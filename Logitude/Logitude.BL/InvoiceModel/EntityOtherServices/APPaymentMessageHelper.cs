@@ -1,5 +1,5 @@
 ﻿using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Simplog.Server.Infrastructure.Helpers;
 using System.IO;
@@ -14,12 +15,6 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Xml;
 using Microsoft.Practices.Unity;
-using Logitude.Server.Tools.StorageService;
-using Logitude.Server.Tools;
-using System.Web;
-using Logitude.SystemLogs;
-using Logitude.Server.Tools.QueueService;
-using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -32,8 +27,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private string myVATExemptTempCard;
         private string myAccountingSystemCode;
         private bool isDropBox = false;
-        private bool UsingFTP = false;
-        private string FTPDetailId;
         public APPaymentMessageHelper(int tenant)
         {
             this.tenant = tenant;
@@ -47,13 +40,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
             }
         }
-        public APPaymentMessageHelper(List<APPayment> allEntities, string filename, int tenant, bool isDropBox = false, bool isFTP = false)
+        public APPaymentMessageHelper(List<APPayment> allEntities, string filename, int tenant, bool isDropBox = false)
         {
             this.tenant = tenant;
             this.filename = filename;
             this.allEntities = allEntities;
             this.isDropBox = isDropBox;
-            this.UsingFTP = isFTP;
 
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(tenant);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
@@ -62,7 +54,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 myVATableTempCard = accountingSetting.PayableVATableTempCard;
                 myVATExemptTempCard = accountingSetting.PayableVATExemptTempCard;
                 myAccountingSystemCode = accountingSetting.AccountingSystemCode;
-                FTPDetailId = accountingSetting.TransferFTPDetailId;
             }
         }
 
@@ -104,8 +95,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             List<string> allPaymentIds = allEntities.Select(s => s.Id).ToList();
             List<CreditCardType> creditCardTypes = (from d in invoiceContext.CreditCardTypes where d.Tenant == tenant select d).ToList();
+            //List<APPaymentMethod> paymentMethods = (from d in invoiceContext.APPaymentMethods where d.Tenant == tenant select d).ToList();
             List<AccountingPaymentMethod> paymentMethods = (from d in invoiceContext.AccountingPaymentMethods where d.IsAP == true && d.Tenant == tenant select d).ToList();
-            
+            //List<APInvoiceType> invoiceTypes = (from d in invoiceContext.APInvoiceTypes select d).ToList();
+
             List<APInvoicePayment> allInvoicesPayments = (from d in invoiceContext.APInvoicePayments
                                                           where d.Tenant == tenant
                                                           && allPaymentIds.Contains(d.APPaymentId)
@@ -148,7 +141,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 paymentElement.DocumentType = "APPAY";
                 paymentElement.PaymentNumber = item.PaymentNo;
                 paymentElement.RegisterDate = item.RegisterDate;
-                paymentElement.PaymentCurrency = item.PaymentCurrency != null ? item.PaymentCurrency.Code : null;
+                paymentElement.PaymentCurrency = item.PaymentCurrency.Code;
                 paymentElement.PaymentMethod = myPaymentMethodCode;
                 paymentElement.PaymentAmount = item.AmountInPaymentCurrency;
                 paymentElement.ExchngeRate = item.PaymentCurrencyExchangeRate;
@@ -169,11 +162,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 paymentElement.BankCode = item.Bank;
                 paymentElement.BankBranch = item.BankBranch;
                 paymentElement.BankAccount = item.Account;
-                paymentElement.BankName = item.VendorBankName;
-                paymentElement.AccountNumber = item.VendorBankAccountNumber;
-                paymentElement.BankAddress = item.VendorBankAddress;
-                paymentElement.SWIFTCode = item.VendorSwift;
-                paymentElement.IBANNumber = item.VendorIBANNumber;
                 #endregion
 
                 #region Card
@@ -181,8 +169,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Card vendor = CardRepository.GetSingleCard(item.VendorId, tenant, true);
                 if (vendor != null)
                 {
-                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                    paymentElement.Card.AccountingCard = accountingSystemHelper.GetGenericCreditAccount(vendor.Id, item.PaymentCurrencyId, tenant, true);
+                    paymentElement.Card.AccountingCard = vendor.PayablesAccountingCard;
                     paymentElement.Card.IntercompanyCode = vendor.ExternalId2;
                     paymentElement.Card.Name = vendor.EnglishName;
                     paymentElement.Card.Code = vendor.Code;
@@ -196,7 +183,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         paymentElement.Card.City = address.City;
                         paymentElement.Card.ZipCode = address.ZipCode;
                         paymentElement.Card.Country = address.Country == null ? "" : address.Country.EnglishName;
-                        paymentElement.Card.CountryCode = address.Country == null ? "" : address.Country.Code;
                     }
                     paymentElement.Card.VatNumber = vendor.VatNumber;
                 }
@@ -274,14 +260,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 this.BulidDropBoxXMLLFile(bytearray);
             }
-
-            else if (this.UsingFTP && !string.IsNullOrEmpty(this.FTPDetailId))
-            {
-                this.BuildFile_ViaFTP(bytearray);
-            }
-
             else
             {
+                //Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');
@@ -312,65 +293,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
             var commLog = helper.CreateDropBoxCommunicationLog(tenant, objectTableId, bytearray, this.filename, "APPayments", "AP Payment", entityId);
         }
-
-        private string myDocumentId;
-        private string myDocumentFolder;
-        private string myDocumentExtension;
-        private string myCommunicationLogId;
-        private void BuildFile_ViaFTP(byte[] myByteArray)
-        {
-            ObjectTableRepository repo = new ObjectTableRepository(tenant);
-            string objectTableId = repo.GetObjectTableIdByName("APPayment");
-            string FTPFileName = "";
-
-            AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);
-            var payment = this.allEntities.FirstOrDefault();
-            var entityId = "";
-            if (payment != null)
-            {
-                entityId = payment.Id;
-                FTPFileName = ("APPayment_" + payment.PaymentNo).ToLower();
-            }
-
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
-
-            this.myDocumentId = helper.DocumentId;
-            this.myDocumentFolder = helper.DocumentFolder;
-            this.myDocumentExtension = helper.DocumentExtension;
-            this.myCommunicationLogId = commLog.Id;
-
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = myDocumentId,
-                FolderName = myDocumentFolder,
-                Extension = myDocumentExtension,
-                Tenant = tenant,
-                FileSize = myByteArray.Length,
-            };
-
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(myByteArray, fileInfo);
-
-            try
-            {
-                //helper.Test(commLog, tenant);
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(commLog.QueueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
-            }
-
-            catch (Exception ex)
-            {
-                string ip = "";
-
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                {
-                    ip = HttpContext.Current.Request.UserHostAddress;
-                }
-
-                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AP Payment Transfer", null, ip);
-            }
-        }
         #endregion
     }
 
@@ -394,7 +316,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public double? PaymentAmount { get; set; }
         public double? ExchngeRate { get; set; }
         public double? PaymentAmountInLocalCurrency { get; set; }
-
         [XmlElement(DataType = "date")]
         public DateTime? ValueDate { get; set; }
         public string PaymentRef { get; set; }
@@ -405,11 +326,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string BankBranch { get; set; }
         public string BankAccount { get; set; }
         public int Tenant { get; set; }
-        public string BankName { get; set; }
-        public string AccountNumber { get; set; }
-        public string BankAddress { get; set; }
-        public string SWIFTCode { get; set; }
-        public string IBANNumber { get; set; }
 
         [XmlElement(ElementName = "Vendor")]
         public APPaymnetCardElement Card { get; set; }
@@ -430,7 +346,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Country { get; set; }
-        public string CountryCode { get; set; }
         public string VatNumber { get; set; }
     }
 
@@ -439,7 +354,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string InvoiceType { get; set; }
         public string InvoiceNumber { get; set; }
         public double PaidAmount { get; set; }
-
     }
     #endregion
 }

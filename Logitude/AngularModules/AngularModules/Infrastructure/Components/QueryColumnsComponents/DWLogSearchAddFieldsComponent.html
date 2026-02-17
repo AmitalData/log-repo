@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .Link:hover {
         cursor: pointer;
@@ -14,13 +14,15 @@
     }
 </style>
 
-<div *ngIf="fieldName != 'Choose'" style="vertical-align:central;text-align:left">
+<div style="vertical-align:central;text-align:left">
     <a class="Link" style="font-size:13px;" (click)="AddField(rowData)">Add</a>
 </div>
 
-<div *ngIf="fieldName == 'Choose'" style="margin-top:8px;margin-left:11px">
-    <div class="RadioButton">
-        <input type="radio" [id]="rowData.Field" [value]="rowData.Field" (click)="ChooseField(rowData)" [checked]="rowData.IsChecked" name="Choose" />
-        <label [attr.for]="rowData.Field"></label>
-    </div>
-</div>
+
+
+<!--<div style="margin-left:5px;margin-top:5px">
+
+    <img class="CenterCenter" (click)="AddField(rowData)" style="cursor:pointer;height:24px;width:24px" src="./_Resources/Images/Icons/All/ArrowForward.png" />
+
+</div>-->
+

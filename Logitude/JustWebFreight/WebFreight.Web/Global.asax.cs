@@ -1,70 +1,62 @@
-﻿using Logitude.BL.Helpers;
-using Logitude.BL.Interfaces;
-using Logitude.BL.Resolvers;
-using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.Messaging.Amital;
-using Logitude.Customs.BL.PatchDistribution;
-using Logitude.Customs.BL.PatchDistribution.Patches;
-using Logitude.Customs.BL.Validators;
-using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Interfaces;
-using Logitude.Server.Tools.Resolvers;
-using Logitude.Server.Tools.TreeFilterQuery;
-using Logitude.Server.Tools.Utils;
+﻿using System;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Web;
+using System.Threading;
+using System.Web.Routing;
+using System.Web.Http;
+using Microsoft.ServiceBus.Messaging;
+using Simplog.Server.Infrastructure.Azure;
+using WebFreight.Web.TopicQueues;
+using Simplog.Server.Infrastructure;
 using Logitude.SystemLogs;
-using Logitude.SystemLogs.POCOs;
-using Logitude.SystemLogs.Repositories;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Customs.BL.EntityQueryServices;
+using System.Globalization;
+using WebFreight.Web.CustomModel;
+using WebFreight.Web.AccountingModel;
+using WebFreight.Web.Security;
+using Logitude.BL.Interfaces;
+using WebFreight.Web.Validators;
+using Logitude.BL.Helpers;
+using Autofac;
+using System.Reflection;
+using Autofac.Integration.WebApi;
 //using WebFreight.Web.Azure.TopicQueues;
 using Microsoft.AspNet.SignalR;
-using Microsoft.ServiceBus.Messaging;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Azure;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure.LogitudeCacheManager;
 using Stimulsoft.Base;
-using System;
-using System.Globalization;
-using System.Threading;
+using Simplog.Server.Infrastructure.LogitudeCacheManager;
+using Logitude.Server.Tools.Utils;
+using Logitude.Customs.BL.Messaging.Amital;
+using Simplog.Server.Infrastructure.DataContracts;
 using System.Timers;
-using System.Web;
-using System.Web.Hosting;
-using System.Web.Http;
-using System.Web.Routing;
-using WebFreight.Web.AccountingModel;
-using WebFreight.Web.CustomModel;
+using Logitude.SystemLogs.Repositories;
+using Logitude.SystemLogs.POCOs;
+using Logitude.Server.Tools.Counters;
 using WebFreight.Web.Helpers;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Resolvers;
 using WebFreight.Web.Helpers.APIHelpers;
-using WebFreight.Web.Security;
-using WebFreight.Web.TopicQueues;
-using WebFreight.Web.Validators;
-using System.Collections.Generic;
-using System.Linq;
-using WebFreight.Web.GlobalModel;
 
 namespace WebFreight.Web
 {
     public class Global : System.Web.HttpApplication
-    {
+    { 
         System.Timers.Timer aTimer = new System.Timers.Timer();
         protected void Application_Start(object sender, EventArgs e)
         {
-            NetCommonHelper.Logger.DevLog.Instance.SetProcessName("website", true); //Set process name and is webApp
             LogitudeAppSettings.StartDateTime = DateTime.Now;
             //if ((DateTime.Now - LogitudeAppSettings.EndDateTime).TotalMinutes <= 5)
             //{
-            LogitudeAppSettings.IsRecycled = true;
-            LogitudeAppSettings.WarmingIsFinished = false;
+                LogitudeAppSettings.IsRecycled = true;
             //} 
-         
+
 
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
@@ -72,9 +64,67 @@ namespace WebFreight.Web
                 LogitudeSettings.DatabaseManagementSystem = dbms;
                 LogitudeSettings.DebugKey = System.Configuration.ConfigurationManager.AppSettings.Get("DebugKey");
                 FillAppSettings();
-               
+
+
+
+                //SessionContextConfiguration conf = new SessionContextConfiguration();
+
+
+                ////SettingRepository settingRepository = new SettingRepository();
+                ////Setting setting = settingRepository.GetSingleSetting("1");
+                ////LogitudeSettings.Id = setting.Id;
+                ////LogitudeSettings.ChampEnv = setting.ChampEnv;
+                ////LogitudeSettings.ChampURL = setting.ChampURL;
+                ////LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
+                ////LogitudeSettings.DeploymentStage = setting.DeploymentStage;
+                ////LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
+                ////LogitudeSettings.LogitudeURL = setting.LogitudeURL;
+                ////LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
+                ////LogitudeSettings.UsingAzure = setting.UsingAzure;
+                ////LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
+                ////LogitudeSettings.StorageAccountName = setting.StorageAccountName;
+                ////LogitudeSettings.StorageType = setting.StorageType;
+                ////LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+                ////LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
+                ////LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
+                ////LogitudeSettings.ForceHttps = setting.ForceHttps;
+                ////LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
+                ////LogitudeSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
+                ////LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
+                ////LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
+                ////LogitudeSettings.LogoCode = setting.LogoCode;
+                ////LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
+                ////LogitudeSettings.EmailAlertSignature = setting.EmailAlertSignature;
+                ////LogitudeSettings.IOSAppLink = setting.IOSAppLink;
+                ////LogitudeSettings.AndroidAppLink = setting.AndroidAppLink;
+                ////LogitudeSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
+                ////LogitudeSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
+                ////LogitudeSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
+                ////LogitudeSettings.ABMProductId = setting.ABMProductId;
+                ////LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                ////LogitudeSettings.SignAppVersion = setting.SignAppVersion;
+                ////LogitudeSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
+                ////LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
+                ////LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
+                ////LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
+
+                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 LogitudeSettings_AmitalInit();
-              
+                ////LogitudeSettings.GLSHKEnv = setting.GLSHKEnv;
+                ////LogitudeSettings.GLSHKURL = setting.GLSHKURL;
+                ////LogitudeSettings.NotificationHubName = setting.NotificationHubName;
+                ////LogitudeSettings.NotificationHubConnectionString = setting.NotificationHubConnectionString;
+                ////LogitudeSettings.DomainName = setting.DomainName;
+                ////LogitudeSettings.ProductName = setting.ProductName;
+                ////LogitudeSettings.QueueServiceMode = setting.QueueServiceMode;
+                ////LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
+                ////LogitudeSettings.DropboxAppKey = setting.DropboxAppKey;
+                ////LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
+
+                //aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
+                //aTimer.Interval = 60000;
+                //aTimer.Enabled = true;
+
             }
 
             //string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
@@ -82,8 +132,6 @@ namespace WebFreight.Web
             ContainerAccessor.InitContainer();
             ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
             ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
-             ContainerAccessor.RegisterTypeFactory<IAddManualTraceEventsHelper, AddManualTraceEventsHelper>("AddManualTraceEventsHelper", new AddManualTraceEventsHelper());
-            
 
             LoggedContactResolver.RegisterLoggedContactUtil();
             DateTimeUtilResolver.RegisterDateTimeUtil();
@@ -95,22 +143,9 @@ namespace WebFreight.Web
 
             AccountingRegistrations.Register();
             CustomsRegistrations.Register();
-            string notUsecache = System.Configuration.ConfigurationManager.AppSettings.Get("NotUseCache");
-            if (notUsecache == "1")
-            {
-                CacheManager.CacheWrapper = new CacheEmptyWrapper(HttpContext.Current.Cache);
-            }
-            else
-            {
-                Dictionary<int,string> globalDBs = new Dictionary<int, string>();
-                List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
-                foreach (var item in globalTenants)
-                {
-                    globalDBs.Add(item.Id, item.GlobalDBId);
-                }
-                CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache, globalDBs);
-            }
-            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
+            
+            CacheManager.CacheWrapper = new CacheWrapper(HttpContext.Current.Cache);
+            if (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "amitalstorage" || LogitudeSettings.DeploymentStage == "Dev" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "logboxwe1")
             {
                 LogitudeCacheManager.ServerCache = new RedisCache();
             }
@@ -119,10 +154,21 @@ namespace WebFreight.Web
                 LogitudeCacheManager.ServerCache = new LocalHttpCache();
             }
 
-            InfraRegistrationHelper.Register();
+            //AreaRegistration.RegisterAllAreas();
+
+            // A route that enables RPC requests
+            //RouteTable.Routes.MapHttpRoute(
+            //    name: "RpcApi",
+            //    routeTemplate: "rpc/{controller}/{action}",
+            //    defaults: new { action = "Get" }
+            //);
 
 
-           
+            //        RouteTable.Routes.MapHttpRoute(
+            //name: "DefaultApi",
+            //routeTemplate: "api/{controller}/{id}",
+            //defaults: new { id = System.Web.Http.RouteParameter.Optional }
+            //);
 
             RouteTable.Routes.MapHttpRoute(
           name: "DefaultGetApi",
@@ -148,37 +194,34 @@ namespace WebFreight.Web
             RouteTable.Routes.MapHttpRoute("Route1", "api/{controller}/getsinglepmwithoutcomposition/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMWithoutComposition" });
             RouteTable.Routes.MapHttpRoute("Route2", "api/{controller}/getsinglepm/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPM" });
             RouteTable.Routes.MapHttpRoute("Route3", "api/{controller}/getsinglepmbykey/{securitykey}/{id}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKey" });
-            RouteTable.Routes.MapHttpRoute("Route4", "api/{controller}/getsinglepmbykeyandtenant/{securitykey}/{tenant}", new { controller = "Shipments", action = "GetSingleShipmentPMByKeyAndTenant" });
-            // RouteTable.Routes.MapHttpRoute("HybridTest", "api/WcfApi/Hybrid/Test/{action}", new { controller = "HybridTest", action = RouteParameter.Optional });
-            RouteTable.Routes.MapHttpRoute("HybridModel", "api/WebAPI/HybridModel/{controller}/{action}");
 
             RouteTable.Routes.Ignore("{resource}.axd/{*pathInfo}");
 
             //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+			json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
 
 
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.UseXmlSerializer = true;
-            GlobalConfiguration.Configuration.Filters.Add(new ApiExceptionFilter());
-            //GlobalConfiguration.Configuration.Formatters.Add(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
-            //var builder = new ContainerBuilder();
-            //var config = GlobalConfiguration.Configuration;
-            //builder.RegisterType<BranchesController>();
-            ////builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            //var container = builder.Build();
-            //config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+			GlobalConfiguration.Configuration.Filters.Add(new ApiExceptionFilter());
+			//GlobalConfiguration.Configuration.Formatters.Add(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+			//var builder = new ContainerBuilder();
+			//var config = GlobalConfiguration.Configuration;
+			//builder.RegisterType<BranchesController>();
+			////builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+			//var container = builder.Build();
+			//config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
 
-            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+			//GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
 
-            //GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+			//GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
 
-            // Make long polling connections wait a maximum of 110 seconds for a
-            // response. When that time expires, trigger a timeout command and
-            // make the client reconnect.
-            GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(110);
+			// Make long polling connections wait a maximum of 110 seconds for a
+			// response. When that time expires, trigger a timeout command and
+			// make the client reconnect.
+			GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(110);
 
             // Wait a maximum of 30 seconds after a transport connection is lost
             // before raising the Disconnected event to terminate the SignalR connection.
@@ -189,19 +232,20 @@ namespace WebFreight.Web
             // This value must be no more than 1/3 of the DisconnectTimeout value.
             GlobalHost.Configuration.KeepAlive = TimeSpan.FromSeconds(5);
 
-            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHlDUTDyyOzH1Ys3qCPYbCdoOPkp0wcjMFs/nMMKkWriMMfI0I" +
-"PTmv3vqyK+kiZMWBXbmk/5nVaYnoKdZDQcs9S4EXbREpWCaBtBUPBdGK/RvynNQgdJ92boAv5dvQNf+cI/TFtMD5Zu" +
-"IUmN7IUWcOYxu68ChgVJhjNdkvfh+tpcYa9gRW/Ik/9N1FO2Uaq7qiKAnO0rn1Put5GiR8zSvegcgRcRzkn5wApANF" +
-"lb0W//9Ce8sgpSUwO1no2Auf/Efv+2uV3Ld9e5WZvjKskFJDhLYbdvWq3xNMZkwdo0qSBdavsMZqOtPfpzpSmrGPCC" +
-"cFFCq4hgXdc9BrS7XjM/KGcojYpSArv6b3oEp4XOa1rgach8lukVJCR5WwMAyfgXHT9Na5d87xey46BtTRZWJd2Svx" +
-"tXYYoWNDtqe0IEh54aL6prLL162XgeDiWnlUiLIHYm3Jtwp6/N39l+p3kHYDdGnS+vgv1Eso7uUmYl7FKrqzjczh7l" +
-"wjvqoQrAretQXTtTlqp0O8LtDn2cbEsboWm3";
+            StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHk5LQfMb0Dr1Ze4z6YRXSb7imTiay6/HzKYGUzkd/h3FMt5R7" +
+"uunoM5lX8Vs2voVkSeT6Wv6WI6Jcy4xOeAjjPkTBhC+ivrrxidMQjLaebItqFcnJWqKXBUgoJa0WfmH3soi0IbfEmI" +
+"fQ3ZmMq5BHsjsKoHSdnbzDUPWMXieYRTJZL6tsBC6QRy2ALPnYwg88ZJDGAWgAqMhZ+M0BVM17B3YJN9mu1MfAblN7" +
+"rG1eWrSrR5B53af4aeWs0RmqVNatfenGL8sufvTgOiyEuQmC9J7sHOT6VoQpWOlZthrc7JOl4zbw+qduZHZrpLuK+1" +
+"O3AB8EeDCQ6EgM8TcUesQBZZrUA4ZUFpxsCdvL0n4DQiB1tIof1TGHXCtZ62S1kAfU4XJzEGM/g3MYbKridAK5ckyc" +
+"0xwsK2y46rm9W3EV0m49Na0pcJe+2ZScc6BP1o3tDS9ddHbfkt7hFZpUNTqOxn9BOP0YVoQul+dPckYle4PS4mzXVp" +
+"tMrKV4En69rnW/z658axW0kQ2GxorKwW0IAR";
 
 
 
-            if (LogitudeSettings.IsCostomsDeploy &&
-                LogitudeSettings.DatabaseManagementSystem.Equals("oracle", StringComparison.OrdinalIgnoreCase) &&
-                LogitudeSettings.QueueServiceMode.Equals("db", StringComparison.OrdinalIgnoreCase)
+
+            if (LogitudeSettings.IsCostomsDeploy && 
+                LogitudeSettings.DatabaseManagementSystem.Equals("oracle", StringComparison.OrdinalIgnoreCase) &&  
+                LogitudeSettings.QueueServiceMode.Equals("db", StringComparison.OrdinalIgnoreCase) 
                 )
             {
                 return;
@@ -218,25 +262,26 @@ namespace WebFreight.Web
                 {
                     dataCacheTopic = StorageAcountDetails.NameSpaceManager.GetTopic(StorageAcountDetails.DataCacheTopicName);
                 }
-                if (!isDebug())
+                //if (!RoleEnvironment.IsAvailable)//is azure env
+                //{
+                //    return;
+                //}
+                SubscriptionDescription myAgentSubscription;
+                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+                string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
+                if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
                 {
-                    string subscribtionName = Environment.MachineName;
-                    var commandLineArgs = Environment.GetCommandLineArgs();
-                    if (commandLineArgs.Length > 1)
-                    {
-                        subscribtionName += ("_" + commandLineArgs[2]);
-                    }
-                    /*SubscriptionDescription myAgentSubscription;
-                    if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(dataCacheTopic.Path, subscribtionName))
-                    {
-                        myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
-                    }*/
-
-                    CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
-                    Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
-                    cacheThread.Start();
+                    myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(dataCacheTopic.Path, subscribtionName);
                 }
+                //  string ssss = RoleEnvironment.CurrentRoleInstance.Id;
+
+
+                CacheMessageHandler cacheMessageHandler = new CacheMessageHandler();
+                Thread cacheThread = new Thread(cacheMessageHandler.HandleTopicMessages);
+                cacheThread.Start();
+
                 this.StartSignalRTopicThread();
+
             }
             catch (Exception ex)
             {
@@ -245,67 +290,36 @@ namespace WebFreight.Web
             }
 
 
-            AppDomain.CurrentDomain.FirstChanceException += (mySender, eventArgs) =>
-            {
-                //eventArgs.Exception.sou
-                //FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
+			AppDomain.CurrentDomain.FirstChanceException += (mySender, eventArgs) =>
+			{
+				//eventArgs.Exception.sou
+				//FirstChanceExceptionEventArgsLogger.LogException(eventArgs);
 
-                //Debug.WriteLine(eventArgs.Exception.ToString());
-            };
+				//Debug.WriteLine(eventArgs.Exception.ToString());
+			};
 
-        }
-
-        private bool isDebug()
-        {
-#if DEBUG
-            return true;
-#else
-                return false;
-#endif
-        }
-
-        private void HandleSettingsChanges()
-        {
-            while (true)
-            {
-                try
-                {
-                    FillAppSettings();
-                    Thread.Sleep(2000);
-                }
-
-                catch { }
-            }
-        }
+		}
 
         private static void LogitudeSettings_AmitalInit()//itzik:CleanCode when is possible -should convert 2 ContainerAccessor
         {
-            //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
             Func<IAmitalRestrictOwnerService> createAmitalRestrictOwnerModelService = null;
 
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 /// itzik : can use/convert to    !!!ContainerAccessor !!!! // ContainerAccessor.Container.RegisterType<ICustomsDocumentQueryServiceExt, CustomsDocumentQueryServiceExt>("CustomsDocumentQueryServiceExt", new InjectionFactory(c => new CustomsDocumentQueryServiceExt()));
-                /// 
+                var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
+                LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
 
-                bool useAppData = true;
-                if (useAppData)
-                {
-                    AppDataUtil.Init(HostingEnvironment.ApplicationPhysicalPath);
-                    var appDataUtil = new AppDataUtil();
-                    LogitudeSettings.ProductInfo = appDataUtil.GetProdInfo();
-
-                }
-                else
-                {
-                    var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
-                    LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
-                }
                 // this project no need but in FilingManager is must 
                 LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;// this project no need but in FilingManager is must 
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
-
+                Logger.OverrideExecutablePath = HttpContext.Current.Server.MapPath("App_Data");
+                LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+                {
+                    if (DateTime.Now > stopLogAt) return;
+                    Logger.LogMe(mess, err, suffix);
+                });
                 LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
                 createAmitalRestrictOwnerModelService = () =>
@@ -314,31 +328,6 @@ namespace WebFreight.Web
                     return amitalRestrictOwnerService;
                 };
             }
-
-
-            ////logging
-            //Logger.OverrideExecutablePath = HttpContext.Current.Server.MapPath("App_Data");
-            //LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
-            //{
-            //    if (DateTime.Now > stopLogAt) return;
-            //    Logger.LogMe(mess, err, suffix);
-            //});
-
-
-            LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
-            {
-                if (DateTime.Now > stopLogAt) return;
-                if (err)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
-                }
-                else
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
-                }
- 
-               
-            });
 
             LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
             LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
@@ -353,106 +342,14 @@ namespace WebFreight.Web
             InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature,
                 () => (new ByteCompressorUtil()) as IByteCompressorUtil,
                 new IISManager(),
-                () => (new HtmlEditorHelper()) as IHtmlEditorHelper,
-                () => (new EntityUpdateReflectorService()) as IEntityUpdateReflectorService,
-                () => (new EntityGetReflectorService()) as IEntityGetReflectorService,
-                () => (new TreeFilterQueryService()) as ITreeFilterQueryService
+                () => (new HtmlEditorHelper()) as IHtmlEditorHelper
                 );
-            ProxyUtil.SecurityUtilityCheckFeature = (a, b, c) => SecurityUtility.CheckFeature(a, b, c);
-            InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
-                (string courierMasterId, int tenant) =>
-                {
-                    var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
-                    if (courierMasterRequiredErrors != null)
-                    {
-                        return courierMasterRequiredErrors.RequiredFields.Count == 0;
-
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                };
+            ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
 
 
 
             LogitudeSettings.GetUserNameInject = AuthenticationUtil.ResolveUserIdentityName;
         }
-
-        private static void ProductInfoSetting()
-        {
-            try
-            {
-
-                bool useAppData = false;
-                if (useAppData)
-                {
-                    AppDataUtil.Init(HostingEnvironment.ApplicationPhysicalPath);
-                    var appDataUtil = new AppDataUtil();
-                    LogitudeSettings.ProductInfo = appDataUtil.GetProdInfo();
-
-                }
-                else
-                {
-                    var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
-                    LogitudeSettings.ProductInfo = assemblyUtil.GetProductInfo(typeof(Global).Assembly);
-                    var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
-                    myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
-
-                    if (!LogitudeSettings.IsCostomsDeploy)
-                    {
-                        return;
-                    }
-
-                    bool supressAlertProductMessage = !String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings.Get("supressAlertProductMessage"));
-                    if (!supressAlertProductMessage)
-                    {
-                        var assemblyVersion = assemblyUtil.GetVersion(LogitudeSettings.ProductInfo);
-                        var patchDistributionMatch = new PatchDistributionMatch();
-                        var patchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-                        if (patchDistributionMatchModel.MyAssemblyDBMigrationModel == null)
-                        {
-                            return;
-                        }
-                        if (patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB ||
-                            patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldSource)
-                        {
-
-                            LogitudeSettings.ProductMessage = patchDistributionMatchModel.Message;
-                            return;
-                        }
-                        if (patchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OK_DBAndAssemblyREqual)
-                        {
-                            var _PatchDistributionManager = new PatchDistributionManager();
-                            var patchDistributionList = _PatchDistributionManager.GetPatchDistribution_MinorNotClosed(patchDistributionMatchModel.LastClosed_DBMigration.MajorVersion, patchDistributionMatchModel.LastClosed_DBMigration.MinorVersion);
-                            if (patchDistributionList.Count == 0)
-                            {
-                                return;
-                            }
-                            LogitudeSettings.ProductMessage = @"הגרסה המיגורית תקינה 
-אולם לא בוצעו עדכונים מינורים  ";
-
-
-                        }
-                    }
-
-                }
-            }
-            catch (Exception e)
-            {
-
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal( e);
-            }
-            finally
-            {
-
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(LogitudeSettings.ProductMessage);
-
-                
-            }
-
-        }
-
 
         private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
         {
@@ -514,21 +411,9 @@ namespace WebFreight.Web
             LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
             LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken;
             LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
-            LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
-            LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
-            LogitudeSettings.OITenantNumber = setting.OITenantNumber;
-            LogitudeSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
-            LogitudeSettings.DNSZone = setting.DNSZone;
-            LogitudeSettings.DNSIPAddress = setting.DNSIPAddress;
-            LogitudeSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
-            LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
-            LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
-			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
-			LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
-            LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
         }
 
-		private void StartSignalRTopicThread()
+        private void StartSignalRTopicThread()
         {
             TopicDescription signalRTopic;
             if (!StorageAcountDetails.NameSpaceManager.TopicExists(StorageAcountDetails.SignalRHubTopicName))
@@ -543,13 +428,13 @@ namespace WebFreight.Web
             //{
             //    return;
             //}
-            /*SubscriptionDescription myAgentSubscription;
+            SubscriptionDescription myAgentSubscription;
             //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
             string subscribtionName = Environment.MachineName; //roleId[roleId.Length - 1];
             if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(signalRTopic.Path, subscribtionName))
             {
                 myAgentSubscription = StorageAcountDetails.NameSpaceManager.CreateSubscription(signalRTopic.Path, subscribtionName);
-            }*/
+            }
 
             //SignalRHubMessageHandler signalRMessageHandler = new SignalRHubMessageHandler();
             //Thread signalRThread = new Thread(signalRMessageHandler.HandleTopicMessages);
@@ -601,8 +486,8 @@ namespace WebFreight.Web
             //string token = HttpContext.Current.Request.Headers["Token"];
             //if (!string.IsNullOrEmpty(token))
             //{
-            //    ICommonDataContext context = CommonDataContext.GetContext(tenant);
-            //    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
+            //    ICommonDataContext context = CommonDataContext.GetContext(0);
+            //    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
             //    AuthenticationToken authToken = tokenRep.GetSingleToken(token);
             //    if (authToken != null)
             //    {
@@ -623,13 +508,13 @@ namespace WebFreight.Web
             //    }
             //}
             string clientmode = System.Configuration.ConfigurationManager.AppSettings.Get("clientMode");
-            if (clientmode == "angular" && SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development)) //islam: please don't remark this !!!!!!!!!!!!!!
+            if (clientmode == "angular" && LogitudeSettings.DeploymentStage == "Dev") //islam: please don't remark this !!!!!!!!!!!!!!
             {
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://localhost:4200");
                 HttpContext.Current.Response.AddHeader("Access-Control-Expose-Headers", "http://localhost:4200");
                 HttpContext.Current.Response.AddHeader("Access-Control-Allow-Credentials", "true");
             }
-           
+
             //   if (HttpContext.Current.Request.HttpMethod == "OPTIONS")
             //    {
             //These headers are handling the "pre-flight" OPTIONS call sent by the browser
@@ -641,31 +526,8 @@ namespace WebFreight.Web
             //     HttpContext.Current.Response.End();
             //  }
 
-
-            var systemUrl = SecurityUtility.getLoggedDomain();
-            if (!string.IsNullOrEmpty(systemUrl) && systemUrl.ToLower().Contains("staging") && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction))
-            {
-                HttpContext.Current.Items.Add("workerrolename", "staging");
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(HttpContext.Current.Request.CurrentExecutionFilePath) && HttpContext.Current.Request.CurrentExecutionFilePath.ToLower().Contains("/wcfapi/"))
-            {
-                if (!HttpContext.Current.Items.Contains("workerrolename"))
-                    HttpContext.Current.Items.Add("workerrolename", "production");
-            }
-            else
-            {
-                if (HttpContext.Current.Request.Headers["workerrolename"] != null)
-                {
-                    if (!HttpContext.Current.Items.Contains("workerrolename"))
-                        HttpContext.Current.Items.Add("workerrolename", HttpContext.Current.Request.Headers["workerrolename"]);
-                    else
-                        HttpContext.Current.Items["workerrolename"] = HttpContext.Current.Request.Headers["workerrolename"];
-                }
-
-            }
         }
+
 
         private void InSertFailedTokenLog(string token)
         {
@@ -677,7 +539,7 @@ namespace WebFreight.Web
                 IP = AuthenticationUtil.GetIP4Address(),
                 GMTDateTime = DateTime.Now,
                 Token = token,
-
+                
             };
 
             string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
@@ -695,21 +557,21 @@ namespace WebFreight.Web
                 {
                     HttpContext.Current.User = null;
                 }
-
+              
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (!string.IsNullOrEmpty(token))
                 {
+
+                    ICommonDataContext context = CommonDataContext.GetContext(0);
+                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)
                     {
-                        HttpContext.Current.Items.Add("authToken", authToken);
-                        HttpContext.Current.Items.Add("Tenant", authToken.Tenant);
-
                         if (!authToken.APIToken)
                         {
                             if (!authToken.InActive)
                             {
-                                if (authToken.ClientType == "Web")
+                                if(authToken.ClientType == "Web")
                                 {
                                     if (authToken.ExpirationDate != null)
                                     {
@@ -720,23 +582,23 @@ namespace WebFreight.Web
                                             HttpContext.Current.Items.Add("Session", "SessionExpiration");
                                             return;
                                         }
-
+                    
                                     }
 
 
-                                    //if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
-                                    //{
-                                    HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
-                                    //}
-                                    //    else
-                                    //    {
-                                    //        ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-                                    //        ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
-                                    //        if (contactPassword != null && contactPassword.Password == authToken.Password)
-                                    //            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+									if (GetContactPasswordFromCache(authToken.Email) == authToken.Password)
+									{
+										HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+									}
+									else
+									{
+										ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
+										ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(authToken.Email);
+										if (contactPassword != null && contactPassword.Password == authToken.Password)
+											HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
 
-                                    //    }
-                                }
+									}
+								}
 
                                 else HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
                             }
@@ -744,9 +606,8 @@ namespace WebFreight.Web
 
                         }
                         else
-                        {
-                            HandleAPIAuthenticationToken(authToken);
-                        }
+                            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
+
 
                     }
                     else
@@ -786,51 +647,38 @@ namespace WebFreight.Web
             }
         }
 
-        private static void HandleAPIAuthenticationToken(AuthenticationToken authToken)
-        {
-            if (authToken.ExpirationDate != null && (DateTime)authToken.ExpirationDate < DateTime.Now)
-            {
-                HttpContext.Current.Items.Add("APICredintial", "APICredintialExpired");
-                return;
-            }
-            HttpContext.Current.User = new System.Security.Principal.GenericPrincipal(new System.Security.Principal.GenericIdentity(authToken.Email), new string[0]);
-        }
+		private string GetContactPasswordFromCache(string email)
+		{
+			ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
 
-        private static object _lock = new object();
-        private string GetContactPasswordFromCache(string email)
-        {
-            ContactPasswordRepository contactPasswordRep = new ContactPasswordRepository();
-            if (CacheManager.CacheWrapper != null)
-            {
-                string cacheKey = $"ContactPassword_{email}";
-                string password = (string)CacheManager.CacheWrapper.Get(cacheKey, 0 );
-                if (password == null)
-                {
-                    lock (_lock)
-                    {
-                        return GetContactPassword(email);
-                    }
-                }
-                else
-                {
-                    return password;
-                }
-            }
-            else
-            {
-                return GetContactPassword(email);
-            }
-        }
+			string cahce_key = "ContactPassword_" + email;
+			if (CacheManager.CacheWrapper != null)
+			{
+				if (CacheManager.CacheWrapper.Get(cahce_key) == null)
+				{
+					ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
+					if (CacheManager.CacheWrapper.Get(cahce_key) == null && contactPassword != null)
+					{
+						CacheManager.CacheWrapper.Insert(cahce_key, contactPassword.Password, null, DateTime.UtcNow.AddMinutes(5), TimeSpan.Zero);
+						
+					}
 
-        private string GetContactPassword(string email)
-        {
-                ContactPassword contactPassword = new ContactPasswordRepository().GetSingleContactPassword(email);
-                return contactPassword != null ? contactPassword.Password : "";
-        }
+					return contactPassword.Password;
+				}
+				else
+				{
+					return (string)CacheManager.CacheWrapper.Get(cahce_key);
+				}
+			}
+			else
+			{
+				ContactPassword contactPassword = contactPasswordRep.GetSingleContactPassword(email);
+				return contactPassword.Password;
+			}
 
+		}
 
-
-        protected void Application_Error(object sender, EventArgs e)
+		protected void Application_Error(object sender, EventArgs e)
         {
 
         }

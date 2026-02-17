@@ -11,7 +11,7 @@ import {CustomerDepositionListExtendedService} from '../../../../../Common/Servi
 
 @Component({
     selector: 'CustomsShipperGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomsShipperGeneralTabComponent.html',
 })
 
@@ -29,7 +29,7 @@ export class CustomsShipperGeneralTabComponent implements OnInit {
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.customerDepositionListExtendedService  = new CustomerDepositionListExtendedService();
 
-        this._entityResourceService.getEntityResourceByTableName("CustomerDeposition").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("CustomerDeposition").subscribe(response => {
             this.IsReady = true;
             this.LoadData();
         });

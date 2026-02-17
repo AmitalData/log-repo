@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,20 +26,19 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 { 
@@ -57,6 +56,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.CheckContactFeature("DWObjectTable", "READ", authToken.Tenant);
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(code, authToken.Tenant);
                 
@@ -87,6 +88,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("DWObjectTable", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectTable", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         DWObjectTableService service = new DWObjectTableService(MyContext, entityPM.Tenant);
@@ -133,6 +136,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("DWObjectTable", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectTable", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "DWObjectTable" + entityPM.Code + entityPM.Tenant;
                         string entityPmName = "DWObjectTablePM" + entityPM.Code + entityPM.Tenant;

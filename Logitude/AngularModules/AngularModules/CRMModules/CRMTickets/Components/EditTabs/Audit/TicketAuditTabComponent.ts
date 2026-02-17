@@ -10,7 +10,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 @Component({
     selector: 'TicketAuditTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './TicketAuditTabComponent.html',
 
 })

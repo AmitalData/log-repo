@@ -1,29 +1,33 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {TMOfficeHourPM} from '../EntityPMs/TMOfficeHourPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import {TMEmployeeTimePM} from '../EntityPMs/TMEmployeeTimePM'; 
 
 @Injectable()
 
 export class TimeOfficeHourDomainService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TimeOfficeHourDomain';
     }
 
     GetTimeOfficeClock(employeeUserId: string, FromDate: Date, ToDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetTimeOfficeClock?employeeUserId=' + employeeUserId + "&FromDate=" + ServiceHelper.GetDateString(FromDate) + "&ToDate=" + ServiceHelper.GetDateString(ToDate);
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-               var list:any = response;                
+               var list = response.json();                
                 var entity: Array<TMOfficeHourPM>=[];
                 if (list) {
                     list.forEach(p => {
@@ -34,26 +38,23 @@ export class TimeOfficeHourDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;                             
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
-    UpdateOfficeHourList(entityPMList: TMOfficeHourPM[]) {
-        return defer(() => {
+    UpdateOfficeHourList(entityPMList: any[]) {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
-            var mappedEntities: TMOfficeHourPM[] = [];
-            entityPMList.forEach((item) => {
-                var mappedEntity: TMOfficeHourPM = this.MapJsonToEntityPM(item);
-                mappedEntities.push(mappedEntity);
-            });
-
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntities), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.post(this._apiUrl, JSON.stringify(entityPMList), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 

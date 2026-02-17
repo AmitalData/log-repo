@@ -1,141 +1,126 @@
 import {Injectable, } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { filter } from 'rxjs/operator/filter';
+
 
 @Injectable()
-
 export class SharedLogisticsService {       
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SharedLogistics';
     }
 
-    getSharedLogisticsStatistics(tenant: number, invitationStatusType: string) {
+    getSharedLogisticsStatistics(tenant: number) {
 
-        return this._http.get(this._apiUrl + '/getSharedLogisticsStatistics/?' + 'tenant=' + tenant + '&invitationStatusType=' + invitationStatusType, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+
+        return this._http.get(this._apiUrl + '/getSharedLogisticsStatistics/?' + 'tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     getSharedLogisticsSummaryData(tenant: number) {
 
-        return this._http.get(this._apiUrl + '/getSharedLogisticsSummaryData/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/getSharedLogisticsSummaryData/?' + 'tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     getLastLoginPartners(tenant: number) {
 
-
-        return this._http.get(this._apiUrl + '/getLastLoginPartners/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/getLastLoginPartners/?' + 'tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     getCardLogDetails(partnerTypeId: string, dateParameter: string, tenant: number) {
 
-
-        return this._http.get(this._apiUrl + '/getcardlogdetails/?' + 'partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/getcardlogdetails/?' + 'partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-
-    getDigitalSharedLogisticsSummaryData(tenant: number) {
-        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/GetDigitalSharedLogisticsSummaryData/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
-    }
-
-    getDigitalCardLogDetails(partnerTypeId: string, dateParameter: string, tenant: number)
-    {
-        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/GetDigitalCardLogDetails/?' + 'partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     getCardLogActivityDetailsList(cardId: string, contactId: string, partnerTypeId: string, dateParameter: string, tenant: number) {
 
-
-        return this._http.get(this._apiUrl + '/getcardlogactivitydetailslist/?' + 'cardId=' + cardId + '&contactId=' + contactId + '&partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/getcardlogactivitydetailslist/?' + 'cardId=' + cardId + '&contactId=' + contactId + '&partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-
-    getDigitalCardLogActivityDetailsList(cardId: string, contactId: string, partnerTypeId: string, dateParameter: string, tenant: number) {
-        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/getcardlogactivitydetailslist/?' + 'cardId=' + cardId + '&contactId=' + contactId + '&partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     getCustomerTenantAccessRequestStatusCount(tenant: number) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
 
-        return this._http.get(this._apiUrl + '/GetCustomerTenantAccessRequestStatusCount/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/GetCustomerTenantAccessRequestStatusCount/?' + 'tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     GetLastCustomerRequest(tenant: number) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
 
-
-        return this._http.get(this._apiUrl + '/GetLastCustomerRequest/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/GetLastCustomerRequest/?' + 'tenant=' + tenant, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     GetSharedShipments(filters: ShipmentFilters) {
-
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetSharedShipments?partnerId=' + filters.PartnerId + '&partnerType=' + filters.PartnerType + '&directionId=' + filters.DirectionId
             + '&transportModeId=' + filters.TransportModeId + '&levelCode=' + filters.ShipmentLevelCode + '&searchField=' + filters.SearchField
             + '&pageSize=' + filters.PageSize + '&pageIndex=' + filters.PageIndex + '&isOperationalClosed=' + filters.IsOperationalClosed;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 }

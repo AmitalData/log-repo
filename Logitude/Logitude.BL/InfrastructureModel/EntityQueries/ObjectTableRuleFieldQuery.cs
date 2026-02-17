@@ -44,7 +44,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                  ObjectTableRuleCode = a.ObjectTableRule.RuleCode,
                                                                  ObjectTableRuleTypeCode = a.ObjectTableRule.RuleTypeCode,
                                                                  RuleNotificationTypeCode = a.RuleNotificationTypeCode,
-                                                                 ObjectFieldCode = a.ObjectFieldCode,
                                                              }).FirstOrDefault();
 
 
@@ -69,7 +68,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                  ObjectTableRuleCode = a.ObjectTableRule.RuleCode,
                                                                  ObjectTableRuleTypeCode = a.ObjectTableRule.RuleTypeCode,
                                                                  RuleNotificationTypeCode = a.RuleNotificationTypeCode,
-                                                                 ObjectFieldCode = a.ObjectFieldCode,
                                                              }).FirstOrDefault();
             return objectTableRuleFieldPm;
         }
@@ -92,7 +90,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                               ObjectTableRuleCode = a.ObjectTableRule.RuleCode,
                                                                               ObjectTableRuleTypeCode = a.ObjectTableRule.RuleTypeCode,
                                                                               RuleNotificationTypeCode = a.RuleNotificationTypeCode,
-                                                                              ObjectFieldCode = a.ObjectFieldCode,
                                                                           }).AsQueryable();
             return objectTableRuleFieldPMs;
         }
@@ -115,7 +112,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                             ObjectTableRuleCode = a.ObjectTableRule.RuleCode,
                                                             ObjectTableRuleTypeCode = a.ObjectTableRule.RuleTypeCode,
                                                             RuleNotificationTypeCode = a.RuleNotificationTypeCode,
-                                                            ObjectFieldCode = a.ObjectFieldCode,
                                                         }).AsQueryable();
 
 

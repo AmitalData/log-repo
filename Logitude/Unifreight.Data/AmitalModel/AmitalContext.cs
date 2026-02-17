@@ -84,17 +84,13 @@ namespace Unifreight.Data.AmitalModel
 
 
 
-        //public AmitalContext(DbConnection conn,int tenantSeed)
-        //   : base(conn, true)
-        //{
-        //    InitConfiguration();
-        //    _TenantSeed = tenantSeed;
-        //}
-
-        private void InitConfiguration()
+        public AmitalContext(DbConnection conn,int tenantSeed)
+           : base(conn, true)
         {
             this.Configuration.LazyLoadingEnabled = false;
             this.Configuration.AutoDetectChangesEnabled = false;
+            
+            
             //config.QueryOptions.CaseInsensitiveComparison = true;
             //config.QueryOptions.CaseInsensitiveLike = true;
 
@@ -104,39 +100,41 @@ namespace Unifreight.Data.AmitalModel
             //{
             //    var state = myStateChangeEventArgs.CurrentState;
             //};
+            _TenantSeed = tenantSeed;
         }
 
-
+        
 
         //public static  void SetOracleMonitor()
         //{
         //    Devart.Data.Oracle.OracleMonitor monitor = new Devart.Data.Oracle.OracleMonitor() { IsActive = true };
         //}
-        public static AmitalContext GetContext(int tenantSeed)
-        {            
+        public static AmitalContext GetContext(int tenant)
+        {
             string dbConnectionInfo = null;
-            //if (DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn )
-            //{
+            if (DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn )
+            {
+                GlobalDB currentDb;
+                currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+                dbConnectionInfo = currentDb.DBConnection;
+                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+                var context = new AmitalContext(connection, tenant);
+                return context;
+            }
+            else
+            {
+                if (LogitudeSettings.GetLogitudeCustomsSettingsMInject== null)
+                {
+                    throw new Exception("LogitudeSettings.GetdbConnectionInfoFromTenantInject is null ,Please Init ");
+                }
+                var myFuncGetConn = LogitudeSettings.GetLogitudeCustomsSettingsMInject;
+                dbConnectionInfo = myFuncGetConn(tenant).UnfConnectionString;
+                return GetContextByDBInfo(dbConnectionInfo, tenant);
+            }
+            
 
-            GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenantSeed);
-            LogitudeCustomsSettingsM settings = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenantSeed);
-            dbConnectionInfo = settings == null || settings.IsConnectedToUniFreight ? currentDb.DBConnection : settings.UnfConnectionString;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            AmitalContext context = Create(tenantSeed, connection);//new AmitalContext(connection, tenantSeed);
 
-            return context;
-
-            //}
-            //else
-            //{
-            //    if (LogitudeSettings.GetLogitudeCustomsSettingsMInject == null)
-            //    {
-            //        throw new Exception("LogitudeSettings.GetdbConnectionInfoFromTenantInject is null ,Please Init ");
-            //    }
-            //    var myFuncGetConn = LogitudeSettings.GetLogitudeCustomsSettingsMInject;
-            //    dbConnectionInfo = myFuncGetConn(tenantSeed).UnfConnectionString;
-            //    return GetContextByDBInfo(dbConnectionInfo, tenantSeed);
-            //}
+            
         }
         public static AmitalContext GetContextByDBInfo(string dbConnectionInfo, int tenantSeed)
         {
@@ -147,11 +145,11 @@ namespace Unifreight.Data.AmitalModel
             //DbConnection con = new Devart.Data.Oracle.OracleConnection("Data Source=srv64bit;User Id=devart;Password=devart;");
 
 
-            var context = Create( tenantSeed, myConnection);
+            var context = new AmitalContext(myConnection,tenantSeed);
             return context;
         }
 
-
+    
 #if false
         public bool DisableQuoting
         {
@@ -166,15 +164,15 @@ namespace Unifreight.Data.AmitalModel
         }
         
 #endif
-
-
+        
+        
         //Dictionary<string, System.Collections.IList> CacheWrapper = new Dictionary<string, System.Collections.IList>();
         //protected override void Dispose(bool disposing)
         //{
         //    foreach (var item in CacheWrapper)
         //    {
         //        item.Value.Clear();
-
+                
         //    }
         //    CacheWrapper.Clear(); 
 
@@ -189,14 +187,14 @@ namespace Unifreight.Data.AmitalModel
             }
         }
 
-        public DbConnection GetConnection()
+        public System.Data.Common.DbConnection GetConnection()
         {
-            return this.Database.Connection;
+            throw new NotImplementedException();
         }
 
-        public DbContext GetActiveDbContext()
+        public System.Data.Entity.DbContext GetActiveDbContext()
         {
-            return this;
+            throw new NotImplementedException();
         }
 
         public void SetAsModified(object entity)

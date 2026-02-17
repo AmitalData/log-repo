@@ -39,14 +39,14 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
         }
 
 
-        public ObjectTable GetObjectTableById(string Id, int Tenant, string ComputingPartnerName = "")
+        public ObjectTable GetObjectTableById(string Id, int Tenant)
         {
             try
             {
 
 
                 var temp = query.GetSinglePM(Id, Tenant);
-                return ObjectTableDataMapping(temp, Tenant,ComputingPartnerName);
+                return ObjectTableDataMapping(temp, Tenant);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
             }
         }
 
-        public ObjectTablePM ObjectTableDataMappingAndValidatin(ObjectTable MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public ObjectTablePM ObjectTableDataMappingAndValidatin(ObjectTable MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
@@ -106,11 +106,6 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.ApiV1
 
                 throw ex;
             }
-        }
-
-        public string GetObjectTableNamesById(string Id,int tenant)
-        {
-            return query.GetObjectTableNamesById(Id,tenant);
         }
 
     }

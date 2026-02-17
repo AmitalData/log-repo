@@ -35,7 +35,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Notes { get; set; }
-        public string ShipmentNumber { get; set; }
 
         List<CustomsTransferLinePM> transferLines;
         [Include]

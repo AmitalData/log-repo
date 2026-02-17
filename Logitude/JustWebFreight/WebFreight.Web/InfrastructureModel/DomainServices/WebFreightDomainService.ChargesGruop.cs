@@ -7,7 +7,7 @@ using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
 
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -254,7 +254,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
         public void InsertChargesGroup(ChargesGroupPM entity)
         {
-            if (objectContext == null) objectContext = WebFreightContext.GetContext(entity.Tenant);
+            if (objectContext == null) objectContext = WebFreightContext.GetContext(0);
      
             ChargesGroupService ChargesGroupService = new ChargesGroupService(objectContext, entity.Tenant);
             ChargesGroupService.Create(entity);
@@ -263,7 +263,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
 
         public void UpdateChargesGroup(ChargesGroupPM currentEntity)
         {
-            if (objectContext == null) objectContext = WebFreightContext.GetContext(currentEntity.Tenant);
+            if (objectContext == null) objectContext = WebFreightContext.GetContext(0);
             ChargesGroupService ChargesGroupService = new ChargesGroupService(objectContext, currentEntity.Tenant);
             ChargesGroupService.Update(currentEntity);
            

@@ -16,9 +16,5 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         //public int IndexOrder { get; set; }
         public string SearchFields { get; set; }
         public string DisplayName { get; set; }
-        public int? StatusLocalWeight { get; set; }
-        public string EntityStatusTypeCode { get; set; }
-        public bool AllowPartial { get; set; }
-        public bool IsDigitalPortal { get; set; }
     }
 }

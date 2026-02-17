@@ -8,7 +8,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
@@ -39,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityRepository = new TextCodeRepository(objectContext);
         }
 
-        public TextCodePM Create(TextCodePM theEntityPm)
+        public void Create(TextCodePM theEntityPm)
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
@@ -57,7 +57,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            return theEntityPm;
         }
 
         public void Update(TextCodePM theEntityPm)

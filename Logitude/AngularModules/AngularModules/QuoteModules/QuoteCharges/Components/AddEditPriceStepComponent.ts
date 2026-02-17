@@ -9,7 +9,7 @@ import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPriceStepComponent.html',
 })
 

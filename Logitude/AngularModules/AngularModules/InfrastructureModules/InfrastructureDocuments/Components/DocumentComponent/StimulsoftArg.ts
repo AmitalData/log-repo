@@ -1,4 +1,4 @@
-import {EditDocumentComponent} from './EditDocumentComponent';
+﻿import {EditDocumentComponent} from './EditDocumentComponent';
 import {StimulsoftViewerComponent} from '../../../../Infrastructure/Components/StimulsoftComponent/StimulsoftViewerComponent';
 import {ReportFliter} from '../../../../Report/Components/Filters/ReportFliter';
 import {ReportsTemplateList} from '../../../../Common/EntityLists/ReportsTemplateList';
@@ -16,7 +16,6 @@ export class StimulsoftArg {
     EditDocumentComponent: EditDocumentComponent;
     public DocumentTypeId: string;
     public ReportsPreviewComponent: any;
-    public TemplateType: string;
     public BuildStimulReportResult: BuildStimulReportResult;
 
 
@@ -26,8 +25,6 @@ export class StimulsoftArg {
     IsShowExportPrinttoPDF: boolean = false;
     IsShowExportMicrosoftExcel: boolean = false;
     IsShowSendButton: boolean = false;
-    IsSchedulerReport: boolean = false;
-    IsExcelReportAllowed: boolean = false;
     ReportKey: string;
     NumberOfPage: number;
     PagesCount: number;
@@ -45,13 +42,6 @@ export class StimulsoftArg {
     ReportFilterConmponent: any;
     TemplateDescription: string;
     IsReset: boolean;
-    MessageTemplateLists: ReportsTemplateList[] = [];
-    DefaultMessageTemplateId: string;
-    DefaultExcelTemplateId: string;
-    DefaultExcelNoStimId: string;
-    ProcessMenuTemplateId: string;
-    ResultType: string;
-    ObjectTableId: string;
     constructor() {
 
     }

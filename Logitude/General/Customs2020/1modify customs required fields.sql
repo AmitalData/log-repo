@@ -1,3 +1,0 @@
-﻿--ALTER TABLE CustomsRequiredFields ADD ObjectfieldCode varchar2(100);
---update CustomsRequiredFields set ObjectfieldCode =(select ObjectFields.FieldCode from ObjectFields where id=CustomsRequiredFields.ObjectFieldId);
---ALTER TABLE CustomsRequiredFields modify ObjectfieldCode varchar2(100) NOT NULL;

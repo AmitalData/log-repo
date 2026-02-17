@@ -13,7 +13,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Testing;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 

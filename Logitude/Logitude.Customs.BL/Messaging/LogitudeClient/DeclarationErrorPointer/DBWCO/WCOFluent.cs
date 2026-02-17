@@ -25,10 +25,6 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         public WCOErrorPointerModel GetTagID(int level, string TagId)
         {
-            if(_List==null)
-            {
-                _List = new List<WCOErrorPointerModel>();
-            }
             var elm = _List.FirstOrDefault(rec => rec.Level == level & rec.WCOID == TagId);
             if (elm != null)
             {
@@ -38,11 +34,6 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         public WCOFluent GetNode(int level, string WCOID)
         {
-            if (_List == null)
-            {
-                _List = new List<WCOErrorPointerModel>();
-            }
-
             var elm = _List.FirstOrDefault(rec => rec.Level == level & rec.WCOID == WCOID);
             GetNode(elm);
             return this;
@@ -76,7 +67,7 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.D
         }
         public override string ToString()
         {
-            _List.OrderBy(rec => rec.IndexSeq).ToList().ForEach(rec =>NetCommonHelper.Logger.DevLog.Instance.WriteDebug(rec.ToString()));
+            _List.OrderBy(rec => rec.IndexSeq).ToList().ForEach(rec => Debug.WriteLine(rec.ToString()));
             return base.ToString();
         }
     }

@@ -1,17 +1,18 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using Logitude.Server.Tools.Helpers;
+using System;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -72,8 +73,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 msg = msg.Replace("%Entity", "Vessel");
                 throw new Exception(msg);
             }
-
-            AddVesselKafkaQueueMessage();
         }
 
         public void Update(VesselPM entityPM)
@@ -122,28 +121,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 msg = msg.Replace("%Entity", "Vessel");
                 throw new Exception(msg);
             }
-
-            AddVesselKafkaQueueMessage();
-        }
-
-        private void AddVesselKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Vessel" },
-                { "EntityId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
     }
 }

@@ -43,10 +43,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool AddedManually { get; set; }
         public bool DisplayInLOV { get; set; }        
         public string SearchFields { get; set; }
-        public bool IsManuallySet { get; set; }
-        public bool EndOfMonth { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public int NumberOfMonths { get; set; }
+        public bool IsManuallySet { get; set; }     
+        public bool CurrentMonth { get; set; }
         public string CalculatedLocalName { get; set; }
         public string CalculatedEnglishName { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

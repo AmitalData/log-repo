@@ -11,11 +11,10 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Customs.BL.EntityQueryServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -72,7 +71,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.ObjectTableId != null)
             {
-                ObjectTableRepository rep = new ObjectTableRepository(SettingUtil.GetCurrentTenant());
+                ObjectTableRepository rep = new ObjectTableRepository(0);
                 ObjectTable objectTable = rep.GetObjectTableById(entityPOCO.ObjectTableId, entityPOCO.Tenant);
                 entityPM.ObjectTableName = objectTable.Name;
             }

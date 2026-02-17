@@ -1,15 +1,14 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebFreight.Web.DataProviders;
 
 namespace WebFreight.Web.AccountingModel.Reports.Journal
 {
-    public class JournalDataProvider:BaseDataProvider
+    public class JournalDataProvider
     {
 
         public string JournalNumber { get; set; }

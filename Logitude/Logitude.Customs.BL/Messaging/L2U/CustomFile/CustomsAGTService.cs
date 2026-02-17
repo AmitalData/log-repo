@@ -12,10 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Customs.BL.TraceEvents;
-using Logitude.Customs.BL.Messaging.Amital;
-using Logitude.Server.Tools.Helpers;
-using System.Collections;
 
 
 namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
@@ -26,7 +22,7 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
         private MasavPaymentsToAgentResponseData _MasavPaymentsResponseData;
         private DateTime? _MasavSentDate;
 
-        public CustomsAGTService(MasavPaymentsToAgentRequestParams MasavRequestParams, DateTime? MasavSentDate, MasavPaymentsToAgentResponseData MasavPaymentsResponseData)
+        public CustomsAGTService(MasavPaymentsToAgentRequestParams MasavRequestParams,  DateTime? MasavSentDate, MasavPaymentsToAgentResponseData MasavPaymentsResponseData)
         {
             _MasavRequestParams = MasavRequestParams;
             _MasavPaymentsResponseData = MasavPaymentsResponseData;
@@ -39,12 +35,24 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
             {
                 throw new Exception("AGT Details are missing");
             }
-
-            var setting = CustomsSettingQueryService.GetSettingByTenant(_MasavRequestParams.Tenant);
             string DeclarationNumber = null;
             string DeclarationId = null;
             var context = CustomContext.GetContext(_MasavRequestParams.Tenant);
-
+            /*
+            if(!String.IsNullOrWhiteSpace(_MasavPaymentsResponseData.AgentMasavPaymentResultList.FirstOrDefault().EntityIdExternalReferenceID))
+            {
+                var myDeclarationQueryService = new DeclarationQueryService(context);
+                string id = myDeclarationQueryService.GetIdByCustomFileNo(_MasavPaymentsResponseData.AgentMasavPaymentResultList.FirstOrDefault().EntityIdExternalReferenceID, _MasavRequestParams.Tenant);
+                if (!String.IsNullOrWhiteSpace(id))
+                {
+                    var declarationPM = myDeclarationQueryService.GetSingle(id, false, false);
+                    if (declarationPM != null)
+                    {
+                        DeclarationNumber = declarationPM.DeclarationNumber;
+                        DeclarationId = declarationPM.Id;
+                    }
+                }
+            }*/
             var amitalCustomFileCommunicationModel = new Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase(
                Logitude.Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess,
                "CWSFLOGICUSTAGT", "UpdateCustomsAGT")
@@ -59,91 +67,38 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
 
             var myCustomsAGT = new CustomsAGT();
             myCustomsAGT.CustomsAGTRep = new CustomsAGTRep[] { new CustomsAGTRep() };
+            //myCustomsAGT.CustomsAGTRep[0].CustomsFile = _MasavPaymentsResponseData.AgentMasavPaymentResultList.FirstOrDefault().EntityIdExternalReferenceID;
+            //myCustomsAGT.CustomsAGTRep[0].DeclarationNum = DeclarationNumber;
             if (_MasavSentDate.HasValue) myCustomsAGT.CustomsAGTRep[0].MasavSentDate = _MasavSentDate.Value.Date.ToString("dd.MM.yy");
             myCustomsAGT.CustomsAGTRep[0].AgentMasavPayment = GetMasavPayments(_MasavPaymentsResponseData.AgentMasavPaymentResultList);
-
-
-            if (setting == null || !setting.IsConnectedToUniFreight)
-            {
-                string bodyXml = XmlGenericUtil<CustomsAGT>.SerializeObject(myCustomsAGT, true);
-
-                string xmlIn = BuildUrouterXml(
-                    amitalCustomFileCommunicationModel,
-                    bodyXml,
-                    amitalCustomFileCommunicationModel.CommunicationSubject,
-                    _MasavRequestParams.Tenant);
-
-                var hybridSvc = new UnifreightHybridQueueTaskService<AmitalCommunicationModelBase, string>(amitalCustomFileCommunicationModel, xmlIn);
-
-                var param = new UnifreightHybridQueueTaskParam
-                {
-                    Action = "GWSFINSRVEXE_DOIT",
-                    ParameterName = "p_xml_in",
-                    InterfaceTypeCode = "CFIFILEM"
-                };
-                hybridSvc.Send(param, withTransmission: false, alreadySerialized:true,SystemId:"I");
-
-                return new GenericResponse();
-            }
-
+            
+            
             var myUServerCommunicationService = new Logitude.Customs.BL.Messaging.Amital.UServerCommunicationService
-                 <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, CustomsAGT>(
+                <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, CustomsAGT>(
                 amitalCustomFileCommunicationModel, myCustomsAGT);
             bool myImmediately = true;
 
             var info = myUServerCommunicationService.Send(myImmediately);
-             if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
-              {
-                  throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
-              }
-              var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
-              var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
-              if (genericResponseObj == null)
-              {
-                  throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
-              }
+            if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
+            {
+                throw new Exception("ImmediatelyResponse is null");
+            }
+            var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
+            var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
+            if (genericResponseObj == null)
+            {
+                throw new Exception("GenericResponse.GenericResponseObj is null");
+            }
 
-              if (genericResponseObj.ResponseXml == null && genericResponseObj.ResponseXml == "")
-              {
-                  throw new Exception("genericResponseObj.ResponseXml is null" + " Urouter is failed, Try to restart urouter service");
-              }
-           
+            if (genericResponseObj.ResponseXml == null && genericResponseObj.ResponseXml == "")
+            {
+                throw new Exception("genericResponseObj.ResponseXml is null");
+            }
+
             return GenericResponse;
 
         }
-        private static string BuildUrouterXml(
-            AmitalCommunicationModelBase model,
-            string innerXml,
-            string subject,
-            int tenant,
-            string communicationLogId = null)
-        {
-            var p = new Hashtable
-            {
-                ["componentname"] = "GWSFLOGITUDE",
-                ["Operation"] = "AnalyzeStandard",
-                ["Subject"] = subject
-            };
 
-            var uid = AuthenticationUtil.ResolveUnifreightUserId(tenant);
-            if (!string.IsNullOrWhiteSpace(uid))
-                p["$$GSC_USER_ID"] = uid;
-
-            if (model.UnifaceMethodType ==
-                Server.Tools.Models.AmitalStandardCommunicationModel.OperationMethod.DataAccess)
-            {
-                p["Operation"] = "DataAccess";
-                p["GWSFLOGITUDE:componentname"] = model.UnifaceComponentName;
-                p["GWSFLOGITUDE:operation"] = model.UnifaceOperation;
-            }
-
-            if (!string.IsNullOrWhiteSpace(communicationLogId))
-                p["CommunicationLogId"] = communicationLogId;
-
-            p["GWSFLOGITUDE:Xml"] = innerXml;
-
-            return UnifreightListsUtil.Serialize(p);
-        }
         private AgentMasavPayment[] GetMasavPayments(List<AgentMasavPaymentResult> MasavPaymentResultlist)
         {
             var MasavPaymentList = new List<AgentMasavPayment>();

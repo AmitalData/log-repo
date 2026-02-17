@@ -84,10 +84,7 @@ export class ErrorLogPM {
     public OldEntityPM: ErrorLogPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -95,7 +92,6 @@ export class ErrorLogPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ErrorLog");
            
         }
-	 }
     }
     private MyClone: ErrorLogPM;
 

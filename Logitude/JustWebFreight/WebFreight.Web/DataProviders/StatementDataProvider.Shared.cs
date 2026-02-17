@@ -39,10 +39,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantPhone { get; set; }
         public string TenantFax { get; set; }
         public string Name { get; set; }
-        public DateTime? FromDate { get; set; }
-        public DateTime? ToDate { get; set; }
-        public string AROrAPFilter { get; set; }
-        public string PaymentOrInvoiceFilter { get; set; }
+
         public List<StatementGroup> StatementGroupList { get; set; } 
         public List<StatementRecord> StatementRecordList { get; set; }
         public List<StatmentAging> StatementAgingSummaryRecordList { get; set; }  
@@ -53,7 +50,6 @@ namespace WebFreight.Web.DataProviders
         public string Currency { get; set; }
         public List<StatementRecord> StatementRecordList { get; set; }
         public List<StatmentAging> StatementAgingSummaryRecordList { get; set; }
-        
     }
 
     public class StatementRecord
@@ -66,11 +62,8 @@ namespace WebFreight.Web.DataProviders
         public string MasterNumber { get; set; }
         public string HouseNumber { get; set; }
         public string Desicription { get; set; }
-        public double? Balance { get; set; }
         public double? Debit { get; set; }
-        public double CreditWithZero { get; set; }
         public double? Credit { get; set; }
-        public double DebitWithZero { get; set; }
         public string Currency { get; set; }
         public double? TotalAmount { get; set; }
 
@@ -147,24 +140,7 @@ namespace WebFreight.Web.DataProviders
         public double? InvoiceAmountInInvoiceCurrency { get; set; }
         public double? AmountPaidInInvoiceCurrency { get; set; }
         
-        public string PaymentStatus { get; set; }
-        public double? OriginalAmount { get; set; }
-        public string ShipmentNumber { get; set; }
-        public string ShipmentDirection { get; set; }
-        public string ContainersNumbersArray { get; set; }
-        public string ProjectNumber { get; set; }
-        public double? DebitSubtotalInvoiceCurrency { get; set; }
-        public double? DebitVATAmountInvoiceCurrency { get; set; }
-        public double? CreditSubtotalInvoiceCurrency { get; set; }
-        public double? CreditVATAmountInvoiceCurrency { get; set; }
-        public double? DebitSubtotalLocalCurrency { get; set; }
-        public double? DebitVATAmountLocalCurrency { get; set; }
-        public double? CreditSubtotalLocalCurrency { get; set; }
-        public double? CreditVATAmountLocalCurrency { get; set; }
-        public int? ContainersQuantity { get; set; }
-        public DateTime? FinalDestinationETA { get; set; }
-        public string PaymentTerm { get; set; }
-        public DateTime? FinalDestinationETD { get; set; }
+
     }
 
     public class StatmentAging

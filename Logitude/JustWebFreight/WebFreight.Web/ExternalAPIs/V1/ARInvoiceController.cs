@@ -1,5 +1,4 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -10,7 +9,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
@@ -41,7 +40,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("ARInvoice", authToken.Tenant);
+ 
 
                 ARInvoiceQueryService Service = new ARInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
@@ -82,33 +81,33 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         int tenant = entity.Tenant;
 
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                        SecurityUtility.AuthenticateAccessibleAPI("ARInvoice", authToken.Tenant);
 
-                        if (entity != null)
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entity.Tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(entity.Tenant);
-                        entity = mappingService.SetARInvoiceSystemUser(entity);
-                        JournalPM journalPM = mappingService.GetARInvoiceExistingJournalPM(entity);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
                         mappingService.ValidateAccountingExternalEntityId(entity);
-                        mappingService.SetBillToGLAccountId(entityPM);
                         entityPM.IsExternalEntity = true;
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
                         entityPM.IsGeneralInvoice = true;
-                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
+                        if (entity.IsDraft)
                         {
-                            entityPM.JournalId = journalPM.Id;
-                            entityPM.JournalNumber = journalPM.JournalNumber;
-                            entityPM.ExternalAccountingEntityId = journalPM.Id;
+                            entityPM.SetApproved = false;
                         }
-                        entityPM = SetARInvoiceStatusBooleans(entity, entityPM );
-                   
+                        else entityPM.SetApproved = true;
+
+
+                        if(entityPM.StatusCode == "AD")
+                        {
+                            entityPM.SetApproved = true;
+                        }
+
                         #region Computing Invoice Lines Fields
                         ICommonDataContext CommonContext = CommonDataContext.GetContext(tenant);
                         Tenant MyTenant = (from d in CommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
@@ -177,29 +176,23 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         if (entityPM.InvoiceNumber == null)
                         {
                             if (!entityPM.IsInvoiceNumberManuallySet)
-                            {
-                                Dictionary<string, string> counterAdditionalParameters = null;
-                                if (FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
-                                {
-                                    counterAdditionalParameters = GetCounterAdditionalParameters(entityPM, CommonContext);
-                                }
-
+                            {                               
                                 if (entityPM.IsConstituentInvoice)
                                 {
-                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null, counterAdditionalParameters);
+                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null);
                                 }
 
                                 else if (entityPM.IsConsolidationInvoice)
                                 {
-                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null, counterAdditionalParameters);
+                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null);
                                 }
 
                                 else
                                 {
-                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null, counterAdditionalParameters);
+                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
                                 }
                             }
-                        }                   
+                        }
                         #endregion
 
                         ARInvoiceService service = new ARInvoiceService(MyContext, entity.Tenant);
@@ -244,45 +237,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        private static Dictionary<string, string> GetCounterAdditionalParameters(ARInvoicePM entityPM, ICommonDataContext CommonContext)
-        {
-            Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" }, { "[BranchName]", "" } };
-            if (!string.IsNullOrEmpty(entityPM.BranchId))
-            {
-                BranchRepository branchRepository = new BranchRepository(CommonContext);
-                Branch myBranch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
-                if (myBranch != null)
-                {
-                    counterAdditionalParameters["[BranchName]"] = myBranch.EnglishName;
-                }
-                if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
-                {
-                    counterAdditionalParameters["[B]"] = myBranch.CounterCode;
-                }
-            }
-
-            return counterAdditionalParameters;
-        }
-        private ARInvoicePM SetARInvoiceStatusBooleans(ARInvoice invoice,ARInvoicePM invoicePM)
-        {
-            if (invoice.IsDraft)
-            {
-                invoicePM.SetApproved = false;
-            }
-            else invoicePM.SetApproved = true;
-
-            if (invoicePM.StatusCode == "AD")
-            {
-                invoicePM.SetApproved = true;
-            }
-            else if(invoice.Status!=null && invoice.Status.Code == "AC")
-            {
-                invoicePM.IsAutoCredit = true;
-            }
-            return invoicePM;
-        }
-
-
         public HttpResponseMessage Put(ARInvoice entity)
         {
             ARInvoice oldEntity = entity;
@@ -299,27 +253,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                        SecurityUtility.AuthenticateAccessibleAPI("ARInvoice", authToken.Tenant);
-
-                        if (entity != null)
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
                        
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(tenant);
-                        JournalPM journalPM = mappingService.GetARInvoiceExistingJournalPM(entity);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, tenant);
-                        mappingService.SetBillToGLAccountId(entityPM);
-                        //  mappingService.UpdateCreditInvoice(entityPM, tenant);
+                      //  mappingService.UpdateCreditInvoice(entityPM, tenant);
                         entityPM.IsExternalAPI = true;
                         entityPM.IsExternalEntity = true;
-                        if (entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true && journalPM != null && String.IsNullOrEmpty(journalPM.Id))
-                        {
-                            entityPM.JournalId = journalPM.Id;
-                            entityPM.JournalNumber = journalPM.JournalNumber;
-                            entityPM.ExternalAccountingEntityId = journalPM.Id;
-                        }
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);

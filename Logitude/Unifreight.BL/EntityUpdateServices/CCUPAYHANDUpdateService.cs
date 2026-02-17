@@ -13,7 +13,6 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Models;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
-using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -30,7 +29,7 @@ namespace Unifreight.BL.EntityUpdateServices
    
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUPAYHANDPM entityPM)
         {
-            return new CCUPAYHANDKeys() { FILENO = entityPM.FILENO, Tenant = entityPM.Tenant };
+            return new CCUPAYHANDKeys() { FILENO = entityPM.FILENO };
         }
 
         protected override void OnCreating(CCUPAYHANDPM entityPM, EntityPM entityParentPM)
@@ -50,16 +49,6 @@ namespace Unifreight.BL.EntityUpdateServices
         {
             try
             {
-                if (entityPM.Tenant != 0)
-                {
-                    CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
-                    bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
-                    if (!isConnectedToUnifreight)
-                    {
-                        entityPM.IS_SYNCH = false;
-                        entityPM.LAST_UPDATE_DT = DateTime.Now;
-                    }
-                }
                 base.OnUpdating(entityPM, entityPOCO);
             }
             finally

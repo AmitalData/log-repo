@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentPM} from '../EntityPMs/ShipmentPM';
@@ -10,20 +9,24 @@ import {ShipmentPMService} from '../Services/StandardPMs/ShipmentPMService';
 @Injectable()
 
 export class SplitShipmentService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SplitShipment';
     }
 
     Split(entityPM: SplitShipmentHelper) {
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
             var mappedEntity: SplitShipmentHelper = this.MapSplitShipmentHelper(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
 
                 var mappedResult: SplitShipmentHelper = this.MapSplitShipmentHelper(myJsonResult, true, entityPM);
 
@@ -31,7 +34,7 @@ export class SplitShipmentService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 

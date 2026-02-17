@@ -15,7 +15,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Ransom;
-using System.Runtime.CompilerServices;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -50,26 +49,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = CustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(documentsFilingId, requestParams.Tenant);
             CustomsDocumentsTicketPM myCustomsDocumentsTicketPM = myCustomsDocumentsTicketPMList.FirstOrDefault();
-
-            if (myCustomsDocumentsTicketPMList.Count > 1)
-            {
-                // determine the right document ticket by getting its id from the declaration document
-                var myDeclarationUpdateService = new DeclarationUpdateService(commonContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                var myQueryService = new DeclarationQueryService(requestParams.Tenant);
-                if (customResponse?.ConnectedEntity.Length > 0 && customResponse?.ConnectedEntity[0].entityIdKey1 != null)
-                {
-                    string declarationId = myQueryService.GetIdByDeclarationNumber(customResponse?.ConnectedEntity[0].entityIdKey1, requestParams.Tenant);
-
-                    CustomsDocumentPointerQueryService customsDocumentPointerQuery = new CustomsDocumentPointerQueryService(commonContext);
-                    CustomsDocumentPointerPM pointer = customsDocumentPointerQuery.GetCustomDocumentPoinersForClosingData(declarationId, requestParams.Tenant, documentsFilingId);
-                    if (pointer != null)
-                    {
-                        myCustomsDocumentsTicketPM = myCustomsDocumentsTicketPMList.FirstOrDefault(x => x.Id == pointer.CustomsDocumentsTicketId);
-                    }
-                }
-            }
-
-
             myCustomsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
 
             string remarks = "";
@@ -107,7 +86,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myInsertEventContextTagModel.EventCode = "RDA";
                     myInsertEventContextTagModel.EventRemarks = "Required Document Verified By Customs";
                     myInsertEventContextTagModel.FUStatusRemarks = "דרישת מסמך אומתה " + "\n" + "הערות - " + customResponse.GeneralDetails.remarks;
-                    this.UpdateRequestedCustomsDocId(customResponse, requestParams,myCustomsDocumentsTicketPM);
                     break;
                 case 3: // אומת בנוכחות הלקוח
                     myCustomsDocumentsTicketPM.VerificationStatusTypeCode = "5";
@@ -115,7 +93,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     myInsertEventContextTagModel.EventCode = "RDA";
                     myInsertEventContextTagModel.EventRemarks = "Required Document Verified By Customs";
                     myInsertEventContextTagModel.FUStatusRemarks = "דרישת מסמך אומתה " + "\n" + "הערות - " + customResponse.GeneralDetails.remarks;
-                    this.UpdateRequestedCustomsDocId(customResponse, requestParams, myCustomsDocumentsTicketPM);
                     break;
                 case 4: // נדחה
                     myCustomsDocumentsTicketPM.VerificationStatusTypeCode = "6";
@@ -156,30 +133,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.VerificationDecisionType = customResponse.VerificationDecision.verificationDecisionType.ToString();
         }
 
-        private void UpdateRequestedCustomsDocId(VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage customResponse, RequiredDocumentRequestParams requestParams, CustomsDocumentsTicketPM myCustomsDocumentsTicketPM)
-        {
-            var customContext = CustomContext.GetContext(requestParams.Tenant);
-            var CustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-
-            var myDeclarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-            var myQueryService = new DeclarationQueryService(requestParams.Tenant);
-            if (customResponse?.ConnectedEntity.Length > 0 && customResponse?.ConnectedEntity[0].entityIdKey1 != null)
-            {
-                var customfileno = myQueryService.GetCustomFileNoByDeclarationNumber(customResponse?.ConnectedEntity[0].entityIdKey1, requestParams.Tenant);
-                var _MyDeclarationPM = myQueryService.GetAcceptDeclarationAmendmentByCustomsFile(customfileno, requestParams.Tenant);
-                if (_MyDeclarationPM != null)
-                {
-                    var IsThereRequestCustomDoc = CustomsDocumentsTicketQueryService.GetIfThereRequestDocumentDocIdNotVerifiedByDeclarationId(_MyDeclarationPM.Id, myCustomsDocumentsTicketPM.Id);
-                    if (!IsThereRequestCustomDoc) {
-                        _MyDeclarationPM.RequestedCustomsDocId = 0;
-                        _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-                    }
-                }
-            }
-
-
-        }
         private void InitMyResponseData(VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage customResponse, RequiredDocumentRequestParams requestParams)
         {
             this.MyResponseData = new RequiredDocumentResponseData();

@@ -6,13 +6,9 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.Server.Tools;
-using System.Data.Entity.Core.Objects;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -20,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CountryCityRepository repository;
 
-
+        public CountryCityQuery()
+        {
+            repository = new CountryCityRepository(); 
+        }
 
         public CountryCityQuery(int tenant)
         {
@@ -39,36 +38,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       select new CountryCityPM()
                                       {
                                           AddedManually = a.AddedManually,                                          
-                                          EnglishName = a.EnglishName,
-                                          Id = a.Id,
-                                          Code = a.Code,
-                                          InActive = a.InActive,
-                                          LocalName = a.LocalName,
-                                          Notes = a.Notes,
-                                          Tenant = a.Tenant,
-                                          SearchFields = a.SearchFields,
-                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                          CountryId = a.CountryId,
-                                          CountryCode = a.Country == null ? null : a.Country.Code,
-                                          CountryEnglishName = a.Country == null ? null : a.Country.EnglishName,
-                                          StateId = a.StateId,
-                                          StateCode = a.State == null ? null : a.State.Code,
-                                          StateEnglishName = a.State == null ? null : a.State.EnglishName,
-                                      }).FirstOrDefault();
-
-            CountryCityPM securedEntityPM = new CountryCityPM();
-            SecuredMapping.GetMappedPM(entityPM, securedEntityPM, "CountryCity", tenant);
-
-            return securedEntityPM;
-        }
-
-        public CountryCityPM GetCountryCityPMByCountryIdAndNAme(string countryId, string cityName, int tenant)
-        {
-            CountryCityPM entityPM = (from a in repository.context.CountryCities.Include("Country").Include("State")
-                                      where a.Tenant == tenant && a.CountryId == countryId && a.EnglishName == cityName
-                                      select new CountryCityPM()
-                                      {
-                                          AddedManually = a.AddedManually,
                                           EnglishName = a.EnglishName,
                                           Id = a.Id,
                                           Code = a.Code,
@@ -253,53 +222,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             SecuredMapping.GetMappedPM(entityPM, securedEntityPM, "CountryCity", tenant);
 
             return securedEntityPM;
-        }
-
-
-        public void CopyFromTenant0(int tenant, int tenatToCopy)
-        {
-            ICommonDataContext MyContext = CommonDataContext.GetContext(tenatToCopy);
-            CountryCityService service = new CountryCityService(MyContext, tenatToCopy);
-            CountryQuery CountryQuery = new CountryQuery(tenatToCopy);
-			CountryRepository CountryRepository = new CountryRepository(tenatToCopy);
-
-			CountryCityRepository repository = new CountryCityRepository(tenant);   
-            List<CountryCity> CountryCityList = this.repository.GetCountryCities(tenant).ToList();
-            if(CountryCityList!=null && CountryCityList.Count() > 0)
-            {
-                foreach (var item in CountryCityList)
-                {
-					var CountryId = CountryQuery.GetSinglePMByCode(CountryRepository.GetSingleCountry(item.CountryId, tenant)?.Code, tenatToCopy)?.Id;
-					CountryCity countryCityExist = repository.GetSingleCountryCityByCodeAndCountry(item.Code, CountryId, tenatToCopy);
-                    if (countryCityExist == null) {
-
-					    CountryCityPM countryCity = new CountryCityPM()
-                        {
-                            AddedManually = item.AddedManually,
-                            EnglishName = item.EnglishName,
-                            Code = item.Code,
-                            InActive = item.InActive,
-                            LocalName = item.LocalName,
-                            Notes = item.Notes,
-                            Tenant = tenatToCopy,
-                            SearchFields = item.SearchFields,
-                            StateId = item.StateId,
-                            CountryId= CountryId                   
-                        };
-                        service.Create(countryCity);
-					}
-				}
-            }
-
-
-
-
-
-
-
-
-
-
         }
     }
 }

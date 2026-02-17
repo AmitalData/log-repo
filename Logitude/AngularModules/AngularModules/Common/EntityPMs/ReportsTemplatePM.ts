@@ -20,7 +20,7 @@ export class ReportsTemplatePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -79,14 +79,7 @@ export class ReportsTemplatePM {
     public get InActive() { return this.inActive; }
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
-    private isCopiedAtSignup: boolean;
-    public get IsCopiedAtSignup() { return this.isCopiedAtSignup; }
-    public set IsCopiedAtSignup(newValue: boolean) { if (this.isCopiedAtSignup != newValue) { this.isCopiedAtSignup = newValue; this.MarkAsDirty("IsCopiedAtSignup"); } }
-
-    private useStimul: boolean;
-    public get UseStimul() { return this.useStimul; }
-    public set UseStimul(newValue: boolean) { if (this.useStimul != newValue) { this.useStimul = newValue; this.MarkAsDirty("UseStimul"); } }
-
+	 
     private isDefault: boolean;
     public get IsDefault() { return this.isDefault; }
     public set IsDefault(newValue: boolean) { if (this.isDefault != newValue) { this.isDefault = newValue; this.MarkAsDirty("IsDefault"); } }
@@ -127,24 +120,11 @@ export class ReportsTemplatePM {
     public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
        
 	 
-    private objectTableId: string;
-    public get ObjectTableId() { return this.objectTableId; }
-    public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
-       
-	 
-    private entityId: string;
-    public get EntityId() { return this.entityId; }
-    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
-       
-	 
 
     public OldEntityPM: ReportsTemplatePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -152,7 +132,6 @@ export class ReportsTemplatePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ReportsTemplate");
            
         }
-	 }
     }
     private MyClone: ReportsTemplatePM;
 
@@ -164,4 +143,4 @@ export class ReportsTemplatePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

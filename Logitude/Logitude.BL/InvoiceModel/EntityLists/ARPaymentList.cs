@@ -48,7 +48,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string ARAccountName { get; set; }
         public string CreditAccountName { get; set; }
         public double? OpenAmount { get; set; }
-        public double? PaidAmount { get; set; }
         public double? OpenAmountInLocalCurrency { get; set; }
         public string ChequeOrPaymentRef { get; set; }
         public string Bank { get; set; }
@@ -74,9 +73,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string TransmissionError { get; set; }
         public string BankAccountLiteId { get; set; }
         public string BankAccountName { get; set; }
-        public DateTime? AccountingCancelationDate { get; set; }
-        public string CancelationNotes { get; set; }
-        public string VoidedByJournalNumber { get; set; }
 
         public string MetodoPagoCode { get; set; }
         public string TipoCadenaPago { get; set; }
@@ -92,21 +88,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public DateTime? FechaPago { get; set; }
 
         public string CreatedByPartner { get; set; }
-        public bool IsPaymentNumberManuallySet { get; set; }
 
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-        public string Field6 { get; set; }
-        public string Field7 { get; set; }
-        public string Field8 { get; set; }
-        public string Field9 { get; set; }
-        public string Field10 { get; set; }
-        public string PartnerId { get; set; }
-        public string BillToCode { get; set; }
-        public string GLAccountId { get; set; }
-        public string GLAccountDisplayNumber { get;  set; }
     }
 }

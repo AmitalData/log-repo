@@ -14,14 +14,13 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 export class WarehouseReleasePM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -320,58 +319,11 @@ export class WarehouseReleasePM {
     public set ToAddressCountryId(newValue: string) { if (this.toAddressCountryId != newValue) { this.toAddressCountryId = newValue; this.MarkAsDirty("ToAddressCountryId"); } }
        
 	 
-    private isUsed: boolean;
-    public get IsUsed() { return this.isUsed; }
-    public set IsUsed(newValue: boolean) { if (this.isUsed != newValue) { this.isUsed = newValue; this.MarkAsDirty("IsUsed"); } }
-       
-	 
-    private destination: string;
-    public get Destination() { return this.destination; }
-    public set Destination(newValue: string) { if (this.destination != newValue) { this.destination = newValue; this.MarkAsDirty("Destination"); } }
-       
-	 
-    private truckerId: string;
-    public get TruckerId() { return this.truckerId; }
-    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
-       
-	 
-    private truckerReference: string;
-    public get TruckerReference() { return this.truckerReference; }
-    public set TruckerReference(newValue: string) { if (this.truckerReference != newValue) { this.truckerReference = newValue; this.MarkAsDirty("TruckerReference"); } }
-       
-	 
-    private childEntityReference: string;
-    public get ChildEntityReference() { return this.childEntityReference; }
-    public set ChildEntityReference(newValue: string) { if (this.childEntityReference != newValue) { this.childEntityReference = newValue; this.MarkAsDirty("ChildEntityReference"); } }
-       
-	 
-    private masterShipmentNumber: string;
-    public get MasterShipmentNumber() { return this.masterShipmentNumber; }
-    public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
-       
-	 
-    private isUpdateByAutomation: boolean;
-    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
-    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
-       
-	 
-    private customerPrimaryContactId: string;
-    public get CustomerPrimaryContactId() { return this.customerPrimaryContactId; }
-    public set CustomerPrimaryContactId(newValue: string) { if (this.customerPrimaryContactId != newValue) { this.customerPrimaryContactId = newValue; this.MarkAsDirty("CustomerPrimaryContactId"); } }
-       
-	 
-    private customChildEntities: CustomChildEntity[];
-    public get CustomChildEntities() { return this.customChildEntities; }
-    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
-
 
     public OldEntityPM: WarehouseReleasePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -379,7 +331,6 @@ export class WarehouseReleasePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WarehouseRelease");
            
         }
-       }
     }
 
     private MyClone: WarehouseReleasePM;

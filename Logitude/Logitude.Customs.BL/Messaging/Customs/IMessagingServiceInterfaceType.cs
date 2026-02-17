@@ -1,5 +1,4 @@
 ﻿using Logitude.Customs.BL.Utils;
-using Logitude.CustomsMessaging.Common.RequestParams;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,20 +22,20 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
 
         object SendSheet(int tenant, string customsRequestsSheetId, SendSheetSignModel SignRecievedModel = null);
-        object ReQueue(int tenant, string customsRequestsSheetId,string ParentId=null, DateTime? futureSendDateTime = null);
+        object ReQueue(int tenant, string customsRequestsSheetId);
 
         //string DcaReceivedCustomResponseCorrelationCrashIfNotValid(Logitude.Customs.BL.EntityPMs.InterfaceManagementPM messageDCA, int tenant, string selectedFile, byte[] messageBytes, bool pseudo = false);
         string DcaReceivedCustomResponseCorrelation(Logitude.Customs.Def.EntityPMs.InterfaceManagementPM messageDCA, int tenant,
             DCAFileModel selectedDCAFile, string fileContents //byte[] messageBytesbyte[] messageBytes
-            , bool pseudo = false , DateTime? futureSendDateTime=null);
-        string CreateFakeDCA(GenericRequestParams requestParamsData);
+            , bool pseudo = false);
+
 
         string DCAServerUploadStatus(
             int tenant,
             DCAFileModel selectedDCAFile,
             Logitude.CustomsMessaging.Common.DCAParams.DCAServerUploadStatus MyDCAServerUploadStatus);
             
-        (byte[] bytesToSign , RequestParamsBase requestParamsBase) PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId);
+        byte[] PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId);
         //bool CompleteResponseSignBytes(int tenant, string CustomsRequestsSheetId, Byte[] mySignBytes);
     }    
 }

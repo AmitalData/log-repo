@@ -8,7 +8,7 @@ import {CustomerProductActualDataPM} from '../../../../Common/EntityPMs/Customer
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ProductHistoryDetailsComponent.html',
 })
 

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -48,20 +48,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void Trace(BankAccountPM entityPM, BankAccount entityPOCO, string changesXml)
         {
             BankAccountTraceEventService traceEventService = new BankAccountTraceEventService(MainContext as IAccountingContext);
-            if (!entityPM.IsBankPageEvent && entityPOCO.ChequeCounter + 1 != entityPM.ChequeCounter)
+            if (!entityPM.IsBankPageEvent)
             {
+
+
                 traceEventService.Trace(entityPM, entityPOCO, changesXml);
             }
             List<TraceEventResponse> responses = traceEventService.TraceEventResponses;//for later user.
             traceEventService.InsertTraceEvents();
             base.Trace(entityPM, entityPOCO, changesXml);
         }
-        protected override void UpdateComposition(BankAccountPM entityPM)
-        {
-            ChequeCounterSerialUpdateService chequeCounterSerialUpdateService = new ChequeCounterSerialUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            chequeCounterSerialUpdateService.UpdateMulti(entityPM.ChequeCounterSerials, entityPM.DeletedChequeCounterSerials, entityPM, false);
-            base.UpdateComposition(entityPM);
-        }
+
         protected override void Validate(BankAccountPM entityPM)
         {
             BankAccountValidateService validateService = new BankAccountValidateService(MainContext as IAccountingContext);

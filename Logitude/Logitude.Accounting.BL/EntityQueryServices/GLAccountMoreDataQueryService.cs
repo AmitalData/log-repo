@@ -1,11 +1,10 @@
 ﻿using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.Data.EntityKeys;
-using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
@@ -43,7 +42,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             List<Data.EntityPOCOs.ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
 
-                                        where a.Tenant == tenant
+                                        where a.Tenant == tenant && a.StatusCode != "5" && a.StatusCode != "6" 
 
                                         select a).ToList();
 
@@ -74,42 +73,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                         GLAccountId = c.GLAccountId,
                                                         PaymentId = p.Id
                                                     }).ToList();
-            LedgerTransactionListQueryService ledgerQuery = new LedgerTransactionListQueryService(context);
-            var glAccountsForFutureExternalTransactions = ledgerQuery.GetGlAccountsForFutureExternalTransactions(tenant).ToList();
-            foreach (var item in glAccountsForFutureExternalTransactions) {
-                if (!data.Any(x => x.GLAccountId == item)) {
-                    data.Add(new ARPaymentChequeFutureData { GLAccountId = item, PaymentId = null });
-                }
-            }
-            var glAccounts = data.Select(x => x.GLAccountId).ToList();
-            var gLAccountsDontHaveARPaymentCheques = (from a in context.GLAccountMoreDatas
-                       where a.Tenant == tenant && a.TotFutureOpenChequesInLocalCur > 0 || a.TotalOpenChequesInLocalCur > 0 && !glAccounts.Contains(a.AccountId)
-                       select a.AccountId).ToList();
-            foreach (var item in gLAccountsDontHaveARPaymentCheques)
-            {
-                if (!data.Any(x => x.GLAccountId == item))
-                {
-                    data.Add(new ARPaymentChequeFutureData { GLAccountId = item, PaymentId = null });
-                }
-            }
+
+        
             return data;
 
 
 
 
 
-        }
-        public GLAccountMoreDataPM GetSinglePMByAccountId(string accountId, int tenant)
-        {
-            GLAccountMoreData accountMoreData = repository.GetSingle(accountId, tenant);
-            return GetEntityPM(accountMoreData);
-        }
-
-        public bool CheckIfGLAccountHasMoreDataRecord(string id, int tenant)
-        {
-           return (from a in context.GLAccountMoreDatas
-             where a.Tenant == tenant && a.AccountId==id
-             select a).Any();
         }
     }
 }

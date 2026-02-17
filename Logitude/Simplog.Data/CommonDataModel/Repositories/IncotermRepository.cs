@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public IncotermRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IncotermRepository(ICommonDataContext context)
         {
@@ -32,26 +35,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Incoterm GetSingleIncoterm(string id, int tenant)
         {
             return (from record in context.Incoterms where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
-        }
-
-        public static Incoterm GetSingleFromCache(string id, int tenant)
-        {
-            string entityName = "Incoterm" + id + tenant;
-
-
-            Incoterm entity = (Incoterm)CacheManager.CacheWrapper.Get(entityName);
-
-            if(entity == null)
-            {
-                ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                entity = new IncotermRepository(tenant).GetSingleIncoterm(id, tenant);
-
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-            }
-
-            return entity;
         }
 
         public Incoterm GetSingleIncotermByCode(string code, int tenant)

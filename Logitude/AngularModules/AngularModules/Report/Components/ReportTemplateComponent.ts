@@ -1,27 +1,24 @@
 declare var System: any;
 declare var window: any;
 declare var attachmentUploader, ResultAsArray: any;
-import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, ElementRef, Output, EventEmitter}  from '@angular/core';
 
 
-import { EntityArgs } from '../../Infrastructure/DataContracts/EntityArgs';
-import { ReportPM } from '../../Common/EntityPMs/ReportPM';
-import { ImageParameter } from '../../Infrastructure/DataContracts/ImageParameter';
-import { Guid } from '../../Infrastructure/Utilities/Guid';
-import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
-import { MessageWindow } from '../../Controls/Windows/MessageWindow';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { ReportsTemplatePM } from '../../Common/EntityPMs/ReportsTemplatePM';
-import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
-import { ReportsTemplatePMExtendedService } from '../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
-import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
-import { EntityResourceService } from '../../Infrastructure/Services/EntityResourceService';
+import {EntityArgs} from '../../Infrastructure/DataContracts/EntityArgs';
+import {ReportPM} from '../../Common/EntityPMs/ReportPM';
+import {ImageParameter} from '../../Infrastructure/DataContracts/ImageParameter';
+import {Guid} from '../../Infrastructure/Utilities/Guid';
+import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
+import {MessageWindow} from '../../Controls/Windows/MessageWindow';
+import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {ReportsTemplatePM} from '../../Common/EntityPMs/ReportsTemplatePM';
+import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
+import {ReportsTemplatePMExtendedService} from '../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
+import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
+import {EntityResourceService} from '../../Infrastructure/Services/EntityResourceService';
 
-import { ReportsTemplatePMService } from '../../Common/Services/StandardPMs/ReportsTemplatePMService';
-import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
-import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
-import { AppTool } from '../../Infrastructure/Tools';
+import {ReportsTemplatePMService} from '../../Common/Services/StandardPMs/ReportsTemplatePMService';
 
 @Component({
 
@@ -42,33 +39,28 @@ export class ReportTemplateComponent implements OnInit {
 
     IsEnableEditUserReportTemplate: boolean = false;
     IsEnableEditAllReportTemplate: boolean = false;
-    IsEnableReportTemplateExcel: boolean = false;
-    IsEnableRegularReportTemplate: boolean = false;
+
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     ReportsTemplatePMLists: ReportsTemplatePM[] = [];
     CurrentReportsTemplatePM: ReportsTemplatePM;
 
-    public ValidationErrorsList: string[];
 
-    MessageReportsTemplatePMLists: ReportsTemplatePM[] = [];
-    CurrentMessageReportsTemplatePM: ReportsTemplatePM;
-    CurrentNoStimExcelReportsTemplate: ReportsTemplatePM;
 
-    ExcellReportsTemplatePMLists: ReportsTemplatePM[] = [];
-    NoStimExcellReportsTemplateLists: ReportsTemplatePM[] = [];
-    CurrentExcelReportsTemplatePM: ReportsTemplatePM;
+    MessageReportsTemplatePMLists : ReportsTemplatePM[] = [];
+    CurrentMessageReportsTemplatePM:ReportsTemplatePM;
+
+
+
 
 
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, public _elementRef: ElementRef) {
-        this.ValidationErrorsList = [];
+    constructor( public entityArgs: EntityArgs,public _elementRef: ElementRef) {
         this.reportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
         this.reportsTemplatePMService = new ReportsTemplatePMService();
         this.ReportsTemplatePMLists = [];
-
-
-
+       
+        
     }
     IsVisibile: boolean = false;
     IsShowNewButton: boolean = false;
@@ -82,17 +74,11 @@ export class ReportTemplateComponent implements OnInit {
         }
         if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "UPDATE")) {
             this.IsEnableEditUserReportTemplate = true;
+
         }
 
-        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.EntityPM.IsExcelReportAllowed == true) {
-            this.IsEnableReportTemplateExcel = true;
-        }
-
-        if (this.RegularReportTemplateEnabled()) {
-            this.IsEnableRegularReportTemplate = true;
-        }
-        
-        this._entityResourceService.getEntityResourceByTableName("ReportsTemplate", 0).subscribe((response: any) => {
+  
+        this._entityResourceService.getEntityResourceByTableName("ReportsTemplate", 0).subscribe(response => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -103,12 +89,7 @@ export class ReportTemplateComponent implements OnInit {
 
     }
 
-
-    private RegularReportTemplateEnabled() : boolean {
-        return SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev" ||
-         SessionLocator.LoggedUserPM.IsDistributor || FeatureLocator.HasFeaturePermession("ReportsTemplate", "REGULARREPORTTEMPLATE");
-    }
-
+    
     public ShowMessage(message: string) {
 
         var messageWindow: MessageWindow = new MessageWindow();
@@ -120,76 +101,55 @@ export class ReportTemplateComponent implements OnInit {
     LoadReportsTemplatePMLists() {
         this.ReportsTemplatePMLists = [];
         this.MessageReportsTemplatePMLists = [];
-        this.ExcellReportsTemplatePMLists = [];
-        this.NoStimExcellReportsTemplateLists = [];
         this.CurrentSession.StartBusyIndicatorLoading();
         this.reportsTemplatePMExtendedService.GetReportsTemplatePMsByReportId(this.EntityPM.Id).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
-                    this.InitReportTemplates(result);
+
+                    result.forEach((item) => {
+                        if (item.TemplateType == "R") {
+                            this.ReportsTemplatePMLists.push(item);
+                        } else if (item.TemplateType == "M") {
+                            this.MessageReportsTemplatePMLists.push(item);
+                        }
+
+                    });
+
+                    if (this.ReportsTemplatePMLists.length > 0) {
+                        var tempate = this.ReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultTemplateId)[0];
+                        if (tempate) {
+                            tempate.IsDefault = true;
+                            tempate.IsDirty = false;
+                        }
+                    }
+
+                    if (this.MessageReportsTemplatePMLists.length > 0) {
+                        var tempate = this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0];
+                        if (tempate) {
+                            tempate.IsDefault = true;
+                            tempate.IsDirty = false;
+                        }
+                    }
+
                 }
             }
+           
             this.CurrentSession.StopBusyIndicator();
+
+
         });
 
 
     }
 
-    InitReportTemplates(result: any) {
-        result.forEach((item: any) => {
-            this.AddReportsTemplateToList(item);
-        });
-        this.SetTemplateAsDefault(this.ReportsTemplatePMLists, this.EntityPM.DefaultTemplateId);
-        this.SetTemplateAsDefault(this.MessageReportsTemplatePMLists, this.EntityPM.DefaultMessageTemplateId);
-        this.SetTemplateAsDefault(this.ExcellReportsTemplatePMLists, this.EntityPM.DefaultExcelTemplateId);
-        this.SetTemplateAsDefault(this.NoStimExcellReportsTemplateLists, this.EntityPM.DefaultExcelNoStimId);
-    }
-
-    AddReportsTemplateToList(reportsTemplate: any) {
-        if (reportsTemplate.TemplateType == "R") {
-            this.ReportsTemplatePMLists.push(reportsTemplate);
-            return;
-        }
-        if (reportsTemplate.TemplateType == "M" && AppTool.IsNullOrEmpty(reportsTemplate.EntityId)) {
-            this.MessageReportsTemplatePMLists.push(reportsTemplate);
-            return;
-        } if (reportsTemplate.TemplateType == "E" && reportsTemplate.UseStimul) {
-            this.ExcellReportsTemplatePMLists.push(reportsTemplate);
-            return;
-        }
-        if (reportsTemplate.TemplateType == "E" && !reportsTemplate.UseStimul) {
-            this.NoStimExcellReportsTemplateLists.push(reportsTemplate);
-            return;
-        }
-    }
-
-    SetTemplateAsDefault(templateList: ReportsTemplatePM[], templateId: any) {
-        if (templateList.length > 0) {
-            var tempate = templateList.filter(d => d.Id == templateId)[0];
-            if (tempate) {
-                tempate.IsDefault = true;
-                tempate.IsDirty = false;
-            }
-        }
-    }
 
     //Description
     DescriptionKeyUpMethod(item: ReportsTemplatePM) {
-        const regex = new RegExp('^[^<+>#%&\\/\'"*?!:@=|]+$');
-        var isfailed: boolean = false;
-        this.ValidationErrorsList.forEach(s => s.includes(`Forbidden character in the Description`) ? isfailed = true : null);
-
-        if (isfailed) this.ValidationErrorsList.pop();
-
         if (item != null && item.IsDirty) {
-            var valid: boolean = regex.test(item.Description);
-            if (item.Description && item.Description.trim() && !valid) {
-                this.ValidationErrorsList.push(`Forbidden character in the Description: ${item.Description}`);
-            } else {
-                this.UpdateReportsTemplatePM(item);
-            }
+        
+            this.UpdateReportsTemplatePM(item);
         }
     }
 
@@ -199,33 +159,16 @@ export class ReportTemplateComponent implements OnInit {
         if (item.InActive) item.InActive = false;
         else item.InActive = true;
 
-
+  
         this.UpdateReportsTemplatePM(item);
 
     }
 
-    CheckUseStimulclick(item: ReportsTemplatePM) {
-
-        if (item.UseStimul) item.UseStimul = false;
-        else item.UseStimul = true;
-
-
-        this.UpdateReportsTemplatePM(item);
-
-    }
-
-    CheckIsCopiedAtSignupclick(item: ReportsTemplatePM) {
-
-        if (item.IsCopiedAtSignup) item.IsCopiedAtSignup = false;
-        else item.IsCopiedAtSignup = true;
-
-        this.UpdateReportsTemplatePM(item);
-    }
 
     UpdateReportsTemplatePM(item: ReportsTemplatePM) {
         this.CurrentSession.StartBusyIndicatorSaving();
         this.IsChange = true;
-        this.reportsTemplatePMService.update(item).subscribe((res: any) => {
+        this.reportsTemplatePMService.update(item).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -298,8 +241,6 @@ export class ReportTemplateComponent implements OnInit {
                 windowArgs.IsNewEntity = isNew;
                 windowArgs.ReportTemplatePM = item;
                 windowArgs.ReportComponentArea = "Maintenance";
-                windowArgs.DontShowToField = true;
-                windowArgs.DontShowBCCField = true;
                 var widthwindow = window.innerWidth;
                 var heighthwindow = window.innerHeight;
 
@@ -314,118 +255,64 @@ export class ReportTemplateComponent implements OnInit {
         }
     }
 
-    EditExcelReportsTemplate(item: ReportsTemplatePM) {
-        if (!this.CanEditTemplate(item))
-            return;
-
-        var windowArgs: any = {};
-        windowArgs.DataViewModel = this;
-        windowArgs.TemplateId = item.Id;
-        windowArgs.Tenant = item.Tenant;
-        windowArgs.ReportTemplatePM = item;
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 550;
-        logWindow.Title = "Edit Excel Template";
-
-        logWindow.WindowArgs = windowArgs;
-        if (!item.UseStimul){
-            logWindow.Show("./Report/Components/NoStimulReportTemplateComponent"); 
-            logWindow.Title = "Edit Excel Templates (Native)";
-
-        }
-        else
-            logWindow.Show("./Report/Components/ExcelReportTemplateComponent");
-
-    }
-
-    CanEditTemplate(reportsTemplate: ReportsTemplatePM): boolean {
-        if (!reportsTemplate || !this.IsEnableEditAllReportTemplate)
-            return false;
-
-        if(reportsTemplate.IsSystem || !this.IsEnableEditUserReportTemplate){
-            return false;
-        }
-        return true;
-    }
-
-
     RestoreVersionButtonClicked(item: ReportsTemplatePM) {
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
         windowArgs.ReportsTemplatePM = item;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 668;
+        logWindow.Width =668;
         logWindow.Height = 500;
         logWindow.Title = "Version History";
         logWindow.WindowArgs = windowArgs;
-        logWindow.Show("./Report/Components/ReportsTemplateRestoreComponent");
+        logWindow.Show("./Report/Components/ReportsTemplateRestoreComponent"); 
         logWindow.WindowClosed.subscribe(($event: any) => {
             if ($event) {
             }
         });
     }
 
-    SetAsDefaultButtonClicked(type: string, useStimul: boolean = true) {
+    SetAsDefaultButtonClicked(type:string) {
 
-        var currentTemplate: ReportsTemplatePM = type == "R" ? this.CurrentReportsTemplatePM : type == "M" ? 
-            this.CurrentMessageReportsTemplatePM : useStimul ? this.CurrentExcelReportsTemplatePM : this.CurrentNoStimExcelReportsTemplate;
+        var currentTemplate: ReportsTemplatePM = type == "R" ? this.CurrentReportsTemplatePM : this.CurrentMessageReportsTemplatePM;
 
         if (currentTemplate) {
             if (!currentTemplate.InActive) {
-                var tempate: ReportsTemplatePM = this.GetDefaultTemplate(type, useStimul);
+
+                var tempate = type == "R" ? this.ReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultTemplateId)[0] : this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0];
                 if (tempate) {
                     tempate.IsDefault = false;
                 }
+
                 this.IsChange = true;
                 currentTemplate.IsDefault = true;
                 if (type == "R") this.EntityPM.DefaultTemplateId = currentTemplate.Id;
                 else if (type == "M") this.EntityPM.DefaultMessageTemplateId = currentTemplate.Id;
-                else if (type == "E" && useStimul) this.EntityPM.DefaultExcelTemplateId = currentTemplate.Id;
-                else if (type == "E" && !useStimul) this.EntityPM.DefaultExcelNoStimId = currentTemplate.Id;
             }
             else this.ShowMessage("Please note that you can't set an inactive template as default");
-
+        
         }
 
     }
 
-    GetDefaultTemplate(type: string, useStimul: boolean = true): ReportsTemplatePM {
-        if (type == "R") {
-            return this.ReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultTemplateId)[0];
-        }
+    
+    AddReportTemplateButtonClicked(type:string) {
 
-        if (type == "M") {
-            return this.MessageReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultMessageTemplateId)[0];
-        }
-
-        if (type == "E" && useStimul) {
-            return this.ExcellReportsTemplatePMLists.filter(d => d.Id == this.EntityPM.DefaultExcelTemplateId)[0];
-        }
-        if (type == "E" && !useStimul) {
-            return this.NoStimExcellReportsTemplateLists.filter(d => d.Id == this.EntityPM.DefaultExcelNoStimId)[0];
-        }
-    }
-
-
-    AddReportTemplateButtonClicked(type: string, useStimul: boolean = true) {
-        var windowArgs: any = {};
-        windowArgs.DataViewModel = this;
-        windowArgs.TemplateType = type;
-        windowArgs.UseStimul = useStimul;
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 600;
-        logWindow.Title = type == "R" ? "New Report Template" : type == "M" ? "New Message Template" : "New Excel Report Template";
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show("./Report/Components/NewReportsTemplateComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event) {
-                this.IsChange = true;
-                this.Refresh();
-            }
-        });
+     
+            var windowArgs: any = {};
+            windowArgs.DataViewModel = this;
+            windowArgs.TemplateType = type;
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 700;
+            logWindow.Height = 500;
+            logWindow.Title = type == "R" ? "New Report Template":"New Message Template";
+            logWindow.WindowArgs = windowArgs;
+  
+            logWindow.Show("./Report/Components/NewReportsTemplateComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event) {
+                }
+            });
+     
     }
 
 
@@ -437,46 +324,18 @@ export class ReportTemplateComponent implements OnInit {
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
                 if (result) {
-                    if (item.TemplateType == "R") {
-                        if (!this.ReportsTemplatePMLists) {
-                            this.ReportsTemplatePMLists = [];
-                        }
-                        this.ReportsTemplatePMLists.push(result);
-                        this.CurrentReportsTemplatePM = result;
-                    } else if (item.TemplateType == "E" && item.UseStimul) {
-                        this.AddTemplateToExcelList(result);
+                    if (!this.ReportsTemplatePMLists) {
+                        this.ReportsTemplatePMLists = [];
                     }
-                    else if (item.TemplateType == "E" && !item.UseStimul) {
-                        this.AddTemplateToNoStimExcelList(result);
-                    }
-
+                    this.ReportsTemplatePMLists.push(result);
+                    this.CurrentReportsTemplatePM = result;
                 }
             }
             this.CurrentSession.StopBusyIndicator();
         });
     }
 
-    AddTemplateToExcelList(reportsTemplate: ReportsTemplatePM) {
-        if (!this.ExcellReportsTemplatePMLists) {
-            this.ExcellReportsTemplatePMLists = [];
-        }
-        this.ExcellReportsTemplatePMLists.push(reportsTemplate);
-        this.CurrentExcelReportsTemplatePM = reportsTemplate;
-        if (this.ExcellReportsTemplatePMLists.length == 1) {
-            this.SetAsDefaultButtonClicked(reportsTemplate.TemplateType);
-        }
-    }
 
-    AddTemplateToNoStimExcelList(reportsTemplate: ReportsTemplatePM) {
-        if (!this.NoStimExcellReportsTemplateLists) {
-            this.NoStimExcellReportsTemplateLists = [];
-        }
-        this.NoStimExcellReportsTemplateLists.push(reportsTemplate);
-        this.CurrentNoStimExcelReportsTemplate = reportsTemplate;
-        if (this.NoStimExcellReportsTemplateLists.length == 1) {
-            this.SetAsDefaultButtonClicked(reportsTemplate.TemplateType, false);
-        }
-    }
 
 }
 

@@ -11,7 +11,7 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
     selector: 'NewOccasionComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewOccasionComponent.html',
 })
 
@@ -94,7 +94,7 @@ export class NewOccasionComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorCreating();
             var service = new OccasionPMService();
-            service.insert(this.EntityPM).subscribe((myResult:any) => {
+            service.insert(this.EntityPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);

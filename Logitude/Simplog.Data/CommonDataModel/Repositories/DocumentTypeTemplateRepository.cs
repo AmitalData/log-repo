@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentTypeTemplateRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentTypeTemplateRepository(ICommonDataContext context)
         {
@@ -26,7 +29,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetDocumentTypeTemplatesByTenant(int tenant)
         {
             return from a in context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                   where a.Tenant == tenant && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
+                   where a.Tenant == tenant
                    select a;
         }
 
@@ -34,7 +37,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetDocumentTypeTemplates(int tenant)
         {
             return from a in context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                   where a.Tenant == tenant && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
+                   where a.Tenant == tenant
                    select a;
         }
 
@@ -42,7 +45,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<DocumentTypeTemplate> GetHtmDocumentTypeTemplates(int tenant)
         {
             return from a in context.DocumentTypeTemplates
-                   where a.Tenant == tenant && a.EditorTool !="S" && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
+                   where a.Tenant == tenant && a.EditorTool !="S" 
                    select a;
         }
 
@@ -62,15 +65,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in context.DocumentTypeTemplates
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
-        }
-
-
-
-        public List<DocumentTypeTemplate> GetDocumentTypeTemplatesByDocumentTypeId(int tenant, string documentTypeId)
-        {
-            return (from a in context.DocumentTypeTemplates
-                   where a.Tenant == tenant && a.DocumentTypeId == documentTypeId
-                   select a).ToList();
         }
 
 

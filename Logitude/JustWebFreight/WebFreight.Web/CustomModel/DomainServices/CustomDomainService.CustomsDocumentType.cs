@@ -22,7 +22,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
         {
             customContext = CustomContext.GetContext(tenant);
             customDocumentTypeQuery = new CustomDocumentTypeQueryService(customContext);
-            CustomDocumentTypePM CustomDocumentType = customDocumentTypeQuery.GetSingleCustomDocumentTypeWithTenant(id, tenant);
+            CustomDocumentTypePM CustomDocumentType = customDocumentTypeQuery.GetSingle(id,  true, false);
             return CustomDocumentType;
         }
 

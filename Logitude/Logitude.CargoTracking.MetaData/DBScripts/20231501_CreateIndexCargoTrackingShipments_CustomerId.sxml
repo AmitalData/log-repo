@@ -1,9 +1,0 @@
-﻿<Script DBType="CargoTracking" Module="CargoTracking" AOT="false" TargetTableName="CargoTrackingShipments" Env="local,test,cloud">
-	<Sql Version="1">
-		<![CDATA[
-    CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_Tenant_CustomerId]
-    ON [dbo].[CargoTrackingShipments]
-    ([Tenant], [CustomerId])
-    ]]>       
-  </Sql>
-</Script>

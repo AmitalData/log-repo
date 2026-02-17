@@ -11,7 +11,7 @@ import { PaymentChequePM } from '../../../../Accounting/EntityPMs/PaymentChequeP
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditPaymentChequeComponent.html',
 })
 
@@ -19,16 +19,10 @@ import { PaymentChequePM } from '../../../../Accounting/EntityPMs/PaymentChequeP
 
 
 export class EditPaymentChequeComponent extends BaseComponent{
-  public filterAgrs: any;
-  public BankName: any;
-  public LocalAmountFieldLabel: any;
-  public Account: any;
-  public BankAccount: any;
-  public Currency: any;
 
 
     public EntityPM: PaymentChequePM = null;
-    private NameForPrintingCheques: string;
+ 
     public LocalCurrencyId: string;
     public DataContext = this;
     public ObjectTableName: string = "PaymentCheque";
@@ -44,7 +38,7 @@ export class EditPaymentChequeComponent extends BaseComponent{
             this.ForeignAmount = args.ForeignAmount;
             this.ValueDate = args.ValueDate;
             this.BankAccountId = args.BankAccountId;
-            this.PayToName = args.NameForPrintingCheques;
+          
         }
     }
 
@@ -52,7 +46,7 @@ export class EditPaymentChequeComponent extends BaseComponent{
 
     constructor() {
         super();
-        this._entityResourceService.getEntityResourceByTableName("PaymentCheque", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("PaymentCheque", 0).subscribe(response => {
             this.IsVisibile = true;
             this.SetUIProperties();
         });

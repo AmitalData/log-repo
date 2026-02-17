@@ -1,4 +1,9 @@
 
+
+
+
+
+
 <table>
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -6,24 +11,9 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
-    <tr style="height: 60px;"><td colspan="2">
-    <ul class="FiltersMenu">
-        <li (click)="FilterItemClicked('Periodic')" style="width: 80px; height: 22px;"
-            [class.SelectedFilter]="FilterSelectedValue === TimePeriod.Periodic">
-            {{'TaxDeductionReport.O.Periodic' | TextCodeTranslationPipe}}
-        </li>
-        <li (click)="FilterItemClicked('Month')" style="width: 80px; height: 22px;"
-            [class.SelectedFilter]="FilterSelectedValue === TimePeriod.Month">
-            {{'TaxDeductionReport.O.ByMonth' | TextCodeTranslationPipe}}
-        </li>
-        <li (click)="FilterItemClicked('Year')" style="width: 80px; height: 22px;"
-            [class.SelectedFilter]="FilterSelectedValue === TimePeriod.Year">
-            {{'TaxDeductionReport.O.ByYear' | TextCodeTranslationPipe}}
-        </li>
 
-    </ul>
-</td>   </tr>
-    <tr style="height:32px" >
+
+    <tr style="height:32px">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'TaxYear'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -35,31 +25,8 @@
 
         <td></td>
     </tr>
-    <tr style="height:32px" *ngIf="FilterSelectedValue == TimePeriod.Periodic">
-        <td style="width:100px">
-            <LogLabel [ObjectFieldName]="'FromMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
 
-        <td style="width:150px">
-            <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedFromMonth" (SelectedItemChanged)="SelectedFromMonth=$event"></ComboBox>
-        </td>
-
-        <td></td>
-    </tr>
-    <tr style="height:32px" *ngIf="FilterSelectedValue == TimePeriod.Month || FilterSelectedValue == TimePeriod.Periodic">
-        <td style="width:100px">
-            <LogLabel [ObjectFieldName]="'Month'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-        <td style="width:150px">
-            <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedMonth" (SelectedItemChanged)="SelectedMonth=$event"></ComboBox>
-        </td>
-
-        <td></td>
-    </tr>
-
-    <tr style="height:32px" *ngIf="FilterSelectedValue == 'Year'">
+    <tr style="height:32px">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'IsAdditionalReportExist'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -67,18 +34,18 @@
         <td style="width:60px">
             <CheckBox [IsChecked]="IsAdditionalReportExist" (Checked)="IsAdditionalReportExist = $event"></CheckBox>
 
-
+          
         </td>
 
         <td></td>
     </tr>
-    <tr style="height:32px" *ngIf="FilterSelectedValue == 'Year'">
+    <tr style="height:32px">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
         <td style="width:150px">
-            <LogTextBox [Text]="Email" [HideColumns]="true" [ObjectFieldName]="'Email'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName">
+            <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Email'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName">
 
             </LogTextBox>
         </td>

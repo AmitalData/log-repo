@@ -1,5 +1,4 @@
-﻿using Logitude.BL.DataContracts;
-using Logitude.BL.Helpers;
+﻿using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
@@ -9,10 +8,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -65,7 +64,6 @@ namespace Logitude.XSD
         public ShipmentMasterData MasterData { get; set; }
         public CCSResult Result { get; set; }
         public string AWBMessagesCCSTypeCode { get; set; }
-        public bool isMultiHS { get; set; }
         #endregion
 
         #region Private Members
@@ -80,7 +78,7 @@ namespace Logitude.XSD
         private CommunicationLogRepository communicationLogRepository;
         #endregion
 
-        public CCSHelper(string myShipmentId, int myTenant, string myRecipient, bool isCargonautSending, bool isDEXXSending, bool isMultiHS = false)
+        public CCSHelper(string myShipmentId, int myTenant, string myRecipient, bool isCargonautSending, bool isDEXXSending)
         {
             this.Tenant = myTenant;
             this.ShipmentId = myShipmentId;
@@ -90,7 +88,6 @@ namespace Logitude.XSD
             this.IsValid = true;
             this.TodayDate = TenantServerConfigration.GetCurrentDateTime(myTenant).Date;
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(myTenant);
-            this.isMultiHS = isMultiHS;
 
             this.Result = new CCSResult()
             {
@@ -184,9 +181,6 @@ namespace Logitude.XSD
                 {
                     TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                     TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(Tenant);
-                    SettingRepository mySettingRepository = new SettingRepository();
-                    var isDemoTenant = mySettingRepository.IsDemoTenant(Tenant.ToString());
-
                     if (tenantManagement != null)
                     {
                         TTY = tenantManagement.TTY;
@@ -198,7 +192,7 @@ namespace Logitude.XSD
                         IsEAWBOnlyDemo = tenantManagement.IsEAWBOnlyDemo;
                     }
 
-                    if (isDemoTenant || IsEAWBOnlyDemo)
+                    if (Tenant == 65 || IsEAWBOnlyDemo)
                     {
                         this.IsDemoTenant = true;
                         this.Result.IsDemoTenant = true;
@@ -328,7 +322,7 @@ namespace Logitude.XSD
                             {
                                 Sender = this.TTY,
                                 Recipient = this.Recipient,
-                                Item = dataBuilder.GetChampFHL5(isMultiHS),
+                                Item = dataBuilder.GetChampFHL5(),
                             };
 
                             this.SendXMLFile(envelop, "champmessageoutqueue");
@@ -396,7 +390,7 @@ namespace Logitude.XSD
                         #region FWB
                         FWBDataContext dataContext = new FWBDataContext(this.Shipment, this.MasterData, this.AWBMessagesCCSTypeCode);
                         FWBDataBuilder dataBuilder = new FWBDataBuilder(dataContext);
-                        var champ17Item = dataBuilder.GetChampFWB17(this.isMultiHS);
+                        var champ17Item = dataBuilder.GetChampFWB17();
                         this.ValidateFNAStringLength(dataContext);
 
                         if (this.IsValid)
@@ -730,7 +724,7 @@ namespace Logitude.XSD
 					//}
 
 					DbQueueService queueservice = new DbQueueService(queueName, Tenant);
-					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
+					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
 				}
 
                 catch (Exception ex)
@@ -1032,11 +1026,6 @@ namespace Logitude.XSD
             shipmentMasterDataRepository.Update(MasterData);
             shipmentContext.SaveChanges();
             commonContext.SaveChanges();
-            RunStoredProcedureClass.UpdateShipmentStatus(Shipment.Id, Shipment.Tenant);
-
-
-
-
         }
         #endregion        
     }

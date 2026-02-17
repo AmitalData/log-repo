@@ -12,7 +12,7 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -76,8 +76,10 @@ namespace CommunicationWorkerRole
                 DateTime currentTestDate = DateTime.UtcNow;
                 EmailParameters parameters = new EmailParameters()
                 {
-                    From = SettingUtil.Emails.FromNoReply,
-                    To = SettingUtil.Emails.AutoSignupGroup,
+                    From = "mohammad@logitudeworld.com",
+                    To = "AutoSignup@logitudeworld.com",
+                    Cc = "",
+                    Bcc = "",
                     Subject = currentTestDate.ToString(),
                     Body = currentTestDate.ToString(),
                     ProviderNumber = int.Parse(provider.ProviderNumber),

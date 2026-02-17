@@ -47,7 +47,7 @@ namespace Logitude.XSD.CW_API.ABM
             body.RequestList = new CustomsForceServiceRequestMessageBodyRequestList();
             body.RequestList.RequestItem = new CustomsForceServiceRequestMessageBodyRequestListRequestItem()
             {
-
+                
             };
 
             body.RequestList.RequestItem.DataList = new CustomsForceServiceRequestMessageBodyRequestListRequestItemDataList();
@@ -59,7 +59,7 @@ namespace Logitude.XSD.CW_API.ABM
 
             body.RequestList.RequestItem.DataList.DataItem.InputDocument.Credentials = new Credentials()
             {
-                UserID = this.Context.UserID,
+                UserID = this.Context.UserID,                                
                 Password = this.Context.Password,
                 CompanyID = this.Context.CompanyID,
                 //LicenseCode = "",
@@ -87,7 +87,7 @@ namespace Logitude.XSD.CW_API.ABM
 
             #region ValueAmount
             string[] iCurrencyText = new string[1];
-            if (this.Context.ValueOfGoodsCurrencyCode != null)
+            if(this.Context.ValueOfGoodsCurrencyCode != null)
             {
                 iCurrencyText[0] = this.Context.ValueOfGoodsCurrencyCode;
             }
@@ -101,9 +101,9 @@ namespace Logitude.XSD.CW_API.ABM
                     ValueType = "DocumentValue",
                     AmountValue = this.Context.ValueOfGoods.Value,
                     AmountValueSpecified = true,
-
+                    
                     Currency = new Currency()
-                    {
+                    {                        
                         CodeType = CurrencyCodeType.ISO,
                         Text = iCurrencyText,
                     },
@@ -119,7 +119,6 @@ namespace Logitude.XSD.CW_API.ABM
             CWXSD.Transport iTransportItem = new Transport()
             {
                 Conveyance = this.Context.TransportConveyance,
-                TPMode = this.Context.TransportTPMode,
                 TransportType = TransportTransportType.Border,
                 TransportTypeSpecified = true,
             };
@@ -144,8 +143,6 @@ namespace Logitude.XSD.CW_API.ABM
                 RefCode = "MWB",
                 RefText = this.Context.MasterNumber,
             });
-
-
 
             myItem.ConsignmentHeader.Reference = references.ToArray<Reference>();
             #endregion
@@ -175,7 +172,7 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 Text = new string[] { this.Context.FromPortCode },
                 PortCountry = this.Context.MainCarriageFromPortCountryCode,
-                PortType = "ConsignmentOrigin",
+                PortType = "Origin",
                 CodeType = PortCodeType.UNLOC,
             });
 
@@ -183,7 +180,7 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 Text = new string[] { this.Context.FinalDestinationPortCode },
                 PortCountry = this.Context.FinalDestinationPortCountryCode,
-                PortType = "ConsignmentDestination",
+                PortType = "Arrival",
                 CodeType = PortCodeType.UNLOC,
             });
 
@@ -195,7 +192,7 @@ namespace Logitude.XSD.CW_API.ABM
             {
                 myItem.ConsignmentHeader.Party = this.Context.Parties.ToArray<CWXSD.Party>();
 
-            }
+            }            
             #endregion
 
             #region Goods Descriptio
@@ -204,11 +201,10 @@ namespace Logitude.XSD.CW_API.ABM
 
             #region Measure
             List<ApplicationUnitsOfMeasure> measures = new List<ApplicationUnitsOfMeasure>();
-            var uomValue = this.Context.Shipment.NumberOfInsidePackages > 0 ? this.Context.Shipment.NumberOfInsidePackages.ToString() : this.Context.NumberOfPackages;
             measures.Add(new ApplicationUnitsOfMeasure()
             {
                 UOMCode = "DocumentPieces",
-                UOMValue = new UOMValue() { Value = uomValue },
+                UOMValue = new UOMValue() { Value = this.Context.NumberOfPackages },
             });
 
             measures.Add(new ApplicationUnitsOfMeasure()
@@ -239,8 +235,7 @@ namespace Logitude.XSD.CW_API.ABM
             #endregion
 
             #region Container
-            string allowedShipmentsTypes = "FCLD,FTL";
-            if (allowedShipmentsTypes.Contains(this.Context.Shipment.ShipmentTypeId) && this.Context.Containers.Count() > 0)
+            if (this.Context.Containers.Count() > 0)
             {
                 myItem.ConsignmentHeader.Container = new Container();
                 List<ContainerItem> containerItems = new List<ContainerItem>();
@@ -253,13 +248,12 @@ namespace Logitude.XSD.CW_API.ABM
                         ContainerRef = container.ContainerNumber,
                         ContainerSealNumber = container.ShipperSeal,
                     };
-
+                    
                     containerItems.Add(containerItem);
                 }
 
                 myItem.ConsignmentHeader.Container.ContainerItem = containerItems.ToArray<ContainerItem>();
             }
-
             #endregion
 
             #region Terms

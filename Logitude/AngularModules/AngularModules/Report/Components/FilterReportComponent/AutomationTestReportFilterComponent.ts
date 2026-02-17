@@ -1,12 +1,15 @@
-import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+﻿import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ReportsPreviewComponent } from '../../Components/ReportsPreviewComponent';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
-import { Component, Output, EventEmitter } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { DateTool } from '../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { DashBoardFilters } from '../../../Infrastructure/DataContracts/Dashboard/DashboardFilters';
+import {AppTool} from '../../../Infrastructure/Tools';
 @Component({
-    
+    moduleId: module.id,
     selector: 'AutomationTestReportFilterComponent',
     templateUrl: './AutomationTestReportFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -14,92 +17,60 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 export class AutomationTestReportFilterComponent extends BaseComponent {
     public ReportsPreview: ReportsPreviewComponent;
-    public DataContext: AutomationTestReportFilterComponent = this;
+    reportFliter: ReportFliter;
     public ObjectTableName: string = "Report";
-    public RunReportTitle: string = "Run Report";
-    public IsReportScheduler: boolean = false;
-    IsException: boolean = true;
-    @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
 
+    IsException: boolean = true;
+    queryFilterItems: QueryFilterItem[];
+    queryFilterItem: QueryFilterItem;
+    public DataContext: AutomationTestReportFilterComponent = this;
     constructor() {
         super();
+     
+
     }
+
+
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-    }
 
-    SetRunReportTitle() {
-        this.RunReportTitle = "Preview";
-    }
-
-    GetMainCustomerFieldName() {
-        return null;
-    }
-
-    IsPartnersChanged() {
-        return false;
-    }
-
-    GetQueryFilterItems() {
-        var queryFilterItems = new Array<QueryFilterItem>();
-        var queryFilterItem: QueryFilterItem;
-
-        //IsException
-        queryFilterItem = new QueryFilterItem();
-        queryFilterItem.DisplayInList = false;
-        queryFilterItem.FieldName = "IsException";
-        queryFilterItem.FieldValue = this.IsException ? true : false;
-        queryFilterItem.Operator = "Equals";
-        queryFilterItems.push(queryFilterItem);
-
-        return queryFilterItems;
     }
 
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
-        this.RunReportTitle = "Preview";
-        this.IsReportScheduler = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
 
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            if (queryFilterItem.FieldName == "IsException") {
-                this.IsException = queryFilterItem.FieldValue;
-            }
-        }
-    }
+    RunReport(isloading: boolean) {
 
-    ValidateSelectedFilters() {
-        var isValid: boolean = true;
 
-        //nothing to validate
 
-        return isValid;
-    }
+        this.queryFilterItems = new Array<QueryFilterItem>();
 
-    PrepareContactList() {
-        //for report scheduler
-    }
+            //IsException
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsException";
+            this.queryFilterItem.FieldValue = this.IsException;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
-    RunReport() {
-        var reportFliter: ReportFliter = new ReportFliter();
 
-        reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-        reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        reportFliter.NumberOfPage = 1;
-        reportFliter.ProcessType = "GenerateReport";
+            this.reportFliter = new ReportFliter();
+            this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+            this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+            this.reportFliter.NumberOfPage = 1;
+            this.reportFliter.ProcessType = "GenerateReport";
 
-        reportFliter.IncludeOperationalyClosed = false;
 
-        this.RunReportEvent.emit(reportFliter);
-        //this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+            this.reportFliter.IncludeOperationalyClosed = false;
+
+            this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+       
+
+
+
+
+
     }
 }

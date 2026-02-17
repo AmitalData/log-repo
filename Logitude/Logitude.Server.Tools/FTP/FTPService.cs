@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,7 +20,7 @@ namespace Logitude.Server.Tools.FTP
 		/* Construct Object */
 		public FTPService(string hostIP, string userName, string password)
 		{
-			if (!hostIP.Contains(@"ftp://") && !hostIP.Contains(@"ftps://"))
+			if (!hostIP.Contains(@"ftp://"))
 			{
 				hostIP = @"ftp://" + hostIP;
 			}
@@ -75,7 +74,6 @@ namespace Logitude.Server.Tools.FTP
 			}
 			catch (WebException ex)
 			{
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
 				FTPServiceExceptionThrower.Throw(ex, user, host, remoteFile, "download");
 			}
 			catch (Exception ex)
@@ -88,71 +86,69 @@ namespace Logitude.Server.Tools.FTP
 
 			return result;
 		}
-	
 
 		/* Upload File */
 		public bool Upload(string remoteFile, string folder, byte[] fileData, out string p_message, bool uploadAsTemp = false, bool deleteIfExists = false)
 		{
 			p_message = "";
 			try
-            {
-				CreateFoldersIfNotExist(folder);
+			{
+				//string[] dirFiles = this.DirectoryListSimple(folder);
+				//if (!string.IsNullOrEmpty(folder) && !this.DirectoryExists(folder))
+				//{
+				//    this.CreateDirectory(folder);
+				//}
 
-                //if (!string.IsNullOrEmpty(folder) && !this.DirectoryExists(folder))
-                //            {
-                //                this.CreateDirectory(folder);
-                //            }
-
-                /* Create an FTP Request */
-                string uploadFileName = remoteFile;
+				/* Create an FTP Request */
+				string uploadFileName = remoteFile;
                 if (uploadAsTemp)
                 {
                     uploadFileName = "tmp_" + uploadFileName + ".tmp";
                     DeleteFileIfExists(uploadFileName, folder);
                 }
-                string url = host + (!string.IsNullOrEmpty(folder) ? ("/" + folder) : "") + "/" + uploadFileName;
-                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(url);
-                /* Log in to the FTP Server with the User Name and Password Provided */
-                ftpRequest.Credentials = new NetworkCredential(user, pass);
-                /* When in doubt, use these options */
-                ftpRequest.UseBinary = true;
-                ftpRequest.UsePassive = true;
-                ftpRequest.KeepAlive = true;
-                /* Specify the Type of FTP Request */
-                ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
-                /* Establish Return Communication with the FTP Server */
-                ftpStream = ftpRequest.GetRequestStream();
+				string url = host + (!string.IsNullOrEmpty(folder) ? ("/" + folder) : "") + "/" + uploadFileName;
+				ftpRequest = (FtpWebRequest)FtpWebRequest.Create(url);
+				/* Log in to the FTP Server with the User Name and Password Provided */
+				ftpRequest.Credentials = new NetworkCredential(user, pass);
+				/* When in doubt, use these options */
+				ftpRequest.UseBinary = true;
+				ftpRequest.UsePassive = true;
+				ftpRequest.KeepAlive = true;
+				/* Specify the Type of FTP Request */
+				ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
+				/* Establish Return Communication with the FTP Server */
+				ftpStream = ftpRequest.GetRequestStream();
 				/* Open a File Stream to Read the File for Upload */
 				MemoryStream localFileStream = new MemoryStream(fileData);
-                /* Buffer for the Downloaded Data */
-                byte[] byteBuffer = new byte[bufferSize];
-                int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-                /* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
-                while (bytesSent != 0)
-                {
-                    ftpStream.Write(byteBuffer, 0, bytesSent);
-                    bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-                }
+				/* Buffer for the Downloaded Data */
+				byte[] byteBuffer = new byte[bufferSize];
+				int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
+				/* Upload the File by Sending the Buffered Data Until the Transfer is Complete */
+				while (bytesSent != 0)
+				{
+					ftpStream.Write(byteBuffer, 0, bytesSent);
+					bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
+				}
 
 
-                localFileStream.Close();
-                ftpStream.Flush();
-                ftpStream.Close();
+				localFileStream.Close();
+				ftpStream.Flush();
+				ftpStream.Close();
 
-                FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse();
-                FtpStatusCode code = response.StatusCode;
-                string description = response.StatusDescription;
-                response.Close();
-                ftpRequest = null;
+				FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse();
+				FtpStatusCode code = response.StatusCode;
+				string description = response.StatusDescription;
+				response.Close();
+				ftpRequest = null;
 
-                //if (uploadAsTemp)
-                //    ftpRequest.RenameTo = remoteFile;
-                ///* Establish Return Communication with the FTP Server */
-                //ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-                ///* Resource Cleanup */
-                //ftpResponse.Close();
+				//if (uploadAsTemp)
+				//    ftpRequest.RenameTo = remoteFile;
+				///* Establish Return Communication with the FTP Server */
+				//ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+				///* Resource Cleanup */
+				//ftpResponse.Close();
 
-                if (uploadAsTemp)
+				if (uploadAsTemp)
                 {
                     DeleteFileIfExists(remoteFile, folder);
 
@@ -170,12 +166,12 @@ namespace Logitude.Server.Tools.FTP
 
                 p_message = "File '" + remoteFile + "' was successfully uploaded to '" + (host + (!string.IsNullOrEmpty(folder) ? ("/" + folder) : ""));
 
-                //else
-                //{
-                //    throw new Exception("The file already exists");
-                //}
-            }
-            catch (WebException ex)
+				//else
+				//{
+				//    throw new Exception("The file already exists");
+				//}
+			}
+			catch (WebException ex)
 			{
 				//string errorMessage = "";
 				//var ftpResponse = ex.Response as FtpWebResponse;
@@ -205,27 +201,7 @@ namespace Logitude.Server.Tools.FTP
 			return true;
 		}
 
-		private void CreateFoldersIfNotExist(string folder)
-		{
-			if (string.IsNullOrEmpty(folder)) return;
-			var folders = folder.Split('/');
-			string folderPath = string.Empty;
-			int folderscount = 0;
-			while (folderscount < folders.Length)
-			{
-				folderPath = CreateFolderIfNotExist(folders[folderscount], folderPath);
-				folderscount += 1;
-			}
-		}
-
-		private string CreateFolderIfNotExist(string folderName, string folderPath)
-		{
-			if (string.IsNullOrEmpty(folderName)) return folderPath;
-			if (!this.DirectoryExists((folderPath + "/" + folderName))) this.CreateDirectory((folderPath + "/" + folderName));
-			return (folderPath + "/" + folderName);
-		}
-
-		private void DeleteFileIfExists(string remoteFile, string folder)
+        private void DeleteFileIfExists(string remoteFile, string folder)
         {
             bool fileExists = CheckIfFileExists(remoteFile, folder);
             
@@ -288,28 +264,23 @@ namespace Logitude.Server.Tools.FTP
 		/* Create a New Directory on the FTP Server */
 		public void CreateDirectory(string newDirectory)
 		{
-			try
-			{
-				/* Create an FTP Request */
-				ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + newDirectory);
-				/* Log in to the FTP Server with the User Name and Password Provided */
-				ftpRequest.Credentials = new NetworkCredential(user, pass);
-				/* When in doubt, use these options */
-				ftpRequest.UseBinary = true;
-				ftpRequest.UsePassive = true;
-				ftpRequest.KeepAlive = true;
-				/* Specify the Type of FTP Request */
-				ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
-				/* Establish Return Communication with the FTP Server */
-				ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
-				/* Resource Cleanup */
-				ftpResponse.Close();
-				ftpRequest = null;
-			}
-			catch (Exception exception)
-            {
 
-            }
+			/* Create an FTP Request */
+			ftpRequest = (FtpWebRequest)WebRequest.Create(host + "/" + newDirectory);
+			/* Log in to the FTP Server with the User Name and Password Provided */
+			ftpRequest.Credentials = new NetworkCredential(user, pass);
+			/* When in doubt, use these options */
+			ftpRequest.UseBinary = true;
+			ftpRequest.UsePassive = true;
+			ftpRequest.KeepAlive = true;
+			/* Specify the Type of FTP Request */
+			ftpRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
+			/* Establish Return Communication with the FTP Server */
+			ftpResponse = (FtpWebResponse)ftpRequest.GetResponse();
+			/* Resource Cleanup */
+			ftpResponse.Close();
+			ftpRequest = null;
+
 			return;
 		}
 

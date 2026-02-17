@@ -28,7 +28,7 @@ export class BIReportComponent {
 
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "ReloadAllList") {
+            if (s == "BIRefresh") {
                 this.LoadData();
             }
         });
@@ -73,7 +73,7 @@ export class BIReportComponent {
                     SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ DWQueryId: s.QID, Name: null, ObjectTableName: 'BIReport', EntityId: null });
+                            cmpRef.instance.Run({ DWQueryId: s.QID, ObjectTableName: 'BIReport', EntityId: null });
                         });
                 }
             });
@@ -86,7 +86,7 @@ export class BIReportComponent {
     }
 
     EditBIReportClicked(report: BIReportList) {
-        this.entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
             if (!AppTool.IsNullOrEmpty(report.Id)) {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
@@ -103,7 +103,7 @@ export class BIReportComponent {
         SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBIReport/Components/Workspaces/BIReportPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ DWQueryId: report.DWQueryId, Name: report.Name, ObjectTableName: 'BIReport', EntityList: report, EntityId: report.Id });
+                cmpRef.instance.Run({ DWQueryId: report.DWQueryId, ObjectTableName: 'BIReport', EntityList: report, EntityId: report.Id });
             });
     }
 

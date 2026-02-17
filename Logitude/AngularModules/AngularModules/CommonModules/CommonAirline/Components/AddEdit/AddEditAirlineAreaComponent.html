@@ -1,0 +1,183 @@
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table class="FixedTable">
+                <tr style="height:70px">
+                    <td style="width:200px">
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 70px;">
+                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 120px;">
+                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="DataContext.Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>                                    
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 80px;">
+                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 200px;">
+                                    <div style="width: 200px;height:70px;">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [Text]="DataContext.Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+       
+                <tr style="vertical-align:top">
+                    <td colspan="2">
+                        <table>
+                            <tr style="border:solid 1px;border-color:lightgrey;height:100%">
+                                <td>
+                                    <table>
+                                        <tr style="height:25px;">
+                                            <td style="padding-left:10px;background:linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);">
+                                                <table>
+                                                    <tr>
+                                                        <td style="color:#1B90CB">
+                                                            Ports
+                                                        </td>
+                                                        <td style="width:50px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:3px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:150px">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 80px;">
+                                                                        <button style="height:20px;" class="Button" (click)="DataContext.ChooseCountry()">
+                                                                            <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                            Country Ports
+                                                                        </button>
+                                                                    </td>
+                                                                    <td style="width:5px">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width: 50px;">
+                                                                        <button style="height:20px;" class="Button" (click)="DataContext.ChoosePort()">
+                                                                            <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                            Port
+                                                                        </button>
+                                                                    </td>
+                                                                    <td style="width:10px"></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                        </tr>
+                                        <tr style="overflow-y:hidden">
+                                            <td>
+                                                <div class="MediaFill">
+
+                                                    <div class="SimpleGridView">
+                                                        <div class="SimpleGridViewHeader">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 80px; min-width: 80px;max-width:80px">Code</td>
+                                                                    <td style="width: 170px; min-width: 170px;max-width:170px">Name</td>
+                                                                    <td style="width: 100px; min-width: 100px;max-width:100px">Country code</td>
+                                                                    <td class="LastChild"></td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="SimpleGridViewBody" style="overflow-y:auto">
+                                                            <table>
+                                                                <tr class="SimpleGridViewRow RowHover RowSelected" *ngFor="let item of DataContext.PortItemsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem">
+                                                                    <td class="GridViewCell" style="width:80px; min-width: 80px;max-width:80px">
+                                                                        <div>{{item.Code}}</div>
+                                                                    </td>
+
+                                                                    <td class="GridViewCell" style="width:170px; min-width: 170px;max-width:170px">
+                                                                        <div>{{item.Name}}</div>
+                                                                    </td>
+
+                                                                    <td class="GridViewCell" style="width:100px; min-width: 100px;max-width:100px">
+                                                                        <div>{{item.CountryCode}}</div>
+                                                                    </td>
+
+                                                                    <td class="GridViewCell">
+                                                                        <div>
+                                                                            <IconButton [IsSmall]="true" [Name]="'Delete'" (click)="DataContext.DeletePort(item)"></IconButton>
+                                                                        </div>
+                                                                    </td>
+
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+

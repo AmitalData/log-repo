@@ -24,7 +24,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 
 @Component({
     selector: 'FaultQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './FaultQueryComponent.html',
 })
 
@@ -348,7 +348,7 @@ export class FaultQueryComponent
 */
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא ליקויים", true)
             .then((res) => {
                 this.ResponseData = res;

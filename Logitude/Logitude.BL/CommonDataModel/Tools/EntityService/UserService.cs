@@ -6,13 +6,10 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.GlobalModel.Tools.Validating;
 using Logitude.BL.Helpers;
 using Logitude.BL.Security;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
@@ -41,27 +38,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactTenantRepository contactTenantRepository;
         private UserPermittedBranchRepository userPermittedBranchRepository;
         private UserPermittedProductRepository userPermittedProductRepository;
-        private UserFreelancerGroupRepository userFreelancerGroupRepository;
-
         private ContactQuery contactQuery;
-        private User UserTenant0;
-        private string Id0;
         public UserService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new UserRepository(objectContext);
             this.userPermittedBranchRepository = new UserPermittedBranchRepository(objectContext);
-            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext); 
-            this.userFreelancerGroupRepository = new UserFreelancerGroupRepository(objectContext);
+            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext);            
         }
 
         private List<UserPermittedBranchPM> userPermittedBranchPMChangeSet;
         private List<UserPermittedProductPM> userPermittedProductPMChangeSet;
-        private List<UserFreelancerGroupPM> userFreelancerGroupPMChangeSet;
-
-        private string _DisableOldContactId;
-
         public void SetChangeSet(List<UserPermittedBranchPM> userPermittedBranchPMChangeSet)
         {
             this.userPermittedBranchPMChangeSet = userPermittedBranchPMChangeSet;
@@ -69,10 +57,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void SetProductChangeSet(List<UserPermittedProductPM> userPermittedProductPMChangeSet)
         {
             this.userPermittedProductPMChangeSet = userPermittedProductPMChangeSet;
-        }
-        public void SetFreeLancerGroupChangeSet(List<UserFreelancerGroupPM> userFreelancerGroupPMChangeSet)
-        {
-            this.userFreelancerGroupPMChangeSet = userFreelancerGroupPMChangeSet;
         }
         public bool SuppressMustChangePasswordDueSSO { get; set; }
         
@@ -82,13 +66,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.isNewEntity = true;
             this.entityPm = entityPM;
-			this.entityPm.Id = IdCounter.GetNumber("User", tenant).ToString();
-			this.entityPm.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            this.entityPm.Id = IdCounter.GetNumber("User", tenant).ToString();
+            this.entityPm.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             this.Poco = new User();
             this.Poco.Id = this.entityPm.Id;
 
-            UserValidating.Validate(entityPM, isNewEntity);
+            UserValidating.Validate(entityPM);
             
             this.CheckNumberOfUsers();
 
@@ -128,14 +112,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.CreateUserPermittedProduct(itemPM);
             }
 
-            foreach (UserFreelancerGroupPM itemPM in entityPM.FreelancerGroups)
-            {
-                if (itemPM != null)
-                {
-                    this.CreateUserFreelancerGroup(itemPM, entityPM);
-                }
-            }
-
             ContactQuery contactQuery = new ContactQuery(contactRepository);
             if (!entityPM.IsHybrid)
             {
@@ -148,89 +124,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
             
-            entityPm.UserRoles = this.ComputeNewUserRoles();
+            entityPm.UserRoles = this.ComputeUserRoles();
             CheckDocumentFilingInbox(entityPm, Poco);
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            AddUserKafkaQueueMessage();
+            
             if (!entityPM.IsHybrid)
             {
                 UpdateRolePM(entityPM);
             }
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
-			if (tenant == 0)
-			{
-                UserTenant0 =  new User();
-				DepartmentRepository departmentRepository = new DepartmentRepository(objectContext);
-				Department department = departmentRepository.GetSingleDepartmentCache(entityPM.DepartmentId, tenant);
-				UserTenant0.Department = department;
-				BranchRepository branchRepository = new BranchRepository(objectContext);
-				Branch branch = branchRepository.GetSingleBranch(entityPM.BranchId, tenant);
-				UserTenant0.Branch = branch;
-				BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository(objectContext);
-				BusinessUnit businessUnit = businessUnitRepository.GetSingleBusinessUnit(entityPM.BusinessUnitId, tenant);
-				UserTenant0.BusinessUnit = businessUnit;
-
-				GlobalDBRepository globaldbRep = new GlobalDBRepository();
-				List<GlobalDB> activeDbs = globaldbRep.GetGlobalDBsActive();
-
-
-		
-			    foreach (var db in activeDbs)
-                {
-						var targetTenant = Convert.ToInt32(db.Id);
-                    if (targetTenant == 0) continue;
-
-					ICommonDataContext ctx = CommonDataContext.GetContext(targetTenant);
-					departmentRepository = new DepartmentRepository(ctx);
-					branchRepository = new BranchRepository(ctx);
-					businessUnitRepository = new BusinessUnitRepository(ctx);
-					UserService service = new UserService(ctx, targetTenant);
-
-					var deptName = UserTenant0?.Department?.EnglishName;
-					department = departmentRepository.GetDepartmentByName(deptName, targetTenant);
-					entityPM.DepartmentId = department?.Id;
-
-					var branchtName = UserTenant0?.Branch?.EnglishName;
-					branch = branchRepository.GetBranchByName(branchtName, targetTenant);
-					entityPM.BranchId = branch?.Id;
-
-					var businessUnitName = UserTenant0?.Branch?.EnglishName;
-					businessUnit = businessUnitRepository.GetBusinessUnitByName(businessUnitName, targetTenant);
-					entityPM.BusinessUnitId = businessUnit?.Id;
-
-					using (var scope = new System.Transactions.TransactionScope())
-					{
-						try
-						{
-							service.Id0 = entityPM.Id;
-							service.Create(entityPM);
-							scope.Complete();
-
-						}
-						catch (Exception ex)
-						{
-							throw ex;
-						}
-					}
-
-					
-				} 		
-			}
-
-		}
-
-		public void Update(UserPM entityPM, bool mapComposition = false)
+        }
+        
+        public void Update(UserPM entityPM, bool mapComposition = false)
         {
             if (mapComposition)
             {
                 this.userPermittedBranchPMChangeSet = entityPM.UserPermittedBranches;
                 this.userPermittedProductPMChangeSet = entityPM.UserPermittedProducts;
             }
-            this.userFreelancerGroupPMChangeSet = entityPM.FreelancerGroups;
-
 
             contactRepository = new ContactRepository(objectContext);
             roleRepository = new RoleRepository(objectContext);
@@ -306,7 +220,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateUserPermittedPermitions();
-            this.UpdateUserFreelancerGroups(entityPM);
 
             if (entityPM.IsBranchRestricted)
             {
@@ -341,44 +254,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
 
-            entityPm.UserRoles = this.ComputeUpdatedUserRoles();
+            entityPm.UserRoles = this.ComputeUserRoles();
             CheckDocumentFilingInbox(entityPM, Poco);
             ContactService service = new ContactService(objectContext, entityPM.Tenant);
-            if (!String.IsNullOrWhiteSpace(this._DisableOldContactId))
-            {
-                //update contacts  set inactive=1, computedkey  = id  where id='1-10622'
-                contact.ExternalId = service.DisableOldContact(this._DisableOldContactId, entityPM.Tenant);//UPDATE  CONTACTS SET   externalid ='1439'  WHERE   EMAIL ='a59mix_tk4@amitaly.co.il' OR ID IN ('1-10628','1-10627')
-            }
             MapUserToContact(entityPM, contact);
             service.Update(contact);
 
-            UserValidating.Validate(entityPM, isNewEntity);
+            UserValidating.Validate(entityPM);
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            AddUserKafkaQueueMessage();
+
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
-        }
-
-        private void AddUserKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Contact" },
-                { "EntityId", entityPm.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
 
         private void CheckNumberOfUsers()
@@ -393,11 +281,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 if (entityPM.Roles != null)
                 {
-                    List<Role> allRoles = roleRepository.GetRoles(entityPM.Tenant).ToList();
+                    List<Role> allRoles = roleRepository.GetRoles(tenant).ToList();
                     Role freelancerRole = allRoles.FirstOrDefault(r => r.Code.StartsWith("FRL"));
                     if (freelancerRole != null && entityPM.IsFreelancer && !entityPM.Roles.Any(r => r.Id == freelancerRole.Id))
                     {
-                        throw new Exception("המשתמש הינו פרילנסר, יש לבחור רק תפקיד המוגדר כפרילנסר"); // ("Must choose a freelancer role!");
+                        throw new Exception("המשתמש הינו פרילנסר, יש לבחור רק תקפיד המוגדר כפרילנסר"); // ("Must choose a freelancer role!");
                     }
 
                     foreach (UserRolesPM role in entityPM.Roles)
@@ -421,8 +309,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
 
                         roleRepository.Update(currentRole);
-                        roleRepository.context.SaveChanges();
-                        contactTenantRoleRepository.context.SaveChanges();
 
                         if (!entityPM.IsHybrid)
                         {
@@ -441,7 +327,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 GlobalContact globalContact = globalContactRepository.GetSingleGlobalContact(entityPm.Id);
                 if (globalContact != null)
                 {
-                    ChangeContactToCurrentUserRemoveOldGlobalContact(globalContactRepository, globalContact);
                     globalContact.Email = entityPm.Email;
                     globalContact.InActive = entityPm.InActive;
                     globalContactRepository.Update(globalContact);
@@ -484,35 +369,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void ChangeContactToCurrentUserRemoveOldGlobalContact(GlobalContactRepository globalContactRepository, GlobalContact globalContact)
-        {
-            if ( globalContact.Email != entityPm.Email)
-            {
-                if (!string.IsNullOrWhiteSpace(entityPm.Email) )
-                {
-                    var qoldContact = globalContactRepository
-                        .GetContactByEmail(entityPm.Email)
-                        .Where(r => r.IsUser == false)
-                        .Where(r => r.Id != entityPm.Id);
-                    var oldContact = qoldContact.FirstOrDefault();
-
-
-                    if (oldContact != null)
-                    {
-                        this._DisableOldContactId = oldContact.Id;
-
-                        oldContact.Email = entityPm.Id + entityPm.Email;
-                        oldContact.Email = oldContact.Email ?? "";
-                        oldContact.Email = oldContact.Email.Substring(0, Math.Min(70, oldContact.Email.Length));
-                        globalContactRepository.Update(oldContact);//globalContactRepository.Remove(oldContact);
-                        globalContactRepository.SubmitChanges();
-                    }
-
-
-                }
-            }
-        }
- 
         private void MapUserToContact(UserPM user, Contact contact)
         {
             contact.Anniversary = user.Anniversary;
@@ -555,7 +411,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             contact.Fax = user.Fax;
             contact.InActive = user.InActive;
             contact.LocalName = user.LocalName;
-            contact.DontShowLocalLabels = user.DontShowLocalLabels;
             contact.Mobile = user.Mobile;
             contact.Password = user.Password != null ? user.Password : contact.Password;
             contact.Notes = user.Notes;
@@ -572,11 +427,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPM.Email = entityPM.Email.ToLower();
 
             Contact newContact = new Contact();
-			newContact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" || entityPM.DontShowLocalLabels == false ? false : true;
+			newContact.DontShowLocalLabels = LogitudeSettings.WorkEnvironment == "customs" ? false : true; // Mohammad & Islam: related to bug 44449
 
 			MapUserToContact(entityPM, newContact);
 
-            Contact adminContact = contactRepository.GetSingleContactByEmail("support@amital.co.il", 0);
+            Contact adminContact = contactRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
             if (adminContact != null)
             {
                 newContact.Signature = adminContact.Signature;
@@ -587,16 +442,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             Random rnd = new Random();
 
-            newContact.Id = !string.IsNullOrEmpty(Id0) ? Id0 : IdCounter.GetNumber("Contact", entityPM.Tenant).ToString();
+            newContact.Id = IdCounter.GetNumber("Contact", entityPM.Tenant).ToString();
             newContact.ComputedKey = (!string.IsNullOrEmpty(newContact.Email) ? newContact.Email : newContact.Id);
             newContact.UserType = "R";
-            newContact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             newContact.IndexColor = rnd.Next(1, 20);
             RoleQuery roleQuery = new RoleQuery(roleRepository);
 
             ContactTenant newContactTenant = new ContactTenant()
             {
-                Id = !string.IsNullOrEmpty(Id0)?Id0 : IdCounter.GetNumber("ContactTenant", entityPM.Tenant).ToString(),
+                Id = IdCounter.GetNumber("ContactTenant", entityPM.Tenant).ToString(),
                 TenantId = newContact.Tenant,
                 ContactId = newContact.Id,
             };
@@ -612,7 +466,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 ContactTenantRole admincontactTenantRole = new ContactTenantRole()
                 {
                     ContactTenantId = newContactTenant.Id,
-                    Id = !string.IsNullOrEmpty(Id0) ? Id0 : IdCounter.GetNumber("ContactTenantRole", entityPM.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("ContactTenantRole", entityPM.Tenant).ToString(),
                     RoleId = adimnrole.Id,
                     Tenant = newContact.Tenant
 
@@ -674,20 +528,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.Poco.Id = newContact.Id;
             entityPM.Id = this.Poco.Id;
-			return newContactTenant;
+            return newContactTenant;
         }
         private ContactTenant ConnectToExistedContact(UserPM entityPM, Contact contact)
         {
             entityPM.Email = entityPM.Email.ToLower();
 
-            Contact adminContact = contactRepository.GetSingleContactByEmail("support@amital.co.il", 0);
+            Contact adminContact = contactRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
             if (adminContact != null)
             {
                 contact.Signature = adminContact.Signature;
             }
 
             contact.UserType = "R";
-            contact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             if (!string.IsNullOrEmpty(contact.Email))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -718,52 +571,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             globalContext.ContactPasswords.Add(contactPassword);
                         }
                     }
-                    if (LogitudeSettings.IsCostomsDeploy)
+
+                    GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
+                    GlobalContact globalContact = globalContactRep.GetSingleGlobalContact(contact.Id);
+
+                    if (globalContact != null)
                     {
-                        GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
-
-
-
-                        bool globalContactExists = (from a in globalContactRep.GetGlobalContactByTenant(contact.Tenant)
-                                                    where a.Email == contact.Email
-                                                    select a).Any();
-
-
-
-                        if (!globalContactExists)
-                        {
-                            GlobalContact conflictcontact = globalContactRep.GetSingleGlobalContact(contact.Id);
-                            if (conflictcontact != null)
-                            {
-                                globalContactRep.Remove(conflictcontact);
-                            }
-                            GlobalContact gcontact = new GlobalContact() { Email = contact.Email, Id = contact.Id, GlobalTenantId = contact.Tenant, IsUser = true, };
-                        }
+                        globalContact.IsUser = true;
+                        globalContactRep.Update(globalContact);
                     }
                     else
                     {
-                        GlobalContactRepository globalContactRep = new GlobalContactRepository(globalContext);
-                        GlobalContact globalContact = globalContactRep.GetSingleGlobalContact(contact.Id);
+                        GlobalContact conflictcontact = globalContactRep.GetSingleGlobalContact(contact.Id);
 
-
-                        if (globalContact != null)
+                        if (conflictcontact != null)
                         {
-                            globalContact.IsUser = true;
-                            globalContactRep.Update(globalContact);
+                            globalContactRep.Remove(conflictcontact);
                         }
-                        else
-                        {
-                            GlobalContact conflictcontact = globalContactRep.GetSingleGlobalContact(contact.Id);
 
-                            if (conflictcontact != null)
-                            {
-                                globalContactRep.Remove(conflictcontact);
-                            }
-
-                            GlobalContact gcontact = new GlobalContact() { Email = contact.Email, Id = contact.Id, GlobalTenantId = contact.Tenant, IsUser = true, };
-                            globalContactRep.Add(gcontact);
-                        }
+                        GlobalContact gcontact = new GlobalContact() { Email = contact.Email, Id = contact.Id, GlobalTenantId = contact.Tenant, IsUser = true, };
+                        globalContactRep.Add(gcontact);
                     }
+
                     globalContext.SaveChanges();
                     scope.Complete();
                 }
@@ -851,18 +680,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-        private void UpdateUserFreelancerGroups(UserPM entityPM)
-        {
-            if (userFreelancerGroupPMChangeSet != null)
-            {
-                DeleteUserFreelancerGroups(entityPM);
-                foreach (UserFreelancerGroupPM itemPM in userFreelancerGroupPMChangeSet)
-                {
-                    itemPM.UserId = entityPM.Id;
-                    this.CreateUserFreelancerGroup(itemPM, entityPM);
-                }
-            }
-        }
         
         private void CreateUserPermittedBranch(UserPermittedBranchPM entityPM)
         {
@@ -899,17 +716,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             UserPermittedProductMapping.MapEntity(entityPM, Poco, true);
             userPermittedProductRepository.Add(Poco);
         }
-
-        private void CreateUserFreelancerGroup(UserFreelancerGroupPM entityPM, UserPM userPM)
-        {
-            entityPM.Id = IdCounter.GetNumber("UserFreelancerGroup", tenant).ToString();
-            UserFreelancerGroup Poco = new UserFreelancerGroup();
-            Poco.UserId = userPM.Id;
-            Poco.Id = entityPM.Id;
-
-            UserFreelancerGroupMapping.MapEntity(entityPM, Poco, true);
-            userFreelancerGroupRepository.Add(Poco);
-        }
         private void UpdateUserPermittedProduct(UserPermittedProductPM entityPM)
         {
             UserPermittedProduct Poco = userPermittedProductRepository.GetSingleUserPermittedProduct(entityPM.Id, entityPM.Tenant);
@@ -917,20 +723,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             UserPermittedProductMapping.MapEntity(entityPM, Poco, false);
             userPermittedProductRepository.Update(Poco);
         }
-
         private void DeleteUserPermittedProduct(UserPermittedProductPM entityPM)
         {
             UserPermittedProduct Poco = userPermittedProductRepository.GetSingleUserPermittedProduct(entityPM.Id, entityPM.Tenant);
             UserPermittedProductValidating.Validate(entityPM);
             userPermittedProductRepository.Remove(Poco);
-        }
-        private void DeleteUserFreelancerGroups(UserPM userPM)
-        {
-            var listOfGroupsToDelete = userFreelancerGroupRepository.GetUserFreelancerGroupByUserId(userPM.Id,userPM.Tenant);
-            foreach(var item in listOfGroupsToDelete)
-            {
-                userFreelancerGroupRepository.Remove(item);
-            }
         }
 
         private void UpdateRolePM(UserPM entityPM)
@@ -939,8 +736,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 foreach (RolePM rolePM in entityPM.RolePMLists)
                 {
-                    ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
-                    RoleService roleService = new RoleService(MyContext, tenant);
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                    RoleService roleService = new RoleService(MyContext, entityPM.Tenant);
                     roleService.Update(rolePM);
                 }
 
@@ -977,7 +774,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CheckDocumentFilingInbox(UserPM entityPM, User entityPOCO)
         {
-            if (this.isNewEntity || (entityPOCO.Contact != null && entityPM.Email != entityPOCO.Contact.Email))
+            if (this.isNewEntity)
             {
                 var filingInboxName = entityPM.Email.Split('@')[0] + '.' + entityPM.Email.Split('@')[1].Split('.')[0];
                 var emailIndex = 0;
@@ -1013,68 +810,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private string ComputeNewUserRoles()
-        {
-            string userRoles = "";
-            if (!entityPm.SignupRole)
-            {
-                userRoles = this.GetUserRoles_New();
-                bool hasRoles = this.IsUserHasRoles(userRoles);
-                if (!hasRoles)
-                {
-                    string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
-                    throw new ApplicationException(message);
-                }
-            }
-            return userRoles;
-        }
-        private string GetUserRoles_New()
-        {
-            if(this.entityPm == null || (this.entityPm!= null && this.entityPm.RolePMLists == null))
-            {
-                return null;
-            }
-
-            string roles = "";
-            foreach (RolePM role in this.entityPm.RolePMLists)
-            {
-                if (role != null)
-                {
-                    if (string.IsNullOrEmpty(roles))
-                    {
-                        roles = role.Name;
-                    }
-
-                    else
-                    {
-                        roles = roles + ", " + role.Name;
-                    }
-                }
-            }
-            return roles;
-        }
-
-        private string ComputeUpdatedUserRoles()
-        {
-            string userRoles = "";
-            userRoles = this.GetUserRoles_Update();
-            if (!entityPm.SignupRole)
-            {
-                bool hasRoles = this.IsUserHasRoles(userRoles);
-                if (!hasRoles)
-                {
-                    string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
-                    throw new ApplicationException(message);
-                }
-            }
-            return userRoles;
-        }
-
-    
-
-        private string GetUserRoles_Update()
+        private string ComputeUserRoles()
         {
             string myResult = "";
+
             ContactTenant contacttenant = (from a in this.objectContext.ContactTenants
                                            where a.ContactId == entityPm.Id && a.TenantId == tenant
                                            select a).FirstOrDefault();
@@ -1088,26 +827,15 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (contacttenant != null)
             {
-                var query = (from a in this.objectContext.ContactTenantRoles
-                             where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
-                             select a);
-
-
-
-                   List<ContactTenantRolePM> ContactTenantRole= query.Select(e => new ContactTenantRolePM()
-                             {
-                                 Tenant = e.Tenant,
-                                 ContactTenantId = e.ContactTenantId,
-                                 RoleId = e.RoleId,
-                                 Id = e.Id
-
-                             }).ToList();
-
-                foreach (ContactTenantRolePM contacttenantrole in ContactTenantRole)
+                List<ContactTenantRole> contactTenantRoles = (from a in this.objectContext.ContactTenantRoles
+                                                              where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
+                                                              select a).ToList();
+                
+                foreach (ContactTenantRole contacttenantrole in contactTenantRoles)
                 {
                     Role role = this.objectContext.Roles.Where(a => a.Id == contacttenantrole.RoleId && (a.Tenant == tenant || a.Tenant == 0)).FirstOrDefault();
-
-                    if (role != null)
+                    
+                    if(role != null)
                     {
                         if (string.IsNullOrEmpty(myResult))
                         {
@@ -1121,35 +849,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-
+            
             return myResult;
-        }
-
-        private bool IsUserHasRoles(string roles)
-        {
-            bool hasRoles = true;
-            if (this.isNewEntity)
-            {
-                if (entityPm.Roles.Count == 0)
-                {
-                    hasRoles = false;
-                }
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(roles))
-                {
-                    hasRoles = false;
-                }
-            }
-            return hasRoles;
-        }
-
-        public bool CheckIsUserCustomerCareById(string id, int tenant)
-        {
-            bool isCustomerCare = false;
-            isCustomerCare = entityRepository.IsContactIdExist(id, tenant);
-            return isCustomerCare;
         }
     }
 }

@@ -1,23 +1,22 @@
 
 <table>
     <tr>
-        
-        <td style="width:50%;">
+        <td>
             <div class="MediaFill">
                 <div class="MediaFillRelative">
 
-                    <div class="MediaFillAbsolute" [hidden]="!this.ShowChildTemplate" style="overflow: hidden;">
-                        <div class="LocationDirective" ChildDirective></div>
+                    <div  class="MediaFillAbsolute" [hidden]="HasTemplate != true && this.IsSpotLightTemplate != true" style="overflow: hidden;">
+                        <div  #Template></div>
                     </div>
 
-                    <div class="MediaFillAbsolute" *ngIf="!HasTemplate && ObjectField != null">
+                    <div class="MediaFillAbsolute" *ngIf="HasTemplate != true && ObjectField">
 
                         <div class="MediaFillRelative" *ngIf="!IsAutoFormat">
 
-                            <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="ObjectField.DataTemplateName" title="{{FieldValue}}">{{FieldValue}}</div>
+                            <div   class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="ObjectField.DataTemplateName" title="{{FieldValue}}">{{FieldValue}}</div>
 
                             <div class="MediaFill" *ngIf="!ObjectField.DataTemplateName">
-                                <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
+                                <div  class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
 
                                 <div class="MediaFill" *ngIf="IsHeaderScreenTemplate">
 
@@ -40,10 +39,9 @@
                         <div class="MediaFillRelative" *ngIf="IsAutoFormat">
 
                             <div class="MediaFillRelative" *ngIf="!CustomField">
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue | NumbersPipe:'n0'}}</div>
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue | NumbersPipe:DigitsAfterPoints}}</div>
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime' || DataTypeCode == 'DateTime2'" [style.textAlign]="TextAlign">{{FieldValue | DateTimeToDatePipe}}</div>
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'PickList'" [style.textAlign]="TextAlign">{{FieldValue}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | NumbersPipe:'n0'}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | NumbersPipe:DigitsAfterPoints}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{FieldValue | DateTimeToDatePipe}}</div>
 
                                 <div *ngIf="DataTypeCode == 'Boolean'">
 
@@ -53,9 +51,9 @@
                                         <div *ngIf="!FieldValue">{{'General.O.No' | TextCodeTranslationPipe}}</div>
 
                                         <!--
-            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
-            <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
-            -->
+                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                        <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+                                        -->
 
                                     </div>
 
@@ -69,10 +67,9 @@
                             <!-- CustomField -->
                             <div class="MediaFillRelative" *ngIf="CustomField">
                                 <div class="MediaFillRelative" *ngIf="IsHeaderScreenTemplate">
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding"> {{CustomField['ResolvedValue']}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{CustomField['ResolvedValue'] | NumbersPipe:DigitsAfterPoints}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue']}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{CustomField['ResolvedValue']}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue'] | DateTimeToDatePipe}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'PickList'" [style.textAlign]="TextAlign">{{CustomField['ResolvedValue']}}</div>
 
                                     <div *ngIf="DataTypeCode == 'Boolean'">
 
@@ -82,35 +79,34 @@
                                             <div *ngIf="!FieldValue">{{'General.O.No' | TextCodeTranslationPipe}}</div>
 
                                             <!--
-            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
-            <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
-            -->
+        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+        <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+        -->
 
                                         </div>
 
-                                        <!-- <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
-            <img *ngIf="CustomField.ResolvedValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
-        </div> -->
+                                        <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                        </div>
 
                                     </div>
                                 </div>
 
                                 <div class="MediaFillRelative" *ngIf="!IsHeaderScreenTemplate">
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign" [style.padding-right]="NumberFieldRightPadding">{{FieldValue}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
+                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
                                     <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{FieldValue}}</div>
-                                    <div class="TextTrimming" *ngIf="DataTypeCode == 'PickList'" [style.textAlign]="TextAlign">{{FieldValue}}</div>
 
                                     <div *ngIf="DataTypeCode == 'Boolean'">
 
-                                        <!-- <div *ngIf=IsHeaderScreenTemplate>
-            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
-            <div *ngIf="!FieldValue">{{FieldValue}}</div>
-        </div> -->
+                                        <div *ngIf=IsHeaderScreenTemplate>
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
+                                            <div *ngIf="!FieldValue">{{FieldValue}}</div>
+                                        </div>
 
-
-                                        <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
-
+                                        <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">
+                                            <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
+                                        </div>
 
                                     </div>
                                 </div>

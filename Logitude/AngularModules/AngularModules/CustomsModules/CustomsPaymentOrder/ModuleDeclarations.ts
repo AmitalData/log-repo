@@ -6,7 +6,6 @@ import { SendPaymentOrderComponent } from './Components/SendPaymentOrder/SendPay
 import { PaymentOrderDepositDataComponent } from './Components/EditTabs/Tapag/Deposit/PaymentOrderDepositDataComponent';
 import { PaymentOrderDeficitComponent } from './Components/EditTabs/Tapag/Deficit/PaymentOrderDeficitComponent';
 import { BankAccountToRefundComponent } from './Components/EditTabs/Tapag/Deposit/BankAccountToRefundComponent';
-import { DeficitDecisionComponent } from './Components/EditTabs/Tapag/Deficit/DeficitDecisionComponent';
 
 export const Components =
   [
@@ -17,7 +16,6 @@ export const Components =
         PaymentOrderDepositDataComponent,
         PaymentOrderDeficitComponent,
         BankAccountToRefundComponent,
-        DeficitDecisionComponent,
 
   ];
 
@@ -35,7 +33,7 @@ export class ModuleDeclarations {
       case "PaymentOrderDepositDataComponent": { myResult = PaymentOrderDepositDataComponent; break; }
       case "PaymentOrderDeficitComponent": { myResult = PaymentOrderDeficitComponent; break; }
       case "BankAccountToRefundComponent": { myResult = BankAccountToRefundComponent; break; }
-        case "DeficitDecisionComponent": { myResult = DeficitDecisionComponent; break; }
+
     }
 
     return myResult;

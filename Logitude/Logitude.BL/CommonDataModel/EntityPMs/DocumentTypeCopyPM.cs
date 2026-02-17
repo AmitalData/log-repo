@@ -20,6 +20,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool InActive { get; set; }
         public bool HasDocumentOutCopy { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
-        public bool IsOriginal { get; set; }
     }
 }

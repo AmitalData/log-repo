@@ -73,7 +73,7 @@
                                 </LogLov>
                             </div>
 
-                            <div style="width: 80px; display: block; float:left; margin-left: 15px;">
+                            <div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsQuoteEditEnabled"></RatioBox>
                             </div>
@@ -95,20 +95,20 @@
         </tr>
 
         <!-- Quote Details -->
-        <tr style="height:320px;">
+        <tr style="height:257px;">
             <td>
                 <div class="MediaFill">
                     <SectionBox>
                         <SectionHead>{{'Quote.S.Details.QuoteDetails' | TextCodeTranslationPipe}}</SectionHead>
-                        <SectionBody style="overflow-y:auto;">
+                        <SectionBody>
                             <table>
                                 <tr>
-                                    <td style="width:350px;">
+                                    <td style="width:330px;">
                                         <table>
 
                                             <!-- Incoterm -->
                                             <tr class="FormFieldRow">
-                                                <td style="width: 130px;">
+                                                <td style="width: 100px;">
                                                     <LogLabel [ObjectFieldName]="'IncotermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -259,7 +259,6 @@
                                                                 </LogCheckBox>
                                                             </td>
 
-
                                                             <td class="Label" style="width:1px;">{{'Quote.S.Details.CloseAutomatically' | TextCodeTranslationPipe}}</td>
 
                                                             <td style="width:5px;">
@@ -298,39 +297,13 @@
                                                     </LogDatePicker>
                                                 </td>
                                             </tr>
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'ValueOfGoods'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'ValueOfGoods'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"
-                                                                [Text]="ValueOfGoods">
-                                                    </LogTextBox>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'ValueOfGoodsCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'ValueOfGoodsCurrencyId'"
-                                                            [SelectedValue]="ValueOfGoodsCurrencyId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Currency'">
-                                                    </LogLov>
-                                                </td>
-                                            </tr>
 
                                             <tr>
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
+
                                         </table>
                                     </td>
 
@@ -338,10 +311,10 @@
                                         <div></div>
                                     </td>
 
-                                    <td style="width:360px;">
+                                    <td style="width:340px;">
                                         <table>
                                             <tr class="FormFieldRow">
-                                                <td style="width: 200px;">
+                                                <td style="width: 130px;">
                                                     <LogLabel [ObjectFieldName]="'TransitTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -365,74 +338,6 @@
                                                                 [DataContext]="DataContext"
                                                                 [Text]="DepartureFrequency">
                                                     </LogTextBox>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'IncludeInsurance'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'IncludeInsurance'"
-                                                                 [ObjectTableName]="ObjectTableName"
-                                                                 [DataContext]="DataContext"
-                                                                 [Checked]="IncludeInsurance"
-                                                                 [HideColumns]="true">
-                                                    </LogCheckBox>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'IsStackable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'IsStackable'"
-                                                                 [ObjectTableName]="ObjectTableName"
-                                                                 [DataContext]="DataContext"
-                                                                 [Checked]="IsStackable"
-                                                                 [HideColumns]="true">
-                                                    </LogCheckBox>
-                                                </td>
-                                            </tr>
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'IncludeImportDutyCharges'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'IncludeImportDutyCharges'"
-                                                                 [ObjectTableName]="ObjectTableName"
-                                                                 [DataContext]="DataContext"
-                                                                 [Checked]="IncludeImportDutyCharges"
-                                                                 [HideColumns]="true">
-                                                    </LogCheckBox>
-                                                </td>
-                                            </tr>
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'InsuranceValue'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'InsuranceValue'" [Text]="InsuranceValue" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
-                                                </td>
-                                            </tr>
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'SpecialServicesTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'SpecialServicesTypeId'"
-                                                            [SelectedValue]="SpecialServicesTypeId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'SpecialServicesType'">
-                                                    </LogLov>
                                                 </td>
                                             </tr>
 
@@ -469,13 +374,14 @@
                         <SectionHead>{{'Quote.S.Details.GeneralDetails' | TextCodeTranslationPipe}}</SectionHead>
                         <SectionBody>
                             <div [class.NewQuoteFieldsDisabled]="!IsQuoteEditEnabled">
-                                <div class="LocationDirective" ChildDirective></div>
+                                <div class="LocationDirective" #Child></div>
                             </div>
                         </SectionBody>
                     </SectionBox>
                 </div>
             </td>
         </tr>
+
     </table>
 </div>
 

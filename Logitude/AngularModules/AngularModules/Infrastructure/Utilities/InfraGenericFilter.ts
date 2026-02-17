@@ -1,4 +1,4 @@
-import {ApiQueryFilters, FilterItem} from '../../Infrastructure/DataContracts/ApiQueryFilters';
+﻿import {ApiQueryFilters, FilterItem} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 export class InfraGenericFilter {
 
     public static GetFilteredArray(dataArray: Array<any>, filters: ApiQueryFilters) {
@@ -195,16 +195,6 @@ export class InfraGenericFilter {
                 return dataArray.filter(function (item) {
                     if (item[fieldName] != null && item[fieldName] != undefined) {
                         return value1.toLowerCase().indexOf(item[fieldName].toLowerCase()) == -1;
-                    }
-                    else {
-                        return true;
-                    }
-                });
-            }
-            case "ExcludeList": {
-                return dataArray.filter(function (item) {
-                    if (item[fieldName] != null && item[fieldName] != undefined) {
-                        return value1.toLowerCase().split(',').indexOf(item[fieldName].toLowerCase()) == -1;
                     }
                     else {
                         return true;

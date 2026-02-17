@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Simplog.Server.Infrastructure;
-using System.Text;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -54,16 +53,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             IQueryable<TextCode> textcodes = from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
                                              where (a.Tenant == tenant || a.Tenant == 0)
                                              select a;
+
             return textcodes;
         }
 
-        public IQueryable<TextCode> GetTextCodesByTenantForCustomization(int tenant)
-        {
-            IQueryable<TextCode> textcodes = from a in context.TextCodes
-                                             where (a.Tenant == tenant || a.Tenant == 0)
-                                             select a;
-            return textcodes;
-        }
 
         public List<TextCode> GetTextCodesByTenantAndObjectTable(int tenant, string objectTableName)
         {
@@ -73,22 +66,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                         where (a.Tenant == tenant || a.Tenant == 0) && a.ObjectTableId == table.Id && a.InActive == false
                                              select a).ToList();
 
-            return textcodes;
-        }
-
-        public List<TextCode> GetDigitalTextCodesByTenantAndObjectTable(int tenant, string objectTableName)
-        {
-            var allowedTextCodesTypes = new List<string> { "F", "QC", "CH", "TH", "G" , "O"};
-
-            List<TextCode> textcodes = context.TextCodes
-                                              .Where(a => (a.Tenant == tenant || a.Tenant == 0) 
-                                                           && (a.ObjectTable.Name.Equals(objectTableName) 
-                                                                || (a.ObjectTable
-                                                                    .Name
-                                                                    .Equals("general", StringComparison.InvariantCultureIgnoreCase)
-                                                                    && a.Code.StartsWith(objectTableName))) 
-                                                           && allowedTextCodesTypes.Contains(a.TextCodeTypeCode))
-                                              .ToList();
             return textcodes;
         }
 
@@ -122,7 +99,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             if (tenant != 0)
             {
-               
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(tenantListName) == null)
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -140,16 +118,27 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     {
                         currentTenantTextCodes = (List<TextCode>)CacheManager.CacheWrapper.Get(tenantListName);
                     }
-                
-          
+                }
+                else
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        currentTenantTextCodes = (from a in context.TextCodes//.Include("ObjectTable")//.Include("SpellCheckedByUser")
+                                                  where a.Tenant == tenant && a.InActive == false
+                                                  select a).ToList();
+                        scope.Complete();
+                    }
+                }
             }
 
-           
+            if (HttpContext.Current != null)
+            {
                 if (CacheManager.CacheWrapper.Get(listName) == null)
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction(new TimeSpan(2, 0, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew,new TimeSpan(2,0,0)))
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        IWebFreightContext context = WebFreightContext.GetContext(0);
                         zeroTenantTextCodes = (from a in context.TextCodes//.Include("ObjectTable")//.Include("SpellCheckedByUser")
                                                   where a.Tenant == 0 && a.InActive == false
                                                   select a).ToList();
@@ -164,8 +153,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     zeroTenantTextCodes = (List<TextCode>)CacheManager.CacheWrapper.Get(listName);
                 }
-            
-           
+            }
+            else
+            {
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    zeroTenantTextCodes = (from a in context.TextCodes//.Include("ObjectTable")//.Include("SpellCheckedByUser")
+                                           where a.Tenant == 0 && a.InActive == false
+                                           select a).ToList();
+
+                    scope.Complete();
+                }
+
+            }
 
             result = zeroTenantTextCodes.Concat(currentTenantTextCodes).ToList();
 
@@ -191,50 +192,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-		public TextCode GetSingleTextCodeByCode(string code, bool fromCache = false)
-		{
-			string codeName = "GetSingleTextCodeByCode" + code;
-			TextCode textCode = new TextCode();
-			if (fromCache)
-			{
-				if (CacheManager.CacheWrapper.Get(codeName) == null)
-				{
-					textCode = (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
-								where a.Code == code
-								select a).FirstOrDefault();
-
-					CacheManager.CacheWrapper.Insert(codeName, textCode, null);
-				}
-				else
-				{
-					textCode = (TextCode)CacheManager.CacheWrapper.Get(codeName);
-				}
-				return textCode;
-			}
-			else
-			{
-				return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
-						where a.Code == code
-						select a).FirstOrDefault();
-			}
-
-		}
-
-		public TextCode GetSingleTextCodeByTenant(string code, int tenant)
+        public TextCode GetSingleTextCodeByTenant(string id, int tenant)
         {
             return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
-                    where a.Code == code && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public string GetSingleTextCodeByCode(string code, int tenant)
-        {
-            return (from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
-                    where a.Code == code && a.Tenant == tenant
-                    select a.Id).FirstOrDefault();
-        }
-
-
+       
         public int GetTextCodesCountForDefaultTranslation(int tenant, string objectTableId, string isSpellCheckedCode, string textCodeTypeCode, DateTime? selectedCheckDate, string checkDateFiler, string searchText)
         {
             int result = 0;
@@ -286,8 +251,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
      
         public void Add(TextCode entity)
         {
-            entity.LocalDefaultText = TryConvertFromBase64(entity.LocalDefaultText);
-
             context.TextCodes.Add(entity);
         }
 
@@ -299,8 +262,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Update(TextCode entity)
         {
-            entity.LocalDefaultText = TryConvertFromBase64(entity.LocalDefaultText);
-
             try { context.TextCodes.Attach(entity); }
             catch { }
             context.SetAsModified(entity);
@@ -344,51 +305,5 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             return textcodes;
         }
-        public static string TryConvertFromBase64(string input)
-        {
-            try
-            {
-                if (input == null)
-                {
-                    return null;
-                }
-                if (input.StartsWith("BS64:") || input.StartsWith("\"BS64:"))
-                {
-
-                    return ConvertFromBase64(input);
-
-
-                }
-                return input;
-
-            }
-            catch (FormatException)
-            {
-                return input;
-            }
-        }
-
-        private static string ConvertFromBase64(string input)
-        {
-            string substringToRemove = "\"";
-            string backUp = input;
-            try
-            {
-                input = input.Trim('\"');
-                input = input.Substring(5);//REMOVE BS64:
-                byte[] data = Convert.FromBase64String(input);
-                string decodedString = Encoding.UTF8.GetString(data);
-                decodedString = decodedString.Trim('\"');
-                decodedString = decodedString.Replace("\\\"", "\"").Replace("\\\\", "\\");
-                return decodedString;
-
-            }
-            catch (FormatException)
-            {
-                return backUp;
-            }
-
-        }
-
     }
 }

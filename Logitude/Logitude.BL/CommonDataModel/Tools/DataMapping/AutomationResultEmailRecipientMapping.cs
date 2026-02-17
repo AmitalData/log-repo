@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +24,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.AutomationsId = entityPM.AutomationsId;
             entityPOCO.RecipientType = entityPM.RecipientType;
             entityPOCO.RecipientValue = entityPM.RecipientValue;
-            entityPOCO.PartnerObjectFieldCode = entityPM.PartnerObjectFieldCode;
-            entityPOCO.IsNotifyBack = entityPM.IsNotifyBack;
+
 
 
         }

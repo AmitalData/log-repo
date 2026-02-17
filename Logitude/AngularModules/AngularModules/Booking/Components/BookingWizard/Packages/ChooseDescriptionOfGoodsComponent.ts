@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 @Component({
     selector: 'ChooseDescriptionOfGoodsComponent',
-    
+    moduleId: module.id,
     templateUrl: './ChooseDescriptionOfGoodsComponent.html',
 })
 
@@ -62,7 +62,7 @@ export class ChooseDescriptionOfGoodsComponent extends BaseComponent {
         }
 
         var myService: AWBDescriptionOfGoodsListService = new AWBDescriptionOfGoodsListService();
-        myService.getByFilters(filters).subscribe((myResult:any) => {            
+        myService.getByFilters(filters).subscribe(myResult => {            
             if (myResult == null) {
                 this.ItemsSource = [];
             }

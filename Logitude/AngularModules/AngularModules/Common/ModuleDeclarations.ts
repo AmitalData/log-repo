@@ -17,8 +17,7 @@ import {EditLastRateComponent} from './Components/Maintenance/EditLastRateCompon
 import {LogBoxSettings} from '../Common/Components/Maintenance/LogBoxSettings';
 import {TenantImportComponent} from './Components/Maintenance/TenantImportComponent';
 import {MeasurementGeneralComponent} from './Components/Maintenance/Measurement/MeasurementGeneralComponent';
-import { ChargesTypeGeneralTabComponent } from './Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent';
-import { ChargesTypeQuotationsTabComponent } from './Components/Maintenance/ChargesType/ChargesTypeQuotationsTabComponent';
+import {ChargesTypeGeneralTabComponent} from './Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent';
 import {CreditLimitSettingsComponent} from './Components/Maintenance/CreditLimit/CreditLimitSettingsComponent';
 import { CustomerActivationSettingsComponent } from '../Common/Components/Maintenance/CustomerActivationSettingsComponent';
 import { VATSettingsComponent } from '../Common/Components/Maintenance/VATSettingsComponent';
@@ -55,22 +54,12 @@ import {CountryCityGeneralTabComponent} from './Components/Maintenance/CountryCi
 import {VesselGeneralTabComponent} from './Components/Maintenance/Vessel/VesselGeneralTabComponent';
 import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/CustomsShipperFiltersMenuComponent';
 import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
-import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
-import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
-import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
-import { CityNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate';
-import { CodeListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate';
-import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate';
-import { OcrDefaultsSettingsComponent } from './Components/Maintenance/OcrDefaultsSettingsComponent';
-import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
-import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
-import { ReportExecutionLogListActionBarComponent } from './Components/ListActionBar/ReportExecutionLogListActionBarComponent';
 
-  export const Components =
+
+export const Components =
     [
         CustomerHelperComponent,
         CustomerShortTitleComponent,
-        TariffsTabComponent,
         AssignComponent,
         NewStackComponent,
         StackSelectionComponent,
@@ -87,14 +76,12 @@ import { ReportExecutionLogListActionBarComponent } from './Components/ListActio
         NewCurrencyComponent,
         NewChargesTypeComponent,
         ChargesTypeGeneralTabComponent,
-        ChargesTypeQuotationsTabComponent,
         NewVatTypePercentageComponent,
         CreditLimitSettingsComponent,
         CompetitorComponent,
         NewBusinessUnitComponent,
         BusinessUnitGeneralTabComponent,
         CustomerActivationSettingsComponent,
-        OcrDefaultsSettingsComponent,
         VATSettingsComponent,
         AccountingTabComponent,
         AccountingTab_ChargesType,
@@ -127,17 +114,8 @@ import { ReportExecutionLogListActionBarComponent } from './Components/ListActio
         DocumentFilingEmailSettingsComponent,
         CustomsShipperFiltersMenuComponent,
         TransmissionLogAuditTabComponent,
-        NewHorseComponent,
-        HorseGeneralTabComponent,
-        CodeListHeaderTemplate,
-        CityNameListHeaderTemplate,
-        EnglishNameListHeaderTemplate,
-        StartWorkingListHeaderTemplate,         
-        TariffsTabComponent,
-        HostScreenComponent,
-        ReportExecutionLogListActionBarComponent
     ];
-  
+
 export class ModuleDeclarations {
     public static Get(name: string) {
 
@@ -162,12 +140,9 @@ export class ModuleDeclarations {
             case "NewCurrencyComponent": { myResult = NewCurrencyComponent; break; }
             case "NewChargesTypeComponent": { myResult = NewChargesTypeComponent; break; }
             case "ChargesTypeGeneralTabComponent": { myResult = ChargesTypeGeneralTabComponent; break; }
-            case "ChargesTypeQuotationsTabComponent": { myResult = ChargesTypeQuotationsTabComponent; break; }
             case "NewVatTypePercentageComponent": { myResult = NewVatTypePercentageComponent; break; }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
             case "CustomerActivationSettingsComponent": { myResult = CustomerActivationSettingsComponent; break }
-            case "OcrDefaultsSettingsComponent": { myResult = OcrDefaultsSettingsComponent; break }
-
             case "VATSettingsComponent": { myResult = VATSettingsComponent; break }
             case "CompetitorComponent": { myResult = CompetitorComponent; break }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
@@ -205,17 +180,10 @@ export class ModuleDeclarations {
             case "DocumentFilingEmailSettingsComponent": { myResult = DocumentFilingEmailSettingsComponent; break; }
             case "CustomsShipperFiltersMenuComponent": { myResult = CustomsShipperFiltersMenuComponent; break; }
             case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
-            case "NewHorseComponent": { myResult = NewHorseComponent; break; }
-            case "HorseGeneralTabComponent": { myResult = HorseGeneralTabComponent; break; }
-            case "CodeListHeaderTemplate": { myResult = CodeListHeaderTemplate; break; }
-            case "CityNameListHeaderTemplate": { myResult = CityNameListHeaderTemplate; break; }
-            case "EnglishNameListHeaderTemplate": { myResult = EnglishNameListHeaderTemplate; break; }
-            case "StartWorkingListHeaderTemplate": { myResult = StartWorkingListHeaderTemplate; break; }
-            case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
-            case "HostScreenComponent": { myResult = HostScreenComponent; break; }
-            case "ReportExecutionLogListActionBarComponent": { myResult = ReportExecutionLogListActionBarComponent; break; }
+
+
         }
- 
+
         return myResult;
     }
 }

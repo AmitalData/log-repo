@@ -12,7 +12,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 
 @Component({
     selector: 'CustomsInterfaceSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomsInterfaceSettingsComponent.html',
 })
 

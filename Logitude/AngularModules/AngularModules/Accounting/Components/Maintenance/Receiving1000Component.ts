@@ -11,7 +11,7 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './Receiving1000Component.html',
 })
 

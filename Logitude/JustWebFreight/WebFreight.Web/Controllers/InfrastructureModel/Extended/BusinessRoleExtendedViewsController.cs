@@ -3,7 +3,7 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;

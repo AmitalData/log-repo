@@ -1,11 +1,6 @@
-﻿using Logitude.Accounting.Def.Validators;
-using Logitude.BL.Validators;
-using Logitude.Server.Tools;
-using Simplog.Server.Infrastructure.DataContracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 using System.ServiceModel.DomainServices.Server;
 
 namespace Logitude.BL.InvoiceModel.EntityPMs
@@ -97,9 +92,10 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
         public string BranchName { get; set; }
+
+        public string ConnectedEntityReferences { get; set; }
         public string HouseNumber {get; set;}
         public string MasterNumber {get; set;}
-        public string MainEntityMasterShipmentNumbers { get; set; }
         public string Description {get; set;}
         public string VendorPartnerTypeId { get; set; }
         public string CreditAccount { get; set; }
@@ -116,10 +112,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsMultipleEntities { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
-        public string ConfirmationNumber { get; set; }
-
         public string ApprovedByUserName { get; set; }
-        public string VendorContactId { get; set; }
         public string ExternalAccountingEntityId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? OperationalDate { get; set; }
@@ -135,50 +128,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstApproveDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field1 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field2 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field3 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field4 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field5 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field6 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field7 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field8 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field9 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field10 { get; set; }
-
-        public string ShipmentsNumbers { get; set; }
-        public string MasterNumbers { get; set; }
-        public string MasterShipmentNumbers { get; set; }
-        public string HouseNumbers { get; set; }
 
         private List<APInvoiceLinePM> invoiceLines;
         [Include]
@@ -344,26 +293,5 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string VendorCountry { get; set; }
 
         public string CreatedByPartner { get; set; }
-        public bool TotalVATOnly { get; set; }
-        public string VendorVatNumber { get; set; }
-
-        public DateTime? PaidDate { get; set; }
-        public Boolean IsNew { get; set; }
-        public Boolean IsCopied { get; set; }
-        public string CopiedFrom { get; set; }
-        public string GlobalTaxCalculation { get; set; }
-        public bool IsUpdateFromPaymentService { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConcurrencyGUID { get; set; }
-        public string NewConcurrencyGUID { get; set; }
-        public bool IsEquipment { get; set; }
-        public string ConnectedPaymentsNumbers { get; set; }
-        public string TotalEquation { get; set; }
-        public bool IsPrepaidExpenses { get; set; }
-
-        public bool HasExpenseAllocationSetting { get; set; }
-        public DateTime ExpenseAllocationStartDate { get; set; }
-
     }
 }

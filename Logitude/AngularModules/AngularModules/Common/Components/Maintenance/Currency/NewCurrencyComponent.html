@@ -51,21 +51,6 @@
 
                             </tr>
 
-                            <tr *ngIf="IsAccountingActivated" class="FormFieldRow">
-                                <td>
-                                    <LogLabel [NoObjectField]="true" [Text]="'Unit'" [ObjectFieldName]="'Unit'" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td style="width:230px;">
-                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'Unit'" [InputType]="'integer'" Min="1" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-
-                            </tr>
-
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [NoObjectField]="true" [Text]="'Exchange Rate Date'" [ObjectFieldName]="'RateDate'" [DataContext]="DataContext"></LogLabel>

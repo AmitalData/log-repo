@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
@@ -20,7 +20,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string SmallDocumentId { get; set; }
         public string CalculatedFileName { get; set; }
         public bool IsEncrypted { get; set; }
-        public bool? MarkForDelete { get; set; }
         [ForeignKey("SmallDocumentId")]
         public SmallDocument SmallDocument { get; set; }
         //public List<DocumentIn> ExternalDocuments { get; set; }

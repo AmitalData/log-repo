@@ -1,7 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -12,10 +11,10 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class LoadTestService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
 
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsLoadTest';
 
@@ -25,7 +24,7 @@ export class LoadTestService {
 
     PostCourierBOLRequest(entity: any) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -37,13 +36,13 @@ export class LoadTestService {
             return this._http.post(
                 this._apiUrl + '/PostCourierBOLRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -59,18 +58,18 @@ export class LoadTestService {
 
 
 
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetNewCustomFile/?' + '&tenant=' + tenant + '&ConsigneeId=' + ConsigneeId + '&CustomerId=' + CustomerId,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                { headers: authHeader }).map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
+                    serviceResponse.Result = response.json();
 
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -80,18 +79,18 @@ export class LoadTestService {
 
 
 
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetDeclarationFromFileNo/?' + '&tenant=' + tenant + '&fileNo=' + fileNo + '&FilingCopy=' +  FilingCopy,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                { headers: authHeader }).map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
+                    serviceResponse.Result = response.json();
 
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetTicket(tenant: number, declarationId: string) {
@@ -100,18 +99,18 @@ export class LoadTestService {
 
 
 
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetTicket/?' + '&tenant=' + tenant + '&declarationId=' + declarationId,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                { headers: authHeader }).map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
+                    serviceResponse.Result = response.json();
 
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
     

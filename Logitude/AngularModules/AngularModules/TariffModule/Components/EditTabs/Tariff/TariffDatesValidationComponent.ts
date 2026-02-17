@@ -8,7 +8,7 @@ import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { TariffDomainService } from '../../../Services/TariffDomainService';
 @Component({
     selector: 'TariffDatesValidationComponent',
-    
+    moduleId: module.id,
     templateUrl: './TariffDatesValidationComponent.html',
 })
 
@@ -81,7 +81,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
             }
         }
 
-        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS" || this.TariffType == "ICC" || this.TariffType == "ECC" || this.TariffType == "IFT" || this.TariffType == "ICS" || this.TariffType == "ECS") {
+        else if (this.TariffType == "ASC" || this.TariffType == "OSC" || this.TariffType == "OFS") {
             if (this.LineExpirationDate == null) {
                 this.ValidationErrorsList.push("Expiration Date is required");
             }
@@ -90,7 +90,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
                 this.EntityLinePM.ExpirationDate = this.LineExpirationDate;
 
                 var service: TariffDomainService = new TariffDomainService();
-                service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe((result:any) => {
+                service.GetCheckDatesValidty(this.EntityLinePM.OriginPortId, this.EntityLinePM.DestinationPortId, this.LineExpirationDate, this.EntityLinePM.TariffId).subscribe(result => {
                     if (result.HasError) {
                         this.ValidationErrorsList = this.ValidationErrorsList.concat(result.ErrorsArray);
                     }
@@ -102,7 +102,7 @@ export class TariffDatesValidationComponent extends BaseComponent {
             }
         }
 
-        if (this.ValidationErrorsList.length == 0 && (this.TariffType != "ASC" && this.TariffType != "OSC" && this.TariffType != "OFS" && this.TariffType != "ICC" && this.TariffType != "ECC" && this.TariffType != "IFT" && this.TariffType != "ICS" && this.TariffType != "ECS")) {
+        if (this.ValidationErrorsList.length == 0 && (this.TariffType != "ASC" && this.TariffType != "OSC" && this.TariffType != "OFS")) {
             this.CurrentSession.CloseCurrentWindowEmit("ok");
         }      
     }

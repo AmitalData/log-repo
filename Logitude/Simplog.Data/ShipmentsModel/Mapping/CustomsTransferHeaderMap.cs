@@ -19,7 +19,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FileName).HasMaxLength(40).IsRequired().IsUnicode(false);
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomsTransferTypeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
-            //this.Property(t => t.TransferDate).IsOptional();
+            this.Property(t => t.TransferDate).IsOptional();
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsOptional().IsUnicode(true);
             this.Property(t => t.Notes).HasMaxLength(250).IsOptional().IsUnicode(true);
 
@@ -34,11 +34,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.Notes).HasColumnName("Notes");
-            this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber");
 
             this.HasRequired(t => t.CustomsTransferType).WithMany().HasForeignKey(d => d.CustomsTransferTypeCode);
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(t => t.CreatedByUserId);
-
         }
     }
 }

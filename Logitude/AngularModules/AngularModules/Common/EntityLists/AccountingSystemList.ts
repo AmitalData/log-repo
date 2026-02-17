@@ -27,6 +27,5 @@ export class AccountingSystemList {
 		AllowPositiveAmountsInTheCreditNote: boolean;
 		CanTransferToDropbox: boolean;
 		AllowAPPaymentsTransfer: boolean;
-		CanTransferToFTP: boolean;
 	
 }

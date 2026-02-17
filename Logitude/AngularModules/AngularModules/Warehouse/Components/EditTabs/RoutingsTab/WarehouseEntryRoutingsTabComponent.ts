@@ -1,3 +1,4 @@
+/// <reference path="../../../tools.ts" />
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -16,12 +17,11 @@ import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
 
 @Component({
     selector: 'WarehouseEntryRoutingsTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './WarehouseEntryRoutingsTabComponent.html',
 })
 
 export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
-  public CarrierDependencyProperty1: any;
 
     public EntityPM: WarehouseEntryPM;
     public ObjectTableName: string = null;
@@ -70,7 +70,7 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
 
                 }
                 else {
-
+  
                     if ((!this.FromPortId && !this.FromCountryId) || (!this.ToPortId && !this.ToCountryId)) {
                         this.IsEnableEdit = true;
                     }
@@ -79,12 +79,9 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
                     this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
                     this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
                     this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
-
-
+                   
+  
                 }
-            }
-            if (this.EntityPM.StatusCode == "CAEA") {
-                this.DisableEditing();
             }
 
         }
@@ -94,9 +91,6 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    if (this.EntityPM.StatusCode == "CAEA") {
-                        this.DisableEditing();
-                    }
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                   
                 }
@@ -105,24 +99,10 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    if (this.EntityPM.StatusCode == "CAEA") {
-                        this.DisableEditing();
-                    }
 
                 }
             });
-
         }
-    }
-
-    private DisableEditing() {
-        this.IsEnableEdit = false;
-        this.UIProperties.SetEnabled("FromPortId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("ToPortId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("FromCountryId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("ToCountryId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, this.IsEnableEdit);
-        this.UIProperties.SetEnabled("TruckerReference", this.ObjectTableName, this.IsEnableEdit);
     }
 
     IsInlandDomesticWarehouse(entityPM: WarehouseEntryPM) {
@@ -405,8 +385,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -460,8 +440,8 @@ export class WarehouseEntryRoutingsTabComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

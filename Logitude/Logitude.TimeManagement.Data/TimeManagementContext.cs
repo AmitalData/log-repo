@@ -104,6 +104,7 @@ namespace Logitude.TimeManagement.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -300,7 +301,7 @@ namespace Logitude.TimeManagement.Data
             modelBuilder.Configurations.Add(new ChargeTypeAccountingMap());
             modelBuilder.Configurations.Add(new ReportMap());
             modelBuilder.Configurations.Add(new ContactLastLoginMap());
-			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ContactLoginLogMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());

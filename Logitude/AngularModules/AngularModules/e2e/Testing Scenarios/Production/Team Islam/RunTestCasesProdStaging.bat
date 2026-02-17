@@ -13,19 +13,19 @@ FOR /L %%A IN (1,1,1) DO (
 
   
 --ShipmentView-- 
-  cmd /c call  npm run do-e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,ShipmentView>D:\E2ETeamIslamReport\Report.log
+  cmd /c call  npm run e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,ShipmentView>D:\E2ETeamIslamReport\Report.log
  CALL :CheckError "ShipmentView"
    
 --CompanyAddressSetting
-cmd /c call npm run do-e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,CompanyAddressSetting>D:\E2ETeamIslamReport\Report.log
+cmd /c call npm run e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,CompanyAddressSetting>D:\E2ETeamIslamReport\Report.log
   CALL :CheckError "CompanyAddressSetting"
   
 --NewAgent
-  cmd /c call npm run do-e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,NewAgent>D:\E2ETeamIslamReport\Report.log
+  cmd /c call npm run e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,NewAgent>D:\E2ETeamIslamReport\Report.log
  CALL :CheckError "NewAgent"
    
 --NewUser--
- cmd /c call npm run do-e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,NewUser>D:\E2ETeamIslamReport\Report.log
+ cmd /c call npm run e2e -- --params.Env="testStaging" --params.Team="islam" --suite=login,NewUser>D:\E2ETeamIslamReport\Report.log
  CALL :CheckError "NewUser"
  
 
@@ -43,7 +43,7 @@ IF %NumberErrors% NEQ 0 (
   exit 1
 )
 
-
+pause
 
 SETLOCAL
 :CheckError

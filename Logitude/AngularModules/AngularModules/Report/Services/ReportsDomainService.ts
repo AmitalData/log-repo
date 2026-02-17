@@ -1,29 +1,34 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Observable}     from 'rxjs/Rx';
+import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import { ParticipantList } from '../EntityLists/ParticipantList';
-
+import {ParticipantList} from '../EntityLists/ParticipantList';
 @Injectable()
 
 export class ReportsDomainService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsDomain'
     }
 
     GetActivityStatus(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsDomain'
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetIQueryableEntityList?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetIQueryableEntityList?tenant=' + currentTenant, {
+                headers: authHeader
+            }).map(response => {
 
-                var allLists: any = response;
+                var allLists: ParticipantList[] = response.json();
                 var myList: Array<ParticipantList> = new Array<ParticipantList>();
                 for (var key in allLists) {
                     var entity: ParticipantList;
@@ -31,69 +36,93 @@ export class ReportsDomainService {
                     myList.push(entity);
                 }
                 return myList;
-            }));
+            });
         });
 
     }
     GetBusinessUnitLists(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsDomain'
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetBusinessUnitLists?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var myList:any=response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetBusinessUnitLists?tenant=' + currentTenant, {
+                headers: authHeader
+            }).map(response => {
+
+                var myList:any=response.json();
                 
                 return myList;
-            }));
+            });
         });
 
     }
     GetAdditionalServicesByTenant(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsDomain'
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetAdditionalServicesByTenant?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetAdditionalServicesByTenant?tenant=' + currentTenant, {
+                headers: authHeader
+            }).map(response => {
 
-                var myList: any = response;
+                var myList: any = response.json();
 
                 return myList;
-            }));
+            });
         });
 
     }
     GetProductTypesByTenant(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsDomain'
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetProductTypesByTenant?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var myList: any = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetProductTypesByTenant?tenant=' + currentTenant, {
+                headers: authHeader
+            }).map(response => {
+
+                var myList: any = response.json();
 
                 return myList;
-            }));
+            });
         });
 
     }
     GetLeadSourceLists(currentTenant: number) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsDomain'
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetLeadSourceLists?tenant=' + currentTenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-                var myList: any = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetLeadSourceLists?tenant=' + currentTenant, {
+                headers: authHeader
+            }).map(response => {
+
+                var myList: any = response.json();
 
                 return myList;
-            }));
+            });
         });
 
     }
     UploadStaticFile(fileUploadParamerter: any) {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportsDomain'
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/putuploadstaticfile', JSON.stringify(fileUploadParamerter),{
+                headers: authHeader,
 
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/putuploadstaticfile', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+            }).map(response => {
+                var result = response.json();
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
@@ -101,10 +130,12 @@ export class ReportsDomainService {
                 pmresponse.Result = result;
                 return pmresponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
+            }).catch(ServiceHelper.HandleServiceError);
+        }
 
+        );
+
+    }
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: ParticipantList;

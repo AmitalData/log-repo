@@ -43,7 +43,7 @@
                                             </table>
                                         </div>
 
-                                        <div *ngIf="IsNewEntityVisibile" [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
+                                        <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
                                             <button class="Button" (click)="NewEntityClicked('APInvoiceMultiple')">{{'General.O.New' | TextCodeTranslationPipe}}</button>
                                         </div>
 
@@ -83,11 +83,11 @@
                                         </div>
 
                                         <div>
-                                            <p id="{{'DraftAPPaymentsQ' | IdGeneratorAsyncPipe | async}}"  class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')">{{'APPayment.Q.DraftAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsDraftsCount}})</p>
-                                            <p id="{{'OpenAPPaymentsQ' | IdGeneratorAsyncPipe | async}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')">{{'APPayment.Q.OpenAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsOpenedCount}})</p>
-                                            <p id="{{'ErrorInTransferQ' | IdGeneratorAsyncPipe | async}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:ErrorInTransfer')" *ngIf="APPaymentErrorInTransferVisibility">{{'APPayment.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{APPaymentErrorInTransferCount}})</p>
-                                            <p id="{{'AllAPPaymentsQ' | IdGeneratorAsyncPipe | async}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:All Payments')">{{'APPayment.Q.AllAPPayments'|TextCodeTranslationPipe}}</p>
-                                            <p id="{{'NewAPPayment' | IdGeneratorAsyncPipe | async}}" class="QueryLink" (click)="NewEntityClicked('APPayment')">{{'General.O.NewPayment'|TextCodeTranslationPipe}}</p>
+                                            <p id="{{'DraftAPPaymentsQ' | IdGeneratorPipe}}"  class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')">{{'APPayment.Q.DraftAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsDraftsCount}})</p>
+                                            <p id="{{'OpenAPPaymentsQ' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')">{{'APPayment.Q.OpenAPPayments'|TextCodeTranslationPipe}} ({{APPaymentsOpenedCount}})</p>
+                                            <p id="{{'ErrorInTransferQ' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:ErrorInTransfer')" *ngIf="APPaymentErrorInTransferVisibility">{{'APPayment.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{APPaymentErrorInTransferCount}})</p>
+                                            <p id="{{'AllAPPaymentsQ' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewInvoiceQuery('APPayment:All Payments')">{{'APPayment.Q.AllAPPayments'|TextCodeTranslationPipe}}</p>
+                                            <p id="{{'NewAPPayment' | IdGeneratorPipe}}" class="QueryLink" (click)="NewEntityClicked('APPayment')">{{'General.O.NewPayment'|TextCodeTranslationPipe}}</p>
                                         </div>
                                     </div>
 
@@ -285,30 +285,24 @@
                         <div class="MediaFill">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
                                 <!-- TopName -->
-                                <log-column [width]="'150'" [header]="'General.O.TopName' | TextCodeTranslationPipe" [Alignment]="isRTL ? 'right' : 'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'right' : 'left'">
-                                            {{item.CreditorName}}
-                                        </log-cell-template>
-                                    </ng-template>
+                                <log-column [width]="'150'" [header]="'General.O.TopName' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1"  [Alignment]="isRTL ? 'right' : 'left'">
+                                        {{item.CreditorName}}
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Outstanding -->
-                                <log-column [width]="'95'" [header]="'General.O.Outstanding' | TextCodeTranslationPipe" [Alignment]="isRTL ? 'right' : 'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
-                                            {{item.Outstanding | NumbersPipe:'N2'}}
-                                        </log-cell-template>
-                                    </ng-template>
+                                <log-column [width]="'95'" [header]="'General.O.Outstanding' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
+                                        {{item.Outstanding | NumbersPipe:'N2'}}
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Overdue -->
-                                <log-column [width]="'95'" [header]="'General.O.Overdue' | TextCodeTranslationPipe" [Alignment]="isRTL ? 'right' : 'left'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
-                                            {{item.Overdue | NumbersPipe:'N2'}}
-                                        </log-cell-template>
-                                    </ng-template>
+                                <log-column [width]="'95'" [header]="'General.O.Overdue' | TextCodeTranslationPipe"  [Alignment]="isRTL ? 'right' : 'left'">
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="isRTL ? 'left' : 'right'">
+                                        {{item.Overdue | NumbersPipe:'N2'}}
+                                    </log-cell-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

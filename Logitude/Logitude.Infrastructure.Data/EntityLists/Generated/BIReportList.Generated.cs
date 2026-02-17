@@ -46,16 +46,6 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string CreatedByUserName  { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
-       [DataMember]
-       public DateTime? LastRunDate  { get; set; }
-       [DataMember]
-       public string LastRunByUserName  { get; set; }
-       [DataMember]
-       public string FactTableName  { get; set; }
-       [DataMember]
-       public string LastRunId  { get; set; }
-       [DataMember]
-       public bool AvailableForScheduling  { get; set; }
    }
 
 }

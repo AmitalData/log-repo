@@ -41,15 +41,9 @@ export class GITITEMCacheService {
   //}
 
     FirstItemCodeComponent(itemCode) {
-        var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == itemCode )[0];
+        var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == itemCode)[0];
         return itemCodeDetails;
     }
-    FirstItemCodeComponentByDirection(itemCode,direction) {
-      
-      var itemCodeDetails = GITITEMCacheService.Instance.ItemCode_LocalCache.filter(vm => vm.ItemCode == itemCode && vm.Direction==direction)[0];
-      return itemCodeDetails;
-  }
-
     AddItemCodeComponent(ItemCodeComponent) {
         GITITEMCacheService.Instance.ItemCode_LocalCache.push(ItemCodeComponent);
     }
@@ -102,7 +96,7 @@ export class GITITEMCacheService {
     //this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
     var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", SessionLocator.Tenant)
-      .subscribe((response:any) => {
+      .subscribe(response => {
         //this.CurrentSession.StopBusyIndicator();
         if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
           this.IsCountryPURForItems = true;
@@ -114,7 +108,7 @@ export class GITITEMCacheService {
     private GetUnitPURForItems() {
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_UNIT", "NON", "NON", SessionLocator.Tenant)
-            .subscribe((response:any) => {
+            .subscribe(response => {
                 if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
                     this.IsUnitPURForItems = true;
                 }
@@ -139,11 +133,8 @@ export class GITITEMCacheService {
           myGITITEMPM.NAMEENG = item.ItemDescription;
           myGITITEMPM.ORIGINCOUNTRY = item.OriginCountryCode;
           myGITITEMPM.UNITID = item.InvoiceQuantityType;
-            myGITITEMPM.TARIFFID = item.TariffID;
-            myGITITEMPM.GITITEMCRs = item.GITITEMCRs;
-            //myGITITEMPM.GITITEMCRs.push.apply(myGITITEMPM.GITITEMCRs, item.GITITEMCRs)
 
-          //this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe((myResult:any) => {
+          //this.GITITEMExtendedPMService.insert(myGITITEMPM).subscribe(myResult => {
           //  var mm: ServiceResponse = myResult;
           //  if (!mm.HasError) {
           //    //this.entity = mm.Result;
@@ -158,7 +149,7 @@ export class GITITEMCacheService {
         let chunk = 50;
         for (i = 0, j = listGITITEMDto.length; i < j; i += chunk) {
             let chunkDtos = listGITITEMDto.slice(i, i + chunk);
-            this.GITITEMExtendedPMService.insert(chunkDtos).subscribe((myResult:any) => {
+            this.GITITEMExtendedPMService.insert(chunkDtos).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var entity = mm.Result;

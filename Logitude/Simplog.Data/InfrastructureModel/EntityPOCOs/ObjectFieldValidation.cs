@@ -16,7 +16,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ObjectFieldId { get; set; }
         public int ValidationOrder { get; set; }
         public string Condition { get; set; }
-        public string ObjectFieldCode { get; set; }
         //[Include]
         //[Association("ObjectFieldValidationObjectField", "ObjectFieldId", "Id", IsForeignKey = true)]
 

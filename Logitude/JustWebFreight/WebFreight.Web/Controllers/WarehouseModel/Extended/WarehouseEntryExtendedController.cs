@@ -1,24 +1,21 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
-using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -28,38 +25,6 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
 {
     public class WarehouseEntryExtendedController : ApiController
     {
-        public HttpResponseMessage PutCancelWarehouseEntry(WarehouseEntryPM entityPM)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseEntry", entityPM.Tenant, authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("WarehouseRelease", "UPDATE", authToken.Tenant);
-                        WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(entityPM.Tenant);
-                        warehouseEntryQueryService.PutCancelWarehouseEntry(entityPM);
-                        
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-
         public HttpResponseMessage GetRecentWarehouseEntries()
         {
             try
@@ -104,30 +69,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetWarehouseEntriesByShipmentId(string shipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("WarehouseEntry", "READ", tenant);
-
-                WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(tenant);
-                List<WarehouseEntryList> warehouseEntries = warehouseEntryQueryService.GetActiveWarehouseEntryListsByshipmentId(shipmentId, tenant);
-                
-                return Request.CreateResponse(HttpStatusCode.OK, warehouseEntries);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
+        
         public HttpResponseMessage GetWarehouseConnectedEntitiesByEntityId(string entityId)
         {
             try  //GetQuoteConnectedEntities
@@ -172,29 +114,8 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        
 
-        public HttpResponseMessage GetWarehouseEntriesByWarehouseId(string warehouseId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("WarehouseEntry", "READ", tenant);
-
-                WarehouseEntryQueryService warehouseEntryQueryService = new WarehouseEntryQueryService(tenant);
-                List<WarehouseEntryList> warehouseEntries = warehouseEntryQueryService.GetActiveWarehouseEntryListsByWarehouseId(warehouseId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, warehouseEntries);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
 
     }
 

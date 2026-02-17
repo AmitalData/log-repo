@@ -8,7 +8,7 @@ import {AppTool} from '../../Tools';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'MultilineTextBoxWindow',
     templateUrl: "./MultilineTextBoxWindow.html",
@@ -20,7 +20,6 @@ export class MultilineTextBoxWindow implements OnInit {
     PreventNewLine: boolean = false;
     IsTextBoxRTL: boolean = false;
     RowsCount: number;
-    EnableKeyDown: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -36,7 +35,6 @@ export class MultilineTextBoxWindow implements OnInit {
 
         this.PreventNewLine = this.RowsCount == 1;
 
-        this.EnableKeyDown = args.EnableKeyDown;
     }
 
     private text: string;
@@ -53,7 +51,7 @@ export class MultilineTextBoxWindow implements OnInit {
         var key = event.keyCode;
         var keyChar = event.key;
 
-        if (key == ENTER && this.PreventNewLine && !this.EnableKeyDown) {
+        if (key == ENTER && this.PreventNewLine) {
             event.preventDefault();
             return;
         }

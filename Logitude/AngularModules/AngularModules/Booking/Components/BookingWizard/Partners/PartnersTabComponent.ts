@@ -18,7 +18,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 @Component({
     selector: 'PartnersTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './PartnersTabComponent.html',
 })
 
@@ -385,7 +385,7 @@ export class PartnersTabComponent extends BaseComponent {
         }
 
         else {
-            this.myCardListService.getSingle(this.ShipperId).subscribe((myResult:any) => {
+            this.myCardListService.getSingle(this.ShipperId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -405,7 +405,7 @@ export class PartnersTabComponent extends BaseComponent {
         }
     }
     private LoadShipperCard() {
-        this.myCardListService.getSingle(this.ShipperId).subscribe((myResult:any) => {
+        this.myCardListService.getSingle(this.ShipperId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
@@ -425,7 +425,7 @@ export class PartnersTabComponent extends BaseComponent {
     private GetShipperAddress() {
         if (!AppTool.IsNullOrEmpty(this.ShipperAddressId)) {
             var myService: AddressListService = new AddressListService();
-            myService.getSingle(this.ShipperAddressId).subscribe((myResult:any) => {
+            myService.getSingle(this.ShipperAddressId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -439,7 +439,7 @@ export class PartnersTabComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(this.ShipperId)) {
             var myService: AddressService = new AddressService();
 
-            myService.GetMainAddressByCardId(this.ShipperId, this.Wizard.TenantPM.Id).subscribe((myResult:any) => {
+            myService.GetMainAddressByCardId(this.ShipperId, this.Wizard.TenantPM.Id).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -531,7 +531,7 @@ export class PartnersTabComponent extends BaseComponent {
         }
 
         else {
-            this.myCardListService.getSingle(this.ConsigneeId).subscribe((myResult:any) => {
+            this.myCardListService.getSingle(this.ConsigneeId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -549,7 +549,7 @@ export class PartnersTabComponent extends BaseComponent {
         }
     }
     private LoadConsigneeCard() {
-        this.myCardListService.getSingle(this.ConsigneeId).subscribe((myResult:any) => {
+        this.myCardListService.getSingle(this.ConsigneeId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
@@ -569,7 +569,7 @@ export class PartnersTabComponent extends BaseComponent {
     private GetConsigneeAddress() {
         if (!AppTool.IsNullOrEmpty(this.ConsigneeAddressId)) {
             var myService: AddressListService = new AddressListService();
-            myService.getSingle(this.ConsigneeAddressId).subscribe((myResult:any) => {
+            myService.getSingle(this.ConsigneeAddressId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -582,7 +582,7 @@ export class PartnersTabComponent extends BaseComponent {
     private GetConsigneeMainAddress() {
         if (!AppTool.IsNullOrEmpty(this.ConsigneeId)) {
             var myService: AddressService = new AddressService();
-            myService.GetMainAddressByCardId(this.ConsigneeId, this.Wizard.TenantPM.Id).subscribe((myResult:any) => {
+            myService.GetMainAddressByCardId(this.ConsigneeId, this.Wizard.TenantPM.Id).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -678,7 +678,7 @@ export class PartnersTabComponent extends BaseComponent {
         }
 
         else {            
-            this.myCardListService.getSingle(this.IssuingCarrierAgentId).subscribe((myResult:any) => {
+            this.myCardListService.getSingle(this.IssuingCarrierAgentId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -700,7 +700,7 @@ export class PartnersTabComponent extends BaseComponent {
         }
     }
     private LoadIssuingCarrierCard() {
-        this.myCardListService.getSingle(this.IssuingCarrierAgentId).subscribe((myResult:any) => {
+        this.myCardListService.getSingle(this.IssuingCarrierAgentId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
@@ -721,7 +721,7 @@ export class PartnersTabComponent extends BaseComponent {
     private GetIssuingCarrierAddress() {
         if (!AppTool.IsNullOrEmpty(this.IssuingCarrierAddressId)) {
             var myService: AddressListService = new AddressListService();
-            myService.getSingle(this.IssuingCarrierAddressId).subscribe((myResult:any) => {
+            myService.getSingle(this.IssuingCarrierAddressId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
 
                 if (!myResponse.HasError) {
@@ -735,7 +735,7 @@ export class PartnersTabComponent extends BaseComponent {
         if (!this.isSetDefaultTenantAgent) {
             if (!AppTool.IsNullOrEmpty(this.IssuingCarrierAgentId)) {
                 var myService: AddressService = new AddressService();
-                myService.GetMainAddressByCardId(this.IssuingCarrierAgentId, this.Wizard.TenantPM.Id).subscribe((myResult:any) => {
+                myService.GetMainAddressByCardId(this.IssuingCarrierAgentId, this.Wizard.TenantPM.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
 
                     if (!myResponse.HasError) {

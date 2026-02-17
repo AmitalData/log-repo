@@ -26,10 +26,10 @@ namespace DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceRefe
         private string DeclarationXmlDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RemarksField;
+        private string ForwarderShipmentNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentNumberField;
+        private string RemarksField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
@@ -58,6 +58,19 @@ namespace DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceRefe
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ForwarderShipmentNumber {
+            get {
+                return this.ForwarderShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ForwarderShipmentNumberField, value) != true)) {
+                    this.ForwarderShipmentNumberField = value;
+                    this.RaisePropertyChanged("ForwarderShipmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Remarks {
             get {
                 return this.RemarksField;
@@ -66,19 +79,6 @@ namespace DeclarationApprovalRequestTester.DeclarationApprovalRequestServiceRefe
                 if ((object.ReferenceEquals(this.RemarksField, value) != true)) {
                     this.RemarksField = value;
                     this.RaisePropertyChanged("Remarks");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentNumber {
-            get {
-                return this.ShipmentNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentNumberField, value) != true)) {
-                    this.ShipmentNumberField = value;
-                    this.RaisePropertyChanged("ShipmentNumber");
                 }
             }
         }

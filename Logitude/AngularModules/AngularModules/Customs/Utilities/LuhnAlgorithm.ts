@@ -1,4 +1,4 @@
-
+﻿
 
 export class LuhnAlgorithm {
 
@@ -36,18 +36,13 @@ export class LuhnAlgorithm {
             return null;
         }
 
-         var year = Number( (new Date()).getUTCFullYear().toString().substr(2, 1));
-
-        if ( reshimonNumber.substr(0, 1) > (new Date()).getUTCFullYear().toString().substr(3, 1)) {
-            year = year - 1;
-        }
 
 
         let tmp: string =
             //DateTime.Now.ToString("yy").Substring(0, 1)
             //2017 return 1 
             //1984 return 8 
-            year
+            (new Date()).getUTCFullYear().toString().substr(2, 1)
             +
             reshimonNumber.substr(0, 1)
             +
@@ -68,10 +63,7 @@ export class LuhnAlgorithm {
         }
         //check digits 3-4 is 98 or 99 according to DclarationType
         if (declarationNumber.substr(2, 2) != "98" &&
-            declarationNumber.substr(2, 2) != "99"
-            &&
-            declarationNumber.substr(2, 2) != "97"
-        ) {
+            declarationNumber.substr(2, 2) != "99") {
             return null;
         }
 

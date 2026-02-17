@@ -30,7 +30,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerSalesTabComponent.html',
 })
 
@@ -55,7 +55,7 @@ export class CustomerSalesTabComponent implements OnDestroy {
         this.RegardingEntity = "Regarding Customer : " + this.EntityPM.Code + " " + this.EntityPM.EnglishName;
         
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
-           this.IsTicketTabDim = true;
+            this.IsTicketTabDim = true;
         }
 
         this.BuildScreenData();
@@ -222,12 +222,8 @@ export class CustomerSalesTabComponent implements OnDestroy {
                             myTempList.push(item);
                         });
 
-                        var length = 5;
-                        if (!this.IsTicketTabDim) {
-                            length = 10;
-                        }
                         myTempList.forEach(item => {
-                            if (this.ActivityObsList.length < length) {
+                            if (this.ActivityObsList.length < 5) {
                                 this.ActivityObsList.push(new ActivityData(item, this));
                             }
                         });
@@ -426,7 +422,7 @@ export class CustomerSalesTabComponent implements OnDestroy {
                 }
         }
 
-        this._entityResourceService.getEntityResourceByTableName(objectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(objectTableName, 0).subscribe(response => {
             logWindow.Title = title;
             logWindow.Show(path);
             logWindow.WindowClosed.subscribe(s => {
@@ -502,7 +498,7 @@ export class CustomerSalesTabComponent implements OnDestroy {
         listArgs.ObjectTableName = objectTableName;
         listArgs.DisplayTitle = listArgs.QueryCode;
         listArgs.BackButtonTitle = "Back";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -548,7 +544,7 @@ export class CustomerSalesTabComponent implements OnDestroy {
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {

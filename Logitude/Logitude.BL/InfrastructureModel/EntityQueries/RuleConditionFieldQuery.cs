@@ -38,7 +38,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                                                                        Id = a.Id,
                                                                        ObjectFieldId = a.ObjectFieldId,
-                                                                       ObjectFieldCode = a.ObjectFieldCode,
                                                                        ObjectFieldName = a.ObjectField.FieldName,
                                                                        Operator = a.Operator,
                                                                        Tenant = a.Tenant,
@@ -61,7 +60,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                                                                        Id = a.Id,
                                                                        ObjectFieldId = a.ObjectFieldId,
-                                                                       ObjectFieldCode = a.ObjectFieldCode,
                                                                        ObjectFieldName = a.ObjectField.FieldName,
                                                                        Operator = a.Operator,
                                                                        Tenant = a.Tenant,

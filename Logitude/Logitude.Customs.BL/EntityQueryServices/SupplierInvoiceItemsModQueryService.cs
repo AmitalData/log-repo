@@ -27,8 +27,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                           TypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
                                                                                           LineNumber = a.LineNumber,
                                                                                           Tenant = a.Tenant,
-                                                                                          
-                                                                          }).ToList();
+                                                                                           
+                                                                                      }).ToList();
             return SupplierInvoiceItemsModPms;
         }
 

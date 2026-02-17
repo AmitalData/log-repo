@@ -20,7 +20,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data; 
 using Logitude.TariffModule.Data.EntityMapping;
-using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.TariffModule.Data
 {
@@ -61,7 +60,7 @@ namespace Logitude.TariffModule.Data
 
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = OracleEntityProviderConfig.Instance;
+                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
             }
@@ -72,10 +71,6 @@ namespace Logitude.TariffModule.Data
             modelBuilder.Configurations.Add(new TariffMap());
 	
             modelBuilder.Configurations.Add(new TariffLineMap());
-	
-            modelBuilder.Configurations.Add(new TariffLinesContainersPriceMap());
-	
-            modelBuilder.Configurations.Add(new TariffProductMap());
 	
             modelBuilder.Configurations.Add(new TariffSettingMap());
 	
@@ -88,8 +83,6 @@ namespace Logitude.TariffModule.Data
             modelBuilder.Configurations.Add(new TariffVersionMap());
 	
             modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
-	
-            modelBuilder.Configurations.Add(new TariffVersionUploadedExcelMap());
 				
 				
 			modelBuilder.Entity<TariffLine>().Property(x => x.MinPrice).HasPrecision(18, 3);
@@ -149,18 +142,6 @@ namespace Logitude.TariffModule.Data
 			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge9MinPrice).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge10MinPrice).HasPrecision(18, 3);
-				
-			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price1).HasPrecision(18, 3);
-				
-			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price2).HasPrecision(18, 3);
-				
-			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price3).HasPrecision(18, 3);
-				
-			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price4).HasPrecision(18, 3);
-				
-			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.Price5).HasPrecision(18, 3);
-				
-			modelBuilder.Entity<TariffLinesContainersPrice>().Property(x => x.CostPrice).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -179,6 +160,7 @@ namespace Logitude.TariffModule.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -452,18 +434,6 @@ namespace Logitude.TariffModule.Data
 	 
 	 }
 	
-	 public IDbSet<TariffLinesContainersPrice> TariffLinesContainersPrices 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<TariffProduct> TariffProducts 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<TariffSetting> TariffSettings 
 	 {
 	      get; set;
@@ -495,12 +465,6 @@ namespace Logitude.TariffModule.Data
 	 }
 	
 	 public IDbSet<TariffVersionAllInCharge> TariffVersionAllInCharges 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<TariffVersionUploadedExcel> TariffVersionUploadedExcels 
 	 {
 	      get; set;
 	 

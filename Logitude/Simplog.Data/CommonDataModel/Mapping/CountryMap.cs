@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -35,8 +35,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.HasCitiesList).HasColumnName("HasCitiesList");
             this.Property(t => t.IsNorthAmerica).HasColumnName("IsNorthAmerica");
-            this.Property(t => t.IsGreaterChina).HasColumnName("IsGreaterChina");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
 
             // Relationships
             this.HasRequired(t => t.GlobalZone).WithMany().HasForeignKey(d => d.GlobalZoneId);

@@ -4,7 +4,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentsFilingPM} from '../../../../Common/EntityPMs/DocumentsFilingPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DocumentsFilingGeneralTabComponent.html',
 })
 

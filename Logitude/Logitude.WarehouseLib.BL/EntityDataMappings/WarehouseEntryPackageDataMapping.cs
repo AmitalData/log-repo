@@ -11,8 +11,6 @@ using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs; 
 using Logitude.WarehouseLib.Data;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.WarehouseLib.BL.EntityDataMappings
 {
@@ -32,31 +30,9 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                UpdateInUseShipmentPackages(entityPM, entityPOCO);
-            }
         }
 
-        private static void UpdateInUseShipmentPackages(WarehouseEntryPackagePM entityPM, WarehouseEntryPackage entityPOCO)
-        {
-            int ChangedQuantity = entityPM.Quantity - (entityPOCO.Quantity - entityPOCO.OverManifest);
-            if (ChangedQuantity != 0)
-            {
-                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(entityPM.Tenant);
-                ShipmentPackage shipmentPackage = shipmentPackageRepository.GetSingleShipmentPackage(entityPM.ShipmentPackageId, entityPM.Tenant);
-                if (shipmentPackage != null)
-                {
-                    shipmentPackage.InUse += ChangedQuantity;
-                    if (shipmentPackage.InUse > shipmentPackage.Quantity) shipmentPackage.InUse = shipmentPackage.Quantity == null ? 0 : shipmentPackage.Quantity.Value;
 
-                    shipmentPackageRepository.Update(shipmentPackage);
-                    shipmentPackageRepository.SubmitChanges();
-
-                    if (entityPM.Quantity == 0 && entityPM.OverManifest > 0) entityPM.OverManifest = 0;
-                }
-            }
-        }
 
         public void CustomPOCOToPM(WarehouseEntryPackagePM entityPM, WarehouseEntryPackage entityPOCO)
         {

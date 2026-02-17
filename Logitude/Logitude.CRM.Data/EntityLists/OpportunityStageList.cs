@@ -42,7 +42,5 @@ namespace Logitude.CRM.Data.EntityLists
 
         [DataMember]
         public string LeadSourceId { get; set; }
-
-        public string CustomerId { get; set; }
     }
 }

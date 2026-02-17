@@ -1,16 +1,20 @@
+declare var System: any;
+declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit, Output, ElementRef}  from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
+import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
+import {ParticipantList} from '../../EntityLists/ParticipantList';
 import {CodeNameClass} from '../../../Infrastructure/DataContracts/CodeNameClass';
-import {AppTool} from '../../../Infrastructure/Tools';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import {AppTool, DateTool, DateParts} from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'ShipmentChargesAnalysisFilterComponent',
     templateUrl: './ShipmentChargesAnalysisFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -72,14 +76,14 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
     }
 
     public DateFilterList: CodeNameClass[];
-    private BuildFunnelFilters(code: string = "CRT") {
+    private BuildFunnelFilters() {
         this.DateFilterList = [];
         this.DateFilterList.push(new CodeNameClass("CRT", "Create Date"));
         this.DateFilterList.push(new CodeNameClass("ARR", "Actual Arrival Date"));
         this.DateFilterList.push(new CodeNameClass("DEP", "Actual Departure Date"));
         this.DateFilterList.push(new CodeNameClass("OPE", "Operational Date"));
-        this.DateFilterList.push(new CodeNameClass("FOPC", "First Operational Close Date"));
-        this.selectedDateFilter = this.DateFilterList.filter(d => d.Code === code)[0];
+
+        this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == "CRT")[0];
     }
 
     private selectedDateFilter: CodeNameClass;
@@ -91,7 +95,7 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
     }
 
     public FiltersComboList: CodeNameClass[];
-    private FillFiltersList(payableCode: string = "NOFI", receivableCode: string = "NOFI") {
+    private FillFiltersList() {
         this.FiltersComboList = [];
         this.FiltersComboList.push(new CodeNameClass("NOFI", "No Filter"));
         this.FiltersComboList.push(new CodeNameClass("OPEN", "Open Amount"));
@@ -99,8 +103,8 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
         this.FiltersComboList.push(new CodeNameClass("OPAT", "Open or Accounted"));
         this.FiltersComboList.push(new CodeNameClass("MISS", "Missing"));
 
-        this.receivablesFilterSelectedItem = this.FiltersComboList.filter(d => d.Code == receivableCode)[0];
-        this.payablesFilterSelectedItem = this.FiltersComboList.filter(d => d.Code == payableCode)[0];
+        this.receivablesFilterSelectedItem = this.FiltersComboList.filter(d => d.Code == "NOFI")[0];
+        this.payablesFilterSelectedItem = this.FiltersComboList.filter(d => d.Code == "NOFI")[0];
     }
 
     public ReceivablesFilterEnabled: boolean = true;
@@ -216,182 +220,10 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
     OnAccountingClicked(myCode: string) {
         this.SelectedAccountingCode = myCode;
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-
-        if (this.IsSchedulerReport) {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-        }
-        else {
-            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-        }
-
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ChargesTypeId":
-                    this.ChargesTypeId = queryFilterItem.FieldValue;
-                    break;
-                case "CustomerId":
-                    this.CustomerId = queryFilterItem.FieldValue;
-                    break;
-                case "AccountingType":
-                    this.SelectedAccountingCode = queryFilterItem.FieldValue;
-                    break;
-                case "CurrencyCode":
-                    this.SelectedCurrencyCode = queryFilterItem.FieldValue;
-                    break;
-                case "DateType":
-                    this.BuildFunnelFilters(queryFilterItem.FieldValue);
-                    break;
-                case "ReceivablesType":
-                    this.FillFiltersList(queryFilterItem.FieldValue);
-                    break;
-                case "PayablesType":
-                    this.FillFiltersList(queryFilterItem.FieldValue);
-                    break;
-                case "IsProfitCurrency":
-                    this.ProfitCurrencyCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode;
-                    break;
-                
-                case "OperationalType":
-                    this.SelectedOperationalCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode;
-                    break;
-                case "SelectedCurrencyCode":
-                    this.SelectedCurrencyCode=queryFilterItem.FieldValue;
-                    break;
-                
-
-
-            }
-
-
-
-        }
-    }
+    
     queryFilterItems: QueryFilterItem[];    
     queryFilterItem: QueryFilterItem;    
     RunReport(isloading: boolean) {
-       
-        if (this.ValidateSelectedFilters()) {
-           
-            
-            var reportFliter = new ReportFliter();
-            reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-            reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-            reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-            reportFliter.NumberOfPage = 1;
-            reportFliter.ProcessType = "GenerateReport";
-            
-            this.ReportsPreview.CleanPartnersObslist();
-            this.ReportsPreview.GenerateReport(reportFliter, isloading);
-        }
-    }
-    GetQueryFilterItems(){
-        this.queryFilterItems = new Array<QueryFilterItem>();
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "CustomerId";
-        this.queryFilterItem.FieldValue = this.CustomerId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ChargesTypeId";
-        this.queryFilterItem.FieldValue = this.ChargesTypeId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "DateType";
-        this.queryFilterItem.FieldValue = this.SelectedDateFilter.Code;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        var IsProfitCurrency = false;
-        if (this.SelectedCurrencyCode == this.ProfitCurrencyCode) {
-            IsProfitCurrency = true;
-        }
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IsProfitCurrency";
-        this.queryFilterItem.FieldValue = IsProfitCurrency;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "CurrencyCode";
-        this.queryFilterItem.FieldValue = this.SelectedCurrencyCode;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-        
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-        
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "OperationalType";
-        this.queryFilterItem.FieldValue = this.SelectedOperationalCode;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "AccountingType";
-        this.queryFilterItem.FieldValue = this.SelectedAccountingCode;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-        
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ReceivablesType";
-        this.queryFilterItem.FieldValue = this.ReceivablesFilterSelectedItem.Code;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-        
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "PayablesType";
-        this.queryFilterItem.FieldValue = this.PayablesFilterSelectedItem.Code;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-        return this.queryFilterItems;
-    }
-    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
 
         if (!this.SelectedDateFilter) {
@@ -429,8 +261,107 @@ export class ShipmentChargesAnalysisFilterComponent extends BaseComponent implem
                 this.ValidationErrorsList.push("To Date is required");
             }
         }
-         return this.ValidationErrorsList.length == 0;
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CustomerId";
+            this.queryFilterItem.FieldValue = this.CustomerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ChargesTypeId";
+            this.queryFilterItem.FieldValue = this.ChargesTypeId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "DateType";
+            this.queryFilterItem.FieldValue = this.SelectedDateFilter.Code;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            var IsProfitCurrency = false;
+            if (this.SelectedCurrencyCode == this.ProfitCurrencyCode) {
+                IsProfitCurrency = true;
+            }
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsProfitCurrecny";
+            this.queryFilterItem.FieldValue = IsProfitCurrency;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CurrencyCode";
+            this.queryFilterItem.FieldValue = this.SelectedCurrencyCode;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+            
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+            
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "OperationalType";
+            this.queryFilterItem.FieldValue = this.SelectedOperationalCode;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "AccountingType";
+            this.queryFilterItem.FieldValue = this.SelectedAccountingCode;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+            
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ReceivablesType";
+            this.queryFilterItem.FieldValue = this.ReceivablesFilterSelectedItem.Code;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+            
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "PayablesType";
+            this.queryFilterItem.FieldValue = this.PayablesFilterSelectedItem.Code;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+            
+            var reportFliter = new ReportFliter();
+            reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+            reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+            reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+            reportFliter.NumberOfPage = 1;
+            reportFliter.ProcessType = "GenerateReport";
+            
+            this.ReportsPreview.CleanPartnersObslist();
+            //if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Customer", this.CustomerId);
+            this.ReportsPreview.GenerateReport(reportFliter, isloading);
+        }
     }
+
     public FilterId_OO: string = "operational_open";
     public FilterId_OC: string = "operational_close";
     OperationalMouseOver(itemValue: string) {

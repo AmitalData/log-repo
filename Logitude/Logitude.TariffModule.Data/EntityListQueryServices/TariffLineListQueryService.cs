@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -40,8 +40,6 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					                          Version = a.Version,
 					
 					                          MinPrice = a.MinPrice,
-
-                                              TransitTime = a.TransitTime,
 					
 		                    	            });
             return query;

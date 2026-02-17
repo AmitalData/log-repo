@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,16 +76,6 @@ namespace Logitude.XSD.INTTRA.BL
 
                 Parties = this.Context.MessagePropertiesParties.ToArray<INTTRA_Out.PartnerInformation>(),
             };
-
-            if(this.Context.ShipmentIndicator != null)
-            {
-                myResult.ShipmentIndicator = this.Context.ShipmentIndicator;
-            }
-
-            if(this.Context.HeaderCustomsInformation != null)
-            {
-                myResult.HeaderCustomsInformation = this.Context.HeaderCustomsInformation.ToArray<INTTRA_Out.HeaderCustomsFilerInstruction>();
-            }
 
             if (this.Context.Shipment.ValueOfGoodsCurrencyId != null)
             {

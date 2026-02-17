@@ -1,14 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
     public class EntityDateRepository:IRepository<EntityDate>
     {
         ICommonDataContext commonDataContext;
-
+        public EntityDateRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
         public EntityDateRepository(ICommonDataContext context)
         {
             commonDataContext = context;

@@ -20,5 +20,5 @@ export class QueueMessageMoreDetailsList {
 		Field2: string;
 		Field3: string;
 		StatusName: string;
-
-}
+	
+}

@@ -1,11 +1,15 @@
+
+
+declare var System: any;
 declare var window: any;
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {Component, OnInit}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {WarehouseReleasePM} from '../../../Warehouse/EntityPMs/WarehouseReleasePM';
+import {WarehouseReleasePM} from '../../../Warehouse/EntityPMs/warehouseReleasePM';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
 import {WarehouseReleasePackagePM} from '../../../Warehouse/EntityPMs/WarehouseReleasePackagePM';
 import {AddressList} from '../../../Common/EntityLists/AddressList'; 
@@ -14,6 +18,7 @@ import {CardListService} from '../../../Common/Services/StandardLists/CardListSe
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {NewEntityArgs} from '../../../Infrastructure/Args';
 import {AddressPM} from '../../../Common/EntityPMs/AddressPM';
+import {PortList} from '../../../Common/EntityLists/PortList';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
 import {WarehouseHelper} from '../../Helpers/WarehouseHelper';
@@ -21,7 +26,7 @@ import {FilterClass} from '../../../Shipment/Components/NewEntity/NewShipmentCom
 import {PortListService} from '../../../Common/Services/StandardLists/PortListService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'NewFullWarehouseReleaseComponent',
     templateUrl: './NewFullWarehouseReleaseComponent.html',
 
@@ -111,7 +116,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
 
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease").subscribe(response => {
             this.Start(args);
         });
     }
@@ -679,7 +684,7 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
         logeWindow.Height = 500;
         logeWindow.Title = "Packages Details";
 
-        logeWindow.WindowArgs = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseReleaseComponent: true, ShipmentPM: this.Shipment };
+        logeWindow.WindowArgs = { warehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShowPackageSummary: true, IsFromFullWarehouseReleaseComponent: true, ShipmentPM: this.Shipment };
         logeWindow.Show("./Warehouse/Components/WarehouseReleasePackagesDetailsComponent");
 
     }
@@ -788,8 +793,8 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                  
@@ -819,8 +824,8 @@ export class NewFullWarehouseReleaseComponent extends BaseComponent implements O
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                    

@@ -10,10 +10,9 @@ import {ARInvoicePMService} from '../../Services/StandardPMs/ARInvoicePMService'
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import { ListComponentArgs } from 'Infrastructure/Args';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -29,17 +28,12 @@ export class FieldTemplateComponent extends BaseComponent {
     public DisplaySATFields: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    private ListComponentArgs: ListComponentArgs;
-
-    public NumberFieldRightPadding = "20px";
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATFields = true;
         }
-        this.ListComponentArgs = SessionLocator.SelectedSession?.CurrentListComponent._ListComponentArgs;
-
     }
 
     public IsUnpaidInvoice: boolean = false;
@@ -65,7 +59,7 @@ export class FieldTemplateComponent extends BaseComponent {
 
                     if (this.Entity.StatusCode != "DR" && this.Entity.StatusCode != "VD" && !this.Entity.IsClosed) {
                         this.IsUnpaidInvoice = true;
-                    }                    
+                    }
 
                     this.ShowBusyIndicator = true;
                     this.BusyIndicatorMessage = "Loading...";
@@ -80,7 +74,7 @@ export class FieldTemplateComponent extends BaseComponent {
     public MainEntityStatus: string;
     public EntityPM: ARInvoicePM;
     private LoadARInvoicePM() {
-        this.myService.get(this.Entity.Id).subscribe((myResponse:any) => {
+        this.myService.get(this.Entity.Id).subscribe(myResponse => {
             if (!myResponse.HasError) {
                 this.ShowBusyIndicator = false;
                 this.EntityPM = myResponse.Result;
@@ -134,16 +128,12 @@ export class FieldTemplateComponent extends BaseComponent {
                 tableName = "ARPayment";
                 entityId = this.arPaymentId;
             }
-            else if(entityType == "GLAC") {
-                tableName = "GLAccount";
-                entityId = this.Entity.GLAccountId;
-                this.ListComponentArgs.SuppressOnRowSelectedField = true;
-            }
+
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, });
-                        
+
                     let isEditComponentSaved = false;
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                         if (isEditComponentSaved) {
@@ -189,14 +179,7 @@ export class FieldTemplateComponent extends BaseComponent {
                 window.Height = 150;
                 window.Show(messageText);
             }
-            else if (this.EntityPM.StatusCode === "PR") {
-                const messageText = "Cant add payment for processing invoice";
 
-                let window: MessageWindow = new MessageWindow();
-                window.Width = 300;
-                window.Height = 150;
-                window.Show(messageText);
-            }
             else if (this.EntityPM.AmountDue <= 0) {
                 var messageText = "Amount paid equals or bigger than invoice amount";
 
@@ -229,17 +212,6 @@ export class FieldTemplateComponent extends BaseComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                    });
-                });
-        }
-    }
-    OpenInterestReport(id) {
-        if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'InterestReport' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });

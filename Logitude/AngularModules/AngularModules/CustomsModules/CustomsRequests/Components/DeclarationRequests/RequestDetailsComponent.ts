@@ -1,6 +1,6 @@
-declare var window: any;
+﻿declare var window: any;
 
-import { Directive, ChangeDetectorRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
+import { Directive, ChangeDetectorRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
@@ -13,7 +13,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 @Component({
     selector: 'RequestDetailsComponent',
-    
+    moduleId: module.id,
     templateUrl: './RequestDetailsComponent.html',
 })
 

@@ -22,7 +22,7 @@ export class OpEAWB {
         this.DirectWizard = new DirectAWB();
     }
     CreateAWB(LogitudeWizardType: string, shipperRef1: string) {
-        this.Operation.GoToMainMenu2('General.MH.Operations');
+        this.Operation.GoToMainMenu('General.MH.Operations');
         this.Operation.SelectMenuWorkSpaceTabs('SHIP');
         this.Helper.WaitByIdAndClick('NewAWB');
 

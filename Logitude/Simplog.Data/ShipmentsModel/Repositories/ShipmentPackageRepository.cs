@@ -3,11 +3,10 @@ using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
-using System;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
-    public class ShipmentPackageRepository : IRepository<ShipmentPackage>
+    public class ShipmentPackageRepository: IRepository<ShipmentPackage>
     {
         IShipmentsContext shipmentContext;
 
@@ -18,7 +17,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public ShipmentPackageRepository()
         {
-            shipmentContext = new ShipmentsContext();
+            shipmentContext = new  ShipmentsContext();
         }
 
         public ShipmentPackageRepository(int tenant)
@@ -29,8 +28,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public IQueryable<ShipmentPackage> GetShipmentPackages(int tenant)
         {
             return (from record in context.ShipmentPackages
-                    where record.Tenant == tenant
-                    select record);
+                    where record.Tenant == tenant select record);
         }
 
         public ShipmentPackage GetSingleShipmentPackage(string id, int tenant)
@@ -51,23 +49,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<ShipmentPackage> GetPackagesFromShipmentsIds(List<string> shipmentsIds, int tenant)
         {
-            IQueryable<ShipmentPackage> shipments = (from a in context.ShipmentPackages.Include("PackageType").Include("LCLPackageType")
+            IQueryable<ShipmentPackage> shipments = (from a in context.ShipmentPackages
                                                      where a.Tenant == tenant && shipmentsIds.Contains(a.ShipmentId)
                                                      select a);
-            return shipments;
-        }
 
-        public List<ShipmentPackage> GetShipmentsPackagesByContainerIdAndTenant(string shipmentId, string containerId,int tenant)
-        {
-            List<ShipmentPackage> shipmentPackages = null;
-            if (!string.IsNullOrEmpty(containerId))
-            {
-                shipmentPackages = (from record in context.ShipmentPackages
-                                    where record.ShipmentId != shipmentId &&
-                                     record.Tenant == tenant && record.ContainerEntityId == containerId
-                                    select record).ToList();
-            }
-            return shipmentPackages;
+            return shipments;
         }
 
         public void Add(ShipmentPackage entity)
@@ -109,7 +95,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             context.SaveChanges();
         }
-
+       
         public List<ShipmentPackage> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
@@ -120,12 +106,6 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             throw new System.NotImplementedException();
         }
 
-        public string GetContainersNumbersByShipmentIdAndTenant(string id, int tenant)
-        {
-            string containerNumbers = string.Join(",", (from a in context.ShipmentPackages
-                                                        where a.Tenant == tenant && a.ShipmentId == id && a.ContainerNumber != null
-                                                        select a.ContainerNumber));
-            return containerNumbers;
-        }
+
     }
 }

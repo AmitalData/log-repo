@@ -8,7 +8,7 @@ import {AppTool, FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'GeneralDetailsTabComponent',
     templateUrl: './GeneralDetailsTabComponent.html',    
@@ -545,14 +545,6 @@ export class GeneralDetailsTabComponent extends BaseComponent {
                         }
                     }
                 }
-            }
-
-            if ((this.Wizard.IsFWB || this.Wizard.IsFHL) && AppTool.IsNullOrEmpty(this.MainHarmonize)) {
-                if (this.EntityPM.ToCountryIsEC
-                    || this.EntityPM.Transshipment1ToCountryIsEC
-                    || this.EntityPM.Transshipment2ToCountryIsEC
-                    || this.EntityPM.Transshipment3ToCountryIsEC)
-                    isValid = false;                    
             }
 
             this.ShowWarning_MainHarmonize = !isValid;

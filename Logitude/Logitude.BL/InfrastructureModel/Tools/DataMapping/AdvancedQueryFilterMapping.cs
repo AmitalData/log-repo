@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -13,13 +13,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             advancedQueryFilter.Operator = advancedQueryFilterPM.Operator;
             advancedQueryFilter.PredefinedValue = advancedQueryFilterPM.PredefinedValue;
             advancedQueryFilter.PredefinedValue2 = advancedQueryFilterPM.PredefinedValue2;
-            advancedQueryFilter.CustomPredefined = advancedQueryFilterPM.CustomPredefined;
             advancedQueryFilter.QueryId = advancedQueryFilterPM.QueryId;
-            advancedQueryFilter.QueryCode = advancedQueryFilterPM.QueryCode;
-
             advancedQueryFilter.Tenant = advancedQueryFilterPM.Tenant;
-            advancedQueryFilter.UserId = advancedQueryFilterPM.UserId;
-            advancedQueryFilter.ObjectFieldCode = advancedQueryFilterPM.ObjectFieldCode;
+            advancedQueryFilter.UserId = advancedQueryFilterPM.UserId; 
         }
     }
 }

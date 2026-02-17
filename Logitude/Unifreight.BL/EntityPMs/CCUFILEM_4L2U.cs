@@ -14,8 +14,8 @@ namespace Unifreight.BL.EntityPMs
         public DateTime? GRANTDATE { get; set; }
         public string RESHIMONTYPEN { get; set; }
         public DateTime? RESHMDATE { get; set; }
-        public decimal? CIFVALUE { get; set; }
-        public decimal? TOTALTAX { get; set; }
+        public double? CIFVALUE { get; set; }
+        public double? TOTALTAX { get; set; }
         public int? MEHESDRAFTSTATUS { get; set; }
         public string RESHIMONNON { get; set; }
         public DateTime? PAYDATE { get; set; }

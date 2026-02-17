@@ -3,7 +3,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -50,9 +50,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                         else
                         {
-                            SecurityUtility.AuthenticationOnTenant(helper.Shipment.Tenant);
-                            SecurityUtility.AuthenticationOnEntityTenant("Shipment", helper.Shipment.Tenant, tenant);
-
                             ShipmentPM oldShipmentPM = helper.Shipment;
                             ShipmentPM newShipmentPM = this.CopyShipment(oldShipmentPM);
 
@@ -63,7 +60,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                                 {
                                     ShipmentPackagePM oldPackagePM = oldShipmentPM.ShipmentPackages.Where(d => d.Id == item.Id).FirstOrDefault();
 
-                                    if (oldPackagePM != null)
+                                    if(oldPackagePM != null)
                                     {
                                         ShipmentPackagePM newPackagePM = this.CopyPackage(oldPackagePM, true);
 
@@ -125,8 +122,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                             this.CalculateShipmentAmounts(oldShipmentPM);
                             this.CalculateShipmentAmounts(newShipmentPM);
-                            this.ComputeAWBChargeAmount(oldShipmentPM);
-                            this.ComputeAWBChargeAmount(newShipmentPM);
 
                             IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
                             ShipmentService oldShipmentService = new ShipmentService(objectContext, oldShipmentPM, loggedEmail);
@@ -192,7 +187,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 DirectionId = oldEntity.DirectionId,
                 TransportModeId = oldEntity.TransportModeId,
                 ShipmentTypeId = oldEntity.ShipmentTypeId,
-                ShipmentSubTypeId = oldEntity.ShipmentSubTypeId,
                 BranchId = oldEntity.BranchId,
                 DepartmentId = oldEntity.DepartmentId,
                 ProfitCurrencyId = oldEntity.ProfitCurrencyId,
@@ -310,7 +304,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment1CarrierNumber = oldEntity.Transshipment1CarrierNumber,
                 Transshipment1CarrierCode = oldEntity.Transshipment1CarrierCode,
                 Transshipment1CarrierPrefix = oldEntity.Transshipment1CarrierPrefix,
-                Transshipment1TrailerNumber = oldEntity.Transshipment1TrailerNumber,
 
                 Transshipment2FromPortId = oldEntity.Transshipment2FromPortId,
                 Transshipment2FromPortCode = oldEntity.Transshipment2FromPortCode,
@@ -326,7 +319,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment2CarrierNumber = oldEntity.Transshipment2CarrierNumber,
                 Transshipment2CarrierCode = oldEntity.Transshipment2CarrierCode,
                 Transshipment2CarrierPrefix = oldEntity.Transshipment2CarrierPrefix,
-                Transshipment2TrailerNumber = oldEntity.Transshipment2TrailerNumber,
 
                 Transshipment3FromPortId = oldEntity.Transshipment3FromPortId,
                 Transshipment3FromPortCode = oldEntity.Transshipment3FromPortCode,
@@ -342,7 +334,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment3CarrierNumber = oldEntity.Transshipment3CarrierNumber,
                 Transshipment3CarrierCode = oldEntity.Transshipment3CarrierCode,
                 Transshipment3CarrierPrefix = oldEntity.Transshipment3CarrierPrefix,
-                Transshipment3TrailerNumber = oldEntity.Transshipment3TrailerNumber,
 
                 Field1 = oldEntity.Field1,
                 Field2 = oldEntity.Field2,
@@ -384,62 +375,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Field38 = oldEntity.Field38,
                 Field39 = oldEntity.Field39,
                 Field40 = oldEntity.Field40,
-                Field41 = oldEntity.Field41,
-                Field42 = oldEntity.Field42,
-                Field43 = oldEntity.Field43,
-                Field44 = oldEntity.Field44,
-                Field45 = oldEntity.Field45,
-                Field46 = oldEntity.Field46,
-                Field47 = oldEntity.Field47,
-                Field48 = oldEntity.Field48,
-                Field49 = oldEntity.Field49,
-                Field50 = oldEntity.Field50,
-                Field51 = oldEntity.Field51,
-                Field52 = oldEntity.Field52,
-                Field53 = oldEntity.Field53,
-                Field54 = oldEntity.Field54,
-                Field55 = oldEntity.Field55,
-                Field56 = oldEntity.Field56,
-                Field57 = oldEntity.Field57,
-                Field58 = oldEntity.Field58,
-                Field59 = oldEntity.Field59,
-                Field60 = oldEntity.Field60,
-                Field61 = oldEntity.Field61,
-                Field62 = oldEntity.Field62,
-                Field63 = oldEntity.Field63,
-                Field64 = oldEntity.Field64,
-                Field65 = oldEntity.Field65,
-                Field66 = oldEntity.Field66,
-                Field67 = oldEntity.Field67,
-                Field68 = oldEntity.Field68,
-                Field69 = oldEntity.Field69,
-                Field70 = oldEntity.Field70,
+
                 ProjectNumber = oldEntity.ProjectNumber,
-                InlandDomesticFromZipCode = oldEntity.InlandDomesticFromZipCode,
-                InlandDomesticToZipCode = oldEntity.InlandDomesticToZipCode,
-                InlandDomesticFromCity = oldEntity.InlandDomesticFromCity,
-                InlandDomesticToCity = oldEntity.InlandDomesticToCity,
-                InlandDomesticFromCountryId = oldEntity.InlandDomesticFromCountryId,
-                InlandDomesticToCountryId = oldEntity.InlandDomesticToCountryId,
-                InlandDomesticFromTypeCode = oldEntity.InlandDomesticFromTypeCode,
-                InlandDomesticToTypeCode = oldEntity.InlandDomesticToTypeCode,
-                MainCarriageFromPortAddress = oldEntity.MainCarriageFromPortAddress,
-                MainCarriageToPortAddress = oldEntity.MainCarriageToPortAddress,
-                HandlerUserId = oldEntity.HandlerUserId,
-                PlannedCargoReadyDate = oldEntity.PlannedCargoReadyDate,
-                ApprovedCargoReadyDate = oldEntity.ApprovedCargoReadyDate,
-
-                InlandDomesticToAddress1 = oldEntity.InlandDomesticToAddress1,
-                InlandDomesticToAddress2 = oldEntity.InlandDomesticToAddress2,
-                InlandDomesticToPhone = oldEntity.InlandDomesticToPhone,
-                InlandDomesticToFax = oldEntity.InlandDomesticToFax,
-                InlandDomesticToStateId = oldEntity.InlandDomesticToStateId,
-
-                InlandDomesticFromAddress1 = oldEntity.InlandDomesticFromAddress1,
-                InlandDomesticFromAddress2 = oldEntity.InlandDomesticFromAddress2,
-                InlandDomesticFromPhone = oldEntity.InlandDomesticFromPhone,
-                InlandDomesticFromFax = oldEntity.InlandDomesticFromFax,
-                InlandDomesticFromStateId = oldEntity.InlandDomesticFromStateId,
             };
 
             this.CopyPartners(entityPM, oldEntity);
@@ -582,7 +519,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.Notify1Name = oldEntity.Notify1Name;
             entityPM.Notify1Note = oldEntity.Notify1Note;
             entityPM.Notify1Reference = oldEntity.Notify1Reference;
-            entityPM.Notify1Reference2 = oldEntity.Notify1Reference2;
             entityPM.Notify1Address1 = oldEntity.Notify1Address1;
             entityPM.Notify1Address2 = oldEntity.Notify1Address2;
             entityPM.Notify1City = oldEntity.Notify1City;
@@ -616,9 +552,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.ShipperNotExporterName = oldEntity.ShipperNotExporterName;
             entityPM.ShipperNotExporterNote = oldEntity.ShipperNotExporterNote;
             entityPM.ShipperNotExporterReference = oldEntity.ShipperNotExporterReference;
-            entityPM.ShipperNotExporterReference1 = oldEntity.ShipperNotExporterReference1;
-            entityPM.ShipperNotExporterReference2 = oldEntity.ShipperNotExporterReference2;
-
             #endregion
 
             #region ConsigneeNotImporter
@@ -674,16 +607,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.ReleasingAgentNote = oldEntity.ReleasingAgentNote;
             entityPM.ReleasingAgentReference1 = oldEntity.ReleasingAgentReference1;
             entityPM.ReleasingAgentReference2 = oldEntity.ReleasingAgentReference2;
-            #endregion
-
-            #region Trucker
-            entityPM.TruckerId = oldEntity.TruckerId;
-            entityPM.TruckerAddressId = oldEntity.TruckerAddressId;
-            entityPM.TruckerContactId = oldEntity.TruckerContactId;
-            entityPM.TruckerName = oldEntity.TruckerName;
-            entityPM.TruckerNote = oldEntity.TruckerNote;
-            entityPM.TruckerReference1 = oldEntity.TruckerReference1;
-            entityPM.TruckerReference2 = oldEntity.TruckerReference2;
             #endregion
         }
         private void CopyPickups(ShipmentPM entityPM, ShipmentPM oldEntity)
@@ -779,7 +702,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         Width = oldPickupPackage.Width,
                     };
 
-                    foreach (PickUpDeliveryPackageHarmonizePM oldHarmonize in oldPickupPackage.PickUpDeliveryPackageHarmonizes)
+                    foreach(PickUpDeliveryPackageHarmonizePM oldHarmonize in oldPickupPackage.PickUpDeliveryPackageHarmonizes)
                     {
                         newPickupPackage.PickUpDeliveryPackageHarmonizes.Add(new PickUpDeliveryPackageHarmonizePM()
                         {
@@ -825,7 +748,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 MethodUsed = oldEntity.MethodUsed,
                 Notes = oldEntity.Notes,
                 PackageTypeCode = oldEntity.PackageTypeCode,
-                LCLContainerTypeId = oldEntity.LCLContainerTypeId,
                 PackageTypeId = oldEntity.PackageTypeId,
                 PackageTypeIsAir = oldEntity.PackageTypeIsAir,
                 PackageTypeIsInland = oldEntity.PackageTypeIsInland,
@@ -895,7 +817,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     {
                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                         Tenant = item.Tenant,
-                        CommodityNumber = item.CommodityNumber,
+                        CommodityNumber = item.CommodityNumber,                       
                         ContainerSize = item.ContainerSize,
                         Description = item.Description,
                         Height = item.Height,
@@ -943,7 +865,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         Quantity = item.Quantity,
                     });
                     #endregion
-                }
+                }               
             }
 
             return entityPM;
@@ -1054,7 +976,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     TruckNumber = oldDeliveryPM.TruckNumber,
                 };
 
-                foreach (ShipmentPickUpDeliveryPackagePM itemPM in oldDeliveryPM.ShipmentPickUpDeliveryPackages)
+                foreach(ShipmentPickUpDeliveryPackagePM itemPM in oldDeliveryPM.ShipmentPickUpDeliveryPackages)
                 {
                     newDeliveryPM.ShipmentPickUpDeliveryPackages.Add(new ShipmentPickUpDeliveryPackagePM()
                     {
@@ -1441,99 +1363,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
 
             return myResult;
-        }
-        private void ComputeAWBChargeAmount(ShipmentPM entityPM)
-        {
-            if (entityPM.TransportModeId == "A")
-            {
-                double? chargeableWeight = entityPM.ChargeableWeight;
-                if (entityPM.RateClassCode == "K")
-                {
-                    chargeableWeight = entityPM.ChargeableWeightInKG;
-                }
-
-                var groupCode = this.GetRateClassGroupCode(entityPM.RateClassCode);
-                if (groupCode == "M")
-                {
-                    entityPM.AWBChargeAmount = entityPM.AWBChargeRate;
-                }
-                else if (groupCode == "R")
-                {
-                    entityPM.AWBChargeAmount = entityPM.AWBChargeRate * chargeableWeight;
-                }
-
-                this.ComputeAWBFrieghtAmount(entityPM);
-            }
-        }
-        private void ComputeAWBFrieghtAmount(ShipmentPM entityPM)
-        {
-            var totalAmount = entityPM.AWBFreightAmountPrepaid + entityPM.AWBFreightAmountCollect;
-
-            bool recompute = true;
-            bool isPrepaidHasAmount = (entityPM.AWBFreightAmountPrepaid != 0 && entityPM.AWBFreightAmountPrepaid != null);
-            bool isCollectHasAmount = (entityPM.AWBFreightAmountCollect != 0 && entityPM.AWBFreightAmountCollect != null);
-
-            if (!string.IsNullOrEmpty(entityPM.FreightPrepaidCollectId))
-            {
-                if (isPrepaidHasAmount && isCollectHasAmount && (entityPM.AWBChargeAmount == totalAmount))
-                {
-                    recompute = false;
-                }
-            }
-
-            if (recompute)
-            {
-                if (entityPM.FreightPrepaidCollectId == "P")
-                {
-                    entityPM.AWBFreightAmountCollect = 0;
-                    entityPM.AWBFreightAmountPrepaid = entityPM.AWBChargeAmount == null ? 0 : entityPM.AWBChargeAmount;
-                }
-
-                else if (entityPM.FreightPrepaidCollectId == "C")
-                {
-                    entityPM.AWBFreightAmountPrepaid = 0;
-                    entityPM.AWBFreightAmountCollect = entityPM.AWBChargeAmount == null ? 0 : entityPM.AWBChargeAmount;
-                }
-            }
-        }
-        private string GetRateClassGroupCode(string rateClassCode)
-        {
-            var code = "";
-
-            switch (rateClassCode)
-            {
-                case "M":
-                case "B":
-                    {
-                        code = "M";
-                        break;
-                    }
-
-                case "R":
-                case "X":
-                case "Y":
-                    {
-                        code = "S";
-                        break;
-                    }
-
-                case "C":
-                case "E":
-                case "K":
-                case "N":
-                case "P":
-                case "Q":
-                case "U":
-                case "S":
-                    {
-                        code = "R";
-                        break;
-                    }
-
-                default: { break; }
-            }
-
-            return code;
         }
     }
     public class SplitShipmentHelper

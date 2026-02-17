@@ -45,7 +45,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string DistributorCode { get; set; }
         public string PersonalId { get; set; }
         public bool IsTwoFactorAuthenticationEnabled { get; set; }
-        public int? SecurityLevel { get; set; }
 
         public string DocumentFilingInbox { get; set; }
 
@@ -67,6 +66,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
             }
             set { groupId = value; }
         }
-        public string SignatureImageId { get; set; }
-    }     
+    }
 }

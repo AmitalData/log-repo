@@ -39,7 +39,7 @@ namespace Logitude.Accounting.BL.Utils
 
                     foreach (CurrencySum item in myLTSum)
                     {
-                        GLAccountTotalByMonthPM myGLAccountTotal = myGLAccountTotalByMonthsQueryServices.GetSingle(accountId,GLAccountTotalDateTypeValues.AccountingDate, TwoMonth.Year, TwoMonth.Month, item.CurrencyId, false, false);
+                        GLAccountTotalByMonthPM myGLAccountTotal = myGLAccountTotalByMonthsQueryServices.GetSingle(accountId,GLAccountTotalDateTypeValues.Accountingdate, TwoMonth.Year, TwoMonth.Month, item.CurrencyId, false, false);
 
                         if (myGLAccountTotal != null)
                         {

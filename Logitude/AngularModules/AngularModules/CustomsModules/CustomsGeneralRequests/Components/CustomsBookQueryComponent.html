@@ -18,8 +18,8 @@
                         <td style="width: 200px; padding-right: 36px;">
                             <!-- CustomsBookQueryComponent  Request.FromDate-->
                             <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                           [InputType]="'date'" [DataContext]="DataContext"
-                                           [HideColumns]="true" [SelectedDateValue]='FromDate'></LogDatePicker>
+                                           [InputType]="'date'" [SelectedDateValue]="'FromDate'" [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
 
                         </td>
                         <td><div></div></td>
@@ -34,7 +34,7 @@
                             <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'"
                                            [ObjectTableName]="ObjectTableName" [InputType]="'date'"
                                            [DataContext]="DataContext"
-                                           [HideColumns]="true" [SelectedDateValue]='ToDate'></LogDatePicker>
+                                           [HideColumns]="true"></LogDatePicker>
                         </td>
 
                         <td><div></div></td>

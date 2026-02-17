@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -48,7 +48,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'VatType'"
                                             [HideMaintenanceIcon]="true"
-                                            [HideAddLink]="true" [DependencyFilter2Value]="false">
+                                            [HideAddLink]="true">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -62,7 +62,7 @@
                                 <td>
                                     <div class="MediaFill">
                                         <div class="MediaFillRelative">
-                                            <LogTextBox [DigitsAfterPoint]="3" [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            <LogTextBox [ObjectFieldName]="'VatPercentage'" [Text]="DataContext.VatPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                             <div class="Value" style="position: absolute; left: 10px; top: 7px;" *ngIf="DataContext.VatIsMultiPercentage">Multi</div>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                             </tr>
 
                             <!-- InvoiceCurrencyAmount -->
-                            <tr class="FormFieldRow" *ngIf="DataContext.IsInvoiceCurrencyAmountVisible">
+                            <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'InvoiceCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="AmountInvoiceLabel"></LogLabel>
                                 </td>
@@ -153,22 +153,6 @@
                                 </td>
                             </tr>
 
-                            <!-- IsRegionalTax -->
-                            <tr class="FormFieldRow" *ngIf="IsRegionalTaxVisible">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'IsRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogCheckBox [ObjectFieldName]="'IsRegionalTax'" [Checked]="DataContext.IsRegionalTax" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="2">
-                                    <div></div>
-                                </td>
-                            </tr>
                         </table>
                     </td>
 

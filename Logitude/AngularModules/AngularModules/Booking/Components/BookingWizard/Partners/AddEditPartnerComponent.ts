@@ -27,7 +27,7 @@ import {AddEditPartnerArgs} from '../../../Args';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPartnerComponent.html',
 })
 
@@ -133,7 +133,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
 
                 var myService: CardListService = new CardListService();
 
-                myService.getSingle(this.CurrentPartnerId).subscribe((myResult:any) => {
+                myService.getSingle(this.CurrentPartnerId).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
 
@@ -170,7 +170,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
         switch (this.PartnerTypeId) {
             case "AG": {
                 myService = new AgentPMService();
-                myService.get(this.CurrentPartnerId).subscribe((myResult:any) => {
+                myService.get(this.CurrentPartnerId).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
 
                     if (!myResponse.HasError) {
@@ -185,7 +185,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
 
             case "CS": {
                 myService = new CustomerPMService();
-                myService.get(this.CurrentPartnerId).subscribe((myResult:any) => {
+                myService.get(this.CurrentPartnerId).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
 
                     if (!myResponse.HasError) {
@@ -203,7 +203,7 @@ export class AddEditPartnerComponent extends BaseComponent implements AfterViewI
         this.isAddressLoaded = false;
 
         var myService = new AddressPMService();
-        myService.get(this.CurrentAddressId).subscribe((myResult:any) => {
+        myService.get(this.CurrentAddressId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

@@ -9,7 +9,7 @@ import { BatchTaskExecutionList } from '../../EntityLists/BatchTaskExecutionList
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EraseTenantManagementDataComponent.html',
 })
 
@@ -18,7 +18,6 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
     private entityId: number;
     public Message: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ValidationErrorsList: string[] = [];
     constructor() {
         this.myService = new InfrastructureDomainService();   
     }
@@ -91,10 +90,16 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
             }
         }        
     }
-    
+
+    public IsResponseProgressVisible: boolean = false;
+    CloseResponseProgressClicked() {      
+        this.StopTimer();
+    }
+
     private batchEntity: BatchTaskExecutionPM;
     private DoDelete(type: string) {
-        this.Message = null;        
+        this.Message = null;
+        this.Retries = 0;
 
         this.myService.DeleteDataForTenant(this.entityId, type).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
@@ -102,61 +107,95 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
                 this.batchEntity = mm.Result;
 
                 if (this.batchEntity != null) {
-                    this.CurrentSession.StartBusyIndicator("Deleting...");
-                    this.StopTimer();
-
-                    this.timer = setInterval(() => {
-                        this.GetBTE();
-                    }, this.timerInterval);
+                    this.IsResponseProgressVisible = true;
+                    this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
                 }
             }            
         });
     }
-    
+
     // Timer
+    private timerSeconds: number = 1;
     timer: any;
-    timerInterval: number = 1000;
+    private Retries: number = 0;
+    private IncreaseTimer() {
+        clearTimeout(this.timer);
+        this.timer = setInterval(() => this.RunTimerFunction(), this.timerSeconds * 1000);
+    }
+    private AdjustTimerSpeed() {
+        if (this.Retries <= 60) {
+            if (this.timerSeconds != 1) {
+                this.timerSeconds = 1;
+                this.IncreaseTimer();
+            }
+        }
+
+        else if (this.Retries <= 120) {
+            if (this.timerSeconds != 5) {
+                this.timerSeconds = 5;
+                this.IncreaseTimer();
+            }
+        }
+
+        else if (this.Retries <= 180) {
+            if (this.timerSeconds != 60) {
+                this.timerSeconds = 60;
+                this.IncreaseTimer();
+            }
+        }
+
+        else {
+            this.StopTimer();
+        }
+    }
+    private RunTimerFunction() {
+        this.Retries++;
+        this.GetBTE();
+        this.AdjustTimerSpeed();
+    }
     public StopTimer() {
         if (this.timer) {
-            clearInterval(this.timer);
+            clearTimeout(this.timer);
         }
+        
+        this.IsResponseProgressVisible = false;
     }
 
     ngOnDestroy() {
         this.StopTimer();
     }
     
+    private bteList: BatchTaskExecutionList;
     GetBTE() {
         var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResult:any) => {
-            var myResponse: ServiceResponse = myResult;
-            if (!myResponse.HasError) {
-                var bteList: BatchTaskExecutionList = myResponse.Result;
-                
-                if (bteList.StatusCode == "D")
-                {
-                    this.ValidationErrorsList = [];
+        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe(myResult => {
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.bteList = mm.Result;
 
-                    this.GetCounts();
+                var window: MessageWindow = new MessageWindow();
+                if (this.bteList.StatusCode == "D") // D- Done
+                {
+                    this.GetCounts();                    
 
                     switch (this.type) {
                         case "B": {
-                            this.Message = "Erasing Business Records Completed Succesfully";
+                            window.Show("Erasing Business Records Completed Succesfully");
                             break;
                         }
 
                         case "P": {
-                            this.Message = "Erasing Shippers & Consignees Completed Succesfully";
+                            window.Show("Erasing Shippers & Consignees Completed Succesfully");
                             break;
                         }
 
                         case "T": {
-                            this.Message = "Erasing Tickets Completed Succesfully";
+                            window.Show("Erasing Tickets Completed Succesfully");
                             break;
                         }
 
                         case "C": {
-                            this.Message = "Erasing CRM Data Completed Succesfully";
+                            window.Show("Erasing CRM Data Completed Succesfully");
                             break;
                         }
                     }
@@ -164,25 +203,11 @@ export class EraseTenantManagementDataComponent implements OnDestroy {
                     this.StopTimer();
                 }
 
-                else if (bteList.StatusCode == "F") {
+                else if (this.bteList.StatusCode == "F") // F- Failed
+                {
                     this.StopTimer();
-                    this.CurrentSession.StopBusyIndicator();
-
-                    var errors: string[] = [];
-                    errors.push(bteList.ErrorLog);
-                    this.ValidationErrorsList = errors;
+                    window.Show("Faild: " + this.bteList.ErrorLog);
                 }
-
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.StartBusyIndicator("Deleting... ");
-                }
-            }
-
-            else {
-                this.StopTimer();
-                this.CurrentSession.StopBusyIndicator();
-                this.ValidationErrorsList = myResponse.ErrorsArray;
             }
         });
     }

@@ -3,10 +3,8 @@ using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
@@ -75,7 +73,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CardContactMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            AddUserKafkaQueueMessage();
         }
 
         public void Update(CardContactPM entityPM)
@@ -96,27 +93,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CardContactMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            AddUserKafkaQueueMessage();
-        }
-
-        private void AddUserKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Contact" },
-                { "EntityId", entityPm.ContactId },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
 
         private void UpdateProductsCollection()

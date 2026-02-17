@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="false">
-  <Sql Version="1">
-    <![CDATA[
-	  update Reports set Name = N'856 Report Per Vendor', Description = N'856 Report Per Vendor' where Code = 'PRVR'
-     ]]>
- </Sql>
-</Script>

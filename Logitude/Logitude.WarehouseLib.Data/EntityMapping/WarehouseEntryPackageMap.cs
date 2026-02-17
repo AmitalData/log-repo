@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data;
@@ -45,7 +45,7 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
 
             this.Property(t => t.Volume).HasColumnName("Volume").HasPrecision(16, 3);
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(4000).IsUnicode(true);
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(2000).IsUnicode(false);
 
             this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId").HasMaxLength(15).IsUnicode(false);
 
@@ -84,10 +84,6 @@ namespace Logitude.WarehouseLib.Data.EntityMapping
             this.Property(t => t.CountryId).HasColumnName("CountryId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CommodityNumber).HasColumnName("CommodityNumber").HasMaxLength(20).IsUnicode(false);
-
-            this.Property(t => t.ShipmentPackageId).HasColumnName("ShipmentPackageId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.OverManifest).HasColumnName("OverManifest");
         }
     }
 }

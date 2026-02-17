@@ -1,7 +1,7 @@
 ﻿using Logitude.Server.Tools.Helpers;
 using Logitude.XSD.DataContracts;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -188,15 +188,9 @@ namespace Logitude.XSD
         }
         private void CheckDemoTenantData()
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            if (myAWBResultClass.Tenant == 65 || myAWBResultClass.IsEAWBOnlyDemo)
             {
-                SettingRepository mySettingRepository = new SettingRepository();
-                var isDemoTenant = mySettingRepository.IsDemoTenant(myAWBResultClass.Tenant.ToString());
-                if (isDemoTenant || myAWBResultClass.IsEAWBOnlyDemo)
-                {
-                    myAWBResultClass.IsDemoTenant = true;
-                }
-                scope.Complete();
+                myAWBResultClass.IsDemoTenant = true;
             }
         }
         private void CheckStockValidity()

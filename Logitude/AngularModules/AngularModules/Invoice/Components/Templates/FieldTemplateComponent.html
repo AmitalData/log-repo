@@ -9,16 +9,6 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <!-- Shipment Number -->
-                                <div *ngIf="FieldName == 'ShipmentsNumbers'" class="TemplateTrimming">
-                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsConsolidationInvoice" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsConsolidationInvoice" class="TemplateTrimmingChild" style="font-size:11px;" [attr.title]="Entity.ShipmentsNumbers">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
-                                </div>
-
-                                <div *ngIf="FieldName == 'MainEntityReference' && !IsHeaderScreenTemplate">
-                                    <span>{{FieldValue}}</span>
-                                </div>
 
                                 <div *ngIf="FieldName == 'SATTransferStatusName'" [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
 
@@ -29,7 +19,7 @@
                                     <div *ngIf="IsHeaderScreenTemplate">
                                         <table>
                                             <tr>
-                                                <td id="{{'ARInvoiceHeaderStatusName' | IdGeneratorAsyncPipe | async}}" style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
+                                                <td id="{{'ARInvoiceHeaderStatusName' | IdGeneratorPipe}}" style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
 
                                                 <td style="width: 1px; padding-left: 2px;" *ngIf="Entity[FieldName] == 'Paid'">
                                                     <img style="vertical-align:middle;" src="./Images/Icons/IsClosed.png" />
@@ -54,14 +44,14 @@
                                 </div>
 
                                 <!-- AmountInLocalCurrency -->
-                                <div *ngIf="FieldName == 'AmountInLocalCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInLocalCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
                                             </td>
@@ -70,14 +60,14 @@
                                 </div>
 
                                 <!-- AmountInInvoiceCurrency -->
-                                <div *ngIf="FieldName == 'AmountInInvoiceCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInInvoiceCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
                                             </td>
@@ -86,13 +76,13 @@
                                 </div>
 
                                 <!-- AmountDue -->
-                                <div *ngIf="FieldName == 'AmountDue'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountDue'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
                                             </td>
@@ -102,14 +92,14 @@
                                 </div>
 
                                 <!-- AmountDueInLocalCurrency -->
-                                <div *ngIf="FieldName == 'AmountDueInLocalCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountDueInLocalCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
                                             </td>
@@ -118,14 +108,14 @@
                                 </div>
 
                                 <!-- AmountDueInProfitCurrency -->
-                                <div *ngIf="FieldName == 'AmountDueInProfitCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountDueInProfitCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.ProfitCurrencyCode}})</span>
                                             </td>
@@ -134,7 +124,7 @@
                                 </div>
 
                                 <!-- InvoiceCurrencyExchangeRate -->
-                                <div *ngIf="FieldName == 'InvoiceCurrencyExchangeRate'" style="text-align: right" [style.padding-right]="NumberFieldRightPadding">{{Entity[FieldName] | NumbersPipe:'N5'}}</div>
+                                <div *ngIf="FieldName == 'InvoiceCurrencyExchangeRate'" style="text-align: right">{{Entity[FieldName] | NumbersPipe:'N5'}}</div>
 
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransmissionError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
@@ -160,11 +150,7 @@
                                         <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
                                     </div>
                                 </div>
-                                <div *ngIf="FieldName == 'InterestReportNumber' && IsHeaderScreenTemplate">
-                                    <div>
-                                        <a href="#" (click)="OpenInterestReport(Entity.InterestReportId)">{{Entity.InterestReportNumber}}</a>
-                                    </div>
-                                </div>
+
                             </div>
                         </td>
                     </tr>
@@ -175,16 +161,6 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <!-- Shipment Number -->
-                                <div *ngIf="FieldName == 'ShipmentsNumbers'" class="TemplateTrimming">
-                                    <span *ngIf="IsHeaderScreenTemplate && !Entity.IsMultipleEntities" class="hyperlink" (click)="ViewEntityClicked('SHI')">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="IsHeaderScreenTemplate && Entity.IsMultipleEntities" class="TemplateTrimmingChild" style="font-size:11px;" [attr.title]="Entity.ShipmentsNumbers">{{Entity[FieldName]}}</span>
-                                    <span *ngIf="!IsHeaderScreenTemplate">{{Entity[FieldName]}}</span>
-                                </div>
-
-                                <div *ngIf="FieldName == 'MainEntityReference' && !IsHeaderScreenTemplate">
-                                    <span>{{FieldValue}}</span>
-                                </div>
 
                                 <!-- StatusName -->
                                 <div *ngIf="FieldName == 'StatusName'" class="TemplateTrimming">
@@ -193,7 +169,7 @@
                                     <div *ngIf="IsHeaderScreenTemplate">
                                         <table>
                                             <tr>
-                                                <td [attr.data-cy]="'StatusValue'" style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
+                                                <td style="width: 1px;" [ngStyle]="{color: Entity[FieldName] | StringToColorPipe}">{{Entity[FieldName]}}</td>
 
                                                 <td style="width: 1px; padding-left: 2px;" *ngIf="Entity[FieldName] == 'Paid'">
                                                     <img style="vertical-align:middle;" src="./Images/Icons/IsClosed.png" />
@@ -206,27 +182,25 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
                                     <div>
                                         <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
                                     </div>
                                 </div>
-
                                 <!-- DueDate -->
                                 <div *ngIf="FieldName == 'DueDate'" [ngStyle]="{color: Entity[FieldName] | InvoiceDueDateForegroundPipe:Entity.IsClosed}">
                                     <span>{{Entity[FieldName] | DateTimeToDatePipe}}</span>
                                 </div>
 
                                 <!-- AmountInLocalCurrency -->
-                                <div *ngIf="FieldName == 'AmountInLocalCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInLocalCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
                                             </td>
@@ -236,14 +210,14 @@
                                 </div>
 
                                 <!-- AmountInInvoiceCurrency -->
-                                <div *ngIf="FieldName == 'AmountInInvoiceCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInInvoiceCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
                                             </td>
@@ -253,14 +227,14 @@
                                 </div>
 
                                 <!-- AmountInProfitCurrency -->
-                                <div *ngIf="FieldName == 'AmountInProfitCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInProfitCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.ProfitCurrencyCode}})</span>
                                             </td>
@@ -270,13 +244,13 @@
                                 </div>
 
                                 <!-- AmountDue -->
-                                <div *ngIf="FieldName == 'AmountDue'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountDue'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.InvoiceCurrencyCode}})</span>
                                             </td>
@@ -285,14 +259,14 @@
                                 </div>
 
                                 <!-- AmountDueInLocalCurrency -->
-                                <div *ngIf="FieldName == 'AmountDueInLocalCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountDueInLocalCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.LocalCurrencyCode}})</span>
                                             </td>
@@ -301,14 +275,14 @@
                                 </div>
 
                                 <!-- AmountDueInProfitCurrency -->
-                                <div *ngIf="FieldName == 'AmountDueInProfitCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountDueInProfitCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span [ngStyle]="{color: Entity.DueDate | InvoiceDueDateForegroundPipe:Entity.IsClosed}">{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span *ngIf="Entity[FieldName] || Entity[FieldName] == 0">({{Entity.ProfitCurrencyCode}})</span>
                                             </td>
@@ -323,7 +297,7 @@
                                     <img style="width:10.5px;height:10px;" *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
                                 </div>
                             </div>
-</td>
+                        </td>
                     </tr>
                 </table>
 
@@ -334,14 +308,14 @@
                             <div class="MediaFill">
                                 <div *ngIf="FieldName == 'SATTransferStatusName'" [attr.title]="Entity.SATTransferStatusName">{{FieldValue}}</div>
                                 <!-- AmountInPaymentCurrency -->
-                                <div *ngIf="FieldName == 'AmountInPaymentCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInPaymentCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span>({{Entity.PaymentCurrencyCode}})</span>
                                             </td>
@@ -350,10 +324,10 @@
                                 </div>
 
                                 <!-- OpenAmount -->
-                               <div *ngIf="FieldName == 'OpenAmount'">
+                                <div *ngIf="FieldName == 'OpenAmount'">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span>({{Entity.PaymentCurrencyCode}})</span>
                                             </td>
@@ -368,7 +342,7 @@
                                 <div *ngIf="FieldName == 'OpenAmountInLocalCurrency'">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span>({{Entity.LocalCurrencyCode}})</span>
                                             </td>
@@ -382,11 +356,6 @@
                                 <div *ngIf="FieldName == 'JournalNumber' && IsHeaderScreenTemplate">
                                     <div>
                                         <a href="#" (click)="OpenJournal(Entity.JournalId)">{{Entity.JournalNumber}}</a>
-                                    </div>
-                                </div>
-                                <div *ngIf="FieldName == 'GLAccountDisplayNumber'">
-                                    <div>
-                                        <a href="#" (click)="ViewEntityClicked('GLAC')">{{Entity.GLAccountDisplayNumber}}</a>
                                     </div>
                                 </div>
                                 <div class="TextTrimming" *ngIf="FieldName == 'TransferError'" style="font-size:11px;color:#E53030;">{{FieldValue}}</div>
@@ -408,14 +377,14 @@
                             <div class="MediaFill">
 
                                 <!-- AmountInLocalCurrency -->
-                                <div *ngIf="FieldName == 'AmountInLocalCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInLocalCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span>({{Entity.LocalCurrencyCode}})</span>
                                             </td>
@@ -424,14 +393,14 @@
                                 </div>
 
                                 <!-- AmountInPaymentCurrency -->
-                                <div *ngIf="FieldName == 'AmountInPaymentCurrency'" [style.padding-right]="NumberFieldRightPadding">
+                                <div *ngIf="FieldName == 'AmountInPaymentCurrency'">
                                     <table>
                                         <tr>
                                             <td>
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span>({{Entity.PaymentCurrencyCode}})</span>
                                             </td>
@@ -443,7 +412,7 @@
                                 <div *ngIf="FieldName == 'OpenAmount'">
                                     <table>
                                         <tr>
-                                            <td style="width: 1px;">
+                                            <td style="width: 1px;padding-right:5px;">
                                                 <span>{{Entity[FieldName] | NumbersPipe:'N2'}}</span>
                                                 <span>({{Entity.PaymentCurrencyCode}})</span>
                                             </td>

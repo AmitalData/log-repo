@@ -25,7 +25,7 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AWBRoutingsTabComponent',
     templateUrl: './AWBRoutingsTabComponent.html',   
 })
@@ -567,7 +567,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment1FromPortChanged(this.EntityPM, list);
-                            this.FireWizardEvent();
                         }
 
                         else {
@@ -575,7 +574,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment1FromPortChanged(this.EntityPM, list);
-                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -605,7 +603,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment2FromPortChanged(this.EntityPM, list);
-                            this.FireWizardEvent();
                         }
 
                         else {
@@ -613,7 +610,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment2FromPortChanged(this.EntityPM, list);
-                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -643,7 +639,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment3FromPortChanged(this.EntityPM, list);
-                            this.FireWizardEvent();
                         }
 
                         else {
@@ -651,7 +646,6 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment3FromPortChanged(this.EntityPM, list);
-                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -1122,7 +1116,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
         }
 
         if (!AppTool.IsNullOrEmpty(this.Master)) {
-            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM)
+            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM.Id, this.EntityPM.BookingId, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentLevelCode, this.EntityPM.IsCancelled)
                 .subscribe((myResult: any) => {
 
                     if (AppTool.IsNullOrEmpty(myResult)) {

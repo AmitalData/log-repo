@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -14,7 +14,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public AirlineRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AirlineRepository(ICommonDataContext context)
         {

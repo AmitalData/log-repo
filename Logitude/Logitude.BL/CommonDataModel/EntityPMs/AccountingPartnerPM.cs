@@ -4,20 +4,17 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [DataContract]
-    public class AccountingPartnerPM : ObjectCustomFieldDataContractPM
+    public class AccountingPartnerPM
     {
         [Key]
         [DataMember]
         public string Id { get; set; }
-
         [DataMember]
         public int Tenant { get; set; }
-
         [DataMember]
         public bool IsSecured { get; set; }
 
@@ -265,33 +262,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UsoCFDICode { get; set; }
-        [DataMember]
-        public string GLAccountId { get; set; }
 
-        [DataMember]
-        public string GLAccountNumber { get; set; }
-        [DataMember]
-        public bool AccountingVATSplit { get; set; }
-
-        [DataMember]
-        public string UploadingUniqueKey { get; set; }
-
-        [DataMember]
-        public string BillToId { get; set; }
-
-        [DataMember]
-        public string CollectorId { get; set; }
-
-        [DataMember]
-        public double? CreditLimit { get; set; }
-
-        [DataMember]
-        public double? InsuredCreditlimit { get; set; }
-
-        [DataMember]
-        public string RegimenFiscalCode { get; set; }
-
-        [DataMember]
-        public string SATReceptorName { get; set; }
     }
 }

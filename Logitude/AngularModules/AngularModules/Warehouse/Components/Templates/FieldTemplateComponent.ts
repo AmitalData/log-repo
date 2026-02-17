@@ -2,7 +2,7 @@ import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef}
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FontTool} from '../../../Infrastructure/Tools';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 

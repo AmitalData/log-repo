@@ -6,10 +6,9 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {Component}  from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'OceanShipmentReportFilterComponent',
     templateUrl: './OceanShipmentReportFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -33,7 +32,6 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
     public IsImport: boolean = false;
     public IncludeClosed: boolean = false;
     reportFliter: ReportFliter;
-    customerId: string;
     ToDate: Date;
     FromDate: Date;
     public currentDirectionId: string;
@@ -85,82 +83,8 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true,customerId: string=null) {
-        this.CustomerId =customerId;
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                                       
-                case "CreateDateTime":
-                    if(queryFilterItem.Operator=="GreaterThanOrEqual"){
-                        this.FromDate =new Date(queryFilterItem.FieldValue);
-                        break;     }
-                    if(queryFilterItem.Operator=="LessThanOrEqual"){
-                        this.ToDate =new Date(queryFilterItem.FieldValue);
-                        break;  }
-                     break; 
-                case "ShipmentTypeId":
-                    this.ShipmentTypeRadio = queryFilterItem.FieldValue;
-                    break;  
-                case "DirectionId": {
-                    this.IsImport = queryFilterItem.FieldValue?.includes("I");
-                    this.IsExport = queryFilterItem.FieldValue?.includes("E");
-                    this.IsDomestic = queryFilterItem.FieldValue?.includes("D");
-                    break;
-                }
-               
-                case "IncludeClosed":
-                    this.IncludeClosed = queryFilterItem.FieldValue == "true";
-                    break;
 
-              
-            }
-            }
-    }
-    ValidateSelectedFilters() {
-        return true;
-    }
     RunReport(isloading: boolean) {
-        
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        this.reportFliter.CurrentCurrencyCodeType = this.SelectedCurrency;
-
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-        this.reportFliter.CustomerId = this.CustomerId;
-
-        this.reportFliter.IncludeOperationalyClosed = this.IncludeClosed;
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
-
-        this.ReportsPreview.CleanPartnersObslist();
-        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
-    }
-    GetQueryFilterItems(){
         this.queryFilterItems = new Array<QueryFilterItem>();
 
         if (this.FromDate) {
@@ -200,8 +124,27 @@ export class OceanShipmentReportFilterComponent extends BaseComponent   {
             this.queryFilterItem.Operator = "Equals";
             this.queryFilterItems.push(this.queryFilterItem);
         }       
-        return this.queryFilterItems;
+
+        this.reportFliter = new ReportFliter();
+        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        this.reportFliter.CurrentCurrencyCodeType = this.SelectedCurrency;
+
+        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        this.reportFliter.NumberOfPage = 1;
+        this.reportFliter.ProcessType = "GenerateReport";
+        this.reportFliter.CustomerId = this.CustomerId;
+
+        this.reportFliter.IncludeOperationalyClosed = this.IncludeClosed;
+
+        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
+
+        this.ReportsPreview.CleanPartnersObslist();
+        if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
     }
+
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);

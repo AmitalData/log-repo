@@ -19,7 +19,7 @@
 //import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 //@Component({
-//    
+//    moduleId: module.id,
 //    templateUrl: './EditPaymentOrderComponent.html',
 //})
 //export class EditPaymentOrderComponent extends BaseComponent {
@@ -62,8 +62,8 @@
 //            }
 
 //        }
-//        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-//            this.entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
+//        this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+//            this.entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
 //                this.BuildTabs();
 //                this.RunComponent();
 //            });
@@ -112,7 +112,7 @@
 //            clearTimeout(this.timerToken);
 //        }
 
-//        if (this.Retries < 20) {
+//        if (this.Retries < 3) {
 //            this.timerToken = setTimeout(() => this.RunComponent(), 1);
 //        }
 //    }
@@ -162,7 +162,7 @@
 
 //                    }
 //                    case "REQUEST": {
-//                        SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent', myLocation.viewContainerRef)
+//                        SessionLocator.DynamicLoader.Load('./CustomsModules/CustomControls/Components/CustomsRequestsSheetsComponent', myLocation.viewContainerRef)
 //                            .then(cmpRef => {
 //                                //this.REQUEST = cmpRef.instance;
 //                                //this.REQUEST.InitTab(this.EntityPM, this, this.IsDisplayOnly, true);
@@ -325,7 +325,7 @@
 
 //        if (this.IsNewEntity) {
 
-//            this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
+//            this.supplierInvoicePMService.insert(this.EntityPM).subscribe(myResult => {
 
 //                var res: ServiceResponse = myResult;
 //                if (!res.HasError) {
@@ -344,7 +344,7 @@
 
 //        } else {
 
-//            this.supplierInvoicePMService.update(this.EntityPM).subscribe((myResult:any) => {
+//            this.supplierInvoicePMService.update(this.EntityPM).subscribe(myResult => {
 
 //                var res: ServiceResponse = myResult;
 //                if (!res.HasError) {
@@ -366,7 +366,7 @@
 //    SavingPromise(): Promise<boolean> {
 //        return new Promise((resolve) => {
 //            if (this.IsNewEntity) {
-//                this.supplierInvoicePMService.insert(this.EntityPM).subscribe((myResult:any) => {
+//                this.supplierInvoicePMService.insert(this.EntityPM).subscribe(myResult => {
 //                    var res: ServiceResponse = myResult;
 //                    if (!res.HasError) {
 //                        var entity = res.Result;
@@ -385,7 +385,7 @@
 //                });
 
 //            } else {
-//                this.supplierInvoicePMService.update(this.EntityPM).subscribe((myResult:any) => {
+//                this.supplierInvoicePMService.update(this.EntityPM).subscribe(myResult => {
 
 //                    var res: ServiceResponse = myResult;
 //                    if (!res.HasError) {
@@ -447,7 +447,7 @@
 
 //            //        if (saveInsurance == "Save1stSupplierInvoice") {
 //            //            let supplierInvoice = this.declarationPM.SupplierInvoices[0];
-//            //            this.supplierInvoicePMService.update(supplierInvoice).subscribe((myResult:any) => {
+//            //            this.supplierInvoicePMService.update(supplierInvoice).subscribe(myResult => {
 
 //            //                var res: ServiceResponse = myResult;
 //            //                if (!res.HasError) {

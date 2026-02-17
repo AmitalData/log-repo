@@ -64,14 +64,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\UserIDNumberRequestServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Form1.cs" />
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
@@ -158,25 +151,6 @@
     <None Include="Connected Services\LoginWcfServiceReference\LoginWcfService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\DeclarationApprovalRequestTester.UserIDNumberRequestServiceReference.Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\UserIDNumberRequestWcfService.wsdl" />
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\UserIDNumberRequestWcfService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\UserIDNumberRequestWcfService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\UserIDNumberRequestWcfService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\UserIDNumberRequestWcfService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\UserIDNumberRequestWcfService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -197,7 +171,6 @@
     <WCFMetadataStorage Include="Connected Services\AccountingPartnerServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\DeclarationApprovalRequestServiceReference\" />
     <WCFMetadataStorage Include="Connected Services\LoginWcfServiceReference\" />
-    <WCFMetadataStorage Include="Connected Services\UserIDNumberRequestServiceReference\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\DeclarationApprovalRequestServiceReference\DeclarationApprovalRequestWcfService.disco" />
@@ -240,21 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\AccountingPartnerServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\UserIDNumberRequestWcfService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\UserIDNumberRequestServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

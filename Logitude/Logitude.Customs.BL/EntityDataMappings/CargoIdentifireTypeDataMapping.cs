@@ -19,12 +19,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CargoIdentifireTypePM entityPM, CargoIdentifireType entityPOCO)
         {
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
-
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                entityPOCO.Code = entityPM.Code;
-            }
+          
         }
 
         public void CustomPOCOToPM(CargoIdentifireTypePM entityPM, CargoIdentifireType entityPOCO)

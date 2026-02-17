@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;
@@ -30,11 +30,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             {
                 UserValidityResponse response = new UserValidityResponse() { IsValid = true };
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-
                 IWebFreightContext ObjectContext = WebFreightContext.GetContext(tenant);
                 if (HttpContext.Current != null)
                 {
@@ -64,15 +59,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     //if (connection.Contains("Main"))
                     //{ }
 
-                    //isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
-
-
-                    isBlocking = (from a in globalcontext.GlobalDBs
-                                       where a.IsBlocking == true
-                                       select a.IsBlocking).Count() > 0;
-
-
-
+                    isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
                     GlobalContactRepository repository = new GlobalContactRepository(globalcontext);
                     GlobalContact contact = repository.GetGlobalContactByEmailAndTenant(authEmail, tenant);
                     if (contact != null && contact.InActive)
@@ -110,6 +97,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     }
                 }
 
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (authToken != null)
                 {
                     AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
@@ -204,12 +193,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         private bool GetIsBlockingFromDB()
         {
             IGlobalContext globalcontext = GlobalContext.GetContext();
-            // bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
-
-            bool isBlocking = (from a in globalcontext.GlobalDBs 
-                               where a.IsBlocking == true
-                               select a.IsBlocking).Count()>0;
-
+            bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
 
             bool isIpAuthenticated = true;
 

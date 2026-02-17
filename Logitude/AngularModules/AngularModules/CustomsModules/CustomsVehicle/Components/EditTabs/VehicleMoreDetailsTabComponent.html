@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .FormFieldRow {
         height: 32px;
     }
@@ -27,7 +27,7 @@
                         </td>
                         <td style="width: 200px;">
 
-                            <CheckBox (Checked)="IsABS = $event" [IsChecked]="IsABS"  ></CheckBox>
+                            <CheckBox (Checked)="IsABS = $event" [IsChecked]="IsABS"></CheckBox>
 
                         </td>
 
@@ -40,8 +40,7 @@
                         <td style="width: 200px;">
                             <LogTextBox [ObjectFieldName]="'AirBagsNumber'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"
-                                        [Text]="AirBagsNumber"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
                         <td><div></div></td>
@@ -60,8 +59,7 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.ConverterType'"
-                                    [HideColumns]="true"
-                                    [SelectedValue]="ConverterTypeCode">
+                                    [HideColumns]="true">
                             </LogLov>
                         </td>
 
@@ -74,7 +72,7 @@
                         <td style="width: 200px;">
                             <LogTextBox [ObjectFieldName]="'GreenIndex'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="GreenIndex"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
                         <td><div></div></td>
@@ -92,8 +90,8 @@
 
 
                             <LogTextBox [ObjectFieldName]="'GreenIndexGroup'"
-                                        [ObjectTableName]="'Customs.Vehicle'" id="GreenIndexGroup"
-                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="GreenIndexGroup"></LogTextBox>
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
 
@@ -124,8 +122,7 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.VehicleTecnologyType'"
-                                    [HideColumns]="true"
-                                    [SelectedValue]="VehicleTecnologyTypeCode">
+                                    [HideColumns]="true">
                             </LogLov>
 
                         </td>
@@ -140,7 +137,7 @@
                             <LogTextBox [ObjectFieldName]="'VehicleSafetyAccessoryPoints'"
                                         [InputType]="'ntext'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="VehicleSafetyAccessoryPoints"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
                         <td><div></div></td>
@@ -161,8 +158,7 @@
                                     [ObjectTableName]="'Customs.Vehicle'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Customs.VehiclePriceListType'"
-                                    [HideColumns]="true"
-                                    [SelectedValue]="VehiclePriceListTypeCode">
+                                    [HideColumns]="true">
                             </LogLov>
 
                         </td>
@@ -205,8 +201,7 @@
                             <LogTextBox [ObjectFieldName]="'SelfVehicleWeight'"
                                         [InputType]="'unsinteger'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"
-                                        [Text]="SelfVehicleWeight"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
 
                         </td>
@@ -230,7 +225,6 @@
                                         [InputType]="'decimal'"
                                         [ObjectTableName]="'Customs.Vehicle'"
                                         [DataContext]="DataContext" [HideColumns]="true"
-                                        [Text]="VehiclePowerKW"
                                         (LostFocus)="OnVehiclePowerKWLostFocus(VehiclePowerKWTextBox)" [DebounceTime]="1" (KeyUp)="VehiclePowerKWKeyUp($event,VehiclePowerKWTextBox)">
 
                             </LogTextBox>
@@ -249,8 +243,7 @@
                             <LogTextBox [ObjectFieldName]="'MedalNumber'"
                                         [InputType]="'unsinteger'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true"
-                                        [Text]="MedalNumber"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
@@ -270,7 +263,7 @@
                             <LogTextBox [ObjectFieldName]="'NumberOfSeats'"
                                         [InputType]="'unsinteger'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="NumberOfSeats"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
@@ -285,8 +278,7 @@
                             <LogDatePicker [ObjectFieldName]="'DateOnRoadAbroad'"
                                            [ObjectTableName]="ObjectTableName"
                                            [InputType]="'date'" [DataContext]="DataContext"
-                                           [HideColumns]="true"
-                                           [SelectedDateValue]="DateOnRoadAbroad" [RefreshMe]="refresh"></LogDatePicker>
+                                           [HideColumns]="true"></LogDatePicker>
 
                         </td>
 
@@ -301,15 +293,13 @@
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'IsraelEnterDate'" [ObjectTableName]="'Customs.Vehicle'"
                                       [DataContext]="DataContext"></LogLabel>
-                                   
                         </td>
                         <td style="width: 200px;">
 
                             <LogDatePicker [ObjectFieldName]="'IsraelEnterDate'"
                                            [ObjectTableName]="ObjectTableName"
                                            [InputType]="'date'" [DataContext]="DataContext"
-                                           [HideColumns]="true"
-                                           [SelectedDateValue]="IsraelEnterDate" [RefreshMe]="refresh"></LogDatePicker>
+                                           [HideColumns]="true"></LogDatePicker>
 
 
                         </td>
@@ -325,8 +315,7 @@
                             <LogDatePicker [ObjectFieldName]="'TransmissionDateWithoutTax'"
                                            [ObjectTableName]="ObjectTableName"
                                            [InputType]="'date'" [DataContext]="DataContext"
-                                           [HideColumns]="true"
-                                           [SelectedDateValue]="TransmissionDateWithoutTax" [RefreshMe]="refresh"></LogDatePicker>
+                                           [HideColumns]="true"></LogDatePicker>
 
                         </td>
 
@@ -421,7 +410,7 @@
 
                             <LogTextBox [ObjectFieldName]="'VehicleCategory'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="VehicleCategory"></LogTextBox>
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
@@ -437,7 +426,7 @@
                             <LogTextBox #VehicleMaxPowerKWTextBox [ObjectFieldName]="'VehicleMaxPowerKW'"
                                         [InputType]="'decimal'"
                                         [ObjectTableName]="'Customs.Vehicle'"
-                                        [DataContext]="DataContext" [HideColumns]="true" [Text]="VehicleMaxPowerKW"
+                                        [DataContext]="DataContext" [HideColumns]="true"
                                         (LostFocus)="OnVehicleMaxPowerKWLostFocus(VehicleMaxPowerKWTextBox)" [DebounceTime]="1" (KeyUp)="VehicleMaxPowerKWKeyUp($event,VehicleMaxPowerKWTextBox)">
                             </LogTextBox>
 

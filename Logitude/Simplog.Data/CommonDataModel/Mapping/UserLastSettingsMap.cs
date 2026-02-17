@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -23,6 +23,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FilterName).HasColumnName("FilterName").IsRequired().HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.FilterValue).HasColumnName("FilterValue").HasMaxLength(50).IsUnicode(false);
+
         }
     }
 }

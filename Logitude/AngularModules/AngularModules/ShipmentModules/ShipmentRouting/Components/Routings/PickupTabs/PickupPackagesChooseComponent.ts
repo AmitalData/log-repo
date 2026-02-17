@@ -12,7 +12,7 @@ import { PickUpDeliveryPackageHarmonizePM } from '../../../../../Shipment/Entity
 import { ShipmentPackageHarmonizePM } from '../../../../../Shipment/EntityPMs/ShipmentPackageHarmonizePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PickupPackagesChooseComponent.html',
 })
 

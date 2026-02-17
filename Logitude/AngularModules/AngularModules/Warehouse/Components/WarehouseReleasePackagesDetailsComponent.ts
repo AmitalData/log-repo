@@ -28,7 +28,7 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 import {WarehouseEntryPackagePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseEntryPackagePMExtendedService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'WarehouseReleasePackagesDetailsComponent',
     templateUrl: './WarehouseReleasePackagesDetailsComponent.html',
     providers: [WarehouseEntryPackagePMExtendedService],
@@ -54,7 +54,6 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     DimensionsColumnHeader: string;
     VolumetricWeightColumnHeader: string;
     PackageTypeColumnHeader: string;
-    IsFilterByShipmentId: boolean = true;
 
     ShowAddPackageButton: boolean = false;
     SelectedWarehouseReleasePackage: WarehouseReleasePackagePM;
@@ -70,7 +69,26 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     ngOnInit() { }
 
     SetWindowArgs(args: any) {
+
+
         this.Start(args);
+        //this.IsFromFullWarehouseEntryComponent = args.IsFromFullWarehouseEntryComponent;
+        //this.IsEditMode = args.IsEditMode;
+        //this.ShowPackageSummary = args.ShowPackageSummary;
+        //this.ShowAddPackageButton = args.ShowAddPackageButton;
+        //if (!this.IsEditMode) {
+        //    this.ShowAddPackageButton = true;
+        //}
+
+        //this.myPackageTypeService.getAllFromCache().subscribe((resp: any) => {
+        //    if (!resp.HasError) {
+        //        this.AllPackageTypes = resp.Result;
+        //    }
+
+
+        //});
+
+
     }
 
     ShipmentPM: any;
@@ -78,62 +96,45 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
 
         this.TransportModeId = this.warehouseReleasePM.TransportModeId;
         this.DirectionId = this.warehouseReleasePM.DirectionId;
-        this.SetPortData();
+        if (this.ShipmentPM) {
+            this.FromPortId = this.ShipmentPM ? this.ShipmentPM.MainCarriageFromPortId ? this.ShipmentPM.MainCarriageFromPortId : this.ShipmentPM.FromPortId : "";
+            this.ToPortId = this.ShipmentPM.ShipmentLevelCode == "H" ? this.ShipmentPM.MainCarriageFinalDestinationPortId : this.ShipmentPM.FinalDistenationPortId;
+            if (!this.ToPortId) {
+                this.ToPortId = this.ShipmentPM.ToPortId;
+            }
+        }
         this.ConnectedTo = this.warehouseReleasePM.ConnectedTo;
         this.IsLCLEntity = AppTool.IsLCLEntity(this.warehouseReleasePM.TransportModeId, this.warehouseReleasePM.ShipmentTypeId);
     }
 
-    SetPortData() {
-
-        var shipment = this.ViewModelTrigger ? this.ViewModelTrigger.ShipmentPM : this.ShipmentPM;
-
-        if (shipment && this.ViewModelTrigger.FromType!="WarehouseEntry") {
-            this.FromPortId = shipment ? shipment.MainCarriageFromPortId ? shipment.MainCarriageFromPortId : shipment.FromPortId : "";
-            this.ToPortId = shipment.ShipmentLevelCode == "H" ? shipment.MainCarriageFinalDestinationPortId : shipment.FinalDistenationPortId;
-            if (!this.ToPortId) {
-                this.ToPortId = shipment.ToPortId;
-            }
-        } else {
-            this.ToPortId = this.ViewModelTrigger.ToPortId;
-            this.FromPortId = this.ViewModelTrigger.FromPortId;
-        }
-    }
 
     SetLabel() {
 
         this.VolumeLabel = "Volume (" + SessionLocator.TenantPM.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Gross Weight (" + SessionLocator.TenantPM.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dim(L-W-H) (" + SessionLocator.TenantPM.DimensionsUnitCode + ")";
-        //this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
-        this.PackageTypeColumnHeader = "Package Type";
-        if (this.warehouseReleasePM) {
-
-            this.WeightColumnHeader = "Gross Weight (" + this.warehouseReleasePM.GrossWeightUnitCode + ")";
-            this.DimensionsColumnHeader = "Dim(L-W-H) (" + this.warehouseReleasePM.DimensionsUnitCode + ")";
-            this.VolumetricWeightColumnHeader = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
-
-            this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
-
-
-
-
-
-        }
-
-
+        this.WeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.GrossWeight").replace("%UnitCode", this.warehouseReleasePM.GrossWeightUnitCode);
+        this.DimensionsColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.Dimensions").replace("%UnitCode", this.warehouseReleasePM.DimensionsUnitCode);
+        this.VolumetricWeightColumnHeader = TextCodeTranslator.Translate("Shipment.O.Packages.VolWeight").replace("%UnitCode", this.warehouseReleasePM.ChargeableWeightUnitCode);
+        this.PackageTypeColumnHeader = TextCodeTranslator.Translate("ShipmentPackage.F.PackageTypeId");
+        this.VolumetricWeightLabel = "Volumetric Weight (" + this.warehouseReleasePM.ChargeableWeightUnitCode + ")";
     }
 
-    WarehouseEntryId: string = "";
     Start(args) {
 
-        this.warehouseReleasePM = args.WarehouseReleasePM;
+        if (args.IsFromFullWarehouseReleaseComponent) {
+            this.warehouseReleasePM = args.warehouseReleasePM;
+        }
+        else {
+            this.warehouseReleasePM = args.WarehouseEntryPM;
+        }
+
         this.ViewModelTrigger = args.ViewModelTrigger;
         this.IsEditMode = args.IsEditMode;
         this.IsFromFullWarehouseReleaseComponent = args.IsFromFullWarehouseReleaseComponent;
         this.ShipmentPM = args.ShipmentPM;
-        this.IsFilterByShipmentId = args.IsFilterByShipmentId;
         this.ShowPackageSummary = args.ShowPackageSummary;
-        this.WarehouseEntryId = args.WarehouseEntryId;
+
         if (this.warehouseReleasePM) {
             this.WarehouseReleasePackagesLists = this.warehouseReleasePM.WarehouseReleasePackages;
         }
@@ -156,23 +157,18 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
         if (!this.IsPackageOpen) {
             this.IsPackageOpen = true;
             this.IsChoosePackageOpen = true;
-            if (this.CustomerId != this.warehouseReleasePM.CustomerId || this.WarehouseId != this.warehouseReleasePM.WarehouseId || this.ShipmentId !=this.warehouseReleasePM.ShipmentId) {
+            if (this.CustomerId != this.warehouseReleasePM.CustomerId || this.WarehouseId != this.warehouseReleasePM.WarehouseId) {
 
-                var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId:"";
+                var shipmentId = this.IsFromFullWarehouseReleaseComponent ? this.warehouseReleasePM.ShipmentId : null;
                 this.AllWarehouseEntryPackagesLists = [];
-                
-                this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.IsFilterByShipmentId ? shipmentId : null, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
+                this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.warehouseReleasePM.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.AllWarehouseEntryPackagesLists = pmResponse.Result;
-                        if (this.AllWarehouseEntryPackagesLists && this.WarehouseEntryId) {
-                            this.AllWarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists.filter(d => d.WarehouseEntryId == this.WarehouseEntryId);
-                        }
                         this.OpenChoosePackage(packageType);
                     }
 
                 });
-                
 
             } else {
                 this.OpenChoosePackage(packageType);
@@ -221,33 +217,27 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
     FromPortId: string;
     ToPortId: string;
     ConnectedTo: string;
-    ShipmentId: string;
+
 
     OpenChoosePackage(packageType: string) {
 
         this.WarehouseId = this.warehouseReleasePM.WarehouseId;
         this.CustomerId = this.warehouseReleasePM.CustomerId;
-        this.ShipmentId = this.warehouseReleasePM.ShipmentId;
-     
-
         this.IsPackageOpen = false;
         var windowArgs: any = {};
         windowArgs.WarehouseReleasePM = this.warehouseReleasePM;
 
         windowArgs.WarehouseEntryPackagesLists = this.AllWarehouseEntryPackagesLists;
         windowArgs.ViewModelTrigger = this;
-        windowArgs.WarehouseEntryId = this.WarehouseEntryId;
-        windowArgs.UsingFilterPorts = this.ViewModelTrigger.IsHaveShipmentPM ? false : true;
-        windowArgs.IsCFSWarehouse = this.ShipmentPM ? this.ShipmentPM.IsCFSWarehouse : false;
-
         windowArgs.PackageType = packageType;
+
         var logWindow = new LogitudeWindow();
         if (this.IsFromFullWarehouseReleaseComponent) {
             windowArgs.IsFromFullWarehouseReleaseComponent = this.IsFromFullWarehouseReleaseComponent;
         }
         logWindow.Width = 1250;
         logWindow.Height = 550;
-        logWindow.Title = "Choose " + packageType+"s";
+        logWindow.Title = "Choose Packages";
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./Warehouse/Components/WarehouseReleaseChoosePackagesComponent");
 
@@ -401,7 +391,7 @@ export class WarehouseReleasePackagesDetailsComponent extends BaseComponent impl
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
 

@@ -1,7 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -15,7 +14,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentPickUpDeliveryQuery
     {
-        ShipmentPickUpDeliveryRepository repository;
+        ShipmentPickUpDeliveryRepository repository;         
         public ShipmentPickUpDeliveryQuery(int tenant)
         {
             repository = new ShipmentPickUpDeliveryRepository(tenant);
@@ -34,18 +33,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPickUpDelivery entityPOCO = repository.GetSingleShipmentPickUpDelivery(tenant, id);
             ShipmentPickUpPM pickUp = null;
             ShipmentDeliveryPM delivery = null;
-            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            string shipmentNumber = "", bookingConfirmationNumber = "";
+            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
+      
              
             if (entityPOCO != null)
             {
-                Tuple<string, string> shipmentFields = shipmentQuery.GetShipmentFieldsForPickUpDelivery(entityPOCO.ShipmentId, entityPOCO.Tenant);
-                if (shipmentFields != null)
-                {
-                    shipmentNumber = shipmentFields.Item1;
-                    bookingConfirmationNumber = shipmentFields.Item2;
-                }
-
+                string shipmentNumber = shipmentRepository.GetShipmentNumberByShipmentIdTenant(entityPOCO.ShipmentId, entityPOCO.Tenant);
                 if (entityPOCO.PickUpDeliveryTypeCode == "PICK")
                 {
                     pickUp = new ShipmentPickUpPM()
@@ -99,9 +92,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
                         EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                         TransportModeCode = entityPOCO.TransportModeCode,
-                        ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
-                        ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
-                        BookingConfirmationNumber = bookingConfirmationNumber,
                     };
 
                     ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -296,10 +286,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         pickUp.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                     }
                     #endregion
-
-
-                 
-
                 }
 
                 else
@@ -355,9 +341,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         EmptyDeliveryContainerPartnerId = entityPOCO.EmptyDeliveryContainerPartnerId,
                         EmptyDeliveryDepotReference = entityPOCO.EmptyDeliveryDepotReference,
                         TransportModeCode = entityPOCO.TransportModeCode,
-                        ParentPickUpDeliveryId = entityPOCO.ParentPickUpDeliveryId,
-                        ChildDeliveryIndex = entityPOCO.ChildDeliveryIndex,
-                        BookingConfirmationNumber = bookingConfirmationNumber,
                     };
 
                     ShipmentPickUpDeliveryPackageQuery packagesQuery = new ShipmentPickUpDeliveryPackageQuery(tenant);
@@ -552,20 +535,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         delivery.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                     }
                     #endregion
-                }
-
-                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
-                {
-                    Tenant = tenant,
-                    EntityId = entityPOCO.ShipmentId,
-                    ObjectTableName = "Shipment",
-                    ChildObjectTableName = "ShipmentPickUpDelivery",
-                    ChildEntityId = entityPOCO.Id,
-                    ChildEntities = pickUp != null ? new List<object>() { pickUp  }.ToList() : new List<object>() { delivery }.ToList(),
-                });
-
-                
-      
+                }                
             }
 
             if (entityPOCO == null)
@@ -591,7 +561,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                select a.CarrierId).FirstOrDefault();
             return entityId;
 
-        }
-        
+        }      
     }
 }

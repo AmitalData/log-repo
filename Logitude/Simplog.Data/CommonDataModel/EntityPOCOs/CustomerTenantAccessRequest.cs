@@ -24,8 +24,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("RequestStatus")]
         public virtual CustomerTenantAccessStatusType RequestStatusCode { get; set; }
 
-        public bool IsCustoms { get; set; }
-        public bool IsExport { get; set; }
+
 
     }
 }

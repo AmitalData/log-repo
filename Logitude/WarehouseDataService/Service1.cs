@@ -37,15 +37,15 @@ namespace WarehouseDataService
 
 
 
-                string sourceConnection = warehouseServiceHelper.BuildConnectionString(ConfigurationManager.AppSettings["SourceConnection"]);
+                string sourceConnection = warehouseServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
                 ApplicationInfo.SourceConnection = warehouseServiceHelper.GetMainDBConnectionString(sourceConnection);
-                ApplicationInfo.DestinationConnection = ConfigurationManager.AppSettings["DestinationConnection"];
-                string updateWarehouseSleepTime = ConfigurationManager.AppSettings["UpdateWarehouseSleepTime"];
+                ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
+                string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateWarehouseSleepTime"];
                 ApplicationInfo.UpdateWarehouseSleepTime = (!string.IsNullOrEmpty(updateWarehouseSleepTime) ? Int32.Parse(updateWarehouseSleepTime) : 1) * 60000;
-                string warehouseBuildDays = ConfigurationManager.AppSettings["WarehouseBuildDays"];
-                string warehouseBuildHoures = ConfigurationManager.AppSettings["WarehouseBuildHoures"];
+                string warehouseBuildDays = ConfigurationSettings.AppSettings["WarehouseBuildDays"];
+                string warehouseBuildHoures = ConfigurationSettings.AppSettings["WarehouseBuildHoures"];
 
-                string retryBuildWithinHours = ConfigurationManager.AppSettings["RetryBuildWithinHours"];
+                string retryBuildWithinHours = ConfigurationSettings.AppSettings["RetryBuildWithinHours"];
                 ApplicationInfo.RetryBuildWithinHours = !string.IsNullOrEmpty(retryBuildWithinHours) ? Int32.Parse(retryBuildWithinHours) : 0;
                 ApplicationInfo.RunDataWarehouseImmediately = GetIsBuildDataWarehouseFromConfigurationSettings();
 
@@ -87,7 +87,7 @@ namespace WarehouseDataService
         private bool GetIsBuildDataWarehouseFromConfigurationSettings()
         {
             bool result = false;
-            var isBuildDWHNow = ConfigurationManager.AppSettings["RunDataWarehouseImmediately"] != null ? ConfigurationManager.AppSettings["RunDataWarehouseImmediately"].ToString() : null;
+            var isBuildDWHNow = ConfigurationSettings.AppSettings["RunDataWarehouseImmediately"] != null ? ConfigurationSettings.AppSettings["RunDataWarehouseImmediately"].ToString() : null;
             if (!string.IsNullOrEmpty(isBuildDWHNow))
             {
                 result = Boolean.Parse(isBuildDWHNow);

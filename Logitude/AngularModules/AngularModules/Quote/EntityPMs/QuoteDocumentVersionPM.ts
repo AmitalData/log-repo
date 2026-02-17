@@ -1,4 +1,4 @@
-
+﻿
 import {QuotePM} from './QuotePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -97,10 +97,6 @@ export class QuoteDocumentVersionPM {
     public get DisplayVersionTypeName() { return this.displayVersionTypeName; }
     public set DisplayVersionTypeName(newValue: string) { if (this.displayVersionTypeName != newValue) { this.displayVersionTypeName = newValue;  } }
 
-
-    private extension: string;
-    public get Extension() { return this.extension; }
-    public set Extension(newValue: string) { if (this.extension != newValue) { this.extension = newValue; } }
     
 
     public OldEntityPM: QuoteDocumentVersionPM;
@@ -119,18 +115,15 @@ export class QuoteDocumentVersionPM {
 
 
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName: string = null) {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-            if (this.EntityParentPM) {
-                this.EntityParentPM.MarkAsDirty();
-            }
-            if (propertyName != null) {
-                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteDocumentVersionPM");
+        this.IsDirty = true;
+        if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteDocumentVersionPM");
 
-            }
         }
     }
     private MyClone: QuoteDocumentVersionPM;

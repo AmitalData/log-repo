@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .MessageText {
         white-space: normal;
@@ -16,268 +16,251 @@
 
 <div *ngIf="IsLoadPage" style="height:100%;vertical-align:top">
 
-    <table>
-        <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
-            <td>
-                <WarningSummary [ItemsSource]="ValidationWarningsList"></WarningSummary>
+    <table style="height:100%;vertical-align:top">
+
+        <tr style="height:10px"><td colspan="3"><div></div></td></tr>
+
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="3">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr> 
+
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
+            <td colspan="3">
+                <div style="height:5px"></div>
             </td>
         </tr>
-
-        <tr>
-            <td>
-                <table style="height:100%;vertical-align:top">
-                    <tr style="height:10px"><td colspan="3"><div></div></td></tr>
-
-                    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                        <td colspan="3">
-                            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-                        </td>
-                    </tr>
-
-                    <tr *ngIf="!IsNoPackagesAvaliable && ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:5px;">
-                        <td colspan="3">
-                            <div style="height:5px"></div>
-                        </td>
-                    </tr>
-
-                    <tr *ngIf="IsNoPackagesAvaliable">
-                        <td colspan="3">
-                            <div></div>
-                        </td>
-                    </tr>
+         
+         
+         
+        <tr style="height:210px;vertical-align:top;">
 
 
-
-                    <tr *ngIf="!IsNoPackagesAvaliable" style="height:210px;vertical-align:top;">
-
-
-                        <td style="width:400px">
-                            <table style="vertical-align:top">
-                                <tr style="vertical-align:top;height:30px">
-                                    <td style="width:5px"><div></div></td>
-                                    <td style="width:125px;">  <LogLabel [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:270px"><LogLov style="width:230px" [SelectedValue]="warehouseEntryPM.WarehouseId" [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [LookUpTableName]="'Warehouse'"></LogLov></td>
-                                    <td><div></div></td>
-                                </tr>
-
-
-
-                                <tr style="vertical-align:top;height:30px">
-                                    <td style="width:5px"><div></div></td>
-                                    <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:270px"><LogLov style="width:230px" [DependencyFilter1Value]="'CS'" [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [LookUpTableName]="'Card'"></LogLov></td>
-                                    <td><div></div></td>
-                                </tr>
-
-                                <tr style="vertical-align:top;height:30px">
-                                    <td style="width:5px"><div></div></td>
-                                    <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerRef1'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'CustomerRef1'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox></td>
-                                    <td><div></div></td>
-                                </tr>
-
-
-                                <tr style="vertical-align:top;height:30px">
-                                    <td style="width:5px"><div></div></td>
-                                    <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerRef2'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'CustomerRef2'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox></td>
-                                    <td><div></div></td>
-                                </tr>
-
-                                <tr style="vertical-align:top;height:4px">
-                                    <td colspan="4"><div></div></td>
-
-                                </tr>
-
-                                <tr style="vertical-align:top;height:80px;">
-                                    <td style="width:5px"><div></div></td>
-                                    <td style="width:125px;">  <LogLabel [ObjectFieldName]="'SpecialInstruction'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:270px;">
-
-                                        <div style="height: 100%; width:270px;">
-                                            <LogTextBox style="width:270px;" [IsMultiline]="true" [ObjectFieldName]="'SpecialInstruction'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox>
-                                        </div>
-
-                                    <td><div></div></td>
-                                </tr>
-
-
-                                <tr><td></td></tr>
-
-                            </table>
-
-
-
-                        </td>
-
+            <td style="width:400px">
+                <table style="vertical-align:top">
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:125px;">  <LogLabel [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:270px"><LogLov style="width:230px"  [SelectedValue]="warehouseEntryPM.WarehouseId" [ObjectFieldName]="'WarehouseId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [LookUpTableName]="'Warehouse'"></LogLov></td>
                         <td><div></div></td>
+                    </tr>
 
+                     
+               
+                    <tr  style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:270px"><LogLov style="width:230px" [DependencyFilter1Value]="'CS'" [ObjectFieldName]="'CustomerId'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [LookUpTableName]="'Card'"></LogLov></td>
+                        <td><div></div></td>
+                    </tr>
 
-                        <td style="width:460px;">
+                    <tr  style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerRef1'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'CustomerRef1'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+                      
+                     
+                    <tr style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:125px;">  <LogLabel [ObjectFieldName]="'CustomerRef2'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:270px"><LogTextBox style="width:230px" [ObjectFieldName]="'CustomerRef2'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
 
-                            <table style="vertical-align:top">
-
-
-                                <tr style="vertical-align:top;height:30px">
-
-
-                                    <td style="width:80px">
-                                        <div>
-                                            <button *ngIf="warehouseEntryPM && warehouseEntryPM.ExpectedEntryDate && !warehouseEntryPM.ActualEntryDate" (click)="SetActualDateClicked()" class="Button" style="height: 18px; font-size: 10px;">Set as Actual</button>
-                                        </div>
-                                    </td>
-                                    <td style="width:5px"><div></div></td>
-                                    <td style="width:130px;"> <LogLabel [ObjectFieldName]="'ExpectedEntryDate'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:240px;">
-
-
-                                        <table>
-                                            <tr>
-                                                <td style="width: 117px;">
-
-                                                    <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true"></LogDatePicker>
-                                                </td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 117px;">
-                                                    <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>
-                                        </table>
-
-
-
-                                    </td>
-                                    <td><div></div></td>
-                                </tr>
-
-
-                                <tr style="vertical-align:top;height:30px">
-                                    <td colspan="2" style="width:75px"><div></div></td>
-
-                                    <td style="width:130px;"> <LogLabel [Text]="'Actual Entry Date'" [ObjectFieldName]="'ActualEntryDate'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-
-
-
-                                    <td style="width:240px;">
-
-                                        <table>
-                                            <tr>
-                                                <td style="width: 117px;">
-
-                                                    <LogDatePicker [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-
-                                                </td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 117px;">
-
-
-                                                    <LogDatePicker [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
-                                                </td>
-                                                <td><div></div></td>
-                                            </tr>
-                                        </table>
-
-
-                                    </td>
-                                    <td><div></div></td>
-                                </tr>
-
-
-
-                                <tr style="vertical-align:top;height:30px">
-                                    <td colspan="2" style="width:75px"><div></div></td>
-                                    <td style="width:125px;">  <LogLabel [ObjectFieldName]="'ReceivedBy'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:240px"><LogTextBox style="width:240px" [ObjectFieldName]="'ReceivedBy'" [HideColumns]="true" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox></td>
-                                    <td><div></div></td>
-                                </tr>
-
-
-                                <tr style="vertical-align:top;height:4px">
-                                    <td colspan="5"><div></div></td>
-
-                                </tr>
-
-                                <tr style="vertical-align:top;height:80px">
-                                    <td colspan="2" style="width:75px"><div></div></td>
-                                    <td style="width:125px;">  <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
-                                    <td style="width:240px">
-
-                                        <div style="height: 100%; width:240px;">
-                                            <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'Notes'" [HideColumns]="true" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox>
-                                        </div>
-
-                                    </td>
-                                    <td><div></div></td>
-
-                                </tr>
-
-                                <tr><td colspan="5"><div></div></td></tr>
-
-                            </table>
-
-
-
-                        </td>
-
-
+                    <tr style="vertical-align:top;height:4px">
+                        <td colspan="4"><div></div></td>
 
                     </tr>
 
+                    <tr style="vertical-align:top;height:80px;">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:125px;">  <LogLabel [ObjectFieldName]="'SpecialInstruction'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:270px;">
+                        
+                            <div style="height: 100%; width:270px;">
+                                <LogTextBox  style="width:270px;" [IsMultiline]="true" [ObjectFieldName]="'SpecialInstruction'"  [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox>
+                            </div>
+                        
+                        <td><div></div></td>
+                    </tr>
+             
 
-                    <!--End Fields Grid-->
-                    <tr *ngIf="!IsNoPackagesAvaliable" style="vertical-align:central;height:10px;">
-                        <td colspan="3">
-                            <div></div>
+                    <tr><td></td></tr>
+
+                </table>
+
+
+
+            </td>
+
+            <td><div></div></td>
+
+
+            <td style="width:460px;">
+
+                <table style="vertical-align:top">
+
+        
+                    <tr style="vertical-align:top;height:30px">
+
+
+                        <td style="width:80px">
+                            <div>
+                                <button *ngIf="warehouseEntryPM && warehouseEntryPM.ExpectedEntryDate && !warehouseEntryPM.ActualEntryDate" (click)="SetActualDateClicked()" class="Button" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                            </div>
                         </td>
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:130px;"> <LogLabel [ObjectFieldName]="'ExpectedEntryDate'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:240px;">
+                        
+                        
+                        <table>
+                            <tr>
+                                <td style="width: 117px;">
+
+                                    <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 117px;">
+                                    <LogDatePicker [ObjectFieldName]="'ExpectedEntryDate'" [SelectedDateValue]="ExpectedEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table> 
+                 
+                        
+                        
+                        </td>
+                        <td><div></div></td>
                     </tr>
 
-                    <tr *ngIf="!IsNoPackagesAvaliable" style="vertical-align:central;height:100%;">
-                        <td colspan="3">
-                            <div class="MediaFill" LocationDirective Code="WEPD"></div>
-                        </td>
-                    </tr>
+
+                    <tr style="vertical-align:top;height:30px">
+                        <td colspan="2" style="width:75px"><div></div></td>
+          
+                        <td style="width:130px;"> <LogLabel [Text]="'Actual Entry Date'" [ObjectFieldName]="'ActualEntryDate'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
 
 
 
-                    <tr style="height: 32px;">
-                        <td colspan="3" style="vertical-align: bottom">
-                            <table style="height: 22px;">
+                        <td style="width:240px;">
+                        
+                            <table>
                                 <tr>
-                                    <td>
-                                        <div></div>
-                                    </td>
+                                    <td style="width: 117px;">
+                        
+                                     <LogDatePicker  [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
 
-                                    <td style="width: 57px;">
-                                        <div>
-                                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
-                                        </div>
                                     </td>
 
                                     <td style="width: 5px;">
                                         <div></div>
                                     </td>
 
-                                    <td *ngIf="!IsNoPackagesAvaliable" style="width: 57px;">
-                                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                                    <td style="width: 117px;">
+                                    
+
+                                      <LogDatePicker [ObjectFieldName]="'ActualEntryDate'" [SelectedDateValue]="ActualEntryDate" [ObjectTableName]="'WarehouseEntry'" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
                                     </td>
+                                    <td><div></div></td>
                                 </tr>
-                            </table>
+                            </table> 
+
+                        
                         </td>
+                        <td><div></div></td>
                     </tr>
 
+
+
+                    <tr style="vertical-align:top;height:30px">
+                        <td colspan="2" style="width:75px"><div></div></td>
+                        <td style="width:125px;">  <LogLabel [ObjectFieldName]="'ReceivedBy'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:240px"><LogTextBox style="width:240px" [ObjectFieldName]="'ReceivedBy'" [HideColumns]="true" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox></td>
+                        <td><div></div></td>
+                    </tr>
+
+
+                    <tr style="vertical-align:top;height:4px">
+                        <td colspan="5"><div></div></td>
+
+                    </tr>
+
+                    <tr style="vertical-align:top;height:80px">
+                        <td colspan="2" style="width:75px"><div></div></td>
+                        <td style="width:125px;">  <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogLabel></td>
+                        <td style="width:240px">
+
+                            <div style="height: 100%; width:240px;">
+                                <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'Notes'" [HideColumns]="true" [ObjectTableName]="'WarehouseEntry'" [DataContext]="warehouseEntryPM"></LogTextBox>
+                            </div>
+
+                        </td>
+                        <td><div></div></td>
+
+                    </tr>
+
+                    <tr><td colspan="5"><div></div></td></tr>
+
+                </table>
+
+
+
+            </td>
+
+           
+
+        </tr>
+
+
+        <!--End Fields Grid-->
+        <tr style="vertical-align:central;height:10px;">
+            <td colspan="3">
+               <div></div>
+            </td>
+        </tr>
+    
+       <tr  style="vertical-align:central;height:100%;">
+            <td colspan="3" >
+                <div class="MediaFill"  LocationDirective Code="WEPD"></div>
+            </td>
+        </tr>
+
+
+
+        <tr style="height: 32px;">
+            <td colspan="3" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <div>
+                                <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                            </div>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
+
     </table>
-   
 
 </div>

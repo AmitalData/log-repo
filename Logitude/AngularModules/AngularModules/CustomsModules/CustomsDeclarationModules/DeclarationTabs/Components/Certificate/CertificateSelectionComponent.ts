@@ -13,7 +13,7 @@ import {ObservableCollection} from '../../../../../Infrastructure/Utilities/Obse
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CertificateSelectionComponent.html',
 })
 

@@ -3,15 +3,15 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { AccountingPaymentMethodPM } from '../../EntityPMs/AccountingPaymentMethodPM';
+import {APPaymentMethodPM} from '../../EntityPMs/APPaymentMethodPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AccountingTab_APPaymentMethod.html',
 })
 
 export class AccountingTab_APPaymentMethod extends BaseComponent implements OnDestroy {
-    public EntityPM: AccountingPaymentMethodPM = null;
+    public EntityPM: APPaymentMethodPM = null;
     public ObjectTableName: string;
     public DataContext = this;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -48,10 +48,10 @@ export class AccountingTab_APPaymentMethod extends BaseComponent implements OnDe
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    get AccountingExternalId() { return this.EntityPM.APExternalId; }
+    get AccountingExternalId() { return this.EntityPM.AccountingExternalId; }
     set AccountingExternalId(value: string) {
-        if (this.EntityPM.APExternalId != value) {
-            this.EntityPM.APExternalId = value;
+        if (this.EntityPM.AccountingExternalId != value) {
+            this.EntityPM.AccountingExternalId = value;
         }
     }
 }

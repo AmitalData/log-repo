@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AccountingSettingQuery
     {
         AccountingSettingRepository repository;
-
+        public AccountingSettingQuery()
+        {
+            repository = new AccountingSettingRepository(); 
+        }
         public AccountingSettingQuery(int tenant)
         {
             repository = new AccountingSettingRepository(tenant);
@@ -27,7 +30,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public AccountingSettingPM GetSingleAccountingSettingPMById(int id)
         {
-            AccountingSettingPM account = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
+            AccountingSettingPM account = (from a in repository.context.AccountingSettings
                                            where a.Id == id
                                            select new AccountingSettingPM()
                                            {
@@ -53,11 +56,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                APInvoiceTransferStartDate = a.APInvoiceTransferStartDate,
                                                ARInvoiceTransferStartDate = a.ARInvoiceTransferStartDate,
                                                AllowPositiveAmountsInTheCreditNote = a.AllowPositiveAmountsInTheCreditNote,
+                                               QBOAccessToken = a.QBOAccessToken,
+                                               QBOAccessTokenSecret = a.QBOAccessTokenSecret,
                                                QBOrealMeID = a.QBOrealMeID,
                                                IsSingleTaxPerInvoice = a.IsSingleTaxPerInvoice,
                                                IsARPaymentsTransferEnabled = a.IsARPaymentsTransferEnabled,
                                                ARPaymentTransferStartDate = a.ARPaymentTransferStartDate,
-                                               APPaymentTransferStartDate = a.APPaymentTransferStartDate,
                                                TransferToDropboxActivated = a.TransferToDropboxActivated,
                                                EnableMultiPercentageVATTypes = a.EnableMultiPercentageVATTypes,
                                                NotifyPastDateOnInvoiceEdit = a.NotifyPastDateOnInvoiceEdit,
@@ -73,14 +77,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                RefreshToken=a.RefreshToken,
                                                QBOOAuth=a.QBOOAuth,
-                                               AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
-                                               AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
-                                               EnableAPPaymentExternalPayment=a.EnableAPPaymentExternalPayment,
-                                               TransferToFTPActivated = a.TransferToFTPActivated,
-                                               TransferFTPDetailId = a.TransferFTPDetailId,
-                                               TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
-                                               EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
-                                               BlockSendInvoiceOriginalCopy = a.BlockSendInvoiceOriginalCopy,
                                            }).FirstOrDefault();
 
             return account;
@@ -88,7 +84,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public AccountingSettingPM GetSinglePM(int id)
         {
-            AccountingSettingPM account = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
+            AccountingSettingPM account = (from a in repository.context.AccountingSettings
                                            where a.Id == id
                                            select new AccountingSettingPM()
                                            {
@@ -114,11 +110,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                APInvoiceTransferStartDate = a.APInvoiceTransferStartDate,
                                                ARInvoiceTransferStartDate = a.ARInvoiceTransferStartDate,
                                                AllowPositiveAmountsInTheCreditNote = a.AllowPositiveAmountsInTheCreditNote,
+                                               QBOAccessToken = a.QBOAccessToken,
+                                               QBOAccessTokenSecret = a.QBOAccessTokenSecret,
                                                QBOrealMeID = a.QBOrealMeID,
                                                IsSingleTaxPerInvoice = a.IsSingleTaxPerInvoice,
                                                IsARPaymentsTransferEnabled = a.IsARPaymentsTransferEnabled,
                                                ARPaymentTransferStartDate = a.ARPaymentTransferStartDate,
-                                               APPaymentTransferStartDate = a.APPaymentTransferStartDate,
                                                TransferToDropboxActivated = a.TransferToDropboxActivated,
                                                EnableMultiPercentageVATTypes = a.EnableMultiPercentageVATTypes,
                                                NotifyPastDateOnInvoiceEdit = a.NotifyPastDateOnInvoiceEdit,
@@ -134,14 +131,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                RefreshToken = a.RefreshToken,
                                                QBOOAuth = a.QBOOAuth,
-                                               AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
-                                               AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
-                                               EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
-                                               TransferToFTPActivated = a.TransferToFTPActivated,
-                                               TransferFTPDetailId = a.TransferFTPDetailId,
-                                               TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
-                                               EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
-                                               BlockSendInvoiceOriginalCopy = a.BlockSendInvoiceOriginalCopy,
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -158,12 +147,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             AccountingSettingPM entity = null;
             string entityName = "AccountingSettingPM" + id;
-            if (true )//HttpContext.Current != null)
+            if (HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
 
-                    var systems = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
+                    var systems = (from a in repository.context.AccountingSettings
                                    where a.Id == id
                                    select new AccountingSettingPM()
                                    {
@@ -189,11 +178,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        APInvoiceTransferStartDate = a.APInvoiceTransferStartDate,
                                        ARInvoiceTransferStartDate = a.ARInvoiceTransferStartDate,
                                        AllowPositiveAmountsInTheCreditNote = a.AllowPositiveAmountsInTheCreditNote,
+                                       QBOAccessToken = a.QBOAccessToken,
+                                       QBOAccessTokenSecret = a.QBOAccessTokenSecret,
                                        QBOrealMeID = a.QBOrealMeID,
                                        IsSingleTaxPerInvoice = a.IsSingleTaxPerInvoice,
                                        IsARPaymentsTransferEnabled = a.IsARPaymentsTransferEnabled,
                                        ARPaymentTransferStartDate = a.ARPaymentTransferStartDate,
-                                       APPaymentTransferStartDate = a.APPaymentTransferStartDate,
                                        TransferToDropboxActivated = a.TransferToDropboxActivated,
                                        EnableMultiPercentageVATTypes = a.EnableMultiPercentageVATTypes,
                                        NotifyPastDateOnInvoiceEdit = a.NotifyPastDateOnInvoiceEdit,
@@ -209,14 +199,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                        RefreshToken = a.RefreshToken,
                                        QBOOAuth = a.QBOOAuth,
-                                       AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
-                                       AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
-                                       EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
-                                       TransferToFTPActivated = a.TransferToFTPActivated,
-                                       TransferFTPDetailId = a.TransferFTPDetailId,
-                                       TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
-                                       EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
-                                       BlockSendInvoiceOriginalCopy = a.BlockSendInvoiceOriginalCopy,
                                    });
 
                     foreach (var c in systems)
@@ -239,7 +221,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             else
             {
-                entity = (from a in repository.context.AccountingSettings.Include("TransferFTPDetail")
+                entity = (from a in repository.context.AccountingSettings
                           where a.Id == id
                           select new AccountingSettingPM()
                           {
@@ -265,11 +247,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               APInvoiceTransferStartDate = a.APInvoiceTransferStartDate,
                               ARInvoiceTransferStartDate = a.ARInvoiceTransferStartDate,
                               AllowPositiveAmountsInTheCreditNote = a.AllowPositiveAmountsInTheCreditNote,
+                              QBOAccessToken = a.QBOAccessToken,
+                              QBOAccessTokenSecret = a.QBOAccessTokenSecret,
                               QBOrealMeID = a.QBOrealMeID,
                               IsSingleTaxPerInvoice = a.IsSingleTaxPerInvoice,
                               IsARPaymentsTransferEnabled = a.IsARPaymentsTransferEnabled,
                               ARPaymentTransferStartDate = a.ARPaymentTransferStartDate,
-                              APPaymentTransferStartDate = a.APPaymentTransferStartDate,
                               TransferToDropboxActivated = a.TransferToDropboxActivated,
                               EnableMultiPercentageVATTypes = a.EnableMultiPercentageVATTypes,
                               NotifyPastDateOnInvoiceEdit = a.NotifyPastDateOnInvoiceEdit,
@@ -285,14 +268,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                               RefreshToken = a.RefreshToken,
                               QBOOAuth = a.QBOOAuth,
-                              AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
-                              AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
-                              EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
-                              TransferToFTPActivated = a.TransferToFTPActivated,
-                              TransferFTPDetailId = a.TransferFTPDetailId,
-                              TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
-                              EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
-                              BlockSendInvoiceOriginalCopy = a.BlockSendInvoiceOriginalCopy,
                           }).FirstOrDefault();
             }
 
@@ -327,11 +302,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             APInvoiceTransferStartDate = a.APInvoiceTransferStartDate,
                                                             ARInvoiceTransferStartDate = a.ARInvoiceTransferStartDate,
                                                             AllowPositiveAmountsInTheCreditNote = a.AllowPositiveAmountsInTheCreditNote,
+                                                            QBOAccessToken = a.QBOAccessToken,
+                                                            QBOAccessTokenSecret = a.QBOAccessTokenSecret,
                                                             QBOrealMeID = a.QBOrealMeID,
                                                             IsSingleTaxPerInvoice = a.IsSingleTaxPerInvoice,
                                                             IsARPaymentsTransferEnabled = a.IsARPaymentsTransferEnabled,
                                                             ARPaymentTransferStartDate = a.ARPaymentTransferStartDate,
-                                                            APPaymentTransferStartDate = a.APPaymentTransferStartDate,
                                                             TransferToDropboxActivated = a.TransferToDropboxActivated,
                                                             EnableMultiPercentageVATTypes = a.EnableMultiPercentageVATTypes,
                                                             NotifyPastDateOnInvoiceEdit = a.NotifyPastDateOnInvoiceEdit,
@@ -347,13 +323,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                             RefreshToken = a.RefreshToken,
                                                             QBOOAuth = a.QBOOAuth,
-                                                            AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
-                                                            AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
-                                                            EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
-                                                            TransferToFTPActivated = a.TransferToFTPActivated,
-                                                            TransferFTPDetailId = a.TransferFTPDetailId,
-                                                            EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
-                                                            BlockSendInvoiceOriginalCopy = a.BlockSendInvoiceOriginalCopy,
                                                         });
 
             return accounts;
@@ -386,11 +355,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            APInvoiceTransferStartDate = a.APInvoiceTransferStartDate,
                                                            ARInvoiceTransferStartDate = a.ARInvoiceTransferStartDate,
                                                            AllowPositiveAmountsInTheCreditNote = a.AllowPositiveAmountsInTheCreditNote,
+                                                           QBOAccessToken = a.QBOAccessToken,
+                                                           QBOAccessTokenSecret = a.QBOAccessTokenSecret,
                                                            QBOrealMeID = a.QBOrealMeID,
                                                            IsSingleTaxPerInvoice = a.IsSingleTaxPerInvoice,
                                                            IsARPaymentsTransferEnabled = a.IsARPaymentsTransferEnabled,
                                                            ARPaymentTransferStartDate = a.ARPaymentTransferStartDate,
-                                                           APPaymentTransferStartDate = a.APPaymentTransferStartDate,
                                                            TransferToDropboxActivated = a.TransferToDropboxActivated,
                                                            EnableMultiPercentageVATTypes = a.EnableMultiPercentageVATTypes,
                                                            NotifyPastDateOnInvoiceEdit = a.NotifyPastDateOnInvoiceEdit,
@@ -406,62 +376,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                            RefreshToken = a.RefreshToken,
                                                            QBOOAuth = a.QBOOAuth,
-                                                           AllowManualARPaymentNumber = a.AllowManualARPaymentNumber,
-                                                           AllowRegionalTaxManagement = a.AllowRegionalTaxManagement,
-                                                           EnableAPPaymentExternalPayment = a.EnableAPPaymentExternalPayment,
-                                                           TransferToFTPActivated = a.TransferToFTPActivated,
-                                                           TransferFTPDetailId = a.TransferFTPDetailId,
-                                                           EnableEnteringTotalVAT = a.EnableEnteringTotalVAT,
-                                                           BlockSendInvoiceOriginalCopy = a.BlockSendInvoiceOriginalCopy,
                                                        };
             return result;
-        }
-
-        public void CopyFromTenant0(int tenant, int tenantToCopy)
-        {
-            AccountingSetting accountingSettingTenantZero = repository.GetSingleAccountSetting(tenant);
-            if (accountingSettingTenantZero == null)
-            {
-                throw new Exception("Accounting Setting not found for tenant " + tenant);
-            }
-
-            AccountingSetting accountingSetting = repository.GetSingleAccountSetting(tenantToCopy);
-
-            // ar
-            accountingSetting.AllowVoidARI = accountingSettingTenantZero.AllowVoidARI;
-            accountingSetting.AllowVoidARP = accountingSettingTenantZero.AllowVoidARP;
-            accountingSetting.IsVatNumberMandatoryInAR = accountingSettingTenantZero.IsVatNumberMandatoryInAR;
-            accountingSetting.AllowMinusInvoicelines = accountingSettingTenantZero.AllowMinusInvoicelines;
-            accountingSetting.AllowPositiveAmountsInTheCreditNote = accountingSettingTenantZero.AllowPositiveAmountsInTheCreditNote;
-            accountingSetting.AllowManualInvoiceNumber = accountingSettingTenantZero.AllowManualInvoiceNumber;
-            accountingSetting.IsARInvoiceChronologicalDates = accountingSettingTenantZero.IsARInvoiceChronologicalDates;
-            accountingSetting.IsARPaymentChronologicalDates = accountingSettingTenantZero.IsARPaymentChronologicalDates;
-            accountingSetting.IsSingleTaxPerInvoice = accountingSettingTenantZero.IsSingleTaxPerInvoice;
-
-            // ar advanced settings
-            accountingSetting.EnableMultiPercentageVATTypes = accountingSettingTenantZero.EnableMultiPercentageVATTypes;
-            accountingSetting.NotifyPastDateOnInvoiceEdit = accountingSettingTenantZero.NotifyPastDateOnInvoiceEdit;
-            accountingSetting.EnableNegativeOffsetARPayments = accountingSettingTenantZero.EnableNegativeOffsetARPayments;
-            accountingSetting.EnableInvoiceStocksManagement = accountingSettingTenantZero.EnableInvoiceStocksManagement;
-            accountingSetting.AllowManualARPaymentNumber = accountingSettingTenantZero.AllowManualARPaymentNumber;
-            accountingSetting.AllowRegionalTaxManagement = accountingSettingTenantZero.AllowRegionalTaxManagement;
-            accountingSetting.BlockSendInvoiceOriginalCopy = accountingSettingTenantZero.BlockSendInvoiceOriginalCopy;
-
-            // ap
-            accountingSetting.AllowVoidAPI = accountingSettingTenantZero.AllowVoidAPI;
-            accountingSetting.AllowVoidAPP = accountingSettingTenantZero.AllowVoidAPP;
-            accountingSetting.IsVatNumberMandatoryInAP = accountingSettingTenantZero.IsVatNumberMandatoryInAP;
-            accountingSetting.AllowClosureWithoutPayables = accountingSettingTenantZero.AllowClosureWithoutPayables;
-            accountingSetting.EnableMultiRateAPInvoices = accountingSettingTenantZero.EnableMultiRateAPInvoices;
-            accountingSetting.EnableNegativeOffsetAPPayments = accountingSettingTenantZero.EnableNegativeOffsetAPPayments;
-            accountingSetting.EnableMultiCurrencyAPPayments = accountingSettingTenantZero.EnableMultiCurrencyAPPayments;
-
-            // ap advanced settings
-            accountingSetting.EnableAPPaymentExternalPayment = accountingSettingTenantZero.EnableAPPaymentExternalPayment;
-            accountingSetting.EnableEnteringTotalVAT = accountingSettingTenantZero.EnableEnteringTotalVAT;
-
-            repository.Update(accountingSetting);
-            repository.SubmitChanges();
         }
     }
 }

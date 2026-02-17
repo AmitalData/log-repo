@@ -8,7 +8,7 @@ import {DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'NewProjectCategoryComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewProjectCategoryComponent.html',
 })
 

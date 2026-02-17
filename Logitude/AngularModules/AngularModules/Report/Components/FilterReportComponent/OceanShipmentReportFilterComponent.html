@@ -85,7 +85,7 @@
                                 [LookUpTableName]="'Card'"
                                 [DisplayMemberPath]="'EnglishName'"
                                 [DependencyFilter1IsList]="'true'"
-                                [ShowInActive]="true"
+                                [ShowInActive]="InActive"
                                 [DependencyFilter1Value]="'AG,CS'">
                         </LogLov>
                     </td>
@@ -123,7 +123,7 @@
                     </td>
 
                     <td style="width:90px;">
-                        <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">{{RunReportTitle}}</button>
+                        <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
                     </td>
 
                     <td>

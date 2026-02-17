@@ -1,23 +1,21 @@
 <style>
-    .FormFieldRow {
+    .FormFieldRow{
         height: 32px;
     }
 
 
-    .subTitle {
+    .subTitle{
         color: #1b90cb;
         font-size: 14px;
     }
-
     .FlipImgHoriz {
         transform: rotate(180deg);
     }
-
     .DisbleBox {
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
-        background: #faf5c0; /*fbebbc*/
+        background: #faf5c0;/*fbebbc*/
         padding: 4px 10px;
         color: gray;
         font-family: sans-serif;
@@ -26,7 +24,7 @@
     }
 
     /* Header Screen*/
-    .HeaderScreen {
+     .HeaderScreen {
         height: 100%;
         width: 100%;
         padding-top: 5px;
@@ -53,8 +51,7 @@
         font-size: 12px;
         color: #282E30;
     }
-
-    .CurvedEditArea {
+    .CurvedEditArea{
         box-shadow: 0px -3px 1px #ececec !important;
         -moz-box-shadow: 0px -3px 1px #ececec !important;
         -webkit-box-shadow: 0px -3px 1px #ececec !important;
@@ -255,24 +252,23 @@
                                 {{ErrorMessage}}
                             </div>
                         </div>
-                        <div *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="float: right;display: inline-block;width: 665px;">
+                        <div *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="float: right;display: inline-block;width: 665px;">
                             <div class="DisbleBox">
                                 {{ErrorMessage}}
                             </div>
                         </div>
 
                         <!-- send button -->
-                        <div style="float: left;display: inline-block;width: 110px;" *ngIf="paymentPM">
+                        <div style="float: left;display: inline-block;width: 110px;">
                             <custom-send-options [IsDisabled]="!SendButtonEnabled"
                                                  [AvoidDoubleClick]="true"
-                                                 [HaveTestCase]="'true'"
                                                  #MyCustomSendOptionsComponent
                                                  (SendButtonClicked)="SendButtonClicked($event)">
                             </custom-send-options>
                         </div>
 
 
-
+                        
                     </div>
                 </div>
 
@@ -283,18 +279,19 @@
                         <tr style="height: 100px;">
                             <td colspan="2" style="height: 100px;">
 
-                                <table *ngIf="paymentPM" style="table-layout: fixed;">
+                                <table  *ngIf="paymentPM" style="table-layout: fixed;">
                                     <tr class="FormFieldRow">
                                         <!-- PaymentDate -->
                                         <td style="width: 110px;">
-                                            <LogLabel [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName"
+                                            <LogLabel [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName" 
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 115px;">
+                                        <td style="width: 115px;" >
                                             <LogDatePicker [ObjectFieldName]="'PaymentDate'" [ObjectTableName]="ObjectTableName"
                                                            [DataContext]="DataContext" [HideColumns]="true"
-                                                           [SelectedDateValue]="PaymentDate"
-                                                           (OnBlurEvent)="PaymentDateTimeOnBlur($event)"></LogDatePicker>
+                                                           [SelectedDateValue]="PaymentDate" 
+                                                           (OnBlurEvent)="PaymentDateTimeOnBlur($event)"
+                                                           ></LogDatePicker>
                                         </td>
                                         <td style="width: 40px;"><div></div></td>
 
@@ -304,10 +301,10 @@
                                             <LogLabel [ObjectFieldName]="'TotalTax'" [ObjectTableName]="'Customs.Declaration'"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 130px; text-align: right; color: black;">
+                                        <td style="width: 130px; text-align: right; color: black;" >
                                             <span class="hyperlink" (click)="OpenTaxScreen()" style="font-size:10px ;color:blue"> {{ TotalTax | NumbersPipe:'n2' }}</span>
 
-
+                                        
                                         </td>
                                         <td style="width: 40px;"><div></div></td>
 
@@ -316,7 +313,7 @@
                                             <LogLabel [ObjectFieldName]="'CreatedByUserId'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td style="width: 115px;">
+                                        <td style="width: 115px;" >
                                             <LogLov [ObjectFieldName]="'CreatedByUserId'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"
@@ -329,7 +326,7 @@
                                     </tr>
                                     <tr class="FormFieldRow">
                                         <!-- IsProcessA -->
-                                        <td>
+                                        <td >
                                             <LogLabel [ObjectFieldName]="'IsProcessA'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
@@ -340,43 +337,35 @@
 
 
                                         <!-- ProcessADescription -->
-                                        <td>
+                                        <td >
                                             <LogLabel [ObjectFieldName]="'ProcessADescription'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
                                         <td rowspan="2">
                                             <LogTextBox [ObjectFieldName]="'ProcessADescription'" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"
                                                         [DataContext]="DataContext" [HideColumns]="true" [InputType]="'nText'"
-                                                        style="height: 100%; /*position: absolute;top: 0;*/"></LogTextBox>
+                                                        style="height: 100%;/*position: absolute;top: 0;*/"></LogTextBox>
                                         </td>
                                         <td><div></div></td>
 
                                         <!-- SignatoryIdentification -->
-                                        <td>
+                                        <td >
                                             <LogLabel [ObjectFieldName]="'SignatoryIdentification'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td>
+                                        <td  >
                                             <LogTextBox [ObjectFieldName]="'SignatoryIdentification'" [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'text'" [FocusOnMe]="true" [Text]="SignatoryIdentification"></LogTextBox>
+                                                        [DataContext]="DataContext" [HideColumns]="true" [InputType]="'text'"></LogTextBox>
                                         </td>
                                         <td><div></div></td>
                                         <td></td>
                                     </tr>
                                     <tr style="height:28px;">
-                                        <!--<td colspan="6">
+                                        <td colspan="6">
                                             <div></div>
-                                        </td>-->
-                                        <td>
-                                            <LogLabel  *ngIf ="IsAutomaticPayment"  [ObjectFieldName]="'AutomaticPayment'" [ObjectTableName]="ObjectTableName"
-                                                      [DataContext]="DataContext"></LogLabel>
                                         </td>
-                                        <td>
-                                            <!-- *ngIf ="IsAutomaticPayment"-->
-                                            <CheckBox *ngIf ="IsAutomaticPayment" [IsChecked]="AutomaticPayment" (change)="OnCheckedAutomaticPayment($event)" [IsEnabled]="(!IsDisplayOnly || !DisplayAutomaticPayment) && !IsDisplayOnlyAutomaticPayment"></CheckBox>
-                                        </td>
-                                        <td colspan="4"><div></div></td>
-                                        <!-- FuturePaymentDateTime -->
+
+                                        <!-- FuturePaymentDateTime --> 
                                         <td>
                                             <LogLabel [ObjectFieldName]="'FuturePaymentDateTime'" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext"></LogLabel>
@@ -385,12 +374,12 @@
                                             <LogDatePicker [ObjectFieldName]="'FuturePaymentDateTime'" [ObjectTableName]="ObjectTableName"
                                                            [DataContext]="DataContext" [HideColumns]="true"
                                                            [SelectedDateValue]="FuturePaymentDateTime"
-                                                           (ValueChanged)="FuturePaymentDateTimeOnBlur($event)"></LogDatePicker>
+                                                           (OnBlurEvent)="FuturePaymentDateTimeOnBlur($event)"></LogDatePicker>
                                         </td>
                                         <td colspan="2" style="padding-right: 10px;">
                                             <LogDatePicker [ObjectFieldName]="'FuturePaymentTime'" [ObjectTableName]="ObjectTableName"
                                                            [DataContext]="DataContext" [HideColumns]="true" [ForceSubscribe]="true"
-                                                         (ValueChanged)="FuturePaymentTimeOnBlur($event)"  [SelectedDateValue]="FuturePaymentTime" [InputType]="'time'"></LogDatePicker>
+                                                           [SelectedDateValue]="FuturePaymentTime" [InputType]="'time'"></LogDatePicker>
                                         </td>
 
                                     </tr>
@@ -401,6 +390,7 @@
                         </tr>
 
                         <!-- #region Payment method grid -->
+
                         <!-- Toolbar-->
                         <tr style="height: 28px;">
                             <td>
@@ -415,7 +405,7 @@
                             </td>
 
                             <td style="width: 30px;">
-                                <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsDisplayOnly" (click)="AddPaymentMethodClicked(false,false)"></IconButton>
+                                <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="!IsDisplayOnly" (click)="AddPaymentMethodClicked()"></IconButton>
                             </td>
                         </tr>
 
@@ -430,19 +420,16 @@
 
                                         <!-- SequenceNumeric -->
                                         <log-column [header]="'Customs.DeclarationPaymentMethod.F.SequenceNumeric' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="'right'" [binding]="'SequenceNumeric'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate [IgnoreMods]="true">
+                                            <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
                                                 <div style="text-align: right;" class="TextTrimming">
                                                     <span>{{item.SequenceNumeric}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- MethodTypeCode -->
                                         <log-column [header]="'Customs.DeclarationPaymentMethod.F.MethodTypeCode' | TextCodeTranslationPipe" [width]="'145'" [Alignment]="'right'" [binding]="'MethodTypeCode'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.MethodTypeName}}</span>
                                                 </div>
@@ -453,52 +440,46 @@
                                                             [HideColumns]="true"
                                                             [LookUpTableName]="'Customs.PaymentMethodType'"
                                                             (SelectedItemChanged)="item.SetLocalName($event, 'MethodTypeName')"
-                                                            [SelectedValue]="item.MethodTypeCode"
+                                                              [SelectedValue]="item.MethodTypeCode"
                                                             [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- Amount -->
                                         <log-column [header]="'Customs.DeclarationPaymentMethod.F.Amount' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'" [binding]="'Amount'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{ item.Amount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item"
-                                                                [Text]="item.Amount" (dblclick)="item.OnDblClick()"
+                                                    <LogTextBox [ObjectFieldName]="'Amount'" [InputType]="'double'" [DataContext]="item" 
+                                                                [Text]="item.Amount" (dblclick)="item.OnDblClick()" 
                                                                 [ObjectTableName]="'Customs.DeclarationPaymentMethod'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- BankCode -->
                                         <log-column [header]="'Customs.DeclarationPaymentMethod.F.BankCode' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'right'" [binding]="'BankCode'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.InternalBankName}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <ComboBox [ItemsSource]="item.BanksList" [FocusOnMe]="true"
                                                               [SelectedItem]="item.SelectedBank"
-                                                              (SelectedItemChanged)="item._ComboBoxSelectedBankChanged=true;item.SelectedBank = $event"
-                                                              (ComboBoxDropDownClicked)="item._ComboBoxSelectedBankChanged=true;item.ComboBoxClicked()"
+                                                              (SelectedItemChanged)="item.SelectedBank = $event"
+                                                              (ComboBoxDropDownClicked)="item.ComboBoxClicked()"
                                                               [Binding]="'Name'"></ComboBox>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- PayerActivityTypeCode -->
                                         <log-column [header]="'Customs.DeclarationPaymentMethod.F.PayerActivityTypeCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'PayerActivityTypeCode'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.PayerActivityTypeName}}</span>
                                                 </div>
@@ -512,23 +493,20 @@
                                                             [LookUpTableName]="'Customs.CustomerActivityType'"
                                                             (SelectedItemChanged)="item.CustomerActivityType = $event"
                                                             [SelectedValue]="PayerActivityTypeCode"
-                                                            [FocusOnMe]="true">
+                                                              [FocusOnMe]="true">
                                                     </LogLov>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- Buttons -->
                                         <log-column [width]="'55'" [Alignment]="'right'">
-                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                 <span class="CellSeparator" style="float: right;"></span>
                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemovePaymentMethodClicked(item)"
                                                             [IsEnabled]="!IsDisplayOnly"
-                                                            style="display: inline-block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
+                                                          style="display: inline-block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -538,6 +516,7 @@
                         </tr>
 
                         <!-- #endregion -->
+                            
                         <!-- Total -->
                         <tr style="height: 32px;">
                             <td colspan="3" style="padding-bottom: 5px;">
@@ -547,6 +526,7 @@
                         </tr>
 
                         <!-- #region Protest grid -->
+
                         <!-- Toolbar-->
                         <tr style="height: 28px;">
                             <td>
@@ -570,8 +550,7 @@
 
                                         <!-- ProtestTypeCode -->
                                         <log-column [header]="'Customs.DeclarationPaymentProtest.F.ProtestTypeCode' | TextCodeTranslationPipe" [width]="'160'" [Alignment]="'right'" [binding]="'ProtestTypeCode'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.ProtestTypeName}}</span>
                                                 </div>
@@ -586,13 +565,11 @@
                                                     </LogLov>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- CustomsAgentExplanation -->
                                         <log-column [header]="'Customs.DeclarationPaymentProtest.F.CustomsAgentExplanation' | TextCodeTranslationPipe" [width]="'180'" [Alignment]="'right'" [binding]="'CustomsAgentExplanation'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{ item.CustomsAgentExplanation }}</span>
                                                 </div>
@@ -601,35 +578,29 @@
                                                                 [ObjectTableName]="'Customs.DeclarationPaymentProtest'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- InvoiceNumber -->
                                         <log-column [header]="'Customs.DeclarationPaymentProtest.F.InvoiceNumber' | TextCodeTranslationPipe" [width]="'110'" [Alignment]="'right'" [binding]="'InvoiceNumber'">
-                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true" #logcelltemplate>
+                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming">
                                                     <span>{{ item.InvoiceNumber }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- GoodsItemLineNumber -->
                                         <log-column [header]="'Customs.DeclarationPaymentProtest.F.GoodsItemLineNumber' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'right'" [binding]="'GoodsItemLineNumber'">
-                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true" #logcelltemplate>
+                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming">
                                                     <span>{{item.GoodsItemLineNumber }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- GoodsItemClassification -->
                                         <log-column [header]="'Customs.DeclarationPaymentProtest.F.GoodsItemClassification' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'right'" [binding]="'GoodsItemClassification'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.GoodsItemClassification}}</span>
                                                 </div>
@@ -638,13 +609,11 @@
                                                                 [ObjectTableName]="'Customs.DeclarationPaymentProtest'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>-->
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- AmountInDispute -->
                                         <log-column [header]="'Customs.DeclarationPaymentProtest.F.AmountInDispute' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'right'" [binding]="'AmountInDispute'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.AmountInDispute | NumbersPipe:'n2' }}</span>
                                                 </div>
@@ -653,13 +622,11 @@
                                                                 [ObjectTableName]="'Customs.DeclarationPaymentProtest'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- Buttons -->
                                         <log-column [width]="'55'" [Alignment]="'right'">
-                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                 <span class="CellSeparator" style="float: right;"></span>
                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.EditProtestClicked(item)"
                                                             [IsEnabled]="!IsDisplayOnly"
@@ -670,7 +637,6 @@
                                                             style="display: inline-block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -698,7 +664,7 @@
             <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
         </td>
         <td style="width: 67px;vertical-align: bottom; padding-right: 10px;">
-            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonEnabled ||  AutomaticPayment">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
+            <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!OkButtonEnabled">{{'General.B.Save' |TextCodeTranslationPipe}}</button>
         </td>
     </tr>
 

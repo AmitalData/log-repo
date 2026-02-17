@@ -1,4 +1,4 @@
-import {ObjectFieldPM} from '../../../../../Infrastructure/EntityPMs/ObjectFieldPM';
+﻿import {ObjectFieldPM} from '../../../../../Infrastructure/EntityPMs/ObjectFieldPM';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 declare var System: any;
 declare var window: any;
@@ -19,21 +19,17 @@ export class DocumentObjectFieldsRowViewModel   {
     TranslatedText: string;
     FullNameTextCodeCode: string;
     Order: number;
-    ObjectTableId: string;
-    ObjectTableName: string;
-    IsCustom: boolean= false;
+
     DisplayListOnly: boolean;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public constructor(objectField: ObjectFieldPM, resultFieldName: string, objectFieldType: string) {
 
         if (objectField) {
             this.CurrentObjectField = objectField;
-            this.IsCustom = this.CurrentObjectField.IsCustom;
+
      
 
             this.FieldName = objectField.FieldName;
-            this.ObjectTableId = objectField.ObjectTableId;
-            this.ObjectTableName = objectField.ObjectTableName;
             this.ResultFieldName = resultFieldName;
             this.ObjectFieldType = objectFieldType;
 
@@ -48,13 +44,13 @@ export class DocumentObjectFieldsRowViewModel   {
                 result = objectField.FieldName;
             }
             else {
-                //if (this.CurrentObjectField.ShortNameTextCodeCode) {
-                //    result = TextCodeTranslator.Translate(objectField.ShortNameTextCodeCode)
+                if (this.CurrentObjectField.ShortNameTextCodeId) {
+                    result = TextCodeTranslator.Translate(objectField.ShortNameTextCodeCode)
 
-                //}
-                //else {
+                }
+                else {
                     result = TextCodeTranslator.Translate(objectField.FullNameTextCodeCode)
-                //}
+                }
             }
 
             if (result) {

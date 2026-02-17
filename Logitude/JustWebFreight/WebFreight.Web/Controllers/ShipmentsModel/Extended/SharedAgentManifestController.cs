@@ -14,7 +14,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -47,7 +47,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Shipment", "AgentSharedManifest", tenant);
 
 
@@ -659,7 +658,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         //string manifestXML = LogitudeXmlSerializer.SerializeObjectToXmlString(manifestSL);
                         byte[] manifestXML = LogitudeXmlSerializer.SerializeObject(manifestSL);
                         ObjectTableQuery tablesQuery = new ObjectTableQuery(tenant);
-                        ObjectTablePM table = tablesQuery.GetObjectTableByName("Shipment", tenant);
+                        ObjectTablePM table = tablesQuery.GetObjectTableByName("Shipment", 0);
                         CommunicationsParams logParams = new CommunicationsParams()
                         {
                             Tenant = tenant,
@@ -831,10 +830,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CardRepository cardRepository = new CardRepository(tenant);
                 string result = cardRepository.GetActiveCardIdByCode(code, tenant);
@@ -860,8 +855,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("AgentSharedManifest" , entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AgentSharedManifest" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AgentSharedManifestPM" + entityPM.Id + entityPM.Tenant;
@@ -905,7 +898,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
 
@@ -927,8 +919,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
                 AgentSharedManifestsSummaryClass agentSharedManifestsSummaryClass = new AgentSharedManifestsSummaryClass();
 
                 AgentSharedManifestQuery agentSharedManifestQuery = new AgentSharedManifestQuery(authToken.Tenant);
@@ -961,10 +951,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
                 if (longMaster == "null" || longMaster == "undefined") longMaster = null;
@@ -1118,7 +1104,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     bool addedManually = false;
                     if (cardPM.PartnerTypeId == "TR")
                     {
-                        TruckerQuery truckerQuery = new TruckerQuery(tenant);
+                        TruckerQuery truckerQuery = new TruckerQuery(0);
                         addedManually = truckerQuery.CheckTruckerAddedManually(cardPM.Id, cardPM.Tenant);
                         if (!addedManually) cardCode = cardPM.Code;
 
@@ -1126,14 +1112,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
 
                     if (cardPM.PartnerTypeId == "AL")
                     {
-                        AirlineQuery airlineQuery = new AirlineQuery(tenant);
+                        AirlineQuery airlineQuery = new AirlineQuery(0);
                         addedManually = airlineQuery.CheckAirlinesAddedManually(cardPM.Id, cardPM.Tenant);
                         if (!addedManually) cardCode = cardPM.Code;
                     }
 
                     if (cardPM.PartnerTypeId == "SL")
                     {
-                        ShippingLineQuery shippingLineQuery = new ShippingLineQuery(tenant);
+                        ShippingLineQuery shippingLineQuery = new ShippingLineQuery(0);
                         addedManually = shippingLineQuery.CheckShippingLinesAddedManually(cardPM.Id, cardPM.Tenant);
                         if (!addedManually) cardCode = cardPM.Code;
                     }
@@ -1278,7 +1264,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             if (manifestSL != null && !string.IsNullOrEmpty(interlineId))
             {
                 CardQuery cardQuery = new CardQuery(tenant);
-                AirlineQuery airlineQuery = new AirlineQuery(tenant);
+                AirlineQuery airlineQuery = new AirlineQuery(0);
                 bool addedManually = airlineQuery.CheckAirlinesAddedManually(interlineId, tenant);
                 CardPM cardPM = null;
                 if (!addedManually)
@@ -1517,8 +1503,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
                 List<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByMasterIdAndTenant(entityId, tenant);

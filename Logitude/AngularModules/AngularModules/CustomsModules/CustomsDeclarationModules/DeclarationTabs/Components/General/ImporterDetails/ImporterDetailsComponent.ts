@@ -8,12 +8,10 @@ import {DeclarationPMService} from '../../../../../../Customs/Services/StandardP
 import {ClientList} from '../../../../../../Customs/EntityLists/ClientList';
 import {CustomerIdentifyTypePM} from '../../../../../../Customs/EntityPMs/CustomerIdentifyTypePM';
 import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow';
-import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
-    
+    moduleId: module.id,
     templateUrl: './ImporterDetailsComponent.html',
     selector :'ImporterDetailsComponent',
 
@@ -26,10 +24,10 @@ export class ImporterDetailsComponent extends BaseComponent {
     declarationPMService: DeclarationPMService = new DeclarationPMService();
     public OriginalEntityPM: DeclarationPM;
     public ClonedEntityPM: DeclarationPM;
-    public IsDisplayOnly: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
+
       
     }
 
@@ -52,8 +50,8 @@ export class ImporterDetailsComponent extends BaseComponent {
 
     public get ImporterTypeCode() { return this.EntityPM.ImporterTypeCode; }
     public set ImporterTypeCode(newValue: string) {
-        this.EntityPM.ImporterTypeCode = newValue;       
-                this.EntityPM.ImporterCode = null; 
+        this.EntityPM.ImporterTypeCode = newValue;
+        this.EntityPM.ImporterCode = null;
       
         this.EntityPM.ImporterPassportNumber = null;
         this.EntityPM.ImporterPassCountryCode = null;
@@ -291,11 +289,6 @@ export class ImporterDetailsComponent extends BaseComponent {
              this.OriginalEntityPM = args.EntityPM;
              this.ClonedEntityPM = this.CloneEntity(args.EntityPM);
              this.type = args.Type;
-             this.IsDisplayOnly = args.IsDisplayOnly;
-
-             var service = new DeclarationWebService();
-             service.SendPRIVEventPrivacyProtection(this.EntityPM.Id, this.EntityPM.Tenant, this.EntityPM.CustomFileNo).subscribe((res: ServiceResponse) => {
-             });
 
              switch (this.type) {
                  case "Importer": {
@@ -307,7 +300,7 @@ export class ImporterDetailsComponent extends BaseComponent {
                          if (this.EntityPM.ImporterCode != null || this.EntityPM.ImporterId != null) {
                              this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, false);
                          }
-                     } 
+                     }
                      break;
                  }
 
@@ -339,54 +332,17 @@ export class ImporterDetailsComponent extends BaseComponent {
             
              }
 
-             //Disable fields
-             if (this.IsDisplayOnly) {
-                 this.SetScreenFieldsEditability();
-             }
-          
-          
+            
+
+            
+            
+           
 
          }
-    }
-
-    SetScreenFieldsEditability() {
-        this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ImporterAddress", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("TransferImporterTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("TransferImporterName", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("TransferImporterAddress", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("TransferImporterCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("TransferPassportNumber", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("EntitleImporterName", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("EntitleImporterAddress", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("EntitleImporterTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("EntitleImporterCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("EntitlePassportNumber", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterAddress1", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterAddress2", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterCity", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterZipCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterFax", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterEmail", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterTel", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("CasualImporterContact", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("MainImporterEntitlemntTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ImporterEntitlementTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("TransImporterEntitleTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
-
-        if (this.IsDisplayOnly) {
-            this.IsImporterEnabled = !this.IsDisplayOnly;
-            this.IsTransferImporterEnabled = !this.IsDisplayOnly;
-            this.IsImporterEnabled = !this.IsDisplayOnly;
-        }
-        
-    }
+     }
 
      SetFieldsEditibility(xxxTypeCode: string, type: string) {
-
+         
          switch (type) {
              case "Importer": {
                  
@@ -402,13 +358,6 @@ export class ImporterDetailsComponent extends BaseComponent {
                          this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, false);
                          this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, false);
                          this.UIProperties.SetEnabled("ImporterAddress", this.ObjectTableName, false);
-                         if (this.EntityPM.ImporterTypeCode == "1" && this.EntityPM.Direction =="E" 
-                            && this.EntityPM.ImporterCode != null && /[a-zA-Z]/.test(this.EntityPM.ImporterCode)) 
-                         {
-                                this.UIProperties.SetEnabled("ImporterTypeCode", this.ObjectTableName, true);
-                         }        
-
-                            
 
                      }
                      
@@ -416,10 +365,7 @@ export class ImporterDetailsComponent extends BaseComponent {
                   //   
                      this.UIProperties.SetEnabled("ImporterPassportNumber", this.ObjectTableName, false);
                      this.UIProperties.SetEnabled("ImporterPassCountryCode", this.ObjectTableName, false);
-                     if(this.EntityPM.Direction =='E' && this.EntityPM.ShortProcedure && AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)){
-                        this.UIProperties.SetWarning("ImporterName", this.ObjectTableName, true);
-                        this.UIProperties.SetWarning("ImporterAddress", this.ObjectTableName, true);
-                    }
+                     
                  }
                  else if (xxxTypeCode == "2" || xxxTypeCode == "3") {
                      this.IsImporterEnabled = true;
@@ -503,20 +449,16 @@ export class ImporterDetailsComponent extends BaseComponent {
              }
 
          }
-
-         //Disable fields
-         if (this.IsDisplayOnly) {
-             this.SetScreenFieldsEditability();
-         }
+        
      }
 
     private SetFieldsEditibilityCourier() {
-        if (this.isCourierDeclaration) {
-           
-        
+        if (!this.isCourierDeclaration) {
+            return;
+        }
         //if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
-        
         this.UIProperties.SetEnabled("ImporterName", this.ObjectTableName, true);
+
         this.UIProperties.SetEnabled("CasualImporterAddress1", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("CasualImporterAddress2", this.ObjectTableName, true);
         this.UIProperties.SetEnabled("CasualImporterCity", this.ObjectTableName, true);
@@ -527,7 +469,7 @@ export class ImporterDetailsComponent extends BaseComponent {
         this.UIProperties.SetEnabled("CasualImporterContact", this.ObjectTableName, true);
         //}
         if (///!AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode) ||
-            //this.EntityPM.ImporterTypeCode == "2" /*"P"*/ || 
+            this.EntityPM.ImporterTypeCode == "2" /*"P"*/ ||
             this.EntityPM.ImporterTypeCode == "3" /*"F"*/) {
 
             this.ImporterName = "";
@@ -554,10 +496,6 @@ export class ImporterDetailsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("CasualImporterTel", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("CasualImporterContact", this.ObjectTableName, false);
 
-            }
-        }
-        else{
-            return;
         }
     }
 
@@ -684,7 +622,7 @@ export class ImporterDetailsComponent extends BaseComponent {
 
      CancelButtonClicked() {
          this.RejectChanges();
-         SessionLocator.SelectedSession.CloseCurrentWindowEmit("cancel");
+         this.CurrentSession.CloseCurrentWindowEmit("cancel");
      }
 
      GetPassportNumber(passportNumber: string) {
@@ -720,35 +658,26 @@ export class ImporterDetailsComponent extends BaseComponent {
         this.EntityPM.CalculatedImporterName = null
 
         //this.OkButtonClicked();
-        //SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
-        //SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
-    }
-    Append2ImporterAddress(val:string ) {
-        if (!AppTool.IsNullOrEmpty(val)) {
-            if (!AppTool.IsNullOrEmpty(this.ImporterAddress)) {
-                this.ImporterAddress += " " + val;
-            } else {
-                this.ImporterAddress = val;
-            }
-        }
+        //this.CurrentSession.CurrentEditComponent.SaveChanges();
+        //this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
     OkButtonClicked() {
         if (this.type == "Importer" && this.isCourierDeclaration) {
             //if (!FormatTool.IsEmail(this.CasualImporterEmail)) {
             //errors.push("Invalid email format!");
             //}
-
-            //save Declaration
-            //merge CasualImporterAddress1, CasualImporterAddress2, CasualImporterCity  to ImporterAddress field
             this.ImporterAddress = null;
-            this.Append2ImporterAddress(this.CasualImporterAddress1);
-            this.Append2ImporterAddress(this.CasualImporterAddress2);
-            this.Append2ImporterAddress(this.CasualImporterCity);
-            
+            if (!AppTool.IsNullOrEmpty(this.CasualImporterAddress1) ||
+                !AppTool.IsNullOrEmpty(this.CasualImporterAddress2) ||
+                !AppTool.IsNullOrEmpty(this.CasualImporterCity) 
 
+                ) {
+                this.ImporterAddress = this.CasualImporterAddress1 + " " +
+                    this.CasualImporterAddress2 + " " + this.CasualImporterCity;
+            }
         }
         
-        SessionLocator.SelectedSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
         var passportNumber: string;
             switch (this.type) {
                 case "Importer": {
@@ -828,10 +757,10 @@ export class ImporterDetailsComponent extends BaseComponent {
 
 
             if (this.doDisable) {
-                SessionLocator.SelectedSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
             }
             else {
-                SessionLocator.SelectedSession.CloseCurrentWindowEmit("!ok");
+                this.CurrentSession.CloseCurrentWindowEmit("!ok");
             }
         
          
@@ -842,13 +771,4 @@ export class ImporterDetailsComponent extends BaseComponent {
       
     }
 
-    OnCTRL_S_HotKeyPressed(){
-        if(!this.IsDisplayOnly){
-        this.OkButtonClicked();
-        }
-    }
-
-    OnEscHotKeyPressed(){
-        this.CancelButtonClicked();
-    }
 }

@@ -1,3 +1,0 @@
-LineNumber,Tenant,PeriodStartDate,GLAccountId,StandardInterestRateBaseId,StandardAddInterestPercent,ExceptionalInterestRateBaseId,ExceptionalAddInterestPercent,CreditInterestRateBaseId,CreditAddInterestPercent,CreateDateTime,UpdateDateTime,CreatedByUserId,UpdatedByUserId
-1,1071,1/1/2020 0:00,1-439694,1-39,0.23,1-40,0.54,1-41,0.36,2/14/2020 17:11,2/14/2020 17:11,1-82241,1-82241
-2,1071,2/1/2020 0:00,1-439694,1-40,0.12,1-39,1.3,1-41,0.45,2/14/2020 18:42,2/14/2020 18:42,1-82241,1-82241

@@ -1,4 +1,4 @@
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 
 export class ARInvoiceEntityPM {
@@ -47,13 +47,10 @@ export class ARInvoiceEntityPM {
     public UniqueKey: string;
 
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-            if (this.EntityParentPM) {
-                this.EntityParentPM.MarkAsDirty();
-            }
+        this.IsDirty = true;
+        if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
         }
     }
     private MyClone: ARInvoiceEntityPM;

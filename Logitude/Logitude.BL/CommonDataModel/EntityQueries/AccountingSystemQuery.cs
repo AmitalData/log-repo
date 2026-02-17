@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AccountingSystemQuery
     {
         AccountingSystemRepository repository;
-
+        public AccountingSystemQuery()
+        {
+            repository = new AccountingSystemRepository(); 
+        }
 
         public AccountingSystemQuery(int tenant)
         {
@@ -56,7 +59,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                           CanTransferToDropbox = a.CanTransferToDropbox,
                           AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
-                          CanTransferToFTP = a.CanTransferToFTP,
                       }).FirstOrDefault();
           });
         }
@@ -87,7 +89,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                         CanTransferToDropbox = a.CanTransferToDropbox,
                         AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
-                        CanTransferToFTP = a.CanTransferToFTP,
+
                     }).FirstOrDefault();
         }
 
@@ -118,7 +120,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                         CanTransferToDropbox = a.CanTransferToDropbox,
                         AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
-                        CanTransferToFTP = a.CanTransferToFTP,
+
                     }).FirstOrDefault();
         }
 
@@ -147,7 +149,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        AllowARPaymentsTransfer = a.AllowARPaymentsTransfer,
                        CanTransferToDropbox = a.CanTransferToDropbox,
                        AllowAPPaymentsTransfer = a.AllowAPPaymentsTransfer,
-                       CanTransferToFTP = a.CanTransferToFTP,
+
                    };
         }
 
@@ -176,7 +178,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              AllowARPaymentsTransfer = entity.AllowARPaymentsTransfer,
                              CanTransferToDropbox = entity.CanTransferToDropbox,
                              AllowAPPaymentsTransfer = entity.AllowAPPaymentsTransfer,
-                             CanTransferToFTP = entity.CanTransferToFTP,
+
                          };
 
             return result;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 
 using Logitude.BL.CommonDataModel.EntityLists;
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
 
         PaymentGatewayPartnerRepository repository;
-
+        public PaymentGatewayPartnerQuery()
+        {
+            repository = new PaymentGatewayPartnerRepository();
+        }
 
         public PaymentGatewayPartnerQuery(int tenant)
         {

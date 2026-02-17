@@ -1,6 +1,6 @@
-import { Injectable, Inject, EventEmitter } from "@angular/core";
-import { Observable, Subject, interval } from "rxjs";
-import { timeInterval } from 'rxjs/operators';
+import { Injectable, Inject,EventEmitter } from "@angular/core";
+import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -188,7 +188,7 @@ export class SignalRChannelService {
         window.logitudeHubConnected = false;
         console.log("logitude hub was disconnected, will restart connection after 30 seconds...");
 
-        var upgradingSystemsub = this.startReconnectTimer().subscribe((res:any) => {
+        var upgradingSystemsub = this.startReconnectTimer().subscribe(res => {
             upgradingSystemsub.unsubscribe();
             if (this.connectionStarted != true) {
                 //console.log("reconnecting to hub.");
@@ -205,7 +205,7 @@ export class SignalRChannelService {
 
 
     startReconnectTimer() {
-      return interval(30000).pipe(timeInterval());
+        return Observable.interval(30000).timeInterval();
     }
 
     /**
@@ -223,7 +223,7 @@ export class SignalRChannelService {
         //  a client subscried to it the start sequence would be triggered
         //  again since it's a cold observable.
         //
-      if (ObjectsLocator.GlobalSetting?.DeploymentStage == "Dev") {
+      if (ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
         this.hubConnection.start().done((result: any) => {
           window.logitudeHubConnected = true;
           this.connectionStarted = true;

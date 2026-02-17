@@ -39,10 +39,5 @@ export class TruckerList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
-		StateName: string;
-		GLAccountNumber: string;
-		TransmitToPort: boolean;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
 	
-}
+}

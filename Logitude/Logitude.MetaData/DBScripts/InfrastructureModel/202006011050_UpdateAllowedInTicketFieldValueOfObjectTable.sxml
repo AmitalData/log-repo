@@ -1,7 +1,0 @@
-﻿<Script DBType="Main">
-  <Sql Version="1">
-    <![CDATA[
-      update ObjectTables set AllowedInTicket=1 where Name in ('shipment','Quote')
-    ]]>       
-  </Sql>
-</Script>

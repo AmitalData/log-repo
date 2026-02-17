@@ -24,8 +24,6 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
 
     public class Invoice
     {
-
-        public string InvoiceId { get; set; }
         public string SequenceNumber { get; set; }
         public string ExternalID { get; set; }
         public string InvoiceAmountCurrency { get; set; }
@@ -35,7 +33,6 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
 
     public class Request
     {
-        public string InvoiceId { get; set; }
         public string SequenceNumber { get; set; }
         public string CustomsItem { get; set; }
         public string ValueQuantity { get; set; }

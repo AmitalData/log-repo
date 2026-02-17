@@ -26,6 +26,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AllowPositiveAmountsInTheCreditNote { get; set; }
         public bool CanTransferToDropbox { get; set; }
         public bool AllowAPPaymentsTransfer { get; set; }
-        public bool CanTransferToFTP { get; set; }
     }
 }

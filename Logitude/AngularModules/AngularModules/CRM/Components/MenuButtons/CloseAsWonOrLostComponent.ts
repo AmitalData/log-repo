@@ -10,7 +10,7 @@ import {StageListService} from '../../Services/StandardLists/StageListService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CloseAsWonOrLostComponent.html',
 })
 
@@ -46,7 +46,7 @@ export class CloseAsWonOrLostComponent extends BaseComponent {
 
 
         var closingListService: OpportunityClosingReasonListService = new OpportunityClosingReasonListService();
-        closingListService.getAllFromCache().subscribe((result:any) => {
+        closingListService.getAllFromCache().subscribe(result => {
             var list: OpportunityClosingReasonList = result.Result.filter(d => d.Id == value)[0];
             if (list != null) {
                 this.ClosingReasonCode = list.Code;
@@ -124,7 +124,7 @@ export class CloseAsWonOrLostComponent extends BaseComponent {
 
         if (!this.IsClosedLost) {
             var stageListService: StageListService = new StageListService();
-            stageListService.getAllFromCache().subscribe((result:any) => {                    
+            stageListService.getAllFromCache().subscribe(result => {                    
                 var stage = result.Result.filter(s => s.Code == "CWN")[0];
                 if (stage != null) {
                     this.entityPM.StageId = stage.Id;
@@ -135,7 +135,7 @@ export class CloseAsWonOrLostComponent extends BaseComponent {
         }
         else {
             var stageListService: StageListService = new StageListService();
-            stageListService.getAllFromCache().subscribe((result:any) => {
+            stageListService.getAllFromCache().subscribe(result => {
                 var stage = result.Result.filter(s => s.Code == "CLS")[0];
                 if (stage != null) {
                     this.entityPM.StageId = stage.Id;

@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VatTypePercentageRepository repository;
 
-
+        public VatTypePercentageQuery()
+        {
+            repository = new VatTypePercentageRepository(); 
+        }
 
         public VatTypePercentageQuery(int tenant)
         {
@@ -68,27 +71,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        Tenant = a.Tenant,
                        VatTypeId = a.VatTypeId,
                    };
-        }
-
-
-        public VatTypePercentagePM GetVatTypePercentagesForVatTypeDate(int tenant, string vatTypeId, DateTime date)
-        {
-            VatTypePercentagePM rv = new VatTypePercentagePM();
-
-            VatTypePercentage resultItem = this.repository.GetVatTypePercentageByDate(vatTypeId, tenant, date);
-            if (resultItem != null)
-            {
-                rv= new VatTypePercentagePM()
-                {
-                    Id = resultItem.Id,
-                    Tenant = resultItem.Tenant,
-                    VatTypeId = resultItem.VatTypeId,
-                    FromDate = resultItem.FromDate,
-                    Percentage = resultItem.Percentage
-                };
-            }
-
-            return rv;
         }
 
         public List<VatTypePercentagePM> GetVatTypePercentagePMByDate(int tenant, DateTime? date)

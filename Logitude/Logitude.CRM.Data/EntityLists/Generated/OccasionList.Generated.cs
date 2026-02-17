@@ -66,8 +66,6 @@ namespace Logitude.CRM.Data.EntityLists
        public int InvitedCustomers  { get; set; }
        [DataMember]
        public int InvitedContacts  { get; set; }
-       [DataMember]
-       public bool IsAllAdded  { get; set; }
    }
 
 }

@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;

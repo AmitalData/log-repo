@@ -18,7 +18,7 @@ import {DocumentTypeTemplatePM} from '../../../../../Common/EntityPMs/DocumentTy
 import {DocumentTypePM} from '../../../../../Common/EntityPMs/DocumentTypePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddDocumentTypeTemplateFromLibraryComponent.html',
     providers: [DocumentTypeTemplateListExtendedService, DocumentTypePMExtendedService, DocumentTypeTemplatePMService, DocumentTypeTemplatePMExtendedService]
 })
@@ -94,7 +94,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
         this.DocumentTypeTemplateLists = [];
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ? false : true;
-        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibraryByDocumentTypeId(0, this.CurrentDocumentType.Id, isfilter,SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibraryByDocumentTypeId(0, this.CurrentDocumentType.Id, isfilter,SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -214,7 +214,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
         var documenttypetemplatePm: DocumentTypeTemplatePM = this.DocumentTypeTemplatePMLists.filter(d=> d.Id == this.DocumentTypeTemplateViewModelSelected.Id)[0];
         if (!documenttypetemplatePm) {
 
-            this._documentTypeTemplatePMExtendedService.GetSingleDocumentTypeTemplate(this.DocumentTypeTemplateViewModelSelected.Id, 0).subscribe((res:any) => {
+            this._documentTypeTemplatePMExtendedService.GetSingleDocumentTypeTemplate(this.DocumentTypeTemplateViewModelSelected.Id, 0).subscribe(res => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = res;
                 var myResult = pmResponse.Result;
@@ -255,7 +255,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
         this.newTemplatePm.IsCopiedAtSignup = true;
 
        
-        this.documentTypeTemplatePMService.insert(this.newTemplatePm).subscribe((res:any) => {
+        this.documentTypeTemplatePMService.insert(this.newTemplatePm).subscribe(res=> {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
 

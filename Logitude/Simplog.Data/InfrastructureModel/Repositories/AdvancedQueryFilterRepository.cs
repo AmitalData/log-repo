@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
@@ -38,19 +38,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
       
-        public IQueryable<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndQuery(int tenant,string queryCode)
+        public IQueryable<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndQuery(int tenant,string queryId)
         {
             IQueryable<AdvancedQueryFilter> advancedFilters = from a in context.AdvancedQueryFilters
-                                                              where (a.Tenant == tenant||a.Tenant==0)&&a.QueryCode== queryCode
+                                                              where (a.Tenant == tenant||a.Tenant==0)&&a.QueryId==queryId
                                                               select a;
             return advancedFilters;
 
         }
 
-        public void RemoveFilter(ObjectField objectField, int tenant, string queryCode)
+        public void RemoveFilter(ObjectField objectField, int tenant, string queryId)
         {
             AdvancedQueryFilter advancedFilter = (from a in context.AdvancedQueryFilters
-                                                  where a.Tenant == tenant && a.ObjectField.FieldCode == objectField.FieldCode && a.QueryCode == queryCode
+                                                  where a.Tenant == tenant && a.ObjectField.Id == objectField.Id && a.QueryId == queryId
                                                   select a).FirstOrDefault();
 
             if (advancedFilter != null)
@@ -111,19 +111,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new System.NotImplementedException();
         }
 
-        public List<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndUserAndQuery(int tenant, string userId, string queryCode)
+        public List<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndUserAndQuery(int tenant, string userId, string queryId)
         {
             List<AdvancedQueryFilter> advancedFilters = (from a in context.AdvancedQueryFilters
-                                                        where (a.Tenant == tenant && a.UserId == userId && a.QueryCode == queryCode) // || a.Tenant == 0
+                                                        where (a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId) // || a.Tenant == 0
                                                         select a).ToList();                                  
             
             return advancedFilters;
         }
 
-        public List<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndAndQuery(int tenant, string queryCode)
+        public List<AdvancedQueryFilter> GetAdvancedQueryFiltersByTenantAndAndQuery(int tenant, string queryId)
         {
             List<AdvancedQueryFilter> advancedFilters = (from a in context.AdvancedQueryFilters
-                                                         where (a.Tenant == tenant  && a.QueryCode == queryCode) // || a.Tenant == 0
+                                                         where (a.Tenant == tenant  && a.QueryId == queryId) // || a.Tenant == 0
                                                          select a).ToList();
 
             return advancedFilters;

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -25,6 +24,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AddedManually { get; set; }
         public string SearchFields { get; set; }
         public string AccountingExternalCode { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
     }
 }

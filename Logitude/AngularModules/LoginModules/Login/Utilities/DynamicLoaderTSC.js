@@ -1,4 +1,6 @@
-export var DynamicLoaderTSC = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var DynamicLoaderTSC = /** @class */ (function () {
     function DynamicLoaderTSC() {
     }
     DynamicLoaderTSC.Load = function (myComponentPath, location) {
@@ -58,4 +60,5 @@ export var DynamicLoaderTSC = (function () {
     };
     return DynamicLoaderTSC;
 }());
+exports.DynamicLoaderTSC = DynamicLoaderTSC;
 //# sourceMappingURL=DynamicLoaderTSC.js.map

@@ -13,332 +13,345 @@
 
 <table>
     <tr>
-        <td>
-            <div class="TabHolder">
+      <td>
+        <div class="TabHolder">
+          <table>
+            <tr class="TabTitleRow">
+              <td>{{'Shipment.TH.Customs' | TextCodeTranslationPipe}}</td>
+            </tr>
+
+            <tr>
+              <td>
                 <table>
-                    <tr class="TabTitleRow">
-                        <td>{{'Shipment.TH.Customs' | TextCodeTranslationPipe}}</td>
-                    </tr>
+                  <tr>
+                    <td style="width:420px;">
+                      <div class="MediaFill">
+                        <table>
 
-                    <tr style="height: 200px">
-                        <td>
-                            <table>
-                                <tr>
-                                    <td style="width:420px;">
-                                        <div class="MediaFill">
-                                            <table>
+                          <!-- IncludesCustoms -->
+                          <tr class="FormFieldRow">
+                            <td>
+                              <LogLabel [ObjectFieldName]="'IncludesCustoms'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
 
-                                                <!-- IncludesCustoms -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'IncludesCustoms'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                    </td>
+                            <td style="width: 250px;">
+                              <LogCheckBox [ObjectFieldName]="'IncludesCustoms'" [Checked]="IncludesCustoms" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                            </td>
+                            <td style="width:10px"></td>
+                          </tr>
 
-                                                    <td style="width: 250px;">
-                                                        <LogCheckBox [ObjectFieldName]="'IncludesCustoms'" [Checked]="IncludesCustoms" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                    </td>
-                                                    <td style="width:10px"></td>
-                                                </tr>
+                          <!-- DeclarationNumber -->
+                          <tr class="FormFieldRow">
+                            <td>
+                              <LogLabel [ObjectFieldName]="'DeclarationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DeclarationNumberLabel"></LogLabel>
+                            </td>
 
-                                                <!-- DeclarationNumber -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'DeclarationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DeclarationNumberLabel"></LogLabel>
-                                                    </td>
+                            <td>
+                              <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [Text]="DeclarationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                            </td>
+                            <td></td>
 
-                                                    <td>
-                                                        <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [Text]="DeclarationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                    </td>
-                                                    <td></td>
+                          </tr>
 
-                                                </tr>
+                          <!-- DeclarationDate -->
+                          <tr class="FormFieldRow">
+                            <td>
+                              <LogLabel [ObjectFieldName]="'DeclarationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DeclarationDateLabel"></LogLabel>
+                            </td>
 
-                                                <!-- DeclarationDate -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'DeclarationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="DeclarationDateLabel"></LogLabel>
-                                                    </td>
+                            <td>
+                              <LogDatePicker [ObjectFieldName]="'DeclarationDate'" [SelectedDateValue]="DeclarationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                            </td>
 
-                                                    <td>
-                                                        <LogDatePicker [ObjectFieldName]="'DeclarationDate'" [SelectedDateValue]="DeclarationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                    </td>
+                            <td>
+                              <div></div>
+                            </td>
+                          </tr>
 
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
+                          <!-- CustomsClearanceDate -->
+                          <tr class="FormFieldRow">
+                            <td>
+                              <LogLabel [ObjectFieldName]="'CustomsClearanceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
 
-                                                <!-- CustomsClearanceDate -->
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'CustomsClearanceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td colspan="2">
-                                                        <div class="MediaFill">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width:106px;">
-                                                                        <LogDatePicker [ObjectFieldName]="'CustomsClearanceDate'" [SelectedDateValue]="CustomsClearanceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                                    </td>
-
-                                                                    <td style="width:2px;">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width:106px;">
-                                                                        <LogDatePicker [ObjectFieldName]="'CustomsClearanceDate'" [SelectedDateValue]="CustomsClearanceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [HideColumns]="true"></LogDatePicker>
-                                                                    </td>
-
-                                                                    <td style="width:18px;">
-                                                                        <FollowupButton [IsEnabled]="IsCustomFollowUpEnabled" [ShipmentPM]="EntityPM" [LegType]="'CustomsClearanceDate'"></FollowupButton>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- FreightRelease -->
-                                                <tr class="FormFieldRow" *ngIf="IsOceanImport && IsDirectOrHouse">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'FreightRelease'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td colspan="2">
-                                                        <div class="MediaFill">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width: 106px;">
-                                                                        <LogDatePicker [ObjectFieldName]="'FreightRelease'" [SelectedDateValue]="FreightRelease" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                                    </td>
-
-                                                                    <td style="width:2px;">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width: 106px;">
-                                                                        <LogDatePicker [ObjectFieldName]="'FreightRelease'" [SelectedDateValue]="FreightRelease" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [HideColumns]="true"></LogDatePicker>
-                                                                    </td>
-
-                                                                    <td style="width:18px">
-                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'FreightRelease'" *ngIf="FreightRelease == null"></FollowupButton>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- TerminalAvailable -->
-                                                <tr class="FormFieldRow" *ngIf="IsOceanImport && IsDirectOrHouse">
-                                                    <td>
-                                                        <LogLabel [ObjectFieldName]="'TerminalAvailable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-
-                                                    <td colspan="2">
-                                                        <div class="MediaFill">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width:106px;">
-                                                                        <LogDatePicker [ObjectFieldName]="'TerminalAvailable'" [SelectedDateValue]="TerminalAvailable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                                                    </td>
-
-                                                                    <td style="width:2px;">
-                                                                        <div></div>
-                                                                    </td>
-
-                                                                    <td style="width:106px;">
-                                                                        <LogDatePicker [ObjectFieldName]="'TerminalAvailable'" [SelectedDateValue]="TerminalAvailable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [HideColumns]="true"></LogDatePicker>
-                                                                    </td>
-
-                                                                    <td style="width:18px">
-                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'TerminalAvailable'" *ngIf="TerminalAvailable == null"></FollowupButton>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="3">
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                            </table>
-                                        </div>
+                            <td colspan="2">
+                              <div class="MediaFill">
+                                <table>
+                                  <tr>
+                                    <td style="width:106px;">
+                                      <LogDatePicker [ObjectFieldName]="'CustomsClearanceDate'" [SelectedDateValue]="CustomsClearanceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                     </td>
 
-                                    <td style="width: 20px;">
-                                        <div></div>
+                                    <td style="width:2px;">
+                                      <div></div>
                                     </td>
 
-                                    <td style="width:330px;">
-                                        <div class="MediaFill">
-                                            <table *ngIf="IsTenantUS && IsDirectOrHouse">
+                                    <td style="width:106px;">
+                                      <LogDatePicker [ObjectFieldName]="'CustomsClearanceDate'" [SelectedDateValue]="CustomsClearanceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [HideColumns]="true"></LogDatePicker>
+                                    </td>
 
-                                                <tr class="FormFieldRow" *ngIf="IsOceanImport">
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- ISFNumber -->
-                                                <tr class="FormFieldRow" *ngIf="IsOceanImport">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'ISFNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 250px;">
-                                                                    <LogTextBox [ObjectFieldName]="'ISFNumber'" [Text]="ISFNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- ISFDate -->
-                                                <tr class="FormFieldRow" *ngIf="IsOceanImport">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'ISFDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 250px;">
-                                                                    <LogDatePicker [ObjectFieldName]="'ISFDate'" [SelectedDateValue]="ISFDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- ENSNumber -->
-                                                <tr class="FormFieldRow" *ngIf="IsExport">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'ENSNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 250px;">
-                                                                    <LogTextBox [ObjectFieldName]="'ENSNumber'" [Text]="ENSNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- ENSDate -->
-                                                <tr class="FormFieldRow" *ngIf="IsExport">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'ENSDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 250px;">
-                                                                    <LogDatePicker [ObjectFieldName]="'ENSDate'" [SelectedDateValue]="ENSDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- Internal transaction -->
-                                                <tr class="FormFieldRow" *ngIf="IsOceanOrAir">
-                                                    <td style="vertical-align: bottom; font-size: 14px; color: #1B90CB;">
-                                                        IT (Internal transaction)
-                                                    </td>
-                                                </tr>
-
-                                                <!-- ITNumber -->
-                                                <tr class="FormFieldRow" *ngIf="IsOceanOrAir">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'ITNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 250px;">
-                                                                    <LogTextBox [ObjectFieldName]="'ITNumber'" [Text]="ITNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <!-- ITDate -->
-                                                <tr class="FormFieldRow" *ngIf="IsOceanOrAir">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <LogLabel [ObjectFieldName]="'ITDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                </td>
-
-                                                                <td style="width: 250px;">
-                                                                    <LogDatePicker [ObjectFieldName]="'ITDate'" [SelectedDateValue]="ITDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
+                                    <td style="width:18px;">
+                                      <FollowupButton [IsEnabled]="IsCustomFollowUpEnabled" [ShipmentPM]="EntityPM" [LegType]="'CustomsClearanceDate'"></FollowupButton>
                                     </td>
 
                                     <td>
-                                        <div></div>
+                                      <div></div>
                                     </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <!-- FreightRelease -->
+                          <tr class="FormFieldRow" *ngIf="IsOceanImport && IsDirectOrHouse">
+                            <td>
+                              <LogLabel [ObjectFieldName]="'FreightRelease'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td colspan="2">
+                              <div class="MediaFill">
+                                <table>
+                                  <tr>
+                                    <td style="width: 106px;">
+                                      <LogDatePicker [ObjectFieldName]="'FreightRelease'" [SelectedDateValue]="FreightRelease" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width:2px;">
+                                      <div></div>
+                                    </td>
+
+                                    <td style="width: 106px;">
+                                      <LogDatePicker [ObjectFieldName]="'FreightRelease'" [SelectedDateValue]="FreightRelease" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width:18px">
+                                      <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'FreightRelease'" *ngIf="FreightRelease == null"></FollowupButton>
+                                    </td>
+
+                                    <td>
+                                      <div></div>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <!-- TerminalAvailable -->
+                          <tr class="FormFieldRow" *ngIf="IsOceanImport && IsDirectOrHouse">
+                            <td>
+                              <LogLabel [ObjectFieldName]="'TerminalAvailable'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            </td>
+
+                            <td colspan="2">
+                              <div class="MediaFill">
+                                <table>
+                                  <tr>
+                                    <td style="width:106px;">
+                                      <LogDatePicker [ObjectFieldName]="'TerminalAvailable'" [SelectedDateValue]="TerminalAvailable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width:2px;">
+                                      <div></div>
+                                    </td>
+
+                                    <td style="width:106px;">
+                                      <LogDatePicker [ObjectFieldName]="'TerminalAvailable'" [SelectedDateValue]="TerminalAvailable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'time'" [HideColumns]="true"></LogDatePicker>
+                                    </td>
+
+                                    <td style="width:18px">
+                                      <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'TerminalAvailable'" *ngIf="TerminalAvailable == null"></FollowupButton>
+                                    </td>
+
+                                    <td>
+                                      <div></div>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td colspan="3">
+                              <div></div>
+                            </td>
+                          </tr>
+
+                        </table>
+                      </div>
+                    </td>
+
+                    <td style="width: 20px;">
+                      <div></div>
+                    </td>
+
+                    <td style="width:330px;">
+                      <div class="MediaFill">
+                        <table *ngIf="IsTenantUS && IsDirectOrHouse">
+
+                          <tr class="FormFieldRow" *ngIf="IsOceanImport">
+                            <td>
+                              <div></div>
+                            </td>
+                          </tr>
+
+                          <!-- ISFNumber -->
+                          <tr class="FormFieldRow" *ngIf="IsOceanImport">
+                            <td>
+                              <table>
+                                <tr>
+                                  <td>
+                                    <LogLabel [ObjectFieldName]="'ISFNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                  </td>
+
+                                  <td style="width: 250px;">
+                                    <LogTextBox [ObjectFieldName]="'ISFNumber'" [Text]="ISFNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                  </td>
                                 </tr>
-                            </table>
-                        </td>
-                    </tr>
+                              </table>
+                            </td>
+                          </tr>
 
-                    <tr class="TabTitleRow">
-                        <td>{{'Shipment.S.Customs.AdditionalFields' | TextCodeTranslationPipe}}</td>
-                    </tr>
+                          <!-- ISFDate -->
+                          <tr class="FormFieldRow" *ngIf="IsOceanImport">
+                            <td>
+                              <table>
+                                <tr>
+                                  <td>
+                                    <LogLabel [ObjectFieldName]="'ISFDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                  </td>
 
-                    <tr>
-                        <td>
-                            <ScrollViewer>
-                                <div class="MediaFill">
-                                    <div ChildDirective></div>
-                                </div>
-                            </ScrollViewer>
-                        </td>
-                    </tr>
+                                  <td style="width: 250px;">
+                                    <LogDatePicker [ObjectFieldName]="'ISFDate'" [SelectedDateValue]="ISFDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+
+                          <!-- ENSNumber -->
+                          <tr class="FormFieldRow" *ngIf="IsExport">
+                            <td>
+                              <table>
+                                <tr>
+                                  <td>
+                                    <LogLabel [ObjectFieldName]="'ENSNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                  </td>
+
+                                  <td style="width: 250px;">
+                                    <LogTextBox [ObjectFieldName]="'ENSNumber'" [Text]="ENSNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+
+                          <!-- ENSDate -->
+                          <tr class="FormFieldRow" *ngIf="IsExport">
+                            <td>
+                              <table>
+                                <tr>
+                                  <td>
+                                    <LogLabel [ObjectFieldName]="'ENSDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                  </td>
+
+                                  <td style="width: 250px;">
+                                    <LogDatePicker [ObjectFieldName]="'ENSDate'" [SelectedDateValue]="ENSDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+
+                          <!-- Internal transaction -->
+                          <tr class="FormFieldRow" *ngIf="IsOceanOrAir">
+                            <td style="vertical-align: bottom; font-size: 14px; color: #1B90CB;">
+                              IT (Internal transaction)
+                            </td>
+                          </tr>
+
+                          <!-- ITNumber -->
+                          <tr class="FormFieldRow" *ngIf="IsOceanOrAir">
+                            <td>
+                              <table>
+                                <tr>
+                                  <td>
+                                    <LogLabel [ObjectFieldName]="'ITNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                  </td>
+
+                                  <td style="width: 250px;">
+                                    <LogTextBox [ObjectFieldName]="'ITNumber'" [Text]="ITNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+
+                          <!-- ITDate -->
+                          <tr class="FormFieldRow" *ngIf="IsOceanOrAir">
+                            <td>
+                              <table>
+                                <tr>
+                                  <td>
+                                    <LogLabel [ObjectFieldName]="'ITDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                  </td>
+
+                                  <td style="width: 250px;">
+                                    <LogDatePicker [ObjectFieldName]="'ITDate'" [SelectedDateValue]="ITDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <div></div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div></div>
+                    </td>
+                  </tr>
                 </table>
-            </div>
-        </td>
+              </td>
+            </tr>
+
+            <tr class="TabTitleRow">
+              <td>{{'Shipment.S.Customs.AdditionalFields' | TextCodeTranslationPipe}}</td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="MediaFill">
+                  <div #Child></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Additional Fields -->
+        <!--<div>
+          <div class="SectionTitle">{{'Shipment.S.Customs.AdditionalFields' | TextCodeTranslationPipe}}</div>
+
+          <table>
+            <tr>
+              <td>
+                <div class="MediaFill">
+                  <div class="LocationDirective" #Child></div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>-->
+      </td>
     </tr>
 
     <tr class="TabSummary" *ngIf="SummatyAreaIsVisible">
@@ -374,13 +387,13 @@
                                                                     <td style="width: 200px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td attr.data-cy="{{'StatusValue' | IdGeneratorAsyncPipe | async}}" style="width:60px; float:left;" [ngStyle]="{color: item.StatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width:60px; float:left;" [ngStyle]="{color: item.StatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{item.StatusName}}
                                                                                 </td>
 
                                                                                 <td style="width:30px; float:left; top:7px;">
                                                                                     <div *ngIf="item.Error">
-                                                                                        <img class="CenterCenter" src="./Images/ErrorIcon.png" width="20" height="20" [title]="item.Error" />
+                                                                                        <img class="CenterCenter" src="./Images/ErrorIcon.png" width="20" height="20" [title]="item.Error"/>
                                                                                     </div>
                                                                                 </td>
 
@@ -405,7 +418,7 @@
                                                                 <tr>
                                                                     <td style="width:70px;" class="Label">Last Sent:</td>
 
-                                                                    <td attr.data-cy="{{'StatusDate' | IdGeneratorAsyncPipe | async}}" style="text-align: left; width:200px;">{{item.StatusDate | DateTimePipe: 'SHWH'}}</td>
+                                                                    <td style="text-align: left; width:200px;">{{item.StatusDate | DateTimePipe: 'SHWH'}}</td>
 
                                                                     <td>
                                                                         <div></div>
@@ -421,7 +434,7 @@
                                                                 <tr>
                                                                     <td style="width:70px;" class="Label">By:</td>
 
-                                                                    <td attr.data-cy="{{'UserName' | IdGeneratorAsyncPipe | async}}" style="width:200px;">{{item.UserName}}</td>
+                                                                    <td style="width:200px;">{{item.UserName}}</td>
 
                                                                     <td>
                                                                         <div></div>
@@ -431,7 +444,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </td>
+                                            </td>                                            
                                         </tr>
                                     </table>
                                 </li>

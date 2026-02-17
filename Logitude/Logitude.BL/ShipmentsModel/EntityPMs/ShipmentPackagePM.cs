@@ -5,16 +5,13 @@ using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System;
 using Logitude.BL.Validators;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Logitude.Server.Tools;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
-
+        
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentPackageValidator), "IsShipmentPackageValid")]
-    public class ShipmentPackagePM: ChildEntitiesCustomFieldPM
+    public class ShipmentPackagePM
     {
         [Key]
         public string Id { get; set; }
@@ -37,7 +34,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string PackageTypeLocalName { get; set; }
         public decimal PackageTypeVolume { get; set; }
         public bool IsPackageAddedManually { get; set; }
-        public string WarehouseReleaseNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ContainerNumber { get; set; }
@@ -111,7 +107,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ShipmentNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipmentId { get; set; }
+        public string ShipmentId { get; set; }       
         public string ShipmentPMId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -200,7 +196,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         //Dummy
         public bool IsAWBWizardDefault { get; set; }
-        public string DummyIdGuid { get; set; }
+        public string DummyIdGuid { get; set; }        
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? OnCarriageETD { get; set; }
@@ -332,15 +328,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastStatusCode { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-
-        public string ContainerStatusSourceCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastStatusName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ContainerStatusName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? LastStatusDate { get; set; }
@@ -352,8 +342,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ECRTransportModeCode { get; set; }
 
         public bool IsMultiHarmonize { get; set; }
-
-        public int InUse { get; set; }
 
         private List<ShipmentPackageHarmonizePM> shipmentPackageHarmonizes;
         [Composition]
@@ -418,26 +406,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CountryId { get; set; }
         public string CountryName { get; set; }
         public bool IsVehicle { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string HorseId { get; set; }
-        public string HorseName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string LCLContainerTypeId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ContainerEntityId { get; set; }
-        public bool IsCreatedFromPickupDelivery{ get; set; }
-        public bool IsPackageCheckedInLeg { get; set; }
-        public string ChangeSet { get; set; }
-
-        public double? VolumeInCBM { get; set; }
-        public double? GrossWeightInKG { get; set; }
-        public double? GrossWeightInLB { get; set; }
-        public double? VolumeInCBF { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? ContainerStrippedDate { get; set; }
     }
 }

@@ -12,6 +12,5 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer
         public string MessageError { get; set; }
         public string OldValue { get; set; }
         public string NewValue { get; set; }
-
     }
 }

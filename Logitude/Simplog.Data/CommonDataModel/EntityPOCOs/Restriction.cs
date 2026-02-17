@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
@@ -13,9 +13,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ObjectFieldId { get; set; }
         public string Value { get; set; }
         public string ContactTenantId { get; set; }
-        public string ObjectFieldCode { get; set; }
 
-        [ForeignKey("ObjectTableId")]
+         [ForeignKey("ObjectTableId")]
         public ObjectTable ObjectTable { get; set; }
         [ForeignKey("ObjectFieldId")]
         public ObjectField ObjectField { get; set; }

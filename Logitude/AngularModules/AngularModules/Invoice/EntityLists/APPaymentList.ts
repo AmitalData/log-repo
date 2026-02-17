@@ -41,7 +41,6 @@ export class APPaymentList {
 		ExternalAccountingEntityId: string;
 		CreatedByUserName: string;
 		VendorName: string;
-		VendorLocalName: string;
 		StatusName: string;
 		PaymentCurrencyCode: string;
 		PaymentMethodName: string;
@@ -66,23 +65,5 @@ export class APPaymentList {
 		VendorBankAccountNumber: string;
 		VendorSwift: string;
 		VendorIBANNumber: string;
-		Field1: string;
-		Field2: string;
-		Field3: string;
-		Field4: string;
-		Field5: string;
-		Field6: string;
-		Field7: string;
-		Field8: string;
-		Field9: string;
-		Field10: string;
-		ExternalPaymentAmount: number;
-		ExternalPaymentDate: Date;
-		ExternalPaymentNotes: string;
-		VendorCode: string;
-		ConnectedInvoicesNumbers: string;
-		MasavInterfaceId : string;			
-		VendorBankBranch : string;	
-        VendorBankAccount: string;	
-        VendorBankCode: string;	
-}
+	
+}

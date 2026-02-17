@@ -3,11 +3,10 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -410,10 +409,8 @@ namespace Logitude.XSD
             LogitudeMessagesTransmissionLogPM myLog = query.GetSinglePM(this.TransmissionLog.Id, tenant);
             if (myLog != null)
             {
-                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = myLog,  ProcessType = "OnCreate",  ObjectTableName = "LogitudeMessagesTransmissionLog", EntityId = myLog.Id, Tenant = tenant, EntityReference = myLog.AWBNumber });
-                mainEntityChangeService.AddEntityChange();
-
-
+                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+                entityChangeHelper.AddEntityChange(myLog, null, "OnCreate", "", "LogitudeMessagesTransmissionLog");
             }
         }
         private void SendTransmissionToQueue()

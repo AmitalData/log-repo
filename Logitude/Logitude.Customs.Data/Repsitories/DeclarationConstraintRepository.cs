@@ -74,17 +74,6 @@ namespace Logitude.Customs.Data.Repsitories
             return constraints.FirstOrDefault().DeclarationID;
         }
 
-        public List<string> GetIsConsignmentConectContainerization( int tenant ,string[] ArrayDeclartiosId, string ContainerizationID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
-        {
-            var query = (from c in context.Consignments
-                         where c.Tenant== tenant && c.ExportContainerizationID==null && ArrayDeclartiosId.Contains(c.DeclarationId)&&c.CargoTypeCode==CargoTypeCode&&c.ManifestNumber == ManifestNumber&&c.SecondCargoID==SecondCargoID&&c.ThirdCargoID==ThirdCargoID
-                         select c).Select(x=>x.DeclarationId) .ToList();
-
-
-            return query;
-        }
-       
-
 
         public void FastDeleteMulti(DeclarationKeys entityKeyFields)
         {

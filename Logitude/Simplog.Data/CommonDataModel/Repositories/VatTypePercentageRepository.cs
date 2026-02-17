@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public VatTypePercentageRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public VatTypePercentageRepository(ICommonDataContext context)
         {
@@ -39,21 +42,20 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public VatTypePercentage GetVatTypePercentageByDate(string vatTypeId,int tenant, DateTime? date)
         {
-            return (from r in context.VatTypePercentages.Include("VatType")
-                    where r.VatTypeId == vatTypeId
-                    && r.Tenant == tenant
-                    && System.Data.Entity.DbFunctions.TruncateTime(r.FromDate) <= date
-                    select r).OrderByDescending(o => o.FromDate).FirstOrDefault();
+            VatTypePercentage result = null;
+            if (context.VatTypePercentages.Count() > 0)
+            {
+                result =
+                    (from r in context.VatTypePercentages
+                     where r.VatTypeId == vatTypeId
+                     && r.Tenant == tenant
+                     && System.Data.Entity.DbFunctions.TruncateTime(r.FromDate) <= date
+                     select r).OrderByDescending(o => o.FromDate).FirstOrDefault();
+            }
+
+            return result;
         }
 
-
-        public VatTypePercentage GetVatTypePercentageByVatTypeId(string vatTypeId, int tenant)
-        {
-            return (from r in context.VatTypePercentages.Include("VatType")
-                    where r.VatTypeId == vatTypeId
-                    && r.Tenant == tenant
-                    select r).FirstOrDefault();
-        }
         public void Add(VatTypePercentage entity)
         {
             context.VatTypePercentages.Add(entity);
@@ -86,12 +88,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             context.SaveChanges();
         }
 
-        public List<VatTypePercentage> GetVatTypePercentagesByVATId(string vatTypeId, int tenant)
-        {
-            return (from a in context.VatTypePercentages.Include("VatType")
-                   where a.Tenant == tenant && a.VatTypeId == vatTypeId
-                   select a).ToList();
-        }
 
         public List<VatTypePercentage> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

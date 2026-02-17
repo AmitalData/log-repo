@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -47,20 +47,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                         }
                     }
 
-                    if (item.FieldName == "CardId" || item.FieldName == "CardCode")
+                    if (item.FieldName == "CardId")
                     {
                         string value = item.FieldValue as string;
-                        List<string> cardIds = GetCardIdsForList(item);
 
                         CardContactRepository repositry = new CardContactRepository(tenant);
-                        if (item.Operator == "InListExact")
-                        {
-                            queryableData = repositry.GetContactsByCardIds(cardIds);
-                        }
-                        else
-                        {
-                            queryableData = repositry.GetContactsByCardId(value);
-                        }
+                        queryableData = repositry.GetContactsByCardId(value);
                     }
 
                     if (item.FieldName == "ContactEmailAndNames")
@@ -202,21 +194,6 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             }
 
             return queryableData;
-        }
-
-        private List<string> GetCardIdsForList(QueryFilterItem item)
-        {
-            string value = item.FieldValue as string;
-
-            if (item.FieldName != "CardCode")
-            {
-                return value.Split(',').ToList();
-            }
-
-            PartnerTypeRepository partnerTypeRepository = new PartnerTypeRepository(tenant);
-            string partnerTypeId = partnerTypeRepository.GetSinglePartnerTypeByName(item.FieldValue2?.ToString())?.Id;
-            CardRepository cardRepository = new CardRepository(tenant);
-            return cardRepository.GetActiveCardsIdsByCodes(value.Split(new Char[] { ';', ',' })?.ToList(), partnerTypeId, tenant);
         }
     }
 }

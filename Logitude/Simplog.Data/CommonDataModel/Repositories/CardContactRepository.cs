@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -15,8 +15,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
+        public CardContactRepository()
+        {
+            commonDataContext = new CommonDataContext();
 
-        
+        }
 
         public CardContactRepository(int tenant)
         {
@@ -41,7 +44,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public int GetCardsContactsForContactIds_Count(List<string> contactIdsList, int tenant)
         {
             var cardsList = (from d in context.CardContacts.Include("Card.Customer")
-                             where d.Tenant == tenant && contactIdsList.Contains(d.ContactId) && (d.Card != null && d.Card.IsCustomer)
+                             where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
                              select d).GroupBy(a => a.CardId).ToList();
 
             return cardsList != null ? cardsList.Count() : 0;
@@ -51,26 +54,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             var ids = "";
             List<string> cardsList = (from d in context.CardContacts.Include("Card.Customer")
-                                      where d.Tenant == tenant && contactIdsList.Contains(d.ContactId) && (d.Card != null && d.Card.IsCustomer)
-                                      select d).GroupBy(a => a.CardId)
+                             where d.Tenant == tenant && contactIdsList.Contains(d.ContactId)
+                             select d).GroupBy(a => a.CardId)
                             .Select(grp => grp.FirstOrDefault().CardId).ToList();
 
-            if (cardsList != null && cardsList.Count() > 0)
-            {
-                ids = string.Join(",", cardsList);
-                ids.TrimEnd(',');
-            }
-            return ids;
-        }
-
-
-        public string GetCardsContactsForContactIds_Names(List<string> contactIdsList, int tenant)
-        {
-            var ids = "";
-            List<string> cardsList = (from d in context.CardContacts.Include("Card.Customer")
-                                      where d.Tenant == tenant && contactIdsList.Contains(d.ContactId) && (d.Card != null && d.Card.IsCustomer)
-                                      select d).GroupBy(a => a.Card).Select(grp => grp.FirstOrDefault().Card.EnglishName).ToList();
-            if (cardsList != null && cardsList.Count() > 0)
+            if(cardsList !=null && cardsList.Count() > 0)
             {
                 ids = string.Join(",", cardsList);
                 ids.TrimEnd(',');
@@ -87,11 +75,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<Contact> GetContactsByCardId(string cardId)
         {
             return (from d in context.CardContacts.Include("Contact") where d.CardId == cardId select d.Contact);
-        }
-
-        public IQueryable<Contact> GetContactsByCardIds(List<string> cardIds)
-        {
-            return (from d in context.CardContacts.Include("Contact") where cardIds.Contains(d.CardId) select d.Contact);
         }
 
         public IQueryable<CardContact> GetCardContactsByCardId(string cardId)

@@ -11,7 +11,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './MainSchedulerComponent.html',
 })
 
@@ -104,7 +104,7 @@ export class MainSchedulerComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

@@ -12,16 +12,6 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Server.Tools.Models;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using System.Data.SqlClient;
-using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.Data.EntityPOCOs;
-using Simplog.Data.Helpers;
-using Simplog.Server.Infrastructure.Helpers;
-using Devart.Data.Oracle;
-using System.Web;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Logitude.Customs.Data.EntityMapping;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -38,7 +28,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUFILEMPM entityPM)
         {
-            return new CCUFILEMKeys() { FILENO = entityPM.FILENO, TENANT = entityPM.Tenant };
+            return new CCUFILEMKeys() { FILENO = entityPM.FILENO };
         }
 
         protected override void OnCreating(CCUFILEMPM entityPM, EntityPM entityParentPM)
@@ -47,40 +37,15 @@ namespace Unifreight.BL.EntityUpdateServices
             {
                 new BusinessErrorException("please init entityPM.DeclarationId");
             }
-            entityPM.FILENO = GetCounter(entityPM.DeclarationId,entityPM.Tenant);
+            entityPM.FILENO = GetCounter(entityPM.DeclarationId);
             entityPM.OPENDATE = DateTime.Now;
             entityPM.FILECLOSE = 0;
         }
 
-
-        protected override void OnUpdating(CCUFILEMPM entityPM)
+        private int GetCounter(string dirtyDeclarationPMId)
         {
-            if(entityPM.Tenant != 0)
-            {
-                CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
-                bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
-                if (!isConnectedToUnifreight)
-                {
-                    entityPM.IS_SYNCH = false;
-                    entityPM.LAST_UPDATE_DT = DateTime.Now;
-                }
-            }
-
-        }
-
-        private int GetCounter(string dirtyDeclarationPMId, int tenant)
-        {
-            int i = Convert.ToInt32(
-                           dirtyDeclarationPMId.Contains('-')
-                               ? "1" + dirtyDeclarationPMId.Split('-')[1]
-                               : dirtyDeclarationPMId.Replace(tenant + "-", "1"));
-            i = 50000000 + i;
-            int fileNoLen = 15;
-            if (i.ToString().Length > fileNoLen)
-            {
-                return i - 110_009_120;
-            }
-            return i;
+            int i = Convert.ToInt32(dirtyDeclarationPMId.Replace("-", ""));
+            return 50000000 + i;
         }
 
         protected override void UpdateComposition(CCUFILEMPM entityPM)
@@ -181,56 +146,6 @@ namespace Unifreight.BL.EntityUpdateServices
             (Repository as CCUFILEMRepository).FastDeleteMulti(GetKeys(entityPM) as CCUFILEMKeys);
 
         }
-
-
-        public object GetFileNoLen_Cache(int tenant)
-        {
-            string entityKeyString = $"GetFileNoLen_Cache({tenant})";
-            var res = CacheManager
-                .GetOrInsertNewObject<object>(entityKeyString,
-                () => { return this.GetFileNoLen(tenant); });
-            return res;
-
-        }
-
-        public object GetFileNoLen(int tenant)
-        {
-            object columnSize = 0;
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string owner = null;
-            CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(tenant);
-            CustomsSetting custSettings = custSettingsRepo.GetSettingByTenant(tenant);
-            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
-
-            if (custSettings != null && !string.IsNullOrWhiteSpace(custSettings.UnfConnectionString))
-            {
-                owner = custSettings.UnfConnectionString.Split(',').Last().ToUpper();
-            }
-            try
-            {
-
-                if (dbms == "oracle")
-                {
-                    using (OracleConnection con = new OracleConnection(strConnString))
-                    {
-                        string cmd = "select data_precision from ALL_TAB_COLUMNS where table_name = 'CCUFILEM' and column_name ='FILE_NO' and owner=:p1";
-
-                        OracleCommand oracleCommand = new OracleCommand(cmd, con);
-                        oracleCommand.Parameters.Add(new OracleParameter("p1", owner));
-                        con.Open(); 
-                        columnSize = oracleCommand.ExecuteScalar();
-                    }
-
-                }
-                return columnSize;
-            }
-            catch(Exception ex)
-            {
-                return columnSize;
-            }
-
-        }
-
-
+        
     }
 }

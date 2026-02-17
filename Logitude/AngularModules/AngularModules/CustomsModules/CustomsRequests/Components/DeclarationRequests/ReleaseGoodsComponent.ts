@@ -21,7 +21,7 @@ import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestP
 
 @Component({
     selector: 'ReleaseGoodsComponent',
-    
+    moduleId: module.id,
     templateUrl: './ReleaseGoodsComponent.html',
 })
 
@@ -40,7 +40,7 @@ export class ReleaseGoodsComponent
     constructor() {
         super();
         this.GoodsItemsList = new ObservableCollection([]);
-        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.ReleaseGoods").subscribe((response:any) => {
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("Customs.ReleaseGoods").subscribe(response => {
 
         });
 

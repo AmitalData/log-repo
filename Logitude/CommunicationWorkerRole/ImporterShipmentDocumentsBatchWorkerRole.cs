@@ -18,10 +18,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -67,7 +67,17 @@ namespace CommunicationWorkerRole
             SettingQuery SettingQuery = new SettingQuery(SettingRepository);
             URI = SettingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
         }
-        
+        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM, int tenant)
+        {
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant,tenant))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -78,8 +88,19 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        Contact User; 
-        public override void Run()
+        Contact User;
+        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true)// && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
+            {
+                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public override async void AsyncRun()
         {
             try
             {
@@ -95,9 +116,8 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = client.PostAsync(AuthURI, content);
-                    result.Wait();
-                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
+                    var result = await client.PostAsync(AuthURI, content);
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -124,7 +144,7 @@ namespace CommunicationWorkerRole
                                 string CustomerId = response.MessageValues["CustomerId"].ToString();
                                 string BatchNumber = response.MessageValues["BatchNumber"].ToString();
                                 int.TryParse(response.MessageValues["Tenant"], out tenant);
-                                string CorrelationId = response.MessageId;
+                                string CorrelationId = response.MessageValues["CorrelationId"].ToString();
                                 ContactRepository contactRepository = new ContactRepository(tenant);
                                 User = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);
                                 #region API Initialization
@@ -189,7 +209,7 @@ namespace CommunicationWorkerRole
                                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, ForwarderShipment.CustomerId);
                                         var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
-                                        var tenantPM = TenantQuery.GetSingleTenantPM(ForwarderShipment.Tenant, false);  
+                                        var tenantPM = tenantQuery.GetSinglePM(ForwarderShipment.Tenant);
                                         TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                         if (customerTenantAccessInfo != null)
                                         {
@@ -199,18 +219,16 @@ namespace CommunicationWorkerRole
                                                 LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
                                             }
                                         }
-                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.CustomerTenantShareCustomsFile)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
+                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
                                         {
                                             importerTenant = customerTenantAccessInfo.CustomerTenant;
                                             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                                             ShipmentPM ImporterShipment = null;
                                             DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
-                                            string EntityNumber = "";  
+                                            string EntityNumber = "";
                                             if (ForwarderShipment != null)
                                             {
-                                                PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
- 
-                                                if (!privateLabelShipmentService.IsShipmentsAllowedForLogBox() && !privateLabelShipmentService.IsCustomFileShipment(ForwarderShipment))
+                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment,tenant))
                                                 {
                                                     queueservice.Complete();
                                                 }
@@ -243,7 +261,7 @@ namespace CommunicationWorkerRole
                                                         }
 
                                                     }
-                                                    else 
+                                                    else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment)))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
                                                     {
                                                         ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
                                                         msg = "Getting Custom shipment number" + DateTime.Now;
@@ -262,13 +280,12 @@ namespace CommunicationWorkerRole
                                                 using (var client = new HttpClient())
                                                 {
                                                     client.DefaultRequestHeaders.Add("Token", Token);
-                                                    using (var apiresponse = client.GetAsync(GetURI))
+                                                    using (var apiresponse = await client.GetAsync(GetURI))
                                                     {
-                                                        apiresponse.Wait();
-                                                        if (apiresponse.Result.IsSuccessStatusCode)
+                                                        if (apiresponse.IsSuccessStatusCode)
                                                         {
 
-                                                            var IsNewJsonString = apiresponse.Result.Content.ReadAsStringAsync().Result;
+                                                            var IsNewJsonString = apiresponse.Content.ReadAsStringAsync().Result;
                                                             var tempResult = JsonConvert.DeserializeObject(IsNewJsonString);
                                                             if (tempResult != null)
                                                             {
@@ -420,17 +437,16 @@ namespace CommunicationWorkerRole
                                                                 NewDocumentFilingAM.FileInfo.BlockIdsList = blockIdsArray.ToArray();
                                                                 var serializedObj = JsonConvert.SerializeObject(NewDocumentFilingAM);
                                                                 var contentData = new StringContent(serializedObj, Encoding.UTF8, "application/json");
-                                                                var resultData = client.PostAsync(URI + "ImporterShipmentDocuments", contentData);
-                                                                resultData.Wait();
-                                                                if (resultData.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                                var resultData = await client.PostAsync(URI + "ImporterShipmentDocuments", contentData);
+                                                                if (resultData.StatusCode == System.Net.HttpStatusCode.OK)
                                                                 {
-                                                                    string temp1 = resultData.Result.Content.ReadAsStringAsync().Result;
+                                                                    string temp1 = resultData.Content.ReadAsStringAsync().Result;
                                                                     NewDocumentFilingAM.DocumentId = JsonConvert.DeserializeObject<string>(temp1);
                                                                     NewDocumentFilingAM.FileInfo.DocumentId = NewDocumentFilingAM.DocumentId;
                                                                 }
                                                                 else
                                                                 {
-                                                                    var temp1 = resultData.Result.Content.ReadAsStringAsync().Result;
+                                                                    var temp1 = resultData.Content.ReadAsStringAsync().Result;
                                                                     APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                                     if (EXC != null)
                                                                     {
@@ -465,11 +481,10 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(NewDocumentFilingAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = client.PostAsync(ImporterShipmentDocumentsURI, content);
-                                                        result.Wait();
-                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = await client.PostAsync(ImporterShipmentDocumentsURI, content);
+                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
-                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
                                                             var Donemsg = "New Document Sent To Importer Successfully " + DateTime.Now;
                                                             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, temp1, null, "");
 
@@ -515,7 +530,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
                                                             APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                             if (EXC != null)
                                                             {
@@ -631,17 +646,16 @@ namespace CommunicationWorkerRole
                                                                     NewDocumentFilingAM.FileInfo.BlockIdsList = blockIdsArray.ToArray();
                                                                     var serializedObj = JsonConvert.SerializeObject(NewDocumentFilingAM);
                                                                     var contentData = new StringContent(serializedObj, Encoding.UTF8, "application/json");
-                                                                    var resultData = client.PostAsync(URI + "ImporterShipmentDocuments", contentData);
-                                                                    resultData.Wait();
-                                                                    if (resultData.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                                    var resultData = await client.PostAsync(URI + "ImporterShipmentDocuments", contentData);
+                                                                    if (resultData.StatusCode == System.Net.HttpStatusCode.OK)
                                                                     {
-                                                                        string temp1 = resultData.Result.Content.ReadAsStringAsync().Result;
+                                                                        string temp1 = resultData.Content.ReadAsStringAsync().Result;
                                                                         NewDocumentFilingAM.DocumentId = JsonConvert.DeserializeObject<string>(temp1);
                                                                         NewDocumentFilingAM.FileInfo.DocumentId = NewDocumentFilingAM.DocumentId;
                                                                     }
                                                                     else
                                                                     {
-                                                                        var temp1 = resultData.Result.Content.ReadAsStringAsync().Result;
+                                                                        var temp1 = resultData.Content.ReadAsStringAsync().Result;
                                                                         APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                                         if (EXC != null)
                                                                         {
@@ -677,11 +691,10 @@ namespace CommunicationWorkerRole
 
                                                         var serializedObject = JsonConvert.SerializeObject(NewDocumentFilingAM);
                                                         var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                                        var result = client.PutAsync(ImporterShipmentDocumentsURI, content);
-                                                        result.Wait();
-                                                        if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                                        var result = await client.PutAsync(ImporterShipmentDocumentsURI, content);
+                                                        if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                                         {
-                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
                                                             string ImporterDocId = JsonConvert.DeserializeObject<string>(temp1);
                                                             DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
                                                             if (DocumentFilingPM.IsDeleted || ForwarderShipment.IsCancelled)
@@ -699,7 +712,7 @@ namespace CommunicationWorkerRole
                                                         }
                                                         else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                                         {
-                                                            var temp1 = result.Result.Content.ReadAsStringAsync().Result;
+                                                            var temp1 = result.Content.ReadAsStringAsync().Result;
                                                             APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                                                             if (EXC != null)
                                                             {
@@ -732,8 +745,6 @@ namespace CommunicationWorkerRole
                                 catch (Exception ex)
                                 {
                                     #region Exception handling
-                                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role start", null, null);
-
                                     string Status = "F";
                                     if (ex.Message == "EntityNumber is null Or Document has No file" || ex.Message == "Customer Has No Access To send Document")
                                     {
@@ -807,7 +818,7 @@ namespace CommunicationWorkerRole
                         catch (Exception ex)
                         {
                             ConnectClient();
-                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role ", null, null);
+                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                             Thread.Sleep(10000);
                         }
 
@@ -821,7 +832,7 @@ namespace CommunicationWorkerRole
             catch (Exception ex)
             {
                 ConnectClient();
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role ", null, null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                 Thread.Sleep(10000);
             } 
         }

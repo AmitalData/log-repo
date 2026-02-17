@@ -34,7 +34,6 @@ export class OccasionList {
 	ParticipatedContacts: number;
 	InvitedCustomers: number;
 	InvitedContacts: number;
-	IsAllAdded: boolean;
 	
 }
  

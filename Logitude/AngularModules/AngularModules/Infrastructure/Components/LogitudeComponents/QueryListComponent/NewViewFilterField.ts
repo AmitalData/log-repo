@@ -1,4 +1,4 @@
-import {QueryPM} from '../../../../Infrastructure/EntityPMs/QueryPM'; 
+﻿import {QueryPM} from '../../../../Infrastructure/EntityPMs/QueryPM'; 
 import {LogEvents} from '../../../../Infrastructure/Utilities/LogEvents';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {PubSubService} from '../../../../Infrastructure/Utilities/events/ApiFiltersEvent';
@@ -21,11 +21,9 @@ export class NewViewFilterField extends BaseComponent {
     filters: ApiQueryFilters;
     iswidnowMode: boolean = false;
     QueryId: string;
-    QueryCode: string;
-
-    constructor(objectField: any, queryCode: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
+    constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
-        this.QueryCode = queryCode;
+        this.QueryId = queryId;
         this.Filterchangeevent = filterchangeevent;
         this.ParentClass = parentClass;
         this.AdvancedQueryFilterPMs = AdvancedQFPMs;
@@ -41,8 +39,8 @@ export class NewViewFilterField extends BaseComponent {
 
         //}
         //SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId
-        if (queryCode != null && queryCode != undefined && queryCode != "") {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldCode == objectField.FieldCode && d.QueryCode == queryCode)[0];
+        if (queryId != null && queryId != undefined && queryId != "") {
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => ((d.Tenant == SessionInfo.LoggedUserTenant && d.UserId == SessionInfo.LoggedUserId) || d.Tenant == 0) && d.IsPredefined == true).filter(d => d.ObjectFieldId == objectField.Id && d.QueryId == queryId)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
@@ -331,7 +329,7 @@ export class NewViewFilterFieldsClass {
         this.FilterFields = [];
     }
 
-    AddNewViewFiltersList(objectsList: any, queryCode: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
+    AddNewViewFiltersList(objectsList: any, queryId: string, AdvancedQueryFilterPMs: AdvancedQueryFilterPM[]) {
         //ObservableCollection
         if (this.ParentClass == null) {
             var ss = "";
@@ -339,7 +337,7 @@ export class NewViewFilterFieldsClass {
         var newList = [];
         //.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : a ? -1 : 1 })
         objectsList.sort((a, b) => { return (a.FieldName === b.FieldName) ? 0 : (a.FieldName < b.FieldName) ? -1 : 1 }).forEach((item, key) => {
-            newList.push(new NewViewFilterField(item, queryCode, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass));
+            newList.push(new NewViewFilterField(item, queryId, this.IsWindowMode, AdvancedQueryFilterPMs, this.ParentClass));
         });
 
         this.FilterFields = newList;

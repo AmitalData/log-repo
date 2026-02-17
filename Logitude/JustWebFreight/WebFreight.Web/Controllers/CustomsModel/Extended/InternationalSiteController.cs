@@ -7,7 +7,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using WebFreight.Web.Helpers;

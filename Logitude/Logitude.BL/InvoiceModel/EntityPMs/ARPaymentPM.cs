@@ -1,5 +1,4 @@
 ﻿using Logitude.Accounting.Def.EntityPMs;
-using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,9 +25,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? AmountInLocalCurrency { get; set; }
         public double? ProfitCurrencyExchangeRate { get; set; }
         public double? AmountInProfitCurrency { get; set; }
-        public DateTime? AccountingCancelationDate { get; set; }
-        public string CancelationNotes { get; set; }
-        public string VoidedByJournalNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
@@ -87,7 +83,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TransferStatusName { get; set; }
         public bool ReadyForTransfer { get; set; }
         public string ExternalAccountingEntityId { get; set; }
-        public bool IsTransferStatusSetManually { get; set; }
         public string InvoiceNumber { get; set; }
         public string ShipmentNumber { get; set; }
         public string TransmissionError { get; set; }
@@ -117,7 +112,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
-       
+
 
         //Dummy Fields
         public bool SetVoided { get; set; }
@@ -136,7 +131,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string BankAccountLiteId { get; set; }
         public string BankAccountName { get; set; }
-        public string BankAccountNumber { get; set; }
         public string MetodoPagoCode { get; set; }
         public string TipoCadenaPago { get; set; }
         public string CertPago { get; set; }
@@ -203,68 +197,5 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
-
-        public List<ARPaymentBankTranferPM> ARPaymentBankTranfers { get; set; }
-
-        public bool IsPaymentNumberManuallySet { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field1 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field2 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field3 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field4 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field5 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field6 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field7 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field8 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field9 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field10 { get; set; }
-
-
-        public string GLAccountCurrencyCode { get; set; }
-        public string PaymentCurrencySign { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PartnerId { get; set; }
-        public bool ForceUsingBankTransferMethod { get; set; }
-        public string ReconcileExternalPagesIds { get; set; }
-
-        public bool UpdateAmountAndStatuses { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string BillToCode { get; set; }
-        public bool IsUpdatedByQBO { get; set; }
-        public bool IsUpdatedBySAT { get; set; }
-        public string SATAdditionalFieldsXML { get; set; }
-        public string TransferStatusCode_Original { get; set; }
-        public bool IsTransferStarted_Original { get; set; }
-        public string TransferError_Original { get; set; }
-        public string GLAccountDisplayNumber { get; set; }
     }
 }

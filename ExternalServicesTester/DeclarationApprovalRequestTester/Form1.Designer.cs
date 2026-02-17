@@ -43,39 +43,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabDec = new System.Windows.Forms.TabPage();
-            this.label6 = new System.Windows.Forms.Label();
             this.tabAP = new System.Windows.Forms.TabPage();
-            this.txtAccountingPartnerData = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.tabUserIDNumberRequest = new System.Windows.Forms.TabPage();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txtForwarderShipmentNumber = new System.Windows.Forms.TextBox();
-            this.txtCustomerAddress = new System.Windows.Forms.TextBox();
-            this.txtCustomerName = new System.Windows.Forms.TextBox();
-            this.txtDeclarationNumber = new System.Windows.Forms.TextBox();
-            this.txtQuantity = new System.Windows.Forms.TextBox();
-            this.txtMaster = new System.Windows.Forms.TextBox();
-            this.txtGoodsDescritpion = new System.Windows.Forms.TextBox();
-            this.txtHawb = new System.Windows.Forms.TextBox();
-            this.txtShipmentValueInNIS = new System.Windows.Forms.TextBox();
-            this.txtSenderDetails = new System.Windows.Forms.TextBox();
-            this.txtWeight = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtAccountingPartnerData = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabDec.SuspendLayout();
             this.tabAP.SuspendLayout();
-            this.tabUserIDNumberRequest.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -197,7 +173,6 @@
             // 
             this.tabControl1.Controls.Add(this.tabDec);
             this.tabControl1.Controls.Add(this.tabAP);
-            this.tabControl1.Controls.Add(this.tabUserIDNumberRequest);
             this.tabControl1.Location = new System.Drawing.Point(22, 110);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -219,15 +194,6 @@
             this.tabDec.TabIndex = 0;
             this.tabDec.Text = "Declaration Approval";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 33);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(107, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Declaration Xml Data";
-            // 
             // tabAP
             // 
             this.tabAP.BackColor = System.Drawing.Color.Gainsboro;
@@ -240,23 +206,6 @@
             this.tabAP.TabIndex = 1;
             this.tabAP.Text = "Accounting Partner";
             // 
-            // txtAccountingPartnerData
-            // 
-            this.txtAccountingPartnerData.Location = new System.Drawing.Point(131, 6);
-            this.txtAccountingPartnerData.Multiline = true;
-            this.txtAccountingPartnerData.Name = "txtAccountingPartnerData";
-            this.txtAccountingPartnerData.Size = new System.Drawing.Size(621, 300);
-            this.txtAccountingPartnerData.TabIndex = 1;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 10);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(118, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Accounting Partner Xml";
-            // 
             // btnClose
             // 
             this.btnClose.Location = new System.Drawing.Point(601, 450);
@@ -267,213 +216,31 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // tabUserIDNumberRequest
+            // label6
             // 
-            this.tabUserIDNumberRequest.BackColor = System.Drawing.Color.Gainsboro;
-            this.tabUserIDNumberRequest.Controls.Add(this.txtWeight);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtShipmentValueInNIS);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtSenderDetails);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtQuantity);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtMaster);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtGoodsDescritpion);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtHawb);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtDeclarationNumber);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtCustomerName);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtCustomerAddress);
-            this.tabUserIDNumberRequest.Controls.Add(this.txtForwarderShipmentNumber);
-            this.tabUserIDNumberRequest.Controls.Add(this.label18);
-            this.tabUserIDNumberRequest.Controls.Add(this.label19);
-            this.tabUserIDNumberRequest.Controls.Add(this.label14);
-            this.tabUserIDNumberRequest.Controls.Add(this.label15);
-            this.tabUserIDNumberRequest.Controls.Add(this.label16);
-            this.tabUserIDNumberRequest.Controls.Add(this.label11);
-            this.tabUserIDNumberRequest.Controls.Add(this.label12);
-            this.tabUserIDNumberRequest.Controls.Add(this.label13);
-            this.tabUserIDNumberRequest.Controls.Add(this.label10);
-            this.tabUserIDNumberRequest.Controls.Add(this.label9);
-            this.tabUserIDNumberRequest.Controls.Add(this.label8);
-            this.tabUserIDNumberRequest.Location = new System.Drawing.Point(4, 22);
-            this.tabUserIDNumberRequest.Name = "tabUserIDNumberRequest";
-            this.tabUserIDNumberRequest.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUserIDNumberRequest.Size = new System.Drawing.Size(758, 312);
-            this.tabUserIDNumberRequest.TabIndex = 2;
-            this.tabUserIDNumberRequest.Text = "UserIDNumberRequest";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 33);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(107, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Declaration Xml Data";
             // 
-            // label8
+            // label7
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 27);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(135, 13);
-            this.label8.TabIndex = 2;
-            this.label8.Text = "ForwarderShipmentNumber";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 10);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(118, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Accounting Partner Xml";
             // 
-            // label9
+            // txtAccountingPartnerData
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(24, 51);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(89, 13);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "CustomerAddress";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(24, 77);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(79, 13);
-            this.label10.TabIndex = 4;
-            this.label10.Text = "CustomerName";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(24, 153);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(91, 13);
-            this.label11.TabIndex = 7;
-            this.label11.Text = "GoodsDescritpion";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(24, 129);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(35, 13);
-            this.label12.TabIndex = 6;
-            this.label12.Text = "Hawb";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(24, 103);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(98, 13);
-            this.label13.TabIndex = 5;
-            this.label13.Text = "DeclarationNumber";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(24, 231);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(73, 13);
-            this.label14.TabIndex = 10;
-            this.label14.Text = "SenderDetails";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(24, 205);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(46, 13);
-            this.label15.TabIndex = 9;
-            this.label15.Text = "Quantity";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(24, 179);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(39, 13);
-            this.label16.TabIndex = 8;
-            this.label16.Text = "Master";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(24, 281);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(41, 13);
-            this.label18.TabIndex = 12;
-            this.label18.Text = "Weight";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(24, 255);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(105, 13);
-            this.label19.TabIndex = 11;
-            this.label19.Text = "ShipmentValueInNIS";
-            // 
-            // txtForwarderShipmentNumber
-            // 
-            this.txtForwarderShipmentNumber.Location = new System.Drawing.Point(174, 24);
-            this.txtForwarderShipmentNumber.Name = "txtForwarderShipmentNumber";
-            this.txtForwarderShipmentNumber.Size = new System.Drawing.Size(181, 20);
-            this.txtForwarderShipmentNumber.TabIndex = 13;
-            // 
-            // txtCustomerAddress
-            // 
-            this.txtCustomerAddress.Location = new System.Drawing.Point(174, 48);
-            this.txtCustomerAddress.Name = "txtCustomerAddress";
-            this.txtCustomerAddress.Size = new System.Drawing.Size(181, 20);
-            this.txtCustomerAddress.TabIndex = 14;
-            // 
-            // txtCustomerName
-            // 
-            this.txtCustomerName.Location = new System.Drawing.Point(174, 74);
-            this.txtCustomerName.Name = "txtCustomerName";
-            this.txtCustomerName.Size = new System.Drawing.Size(181, 20);
-            this.txtCustomerName.TabIndex = 15;
-            // 
-            // txtDeclarationNumber
-            // 
-            this.txtDeclarationNumber.Location = new System.Drawing.Point(174, 100);
-            this.txtDeclarationNumber.Name = "txtDeclarationNumber";
-            this.txtDeclarationNumber.Size = new System.Drawing.Size(181, 20);
-            this.txtDeclarationNumber.TabIndex = 16;
-            // 
-            // txtQuantity
-            // 
-            this.txtQuantity.Location = new System.Drawing.Point(174, 202);
-            this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(181, 20);
-            this.txtQuantity.TabIndex = 20;
-            // 
-            // txtMaster
-            // 
-            this.txtMaster.Location = new System.Drawing.Point(174, 176);
-            this.txtMaster.Name = "txtMaster";
-            this.txtMaster.Size = new System.Drawing.Size(181, 20);
-            this.txtMaster.TabIndex = 19;
-            // 
-            // txtGoodsDescritpion
-            // 
-            this.txtGoodsDescritpion.Location = new System.Drawing.Point(174, 150);
-            this.txtGoodsDescritpion.Name = "txtGoodsDescritpion";
-            this.txtGoodsDescritpion.Size = new System.Drawing.Size(181, 20);
-            this.txtGoodsDescritpion.TabIndex = 18;
-            // 
-            // txtHawb
-            // 
-            this.txtHawb.Location = new System.Drawing.Point(174, 126);
-            this.txtHawb.Name = "txtHawb";
-            this.txtHawb.Size = new System.Drawing.Size(181, 20);
-            this.txtHawb.TabIndex = 17;
-            // 
-            // txtShipmentValueInNIS
-            // 
-            this.txtShipmentValueInNIS.Location = new System.Drawing.Point(174, 252);
-            this.txtShipmentValueInNIS.Name = "txtShipmentValueInNIS";
-            this.txtShipmentValueInNIS.Size = new System.Drawing.Size(181, 20);
-            this.txtShipmentValueInNIS.TabIndex = 22;
-            // 
-            // txtSenderDetails
-            // 
-            this.txtSenderDetails.Location = new System.Drawing.Point(174, 228);
-            this.txtSenderDetails.Name = "txtSenderDetails";
-            this.txtSenderDetails.Size = new System.Drawing.Size(181, 20);
-            this.txtSenderDetails.TabIndex = 21;
-            // 
-            // txtWeight
-            // 
-            this.txtWeight.Location = new System.Drawing.Point(174, 278);
-            this.txtWeight.Name = "txtWeight";
-            this.txtWeight.Size = new System.Drawing.Size(181, 20);
-            this.txtWeight.TabIndex = 23;
+            this.txtAccountingPartnerData.Location = new System.Drawing.Point(131, 6);
+            this.txtAccountingPartnerData.Multiline = true;
+            this.txtAccountingPartnerData.Name = "txtAccountingPartnerData";
+            this.txtAccountingPartnerData.Size = new System.Drawing.Size(621, 300);
+            this.txtAccountingPartnerData.TabIndex = 1;
             // 
             // Form1
             // 
@@ -495,8 +262,6 @@
             this.tabDec.PerformLayout();
             this.tabAP.ResumeLayout(false);
             this.tabAP.PerformLayout();
-            this.tabUserIDNumberRequest.ResumeLayout(false);
-            this.tabUserIDNumberRequest.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -524,29 +289,6 @@
         private System.Windows.Forms.TextBox txtAccountingPartnerData;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.TabPage tabUserIDNumberRequest;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtWeight;
-        private System.Windows.Forms.TextBox txtShipmentValueInNIS;
-        private System.Windows.Forms.TextBox txtSenderDetails;
-        private System.Windows.Forms.TextBox txtQuantity;
-        private System.Windows.Forms.TextBox txtMaster;
-        private System.Windows.Forms.TextBox txtGoodsDescritpion;
-        private System.Windows.Forms.TextBox txtHawb;
-        private System.Windows.Forms.TextBox txtDeclarationNumber;
-        private System.Windows.Forms.TextBox txtCustomerName;
-        private System.Windows.Forms.TextBox txtCustomerAddress;
-        private System.Windows.Forms.TextBox txtForwarderShipmentNumber;
     }
 }
 

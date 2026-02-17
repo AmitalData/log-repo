@@ -17,10 +17,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
             return myResult;
         }
 
+
         public static double? ComputeInsideVolume(InsideShipmentPackagePM package, ShipmentPM entityPM)
         {
             double? myResult = null;
-            myResult = ComputeInsidePackageVolume(package.Quantity, package.Width, package.Height, package.Length, package.Volume, package.Weight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+            myResult = ComputeInsidePackageVolume(package.Quantity, package.Width, package.Height, package.Length,package.Volume, package.Weight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
 
             return myResult;
         }
@@ -80,7 +81,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     myResult = myVolume;// GetWeightFromVolume(volumeCode, fromWeightCode, myVolume, myRatio);
                 }
 
-                else if (myWeight != null)
+              else  if (myWeight != null)
                 {
                     myResult = GetVolumeFromWeight(fromWeightCode, volumeCode, myWeight, myRatio);
                 }
@@ -98,6 +99,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
+
 
         public static double? ComputePackageVolume(double? quantity, double? width, double? height, double? length, double? weight, double? ratio, string dimentionCode, string volumeCode, string fromWeightCode)
         {
@@ -311,6 +314,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
 
         public static double? ComputeInsideVolumetricWeight(InsideShipmentPackagePM package, ShipmentPM entityPM)
         {
@@ -597,8 +601,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
         public static void ComputeTotals(ShipmentPM entityPM)
         {
-            List<ShipmentPackagePM> notDeletedPackages = entityPM.ShipmentPackages.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-            if (notDeletedPackages.Count == 0)
+            if (entityPM.ShipmentPackages.Count == 0)
             {
                 entityPM.NumberOfPackages = null;
                 entityPM.NumberOfContainers = null;
@@ -608,27 +611,25 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 entityPM.ChargeableWeight = null;
                 entityPM.GrossWeightInKG = null;
                 entityPM.GrossWeightPerTon = null;
-                entityPM.ChargeableWeightInKG = null;
             }
 
             else
             {
-                if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
+                if(MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
                 {
-                    entityPM.NumberOfPackages = notDeletedPackages.Sum(s => s.Quantity);
+                    entityPM.NumberOfPackages = entityPM.ShipmentPackages.Sum(s => s.Quantity);
                 }
 
                 else
                 {
-                    entityPM.NumberOfContainers = notDeletedPackages.Sum(s => s.Quantity);
+                    entityPM.NumberOfContainers = entityPM.ShipmentPackages.Sum(s => s.Quantity);
                 }
-
-                entityPM.GrossWeight = Round(notDeletedPackages.Sum(s => s.Weight), 3);
-                entityPM.Volume = Round(notDeletedPackages.Sum(s => s.Volume), 3);
-                entityPM.VolumetricWeight = Round(notDeletedPackages.Sum(s => s.VolumetricWeight), 3);
+                                
+                entityPM.GrossWeight = Round(entityPM.ShipmentPackages.Sum(s => s.Weight), 3);
+                entityPM.Volume = Round(entityPM.ShipmentPackages.Sum(s => s.Volume), 3);
+                entityPM.VolumetricWeight = Round(entityPM.ShipmentPackages.Sum(s => s.VolumetricWeight), 3);
                 entityPM.ChargeableWeight = CalculateChargeableWeight(entityPM.GrossWeight, entityPM.VolumetricWeight, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode, entityPM.DirectionId, entityPM.TransportModeId);
                 ComputeGrossWeigh_Kg_Ton(entityPM);
-                ComputeChargeableWeight_Kg(entityPM);
             }
         }
         public static double? CalculateChargeableWeight(double? grossWeight, double? volumetricWeight, string grossWeightUnitCode, string chargeableWeightUnitCode, string directionId, string transportModeId)
@@ -774,6 +775,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return result;
         }
+
         public static double? Round(double? value, int digits)
         {
             double? myValue = null;
@@ -794,6 +796,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
         private static void ComputeGrossWeigh_Kg_Ton(ShipmentPM entityPM)
         {
             double? weigh_Kg = null;
@@ -830,33 +833,6 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             entityPM.GrossWeightInKG = weigh_Kg;
             entityPM.GrossWeightPerTon = weigh_Ton;
-        }
-        private static void ComputeChargeableWeight_Kg(ShipmentPM entityPM)
-        {
-            if (entityPM.ChargeableWeight == null) return;
-
-            double factorOfConvert = GetChargeableWeightConvertFactor(entityPM.ChargeableWeightUnitCode);
-            double? weigh_Kg = entityPM.ChargeableWeight * factorOfConvert;
-            
-            if (weigh_Kg != null) 
-                weigh_Kg = Round(weigh_Kg, 3);
-
-            entityPM.ChargeableWeightInKG = weigh_Kg;
-        }
-        private static double GetChargeableWeightConvertFactor(string chargeableWeightUnitCode)
-        {
-            double factorOfConvert = 1;
-
-            if (!string.IsNullOrEmpty(chargeableWeightUnitCode))
-            {
-                switch (chargeableWeightUnitCode.ToUpper())
-                {
-                    case "KG": { factorOfConvert = 1; break; }
-                    case "LB": { factorOfConvert = 0.45359237; break; }
-                    case "MT": { factorOfConvert = 1000; break; }
-                }
-            }
-            return factorOfConvert;
-        }
+        }        
     }
 }

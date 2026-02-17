@@ -76,36 +76,6 @@ namespace WebFreight.Web.ShipmentPackageModel
             public string ShipmentField38 { get; set; }
             public string ShipmentField39 { get; set; }
             public string ShipmentField40 { get; set; }
-            public string ShipmentField41 { get; set; }
-            public string ShipmentField42 { get; set; }
-            public string ShipmentField43 { get; set; }
-            public string ShipmentField44 { get; set; }
-            public string ShipmentField45 { get; set; }
-            public string ShipmentField46 { get; set; }
-            public string ShipmentField47 { get; set; }
-            public string ShipmentField48 { get; set; }
-            public string ShipmentField49 { get; set; }
-            public string ShipmentField50 { get; set; }
-            public string ShipmentField51 { get; set; }
-            public string ShipmentField52 { get; set; }
-            public string ShipmentField53 { get; set; }
-            public string ShipmentField54 { get; set; }
-            public string ShipmentField55 { get; set; }
-            public string ShipmentField56 { get; set; }
-            public string ShipmentField57 { get; set; }
-            public string ShipmentField58 { get; set; }
-            public string ShipmentField59 { get; set; }
-            public string ShipmentField60 { get; set; }
-            public string ShipmentField61 { get; set; }
-            public string ShipmentField62 { get; set; }
-            public string ShipmentField63 { get; set; }
-            public string ShipmentField64 { get; set; }
-            public string ShipmentField65 { get; set; }
-            public string ShipmentField66 { get; set; }
-            public string ShipmentField67 { get; set; }
-            public string ShipmentField68 { get; set; }
-            public string ShipmentField69 { get; set; }
-            public string ShipmentField70 { get; set; }
 
             public bool IsCancelled { get; set; }
             public DateTime? ETDAsDateTime { get; set; }
@@ -121,13 +91,10 @@ namespace WebFreight.Web.ShipmentPackageModel
             public string ShipmentPackageReference4 { get; set; }
             public string ContainerTypeName { get; set; }
             public string OnCarriageTo { get; set; }
-            public string OnForwardingTo { get; set; }
             public DateTime? ATD { get; set; }
             public DateTime? ATA { get; set; }
             public DateTime? OnCarriageATD { get; set; }
             public DateTime? OnCarriageATA { get; set; }
-            public DateTime? OnForwardingATD { get; set; }
-            public DateTime? OnForwardingATA { get; set; }
             public string ContainerNotes { get; set; }
             public string GrossWeight { get; set; }
             public bool? Flagged { get; set; }
@@ -154,7 +121,7 @@ namespace WebFreight.Web.ShipmentPackageModel
 
             public DateTime? ETARamp { get; set; }
             public DateTime? OnCarriageETA { get; set; }
-            public DateTime? OnForwardingETA { get; set; }
+
             public string ShipperCityAndCountry { get; set; }
             public string ConsigneeCityAndCountry { get; set; }
             public string Incoterm { get; set; }

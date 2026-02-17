@@ -11,6 +11,7 @@ import {AppTool, DateTool} from '../../../../../Infrastructure/Tools'
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClientPM} from '../../../../../Customs/EntityPMs/ClientPM';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
@@ -19,7 +20,7 @@ import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExc
 import {DeclarationValidator} from '../../../../../Customs/Validators/DeclarationValidator';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {GenericRequestParams} from '../../../../../Customs/DataContract/RequestParams/GenericRequestParams';
-import {HsmStationContext, SendRequestVIA, TestCase} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import {SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import {CustomMessageProgressComponent, ShowProgressBarParams} from '../../../../CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import {SupplierInvoicePMService} from  '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
@@ -33,7 +34,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 import { DeclarationEditComponentController } from '../../../../../Customs/Controller/DeclarationEditComponentController';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SendManifestComponent',
     templateUrl: "SendManifestComponent.html",
 })
@@ -55,35 +56,6 @@ export class SendManifestComponent {
 
   
     OnCustomSendOptionsButtonClick(event) {
-        this._SendManifestService._TestCase = null;
-        if (event.TestCase) {
-
-            let windowArgs = { "SincroScreen": "SincroSendManifest" };
-
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 600;
-            logWindow.Height = 400;
-            logWindow.Title = "תרחשי הצהרה";
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = windowArgs;
-
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(res => {
-                     if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
-                        this._SendManifestService._TestCase = new TestCase();
-                        this._SendManifestService._TestCase.Code = comp._ScenarioCode;
-                        this._SendManifestService._TestCase.Param1 = comp.Param1;
-                        this._SendManifestService._TestCase.Param2 = comp.Param2;
-                        this._SendManifestService.OnCustomSendOptionsButtonClick(event)
-                    }
-                });
-            });
-
-            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
-            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-
-            return;
-        }
         this._SendManifestService.OnCustomSendOptionsButtonClick(event);
     }
                                                                       
@@ -113,15 +85,14 @@ export class SendManifestService {
     LoadCompletedEvent: any;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration").subscribe((response:any) => {
-            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration").subscribe(response => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.CourierMaster").subscribe(response => {
                 });
 
             });
         });
     }
-    _TestCase: TestCase;
 
     CourierWorksheetmode: boolean = false;
     ButtonText: string;
@@ -162,7 +133,7 @@ export class SendManifestService {
         this.CurrentSession.StartBusyIndicator("");
         this.RequestVIA = event.RequestVIA;
         this.Option = event.Option;
-         this.ForcePersonalSign = event.ForcePersonalSign;
+        this.ForcePersonalSign = event.ForcePersonalSign;
         Validator.TryValidateObject(this.EntityPM, "Customs.Declaration", this.ValidationErrors);
         if (this.ValidationErrors.length == 0) {
             // this.CurrentSession.CurrentEditComponent.SaveChanges("");
@@ -271,8 +242,8 @@ export class SendManifestService {
         this.DeclarationService.GetMAWBCourierMasterByDeclaration(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             var result = myResponse.Result;
 
-            if (AppTool.IsNullOrEmpty(result) && this.EntityPM.IsAmendment!=true) {
-                this.ValidationErrors.push("ההצהרה אינה מקושרת לבלדר ראשי");
+            if (AppTool.IsNullOrEmpty(result)) {
+                this.ValidationErrors.push("ההצרה אינה מקושרת לבלדר ראשי");
                 this.FillValidationErrors(this.presendValidationsTitle);
             }
             else {
@@ -295,17 +266,7 @@ export class SendManifestService {
         sendParams.ResponseName = "Declaration Response";
         sendParams.RequestVIA = this.RequestVIA;
         sendParams.ForcePersonalSign = this.ForcePersonalSign;
-        sendParams.TestCase = this._TestCase;
 
-        if (this.EntityPM?.IsCourierDeclaration === true ) {
-            sendParams.HsmStationContext = HsmStationContext.Courier;
-        }
-        else if (this.EntityPM?.Direction === "E") {
-            sendParams.HsmStationContext = HsmStationContext.Export;
-        }
-        else {
-            sendParams.HsmStationContext = HsmStationContext.Import;
-        }
         //let myShowProgressBarParams = new ShowProgressBarParams();
         //myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
         //    (response: any) => {
@@ -318,7 +279,7 @@ export class SendManifestService {
         //                    ObjectTableName: "Customs.Declaration",
         //                });
         //                cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-        //                    .subscribe((myResult:any) => {
+        //                    .subscribe(myResult => {
         //                        var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
         //                        myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
         //                        console.log("myDeclarationEditComponentController.CustomsAnswersShowManifest = true;");
@@ -346,7 +307,7 @@ export class SendManifestService {
                 };
         }
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,sendParams.PBId,
+            .ShowProgressBar(sendParams.PBId,
             "שליחת מצהר", false, myShowProgressBarParams)
             .then((res) => {
                 this.responseData = res;
@@ -388,7 +349,7 @@ export class SendManifestService {
         //            ObjectTableName: "Customs.Declaration",
         //        });
         //        cmpRef.instance.OnFirstTimeAfterSingleDataLoaded
-        //            .subscribe((myResult:any) => {
+        //            .subscribe(myResult => {
         //                var myDeclarationEditComponentController = cmpRef.instance.EditComponentController as DeclarationEditComponentController;
         //                myDeclarationEditComponentController.CustomsAnswersShowManifest = true;
         //                console.log("myDeclarationEditComponentController.CustomsAnswersShowManifest = true;");
@@ -451,7 +412,7 @@ export class SendManifestService {
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
 
-        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
     }
 
 

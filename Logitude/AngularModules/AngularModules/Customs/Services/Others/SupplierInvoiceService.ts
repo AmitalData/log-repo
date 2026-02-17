@@ -1,27 +1,20 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SupplierInvoicePM} from '../../EntityPMs/SupplierInvoicePM';
 
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import { SendMultiUpdateRequestParams } from '../../DataContract/RequestParams/SendMultiUpdateRequestParams';
-import { MultiUpdateOcrParams } from 'Customs/DataContract/RequestParams/MultiUpdateOcrParams';
-import { isDebuggerStatement } from 'typescript';
-import { SupplierInvoicePMService } from '../StandardPMs/SupplierInvoicePMService';
 
 @Injectable()
 
 export class SupplierInvoiceService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
-    public SupplierInvoicePMService: SupplierInvoicePMService=new SupplierInvoicePMService()
-
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationSupplierInvoices';
     }
 
@@ -30,13 +23,13 @@ export class SupplierInvoiceService {
         authHeader.append('Token', SessionInfo.Token);
 
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetTotalForeignCurrencyForInvoice?' + 'declarationId=' + declarationId + '&invoiceCounterKey=' + invoiceCounterKey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTotalForeignCurrencyForInvoice?' + 'declarationId=' + declarationId + '&invoiceCounterKey=' + invoiceCounterKey, { headers: authHeader }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
 
         });
@@ -49,99 +42,17 @@ export class SupplierInvoiceService {
         authHeader.append('Token', SessionInfo.Token);
 
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCheckIfInvoiceNumberExists?' + 'declarationId=' + declarationId + '&invoiceNumber=' + invoiceNumber+ '&invoiceCounterKey=' + invoiceCounterKey, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCheckIfInvoiceNumberExists?' + 'declarationId=' + declarationId + '&invoiceNumber=' + invoiceNumber+ '&invoiceCounterKey=' + invoiceCounterKey, { headers: authHeader }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
 
         });
 
 
-    }
-
-    PostSendMultiUpdate(requestParams: SendMultiUpdateRequestParams) {
-
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-           
-
-            return this._http.post(
-                this._apiUrl + '/PostSendMultiUpdate/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
-    }
-
-    PutSupplierInvioceFromFileRequest(fileUploadParamerter: any, tenant: number, clientId: string, partnerId: string, declarationId: string, ignoreChecks: boolean = false) {
-
-        return defer(() => {
-            return this._http.put(this._apiUrl + "/PutSupplierInvioceFromFileRequest?" + "tenant=" + tenant
-                + "&clientId=" + clientId + "&partnerId=" + partnerId + "&declarationId=" + declarationId + "&ignoreChecks=" + ignoreChecks, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
-                    
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
-
-        });
-    }
-    PutExportSupplierInviocesFromFileRequest(fileUploadParamerter: any, tenant: number, declarationId: string) {
-
-        return defer(() => {
-            return this._http.put(this._apiUrl + "/PutExportSupplierInviocesFromFileRequest?" + "tenant=" + tenant
-                + "&declarationId=" + declarationId, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
-
-        });
-    }
-
-    PostMultiUpdateOCR(requestParams: MultiUpdateOcrParams) {
-
-        
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.put(
-                this._apiUrl + "/PutMultiUpdateOCR/"
-                , 
-                JSON.stringify(requestParams),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
-            ;
-
-        });
     }
 }

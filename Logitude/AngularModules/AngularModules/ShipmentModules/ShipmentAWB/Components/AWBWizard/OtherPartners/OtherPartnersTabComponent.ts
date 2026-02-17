@@ -7,7 +7,7 @@ import {AppTool,FormatTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'OtherPartnersTabComponent',
     templateUrl: './OtherPartnersTabComponent.html',   

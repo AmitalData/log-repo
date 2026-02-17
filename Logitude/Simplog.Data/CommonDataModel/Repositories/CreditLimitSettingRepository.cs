@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class CreditLimitSettingRepository : IRepository<CreditLimitSetting>
     {
         ICommonDataContext commonDataContext;
- 
+        public CreditLimitSettingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
         public CreditLimitSettingRepository(ICommonDataContext context)
         {
             commonDataContext = context;

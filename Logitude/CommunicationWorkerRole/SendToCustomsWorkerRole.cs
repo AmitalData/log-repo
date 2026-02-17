@@ -4,7 +4,7 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -57,15 +57,7 @@ namespace CommunicationWorkerRole
 
                                         using (APIWebClient client = new APIWebClient())
                                         {
-                                            if (tenant == 2264)
-                                            {
-                                                client.Url = "https://cargowise.customsforce.com/customsforcewebservice.asmx";
-                                            }
-
-                                            else
-                                            {
-                                                client.Url = "https://customsforce.com/customsforcewebservice.asmx";
-                                            }
+                                            client.Url = "http://www.CustomsForce.com/customsforcewebservice.asmx";
 
                                             XmlDocument doc = new XmlDocument();
                                             doc.LoadXml(fileBody);

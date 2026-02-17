@@ -7,10 +7,10 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            //DropForeignKey("dbo.WarehouseReleases", "FromPortId", "dbo.Ports");
-            //Sql("update WarehouseReleases set FromPortId = null");
-            //AddForeignKey("dbo.WarehouseReleases", "FromPortId", "dbo.Warehouses", "Id");
-            //Sql("update WarehouseReleases set FromPortId = WarehouseId");
+            DropForeignKey("dbo.WarehouseReleases", "FromPortId", "dbo.Ports");
+            Sql("update WarehouseReleases set FromPortId = null");
+            AddForeignKey("dbo.WarehouseReleases", "FromPortId", "dbo.Warehouses", "Id");
+            Sql("update WarehouseReleases set FromPortId = WarehouseId");
         }
         
         public override void Down()

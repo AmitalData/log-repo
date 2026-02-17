@@ -1,15 +1,12 @@
 
 
 import {Injectable} from '@angular/core';
-import { QueryFilterItem } from '../../Report/Components/Filters/QueryFilterItem';
 
 @Injectable()
 
 export class SchedulerDetails {
 
     public FTPDetails: FTPSchedulerDetails;
-    public ReportDetails: ReportSchedulerDetails;
-    public SendIfEmpty: boolean;
 
 }
 
@@ -28,24 +25,4 @@ export class FTPSchedulerDetails {
 
 }
 
-export class ReportSchedulerDetails {
-    public CreatedByUserId: string;
-    public Recepients: ReportSchedulerRecepients;
-    public ReportTemplateId: string;
-    public BIReportEntityId: string;
-    public DWQueryId: string;
-    public ReportTemplateType: string;
-    public ReportFilterItems: Array<QueryFilterItem>;
-    public MainCustomerFieldName: string;
-    public DWQueryFilterData: any;
-    public DocumentTypeTemplateId: string;
-    public DocumentTypeTemplateIds: Array<string> = [];
-    public MessageTemplateId: string;
-    public ProcedureName: string;
-}
 
-export class ReportSchedulerRecepients {
-    public To: string;
-    public Cc: string;
-    public Bcc: string;
-}

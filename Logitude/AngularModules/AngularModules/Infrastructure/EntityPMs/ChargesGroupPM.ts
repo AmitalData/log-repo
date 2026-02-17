@@ -20,7 +20,7 @@ export class ChargesGroupPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -60,19 +60,11 @@ export class ChargesGroupPM {
     public set ViewOrder(newValue: number) { if (this.viewOrder != newValue) { this.viewOrder = newValue; this.MarkAsDirty("ViewOrder"); } }
        
 	 
-    private quoteGroupSectionID: string;
-    public get QuoteGroupSectionID() { return this.quoteGroupSectionID; }
-    public set QuoteGroupSectionID(newValue: string) { if (this.quoteGroupSectionID != newValue) { this.quoteGroupSectionID = newValue; this.MarkAsDirty("QuoteGroupSectionID"); } }
-       
-	 
 
     public OldEntityPM: ChargesGroupPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -80,7 +72,6 @@ export class ChargesGroupPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ChargesGroup");
            
         }
-	 }
     }
     private MyClone: ChargesGroupPM;
 

@@ -49,7 +49,7 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.OpportunityId == keys.OpportunityId && a.OpportunityProductTypeCode == keys.OpportunityProductTypeCode && a.LineNumber == keys.LineNumber
                     select a).FirstOrDefault();
         }
-		 		                 
+		         
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(OpportunityProductLocation entity)
         {

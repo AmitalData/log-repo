@@ -6,7 +6,7 @@ import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import {PhysicalCheckPMService} from '../../Services/StandardPMs/PhysicalCheckPMService'
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsSpotlightComponent.html',
 })
 
@@ -36,7 +36,7 @@ export class CustomsSpotlightComponent {
         this.ShowBusyIndicator = true;
 
         var physicalCheckPMService = new PhysicalCheckPMService();
-        physicalCheckPMService.get(this.EntityId).subscribe((response:any) => {
+        physicalCheckPMService.get(this.EntityId).subscribe(response => {
             var result = response.Result;
             if (!AppTool.IsNullOrEmpty(result)) {
                 this.MyEntityArg = new EntityArgs();

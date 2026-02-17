@@ -8,7 +8,7 @@ import {DateTool} from '../../../Infrastructure/Tools';
 
 @Component({
     selector: 'NewSprintComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewSprintComponent.html',
 })
 

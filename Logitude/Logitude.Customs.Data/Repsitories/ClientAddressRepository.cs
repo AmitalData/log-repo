@@ -32,12 +32,6 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.ClientId ==clientId && a.Tenant == tenant
                     select a).Any();
         }
-         public ClientAddress GetCityOfDeclarationByImporterID(string importerID, string addressTypeCode, int tenant)
-        {
-            return (from a in context.ClientAddresses
-                    where a.ClientId == importerID && a.AddressTypeCode == addressTypeCode && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
 
     }
 

@@ -7,10 +7,10 @@ using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -260,7 +260,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             ContactRepository = new ContactRepository(objectContext);
 
             List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrenciesChangeSet = ChangeSet.GetAssociatedChanges(currentEntity, d => d.CardExternalCodeByCurrencies).Cast<CardExternalCodeByCurrencyPM>().ToList();
-            List<WarehouseStoragePricingPM> warehouseStoragePricingsChangeSet = ChangeSet.GetAssociatedChanges(currentEntity, d => d.WarehouseStoragePricings).Cast<WarehouseStoragePricingPM>().ToList();
             foreach (CardExternalCodeByCurrencyPM itemPM in cardExternalCodeByCurrenciesChangeSet)
             {
                 switch (ChangeSet.GetChangeOperation(itemPM))
@@ -278,25 +277,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
 
             }
-
-            foreach (WarehouseStoragePricingPM itemPM in warehouseStoragePricingsChangeSet)
-            {
-                switch (ChangeSet.GetChangeOperation(itemPM))
-                {
-                    case ChangeOperation.Insert: { itemPM.ChangeSetOp = ChangeSetOperation.Insert; break; }
-                    case ChangeOperation.Delete: { itemPM.ChangeSetOp = ChangeSetOperation.Delete; break; }
-
-                    case ChangeOperation.Update:
-                        {
-                            itemPM.ChangeSetOp = ChangeSetOperation.Update;
-                            break;
-                        }
-
-                    default: { itemPM.ChangeSetOp = ChangeSetOperation.None; break; }
-                }
-
-            }
-
             CardPM c = cardQuery.GetSinglePM(currentEntity.Id, currentEntity.Tenant);
 
             bool exist = (from a in warehouseRepository.GetWarehousesByTenant(currentEntity.Tenant)
@@ -307,7 +287,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             if (!exist)
             {
                 WarehouseService service = new WarehouseService(objectContext, currentEntity.Tenant);
-                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet, warehouseStoragePricingsChangeSet);
+                service.SetChangeSet(cardExternalCodeByCurrenciesChangeSet);
                 service.Update(currentEntity);
             }
             else
@@ -318,7 +298,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             }
 
         }
-       
+
         public void DeleteWarehouse(WarehousePM entity)
         {
             if (objectContext == null)

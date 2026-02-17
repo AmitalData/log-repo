@@ -1,4 +1,4 @@
-
+﻿
 export class ImageParameter {
 
 
@@ -33,10 +33,7 @@ export class ImageParameter {
     public Buffersize: number;
     public Position: number;
     public Result: string;
-    public KeepOriginalSize:boolean;
-    public FileLocation: string = "";
-    public ForceCreateDocument: boolean;
-    public TokenTenant: number=-1;
+
 
     constructor() {
      

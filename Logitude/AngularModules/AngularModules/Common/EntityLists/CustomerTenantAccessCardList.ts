@@ -18,7 +18,5 @@ export class CustomerTenantAccessCardList {
 		UpdateDateTime: Date;
 		StatusTypeCode: string;
 		StatusType: string;
-		IsExportActivated: boolean;
-		IsCustomsActivated: boolean;
 	
 }

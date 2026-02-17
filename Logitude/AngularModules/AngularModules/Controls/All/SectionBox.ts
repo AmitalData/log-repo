@@ -1,8 +1,8 @@
-import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
+﻿import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
     selector: 'SectionBox',
-    inputs: ['Top', 'Bottom', 'Scrolling', 'HeaderHeight', 'Border', 'borderLeft'],
+    inputs: ['Top', 'Bottom', 'Scrolling', 'HeaderHeight', 'Border'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -31,7 +31,7 @@ import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
                 <td>
                     <div class="MediaFill">
                         <div class="MediaFixed">
-                            <div class="LogitudeSectionBody LogitudeSmallScrollViewer" [ngStyle]="{'overflow-y': Scrolling ? 'auto' : 'hidden', 'border': Border, 'border-top': '0px solid transparent' , 'border-left':borderLeft}">                                 
+                            <div class="LogitudeSectionBody LogitudeSmallScrollViewer" [ngStyle]="{'overflow-y': Scrolling ? 'auto' : 'hidden', 'border': Border, 'border-top': '0px solid transparent'}">                                 
                                 <ng-content select="SectionBody"></ng-content>
                             </div>
                         </div>
@@ -69,7 +69,6 @@ import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
 
 export class SectionBox {
     public Top: number = null;
-    public borderLeft: number = null;
     public Bottom: number = null;
     public Scrolling: boolean = false;
     public SectionHead: SectionHead;

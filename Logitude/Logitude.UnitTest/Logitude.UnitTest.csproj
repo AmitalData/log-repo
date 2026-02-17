@@ -1,11 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
-  <Import Project="..\packages\NUnit.4.1.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.4.1.0\build\NUnit.props')" />
-  <Import Project="..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.props')" />
-  <Import Project="..\packages\Microsoft.Testing.Extensions.Telemetry.1.2.1\build\netstandard2.0\Microsoft.Testing.Extensions.Telemetry.props" Condition="Exists('..\packages\Microsoft.Testing.Extensions.Telemetry.1.2.1\build\netstandard2.0\Microsoft.Testing.Extensions.Telemetry.props')" />
-  <Import Project="..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.props" Condition="Exists('..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.props')" />
-  <Import Project="..\packages\Microsoft.Testing.Platform.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.props" Condition="Exists('..\packages\Microsoft.Testing.Platform.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.props')" />
+  <Import Project="..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.props')" />
+  <Import Project="..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.UnitTest</RootNamespace>
     <AssemblyName>Logitude.UnitTest</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -31,14 +27,12 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
-    <!-- Explicitly mark as test project so VSTest runs under dotnet test -->
-    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,7 +40,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -54,124 +48,38 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.5.1.1\lib\net462\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="FakeItEasy, Version=8.0.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FakeItEasy.8.2.0\lib\net462\FakeItEasy.dll</HintPath>
+    <Reference Include="FakeItEasy, Version=2.3.2.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.2.3.2\lib\net40\FakeItEasy.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.ApplicationInsights, Version=2.22.0.997, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ApplicationInsights.2.22.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Testing.Extensions.Telemetry, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Testing.Extensions.Telemetry.1.2.1\lib\netstandard2.0\Microsoft.Testing.Extensions.Telemetry.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Testing.Extensions.TrxReport.Abstractions, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Testing.Extensions.TrxReport.Abstractions.1.2.1\lib\netstandard2.0\Microsoft.Testing.Extensions.TrxReport.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Testing.Extensions.VSTestBridge, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Testing.Extensions.VSTestBridge.1.2.1\lib\netstandard2.0\Microsoft.Testing.Extensions.VSTestBridge.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Testing.Platform, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Testing.Platform.1.2.1\lib\netstandard2.0\Microsoft.Testing.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Testing.Platform.MSBuild, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\lib\netstandard2.0\Microsoft.Testing.Platform.MSBuild.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.TestPlatform.CoreUtilities, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.TestPlatform.ObjectModel.17.10.0\lib\net462\Microsoft.TestPlatform.CoreUtilities.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.TestPlatform.PlatformAbstractions, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.TestPlatform.ObjectModel.17.10.0\lib\net462\Microsoft.TestPlatform.PlatformAbstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.TestPlatform.ObjectModel.17.10.0\lib\net462\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.3.4.3\lib\net462\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+      <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\MSTest.TestFramework.3.4.3\lib\net462\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+      <HintPath>..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NuGet.Frameworks, Version=6.10.0.107, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\NuGet.Frameworks.6.10.0\lib\net472\NuGet.Frameworks.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=4.0.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.4.1.0\lib\net462\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework.legacy, Version=4.0.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.4.1.0\lib\net462\nunit.framework.legacy.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.8.0.0\lib\net462\System.Collections.Immutable.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.Metadata, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.8.0.0\lib\net462\System.Reflection.Metadata.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\Microsoft SDKs\RIA Services\v1.0\Libraries\Server\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -193,16 +101,11 @@
     <Compile Include="Accounting\UniTests\EntityMapping\ChartOfAccountDataMappingUnderTest.cs" />
     <Compile Include="Accounting\UniTests\ExternalReconcile\ExternalReconcileJournalServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\ExternalReconcile\ExternalReconcileAdjustBankFeesServiceUnitTest.cs" />
-    <Compile Include="Accounting\UniTests\ExternalReconcile\ExternalReconcileJournalServiceUnitTest.BankFeesUnit.cs" />
-    <Compile Include="Accounting\UniTests\InterestReport\InterestReportCalculationsUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalStornoReconcileServiceUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation errors - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\JournalStornoServiceUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\JournalStornoServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingLineUnderTest.cs" />
-    <!-- Temporarily excluded due to compilation error (CodeCounterWrapperGetNumber) - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest.cs" /> -->
-    <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest_MSTest.cs" />
+    <Compile Include="Accounting\UniTests\JournalUpdateOnCreatingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.CheckVoid.cs" />
     <Compile Include="Accounting\UniTests\JournalUpdateOnUpdatingUnderTest.cs" />
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.Reco.cs" />
@@ -215,24 +118,20 @@
     <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnCreatingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnUpdatingServiceUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation errors - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountValidateUpdateServiceUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountValidateUpdateServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\Report\LedgerTransactionBalanceServiceUnderTest.DateTypeCode.cs" />
     <Compile Include="Accounting\UniTests\Reconciliation\CreateAutoReconcileWhileStreamingServiceUnitTest.cs" />
     <Compile Include="Accounting\UniTests\YearTransferUnitTest.cs" />
-    <!-- Exclude missing ItzikTest files to allow build; restore sources later -->
-    <!-- <Compile Include="ItzikTest\TransactionUnitTest.cs" /> -->
-    <!-- <Compile Include="ItzikTest\LinqUnitTest.cs" /> -->
+    <Compile Include="ItzikTest\TransactionUnitTest.cs" />
+    <Compile Include="ItzikTest\LinqUnitTest.cs" />
     <Compile Include="SimplogDataFakeFactory.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TestingTestingUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation error (Assert.AreEqual type inference) - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\AccountingSettingResolverUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\AccountingSettingResolverUnitTest.cs" />
     <Compile Include="Accounting\UniTests\ChartOfAccountFlatUnitTest.cs" />
-    <!-- <Compile Include="Accounting\UniTests\FakeItTest\UnitTest1.cs" /> -->
+    <Compile Include="Accounting\UniTests\FakeItTest\UnitTest1.cs" />
     <Compile Include="Accounting\UniTests\GLAccountUpdateServiceUnitTest.cs" />
-    <!-- Temporarily excluded due to compilation errors (NetCommonHelper) - will be fixed separately -->
-    <!-- <Compile Include="Accounting\UniTests\JournalLineCreditMappingUnitTest.cs" /> -->
+    <Compile Include="Accounting\UniTests\JournalLineCreditMappingUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalLineRepositoryUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalRepositoryUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.1.cs" />
@@ -244,31 +143,11 @@
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.7.cs" />
     <Compile Include="Accounting\UniTests\JournalValidatorUnitTest.cs" />
     <Compile Include="Accounting\UniTests\JournalLineDebitMappingUnitTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalLineDebitMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalDataMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalLineCreditMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\ChartOfAccountFlatUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalRepositoryUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalLineRepositoryUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\YearTransferUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\CashBookOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\CashBookOnUpdatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\JournalStornoReconcileServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\GLAccountUpdateServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountOnUpdatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountCustomDataMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankAccountTests\BankAccountTraceEventServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\BankDeposit\BankDepositOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeDataMappingUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnCreatingServiceUnitTest_MSTest.cs" />
-    <Compile Include="Accounting\UniTests\PaymentChequeTests\PaymentChequeOnUpdatingServiceUnitTest_MSTest.cs" />
-    <!-- <Compile Include="UnitTest1.cs" /> -->
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AccountingSettingResolverUtil.cs" />
     <Compile Include="Utils\AssertHelper.cs" />
     <Compile Include="Utils\CacheUtil.cs" />
-    <Compile Include="Utils\EnvFakes.cs" />
     <Compile Include="Utils\FakeFactory.cs" />
     <Compile Include="Utils\LogitudeServerToolsFactory.cs" />
     <Compile Include="Utils\TestsUtil.cs" />
@@ -277,10 +156,6 @@
     <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
       <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
       <Name>Logitude.Accounting.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Test.Infrastructure\Logitude.Test.Infrastructure.csproj">
-      <Project>{04E15311-C97C-40ED-B40D-0C617103C026}</Project>
-      <Name>Logitude.Test.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
@@ -302,45 +177,21 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="bin\Debug\" />
-  </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
-    <None Include="Accounting\UniTests\InterestReport\glaccountPeriods.csv" />
-    <None Include="Accounting\UniTests\InterestReport\interestPeriods.csv" />
-    <None Include="Accounting\UniTests\InterestReport\interestreport.csv" />
-    <None Include="Accounting\UniTests\InterestReport\interestreportglaccount.csv" />
-    <None Include="Accounting\UniTests\InterestReport\interestreportlinesbydate.csv" />
-    <None Include="Accounting\UniTests\InterestReport\interesttransactions.csv" />
-    <None Include="Accounting\UniTests\InterestReport\interestTypes.csv" />
     <None Include="App.config" />
-    <None Include="Fakes\Logitude.Accounting.BL.fakes" />
-    <None Include="Fakes\Logitude.Accounting.Data.fakes" />
-    <None Include="Fakes\Logitude.Accounting.Def.fakes" />
-    <None Include="Fakes\Logitude.Server.Tools.fakes" />
-    <None Include="Fakes\Simplog.Data.Global.fakes" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <!-- Exclude unstable tests for this environment -->
-  <ItemGroup>
-    <Compile Remove="Accounting\UniTests\ExternalReconcile\*.cs" />
-    <Compile Remove="Accounting\UniTests\Reconciliation\*.cs" />
-    <Compile Remove="Accounting\UniTests\InterestReport\*.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
@@ -365,20 +216,19 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see [http://go.microsoft.com/fwlink/?LinkID=322105](http://go.microsoft.com/fwlink/?LinkID=322105). The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Testing.Platform.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Testing.Platform.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Testing.Extensions.Telemetry.1.2.1\build\netstandard2.0\Microsoft.Testing.Extensions.Telemetry.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Testing.Extensions.Telemetry.1.2.1\build\netstandard2.0\Microsoft.Testing.Extensions.Telemetry.props'))" />
-    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.props'))" />
-    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.targets'))" />
-    <Error Condition="!Exists('..\packages\NUnit.4.1.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.4.1.0\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.11.0\build\NUnit.props'))" />
+    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.props'))" />
+    <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets'))" />
   </Target>
-  <Import Project="..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.targets" Condition="Exists('..\packages\Microsoft.Testing.Platform.MSBuild.1.2.1\build\netstandard2.0\Microsoft.Testing.Platform.MSBuild.targets')" />
-  <Import Project="..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.3.4.3\build\net462\MSTest.TestAdapter.targets')" />
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+  <Import Project="..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.4.0\build\net45\MSTest.TestAdapter.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

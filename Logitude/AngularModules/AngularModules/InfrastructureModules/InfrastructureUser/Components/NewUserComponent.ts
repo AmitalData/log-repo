@@ -15,23 +15,15 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
-import { UserLicenseArgs } from '../../../Infrastructure/Args';
-import { PackageListService } from '../../../Common/Services/StandardLists/PackageListService';
-import { PackageList } from '../../../Common/EntityLists/PackageList';
-import { UserLicensePM } from '../../../Common/EntityPMs/UserLicensePM';
-import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'NewUser',
     templateUrl: './NewUserComponent.html',
     providers: [PasswordChangeService, UserPMService, RoleExtendedPMService]
 })
 
 export class NewUserComponent extends BaseComponent implements OnInit {
-  public AdditionalPackagesOnly: boolean = false;
-
     ReTypePassword: string = "";
     UserId: string;
     validator: ClassLevelValidator;
@@ -70,8 +62,8 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
         this.IsCurrentUserFreelancer = SessionLocator.LoggedUserPM.IsFreelancer;
 
-        //if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
-        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
+        //if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
+        if (ObjectsLocator != null && ObjectsLocator.GlobalSetting != null && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
             if (this.IsCurrentUserFreelancer) {
                 //this.NewUserPM.IsFreelancer = true;
                 //this.IsFreelancerVisible = false;
@@ -95,7 +87,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
 
         this.IsScreenEnabled = true;
 
-        if (ObjectsLocator.IsDemoTenant(SessionInfo.LoggedUserTenant.toString())) {
+        if (SessionInfo.LoggedUserTenant == 65) {
 
             this.DemoTenantMessageVisibility = true;
             this.IsScreenEnabled = false;
@@ -137,7 +129,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
     }
 
     LoadUserRolesMethod() {
-        this._roleExtendedPMService.GetRolesForUser(null, SessionLocator.Tenant).subscribe((res:any) => {
+        this._roleExtendedPMService.GetRolesForUser(null, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -159,9 +151,10 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             if (this.NewUserPM.Password) {
                 Password = this.NewUserPM.Password.trim();
             }
-
             else {
+
                 this.ValidationErrorsList.push("Please fill the password field!");
+
             }
 
             if (this.ReTypePassword) {
@@ -169,10 +162,12 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             }
 
             if (this.ObsList.filter(d => d.IsActive).length == 0) {
+
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.AddRoleToUser"));
             }
 
             if (Password != this.ReTypePassword) {
+
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("User.M.CurrentPasswordDoesntMatchYourInput"));
             }
 
@@ -181,84 +176,41 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             }
 
             if (this.ValidationErrorsList.length == 0) {
+
                 this.ValidationErrorsList = [];
                 this.NewUserPM.Tenant = SessionInfo.LoggedUserTenant;
                 this.NewUserPM.Technology = "AG";
-                this.NewUserPM.LayoutDirection = "rtl";
-
-                if (SessionLocator.TenantPM.HebrewTenant) {
-                    this.NewUserPM.ShowLocalNameInLOV = true;
-                    this.NewUserPM.DontShowLocalLabels = false;
-                    this.NewUserPM.LayoutDirection = "rtl";
-                }
-
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-
-                this.userPMService.insert(this.NewUserPM).subscribe((myResult: any) => {
+                this.userPMService.insert(this.NewUserPM).subscribe(myResult => {
                     if (myResult) {
+
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         if (myResult.HasError) {
+
                             myResult.ErrorsArray.forEach((item) => {
                                 this.ValidationErrorsList.push(item);
                             });
                         }
-
                         else {
                             var newUserPM: UserPM = myResult.Result;
                             this.CurrentSession.CloseCurrentWindowEmit(newUserPM.Id);
-
-                            this.OpenLicenseManagementScreen();
                         }
+
                     }
+
+
                 }, error => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var dd: any = error;
                     console.log(dd.text);
-                });
+                })
+
+
+
+
+
             }
-        }
-    }
 
-    private OpenLicenseManagementScreen() {
-        if (SessionLocator.TenantManagementJS.IsMultiPackage && FeatureLocator.HasFeaturePermession("User", "User.Feature.LicensesManagment")) {
-            var service: PackageListService = new PackageListService();
-            service.getAllFromCache().subscribe((result: any) => {
-                var allPackages: PackageList[] = result.Result;
-
-                var userExtendedPMService: UserExtendedPMService = new UserExtendedPMService();
-                userExtendedPMService.GetUserLicenses().subscribe((myResult: any) => {
-                    if (myResult) {
-                        var myResponse: ServiceResponse = myResult;
-                        if (!myResponse.HasError) {
-                            var allUserLicenses: UserLicensePM[] = myResponse.Result;
-
-                            userExtendedPMService.GetUsersWorkspaceSummary(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
-                                var pmResponse: ServiceResponse = res;
-                                if (!pmResponse.HasError) {
-                                    var myResult = pmResponse.Result;
-                                    if (myResult) {
-                                        var args: UserLicenseArgs = new UserLicenseArgs();
-                                        args.AllPackages = allPackages;
-                                        args.AllUserLicenses = allUserLicenses;
-                                        args.ActiveNotAdditionalUsersCount = myResult.ActiveNotAdditionalUsersCount;
-                                        args.SearchField = this.NewUserPM.Email;
-
-                                        var logitudeWindow = new LogitudeWindow();
-                                        logitudeWindow.Width = 960;
-                                        logitudeWindow.Height = 570;
-                                        logitudeWindow.Title = "Licenses Management";
-                                        logitudeWindow.WindowArgs = args;
-                                        logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/LicensesManagementComponent');
-                                        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                                            this.CurrentSession.FireEvent("RefreshUserWorkspace");
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            });
         }
     }
 
@@ -285,7 +237,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
             email = email.trim();
 
             if (email.indexOf('.') > 0 && email.indexOf('@') > 0) {
-                this._passwordChangeService.CheckIfUserIsExists(email, SessionLocator.Tenant, false, false).subscribe((res:any) => {
+                this._passwordChangeService.CheckIfUserIsExists(email, SessionLocator.Tenant, false, false).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;
@@ -349,7 +301,7 @@ export class NewUserComponent extends BaseComponent implements OnInit {
         if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) this.LicencedUserVisible = true;
         else this.LicencedUserVisible = false;
 
-        if (ObjectsLocator.IsDemoTenant(SessionInfo.LoggedUserTenant.toString()) && SessionInfo.LoggedUserPM.IsCustomerCare) this.ExpirationDateVisible = true;
+        if (SessionInfo.LoggedUserTenant == 65 && SessionInfo.LoggedUserPM.IsCustomerCare) this.ExpirationDateVisible = true;
         else this.ExpirationDateVisible = false;
 
         if (SessionInfo.LoggedUserTenant != 0) {
@@ -404,18 +356,9 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                     case "CUCA":
                         {
                             if (SessionInfo.LoggedUserTenant == 0) {
+
                                 this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
-                            }
 
-                            break;
-                        }
-
-                    case "HRAD":
-                        {
-                            if (SessionInfo.LoggedUserTenant == 0 || SessionInfo.LoggedUserTenant == 1489 || FeatureLocator.IsPackage_DVMT()) {
-                                if (SessionLocator.LoggedUserPM.IsCustomerCare) {
-                                    this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
-                                }
                             }
 
                             break;
@@ -425,11 +368,13 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                         {
                             if (item.IsCustomRole) {
                                 if (item.Tenant == SessionInfo.LoggedUserTenant) {
+
                                     this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
                                 }
                             }
 
                             else {
+
                                 this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
                             }
 

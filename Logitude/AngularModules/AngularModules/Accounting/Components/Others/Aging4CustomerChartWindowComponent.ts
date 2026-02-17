@@ -21,7 +21,7 @@ import { PeriodM } from '../../DataContracts/PeriodM';
 
 @Component({
     selector: 'Aging4CustomerChartWindowComponent',
-    
+    moduleId: module.id,
     templateUrl: './Aging4CustomerChartWindowComponent.html',
 })
 

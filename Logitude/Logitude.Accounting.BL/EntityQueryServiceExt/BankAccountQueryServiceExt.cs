@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityQueryServiceExt
 {
-    public class BankAccountQueryServiceExt : IBankAccountQueryServiceExt
+    public class BankAccountQueryServiceExt: IBankAccountQueryServiceExt
     {
         public BankAccountQueryServiceExt()
         {
@@ -21,16 +21,6 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             BankAccountQueryService query = new BankAccountQueryService(tenant);
             return query.GetByFirstOrDefault(id, tenant);
         }
-        public BankAccountPM GetBankAccountByNumber(string number, int tenant)
-        {
-            BankAccountQueryService query = new BankAccountQueryService(tenant);
-            return query.GetByAccountNumber(number, tenant);
-        }
-        public BankAccountPM GetBankAccountByDisplay(string number, int tenant)
-        {
-            BankAccountQueryService query = new BankAccountQueryService(tenant);
-            return query.GetByAccountDisplay(number, tenant);
-        }
-
     }
+
 }

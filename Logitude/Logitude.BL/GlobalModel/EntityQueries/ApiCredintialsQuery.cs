@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -44,7 +44,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         UpdatedBy = a.UpdatedBy,
                         UsedFor = a.UsedFor,
                         Tenant = a.Tenant,
-                        TokenExpirationTime = a.TokenExpirationTime,
                         //ComputingPartnerId = a.ComputingPartnerId,
                     });
         }
@@ -67,7 +66,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                            UpdatedBy = a.UpdatedBy,
                                            UsedFor = a.UsedFor,
                                            Tenant = a.Tenant,
-                                           TokenExpirationTime = a.TokenExpirationTime,
                                            //ComputingPartnerId = a.ComputingPartnerId,
                                        }).FirstOrDefault();
 
@@ -94,7 +92,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              UpdatedBy = a.UpdatedBy,
                                              UsedFor = a.UsedFor,
                                              Tenant = a.Tenant,
-                                             TokenExpirationTime = a.TokenExpirationTime,
                                              //ComputingPartnerId = a.ComputingPartnerId,
                                          }).FirstOrDefault();
 
@@ -119,7 +116,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         UpdatedBy = a.UpdatedBy,
                         UsedFor = a.UsedFor,
                         Tenant = a.Tenant,
-                        TokenExpirationTime = a.TokenExpirationTime,
                         //ComputingPartnerId = a.ComputingPartnerId,
                     });
         }
@@ -141,7 +137,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        UpdatedBy = a.UpdatedBy,
                        UsedFor = a.UsedFor,
                        Tenant = a.Tenant,
-                       TokenExpirationTime = a.TokenExpirationTime,
                        //ComputingPartnerId = a.ComputingPartnerId,
                    };
         }

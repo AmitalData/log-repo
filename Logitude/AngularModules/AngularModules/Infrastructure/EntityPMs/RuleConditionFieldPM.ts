@@ -1,4 +1,4 @@
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 export class RuleConditionFieldPM {
 
@@ -14,7 +14,6 @@ export class RuleConditionFieldPM {
     public Tenant: number;
     public ObjectTableRuleId: string;
     public ObjectFieldId: string;
-    public ObjectFieldCode: string;
     public Value: string;
     public Operator: string;
     public ObjectFieldName: string;

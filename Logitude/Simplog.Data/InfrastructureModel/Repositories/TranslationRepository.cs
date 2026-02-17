@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Web;
 using System;
@@ -38,19 +38,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return result;
         }
 
-        public List<Translation> GetTranslationsByTenantList(int tenant)
+        public List<Translation> GetTranslationsByTenant(int tenant)
         {
             List<Translation> translations = (from a in context.Translations.Include("TextCode")
                                                    where a.Tenant == tenant                                                   
                                                    select a).ToList();
             return translations;
-        }
-
-        public IQueryable<Translation> GetTranslationsByTenant(int tenant)
-        {
-            return (from a in context.Translations.Include("TextCode")
-                                              where a.Tenant == tenant
-                                              select a);
         }
         //Islam: this is only for silverlight version to fix the timeout login issue.
         public List<Translation> GetTranslationsWithoutESByTenant(int tenant)
@@ -77,25 +70,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                               select a).ToDictionary(d=>d.TextCode.Code,a=>a);
             return translations;
         }
-        
-        public Dictionary<string, string> GetDigitalTranslationsByTenant(int tenant, string objectTableName, string lang = "")
-        {
-            var translationCodes = context.Translations
-                                          .Where(a => a.Tenant == tenant
-                                                      && (a.TextCodeCode.StartsWith(objectTableName))
-                                                      && a.TranslationHeaderCode.Equals(lang, StringComparison.InvariantCultureIgnoreCase)
-                                                      && !string.IsNullOrEmpty(a.TranslatedText))
-                                          .ToDictionary(a => a.TextCodeCode, x => x.TranslatedText);
 
-            return translationCodes;
-        }
-
-        public Translation GetLastTranslationsByTenant(int tenant)
+		public Translation GetLastTranslationsByTenant(int tenant)
 		{
 			string entityName = "LastTranslationsByTenant" + tenant;
 			Translation lastTranslation = null;
 
-			
+			if (HttpContext.Current != null)
+			{
 				if (CacheManager.CacheWrapper.Get(entityName) != null)
 				{
 					lastTranslation = (Translation)CacheManager.CacheWrapper.Get(entityName);
@@ -118,8 +100,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 							CacheManager.CacheWrapper.Insert(entityName, new Translation() { UpdateDateGMT = new DateTime(2015, 1, 1) }, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 					}
 				}
-			
-	
+			}
+			else
+			{
+
+				lastTranslation = (from a in context.Translations
+								   where a.Tenant == tenant && a.UpdateDateGMT != null
+								   select a).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
+			}
 
 			return lastTranslation;
 
@@ -136,13 +124,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 		private static void InvalidateLastTranslationCache(Translation entity)
 		{
-			
+			if (HttpContext.Current != null)
+			{
 				string entityName = "LastTranslationsByTenant" + entity.Tenant;
 				if (CacheManager.CacheWrapper.Get(entityName) != null)
 				{
 					CacheManager.CacheWrapper.Invalidate(entityName);
 				}
-			
+			}
 		}
 
 		public void Remove(Translation entity)

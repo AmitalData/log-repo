@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Runtime.Remoting.Contexts;
-using Simplog.Data.InfrastructureModel;
-using System.Transactions;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -51,42 +48,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return customPickLists;
         }
-		public  List<CustomPickListPM> GetCustomPickListPMsByTenantCash(int tenant)
-		{
-			List<CustomPickListPM> customPickLists;
-			string listName = "CustomPickLists" + tenant;
-
-			if (CacheManager.CacheWrapper.Get(listName) == null)
-			{
-				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{					
-				       customPickLists = (from a in repository.context.CustomPickLists
-															   where a.Tenant == tenant
-															   select new CustomPickListPM()
-															   {
-																   Id = a.Id,
-																   Code = a.Code,
-																   Tenant = a.Tenant,
-																   Value = a.Value,
-																   IsMultipleChoice = a.IsMultipleChoice,
-
-															   }).ToList();
-
-			    }
-				
-				CacheManager.CacheWrapper.Insert(listName, customPickLists, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-			}
-			else
-			{
-				customPickLists = (List<CustomPickListPM>)CacheManager.CacheWrapper.Get(listName);
-			}
-			return customPickLists;
-		}
 
 
 
 
-		public IQueryable<CustomPickListPM> GetCustomPickListPMsByCode(int tenant, string code)
+
+        public IQueryable<CustomPickListPM> GetCustomPickListPMsByCode(int tenant, string code)
         {
 
             IQueryable<CustomPickListPM> customPickLists = from a in repository.context.CustomPickLists
@@ -179,14 +146,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                         Value = entity.Value,
                                                         IsMultipleChoice = entity.IsMultipleChoice,
                                                     }).ToList();
-            return result;
-        }
-
-        public string GetIdByCodeAndValueAndTenant(string code, string value, int tenant)
-        {
-            string result = (from entity in repository.context.CustomPickLists
-                                               where entity.Code.Replace(" ", "") == code && entity.Value == value && entity.Tenant == tenant
-                                               select entity.Id).FirstOrDefault();
             return result;
         }
     }

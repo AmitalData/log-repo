@@ -1,97 +1,66 @@
 
 declare var window: any;
 declare var document: Document;
-import { Component, ChangeDetectorRef, EventEmitter, Output, OnInit, OnDestroy } from '@angular/core';
-import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
-import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CustomsVendorPM } from '../../../../../Customs/EntityPMs/CustomsVendorPM';
-import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
-import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
-import { TradeAgreementPM } from '../../../../../Customs/EntityPMs/TradeAgreementPM';
-import { MeasurmentUnitPM } from '../../../../../Customs/EntityPMs/MeasurmentUnitPM';
-import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountryPM';
-import { AppTool, FontTool } from '../../../../../Infrastructure/Tools';
-import { AddEditSupplierInvoiceComponent } from './AddEditSupplierInvoiceComponent';
-import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
-import { CustomsDocumentPointerPM } from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
-import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
-import { SupplierInvoiceFreightAmountPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceFreightAmountPM';
-import { CurrencyTypePM } from '../../../../../Customs/EntityPMs/CurrencyTypePM';
-import { CustomsExchangeRateExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService';
-import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
-import { CustomsExchangeRatePM } from '../../../../../Customs/EntityPMs/CustomsExchangeRatePM';
-import { SupplierInvoiceService } from '../../../../../Customs/Services/Others/SupplierInvoiceService';
-import { TermsOfSaleTypeListService } from '../../../../../Customs/Services/StandardLists/TermsOfSaleTypeListService';
-import { TermsOfSaleTypeList } from '../../../../../Customs/EntityLists/TermsOfSaleTypeList';
+import {Component, ChangeDetectorRef, EventEmitter, Output, OnDestroy}  from '@angular/core';
+import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
+import {CustomsVendorPMService} from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
+import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {CustomsVendorPM} from '../../../../../Customs/EntityPMs/CustomsVendorPM';
+import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
+import {SupplierInvoiceItemPM} from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
+import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import {TradeAgreementPM} from '../../../../../Customs/EntityPMs/TradeAgreementPM';
+import {MeasurmentUnitPM} from '../../../../../Customs/EntityPMs/MeasurmentUnitPM';
+import {CustomsCountryPM} from '../../../../../Customs/EntityPMs/CustomsCountryPM';
+import {AppTool, FontTool} from '../../../../../Infrastructure/Tools';
+import {AddEditSupplierInvoiceComponent} from './AddEditSupplierInvoiceComponent';
+import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import {CustomsDocumentPointerPM} from '../../../../../Customs/EntityPMs/CustomsDocumentPointerPM';
+import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {EntityListService} from '../../../../../Infrastructure/Services/EntityListService';
+import {SupplierInvoiceFreightAmountPM} from '../../../../../Customs/EntityPMs/SupplierInvoiceFreightAmountPM';
+import {CurrencyTypePM} from '../../../../../Customs/EntityPMs/CurrencyTypePM';
+import {CustomsExchangeRateExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/CustomsExchangeRateExtendedPMService';
+import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
+import {CustomsExchangeRatePM} from '../../../../../Customs/EntityPMs/CustomsExchangeRatePM';
+import {SupplierInvoiceService} from '../../../../../Customs/Services/Others/SupplierInvoiceService';
+import {TermsOfSaleTypeListService}  from '../../../../../Customs/Services/StandardLists/TermsOfSaleTypeListService';
+import {TermsOfSaleTypeList} from '../../../../../Customs/EntityLists/TermsOfSaleTypeList';
 import { LuhnAlgorithm } from '../../../../../Customs/Utilities/LuhnAlgorithm';
-import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import { QuantityTypeMessageService } from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
-import { LogCellTemplateComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
-import { CustomsRequiredFieldListService } from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
-import { FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import {QuantityTypeMessageService} from '../../../../../Customs/Services/WebServices/QuantityTypeMessageService';
+import {LogCellTemplateComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
+import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
+import {FilterItem} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationWebService } from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { CustomsVendorListService } from '../../../../../Customs/Services/StandardLists/CustomsVendorListService';
-import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
-import { SupplierInvoicePMService } from '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
+import {SupplierInvoiceExtendedPMService} from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import {SupplierInvoicePMService} from '../../../../../Customs/Services/StandardPMs/SupplierInvoicePMService';
 import { ImporterDespositionClass } from '../../../../../Customs/DataContract/ImporterDespositionClass';
-import { DateTimeToDatePipe } from '../../../../../Controls/Pipes/DateTimeToDatePipe';
+import {DateTimeToDatePipe} from '../../../../../Controls/Pipes/DateTimeToDatePipe';
 import { SupplierInvoiceItemProcesTypePM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemProcesTypePM';
-import { ItemGovernmentProcedureTypeListService } from '../../../../../Customs/Services/StandardLists/ItemGovernmentProcedureTypeListService';
-import { ItemGovernmentProcedureTypeList } from '../../../../../Customs/EntityLists/ItemGovernmentProcedureTypeList';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
-import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import {ItemGovernmentProcedureTypeListService}  from  '../../../../../Customs/Services/StandardLists/ItemGovernmentProcedureTypeListService';
+import {ItemGovernmentProcedureTypeList} from '../../../../../Customs/EntityLists/ItemGovernmentProcedureTypeList';
+import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
+import { AmitalGatewayUtil, UnifreightMessageM} from '../../../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import {CustomsSettingExtendedListService} from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsCountryListService } from '../../../../../Customs/Services/StandardLists/CustomsCountryListService';
+
 import { GITITEMCacheService } from '../../../../../Customs/Services/Others/GITITEMCacheService';
-import { DecimalPipe } from '@angular/common';
-import { DeclarationEventManager } from '../../../../../Customs/Utilities/DeclarationEventManager';
-import { CustomsRequiredFieldExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
-import { SupplierInvoiceModificationPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceModificationPM';
-import { ModificationAndDiscountTypeList } from '../../../../../Customs/EntityLists/ModificationAndDiscountTypeList';
-import { ModificationAndDiscountTypeListService } from '../../../../../Customs/Services/StandardLists/ModificationAndDiscountTypeListService';
-import { any } from 'cypress/types/bluebird';
-import { CurrencyTypeListService } from '../../../../../Customs/Services/StandardLists/CurrencyTypeListService';
-import { GITITEMCR } from 'Customs/EntityPMs/Extended/GITITEMCR';
-import { SupplierInvioceItemCertificatPM } from '../../../../../Customs/EntityPMs/SupplierInvioceItemCertificatPM';
-import { MultiCertificateUpdateComponent } from '../../../../../CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiCertificateUpdate/MultiCertificateUpdateComponent';
-import { TradeAgreementListService } from 'Customs/Services/StandardLists/TradeAgreementListService';
-import { TradeAgreementProtocolListService } from 'Customs/Services/StandardLists/TradeAgreementProtocolListService';
-import { IncotemrsFileValidationListService } from 'Customs/Services/StandardLists/IncotemrsFileValidationListService';
-import { IncotemrsFileValidationList } from 'Customs/EntityLists/IncotemrsFileValidationList';
-import { SupplierInvoiceSharedService } from './Services/SupplierInvoiceSharedService';
-
-import { VendorCurrencyService } from 'Customs/Services/WebServices/VendorCurrencyService';
-import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import { CustomsItemDetailsQueryRequestParams } from 'Customs/DataContract/RequestParams/CustomsItemDetailsQueryRequestParams';
-import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
-import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
-import { ClientIndicationPM } from 'Customs/EntityPMs/ClientIndicationPM';
-import { ClientIndicationListService } from 'Customs/Services/StandardLists/ClientIndicationListService';
-import { ClientItemExtendedPMService } from 'Customs/Services/ExtendedPMs/ClientItemExtendedPMService';
-import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
-import { Observable } from 'rxjs';
-import { CustomsPartnersItemList } from 'Customs/EntityLists/CustomsPartnersItemList';
-import { List } from 'Infrastructure/DataContracts/Dashboard/List';
-
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './SupplierInvoiceGeneralTabComponent.html',
 })
 
 
-export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
-    public CurrencyTypeCode: any;
-    public OriginCountryCode: any;
-    hasOcr = false;
+export class SupplierInvoiceGeneralTabComponent extends BaseComponent
+    implements OnDestroy {
     public InvoiceTypeFocus: boolean;
     public DataContext: any = this;
     public ObjectTableName: string = "Customs.SupplierInvoice";
@@ -103,12 +72,10 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public Parent: AddEditSupplierInvoiceComponent;
     Pointers: CustomsDocumentPointerPM[];
     public AmountList: ObservableCollection;
-    public AdjustmentsList: ObservableCollection;
     private _entityListService: EntityListService;
     public declarationPM: DeclarationPM;
     isNewEntity: boolean;
     FreightCopyList: SupplierInvoiceFreightAmountLine[];
-    AdjustmentsCopyList: ObservableCollection;
     public VendorFilterItems: ApiQueryFilters;
     ChangeScrollPosition: EventEmitter<any> = new EventEmitter();
     public vendorNumber: string = "";
@@ -118,8 +85,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public termsOfSaleTypeListService: TermsOfSaleTypeListService = new TermsOfSaleTypeListService();
     public customsExchangeRateExtendedPMService: CustomsExchangeRateExtendedPMService = new CustomsExchangeRateExtendedPMService();
     supplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
-    incotemrsFileValidationListService: IncotemrsFileValidationListService = new IncotemrsFileValidationListService();
-    public allowExport: boolean = false;
+
     public IsDisplayOnly: boolean = false;
     public IsReadOnly: boolean = false;
     //public IsCountryPURForItems: boolean = false;
@@ -129,10 +95,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     itemGovernmentProcedureTypeListService: ItemGovernmentProcedureTypeListService = new ItemGovernmentProcedureTypeListService();
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
-    private modificationAndDiscountTypeListService: ModificationAndDiscountTypeListService = new ModificationAndDiscountTypeListService();
-    customsCountryListService: CustomsCountryListService = new CustomsCountryListService();
-
-    vendorCurrencyService: VendorCurrencyService = new VendorCurrencyService();
     IsActionButtonsEnabled: boolean = true;
 
     ikeaFeature: any;
@@ -140,33 +102,16 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     @Output() ReloadEntityEvent: EventEmitter<any> = new EventEmitter();
     isMasterInvoic: boolean = false;
     IsValueForCustomsOnlyVisible: boolean = false;
-    isInsurance: boolean = false;
-    isFreightCharge: boolean = false;
-    TooltipCopy: string
-    TooltipCertificate: string;
-    TooltipCar: string;
-    TooltipEdit: string;
-    SumDifference: number = 0;
-    ConUNF = true;
-    PratMehesUNF = [];
+
 
     old_currency;
     old_amount;
     old_vendor;
-    updateOptionsMap = new Map<UpdateOptions, UpdateGeneralParams>();
-    public addedVehicles: any[] = [];
-    clientIndicationListService: ClientIndicationListService = new ClientIndicationListService();
-    clientIndicationList: Array<ClientIndicationPM> = new Array<ClientIndicationPM>();
-    private CurrentSession = SessionLocator.SelectedSession;
-    public tradeAgreementFilter: ApiQueryFilters = null as any;
-    public ModificationAndDiscountTypeList = new Map<string, string>();
-    public isConnectToUnifreight: boolean = false;
 
-    constructor(
-        private supplierInvoiceSharedService: SupplierInvoiceSharedService,
-        private cd: ChangeDetectorRef,
-        // private logtuideTableDataService: LogtuideTableDataService,
-    ) {
+    public addedVehicles: any[] = [];
+
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(private cd: ChangeDetectorRef) {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.AmountList = new ObservableCollection([]);
@@ -180,15 +125,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
 
-        //this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
-        this.accumulationFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "ACCUMULATION")
+        this.accumulationFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCUMULATION") && f.ObjectTableId == table.Id)[0];
         if (this.accumulationFeature) {
             this.IsAccumulationStateVisibile = true;
             this.IsNotForAccumaltionVisibile = true;
         }
-        else {
-            this.IsNotForAccumaltionVisibile = false;
-        }
+        this.CheckRequrierdFieldsForSend();
         //this.CurrentSession.SubscriptionAdd(
         //this.CurrentSession.SelectInvoiceItemEvent.subscribe((res) => {
         //    var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
@@ -204,151 +146,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         //FRITZ
         this.IFritz_feature = FeatureLocator.Features.filter(d => d.Code == "IFRITZ")[0];
         console.log("IFritz feature: ", this.IFritz_feature);
-        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
-        .subscribe((customsSettingList: ServiceResponse) => {
-                if (customsSettingList) {
-                    this.isConnectToUnifreight = customsSettingList.Result ? customsSettingList?.Result?.IsConnectedToUniFreight : true;              
-                    this.initTradeAgreementFilter();
-                }
-            });
+
+
     }
-
-    private buildQuantityTypeGeneralParams() {
-        let params = new UpdateGeneralParams();
-        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CopyNow");
-        params.Arguments = new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField = 'InvoiceQuantityType';
-        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiQantityType");
-        params.Arguments.IsItemsWithNoValue = true;
-        params.Arguments.LookUpTableName = 'Customs.MeasurmentUnit';
-        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
-        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate('Customs.Declaration.O.ItemsWithNoQuantityType');
-        params.Arguments.SelectionCompletedMethod = (comp) => {
-            this.SelectionOriginCompleted(comp);
-        };
-        this.updateOptionsMap[UpdateOptions.QuantityType] = params;
-    }
-
-    private buildProcessCodeGeneralParams() {
-        let params = new UpdateGeneralParams();
-        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProcessCode");
-        params.Arguments = new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField = 'ProcessTypeCode';
-        params.Arguments.LookUpTableName = 'Customs.ItemGovernmentProcedureType';
-        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItemProcesType';
-        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiProcessCode");
-        params.Arguments.IsItemsWithNoValue = false;
-        params.Arguments.SelectionCompletedMethod = (comp) => {
-            this.SelectionCompleted(comp);
-        };;
-        this.updateOptionsMap[UpdateOptions.ProcessCode] = params;
-    }
-
-    private buildCountryOfOriginGeneralParams() {
-        let params = new UpdateGeneralParams();
-        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
-        params.Arguments = new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField = 'OriginCountryCode';
-        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiCountryOfOrigin");
-        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoCountrOfOrigin");
-        params.Arguments.IsItemsWithNoValue = true;
-        params.Arguments.LookUpTableName = 'Customs.CustomsCountry';
-        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
-        params.Arguments.SelectionCompletedMethod = (comp) => {
-            this.SelectionOriginCompleted(comp);
-        };
-        this.updateOptionsMap[UpdateOptions.CountryOfOrigin] = params;
-    }
-
-    private buildClassificationCodeGeneralParams() {
-        let params = new UpdateGeneralParams();
-        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateClassificationCode");
-        params.Arguments = new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField = 'ClassificationCode';
-        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiClassificationCode");
-        params.Arguments.Validate = SupplierInvoiceItemLine.validateClassificationCode;
-        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoClassificationCode");
-        params.Arguments.IsItemsWithNoValue = true;
-        params.Arguments.SelectionCompletedMethod = (comp) => {
-            this.SelectionOriginCompleted(comp);
-        };
-        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
-        this.updateOptionsMap[UpdateOptions.ClassificationCode] = params;
-    }
-
-    private buildProtocolCodeGeneralParams() {
-        let params = new UpdateGeneralParams();
-        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProtocolCode");
-        params.Arguments = new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField = 'DutyRegimeProtocolCode';
-        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiProtocolCode");
-        params.Arguments.Validate = SupplierInvoiceItemLine.validateClassificationCode;
-        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoProtocolCode");
-        params.Arguments.IsItemsWithNoValue = true;
-        params.Arguments.LookUpTableName = 'Customs.TradeAgreementProtocol';
-        params.Arguments.SelectionCompletedMethod = (comp) => {
-            this.SelectionOriginCompleted(comp);
-        };
-        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
-        this.updateOptionsMap[UpdateOptions.ProtocolCode] = params;
-    }
-
-    private buildTradeAgreementGeneralParams() {
-        let params = new UpdateGeneralParams();
-        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateTradeAgreement");
-        params.Arguments = new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField = 'TradeAgreementCode';
-        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiTradeAgreement");
-        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoTradeAgreement");
-        params.Arguments.IsItemsWithNoValue = true;
-        params.Arguments.LookUpTableName = 'Customs.TradeAgreement';
-        params.Arguments.SelectionCompletedMethod = (comp) => {
-            this.SelectionOriginCompleted(comp);
-        };
-        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
-        this.updateOptionsMap[UpdateOptions.TradeAgreement] = params;
-    }
-
-    ngOnInit() {
-        this.buildQuantityTypeGeneralParams();
-        this.buildProcessCodeGeneralParams();
-        this.buildCountryOfOriginGeneralParams();
-        this.buildClassificationCodeGeneralParams();
-        this.buildProtocolCodeGeneralParams();
-        this.buildTradeAgreementGeneralParams();
-
-        this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
-        if (this.allowExport) {
-            this.TooltipCopy = "שכפל שורה";
-            this.TooltipCertificate = "אישורים"
-            this.TooltipCar = "נתוני רכב";
-            this.TooltipEdit = "עריכת פריט";
-            this.setAdjustmentsWarning(this.IncotermCode)
-        }
-        if (this.declarationPM.Direction == 'E') {
-
-            this.modificationAndDiscountTypeListService.getAllFromCache().subscribe((response: ServiceResponse) => {
-                if (response.Result) {
-
-                    response.Result.forEach(item => {
-
-                        this.ModificationAndDiscountTypeList.set(item.Code, item.NetoValuesModificationAffectID)
-
-                    });
-                }
-            });
-
-        }
-        this.supplierInvoiceSharedService.DifferenceAndTotalForeignCurrency$.subscribe(() => this.GetDifferenceAndTotalForeignCurrency())
-    }
-
-
-    initTradeAgreementFilter() {
-        this.tradeAgreementFilter = new ApiQueryFilters();
-        this.tradeAgreementFilter.addAdditionalFilter("CustomsBookTypeID", 2, null, null, "Equal", false, false, false, "number");
-    }
-
-
     public SelectInvoiceItemMethod(res) {
         var item: SupplierInvoiceItemLine = this.ItemsSource.Collection.filter(d => d.SequenceNumeric == res.filter)[0];
         //this.SelectedRow = item;
@@ -399,9 +199,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     SelectedRow: SupplierInvoiceItemLine;
     BuildItemsList() {
         this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
-        if (this.ItemsSource != null) {
-            this.ItemsSource.Clear();
-        }
+        this.ItemsSource.Clear();
         this.ParentItems = [];
         this.ChildrenItems = [];
         var TempItemSource: SupplierInvoiceItemLine[] = [];
@@ -423,7 +221,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 this.IsReadOnly = true;
                 this.IsNotForAccumaltionVisibile = false;
                 for (var i = 0; i < this.ParentItems.length; i++) {
-                    TempItemSource.push(new SupplierInvoiceItemLine(this.ParentItems[i], this, this.allowExport));
+                    TempItemSource.push(new SupplierInvoiceItemLine(this.ParentItems[i], this));
                 }
 
             }
@@ -436,7 +234,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     this.IsNotForAccumaltionVisibile = true;
                 }
                 for (var i = 0; i < this.ChildrenItems.length; i++) {
-                    TempItemSource.push(new SupplierInvoiceItemLine(this.ChildrenItems[i], this, this.allowExport));
+                    TempItemSource.push(new SupplierInvoiceItemLine(this.ChildrenItems[i], this));
                 }
 
             }
@@ -445,15 +243,13 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         else {
             this.AccumulatedMessageVisibility = false;
             for (var i = 0; i < this.EntityPM.SupplierInvoiceItems.length; i++) {
-                TempItemSource.push(new SupplierInvoiceItemLine(this.EntityPM.SupplierInvoiceItems[i], this, this.allowExport));
+                TempItemSource.push(new SupplierInvoiceItemLine(this.EntityPM.SupplierInvoiceItems[i], this));
             }
         }
         if (this.EntityPM.IsAccumalated) {
             //    this.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
         }
-        if (this.ItemsSource != null) {
-            this.ItemsSource.InsertCollection(TempItemSource);
-        }
+        this.ItemsSource.InsertCollection(TempItemSource);
         this.CurrentSession.StopBusyIndicator();
 
         this.originalItemSource.InsertCollection(TempItemSource);
@@ -463,30 +259,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
 
     }
-
-
-
-
-    OpenExporterInvoiceWindow() {
-        var windowArgs: any = {};
-        windowArgs.SupplierInvoice = this.EntityPM;
-        windowArgs.Declaration = this.declarationPM;
-
-        windowArgs.Parent = this;
-        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        var windowTitle = "נתונים נוספים ליצוא - חטיבת חשבון יצואן";
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 400;
-        logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = false;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/ExporterInvoiceComponent');
-
-
-    }
-
     originalItemSource: ObservableCollection = new ObservableCollection([]);
     Search(text: string) {
         var itemsSource: any = this.originalItemSource;
@@ -559,7 +331,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 if (this.Parent.EntityPM.IsDirty) {
                     this.Parent.SaveChangesSync();
                 }
-                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, 0, 500, this.AccumulatedFilter).subscribe((response: any) => {
+                this.supplierInvoiceExtendedPMService.GetSingleSupplierInvoicePMWithLimitedItems(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey, 0, 500, this.AccumulatedFilter).subscribe(response => {
                     var entityPM: SupplierInvoicePM = this.EntityPM;
                     this.EntityPM = response.Result;
                     this.BuildItemsList();
@@ -587,8 +359,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             if (this.Parent.TotalForeignCurrency == null) this.Parent.TotalForeignCurrency = 0;
 
             this.Parent.TotalForeignCurrency = this.Parent.TotalForeignCurrency - deletedItemPrice;
-
-            this.declarationPM.Direction != "E" ? this.Parent.Difference = this.Parent.TotalForeignCurrency - (this.InvoiceAmount) : this.GetDifferenceAndTotalForeignCurrency();
+            this.Parent.Difference = this.Parent.TotalForeignCurrency - (this.InvoiceAmount);
 
 
         }
@@ -606,8 +377,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     opacity: number = 1;
     FromClassificationJumpToSII;
-    DocumentFilingId: string;
-    InitTab(entityPM: SupplierInvoicePM, parent: AddEditSupplierInvoiceComponent, isDisplayOnly: boolean, getFreightTotals: boolean = true, IsNewEntity, IsFromCustomsAnswer, IsInvoiceAnswer, documentFilingId) {
+    InitTab(entityPM: SupplierInvoicePM, parent: AddEditSupplierInvoiceComponent, isDisplayOnly: boolean, getFreightTotals: boolean = true, IsNewEntity, IsFromCustomsAnswer, IsInvoiceAnswer) {
 
         this.InvoiceTypeFocus = false;
         this.focusTimerToken = setTimeout(() => {
@@ -619,7 +389,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.IsDisplayOnly = isDisplayOnly;
         this.IsReadOnly = isDisplayOnly;
         this.IsActionButtonsEnabled = !isDisplayOnly;
-        this.DocumentFilingId = documentFilingId;
+
         this.Pointers = this.Parent.pointers;
         this.declarationPM = parent.declarationPM;
         this.IsFromCustomsAnswer = IsFromCustomsAnswer;
@@ -627,14 +397,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.oldIncoterm = this.EntityPM.IncotermCode;
         //this.InvoiceNumber = entityPM.InvoiceNumber;
         this.IsChecked = false;
-        if (this.declarationPM.Direction == "E" && FeatureLocator.HasFeaturePermession("Customs.Declaration", "EXPORTDECLARATIONPSCREEN")) {
-            this.allowExport = true;
-            this.FillGridData();
-        }
-
-        this.CheckRequrierdFieldsForSend();
-
-
         this.isNewEntity = IsNewEntity;
         if (isDisplayOnly) {
             this.opacity = 0.5;
@@ -643,15 +405,15 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             this.ParentsCount = "(" + this.EntityPM.FullParentsCount + ")";
             this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
         }
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe((responseRate: any) => {
+        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe(responseRate => {
 
             if (responseRate) {
                 if (!responseRate.HasError) {
                     this.ExchangeRates = responseRate.Result;
                 }
             }
-            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsPartnersItem").subscribe((response: any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.CustomsPartnersItem").subscribe(response => {
 
                     if (this.EntityPM.IsAccumalated) {
                         this.IsAccumulated = true;
@@ -676,7 +438,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                     //  this.CurrentSession.AccumulatedFilterChangedEvent.emit({ filter: this.AccumulatedFilterSelectedValue, ParentCount: this.ParentItems.length, childrenCount: this.ChildrenItems.length });
 
                     if (getFreightTotals) {
-                        this.declarationPM.Direction != 'E' ? this.GetFreightTotals() : this.GetDifferenceAndTotalForeignCurrency();
+                        this.GetFreightTotals();
                     }
                     //if (entityPM.InsruancePercentage) {
                     //    this.CalculateInsuranceAmount(entityPM.InsruancePercentage);
@@ -725,8 +487,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                             }
                         });
                     }
-                    if (this.declarationPM.Direction == "E")
-                        this.GetDifferenceAndTotalForeignCurrency()
 
                     this.SetDepositionStatus();
                     //this.GetExchagneRates();
@@ -783,7 +543,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             .subscribe((customsSettingList: ServiceResponse) => {
                 if (customsSettingList) {
                     this.CurrentSession.StopBusyIndicator();
-                    if (this.Parent.IsNewEntity && this.declarationPM.Direction != "E") {
+                    if (this.Parent.IsNewEntity) {
                         let autoFillAccountType = customsSettingList.Result ? customsSettingList.Result.AutoFillAccountType : false;
                         if (autoFillAccountType) {
                             this.AccountTypeCode = "380";
@@ -798,13 +558,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         //}
 
         //this.GetCountryPURForItems();
-
-
     }
 
     //GetExchagneRates() {
 
-    //    this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe((response:any) => {
+    //    this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForDate(this.declarationPM.TaxationDateTime).subscribe(response => {
 
     //        if (response) {
     //            if (!response.HasError) {
@@ -814,100 +572,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     //            });
     //}
 
-    FillGridData() {
-        var paymentCounter = 0;
-        if (this.EntityPM.SupplierInvoiceModifications.length > 0) {
-            paymentCounter = this.getMax(this.EntityPM.SupplierInvoiceModifications, "SequenceNumeric");
-        }
-
-        let Insurance67: any = this.FindModificationByCode("67");
-        let Freight104: any = this.FindModificationByCode("104");
-        let ExtraPayments160: any = this.FindModificationByCode("160");
-
-        this.AdjustmentsList = new ObservableCollection([]);
-        if (Insurance67 == null) {
-            paymentCounter += 1;
-            this.AddModification("67", paymentCounter, "ביטוח");
-        } else {
-            Insurance67.TypeName = "ביטוח"
-            this.AdjustmentsList.Insert(new ModificationItemModel(Insurance67, this, "67"));
-        }
-
-        if (Freight104 == null) {
-            paymentCounter += 1;
-            this.AddModification("104", paymentCounter, "הובלה בפועל");
-        } else {
-            Freight104.TypeName = "הובלה בפועל"
-            this.AdjustmentsList.Insert(new ModificationItemModel(Freight104, this, "104"));
-        }
-
-        if (ExtraPayments160 == null) {
-            paymentCounter += 1;
-            this.AddModification("160", paymentCounter, "הוצאות נוספות");
-        } else {
-            ExtraPayments160.TypeName = "הוצאות נוספות"
-            this.AdjustmentsList.Insert(new ModificationItemModel(ExtraPayments160, this, "160"));
-        }
-
-
-        this.ExportModificationCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
-        this.EntityPM.IsDirty = false;
-    }
-
-    GetInsuranceAsModificationItemModel() {
-        /*var item = new SupplierInvoiceModificationPM(this.EntityPM);
-        item.TypeName = "ביטוח";
-        item.Amount = this.EntityPM.InsuranceAmount;
-        item.CurrencyTypeCode = this.EntityPM.InsruanceCurrencyTypeCode;
-        item.CurrencyTypeName = this.EntityPM.InsruanceCurrencyTypeCodeName;
-        item.IsDirty = false;
-        return item;*/
-    }
-
-    GetFreightAsModificationItemModel() {
-        var item = new SupplierInvoiceModificationPM(this.EntityPM);
-        if (this.EntityPM.SupplierInvoiceFreightAmounts.length != 0) {
-            if (this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount > 0) {
-                item.Amount = this.EntityPM.SupplierInvoiceFreightAmounts[0].Amount;
-            }
-            item.CurrencyTypeCode = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
-            item.CurrencyTypeName = this.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeName;
-        }
-        item.IsDirty = false;
-        item.TypeName = "הובלה";
-        return item;
-    }
-
-    FindModificationByCode(code: string) {
-        for (let item of this.EntityPM.SupplierInvoiceModifications) {
-            if (item.TypeCode == code) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    getMax(list: any[], propertyName: string) {
-        var max = -99999;
-        var maxObj = list && list.length > 0 ? list.reduce(function (prev, current) { return (prev[propertyName] > current[propertyName]) ? prev : current }) : null;
-        if (maxObj != null)
-            if (max <= maxObj[propertyName])
-                max = maxObj[propertyName];
-        return max;
-    }
-
-    AddModification(code: string, modificationCounter: number, typeName: string) {
-        var item = new SupplierInvoiceModificationPM(this.EntityPM);
-        item.TypeName = typeName;
-        item.TypeCode = code;
-        item.DeclarationId = this.EntityPM.DeclarationId;
-        item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-        item.Tenant = SessionLocator.Tenant;
-        item.ModificationCounterKey = modificationCounter;
-        item.IsDirty = false;
-        this.EntityPM.AddSupplierInvoiceModification(item);
-        this.AdjustmentsList.Insert(new ModificationItemModel(item, this, code));
-    }
 
     SetScreenFieldsEditability() {
 
@@ -936,14 +600,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.UIProperties.SetEnabled("TotalFreightInFreightCurrency", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("InsurancePercentage", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("TotalFreightAmountInNIS", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("PartyRelationshipCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("BuyerName", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("BuyerCountryCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("BuyerAddress", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("DutyRegimeProtocolCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("BuyerRoleCode", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("ExportModificationCurrency", this.ObjectTableName, !this.IsDisplayOnly);
-
 
         if (this.IsDisplayOnly) {
             this.UIProperties.SetEnabled("FreightCurrencyTypeCode", this.ObjectTableName, !this.IsDisplayOnly);
@@ -958,7 +614,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     importer: ImporterDespositionClass;
     tootltip: string;
     SetDepositionStatus() {
-        this.supplierInvoiceExtendedPMService.GetImporterDespositionStatus(this.VendorId, this.declarationPM.ImporterId).subscribe((response: any) => {
+        this.supplierInvoiceExtendedPMService.GetImporterDespositionStatus(this.VendorId, this.declarationPM.ImporterId).subscribe(response => {
             if (response) {
                 if (response.Result) {
 
@@ -997,22 +653,14 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
 
     CheckRequrierdFieldsForSend() {
-        var isExport = false;
-        if (this.allowExport) {
-            isExport = true;
-        }
-
         var customsRequiredFieldListService: CustomsRequiredFieldListService = new CustomsRequiredFieldListService();
         var table = window.ObjectTables.filter(d => d.Name == 'Customs.SupplierInvoice')[0];
         var filters = new ApiQueryFilters();
         filters.addAdditionalFilter("ObjectTableId", table.Id, null, null, "Equals", false, false, false, "string");
-        var customsRequiredFieldExtendedListService: CustomsRequiredFieldExtendedListService = new CustomsRequiredFieldExtendedListService();
-        filters = customsRequiredFieldExtendedListService.GetFilter(filters, isExport)
-
         customsRequiredFieldListService.getAllFromCache(filters).subscribe((response: ServiceResponse) => {
             var requiredFields = response.Result;
             requiredFields.forEach((field) => {
-                var objectField = window.ObjectFields.filter(d => d.FieldCode == field.ObjectfieldCode)[0];
+                var objectField = window.ObjectFields.filter(d => d.Id == field.ObjectfieldId)[0];
                 this.UIProperties.SetWarning(objectField.FieldName, 'Customs.SupplierInvoice', true);
             });
         });
@@ -1030,9 +678,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     }
     public FiltersList: string[] = ["Copy Now"];
     public get AccountTypeCode() { return this.EntityPM.AccountTypeCode; }
-    public set AccountTypeCode(newValue: string) {
-        this.EntityPM.AccountTypeCode = newValue;
-    }
+    public set AccountTypeCode(newValue: string) { this.EntityPM.AccountTypeCode = newValue; }
 
     public get InvoiceNumber() { return this.EntityPM.InvoiceNumber; }
     public set InvoiceNumber(newValue: string) { this.EntityPM.InvoiceNumber = newValue; }
@@ -1045,46 +691,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     public get IssueDate() { return this.EntityPM.IssueDate; }
     public set IssueDate(newValue: Date) { this.EntityPM.IssueDate = newValue; }
-
-    public get ChangeInSupplierInvoice() { return this.EntityPM.ChangeInSupplierInvoice; }
-    public set ChangeInSupplierInvoice(newValue: string) { this.EntityPM.ChangeInSupplierInvoice = newValue; }
-
-
-    public get BuyerName() { return this.EntityPM ? this.EntityPM.BuyerName : null; }
-    public set BuyerName(newValue: string) { this.EntityPM.BuyerName = newValue; }
-
-    public get BuyerAddress() { return this.EntityPM ? this.EntityPM.BuyerAddress : null; }
-    public set BuyerAddress(newValue: string) {
-        this.EntityPM.BuyerAddress = newValue;
-    }
-
-    public get BuyerCountryCode() { return this.EntityPM ? this.EntityPM.BuyerCountryCode : null; }
-    public set BuyerCountryCode(newValue: string) {
-
-        this.EntityPM.BuyerCountryCode = newValue;
-    }
-
-    public get DutyRegimeProtocolCode() { return this.EntityPM ? this.EntityPM.DutyRegimeProtocolCode : null; }
-    public set DutyRegimeProtocolCode(newValue: string) {
-
-        this.EntityPM.DutyRegimeProtocolCode = newValue;
-    }
-
-    public get BuyerRoleCode() { return this.EntityPM ? this.EntityPM.BuyerRoleCode : null; }
-    public set BuyerRoleCode(newValue: string) {
-
-        this.EntityPM.BuyerRoleCode = newValue;
-    }
-
-    public get PartyRelationshipCode() { return this.EntityPM ? this.EntityPM.PartyRelationshipCode : null; }
-    public set PartyRelationshipCode(newValue: string) {
-        //if (AppTool.IsNullOrEmpty(newValue))
-        //    this.UIProperties.SetRequired("PartyRelationshipCode", this.ObjectTableName, true);
-        //else
-        //    this.UIProperties.SetRequired("PartyRelationshipCode", this.ObjectTableName, false);
-
-        this.EntityPM.PartyRelationshipCode = newValue;
-    }
 
     public get VendorId() { return this.EntityPM.VendorId; }
     public set VendorId(newValue: string) {
@@ -1128,14 +734,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     InvoiceCurrencyChanged(currency) {
         this.InvoiceCurrency = currency;
-        if (this.InvoiceCurrency) {
+        if (this.InvoiceCurrency)
             this.Parent.invoiceCurrencyName = this.InvoiceCurrency.LocalName;
-            if (this.declarationPM.Direction == 'E') {
-                this.GetDifferenceAndTotalForeignCurrency();
-            }
-
-        }
-
         //this.Parent.CalculateCommissionPercentage();
     }
 
@@ -1295,28 +895,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         this.GetInsurancePercentDefault();
 
-        this.setAdjustmentsWarning(newValue);
-    }
-
-    private async setAdjustmentsWarning(incotermCode: string) {
-        /*if (incotermCode) {
-            const filters: ApiQueryFilters = new ApiQueryFilters();
-            filters.PageIndex = 0;
-            filters.PageSize = 50;
-            filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
-            filters.addAdditionalFilter("LeadDocumentTypeID", '2', null, null, "Contains", false, false, false, "Text", false, false);
-            const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
-
-            this.isInsurance = incotemrsFileValidationList.some(x => x.IsInsurance)
-            this.isFreightCharge = incotemrsFileValidationList.some(x => x.IsFreightCharge)
-        } else
-            this.isInsurance = this.isFreightCharge = false;*/
     }
 
     private GetInsurancePercentDefault() {
-
-        if (this.declarationPM.IsReleaseFile) return;
-        if (this.IsDisplayOnly) return;
         //let goToInsuranceInUNF = false;
 
         //if (this.declarationPM.IsConnectedToUnifreight) {
@@ -1370,14 +951,12 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             ///first 1
         }
 
-
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         myCustomsSettingExtendedListService.GetInsurancePercentDefault(this.declarationPM.CustomerCode, this.declarationPM.Tenant)
-            .subscribe((res: any) => {
+            .subscribe(res => {
                 this._OpInsurancePercent_Completed(res.Result);// += _OpInsurancePercent_Completed;
             });
     }
-
 
     _OpInsurancePercent_Completed(res): void {
         //if (!_OpInsurancePercent.IsCanceled) {
@@ -1403,7 +982,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     //    this.CurrentSession.StartBusyIndicator("Customs.General.O.Loading");
     //    var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     //    myCustomsSettingExtendedListService.GetDefault("ISRAEL", "CGG_I_PUR_CTRY", "NON", "NON", this.declarationPM.Tenant)
-    //        .subscribe((response:any) => {
+    //        .subscribe(response => {
     //            this.CurrentSession.StopBusyIndicator();
     //            if (!response.HasError && response.Result != null && response.Result.DefaultValue == "Y") {
     //                this.IsCountryPURForItems = true;
@@ -1417,13 +996,11 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
         if (this.EntityPM.InvoiceAmount != newValue) {
             //this.Parent.calculateCommission = true; //old
+
         }
         this.EntityPM.InvoiceAmount = newValue;
         if (this.Parent.TotalForeignCurrency == null) this.Parent.TotalForeignCurrency = 0;
-        if (this.declarationPM.Direction != "E")
-            this.Parent.Difference = this.Parent.TotalForeignCurrency - (newValue);
-        else
-            this.GetDifferenceAndTotalForeignCurrency()
+        this.Parent.Difference = this.Parent.TotalForeignCurrency - (newValue);
         var percentage;
         //if (this.declarationPM.SupplierInvoices.length > 0) {
         //    percentage = this.declarationPM.SupplierInvoices[0].InsruancePercentage;
@@ -1448,16 +1025,6 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public get TotalFreightInFreightCurrency() { return this.EntityPM.TotalFreightInFreightCurrency; }
     public set TotalFreightInFreightCurrency(newValue: number) { this.EntityPM.TotalFreightInFreightCurrency = newValue; }
 
-    totalExportModificationInInvoiceCurrency: number;
-    public get TotalExportModificationInInvoiceCurrency() { return this.totalExportModificationInInvoiceCurrency; }
-    public set TotalExportModificationInInvoiceCurrency(newValue: number) { this.totalExportModificationInInvoiceCurrency = newValue; }
-
-    exportModificationCurrency: string;
-    public get ExportModificationCurrency() { return this.exportModificationCurrency; }
-    public set ExportModificationCurrency(newValue: string) {
-        this.exportModificationCurrency = newValue;
-        this.CalculateExportModificationAmount();
-    }
 
     public get InsurancePercentage() { return this.EntityPM.InsruancePercentage; }
     public set InsurancePercentage(newValue: number) {
@@ -1490,96 +1057,42 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     public set IsValueForCustomsOnly(newValue: boolean) { this.EntityPM.IsValueForCustomsOnly = newValue; }
 
     //#endregion
-    _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
-
-    SendGetQuantityTypeBy8314(classificationCode:string , args:any) {
-
-        if (AppTool.IsNullOrEmpty(classificationCode)) return
-        var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
-        currRequestParams.ValidToDate = new Date();
-        currRequestParams.Classification = classificationCode;
-        currRequestParams.CustomsBookType = this.Parent.declarationPM.Direction == 'I' ? 1 : 2;
-
-        currRequestParams.LoggingEnabled = true;
-        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-        currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
-        currRequestParams.ForcePersonalSign = false;
-        var ResponseData: any
-        CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שאילתא לנתוני פרט מכס", true)
-            .then((res) => {
-                debugger;
-                if (res) {
-                    ResponseData = res;
-
-                    if (!ResponseData.HasError){
-                        var keys = Object.keys(this.ClasificationQtyTypes);
-                        if (!(keys.indexOf(classificationCode) > -1) ) {
-                            this.ClasificationQtyTypes[classificationCode] = ResponseData.Result;
-                          
-                        }
-                    
-                    }
-                  
-                    this.SelectionOriginCompleted(args,true);
-                }
-
-            }
-
-
-            ).catch((err) => {
-
-
-            });
-
-        this._IIGGeneralMessagesService.PostCustomsItemDetailsQuery(currRequestParams)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-
-            });
-
-
-    }
-
-public getSpecificQuantityType( args:any)
-{
-    var classificationCode=args[args.UpdateField];
-     var keys = Object.keys(this.ClasificationQtyTypes);
-var qunatityTypeCode="";
- this.ClasificationQtyTypes[classificationCode] = null;
-var code = classificationCode.toString().slice(0, classificationCode.toString().length - 1);
-this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
-    if (!myServiceResponse.HasError) {
-        if (!myServiceResponse.HasError) {
-            if (myServiceResponse.Result) {
-                qunatityTypeCode = "(" + myServiceResponse.Result + ")";
-                
-                this.ClasificationQtyTypes[classificationCode] = myServiceResponse.Result;
-             
-                this.SelectionOriginCompleted(args,true);
-            }
-            else {
-                
-                    this.SendGetQuantityTypeBy8314(classificationCode,args);
-                    qunatityTypeCode = null;
-                
-
-            }
-        
-   
-        }
-    }
-
-
-
-});
-        }
-
 
     OnInvoiceNumberLostFocus(invoiceNumberTextBox: any) {
 
         if (this.declarationPM != null && this.declarationPM.SupplierInvoices.length >= 0) {
             if (this.EntityPM.InvoiceNumber) {
+
+                //server method
+                //var supplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
+                //supplierInvoiceService.GetCheckIfInvoiceNumberExists(this.EntityPM.DeclarationId, this.EntityPM.InvoiceNumber, this.EntityPM.InvoiceCounterKey).subscribe((resp: ServiceResponse) => {
+                //    if (!resp.HasError) {
+                //        if (resp.Result) {
+                //            var newValue = this.InvoiceNumber;
+                //            var confirm = new ConfirmWindow();
+                //            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+                //            confirm.ShowNoButton = true;
+                //            confirm.Show(" קיים כבר חשבון ספק עם מספר חשבון זהה - שורה" + resp.Result.SequenceNumeric + "- האם להמשיך ?");
+                //            confirm.WindowClosed.subscribe((event: any) => {
+                //                confirm.Close();
+                //                this.InvoiceNumber = newValue;
+                //                if (confirm.Yes) {
+                //                    SessionLocator.SustainFocusOnCell = false;
+                //                }
+                //                else {
+                //                    SessionLocator.SustainFocusOnCell = true;
+                //                    console.log(invoiceNumberTextBox.InputId);
+                //                    var element = document.getElementById(invoiceNumberTextBox.InputId);
+                //                    if (element) {
+                //                        element.focus();
+                //                    }
+                //                }
+                //            });
+                //        }
+                //    }
+                //});
+
+                //client method
                 var invoices: SupplierInvoicePM[] = [];
                 invoices = this.declarationPM.SupplierInvoices;
                 invoices = invoices.concat(this.Parent.NewInvoices);
@@ -1621,258 +1134,52 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
     }
 
 
-    CopyNowClicked(direction: string) {
-        if (direction == 'E') {
-            this.UpdateClicked(UpdateOptions.QuantityType);
-        }
-        else {
-            var confirm = new ConfirmWindow();
+    CopyNowClicked() {
 
-            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
-            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Update");
-            confirm.ShowNoButton = true;
-            confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
-            confirm.WindowClosed.subscribe((event: any) => {
+        for (let item of this.ItemsSource.Collection) {
+            if (item.InvoiceQuantityType == null) {
 
-                if (confirm.Yes) {
-                    confirm.Close();
-                    for (let item of this.ItemsSource.Collection) {
+                if (item.QunatityTypeCode != null) {
+                    var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                    //var s = item.QunatityTypeCode.split('(');
+                    //var st = s[1].split(')');
 
-                        if (item.QunatityTypeCode != null) {
-                            var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
-                            item.InvoiceQuantityType = s;
-                        }
-                    }
-
+                    item.InvoiceQuantityType = s;
                 }
-                else {
-                    confirm.Close();
-                    for (let item of this.ItemsSource.Collection) {
-                        if (item.InvoiceQuantityType == null) {
-
-                            if (item.QunatityTypeCode != null) {
-                                var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
-                                //var s = item.QunatityTypeCode.split('(');
-                                //var st = s[1].split(')');
-
-                                item.InvoiceQuantityType = s;
-                            }
-
-                        }
-                    }
-
-
-                }
-
-            });
-
-            if (this.ItemsSource.Collection.length == 500) {
-
-                var msg = new MessageWindow();
-
-                msg.Show(" עודכנו רק 500 הפריטים המוצגים");
 
             }
         }
 
-    }
+        if (this.ItemsSource.Collection.length == 500) {
 
+            var msg = new MessageWindow();
 
-    UpdateGroupingAccountLines(){
-        let GroupedItemsSource = new ObservableCollection([]);        
-        let GroupedResult: string = `${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedAccountLinesResult")}: \n`; 
-        
-        this.ItemsSource.Collection.forEach(item => {
-            AppTool.IsNullOrEmpty(item.ClassificationCode) ? item.ClassificationCode = "" : item.ClassificationCode;
+            msg.Show(" עודכנו רק 500 הפריטים המוצגים");
 
-            if(GroupedItemsSource.Collection.filter(j=> j.ClassificationCode == item.entityPM.ClassificationCode && item.OriginCountryCode == j.OriginCountryCode).length == 0){
-                let filterItems: SupplierInvoiceItemLine[] = this.ItemsSource.Collection.filter(i => i.ClassificationCode == item.ClassificationCode && item.OriginCountryCode == i.OriginCountryCode);
-                if(filterItems && filterItems.length > 1){
-                    let GroupedItem:SupplierInvoiceItemPM = item.entityPM;
-                    if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode) && !AppTool.IsNullOrEmpty(GroupedItem.OriginCountryCode)) {
-                        GroupedResult += `${filterItems.length} ${TextCodeTranslator.Translate("Customs.Declaration.O.Lines")} - ${GroupedItem.ClassificationCode} - ${GroupedItem.OriginCountryName} \n`;
-                    }
-                    else if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode)) {
-                        GroupedResult += `${filterItems.length}- ${GroupedItem.ClassificationCode} \n`;
-                    } 
-                    else if (!AppTool.IsNullOrEmpty(GroupedItem.OriginCountryCode)) {
-                        GroupedResult += `${filterItems.length}- ${GroupedItem.OriginCountryName} \n`;
-                    } 
-                    else {
-                        GroupedResult += `${filterItems.length}- ${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedEmptyLines")} \n`;
-                    }
-                    
-                    GroupedItemsSource.Insert(new SupplierInvoiceItemLine(GroupedItem, this, this.allowExport)); 
-                }
-            }
-        });
-
-        if(GroupedItemsSource.Collection.length == 0) 
-            GroupedResult = `${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedNotFoundLines")}`;
-        this.openConfirmWindowGroupingAccountLines(GroupedResult); 
-    }
-
-    openConfirmWindowGroupingAccountLines(GroupedResult: string =  "") {
-        var confirm = new ConfirmWindow();
-        confirm.Cancel = true;
-        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-        confirm.ShowNoButton = true;
-        confirm.Show(GroupedResult);
-        confirm.WindowClosed.subscribe((event: any) => {
-            if (confirm.Yes){
-                this.GroupingAccountLines();
-            } 
-        }); 
-    }
-
-    GroupingAccountLines(){
-        let GroupedItemsSource = new ObservableCollection([]);
-        let GroupedItems: SupplierInvoiceItemPM[] = []; 
-        let sequenceNumeric = 0;
-    
-        this.ItemsSource.Collection.forEach(item => {
-            if(GroupedItemsSource.Collection.filter(j=> j.ClassificationCode == item.entityPM.ClassificationCode && item.OriginCountryCode == j.OriginCountryCode).length == 0){
-                let filterItems: SupplierInvoiceItemLine[] = this.ItemsSource.Collection.filter(i => i.ClassificationCode == item.ClassificationCode && item.OriginCountryCode == i.OriginCountryCode);
-                if(filterItems && filterItems.length > 1){
-                    let GroupedItem:SupplierInvoiceItemPM = item.entityPM;
-                    let invoiceQuantity = 0;
-                    let itemPrice = 0;
-
-                    filterItems.forEach(i => {
-                        invoiceQuantity += AppTool.IsNullOrEmpty(i.entityPM.InvoiceQuantity) ? 0 : i.entityPM.InvoiceQuantity;
-                        itemPrice += AppTool.IsNullOrEmpty(i.entityPM.ItemPrice) ? 0 : i.entityPM.ItemPrice;
-                    });
-
-                    GroupedItem.InvoiceQuantity = invoiceQuantity != 0 ? invoiceQuantity : null;
-                    GroupedItem.ItemPrice = itemPrice != 0 ? itemPrice : null;
-                    GroupedItem.ItemDescription = "";
-                    GroupedItem.ItemCode = "";
-                    GroupedItem.SequenceNumeric = sequenceNumeric += 1;
-                    GroupedItemsSource.Insert(new SupplierInvoiceItemLine(GroupedItem, this, this.allowExport)); 
-                    GroupedItems.push(GroupedItem);  
-                }
-                else{
-                    item.SequenceNumeric = sequenceNumeric += 1;
-                    GroupedItemsSource.Insert(item);  
-                    GroupedItems.push(item.entityPM);   
-                }
-            }
-        });
-
-        if(GroupedItemsSource && GroupedItems){
-            this.ItemsSource = GroupedItemsSource;
-            this.EntityPM.SupplierInvoiceItems = GroupedItems;
         }
     }
 
-    
+    UpdateProcessClicked() {
 
-    UpdateClicked(type:UpdateOptions){
-        let selectedOptionsSettings=this.updateOptionsMap[type];
-
-        let title = selectedOptionsSettings.Title;
-        var args = selectedOptionsSettings.Arguments;
-        this.UpdateSupplierInvoiceGeneralField(args, title);
-    }
-
-    UpdateSupplierInvoiceGeneralField(args: UpdateGeneralArgsParams, title) {
         var windowArgs: any = {};
+
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
         logWindow.Height = 500;
+
         logWindow.ShowCloseButton = true;
         windowArgs.SupplierInvoicePM = this.EntityPM;
-        windowArgs.ExporterImporterCode = this.declarationPM?.ExporterImporterCode;
-        windowArgs = Object.assign(windowArgs, args);
+        //  windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         logWindow.WindowArgs = windowArgs;
-        logWindow.Title = title;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProcessCode");
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    args.SelectionCompletedMethod(comp);
+                    this.SelectionCompleted(comp);
                 }
             });
         });
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateSupplierInvoiceGeneralFieldComponent');
-    }
-
-    private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
-    SelectionOriginCompleted(args, fromClassificationCodeAfterQuantityType=false) {
-        if (args.ItemsSource != null) {
-            if(args.UpdateField=="ClassificationCode" && !fromClassificationCodeAfterQuantityType){
-                this.getSpecificQuantityType(args);
-
-            }
-           else{
-
-            if (args.UpdateAll) {
-                for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                    if (item[args.UpdateField] != args) {
-                        this.updateProcess(item, args);
-
-                    }
-                }
-            } else {
-                if (args.UpdateItemsWithNoValue) {
-                    for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                        if (item[args.UpdateField] == "" || item[args.UpdateField] == null) {
-                            this.updateProcess(item, args);
-                        }
-                    }
-                } else {
-                    if (args.ItemsSource) {
-                        for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
-                            if (number) {
-                                this.updateProcess(item, args);
-                            }
-                        }
-                    }
-                }
-            }
-           }
-
-        }
-    }
-    updateProcess(item: SupplierInvoiceItemPM, args) {
-        var updateField = args.UpdateField;
-        var value = args[args.UpdateField];
-        switch (updateField) {
-            case 'OriginCountryCode': {
-                item.OriginCountryCode = args.FinalValue.Code;
-                item.OriginCountryName = args.FinalValue.LocalName;
-                break;
-            }
-            case 'ClassificationCode': {
-                item.ClassificationCode = value;
-                var lineItem = this.ItemsSource.Collection[item.SequenceNumeric - 1];
-                if (lineItem) {
-                    lineItem.GetQuantityType(true,false,true);
-                }
-                break;
-            }
-            case 'InvoiceQuantityType': {
-                item.InvoiceQuantityType = args.FinalValue.Code;
-                item.InvoiceQuantityTypeName = args.FinalValue.LocalName;
-                break;
-            }
-            case 'DutyRegimeProtocolCode': {
-                item.DutyRegimeProtocolCode = args.FinalValue.Code;
-                item.DutyRegimeProtocolLocalName = args.FinalValue.LocalName;
-                if (this.Parent.declarationPM.Direction == "E" && (!this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent).some(t => t?.DutyRegimeProtocolCode !== item.DutyRegimeProtocolCode))) {
-                    this.DutyRegimeProtocolCode = item.DutyRegimeProtocolCode;
-                }
-                break;
-            }
-            case 'TradeAgreementCode': {
-                item.TradeAgreementCode = args.FinalValue.Code;
-                item.TradeAgreementName = args.FinalValue.LocalName;
-                if (this.Parent.declarationPM.Direction == "E") {
-                    this.PreferenceDocumentTypeCode = item.TradeAgreementCode;
-                }
-                break;
-            }
-        }
+      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/UpdateProcessCodeComponent');
     }
 
     SelectionCompleted(args) {
@@ -1888,7 +1195,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                     processType.Tenant = this.EntityPM.Tenant;
                     processType.ProcessTypeCode = args.ProcessTypeCode;
 
-                    this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe((response: any) => {
+                    this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe(response => {
 
                         var result: ItemGovernmentProcedureTypeList = response.Result;
                         processType.ProcessTypeName = result.LocalName;
@@ -1934,7 +1241,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                             processType.InvoiceItemLineNumber = item.LineNumber;
                             processType.Tenant = this.EntityPM.Tenant;
                             processType.ProcessTypeCode = args.ProcessTypeCode;
-                            this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe((response: any) => {
+                            this.itemGovernmentProcedureTypeListService.getSingleFromCache(args.ProcessTypeCode).subscribe(response => {
 
                                 var result: ItemGovernmentProcedureTypeList = response.Result;
                                 processType.ProcessTypeName = result.LocalName;
@@ -1979,177 +1286,22 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
 
     }
 
-    GetDifferenceAndTotalForeignCurrency() {
-
-        this.SumDifference = 0;
-        var SumTotalForeignCurrency = 0;
-
-        if (this.ModificationAndDiscountTypeList) {
-
-            this.EntityPM.SupplierInvoiceModifications.forEach(item => {
-
-                var ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(item.TypeCode)) ? this.ModificationAndDiscountTypeList.get(item.TypeCode) : ''
+    GetFreightTotals() {
+        this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe(response => {
 
 
 
-                if (item.Amount != null && (ModificationAffectType == '1' || ModificationAffectType == '2')) {
-
-                    if (item.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode) {
-                        this.TotalExportModificationInInvoiceCurrency = 0;
-                        var ratePM: any;
-                        var InvocieCurrencyRate: number = 0;
-                        var rate: number = 0;
-                        var total: number = 0;
-                        if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
-                            ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.EntityPM.InvoiceCurrencyTypeCode)[0];//.ExchangeRate;
-                        }
-                        else {
-                            this.LoadExchangeRatesForModification(item);
-                            return;
-                        }
-                        if (ratePM) {
-                            InvocieCurrencyRate = ratePM.ExchangeRate;
-                        }
-                        total = (isNaN(item.Amount)) ? 0 : item.Amount;
-                        var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == item.CurrencyTypeCode)[0];
-                        if (ModificationCurrencyRate) {
-                            rate = ModificationCurrencyRate.ExchangeRate;
-                            if (InvocieCurrencyRate > 0) {
-                                total = total * (rate / InvocieCurrencyRate);
-                            }
-                            else {
-                                total = total * rate;
-                            }
-                        }
-                        this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
-
-                        if (ModificationAffectType == '1') {
-                            this.SumDifference += this.TotalExportModificationInInvoiceCurrency;
-                            SumTotalForeignCurrency += this.TotalExportModificationInInvoiceCurrency;
-
-                        }
-                        else {
-                            this.SumDifference -= this.TotalExportModificationInInvoiceCurrency;
-                            SumTotalForeignCurrency -= this.TotalExportModificationInInvoiceCurrency;
-                        }
-
-
-                    }
-
-                    else {
-                        if (ModificationAffectType == '1') {
-                            this.SumDifference += item.Amount;
-                            SumTotalForeignCurrency += item.Amount;
-
-                        }
-                        else {
-                            this.SumDifference -= item.Amount;
-                            SumTotalForeignCurrency -= item.Amount;
-                        }
-
-
-                    }
-
-
-                }
-
-
-            });
-            if (this.EntityPM.SupplierInvoiceItems.length > 0) {
-                this.EntityPM.SupplierInvoiceItems.forEach(item => {
-
-                    if (item.SupplierInvoiceItemsMods.length > 0) {
-
-                        item.SupplierInvoiceItemsMods.forEach(Modifications => {
-                            var ModificationAffectType = !AppTool.IsNullOrEmpty(this.ModificationAndDiscountTypeList.get(Modifications.TypeCode)) ? this.ModificationAndDiscountTypeList.get(Modifications.TypeCode) : ''
-
-
-                            if (Modifications.Amount != null && (ModificationAffectType == '1' || ModificationAffectType == '2')) {
-
-                                if (Modifications.CurrencyTypeCode != this.EntityPM.InvoiceCurrencyTypeCode) {
-                                    this.TotalExportModificationInInvoiceCurrency = 0;
-                                    var ratePM: any;
-                                    var firstRatePM: any;
-                                    var InvocieCurrencyRate: number = 0;
-                                    var rate: number = 0;
-                                    var total: number = 0;
-                                    if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
-                                        ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.EntityPM.InvoiceCurrencyTypeCode)[0];//.ExchangeRate;
-                                        //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
-                                    }
-                                    else {
-                                        this.LoadExchangeRatesForModification(Modifications);
-                                        return;
-                                    }
-                                    if (ratePM) {
-                                        InvocieCurrencyRate = ratePM.ExchangeRate;
-                                    }
-                                    total = (isNaN(Modifications.Amount)) ? 0 : Modifications.Amount;
-                                    var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == Modifications.CurrencyTypeCode)[0];
-                                    if (ModificationCurrencyRate) {
-                                        rate = ModificationCurrencyRate.ExchangeRate;
-                                        if (InvocieCurrencyRate > 0) {
-                                            total = total * (rate / InvocieCurrencyRate);
-                                        }
-                                        else {
-                                            total = total * rate;
-                                        }
-                                    }
-                                    this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
-
-                                    if (ModificationAffectType == '1') {
-                                        this.SumDifference += this.TotalExportModificationInInvoiceCurrency;
-                                        SumTotalForeignCurrency += this.TotalExportModificationInInvoiceCurrency;
-
-                                    }
-                                    else {
-                                        this.SumDifference -= this.TotalExportModificationInInvoiceCurrency;
-                                        SumTotalForeignCurrency -= this.TotalExportModificationInInvoiceCurrency;
-                                    }
-
-
-                                }
-
-                                else {
-
-
-                                    if (ModificationAffectType == '1') {
-                                        this.SumDifference += Modifications.Amount;
-                                        SumTotalForeignCurrency += Modifications.Amount;
-
-                                    }
-                                    else {
-                                        this.SumDifference -= Modifications.Amount;
-                                        SumTotalForeignCurrency -= Modifications.Amount;
-                                    }
-
-
-
-                                }
-
-
-                            }
-
-
-                        });
-
-                    }
-                });
-
-
-            }
-
-            this.SumDifference += this.EntityPM.SupplierInvoiceItems.reduce((acc, cur) => acc + cur.ItemPrice, 0);
-
-
-            this.Parent.Difference = Math.round(Math.abs(this.InvoiceAmount - this.SumDifference) * 100) / 100;
-
-
-            SumTotalForeignCurrency += this.EntityPM.SupplierInvoiceItems.reduce((acc, cur) => acc + cur.ItemPrice, 0);
-
-            this.Parent.TotalForeignCurrency = SumTotalForeignCurrency;
-
+            this.Parent.TotalForeignCurrency = response.Result;
+            //for (let item of items)// this.entitypm(d=> d. SupplierInvoiceItemViewModel item in InvoiceItemsObslist.Where(d => d.entityPM.CounterKey == 0))
+            //{
+            //    if (item.ItemPrice != null)
+            //        this.TotalForeignCurrency = (TotalForeignCurrency != null ? TotalForeignCurrency : 0) + item.ItemPrice;
+            //}
             if (isNaN(this.Parent.TotalForeignCurrency)) this.Parent.TotalForeignCurrency = 0;
+            var amount: number = this.InvoiceAmount;
+
+            if (isNaN(this.InvoiceAmount)) amount = 0;
+            this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
 
             if (this.Parent.TotalForeignCurrency != 0) {
                 if (this.Parent.Difference != null) {
@@ -2161,139 +1313,34 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                     }
                 }
             }
-        }
-    }
+            else {
+                this.Parent.DifferenceColor = FontTool.Black;
+            }
 
-
-
-    GetFreightTotals() {
-
-        if (this.declarationPM.Direction != "E") {
-            this.supplierInvoiceService.GetTotalForeignCurrencyForInvoice(this.EntityPM.DeclarationId, this.EntityPM.InvoiceCounterKey).subscribe((response: any) => {
-                if (response != null) {
-                    this.Parent.TotalForeignCurrency = response.Result;
-                    //for (let item of items)// this.entitypm(d=> d. SupplierInvoiceItemViewModel item in InvoiceItemsObslist.Where(d => d.entityPM.CounterKey == 0))
-                    //{
-                    //    if (item.ItemPrice != null)
-                    //        this.TotalForeignCurrency = (TotalForeignCurrency != null ? TotalForeignCurrency : 0) + item.ItemPrice;
-                    //}
-                    if (isNaN(this.Parent.TotalForeignCurrency)) this.Parent.TotalForeignCurrency = 0;
-                    var amount: number = this.InvoiceAmount;
-
-                    if (isNaN(this.InvoiceAmount)) amount = 0;
-                    if (this.declarationPM.Direction != "E")
-                        this.Parent.Difference = this.Parent.TotalForeignCurrency - amount;
-
-
-                    if (this.Parent.TotalForeignCurrency != 0) {
-                        if (this.Parent.Difference != null) {
-                            if (this.Parent.Difference != 0) {
-                                this.Parent.DifferenceColor = FontTool.Red; //red
-                            }
-                            else {
-                                this.Parent.DifferenceColor = FontTool.Green; //green
-                            }
-                        }
-                    }
-                    else {
-                        this.Parent.DifferenceColor = FontTool.Black;
-                    }
-                }
-            });
-        }
-
+        });
     }
 
     private timerToken: any;
     public IncotermLogic(IncotermCode: string) {
 
-        var _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-        _CustomsSettingExtendedListService.GetDefault("ISRAEL", "NGG_INS_IMPORT", "NON", this.declarationPM.CustomerCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
-            if (response != null) {
-                let obj = response.Result;
-                var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
 
-                if (obj) {
-                    let DefaultValue = obj['DefaultValue'];
-                    if (!AppTool.IsNullOrEmpty(DefaultValue) && DefaultValue == "Y" && this.IncotermCode == 'CIF' && this.IsFirstInvoice()) {
-                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                        return;
+        var firstInvoice: SupplierInvoicePM = this.Parent.Get1SupplierInvoice();
 
-                    }
-                }
+        if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
+            //#region for insurance
+            if (!this.IsFirstInvoice()) {
 
+                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+            }
+            else {
 
-                if (this.EntityPM != null && this.EntityPM.IncotermCode != null) {
-                    //#region for insurance
-                    if (!this.IsFirstInvoice()) {
+                if (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP") {
 
-                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                    }
-                    else {
+                    if (this.incotermChanged) {
+                            if (this.InsuranceAmount == null && this.InsurancePercentage == null && this.InsruanceCurrencyTypeCode == null) {
 
-                        if (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP") {
-
-                            if (this.incotermChanged) {
-                                if (this.InsuranceAmount == null && this.InsurancePercentage == null && this.InsruanceCurrencyTypeCode == null) {
-
-                                    if (this.InsuranceAmount != null) {
-                                        this.InsuranceAmount = null;
-                                    }
-                                    if (this.InsruanceCurrencyTypeCode != null) {
-                                        this.InsruanceCurrencyTypeCode = null;
-                                    }
-
-                                    if (this.InsurancePercentage != null) {
-                                        this.InsurancePercentage = null;
-                                    }
-
-                                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                                }
-                                else {
-
-                                    this.timerToken = setTimeout(() => {
-                                        var confirm = new ConfirmWindow();
-                                        confirm.Cancel = true;
-                                        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                        confirm.ShowNoButton = true;
-                                        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
-                                        confirm.WindowClosed.subscribe((event: any) => {
-                                            if (confirm.Yes) {
-                                                if (this.InsuranceAmount != null) {
-                                                    this.InsuranceAmount = null;
-                                                }
-                                                if (this.InsruanceCurrencyTypeCode != null) {
-                                                    this.InsruanceCurrencyTypeCode = null;
-                                                }
-
-                                                if (this.InsurancePercentage != null) {
-                                                    this.InsurancePercentage = null;
-                                                }
-
-                                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                                            }
-
-                                            else {
-                                                this.allowToDelete = false;
-                                                this.IncotermCode = this.oldIncoterm;
-                                            }
-
-
-                                        });
-                                    }, 200);
-
-                                }
-                            }
-
-                            else {
                                 if (this.InsuranceAmount != null) {
                                     this.InsuranceAmount = null;
                                 }
@@ -2305,97 +1352,148 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                                     this.InsurancePercentage = null;
                                 }
 
-
                                 this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
                                 this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
                                 this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
                             }
-                        }
-                        else if (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR") {
-                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                            if (this.InsurancePercentage == null) {
-
-                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-
-                                if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
-                                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                                }
-                            }
                             else {
 
-                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                                this.timerToken = setTimeout(() => {
+                                    var confirm = new ConfirmWindow();
+                                    confirm.Cancel = true;
+                                    confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                                    confirm.ShowNoButton = true;
+                                    confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteAmounts"));
+                                    confirm.WindowClosed.subscribe((event: any) => {
+                                        if (confirm.Yes) {
+                                            if (this.InsuranceAmount != null) {
+                                                this.InsuranceAmount = null;
+                                            }
+                                            if (this.InsruanceCurrencyTypeCode != null) {
+                                                this.InsruanceCurrencyTypeCode = null;
+                                            }
+
+                                            if (this.InsurancePercentage != null) {
+                                                this.InsurancePercentage = null;
+                                            }
+
+                                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                                        }
+
+                                        else {
+                                            this.allowToDelete = false;
+                                            this.IncotermCode = this.oldIncoterm;
+                                        }
+
+
+                                    });
+                                }, 200);
 
                             }
-                        }
-                        else if (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F")) {
-
-                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                            if (this.InsurancePercentage == null) {
-
-                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-
-
-                                if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
-                                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                                }
-                            }
-                            else {
-                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-
-                            }
-                        }
-                        else {
-                            if (this.InsurancePercentage != null) {
-                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                            }
-                            else if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
-                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                            }
-                            else {
-                                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                            }
-                        }
                     }
 
+                    else {
+                        if (this.InsuranceAmount != null) {
+                            this.InsuranceAmount = null;
+                        }
+                        if (this.InsruanceCurrencyTypeCode != null) {
+                            this.InsruanceCurrencyTypeCode = null;
+                        }
+
+                        if (this.InsurancePercentage != null) {
+                            this.InsurancePercentage = null;
+                        }
+
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    }
+                }
+                else if (this.EntityPM.IncotermCode == "CPT" || this.EntityPM.IncotermCode == "CFR") {
+                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                    if (this.InsurancePercentage == null) {
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+                        if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                        }
+                    }
+                    else {
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+                    }
+                }
+                else if (this.EntityPM.IncotermCode.startsWith("E") || this.EntityPM.IncotermCode.startsWith("F")) {
+
+                    this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                    if (this.InsurancePercentage == null) {
+
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+
+                        if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                            this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                        }
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+
+                    }
                 }
                 else {
-                    if (!this.IsFirstInvoice()) {
-                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    if (this.InsurancePercentage != null) {
                         this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
                         this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
                     }
-                    else if (!(this.EntityPM.SequenceNumeric != 1 && this.EntityPM.SequenceNumeric != null) || (this.isNewEntity && this.declarationPM.SupplierInvoices.length > 0)) {
-                        this.AddAmountEnabled = true;
-                        this.FreightAmountGridEnabled = true;
-                        this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
-
-                        if (this.InsurancePercentage == null) {
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
-                            if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
-                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
-                            }
-                            else {
-                                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
-                            }
-                        }
-                        else {
-                            this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
-                            this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
-                        }
+                    else if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
                     }
                 }
-
-
             }
-        });
+
+        }
+        else {
+            if (!this.IsFirstInvoice()) {
+                this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+            }
+            else if (!(this.EntityPM.SequenceNumeric != 1 && this.EntityPM.SequenceNumeric != null) || (this.isNewEntity && this.declarationPM.SupplierInvoices.length > 0)) {
+                this.AddAmountEnabled = true;
+                this.FreightAmountGridEnabled = true;
+                this.UIProperties.SetEnabled("FreightCurrencyTypeCode", "Customs.SupplierInvoice", true);
+
+                if (this.InsurancePercentage == null) {
+                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", true);
+                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", true);
+                    if (this.InsruanceCurrencyTypeCode != null || this.InsuranceAmount != null) {
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", false);
+                    }
+                    else {
+                        this.UIProperties.SetEnabled("InsruancePercentage", "Customs.SupplierInvoice", true);
+                    }
+                }
+                else {
+                    this.UIProperties.SetEnabled("InsuranceAmount", "Customs.SupplierInvoice", false);
+                    this.UIProperties.SetEnabled("InsruanceCurrencyTypeCode", "Customs.SupplierInvoice", false);
+                }
+            }
+        }
+
     }
 
     //public IncotermLogic(IncotermCode: string) {
@@ -2456,7 +1554,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
     //                        else {
     //                            this.allowToDelete = false;
     //                            this.IncotermCode = this.oldIncoterm;
-    //                            //this.termsOfSaleTypeListService.getSingle(IncotermCode).subscribe((response:any) => {
+    //                            //this.termsOfSaleTypeListService.getSingle(IncotermCode).subscribe(response => {
     //                            //    var incoterm: TermsOfSaleTypeList = response.Result;
     //                            //    this.EntityPM.IncotermName = incoterm.LocalName;
     //                            //});
@@ -2805,20 +1903,6 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         if (this.IsDisplayOnly)
             return; // go back -_-
 
-        if (!this.EntityPM.SupplierInvoiceItems) {
-            this.EntityPM.SupplierInvoiceItems = [];
-        }
-
-        let maxLine = 0;
-        for (const x of this.EntityPM.SupplierInvoiceItems) {
-            const ln = Number((x as any).LineNumber ?? (x as any).lineNumber) || 0;
-            if (ln > maxLine) maxLine = ln;
-        }
-
-        if (isNaN(this.EntityPM.InvoiceItemLastLineNumber) || this.EntityPM.InvoiceItemLastLineNumber < maxLine) {
-            this.EntityPM.InvoiceItemLastLineNumber = maxLine;
-        }
-
         var line: number = 0;
         var sequence: number = 0;
         if (this.EntityPM.SupplierInvoiceItems.length > 0) {
@@ -2831,14 +1915,22 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
             line = 0;
         }
 
-        var items = this.EntityPM.SupplierInvoiceItems.sort((a, b) => {
-            return (a.SequenceNumeric === b.SequenceNumeric) ? 0 : (a.SequenceNumeric < b.SequenceNumeric) ? -1 : 1
-        });
 
+        //if (this.EntityPM.FullItemsCount < 500 || AppTool.IsNullOrEmpty(this.EntityPM.FullItemsCount)) {
+
+        // var items = this.EntityPM.SupplierInvoiceItems..sort(d => d.SequenceNumeric);
+        var items = this.EntityPM.SupplierInvoiceItems.sort((a, b) => { return (a.SequenceNumeric === b.SequenceNumeric) ? 0 : (a.SequenceNumeric < b.SequenceNumeric) ? -1 : 1 });
         if (items.length == 0) sequence = 0;
         else {
-            sequence = items[items.length - 1].SequenceNumeric;
+            sequence = items[this.EntityPM.SupplierInvoiceItems.length - 1].SequenceNumeric;
         }
+
+
+        //}
+        //else {
+        //    sequence = this.EntityPM.FullItemsCount;
+
+        //}
 
         line += 1;
         sequence += 1;
@@ -2851,17 +1943,15 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         item.OrderByLineNo = line.toString();
         item.SequenceNumeric = sequence;
         item.LastCopyFromOrderNo = "10000";
-
-        if (isNaN(this.EntityPM.FullChildrenCount)) this.EntityPM.FullChildrenCount = 0;
-        if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
-        if (isNaN(this.EntityPM.MaxSequence)) this.EntityPM.MaxSequence = 0;
-
         this.EntityPM.FullChildrenCount++;
         this.ChildrenCount = "(" + this.EntityPM.FullChildrenCount + ")";
 
+
         if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
             this.EntityPM.AddSupplierInvoiceItem(item);
-            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this, this.allowExport));
+            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
+            //this.CurrentSession.ResetRowIndex();
+            if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
 
             this.EntityPM.FullItemsCount = this.EntityPM.FullItemsCount + 1;
             this.EntityPM.MaxSequence = this.EntityPM.MaxSequence + 1;
@@ -2914,7 +2004,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
 
         if (!this.EntityPM.SupplierInvoiceItems.includes(item)) {
             this.EntityPM.AddSupplierInvoiceItem(item);
-            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this, this.allowExport));
+            this.ItemsSource.Insert(new SupplierInvoiceItemLine(item, this));
             //this.CurrentSession.ResetRowIndex();
             if (isNaN(this.EntityPM.FullItemsCount)) this.EntityPM.FullItemsCount = 0;
 
@@ -2929,33 +2019,31 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
 
     public filters: ApiQueryFilters = null;
     BuildFreightAmountsList() {
-        if (this.AmountList != null) {
-            this.AmountList.Clear();
+        this.AmountList.Clear();
 
-            for (var i = 0; i < this.EntityPM.SupplierInvoiceFreightAmounts.length; i++) {
+        for (var i = 0; i < this.EntityPM.SupplierInvoiceFreightAmounts.length; i++) {
 
-                this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.EntityPM.SupplierInvoiceFreightAmounts[i], this));
+            this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.EntityPM.SupplierInvoiceFreightAmounts[i], this));
 
-            }
-
-            if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
-                this.FreightCurrencyTypeCode = null;
-
-            }
-
-            if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
-                var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.EntityPM);
-                item.DeclarationId = this.EntityPM.DeclarationId;
-                item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-                item.Tenant = this.EntityPM.Tenant;
-                item.ChangeSetOp = "Insert";
-                this.EntityPM.IsDirty = false;
-                this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(item, this), false);
-
-            }
-
-            this.CopyAmountList();
         }
+
+        if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
+            this.FreightCurrencyTypeCode = null;
+
+        }
+
+        if (this.EntityPM.SupplierInvoiceFreightAmounts.length == 0) {
+            var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.EntityPM);
+            item.DeclarationId = this.EntityPM.DeclarationId;
+            item.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+            item.Tenant = this.EntityPM.Tenant;
+            item.ChangeSetOp = "Insert";
+            this.EntityPM.IsDirty = false;
+            this.AmountList.Insert(new SupplierInvoiceFreightAmountLine(item, this), false);
+
+        }
+
+        this.CopyAmountList();
     }
 
     LoadCurrenciesExchangeRates(recalculateTotals: boolean) {
@@ -2976,7 +2064,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
             }
 
 
-            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(currencyRates, this.declarationPM.TaxationDateTime).subscribe((response: any) => {
+            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(currencyRates, this.declarationPM.TaxationDateTime).subscribe(response => {
 
                 var result = response.Result;
                 if (result) {
@@ -2994,7 +2082,6 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         }
     }
 
-
     public customsExchangeRates: CustomsExchangeRatePM[];
     UpdateTotalFreightInInvoiceCurrencyAndInNIS() {
 
@@ -3005,8 +2092,8 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
             var amountInNIS: number;
             var rate: CustomsExchangeRatePM;
             if (item.CurrencyTypeCode == "ILS") {
-                amountInNIS = AppTool.ToNumber(item.Amount);
-                totalFreightInNIS = +totalFreightInNIS + +amountInNIS;
+                amountInNIS = item.Amount;
+                totalFreightInNIS = totalFreightInNIS + amountInNIS;
                 //if (totalFreightInNIS != null) {
                 //    totalFreightInNIS = Math.round(totalFreightInNIS);
                 //}
@@ -3018,7 +2105,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                     rate = this.customsExchangeRates.filter(d => d.CurrencyTypeCode == item.CurrencyTypeCode)[0];
                     if (rate != null) {
 
-                        amountInNIS = AppTool.ToNumber(item.Amount) * rate.ExchangeRate;
+                        amountInNIS = item.Amount * rate.ExchangeRate;
                         totalFreightInNIS = totalFreightInNIS + amountInNIS;
                         //if (totalFreightInNIS != null) {
                         //    totalFreightInNIS = Math.round(totalFreightInNIS);
@@ -3070,55 +2157,6 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         }
 
     }
-
-    CalculateExportModificationAmount() {
-        this.TotalExportModificationInInvoiceCurrency = 0;
-        this.AdjustmentsList.Collection.forEach((entityPM) => {
-            var ratePM: any;
-            var firstRatePM: any;
-            var InvocieCurrencyRate: number = 0;
-            var rate: number = 0;
-            var total: number = 0;
-            if (this.ExchangeRates) {// this is a bug in errorslog filter of undefined, solution: if no exchange rate try to load them if not it will not be calculated----mohammad.
-                ratePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == this.ExportModificationCurrency)[0];//.ExchangeRate;
-                //firstRatePM = this.ExchangeRates.filter(d => d.CurrencyTypeCode == firstInvoice.InvoiceCurrencyTypeCode)[0];//.FirstExchangeRate;
-            }
-            else {
-                this.LoadExchangeRatesForModification(entityPM);
-                return;
-            }
-            if (ratePM) {
-                InvocieCurrencyRate = ratePM.ExchangeRate;
-            }
-            total = (isNaN(entityPM.Amount)) ? 0 : entityPM.Amount;
-            var ModificationCurrencyRate = this.ExchangeRates.filter(d => d.CurrencyTypeCode == entityPM.CurrencyTypeCode)[0];
-            if (ModificationCurrencyRate) {
-                rate = ModificationCurrencyRate.ExchangeRate;
-                if (InvocieCurrencyRate > 0) {
-                    total = total * (rate / InvocieCurrencyRate);
-                }
-                else {
-                    total = total * rate;
-                }
-            }
-            this.TotalExportModificationInInvoiceCurrency = (this.TotalExportModificationInInvoiceCurrency + total);
-        });
-
-    }
-
-    LoadExchangeRatesForModification(entityPM: any) {
-        var currencyRates: string = "";
-        currencyRates = currencyRates + "," + entityPM.CurrencyTypeCode;
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(currencyRates, this.declarationPM.TaxationDateTime).subscribe((response: any) => {
-
-            var result = response.Result;
-            if (result) {
-                this.customsExchangeRates = result;
-                this.CalculateExportModificationAmount();
-            }
-        });
-
-    }
     ExchangeRates: CustomsExchangeRatePM[];
     CalculateInsuranceAmount(value: number) {
 
@@ -3129,7 +2167,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
             if (this.InsurancePercentage == null || this.InsurancePercentage == 0) {
                 return;
             }
-            // this.InsuranceAmount = (amount + total) * (this.InsurancePercentage / 100);
+           // this.InsuranceAmount = (amount + total) * (this.InsurancePercentage / 100);
             this.InsruanceCurrencyTypeCode = this.InvoiceCurrencyTypeCode;
         }
 
@@ -3304,8 +2342,8 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
     OnRowEnded($event) {
         //console.log("this.ItemsSource.Length : " + this.ItemsSource.Length);
         if (($event) == this.ItemsSource.Length) {
-            //setTimeout(() => this.Add(), 1);
-            this.Add();
+            setTimeout(() => this.Add(), 1);
+            //this.Add();
 
         }
     }
@@ -3357,7 +2395,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                 });
             });
 
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/VendorExtendedSearchComponent');
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/VendorExtendedSearchComponent');
         }
 
     }
@@ -3370,7 +2408,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
             } else {
                 this.VendorId = args.SelectedRow.VendorId;
             }
-
+                                            
         }
     }
 
@@ -3400,15 +2438,11 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
             }
 
         });
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiCertificateUpdate/MultiCertificateUpdateComponent');
+      logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/MultiCertificateUpdate/MultiCertificateUpdateComponent');
     }
 
     ReloadEntity() {
         this.ReloadEntityEvent.emit();
-    }
-
-    RefreshChangeInSupplierInvoice() {
-        this.ChangeInSupplierInvoice = "1";
     }
 
     IsFirstInvoice() {
@@ -3420,28 +2454,14 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
 
         if (this.old_amount != this.EntityPM.InvoiceAmount ||
             this.old_currency != this.EntityPM.InvoiceCurrencyTypeCode ||
-            this.old_vendor != this.EntityPM.VendorId) {
+            this.old_vendor != this.EntityPM.VendorId)
             this.Parent.CalculateCommissionPercentage();
-            this.CalculateCurrencyTypeCode();
-        }
 
         this.old_amount = this.EntityPM.InvoiceAmount;
         this.old_currency = this.EntityPM.InvoiceCurrencyTypeCode;
         this.old_vendor = this.EntityPM.VendorId;
     }
-    CalculateCurrencyTypeCode() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.VendorId) && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyTypeCode)) {
-            this.vendorCurrencyService.GenListVendorCurrencyByVendorId(this.EntityPM.VendorId).subscribe(res => {
 
-                if (!res.HasError) {
-                    if (res.Result?.length == 1) {
-                        this.EntityPM.InvoiceCurrencyTypeCode = res.Result[0].Currency;
-                    }
-                }
-            })
-
-        }
-    }
     //#region Remark tooltip
     onCellSelected($event, Item: SupplierInvoiceItemLine) {
         if (this.SelectedRow != Item) {
@@ -3449,21 +2469,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
         }
     }
     OnSelectedItemChanged(selectedRow: SupplierInvoiceItemLine) {
-        console.log("OnSelectedItemChanged > ", selectedRow);        
-        let isDirty : boolean = this.EntityPM.IsDirty;
-        selectedRow.entityPM.DocumentFilingId = this.DocumentFilingId;
-        if(!isDirty){
-            selectedRow.entityPM.IsDirty = false;
-            this.EntityPM.IsDirty = false;
-        }
-
-        if (selectedRow.entityPM.OcrHeight != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrHeight) && selectedRow.entityPM.OcrPageNumber != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrPageNumber) && selectedRow.entityPM.OcrTop != 0 && !AppTool.IsNullOrEmpty(selectedRow.entityPM.OcrTop)) {
-            DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit(selectedRow.entityPM);
-
-        }
-        else {
-            DeclarationEventManager.DeclarationSplitDocumentItemSelection.emit("remove");
-        }
+        console.log("OnSelectedItemChanged > ", selectedRow);
         if (selectedRow) {
 
             if (this.SelectedRow != selectedRow) {
@@ -3472,19 +2478,16 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
                     selectedRow.closedManullay = false;
 
                     //this.SelectedRow.ShowTariffErrorTooltip = false; // hide Tariff tooltip on prev selected row
-
                 }
             }
-            if (!selectedRow.closedManullay) {
+            if (!selectedRow.closedManullay)
                 selectedRow.ShowClassifierRemarkTooltip = true;
-                selectedRow.CheckTariff();
-                this.SelectedRow = selectedRow;
-            }
+
+            this.SelectedRow = selectedRow;
 
         } else {
             if (this.SelectedRow) {
                 this.SelectedRow.ShowClassifierRemarkTooltip = false;
-
                 this.SelectedRow.closedManullay = false;
             }
             this.SelectedRow = null;
@@ -3494,250 +2497,7 @@ this.quantityTypeMessageService.GetQuantityType(code, this.declarationPM.Directi
 
 
 
-    InspectionRequest() {
-
-        // var IsActivateInsurance = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AIN")[0]? true : false;               
-        //  if(!IsActivateInsurance) return;
-        var table = window.ObjectTables.filter(d => d.Name === 'Customs.Declaration')[0];
-
-        var IsAutoInsuranceExportSubmitFeature = FeatureLocator.Features.filter(f => (f.Code == "IsAutoInsuranceExportSubmit") && f.ObjectTableId == table.Id)[0];
-
-        if (AppTool.IsNullOrEmpty(IsAutoInsuranceExportSubmitFeature)) {
-
-            if (!this.EntityPM.IsDirty) return;
-
-            if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) return;
-
-            if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyTypeCode) || AppTool.IsNullOrEmpty(this.EntityPM.InvoiceAmount) || AppTool.IsNullOrEmpty(this.EntityPM.IncotermCode)) return;
-            SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-
-            let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-                .subscribe(
-                    (mess: UnifreightMessageM) => {
-                        var IsMatchUnifreightCallbackCommand = (
-                            mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                            mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
-                            mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance");
-                        if (IsMatchUnifreightCallbackCommand) {
-                            sub.unsubscribe();
-                            SessionLocator.SelectedSession.StopBusyIndicator();
-                            let ApprovalToInsure = ""; ApprovalToInsure = UnifreightMessageM.GetStringValue(mess, "ApprovalToInsure");
-                            this.ActivateInsurance(ApprovalToInsure)
-                        }
-                    }
-                );
-
-
-            var unifreightMessageM =
-                AmitalGatewayUtil.Instance.
-                    DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ApprovalToInsurance", "BFIFILE");
-            unifreightMessageM.Requset.push(["AmountToInsure", this.EntityPM.InvoiceAmount.toString()]);
-            unifreightMessageM.Requset.push(["Currency", this.EntityPM.InvoiceCurrencyTypeCode]);
-            unifreightMessageM.Requset.push(["Incoterms", this.EntityPM.IncotermCode]);
-            unifreightMessageM.Requset.push(["CustomerUNF", ""]);
-            unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
-            unifreightMessageM.Requset.push(["ApprovalToInsure", ""]);
-            unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
-            unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
-            var PossibleOpenInsurance = TextCodeTranslator.Translate("Customs.Declaration.O.PossibleOpenInsurance");
-            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "AmitalGatewayUtil.CustomExportApprovalToInsurance",
-                "BFIHMAIN.LogitudeTask",
-                "CustomExportApprovalToInsurance",
-                unifreightMessageM,
-                PossibleOpenInsurance);
-
-        }
-    }
-
-
-
-
-    ActivateInsurance(ApprovalToInsure) {
-
-        if (ApprovalToInsure == "Yes") {
-            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.IsItForInsurance");
-
-            var confirm = new ConfirmWindow();
-            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Width = 400;
-            confirm.Show(msg);
-            confirm.WindowClosed.subscribe((event: any) => {
-
-                if (confirm.Yes == true) {
-                    SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-
-                    let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-                        .subscribe(
-                            (mess: UnifreightMessageM) => {
-
-                                var IsMatchUnifreightCallbackCommand = (
-                                    mess.LogitudeEntity == AmitalGatewayUtil.Instance.DeclarationMessaging.LogitudeEntityDeclaration &&
-                                    mess.LogitudeEntityNumber == this.EntityPM.DeclarationId &&
-                                    mess.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance");
-                                if (IsMatchUnifreightCallbackCommand) {
-                                    sub.unsubscribe();
-                                    SessionLocator.SelectedSession.StopBusyIndicator();
-
-                                    let InsuranceAmount = ""; InsuranceAmount = UnifreightMessageM.GetStringValue(mess, "InsuranceAmount");
-                                    let InsuranceCurrency = ""; InsuranceCurrency = UnifreightMessageM.GetStringValue(mess, "InsuranceCurrency");
-                                    let InvoiceNumber = ""; InvoiceNumber = UnifreightMessageM.GetStringValue(mess, "InvoiceNumber");
-
-                                    let confirmWindow = new ConfirmWindow();
-                                    confirmWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CreatingInsurance");
-                                    confirmWindow.Width = 350;
-                                    confirmWindow.Height = 200;
-                                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                                    confirmWindow.ShowNoButton = false;
-                                    if (!AppTool.IsNullOrEmpty(InsuranceAmount) && !AppTool.IsNullOrEmpty(InsuranceCurrency)) {
-
-                                        (new CurrencyTypeListService()).getSingleFromCache(InsuranceCurrency).subscribe(x => {
-                                            let Insurance67: SupplierInvoiceModificationPM = this.FindModificationByCode("67");
-                                            var index = this.AdjustmentsList.FindIndex("67");
-
-                                            Insurance67.CurrencyTypeCode = InsuranceCurrency;
-                                            Insurance67.Amount = Number(InsuranceAmount);
-                                            Insurance67.CurrencyTypeName = x.Result.LocalName;
-                                            this.AdjustmentsList.UpdateWithIndex(index, new ModificationItemModel(Insurance67, this, "67"));
-                                        })
-                                    }
-                                    else if (!AppTool.IsNullOrEmpty(InvoiceNumber)) {
-
-                                        var InsuranceOpenNum = TextCodeTranslator.Translate("Customs.Declaration.O.InsuranceOpenNum");
-                                        var CompletedUnifreight = TextCodeTranslator.Translate("Customs.Declaration.O.CompletedUnifreight");
-                                        confirmWindow.Show(InsuranceOpenNum + `' ` + InvoiceNumber + `, ` + CompletedUnifreight);
-
-                                    }
-                                    else {
-
-                                        var OpenInsuranceFailed = TextCodeTranslator.Translate("Customs.Declaration.O.OpenInsuranceFailed");
-                                        confirmWindow.Show(OpenInsuranceFailed);
-
-                                    }
-                                }
-                            }
-                        );
-
-
-                    var unifreightMessageM =
-                        AmitalGatewayUtil.Instance.
-                            DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.EntityPM.DeclarationId, "SupplierInvoiceGeneralTabComponent.ts-ActivateInsurance", "BFIFILE");
-                    unifreightMessageM.Requset.push(["AmountToInsure", this.EntityPM.InvoiceAmount.toString()]);
-                    unifreightMessageM.Requset.push(["Currency", this.EntityPM.InvoiceCurrencyTypeCode]);
-                    unifreightMessageM.Requset.push(["Incoterms", this.EntityPM.IncotermCode]);
-                    unifreightMessageM.Requset.push(["CustomerUNF", ""]);
-                    unifreightMessageM.Requset.push(["DefineToInsure", "Yes"]);
-                    unifreightMessageM.Requset.push(["ApprovalToInsure", "Yes"]);
-                    unifreightMessageM.Requset.push(["InsuranceAmount", ""]);
-                    unifreightMessageM.Requset.push(["InsuranceCurrency", ""]);
-
-                    var OpeningInsuranceCase = TextCodeTranslator.Translate("Customs.Declaration.O.OpeningInsuranceCase");
-                    AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                        "AmitalGatewayUtil.CustomExportActivateInsurance",
-                        "BFIHMAIN.LogitudeTask",
-                        "CustomExportActivateInsurance",
-                        unifreightMessageM,
-                        OpeningInsuranceCase);
-
-
-                }
-
-            });
-
-
-        }
-
-    }
-
-    ShowIndication() {
-
-
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
-            var table = window.ObjectTables.filter(d => d.Name === 'Customs.ClientIndication')[0];
-
-            var IsIndicationsClientFeature = FeatureLocator.Features.filter(f => (f.Code == "IndicationsClient") && f.ObjectTableId == table.Id)[0];
-            if (IsIndicationsClientFeature) {
-
-                if (this.IsPreference && this.allowExport) {
-
-                    if (!AppTool.IsNullOrEmpty(this.declarationPM.ImporterId)) {
-                        var msg = new MessageWindow();
-                        msg.RTL = true;
-
-                        let filters = new ApiQueryFilters();
-
-
-                        filters.PageSize = 200;
-                        filters.PageIndex = 0;
-                        filters.GetAll = false;
-                        filters.GetCount = true;
-
-                        filters.addAdditionalFilter("ClientId", this.declarationPM.ImporterId, null, null, "Equals", false, false, false, "string", false);
-                        filters.addAdditionalFilter("Tenant", this.declarationPM.Tenant, null, null, "Equals", true, false, false, "string");
-
-
-                        return this.clientIndicationListService.getByFilters(filters)
-                            .subscribe(r => {
-                                this.clientIndicationList = r.Result
-
-                                if (this.clientIndicationList.length > 0) {
-
-                                    if (this.clientIndicationList.filter(x => x.CustomerIndicationTypeID == "2").length > 0) {
-                                        var d = new Date();
-                                        var date = Date.parse(d.toString())
-                                        var IsExporterExpire = this.clientIndicationList.find(x => x.CustomerIndicationTypeID == "2" && Date.parse(x.StartDate.toString()) < date && Date.parse(x.EndDate.toString()) > date);
-
-                                        if (!IsExporterExpire) {
-                                            msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.DeclareInCustomsExpired"));
-                                        }
-                                    }
-                                    else {
-                                        msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.NotDeclareInCustoms"));
-
-                                    }
-                                }
-                                else {
-                                    msg.Show(TextCodeTranslator.Translate("Customs.ClientIndication.O.UpdatDataImpExp"));
-
-                                }
-                            });
-                    }
-
-                }
-
-
-            }
-        });
-    }
-    public get UpdateOptions() {
-        return UpdateOptions;
-    }
-}
-
-class UpdateGeneralArgsParams {
-    public UpdateField: string;
-    public LookUpTableName: string;
-    public ObjectTableName: string;
-    public Validate: any;
-    public Title: string;
-    public IsItemsWithNoValue: boolean;
-    public ItemsWithNoValueTitle: string;
-    public SelectionCompletedMethod: any;
-}
-
-class UpdateGeneralParams {
-    public Title: string;
-    public Arguments: UpdateGeneralArgsParams;
-}
-
-enum UpdateOptions {
-    QuantityType,
-    ProcessCode,
-    CountryOfOrigin,
-    ClassificationCode,
-    ProtocolCode,
-    TradeAgreement
+    //#endregion
 }
 
 export class SupplierInvoiceItemLine extends BaseComponent {
@@ -3750,15 +2510,12 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private customsVendorListService: CustomsVendorListService = new CustomsVendorListService();
     private _CustomsCountryListService: CustomsCountryListService = new CustomsCountryListService();
-    private tradeAgreementProtocolListService: TradeAgreementProtocolListService = new TradeAgreementProtocolListService();
 
     public ShowClassefierRemarkInfo: boolean = false;
     public ShowClassifierRemarkTooltip: boolean = false;
     public ShowTariffErrorInfo: boolean = false;
     public ShowTariffErrorTooltip: boolean = false;
-    public ShowValidatioIcon: boolean = false;
 
-    public allowExport = false;
     public closedManullay: boolean = false;
 
     ClassefierRemarkToolTipWrapper: string = "ClassefierRemarkToolTipWrapper";
@@ -3766,11 +2523,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     TariffErrorToolTipWrapper: string = "TariffErrorToolTipWrapper";
     TariffErrorToolTip: string = "TariffErrorToolTip";
     private CurrentSession = SessionLocator.SelectedSession;
-    //public GITITEMCRs: GITITEMCR[];
-    constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent, allowExport: boolean = false) {
+    constructor(EntityPM: SupplierInvoiceItemPM, parent: SupplierInvoiceGeneralTabComponent) {
         super();
         this.entityPM = EntityPM;
-        this.allowExport = allowExport;
+
         //calculate ids
         this.ClassefierRemarkToolTipWrapper += EntityPM.SequenceNumeric;
         this.ClassefierRemarkToolTip += EntityPM.SequenceNumeric;
@@ -3778,18 +2534,18 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         //this.TariffErrorToolTip += EntityPM.SequenceNumeric;
 
         ////Fill tariff error text
-        //this.TariffErrorText = "מדינה לם תוםמת לקוד התעריף"; //"Tarrif doesnt match country” 
+        //this.TariffErrorText = "מדינה לא תואמת לקוד התעריף"; //"Tarrif doesnt match country” 
 
         ////get currenct customs country
-        if (this.OriginCountryCode) {
-            this._CustomsCountryListService.getSingle(this.OriginCountryCode).subscribe((res) => {
-                var entity = res.Result;
-                if (entity) {
-                    this.CustomsCountry = entity;
-                    this.OriginCountryName = this.CustomsCountry.LocalName;
-                }
-            });
-        }
+        //if (this.OriginCountryCode) {
+        //    this._CustomsCountryListService.getSingle(this.OriginCountryCode).subscribe((res) => {
+        //        var entity = res.Result;
+        //        if (entity) {
+        //            this.CustomsCountry = entity;
+        //            this.OriginCountryName = this.CustomsCountry.LocalName;
+        //        }
+        //    });
+        //}
 
         if (this.entityPM.ClasifiedRemarks) {
             this.ShowClassefierRemarkInfo = true;
@@ -3812,8 +2568,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.WarningVisiblity = false;
             this.OkVisiblity = false;
             this.IsBlueBorderVisibile = false;
-
-
         }
 
         else if (this.entityPM.CertificatesStatusCode == "1") {
@@ -3834,6 +2588,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             this.IsBlueBorderVisibile = true;
         }
 
+
         if (this.entityPM.ItemAdditionalStatus) {
             this.ItemAdditionalStatusVisibility = true;
         }
@@ -3849,7 +2604,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
 
 
-        this.GetQuantityType(false, true);
+        this.GetQuantityType(false);
         this.QuantityTypeCodeLoaded =
             //this.CurrentSession.SubscriptionAdd(
             this.CurrentSession.QuantityTypeCodeLoadedEvent.subscribe((res) => {
@@ -3910,39 +2665,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
-    gITITEMCRs: GITITEMCR[];
-    get GITITEMCRs() { return this.gITITEMCRs; }
-    set GITITEMCRs(value: GITITEMCR[]) {
-
-        if (!AppTool.IsNullOrEmpty(value)) {
-            /*
-            for (GITITEMCR k in value) {
-                // var mySupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(k);
-                // SupplierInvioceItemCertificatPM newSupplierInvioceItemCertificatPM = mySupplierInvioceItemCertificatPM{ declara };
-                // newSupplierInvoiceItemPM.SupplierInvioceItemCertificats.push(newSupplierInvioceItemCertificatPM);
-                
-                for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                    var exist = item.SupplierInvioceItemCertificats.filter(d => d.certificateNumber == k.REQCERT.replace(/^0+/, ''))[0];
-                    if (!exist) {
-                        var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
-                        SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                        SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
-                        SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
-                        SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
-                        SupplierInvioceItemCertificat.CertificateNumber = "k.REQCERT";
-
-
-                        item.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-
-
-
-                    }
-                }
-            }
-            */
-        }
-    }
-
 
     tradeAgreement: TradeAgreementPM;
     get TradeAgreement() { return this.tradeAgreement; }
@@ -3961,9 +2683,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
-    CustomsCountryChanged($event) {
-        this.CustomsCountry = $event;
-    }
 
     customsCountry: CustomsCountryPM;
     get CustomsCountry() { return this.customsCountry; }
@@ -3971,6 +2690,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
         if (this.customsCountry != value) {
             this.customsCountry = value;
+            //this.CheckTariff();
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.OriginCountryName = value.LocalName;
@@ -3984,7 +2704,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     itemCodeDetails.IsNew = true;
                 }
             }
-            this.CheckTariff();
         } else {
             this.OriginCountryName = null;
             this.OriginCountryCode = null;
@@ -3997,7 +2716,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     itemCodeDetails.IsNew = true;
                 }
             }
-            this.CheckTariff();
         }
     }
 
@@ -4015,9 +2733,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     public get ItemDescription() { return this.entityPM.ItemDescription; }
     public set ItemDescription(newValue: string) { this.entityPM.ItemDescription = newValue; }
-
-    public get TariffID() { return this.entityPM.TradeAgreementCode; }
-    public set TariffID(newValue: string) { this.entityPM.TradeAgreementCode = newValue; }
 
     public get NotForAccumaltion() { return this.entityPM.NotForAccumaltion; }
     public set NotForAccumaltion(value: boolean) {
@@ -4048,30 +2763,19 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get TradeAgreementCode() { return this.entityPM.TradeAgreementCode; }
     public set TradeAgreementCode(newValue: string) {
         this.entityPM.TradeAgreementCode = newValue;
-        this.CheckTariff();
+        //this.CheckTariff();
     }
 
     public get TradeAgreementName() { return this.entityPM.TradeAgreementName; }
     public set TradeAgreementName(newValue: string) { this.entityPM.TradeAgreementName = newValue; }
 
-    public get DutyRegimeProtocolCode() { return this.entityPM.DutyRegimeProtocolCode; }
-    public set DutyRegimeProtocolCode(newValue: string) {
-        this.entityPM.DutyRegimeProtocolCode = newValue;
-        this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) =>
-            this.DutyRegimeProtocolLocalName = res?.Result?.LocalName);
-    }
-
-    public get DutyRegimeProtocolLocalName() { return this.entityPM.DutyRegimeProtocolLocalName; }
-    public set DutyRegimeProtocolLocalName(newValue: string) { this.entityPM.DutyRegimeProtocolLocalName = newValue; }
 
     public get InvoiceQuantity() { return this.entityPM.InvoiceQuantity; }
     public set InvoiceQuantity(newValue: number) { this.entityPM.InvoiceQuantity = newValue; }
 
 
     public get InvoiceQuantityType() { return this.entityPM.InvoiceQuantityType; }
-    public set InvoiceQuantityType(newValue: string) {
-        this.entityPM.InvoiceQuantityType = newValue;
-    }
+    public set InvoiceQuantityType(newValue: string) { this.entityPM.InvoiceQuantityType = newValue; }
 
     public get InvoiceQuantityTypeName() { return this.entityPM.InvoiceQuantityTypeName; }
     public set InvoiceQuantityTypeName(newValue: string) { this.entityPM.InvoiceQuantityTypeName = newValue; }
@@ -4079,38 +2783,18 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     doCalculate: boolean = false;
     public get ItemPrice() { return this.entityPM.ItemPrice; }
     public set ItemPrice(newValue: number) {
+
         if (newValue != this.entityPM.ItemPrice) {
             this.doCalculate = true;
             this.entityPM.ItemPrice = newValue;
-
-            let hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
-
-            if(this.entityPM.EntityParentPM.supplierInvoicePayments?.length == 1 && this.entityPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount != null && hasOcr && this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E"){
-                let sum = 0;
-                
-                sum = this.entityPM.EntityParentPM.supplierInvoiceItems
-                .filter(item => item.TransactionNatureCode === "2")
-                .reduce((acc, item) => acc + item.ItemPrice, 0);
-               
-                this.entityPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount = sum;
-                this.entityPM.EntityParentPM.supplierInvoicePayments[0].changeSetOp = "Update"
-            }
         }
 
 
     }
 
-    public get OriginCountryCode() { return this.entityPM.OriginCountryCode; }
+    public get OriginCountryCode()
+    { return this.entityPM.OriginCountryCode; }
     public set OriginCountryCode(newValue: string) {
-        if (newValue) {
-            this._CustomsCountryListService.getSingle(newValue).subscribe((res) => {
-                var entity = res.Result;
-                if (entity) {
-                    this.CustomsCountry = entity;
-                    this.OriginCountryName = this.CustomsCountry.LocalName;
-                }
-            });
-        }
         this.entityPM.OriginCountryCode = newValue;
     }
 
@@ -4136,7 +2820,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     //#endregion
 
-    OnItemPriceLostFocus(ItemPriceTextBox: any) {
+    OnItemPriceLostFocus(value: number) {
 
         if (this.doCalculate) {
             if (isNaN(this.ItemPrice)) this.ItemPrice = 0;
@@ -4144,55 +2828,39 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             if (isNaN(this.oldvalue)) this.oldvalue = 0;
             var totalFCurr: number = this.Parent.Parent.TotalForeignCurrency;
             this.Parent.Parent.TotalForeignCurrency = totalFCurr - this.oldvalue + this.ItemPrice;
-            this.Parent.declarationPM.Direction != "E" ? this.Parent.Parent.Difference = this.Parent.Parent.TotalForeignCurrency - (this.Parent.InvoiceAmount) : this.Parent.GetDifferenceAndTotalForeignCurrency();
-
-
+            this.Parent.Parent.Difference = this.Parent.Parent.TotalForeignCurrency - (this.Parent.InvoiceAmount);
         }
         this.oldvalue = this.entityPM.ItemPrice;
         this.doCalculate = false;
-        ItemPriceTextBox.TextValue = this.oldvalue;
     }
 
-
-    
-
-    GetQuantityType(isChangeInvoiceQuantityType: boolean = true, calcInvoiceQuantityType: boolean = false,ovverideValue:boolean=false) {
-
+    GetQuantityType(isChangeInvoiceQuantityType: boolean = true) {
         if (this.ClassificationCode != null) {
             var keys = Object.keys(this.Parent.ClasificationQtyTypes);
-            if (keys.indexOf(this.ClassificationCode) > -1 && !calcInvoiceQuantityType) {
+            if (keys.indexOf(this.ClassificationCode) > -1) {
                 var result: string = this.Parent.ClasificationQtyTypes[this.ClassificationCode];
                 if (result) {
                     this.QunatityTypeCode = "(" + result + ")";
                     if (this.Parent.IsChecked && isChangeInvoiceQuantityType) {
-                        if ((ovverideValue )||(this.InvoiceQuantityType == null && result != null) ) {
+                        if (this.InvoiceQuantityType == null && result != null) {
                             this.InvoiceQuantityType = result;
                         }
                     }
-                }
-                else{
-                    this.Send8314();
-                    this.InvoiceQuantityType=null;
-                    this.QunatityTypeCode=null;
                 }
             }
             else {
                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = null;
                 var code = this.ClassificationCode.toString().slice(0, this.ClassificationCode.toString().length - 1);
-                this.Parent.quantityTypeMessageService.GetQuantityType(code, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
+                this.Parent.quantityTypeMessageService.GetQuantityType(code).subscribe((myServiceResponse: ServiceResponse) => {
                     if (!myServiceResponse.HasError) {
-                        this.Parent.declarationPM.ProcedureCurrentCode;
+
 
                         if (!myServiceResponse.HasError) {
                             if (myServiceResponse.Result) {
                                 this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
                             }
                             else {
-                                if (!calcInvoiceQuantityType) {
-                                    this.Send8314()
-                                    this.QunatityTypeCode = null;
-                                }
-
+                                this.QunatityTypeCode = null;
                             }
 
 
@@ -4201,7 +2869,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                     this.InvoiceQuantityType = myServiceResponse.Result;
                                 }
                             }
-                            if (!(keys.indexOf(this.ClassificationCode) > -1) || calcInvoiceQuantityType) {
+                            if (!(keys.indexOf(this.ClassificationCode) > -1)) {
                                 this.Parent.ClasificationQtyTypes[this.ClassificationCode] = myServiceResponse.Result;
                             }
                             this.CurrentSession.QuantityTypeCodeLoadedEvent.emit({ ClassificationCode: this.ClassificationCode, QuantityTypeCode: this.QunatityTypeCode });
@@ -4233,48 +2901,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
 
     }
-    _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
-
-    Send8314() {
-
-        if (AppTool.IsNullOrEmpty(this.ClassificationCode)) return
-        var currRequestParams = new CustomsItemDetailsQueryRequestParams();///Force new GUID On Each Send !!
-        currRequestParams.ValidToDate = new Date();
-        currRequestParams.Classification = this.ClassificationCode;
-        currRequestParams.CustomsBookType = this.Parent.declarationPM.Direction == 'I' ? 1 : 2;
-
-        currRequestParams.LoggingEnabled = true;
-        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-        currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
-        currRequestParams.ForcePersonalSign = false;
-        var ResponseData: any
-        CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId, "שםילתם לנתוני פרט מכס", true)
-            .then((res) => {
-                if (res) {
-                    ResponseData = res;
-
-                    if (!ResponseData.HasError)
-                        this.GetQuantityType(true, true)
-                }
-
-            }
-
-
-            ).catch((err) => {
-
-
-            });
-
-        this._IIGGeneralMessagesService.PostCustomsItemDetailsQuery(currRequestParams)
-            .subscribe((myServiceResponse: ServiceResponse) => {
-
-            });
-
-
-    }
-
 
     public pointers: CustomsDocumentPointerPM[];
     DeleteButtonClicked() {
@@ -4314,9 +2940,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!this.Parent.IsReadOnly) {
             var deletedItemPrice: number = this.entityPM.ItemPrice;
             if (this.Parent.EntityPM.SupplierInvoiceItems.includes(this.entityPM)) {
-                if (this.ShowValidatioIcon == true) {
-                    this.Parent.Parent.tariffErrorItems -= 1;
-                }
                 this.Parent.EntityPM.RemoveSupplierInvoiceItem(this.entityPM);
                 var sequence;
                 if (this.Parent.ItemsSource.Collection[0].SequenceNumeric == this.entityPM.SequenceNumeric) {
@@ -4331,12 +2954,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
 
                 //var sortedCollection = this.Parent.ItemsSource.Collection.sort((a, b) => { return a.SequenceNumeric - b.SequenceNumeric });
-                if (!this.Parent.declarationPM.IsAmendment) {
-                    this.Parent.ItemsSource.Collection.forEach((item: SupplierInvoiceItemLine) => {
-                        item.SequenceNumeric = sequence;
-                        sequence++;
-                    });
-                }
+                this.Parent.ItemsSource.Collection.forEach((item: SupplierInvoiceItemLine) => {
+                    item.SequenceNumeric = sequence;
+                    sequence++;
+                });
                 this.Parent.EntityPM.FullItemsCount = this.Parent.EntityPM.FullItemsCount - 1;
                 this.Parent.EntityPM.FullChildrenCount--;
                 this.Parent.ChildrenCount = "(" + this.Parent.EntityPM.FullChildrenCount + ")";
@@ -4353,7 +2974,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
-            windowArgs.allowExport = this.allowExport;
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1000;
@@ -4367,31 +2987,28 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SetCertificateStatusVisibility());
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemCertificatesComponent');
         }
     }
 
     EditItem(item: SupplierInvoiceItemLine) {
         if (!AppTool.IsNullOrEmpty(item)) {
-
-            if (this.Parent.declarationPM.Direction == "E")
-                this.allowExport = true;
-
             var windowArgs: any = {};
             windowArgs.SupplierInvoiceItemPM = item.entityPM;
             windowArgs.Parent = item;
             windowArgs.IsDisplayOnly = this.Parent.IsReadOnly;
+
             var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoiceItem");
 
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 1010;
+            logWindow.Width = 1000;
             logWindow.Height = 600;
             logWindow.Title = windowTitle;
             logWindow.ShowCloseButton = false;
-            windowArgs.allowExport = this.allowExport;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SetStatusVisibility());
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/EditSupplierInvoiceItem');
+
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/EditSupplierInvoiceItem');
 
 
         } else {
@@ -4456,115 +3073,104 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
-    public static validateClassificationCode(classificationCode: any) {
-        var checkDigit, digit;
-        var newValue = classificationCode;
-        let result = {
-            valid: true,
-            errorDescription: '',
-            ClassificationCode: classificationCode
-        };
+    OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
+        var newValue = this.ClassificationCode;
+        this.valid = true;
+        this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
 
-        if (!AppTool.IsNullOrEmpty(classificationCode)) {
-            if (newValue.toString().length > 11) {
-                result.valid = false;
-                result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong");
-            }
-            else if (newValue.toString().length < 8) {
-                result.valid = false;
-                result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort");
-
-            }
-            else if (newValue.toString().length == 8) {
-                newValue = newValue + "00";
-                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-                newValue = newValue + checkDigit;
-                result.valid = true;;
-
-            }
-            else if (newValue.toString().length == 9) {
-                digit = newValue.toString().substring(8);
-
-                newValue = newValue.toString().substring(0, 8) + "00" + newValue.toString().substring(8);
-                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.substring(0, 10));
-
-                if (digit != checkDigit.toString()) {
-                    result.valid = false;
-                    result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString();
-
-                }
-            }
-            else if (newValue.toString().length == 10) {
-                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-                newValue = newValue + "" + checkDigit;
-            }
-            else if (newValue.toString().length == 11) {
-                digit = newValue.toString().substring(10);
-                checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.toString().substring(0, 10));
-                if (digit != checkDigit.toString()) {
-                    result.valid = false;
-                    result.errorDescription = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString();
-
-                }
-            }
+        if (AppTool.IsNullOrEmpty(newValue)) {
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
         }
-        result.ClassificationCode = newValue;
-        return result;
-    }
+        else if (newValue.toString().length > 11) {
+            this.valid = false;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeLong"));
+
+        }
+        else if (newValue.toString().length < 8) {
+            this.valid = false;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+
+        }
+        else if (newValue.toString().length == 8) {
+            newValue = newValue + "00";
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            newValue = newValue + this.checkDigit;
+            this.valid = true;;
+
+        }
+        else if (newValue.toString().length == 9) {
+            this.digit = newValue.toString().substring(8);
+
+            newValue = newValue.toString().substring(0, 8) + "00" + newValue.toString().substring(8);
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.substring(0, 10));
+
+            if (this.digit != this.checkDigit.toString()) {
+                this.valid = false;
+                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+
+            }
+            else {
+                this.valid = true;
+            }
+
+        }
+        else if (newValue.toString().length == 10) {
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            newValue = newValue + "" + this.checkDigit;
+            this.valid = true;
+
+        }
+        else if (newValue.toString().length == 11) {
+            this.digit = newValue.toString().substring(10);
+            this.checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.toString().substring(0, 10));
+            if (this.digit != this.checkDigit.toString()) {
+                this.valid = false;
+                this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + this.checkDigit.toString());
+
+            }
+            else {
+                this.valid = true;
+            }
 
 
-    async ClassificationCodeChanged(logCellTemplate: any, classificationTextBox: any) {
+        }
+
+        else {
+            this.valid = true;
+            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
+        }
+
+        this.ClassificationCode = newValue;
+        classificationTextBox.TextValue = newValue;
         if (this.valid) {
             SessionLocator.SustainFocusOnCell = false;
 
             if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
-
-                //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode, this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+              //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
                 if (itemCodeDetails == null) {
+
+
                     this.AdditemCodeDetail();
 
                 }
                 else {
-
                     if (itemCodeDetails.ClassificationCode != this.ClassificationCode || itemCodeDetails.ItemDescription != this.ItemDescription) {
                         itemCodeDetails.ClassificationCode = this.ClassificationCode;
                         itemCodeDetails.ItemDescription = this.ItemDescription;
                         itemCodeDetails.VendorNumber = this.Parent.vendorNumber;
                         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
-
                             itemCodeDetails.InvoiceQuantityType = this.InvoiceQuantityType;
                         }
-                        if (GITITEMCacheService.Instance.IsCountryPURForItems) {
+                      if (GITITEMCacheService.Instance.IsCountryPURForItems) {
                             itemCodeDetails.OriginCountryCode = this.OriginCountryCode;
                             itemCodeDetails.OriginCountryName = this.OriginCountryName;
-                            itemCodeDetails.TariffID = this.TradeAgreementCode;
                         }
-                        for (let inner of this.GITITEMCRs) {
-                            itemCodeDetails.GITITEMCRs.push(new GITITEMCR(inner.COUNTER, inner.REQCERT, inner.REMARKS));
-                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == inner.REQCERT.replace(/^0+/, ''))[0];
-                            if (!exist) {
-                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
-                                SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
-                                SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
-                                SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
-                                //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = inner.REQCERT.replace(/^0+/, '');
-                                this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-                                var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
-                                multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
-                            }
-                        }
-                        this.SetCertificateStatusVisibility();
                         itemCodeDetails.IsNew = true;
-                        itemCodeDetails.GITITEMCRs = (this.GITITEMCRs);
                     }
                 }
             }
             this.GetQuantityType();
-            logCellTemplate.IsDisplayMode = true;
-            //logCellTemplate.IsEditMode = false;          
         }
         else {
             //var element = document.getElementById(logCellTemplate.OuterDivId);
@@ -4583,54 +3189,34 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
             }
 
-
-
         }
-    }
-
-    async OnClassificationLostFocus(logCellTemplate: any, classificationTextBox: any) {
-        var res = SupplierInvoiceItemLine.validateClassificationCode(this.ClassificationCode);
-        if (res.valid) {
-            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
-        }
-        else {
-            this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", false, res.errorDescription);
-        }
-        this.ClassificationCode = res.ClassificationCode;
-        classificationTextBox.TextValue = this.ClassificationCode;
-        this.valid = res.valid;
-        this.ClassificationCodeChanged(logCellTemplate, classificationTextBox);
     }
 
     private AdditemCodeDetail() {
         var originCountryCode: string = null;
         var originCountryName: string = null;
-        var tariffID: string = null;
         var invoiceQuantityType: string = null;
         if ( /*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
             originCountryCode = this.OriginCountryCode;
             originCountryName = this.OriginCountryName;
-            //tariffID = this.TradeAgreementCode;
         }
         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
-
             invoiceQuantityType = this.InvoiceQuantityType;
         }
-        tariffID = this.TradeAgreementCode
         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, this.InvoiceQuantityType));
         GITITEMCacheService.Instance. /*ItemCode_LocalCache.push*/AddItemCodeComponent(
-            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode, tariffID, this.GITITEMCRs, this.Parent.declarationPM.Direction));
+            new ItemCodeComponent(this.ItemCode, this.ClassificationCode, this.ItemDescription, this.Parent.vendorNumber, originCountryCode, originCountryName, true, invoiceQuantityType, this.Parent.declarationPM.CustomerCode));
     }
 
     OnOriginCountryCodeLostFocus(logCellTemplate: any, originCountryCodeLov: any) {
-        if (!/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+      if (!/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
             return;
         }
 
         if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
             //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
             var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-
+          
             if (itemCodeDetails != null) {
                 itemCodeDetails.OriginCountryCode = this.OriginCountryCode != null ? this.OriginCountryCode : this.customsCountry != null ? this.customsCountry.Code : null;
                 itemCodeDetails.OriginCountryName = this.OriginCountryName != null ? this.OriginCountryName : this.customsCountry != null ? this.customsCountry.LocalName : null;
@@ -4643,135 +3229,69 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!this.entityPM.ClassificationCode) this.entityPM.ClassificationCode = "";
         if (!this.entityPM.ItemDescription) this.entityPM.ItemDescription = "";
 
-        if (AppTool.IsNullOrEmpty(this.ItemCode) && this.Parent.declarationPM.Direction != "E") {
+        if (AppTool.IsNullOrEmpty(this.ItemCode)) {
             return;
         }
-        //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
+
+      //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
         //if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0)
         {
-            if (this.Parent.declarationPM.Direction != "E") {
-                //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-                var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponentByDirection(this.ItemCode, this.Parent.declarationPM.Direction);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
-                if (itemCodeDetails != null) {
-                    let b = true;
-                    if (b) {
-                        GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, itemCodeDetails)
-                            .then(myOnItemCodeAddResult => {
-                                switch (myOnItemCodeAddResult) {
+            //var itemCodeDetails = this.Parent.Parent.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
 
-                                    case 2/*OnItemCodeAddResult.AddTaskToUpdateDB*/:
-                                        {
-                                            GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(
-                                                new ItemCodeComponent(
-                                                    this.ItemCode,
-                                                    this.ClassificationCode,
-                                                    this.ItemDescription,
-                                                    this.Parent.vendorNumber,
-                                                    this.OriginCountryCode,
-                                                    this.OriginCountryName, true,
-                                                    this.InvoiceQuantityType,
-                                                    this.Parent.declarationPM.CustomerCode,
-                                                    this.TariffID,
-                                                    this.GITITEMCRs,
-                                                    this.Parent.declarationPM.Direction
-                                                )
-                                            );
-                                        }
-                                        break;
-                                    //case OnItemCodeAddResult.OverwriteRowFromDB:
-                                    //case OnItemCodeAddResult.voidDoNothing:
-                                    default:
-                                        {
-                                            itemCodeDetails.IsNew = true;
-                                            this.ClassificationCode = itemCodeDetails.ClassificationCode;
-                                            this.ItemDescription = itemCodeDetails.ItemDescription;
-                                            if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+            var itemCodeDetails = GITITEMCacheService.Instance.FirstItemCodeComponent(this.ItemCode);//.ItemCode_LocalCache.filter(vm => vm.ItemCode == this.ItemCode)[0];
+            if (itemCodeDetails != null) {
+                let b = true;
+                if (b) {
+                    GITITEMCacheService.Instance.OnItemCodeAdd(this.entityPM, itemCodeDetails)
+                        .then(myOnItemCodeAddResult => {
+                            switch (myOnItemCodeAddResult) {
 
-                                                this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
-                                            }
-                                            if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
-                                                this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
-                                                this.OriginCountryName = itemCodeDetails.OriginCountryName;
-                                                this.TradeAgreementCode = itemCodeDetails.TariffID;
-                                            }
-                                            //this.entityPM.AddSupplierInvioceItemCertificat()
-
-                                            for (let item of itemCodeDetails.GITITEMCRs) {
-                                                var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == item.REQCERT.replace(/^0+/, ''))[0];
-                                                if (!exist) {
-                                                    var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
-                                                    SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                                                    SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
-                                                    SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
-                                                    SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
-                                                    //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-                                                    SupplierInvioceItemCertificat.ReqConfirmationTypeCode = item.REQCERT.replace(/^0+/, '');
-                                                    this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-                                                    var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
-                                                    multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
-                                                }
-                                            }
-                                            this.GITITEMCRs = itemCodeDetails.GITITEMCRs;
-                                            this.SetCertificateStatusVisibility();
-                                            this.GetQuantityType();
-                                        }
-                                        break;
-                                }
-                                return;
-                            });
-                    }
-
-
-
-
-                    return;
-                }
-            }
-            else if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR")) {
-                if (AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) &&
-                    !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) &&
-                    (!AppTool.IsNullOrEmpty(this.ItemCode) || !AppTool.IsNullOrEmpty(this.ItemDescription))) {
-
-                    const clientItemExtendedPMService = new ClientItemExtendedPMService();
-                    let clientItemRequest: Observable<ServiceResponse>;
-
-                    clientItemRequest = clientItemExtendedPMService.GetClientItemByItemKeyPM(
-                        this.ItemDescription,
-                        this.ItemCode,
-                        this.Parent.declarationPM.ExporterImporterCode,
-                        SessionLocator.Tenant
-                    );
-
-                    clientItemRequest.subscribe((response: ServiceResponse) => {
-                        if (response?.Result) {
-                            const clientItemPM: ClientItemPM = response.Result;
-                            this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode;
-                            this.entityPM.ItemDescription = this.entityPM.ItemDescription || clientItemPM?.ItemDescription;
-                            this.entityPM.ItemCode = this.entityPM.ItemCode || clientItemPM?.ItemCode;
-                            this.entityPM.OriginCountryCode = this.entityPM.OriginCountryCode || clientItemPM?.OriginCountryCode;
-                            this.entityPM.OriginCountryName = this.entityPM.OriginCountryName || clientItemPM?.OriginCountryName;
-
-                            if (!AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode)) {
-                                this.Parent.quantityTypeMessageService.GetQuantityType(
-                                    this.entityPM.ClassificationCode,
-                                    this.Parent.declarationPM.Direction === 'E'
-                                ).subscribe((myServiceResponse: ServiceResponse) => {
-                                    if (!myServiceResponse.HasError && myServiceResponse.Result != null) {
-                                        this.entityPM.InvoiceQuantityType = myServiceResponse.Result;
-                                        this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
+                                case 2/*OnItemCodeAddResult.AddTaskToUpdateDB*/:
+                                    {
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(
+                                            new ItemCodeComponent(
+                                                this.ItemCode,
+                                                this.ClassificationCode,
+                                                this.ItemDescription,
+                                                this.Parent.vendorNumber,
+                                                this.OriginCountryCode,
+                                                this.OriginCountryName, true,
+                                                this.InvoiceQuantityType,
+                                                this.Parent.declarationPM.CustomerCode
+                                            )
+                                        );
                                     }
-                                });
+                                    break;
+                                //case OnItemCodeAddResult.OverwriteRowFromDB:
+                                //case OnItemCodeAddResult.voidDoNothing:
+                                default:
+                                    {
+                                        itemCodeDetails.IsNew = true;
+                                        this.ClassificationCode = itemCodeDetails.ClassificationCode;
+                                        this.ItemDescription = itemCodeDetails.ItemDescription;
+                                        if (GITITEMCacheService.Instance.IsUnitPURForItems) {
+                                            this.InvoiceQuantityType = itemCodeDetails.InvoiceQuantityType;
+                                        }
+                                        if (/*this.Parent*/GITITEMCacheService.Instance.IsCountryPURForItems) {
+                                            this.OriginCountryCode = itemCodeDetails.OriginCountryCode;
+                                            this.OriginCountryName = itemCodeDetails.OriginCountryName;
+                                        }
+                                        this.GetQuantityType();
+                                    }
+                                    break;
                             }
-                        }
-                    });
+                            return;
+                        });
                 }
+
+
+
+
+                return;
             }
-
-
         }
-        if(this.Parent.isConnectToUnifreight) 
-        {
-          this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, false)
+
+        this.declarationWebService.GetGITITEMPartnersItemListByItemCode(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, false)
             .subscribe((response: ServiceResponse) => {
                 var res = response.Result;
                 if (!AppTool.IsNullOrEmpty(res) && res.length == 1) {
@@ -4794,8 +3314,11 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             this.PartnerItemsSelectionCompleted(this.entityPM, res[0]);
                                             return;
                                         } else {
+                                            //Eitancommented 15 minutes ago
+                                            //@odelia devashi @itzik M סיכום:
+                                            //גם כאשר מזינים קודם פרט מכס ואח"כ קוד פריט (מקט), עדיין צריך ליצור TASK של לימוד עצמי + שימוש ב-CACHE ברמת SESSION
                                             if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
-                                                this.AdditemCodeDetail();
+                                                this.AdditemCodeDetail();//Task 43218: שיפור במנגנון לימוד עצמי
                                             }
                                         }
 
@@ -4804,147 +3327,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                         });
                 }
             });
-        }
-        else 
-        {
-          if(this.Parent.declarationPM.Direction!='E'){
-            this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',false)
-            .then(async (res) => {
-             
-                if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {                      
-                    this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
-                    return;
-                }
-                else {                     
-                    this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'ALL',true)
-                    .then(async (res) => {
-                            if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
-                                this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
-                                return;
-                            }
-                            else {
-                                this.GetGITITEMPartnersItemListFromUnifreight(this.Parent.vendorNumber, this.Parent.declarationPM.CustomerCode, this.ItemCode, 30, 'NAME',true).then(async (res) => {                                 
-                                        if (!AppTool.IsNullOrEmpty(res) && res.size() == 1) {
-                                            this.PartnerItemsSelectionCompleted(this.entityPM, res.get(0));
-                                            return;
-                                        } else {
-                                           if (!AppTool.IsNullOrEmpty(this.ClassificationCode)) {
-                                                this.AdditemCodeDetail();
-                                            }
-                                        }
-                                    })
-                                 
-                            }
-                        })
-                    
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching data: ", error);
-            });                    
-          
-           
-          }
-              
-           
-        }
-    }
-     GetGITITEMPartnersItemListFromUnifreight(vendorId: string, customerCode: string, itemCode: string, top: number, searchBy: string, searchNULLVendor: boolean): Promise<List<CustomsPartnersItemList>> {
-        return new Promise((resolve, reject) => {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (message: UnifreightMessageM) => {
-                    var IsMatchUnifreightCallbackCommand = (                      
-                        message.LogitudeEntityNumber == this.Parent.declarationPM.Id &&
-                        message.LogitudeViewModel == "SupplierInvoiceGeneralTabComponent.ts-GetGITITEMS");
-                    if (IsMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
-                        let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
-                        const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-                        const result = this.parseXml(xmlData(XMLResponse));
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        resolve(result); 
-                       
-                    }
-                }
-            );
-
-        var unifreightMessageM =
-            AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.Parent.declarationPM.CustomFileNo, this.Parent.declarationPM.Id, "SupplierInvoiceGeneralTabComponent.ts-GetGITITEMS", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
-        unifreightMessageM.Requset.push(["XMLRequest", this.convertToXML(vendorId, customerCode, itemCode, top, searchBy,searchNULLVendor)]);
-
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "AmitalGatewayUtil.GetGITITEMS",
-            "CFIHMAIN.LogitudeTask",
-            "GetGITITEMS",
-            unifreightMessageM,
-            "");
-        });
     }
 
-
-    parseXml(xmlString: string): List<CustomsPartnersItemList> {
-       
-        // Parse the XML string into a DOM Document
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
-
-        // Extract values from the XML
-        const RESPONSE = xmlDoc.getElementsByTagName('RESPONSE')[0];
-        const items = RESPONSE.getElementsByTagName('ITEM');
-        var customsPartnersItemLists:List<CustomsPartnersItemList> = new List<CustomsPartnersItemList>();
-        var customsPartnersItemList: CustomsPartnersItemList;
-        for (let i = 0; i < items.length; i++) {
-            const item = items[i];
-            customsPartnersItemList = new CustomsPartnersItemList();
-
-            customsPartnersItemList.Id = item.getElementsByTagName('COUNTER')[0]?.textContent || '';
-            customsPartnersItemList.Tenant = this.Parent.declarationPM.Tenant;
-            customsPartnersItemList.ItemCode = item.getElementsByTagName('ITEMNO')[0]?.textContent || '';
-            customsPartnersItemList.ClassificationCode = item.getElementsByTagName('PRATID')[0]?.textContent || '';
-            customsPartnersItemList.Name = item.getElementsByTagName('NAMEENG')[0]?.textContent || '';
-            customsPartnersItemList.SearchFields = item.getElementsByTagName('SEARCHENG')[0]?.textContent || '';
-            customsPartnersItemList.CustomerId = item.getElementsByTagName('PARTNERID')[0]?.textContent || '';
-            customsPartnersItemList.VendorId = item.getElementsByTagName('SAPAKID')[0]?.textContent || '';
-            customsPartnersItemList.CustomerName = item.getElementsByTagName('PARTNERID')[0]?.textContent || '';
-            customsPartnersItemList.VendorName = item.getElementsByTagName('VENDORNAME')[0]?.textContent || '';
-            customsPartnersItemList.OriginCountryCode = item.getElementsByTagName('ORIGINCOUNTRY')[0]?.textContent || '';
-            if(!AppTool.IsNullOrEmpty(customsPartnersItemList.OriginCountryCode)) 
-            {
-                this.Parent.customsCountryListService.getSingleFromCache(customsPartnersItemList.OriginCountryCode).subscribe(res=>{
-    
-                    if(!AppTool.IsNullOrEmpty(res?.Result?.LocalName)){
-                       customsPartnersItemList.OriginCountryName = res?.Result?.LocalName;
-                    }
-                    else{
-                        customsPartnersItemList.OriginCountryCode = null;
-                        customsPartnersItemList.OriginCountryName = null;
-                    }
-                });
-            }
-            customsPartnersItemList.InvoiceQuantityType = item.getElementsByTagName('UNITID')[0]?.textContent || '';
-
-           
-            customsPartnersItemLists.add(customsPartnersItemList);
-         
-        }               
-        return customsPartnersItemLists;
-    }
-    
-    convertToXML(vendorId: string, customerCode: string, itemCode: string, top: number, searchBy: string, searchNULLVendor: boolean) {      
-        return `<GITITEMS>
-        <PARTNERID>${customerCode}</PARTNERID>
-        <SAPAKID>${vendorId}</SAPAKID>
-        <SEARCH></SEARCH>
-        <ITEMNO>${itemCode}</ITEMNO>
-        <SEARCHBY>${searchBy}</SEARCHBY>
-        <TOP>${top}</TOP>
-        <SEARCHNULLVENDOR>${searchNULLVendor}</SEARCHNULLVENDOR>
-        </GITITEMS>`;   
-    }
-   
     ItemCodeDblClick(logCellTemplate: LogCellTemplateComponent) {
         if (!this.Parent.IsReadOnly) {
             console.log("[Double Click] ", this.entityPM);
@@ -4965,81 +3349,17 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 invoicePM: this.Parent.EntityPM,
                 customerCode: this.Parent.declarationPM.CustomerCode,
                 searchText: this.ItemCode,
-                declarationPM: this.Parent.declarationPM
             };
             logWindow.WindowClosed.subscribe(($event: any) => {
                 this.PartnerItemsSelectionCompleted(this.entityPM, $event);
             });
 
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsSelectionComponent');
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsSelectionComponent');
         }
     }
-    ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent, ClassificationTextBox) {
+                                     
 
-        if (this.Parent.declarationPM.Direction != "E" || this.Parent.declarationPM.IsConnectedToUnifreight) return;
-
-        if (this.Parent.hasOcr && SessionLocator.FeatureToggles.find(t => t.ToggleCode === "TCR")) {
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 850;
-            logWindow.Height = 650;
-            logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = {
-                isFromSupplierInvoice: true,
-                ClientCode: this.Parent.declarationPM?.ExporterImporterCode,
-            };
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                this.PartnerItemsSelectionCompleted(this.entityPM, $event);
-            });
-            logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/Items/ClientItemsTabComponent');
-        } else if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-
-            if (!this.Parent.IsReadOnly) {
-                console.log("[Double Click] ", this.entityPM);
-
-                if (this.Parent.IsDisplayOnly)
-                    return;
-
-                //close the cell before showing window; to avoid [true] to [false] problem
-                logCellTemplate.IsDisplayMode = true;
-                logCellTemplate.IsEditMode = false;
-
-                var logWindow = new LogitudeWindow();
-                logWindow.Width = 850;
-                logWindow.Height = 650;
-                logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
-                logWindow.ShowCloseButton = true;
-                logWindow.WindowArgs = {
-
-                    searchText: this.ClassificationCode,
-                    customFileNo: this.Parent.declarationPM.CustomFileNo,
-                    declarationId: this.Parent.declarationPM.Id,
-
-                };
-                logWindow.WindowClosed.subscribe(($event: any) => {
-
-                    this.PartnerItemsDescreptionSelectionCompleted(this.entityPM, $event, logCellTemplate, ClassificationTextBox);
-
-                });
-
-                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent');
-            }
-        }
-    }
-    PartnerItemsDescreptionSelectionCompleted(item, partnersItem, logcelltemplate, ClassificationTextBox) {
-        if (!AppTool.IsNullOrEmpty(partnersItem)) {
-            console.log("Response returned: ", partnersItem);
-            if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
-                item.ClassificationCode = partnersItem.ClassificationCode;
-                item.ItemDescription = partnersItem.ItemDescription;
-                logcelltemplate.IsDisplayMode = false;
-                logcelltemplate.IsEditMode = true;
-                this.OnClassificationLostFocus(logcelltemplate, ClassificationTextBox)
-            }
-        }
-    }
     PartnerItemsSelectionCompleted(item, partnersItem) {
-
         if (!AppTool.IsNullOrEmpty(partnersItem)) {
             console.log("Response returned: ", partnersItem);
             if (!AppTool.IsNullOrEmpty(partnersItem.ItemCode) || !AppTool.IsNullOrEmpty(partnersItem.ClassificationCode)) {
@@ -5060,11 +3380,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                                 item.OriginCountryCode,
                                                 item.OriginCountryName, true,
                                                 item.InvoiceQuantityType,
-                                                this.Parent.declarationPM.CustomerCode,
-                                                item.TariffID,
-                                                item.GITITEMCRs,
-                                                this.Parent.declarationPM.Direction
-
+                                                this.Parent.declarationPM.CustomerCode
                                             )
                                         );
                                         this.GetQuantityType();
@@ -5083,39 +3399,13 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                                             item.OriginCountryName = partnersItem.OriginCountryName;
                                         }
                                         if (GITITEMCacheService.Instance.IsUnitPURForItems) {
-
                                             item.InvoiceQuantityType = partnersItem.InvoiceQuantityType;
                                         }
-                                        partnersItem.GITITEMCRs.
-                                            forEach((itm: GITITEMCR) => {
-                                                //item.GITITEMCRs.push(itm);
-                                                // item.GITITEMCRs.push(new GITITEMCR(itm.COUNTER, itm.REQCERT, itm.REMARKS));
-                                            });
-                                        for (let itm of partnersItem.GITITEMCRs) {
-                                            // item.GITITEMCRs.push(new GITITEMCR(itm.COUNTER, itm.REQCERT, itm.REMARKS));
-                                            var exist = this.entityPM.SupplierInvioceItemCertificats.filter(d => d.CertificateNumber == itm.REQCERT.replace(/^0+/, ''))[0];
-                                            if (!exist) {
-                                                var SupplierInvioceItemCertificat: SupplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM(this.entityPM);
-                                                SupplierInvioceItemCertificat.DeclarationId = this.entityPM.DeclarationId;
-                                                SupplierInvioceItemCertificat.InvoiceCounterKey = this.entityPM.CounterKey;
-                                                SupplierInvioceItemCertificat.LineNumber = this.entityPM.LineNumber;
-                                                SupplierInvioceItemCertificat.Tenant = this.entityPM.Tenant;
-                                                //SupplierInvioceItemCertificat.CertificateNumber = item.REQCERT;
-                                                SupplierInvioceItemCertificat.ReqConfirmationTypeCode = itm.REQCERT.replace(/^0+/, '');
-                                                this.entityPM.AddSupplierInvioceItemCertificat(SupplierInvioceItemCertificat);
-                                                var multiCertificateUpdateComponent: MultiCertificateUpdateComponent = new MultiCertificateUpdateComponent();
-                                                multiCertificateUpdateComponent.UpdateCertStatusAlaaMethod(SupplierInvioceItemCertificat, this.entityPM);
-                                            }
-                                        }
-                                        item.TariffID = partnersItem.TariffID;
-                                        item.GITITEMCRs = partnersItem.GITITEMCRs;
-                                        this.SetCertificateStatusVisibility();
+
                                         //this.Parent.Parent.ItemCode_LocalCache.push(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType));
-                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode, item.TariffID, item.GITITEMCRs, this.Parent.declarationPM.Direction));
+                                        GITITEMCacheService.Instance./*ItemCode_LocalCache.push*/AddItemCodeComponent(new ItemCodeComponent(partnersItem.ItemCode, partnersItem.ClassificationCode, partnersItem.Name, this.Parent.vendorNumber, item.OriginCountryCode, item.OriginCountryName, false, item.InvoiceQuantityType, this.Parent.declarationPM.CustomerCode));
                                         this.GetQuantityType();
 
-                                        //item.IsNew = true;
-                                        //item.GITITEMCRs.push.apply(item.GITITEMCRs, partnersItem.GITITEMCRs) ;
                                     }
                                     break;
                             }
@@ -5142,7 +3432,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe(($event: any) => this.SetVehicleStatusVisibility());
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemVehicleComponent');
+          logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceItem/SupplierInvoiceItemVehicleComponent');
         }
     }
 
@@ -5210,7 +3500,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
             //    copiedItemIndex = this.Parent.ItemsSource.GetIndex(copieditem);
             //}
             entityPM.AddSupplierInvoiceItem(item);
-            this.Parent.ItemsSource.InsertAtIndex(copiedItemIndex + 1, new SupplierInvoiceItemLine(item, this.Parent, false));
+            this.Parent.ItemsSource.InsertAtIndex(copiedItemIndex + 1, new SupplierInvoiceItemLine(item, this.Parent));
             //this.Parent.ItemsSource.Collection.push(new SupplierInvoiceItemLine(item, this.Parent));//Insert(new SupplierInvoiceItemLine(item, this.Parent), false);
             if (isNaN(entityPM.FullItemsCount)) entityPM.FullItemsCount = 0;
 
@@ -5299,540 +3589,200 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
     CheckTariff() {
-        /*if (this.TradeAgreementCode && this.OriginCountryCode) {
+        if (this.TradeAgreementCode && this.OriginCountryCode) {
             this.ShowTariffErrorInfo = (this.CustomsCountry.TarriffCode != this.TradeAgreementCode);
         } else {
             this.ShowTariffErrorInfo = false;
-        }*/
-        if (!AppTool.IsNullOrEmpty(this.CustomsCountry) &&
-            this.OriginCountryName && this.CustomsCountry.TarriffCode && this.CustomsCountry.TarriffCode != this.TradeAgreementCode) {
-            if (this.ShowValidatioIcon != true) {
-                this.ShowValidatioIcon = true;
-                this.Parent.Parent.tariffErrorItems += 1;
-            }
-            var agreementCode = !AppTool.IsNullOrEmpty(this.TradeAgreementCode) ? this.TradeAgreementCode : "לם מוזן";
-            this.TariffErrorText = "קוד הסכם " + agreementCode + ", לם מתםים למדינה " + this.OriginCountryName + " (" + " הסכם " + this.CustomsCountry.TarriffCode + " )";
-
-        }
-        else {
-            if (this.ShowValidatioIcon == true) {
-                this.ShowValidatioIcon = false;
-                this.Parent.Parent.tariffErrorItems -= 1;
-            }
-        }
-    }
-}
-
-export class ModificationItemModel extends BaseComponent {
-    public EntityPM: SupplierInvoiceModificationPM = null;
-    public ObjectTableName = "Customs.SupplierInvoiceModification";
-    public DataContext = this;
-    isValid: boolean;
-    public customsExchangeRateExtendedPMService: CustomsExchangeRateExtendedPMService = new CustomsExchangeRateExtendedPMService();
-    public code: string;
-    constructor(private modificationPM: SupplierInvoiceModificationPM, private parent: SupplierInvoiceGeneralTabComponent, code: string) {
-        super();
-        this.EntityPM = modificationPM;
-        this.code = code;
-        this.isValid = true;
-        this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.parent.ExportModificationCurrency, this.parent.declarationPM.TaxationDateTime).subscribe((response: any) => {
-            if (response) {
-                if (response.Result) {
-                    var rate = response.Result[0];
-                    if (rate) {
-                        this.InvoiceCurrencyExchangeRtae = rate.ExchangeRate;
-                    }
-                }
-            }
-        });
-        if (this.EntityPM.Amount != null) {
-            this.parent.CalculateExportModificationAmount();
-            this.DeleteButton = true;
-        }
-        this.EntityPM.IsDirty = false;
-        this.UIProperties.SetEnabled("CurrencyTypeCode", this.ObjectTableName, !this.parent.IsDisplayOnly);
-        this.UIProperties.SetEnabled("Amount", this.ObjectTableName, !this.parent.IsDisplayOnly);
-
-    }
-
-    setSupplierInvoiceFreightAmountPM() {
-        var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.parent.EntityPM);
-        item.DeclarationId = this.parent.EntityPM.DeclarationId;
-        item.InvoiceCounterKey = this.parent.EntityPM.InvoiceCounterKey;
-        item.Tenant = this.parent.EntityPM.Tenant;
-        item.ChangeSetOp = "Insert";
-        this.parent.EntityPM.AddSupplierInvoiceFreightAmount(item);
-        this.parent.EntityPM.IsDirty = false;
-    }
-
-    setSupplierInvoiceFreightAmountPMWithCode(code: string) {
-        if (code != null) {
-            var item: SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM(this.parent.EntityPM);
-            item.DeclarationId = this.parent.EntityPM.DeclarationId;
-            item.InvoiceCounterKey = this.parent.EntityPM.InvoiceCounterKey;
-            item.Tenant = this.parent.EntityPM.Tenant;
-            item.CurrencyTypeCode = code;
-            item.ChangeSetOp = "Insert";
-            item.Amount = this.Amount;
-            this.parent.EntityPM.AddSupplierInvoiceFreightAmount(item);
-            this.parent.AmountList.Insert(new SupplierInvoiceFreightAmountLine(item, this.parent));
-        }
-    }
-
-    deletSupplierInvoiceFreightAmountPMWithCode(code: string) {
-        if (code != null) {
-            var OldCurrency = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode;
-            var OldPM = this.parent.EntityPM.SupplierInvoiceFreightAmounts.filter(item => item.CurrencyTypeCode == code);
-            if (OldPM[0] != null) {
-                this.parent.EntityPM.RemoveSupplierInvoiceFreightAmount(OldPM[0]);
-                this.parent.AmountList.Clear();
-            }
-        }
-    }
-
-    AddFreightToLists() {
-        if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] == null) {
-            this.setSupplierInvoiceFreightAmountPM();
-            if (this.parent.AmountList.Length == 0) {
-                this.parent.AmountList.Insert(new SupplierInvoiceFreightAmountLine(this.parent.EntityPM.SupplierInvoiceFreightAmounts[0], this.parent));
-            }
-        }
-    }
-    //#region Properties
-    get TypeCode() { return this.EntityPM.TypeCode; }
-    set TypeCode(value: string) {
-        if (this.EntityPM.TypeCode != value) {
-            //this.ModificationPM.TypeCode = value;
-
-            if (value == "I02") {
-                this.EntityPM.TypeCode = value;
-                this.isValid = false;
-                var errors = [];
-                errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.CalculatedFee"));
-            } else {
-                var exists;
-                if (this.parent.AdjustmentsList.Length != 0) {
-                    exists = this.parent.EntityPM.SupplierInvoiceModifications.find(d => d.TypeCode == value);
-                }
-                if (exists) {
-                    this.EntityPM.TypeCode = value;
-                    this.isValid = false;
-                    var errors = [];
-                    errors.push(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType"));
-                } else {
-                    this.EntityPM.TypeCode = value;
-                    //FirePropertyChanged("TypeCode");
-                    this.isValid = true;
-                    var errors = [];
-                }
-
-            }
-            this.EntityPM.IsDirty = false;
-
-        }
-    }
-
-    currencyType: CurrencyTypePM;
-    get CurrencyType() { return this.currencyType; }
-    set CurrencyType(value: CurrencyTypePM) {
-        if (this.currencyType != value && !AppTool.IsNullOrEmpty(value)) {
-            this.DeleteButton = true;
-            this.currencyType = value;
-            /* if (this.code == "67") {
-                this.parent.InsruanceCurrencyTypeCode = value.Code;
-            }
-            if (this.code == "144") {
-                this.AddFreightToLists();
-                var OldCurrency = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode;
-                if (OldCurrency != null && OldCurrency != value.Code) {
-                    this.deletSupplierInvoiceFreightAmountPMWithCode(OldCurrency);
-                    this.setSupplierInvoiceFreightAmountPMWithCode(value.Code);
-                }
-                if (OldCurrency == null) {
-                    this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId).CurrencyTypeCode = value.Code;
-                }
-                this.parent.FreightCurrencyTypeCode = value.Code;
-            }*/
-            this.CurrencyTypeCode = value.Code;
-            this.CurrencyTypeName = value.LocalName;
-            this.parent.CalculateExportModificationAmount();
-        }
-        if (AppTool.IsNullOrEmpty(value)) {
-            this.CurrencyTypeName = null;
-            this.CurrencyTypeCode = null;
-            this.parent.FreightCurrencyTypeCode = null;
-        }
-    }
-
-    get TypeName() { return this.EntityPM.TypeName; }
-    set TypeName(value: string) {
-        if (this.EntityPM.TypeName != value) {
-            this.EntityPM.TypeName = value;
-        }
-    }
-
-    get CurrencyTypeCode() { return this.EntityPM.CurrencyTypeCode; }
-    set CurrencyTypeCode(value: string) {
-        if (this.EntityPM.CurrencyTypeCode != value) {
-            this.EntityPM.CurrencyTypeCode = value;
-
-        }
-    }
-
-    get CurrencyTypeName() { return this.EntityPM.CurrencyTypeName; }
-    set CurrencyTypeName(value: string) {
-        if (this.EntityPM.CurrencyTypeName != value) {
-            this.EntityPM.CurrencyTypeName = value;
-
-        }
-    }
-
-    get Amount() { return this.EntityPM.Amount; }
-    set Amount(value: number) {
-        if (this.EntityPM.Amount != value && !AppTool.IsNullOrEmpty(value)) {
-            this.DeleteButton = true;
-            this.EntityPM.Amount = value;
-            this.parent.CalculateExportModificationAmount();
-            /*if (this.code == "67") {
-                this.parent.InsuranceAmount = value;
-            }
-            if (this.code == "144") {
-                this.AddFreightToLists();
-                this.parent.EntityPM.TotalFreightInFreightCurrency = value;
-                this.parent.TotalFreightInFreightCurrency = value;
-                this.parent.EntityPM.IsDirty = true;
-                if (this.parent.EntityPM.SupplierInvoiceFreightAmounts[0] != null) {
-                    this.parent.EntityPM.SupplierInvoiceFreightAmounts[0].Amount = value;
-                    this.parent.AmountList.Collection[0].Amount = value;
-                }
-            }*/
-        }
-        if (AppTool.IsNullOrEmpty(value)) {
-            this.EntityPM.Amount = null;
-        }
-
-    }
-    doCalculate: boolean = false;
-
-    OriginalText: string;
-    AmountOriginalText(originalText: string) {
-        this.OriginalText = originalText;
-        if (this.OriginalText) {
-            if ((this.OriginalText + "").indexOf('%') > -1) {
-                this.doCalculate = true;
-            }
-        }
-
-        this.OriginalText = null;
-    }
-
-    //#endregion
-
-    SetLocalName(entity, fieldName) {
-        if (!AppTool.IsNullOrEmpty(entity)) {
-            this[fieldName] = entity.LocalName;
-        } else {
-            this[fieldName] = null;
-        }
-
-    }
-    DiscountInNIS: number = 0;
-    InvoiceCurrencyExchangeRtae: number = 0;
-    DiscountInDsicCurrency: number = 0;
-
-    OnCurrentTypeLostFocus() {
-
-        if (this.parent.declarationPM.Direction == 'E' && !AppTool.IsNullOrEmpty(this.EntityPM.Amount)) {
-            this.parent.GetDifferenceAndTotalForeignCurrency()
         }
     }
 
 
-    OnAmountLostFocus() {
-        if (this.parent.declarationPM.Direction == 'E' && !AppTool.IsNullOrEmpty(this.EntityPM.Amount)) {
-
-            this.parent.GetDifferenceAndTotalForeignCurrency()
-        }
-        if (this.doCalculate) {
-            var value = this.Amount;
-
-
-            this.customsExchangeRateExtendedPMService.GetCustomsExchangeRateForCurrencyAndDate(this.CurrencyTypeCode, this.parent.declarationPM.TaxationDateTime).subscribe((response: any) => {
-                if (this.parent.EntityPM.InvoiceAmount) {
-                    this.DiscountInNIS = this.parent.EntityPM.InvoiceAmount * this.InvoiceCurrencyExchangeRtae * value;
-                    //  value = value * this.parent.InvoicePM.InvoiceAmount;
-                    if (response) {
-                        if (response.Result) {
-                            var result = response.Result[0];
-                            if (result) {
-
-                                var amount = this.DiscountInNIS / result.ExchangeRate;
-                                if (amount) {
-                                    this.Amount = amount;
-                                }
-
-
-                            }
-                        }
-                    }
-                }
-                this.doCalculate = false;
-
-
-            });
-        }
-
-    }
-
-    public DeleteButton = false;
-    DeleteButtonClicked(item: ModificationItemModel) {
-        if (item != null) {
-            this.Amount = null;
-            this.CurrencyType = null;
-            if (this.parent.declarationPM.Direction == "E") {
-                this.parent.GetDifferenceAndTotalForeignCurrency();
-            }
-
-
-            switch (item.code) {
-                /*case "67":
-                    this.parent.InsuranceAmount = null;
-                    this.parent.InsruanceCurrencyTypeCode = null;
-                    break;
-                case "144":
-                    this.parent.EntityPM.FreightCurrencyTypeCode = null;
-                    this.parent.EntityPM.TotalFreightInFreightCurrency = null;
-                    var SupplierInvoiceFreightAmount = this.parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.DeclarationId == this.parent.EntityPM.DeclarationId);
-                    this.deletSupplierInvoiceFreightAmountPMWithCode(SupplierInvoiceFreightAmount.CurrencyTypeCode);
-                    break;*/
-            }
-            this.DeleteButton = false;
-        }
-    }
 }
 
 export class SupplierInvoiceFreightAmountLine extends BaseComponent {
-    public entityPM: SupplierInvoiceFreightAmountPM;
-    public ObjectTableName: string = "Customs.SupplierInvoiceFreightAmount";
-    public DataContext = this;
-    Parent: SupplierInvoiceGeneralTabComponent;
-    constructor(EntityPM: SupplierInvoiceFreightAmountPM, parent: SupplierInvoiceGeneralTabComponent) {
-        super();
-        this.entityPM = EntityPM;
-        this.Parent = parent;
-        if (EntityPM.ChangeSetOp == "Insert") {
-            this.UIProperties.SetEnabled("CurrencyTypeCode", "Customs.SupplierInvoiceFreightAmount", true);
+  public entityPM: SupplierInvoiceFreightAmountPM;
+  public ObjectTableName: string = "Customs.SupplierInvoiceFreightAmount";
+  public DataContext = this;
+  Parent: SupplierInvoiceGeneralTabComponent;
+  constructor(EntityPM: SupplierInvoiceFreightAmountPM, parent: SupplierInvoiceGeneralTabComponent) {
+    super();
+    this.entityPM = EntityPM;
+    this.Parent = parent;
+    if (EntityPM.ChangeSetOp == "Insert") {
+      this.UIProperties.SetEnabled("CurrencyTypeCode", "Customs.SupplierInvoiceFreightAmount", true);
+    }
+    else {
+      this.UIProperties.SetEnabled("CurrencyTypeCode", "Customs.SupplierInvoiceFreightAmount", false);
+    }
+  }
+
+  currencyType: CurrencyTypePM;
+  get CurrencyType() { return this.currencyType; }
+  set CurrencyType(value: CurrencyTypePM) {
+
+    if (this.currencyType != value) {
+      this.currencyType = value;
+    }
+    if (!AppTool.IsNullOrEmpty(value)) {
+      this.CurrencyTypeName = value.LocalName;
+
+
+    } else {
+      this.CurrencyTypeName = null;
+      this.CurrencyTypeCode = null;
+    }
+  }
+
+
+  public get CurrencyTypeCode() { return this.entityPM.CurrencyTypeCode; }
+  public set CurrencyTypeCode(newValue: string) {
+    if (this.Parent.AmountList.Length > 0) {
+      if (newValue != null) {
+        var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
+        this.entityPM.CurrencyTypeCode = newValue
+        if (exist) {
+
+
+          var confirmWindow = new ConfirmWindow();
+
+
+          confirmWindow.Width = 400;
+
+
+          confirmWindow.Height = 200;
+          confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+          confirmWindow.ShowNoButton = false;
+          confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType"));
+          this.entityPM.CurrencyTypeCode = newValue;
+          this.entityPM.CurrencyTypeCode = null;
+          // this.entityPM.CurrencyTypeName = null;
+          confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+              //this.entityPM.CurrencyTypeCode = newValue;
+              this.entityPM.CurrencyTypeCode = null;
+              this.CurrencyTypeName = null;
+              confirmWindow.Close();
+            }
+
+          });
         }
         else {
-            this.UIProperties.SetEnabled("CurrencyTypeCode", "Customs.SupplierInvoiceFreightAmount", false);
+          this.entityPM.CurrencyTypeCode = newValue;
+
+          if (this.Parent.AmountList.Length == 1) {
+            this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
+          }
+
+
         }
-    }
+      }
+      else {
+        this.entityPM.CurrencyTypeCode = newValue
 
-    currencyType: CurrencyTypePM;
-    get CurrencyType() { return this.currencyType; }
-    set CurrencyType(value: CurrencyTypePM) {
+      }
 
-        if (this.currencyType != value) {
-            this.currencyType = value;
-        }
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.CurrencyTypeName = value.LocalName;
-
-
-        } else {
-            this.CurrencyTypeName = null;
-            this.CurrencyTypeCode = null;
-        }
     }
 
 
-    public get CurrencyTypeCode() { return this.entityPM.CurrencyTypeCode; }
-    public set CurrencyTypeCode(newValue: string) {
-        if (this.Parent.AmountList.Length > 0) {
-            if (newValue != null) {
-                var exist = this.Parent.EntityPM.SupplierInvoiceFreightAmounts.find(d => d.CurrencyTypeCode === newValue);
-                this.entityPM.CurrencyTypeCode = newValue
-                if (exist) {
+    if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1) {
 
-
-                    var confirmWindow = new ConfirmWindow();
-
-
-                    confirmWindow.Width = 400;
-
-                    confirmWindow.Height = 200;
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                    confirmWindow.ShowNoButton = false;
-                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.ExistingType") + " - מסך נוספים");
-                    this.entityPM.CurrencyTypeCode = newValue;
-                    this.entityPM.CurrencyTypeCode = null;
-                    // this.entityPM.CurrencyTypeName = null;
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            //this.entityPM.CurrencyTypeCode = newValue;
-                            this.entityPM.CurrencyTypeCode = null;
-                            this.CurrencyTypeName = null;
-                            confirmWindow.Close();
-                        }
-
-                    });
-                }
-                else {
-                    this.entityPM.CurrencyTypeCode = newValue;
-                    if (this.Parent.AmountList.Length == 1) {
-                        this.Parent.EntityPM.AddSupplierInvoiceFreightAmount(this.entityPM);
-                    }
-
-
-                }
-            }
-            else {
-                this.entityPM.CurrencyTypeCode = newValue
-
-            }
-
-        }
-
-        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length == 1) {
-
-            this.Parent.FreightCurrencyTypeCode = newValue;
-
-        }
-
-        if (this.Amount != null) {
-            this.Parent.LoadCurrenciesExchangeRates(true);
-        }
-
-
-
-
+      this.Parent.FreightCurrencyTypeCode = newValue;
 
     }
 
-    public get CurrencyTypeName() { return this.entityPM.CurrencyTypeName; }
-    public set CurrencyTypeName(newValue: string) { this.entityPM.CurrencyTypeName = newValue; }
-
-    public get Amount() { return this.entityPM.Amount; }
-    public set Amount(newValue: number) {
-        this.entityPM.Amount = newValue;
+    if (this.Amount != null) {
+      this.Parent.LoadCurrenciesExchangeRates(true);
     }
 
-    OnAmountLostFocus(logCellTemplate: any, amountItemTextBox: any) {
 
-        this.Amount = amountItemTextBox.textValue
-        if (this.CurrencyTypeCode != null) {
-            this.Parent.LoadCurrenciesExchangeRates(true);
+
+
+
+  }
+
+  public get CurrencyTypeName() { return this.entityPM.CurrencyTypeName; }
+  public set CurrencyTypeName(newValue: string) { this.entityPM.CurrencyTypeName = newValue; }
+
+  public get Amount() { return this.entityPM.Amount; }
+  public set Amount(newValue: number) {
+    this.entityPM.Amount = newValue;
+  }
+
+  OnAmountLostFocus(logCellTemplate: any, amountItemTextBox: any) {
+
+    this.Amount = amountItemTextBox.textValue
+    if (this.CurrencyTypeCode != null) {
+      this.Parent.LoadCurrenciesExchangeRates(true);
+    }
+  }
+
+  DeleteButtonClicked() {
+
+
+    if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.includes(this.entityPM)) {
+      this.Parent.EntityPM.RemoveSupplierInvoiceFreightAmount(this.entityPM);
+      if (this.CurrencyTypeCode == this.Parent.FreightCurrencyTypeCode) {
+        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length > 0) {
+          this.Parent.FreightCurrencyTypeCode = this.Parent.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
         }
+      }
     }
 
-    DeleteButtonClicked() {
+    this.Parent.LoadCurrenciesExchangeRates(true);
 
+    this.Parent.BuildFreightAmountsList();
 
-        if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.includes(this.entityPM)) {
-            this.Parent.EntityPM.RemoveSupplierInvoiceFreightAmount(this.entityPM);
-            if (this.CurrencyTypeCode == this.Parent.FreightCurrencyTypeCode) {
-                if (this.Parent.EntityPM.SupplierInvoiceFreightAmounts.length > 0) {
-                    this.Parent.FreightCurrencyTypeCode = this.Parent.EntityPM.SupplierInvoiceFreightAmounts[0].CurrencyTypeCode;
-                }
-            }
-        }
-
-        this.Parent.LoadCurrenciesExchangeRates(true);
-
-        this.Parent.BuildFreightAmountsList();
-
-    }
+  }
 
 }
 
 export class ItemCodeComponent extends BaseComponent {
-    private _ItemCode: string;
-    private _ClassificationCode: string;
-    private _VendorNumber: string;
-    private _ItemDescription: string;
-    private _OriginCountryCode: string;
-    private _OriginCountryName: string;
-    private _TariffID: string;
-    private _InvoiceQuantityType: string;
-    private _IsNew: boolean;
-    private _GITITEMCRs: GITITEMCR[] = [];
-    private _Direction: string;
+  private _ItemCode: string;
+  private _ClassificationCode: string;
+  private _VendorNumber: string;
+  private _ItemDescription: string;
+  private _OriginCountryCode: string;
+  private _OriginCountryName: string;
+  private _InvoiceQuantityType: string;
+  private _IsNew: boolean;
 
-    constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string, tariffID: string, public gITITEMCRs: GITITEMCR[], direction: string) {
-        super();
+  constructor(itemCode: string, classificationCode: string, itemDescription: string, vendorNumber: string, originCountryCode: string, originCountryName: string, isNew: boolean, invoiceQuantityType: string, private _CustomerCode: string) {
+    super();
 
-        this.ItemCode = itemCode;
-        this.ClassificationCode = classificationCode;
-        this.VendorNumber = vendorNumber;
-        this.ItemDescription = itemDescription;
-        this.OriginCountryCode = originCountryCode;
-        this.OriginCountryName = originCountryName;
-        this.InvoiceQuantityType = invoiceQuantityType;
-        this.IsNew = isNew;
-        this.GITITEMCRs = gITITEMCRs;
-        this.TariffID = tariffID;
-        this._Direction = direction;
-    }
-    public get GITITEMCRs() { return this._GITITEMCRs; }
-    public set GITITEMCRs(newValue: GITITEMCR[]) { this._GITITEMCRs = newValue; }
+    this.ItemCode = itemCode;
+    this.ClassificationCode = classificationCode;
+    this.VendorNumber = vendorNumber;
+    this.ItemDescription = itemDescription;
+    this.OriginCountryCode = originCountryCode;
+    this.OriginCountryName = originCountryName;
+    this.InvoiceQuantityType = invoiceQuantityType;
+    this.IsNew = isNew;
+  }
 
-    public get TariffID() { return this._TariffID; }
-    public set TariffID(newValue: string) { this._TariffID = newValue; }
+  public get ItemCode() { return this._ItemCode; }
+  public set ItemCode(newValue: string) { this._ItemCode = newValue; }
 
-    public get ItemCode() { return this._ItemCode; }
-    public set ItemCode(newValue: string) { this._ItemCode = newValue; }
+  public get ClassificationCode() { return this._ClassificationCode; }
+  public set ClassificationCode(newValue: string) { this._ClassificationCode = newValue; }
 
-    public get ClassificationCode() { return this._ClassificationCode; }
-    public set ClassificationCode(newValue: string) { this._ClassificationCode = newValue; }
+  public get VendorNumber() { return this._VendorNumber; }
+  public set VendorNumber(newValue: string) { this._VendorNumber = newValue; }
 
-    public get VendorNumber() { return this._VendorNumber; }
-    public set VendorNumber(newValue: string) { this._VendorNumber = newValue; }
+  public get ItemDescription() { return this._ItemDescription; }
+  public set ItemDescription(newValue: string) { this._ItemDescription = newValue; }
 
-    public get ItemDescription() { return this._ItemDescription; }
-    public set ItemDescription(newValue: string) { this._ItemDescription = newValue; }
+  public get OriginCountryCode() { return this._OriginCountryCode; }
+  public set OriginCountryCode(newValue: string) { this._OriginCountryCode = newValue; }
 
-    public get OriginCountryCode() { return this._OriginCountryCode; }
-    public set OriginCountryCode(newValue: string) { this._OriginCountryCode = newValue; }
+  public get OriginCountryName() { return this._OriginCountryName; }
+  public set OriginCountryName(newValue: string) { this._OriginCountryName = newValue; }
 
-    public get OriginCountryName() { return this._OriginCountryName; }
-    public set OriginCountryName(newValue: string) { this._OriginCountryName = newValue; }
+  public get InvoiceQuantityType() { return this._InvoiceQuantityType; }
+  public set InvoiceQuantityType(newValue: string) { this._InvoiceQuantityType = newValue; }
 
-    public get InvoiceQuantityType() { return this._InvoiceQuantityType; }
-    public set InvoiceQuantityType(newValue: string) { this._InvoiceQuantityType = newValue; }
+  public get CustomerCode() { return this._CustomerCode; }
+  public set CustomerCode(newValue: string) { this._CustomerCode = newValue; }
 
-    public get CustomerCode() { return this._CustomerCode; }
-    public set CustomerCode(newValue: string) { this._CustomerCode = newValue; }
-
-    public get IsNew() { return this._IsNew; }
-    public set IsNew(newValue: boolean) { this._IsNew = newValue; }
-
-    public get Direction() { return this._Direction; }
-    public set Direction(newValue: string) { this._Direction = newValue; }
-}
-
-export class ItemCertificateComponent extends BaseComponent {
-    private _COUNTER: number;
-    private _REQCERT: string;
-    private _REMARKS: string;
-
-
-    constructor(COUNTER: number, REQCERT: string, REMARKS: string) {
-        super();
-
-        this.COUNTER = COUNTER;
-        this.REQCERT = REQCERT;
-        this.REMARKS = REMARKS;
-
-    }
-
-    public get COUNTER() { return this._COUNTER; }
-    public set COUNTER(newValue: number) { this._COUNTER = newValue; }
-
-    public get REQCERT() { return this._REQCERT; }
-    public set REQCERT(newValue: string) { this._REQCERT = newValue; }
-
-    public get REMARKS() { return this._REMARKS; }
-    public set REMARKS(newValue: string) { this._REMARKS = newValue; }
-
-
+  public get IsNew() { return this._IsNew; }
+  public set IsNew(newValue: boolean) { this._IsNew = newValue; }
 }

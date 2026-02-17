@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeCustomFieldRepository repository;
 
-
+        public DocumentTypeCustomFieldQuery()
+        {
+            repository = new DocumentTypeCustomFieldRepository(); 
+        }
 
         public DocumentTypeCustomFieldQuery(int tenant)
         {
@@ -72,7 +75,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<DocumentTypeCustomFieldPM> GetDocumentTypeCusotmFieldPMsByDocumentTypeId(string documentTypeId, int tenant)
         {
-            var documentTypeCustom = from a in repository.context.DocumentTypeCustomFields.Include("FieldDataType")
+            var documentTypeCustom = from a in repository.context.DocumentTypeCustomFields
                                      where a.Tenant == tenant && a.DocumentTypeId == documentTypeId && a.InActive == false
                                      select new DocumentTypeCustomFieldPM()
                                      {
@@ -80,7 +83,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          DocumentTypeId = a.DocumentTypeId,
                                          FieldCode = a.FieldCode,
                                          FieldDataTypeCode = a.FieldDataTypeCode,
-                                         FieldDataTypeName = a.FieldDataType.Name,
                                          Id = a.Id,
                                          InActive = a.InActive,
                                          IsRequired = a.IsRequired,

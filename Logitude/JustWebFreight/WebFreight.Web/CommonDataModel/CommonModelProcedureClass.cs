@@ -32,7 +32,7 @@ namespace WebFreight.Web.CommonDataModel
 
                 SqlParameter param2 = new SqlParameter("@Tenant", SqlDbType.Int);
                 param2.Direction = ParameterDirection.Input;
-                param2.Value = tenant; 
+                param2.Value = tenant;
                 cmd.Parameters.Add(param2);
 
                 cmd.CommandTimeout = 10800; //3 Hours

@@ -41,7 +41,7 @@ export class ConditionFilterField extends BaseComponent {
         this.FieldName = this.ObjectField.FieldName;
 
         if (this.RuleConditionFieldPMs) {
-            var conditionField = this.RuleConditionFieldPMs.filter(f => f.ObjectFieldCode === objectField.FieldCode)[0];
+            var conditionField = this.RuleConditionFieldPMs.filter(f => f.ObjectFieldId === objectField.Id)[0];
             if (conditionField) {
                 this.RuleConditionFieldPM = conditionField;
                 if (!AppTool.IsNullOrEmpty(conditionField.Value)) {
@@ -126,8 +126,8 @@ export class ConditionFilterField extends BaseComponent {
                 //if (this.exists == false) {
                 tempField.IsDeleted = true;
                 //if (!this.IsDeleted){
-                if (this.RuleConditionFieldPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
-                    this.RuleConditionFieldPMs = this.RuleConditionFieldPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
+                if (this.RuleConditionFieldPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
+                    this.RuleConditionFieldPMs = this.RuleConditionFieldPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
                 }
                 this.ParentClass.DeteteFilter(this);
                 //if (this.TextValue != null && this.TextValue != '') {
@@ -313,8 +313,8 @@ export class ConditionFilterField extends BaseComponent {
         //this.AdvancedQueryFilterPM = filter;
         var temp = this;
         temp.IsDeleted = true;
-        if (this.RuleConditionFieldPMs.filter(a => a.ObjectFieldCode == this.ObjectField.FieldCode).length > 0) {
-            this.RuleConditionFieldPMs = this.RuleConditionFieldPMs.filter(a => a.ObjectFieldCode != this.ObjectField.FieldCode);
+        if (this.RuleConditionFieldPMs.filter(a => a.ObjectFieldId == this.ObjectField.Id).length > 0) {
+            this.RuleConditionFieldPMs = this.RuleConditionFieldPMs.filter(a => a.ObjectFieldId != this.ObjectField.Id);
         }
         this.ParentClass.DeteteFilter(this);
         if (this.TextValue != null) {

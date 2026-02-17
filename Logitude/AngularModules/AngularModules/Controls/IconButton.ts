@@ -1,39 +1,39 @@
-import {Component, OnInit, ChangeDetectionStrategy, Input} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'IconButton',
-    inputs: ['IsSmall', 'Width', 'Height', 'IsEnabled', 'disabled', 'IsIconOnly', 'TopIndent', 'Left', 'Top', 'Title', 'ExternalId', 'DataCy'],
+    inputs: ['Name', 'IsSmall', 'Width', 'Height', 'IsEnabled', 'disabled', 'IsIconOnly', 'TopIndent', 'Left', 'Top', 'Title','ExternalId'],    
     changeDetection: ChangeDetectionStrategy.OnPush,
     template:
     `
-    <button [attr.data-cy]="DataCy" id="{{ Name+ExternalId | IdGeneratorAsyncPipe | async}}"   title="{{Title}}" *ngIf="!IsIconOnly"
-            class="LogitudeIconButton"
-            [style.width.px]="Width"
-            [style.height.px]="Height"
-            [style.margin-left.px]="Left"
-            [disabled]="!IsEnabled"
+    <button id="{{ Name+ExternalId | IdGeneratorPipe}}"   title="{{Title}}" *ngIf="!IsIconOnly" 
+            class="LogitudeIconButton" 
+            [style.width.px]="Width" 
+            [style.height.px]="Height" 
+            [style.margin-left.px]="Left" 
+            [disabled]="!IsEnabled" 
             [ngStyle]="{top: Top}"
-            (mouseenter)="OnMouseEnter()"
-            (mouseleave)="OnMouseLeave()"
+            (mouseenter)="OnMouseEnter()" 
+            (mouseleave)="OnMouseLeave()" 
             tabindex="-1">
 
-                <img [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
-                    [attr.src]="Source"
-                    style="visibility:inherit;"
+                <img [class.FlipImgHoriz]="LayoutDirection == 'rtl'" 
+                    [attr.src]="Source" 
+                    style="visibility:inherit;" 
                     [style.width]="Name=='return' ? '13px' : 'initial'"
                     [ngStyle]="LayoutDirection == 'rtl' ? {top: TopIndent,'right': LeftIndent , 'left' : 0} : {top: TopIndent,'left': LeftIndent, 'right':0}" />
 
     </button>
 
     <div *ngIf="IsIconOnly"  title="{{Title}}"
-            style="width: 20px; height: 20px; cursor:pointer; position: relative;"
-            (mouseenter)="OnMouseEnter()"
+            style="width: 20px; height: 20px; cursor:pointer; position: relative;" 
+            (mouseenter)="OnMouseEnter()" 
             (mouseleave)="OnMouseLeave()">
 
                 <img [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
-                    [attr.src]="Source"
-                    [style.width]="Name=='return'||Name=='arrow-up'||Name=='arrow-down' ? '13px' : 'initial'"
+                    [attr.src]="Source" 
+                    [style.width]="Name=='return' ? '13px' : 'initial'"
                     style="visibility:inherit; vertical-align: middle; position: absolute; top:0; bottom:0; right:0; margin: auto; transform:none;" />
 
     </div>
@@ -48,7 +48,6 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
         top: 1px;
         bottom: 0;
         margin: auto;
-        max-width: 12px;
     }
 
     .LogitudeIconButton:focus:not(:disabled) {
@@ -68,7 +67,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
     .LogitudeIconButton:disabled {
         opacity: 0.5;
-        pointer-events: none !important;
+        pointer-events: none !important; 
         cursor: default !important;;
     }
 
@@ -82,7 +81,7 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
         border-radius: 3px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
-        position: relative;
+        position: relative;     
         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
         background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
         background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
@@ -98,11 +97,11 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
         -ms-filter: "FlipH";
     }
     `],
-
+    
 })
 
 export class IconButton implements OnInit {
-    @Input() public Name: string | 'settings' | 'actions' | 'payments' | 'refresh' | 'add' | 'edit' | 'editorange' | 'additional' | 'delete' | 'connect' | 'disconnect' | 'help' | 'signout' | 'call' | 'task' | 'appoint' | 'email' | 'excel' | 'watch' | 'disabledwatch' | 'bell' | 'deletefollowup' | 'donefollowup' | 'search' | 'copy' | 'arrow-up' | 'arrow-down' | 'minus' ;
+    public Name: string;
     public Width: number;
     public Height: number;
     public Left: number = 0;
@@ -117,7 +116,6 @@ export class IconButton implements OnInit {
     LayoutDirection: string = 'ltr';
     public Title: string;
     public ExternalId: string = "";
-    public DataCy: string;
     constructor() {
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
@@ -146,12 +144,6 @@ export class IconButton implements OnInit {
                     break;
                 }
 
-                case "actions": {
-                    this.mySource = './Images/Icons/ActionsGray.png';
-                    this.mySourceOver = './Images/Icons/Actions.png';
-                    break;
-                }
-
                 case "payments": {
                     this.mySource = './Images/Icons/payments.png';
                     this.mySourceOver = './Images/Icons/payments_Blue.png';
@@ -160,16 +152,6 @@ export class IconButton implements OnInit {
 
                 case "refresh": {
                     this.mySource = './Images/Buttons/Refresh.png';
-                    break;
-                }
-
-                case "arrow-up": {
-                    this.mySource = './Images/Icons/ArrowUp.png';
-                    break;
-                }
-
-                case "arrow-down": {
-                    this.mySource = './Images/Icons/ArrowDown.png';
                     break;
                 }
 
@@ -264,7 +246,7 @@ export class IconButton implements OnInit {
                     this.mySource = "./Images/Bell.png";
                     break;
                 }
-
+                       
                 case "deletefollowup": {
                     this.mySource = "./_Resources/Images/Icons/Followups/DeleteFollowup.png";
                     this.mySourceOver = "./_Resources/Images/Icons/Followups/DeleteFollowup_Red.png";
@@ -278,8 +260,8 @@ export class IconButton implements OnInit {
                 }
 
                 case "search": {
-                    this.mySource = "./Images/LOVSearch.png";
-                    this.LeftIndent = "0px";
+                    this.mySource = "./Images/LOVSearch.png";  
+                    this.LeftIndent = "0px";                
                     break;
                 }
                 case "copy": {
@@ -290,16 +272,8 @@ export class IconButton implements OnInit {
                     this.mySource = "./Images/return.png";
                     break;
                 }
-                 case "flag": {
-                    this.mySource = "./Images/Followup.png";
-                    break;
-                }
-                 case "minus": {
-                    this.mySource = "./Images/Buttons/minus.png";
-                    this.mySourceOver = "./Images/Buttons/minus.over.png";
-                    break;
-                }
- 
+
+
             }
 
             this.Source = this.mySource;

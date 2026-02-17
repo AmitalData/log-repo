@@ -9,7 +9,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -45,9 +45,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             ValidatePM(entityPM);
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
-          
+            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            if (setting.IsConnectedToUniFreight)
+            {
                 UpdateUnifreight(entityPM);
-         
+            }
 
             UpdateNotification(entityPM); // moran 2.9.14 - Task 6932 
 
@@ -132,10 +134,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         notificationDefinitionCode = "3050U";
                         break;
                     case EventContextTagModel.ProccessEnum.TSH_MSG2_PaymentOrderReplyResponseServiceCreate:
-                        if (connectedDeclarationPM == null || connectedDeclarationPM.IsCourierDeclaration != true)
-                        {
-                            notificationDefinitionCode = "3050N";
-                        }
+                        notificationDefinitionCode = "3050N";
                         break;
                         // moran 30.10.14 - Task 8327
                     case EventContextTagModel.ProccessEnum.Deficit_NG_5009_MSG14_FirstAndSeconderyRequirementsMessageResponseService:

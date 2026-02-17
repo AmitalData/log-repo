@@ -25,7 +25,7 @@ import { FormGroup, FormBuilder} from '@angular/forms';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'APILogsRequestBody',
     templateUrl: './APILogsRequestBodyComponent.html',
     providers: [DocumentExtendedService, ImageLibraryService ],
@@ -70,7 +70,7 @@ export class APILogsRequestBodyComponent extends BaseComponent implements OnInit
         var token = ServiceHelper.GetLDocumentDownloadToken();
         var url = ServiceHelper.GetLogitudeURL() + "/WebPages/APILogsDownLoadPage.aspx?header=" + HeaderData + "&tempId=" + token;
         window.open(url);
-        //this._documentExtendedService.GetDocumentById(this.EntityPM.DocumentId, this.EntityPM.Tenant).subscribe((res:any) => {
+        //this._documentExtendedService.GetDocumentById(this.EntityPM.DocumentId, this.EntityPM.Tenant).subscribe(res => {
 
         //    var pmResponse: ServiceResponse = res;
         //    if (!pmResponse.HasError) {
@@ -89,7 +89,7 @@ export class APILogsRequestBodyComponent extends BaseComponent implements OnInit
   
     UpdateScreen(document: any) {
 
-        //this._imageLibraryService.DownloadFile(document.Id, document.Extension, document.Folder, this.EntityPM.Tenant).subscribe((res:any) => {
+        //this._imageLibraryService.DownloadFile(document.Id, document.Extension, document.Folder, this.EntityPM.Tenant).subscribe(res => {
 
         //    var pmResponse: ServiceResponse = res;
         //    if (!pmResponse.HasError) {

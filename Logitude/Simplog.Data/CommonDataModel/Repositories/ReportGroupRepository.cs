@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
    public  class ReportGroupRepository: IRepository<ReportGroup>
     {
         ICommonDataContext commonDataContext;
-
+        public ReportGroupRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public ReportGroupRepository(ICommonDataContext context)
         {

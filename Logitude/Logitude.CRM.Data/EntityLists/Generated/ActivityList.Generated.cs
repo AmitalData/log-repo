@@ -196,12 +196,6 @@ namespace Logitude.CRM.Data.EntityLists
        public string BusinessProcessQueueName  { get; set; }
        [DataMember]
        public string TeamName  { get; set; }
-       [DataMember]
-       public string LeadSourceId  { get; set; }
-       [DataMember]
-       public string LeadSourceName  { get; set; }
-       [DataMember]
-       public string CustomerCode  { get; set; }
    }
 
 }

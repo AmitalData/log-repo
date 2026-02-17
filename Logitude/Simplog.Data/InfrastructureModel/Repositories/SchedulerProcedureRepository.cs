@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -74,11 +74,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return webFreightContext.SchedulerProcedures;
         }
-        public IQueryable<SchedulerProcedure> GetSchedulerProcedure()
-        {
-            return webFreightContext.SchedulerProcedures;
-        }
-        
+
         public IQueryable<SchedulerProcedure> GetAll()
         {
             return webFreightContext.SchedulerProcedures;

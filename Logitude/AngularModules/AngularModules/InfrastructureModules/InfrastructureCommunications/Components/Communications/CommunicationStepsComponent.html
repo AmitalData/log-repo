@@ -1,24 +1,18 @@
+﻿<div >
+    <table >
 
-<div>
-    <table>
-
-        <tr style="height:10px">
-            <td colspan="3">
-                <div></div>
-            </td>
-        </tr>
+        <tr style="height:10px"><td colspan="3"><div></div></td></tr>
 
 
         <tr style="height:20px">
-            <td style="width:10px;">
-                <div></div>
-            </td>
+            <td style="width:10px;"><div></div></td>
 
             <td>
                 <div style="height:23px;">
-                    <span style="vertical-align:central;text-align:left;margin-left:5px;font-size:16px;color:#1B90CB">{{'CommunicationLogSteps.O.CommunicationLogSteps' | TextCodeTranslationPipe}}</span>
-
-                    <IconButton [Name]="'Refresh'"
+                    <span 
+                          style="vertical-align:central;text-align:left;margin-left:5px;font-size:16px;color:#1B90CB">{{'CommunicationLogSteps.O.CommunicationLogSteps' | TextCodeTranslationPipe}}</span>
+                    
+                    <IconButton [Name]="'Refresh'" 
                                 style="text-align:right;float:left;" (click)="RefreshButtonClicked()"></IconButton>
 
 
@@ -26,27 +20,24 @@
 
             </td>
 
-            <td style="width:10px;">
-                <div></div>
-            </td>
+            <td style="width:10px;"><div></div></td>
         </tr>
 
         <tr>
-            <td style="width:10px;">
-                <div></div>
-            </td>
-            <td style="position:relative;"></td>
+            <td style="width:10px;"><div></div></td>
+            <td style="position:relative;">
+   
 
-            <td style="width:10px;">
-                <div></div>
             </td>
+
+            <td style="width:10px;"><div></div></td>
         </tr>
 
 
         <tr>
-            <td colspan="3">
+            <td  colspan="3" >
                 <!---->
-                <div class="GridView" style="width:880px ; height: 500px; ">
+                <div class="GridView" style="width:880px ; height: 500px; " >
 
 
                     <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
@@ -61,68 +52,57 @@
                             <log-column [header]="'CommunicationLogSteps.O.StepNumber' | TextCodeTranslationPipe"
                                         [width]="'50'" [Alignment]="'right'"
                                         [binding]="'StepNumber'">
-                                <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                        <div class="RightCenter">
-                                            <span>{{item.StepNumber}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                <log-cell-template template="let item" #logcelltemplate>
+                                    <div class="RightCenter" >
+                                        <span>{{item.StepNumber}}</span>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
 
                             <!-- StepName -->
                             <log-column [header]="'CommunicationLogSteps.O.Name' | TextCodeTranslationPipe"
                                         [binding]="'Name'"
                                         [width]="'150'" [Alignment]="'right'">
-                                <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                        <div>
-                                            <span class="RightCenter">{{item.Name}}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                <log-cell-template template="let item" #logcelltemplate>
+                                    <div>
+                                        <span class="RightCenter" >{{item.Name}}</span>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
 
                             <!-- Status -->
                             <log-column [header]="'CommunicationLogSteps.O.Status' | TextCodeTranslationPipe"
                                         [width]="'50'" [Alignment]="'center'"
                                         [binding]="'Status'">
-                                <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                        <div class="RightCenter">
-                                            <span class="RightCenter">{{item.Status }}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                <log-cell-template template="let item" #logcelltemplate>
+                                    <div class="RightCenter"  >
+                                        <span class="RightCenter" >{{item.Status }}</span>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
 
                             <!-- Retries -->
                             <log-column [header]="'CommunicationLogSteps.O.Retries' | TextCodeTranslationPipe"
                                         [width]="'50'" [Alignment]="'center'"
                                         [binding]="'Retries'">
-                                <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                        <div class="RightCenter">
-                                            <span>{{item.Retries }}</span>
-                                        </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                <log-cell-template template="let item" #logcelltemplate>
+                                    <div class="RightCenter"  >
+                                        <span>{{item.Retries }}</span>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
 
                             <!-- StartDate -->
                             <log-column [width]="'150'" [binding]="'StartDate'"
                                         [Alignment]="'right'"
                                         [header]="'CommunicationLogSteps.O.StartDate' | TextCodeTranslationPipe">
-                                <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                        <div style="width:100%;height:100%;">
-                                            <div class="RightCenter">
-                                                <span>{{item.StartDate  | DateTimeToDatePipe  }}</span>
-                                                <span>{{item.StartDate  | DateTimeToTimePipe :'LT' }}</span>
-                                            </div>
+                                <log-cell-template template="let item" #logcelltemplate>
+                                    <div style="width:100%;height:100%;">
+                                        <div class="RightCenter" >
+                                            <span  >{{item.StartDate  | DateTimeToDatePipe  }}</span> <span>{{item.StartDate  | DateTimeToTimePipe :'LT' }}</span>
                                         </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
 
 
@@ -130,39 +110,33 @@
                             <log-column [width]="'150'" [binding]="'EndDate'"
                                         [Alignment]="'right'"
                                         [header]="'CommunicationLogSteps.O.EndDate' | TextCodeTranslationPipe">
-                                <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                        <div style="width:100%;height:100%;">
-                                            <div class="RightCenter">
-                                                <span>{{item.EndDate | DateTimeToDatePipe }}</span>
-                                                <span>{{item.EndDate | DateTimeToTimePipe :'LT' }}</span>
-                                            </div>
+                                <log-cell-template template="let item" #logcelltemplate>
+                                    <div style="width:100%;height:100%;">
+                                        <div class="RightCenter" >
+                                            <span  >{{item.EndDate | DateTimeToDatePipe }}</span> <span>{{item.EndDate | DateTimeToTimePipe :'LT' }}</span>
                                         </div>
-                                    </log-cell-template>
-                                </ng-template>
+                                    </div>
+                                </log-cell-template>
                             </log-column>
                             <!-- Duration-->
                             <log-column [header]="'CommunicationLogSteps.O.Duration' | TextCodeTranslationPipe"
                                         [width]="'80'" [Alignment]="'right'"
                                         [binding]="'Duration'">
-                                <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
+                                <log-cell-template template="let item" #logcelltemplate>
 
-                                        <div style="width:100%;height:100%;">
+                                    <div style="width:100%;height:100%;">
 
-                                            <span class="RightCenter">{{item.Duration }}</span>
+                                        <span  class="RightCenter" >{{item.Duration }}</span>
 
-                                        </div>
+                                    </div>
 
-                                    </log-cell-template>
-                                </ng-template>
+                                </log-cell-template>
                             </log-column>
 
                             <!-- Buttons -->
                             <log-column [width]="'80'" [visibility]="'visibile'" [Alignment]="'left'">
-                                <ng-template let-item>
-                                    <log-cell-template>
-
+                                <log-cell-template template="let item">
+                                    
                                         <span class="CellSeparator"></span>
 
                                         <button style="width:45px"
@@ -170,24 +144,21 @@
                                                 (click)="ViewXMLClicked(item)">
                                             {{'CommunicationLog.B.View' |   TextCodeTranslationPipe }}
                                         </button>
-
-                                    </log-cell-template>
-                                </ng-template>
+                                    
+                                </log-cell-template>
                             </log-column>
 
 
                             <log-column [width]="'80'" [visibility]="'visibile'" [Alignment]="'left'">
-                                <ng-template let-item>
-                                    <log-cell-template>
-
-                                        <span class="CellSeparator"></span>
-                                        <button class="Button"
-                                                style="width:45px"
-                                                (click)="ViewLogMethod(item)">
-                                            {{'CommunicationLogSteps.O.Log' |   TextCodeTranslationPipe }}
-                                        </button>
-                                    </log-cell-template>
-                                </ng-template>
+                                <log-cell-template template="let item">
+                                   
+                                    <span class="CellSeparator"></span>
+                                    <button class="Button"
+                                            style="width:45px" 
+                                            (click)="ViewLogMethod(item)">
+                                        {{'CommunicationLogSteps.O.Log' |   TextCodeTranslationPipe }}
+                                    </button>
+                                </log-cell-template>
                             </log-column>
 
 
@@ -203,4 +174,4 @@
     </table>
 </div>
 <!---->
-<!---->
+<!----> 

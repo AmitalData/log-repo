@@ -38,13 +38,12 @@ import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64, makeAMLineChart,window: any;  
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerOverviewTabComponent.html',
     providers: [ImageLibraryService]
 })
 
 export class CustomerOverviewTabComponent extends BaseComponent implements OnInit {
-    public RankName: any;
     public EntityPM: CustomerPM;
     public ObjectTableName: string = "Customer";
     private CD: ChangeDetectorRef;
@@ -76,7 +75,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
         this.ActivityStatusOverViewDashboardId = this.ActivityStatusOverViewDashboardId + this.CurrentSession.GetChartId();
 
         this.rankListService = new RankListService();
-        this.rankListService.getAllFromCache().subscribe((result:any) => {
+        this.rankListService.getAllFromCache().subscribe(result => {
             this.RankListArr = result.Result;
         });
     }
@@ -96,7 +95,6 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
     public AllShipments = 0;
     public OpenQuotes = 0;
     public OpenShipments = 0;
-    public CancelledShipments = 0;
     LoadQuriesCount() {
         var service = new QuoteDomainService();
         service.GetDataCountsForCRM(this.TenantPM.Id, this.EntityPM.Id).subscribe((myResult: any) => {
@@ -104,7 +102,6 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             this.AllShipments = myResult.Result.AllShipments;
             this.OpenQuotes = myResult.Result.OpenQuotes;
             this.OpenShipments = myResult.Result.OpenShipments;
-            this.CancelledShipments = myResult.Result.CancelledShipments;
         });
     }
 
@@ -439,7 +436,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
         var service = new ChartsService();
         if (this.SelectedTimeRangeItem.Index == "-1") {
             if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+                service.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "", this.EntityPM.Id).subscribe(myResult => {
                     this.LineData = myResult;
                     this.FillLineQueries();                  
                 });
@@ -448,7 +445,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
 
         else {
             var days = this.ComputeDays();
-            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+            service.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id, this.EntityPM.Id).subscribe(myResult => {
                 this.LineData = myResult;
                 this.FillLineQueries();
             });
@@ -756,7 +753,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             default: break;
         }
 
-        this._entityResourceService.getEntityResourceByTableName(code, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(code, 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;
@@ -812,13 +809,6 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
                 break;
             }
 
-            case "CancelledShipments": {
-                myTableName = "Shipment";
-                myQueryCode = "Cancelled Shipments";
-                displayName = "Cancelled Shipments"
-                break;
-            }
-
             default: break;
         }
 
@@ -833,7 +823,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.DisplayTitle = displayName;
             
             listArgs.BackButtonTitle = "Customer";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, this.EntityPM.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, this.EntityPM.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -857,7 +847,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.ObjectTableName = "Shipment";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -883,7 +873,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.ObjectTableName = "ARPayment";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -910,7 +900,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.ObjectTableName = "ARInvoice";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -930,7 +920,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             this.filterAgrs.addAdditionalFilter("DueDate", DateTool.GetCurrentDateTimeAsUtc(), null, null, "LessThan", false, false, false, "Boolean");
             this.filterAgrs.addAdditionalFilter("IsAutoCredit", false, null, null, "Equals", false, false, false, "Boolean");
             this.filterAgrs.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
-            this.filterAgrs.addAdditionalFilter("StatusCode", "AD,PP,NT", null, null, "InList", false, false, false, "string");
+            this.filterAgrs.addAdditionalFilter("StatusCode", "AD,PP,PR", null, null, "InList", false, false, false, "string");
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
@@ -938,7 +928,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
             listArgs.ObjectTableName = "ARInvoice";
             listArgs.DisplayTitle = listArgs.QueryCode;
             listArgs.BackButtonTitle = "Back";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -950,7 +940,7 @@ export class CustomerOverviewTabComponent extends BaseComponent implements OnIni
     }
 
     NewARPayment() {
-        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe(response => {
             var str = TextCodeTranslator.Translate("General.O.NewEntity");
             str = str.replace("%Entity", TextCodeTranslator.TranslateTable("ARPayment"));       
 

@@ -24,7 +24,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 declare var startLinking;
 @Component({
     selector: 'DropBoxLogin',
-    
+    moduleId: module.id,
     template: `
 
 <iframe [src]="URI | SafePipe" style="width:100%;height:100%"></iframe>

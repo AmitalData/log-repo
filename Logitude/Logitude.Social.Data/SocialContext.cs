@@ -21,8 +21,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.Data; 
 using Logitude.Social.Data.EntityMapping;
-using Devart.Data.Oracle.Entity.Configuration;
-using Simplog.Global.Data.GlobalModel.Mapping;
 
 namespace Logitude.Social.Data
 {
@@ -48,7 +46,9 @@ namespace Logitude.Social.Data
             GlobalDB currentDb;
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             SocialContext context = new SocialContext(connection);
             return context;
         }
@@ -60,7 +60,7 @@ namespace Logitude.Social.Data
         {
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = OracleEntityProviderConfig.Instance;
+                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                
                 
@@ -94,10 +94,9 @@ namespace Logitude.Social.Data
 			modelBuilder.Configurations.Add(new UserLastLoginMap());
 			modelBuilder.Configurations.Add(new ContactMap());
 			modelBuilder.Configurations.Add(new ContactLastLoginMap());
-			modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new ObjectTableMap());
-
-			 modelBuilder.Configurations.Add(new AccountingSystemMap());
+            modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
+            modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
             modelBuilder.Configurations.Add(new Accounts1Map());
             modelBuilder.Configurations.Add(new AccountTypeMap());
@@ -113,6 +112,7 @@ namespace Logitude.Social.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());

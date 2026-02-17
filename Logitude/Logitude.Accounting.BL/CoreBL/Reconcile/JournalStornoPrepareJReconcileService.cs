@@ -4,7 +4,6 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -34,7 +32,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //_StornoJornalLedgerTransactions = stornoLedgerTransactionPM;
             _AccountingContext = accountingContext;
         }
-        public bool CreateJournalReconcileFromStorno(JournalPM theStorno, StornoOverrideM stornoOverrideM)
+        public bool CreateJournalReconcileFromStorno(JournalPM theStorno)
         {
             _TheStorno = theStorno;
             if (!String.IsNullOrWhiteSpace(_JournalToVoidPM.ExternalNo))
@@ -49,19 +47,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return false;
             }
-
-            if (theStorno.AccountingEntityCode == AccountingEntityValues.Revaluation)
-            {
-                return false;
-            }
-            if (theStorno.AccountingEntityCode == AccountingEntityValues.APInvoice)
-            {
-                FetchlTransactionOfOriginalJournalForAPInvoiceStorno(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
-            }
-            else
-            {
-                FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
-            }
+            
+            FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);
             if (!_OrginalJornalLedgerTransactions.Any())
             {
                 return false;// did not stream to Accounting !!
@@ -75,26 +62,12 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 return false;
             }
-
-            var ledgers = _OrginalJornalLedgerTransactions;
-
-            ledgers = RemoveLedgersOfExcludedCheques(stornoOverrideM, ledgers);
-
-            this.JournalReconciles2Insert = CreateJournalReconcileList(ledgers);
-
+            this.JournalReconciles2Insert = CreateJournalReconcileList(
+                _OrginalJornalLedgerTransactions); ;
+            
 
             return true;
             //_OrginalTransaction
-        }
-
-        private static List<LedgerTransactionPM> RemoveLedgersOfExcludedCheques(StornoOverrideM stornoOverrideM, List<LedgerTransactionPM> ledgers)
-        {
-            if (stornoOverrideM.ChequeNumbersToExcludeFromStorno != null && stornoOverrideM.ChequeNumbersToExcludeFromStorno.Count() > 0)
-            {
-                ledgers = ledgers.Where(t => !stornoOverrideM.ChequeNumbersToExcludeFromStorno.Contains(t.Reference2)).ToList();
-            }
-
-            return ledgers;
         }
 
         private bool IsStornoJournal()
@@ -114,6 +87,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public virtual //4 UnitTest
             List<JournalReconcilePM> CreateJournalReconcileList(
             List<LedgerTransactionPM> myOrginalJournalTransaction
+            //List<LedgerTransactionPM> myStornoLedgerTransactionPM
             )
         {
 
@@ -158,11 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var qs = new LedgerTransactionQueryService(_AccountingContext);
             _OrginalJornalLedgerTransactions = qs.GetByJournalId(OriginalJournalId, Tenant);
         }
-        private void FetchlTransactionOfOriginalJournalForAPInvoiceStorno(string OriginalJournalId, int Tenant)
-        {
-            var qs = new LedgerTransactionQueryService(_AccountingContext);
-            _OrginalJornalLedgerTransactions = qs.GetByJournalIdAndForeignAmountCreditNotEqualZero(OriginalJournalId, Tenant);
-        }
+
 
 
         public List<JournalReconcilePM> JournalReconciles2Insert { get; set; }
@@ -176,6 +146,6 @@ namespace Logitude.Accounting.BL.CoreBL
         void MustInitialize(IAccountingContext accountingContext, JournalPM journalToVoidPM
             //, List<LedgerTransactionPM> stornoLedgerTransactionPM
             );
-        bool CreateJournalReconcileFromStorno(JournalPM journalStornoPM, StornoOverrideM stornoOverrideM);
+        bool CreateJournalReconcileFromStorno(JournalPM journalStornoPM);
     }
 }

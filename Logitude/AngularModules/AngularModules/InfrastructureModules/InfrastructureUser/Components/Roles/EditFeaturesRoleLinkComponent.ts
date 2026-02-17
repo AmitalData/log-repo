@@ -4,7 +4,7 @@ import {RoleFeatureClass} from './EditRoleFeaturesComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditFeaturesRoleLinkComponent.html',
 })
 

@@ -103,7 +103,7 @@ namespace WebFreight.Web.WebServices
                     queueservice.InitializeQueue("ImportersShipmentQueue", 0);
                     var MSG = DictionaryJsonConverter.FromJsonToDictionary(Message);
                     //MSG["CorrelationId"] = Guid.NewGuid().ToString();
-                    queueservice.Send(MSG, 0, null, customerId);
+                    queueservice.Send(MSG, null, customerId);
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace WebFreight.Web.WebServices
                     queueservice.InitializeQueue("ImportersShipmentsBatchQueue", 0);
                     var MSG = DictionaryJsonConverter.FromJsonToDictionary(Message);
                     //MSG["CorrelationId"] = Guid.NewGuid().ToString();
-                    queueservice.Send(MSG, 0, null, customerId, BatchNumber);
+                    queueservice.Send(MSG, null, customerId, BatchNumber);
                 }
 
 
@@ -135,7 +135,7 @@ namespace WebFreight.Web.WebServices
                     queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
                     var MSG = DictionaryJsonConverter.FromJsonToDictionary(Message);
                     //MSG["CorrelationId"] = Guid.NewGuid().ToString();
-                    queueservice.Send(MSG, 0);
+                    queueservice.Send(MSG);
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace WebFreight.Web.WebServices
                     queueservice.InitializeQueue("ImportersShipmentDocumentsBatchQueue", 0);
                     var MSG = DictionaryJsonConverter.FromJsonToDictionary(Message);
                     //MSG["CorrelationId"] = Guid.NewGuid().ToString();
-                    queueservice.Send(MSG, 0, null, customerId, BatchNumber);
+                    queueservice.Send(MSG, null, customerId, BatchNumber);
                 }
 
             }
@@ -161,7 +161,7 @@ namespace WebFreight.Web.WebServices
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ForwardersShipmentDocumentsQueue", 0);
                 var MSG = DictionaryJsonConverter.FromJsonToDictionary(Message);
-                queueservice.Send(MSG, 0); 
+                queueservice.Send(MSG); 
             }
             catch (System.Exception ex)
             {

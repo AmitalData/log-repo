@@ -1,4 +1,4 @@
-
+﻿
 declare var System: any;
 declare var window: any;
 
@@ -23,7 +23,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'BrandingTabComponent',
     templateUrl: './BrandingTabComponent.html',
@@ -41,10 +41,9 @@ export class BrandingTabComponent extends BaseComponent implements OnInit {
         this.myForm = fb.group({});
 
     }
-    private SaveCompletedEvent: any = null;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe(response => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -54,18 +53,7 @@ export class BrandingTabComponent extends BaseComponent implements OnInit {
             }
         });
 
-        
- 
-        if (this.SaveCompletedEvent == null) {
-            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.SetUIPropertiesEnabled(this.EntityPM.EnableBranding);
-                }
-            });
 
-
-        }
 
     }
 
@@ -73,19 +61,11 @@ export class BrandingTabComponent extends BaseComponent implements OnInit {
     EnableBrandingChange(value:any) {
 
         this.EntityPM.UpdateByUserId = SessionInfo.LoggedUserId + "^" + SessionInfo.LoggedUserTenant.toString();
-        this.EntityPM.EnableBranding = value;
+  
         this.SetUIPropertiesEnabled(value);
  
     }
-    public get EnableBranding() {
-        return this.EntityPM.EnableBranding;
-    }
-    public set EnableBranding(value: boolean) {
-        if (this.EntityPM.EnableBranding != value) {
-            this.EntityPM.EnableBranding = value;
-            this.SetUIPropertiesEnabled(value);
-        }
-    }
+
     SetUIPropertiesEnabled(value: boolean) {
 
         this.EntityPM.UIProperties.SetEnabled("CustomerURL", "TenantManagement", value);

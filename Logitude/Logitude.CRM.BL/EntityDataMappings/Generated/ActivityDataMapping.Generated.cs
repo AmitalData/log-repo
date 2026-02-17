@@ -180,10 +180,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         DueDateDateField, 
 	         BusinessProcessQueueId, 
 	         TeamId, 
-	         ShipmentId, 
-	         LeadSourceId, 
-	         LeadSourceName, 
-	         CustomerCode,
+	         ShipmentId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

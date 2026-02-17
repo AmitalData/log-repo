@@ -10,7 +10,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 
 @Component({
     selector: 'NewBusinessUnitComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewBusinessUnitComponent.html',
 })
 

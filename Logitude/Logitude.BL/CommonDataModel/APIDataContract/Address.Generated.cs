@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
     public Country Country { get; set; }
     
-    public string City { get; set; }
+    public City City { get; set; }
     
     public string ZipCode { get; set; }
     
@@ -44,8 +44,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     
 	[XmlAttribute]
     public string ExternalId { get; set; }
-    
-    public AddressType AddressType { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

@@ -4,8 +4,6 @@ using System.Linq;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
@@ -40,23 +38,9 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public LogitudeLead GetSingleLogitudeLead(string id)
         {
-            LogitudeLead item = (from a in context.LogitudeLeads
+            return (from a in context.LogitudeLeads
                     where a.Id == id
                     select a).FirstOrDefault();
-
-            string entityName = "LogitudeLead" + id;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && item != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, item, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    item = (LogitudeLead)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return item;
         }
 
         public LogitudeLead GetFirstNotCompletedLogitudeLead()
@@ -76,21 +60,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public IQueryable<LogitudeLead> GetAllLogitudeLeads()
         {
-            IQueryable<LogitudeLead> items = from a in context.LogitudeLeads
-                                            select a;
-            string entityName = "AllLogitudeLeads";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    items = (IQueryable<LogitudeLead>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return items;
+            return from a in context.LogitudeLeads
+                   select a;
         }
 
         public void Add(LogitudeLead entity)

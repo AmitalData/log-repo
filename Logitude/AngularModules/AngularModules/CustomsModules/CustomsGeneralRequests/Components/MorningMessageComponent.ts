@@ -22,12 +22,12 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 @Component({
-    
+    moduleId: module.id,
     selector: 'MorningMessageComponent',
     
     templateUrl: './MorningMessageComponent.html',
 })
-     
+
 
 export class MorningMessageComponent
     extends BaseRequestsSheetMassaging
@@ -191,7 +191,7 @@ export class MorningMessageComponent
 
         
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
+            .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא להודעות בוקר", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

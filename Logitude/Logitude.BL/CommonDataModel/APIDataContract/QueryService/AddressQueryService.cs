@@ -1,5 +1,4 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     {
         public AddressPM AddressCustomDataMappingAndValidatin(Address MyEntity, int Tenant, string ComputingPartnerName = "")
         {
+
             try
             {
                 var temp = new AddressPM();
@@ -19,18 +19,14 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 if (!string.IsNullOrEmpty(MyEntity.ExternalId))
                 {
                     temp = query.GetAddressByExternalId(MyEntity.ExternalId, Tenant);
-                    
-                    if(temp == null) 
-                    {
-                        CardRepository cardRepository = new CardRepository(Tenant);
-                        string cardId = cardRepository.GetActiveCardIdByCode(MyEntity.ExternalId, Tenant);
-                        if(cardId != null )
-                            temp = query.GetAddressByCardId(cardId, Tenant);
-
-                    }
                 }
 
-               
+                else
+                {
+                  //  temp = query.(MyEntity.Code, Tenant);
+                }
+
+
                 if (temp == null)
                 {
                     throw new ApplicationException("Address with ExternalId " + MyEntity.ExternalId + " doesn't exist");
@@ -64,67 +60,16 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        public List<Address> AddressCustomDataMapping(CardPM EntityPm, List<AddressPM> MyEntityPMs, int Tenant, string ComputingPartnerName = "")
-        {
-            return this.AddressMapping(MyEntityPMs, Tenant, ComputingPartnerName);
-        }
 
-        public List<Address> AddressMapping(List<AddressPM> addresses, int tenant, string computingPartner = "")
-        {
-            try
-            {
-                var myList = new List<Address>();
-                foreach (AddressPM item in addresses)
-                {
-                    var address = new Address();
-                    address.Id = item.Id;
-                    address.Address1 = item.Address1;
-                    address.Address2 = item.Address2;                    
-                    address.City = item.City;                    
-                    address.ExternalId = item.ExternalId;
-                    address.FaxNumber = item.FaxNumber;
-                    address.Name = item.Name;
-                    address.PhoneNumber = item.PhoneNumber;                    
-                    address.ZipCode = item.ZipCode;
 
-                    if (item.AddressTypeId != null)
-                    {
-                        AddressTypeQueryService queryService = new AddressTypeQueryService(tenant);
-                        address.AddressType = queryService.GetAddressTypeById(item.AddressTypeId, tenant, computingPartner);
-                    }
-
-                    if (item.CountryId != null)
-                    {
-                        CountryQueryService queryService = new CountryQueryService(tenant);
-                        address.Country = queryService.GetCountryById(item.CountryId, tenant, computingPartner);
-                    }
-
-                    if (item.StateId != null)
-                    {
-                        StateQueryService queryService = new StateQueryService(tenant);
-                        address.State = queryService.GetStateById(item.StateId, tenant, computingPartner);
-                    }
-
-                    myList.Add(address);
-                }
-
-                return myList;
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public Address AddressCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
+        public Address AddressCustomDataMapping(string Id, int Tenant)
         {
             try
             {
 
                 AddressQueryService AddressService0 = new AddressQueryService(Tenant);
-                var Address = AddressService0.GetAddressById(Id, Tenant,ComputingPartnerName);
-                return Address;
+                var ChargeType = AddressService0.GetAddressById(Id, Tenant);
+                return ChargeType;
             }
             catch (Exception ex)
             {
@@ -163,18 +108,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
                 }
 
-                //CityQueryService CityCityService = new CityQueryService(Tenant);
-                //if (MyEntity.City != null)
-                //{
-                //    var myCityPM = CityCityService.CityCustomDataMappingAndValidatin(MyEntity.City, temp.CountryId, Tenant, ComputingPartnerName);
-                //    if (myCityPM != null)
-                //    {
-                //        temp.City = myCityPM.EnglishName;
-                //        temp.CityCode = myCityPM.Code;
-                //    }
-                //}
+                CityQueryService CityCityService = new CityQueryService(Tenant);
+                if (MyEntity.City != null)
+                {
+                    var myCityPM = CityCityService.CityCustomDataMappingAndValidatin(MyEntity.City, temp.CountryId, Tenant, ComputingPartnerName);
+                    if (myCityPM != null)
+                    {
+                        temp.City = myCityPM.EnglishName;
+                        temp.CityCode = myCityPM.Code;
+                    }
+                }
 
-                temp.City = MyEntity.City;
+
                 temp.ZipCode = MyEntity.ZipCode;
                 temp.PhoneNumber = MyEntity.PhoneNumber;
                 temp.FaxNumber = MyEntity.FaxNumber; StateQueryService StateStateService = new StateQueryService(Tenant);
@@ -197,11 +142,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
                 throw ex;
             }
-        }
-
-        internal List<AddressPM> AddressCustomDataMappingAndValidatin(Customer myEntity, List<Address> addresses, int tenant, string computingPartnerName, bool isUpdate)
-        {
-            throw new NotImplementedException();
         }
     }
 }

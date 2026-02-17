@@ -16,7 +16,7 @@ import {FieldDataTypeService} from '../../../../../Common/Services/ExtendedPMs/F
 import {FieldDataTypePM} from '../../../../../Common/EntityPMs/FieldDataTypePM';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'DocumentTypeCustomFields',
     templateUrl: './DocumentTypeCustomFieldsComponent.html',
     providers: [FieldDataTypeService],
@@ -44,7 +44,7 @@ export class DocumentTypeCustomFieldsComponent extends BaseComponent implements 
 
     ngOnInit() {
         this.FullCustomFieldsLists = [];
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeCustomField", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeCustomField", 0).subscribe(response => {
             this.IsVisibile = true;
             this.EntityPM = this.entityArgs.EntityPM;
             if (this.EntityPM) {
@@ -75,7 +75,7 @@ export class DocumentTypeCustomFieldsComponent extends BaseComponent implements 
             });
         }
 
-        this._fieldDataTypeService.GetFieldDataTypes(this.EntityPM.Tenant).subscribe((res:any) => {
+        this._fieldDataTypeService.GetFieldDataTypes(this.EntityPM.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
             if (!pmResponse.HasError) {

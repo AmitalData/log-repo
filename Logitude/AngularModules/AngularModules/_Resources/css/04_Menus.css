@@ -157,16 +157,8 @@
     min-height: 21px;
 }
 
-.FiltersMenu .SeparatedMenu {
-    width: auto; 
-    margin-right: 10px; 
-    padding: 0 5px;
 
-    border-radius: 0 3px 3px 0;
-    border-style: Solid;
-    border-color: #6A8299;
-    border-width: 1px 1px 1px 1px;
-}
+
 
 
 

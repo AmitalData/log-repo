@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'NewCashBookComponent',
-    
+    moduleId: module.id,
     providers: [EntityListService],
     templateUrl: './NewCashBookComponent.html',
 })
@@ -135,9 +135,17 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
         this.CheckCurrency();
         if (this.ValidationErrorsList.length == 0) {
+
             var errors: string[] = [];
+
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
             if (errors.length == 0) {
+
+                //if (AppTool.IsNullOrEmpty(this.BranchId)) {
+                //    this.ValidationErrorsList.push("Branch fields is requierd");
+                //}
+
                 this.SubmitChanges();
             } else {
                 this.ValidationErrorsList = errors;
@@ -150,7 +158,7 @@ export class NewCashBookComponent extends BaseComponent implements OnInit {
     }
 
     SubmitChanges() {
-        this.myService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this.myService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

@@ -10,7 +10,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -51,13 +50,6 @@ namespace Logitude.Customs.Data.Repsitories
         {
             return (from a in context.SupplierInvoiceItems
                     where a.DeclarationId == declarationId && a.Tenant == tenant && counterKeys.Contains(a.CounterKey) && lineNumbers.Contains(a.LineNumber)
-                    select a).ToList();
-        }
-
-        public List<SupplierInvoiceItem> GetSupplierInvoiceItemsByCounterKeysAndLineNumbers(string declarationId, List<string> counterKeysLineNumbers, int tenant)
-        {
-            return (from a in context.SupplierInvoiceItems
-                    where a.DeclarationId == declarationId && a.Tenant == tenant && counterKeysLineNumbers.Contains(a.CounterKey + " " + a.LineNumber)
                     select a).ToList();
         }
 
@@ -114,7 +106,7 @@ namespace Logitude.Customs.Data.Repsitories
                 .DeleteWhere<SupplierInvoiceItem>(rec => rec.DeclarationId == entityKeyFields.Id);
         }
 
-      
+        
         public void GetWeeklyStatistic(int tenant, out int totDeclarationAbove10Items, out int totDeclarationAbove500Items)
         {
             totDeclarationAbove10Items = totDeclarationAbove500Items = -1;
@@ -230,18 +222,10 @@ namespace Logitude.Customs.Data.Repsitories
             return maxLine;
         }
 
-
         public List<SupplierInvoiceItem> GetSupplierInvoiceItemsForDeclaration(string declarationId, int tenant)
         {
             return (from a in context.SupplierInvoiceItems.Include("OriginCountry").Include("TradeAgreement").Include("AdditionalMeasurmentUnit").Include("InvoiceMeasurmentUnit").Include("StatisticMeasurmentUnit")
                     where a.DeclarationId == declarationId
-                    select a).ToList();
-        }
-
-        public List<SupplierInvoiceItem> GetSupplierInvoiceItemByClassificationCode(string declarationId, int tenant,string classificationCode)
-        {
-            return (from a in context.SupplierInvoiceItems.Include("OriginCountry").Include("TradeAgreement").Include("AdditionalMeasurmentUnit").Include("InvoiceMeasurmentUnit").Include("StatisticMeasurmentUnit")
-                    where a.DeclarationId == declarationId &&  a.ClassificationCode ==classificationCode
                     select a).ToList();
         }
 
@@ -293,19 +277,7 @@ namespace Logitude.Customs.Data.Repsitories
             return (from a in context.SupplierInvoiceItems
                     where a.DeclarationId == declarationId && invoicesCounterKeys.Contains(a.CounterKey) && a.Tenant == tenant && a.ItemHash == null && a.IsParent != true
                     select a).Count();
-        }
-        public List<SupplierInvoiceItem> GetSupplierInvoiceItemByInvoiceNumber(int tenant,string declarationId,string ItemCode)
-        {
-            return (from a in context.SupplierInvoiceItems
-                    where a.DeclarationId == declarationId && a.Tenant==tenant && a.ItemCode== ItemCode
-                    select a).ToList();
-        }
 
-        public List<SupplierInvoiceItem> GetPreferenceDocumentNumberSupplierInvoiceItemByDeclarationId( string declarationId, int tenant)
-        {
-            return (from a in context.SupplierInvoiceItems 
-                    where a.DeclarationId == declarationId && a.Tenant == tenant 
-                    select a).ToList();
         }
     }
 

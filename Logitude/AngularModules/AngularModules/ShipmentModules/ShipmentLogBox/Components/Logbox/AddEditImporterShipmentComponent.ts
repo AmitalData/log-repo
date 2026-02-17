@@ -5,7 +5,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,7 @@ import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator
 import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditImporterShipmentComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -60,7 +60,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
         //this.ShipmentList = args.SelectedShipment;
         this.IsNew = args.IsNew;
         if (this.IsNew) {
-            this._EntityStatusListService.getAll().subscribe((myResult:any) => {
+            this._EntityStatusListService.getAll().subscribe(myResult => {
                 if (!myResult.HasError) {
                     this.StatusId = myResult.Result.filter(a => a.Code == "OPOP")[0].Id;
                 }
@@ -68,7 +68,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._DepartmentListService.getAll().subscribe((myResult:any) => {
+            this._DepartmentListService.getAll().subscribe(myResult => {
                 if (!myResult.HasError) {
                     this.DepartmentId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
@@ -76,7 +76,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
             });
-            this._BranchListService.getAll().subscribe((myResult:any) => {
+            this._BranchListService.getAll().subscribe(myResult => {
                 if (!myResult.HasError) {
                     this.BranchId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant)[0].Id;
                 }
@@ -92,16 +92,8 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
     public get ShipperName() { return this.EntityPM.ShipperName }
     public set ShipperName(newValue: string) { this.EntityPM.ShipperName = newValue; }
 
-    public get CustomerReference3() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerReference3))
-            return this.EntityPM.CustomerReference3;
-        else
-            return this.EntityPM.CustomerReference1;
-    }
-    public set CustomerReference3(newValue: string) {
-        if (!AppTool.IsNullOrEmpty(newValue)) this.EntityPM.CustomerReference1 = newValue.substring(0, 50);
-        this.EntityPM.CustomerReference3 = newValue;
-    }
+    public get CustomerReference1() { return this.EntityPM.CustomerReference1 }
+    public set CustomerReference1(newValue: string) { this.EntityPM.CustomerReference1 = newValue; }
 
     public get CustomerReference2() { return this.EntityPM.CustomerReference2 }
     public set CustomerReference2(newValue: string) { this.EntityPM.CustomerReference2 = newValue; }
@@ -161,23 +153,17 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Transportation Type"));
         }
 
-        if (AppTool.IsNullOrEmpty(this.CustomerReference3)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Order Number"));
         }
 
         if (AppTool.IsNullOrEmpty(this.ForwarderPartnerId)) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "Agent"));
         }
-        if (!AppTool.IsNullOrEmpty(this.CustomerReference2) && this.CustomerReference2.length >= 30) {
-            this.ValidationErrorsList.push("Reference Field must be less than 30");
-        }
-        if (!AppTool.IsNullOrEmpty(this.CustomerReference3) && this.CustomerReference3.length >= 30) {
-            this.ValidationErrorsList.push("Invoice Number Field must be less than 30");
-        }
         this._PortExtendedPMService = new PortExtendedPMService();
         if (AppTool.IsNullOrEmpty(this.FromPortId)) {
             //this.ValidationErrorsList.push(msg.replace("%FieldName", "Gatway"));
-            //this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
+            //this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe(Result => {
             //    this.FromPortId = Result.Result.Id;
             //});
         }
@@ -211,7 +197,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                 this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
                 this.EntityPM.NewConcurrencyGUID = Guid.newGuid();
                 this.EntityPM.Tenant = SessionLocator.Tenant;
-                this._ShipmentPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+                this._ShipmentPMService.insert(this.EntityPM).subscribe(myResult => {
                     if (!myResult.HasError) {
                         ServiceLocator.SendTotangoUserActivity("LogBox", "New Shipment");
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -227,7 +213,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                 });
             }
             else {
-                this._ShipmentPMService.update(this.EntityPM).subscribe((myResult:any) => {
+                this._ShipmentPMService.update(this.EntityPM).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindowEmit("MyShipmentAdded"); 

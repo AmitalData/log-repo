@@ -18,15 +18,12 @@ import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceRespo
 import {LocationDirective} from '../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'EditWarehouseReleaseComponent',
     templateUrl: './EditWarehouseReleaseComponent.html',
 
 })
 export class EditWarehouseReleaseComponent extends BaseComponent implements OnInit {
-  public ExpectedReleaseDate: any;
-  public SpecialInstruction: any;
-  public Notes: any;
 
     DataContext: any = this;
     public ValidationErrorsList: string[];
@@ -74,7 +71,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
     ) {
 
-        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseRelease", 0).subscribe(response => {
 
             if (this.entityArgs.EntityPM) {
                 this.InitializeEditWarehouseRelease();
@@ -148,7 +145,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
             else if (!AppTool.IsNullOrEmpty(this.warehouseReleasePM.ShipmentId)) {
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe((res:any) => {
+                this.myShipmentPMService.get(this.warehouseReleasePM.ShipmentId).subscribe(res => {
                     var shipResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
                     if (!shipResponse.HasError) {
@@ -258,7 +255,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
 
 
 
-    SetActualDateClicked() {
+    SetActualDateClicked(fieldName: string) {
         this.ActualReleaseDate = DateTool.GetDateParts(this.warehouseReleasePM.ExpectedReleaseDate).DateObject;
     }
 
@@ -293,7 +290,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -304,7 +301,7 @@ export class EditWarehouseReleaseComponent extends BaseComponent implements OnIn
         if (warehouseEntryPackagesDetailsComponenttLocation != null) {
             SessionLocator.DynamicLoader.Load('./Warehouse/Components/WarehouseReleasePackagesDetailsComponent', warehouseEntryPackagesDetailsComponenttLocation.viewContainerRef)
                 .then(cmpRef => {
-                    var windowArgs: any = { WarehouseReleasePM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, IsEditMode: true };
+                    var windowArgs: any = { WarehouseEntryPM: this.warehouseReleasePM, ViewModelTrigger: this, ShipmentPM: this.ShipmentPM, IsEditMode: true };
                     cmpRef.instance.SetWindowArgs(windowArgs);
 
                 });

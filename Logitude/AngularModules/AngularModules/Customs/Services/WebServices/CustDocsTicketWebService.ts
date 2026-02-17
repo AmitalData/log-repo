@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -16,22 +15,22 @@ import {CustomsDocumentPointerPM} from '../../EntityPMs/CustomsDocumentPointerPM
 @Injectable()
 
 export class CustDocsTicketWebService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustDocsTicketWebService';
     }
 
-    GetCustomsDocumentsTicketsByEntityIdAndChilds(entityId: string, childEntityId1: string, childEntityId2: string, childEntityId3: string, parentEntityCode: string, isAir: boolean) {
+    GetCustomsDocumentsTicketsByEntityIdAndChilds(entityId: string, childEntityId1: string, childEntityId2: string, childEntityId3: string, parentEntityCode:string ) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCustomsDocumentsTicketsByEntityIdAndChilds?' + 'entityId=' + entityId + '&childEntityId1=' + childEntityId1 + '&childEntityId2=' + childEntityId2 + '&childEntityId3=' + childEntityId3 + '&parentEntityCode=' + parentEntityCode + '&isAir=' + isAir, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCustomsDocumentsTicketsByEntityIdAndChilds?' + 'entityId=' + entityId + '&childEntityId1=' + childEntityId1 + '&childEntityId2=' + childEntityId2 + '&childEntityId3=' + childEntityId3 + '&parentEntityCode=' + parentEntityCode, { headers: authHeader }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 var _mappedListsArray: Array<CustomsDocumentsTicketPM> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -44,7 +43,7 @@ export class CustDocsTicketWebService {
 
                 serviceResponse.Result = _mappedListsArray; 
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
 
         });

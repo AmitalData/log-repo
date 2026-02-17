@@ -17,24 +17,5 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string TypeCode { get; set; }
         public bool IsClosed { get; set; }
         public string DefaultFilterBy { get; set; }
-        public string DataViewName { get; set; }
-        public bool HasPivotColumn { get; set; }
-        public string PivotFieldCode { get; set; }
-        public string AdditionalFactCode { get; set; }
-        public string AdditionalFactForeignKey { get; set; }
-        public string ParentFactCode { get; set; } 
-        public string RecordType { get; set; }
-        public string DisplayName { get; set; }
-        public string IndexesXml { get; set; }
-
-        public string ObjectTableName { get; set; }
-        public int MaxNumberOfCustomFields { get; set; }
-        public bool HasCustomFields { get; set; }
-        public string AdditionalFactRelationType { get; set; }
-
-        public string AdditionalConditions { get; set; }
-        public string Description { get; set; }
-
-        
     }
 }

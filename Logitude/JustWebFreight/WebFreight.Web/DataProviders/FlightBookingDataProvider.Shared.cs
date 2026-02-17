@@ -30,33 +30,31 @@ namespace WebFreight.Web.DataProviders
         public int Id { get; set; }
         public string AWBNumber { get; set; }
         public string ShipperName { get; set; }
-        public int? Pieces { get; set; }
+        public int? Pieces { get; set; }        
         public double? GrossWeight { get; set; }
         public double? Volume { get; set; }
         public string DescriptionOfGoods { get; set; }
         public string Dimensions { get; set; }
-        public string ChargeableWeight { get; set; }
-        public string DestinationPortCode { get; set; }
+        public string ChargeableWeight  { get; set; }
+        public string DestinationPortCode   { get; set; }
         public string PC { get; set; }
         public string House { get; set; }
         public string ConsigneeName { get; set; }
         public string ConsigneeAddress { get; set; }
-        public string ShipmentNumber { get; set; }
+        public string ShipmentNumber  { get; set; }
         public string ShipperAddress { get; set; }
         public double? VolumetricWeight { get; set; }
-        public string VolumetricWeightUnit { get; set; }
-        public DateTime? ShipmentCreateDate { get; set; }
+        public string VolumetricWeightUnit{ get; set; }
+        public DateTime? ShipmentCreateDate{ get; set; }
         public string PackagesRef1 { get; set; }
         public string PackagesRef2 { get; set; }
         public string PackagesRef3 { get; set; }
-        public string PackagesRef4 { get; set; }
+        public string PackagesRef4{ get; set; }
         public string CustomAgentExport { get; set; }
         public string CustomAgentImport { get; set; }
-        public int? HAWBsNumbers { get; set; }
+        public int? HAWBsNumbers{ get; set; }
         public string MoveType { get; set; }
-        public string SCI { get; set; }
+        public string SCI{ get; set; }
         public string InvoiceNumber { get; set; }
-        public string PackagesNotes { get; set; }
-        public string PackagesQuantity { get; set; }
     }
 }

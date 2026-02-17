@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -82,7 +82,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.RegulatedAgentNumber = entityPM.RegulatedAgentNumber;
             poco.RegulatedAgentRegimeActivated = entityPM.RegulatedAgentRegimeActivated;
             poco.CustomerId = entityPM.CustomerId;
-            poco.CustomerTenantShareCustomsFile = entityPM.CustomerTenantShareCustomsFile;
+            poco.IsCustomerTenantShare = entityPM.IsCustomerTenantShare;
   
             poco.CustomerTenantShareExportFile = entityPM.CustomerTenantShareExportFile;
             poco.AllowAgentInCustomersLOV = entityPM.AllowAgentInCustomersLOV;
@@ -96,8 +96,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
       
      
             poco.IsWebAccessActivated = entityPM.IsWebAccessActivated;
-            poco.IsCargoTrackWebAccessActivated = entityPM.IsCargoTrackWebAccessActivated;
-            poco.IsDigitalPortalAccessActivated = entityPM.IsDigitalPortalAccessActivated;
             poco.IsCorrespondenceRightToLeftEnabled = entityPM.IsCorrespondenceRightToLeftEnabled;
             poco.IsNotesRightToLeftEnabled = entityPM.IsNotesRightToLeftEnabled;
             poco.AccountingActivationDate = entityPM.AccountingActivationDate;
@@ -113,21 +111,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TemperatureUnitCode = entityPM.TemperatureUnitCode;
             poco.NumberFormatCode = entityPM.NumberFormatCode;
             poco.DefaultSLAId = entityPM.DefaultSLAId;
-            poco.IsIncrementalBuildRunning = entityPM.IsIncrementalBuildRunning;
-            poco.SharedLogisMasterMessageLink = entityPM.SharedLogisMasterMessageLink;
-            poco.ShowMultiUnitsOfMeasurements = entityPM.ShowMultiUnitsOfMeasurements;
+         
+       
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
-            poco.EcommerceTenant = entityPM.EcommerceTenant;
-
             poco.CBSA = entityPM.CBSA;
             poco.CAAT = entityPM.CAAT;
             poco.ApplyVATForAllPartners = entityPM.ApplyVATForAllPartners;
-           
-            poco.AirRatio = entityPM.AirRatio;
-            poco.LCLRatio = entityPM.LCLRatio;
-            poco.FCLRatio = entityPM.FCLRatio;
-            poco.LTLRatio = entityPM.LTLRatio;
-            poco.FTLRatio = entityPM.FTLRatio;
 
             if (entityPM.CheckDigitControlAlgorithmCode == null)
             {
@@ -135,26 +124,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             }
 
             poco.CheckDigitControlAlgorithmCode = entityPM.CheckDigitControlAlgorithmCode;
-            poco.DisplayDocumentsAndEvents = entityPM.DisplayDocumentsAndEvents;
-            poco.VatUniquePartnerTypeCode = entityPM.VatUniquePartnerTypeCode;
-            if (string.IsNullOrEmpty(entityPM.TransferQuotationsToUnifreightTrigger))// Rabaia Added this check to solve ergent signup problem
-            {
-                poco.TransferQuotationsToUnifreightTrigger = "Dont";
-            }
-            else
-            {
-                poco.TransferQuotationsToUnifreightTrigger = entityPM.TransferQuotationsToUnifreightTrigger;
-            }
 
-            poco.IsQuotesRequestActivatedInShared = entityPM.IsQuotesRequestActivatedInShared;
-            poco.EmptyReturnClosingDays = entityPM.EmptyReturnClosingDays;
-            poco.ShipmentATAClosingDays = entityPM.ShipmentATAClosingDays;
-            poco.UseNewTermsOfUse = entityPM.UseNewTermsOfUse;
-            poco.ShipmentATADateIndicator = entityPM.ShipmentATADateIndicator;
-            poco.ApproveUploadedDocuments = entityPM.ApproveUploadedDocuments;
-            poco.InvoicePrintNotes = entityPM.InvoicePrintNotes;
-            poco.InvoicePrintNotesLocal = entityPM.InvoicePrintNotesLocal;
-            poco.HebrewTenant = entityPM.HebrewTenant;
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

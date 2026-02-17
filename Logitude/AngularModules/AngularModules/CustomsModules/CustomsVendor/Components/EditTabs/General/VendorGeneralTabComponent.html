@@ -15,7 +15,6 @@
         <td>
             <div class="TableHolder">
                 <table>
-                    
 
                     <!-- header -->
                     <tr style="height: 28px;">
@@ -176,24 +175,11 @@
                                                  [HideColumns]="true">
                                         </LogLov>
                                     </td>
-                                    
 
                                     <td></td>
 
                                     
                                 </tr>
-                                <tr class="FormFieldRow">
-
-                                    <!-- InActive -->
-                                    <td>
-                                        <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext" [Text]="inActiveVendor"></LogLabel>
-                                    </td>
-                                    <td>
-                                        <CheckBox [IsChecked]="InActive"  (NotChecked)="InActiveVendor($event)"></CheckBox>
-                                    </td>
-                                </tr>
-
                             </table>
                         </td>
                         <td>
@@ -232,8 +218,7 @@
 
                                                                 <!-- CommunicationTypeCode -->
                                                                 <log-column [header]="'Customs.VendorCommunication.F.CommunicationTypeCode' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'right'" [binding]="'CommunicationTypeCode'">
-                                                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                    <log-cell-template template="let item" #logcelltemplate>
                                                                         <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                             <span>{{item.CommunicationTypeName}}</span>
                                                                         </div>
@@ -249,13 +234,11 @@
 
                                                                         </div>
                                                                     </log-cell-template>
-</ng-template>
                                                                 </log-column>
 
                                                                 <!-- CommunicationAddress -->
                                                                 <log-column [header]="'Customs.VendorCommunication.F.CommunicationAddress' | TextCodeTranslationPipe" [width]="'180'" [Alignment]="'right'" [binding]="'CommunicationAddress'">
-                                                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                    <log-cell-template template="let item" #logcelltemplate>
                                                                         <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                                             <span>{{item.CommunicationAddress}}</span>
                                                                         </div>
@@ -264,18 +247,15 @@
                                                                                         [ObjectTableName]="'Customs.CustomsVendor'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                                         </div>
                                                                     </log-cell-template>
-</ng-template>
                                                                 </log-column>
 
                                                                 <!-- Buttons -->
                                                                 <log-column [width]="'40'" [Alignment]="'right'">
-                                                                    <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                                    <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                         <span class="CellSeparator" [style.float]="'right'"></span>
                                                                         <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="RemoveRow(item)"
                                                                                     style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                                     </log-cell-template>
-</ng-template>
                                                                 </log-column>
 
                                                             </logitude-edit-grid>

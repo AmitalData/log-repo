@@ -18,10 +18,7 @@ namespace Logitude.BL.CommonDataModel
         public string IOSAppLink { get; set; }
         public string InvitationPassword { get; set; }
         public string InviteeName { get; set; }
-        public string URLprivateCargoTracking { get; set; }
-        public string BrandingURL { get; set; }
-        public string BrandingURLButton { get; set; }
-        public string ResetPasswordButton { get; set; }
+
     }
 }
    

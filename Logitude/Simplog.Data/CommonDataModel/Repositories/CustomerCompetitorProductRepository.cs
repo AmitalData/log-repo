@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -22,7 +22,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public CustomerCompetitorProductRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CustomerCompetitorProduct> GetAllCustomerCompetitorProducts(int tenant)
         {

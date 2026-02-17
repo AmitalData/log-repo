@@ -7,7 +7,7 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;

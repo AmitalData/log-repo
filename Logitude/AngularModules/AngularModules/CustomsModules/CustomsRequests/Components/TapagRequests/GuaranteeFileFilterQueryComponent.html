@@ -203,129 +203,111 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'GuaranteeTypeName'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.GuaranteeTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- CertificateID -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.CertificateID' | TextCodeTranslationPipe"
                                                     [binding]="'CertificateID'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CertificateID}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- GuaranteeExternalCertificateNumebr -->
                                         <log-column [width]="'110'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeExternalCertificateNumebr' | TextCodeTranslationPipe"
                                                     [binding]="'GuaranteeExternalCertificateNumebr'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.GuaranteeExternalCertificateNumebr }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- Guaranator -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranatorName' | TextCodeTranslationPipe"
                                                     [binding]="'GuaranatorName'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.GuaranatorName }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- GuaranteeValidityDate -->
                                         <log-column [width]="'80'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeValidityDate' | TextCodeTranslationPipe"
                                                     [binding]="'GuaranteeValidityDate'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.GuaranteeValidityDate }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- CertificateAmount -->
                                         <log-column [width]="'95'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.CertificateAmount' | TextCodeTranslationPipe"
                                                     [binding]="'CertificateAmount'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.CertificateAmount }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- CertificateAllocation -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.CertificateAllocation' | TextCodeTranslationPipe"
                                                     [binding]="'CertificateAllocation'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.CertificateAllocation }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- AvaliableCertificateAmount -->
                                         <log-column [width]="'80'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.AvaliableCertificateAmount' | TextCodeTranslationPipe"
                                                     [binding]="'AvaliableCertificateAmount'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.AvaliableCertificateAmount }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- GuaranteeStatus -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.Status' | TextCodeTranslationPipe"
                                                     [binding]="'GuaranteeStatusName'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.GuaranteeStatusName }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -348,69 +330,59 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.CreditTransactionDate' | TextCodeTranslationPipe"
                                                     [binding]="'CreditTransactionDate'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CreditTransactionDate}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- CreditTransaction -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.CreditTransactionName' | TextCodeTranslationPipe"
                                                     [binding]="'CreditTransactionName'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CreditTransactionName}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- EntityType -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.EntityTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'EntityTypeName'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.EntityTypeName }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- EntityNumber -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.GuaranteeEntityID' | TextCodeTranslationPipe"
                                                     [binding]="'EntityNumber'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.EntityNumber }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- CreditTransactionAmount -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.Amount' | TextCodeTranslationPipe"
                                                     [binding]="'CreditTransactionAmount'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.CreditTransactionAmount }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -433,39 +405,33 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.DocumentTypeName' | TextCodeTranslationPipe"
                                                     [binding]="'TypeName'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.TypeName}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- DisplayFileNumber -->
                                         <log-column [width]="'90'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.DisplayFileNumber' | TextCodeTranslationPipe"
                                                     [binding]="'DisplayFileNumber'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.DisplayFileNumber}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- DocumentID -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.GuaranteeFileFilterQuery.F.DocumentID' | TextCodeTranslationPipe"
                                                     [binding]="'DocumentID'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.DocumentID }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

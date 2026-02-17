@@ -10,17 +10,12 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Data.Entity.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
    public partial class NotificationRepository:IRepository<Notification>
    {
-        public NotificationRepository()
-        {
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-        }
-
+        
 		public List<Notification> GetMulti(EntityKeyFields entityKeys)
         {
             
@@ -35,39 +30,20 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).OrderByDescending(d => d.CreateDate).Take(10).ToList();
         }
 
-        public IQueryable<Notification> GetQBadjCount(string userId, int tenant)
+        public int GetBadjCount(string userId, int tenant)
         {
             return (from a in context.Notifications
                     where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
-                    //יש להוסיף לחיתוך הדיפולטיבי גם: לא סגורות (IsClosedByAssignee=False), וכן לבנות אינדקס על אחראי+IsClosedByAssignee+BadjCount.
-                    //CREATE INDEX IX_NOTIFICATIONS_BC_ICBA_ATI ON NOTIFICATIONS (BADJCOUNT ASC, ASSIGNETOID ASC, ISCLOSEDBYASSIGNEE ASC) 
-                    where !a.IsClosedByAssignee
-                    select a);
 
-
-        }
-
-        public int GetBadjCount(string userId, int tenant)
-        {
-            return
-            //return (from a in context.Notifications
-            //        where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
-            //        //יש להוסיף לחיתוך הדיפולטיבי גם: לא סגורות (IsClosedByAssignee=False), וכן לבנות אינדקס על אחראי+IsClosedByAssignee+BadjCount.
-            //        where !a.IsClosedByAssignee
-            //        select a)
-            GetQBadjCount(userId, tenant)
-                    .Count();
+                    select a).Count();
         }
 
         public List<Notification> GetNotificationsWithBadjCount(string userId, int tenant)
         {
-            return
-                    //(from a in context.Notifications
-                    //    where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
+            return (from a in context.Notifications
+                    where a.Tenant == tenant && a.AssigneToId == userId && a.BadjCount
 
-                    //    select a)
-                    GetQBadjCount(userId, tenant)
-                    .ToList();
+                    select a).ToList();
 
         }
 

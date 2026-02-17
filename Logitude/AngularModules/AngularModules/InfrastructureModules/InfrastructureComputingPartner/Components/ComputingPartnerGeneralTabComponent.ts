@@ -17,7 +17,7 @@ import {Cloner} from '../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'ComputingPartnerGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './ComputingPartnerGeneralTabComponent.html',
 })
 

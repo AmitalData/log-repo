@@ -37,11 +37,5 @@ export class AccountingPartnerList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
-		GLAccountNumber: string;
-		CollectorId: string;
-		CreditLimit: number;
-		InsuredCreditlimit: number;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
 	
 }

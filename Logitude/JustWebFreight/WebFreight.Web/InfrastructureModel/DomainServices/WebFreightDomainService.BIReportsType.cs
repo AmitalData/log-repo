@@ -8,7 +8,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -31,7 +31,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
             BIReportsTypeListQueryService listService = new BIReportsTypeListQueryService(objectContext);
             return listService.GetList(tenant);
         }
@@ -40,7 +40,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
             BIReportsTypeListQueryService listService = new BIReportsTypeListQueryService(objectContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return listService.GetList(queryOperations, tenant);
@@ -51,7 +51,7 @@ namespace WebFreight.Web.InfrastructureModel.DomainServices
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
-            IInfrastructureContext objectContext = InfrastructureContext.GetContext(tenant);
+            IInfrastructureContext objectContext = InfrastructureContext.GetContext(0);
 
             BIReportsTypeListQueryService queryService = new BIReportsTypeListQueryService(objectContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);

@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 
 
-import { defer, of } from 'rxjs';
+import {Observable}     from 'rxjs/Rx';
 
 import {QuoteTemplateSectionPM} from '../../EntityPMs/QuoteTemplateSectionPM';
 
@@ -14,10 +13,10 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 @Injectable()
 export class QuoteTemplateSectionExtendedPMService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/QuoteTemplateSectionExtended';
     }
 
@@ -25,9 +24,11 @@ export class QuoteTemplateSectionExtendedPMService {
 
     GetQuoteTemplateSectionByQuoteTemplateId(quoteTemplateId: string, tenant: number) {
 
-        return this._http.get(this._apiUrl + '/GetQuoteTemplateSectionByQuoteTemplateId/?' + 'quoteTemplateId=' + quoteTemplateId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetQuoteTemplateSectionByQuoteTemplateId/?' + 'quoteTemplateId=' + quoteTemplateId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result: any = response;
+            var result = response.json();
             var entity: QuoteTemplateSectionPM;
             var quoteTemplateSectionPMLists: QuoteTemplateSectionPM[];
             quoteTemplateSectionPMLists = new Array<QuoteTemplateSectionPM>();
@@ -40,77 +41,88 @@ export class QuoteTemplateSectionExtendedPMService {
 
             pmresponse.Result = quoteTemplateSectionPMLists;
             return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
 
     updateSections(quoteTemplateSections: any) {
-        return defer(() => {
-
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.put(this._apiUrl + '/PutQuoteTemplateSections', JSON.stringify(quoteTemplateSections), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var pm = res;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        } );
+            return this._http.put(this._apiUrl + '/PutQuoteTemplateSections', JSON.stringify(quoteTemplateSections),
+                { headers: authHeader }).map((res) => {
+                    var pm = res.json();
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+
     }
 
 
    // GetDownloadQuoteTemplateSectionPdfFile(string sectionTypeCode, string sectionDocId, string quoteTemplateId, int tenant, string settingId, string quoteId)
     DownloadQuoteTemplateSectionPdfFile(sectionTypeCode: string, sectionDocId: string, quoteTemplateId: string, settingId: string, quoteId: string, userId:string, tenant: number) {
 
-        return this._http.get(this._apiUrl + '/GetDownloadQuoteTemplateSectionPdfFile/?' + 'sectionTypeCode=' + sectionTypeCode + '&sectionDocId=' + sectionDocId + '&quoteTemplateId=' + quoteTemplateId + '&settingId=' + settingId + '&quoteId=' + quoteId + '&userId=' + userId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetDownloadQuoteTemplateSectionPdfFile/?' + 'sectionTypeCode=' + sectionTypeCode + '&sectionDocId=' + sectionDocId + '&quoteTemplateId=' + quoteTemplateId + '&settingId=' + settingId + '&quoteId=' + quoteId + '&userId=' + userId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result = response;
+            var result = response.json();
            
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
             pmresponse.Result = result
             return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
     GetQuoteTemplatePdfReport(quoteId: string, quoteTemplateId: string, userId: string, isFromLibrary: boolean = false) {
 
-
-        return this._http.get(this._apiUrl + '/GetQuoteTemplatePdfReport/?' + 'quoteId=' + quoteId + '&quoteTemplateId=' + quoteTemplateId + '&userId=' + userId + '&isFromLibrary=' + isFromLibrary, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetQuoteTemplatePdfReport/?' + 'quoteId=' + quoteId + '&quoteTemplateId=' + quoteTemplateId + '&userId=' + userId + '&isFromLibrary=' + isFromLibrary , { headers: authHeader }).map(response => {
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
             pmresponse.Result = result
             return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
- GetMakeQuoteTemplateSectionsIncluded(quoteId: string, quotetemplateId: string, quotetemplatesectionId: string, tenant: number) {
 
-     return this._http.get(this._apiUrl + '/GetMakeQuoteTemplateSectionsIncluded/?' + 'quoteId=' + quoteId + '&quotetemplateId=' + quotetemplateId + '&quotetemplatesectionId=' + quotetemplatesectionId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-         var result = response;
+ GetMakeQuoteTemplateSectionsIncluded(quoteId: string, quotetemplateId: string, quotetemplatesectionId: string, tenant: number) {
+     var authHeader = new Headers();
+     authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+     return this._http.get(this._apiUrl + '/GetMakeQuoteTemplateSectionsIncluded/?' + 'quoteId=' + quoteId + '&quotetemplateId=' + quotetemplateId + '&quotetemplatesectionId=' + quotetemplatesectionId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+         var result = response.json();
          var pmresponse: ServiceResponse;
          pmresponse = new ServiceResponse();
 
          pmresponse.Result = result
          return pmresponse;
-     }), catchError(ServiceHelper.HandleServiceError));
+     }).catch(ServiceHelper.HandleServiceError);
  }
 
  GetMakeQuoteTemplateSectionsExcluded(quoteId: string, quotetemplateId: string, quotetemplatesectionId: string, tenant: number) {
-
-     return this._http.get(this._apiUrl + '/GetMakeQuoteTemplateSectionsExcluded/?' + 'quoteId=' + quoteId + '&quotetemplateId=' + quotetemplateId + '&quotetemplatesectionId=' + quotetemplatesectionId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-         var result = response;
+     var authHeader = new Headers();
+     authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+     return this._http.get(this._apiUrl + '/GetMakeQuoteTemplateSectionsExcluded/?' + 'quoteId=' + quoteId + '&quotetemplateId=' + quotetemplateId + '&quotetemplatesectionId=' + quotetemplatesectionId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+         var result = response.json();
          var pmresponse: ServiceResponse;
          pmresponse = new ServiceResponse();
 
          pmresponse.Result = result
          return pmresponse;
-     }), catchError(ServiceHelper.HandleServiceError));
+     }).catch(ServiceHelper.HandleServiceError);
  }
 
     MapJsonToEntityPM(jsonPM: any) {

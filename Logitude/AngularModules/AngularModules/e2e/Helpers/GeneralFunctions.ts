@@ -7,13 +7,7 @@ export class GeneralFunctions {
         this.Helper = new FieldsHelper();
     }
     public GoToMainMenu(menuid: string) {
-        this.Helper.WaitByIdAndClick('General.MH.Maintenance');
-        var selectMenu = this.Helper.WaitByIdAndClick(menuid);
-    }
-    public GoToMainMenu2(menuid: string) {
-        this.Helper.WaitByIdAndClick('General.MH.Maintenance');
-        var selectMenu2 = this.Helper.ItemsVisibility(menuid);
-        var selectMenu3 = this.Helper.ItemsPresent(menuid);
+        this.Helper.WaitByIdAndClick('PAR');
         var selectMenu = this.Helper.WaitByIdAndClick(menuid);
     }
     SelectMenuWorkSpaceTabs(id: string) {

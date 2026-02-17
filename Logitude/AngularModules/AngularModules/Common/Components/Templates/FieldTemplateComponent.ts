@@ -2,7 +2,7 @@ import {Component, ChangeDetectorRef} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -33,10 +33,6 @@ export class FieldTemplateComponent {
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
 
-            if ((this.FieldName == "SharedLogisticsInvitationStatusName" || this.FieldName == "CargoTrackingInvitationStatusName") && this.ObjectTableName == "Card") {
-                this.SetSharedLogisticsInvitationStatusTemplate();
-            }
-
             if (this.ObjectTableName == "Customer") {
                 if (this.FieldName == "RankCode") {
                     this.SetRanksSource();
@@ -46,10 +42,10 @@ export class FieldTemplateComponent {
                     this.SetLastShipmentDateTemplate();
                 }
 
-                else if (this.FieldName == "StartWorkingDate" || this.FieldName == "StartWorkingDataTemplate") {
+                else if (this.FieldName == "StartWorkingDate") {
                     this.SetStartWorkingDateTemplate();
                 }
-                else if ((this.FieldName == "SharedLogisticsInvitationStatusName" || this.FieldName == "CargoTrackingInvitationStatusName")) {
+                else if (this.FieldName == "SharedLogisticsInvitationStatusName") {
                     this.SetSharedLogisticsInvitationStatusTemplate();
                 }
 

@@ -9,10 +9,10 @@ import {PartnersDomainService} from '../../Common/Services/PartnersDomainService
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentDomainService} from '../../Shipment/Services/ShipmentDomainService'; 
 import {ObjectsLocator}  from  '../../Infrastructure/Locators/ObjectsLocator';
-import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
+import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuickSearchTextBox.html',
     selector: "QuickSearchTextBox",
     inputs: ['Watermark', 'ObjectTableName', 'Filters', 'DropDownWidth', 'ItemHeight', 'Area', 'IsDisabled', 'AWBMessagesCCSTypeCode', 'ShowViewAll', 'DisplayText', 'IsIconsVisible', 'IsItemSelected'],
@@ -285,7 +285,7 @@ export class QuickSearchTextBox implements OnInit {
 
                     var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
                     loadPromise.then((res: any) => {
-                        res.subscribe((resp:any) => {
+                        res.subscribe(resp => {
                             this.OnDataLoaded(resp.Result);
                         })
                     });
@@ -324,7 +324,7 @@ export class QuickSearchTextBox implements OnInit {
                     else {
                         var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
                         loadPromise.then((res: any) => {
-                            res.subscribe((resp:any) => {
+                            res.subscribe(resp => {
                                 this.OnDataLoaded(resp.Result);
                             })
                         });
@@ -365,7 +365,7 @@ export class QuickSearchTextBox implements OnInit {
         var loadPromise = this.entityListService.getByFilters(this.ObjectTableName, this.Filters);
 
         loadPromise.then((res: any) => {
-            res.subscribe((resp:any) => {
+            res.subscribe(resp => {
                 this.OnDataLoaded(resp.Result);
             })
         });

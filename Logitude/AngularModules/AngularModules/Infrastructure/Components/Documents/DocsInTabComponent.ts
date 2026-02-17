@@ -30,15 +30,12 @@ import { BaseComponent } from '../LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
-import { ObjectsLocator } from '../../Locators/ObjectsLocator';
-import { CustomerListService } from '../../../Common/Services/StandardLists/CustomerListService';
-import { CustomerList } from '../../../Common/EntityLists/CustomerList';
 
 @Component({
-    
+    moduleId: module.id,
     selector: "DocsInTabControl",
     templateUrl: './DocsInTabComponent.html',
-    inputs: ['EntityPM', 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference', 'CategoryCode', 'EntityNumber', '', 'ExternalEntityReference', 'ExternalEntityName'],
+    inputs: ['EntityPM' , 'EntityId', 'ChildEntityId', 'ObjectTableId', 'ChildObjectTableId', 'TransportModeId', 'ShipmentlevelCode', 'ChildEntityReference'],
     providers: [DocumentTypeListExtendedService, DocumentsFilingExtendedPMService, DocumentsFilingPMService, ServiceArgs, ImageLibraryService, DocumentTypeListService],
 })
 
@@ -51,10 +48,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public ChildEntityId: string = "";
     public ObjectTableId: string = "";
     public ChildObjectTableId: string = "";
-    public CategoryCode: string = "";
-    public EntityNumber: string="";
-    public ExternalEntityReference: string="";
-    public ExternalEntityName: string="";
     public TransportModeId: string = "";
     public ShipmentlevelCode: string = "";
     public ChildEntityReference: string = "";
@@ -62,7 +55,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     public IsClickToUpload: boolean = false;
     public DownloadAllVisibile: boolean = false;
     public HasDocuments: boolean = false;
-    public IsRTL: boolean = false;
     ObjectTableName: string;
     IsShowFollowColum: boolean;
     DocumentsList: DocsInDataViewModel[];
@@ -75,7 +67,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     SelectedExternalViewModel: DocsInDataViewModel;
     DeleteAttachmentButtonEnable: boolean = false;
     IsStardLoadPage: boolean;
-    AllowChangeReceiveDateDocsIn : boolean =false;
     public documentsFilingPMService: DocumentsFilingPMService;
     public UndoReceivedButtonEnable: boolean;
     public TabHeaderTextCode: string;
@@ -84,15 +75,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     IsLoadDocumentsFilingListsComplete: boolean = false;
     IsLoadDocumentTypeListsComplete: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    IsApprovePendingDocumentsEnabled:boolean = false;
-    public IsDigitalPortalInvitedCustomer: boolean = false;
-    public IsDocumentsNeedApprove: boolean = false;
-    public CustomerListService: CustomerListService;
     constructor(public _documentTypeListService: DocumentTypeListService , public _imageLibraryService: ImageLibraryService,public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.TabHeaderTextCode = "DocsIn.O.DocsIn"; // entityArgs.ObjectTableName + ".TH.DocsIn";
-        if (ObjectsLocator.GlobalSetting) this.IsRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
         if (this.documentsFilingPMService == null) {
             this.documentsFilingPMService = new DocumentsFilingPMService();
 
@@ -106,7 +93,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         ServiceLocator.SendTotangoUserActivity("Shipment", "Docs In Downloaded");
 
         var service: CardPMService = new CardPMService();
-        service.get(SessionLocator.LoggedUserPM.Id).subscribe((res:any) => {
+        service.get(SessionLocator.LoggedUserPM.Id).subscribe(res => {
             if (!res.HasError) {
 
                 var link = ServiceHelper.GetLogitudeURL() + "/WebPages/SharedDownloadPage.aspx?id=" + SessionLocator.Tenant + ":" + null + ":ship:" + this.EntityId + ":" + res.Result.PartnerTypeId + ":" + ServiceHelper.GetLDocumentDownloadToken();
@@ -128,20 +115,18 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         else this.ObjectTableName = "Shipment";
 
 
-      
         if (FeatureLocator.HasFeaturePermession("Shipment", "DOCSINDOWNLOADDOCUMENTS") && this.ObjectTableName == "Shipment") {
             this.DownloadAllVisibile = true;
         }
 
-        this.CheckApproveDocumentsAvailability();
-        this.CheckCustomerInvitationStatus();
+
         // Ayman:
         // we need this for Translation
         // Please don't remove it
         this.TabHeaderTextCode = this.ObjectTableName + ".TH.DocsIn";
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("DocsIn").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("DocsIn").subscribe(response => {
                 this.IsStardLoadPage = true;
 
 
@@ -176,7 +161,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
     private RefreshDocInEvent: any = null;
-    private SaveCompletedEvent: any = null;
+
 
     private Listen() {
 
@@ -196,41 +181,13 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     this.LoadAllDocumentTypeList();
                 }
             });
-
-
-            if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        if (this.IsAttachExternalRequested && this.SelectedDocsInDataViewModel) {
-                            this.SelectedDocsInDataViewModel.UploadDocument();
-                        }
-                        this.IsAttachExternalRequested = false;
-                        this.SelectedDocsInDataViewModel = null;
-                    } else {
-                        this.IsClickToUpload = false;
-                    }
-                });
-            }
-
-
-
-
-
         }
     }
 
 
-
-
- 
-
-
-
-
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.TabSelectedEvent);
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        //AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
 
@@ -244,6 +201,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             }
         }
         else this.DocumentsList = this.StaticDocumentsList;
+
         this.BuildItemsSource();
     }
 
@@ -267,7 +225,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     //    if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) && this.ChildObjectTableId) objecttableid = this.ChildObjectTableId;
 
     //    else objecttableid = this.ObjectTableId;
-    //    this._documentTypeListExtendedService.getDocumentTypeListsByEnityIdAndTenant(this.TransportModeId, this.ShipmentlevelCode, objecttableid, this.Tenant).subscribe((res:any) => {
+    //    this._documentTypeListExtendedService.getDocumentTypeListsByEnityIdAndTenant(this.TransportModeId, this.ShipmentlevelCode, objecttableid, this.Tenant).subscribe(res => {
 
     //        var pmResponse: ServiceResponse = res;
     //        if (!pmResponse.HasError) {
@@ -283,36 +241,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
     //}
 
-    ApprovePendingDocuments() {
-        this.EntityPM.IsDocumentsNeedApprove = false;
-        this.IsDocumentsNeedApprove = false;
-        this.entityArgs.EditComponent.SaveChanges();
-    }
-
-    CheckCustomerInvitationStatus() {
-        if (this.ObjectTableName != "Shipment") return;
-        if (!this.EntityPM) return;
-        this.CustomerListService = new CustomerListService();
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.CustomerListService.getSingle(this.EntityPM.CustomerId).subscribe((response: any) => {
-            let customer = response.Result;
-            if (customer && customer.SharedLogisticsInvitationStatusName != "Not Invited")
-                this.IsDigitalPortalInvitedCustomer = true;
-            this.CurrentSession.StopBusyIndicator();
-        });
-    }
-
-    CheckApproveDocumentsAvailability() {
-        if (!FeatureLocator.HasFeaturePermession("General", "PendingApprovalDocuments")) {
-            this.IsApprovePendingDocumentsEnabled = false;
-            return;
-        }
-        if ((this.ObjectTableName == "Shipment" || ObjectsLocator.GlobalSetting?.WorkEnvironment == "Logitude") && SessionLocator.TenantPM.ApproveUploadedDocuments)
-            this.IsApprovePendingDocumentsEnabled = true;
-        if (this.IsApprovePendingDocumentsEnabled) {
-            this.IsDocumentsNeedApprove = this.EntityPM.IsDocumentsNeedApprove;
-        }
-    }
     LoadAllDocumentTypeList() {
 
         this.DocumentTypes = [];
@@ -321,12 +249,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = this.Tenant;
-
-        if ((!AppTool.IsNullOrEmpty(this.CategoryCode)) && this.CategoryCode == 'E') {
-            apiQueryFilters.ForceCacheRefresh = true;
-        }
-            
-        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
+        this._documentTypeListService.getAllFromCache(apiQueryFilters).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -353,7 +276,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         }
 
         if (getDocsIn) {
-            this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, false).subscribe((res:any) => {
+            this._documentsFilingExtendedPMService.getDocumentsFilingsByEntityIdAndObjectTableAndDirectionCode(this.EntityId, this.ChildEntityId, this.ObjectTableId, "I", SessionInfo.LoggedUserTenant, false).subscribe(res => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -383,7 +306,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.DocumentTypes.forEach((docType) => {
                 var exists = this.StaticDocumentsList.filter(d => d.Id == docType.Id)[0];
                 if (!exists) {
-                    var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
+                    var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId);
                     this.StaticDocumentsList.push(docVeiwModel);
                 }
 
@@ -403,7 +326,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                     }
                   
                     if (!exists) {
-                        var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
+                        var docVeiwModel = new DocsInDataViewModel(null, this, docType, this.EntityId, this.ChildEntityId, this.ChildEntityReference, this.externalDocs, this.ObjectTableId);
                         docVeiwModel.HasFollowUp = true;
                         this.StaticDocumentsList.push(docVeiwModel);
                     }
@@ -475,13 +398,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                 if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) && this.ChildObjectTableId) objecttableid = this.ChildObjectTableId;
                 else objecttableid = this.ObjectTableId;
        
-            this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
-             if (!AppTool.IsNullOrEmpty(this.CategoryCode)) {
-
-                this.DocumentTypes = this.DocumentTypes.filter(a => a.DocumentTypeCategoryCode == this.CategoryCode);
-
-
-            }
+                this.DocumentTypes = this.AllDocumentTypeList.filter(d => d.ObjectTableId == objecttableid && d.IsDocIn && !d.InActive);
                 if (!AppTool.IsNullOrEmpty(this.TransportModeId)) {
                 switch (this.TransportModeId) {
                     case "A":
@@ -537,12 +454,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
 
 
     SortItemSource(ItemsSource: any) {
-        if (!this.IsShipmentPendingApprovalList())
-            return this.AlphabeticalSort(ItemsSource);
-        return this.RecievedDateSort(ItemsSource);
-    }
 
-    AlphabeticalSort(ItemsSource: any) {
         ItemsSource.sort((a, b) => {
             if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
                 return -1;
@@ -558,31 +470,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
         return ItemsSource;
     }
 
-    IsShipmentPendingApprovalList() : boolean{
-        if (this.ObjectTableName != "Shipment") return false;
-        if (!this.IsApprovePendingDocumentsEnabled) return false;
-        return true;
-    }
-
-    RecievedDateSort(ItemsSource: any) {
-        ItemsSource.sort((a, b) => {
-            let firstDate = this.getRecievedDate(a);
-            let secondDate = this.getRecievedDate(b);
-            if (firstDate > secondDate) {
-                return -1;
-            }
-            else if (firstDate < secondDate) {
-                return 1;
-            }
-            else {
-                return 0;
-            }
-        });
-        return ItemsSource;
-    }
-    getRecievedDate(item: any) {
-        return item.ReceivedDate ? item.ReceivedDate : "1955-02-02T12:55:32.32";
-    }
     OnMouseOver(item: DocsInDataViewModel) {
 
         var selectedId: string = this.SelectedExternalViewModel ? this.SelectedExternalViewModel.Id:null;
@@ -697,7 +584,6 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             if (item.DataContext.DocumentHasFile) {
                 this.HasDocuments = true;
             }
-            item.FirstTime = true;
             itemsCollection.push(item);
         })
 
@@ -750,7 +636,7 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
     DeleteAttachmentButtonClicked() {
 
         if (this.SelectedExternalViewModel != null && this.SelectedExternalViewModel.CurrentDocument) {
-            this._documentsFilingExtendedPMService.GetDocumentById(this.SelectedExternalViewModel.CurrentDocument.DocumentId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+            this._documentsFilingExtendedPMService.GetDocumentById(this.SelectedExternalViewModel.CurrentDocument.DocumentId, SessionInfo.LoggedUserTenant).subscribe(res => {
 
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -759,11 +645,11 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
                         if (!this.IsDeleteAttachment) {
                             this.IsDeleteAttachment = true;
                             this.CurrentSession.StartBusyIndicator("Saving...");
-                            this._imageLibraryService.RemoveFile(document.Id, document.Tenant).subscribe((result:any) => {
+                            this._imageLibraryService.RemoveFile(document.Id, document.Tenant).subscribe(result => {
 
                
                                 if (this.ObjectTableName == "Shipment") {
-                                    this._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.EntityId, this.SelectedExternalViewModel.FileName, "DODE").subscribe((res:any) => {
+                                    this._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.EntityId, this.SelectedExternalViewModel.FileName, "DODE").subscribe(res => {
                                     });
                                 }
 
@@ -821,9 +707,9 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             if (this.externalDocs != null) {
                 this.externalDocs.forEach((docin) => {
                     if (this.AllDocumentTypeList != null) {
-                        var docType = this.AllDocumentTypeList.filter(d => d.Id == docin.DocumentTypeId)[0];
+                        var docType = this.AllDocumentTypeList.filter(d => d.Id == docin.DocumentTypeId && d.InActive == false)[0];
                         if (docType) {
-                            var docVeiwModel = new DocsInDataViewModel(docin, this, docType, this.EntityId, docin.ChildEntityId, docin.ChildEntityReference, this.externalDocs, this.ObjectTableId, this.EntityNumber, this.ExternalEntityName, this.ExternalEntityReference);
+                            var docVeiwModel = new DocsInDataViewModel(docin, this, docType, this.EntityId, docin.ChildEntityId, docin.ChildEntityReference, this.externalDocs, this.ObjectTableId);
                             this.StaticDocumentsList.push(docVeiwModel);
                         }
                     }
@@ -836,16 +722,5 @@ export class DocsInTabComponent extends BaseComponent implements OnInit {
             this.CurrentSession.StopBusyIndicator();
         }
     }
-
-
-
-    IsAttachExternalRequested: boolean = false;
-    SelectedDocsInDataViewModel: DocsInDataViewModel;
-    public AttachExternalRequested(docsInDataViewModel: DocsInDataViewModel) {
-        this.SelectedDocsInDataViewModel = docsInDataViewModel;
-        this.IsAttachExternalRequested = true;
-    }
-
-
 
 }

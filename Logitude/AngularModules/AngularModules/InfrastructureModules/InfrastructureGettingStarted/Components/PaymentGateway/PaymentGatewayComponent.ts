@@ -10,7 +10,7 @@ import { TenantAdditionalDataPMServiceExtended } from '../../../../Common/Servic
 
 @Component({
     selector: 'PaymentGatewayComponent',
-    
+    moduleId: module.id,
     templateUrl: './PaymentGatewayComponent.html',
 })
 
@@ -83,7 +83,7 @@ export class PaymentGatewayComponent extends BaseComponent {
                 this.ValidationErrorsList.push("Connection String is required");
             }
             if (this.ValidationErrorsList.length == 0) {
-                this.iService.insert(this.EntityPM).subscribe((myResult:any) => {
+                this.iService.insert(this.EntityPM).subscribe(myResult => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {

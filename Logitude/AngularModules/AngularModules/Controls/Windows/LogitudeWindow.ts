@@ -1,11 +1,6 @@
-import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener, ComponentRef} from '@angular/core';
-import { ChildDirective } from '../Directives/ChildDirective';
-import { Settings } from '../../Infrastructure/Settings';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
-import { SessionComponent } from '../../Infrastructure/Components/Session/SessionComponent';
-import { AppTool } from '../../Infrastructure/Tools';
-
+import {Component, AfterViewInit, ViewChild, ViewContainerRef, Output, EventEmitter, HostListener} from '@angular/core';
+import {Settings} from '../../Infrastructure/Settings';
+import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 declare var dragger: any;
 
 export class LogitudeWindow {
@@ -16,7 +11,6 @@ export class LogitudeWindow {
     public CustomTitleIcon: string = null;
     public WindowIndex: number = null;
     public IsOverWindow: boolean = false;
-    public IsOverEditComponentWindow: boolean = false;
     public IsSameWindowSize: boolean = false;
     public IsShowCloseButton: boolean = false;
     public IsFillScreen: boolean = false;
@@ -41,34 +35,22 @@ export class LogitudeWindow {
     public IsFillScreen_115: boolean = false;
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
-    public ZIndexModified: boolean;
     public IsFillScreen_90: boolean = false;
     public SuppressBusyIndicator: boolean = false;
     public IsHideWindowMargin: boolean = false;
-    public EditComponentArguments: any = null;
-    public IsViewMode: boolean = false;
-    public ShowFooterButtons: boolean = false;
-    public SubmitFooterButtonLabel: string | null = null;
-    public CancelFooterButtonLabel: string | null = null;
-    public HideFooterSaveButton: boolean = false;
 
     @Output() WindowClosed: EventEmitter<any> = new EventEmitter();
     @Output() ComponentLoaded: EventEmitter<any> = new EventEmitter();
-    @Output() FooterButtonsClicked: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
-    
-    constructor(forceSelectedSession?: SessionComponent ) {
-        if (!AppTool.IsNullOrEmpty(forceSelectedSession)) {
-            this.CurrentSession=forceSelectedSession;
-        }
+    constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         if (this.LayoutDirection == 'rtl') {
             this.RTL = true;
         }
     }
 
-    public ComponentRef: ComponentRef<any> = null;
-    public InstanceComponent: LogitudeWindowTemplateComponent = null;
+    private ComponentRef: any = null;
+    private InstanceComponent: LogitudeWindowTemplateComponent = null;
     public Show(myContent: any) {
         if (myContent != null) {
             var viewContainerRefLocation: ViewContainerRef = this.CurrentSession.SessionLocation.viewContainerRef;
@@ -76,6 +58,11 @@ export class LogitudeWindow {
                 if (this.CurrentSession.CurrentEditComponent.IsSplitBtnVisible) {
                     viewContainerRefLocation = this.CurrentSession.CurrentEditComponent.WindowLocationViewContainerRef;
                 }
+            }
+
+
+            if (this.CurrentSession.CurrentWindow) {
+                this.IsOverWindow = true;
             }
 
             if (this.IsOverAll) {
@@ -97,19 +84,13 @@ export class LogitudeWindow {
 
                     this.WindowIndex = this.CurrentSession.GetNewWindowIndex();
 
-
                     if (this.CurrentSession.CurrentWindow != null) {
-
-                        if (this.CurrentSession.CurrentWindow.IsEditComponent == true) {
-                            this.IsOverEditComponentWindow = true;
-                        }
-
-                        else {
+                        if (this.CurrentSession.CurrentWindow.IsEditComponent == false) {
                             this.IsOverWindow = true;
-                        }
 
-                        if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
-                            this.IsSameWindowSize = true;
+                            if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
+                                this.IsSameWindowSize = true;
+                            }
                         }
                     }
 
@@ -143,14 +124,7 @@ export class LogitudeWindow {
                 this.WindowIndex = this.CurrentSession.GetNewWindowIndex();
 
                 if (this.CurrentSession.CurrentWindow != null) {
-
-                    if (this.CurrentSession.CurrentWindow.IsEditComponent == true) {
-                        this.IsOverEditComponentWindow = true;
-                    }
-
-                    else {
-                        this.IsOverWindow = true;
-                    }
+                    this.IsOverWindow = true;
 
                     if (this.CurrentSession.CurrentWindow.Width == this.Width && this.CurrentSession.CurrentWindow.Height == this.Height) {
                         this.IsSameWindowSize = true;
@@ -175,18 +149,6 @@ export class LogitudeWindow {
 
         this.CurrentSession.RemoveWindow(this);
         this.WindowClosed.emit(emit);
-    }
-
-    public Resize(width: number) {
-        var currentWindowWidth = parseInt(this.InstanceComponent.Width.split('p')[0]);
-        var currentWindowLeft = parseInt(this.InstanceComponent.Left.split('p')[0]);
-        if (currentWindowWidth > width) {
-            this.InstanceComponent.Left = (currentWindowLeft*2) + "px";
-        }
-        else if(currentWindowWidth < width){
-            this.InstanceComponent.Left = (currentWindowLeft/2) + "px";
-        }
-        this.InstanceComponent.Width = width + "px";
     }
 
     public DestroyWindow() {
@@ -244,19 +206,11 @@ export class LogitudeWindow {
         }
     }
 
-    private subTitle: string = null;
-    get SubTitle() { return this.subTitle; }
-    set SubTitle(newValue: string) {
-        this.subTitle = newValue;
-        if (this.InstanceComponent) {
-            this.InstanceComponent.SubTitle = newValue;
-        }
-    }
-
 
 }
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: "./LogitudeWindow.html",
 })
 
@@ -266,7 +220,6 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public Width: string = "750px";
     public Height: string = "500px";
     public Title: string = null;
-    public SubTitle: string = null;
     public TitleIcon: string = null;
     public CustomTitleIcon: string = null;
     public ShowModal: boolean = true;
@@ -292,44 +245,38 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public RTL: boolean = false;
     public BottomBorderForTitle: string = "none";
     public IsHideWindowMargin: boolean = false;
+
     LayoutDirection: string = 'ltr';
     public ZIndex: number = 0;
-    public ZIndexModified: boolean;
+
     leftPadding: number = 0;
+
     public IsOverAll: boolean = false;
-    public IsViewMode: boolean = false;
-    public ShowFooterButtons: boolean = false;
-    public SubmitFooterButtonLabel: string | null = null;
-    public HideFooterSaveButton: boolean = false;
-    public CancelFooterButtonLabel: string | null = null;
+    @ViewChild("WindowContent", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild(ChildDirective) Child: ChildDirective;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
-
         if (this.LayoutDirection == 'rtl') {
             this.RTL = true;
         }
     }
 
-    private isChildInjected: boolean = false;
     private ChildComponentPath: string = null;
-    private isAfterViewInited: boolean = false;
     ngAfterViewInit() {
-        this.isAfterViewInited = true;
-        this.FocusWindow();
-        this.LoadChildComponent();
-        this.AddViewModeContainerEvents();
+        //this.isLoaderReady = true;
+        //this.LoadComponent();
+        this.Focus();
+
+
     }
 
-    public logWindow: LogitudeWindow;
+    private logWindow: LogitudeWindow;
     public InjectWindowComponent(myComponentPath: string, logWindow: LogitudeWindow) {
         this.logWindow = logWindow;
         this.IsEditComponent = false;
         this.CreateDynamicIds();
 
         this.Title = logWindow.Title;
-        this.SubTitle = logWindow.SubTitle;
         this.TitleIcon = logWindow.TitleIcon;
         this.WindowArgs = logWindow.WindowArgs;
         this.NewWizardArgs = logWindow.NewWizardArgs;
@@ -344,21 +291,15 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
         this.ShowHelpIcon = logWindow.ShowHelpIcon;
         this.ZIndex = logWindow.ZIndex;
-        this.ZIndexModified = logWindow.ZIndexModified;
         this.ChildComponentPath = myComponentPath;
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
-        this.IsViewMode = logWindow.IsViewMode;
-        this.ShowFooterButtons = logWindow.ShowFooterButtons;
-        this.HideFooterSaveButton = logWindow.HideFooterSaveButton;
-        this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
-        this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
+
         this.SetWindowSize();
-        this.isChildInjected = true;
-        this.LoadChildComponent();
+        this.RunComponent();
     }
 
     private EditComponentEntityId: string;
@@ -372,9 +313,10 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.EditComponentTableName = objectTableName;
         this.EditComponentTabCode = selectedTabCode;
         this.ShowHeaderButtons = true;
+
         this.CreateDynamicIds();
+
         this.Title = logWindow.Title;
-        this.SubTitle = logWindow.SubTitle;
         this.TitleIcon = logWindow.TitleIcon;
         this.WindowArgs = logWindow.WindowArgs;
         this.NewWizardArgs = logWindow.NewWizardArgs;
@@ -385,25 +327,20 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.IsShowAutomationDelayTitle = logWindow.IsShowAutomationDelayTitle;
         this.ShowHelpIcon = logWindow.ShowHelpIcon;
         this.ZIndex = logWindow.ZIndex;
-        this.ZIndexModified = logWindow.ZIndexModified;
         this.NotifyOnClose = logWindow.NotifyOnClose;
         this.BottomBorderForTitle = logWindow.BottomBorderForTitle;
         this.IsHideWindowMargin = logWindow.IsHideWindowMargin;
+
+
         this.ChildComponentPath = "./Infrastructure/Components/EditComponent/EditComponent";
         this.HelpText = logWindow.HelpText;
         this.RTL = logWindow.RTL;
         this.CustomTitleIcon = logWindow.CustomTitleIcon;
-        this.IsViewMode = logWindow.IsViewMode;
-        this.ShowFooterButtons = logWindow.ShowFooterButtons;
-        this.HideFooterSaveButton = logWindow.HideFooterSaveButton;
-        this.SubmitFooterButtonLabel = logWindow.SubmitFooterButtonLabel;
-        this.CancelFooterButtonLabel = logWindow.CancelFooterButtonLabel;
         this.SetWindowSize();
-        this.isChildInjected = true;
-        this.LoadChildComponent();
+        this.RunComponent();
     }
 
-    public SetWindowSize() {
+    private SetWindowSize() {
         var ApplicationSession = document.getElementById("ApplicationSession");
         if (ApplicationSession) {
             var SetOverProperty: boolean = false;
@@ -465,44 +402,36 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             var topProperty: number = (appHeight - windowHeight) / 2;
             var leftProperty: number = (appWidth - windowWidth) / 2;
 
-            if (ObjectsLocator.GlobalSetting?.WorkEnvironment == "customs") {
-                //#region Abdullah: this code to paint the window over editcomponent section while split component is opened (customs)
-                var windowPlaceholderWidth: number = null;
-                var windowPlaceholderHeight: number = null;
-                var isOverEditComponent: boolean = false;
 
-                isOverEditComponent = this.CurrentSession.CurrentEditComponent != null && this.CurrentSession.CurrentEditComponent != undefined;
+            //#region Abdullah: this code to paint the window over editcomponent section while split component is opened (customs)
+            var windowPlaceholderWidth: number = null;
+            var windowPlaceholderHeight: number = null;
+            var isOverEditComponent: boolean = false;
 
-                // if (this.CurrentSession.CurrentWindow.IsOverWindow)
-                //     isOverEditComponent = false;
+            isOverEditComponent = this.CurrentSession.CurrentEditComponent != null && this.CurrentSession.CurrentEditComponent != undefined;
+
+            // if (this.CurrentSession.CurrentWindow.IsOverWindow)
+            //     isOverEditComponent = false;
 
 
-                if (this.IsEditComponent && this.logWindow.IsOverEditComponentWindow) {
-                    // Task 64019
+
+            //change window position according to editcomponent location
+            if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
+
+                //get window location from edit component
+                var editComponentCelId = this.CurrentSession.CurrentEditComponent.EditComponentCellId;
+                var windowPlaceholderDiv = document.getElementById(editComponentCelId);
+                if (windowPlaceholderDiv) {
+                    windowPlaceholderWidth = windowPlaceholderDiv.clientWidth;
+                    windowPlaceholderHeight = windowPlaceholderDiv.clientHeight;
                 }
 
-                else if (this.IsEditComponent && this.logWindow.IsOverWindow && isOverEditComponent) {
-                    // Task 64019
-                }
-
-                //change window position according to editcomponent location
-                else if (isOverEditComponent || (isOverEditComponent && this.logWindow.IsOverWindow)) {
-
-                    //get window location from edit component
-                    var editComponentCelId = this.CurrentSession.CurrentEditComponent.EditComponentCellId;
-                    var windowPlaceholderDiv = document.getElementById(editComponentCelId);
-                    if (windowPlaceholderDiv) {
-                        windowPlaceholderWidth = windowPlaceholderDiv.clientWidth;
-                        windowPlaceholderHeight = windowPlaceholderDiv.clientHeight;
-                    }
-
-                    //update top,left poisition
-                    topProperty = (windowPlaceholderHeight - windowHeight) / 2;
-                    leftProperty = (windowPlaceholderWidth - windowWidth) / 2;
-                }
-
-                //#endregion
+                //update top,left poisition
+                topProperty = (windowPlaceholderHeight - windowHeight) / 2;
+                leftProperty = (windowPlaceholderWidth - windowWidth) / 2;
             }
+
+            //#endregion
 
             if (SetOverProperty) {
                 if (this.logWindow.IsOverWindow) {
@@ -519,6 +448,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
             this.Left = leftProperty + "px";
         }
     }
+
     private CreateDynamicIds() {
         this.WindowId = "LogitudeWindow_" + this.CurrentSession.SessionIndex + "_" + this.CurrentSession.SessionWindowIndex;
         this.FocusElementId = "LogitudeWindowFocusElement_" + this.CurrentSession.SessionIndex + "_" + this.CurrentSession.SessionWindowIndex;
@@ -527,29 +457,57 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.logWindow.WindowContainerId = this.WindowContainerId;
     }
 
-    FocusWindow() {
-        if (this.FocusElementId) {
-            var element = document.getElementById(this.FocusElementId);
-            if (element) {
-                element.focus();
+    private Focus() {
+        if (this.isLoaderReady) {
+            if (this.FocusElementId != null) {
+                var element = document.getElementById(this.FocusElementId);
+                if (element != null) {
+                    element.focus();
+                }
             }
         }
     }
 
+    private isLoaderReady: boolean;
+    private RunComponent() {
+        if (this.viewContainerRef) {
+            this.isLoaderReady = true;
+            this.LoadComponent();
+            this.Focus();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
     private ComponentRef: any = null;
-    public ComponentInstance: any = null;
-    private LoadChildComponent() {
-        if (this.isChildInjected && this.isAfterViewInited) {
+    private ComponentInstance: any = null;
+    private LoadComponent() {
+        if (this.isLoaderReady) {
             if (this.ChildComponentPath != null) {
 
                 if (this.IsEditComponent) {
 
-                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.Child.Location)
+                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.viewContainerRef)
                         .then(cmpRef => {
                             this.ComponentRef = cmpRef;
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.IsInsideWindow = true;
-                            cmpRef.instance.EditComponentArgument = this.logWindow.EditComponentArguments;
                             cmpRef.instance.ComponentBackground = "transparent";
                             cmpRef.instance.Run({ EntityId: this.EditComponentEntityId, ObjectTableName: this.EditComponentTableName, SelectedTabCode: this.EditComponentTabCode });
                             this.logWindow.ComponentLoaded.emit(this.ComponentRef.instance);
@@ -557,7 +515,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                 }
 
                 else {
-                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.Child.Location)
+                    SessionLocator.DynamicLoader.Load(this.ChildComponentPath, this.viewContainerRef)
                         .then(cmpRef => {
                             this.ComponentRef = cmpRef;
                             this.ComponentInstance = this.ComponentRef.instance;
@@ -584,28 +542,6 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                         });
                 }
             }
-        }
-    }
-
-    private AddViewModeContainerEvents() {
-        if(this.IsViewMode){
-            let windowElement = document.getElementById(this.WindowId);
-            let viewModeContainerElements = windowElement ? windowElement.getElementsByClassName("ViewModeContainer") : null;
-            let viewModeContainerElement = viewModeContainerElements && viewModeContainerElements.length > 0 ? viewModeContainerElements[0] : null;
-            if (viewModeContainerElement) {
-                let eventsNames: string[] = ["click", "keyup", "keydown", "keypress", "mouseover", "mouseleave"];
-                eventsNames.forEach(eventName => {
-                    viewModeContainerElement.addEventListener(eventName, (event) => { this.HandleViewModeElementsEvents(event); }, true);
-                });
-            }
-        }
-    }
-
-    private HandleViewModeElementsEvents(event: any) {
-        if (event) {
-            event.stopImmediatePropagation();
-            event.stopPropagation();
-            event.preventDefault();
         }
     }
 
@@ -656,28 +592,6 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
 
             this.CurrentSession.CloseCurrentWindow();
         }
-    }
-
-    OnCTRL_Shift_S_HotKeyPressed(){
-        if (this.ComponentInstance && this.ComponentInstance.OnCTRL_Shift_S_HotKeyPressed) {
-            this.ComponentInstance.OnCTRL_Shift_S_HotKeyPressed();
-        }
-    }
-
-    OnEscHotKeyPressed(){
-        if (this.ComponentInstance && this.ComponentInstance.OnEscHotKeyPressed) {
-            this.ComponentInstance.OnEscHotKeyPressed();
-        }
-    }
-
-    OnCTRL_S_HotKeyPressed(){
-        if (this.ComponentInstance && this.ComponentInstance.OnCTRL_S_HotKeyPressed) {
-            this.ComponentInstance.OnCTRL_S_HotKeyPressed();
-        }
-    }
-
-    FooterButtonsClicked(event: string){
-        this.logWindow.FooterButtonsClicked.emit(event);
     }
 }
 

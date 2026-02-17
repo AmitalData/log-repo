@@ -22,22 +22,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public string HtmlComponentName { get; set; }
         public string HtmlComponentUrl { get; set; }
-        public string FeatureUniqeCode { get; set; }
-
-        public string Changeset { get; set; }
-        public string Type { get; set; }
-        public string Name { get; set; }
-        public string ScreenCode { get; set; }
-        public string ScreenName { get; set; }
-        public string OriginalTabCode { get; set; }
-
-        public bool HasTabModification { get; set; }
-        public bool HideTabNameInScreen { get; set; }
-        public bool CreateDefaultTextCode { get; set; }
-        public string TabNameTextCodeType { get; set; }
-
-		public bool IsLocked { get; set; }
-
-
-	}
+    }
 }

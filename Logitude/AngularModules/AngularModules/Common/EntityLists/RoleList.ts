@@ -16,6 +16,5 @@ export class RoleList {
 		ParentRoleId: string;
 		IsCustomRole: boolean;
 		SearchFields: string;
-		Inactive: boolean;
 	
 }

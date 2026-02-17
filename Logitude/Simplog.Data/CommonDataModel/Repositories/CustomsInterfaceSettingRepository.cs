@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public CustomsInterfaceSettingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CustomsInterfaceSettingRepository(ICommonDataContext context)
         {
@@ -32,7 +35,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-        public CustomsInterfaceSetting GetSingleCustomsInterfaceSetting(int id, int otherTenant=0)
+        public CustomsInterfaceSetting GetSingleCustomsInterfaceSetting(int id, int otherTenant)
         {
             return (from a in this.context.CustomsInterfaceSettings
                     where a.Tenant == id

@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewEncapsulation} from '@angular/core'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -19,19 +19,17 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
-import { UserExtendedPMService } from 'Common/Services/ExtendedPMs/UserExtendedPMService';
-import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
-    selector: 'DashBoard',    
-    templateUrl: './DashBoardComponent.html',    
+    selector: 'DashBoard',
+    moduleId: module.id,
+    templateUrl: './DashBoardComponent.html',
+    encapsulation: ViewEncapsulation.None,
 })
 
-export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class DashboardComponent extends BaseComponent implements OnInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private dashboarddomainservice: DashboardDomainService;
     public TenantPM: TenantPM;
@@ -58,10 +56,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     public MoneyInLabel: string = "";
     public dailySpotLightClass: DailySpotlightClass; 
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    public IsMenuVisible: boolean = false;
-    public IsCustomDashboardFeatureOn: boolean = false;
-    @Output() BackButtonClickedEvent = new EventEmitter();
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -71,56 +65,10 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.MoneyInDashboardId = this.ActivityStatusDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
-        this.IsCustomDashboardFeatureOn = FeatureLocator.HasFeaturePermession("General", "CUSTOMDASH");
-
-        this.RunComponent();
-    }
-
-    private isLoaderReady: boolean = false;
-    RunComponent() {
-        this.IsMenuVisible = true;
-        if (this.AllLocations) {
-            if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {
-                this.isLoaderReady = true;
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-
-
-    OnMoreDetailsBackButtonClicked(event) {
-        if (!AppTool.IsNullOrEmpty(event)) {
-            this.isNotMoreDetails = true;
-        }
     }
 
     ngOnInit() {
-        this.FillScreen();              
-    }
-
-    ngAfterViewInit() {
-        //this.IsMenuVisible = true;
+        this.FillScreen();
     }
 
     ngOnDestroy() {
@@ -135,6 +83,8 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         this.LoadPieQueries();
     }
 
+
+    
     public Shipments_Today_Status: boolean = true;
     public Shipments_Yesterday_Status: boolean = true;
     public Shipments_LastWeek_Status: boolean = true;
@@ -156,7 +106,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     private filterControlNameSpace: string = "Workspace.Dashboard";
 
     LoadSpotlightQueries() {
-        this.dashboarddomainservice.GetDashboardSpotlightCounts(this.TenantPM.Id).subscribe((myResult:any) => {
+        this.dashboarddomainservice.GetDashboardSpotlightCounts(this.TenantPM.Id).subscribe(myResult => {
             this.dailySpotLightClass = myResult;
             if (this.dailySpotLightClass.Shipments_Today != 0)
                 this.Shipments_Today_Status = false;
@@ -201,7 +151,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     public pieChartData: number[] = [];
     private CurrentTop10DebtorsChart: any;
     LoadPieQueries() {
-        this.dashboarddomainservice.GetDebrotExposure(parseInt(this.SelectedCurrency)).subscribe((myResult:any) => {
+        this.dashboarddomainservice.GetDebrotExposure(this.TenantPM.Id, parseInt(this.SelectedCurrency)).subscribe(myResult => {
             this.PieData = myResult;
             this.FillPie();
         });
@@ -330,7 +280,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     LoadBarQueries() {
         if (this.SelectedTimeRangeItem2.Index == "-1") {
             if (this.MoneyFromDate != null && this.MoneyToDate != null) {
-                this.dashboarddomainservice.GetMoneyStatusForTenantCustom("CreateDate",  this.MoneyToDate, this.MoneyFromDate).subscribe((myResult:any) => {
+                this.dashboarddomainservice.GetMoneyStatusForTenantCustom("CreateDate",  this.MoneyToDate, this.MoneyFromDate).subscribe(myResult => {
                     this.BarData = myResult;
                     if (this.BarData.length != 0) {
                         var list: GroupByClass[] = [];
@@ -350,7 +300,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         }
         else {
             var days = this.ComputeDays("money");
-                this.dashboarddomainservice.GetMoneyStatusForTenant("CreateDate", 0, days, this.TenantPM.Id, +this.SelectedTimeRangeItem2.Index, 1).subscribe((myResult:any) => {
+                this.dashboarddomainservice.GetMoneyStatusForTenant("CreateDate", 0, days, this.TenantPM.Id, +this.SelectedTimeRangeItem2.Index, 1).subscribe(myResult => {
                     this.BarData = myResult;
                     var groupedData: GroupByClass[] = [];
                     var barData2 = [];
@@ -547,7 +497,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         listArgs.ObjectTableName = myTableName;
         listArgs.DisplayTitle = displayName;
         listArgs.BackButtonTitle = "Dashboard";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -569,7 +519,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     LoadLineQueries() {     
             if (this.SelectedTimeRangeItem.Index == "-1") {
                 if (this.ActivityFromDate != null && this.ActivityToDate != null) {
-                    this.dashboarddomainservice.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "",null,null).subscribe((myResult:any) => {
+                    this.dashboarddomainservice.GetActivityStatusByType(this.SelectedDateTypeItem.Index, this.ActivityToDate, this.ActivityFromDate, this.TenantPM.Id + "",null,null).subscribe(myResult => {
                         this.LineData = myResult;
                         this.FillLineQueries();
                     });
@@ -580,7 +530,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
         }
         else {
                 var days = this.ComputeDays("activity");
-            this.dashboarddomainservice.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe((myResult:any) => {
+            this.dashboarddomainservice.GetActivityStatus(this.SelectedDateTypeItem.Index, 0, days, this.TenantPM.Id).subscribe(myResult => {
                 this.LineData = myResult;
                 this.FillLineQueries();
             });
@@ -973,11 +923,11 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
     OpenDashBoard() {
         this.isNotMoreDetails = false;
-        //SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
-        //            .then(cmpRef => {
-        //                cmpRef.instance.logoff.subscribe(($event) => this.change(cmpRef))
-        //                this.ActivityStatusPage = cmpRef;
-        //            });
+        SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.logoff.subscribe(($event) => this.change(cmpRef))
+                        this.ActivityStatusPage = cmpRef;
+                    });
     }
         
     FillFilters() {

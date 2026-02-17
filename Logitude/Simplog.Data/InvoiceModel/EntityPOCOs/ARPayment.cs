@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
 {
@@ -75,9 +75,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
 
-        public DateTime? AccountingCancelationDate { get; set; }
-        public string CancelationNotes { get; set; }
-
         public string BankAccountLiteId { get; set; }
         [ForeignKey("BankAccountLiteId")]
         public virtual BankAccountLite BankAccountLite { get; set; }
@@ -144,22 +141,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsFullAccounting { get; set; }
         public bool IsExternalEntity { get; set; }
         public string CreatedByPartner { get; set; }
-        public bool IsPaymentNumberManuallySet { get; set; }
-        public string Field1 { get; set; }
-        public string Field2 { get; set; }
-        public string Field3 { get; set; }
-        public string Field4 { get; set; }
-        public string Field5 { get; set; }
-        public string Field6 { get; set; }
-        public string Field7 { get; set; }
-        public string Field8 { get; set; }
-        public string Field9 { get; set; }
-        public string Field10 { get; set; }
 
-        public string PartnerId { get; set; }
-        [ForeignKey("PartnerId")]
-        public virtual Card Partner { get; set; }
-
-        public string InvoiceNumbers { get; set; }
     }
 }

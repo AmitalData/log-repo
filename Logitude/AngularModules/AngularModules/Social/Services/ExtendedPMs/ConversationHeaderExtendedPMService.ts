@@ -1,8 +1,7 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass';
@@ -10,19 +9,25 @@ import {ConversationHeaderPM} from '../../EntityPMs/ConversationHeaderPM';
 @Injectable()
 
 export class ConversationHeaderExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ConversationHeadersExtended';
     }
 
    GetMessageByFiltered(messageFilter: any) {
-        return defer(() => {
- 
-            return this._http.post(this._apiUrl + '/PostGetMessageByFilter', JSON.stringify(messageFilter), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
-                    var result:any = response;
+
+
+            return this._http.post(this._apiUrl + '/PostGetMessageByFilter', JSON.stringify(messageFilter),
+                { headers: authHeader }).map((response) => {
+
+                    var result = response.json();
                     var entity: ConversationHeaderPM;
                     var conversationHeaderPMLists: ConversationHeaderPM[];
                     conversationHeaderPMLists = new Array<ConversationHeaderPM>();
@@ -36,7 +41,7 @@ export class ConversationHeaderExtendedPMService {
                     pmresponse.Result = conversationHeaderPMLists;
                     return pmresponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
         );
 
@@ -44,10 +49,11 @@ export class ConversationHeaderExtendedPMService {
 
    GetLoggedContactMessageInfo(userId: string, tenant: number) {
 
+       var authHeader = new Headers();
+       authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+       return this._http.get(this._apiUrl + '/GetLoggedContactMessageInfo/?' + 'userId=' + userId + '&tenant='+ tenant, { headers: authHeader }).map(response => {
 
-       return this._http.get(this._apiUrl + '/GetLoggedContactMessageInfo/?' + 'userId=' + userId + '&tenant='+ tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-           var result = response;
+           var result = response.json();
 
            var pmresponse: ServiceResponse;
            pmresponse = new ServiceResponse();
@@ -55,7 +61,7 @@ export class ConversationHeaderExtendedPMService {
            pmresponse.Result = result;
            return pmresponse;
 
-       }),catchError(ServiceHelper.HandleServiceError));
+       }).catch(ServiceHelper.HandleServiceError);
    }
 
 
@@ -63,15 +69,17 @@ export class ConversationHeaderExtendedPMService {
 
    GetCountUnReadConversationHeaderPMs(userid: string, entityId: string, objectTableId: string, areaMessage: string) {
 
-       return this._http.get(this._apiUrl + '/GetCountUnReadConversationHeaderPMs/?' + 'userid=' + userid + '&entityId=' + entityId + '&objectTableId=' + objectTableId + '&areaMessage=' + areaMessage, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+       var authHeader = new Headers();
+       authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+       return this._http.get(this._apiUrl + '/GetCountUnReadConversationHeaderPMs/?' + 'userid=' + userid + '&entityId=' + entityId + '&objectTableId=' + objectTableId + '&areaMessage=' + areaMessage, { headers: authHeader }).map(response => {
 
-           var result = response;
+           var result = response.json();
            var pmresponse: ServiceResponse;
            pmresponse = new ServiceResponse();
            pmresponse.Result = result;
 
            return pmresponse;
-       }),catchError(ServiceHelper.HandleServiceError));
+       }).catch(ServiceHelper.HandleServiceError);
    }
    
 

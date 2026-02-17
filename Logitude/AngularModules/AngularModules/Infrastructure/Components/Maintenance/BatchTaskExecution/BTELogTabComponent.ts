@@ -9,7 +9,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { EntityResourceService } from '../../../Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BTELogTabComponent.html'
 })
 
@@ -27,7 +27,7 @@ export class BTELogTabComponent extends BaseComponent {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             this.isReady = true;
         });
 

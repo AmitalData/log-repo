@@ -9,7 +9,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -165,7 +165,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         { "BatchTaskExecutionId", iBatchTaskExecution.Id },
                         { "Tenant", tenant.ToString() }
-                    }, tenant);
+                    });
             //}
         }
 
@@ -196,7 +196,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         else
                         {
-                            service.Update(entityPM, true);
+                            service.Update(entityPM);
                         }
 
                         this.UpdateProgressPercentage(20, batchTaskExecutionId, serviceArgs.Tenant);

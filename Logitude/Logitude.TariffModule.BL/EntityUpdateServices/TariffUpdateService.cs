@@ -1,5 +1,4 @@
-﻿using Logitude.BL.DataContracts;
-using Logitude.BL.Helpers;
+﻿using Logitude.BL.Helpers;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
@@ -11,7 +10,7 @@ using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -36,36 +35,33 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 entityPM.TariffNumber = CodeCounter.GetNumber("Tariff", entityPM.Tenant).ToString();
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-
                 if (entityPM.PriceSteps == null && (entityPM.TypeCode == "AFC" || entityPM.TypeCode == "OLC"))
                 {
                     ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                     IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
                     TariffSetting iTariffSetting = (from d in iContext.TariffSettings where d.Tenant == entityPM.Tenant select d).FirstOrDefault();
                     
+
                     if (iTariffSetting != null)
                     {
                         if(entityPM.TypeCode== "AFC")
                         {
-                            PriceStep iPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.AirDefaultStepsId select d).FirstOrDefault();
+                            PriceSteps iPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.AirDefaultStepsId select d).FirstOrDefault();
                             entityPM.PriceSteps = iPriceSteps!= null? iPriceSteps.Steps: null;
                         }
                         else if(entityPM.TypeCode == "OLC")
                         {
-                            PriceStep iPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.LCLDefaultStepsId select d).FirstOrDefault();
+                            PriceSteps iPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == iTariffSetting.LCLDefaultStepsId select d).FirstOrDefault();
                             entityPM.PriceSteps = iPriceSteps != null ? iPriceSteps.Steps : null;
                         }
                     }
                 }
-                
+
                 this.ValidateSurchargeUniqueSeller(entityPM);
                 this.ValidateFCLSurchargeUniqueSeller(entityPM);
-                this.ValidateInlandFTLUniqueSeller(entityPM);
-                this.ValidateLocalChargesUniqueCustomerGroup(entityPM);
-                this.ValidateCustomsChargesUniqueSeller(entityPM);
             }
         }
-        
+
         protected override void OnUpdating(TariffPM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
@@ -105,7 +101,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.CreateTariffVersion(entityPM);
             }
 
-            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT")
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
             {
                 if (entityPM.TariffVersions.Where(d => d.StartDate != null || d.ExpirationDate != null).Any())
                 {
@@ -120,9 +116,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             this.ValidateSurchargeUniqueSeller(entityPM);
             this.ValidateFCLSurchargeUniqueSeller(entityPM);
-            this.ValidateInlandFTLUniqueSeller(entityPM);
-            this.ValidateLocalChargesUniqueCustomerGroup(entityPM);
-            this.ValidateCustomsChargesUniqueSeller(entityPM);
 
             if (entityPM.IsApprovingDraftVersion)
             {
@@ -135,10 +128,11 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 this.UpdateMissingPorts(entityPM);
                 entityPM.IsUpdatingMissingPorts = false;
             }
-            
+
             this.InsertTariffSurchargeLog(entityPM);
         }
-        
+
+
         List<ChargesType> ChargeTypes;
         private void InsertTariffSurchargeLog(TariffPM tariff)
         {
@@ -164,8 +158,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         tariffSurchageLog.UpdateMethodCode = "MA";
                         tariffSurchageLog.ChangeSetOp = ChangeSetOperation.Insert;
                         tariffSurchageLog.Tenant = item.Tenant;
-                        tariffSurchageLog.To = tariff.TypeCode.StartsWith("A") ? item.DestinationPortCode : item.DestinationPortCombinedCode;
-                        tariffSurchageLog.From = tariff.TypeCode.StartsWith("A") ? item.OriginPortCode : item.OriginPortCombinedCode;
+                        tariffSurchageLog.To = item.DestinationPortCode;
+                        tariffSurchageLog.From = item.OriginPortCode;
                         tariffSurchargeUpdateService.Update(tariffSurchageLog, true);
                     }
                 }
@@ -196,7 +190,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         {
                             PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                             string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.EnglishName).FirstOrDefault() + ", ";
+                            surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                         }
                     }
                     surcharges = surcharges.TrimEnd(',');
@@ -227,7 +221,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     PropertyInfo chargeIdPropInfo = tariff.GetType().GetProperty("Surcharge" + i + "Id");
                     string chargeIdValue = chargeIdPropInfo.GetValue(tariff).ToString();
-                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.EnglishName).FirstOrDefault() + ", ";
+                    surcharges += ChargeTypes.Where(a => a.Id == chargeIdValue).Select(d => d.Code).FirstOrDefault() + ", ";
                 }
             }
             return surcharges.TrimEnd(',');
@@ -369,27 +363,27 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             entityPM.LastStartDate = entityPM.StartDate;
             entityPM.LastExpirationDate = entityPM.ExpirationDate;
 
-            //TariffVersionPM tariffVersionPM = new TariffVersionPM()
-            //{
-            //    TariffId = entityPM.Id,
-            //    Tenant = entityPM.Tenant,
-            //    CreateDate = entityPM.CreateDate,
-            //    CreatedByUserId = entityPM.CreatedByUserId,
-            //    StartDate = entityPM.StartDate,
-            //    ExpirationDate = entityPM.ExpirationDate,
-            //    Version = entityPM.LastVersion,
-            //    SearchFields = entityPM.LastVersion.ToString(),
-            //    ChangeSetOp = ChangeSetOperation.Insert,
-            //    IsDraft = true,
-            //};
+            TariffVersionPM tariffVersionPM = new TariffVersionPM()
+            {
+                TariffId = entityPM.Id,
+                Tenant = entityPM.Tenant,
+                CreateDate = entityPM.CreateDate,
+                CreatedByUserId = entityPM.CreatedByUserId,
+                StartDate = entityPM.StartDate,
+                ExpirationDate = entityPM.ExpirationDate,
+                Version = entityPM.LastVersion,
+                SearchFields = entityPM.LastVersion.ToString(),
+                ChangeSetOp = ChangeSetOperation.Insert,
+                IsDraft = true,
+            };
 
-            //if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFA")
-            //{
-            //    tariffVersionPM.StartDate = null;
-            //    tariffVersionPM.ExpirationDate = null;
-            //}
+            if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFA")
+            {
+                tariffVersionPM.StartDate = null;
+                tariffVersionPM.ExpirationDate = null;
+            }
 
-            //entityPM.TariffVersions.Add(tariffVersionPM);
+            entityPM.TariffVersions.Add(tariffVersionPM);
         }
 
         private TariffLineRepository iTariffLineRepository;
@@ -453,7 +447,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = "Version " + iDraftVersion.Version + " approved",
                 });
 
-                if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS" || entityPM.TypeCode == "IFT")
+                if (entityPM.TypeCode == "ASC" || entityPM.TypeCode == "OSC" || entityPM.TypeCode == "OFS")
                 {
                     TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)
@@ -487,7 +481,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                                 {
                                     if (tariffLinePM.StartDate != null)
                                     {
-                                        this.UpdateVersionPreviousLineSatrtDate(tariffLinePM, previousLine, entityPM.TypeCode);
+                                        this.UpdateVersionPreviousLineSatrtDate(tariffLinePM, previousLine);
                                     }
                                 }
                             }
@@ -496,46 +490,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         iTariffLineRepository.SubmitChanges();
                     }
                 }
-
-                else if (entityPM.TypeCode == "ECC" || entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS")
-                {
-                    TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
-                    if (iPreviousVersion != null)
-                    {
-                        List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
-
-                        if (entityPM.DeletedLinesExpirationDates.Count > 0)
-                        {
-                            foreach (TariffLineExpirationDatePM tariffLineExpirationDateItem in entityPM.DeletedLinesExpirationDates)
-                            {
-                                TariffLine previousLine = iPreviousVersionLines.Where(d => d.FromCountryId == tariffLineExpirationDateItem.FromCountryId && d.ToCountryId == tariffLineExpirationDateItem.ToCountryId).FirstOrDefault();
-                                if (previousLine != null)
-                                {
-                                    this.UpdateVersionPreviousLineExpirationDate(tariffLineExpirationDateItem, previousLine);
-                                }
-                            }
-                        }
-
-                        foreach (TariffLinePM tariffLinePM in iDraftVersionLines)
-                        {
-                            TariffLine previousLine = iPreviousVersionLines.Where(d => d.FromCountryId == tariffLinePM.FromCountryId && d.ToCountryId == tariffLinePM.ToCountryId).FirstOrDefault();
-
-                            if (previousLine != null)
-                            {
-                                if (tariffLinePM.ChangeSetOp != ChangeSetOperation.Delete)
-                                {
-                                    if (tariffLinePM.StartDate != null)
-                                    {
-                                        this.UpdateVersionPreviousLineSatrtDate(tariffLinePM, previousLine, entityPM.TypeCode);
-                                    }
-                                }
-                            }
-                        }
-
-                        iTariffLineRepository.SubmitChanges();
-                    }
-                }
-
 
                 else
                 {
@@ -590,7 +544,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 throw new ApplicationException("Expiration date can't be less than start date in the previous version line");
             }
         }
-        private void UpdateVersionPreviousLineSatrtDate(TariffLinePM tariffLinePM, TariffLine previousLine, string type)
+        private void UpdateVersionPreviousLineSatrtDate(TariffLinePM tariffLinePM, TariffLine previousLine)
         {
             bool isExpirationDateValid = this.ValidatePreviousLineDates(new { DateField = "start", TariffLinePM = tariffLinePM, PreviousLine = previousLine });
 
@@ -602,16 +556,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             else
             {
-                string from = (type == "ECC" || type == "ICC" || type == "ICS") ? tariffLinePM.FromCountryCode : tariffLinePM.OriginPortCode;
-                string to = (type == "ECC" || type == "ICC" || type == "ECS") ? tariffLinePM.ToCountryCode : tariffLinePM.DestinationPortCode;
-
-                if (type != "ASC" && type != "ECC" && type != "ICC" && type != "ICS" && type != "ECS")
-                {
-                    from = tariffLinePM.OriginPortCombinedCode;
-                    to = tariffLinePM.DestinationPortCombinedCode;
-                }
-
-                string msg = "Line (" + from + " > " + to + ") Start Date is less than or equal the previous version line";
+                string msg = "Line (" + tariffLinePM.OriginPortCode + " > " + tariffLinePM.DestinationPortCode + ") Start Date is less than or equal the previous version line";
                 throw new ApplicationException(msg);
             }
         }
@@ -645,7 +590,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
                               where d.Tenant == entityPM.Tenant
-                              && !d.InActive
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && (d.TypeCode == "ASC" || d.TypeCode == "OSC")
@@ -664,7 +608,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
                               where d.Tenant == entityPM.Tenant
-                              && !d.InActive
                               && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && d.TypeCode == "OFS"
@@ -676,65 +619,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
             }
         }
-        private void ValidateCustomsChargesUniqueSeller(TariffPM entityPM)
-        {
-            if (entityPM.TypeCode == "ICC" || entityPM.TypeCode == "ECC")
-            {
-                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
-                int iCount = (from d in iContext.Tariffs
-                              where d.Tenant == entityPM.Tenant
-                              && !d.InActive
-                              && d.Id != entityPM.Id
-                              && d.SellerId == entityPM.SellerId
-                              && d.TypeCode == entityPM.TypeCode
-                              select d).Count();
 
-                if (iCount >= 1)
-                {
-                    throw new ApplicationException("Tariff seller should be unique");
-                }
-            }
-        }
-        private void ValidateLocalChargesUniqueCustomerGroup(TariffPM entityPM)
-        {
-            if (entityPM.TypeCode == "ICS" || entityPM.TypeCode == "ECS")
-            {
-                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
-                int iCount = (from d in iContext.Tariffs
-                              where d.Tenant == entityPM.Tenant
-                              && !d.InActive
-                              && d.Id != entityPM.Id
-                              && d.CustomerGroupId == entityPM.CustomerGroupId
-                              && d.TypeCode == entityPM.TypeCode
-                              select d).Count();
-
-                if (iCount >= 1)
-                {
-                    var type = entityPM.TypeCode == "ICS" ? "import": "export";
-                    throw new ApplicationException("An "+ type + " sales tariff already exists for this customer group");
-                }
-            }
-        }
-        
-        private void ValidateInlandFTLUniqueSeller(TariffPM entityPM)
-        {
-            if (entityPM.TypeCode == "IFT")
-            {
-                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
-                int iCount = (from d in iContext.Tariffs
-                              where d.Tenant == entityPM.Tenant
-                              && !d.InActive
-                              && d.Id != entityPM.Id
-                              && d.SellerId == entityPM.SellerId
-                              && d.TypeCode == "IFT"
-                              select d).Count();
-
-                if (iCount >= 1)
-                {
-                    throw new ApplicationException("Tariff seller should be unique");
-                }
-            }
-        }
         private void UpdateMissingPorts(TariffPM entityPM)
         {
             this.iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
@@ -772,7 +657,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             }
                             else
                             {
-                                fromPort = portRepository.GetOceanPortByCombinedCode( tariffLine.OriginPortText.Trim(), entityPM.Tenant);
+                                fromPort = portRepository.GetOceanPortByCode(entityPM.Tenant, tariffLine.OriginPortText.Trim(), true);
                             }
                             if (fromPort == null)
                             {
@@ -783,7 +668,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                                 }
                                 else
                                 {
-                                    portZero = portRepository.GetOceanPortByCombinedCode(tariffLine.OriginPortText.Trim(), 0);
+                                    portZero = portRepository.GetOceanPortByCode(0, tariffLine.OriginPortText.Trim(), true);
                                 }
                                
                                 if (portZero != null)
@@ -809,7 +694,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                             }
                             else
                             {
-                                toPort = portRepository.GetOceanPortByCombinedCode(tariffLine.DestinationPortText.Trim(), entityPM.Tenant);
+                                toPort = portRepository.GetOceanPortByCode(entityPM.Tenant, tariffLine.DestinationPortText.Trim(), true);
                             }
 
                             if (toPort == null)
@@ -821,7 +706,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                                 }
                                 else
                                 {
-                                    portZero = portRepository.GetOceanPortByCombinedCode(tariffLine.DestinationPortText.Trim(), 0);
+                                    portZero = portRepository.GetOceanPortByCode(0, tariffLine.DestinationPortText.Trim(), true);
                                 }
                                 if (portZero != null)
                                 {
@@ -912,7 +797,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             {
                 Id = IdCounter.GetNumber("Port", tenant).ToString(),
                 Code = ZeroPort.Code,
-                CombinedCode = ZeroPort.CombinedCode,
                 EnglishName = ZeroPort.EnglishName,
                 LocalName = ZeroPort.LocalName,
                 Tenant = tenant,
@@ -926,35 +810,14 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 Longtitude = ZeroPort.Longtitude,
                 SearchFields = ZeroPort.SearchFields,
                 Notes = ZeroPort.Notes,
-                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
             };
 
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
 
-            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
             TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 
             return newPort;
-        }
-
-        private string GetBCNTMeasurements(int tenant)
-        {
-            MeasurementRepository measurementRepository = new MeasurementRepository(tenant);
-            string id = measurementRepository.GetMeasurementIdbyCode("BCNT", tenant);
-
-            return id;
-        }
-        private void FillBCNTMeasurements(TariffPM entityPM, string BCNTId, int index)
-        {
-            PropertyInfo valuePropInfo1 = entityPM.GetType().GetProperty("Surcharge" + index + "Id");
-            string value1 = valuePropInfo1.GetValue(entityPM).ToString();
-
-            if (!string.IsNullOrEmpty(value1))
-            {
-                PropertyInfo valuePropInfo2 = entityPM.GetType().GetProperty("Surcharge" + index + "UOM");
-                valuePropInfo2.SetValue(entityPM, BCNTId);
-            }
         }
     }
 }

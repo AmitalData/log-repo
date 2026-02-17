@@ -32,24 +32,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.SUGGESTI = entityPM.SUGGESTI;
             entityPOCO.SUGGESTDET1 = entityPM.SUGGESTDET;
             entityPOCO.STATUS = entityPM.STATUS;
-            entityPOCO.TAXEXEMPT = entityPM.TAXEXEMPT;
-            entityPOCO.INVOICEQUANTITY = entityPM.INVOICEQUANTITY;
-            entityPOCO.INVOICEQUANTITYTYPE = entityPM.INVOICEQUANTITYTYPE;
-            entityPOCO.QUETYPE = entityPM.QUETYPE;
-            entityPOCO.CATALOGID = entityPM.CATALOGID;
-            entityPOCO.CATALOGNAME = entityPM.CATALOGNAME;
-            entityPOCO.AMOUNT = entityPM.AMOUNT;
-            entityPOCO.STATAMOUNT = entityPM.STATAMOUNT;
-            entityPOCO.STATTYPE = entityPM.STATTYPE;
-            entityPOCO.ORIGINID = entityPM.ORIGINID;
-            entityPOCO.ITEMPRICE = entityPM.ITEMPRICE;
-            entityPOCO.OCRQUANTITY = entityPM.OCRQUANTITY;
-            entityPOCO.OCRQUANTITYTYPE = entityPM.OCRQUANTITYTYPE;
-            entityPOCO.LINECOUNTER = entityPM.LINECOUNTER;
-            entityPOCO.PROTESTREMARK = entityPM.PROTESTREMARK;
-            entityPOCO.MAKATREMARK = entityPM.MAKATREMARK;
-            entityPOCO.PRATMEHES2 = entityPM.PRATMEHES2;
-
         }
 
         public void POCOToPM(CFIMSVLINEPM entityPM, CFIMSVLINE entityPOCO)
@@ -69,24 +51,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.SUGGESTI = entityPOCO.SUGGESTI;
             entityPM.SUGGESTDET = entityPOCO.SUGGESTDET1;
             entityPM.STATUS = entityPOCO.STATUS;
-            entityPM.TAXEXEMPT = entityPOCO.TAXEXEMPT;
-            entityPM.INVOICEQUANTITY = entityPOCO.INVOICEQUANTITY;
-            entityPM.INVOICEQUANTITYTYPE = entityPOCO.INVOICEQUANTITYTYPE;
-            entityPM.QUETYPE = entityPOCO.QUETYPE;
-            entityPM.CATALOGID = entityPOCO.CATALOGID;
-            entityPM.CATALOGNAME = entityPOCO.CATALOGNAME;
-            entityPM.AMOUNT = entityPOCO.AMOUNT;
-            entityPM.STATAMOUNT = entityPOCO.STATAMOUNT;
-            entityPM.STATTYPE = entityPOCO.STATTYPE;
-            entityPM.ORIGINID = entityPOCO.ORIGINID;
-            entityPM.ITEMPRICE = entityPOCO.ITEMPRICE;
-            entityPM.OCRQUANTITY = entityPOCO.OCRQUANTITY;
-            entityPM.OCRQUANTITYTYPE = entityPOCO.OCRQUANTITYTYPE;
-            entityPM.LINECOUNTER = entityPOCO.LINECOUNTER;
-            entityPM.PROTESTREMARK = entityPOCO.PROTESTREMARK;
-            entityPM.MAKATREMARK = entityPOCO.MAKATREMARK;
-            entityPM.PRATMEHES2 = entityPOCO.PRATMEHES2;
-
         }
 
         public void CustomPMToPOCO(CFIMSVLINEPM entityPM, CFIMSVLINE entityPOCO)
@@ -102,7 +66,7 @@ namespace Unifreight.BL.EntityDataMappings
 
         public void PMToOldPM(CFIMSVLINEPM entityPM, CFIMSVLINEPM oldEntityPM)
         {
-            //    throw new System.NotImplementedException();
+        //    throw new System.NotImplementedException();
         }
     }
 }

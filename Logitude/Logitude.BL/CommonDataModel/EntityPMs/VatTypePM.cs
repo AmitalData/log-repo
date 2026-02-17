@@ -42,15 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExternalVATCard { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PayablesExternalId { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ReceivablesExternalId { get; set; }
-
-
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ExternalTAXItemId { get; set; }
 
@@ -101,8 +93,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
             set { vatTypeGroups = value; }
         }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsRegionalTax { get; set; }
     }
 }

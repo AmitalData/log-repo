@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +17,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
-                // Get the Israel Standard Time zone
-                TimeZoneInfo israelTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Israel Standard Time");
-                // Convert UTC to Israel time
-                DateTime israelDateTime = TimeZoneInfo.ConvertTimeFromUtc(entityPM.CreateDateUTC, israelTimeZone);
-                entityPOCO.CreateDate = israelDateTime;
+                entityPOCO.CreateDate = entityPM.CreateDate;
                 entityPOCO.CreateDateUTC = entityPM.CreateDateUTC;
             }
 

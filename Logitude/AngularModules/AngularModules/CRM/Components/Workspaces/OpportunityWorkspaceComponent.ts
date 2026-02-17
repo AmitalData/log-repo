@@ -1,3 +1,4 @@
+/// <reference path="../../../infrastructure/Utilities/featurelocator.ts" />
 import {Component, Output, EventEmitter} from '@angular/core';
 import {CRMDomainService, CRMSummary} from '../../Services/CRMDomainService';
 import {OpportunityList} from '../../EntityLists/OpportunityList';
@@ -22,7 +23,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 declare var makeChart, FunnelClick, ResetItem;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './OpportunityWorkspaceComponent.html',
 })
 
@@ -518,7 +519,7 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
     public MyOpenCount: number;
     public OpenByStageCount: number;
     private LoadQueriesCounts() {
-        this.myDomainService.GetOpportunitiesSummary(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe((myResult:any) => {
+        this.myDomainService.GetOpportunitiesSummary(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var myData: CRMSummary = myResponse.Result;
@@ -535,7 +536,7 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
     public RecentOpportunitiesCount: number = 0;
     public RecentOpportuntiesList: OpportunityList[] = [];
     private LoadRecentOpportunities() {
-        this.myDomainService.GetRecentOpportunities(null, null).subscribe((myResult:any) => {
+        this.myDomainService.GetRecentOpportunities(null, null).subscribe(myResult => {
             if (myResult == null) {
                 this.RecentOpportuntiesList = [];
                 this.RecentOpportunitiesCount = 0;
@@ -634,7 +635,7 @@ export class OpportunityWorkspaceComponent extends BaseComponent {
         }
 
         var myService: OpportunityListService = new OpportunityListService();
-        myService.getByFilters(filters).subscribe((myResult:any) => {
+        myService.getByFilters(filters).subscribe(myResult => {
             if (myResult != null) {
 
                 var myResponse: ServiceResponse = myResult;

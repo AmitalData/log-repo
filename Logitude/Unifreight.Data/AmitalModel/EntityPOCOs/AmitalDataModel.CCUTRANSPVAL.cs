@@ -21,15 +21,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUTRANSPVAL in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUTRANSPVAL : UNIFBASICPOCO, INotifyPropertyChanged    {
+    public partial class CCUTRANSPVAL : INotifyPropertyChanged    {
 
         public CCUTRANSPVAL()
         {
         }
 
         #region Properties
-
-
+    
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>
@@ -78,7 +77,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TRANSPVALFC in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> TRANSPVALFC
+        public virtual global::System.Nullable<double> TRANSPVALFC
         {
             get
             {
@@ -93,7 +92,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _TRANSPVALFC;
+        private global::System.Nullable<double> _TRANSPVALFC;
 
     
         /// <summary>
@@ -122,7 +121,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TRANSPVAL in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> TRANSPVAL
+        public virtual global::System.Nullable<double> TRANSPVAL
         {
             get
             {
@@ -137,7 +136,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _TRANSPVAL;
+        private global::System.Nullable<double> _TRANSPVAL;
 
     
         /// <summary>

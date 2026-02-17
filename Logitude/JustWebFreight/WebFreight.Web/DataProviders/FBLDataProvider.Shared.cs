@@ -3,15 +3,11 @@ using System.Collections.Generic;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class FBLDataProvider:BaseDataProvider
+    public class FBLDataProvider
     {
         public string ShipperAddress { get; set; }
         public string ShipperAddress_NoTel { get; set; }       
         public string ShipmentNumber { get; set; }
-        public string LoadingPortCode { get; set; }
-        public string DischargePortCode { get; set; }
-        public string MainCarriageCarrierCode { get; set; }
-        public string ShipmentNumberLink { get; set; }
         public string BookingNumber { get; set; }
         public string CompanyName { get; set; }
         /// <summary>
@@ -34,7 +30,6 @@ namespace WebFreight.Web.DataProviders
         public string PlaceOfReceipt { get; set; }        
         public string PlaceOfDelivery { get; set; }
         public string OnCarriageToPort { get; set; }
-        public string OnForwardingToPort { get; set; }
         public string MainCarriageVesselName { get; set; }
         public string MainCarriageVesselNameAndNumber { get; set; }
         public string LoadingPortName { get; set; }
@@ -48,7 +43,6 @@ namespace WebFreight.Web.DataProviders
         public string TotalVolume { get; set; }
         public string PrepaidCollect { get; set; }
         public string PlaceAndDateOfIssue { get; set; }
-        public string PlaceAndDateOfIssue_Local { get; set; }
         public string NumberOfOriginals { get; set; }//custom
         public string Signature { get; set; }
         public string AgentInfo { get; set; }
@@ -113,36 +107,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-        public string ShipmentField41 { get; set; }
-        public string ShipmentField42 { get; set; }
-        public string ShipmentField43 { get; set; }
-        public string ShipmentField44 { get; set; }
-        public string ShipmentField45 { get; set; }
-        public string ShipmentField46 { get; set; }
-        public string ShipmentField47 { get; set; }
-        public string ShipmentField48 { get; set; }
-        public string ShipmentField49 { get; set; }
-        public string ShipmentField50 { get; set; }
-        public string ShipmentField51 { get; set; }
-        public string ShipmentField52 { get; set; }
-        public string ShipmentField53 { get; set; }
-        public string ShipmentField54 { get; set; }
-        public string ShipmentField55 { get; set; }
-        public string ShipmentField56 { get; set; }
-        public string ShipmentField57 { get; set; }
-        public string ShipmentField58 { get; set; }
-        public string ShipmentField59 { get; set; }
-        public string ShipmentField60 { get; set; }
-        public string ShipmentField61 { get; set; }
-        public string ShipmentField62 { get; set; }
-        public string ShipmentField63 { get; set; }
-        public string ShipmentField64 { get; set; }
-        public string ShipmentField65 { get; set; }
-        public string ShipmentField66 { get; set; }
-        public string ShipmentField67 { get; set; }
-        public string ShipmentField68 { get; set; }
-        public string ShipmentField69 { get; set; }
-        public string ShipmentField70 { get; set; }
 
         public string MoveTypeCode { get; set; }
         public string MoveTypeName { get; set; }
@@ -172,11 +136,6 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeAlways { get; set; }
         public string PreCarriageBy { get; set; }
         public string PreCarriageFromPort { get; set; }
-        public string PreCarriageVesselName { get; set; }
-
-        public string PreForwardingBy { get; set; }
-        public string PreForwardingFromPort { get; set; }
-        public string PreForwardingVesselName { get; set; }
 
         public double? OpenReceivablesInLocalCurrency { get; set; }
         public double? OpenReceivablesInProfitCurrency { get; set; }
@@ -238,8 +197,6 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeVAT { get; set; }
         public string AgentVAT { get; set; }
         public string CustomerVAT { get; set; }
-        public string Notify1VAT { get; set; }
-        public string Notify2VAT { get; set; }
 
         public string ShipperNotExporterAddress { get; set; }
 
@@ -260,10 +217,6 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeNotImporterAddress_NoState { get; set; }
         public double? TotalPrepaid { get; set; }
         public double? TotalCollect { get; set; }
-        public double? TotalPrepaidInProfitCurrency { get; set; }
-        public double? TotalPrepaidInLocalCurrency { get; set; }
-        public double? TotalCollectInProfitCurrency { get; set; }
-        public double? TotalCollectInLocalCurrency { get; set; }
 
         public string ShipperATTN { get; set; }
         public string ConsigneeATTN { get; set; }
@@ -287,50 +240,17 @@ namespace WebFreight.Web.DataProviders
         public string Broker { get; set; }
         public string BrokerName { get; set; }
         public string CustomsAgent { get; set; }
-        public string ShipmentSubTypeName { get; set; }
-        public byte[] CustomerLogo { get; set; }
-        public string CustomsDeclarationNumber { get; set; }
-        public DateTime? CustomsDeclarationDate { get; set; }
-        public DateTime? CustomsClearanceDate { get; set; }
-
-        public string Transshipment1CarrierNumber { get; set; }
-        public string Transshipment1CarrierName { get; set; }
-        public string Transshipment1FromPortCode { get; set; }
-        public string Transshipment1ToPortCode { get; set; }
-        public string Transshipment1FromPortName { get; set; }
-        public string Transshipment1ToPortName { get; set; }
-        public DateTime? Transshipment1ETA { get; set; }
-        public DateTime? Transshipment1ETD { get; set; }
-        public DateTime? Transshipment1ATA { get; set; }
-        public DateTime? Transshipment1ATD { get; set; }
-
-        public string Transshipment2CarrierNumber { get; set; }
-        public string Transshipment2CarrierName { get; set; }
-        public string Transshipment2FromPortCode { get; set; }
-        public string Transshipment2ToPortCode { get; set; }
-        public string Transshipment2FromPortName { get; set; }
-        public string Transshipment2ToPortName { get; set; }
-        public DateTime? Transshipment2ETA { get; set; }
-        public DateTime? Transshipment2ETD { get; set; }
-        public DateTime? Transshipment2ATA { get; set; }
-        public DateTime? Transshipment2ATD { get; set; }
-        public byte[] UserSignature { get; set; }
-
-    }
-
+    } 
+    
     public class ReceivablesCharges
     {
         public string ChargeTypeEnglish { get; set; }
         public string ChargeTypeLocal { get; set; }
         public double? PrepaidChargeAmount { get; set; }
-        public double? PrepaidChargeAmountInProfitCurrency { get; set; }
-        public double? PrepaidChargeAmountInLocalCurrency { get; set; }
         public double? CollectChargeAmount { get; set; }
-        public double? CollectChargeAmountInProfitCurrency { get; set; }
-        public double? CollectChargeAmountInLocalCurrency { get; set; }
-
         public string Remark { get; set; }
         public string CurrencyCode { get; set; }
         public string CurrencyName { get; set; }
+
     }
 }

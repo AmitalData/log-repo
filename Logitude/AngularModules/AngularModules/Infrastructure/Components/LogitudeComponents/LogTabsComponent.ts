@@ -1,38 +1,31 @@
-declare var window: any;
-import {Input, Output, Component, OnInit, OnChanges, EventEmitter, QueryList, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChild, ViewChildren, SimpleChanges} from '@angular/core';
+﻿declare var window: any;
+import {Input, Output, Component, OnInit, OnChanges, EventEmitter, QueryList, AfterViewInit, OnDestroy, ChangeDetectorRef, ViewChild, ViewChildren} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {SessionComponent} from '../Session/SessionComponent';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {LocationDirective} from '../../Utilities/LocationDirective';
 import {AppTool} from '../../Tools';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import { fromEvent } from 'rxjs';
-import { debounceTime, mapTo, startWith, throttleTime } from 'rxjs/operators';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'LogTabs',
     templateUrl: "./LogTabsComponent.html",
-    styleUrls: ["./LogTabsComponent.scss"],
 })
-export class LogTabsComponent implements AfterViewInit, OnInit, OnChanges {
+export class LogTabsComponent implements AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    @ViewChild('tabs') tabs: any = null;
 
     @Input() TabsSource: LogTab[] = [];
     @Input() Disabled: boolean = false;
     @Input() NoBorder: boolean = false;
     @Input() IsFixedTabs: boolean = false; // disable new tab button
     @Input() HideCloseButton: boolean = false;
-    @Input() MultiLineTabs: boolean = false;
     
     @Output() AddTabClicked: EventEmitter<any> = new EventEmitter;
     @Output() CloseTabClicked: EventEmitter<any> = new EventEmitter;
     @Output() SelectedTabChanged: EventEmitter<any> = new EventEmitter;
     IsRTL: boolean = false;
     IsOverCloseButton: boolean = false;
-    showButton: boolean = false;
-    private timerToken: any;
 
     constructor(private cd: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting != undefined) {
@@ -40,15 +33,7 @@ export class LogTabsComponent implements AfterViewInit, OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if(changes['TabsSource'])
-            this.checkIfShowButton()
-    }
-
-    ngOnInit() {
-        this.subscribeWindowsResize()
-      }
-
+    private timerToken: any;
     ngAfterViewInit() {
         this.timerToken = setTimeout(() => {
             if (this.TabsSource.length > 0) {
@@ -79,25 +64,7 @@ export class LogTabsComponent implements AfterViewInit, OnInit, OnChanges {
             this.selectedTab = t;
         }
     }
-    BackTab() {
-        
-        let index = this.TabsSource.indexOf(this.SelectedTab);
-        index--;
-        if (index >= 0) {
-            let nextItem = this.TabsSource[index];
-            this.SelectedTab = nextItem;
-        }
 
-    }
-    NextTab() {
-        
-        let index = this.TabsSource.indexOf(this.SelectedTab);
-        if (index >= 0 && index < this.TabsSource.length - 1) {
-            let nextItem = this.TabsSource[index + 1];
-            this.SelectedTab = nextItem;
-        }
-            
-    }
     AddTab() {
         if (this.Disabled)
             return;
@@ -105,13 +72,11 @@ export class LogTabsComponent implements AfterViewInit, OnInit, OnChanges {
         this.AddTabClicked.emit();
         this.cd.detectChanges();
         this.SelectedTab = this.TabsSource[this.TabsSource.length - 1]; // select last tab
-        this.checkIfShowButton()
     }
     CloseTab(tab) {
         if (this.TabsSource.length <= 1) return;
         this.CloseTabClicked.emit(tab);
         this.cd.detectChanges();
-        this.checkIfShowButton()
         //this.SelectedTab = this.TabsSource[this.TabsSource.length - 1]; // select last tab
     }
     SelectionChanged(tabItem: LogTab) {
@@ -164,44 +129,6 @@ export class LogTabsComponent implements AfterViewInit, OnInit, OnChanges {
             }
         }
     }
-
-    scrollRight() {
-        this.tabs.nativeElement.scrollLeft -= 95
-        this.NextTab()
-    }
-    
-    scrollleft() {
-        this.tabs.nativeElement.scrollLeft += 95
-        this.BackTab()
-    }
-
-    scrollToStart() {
-        this.tabs.nativeElement.scrollLeft = 0;
-        this.SelectedTab = this.TabsSource[0];
-    }
-    
-    scrollToEnd() {
-        this.tabs.nativeElement.scrollRight = 0;
-        this.SelectedTab = this.TabsSource[this.TabsSource.length - 1];
-        this.cd.detectChanges();
-        this.scrollRight()        
-    }
-        
-    subscribeWindowsResize() {
-        fromEvent(window, 'resize').pipe(
-        startWith(window),
-        mapTo(window),
-        throttleTime(500),
-        debounceTime(500),
-        ).subscribe(()=>{
-            this.checkIfShowButton()
-        });
-    }
-
-    checkIfShowButton() {
-        const ul = this.tabs.nativeElement as HTMLUListElement;
-        this.showButton = ul.clientWidth < ul.scrollWidth;
-    }
 }
 
 export class LogTab {
@@ -212,7 +139,6 @@ export class LogTab {
     public Parent: any;
     public Code: string;
     public Header: string;
-    public Title: string;
     //public ComponentName: string;
     public ComponentPath: string;
     public Index: number;

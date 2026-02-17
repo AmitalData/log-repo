@@ -4,6 +4,8 @@ import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import {ARPaymentChequePM} from '../../../Accounting/EntityPMs/ARPaymentChequePM';
+import {CashBookLinePM} from '../../../Accounting/EntityPMs/CashBookLinePM';
 import {InvoiceDomainService} from '../../Services/InvoiceDomainService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -17,7 +19,6 @@ import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import { EventParams } from 'Accounting/Utilities/ReconcileEventManager';
 
 export class ARPaymentMenuButtonsHandler {
     public EntityPM: ARPaymentPM;
@@ -41,6 +42,7 @@ export class ARPaymentMenuButtonsHandler {
         this.isVoided = false;
         this.isPrintRequested = false;
         this.isSATSendRequest = false;
+        //this.EntityPM.SetReSendQBO = false;
     }
 
     Listen() {
@@ -102,172 +104,161 @@ export class ARPaymentMenuButtonsHandler {
                     var button = menuButtons[i];
                     switch (button.EventCode) {
 
-                        case "PrintARPayment": {
-                            this.PrintPaymentButtonLoaded();
-                            if (this.EntityPM.Id == null && this.EntityPM.StatusCode == "VD") {
-                                button.IsDisabled = true;
-                            }
-                            else if (SessionLocator.TenantPM.AccountingActivated && this.EntityPM.StatusCode == "DR") {
-                                button.IsDisabled = true;
-                            }
-                            else {
-                                button.IsDisabled = false;
-                            }
-                            break;
-                        }
-
-                        case "ApproveARPayment": {
-
-                            if (this.EntityPM.SATTransferStatusCode == "TD" && (this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "DR")) {
-                                button.IsDisabled = true;
-                            }
-                            else {
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
-
-                                    button.IsDisabled = false;
-                                }
-
-                                else {
+                        case "PrintARPayment":
+                            {
+                                this.PrintPaymentButtonLoaded();
+                                if (this.EntityPM.Id == null && this.EntityPM.StatusCode == "VD") {
                                     button.IsDisabled = true;
                                 }
-                            }
-
-                            break;
-                        }
-
-                        case "CancelApproval": {
-                            if (SessionLocator.TenantPM.AccountingActivated) {
-                                button.IsHidden = true;
-                            }
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
-                                button.IsDisabled = true;
-                            }
-
-                            else {
-                                button.IsDisabled = false;
-                            }
-
-                            break;
-                        }
-                        case "VoidARPaymentOperationsSeparator":{
-                            if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                button.IsHidden =true;
+                                else {
+                                    button.IsDisabled = false;
+                                }
                                 break;
                             }
-                        }
-                        case "VoidARPayemnt": {
-                            if (SessionLocator.TenantPM.AccountingActivated) {
-                                if (this.EntityPM.StatusCode == "AD") {
-                                    button.IsDisabled = false;
-                                }
-                                else {
-                                    button.IsDisabled = true;
-                                }
-                            }
-                            else {
+                        case "ApproveARPayment":
+                            {
 
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.EntityPM.StatusCode == "VD") {
+                                if (this.EntityPM.SATTransferStatusCode == "TD" && (this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "DR")) {
                                     button.IsDisabled = true;
                                 }
                                 else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
+
+                                        button.IsDisabled = false;
+                                    }
+
+                                    else {
+                                        button.IsDisabled = true;
+                                    }
+                                }
+
+                                break;
+                            }
+                        case "CancelApproval":
+                            {
+                                if (SessionLocator.TenantPM.AccountingActivated) {
+                                    button.IsHidden = true;
+                                }
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD" || (this.EntityPM.StatusCode == "AD" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG"))) {
+                                    button.IsDisabled = true;
+                                }
+
+                                else {
                                     button.IsDisabled = false;
                                 }
+
+                                break;
                             }
-                            break;
-                        }
+                        case "VoidARPayemnt":
+                            {
+                                if (SessionLocator.TenantPM.AccountingActivated) {
+                                    if (this.EntityPM.StatusCode == "AD") {
+                                        button.IsDisabled = false;
+                                    }
+                                    else {
+                                        button.IsDisabled = true;
+                                    }
+                                }
+                                else {
 
-                        case "CancelVoidARPayment": {
-                            button.IsDisabled = true;
-                            break;
-                        }
-
-                        case "ReTransfer": {
-                            if (SessionLocator.TenantPM.AccountingActivated) {
-
-                                button.IsHidden = true;
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.EntityPM.StatusCode == "VD") {
+                                        button.IsDisabled = true;
+                                    }
+                                    else {
+                                        button.IsDisabled = false;
+                                    }
+                                }
+                                break;
                             }
-                            else {
+                        case "CancelVoidARPayment":
+                            {
                                 button.IsDisabled = true;
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
-                                        if (this.EntityPM.TransferStatusCode == "TR") {
-                                            button.IsDisabled = false;
+                                break;
+                            }
+
+                        case "ReTransfer":
+                            {
+                                if (SessionLocator.TenantPM.AccountingActivated) {
+
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                button.IsDisabled = true;
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                        if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                            if (this.EntityPM.TransferStatusCode == "TR") {
+                                                button.IsDisabled = false;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            break;
-                        }
-
-                        case "SENDToSAT": {
-                            if (this.EntityPM.SATTransferStatusCode == "TD" && (this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "DR")) {
-                                button.IsDisabled = true;
-                            }
-                            else {
-                                button.IsDisabled = false;
-                            }
-                           
-
-                            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
-                                button.IsHidden = true;
+                                break;
                             }
 
-                           
-                            break;
-                        }
-
-                        case "CheckSATStatus": {
-                            let sATCanceledStatusCode = "CS";
-                            button.IsDisabled = this.EntityPM.SATTransferStatusCode != sATCanceledStatusCode;
-                            button.IsHidden = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || AppTool.IsNullOrEmpty(this.EntityPM.SATXML);
-                            break;
-                        }
-
-                        case "SendToQBO": {
-                            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
-                                button.IsHidden = false;
-                            }
-                            else {
-                                button.IsHidden = true;
-                            }
-                            if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
-                                button.DisplayText = "Send to QBO";
-                            }
-                            else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
-                                button.LabelTextCodeCode = null;
-                                button.DisplayText = "Resend to QBO";
-                            }
-                            if (this.EntityPM.StatusCode == "DR") {
-                                button.IsDisabled = true;
-                            }
-                            else {
-                                button.IsDisabled = false;
-                            }
-
-                            break;
-                        }
-
-                        case "BlockFromTransfer": {
-                            var isHidden: boolean = true;
-
-                            if (this.EntityPM.TransferStatusCode == "ET") {
-                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
-                                    isHidden = false;
+                        case "SENDToSAT":
+                            {
+                                if (this.EntityPM.SATTransferStatusCode == "TD" && (this.EntityPM.StatusCode == "VD" || this.EntityPM.StatusCode == "DR")) {
+                                    button.IsDisabled = true;
                                 }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+                                //  if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || AppTool.IsNullOrEmpty(this.EntityPM.Id) ||// this.EntityPM.StatusCode == "VD") {
+                                //     button.IsDisabled = true;
+                                // }
+
+                                // else {
+
+
+                                if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                                    button.IsHidden = true;
+                                }
+
+                                // }
+                                break;
                             }
 
-                            button.IsHidden = isHidden;
-                            break;
-                        }
+                        case "CheckSATStatus":
+                            {
+                                if (this.EntityPM.SATTransferStatusCode == "CS") {
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsDisabled = true;
+                                }
+                                if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
+                                    button.IsHidden = true;
+                                }
 
-                        case "SolvedManual": {
-                            const sATTransferWithErrorStatusCode: string = "TE";
-                            const sATSolvedManualStatusCode: string = "SM";
-                            button.IsHidden = this.EntityPM.SATTransferStatusCode != sATTransferWithErrorStatusCode && this.EntityPM.SATTransferStatusCode != sATSolvedManualStatusCode;                       
-                            if(!button.IsHidden) button.IsDisabled = this.EntityPM.SATTransferStatusCode == sATSolvedManualStatusCode;
 
-                            break;
-                        }
+                                break;
+                            }
+
+
+                        case "SendToQBO":
+                            {
+                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                                    button.IsHidden = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                                if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
+                                    button.DisplayText = "Send to QBO";
+                                }
+                                else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                                    button.LabelTextCodeCode = null;
+                                    button.DisplayText = "Resend to QBO";
+                                }
+                                if (this.EntityPM.StatusCode == "DR") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
@@ -279,64 +270,51 @@ export class ARPaymentMenuButtonsHandler {
                 this.PrintPayment();
                 break;
             }
-
             case "ApproveARPayment": {
                 this.ResetAllFlags();
                 this.isApproval = true;
                 this.ApprovalMethod();
                 break;
             }
+            case "CancelApproval":
+                {
+                    this.ResetAllFlags();
+                    this.isCancelApproval = true;
+                    this.CancelApproval();
+                    break;
+                }
+            case "VoidARPayemnt":
+                {
+                    this.ResetAllFlags();
+                    this.isVoided = true;
+                    this.VoidMethod();
+                    break;
+                }
+            case "ReTransfer":
+                {
+                    this.ReTransferClicked();
+                    break;
+                }
+            case "SENDToSAT":
+                {
+                    this.SaveSendToSAT();
+                    break;
+                }
+            case "CheckSATStatus":
+                {
+                    this.CheckSATStatus();
+                    break;
+                }
 
-            case "CancelApproval": {
-                this.ResetAllFlags();
-                this.isCancelApproval = true;
-                this.CancelApproval();
-                break;
-            }
-
-            case "VoidARPayemnt": {
-                this.ResetAllFlags();
-                this.isVoided = true;
-                this.VoidMethod();
-                break;
-            }
-
-            case "ReTransfer": {
-                this.ReTransferClicked();
-                break;
-            }
-
-            case "SENDToSAT": {
-                this.SaveSendToSAT();
-                break;
-            }
-
-            case "CheckSATStatus": {
-                this.CheckSATStatus();
-                break;
-            }
-
-            case "SendToQBO": {
-                this.SendToQBO();
-                break;
-            }
-
-            case "BlockFromTransfer": {
-                this.BlockFromTransferToQBO();
-                break;
-            }
-
-            case "SolvedManual": {
-                this.SolvedManual();
-                break;
-            }
+            case "SendToQBO":
+                {
+                    this.SendToQBO();
+                    break;
+                }
         }
     }
 
-    SolvedManual() {
-        this.EntityPM.SATTransferStatusCode = "SM";
-        this.entityArgs.EditComponent.SaveChanges("Solved Manual");
-    }
+
 
     SendToQBO() {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
@@ -392,10 +370,10 @@ export class ARPaymentMenuButtonsHandler {
 
 
     CheckSATStatus() {
-        let invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.GetARPaymentSATCancellationStatus(this.EntityPM.Id).subscribe((response: any) => {
-            if (response.HasError) return;
-            this.entityArgs?.EditComponent?.ReloadEntityPM();
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetARPaymentSATCancellationStatus(this.EntityPM.Id).subscribe(response => {
+
         });
     }
 
@@ -411,6 +389,7 @@ export class ARPaymentMenuButtonsHandler {
         logWindow.Show('./Invoice/Components/SAT/SendPaymentWindowComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
 
+            //this.StopBusyIndicator();
         });
     }
 
@@ -438,7 +417,38 @@ export class ARPaymentMenuButtonsHandler {
                 this.entityArgs.EditComponent.ValidationErrorsList.push(item);
             });
         }
-       
+        ////if (this.EntityPM.StatusCode == "AD" || this.EntityPM.StatusCode == "CL") {
+        //    //if (this.EntityPM.PaymentInvoices.length > 0) {
+        //        var windowArgs: any = {};
+        //        windowArgs.EnttiyPM = this.EntityPM;
+
+        //        var logWindow = new LogitudeWindow();
+        //        //logWindow.Width = 500;
+        //        //logWindow.Height = 300;
+        //        logWindow.Title = "Send to SAT";
+        //        logWindow.WindowArgs = windowArgs;
+        //        logWindow.Show('./Invoice/Components/SAT/SendPaymentWindowComponent');
+        //        logWindow.WindowClosed.subscribe(($event: any) => {
+
+        //            //this.StopBusyIndicator();
+        //        });
+        //    //}
+        //    //else {
+        //    //    var messageWindow: MessageWindow;
+        //    //    var messageText = "There is no connected invoices";//TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
+        //    //    messageWindow = new MessageWindow();
+        //    //    messageWindow.Show(messageText);
+        //    //    return;
+        //    //}
+        ////}
+        ////else {
+        ////    var messageWindow: MessageWindow;
+        ////    var messageText = "Payment should be Approved before sending it to SAT";//TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
+        ////    messageWindow = new MessageWindow();
+        ////    messageWindow.Show(messageText);
+        ////    return;
+
+        ////}
 
 
     }
@@ -446,17 +456,14 @@ export class ARPaymentMenuButtonsHandler {
     // [Approval]
     ApprovalMethod() {
 
-      
+        // full accounting validation
+        //lines validation
         if(SessionLocator.TenantPM.AccountingActivated){
             var _edit = this.CurrentSession.CurrentEditComponent;
             if(!_edit.IsEditValid){
                 _edit.ValidationErrorsList = [TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines')];
                 return;
             }else{
-                this.Validate();
-                if (!this.isValid) {
-                    return;
-                }
                 _edit.ValidationErrorsList = [];
             }
 
@@ -518,9 +525,10 @@ export class ARPaymentMenuButtonsHandler {
 
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
+                //CommonContext.SubmitChanges();
             }
             this.entityArgs.EditComponent.SaveChanges();
-            ARPaymentEventManager.ARPaymentApproved.emit(new EventParams());
+            ARPaymentEventManager.ARPaymentApproved.emit();
         }
         else {
             errors.forEach(item => {
@@ -533,8 +541,22 @@ export class ARPaymentMenuButtonsHandler {
 
     }
     CreateARPaymentCheque() {
-        
+        //var arPaymentcheque: ARPaymentChequePM = new ARPaymentChequePM();
+        //arPaymentcheque.PaymentId = this.EntityPM.Id;
+        //arPaymentcheque.ChequeNumber = this.EntityPM.ChequeOrPaymentRef;
+        //arPaymentcheque.ValueDate = this.EntityPM.ValueDate;
+        //arPaymentcheque.BankBranch = this.EntityPM.BankBranch;
+        //arPaymentcheque.BankAccount = this.EntityPM.Account;
+        //arPaymentcheque.CurrencyId = this.EntityPM.PaymentCurrencyId;
+        //arPaymentcheque.LocalAmount = this.EntityPM.AmountInLocalCurrency;
+        //arPaymentcheque.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
 
+        //var cashBookLine: CashBookLinePM = new CashBookLinePM(null);
+        //cashBookLine.CashBookId = "";
+        //cashBookLine.ARPChequeId = arPaymentcheque.Id;
+        //cashBookLine.IsDeposited = false;
+
+        //// Create Journal
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
         invoiceDomainService.PostARPaymentChequeAndCashBook(this.EntityPM).subscribe((response: ServiceResponse) => {
             if (response != null) {
@@ -559,6 +581,7 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetCancelApproval = true;
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
+                //CommonContext.SubmitChanges();
             }
 
             this.entityArgs.EditComponent.SaveChanges();
@@ -608,9 +631,32 @@ export class ARPaymentMenuButtonsHandler {
     }
 
     // [Void]
-    VoidingARPayment(event: any) {
+    VoidMethod() {
+
         var messageWindow: MessageWindow;
-        if (event == null || event == "Ok") {
+        if (!SessionLocator.AccountingSettingPM.AllowVoidARP) {
+            var messageText = TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
+            messageWindow = new MessageWindow();
+            messageWindow.Show(messageText);
+            return;
+        }
+
+        var errors = ARPaymentValidator.ValidateCurrenctEntity(this.EntityPM);
+        var isValid = true;
+        if (errors != null && errors.length > 0) {
+            isValid = false;
+        }
+
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE" && (this.EntityPM.SATTransferStatusCode == "TD" || this.EntityPM.SATTransferStatusCode == "TG") && (this.EntityPM.StatusCode == "AD" || this.EntityPM.StatusCode == "CL"
+            )) {
+
+            var messageText = "This Payment is connected to SAT, Please cancel payment approval before voiding it";//TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
+            messageWindow = new MessageWindow();
+            messageWindow.Show(messageText);
+            return;
+        }
+
+        if (isValid) {
             if (this.EntityPM.PaymentInvoices.length > 0) {
                 var messageText = TextCodeTranslator.Translate("ARPayment.M.DisconnectInvoices");
                 messageWindow = new MessageWindow();
@@ -629,8 +675,9 @@ export class ARPaymentMenuButtonsHandler {
                         this.EntityPM.SetCancelApproval = false;
                         if (this.CurrentDocument != null) {
                             this.CurrentDocument.NeedsRebuild = true;
+                            //CommonContext.SubmitChanges();
                         }
-                        this.EntityPM.OpenAmount=234242;
+
                         this.entityArgs.EditComponent.SaveChanges();
                     }
                 });
@@ -639,48 +686,7 @@ export class ARPaymentMenuButtonsHandler {
         }
     }
 
-    VoidMethod() {
-
-        var messageWindow: MessageWindow;
-        if (!SessionLocator.AccountingSettingPM.AllowVoidARP) {
-            var messageText = TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
-            messageWindow = new MessageWindow();
-            messageWindow.Show(messageText);
-            return;
-        }
-
-        var errors = ARPaymentValidator.ValidateCurrenctEntity(this.EntityPM);
-        var isValid = true;
-        if (errors != null && errors.length > 0) {
-            isValid = false;
-
-            errors.forEach(item => {
-                if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
-                    this.entityArgs.EditComponent.ValidationErrorsList = [];
-                }
-                this.entityArgs.EditComponent.ValidationErrorsList.push(item);
-            });
-        }
-        
-
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE" && (this.EntityPM.SATTransferStatusCode == "TD" || this.EntityPM.SATTransferStatusCode == "TG") && (this.EntityPM.StatusCode == "AD" || this.EntityPM.StatusCode == "CL"
-            )) {
-
-            var messageText = "This Payment is connected to SAT, Please cancel payment approval before voiding it";
-            messageWindow = new MessageWindow();
-            messageWindow.Show(messageText);
-            return;
-        }
-
-        if (isValid) {
-            if (SessionLocator.TenantPM.AccountingActivated) {
-                this.OpenCancelARPaymentScreen();
-            }
-
-            else { this.VoidingARPayment(null); }
-        }
-    }
-
+    //[ReTransfer]
     ReTransferClicked() {
         this.Validate();
         if (this.isValid) {
@@ -689,45 +695,6 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetReTransfer = true;
             this.EntityPM.SetCancelApproval = false;
             this.entityArgs.EditComponent.SaveChanges();
-        }
-    }
-
-    OpenCancelARPaymentScreen() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-
-        var windowTitle = TextCodeTranslator.Translate("ARPayment.O.CancelAPPayment");
-        var logWindow = new LogitudeWindow();
-        var windowArgs: any = {};
-        windowArgs.PaymentDate = this.EntityPM.RegisterDate;
-        windowArgs.PaymentPM = this.EntityPM;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 480;
-        logWindow.Height = 280;
-        logWindow.Title = windowTitle;
-
-        logWindow.WindowClosed.subscribe(($event: any) => this.VoidingARPayment($event));
-        logWindow.Show('./InvoiceModules/ARPayment/Components/Other/CancelARPaymentComponent');
-        this.CurrentSession.StopBusyIndicator();
-
-    }
-
-    BlockFromTransferToQBO() {
-
-        this.Validate();
-
-        if (this.isValid) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 400;
-            confirmWindow.Show("Please make sure that you've created the record manually at QBO online before marking as 'blocked for transfer', it is recommended to fix any issues and resend from the communication log rather than marking as blocked");
-            confirmWindow.WindowClosed.subscribe(s => {
-
-                if (confirmWindow.Yes) {
-                    this.EntityPM.TransferStatusCode = "BL";
-                    this.EntityPM.TransferStatusName = "Blocked";
-                    this.entityArgs.EditComponent.SaveChanges("Blocking...");
-                }
-            });
         }
     }
 }

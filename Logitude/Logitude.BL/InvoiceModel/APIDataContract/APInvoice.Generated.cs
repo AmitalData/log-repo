@@ -13,7 +13,6 @@ using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
@@ -113,20 +112,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string EntityReference { get; set; }
     
     public string EntityType { get; set; }
-    
-    public string VendorGLAccount { get; set; }
-    
-    public List<APInvoiceTotalVAT> TotalVATs { get; set; }
-    
-    public bool TotalVATOnly { get; set; }
-    
-    public User CreatedByUser { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
-
-    public string ConfirmationNumber { get; set; }
-
-    public bool IsPrepaidExpenses { get; set; }
 
     }
 } 

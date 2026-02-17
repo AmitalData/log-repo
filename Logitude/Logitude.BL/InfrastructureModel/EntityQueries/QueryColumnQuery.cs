@@ -8,7 +8,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -45,7 +45,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectFieldName = a.ObjectField.FieldName,
                                                     QueryId = a.QueryId,
                                                     Tenant = a.Tenant,
-                                                    QueryCode = a.QueryCode,
+                                                    QueryCode = a.Query.Code,
                                                     QueryObjectTableName = a.Query.ObjectTable.Name,
                                                    
                                                     ConverterName = a.ObjectField.ConverterName,
@@ -56,14 +56,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInList = a.ObjectField.DisplayInList,
                                                     UserId = a.UserId,
                                                     ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 }).ToList();
 
             List<QueryColumnPM> selectedQueryColumns = new List<QueryColumnPM>();
             foreach (QueryColumnPM column in querycolumns)
             {
                 QueryColumnPM existedColumn = (from a in selectedQueryColumns
-                                               where a.QueryCode == column.QueryCode && a.ObjectFieldCode == column.ObjectFieldCode && a.UserId == userid
+                                               where a.QueryId == column.QueryId && a.ObjectFieldId == column.ObjectFieldId && a.UserId == userid
                                                select a).FirstOrDefault();
 
                 if (existedColumn != null)
@@ -97,7 +96,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectFieldName = a.ObjectField.FieldName,
                                                     QueryId = a.QueryId,
                                                     Tenant = a.Tenant,
-                                                    QueryCode = a.QueryCode,
+                                                    QueryCode = a.Query.Code,
                                                     QueryObjectTableName = a.Query.ObjectTable.Name,
                                                  
                                                     ConverterName = a.ObjectField.ConverterName,
@@ -108,7 +107,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInList = a.ObjectField.DisplayInList,
                                                     UserId = a.UserId,
                                                     ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 };
 
             //string str = TranslateTextsClass.Translate(ObjectFieldListLabelTextCodeCode, tenant);
@@ -129,7 +127,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectFieldName = a.ObjectField.FieldName,
                                                     QueryId = a.QueryId,
                                                     Tenant = a.Tenant,
-                                                    QueryCode = a.QueryCode,
+                                                    QueryCode = a.Query.Code,
                                                     QueryObjectTableName = a.Query.ObjectTable.Name,
                                                   
                                                     ConverterName = a.ObjectField.ConverterName,
@@ -140,7 +138,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayInList = a.ObjectField.DisplayInList,
                                                     UserId = a.UserId,
                                                     ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                                    ObjectFieldCode = a.ObjectFieldCode,
                                                 };
             return queries;
         }
@@ -161,7 +158,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               ObjectFieldName = a.ObjectField.FieldName,
                               QueryId = a.QueryId,
                               Tenant = a.Tenant,
-                              QueryCode = a.QueryCode,
+                              QueryCode = a.Query.Code,
                               QueryObjectTableName = a.Query.ObjectTable.Name,
                            
                               ConverterName = a.ObjectField.ConverterName,
@@ -172,7 +169,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               DisplayInList = a.ObjectField.DisplayInList,
                               ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
                               UserId = a.UserId,
-                              ObjectFieldCode = a.ObjectFieldCode,
                           };
 
                 if (queries.Count() == 0)
@@ -188,7 +184,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldName = a.ObjectField.FieldName,
                                   QueryId = a.QueryId,
                                   Tenant = a.Tenant,
-                                  QueryCode = a.QueryCode,
+                                  QueryCode = a.Query.Code,
                                   QueryObjectTableName = a.Query.ObjectTable.Name,
                                
                                   ConverterName = a.ObjectField.ConverterName,
@@ -198,7 +194,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldFieldLableTextCodeDefaultText = a.ObjectField.FullNameTextCode.DefaultText,
                                   DisplayInList = a.ObjectField.DisplayInList,
                                   ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
             }
@@ -215,7 +210,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               ObjectFieldName = a.ObjectField.FieldName,
                               QueryId = a.QueryId,
                               Tenant = a.Tenant,
-                              QueryCode = a.QueryCode,
+                              QueryCode = a.Query.Code,
                               QueryObjectTableName = a.Query.ObjectTable.Name,
                               
                               ConverterName = a.ObjectField.ConverterName,
@@ -225,7 +220,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               ObjectFieldFieldLableTextCodeDefaultText = a.ObjectField.FullNameTextCode.DefaultText,
                               DisplayInList = a.ObjectField.DisplayInList,
                               ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                              ObjectFieldCode = a.ObjectFieldCode,
                           };
             }
 
@@ -235,16 +229,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return queries;
         }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCodeAndUser(int tenant, string userId, string queryCode)
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryIdAndUser(int tenant, string userId, string queryId)
         {
             IQueryable<QueryColumnPM> queries = null;
-            Query myQuery = repository.context.Queries.Where(d => d.UniqueCode == queryCode).FirstOrDefault();
+            Query myQuery = repository.context.Queries.Where(d => d.Id == queryId).FirstOrDefault();
             if (myQuery != null)
             {
                 if (!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                              where a.Tenant == tenant && (a.UserId == myQuery.SharedByUserId || a.UserId == userId) && a.QueryCode == queryCode && a.ObjectField.DisplayInList == true
+                              where a.Tenant == tenant && (a.UserId == myQuery.SharedByUserId || a.UserId == userId) && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
@@ -254,7 +248,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldName = a.ObjectField.FieldName,
                                   QueryId = a.QueryId,
                                   Tenant = a.Tenant,
-                                  QueryCode = a.QueryCode,
+                                  QueryCode = a.Query.Code,
                                   QueryObjectTableName = a.Query.ObjectTable.Name,
                                   ConverterName = a.ObjectField.ConverterName,
                                   DataTemplateName = a.ObjectField.DataTemplateName,
@@ -265,14 +259,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
 
                 else
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                              where a.Tenant == tenant && a.UserId == userId && a.QueryCode == queryCode && a.ObjectField.DisplayInList == true
+                              where a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
@@ -282,7 +275,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldName = a.ObjectField.FieldName,
                                   QueryId = a.QueryId,
                                   Tenant = a.Tenant,
-                                  QueryCode = a.QueryCode,
+                                  QueryCode = a.Query.Code,
                                   QueryObjectTableName = a.Query.ObjectTable.Name,
                                   ConverterName = a.ObjectField.ConverterName,
                                   DataTemplateName = a.ObjectField.DataTemplateName,
@@ -293,7 +286,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
             }
@@ -301,17 +293,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return queries;
         }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCodeAndUserAngular(int tenant, string userId, string queryCode)
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryIdAndUserAngular(int tenant, string userId, string queryId)
         {
             IQueryable<QueryColumnPM> queries = null;
-            Query myQuery = repository.context.Queries.Where(d => d.UniqueCode == queryCode).FirstOrDefault();
+            Query myQuery = repository.context.Queries.Where(d => d.Id == queryId).FirstOrDefault();
 
             if (myQuery != null)
             {
                 if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                              where a.Tenant == tenant && a.UserId == myQuery.SharedByUserId && a.QueryCode == queryCode && a.ObjectField.DisplayInList == true
+                              where a.Tenant == tenant && a.UserId == myQuery.SharedByUserId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
@@ -321,7 +313,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldName = a.ObjectField.FieldName,
                                   QueryId = a.QueryId,
                                   Tenant = a.Tenant,
-                                  QueryCode = a.QueryCode,
+                                  QueryCode = a.Query.Code,
                                   QueryObjectTableName = a.Query.ObjectTable.Name,
                                   ConverterName = a.ObjectField.ConverterName,
                                   DataTemplateName = a.ObjectField.DataTemplateName,
@@ -332,14 +324,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }
 
                 else
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                              where a.Tenant == tenant && a.UserId == userId && a.QueryCode == queryCode && a.ObjectField.DisplayInList == true
+                              where a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
@@ -349,7 +340,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldName = a.ObjectField.FieldName,
                                   QueryId = a.QueryId,
                                   Tenant = a.Tenant,
-                                  QueryCode = a.QueryCode,
+                                  QueryCode = a.Query.Code,
                                   QueryObjectTableName = a.Query.ObjectTable.Name,
                                   ConverterName = a.ObjectField.ConverterName,
                                   DataTemplateName = a.ObjectField.DataTemplateName,
@@ -360,7 +351,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                   ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                                   UserId = a.UserId,
                                   ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                  ObjectFieldCode = a.ObjectFieldCode,
                               };
                 }                  
             }
@@ -381,13 +371,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return Cols.AsQueryable();
         }
 
-        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryCode(int tenant, string queryCode)
+        public IQueryable<QueryColumnPM> GetQueryColumnsByQueryId(int tenant, string queryId)
         {
             IQueryable<QueryColumnPM> queries = null;
             //if (!string.IsNullOrEmpty(userId))
             //{
             queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                      where a.Tenant == tenant && a.QueryCode == queryCode
+                      where a.Tenant == tenant && a.QueryId == queryId
                       select new QueryColumnPM()
                       {
                           ColumnWidth = a.ColumnWidth,
@@ -397,7 +387,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                           ObjectFieldName = a.ObjectField.FieldName,
                           QueryId = a.QueryId,
                           Tenant = a.Tenant,
-                          QueryCode = a.QueryCode,
+                          QueryCode = a.Query.Code,
                           QueryObjectTableName = a.Query.ObjectTable.Name,
                           //QueryUserId = a.Query.UserId,
                           ConverterName = a.ObjectField.ConverterName,
@@ -408,21 +398,20 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                           DisplayInList = a.ObjectField.DisplayInList,
                           ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                           UserId = a.UserId,
-                          ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                          ObjectFieldCode = a.ObjectFieldCode,
+                          ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code, 
                       };
 
 
             return queries;
         }
         
-        public IQueryable<QueryColumnPM> GetZeroQueryColumnsByQueryCode(int tenant, string queryCode)
+        public IQueryable<QueryColumnPM> GetZeroQueryColumnsByQueryId(int tenant, string queryId)
         {
             IQueryable<QueryColumnPM> queries = null;
             //if (!string.IsNullOrEmpty(userId))
             //{
             queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                      where a.Tenant == tenant && a.QueryCode == queryCode && a.UserId == null
+                      where a.Tenant == tenant && a.QueryId == queryId && a.UserId == null
                       select new QueryColumnPM()
                       {
                           ColumnWidth = a.ColumnWidth,
@@ -432,7 +421,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                           ObjectFieldName = a.ObjectField.FieldName,
                           QueryId = a.QueryId,
                           Tenant = a.Tenant,
-                          QueryCode = a.QueryCode,
+                          QueryCode = a.Query.Code,
                           QueryObjectTableName = a.Query.ObjectTable.Name,
                           //QueryUserId = a.Query.UserId,
                           ConverterName = a.ObjectField.ConverterName,
@@ -444,7 +433,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                           ObjectFieldDataTypeCode = a.ObjectField.DataTypeCode,
                           UserId = a.UserId,
                           ObjectFieldFullNameTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                          ObjectFieldCode = a.ObjectFieldCode,
                       };
 
 
@@ -464,7 +452,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   ObjectFieldName = a.ObjectField.FieldName,
                                                   QueryId = a.QueryId,
                                                   Tenant = a.Tenant,
-                                                  QueryCode = a.QueryCode,
+                                                  QueryCode = a.Query.Code,
                                                   QueryObjectTableName = a.Query.ObjectTable.Name,
                                                  
                                                   ConverterName = a.ObjectField.ConverterName,
@@ -475,15 +463,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DisplayInList = a.ObjectField.DisplayInList,
                                                   UserId = a.UserId,
                                                   ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                                  ObjectFieldCode = a.ObjectFieldCode,
                                               };
             return query;
         }
 
-        public QueryColumnPM GetQueryColumnsByFieldCodeTenant(string FieldCode, int Tenant)
+        public QueryColumnPM GetQueryColumnsByFieldIdTenant(string FieldId, int Tenant)
         {
             QueryColumnPM query = (from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                                              where a.ObjectFieldCode== FieldCode && a.Tenant == Tenant
+                                              where a.ObjectFieldId == FieldId && a.Tenant == Tenant
                                               select new QueryColumnPM()
                                               {
                                                   ColumnWidth = a.ColumnWidth,
@@ -493,7 +480,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   ObjectFieldName = a.ObjectField.FieldName,
                                                   QueryId = a.QueryId,
                                                   Tenant = a.Tenant,
-                                                  QueryCode = a.QueryCode,
+                                                  QueryCode = a.Query.Code,
                                                   QueryObjectTableName = a.Query.ObjectTable.Name,
 
                                                   ConverterName = a.ObjectField.ConverterName,
@@ -504,7 +491,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DisplayInList = a.ObjectField.DisplayInList,
                                                   UserId = a.UserId,
                                                   ObjectFieldFieldLableTextCodeCode = a.ObjectField.FullNameTextCode.Code,
-                                                  ObjectFieldCode = a.ObjectFieldCode,
                                               }).FirstOrDefault();
             return query;
         }

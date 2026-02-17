@@ -9,7 +9,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BatchServicesDefinitionPMService} from '../../../../Infrastructure/Services/ExtendedPMs/BatchServicesDefinitionPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditBatchServiceComponent.html',
 })
 
@@ -43,7 +43,7 @@ export class EditBatchServiceComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             var service: BatchServicesDefinitionPMService = new BatchServicesDefinitionPMService();
 
-            service.update(this.EntityPM).subscribe((myResult: ServiceResponse) => {
+            service.update(this.EntityPM).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindow();

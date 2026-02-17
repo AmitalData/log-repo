@@ -308,20 +308,8 @@ namespace MeatadataGeneratorTool.DataContractsModule
             }
         }
 
-        private bool includeTenant0Data =false;
-        public bool IncludeTenant0Data
-        {
-            get
-            {
-                return includeTenant0Data;
-            }
-            set
-            {
-                includeTenant0Data = value;
-                FirePropertyChanged("IncludeTenant0Data");
-            }
-        }
 
+         
         public AddDataContractControl DataContractControl;
         public Window DCWindow = new Window();
         public RelayCommand EditBtnCommand
@@ -338,7 +326,7 @@ namespace MeatadataGeneratorTool.DataContractsModule
 
             DCWindow = new Window();
             DCWindow.Width = 500;
-            DCWindow.Height = 235;
+            DCWindow.Height = 185;
             DCWindow.Content = DataContractControl;
             DCWindow.Show();
         }

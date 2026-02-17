@@ -11,7 +11,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
@@ -26,7 +26,6 @@ using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.TaxesApprovalModel;
 using Logitude.Server.Tools;
 using ICSharpCode.SharpZipLib.Checksum;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -144,196 +143,214 @@ namespace CommunicationWorkerRole
 
         public void BuildTaxApprovalDataFiles(DateTime date1, DateTime date2, int tenant, string random, string email, string username)
         {
-            IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
-            ARInvoiceRepository invoiceRep = new ARInvoiceRepository(invoiceCotnext);
-            APInvoiceRepository apInvoiceRep = new APInvoiceRepository(invoiceCotnext);
-            ARPaymentRepository paymentRep = new ARPaymentRepository(invoiceCotnext);
+            try
+            {
+                IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
+                ARInvoiceRepository invoiceRep = new ARInvoiceRepository(invoiceCotnext);
+                APInvoiceRepository apInvoiceRep = new APInvoiceRepository(invoiceCotnext);
+                ARPaymentRepository paymentRep = new ARPaymentRepository(invoiceCotnext);
 
-            TenantRepository tenantRep = new TenantRepository(tenant);
-            Tenant tenantPoco = tenantRep.GetSingleTenant(tenant);
+                TenantRepository tenantRep = new TenantRepository(tenant);
+                Tenant tenantPoco = tenantRep.GetSingleTenant(tenant);
 
-            List<ARPayment> payments = paymentRep.GetARPayments(tenant).Where(p => (p.RegisterDate >= date1 && p.RegisterDate <= date2) && p.StatusCode != "DR").ToList();
-            List<ARInvoice> invoices = invoiceRep.GetIQueryableInvoices(tenant).Where(i => (i.InvoiceDate >= date1 && i.InvoiceDate <= date2) && i.StatusCode != "DR" && i.StatusCode != "PR").ToList();
-            List<APInvoice> apInvoices = apInvoiceRep.GetIQueryableInvoices(tenant).Where(i => (i.InvoiceDate >= date1 && i.InvoiceDate <= date2) && i.StatusCode != "WA").ToList();
+                List<ARPayment> payments = paymentRep.GetARPayments(tenant).Where(p => (p.RegisterDate >= date1 && p.RegisterDate <= date2) && p.StatusCode != "DR").ToList();
+                List<ARInvoice> invoices = invoiceRep.GetIQueryableInvoices(tenant).Where(i => (i.InvoiceDate >= date1 && i.InvoiceDate <= date2) && i.StatusCode != "DR").ToList();
+                List<APInvoice> apInvoices = apInvoiceRep.GetIQueryableInvoices(tenant).Where(i => (i.InvoiceDate >= date1 && i.InvoiceDate <= date2) && i.StatusCode != "WA").ToList();
 
-            string computed = this.Compute(date1, date2, payments, invoices, apInvoices, tenantPoco, invoiceCotnext, random, username);
-            byte[] BKMVDATAFile1bytearray = this.ConvertEncoding(computed);
+                string computed = this.Compute(date1, date2, payments, invoices, apInvoices, tenantPoco, invoiceCotnext, random, username);
+                byte[] BKMVDATAFile1bytearray = this.ConvertEncoding(computed);
 
-            string str = this.BuildA000File(date1, date2, payments, invoices, apInvoices, tenantPoco, random);
-            byte[] inifilebytearray = this.ConvertEncoding(str);
+                string str = this.BuildA000File(date1, date2, payments, invoices, apInvoices, tenantPoco, random);
+                byte[] inifilebytearray = this.ConvertEncoding(str);
 
-            List<DataFiles> files = new List<DataFiles>() {
+                List<DataFiles> files = new List<DataFiles>() {
                     new DataFiles() { FileName = "BKMVDATA.txt", FileData = BKMVDATAFile1bytearray },
                     new DataFiles() { FileName = "INI.txt", FileData = inifilebytearray }
                 };
 
-            DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-            string format = currentDate.ToString("MMddHHmm");
-            string path = tenantPoco.VatNumber + "." + currentDate.Year.ToString().Substring(2, 2) + @"\" + format + "/";
-            byte[] zippedfiles = ZipFiles(files, path);
+                DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                string format = currentDate.ToString("MMddHHmm");
+                string path = tenantPoco.VatNumber + "." + currentDate.Year.ToString().Substring(2, 2) + @"\" + format + "/";
+                byte[] zippedfiles = ZipFiles(files, path);
 
-            TaxesApproval.TaxReport reportdataProvider = this.BuildTaxReportFile(date1, date2, payments, invoices, apInvoices, tenantPoco);
+                TaxesApproval.TaxReport reportdataProvider = this.BuildTaxReportFile(date1, date2, payments, invoices, apInvoices, tenantPoco);
 
-            ReportRepository rep = new ReportRepository(tenant);
-            Report reportPOc = rep.GetReportByCode("ROPF", tenant);
+                ReportRepository rep = new ReportRepository(tenant);
+                Report reportPOc = rep.GetReportByCode("ROPF", tenant);
 
-            ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
-            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
-            string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportPOc.DefaultTemplateId, tenant);
-            byte[] reportTemplate = reportsTemplatesWebService.GetReportTemplate(reportDocumentId, tenant, false);
+                ReportsTemplatesWebService reportsTemplatesWebService = new ReportsTemplatesWebService();
+                ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
+                string reportDocumentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(reportPOc.DefaultTemplateId, tenant);
+                byte[] reportTemplate = reportsTemplatesWebService.GetReportTemplate(reportDocumentId, tenant, false);
 
-            if (reportTemplate == null)
-            {
-                throw new Exception("No report template found : Tax Open Format");
+                if (reportTemplate == null)
+                {
+                    throw new Exception("No report template found : Tax Open Format");
+                }
+                else
+                {
+                    StiReport report = new StiReport();
+                    StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "TaxReport", Name = "TaxReport", BusinessObjectValue = reportdataProvider };
+                    report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
+                    report.Load(reportTemplate);
+                    report.Render(false);
+                    MemoryStream memStream = new MemoryStream();
+                    StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
+                    pdfSettings.ImageResolution = 300;
+                    pdfSettings.ImageQuality = 100;
+                    pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
+                    report.ExportDocument(StiExportFormat.Pdf, memStream, pdfSettings);
+
+                    string folder = reportdataProvider.FileSavingDirectory.Replace(@"C:\OPENFRMT\", "");
+                    string[] foldername = folder.Split(new[] { "\\" }, StringSplitOptions.None);
+
+                    Attachment att1 = new Attachment(new MemoryStream(zippedfiles), "OpenFormat.zip");
+                    memStream.Seek(0, SeekOrigin.Begin);
+                    Attachment att2 = new Attachment(memStream, "TaxReport.pdf");
+
+                    StringBuilder HtmlTemplate = new StringBuilder();
+                    HtmlTemplate.Append("<p style='text-align:left;font-family:Calibri;margin-left:15px'>");
+                    HtmlTemplate.Append("Hi,");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("Open Format files was processed and built for: " + tenantPoco.Company + " / " + tenantPoco.VatNumber + "");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("For the financial data between the dates: " + date1.ToShortDateString() + " – " + date2.ToShortDateString());
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("Attached 2 files:");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("&ensp;&#9642; A Zip file that contains:");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("&ensp;&ensp;&ensp;&bull; BKMVDATA.txt");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("&ensp;&ensp;&ensp;&bull; INI.txt");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("&ensp;&#9642; A PDF report that summarizes the process results");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append(@"Please extract the Zip content to the following path C:\OPENFRMT\");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("Regards,");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("Logitude World Team;");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
+
+                    EmailParameters parameters = new EmailParameters()
+                    {
+                        From = "no-reply@LogitudeWorld.com",
+                        To = email,
+                        Cc = "",
+                        Bcc = "",
+                        Subject = "Open Format Files / Logitude World",
+                        Body = HtmlTemplate.ToString(),
+                        IsBodyHtml = true,
+                        Attachments = new List<Attachment>() { att1, att2 },
+                        SentByUser = null,
+                        Tenant = tenant,
+                        EmailView = System.Net.Mime.MediaTypeNames.Text.Html,
+                    };
+                    EmailingHelper.SendEmail(parameters);
+
+                    EmailCommunicationParams emailParams = new EmailCommunicationParams()
+                    {
+                        From = "no-reply@LogitudeWorld.com",
+                        To = email,
+                        Subject = "Open Format Files / Logitude World",
+                        Tenant = tenant,
+                        EmailBody = HtmlTemplate.ToString(),
+                        IsBodySecured = true,
+                    };
+
+                    Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
+                }
             }
-            else
+
+            catch (Exception e)
             {
-                StiReport report = new StiReport();
-                StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "TaxReport", Name = "TaxReport", BusinessObjectValue = reportdataProvider };
-                report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
-                report.Load(reportTemplate);
-                report.Render(false);
-                MemoryStream memStream = new MemoryStream();
-                StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
-                pdfSettings.ImageResolution = 300;
-                pdfSettings.ImageQuality = 100;
-                pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
-                report.ExportDocument(StiExportFormat.Pdf, memStream, pdfSettings);
 
-                string folder = reportdataProvider.FileSavingDirectory.Replace(@"C:\OPENFRMT\", "");
-                string[] foldername = folder.Split(new[] { "\\" }, StringSplitOptions.None);
-
-                Attachment att1 = new Attachment(new MemoryStream(zippedfiles), "OpenFormat.zip");
-                memStream.Seek(0, SeekOrigin.Begin);
-                Attachment att2 = new Attachment(memStream, "TaxReport.pdf");
-
-                StringBuilder HtmlTemplate = new StringBuilder();
-                HtmlTemplate.Append("<p style='text-align:left;font-family:Calibri;margin-left:15px'>");
-                HtmlTemplate.Append("Hi,");
-                HtmlTemplate.Append("<br /><br />");
-                HtmlTemplate.Append("Open Format files was processed and built for: " + tenantPoco.Company + " / " + tenantPoco.VatNumber + "");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("For the financial data between the dates: " + date1.ToShortDateString() + " – " + date2.ToShortDateString());
-                HtmlTemplate.Append("<br /><br />");
-                HtmlTemplate.Append("Attached 2 files:");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("&ensp;&#9642; A Zip file that contains:");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("&ensp;&ensp;&ensp;&bull; BKMVDATA.txt");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("&ensp;&ensp;&ensp;&bull; INI.txt");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("&ensp;&#9642; A PDF report that summarizes the process results");
-                HtmlTemplate.Append("<br /><br />");
-                HtmlTemplate.Append(@"Please extract the Zip content to the following path C:\OPENFRMT\");
-                HtmlTemplate.Append("<br /><br />");
-                HtmlTemplate.Append("Regards,");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("Logitude World Team;");
-                HtmlTemplate.Append("<br />");
-                HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
-
-                EmailParameters parameters = new EmailParameters()
-                {
-                    From = SettingUtil.Emails.FromNoReply,
-                    To = email,
-                     Subject = "Open Format Files / Amital Data",
-                    Body = HtmlTemplate.ToString(),
-                    IsBodyHtml = true,
-                    Attachments = new List<Attachment>() { att1, att2 },
-                    SentByUser = null,
-                    Tenant = tenant,
-                    EmailView = System.Net.Mime.MediaTypeNames.Text.Html,
-                };
-                EmailingHelper.SendEmail(parameters);
-
-                EmailCommunicationParams emailParams = new EmailCommunicationParams()
-                {
-                    From = SettingUtil.Emails.FromNoReply,
-                    To = email,
-                    Subject = "Open Format Files / Amital Data",
-                    Tenant = tenant,
-                    EmailBody = HtmlTemplate.ToString(),
-                    IsBodySecured = true,
-                };
-
-                Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
             }
         }
 
         private string Compute(DateTime date1, DateTime date2, List<ARPayment> payments, List<ARInvoice> invoices, List<APInvoice> apInvoices, Tenant tenant, IInvoiceContext invoiceCotnext, string random, string username)
         {
-            ARInvoiceLineRepository invoiceLineRep = new ARInvoiceLineRepository(invoiceCotnext);
-            ARInvoiceTotalVATRepository totalVatRep = new ARInvoiceTotalVATRepository(invoiceCotnext);
-            APInvoiceLineRepository apInvoiceLineRep = new APInvoiceLineRepository(invoiceCotnext);
-            APInvoiceTotalVATRepository apTotalVatRep = new APInvoiceTotalVATRepository(invoiceCotnext);
-
-            CardRepository cardRep = new CardRepository(tenant.Id);
-            List<Card> allCards = cardRep.GetCards(tenant.Id).ToList();
-            List<Card> myCards = new List<Card>();
-            Card billTo = null;
-            foreach (ARInvoice item in invoices)
+            try
             {
-                billTo = allCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
+                ARInvoiceLineRepository invoiceLineRep = new ARInvoiceLineRepository(invoiceCotnext);
+                ARInvoiceTotalVATRepository totalVatRep = new ARInvoiceTotalVATRepository(invoiceCotnext);
+                APInvoiceLineRepository apInvoiceLineRep = new APInvoiceLineRepository(invoiceCotnext);
+                APInvoiceTotalVATRepository apTotalVatRep = new APInvoiceTotalVATRepository(invoiceCotnext);
 
-                if (billTo != null)
+                CardRepository cardRep = new CardRepository(tenant.Id);
+                List<Card> allCards = cardRep.GetCards(tenant.Id).ToList();
+                List<Card> myCards = new List<Card>();
+                Card billTo = null;
+                foreach (ARInvoice item in invoices)
                 {
-                    myCards.Add(billTo);
+                    billTo = allCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
+
+                    if (billTo != null)
+                    {
+                        myCards.Add(billTo);
+                    }
                 }
+
+                foreach (APInvoice item in apInvoices)
+                {
+                    billTo = allCards.Where(d => d.Id == item.VendorId).FirstOrDefault();
+
+                    if (billTo != null)
+                    {
+                        myCards.Add(billTo);
+                    }
+                }
+
+                foreach (ARPayment item in payments)
+                {
+                    billTo = allCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
+
+                    if (billTo != null)
+                    {
+                        myCards.Add(billTo);
+                    }
+                }
+
+                myCards = myCards.Distinct().ToList();
+
+                StringBuilder main = new StringBuilder();
+                int counter = 0;
+                int apCounter = 0;
+
+                counter += invoices.Count;
+                counter += apInvoices.Count;
+                counter += (payments.Count) * 2;
+                counter += myCards.Count;
+
+                apCounter += invoices.Count;
+                apCounter += (payments.Count) * 2;
+
+                IQueryable<ARInvoiceLine> ARLines = invoiceLineRep.GetInvoiceLinesByTenant(tenant.Id);
+                IQueryable<APInvoiceLine> APLines = apInvoiceLineRep.GetAPInvoiceLinesByTenant(tenant.Id);
+
+                List<string> ARInvoiceIds = invoices.Select(s => s.Id).ToList();
+                List<string> APInvoiceIds = apInvoices.Select(s => s.Id).ToList();
+
+                counter += ARLines.Where(d => ARInvoiceIds.Contains(d.ARInvoiceId)).Count();
+                apCounter += ARLines.Where(d => ARInvoiceIds.Contains(d.ARInvoiceId)).Count();
+                counter += APLines.Where(d => APInvoiceIds.Contains(d.APInvoiceId)).Count();
+
+                main.AppendLine(BuildA100Line(tenant, random));
+                main.AppendLine(BuildB110Line(invoices, apInvoices, payments, tenant, myCards));
+                main.AppendLine(BuildC100PaymentLines(myCards, payments, tenant, username));
+                main.AppendLine(BuildC100InvoiceLines(((payments.Count) * 2 + myCards.Count) + 1, invoices, tenant, invoiceLineRep, totalVatRep, username, myCards));
+                main.AppendLine(BuildC100APInvoiceLines((apCounter + 1 + myCards.Count), apInvoices, tenant, apInvoiceLineRep, apTotalVatRep, username, myCards));
+                main.AppendLine(BuildZ900Line((counter + 2), tenant, random));
+
+                return Regex.Replace(main.ToString(), @"^\s+$[\r\n]*", "", RegexOptions.Multiline);
             }
 
-            foreach (APInvoice item in apInvoices)
+            catch (Exception e)
             {
-                billTo = allCards.Where(d => d.Id == item.VendorId).FirstOrDefault();
-
-                if (billTo != null)
-                {
-                    myCards.Add(billTo);
-                }
+                return null;
             }
-
-            foreach (ARPayment item in payments)
-            {
-                billTo = allCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
-
-                if (billTo != null)
-                {
-                    myCards.Add(billTo);
-                }
-            }
-
-            myCards = myCards.Distinct().ToList();
-
-            StringBuilder main = new StringBuilder();
-            int counter = 0;
-            int apCounter = 0;
-
-            counter += invoices.Count;
-            counter += apInvoices.Count;
-            counter += (payments.Count) * 2;
-            counter += myCards.Count;
-
-            apCounter += invoices.Count;
-            apCounter += (payments.Count) * 2;
-
-            IQueryable<ARInvoiceLine> ARLines = invoiceLineRep.GetInvoiceLinesByTenant(tenant.Id);
-            IQueryable<APInvoiceLine> APLines = apInvoiceLineRep.GetAPInvoiceLinesByTenant(tenant.Id);
-
-            List<string> ARInvoiceIds = invoices.Select(s => s.Id).ToList();
-            List<string> APInvoiceIds = apInvoices.Select(s => s.Id).ToList();
-
-            counter += ARLines.Where(d => ARInvoiceIds.Contains(d.ARInvoiceId)).Count();
-            apCounter += ARLines.Where(d => ARInvoiceIds.Contains(d.ARInvoiceId)).Count();
-            counter += APLines.Where(d => APInvoiceIds.Contains(d.APInvoiceId)).Count();
-
-            main.AppendLine(BuildA100Line(tenant, random));
-            main.AppendLine(BuildB110Line(invoices, apInvoices, payments, tenant, myCards));
-            main.AppendLine(BuildC100PaymentLines(myCards, payments, tenant, username));
-            main.AppendLine(BuildC100InvoiceLines(((payments.Count) * 2 + myCards.Count) + 1, invoices, tenant, invoiceLineRep, totalVatRep, username, myCards));
-            main.AppendLine(BuildC100APInvoiceLines((apCounter + 1 + myCards.Count), apInvoices, tenant, apInvoiceLineRep, apTotalVatRep, username, myCards));
-            main.AppendLine(BuildZ900Line((counter + 2), tenant, random));
-
-            return Regex.Replace(main.ToString(), @"^\s+$[\r\n]*", "", RegexOptions.Multiline);
         }
 
         private string BuildA100Line(Tenant tenant, string random)
@@ -386,583 +403,591 @@ namespace CommunicationWorkerRole
 
         private string BuildB110Line(List<ARInvoice> arInvoices, List<APInvoice> apInvoices, List<ARPayment> arPayments, Tenant tenant, List<Card> myCards)
         {
-            AddressRepository addressRep = new AddressRepository(tenant.Id);
-            CurrencyRepository currencyRep = new CurrencyRepository(tenant.Id);
-            PartnerTypeRepository typeRep = new PartnerTypeRepository(tenant.Id);
-
-            List<string> codes = new List<string>();
-            StringBuilder str = new StringBuilder(376);
-            int i = 2;
-
-            foreach (ARInvoice item in arInvoices)
+            try
             {
-                TaxesApproval.B110 b110 = new TaxesApproval.B110();
-                Card card = myCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
-                Address address = addressRep.GetSingleAddress(item.BillToAddressId, tenant.Id);
-                PartnerType type = typeRep.GetSinglePartnerType(card.PartnerTypeId);
+                AddressRepository addressRep = new AddressRepository(tenant.Id);
+                CurrencyRepository currencyRep = new CurrencyRepository(tenant.Id);
+                PartnerTypeRepository typeRep = new PartnerTypeRepository(tenant.Id);
 
-                if (!codes.Contains(card.Code))
+                List<string> codes = new List<string>();
+                StringBuilder str = new StringBuilder(376);
+                int i = 2;
+
+                foreach (ARInvoice item in arInvoices)
                 {
-                    codes.Add(card.Code);
+                    TaxesApproval.B110 b110 = new TaxesApproval.B110();
+                    Card card = myCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
+                    Address address = addressRep.GetSingleAddress(item.BillToAddressId, tenant.Id);
+                    PartnerType type = typeRep.GetSinglePartnerType(card.PartnerTypeId);
 
-                    b110.RecordCode = "B110";
-                    b110.RecordLineNumber = i++.ToString();
-                    b110.EntityTypeCode = card != null ? card.PartnerTypeId : "";
-                    b110.EntityTypeName = type != null ? type.Name : "";
-                    b110.HouseNumber = "";
-                    b110.BranchId = "";
-                    b110.BalanceInForeignCurrency = "+00000000000000";
-                    b110.ForeignCurrencyCode = "";
-                    b110.FutureUsage = "";
-                    b110.Field1413 = "";
-                    b110.BalanceOpeningDate = "+00000000000000";
-                    b110.TotalDebit = "+00000000000000";
-                    b110.TotalCredit = "+00000000000000";
-                    b110.Field1417 = "";
-
-                    if (address != null)
+                    if (!codes.Contains(card.Code))
                     {
-                        //Address 1
-                        if (!string.IsNullOrEmpty(address.Address1))
+                        codes.Add(card.Code);
+
+                        b110.RecordCode = "B110";
+                        b110.RecordLineNumber = i++.ToString();
+                        b110.EntityTypeCode = card != null ? card.PartnerTypeId : "";
+                        b110.EntityTypeName = type != null ? type.Name : "";
+                        b110.HouseNumber = "";
+                        b110.BranchId = "";
+                        b110.BalanceInForeignCurrency = "+00000000000000";
+                        b110.ForeignCurrencyCode = "";
+                        b110.FutureUsage = "";
+                        b110.Field1413 = "";
+                        b110.BalanceOpeningDate = "+00000000000000";
+                        b110.TotalDebit = "+00000000000000";
+                        b110.TotalCredit = "+00000000000000";
+                        b110.Field1417 = "";
+
+                        if (address != null)
                         {
-                            if (address.Address1.Length > 50)
+                            //Address 1
+                            if (!string.IsNullOrEmpty(address.Address1))
                             {
-                                b110.Address1 = address.Address1.Substring(0, 50);
+                                if (address.Address1.Length > 50)
+                                {
+                                    b110.Address1 = address.Address1.Substring(0, 50);
+                                }
+                                else
+                                {
+                                    b110.Address1 = address.Address1;
+                                }
                             }
                             else
                             {
-                                b110.Address1 = address.Address1;
+                                b110.Address1 = "";
+                            }
+
+                            //City
+                            if (!string.IsNullOrEmpty(address.City))
+                            {
+                                if (address.City.Length > 30)
+                                {
+                                    b110.City = address.City.Substring(0, 30);
+                                }
+                                else
+                                {
+                                    b110.City = address.City;
+                                }
+                            }
+                            else
+                            {
+                                b110.City = "";
+                            }
+
+                            //Zip Code
+                            if (!string.IsNullOrEmpty(address.ZipCode))
+                            {
+                                if (address.ZipCode.Length > 8)
+                                {
+                                    b110.ZipCode = address.ZipCode.Substring(0, 8);
+                                }
+                                else
+                                {
+                                    b110.ZipCode = address.ZipCode;
+                                }
+                            }
+                            else
+                            {
+                                b110.ZipCode = "";
+                            }
+
+                            //Country Name
+                            if (address.Country != null)
+                            {
+                                if (address.Country.EnglishName.Length > 30)
+                                {
+                                    b110.Country = address.Country.EnglishName.Substring(0, 30);
+                                }
+                                else
+                                {
+                                    b110.Country = address.Country.EnglishName;
+                                }
+                            }
+                            else
+                            {
+                                b110.Country = "";
+                            }
+
+                            //Country Code
+                            if (address.Country != null)
+                            {
+                                b110.CountryCode = address.Country.Code;
+                            }
+                            else
+                            {
+                                b110.CountryCode = "";
                             }
                         }
+
                         else
                         {
                             b110.Address1 = "";
-                        }
-
-                        //City
-                        if (!string.IsNullOrEmpty(address.City))
-                        {
-                            if (address.City.Length > 30)
-                            {
-                                b110.City = address.City.Substring(0, 30);
-                            }
-                            else
-                            {
-                                b110.City = address.City;
-                            }
-                        }
-                        else
-                        {
                             b110.City = "";
-                        }
-
-                        //Zip Code
-                        if (!string.IsNullOrEmpty(address.ZipCode))
-                        {
-                            if (address.ZipCode.Length > 8)
-                            {
-                                b110.ZipCode = address.ZipCode.Substring(0, 8);
-                            }
-                            else
-                            {
-                                b110.ZipCode = address.ZipCode;
-                            }
-                        }
-                        else
-                        {
                             b110.ZipCode = "";
-                        }
-
-                        //Country Name
-                        if (address.Country != null)
-                        {
-                            if (address.Country.EnglishName.Length > 30)
-                            {
-                                b110.Country = address.Country.EnglishName.Substring(0, 30);
-                            }
-                            else
-                            {
-                                b110.Country = address.Country.EnglishName;
-                            }
-                        }
-                        else
-                        {
                             b110.Country = "";
-                        }
-
-                        //Country Code
-                        if (address.Country != null)
-                        {
-                            b110.CountryCode = address.Country.Code;
-                        }
-                        else
-                        {
                             b110.CountryCode = "";
                         }
-                    }
 
-                    else
-                    {
-                        b110.Address1 = "";
-                        b110.City = "";
-                        b110.ZipCode = "";
-                        b110.Country = "";
-                        b110.CountryCode = "";
-                    }
-
-                    if (!string.IsNullOrEmpty(tenant.VatNumber))
-                    {
-                        if (tenant.VatNumber.Length > 9)
+                        if (!string.IsNullOrEmpty(tenant.VatNumber))
                         {
-                            b110.TenantVatNumber = CheckVATValidation(tenant.VatNumber.Substring(0, 9));
-                        }
-                        else
-                        {
-                            b110.TenantVatNumber = CheckVATValidation(tenant.VatNumber);
-                        }
-                    }
-                    else
-                    {
-                        b110.TenantVatNumber = "";
-                    }
-
-                    b110.CardId = card != null ? card.Code : "";
-
-                    if (card != null)
-                    {
-                        if (card.EnglishName.Length > 50)
-                        {
-                            b110.CustomerName = card.EnglishName.Substring(0, 50);
-                        }
-                        else
-                        {
-                            b110.CustomerName = card.EnglishName;
-                        }
-                    }
-                    else
-                    {
-                        b110.CustomerName = "";
-                    }
-
-                    if (card != null)
-                    {
-                        if (!string.IsNullOrEmpty(card.VatNumber))
-                        {
-                            if (card.VatNumber.Length > 9)
+                            if (tenant.VatNumber.Length > 9)
                             {
-                                b110.CustomerVAT = CheckVATValidation(card.VatNumber.Substring(0, 9));
+                                b110.TenantVatNumber = CheckVATValidation(tenant.VatNumber.Substring(0, 9));
                             }
                             else
                             {
-                                b110.CustomerVAT = CheckVATValidation(card.VatNumber);
+                                b110.TenantVatNumber = CheckVATValidation(tenant.VatNumber);
+                            }
+                        }
+                        else
+                        {
+                            b110.TenantVatNumber = "";
+                        }
+
+                        b110.CardId = card != null ? card.Code : "";
+
+                        if (card != null)
+                        {
+                            if (card.EnglishName.Length > 50)
+                            {
+                                b110.CustomerName = card.EnglishName.Substring(0, 50);
+                            }
+                            else
+                            {
+                                b110.CustomerName = card.EnglishName;
+                            }
+                        }
+                        else
+                        {
+                            b110.CustomerName = "";
+                        }
+
+                        if (card != null)
+                        {
+                            if (!string.IsNullOrEmpty(card.VatNumber))
+                            {
+                                if (card.VatNumber.Length > 9)
+                                {
+                                    b110.CustomerVAT = CheckVATValidation(card.VatNumber.Substring(0, 9));
+                                }
+                                else
+                                {
+                                    b110.CustomerVAT = CheckVATValidation(card.VatNumber);
+                                }
+                            }
+                            else
+                            {
+                                b110.CustomerVAT = "";
                             }
                         }
                         else
                         {
                             b110.CustomerVAT = "";
                         }
-                    }
-                    else
-                    {
-                        b110.CustomerVAT = "";
-                    }
 
-                    str.Append(b110.RecordCode.PadRight(4));
-                    str.Append(b110.RecordLineNumber.PadLeft(9, '0'));
-                    str.Append(b110.TenantVatNumber.PadLeft(9, '0'));
-                    str.Append(b110.CardId.PadLeft(15));
-                    str.Append(b110.CustomerName.PadRight(50));
-                    str.Append(b110.EntityTypeCode.PadRight(15));
-                    str.Append(b110.EntityTypeName.PadRight(30));
-                    str.Append(b110.Address1.PadRight(50));
-                    str.Append(b110.HouseNumber.PadRight(10));
-                    str.Append(b110.City.PadRight(30));
-                    str.Append(b110.ZipCode.PadRight(8));
-                    str.Append(b110.Country.PadRight(30));
-                    str.Append(b110.CountryCode.PadRight(2));
-                    str.Append(b110.Field1413.PadRight(15));
-                    str.Append(b110.BalanceOpeningDate.PadRight(15));
-                    str.Append(b110.TotalDebit);
-                    str.Append(b110.TotalCredit);
-                    str.Append(b110.Field1417.PadLeft(4, '0'));
-                    str.Append(b110.CustomerVAT.PadLeft(9, '0'));
-                    str.Append(b110.BranchId.PadRight(7));
-                    str.Append(b110.BalanceInForeignCurrency);
-                    str.Append(b110.ForeignCurrencyCode.PadRight(3));
-                    str.Append(b110.FutureUsage.PadRight(16));
-                    str.AppendLine();
+                        str.Append(b110.RecordCode.PadRight(4));
+                        str.Append(b110.RecordLineNumber.PadLeft(9, '0'));
+                        str.Append(b110.TenantVatNumber.PadLeft(9, '0'));
+                        str.Append(b110.CardId.PadLeft(15));
+                        str.Append(b110.CustomerName.PadRight(50));
+                        str.Append(b110.EntityTypeCode.PadRight(15));
+                        str.Append(b110.EntityTypeName.PadRight(30));
+                        str.Append(b110.Address1.PadRight(50));
+                        str.Append(b110.HouseNumber.PadRight(10));
+                        str.Append(b110.City.PadRight(30));
+                        str.Append(b110.ZipCode.PadRight(8));
+                        str.Append(b110.Country.PadRight(30));
+                        str.Append(b110.CountryCode.PadRight(2));
+                        str.Append(b110.Field1413.PadRight(15));
+                        str.Append(b110.BalanceOpeningDate.PadRight(15));
+                        str.Append(b110.TotalDebit);
+                        str.Append(b110.TotalCredit);
+                        str.Append(b110.Field1417.PadLeft(4, '0'));
+                        str.Append(b110.CustomerVAT.PadLeft(9, '0'));
+                        str.Append(b110.BranchId.PadRight(7));
+                        str.Append(b110.BalanceInForeignCurrency);
+                        str.Append(b110.ForeignCurrencyCode.PadRight(3));
+                        str.Append(b110.FutureUsage.PadRight(16));
+                        str.AppendLine();
+                    }
                 }
-            }
 
-            foreach (APInvoice item in apInvoices)
-            {
-                TaxesApproval.B110 b110 = new TaxesApproval.B110();
-                Card card = myCards.Where(d => d.Id == item.VendorId).FirstOrDefault();
-                Address address = addressRep.GetMainAddressByCardId(item.VendorId, tenant.Id);
-                PartnerType type = typeRep.GetSinglePartnerType(card.PartnerTypeId);
-
-                if (!codes.Contains(card.Code))
+                foreach (APInvoice item in apInvoices)
                 {
-                    codes.Add(card.Code);
+                    TaxesApproval.B110 b110 = new TaxesApproval.B110();
+                    Card card = myCards.Where(d => d.Id == item.VendorId).FirstOrDefault();
+                    Address address = addressRep.GetMainAddressByCardId(item.VendorId, tenant.Id);
+                    PartnerType type = typeRep.GetSinglePartnerType(card.PartnerTypeId);
 
-                    b110.RecordCode = "B110";
-                    b110.RecordLineNumber = i++.ToString();
-                    b110.CardId = card != null ? card.Code : "";
-                    b110.CustomerName = card != null ? card.EnglishName : "";
-                    b110.EntityTypeCode = card != null ? card.PartnerTypeId : "";
-                    b110.EntityTypeName = type != null ? type.Name : "";
-                    b110.HouseNumber = "";
-                    b110.Field1413 = "";
-                    b110.BalanceOpeningDate = "+00000000000000";
-                    b110.TotalDebit = "+00000000000000";
-                    b110.TotalCredit = "+00000000000000";
-                    b110.Field1417 = "";
-                    b110.BranchId = "";
-                    b110.BalanceInForeignCurrency = "+00000000000000";
-                    b110.ForeignCurrencyCode = "";
-                    b110.FutureUsage = "";
+                    if (!codes.Contains(card.Code))
+                    {
+                        codes.Add(card.Code);
 
-                    if (!string.IsNullOrEmpty(tenant.VatNumber))
-                    {
-                        if (tenant.VatNumber.Length > 9)
-                        {
-                            b110.TenantVatNumber = tenant.VatNumber.Substring(0, 9);
-                        }
-                        else
-                        {
-                            b110.TenantVatNumber = tenant.VatNumber;
-                        }
-                    }
-                    else
-                    {
-                        b110.TenantVatNumber = "";
-                    }
+                        b110.RecordCode = "B110";
+                        b110.RecordLineNumber = i++.ToString();
+                        b110.CardId = card != null ? card.Code : "";
+                        b110.CustomerName = card != null ? card.EnglishName : "";
+                        b110.EntityTypeCode = card != null ? card.PartnerTypeId : "";
+                        b110.EntityTypeName = type != null ? type.Name : "";
+                        b110.HouseNumber = "";
+                        b110.Field1413 = "";
+                        b110.BalanceOpeningDate = "+00000000000000";
+                        b110.TotalDebit = "+00000000000000";
+                        b110.TotalCredit = "+00000000000000";
+                        b110.Field1417 = "";
+                        b110.BranchId = "";
+                        b110.BalanceInForeignCurrency = "+00000000000000";
+                        b110.ForeignCurrencyCode = "";
+                        b110.FutureUsage = "";
 
-                    if (address != null)
-                    {
-                        //Address 1
-                        if (!string.IsNullOrEmpty(address.Address1))
+                        if (!string.IsNullOrEmpty(tenant.VatNumber))
                         {
-                            if (address.Address1.Length > 50)
+                            if (tenant.VatNumber.Length > 9)
                             {
-                                b110.Address1 = address.Address1.Substring(0, 50);
+                                b110.TenantVatNumber = tenant.VatNumber.Substring(0, 9);
                             }
                             else
                             {
-                                b110.Address1 = address.Address1;
+                                b110.TenantVatNumber = tenant.VatNumber;
                             }
                         }
+                        else
+                        {
+                            b110.TenantVatNumber = "";
+                        }
+
+                        if (address != null)
+                        {
+                            //Address 1
+                            if (!string.IsNullOrEmpty(address.Address1))
+                            {
+                                if (address.Address1.Length > 50)
+                                {
+                                    b110.Address1 = address.Address1.Substring(0, 50);
+                                }
+                                else
+                                {
+                                    b110.Address1 = address.Address1;
+                                }
+                            }
+                            else
+                            {
+                                b110.Address1 = "";
+                            }
+
+                            //City
+                            if (!string.IsNullOrEmpty(address.City))
+                            {
+                                if (address.City.Length > 30)
+                                {
+                                    b110.City = address.City.Substring(0, 30);
+                                }
+                                else
+                                {
+                                    b110.City = address.City;
+                                }
+                            }
+                            else
+                            {
+                                b110.City = "";
+                            }
+
+                            //Zip Code
+                            if (!string.IsNullOrEmpty(address.ZipCode))
+                            {
+                                if (address.ZipCode.Length > 8)
+                                {
+                                    b110.ZipCode = address.ZipCode.Substring(0, 8);
+                                }
+                                else
+                                {
+                                    b110.ZipCode = address.ZipCode;
+                                }
+                            }
+                            else
+                            {
+                                b110.ZipCode = "";
+                            }
+
+                            //Country Name
+                            if (address.Country != null)
+                            {
+                                if (address.Country.EnglishName.Length > 30)
+                                {
+                                    b110.Country = address.Country.EnglishName.Substring(0, 30);
+                                }
+                                else
+                                {
+                                    b110.Country = address.Country.EnglishName;
+                                }
+                            }
+                            else
+                            {
+                                b110.Country = "";
+                            }
+
+                            //Country Code
+                            if (address.Country != null)
+                            {
+                                b110.CountryCode = address.Country.Code;
+                            }
+                            else
+                            {
+                                b110.CountryCode = "";
+                            }
+                        }
+
                         else
                         {
                             b110.Address1 = "";
-                        }
-
-                        //City
-                        if (!string.IsNullOrEmpty(address.City))
-                        {
-                            if (address.City.Length > 30)
-                            {
-                                b110.City = address.City.Substring(0, 30);
-                            }
-                            else
-                            {
-                                b110.City = address.City;
-                            }
-                        }
-                        else
-                        {
                             b110.City = "";
-                        }
-
-                        //Zip Code
-                        if (!string.IsNullOrEmpty(address.ZipCode))
-                        {
-                            if (address.ZipCode.Length > 8)
-                            {
-                                b110.ZipCode = address.ZipCode.Substring(0, 8);
-                            }
-                            else
-                            {
-                                b110.ZipCode = address.ZipCode;
-                            }
-                        }
-                        else
-                        {
                             b110.ZipCode = "";
-                        }
-
-                        //Country Name
-                        if (address.Country != null)
-                        {
-                            if (address.Country.EnglishName.Length > 30)
-                            {
-                                b110.Country = address.Country.EnglishName.Substring(0, 30);
-                            }
-                            else
-                            {
-                                b110.Country = address.Country.EnglishName;
-                            }
-                        }
-                        else
-                        {
                             b110.Country = "";
-                        }
-
-                        //Country Code
-                        if (address.Country != null)
-                        {
-                            b110.CountryCode = address.Country.Code;
-                        }
-                        else
-                        {
                             b110.CountryCode = "";
                         }
-                    }
 
-                    else
-                    {
-                        b110.Address1 = "";
-                        b110.City = "";
-                        b110.ZipCode = "";
-                        b110.Country = "";
-                        b110.CountryCode = "";
-                    }
-
-                    if (card != null)
-                    {
-                        if (!string.IsNullOrEmpty(card.VatNumber))
+                        if (card != null)
                         {
-                            if (card.VatNumber.Length > 9)
+                            if (!string.IsNullOrEmpty(card.VatNumber))
                             {
-                                b110.CustomerVAT = card.VatNumber.Substring(0, 9);
+                                if (card.VatNumber.Length > 9)
+                                {
+                                    b110.CustomerVAT = card.VatNumber.Substring(0, 9);
+                                }
+                                else
+                                {
+                                    b110.CustomerVAT = card.VatNumber;
+                                }
                             }
                             else
                             {
-                                b110.CustomerVAT = card.VatNumber;
+                                b110.CustomerVAT = "";
                             }
                         }
                         else
                         {
                             b110.CustomerVAT = "";
                         }
-                    }
-                    else
-                    {
-                        b110.CustomerVAT = "";
-                    }
 
-                    str.Append(b110.RecordCode.PadRight(4));
-                    str.Append(b110.RecordLineNumber.PadLeft(9, '0'));
-                    str.Append(b110.TenantVatNumber.PadLeft(9, '0'));
-                    str.Append(b110.CardId.PadLeft(15));
-                    str.Append(b110.CustomerName.PadRight(50));
-                    str.Append(b110.EntityTypeCode.PadRight(15));
-                    str.Append(b110.EntityTypeName.PadRight(30));
-                    str.Append(b110.Address1.PadRight(50));
-                    str.Append(b110.HouseNumber.PadRight(10));
-                    str.Append(b110.City.PadRight(30));
-                    str.Append(b110.ZipCode.PadRight(8));
-                    str.Append(b110.Country.PadRight(30));
-                    str.Append(b110.CountryCode.PadRight(2));
-                    str.Append(b110.Field1413.PadRight(15));
-                    str.Append(b110.BalanceOpeningDate.PadRight(15));
-                    str.Append(b110.TotalDebit);
-                    str.Append(b110.TotalCredit);
-                    str.Append(b110.Field1417.PadLeft(4, '0'));
-                    str.Append(b110.CustomerVAT.PadLeft(9, '0'));
-                    str.Append(b110.BranchId.PadRight(7));
-                    str.Append(b110.BalanceInForeignCurrency);
-                    str.Append(b110.ForeignCurrencyCode.PadRight(3));
-                    str.Append(b110.FutureUsage.PadRight(16));
-                    str.AppendLine();
+                        str.Append(b110.RecordCode.PadRight(4));
+                        str.Append(b110.RecordLineNumber.PadLeft(9, '0'));
+                        str.Append(b110.TenantVatNumber.PadLeft(9, '0'));
+                        str.Append(b110.CardId.PadLeft(15));
+                        str.Append(b110.CustomerName.PadRight(50));
+                        str.Append(b110.EntityTypeCode.PadRight(15));
+                        str.Append(b110.EntityTypeName.PadRight(30));
+                        str.Append(b110.Address1.PadRight(50));
+                        str.Append(b110.HouseNumber.PadRight(10));
+                        str.Append(b110.City.PadRight(30));
+                        str.Append(b110.ZipCode.PadRight(8));
+                        str.Append(b110.Country.PadRight(30));
+                        str.Append(b110.CountryCode.PadRight(2));
+                        str.Append(b110.Field1413.PadRight(15));
+                        str.Append(b110.BalanceOpeningDate.PadRight(15));
+                        str.Append(b110.TotalDebit);
+                        str.Append(b110.TotalCredit);
+                        str.Append(b110.Field1417.PadLeft(4, '0'));
+                        str.Append(b110.CustomerVAT.PadLeft(9, '0'));
+                        str.Append(b110.BranchId.PadRight(7));
+                        str.Append(b110.BalanceInForeignCurrency);
+                        str.Append(b110.ForeignCurrencyCode.PadRight(3));
+                        str.Append(b110.FutureUsage.PadRight(16));
+                        str.AppendLine();
+                    }
                 }
-            }
 
-            foreach (ARPayment item in arPayments)
-            {
-                TaxesApproval.B110 b110 = new TaxesApproval.B110();
-                Card card = myCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
-                Address address = addressRep.GetSingleAddress(item.BillToAddressId, tenant.Id);
-                PartnerType type = typeRep.GetSinglePartnerType(card.PartnerTypeId);
-
-                if (!codes.Contains(card.Code))
+                foreach (ARPayment item in arPayments)
                 {
-                    codes.Add(card.Code);
+                    TaxesApproval.B110 b110 = new TaxesApproval.B110();
+                    Card card = myCards.Where(d => d.Id == item.BillToId).FirstOrDefault();
+                    Address address = addressRep.GetSingleAddress(item.BillToAddressId, tenant.Id);
+                    PartnerType type = typeRep.GetSinglePartnerType(card.PartnerTypeId);
 
-                    b110.RecordCode = "B110";
-                    b110.RecordLineNumber = i++.ToString();
-                    b110.CardId = card != null ? card.Code : "";
-                    b110.CustomerName = card != null ? card.EnglishName : "";
-                    b110.EntityTypeCode = card != null ? card.PartnerTypeId : "";
-                    b110.EntityTypeName = type != null ? type.Name : "";
-                    b110.HouseNumber = "";
-                    b110.Field1413 = "";
-                    b110.BalanceOpeningDate = "+00000000000000";
-                    b110.TotalDebit = "+00000000000000";
-                    b110.TotalCredit = "+00000000000000";
-                    b110.Field1417 = "";
-                    b110.BranchId = "";
-                    b110.BalanceInForeignCurrency = "+00000000000000";
-                    b110.ForeignCurrencyCode = "";
-                    b110.FutureUsage = "";
+                    if (!codes.Contains(card.Code))
+                    {
+                        codes.Add(card.Code);
 
-                    if (!string.IsNullOrEmpty(tenant.VatNumber))
-                    {
-                        if (tenant.VatNumber.Length > 9)
-                        {
-                            b110.TenantVatNumber = tenant.VatNumber.Substring(0, 9);
-                        }
-                        else
-                        {
-                            b110.TenantVatNumber = tenant.VatNumber;
-                        }
-                    }
-                    else
-                    {
-                        b110.TenantVatNumber = "";
-                    }
+                        b110.RecordCode = "B110";
+                        b110.RecordLineNumber = i++.ToString();
+                        b110.CardId = card != null ? card.Code : "";
+                        b110.CustomerName = card != null ? card.EnglishName : "";
+                        b110.EntityTypeCode = card != null ? card.PartnerTypeId : "";
+                        b110.EntityTypeName = type != null ? type.Name : "";
+                        b110.HouseNumber = "";
+                        b110.Field1413 = "";
+                        b110.BalanceOpeningDate = "+00000000000000";
+                        b110.TotalDebit = "+00000000000000";
+                        b110.TotalCredit = "+00000000000000";
+                        b110.Field1417 = "";
+                        b110.BranchId = "";
+                        b110.BalanceInForeignCurrency = "+00000000000000";
+                        b110.ForeignCurrencyCode = "";
+                        b110.FutureUsage = "";
 
-                    if (address != null)
-                    {
-                        //Address 1
-                        if (!string.IsNullOrEmpty(address.Address1))
+                        if (!string.IsNullOrEmpty(tenant.VatNumber))
                         {
-                            if (address.Address1.Length > 50)
+                            if (tenant.VatNumber.Length > 9)
                             {
-                                b110.Address1 = address.Address1.Substring(0, 50);
+                                b110.TenantVatNumber = tenant.VatNumber.Substring(0, 9);
                             }
                             else
                             {
-                                b110.Address1 = address.Address1;
+                                b110.TenantVatNumber = tenant.VatNumber;
                             }
                         }
+                        else
+                        {
+                            b110.TenantVatNumber = "";
+                        }
+
+                        if (address != null)
+                        {
+                            //Address 1
+                            if (!string.IsNullOrEmpty(address.Address1))
+                            {
+                                if (address.Address1.Length > 50)
+                                {
+                                    b110.Address1 = address.Address1.Substring(0, 50);
+                                }
+                                else
+                                {
+                                    b110.Address1 = address.Address1;
+                                }
+                            }
+                            else
+                            {
+                                b110.Address1 = "";
+                            }
+
+                            //City
+                            if (!string.IsNullOrEmpty(address.City))
+                            {
+                                if (address.City.Length > 30)
+                                {
+                                    b110.City = address.City.Substring(0, 30);
+                                }
+                                else
+                                {
+                                    b110.City = address.City;
+                                }
+                            }
+                            else
+                            {
+                                b110.City = "";
+                            }
+
+                            //Zip Code
+                            if (!string.IsNullOrEmpty(address.ZipCode))
+                            {
+                                if (address.ZipCode.Length > 8)
+                                {
+                                    b110.ZipCode = address.ZipCode.Substring(0, 8);
+                                }
+                                else
+                                {
+                                    b110.ZipCode = address.ZipCode;
+                                }
+                            }
+                            else
+                            {
+                                b110.ZipCode = "";
+                            }
+
+                            //Country Name
+                            if (address.Country != null)
+                            {
+                                if (address.Country.EnglishName.Length > 30)
+                                {
+                                    b110.Country = address.Country.EnglishName.Substring(0, 30);
+                                }
+                                else
+                                {
+                                    b110.Country = address.Country.EnglishName;
+                                }
+                            }
+                            else
+                            {
+                                b110.Country = "";
+                            }
+
+                            //Country Code
+                            if (address.Country != null)
+                            {
+                                b110.CountryCode = address.Country.Code;
+                            }
+                            else
+                            {
+                                b110.CountryCode = "";
+                            }
+                        }
+
                         else
                         {
                             b110.Address1 = "";
-                        }
-
-                        //City
-                        if (!string.IsNullOrEmpty(address.City))
-                        {
-                            if (address.City.Length > 30)
-                            {
-                                b110.City = address.City.Substring(0, 30);
-                            }
-                            else
-                            {
-                                b110.City = address.City;
-                            }
-                        }
-                        else
-                        {
                             b110.City = "";
-                        }
-
-                        //Zip Code
-                        if (!string.IsNullOrEmpty(address.ZipCode))
-                        {
-                            if (address.ZipCode.Length > 8)
-                            {
-                                b110.ZipCode = address.ZipCode.Substring(0, 8);
-                            }
-                            else
-                            {
-                                b110.ZipCode = address.ZipCode;
-                            }
-                        }
-                        else
-                        {
                             b110.ZipCode = "";
-                        }
-
-                        //Country Name
-                        if (address.Country != null)
-                        {
-                            if (address.Country.EnglishName.Length > 30)
-                            {
-                                b110.Country = address.Country.EnglishName.Substring(0, 30);
-                            }
-                            else
-                            {
-                                b110.Country = address.Country.EnglishName;
-                            }
-                        }
-                        else
-                        {
                             b110.Country = "";
-                        }
-
-                        //Country Code
-                        if (address.Country != null)
-                        {
-                            b110.CountryCode = address.Country.Code;
-                        }
-                        else
-                        {
                             b110.CountryCode = "";
                         }
-                    }
 
-                    else
-                    {
-                        b110.Address1 = "";
-                        b110.City = "";
-                        b110.ZipCode = "";
-                        b110.Country = "";
-                        b110.CountryCode = "";
-                    }
-
-                    if (card != null)
-                    {
-                        if (!string.IsNullOrEmpty(card.VatNumber))
+                        if (card != null)
                         {
-                            if (card.VatNumber.Length > 9)
+                            if (!string.IsNullOrEmpty(card.VatNumber))
                             {
-                                b110.CustomerVAT = card.VatNumber.Substring(0, 9);
+                                if (card.VatNumber.Length > 9)
+                                {
+                                    b110.CustomerVAT = card.VatNumber.Substring(0, 9);
+                                }
+                                else
+                                {
+                                    b110.CustomerVAT = card.VatNumber;
+                                }
                             }
                             else
                             {
-                                b110.CustomerVAT = card.VatNumber;
+                                b110.CustomerVAT = "";
                             }
                         }
                         else
                         {
                             b110.CustomerVAT = "";
                         }
-                    }
-                    else
-                    {
-                        b110.CustomerVAT = "";
-                    }
 
-                    str.Append(b110.RecordCode.PadRight(4));
-                    str.Append(b110.RecordLineNumber.PadLeft(9, '0'));
-                    str.Append(b110.TenantVatNumber.PadLeft(9, '0'));
-                    str.Append(b110.CardId.PadLeft(15));
-                    str.Append(b110.CustomerName.PadRight(50));
-                    str.Append(b110.EntityTypeCode.PadRight(15));
-                    str.Append(b110.EntityTypeName.PadRight(30));
-                    str.Append(b110.Address1.PadRight(50));
-                    str.Append(b110.HouseNumber.PadRight(10));
-                    str.Append(b110.City.PadRight(30));
-                    str.Append(b110.ZipCode.PadRight(8));
-                    str.Append(b110.Country.PadRight(30));
-                    str.Append(b110.CountryCode.PadRight(2));
-                    str.Append(b110.Field1413.PadRight(15));
-                    str.Append(b110.BalanceOpeningDate.PadRight(15));
-                    str.Append(b110.TotalDebit);
-                    str.Append(b110.TotalCredit);
-                    str.Append(b110.Field1417.PadLeft(4, '0'));
-                    str.Append(b110.CustomerVAT.PadLeft(9, '0'));
-                    str.Append(b110.BranchId.PadRight(7));
-                    str.Append(b110.BalanceInForeignCurrency);
-                    str.Append(b110.ForeignCurrencyCode.PadRight(3));
-                    str.Append(b110.FutureUsage.PadRight(16));
-                    str.AppendLine();
+                        str.Append(b110.RecordCode.PadRight(4));
+                        str.Append(b110.RecordLineNumber.PadLeft(9, '0'));
+                        str.Append(b110.TenantVatNumber.PadLeft(9, '0'));
+                        str.Append(b110.CardId.PadLeft(15));
+                        str.Append(b110.CustomerName.PadRight(50));
+                        str.Append(b110.EntityTypeCode.PadRight(15));
+                        str.Append(b110.EntityTypeName.PadRight(30));
+                        str.Append(b110.Address1.PadRight(50));
+                        str.Append(b110.HouseNumber.PadRight(10));
+                        str.Append(b110.City.PadRight(30));
+                        str.Append(b110.ZipCode.PadRight(8));
+                        str.Append(b110.Country.PadRight(30));
+                        str.Append(b110.CountryCode.PadRight(2));
+                        str.Append(b110.Field1413.PadRight(15));
+                        str.Append(b110.BalanceOpeningDate.PadRight(15));
+                        str.Append(b110.TotalDebit);
+                        str.Append(b110.TotalCredit);
+                        str.Append(b110.Field1417.PadLeft(4, '0'));
+                        str.Append(b110.CustomerVAT.PadLeft(9, '0'));
+                        str.Append(b110.BranchId.PadRight(7));
+                        str.Append(b110.BalanceInForeignCurrency);
+                        str.Append(b110.ForeignCurrencyCode.PadRight(3));
+                        str.Append(b110.FutureUsage.PadRight(16));
+                        str.AppendLine();
+                    }
                 }
+
+                return str.ToString();
             }
 
-            return str.ToString();
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         private string BuildC100PaymentLines(List<Card> myCards, List<ARPayment> payments, Tenant tenant, string username)
@@ -2582,7 +2607,6 @@ namespace CommunicationWorkerRole
             //3- go by the cells one by one , if the number is greater from 9, add both of its digits (check the link in the example)
             //4- sum all the cells
             //5- if the sum MOD 10 = 0 , write as is , else replace with 999999998
-            vat = vat.Trim();
             string result = string.Empty;
             double Num;
             bool isVatNum = double.TryParse(vat, out Num);

@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         }
 
         public void CustomPOCOToPM(JournalLinePM entityPM, JournalLine entityPOCO)
-        {   if (entityPOCO.Reference3=="Amital") return;
+        {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.ActionCode);
 
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CurrencyId);
@@ -61,11 +61,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 JournalActionTypeQueryService journalActionTypeQueryService = new JournalActionTypeQueryService(accContext/*entityPOCO.Tenant*/);
                 JournalActionTypePM action = journalActionTypeQueryService.GetSingle(entityPOCO.ActionCode, false, true/*false*/);
-                if (action != null)
-                {
-                    entityPM.ActionName = action.LocalName;
-                    entityPM.ActionTypeCode = action.Code;
-                }
+                entityPM.ActionName = action.LocalName;
+                entityPM.ActionTypeCode = action.Code;
             }
 
 
@@ -84,9 +81,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.CreditAccountId, false, true/*false*/);
                 entityPM.CreditAccountName = parent.LocalName;
-                entityPM.CreditAccountEnglishName = parent.EnglishName;
-                entityPM.CreditAccountNumber = parent.DisplayNumber;
-                entityPM.CreditAccountCOACode = parent.ChartOfAccountsTypeCode;
+                entityPM.CreditAccountNumber = parent.InternalNumber;
             }
 
             if (entityPOCO.CreditControlAccountId != null)
@@ -101,11 +96,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.DebitAccountId, false, true/*false*/);
                 entityPM.DebitAccountName = parent.LocalName;
-                entityPM.DebitAccountEnglishName = parent.EnglishName;
-                entityPM.DebitAccountNumber = parent.DisplayNumber;
-                entityPM.DebitAccountCOACode = parent.ChartOfAccountsTypeCode;
-                entityPM.DebitAccountCountryCode = parent.CardCountryCode;
-
+                entityPM.DebitAccountNumber = parent.InternalNumber;
 
             }
             if (entityPOCO.DebitControlAccountId != null)

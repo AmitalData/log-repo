@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class StatisticsByClientDataProvider : BaseDataProvider
+    public class StatisticsByClientDataProvider: BaseDataProvider
     {
         public string Name { get; set; }
         public DateTime? FromPeriod { get; set; }
@@ -31,8 +31,7 @@ namespace WebFreight.Web.DataProviders
         public string TenantPhone { get; set; }
         public string TenantFax { get; set; }
 
-        public List<StatisticsByClientReport> StatisticsList_NoGroup { get; set; }
-        public List<StatisticsByClientGroup> StatisticsGroupList { get; set; }
+        public List<StatisticsByClientGroup> StatisticsGroupList { get; set; }             
     }
 
     public class StatisticsByClientGroup
@@ -56,17 +55,5 @@ namespace WebFreight.Web.DataProviders
         public double? Receivables { get; set; }
         public double? Payables { get; set; }
         public double? Profit { get; set; }
-        public string CustomerField1 { get; set; }
-        public string CustomerField2 { get; set; }
-        public string CustomerField3 { get; set; }
-        public string CustomerField4 { get; set; }
-        public string CustomerField5 { get; set; }
-        public string CustomerField6 { get; set; }
-        public string CustomerField7 { get; set; }
-        public string CustomerField8 { get; set; }
-        public string CustomerField9 { get; set; }
-        public string CustomerField10 { get; set; }
-        public string CustomerSalesman { get; set; }
-        public double? ChargeableWeightInKg { get; set; }
     }
 }

@@ -31,14 +31,9 @@ namespace Logitude.BL.DataContracts
         public string DeclarationXmlData { get; set; }
         public string PaymentRequestXML { get; set; }
         public string TargetEnv { get; set; }
-        public string DocumentsApprovedByUserName { get; set; }
-        public string DeclarationStatus { get; set; }
-        public string ImporterId { get; set; }
-        public string CargoIdentifier1 { get; set; }
-        public string CargoIdentifier2 { get; set; }
-        public string CargoIdentifier3 { get; set; }
-        public int Tenant { get; set; }
-        public DateTime? PaymentRequestDateTime { get; set; }
+         
+        
+
 
         //public string VersionId { get; set; }
 
@@ -81,7 +76,6 @@ namespace Logitude.BL.DataContracts
     public class TaxesDetails
     {
         public string Taxtypename { get; set; }
-        public string TaxTypeCode { get; set; }
         public string TaxBasis { get; set; }
         public string TaxToPay { get; set; }
         public string TaxAmount { get; set; }
@@ -108,7 +102,5 @@ namespace Logitude.BL.DataContracts
         public string DclickTK { get; set; }
         public string thtk { get; set; }
         public string TargetEnv { get; set; }
-        public string u71 { get; set; }
-        public bool UseTestLink { get; set; }
     }
 }

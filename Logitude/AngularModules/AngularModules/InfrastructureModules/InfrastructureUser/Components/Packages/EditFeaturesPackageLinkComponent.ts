@@ -2,29 +2,25 @@ import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {PackageFeatureClass} from './EditPackageFeaturesComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditFeaturesPackageLinkComponent.html',
 })
 
 export class EditFeaturesPackageLinkComponent {
     public ItemsSource: PackageFeatureClass[] = [];
-    public ItemsSourceOriginal: PackageFeatureClass[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;    
-    private searchTimeout: any; 
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
 
     SetWindowArgs(args: any) {
         this.ItemsSource = args['Items'];
-        this.ItemsSourceOriginal=args['Items'];
         this.Clone();
     }
 
-    CancelButtonClicked() {        
+    CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -47,18 +43,4 @@ export class EditFeaturesPackageLinkComponent {
             myCloner.RejectChanges();
         });
     }
-
-    SearchFeatures(text: string): void {
-        clearTimeout(this.searchTimeout);
-        if (!AppTool.IsNullOrEmpty(text) && !AppTool.IsNullOrEmpty(this.ItemsSourceOriginal) && this.ItemsSourceOriginal.length > 0) {
-            const searchText = text.trim().toLowerCase();                
-            this.searchTimeout = setTimeout(() => {
-                this.ItemsSource = this.ItemsSourceOriginal.filter(d => 
-                    typeof d["Name"] === "string" && d["Name"].toLowerCase().includes(searchText)
-                );
-            }, 200);        
-        } else {
-            this.ItemsSource = this.ItemsSourceOriginal;        
-        }   
-    }    
 }

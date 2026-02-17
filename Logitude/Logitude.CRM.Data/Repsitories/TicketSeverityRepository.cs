@@ -25,14 +25,7 @@ namespace Logitude.CRM.Data.Repsitories
         {
             return (from a in context.TicketSeverities where a.Code == code && a.Tenant == tenant select a).FirstOrDefault();
         }
-
-        public TicketSeverity GetSingleByName(string name, int tenant)
-        {
-            return (from a in context.TicketSeverities
-                    where a.Name == name && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
-    }
+   }
 
 }
    

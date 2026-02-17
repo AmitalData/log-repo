@@ -1,10 +1,9 @@
-﻿using Logitude.BL.DataContracts;
-using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
 using Logitude.XSD.INTTRA_Status;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -139,7 +138,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                     Location = this.EventLocationPortId,
                     TimeOfArrivalInfo = ArrivalDateIndicator,
                     TimeOfDepartureInfo = DepartureDateIndicator,
-                    StatusSource = "INT",
                 };
 
                 iShipmentContainerStatusRepository.Add(iStatus);
@@ -194,7 +192,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                         Location = EventLocationPortId,
                                         TimeOfArrivalInfo = ArrivalDateIndicator,
                                         TimeOfDepartureInfo = DepartureDateIndicator,
-                                        StatusSource = "INT",
                                     };
 
                                     iShipmentContainerStatusRepository.Add(iHouseStatus);
@@ -721,7 +718,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         }
         private void UpdateLastStatus(string lastStatusCode, DateTime? lastStatusDate, DateTime iLogDate, ShipmentPackagePM iContainer)
         {
-            string inttraSource = "INT";
             if (lastStatusDate == null)
             {
                 lastStatusDate = iLogDate;
@@ -731,7 +727,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 iContainer.LastStatusCode = lastStatusCode;
                 iContainer.LastStatusDate = lastStatusDate;
-                iContainer.ContainerStatusSourceCode = inttraSource;
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
 
@@ -739,14 +734,11 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 iContainer.LastStatusCode = lastStatusCode;
                 iContainer.LastStatusDate = lastStatusDate;
-                iContainer.ContainerStatusSourceCode = inttraSource;
                 iContainer.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             }
         }
         private void UpdateContainerFields()
         {
-            string inttraSource = "INT";
-            iContainer.ContainerStatusSourceCode = inttraSource;
             if (this.DepartureDateIndicator == "E")
             {
                 iContainer.ETD = this.DepartureDate;
@@ -1046,8 +1038,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 iPortRepository.Add(newPort);
                 iPortRepository.SubmitChanges();
-                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
-
             }
 
             return newPort;

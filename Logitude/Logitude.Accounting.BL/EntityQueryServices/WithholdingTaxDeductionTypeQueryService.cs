@@ -10,9 +10,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class WithholdingTaxDeductionTypeQueryService
     {
-        public WithholdingTaxDeductionTypePM GetByCode(string code, int tenant, bool getFromCache = false)
+        public WithholdingTaxDeductionTypePM GetByCode(string code, int tenant)
         {
-            WithholdingTaxDeductionType poco = this.repository.GetSingleWithholdingTaxDeductionType(code, tenant, getFromCache);
+            WithholdingTaxDeductionType poco = this.repository.GetSingleWithholdingTaxDeductionTypeByCode(code, tenant);
             if (poco != null)
             {
                 return GetEntityPM(poco);

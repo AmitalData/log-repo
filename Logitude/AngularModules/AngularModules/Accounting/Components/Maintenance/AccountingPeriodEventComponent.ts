@@ -23,7 +23,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AccountingPeriodEventComponent',
     templateUrl: './AccountingPeriodEventComponent.html',
     providers: [EntityArgs],

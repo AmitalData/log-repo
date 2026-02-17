@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -17,7 +17,7 @@ using Logitude.CRM.Data.CustomFilters;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.BusinessUnitFilters;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 
 namespace Logitude.CRM.Data.EntityListQueryServices
@@ -35,7 +35,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-            IQueryable<TicketList> query = (from a in iQueryable.Include("ObjectTable").Include("Owner").Include("Company").Include("Contact").Include("Stage").Include("TicketType").Include("Severity").Include("MainClassification").Include("SecondaryClassification").Include("BusinessUnit").Include("NextActivityType").Include("ActivityType")
+            IQueryable<TicketList> query = (from a in iQueryable.Include("Owner").Include("Company").Include("Contact").Include("Stage").Include("TicketType").Include("Severity").Include("MainClassification").Include("SecondaryClassification").Include("BusinessUnit").Include("NextActivityType").Include("ActivityType")
                                             select new TicketList()
                                                  {
                                                      Id = a.Id,
@@ -67,7 +67,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      Field9 = a.Field9,
                                                      Field10 = a.Field10,
                                                      OwnerId = a.OwnerId,
-                                                     OwnerName = a.Owner == null ? null : a.Owner.Contact.EnglishName,
+                                                     OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
                                                      CompanyName = a.Company == null ? "" : a.Company.EnglishName,
                                                      StageName = a.Stage == null ? "" : a.Stage.Name,
                                                      StageCode = a.Stage == null ? "" : a.Stage.Code,
@@ -135,11 +135,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                      QuoteNumber= a.QuoteNumber,
                                                      SLAId = a.SLAId,
                                                      EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber: a.QuoteNumber,
-                                                     LastCorrespondence = a.LastCorrespondence,
-                                                     EntityType = a.EntityType,
-                                                     EntityTypeName = a.ObjectTable.Name,
-                                                     QuoteRequestFeedback = a.QuoteRequestFeedback,
-                                                     QuoteRequestComments = a.QuoteRequestComments,
+
                                             });
             return query;
 		}
@@ -270,9 +266,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                         QuoteId = a.QuoteId,
                         QuoteNumber = a.QuoteNumber,
                         EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
-                        EntityType = a.EntityType,
-                        QuoteRequestFeedback = a.QuoteRequestFeedback,
-                        QuoteRequestComments = a.QuoteRequestComments,
                     };
 
                     ContactRepository rep = new ContactRepository(tenant);
@@ -343,7 +336,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 Field9 = a.Field9,
                                                 Field10 = a.Field10,
                                                 OwnerId = a.OwnerId,
-                                                OwnerName = a.Owner == null ? null : a.Owner.Contact.EnglishName,
+                                                OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
                                                 CompanyName = a.Company == null ? "" : a.Company.EnglishName,
                                                 StageName = a.Stage == null ? "" : a.Stage.Name,
                                                 StageCode = a.Stage == null ? "" : a.Stage.Code,
@@ -395,9 +388,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
                                                 EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
-                                                EntityType = a.ObjectTable.Name,
-                                                QuoteRequestFeedback = a.QuoteRequestFeedback,
-                                                QuoteRequestComments = a.QuoteRequestComments,
                                             });
             return query.ToList();
         }
@@ -437,7 +427,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 Field9 = a.Field9,
                                                 Field10 = a.Field10,
                                                 OwnerId = a.OwnerId,
-                                                OwnerName = a.Owner == null ? null : a.Owner.Contact.EnglishName,
+                                                OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
                                                 CompanyName = a.Company == null ? "" : a.Company.EnglishName,
                                                 StageName = a.Stage == null ? "" : a.Stage.Name,
                                                 StageCode = a.Stage == null ? "" : a.Stage.Code,
@@ -489,9 +479,6 @@ namespace Logitude.CRM.Data.EntityListQueryServices
                                                 QuoteId = a.QuoteId,
                                                 QuoteNumber = a.QuoteNumber,
                                                 EntityNumber = a.ShipmentNumber != null ? a.ShipmentNumber : a.QuoteNumber,
-                                                EntityType = a.ObjectTable.Name,
-                                                QuoteRequestFeedback = a.QuoteRequestFeedback,
-                                                QuoteRequestComments = a.QuoteRequestComments,
                                             });
             return query.ToList();
         }

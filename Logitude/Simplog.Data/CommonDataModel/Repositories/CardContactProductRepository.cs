@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -23,20 +23,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public CardContactProductRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CardContactProduct> GetCardContactProducts(int tenant)
         {
             return (from record in context.CardContactProducts
                     where record.Tenant == tenant
                     select record);
-        }
-
-        public List<CardContactProduct> GetCardContactProductsByProductTypes(List<string> myproductsTypesList, int tenant)
-        {
-            return (from record in context.CardContactProducts.Include("CardContact")
-                    where record.Tenant == tenant && myproductsTypesList.Contains(record.ProductTypeCode)
-                    select record).ToList();
         }
 
         public IQueryable<CardContactProduct> GetProductsByCardContactIdd(string cardContactId, int tenant)

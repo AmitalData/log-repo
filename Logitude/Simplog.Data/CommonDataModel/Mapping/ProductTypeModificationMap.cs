@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -38,8 +38,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.RoutingRQuoteDefaultTemplateId).HasColumnName("RoutingRQuoteDefaultTemplateId");
 
             this.Property(t => t.QuotationDefaultTemplateId).HasColumnName("QuotationDefaultTemplateId");
-            this.Property(t => t.CostTariffUse).HasColumnName("CostTariffUse");
-            this.Property(t => t.SaleTariffUse).HasColumnName("SaleTariffUse");
 
 
             this.HasRequired(t => t.ProductType)

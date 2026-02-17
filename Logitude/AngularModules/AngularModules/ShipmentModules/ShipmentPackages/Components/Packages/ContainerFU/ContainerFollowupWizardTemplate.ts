@@ -8,7 +8,7 @@ import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCo
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ContainerFollowupWizardTemplate.html',
 })
 

@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'NewDeclarationCargoSplitComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewDeclarationCargoSplitComponent.html',
 })
 
@@ -35,7 +35,7 @@ export class NewDeclarationCargoSplitComponent extends BaseComponent implements 
 
         this.EntityPM = new DeclarationCargoSplitPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe((response:any) => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit").subscribe(response => { });
     }
 
     SetWindowArgs(args: any) {
@@ -98,7 +98,7 @@ export class NewDeclarationCargoSplitComponent extends BaseComponent implements 
             }
         }
 
-        this._DeclarationCargoSplitPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this._DeclarationCargoSplitPMService.insert(this.EntityPM).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;

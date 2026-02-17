@@ -20,7 +20,7 @@ import {QuoteTemplateSectionExtendedPMService} from '../../../Quote/Services/Ext
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'QuoteTemplateHeaderFooterSettingComponent',
-    
+    moduleId: module.id,
     templateUrl: './QuoteTemplateHeaderFooterSettingComponent.html',
 })
 
@@ -39,15 +39,13 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     public ValidationErrorsList: string[];
     QuoteTemplateSectionTypeName: string = "Packages";
     EditQuoteTemplateComponent: any;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
 
 
     QuoteId: string;
     BorderTypesSelected: BorderType;
     BorderTypes: BorderType[] = [];
-    SelectedTabCode: string;
-    DesignTextDesignPM: QuoteTemplateTextDesignPM;
 
     AreaType: string[];
     private CurrentSession = SessionLocator.SelectedSession;
@@ -68,16 +66,14 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
     
     SetWindowArgs(args: any) {
-        this.SelectedTabCode = "QCS";
         this.QuoteTemplatePM = args.QuoteTemplatePM;
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuoteTemplateSectionViewModel = args.QuoteTemplateSectionViewModel;  
         this.EditQuoteTemplateComponent = args.EditQuoteTemplateComponent;  
-        this.GetQuoteTemplateTextDesign();
+     
 
 
-          
         this.QuoteId = args.QuoteId;  
         var areaTypeString = "Logo,Text";
         if (this.QuoteTemplateSectionTypeName == "Header") areaTypeString += ",Quote Header";
@@ -107,50 +103,6 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         this.FullBorderTypesLists();
     }
 
-    GetQuoteTemplateTextDesign() {
-        var pageNumberingTextDesignId: string = this.QuoteTemplateSettingPM.PageNumberingTextDesignId;
-        this.quoteTemplateTextDesignPMService.get(pageNumberingTextDesignId).subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            this.CurrentSession.StopBusyIndicator();
-            if (!pmResponse.HasError && pmResponse.Result) {
-                this.DesignTextDesignPM = pmResponse.Result;
-                if (this.DesignTextDesignPM) {
-                    this.DesignTextDesignPM.Title = "Design";
-                    this.DesignTextDesignPM.SampleText = "Page 1 of 2";
-                    this.IsLoadPage = true;
-                }
-            }
-            else if (!pmResponse.HasError) {
-                this.CreateNewQuoteTemplateTextDesign();
-            }
-        });     
-    }
-
-    CreateNewQuoteTemplateTextDesign() {
-        var t = new QuoteTemplateTextDesignPM();
-        t.Tenant = SessionLocator.Tenant,
-            t.FontSize = 7,
-            t.TextColor = "#FF000000",
-            t.FontFamily = "Times New Roman",
-            t.BackgroundColor = "#FFFFFFFF",
-            t.FontWeight = "normal",
-            t.Italic = false,
-            t.UnDerLine = false,
-            t.Alignment = "right";
-        this.quoteTemplateTextDesignPMService.insert(t).subscribe((response: any) => {
-            if (!response.HasError && response.Result) {
-                this.DesignTextDesignPM = response.Result;
-                this.QuoteTemplateSettingPM.PageNumberingTextDesignId = response.Result.Id;
-                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res: any) => {
-                    if (!res.HasError) {
-                        this.DesignTextDesignPM.Title = "Design";
-                        this.DesignTextDesignPM.SampleText = "Page 1 of 2";
-                        this.IsLoadPage = true;
-                    }
-                });
-            }
-        });
-    }
 
     //Full Data
 
@@ -450,7 +402,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         if (this.QuoteTemplateSettingPM.IsDirty) {
             this.IsChangeSetting = true;
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
+            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 this.QuoteTemplateSettingPM.IsDirty = false;
                 this.CurrentSession.StopBusyIndicator();
                 this.RefreshQuoteTemplateSectionBodyHtml();
@@ -461,7 +413,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
     RefreshQuoteTemplateSectionBodyHtml() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
-        this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, this.QuoteTemplateSectionViewModel.Id, this.QuoteTemplateSectionViewModel.EntityPM.QuoteTemplateId, this.QuoteTemplateSettingPM.Id, this.QuoteId, this.QuoteTemplatePM.CreatedByUserId, SessionLocator.Tenant).subscribe((res:any) => {
+        this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, this.QuoteTemplateSectionViewModel.Id, this.QuoteTemplateSectionViewModel.EntityPM.QuoteTemplateId, this.QuoteTemplateSettingPM.Id, this.QuoteId, this.QuoteTemplatePM.CreatedByUserId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
  
@@ -521,48 +473,31 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
     }
     //SpaceLinesBefore
-
-    get HidePageNumber() {
-        var hidePageNumber: boolean = false;
-        if (this.QuoteTemplateSettingPM) {
-            hidePageNumber = this.QuoteTemplateSettingPM.HidePageNumber;
-        }
-        return hidePageNumber;
-    }
-    set HidePageNumber(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
-            this.QuoteTemplateSettingPM.HidePageNumber = value;
-        }
-    }
-
+    
     SaveButtonClicked() {
        this.ValidateFields();
-        if (this.ValidationErrorsList.length == 0) {
-            this.SaveQuoteTemplateTextDesign();
-            if (this.QuoteTemplateSettingPM.IsDirty) {
+       if (this.ValidationErrorsList.length == 0) {
 
-                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
-                    this.QuoteTemplateSettingPM.IsDirty = false;
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CurrentWindow.Close("Refresh");
+           if (this.QuoteTemplateSettingPM.IsDirty) {
+
+               this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+               this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
+                   this.QuoteTemplateSettingPM.IsDirty = false;
+                   this.CurrentSession.StopBusyIndicator();
+                   this.CurrentSession.CurrentWindow.Close("Refresh");
 
 
-                });
-            }
-            else {
+               });
+           }
+           else {
 
-                if (this.IsChangeSetting) this.CurrentSession.CurrentWindow.Close("Refresh");
-                else this.CurrentSession.CloseCurrentWindow();
-            }
+               if (this.IsChangeSetting) this.CurrentSession.CurrentWindow.Close("Refresh");
+              else this.CurrentSession.CloseCurrentWindow();
+           }
+            
 
         }
-    }
 
-    SaveQuoteTemplateTextDesign() {
-        if (this.DesignTextDesignPM.IsDirty) {
-            this.quoteTemplateTextDesignPMService.update(this.DesignTextDesignPM).subscribe((res: any) => { });
-        }
     }
 
     ValidateFields() {

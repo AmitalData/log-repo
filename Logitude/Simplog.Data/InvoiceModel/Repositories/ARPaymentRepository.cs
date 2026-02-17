@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
@@ -12,7 +12,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
     public class ARPaymentRepository: IRepository<ARPayment>
     {
         IInvoiceContext invoiceContext;
-        ICommonDataContext commonContext;
+
         public ARPaymentRepository(IInvoiceContext context)
         {
             invoiceContext = context;
@@ -26,7 +26,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
         public ARPaymentRepository(int tenant)
         {
             invoiceContext = InvoiceContext.GetContext(tenant);
-            commonContext = CommonDataContext.GetContext(tenant);
         }
 
         public ARPayment GetSingleARPayment(string id, int tenant)
@@ -50,13 +49,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public List<ARPayment> GetNotCancelledARPayments(List<string> ids, int tenant)
-        {
-            return (from a in context.ARPayments
-                    where ids.Contains(a.Id) && a.Tenant == tenant && a.StatusCode != "VD"
-                    select a).ToList();
-        }
-
         public List<string> GetCardIdsFromPayments(List<string> ids, int tenant)
         {
             List<string> list = new List<string>();
@@ -71,14 +63,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return list;
         }
 
-        public User getUserByARPayment(ARPayment aRPayment)
-        {
-            User createByUser = (from user in commonContext.Users.Include("Contact")
-                                   where user.Id == aRPayment.CreatedByUserId
-                                   select user).FirstOrDefault();
-            return createByUser;
-        }
-
         public IQueryable<ARPayment> GetDraftsARPayments(int tenant)
         {
             return context.ARPayments.Where(d => d.Tenant == tenant && d.StatusCode == "DR");
@@ -86,7 +70,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<ARPayment> GetOpenedARPayments(int tenant)
         {
-            return (from d in context.ARPayments.Include("AccountingPaymentMethod").Include("Status")
+            return (from d in context.ARPayments.Include("AccountingPaymentMethod")
                     where d.Tenant == tenant && d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsClosed == false
                     select d);
         }
@@ -98,7 +82,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public List<ARPayment> GetARPaymentsByBillTo(string billToId, int tenant)
         {
-            return (from a in context.ARPayments where a.BillToId == billToId && a.Tenant == tenant select a).ToList();
+            return (from a in context.ARPayments where a.BillToId == billToId && a.Tenant == tenant && a.StatusCode!="CL" select a).ToList();
         }
 
         public List<ARPayment> GetPaymentsListFromIdList(List<string> ids, int tenant)
@@ -121,12 +105,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     where a.Tenant == tenant
                     select a);
         }
-
-        public IQueryable<ARPayment> GetARPayments()
-        {
-            return context.ARPayments;
-        }
-
+       
         public bool IsARPaymentNumberExists(string arPaymentNo,int tenant)
         {
             return context.ARPayments.Where(d => d.PaymentNo == arPaymentNo && d.Tenant == tenant).Any();
@@ -187,20 +166,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
             throw new System.NotImplementedException();
         }
 
-        public string GetARPaymentNumber(string arPaymentId,int tenant)
-        {
-            string arpaymentno = (from a in context.ARPayments
-                                  where a.Tenant == tenant && a.Id == arPaymentId
-                                  select a.PaymentNo).FirstOrDefault();
-            return arpaymentno;
-        }
+      
 
-        public string GetBillToId(string id, int tenant)
-        {
-            string arpaymentno = (from a in context.ARPayments
-                                  where a.Tenant == tenant && a.Id == id
-                                  select a.BillToId).FirstOrDefault();
-            return arpaymentno;
-        }
     }
 }

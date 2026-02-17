@@ -90,8 +90,6 @@ namespace Logitude.SystemLogs.OracleMigratrion
             modelBuilder.Configurations.Add(new ContactActivityLogMap());
             modelBuilder.Configurations.Add(new ErrorLogMap());
             modelBuilder.Configurations.Add(new BatchServicesLogMap());
-            modelBuilder.Configurations.Add(new FailedLoginLogMap());
-            modelBuilder.Configurations.Add(new FailedTokenLogMap());
 
             base.OnModelCreating(modelBuilder);
         }

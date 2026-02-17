@@ -96,9 +96,9 @@
                                                         </div>
 
                                                         <div *ngIf="item.QuestionTypeCode == 'MC'" class="LableStyle">
-                                                            <div class="RadioButton" *ngFor="let pl of item.CustomPickListItems; let indexItem = index" style="margin:5px;">
-                                                                <input [attr.id]="'RadioButton' + SessionIndex  + 'item' + indexItem + item.IndexKey"  [attr.name]="'RadioButton' + SessionIndex  + 'item' + indexItem + item.IndexKey"  type="radio" [checked]="item.AnswerValue == pl.Value" (click)="item.AnswerValue = pl.Value" />
-                                                                <label [attr.for]="'RadioButton' + SessionIndex  + 'item' + indexItem + item.IndexKey"  style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == pl.Value ? '#287828':'#282E30'}" class="LableStyle">
+                                                            <div class="RadioButton" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey  + item.Question" [attr.name]="'RadioButton' + SessionIndex  + pl.Value + item.IndexKey" type="radio" [checked]="item.AnswerValue == pl.Value" (click)="item.AnswerValue = pl.Value" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey  + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == pl.Value ? '#287828':'#282E30'}" class="LableStyle">
                                                                     {{pl.Value}}
                                                                 </label>
 
@@ -130,9 +130,9 @@
                                                         </div>
 
                                                         <div *ngIf="item.QuestionTypeCode == 'CB'" class="LableStyle">
-                                                            <div class="CheckBox" *ngFor="let pl of item.CustomPickListItems; let indexItem = index" style="margin:5px;">
-                                                                <input [attr.id]="'CheckBox_' + SessionIndex  + 'item' + indexItem + item.IndexKey" [attr.name]="'CheckBox_' + SessionIndex  + 'item' + indexItem + item.IndexKey" type="checkbox" (change)="item.OnItemChecked(pl.Value)" />
-                                                                <label [attr.for]="'CheckBox_' + SessionIndex  + 'item' + indexItem + item.IndexKey" style="text-indent: 25px; font-size: 14px" class="LableStyle">
+                                                            <div class="CheckBox" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'CheckBox_' + SessionIndex + pl.Value" [attr.name]="'CheckBox' + SessionIndex + pl.Value" type="checkbox" (change)="item.OnItemChecked(pl.Value)" />
+                                                                <label [attr.for]="'CheckBox_' + SessionIndex + pl.Value" style="text-indent: 25px; font-size: 14px" class="LableStyle">
                                                                     {{pl.Value}}
                                                                 </label>
                                                             </div>
@@ -245,9 +245,9 @@
                                                         </div>
 
                                                         <div *ngIf="item.QuestionTypeCode == 'MC'" class="LableStyle">
-                                                            <div class="RadioButton" *ngFor="let pl of item.CustomPickListItems; let indexItem = index" style="margin:5px;">
-                                                                <input [attr.id]="'RadioButton' + SessionIndex  + 'item' + indexItem + item.IndexKey" [attr.name]="'RadioButton' + SessionIndex  + 'item' + indexItem + item.IndexKey" type="radio" [checked]="item.AnswerValue == pl.Value" (click)="item.AnswerValue = pl.Value" />
-                                                                <label [attr.for]="'RadioButton' + SessionIndex  + 'item' + indexItem + item.IndexKey" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == pl.Value ? '#287828':'#282E30'}" class="LableStyle">
+                                                            <div class="RadioButton" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey + item.Question" [attr.name]="'RadioButton' + SessionIndex  + pl.Value" type="radio" [checked]="item.AnswerValue == pl.Value" (click)="item.AnswerValue = pl.Value" />
+                                                                <label [attr.for]="'RadioButton_' + SessionIndex + pl.Value + item.IndexKey + item.Question" style="text-indent: 25px; font-size: 14px" [ngStyle]="{color: item.AnswerValue == pl.Value ? '#287828':'#282E30'}" class="LableStyle">
                                                                     {{pl.Value}}
                                                                 </label>
 
@@ -279,11 +279,9 @@
                                                         </div>
 
                                                         <div *ngIf="item.QuestionTypeCode == 'CB'" class="LableStyle">
-                                                            <div class="CheckBox" *ngFor="let pl of item.CustomPickListItems; let indexItem = index" style="margin:5px;">
-
-                                                               
-                                                                <input [attr.id]="'CheckBox_' + SessionIndex  + 'item' + indexItem + item.IndexKey" [attr.name]="'CheckBox_' + SessionIndex  + 'item' + indexItem + item.IndexKey" type="checkbox" (change)="item.OnItemChecked(pl.Value)" />
-                                                                <label [attr.for]="'CheckBox_' + SessionIndex  + 'item' + indexItem + item.IndexKey" style="text-indent: 25px; font-size: 14px" class="LableStyle">
+                                                            <div class="CheckBox" *ngFor="let pl of item.CustomPickListItems; let pi = index" style="margin:5px;">
+                                                                <input [attr.id]="'CheckBox_' + SessionIndex + pl.Value" [attr.name]="'CheckBox' + SessionIndex + pl.Value" type="checkbox" (change)="item.OnItemChecked(pl.Value)" />
+                                                                <label [attr.for]="'CheckBox_' + SessionIndex + pl.Value" style="text-indent: 25px; font-size: 14px" class="LableStyle">
                                                                     {{pl.Value}}
                                                                 </label>
                                                             </div>

@@ -17,7 +17,7 @@ using System.Xml.XPath;
 using System.Xml;
 using System.Xml.Xsl;
 using WebFreight.Web.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
@@ -51,7 +51,7 @@ namespace WebFreight.Web.WebPages
                 string fileName = null;
                 bool IsValid = true;
 
-                ICommonDataContext context = CommonDataContext.GetContext((int)tenant);
+                ICommonDataContext context = CommonDataContext.GetContext(0);
                 if (!string.IsNullOrEmpty(securityKey))
                 {
                     var securityArray = securityKey.Split('~');
@@ -114,7 +114,7 @@ namespace WebFreight.Web.WebPages
 
                 else if (!string.IsNullOrEmpty(token))
                 {
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
+                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)
                     {

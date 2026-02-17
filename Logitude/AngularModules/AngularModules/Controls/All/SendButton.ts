@@ -2,11 +2,10 @@ import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetec
 import { AppTool } from '../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { ControlsIdCounter } from 'Infrastructure/Utilities/ControlsIdCounter';
 
 @Component({
     selector: 'SendButton',
-    
+    moduleId: module.id,
     templateUrl: './SendButton.html',
     inputs: ['ItemsSource', 'SelectedItem', 'Binding'],
 })
@@ -28,13 +27,13 @@ export class SendButton implements OnInit {
         this._CD.detectChanges();
     }
     public IsMouseOver: boolean = false;
-    _DropdownDisplay: string = 'none';
+    private _DropdownDisplay: string = 'none';
     private _ElementRef: any;
 
     static MyId: number = 0;
-    _CustomSendOptionsComponentId: string;
-    _CustomSendOptionsComponentMenuId: string;
-    ListControlId: string;
+    private _CustomSendOptionsComponentId: string;
+    private _CustomSendOptionsComponentMenuId: string;
+    private ListControlId: string;
     public ControlId: string = null;
 
     _IsLoaded: boolean = false;
@@ -87,15 +86,11 @@ export class SendButton implements OnInit {
         this.ItemsSource = [];
 
         this._ElementRef = myElement;
-
-        var buttonId = ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponent");
-
-        // var idIndex = this.CurrentSession.GetNewId("SenButton");
-
-        this._CustomSendOptionsComponentId = "SendButtom_" + ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponent");
-        this._CustomSendOptionsComponentMenuId = "SendButtomMenu_" + ControlsIdCounter.GetNextControlIdCounter("CustomSendOptionsComponentMenuId");
-        this.ControlId = ControlsIdCounter.GetNextControlIdCounter("ComboBox")+"";
-        this.ListControlId = ControlsIdCounter.GetNextControlIdCounter("List")+"";
+        var idIndex = this.CurrentSession.GetNewId("SenButton");
+        this._CustomSendOptionsComponentId = "CustomSendOptionsComponent_" + idIndex;
+        this._CustomSendOptionsComponentMenuId = "CustomSendOptionsComponentMenuId_" + idIndex;
+        this.ControlId = "ComboBox_" + idIndex;
+        this.ListControlId = "List_" + idIndex;
     }
     handleClick(event) {
         var clickedComponent = event.target;

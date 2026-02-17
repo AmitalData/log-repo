@@ -151,7 +151,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
 
                         }
                         else
@@ -181,7 +181,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
 
                         }
                         else
@@ -194,23 +194,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICRMContext MyContext = CRMContext.GetContext(tenant);
 				OccasionInviteeListQueryService occasionInviteeQuery = new OccasionInviteeListQueryService(MyContext);
 
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "OccasionInvitee",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
-
-
-                List<OccasionInviteeList> entityLists = occasionInviteeQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
-
+                List<OccasionInviteeList> entityLists = occasionInviteeQuery.GetList(queryOperations, tenant);
+				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = occasionInviteeQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
+                    int count = occasionInviteeQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

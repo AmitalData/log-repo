@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
  
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-                                    AllowedInTicket =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -147,7 +147,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			//ObjectTable ShipmentReceivableLineStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentReceivableLineStatus" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable ShipmentReceivableLineStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentReceivableLineStatus" && d.Tenant == 0).FirstOrDefault(); 
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)

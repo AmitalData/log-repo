@@ -75,8 +75,7 @@
                                                         <!-- ReasonListTypeCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesReason.F.ReasonListTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'ReasonListTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.ReasonListTypeName}}</span>
                                                                 </div>
@@ -92,14 +91,12 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- ClaimExplanationTypeCode -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntsReasonsExp.F.ClaimExplanationTypeCode' | TextCodeTranslationPipe"
                                                                     [width]="'120'" [Alignment]="'right'" [binding]="'ClaimExplanationTypeCode'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.ClaimExplanationTypeName}}</span>
                                                                 </div>
@@ -116,14 +113,12 @@
                                                                     </LogLov>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- ExplanationNote -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntsReasonsExp.F.ExplanationNote' | TextCodeTranslationPipe"
                                                                     [width]="'180'" [Alignment]="'right'" [binding]="'ExplanationNote'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.ExplanationNote}}</span>
                                                                 </div>
@@ -134,13 +129,11 @@
                                                                                 [Text]="item.ExplanationNote" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete & Edit Button-->
                                                         <log-column [width]="'50'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
 
@@ -148,7 +141,6 @@
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>

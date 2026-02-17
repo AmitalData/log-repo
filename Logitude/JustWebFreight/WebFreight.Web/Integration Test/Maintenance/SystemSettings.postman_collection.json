@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "49c966f9-853e-40c6-addd-17f73afb12f4",
+		"_postman_id": "49116d38-8156-4499-bce6-b16b69322fe2",
 		"name": "SystemSettings",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,6 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
 						"exec": [
 							"pm.test(\"AuthenticationOnMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -36,6 +37,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
 						"exec": [
 							""
 						],
@@ -80,6 +82,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
 						"exec": [
 							"pm.test(\"AuthenticationOnNotMyTenant\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -104,6 +107,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
 						"exec": [
 							""
 						],
@@ -148,6 +152,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "21513698-73d9-410c-bed5-40eb5e0112e8",
 						"exec": [
 							"pm.test(\"GetAccountingSettingsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -234,6 +239,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "40484955-763f-49c5-87d8-3180b46cbeb4",
 						"exec": [
 							"pm.test(\"GetAPICredintialsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -325,6 +331,14 @@
 						{
 							"key": "PageSize",
 							"value": "22"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
 						}
 					]
 				}
@@ -337,6 +351,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "0586c97c-2125-4c9e-9c73-cdea867e87c0",
 						"exec": [
 							"pm.test(\"GetAPICredintialIdFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -420,6 +435,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "4063e07b-9296-4951-aae7-fa63953bfbbb",
 						"exec": [
 							"pm.test(\"GetSystemDefaultsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -438,11 +454,6 @@
 							"      var idvalue12 = pm.response.json().DefaultSLAId;",
 							"      var idvalue13 = pm.response.json().Company;",
 							"      var idvalue14 = pm.response.json().VatNumber;",
-							"      var idvalue15 = pm.response.json().AirRatio;",
-							"      var idvalue16 = pm.response.json().LCLRatio;",
-							"      var idvalue17 = pm.response.json().FCLRatio;",
-							"      var idvalue18 = pm.response.json().LTLRatio;",
-							"      var idvalue19 = pm.response.json().FTLRatio;",
 							"",
 							"      pm.environment.set(\"TenantId\",idvalue1);",
 							"      pm.environment.set(\"TenantAddressId\",idvalue3);",
@@ -454,14 +465,9 @@
 							"      pm.environment.set(\"TenantFreightCurrencyId\",idvalue9);",
 							"      pm.environment.set(\"TenantOtherChargesCurrencyId\",idvalue10);",
 							"      pm.environment.set(\"TenantQuoteSaleCurrencyId\",idvalue11);",
-							"      pm.environment.set(\"DefaultSLAId\",idvalue12);",
+							"      pm.environment.set(\"TenantDefaultSLAId\",idvalue12);",
 							"      pm.environment.set(\"CompanyName\",idvalue13);",
 							"      pm.environment.set(\"VatNumber\",idvalue14);",
-							"      pm.environment.set(\"AirRatio\",idvalue15);",
-							"      pm.environment.set(\"LCLRatio\",idvalue16);",
-							"      pm.environment.set(\"FCLRatio\",idvalue17);",
-							"      pm.environment.set(\"LTLRatio\",idvalue18);",
-							"      pm.environment.set(\"FTLRatio\",idvalue19);",
 							"",
 							"      ",
 							"      ",
@@ -540,12 +546,16 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "a181f4f8-c269-4c84-85f7-2f6bb2ac22f2",
 						"exec": [
 							"     pm.test(\"Sorry you’re not authenticated to view company info.\", function () {",
 							"     pm.response.to.have.status(400);",
 							"     ",
 							"",
-							"",
+							"         pm.test(\"GetSystemDefaultsFromNotMyTenant Fail\", function () {",
+							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry you’re not authenticated to view company info.\");",
+							"          ",
+							"         });",
 							"",
 							"});",
 							""
@@ -616,6 +626,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "0153062c-a0bd-458f-8d67-12f425fe190d",
 						"exec": [
 							"pm.test(\"UpdateSystemDefaultsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -685,7 +696,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n\n  \"company\": \"{{CompanyName}}\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"{{VatNumber}}\",\n \n  \"paymentTermId\": \"{{PaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n\n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{AccCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{ProftCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{DefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\",\n  \"TransferQuotationsToUnifreightTrigger\": \"Dont\",\n  \"AirRatio\":\"{{AirRatio}}\",\n  \"LCLRatio\":\"{{LCLRatio}}\",\n  \"FCLRatio\":\"{{FCLRatio}}\",\n  \"LTLRatio\":\"{{LTLRatio}}\",\n  \"FTLRatio\":\"{{FTLRatio}}\"\n}"
+					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n\n  \"company\": \"{{CompanyName}}\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"{{VatNumber}}\",\n \n  \"paymentTermId\": \"{{PaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n\n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{AccCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{ProftCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/tenants",
@@ -706,11 +717,24 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "0153062c-a0bd-458f-8d67-12f425fe190d",
 						"exec": [
 							"pm.test(\"UpdateSystemDefaultsFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
 							"     ",
-							" ",
+							"      var idvalue1 = pm.response.json().ErrorMessage;",
+							"      //var idvalue2 = pm.globals.get(\"Tenant\");",
+							"      //var idvalue3 = pm.response.json().TemperatureUnitCode;",
+							"      //var idvalue4 = \"FAH\";",
+							"      ",
+							"      var idvalue2 = \"You are not authorized to do this operation\\r\\n\";",
+							"",
+							"      //var idvalue2 = pm.expect(idvalue1).to.include(\"You are not authorized to do this operation\\r\\n\");",
+							"    ",
+							"     if (idvalue1 === idvalue2 )  {",
+							"        tests [idvalue1] = idvalue1;",
+							"   ",
+							"    } ",
 							"       ",
 							"",
 							"",
@@ -767,7 +791,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant2}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n\n  \"company\": \"{{CompanyName}}\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"{{VatNumber}}\",\n\n  \"paymentTermId\": \"{{PaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n \n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{AccCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{ProftCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\",\n  \"TransferQuotationsToUnifreightTrigger\": \"Dont\"\n}"
+					"raw": "{\n  \"PropertyChanged\": {\n    \"_isScalar\": false,\n    \"observers\": [],\n    \"closed\": false,\n    \"isStopped\": false,\n    \"hasError\": false,\n    \"thrownError\": null,\n    \"__isAsync\": false\n  },\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": false,\n  \"$id\": \"1\",\n  \"id\": \"{{Tenant2}}\",\n  \"addressId\": \"{{TenantAddressId}}\",\n  \"localAddressId\": \"{{TenantLocalAddressId}}\",\n\n  \"company\": \"{{CompanyName}}\",\n  \"iATA\": \"\",\n  \"vatNumber\": \"{{VatNumber}}\",\n\n  \"paymentTermId\": \"{{PaymentTermId}}\",\n  \"paymentTermName\": \"Net 30\",\n  \"isHybrid\": false,\n  \"isQuoteSubjectEdited\": false,\n  \"agentId\": \"{{TenantAgentId}}\",\n \n  \"cASSCode\": \"\",\n  \"currencyId\": \"{{AccCurrencyId}}\",\n  \"accountingCurrencyCode\": \"USD\",\n  \"accountingCurrencyName\": \"United States Of America Dollar\",\n  \"profitCurrencyId\": \"{{ProftCurrencyId}}\",\n  \"profitCurrencyCode\": \"EUR\",\n  \"profitCurrencyRate\": 1,\n  \"freightCurrencyId\": \"{{TenantFreightCurrencyId}}\",\n  \"freightCurrencyCode\": \"USD\",\n  \"otherChargesCurrencyId\": \"{{TenantOtherChargesCurrencyId}}\",\n  \"otherChargesCurrencyCode\": \"EUR\",\n  \"quoteSaleCurrencyId\": \"{{TenantQuoteSaleCurrencyId}}\",\n  \"quoteSaleCurrencyCode\": \"EUR\",\n  \"volumeUnitCode\": \"CBM\",\n  \"dimensionsUnitCode\": \"Cm\",\n  \"grossWeightUnitCode\": \"KG\",\n  \"chargeableWeightUnitCode\": \"KG\",\n  \"weightMeasurementUnitCode\": \"MT\",\n  \"exportFreightPrepaidCollectId\": \"P\",\n  \"importFreightPrepaidCollectId\": \"P\",\n  \"exportOtherPrepaidCollectId\": \"P\",\n  \"importOtherPrepaidCollectId\": \"P\",\n  \"masterExportFreightPrepaidCollectId\": \"P\",\n  \"masterImportFreightPrepaidCollectId\": \"P\",\n  \"masterExportOtherPrepaidCollectId\": \"P\",\n  \"masterImportOtherPrepaidCollectId\": \"P\",\n  \"timeZoneOffset\": 2,\n  \"language\": \"EN\",\n  \"dateTimeFormat\": \"dd\\\\/MM\\\\/yyyy\",\n  \"email\": \"\",\n  \"dayLightOffset\": 0,\n  \"passwordPolicyCode\": \"MEDU\",\n  \"passwordStrength\": \"Meduim\",\n  \"isDataBackupBuilt\": false,\n  \"countryCode\": \"US\",\n  \"countryName\": \"United States of America\",\n  \"packageCode\": \"DVMT\",\n  \"currencyCode\": \"USD\",\n  \"invoiceSection1\": \"Integration Test\\r\\nRamallah-PS\\r\\n\",\n  \"invoiceSection2\": \"Integration Test\",\n  \"isSharedLogisticsActivated\": false,\n  \"isWebAccessActivated\": false,\n  \"isMobileActivated\": false,\n  \"sharedLogisticsMessageLink\": false,\n  \"vatUniqueTypeCode\": \"UNT\",\n  \"vatMandatoryTypeCode\": \"MNT\",\n  \"vatMandatoryForPotentialCustomers\": false,\n  \"isCustomerTelRequired\": false,\n  \"isCustomerFaxRequired\": false,\n  \"isPickDelAdrsRequired\": false,\n  \"isCustomerAddress1Required\": false,\n  \"hasPrimaryContact\": false,\n  \"allowEAWBMoreThanTenPackages\": false,\n  \"regulatedAgentRegimeActivated\": false,\n  \"isDocumentsArchive\": false,\n  \"isCustomerTenantShare\": false,\n  \"customerTenantShareImportFile\": false,\n  \"customerTenantShareExportFile\": false,\n  \"allowAgentInCustomersLOV\": false,\n  \"isPotentialTelRequired\": false,\n  \"isPotentialFaxRequired\": false,\n  \"isNumeric\": false,\n  \"createTenantFromSignUp\": false,\n  \"isCorrespondenceRightToLeftEnabled\": false,\n  \"isNotesRightToLeftEnabled\": false,\n  \"accountingActivated\": false,\n  \"isInternalTicketByDefault\": false,\n  \"prorateMasterReceivables\": false,\n  \"exportQuotationsToIntegratedSystem\": false,\n  \"tenantVATManagement\": true,\n  \"documentShareAsDefault\": false,\n  \"numberFormatCode\": \"CD\",\n  \"defaultSLAId\": \"{{TenantDefaultSLAId}}\",\n  \"autoArchiveOnInvoice\": false,\n  \"isTestTenant\": false,\n  \"checkDigitControlAlgorithmCode\": \"NONE\",\n  \"applyVATForAllPartners\": false,\n  \"OldEntityPM\": null,\n  \"temperatureUnitCode\": \"FAH\"\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/tenants",
@@ -788,6 +812,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
 						"exec": [
 							"pm.test(\"GetSystemDefaultsFromMyTenant\", function () {",
 							"     pm.response.to.have.status(200);",
@@ -876,11 +901,18 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "b781a940-1072-4fa3-9e91-c11cc370021a",
 						"exec": [
 							"pm.test(\"GetSystemInfoFromNotMyTenant Fail\", function () {",
 							"     pm.response.to.have.status(400);",
 							"     ",
+							"     var idvalue1 = pm.response.json().ErrorMessage;",
 							"   ",
+							"    ",
+							"         pm.test(\"Sorry you’re not authenticated to view system info\", function () {",
+							"          pm.expect(pm.response.json().ErrorMessage).to.include(\"Sorry you’re not authenticated to view system info.\");",
+							"    ",
+							"         });",
 							"",
 							"",
 							"});",
@@ -943,126 +975,6 @@
 						{
 							"key": "tenant",
 							"value": "{{Tenant2}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CardSearchWithAirlinePrefix",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"CardSearchWithAirlinePrefix\", function () {\r",
-							"       pm.response.to.have.status(200);\r",
-							"     \r",
-							"      \r",
-							"      var idvalue1=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].Id;\r",
-							"      var idvalue2=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].EnglishName;\r",
-							"      var idvalue3=  pm.response.json().Result.filter(a=>a.EnglishName == 'American Airlines')[0].Code;\r",
-							"      \r",
-							"      var id1exist = idvalue1 !== null;\r",
-							"      var id2exist = idvalue2 == \"American Airlines\"; \r",
-							"      var id3exist = idvalue3 == \"AA\"; \r",
-							"\r",
-							"\r",
-							"      \r",
-							"      pm.expect(id1exist); \r",
-							"      pm.expect(id2exist);      \r",
-							"      pm.expect(id3exist);      \r",
-							"     \r",
-							"    \r",
-							"     if (id1exist && id2exist && id3exist)  {\r",
-							"      tests[\"Get Result With AirlinePrefix successfully finished: \" + [(idvalue2) , (idvalue3)]] = responseBody.has(idvalue1,idvalue2,idvalue3);\r",
-							"   \r",
-							"    } \r",
-							"\r",
-							"\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "accept",
-						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}"
-					},
-					{
-						"key": "content-type",
-						"value": "application/json"
-					}
-				],
-				"url": {
-					"raw": "{{URL}}/api/cardviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=true&GetAll=false&GetCount=true&PageIndex=0&PageSize=100&SortBy=&SortDirection=Ascending&Tenant={{Tenant}}&AdditionalFilters=[{%22FieldName%22:%22PartnerTypeId%22,%22FieldValue%22:%22AL%22,%22Operator%22:%22InList%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22Text%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22CardSearchField%22,%22FieldValue%22:%22001%22,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22InActive%22,%22FieldValue%22:false,%22Operator%22:%22Equals%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"cardviews",
-						"getbyfilters"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": "ForceCacheRefresh",
-							"value": "false"
-						},
-						{
-							"key": "DontApplyVirtualization",
-							"value": "true"
-						},
-						{
-							"key": "GetAll",
-							"value": "false"
-						},
-						{
-							"key": "GetCount",
-							"value": "true"
-						},
-						{
-							"key": "PageIndex",
-							"value": "0"
-						},
-						{
-							"key": "PageSize",
-							"value": "100"
-						},
-						{
-							"key": "SortBy",
-							"value": ""
-						},
-						{
-							"key": "SortDirection",
-							"value": "Ascending"
-						},
-						{
-							"key": "Tenant",
-							"value": "{{Tenant}}"
-						},
-						{
-							"key": "AdditionalFilters",
-							"value": "[{%22FieldName%22:%22PartnerTypeId%22,%22FieldValue%22:%22AL%22,%22Operator%22:%22InList%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22Text%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22CardSearchField%22,%22FieldValue%22:%22001%22,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false},{%22FieldName%22:%22InActive%22,%22FieldValue%22:false,%22Operator%22:%22Equals%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:null,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
 						}
 					]
 				}

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -23,7 +23,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InvoiceCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
-            this.Property(t => t.CityName).HasMaxLength(40).IsUnicode(true);
+            this.Property(t => t.CityName).HasMaxLength(25).IsUnicode(true);
             this.Property(t => t.ImageDetailId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BankName).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.BankAddress).HasMaxLength(100).IsUnicode(true);
@@ -31,9 +31,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountNumber).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.IBANNumber).HasMaxLength(30).IsUnicode(true);
             this.Property(t => t.InvitationDate);
-            this.Property(t => t.CargoTrackingInvitationDate);
             this.Property(t => t.SharedLogisticsInvitationStatusCode);
-            this.Property(t => t.CargoTrackingInvitationStatusCode);
             this.Property(t => t.LastLoginDate);
             this.Ignore(t => t.PartnerTypeName);
             this.Property(t => t.ClassifierId).HasMaxLength(15).IsUnicode(false);
@@ -61,22 +59,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Phone).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.StateName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.CreatedByPartner).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.GLAccountDisplayNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.SATCustomerName).HasMaxLength(200).IsUnicode(true);
-            this.Property(t => t.ImportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ExportLocalCustomerGroupId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.EORInumber).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.SingleInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.CustomsInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ConsolidationInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ManifestInvoiceTemplateId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.EmailForSendingSingArinvoice).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.BankBranch).HasMaxLength(30).IsUnicode(false);
-            this.Property(t => t.BankCodeId).HasMaxLength(30).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("Cards");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.GLAccountDisplayNumber).HasColumnName("GLAccountDisplayNumber");
             this.Property(t => t.EnglishName).HasColumnName("EnglishName");
             this.Property(t => t.VatNumber).HasColumnName("VatNumber");
             this.Property(t => t.LocalName).HasColumnName("LocalName");
@@ -100,7 +86,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountNumber).HasColumnName("AccountNumber");
             this.Property(t => t.IBANNumber).HasColumnName("IBANNumber");
             this.Property(t => t.InvitationDate).HasColumnName("InvitationDate");
-            this.Property(t => t.CargoTrackingInvitationDate).HasColumnName("CargoTrackingInvitationDate");
             this.Property(t => t.LastLoginDate).HasColumnName("LastLoginDate");
             this.Property(t => t.ClassifierId).HasColumnName("ClassifierId");
             this.Property(t => t.CollectorId).HasColumnName("CollectorId");
@@ -132,35 +117,20 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsInternationalPartner).HasColumnName("IsInternationalPartner");
             this.Property(t => t.IsAutonomy).HasColumnName("IsAutonomy");
             this.Property(t => t.CreatedByPartner).HasColumnName("CreatedByPartner");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
-            this.Property(t => t.AccountingVATSplit).HasColumnName("AccountingVATSplit");
-            this.Property(t => t.SATCustomerName).HasColumnName("SATCustomerName");
-            this.Property(t => t.ImportLocalCustomerGroupId).HasColumnName("ImportLocalCustomerGroupId");
-            this.Property(t => t.ExportLocalCustomerGroupId).HasColumnName("ExportLocalCustomerGroupId");
-            this.Property(t => t.EORInumber).HasColumnName("EORInumber");
-            this.Property(t => t.SingleInvoiceTemplateId).HasColumnName("SingleInvoiceTemplateId");
-            this.Property(t => t.CustomsInvoiceTemplateId).HasColumnName("CustomsInvoiceTemplateId");
-            this.Property(t => t.ConsolidationInvoiceTemplateId).HasColumnName("ConsolidationInvoiceTemplateId");
-            this.Property(t => t.ManifestInvoiceTemplateId).HasColumnName("ManifestInvoiceTemplateId");
-            this.Property(t => t.EmailForSendingSingArinvoice).HasColumnName("EmailForSendingSingArinvoice");
-            this.Property(t => t.BankBranch).HasColumnName("BankBranch");
-            this.Property(t => t.BankCodeId).HasColumnName("BankCodeId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
          if (dbms == "oracle")
          {
              this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogInvitationStatCode");
-                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTracInvitationStatCode");
-            }
-            //#else
-            else
+         }
+         //#else
+         else
          {
              this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
-                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTrackingInvitationStatusCode");
-            }
-
-            //#endif
+         }
+            
+//#endif
 
             this.HasOptional(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
             this.HasOptional(t => t.InvoiceCurrency).WithMany().HasForeignKey(d => d.InvoiceCurrencyId);
@@ -174,12 +144,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasOptional(t => t.MetodoPago).WithMany().HasForeignKey(d => d.MetodoPagoCode);
             this.HasOptional(t => t.UsoCFDI).WithMany().HasForeignKey(d => d.UsoCFDICode);
-            this.HasOptional(t => t.ImportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ImportLocalCustomerGroupId);
-            this.HasOptional(t => t.ExportLocalCustomerGroup).WithMany().HasForeignKey(d => d.ExportLocalCustomerGroupId);
-            this.HasOptional(t => t.SingleInvoiceTemplate).WithMany().HasForeignKey(d => d.SingleInvoiceTemplateId);
-            this.HasOptional(t => t.CustomsInvoiceTemplate).WithMany().HasForeignKey(d => d.CustomsInvoiceTemplateId);
-            this.HasOptional(t => t.ConsolidationInvoiceTemplate).WithMany().HasForeignKey(d => d.ConsolidationInvoiceTemplateId);
-            this.HasOptional(t => t.ManifestInvoiceTemplate).WithMany().HasForeignKey(d => d.ManifestInvoiceTemplateId);
         }
     }
 }

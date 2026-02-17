@@ -13,7 +13,6 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -26,7 +25,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             entityPOCO.Code = entityPM.Code;
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
-            entityPM.SendTime = null;
             
 
             
@@ -50,13 +48,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(InterfaceManagementPM entityPM, InterfaceManagement entityPOCO)
         {
-            var tenant = entityPM.Tenant;
-            if (tenant == 0)
-            {
-               tenant = SettingUtil.GetCurrentTenant();
-            }
-            
-            InterfaceTenantDefinitionRepository definitionRep = new InterfaceTenantDefinitionRepository(tenant);
+            InterfaceTenantDefinitionRepository definitionRep = new InterfaceTenantDefinitionRepository(entityPM.Tenant);
             InterfaceTenantDefinition definition = definitionRep.GetSingleDefinitionByCode(entityPM.Code, entityPM.Tenant);
 
             if (definition != null)
@@ -64,7 +56,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.Tenant = definition.Tenant;
                 entityPM.TenantPriority = definition.TenantPriority;
                 entityPM.TenantSendOptionsCode = definition.TenantSendOptionsCode;
-                entityPM.SendTime = definition.SendTime;
 
                 entityPM.DcaRenameFileEnable = definition.DcaRenameFileEnable;
                 entityPM.DcaRenameFilePrefix = definition.DcaRenameFilePrefix;

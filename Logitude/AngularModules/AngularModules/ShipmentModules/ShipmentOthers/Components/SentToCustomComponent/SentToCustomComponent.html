@@ -49,7 +49,7 @@
                                 <table>
                                     <!-- ABM -->
                                     <tr *ngIf="IsABMVisible" style="height:120px;">
-                                        <td style="width:420px; max-width:420px;">
+                                        <td style="width:420px;">
                                             <fieldset class="FieldSet">
                                                 <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">ABM Customsware</legend>
                                                 <table style="margin:5px;">
@@ -61,24 +61,28 @@
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width:100px;">
+                                                                    <td style="width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td>
+                                                                    <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width:120px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width: 55px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <div style="color:Red;float:left" class="TextTrimming" [title]="LocalCustomsTransmissionsError">
+                                                                                    <div style="width:450px;color:Red;float:left" class="TextTrimming" [title]="LocalCustomsTransmissionsError">
                                                                                         <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ( </span>{{LocalCustomsTransmissionsError}} <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ) </span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
                                                                     </td>
                                                                 </tr>
 
@@ -92,6 +96,10 @@
                                                                     </td>
 
                                                                     <td style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
 
                                                                 <tr class="StatRow">
@@ -104,12 +112,16 @@
                                                                     </td>
 
                                                                     <td>{{LocalCustomsTransmissionsByUserName}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsABMDisabled" (click)="SendButtonClicked('ABM')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
+                                                            <button class="Button" [disabled]="IsABMDisabled" (click)="SendButtonClicked('ABM')">Send</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -123,7 +135,7 @@
 
                                     <!-- Artemus Voyage -->
                                     <tr *ngIf="IsATMSVisible_VOG" style="height:120px;">
-                                        <td style="width:420px; max-width:420px;">
+                                        <td style="width:420px;">
                                             <fieldset class="FieldSet">
                                                 <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Artemus Voyage</legend>
                                                 <table style="margin:5px;">
@@ -135,24 +147,28 @@
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width:100px;">
+                                                                    <td style="width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td>
+                                                                    <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width:120px;" [ngStyle]="{color: ArtemusVoyageStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width:55px;" [ngStyle]="{color: ArtemusVoyageStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{ArtemusVoyageStatus}}
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <div style="color:Red;float:left" class="MediaFill TextTrimming" [title]="ArtemusVoyageError">
+                                                                                    <div style="width:450px;color:Red;float:left" class="MediaFill TextTrimming" [title]="ArtemusVoyageError">
                                                                                         <span *ngIf="ArtemusVoyageError != null && ArtemusVoyageError != '' "> ( </span>{{ArtemusVoyageError}} <span *ngIf="ArtemusVoyageError != null && ArtemusVoyageError != '' "> ) </span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
                                                                     </td>
                                                                 </tr>
 
@@ -166,6 +182,10 @@
                                                                     </td>
 
                                                                     <td style="text-align: left;">{{ArtemusVoyageLastSendDate | DateTimePipe: 'SHWH'}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
 
                                                                 <tr class="StatRow">
@@ -178,12 +198,16 @@
                                                                     </td>
 
                                                                     <td>{{ArtemusVoyageByUserName}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('ASV')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
+                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('ASV')">Send</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -197,7 +221,7 @@
 
                                     <!-- Artemus BOL -->
                                     <tr *ngIf="IsATMSVisible_BOL" style="height:120px;">
-                                        <td style="width:420px; max-width:420px;">
+                                        <td style="width:420px;">
                                             <fieldset class="FieldSet">
                                                 <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Artemus Bill of Lading</legend>
                                                 <table style="margin:5px;">
@@ -209,24 +233,27 @@
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width:100px;">
+                                                                    <td style="width:120px; min-width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td>
+                                                                    <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width:120px;" [ngStyle]="{color: ArtemusBOLStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width:55px;" [ngStyle]="{color: ArtemusBOLStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{ArtemusBOLStatus}}
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <div style="color:Red;float:left" class="MediaFill TextTrimming" [title]="ArtemusBOLError">
+                                                                                    <div style="width:450px;color:Red;float:left" class="MediaFill TextTrimming" [title]="ArtemusBOLError">
                                                                                         <span *ngIf="ArtemusBOLError != null && ArtemusBOLError != ''"> ( </span>{{ArtemusBOLError}} <span *ngIf="ArtemusBOLError != null && ArtemusBOLError != ''"> ) </span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div></div>
                                                                     </td>
                                                                 </tr>
 
@@ -240,6 +267,10 @@
                                                                     </td>
 
                                                                     <td style="text-align: left;">{{ArtemusBOLLastSendDate | DateTimePipe: 'SHWH'}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
 
                                                                 <tr class="StatRow">
@@ -252,12 +283,16 @@
                                                                     </td>
 
                                                                     <td>{{ArtemusBOLByUserName}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('BOL')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
+                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('BOL')">Send</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -271,7 +306,7 @@
 
                                     <!-- CBP/AES  -->
                                     <tr *ngIf="IsAESVisible" style="height:120px;">
-                                        <td style="width:420px; max-width:420px;">
+                                        <td style="width:420px;">
                                             <fieldset class="FieldSet">
                                                 <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">CBP</legend>
                                                 <table style="margin:5px;">
@@ -283,19 +318,19 @@
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width:100px;">
+                                                                    <td style="width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td>
+                                                                    <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td style="width:120px;" [ngStyle]="{color: CBPStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width:55px;" [ngStyle]="{color: CBPStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{CBPStatus}}
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <div style="color:Red;float:left" class="MediaFill TextTrimming" [title]="CBPError">
+                                                                                    <div style="width:450px;color:Red;float:left" class="MediaFill TextTrimming" [title]="CBPError">
                                                                                         <span *ngIf="CBPError != null && CBPError != ''"> ( </span>{{CBPError}} <span *ngIf="CBPError != null && CBPError != ''"> ) </span>
                                                                                     </div>
                                                                                 </td>
@@ -318,6 +353,10 @@
                                                                     </td>
 
                                                                     <td style="text-align: left;">{{CBPLastSendDate | DateTimePipe: 'SHWH'}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
 
                                                                 <tr class="StatRow">
@@ -330,12 +369,16 @@
                                                                     </td>
 
                                                                     <td>{{CBPByUserName}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsAESDisabled" (click)="SendButtonClicked('CBP')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
+                                                            <button class="Button" [disabled]="IsAESDisabled" (click)="SendButtonClicked('CBP')">Send</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -349,7 +392,7 @@
 
                                     <!-- AMANAC  -->
                                     <tr *ngIf="IsAMANACVisible" style="height:120px;">
-                                        <td style="width:420px; max-width:420px;">
+                                        <td style="width:420px;">
                                             <fieldset class="FieldSet">
                                                 <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">AMANAC</legend>
                                                 <table style="margin:5px;">
@@ -361,24 +404,28 @@
                                                                         <div></div>
                                                                     </td>
 
-                                                                    <td style="width:100px;">
+                                                                    <td style="width:120px; min-width:120px;">
                                                                         <LogLabel [ObjectFieldName]="'Status'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td>
+                                                                    <td style="width: 550px;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td attr.data-cy="{{'CustomsTransmissionsStatusValue' | IdGeneratorAsyncPipe | async}}" style="width: 120px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td style="width: 55px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <div style="color:Red; float:left" class="TextTrimming" [title]="LocalCustomsTransmissionsError">
+                                                                                    <div style="width:450px;color:Red;float:left" class="TextTrimming" [title]="LocalCustomsTransmissionsError">
                                                                                         <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ( </span>{{LocalCustomsTransmissionsError}} <span *ngIf="LocalCustomsTransmissionsError != null && LocalCustomsTransmissionsError != ''"> ) </span>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <div></div>
                                                                     </td>
                                                                 </tr>
 
@@ -391,7 +438,11 @@
                                                                         <LogLabel [ObjectFieldName]="'LastSendDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td attr.data-cy="{{'CustomsTransmissionsStatusDate' | IdGeneratorAsyncPipe | async}}" style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
+                                                                    <td style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
 
                                                                 <tr class="StatRow">
@@ -403,14 +454,18 @@
                                                                         <LogLabel [Text]="'By'" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td attr.data-cy="{{'CustomsTransmissionsUserName' | IdGeneratorAsyncPipe | async}}" >{{LocalCustomsTransmissionsByUserName}}</td>
+                                                                    <td>{{LocalCustomsTransmissionsByUserName}}</td>
+
+                                                                    <td>
+                                                                        <div></div>
+                                                                    </td>
                                                                 </tr>
                                                             </table>
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
-                                                            <button attr.data-cy="{{'CustomsTransmissionsRetransfer' | IdGeneratorAsyncPipe | async}}" *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
+                                                            <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
+                                                            <button *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -433,7 +488,7 @@
                     </td>
                 </tr>
 
-                <tr *ngIf="!IsABMVisible && !IsATMSVisible_VOG && !IsATMSVisible_BOL && !IsAESVisible && !IsAMANACVisible">
+                <tr *ngIf="!IsABMVisible && !IsATMSVisible_VOG && !IsATMSVisible_BOL && !IsAESVisible">
                     <td style="font-size:14px;">
                         No Customs Interface selected, you can enable from
                         <Hyperlink [FontSize]="14" (click)="ViewCustomsSettings()" [Text]="'Customs Interface Settings'"></Hyperlink>
@@ -456,7 +511,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button attr.data-cy="{{'CloseCustomsTransmissions' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

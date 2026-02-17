@@ -33,24 +33,6 @@ namespace Logitude.Infrastructure.BL.Validators
                 tenant = (int)tenantProp.GetValue(context.ObjectInstance, null);                
             }
 
-            else if (objectTableName == "BIReport")
-            {
-                BIReportClassLevelValidator bIReportClassLevelValidator = new BIReportClassLevelValidator(objectTableName, tenant);
-                if (!bIReportClassLevelValidator.IsValid(value, context.ObjectInstance, context.MemberName))
-                {
-                    ValidationResult v = new ValidationResult(bIReportClassLevelValidator.GetErrorMessage(value, context.ObjectInstance, context.MemberName), new string[] { context.MemberName });
-                    return v;
-                }
-            }
-            else if(objectTableName == "FeatureToggle")
-            {
-                FeatureToggleClassLevelValidator featureToggleClassLevelValidator = new FeatureToggleClassLevelValidator();
-                if (!featureToggleClassLevelValidator.IsValid(value, context.ObjectInstance, context.MemberName))
-                {
-                    ValidationResult v = new ValidationResult(featureToggleClassLevelValidator.GetErrorMessage(value, context.ObjectInstance, context.MemberName), new string[] { context.MemberName });
-                    return v;
-                }
-            }
             else
             {
                 tenantProp = type.GetProperty("Tenant");

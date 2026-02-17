@@ -13,7 +13,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from  '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './NewBusinessHourAndHolidaysComponent.html',
 })
 
@@ -32,7 +32,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         this.entityPM = new BusinessHourPM();
         this.HolidaysDataList = [];
         this.getBusinssHourEntityMethod();
-
+      
     }
 
     //Load Business Hour Entity
@@ -55,7 +55,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
                     this.entityPM.UpdateDate = todayDateTime;
                     this.entityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 }
-
+                
                 this.IsVisible = true;
                 this.SetEnabled();
             }
@@ -87,7 +87,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsSaturdayEnabeled", this.ObjectTableName, !this.Is247);
         this.UIProperties.SetEnabled("IsSundayEnabeled", this.ObjectTableName, !this.Is247);
         this.CheckBoxProcessing();
-
+        
     }
 
     SetDateEnabled() {
@@ -447,38 +447,38 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
     }
     private CheckBoxProcessing() {
         if (!this.IsMondayEnabeled) {
-            this.MondayToHourDate = null;
-            this.MondayFromHourDate = null;
+            this.MondayToHourDate = DateTool.TruncateTime(this.MondayToHourDate);
+            this.MondayFromHourDate = DateTool.TruncateTime(this.MondayFromHourDate);
         }
 
         if (!this.IsSaturdayEnabeled) {
-            this.SaturdayToHourDate = null;
-            this.SaturdayFromHourDate = null;
+            this.SaturdayToHourDate = DateTool.TruncateTime(this.SaturdayToHourDate);
+            this.SaturdayFromHourDate = DateTool.TruncateTime(this.SaturdayFromHourDate);
         }
 
         if (!this.IsTuesdayEnabeled) {
-            this.TuesdayToHourDate = null;
-            this.TuesdayFromHourDate = null;
+            this.TuesdayToHourDate = DateTool.TruncateTime(this.TuesdayToHourDate);
+            this.TuesdayFromHourDate = DateTool.TruncateTime(this.TuesdayFromHourDate);
         }
 
         if (!this.IsWednesdayEnabeled) {
-            this.WednesdayToHourDate = null;
-            this.WednesdayFromHourDate = null;
+            this.WednesdayToHourDate = DateTool.TruncateTime(this.WednesdayToHourDate);
+            this.WednesdayFromHourDate = DateTool.TruncateTime(this.WednesdayFromHourDate);
         }
 
         if (!this.IsThursdayEnabeled) {
-            this.ThursdayToHourDate = null;
-            this.ThursdayFromHourDate = null;
+            this.ThursdayToHourDate = DateTool.TruncateTime(this.ThursdayToHourDate);
+            this.ThursdayFromHourDate = DateTool.TruncateTime(this.ThursdayFromHourDate);
         }
 
         if (!this.IsFridayEnabeled) {
-            this.FridayToHourDate = null;
-            this.FridayFromHourDate = null;
+            this.FridayToHourDate = DateTool.TruncateTime(this.FridayToHourDate);
+            this.FridayFromHourDate = DateTool.TruncateTime(this.FridayFromHourDate);
         }
 
         if (!this.IsSundayEnabeled) {
-            this.SundayToHourDate = null;
-            this.SundayFromHourDate = null;
+            this.SundayToHourDate = DateTool.TruncateTime(this.SundayToHourDate);
+            this.SundayFromHourDate = DateTool.TruncateTime(this.SundayFromHourDate);
         }
 
         this.SetDateEnabled();
@@ -486,10 +486,11 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
     }
 
 
+
     private timeDifferencecalCulationMethod(toHour: Date, fromHour: Date, isEnable: boolean) {
         var time = "0";
         var dateDiff;
-        if (isEnable && toHour && fromHour) {
+        if (isEnable) {
             var d1 = DateTool.GetDateFormats(new Date(toHour.toString())).DateParts.DateObject;
             var d2 = DateTool.GetDateFormats(new Date(fromHour.toString())).DateParts.DateObject;
             var timeDiff = Math.abs(DateTool.GetDateFromDate(toHour).getTime() - DateTool.GetDateFromDate(fromHour).getTime());
@@ -516,7 +517,6 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         }
 
         this.ValidationErrorsList = errors;
-        this.ValidateBusinessHoursTime();
         if (this.ValidationErrorsList.length == 0) {
             if (this.IsNew) {
                 this.InsertBusinesHour();
@@ -553,127 +553,27 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         });
     }
 
-    ValidateBusinessHoursTime() {
-        var isValid = true;
-
-        if (this.SundayFromHourDate != null && this.SundayToHourDate != null && DateTool.GetDateFromDate(this.SundayToHourDate) <= DateTool.GetDateFromDate(this.SundayFromHourDate)) {
-            isValid = false;
-        }
-        if (this.MondayFromHourDate != null && this.MondayToHourDate != null && DateTool.GetDateFromDate(this.MondayToHourDate) <= DateTool.GetDateFromDate(this.MondayFromHourDate)) {
-            isValid = false;
-        }
-        if (this.TuesdayFromHourDate != null && this.TuesdayToHourDate != null && DateTool.GetDateFromDate(this.TuesdayToHourDate) <= DateTool.GetDateFromDate(this.TuesdayFromHourDate)) {
-            isValid = false;
-        }
-        if (this.WednesdayFromHourDate != null && this.WednesdayToHourDate != null && DateTool.GetDateFromDate(this.WednesdayToHourDate) <= DateTool.GetDateFromDate(this.WednesdayFromHourDate)) {
-            isValid = false;
-        }
-        if (this.ThursdayFromHourDate != null && this.ThursdayToHourDate != null && DateTool.GetDateFromDate(this.ThursdayToHourDate) <= DateTool.GetDateFromDate(this.ThursdayFromHourDate)) {
-            isValid = false;
-        }
-        if (this.FridayFromHourDate != null && this.FridayToHourDate != null && DateTool.GetDateFromDate(this.FridayToHourDate) <= DateTool.GetDateFromDate(this.FridayFromHourDate)){
-            isValid = false;
-        }
-        if (this.SaturdayFromHourDate != null && this.SaturdayToHourDate != null && DateTool.GetDateFromDate(this.SaturdayToHourDate) <= DateTool.GetDateFromDate(this.SaturdayFromHourDate)) {
-            isValid = false;
-        }
-        if (!isValid) this.ValidationErrorsList.push("Exist time Field must be greater than Entry time Field");
-    }
-
     UpadteDates() {
-        if (this.MondayFromHourDate) {
-            this.entityPM.MondayFromHour = DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.MondayFromHour = null;
-        }
+        this.entityPM.MondayFromHour = DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayFromHourDate).getUTCSeconds();
+        this.entityPM.MondayToHour = DateTool.GetDateFromDate(this.MondayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCSeconds();
 
-        if (this.MondayToHourDate) {
-            this.entityPM.MondayToHour = DateTool.GetDateFromDate(this.MondayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.MondayToHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.MondayToHour = null;
-        }
+        this.entityPM.TuesdayFromHour = DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCSeconds();
+        this.entityPM.TuesdayToHour = DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCSeconds();
 
-        if (this.TuesdayFromHourDate) {
-            this.entityPM.TuesdayFromHour = DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayFromHourDate).getUTCSeconds();
+        this.entityPM.WednesdayFromHour = DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCSeconds();
+        this.entityPM.WednesdayToHour = DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate( this.WednesdayToHourDate).getUTCSeconds();
 
-        }
-        else {
-            this.entityPM.TuesdayFromHour = null;
-        }
+        this.entityPM.ThursdayFromHour = DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCSeconds();
+        this.entityPM.ThursdayToHour = DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCSeconds();
 
-        if (this.TuesdayToHourDate) {
-            this.entityPM.TuesdayToHour = DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.TuesdayToHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.TuesdayToHour = null;
-        }
+        this.entityPM.FridayFromHour = DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCSeconds();
+        this.entityPM.FridayToHour = DateTool.GetDateFromDate(this.FridayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCSeconds();
 
-        if (this.WednesdayFromHourDate) {
-            this.entityPM.WednesdayFromHour = DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.WednesdayFromHourDate).getUTCSeconds();
+        this.entityPM.SaturdayFromHour = DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCSeconds();
+        this.entityPM.SaturdayToHour = DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCSeconds();
 
-        }
-        else {
-            this.entityPM.WednesdayFromHour = null;
-        }
-        if (this.WednesdayToHourDate) {
-            this.entityPM.WednesdayToHour = DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.WednesdayToHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.WednesdayToHour = null;
-        }
-        if (this.ThursdayFromHourDate) {
-            this.entityPM.ThursdayFromHour = DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayFromHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.ThursdayFromHour = null;
-        }
-        if (this.ThursdayToHourDate) {
-            this.entityPM.ThursdayToHour = DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.ThursdayToHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.ThursdayToHour = null;
-        }
-        if (this.FridayFromHourDate) {
-            this.entityPM.FridayFromHour = DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayFromHourDate).getUTCSeconds();
-
-        }
-        else {
-            this.entityPM.FridayFromHour = null;
-        }
-        if (this.FridayToHourDate) {
-            this.entityPM.FridayToHour = DateTool.GetDateFromDate(this.FridayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.FridayToHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.FridayToHour = null;
-        }
-        if (this.SaturdayFromHourDate) {
-            this.entityPM.SaturdayFromHour = DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayFromHourDate).getUTCSeconds();
-
-        }
-        else {
-            this.entityPM.SaturdayFromHour = null;
-        }
-        if (this.SaturdayToHourDate) {
-            this.entityPM.SaturdayToHour = DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SaturdayToHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.SaturdayToHour = null;
-        }
-        if (this.SundayFromHourDate) {
-            this.entityPM.SundayFromHour = DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCSeconds();
-
-        }
-        else {
-            this.entityPM.SundayFromHour = null;
-        }
-        if (this.SundayToHourDate) {
-            this.entityPM.SundayToHour = DateTool.GetDateFromDate(this.SundayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCSeconds();
-        }
-        else {
-            this.entityPM.SundayToHour = null;
-        }
+        this.entityPM.SundayFromHour = DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayFromHourDate).getUTCSeconds();
+        this.entityPM.SundayToHour = DateTool.GetDateFromDate(this.SundayToHourDate).getUTCHours() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCMinutes() + ":" + DateTool.GetDateFromDate(this.SundayToHourDate).getUTCSeconds();
     }
 
     AddHoliday() {

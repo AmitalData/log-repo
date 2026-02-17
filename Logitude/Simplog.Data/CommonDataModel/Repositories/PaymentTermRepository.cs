@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public PaymentTermRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PaymentTermRepository(int tenant)
         {
@@ -30,16 +33,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.PaymentTerms where record.Tenant == tenant select record);
         }
-
-        public PaymentTerm GetSinglePaymentTerm(string id)
-        {
-
-            return (from record in context.PaymentTerms where record.Id == id select record).FirstOrDefault();
-             
-        }
-
-
-
+        
         public IQueryable<PaymentTerm> GetPaymenTermsByTenant(int tenant)
         {
             return (from record in context.PaymentTerms where record.Tenant == tenant select record);

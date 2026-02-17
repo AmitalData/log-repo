@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -12,13 +12,11 @@ using System.Collections.Generic;
 using System.Transactions;
 using Logitude.BL.GlobalModel.EntityDws;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using System.Text.RegularExpressions;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
     public class TenantManagementQuery
     {
-        private int tenant = 0;
         private TenantManagementRepository repository;
         public TenantManagementQuery()
         {
@@ -26,109 +24,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         }
         public TenantManagementQuery(int tenant)
         {
-            this.tenant = tenant;
             repository = new TenantManagementRepository();
         }
         public TenantManagementQuery(TenantManagementRepository repository)
         {
             this.repository = repository;
-        }
-        public TenantManagementPM GetSinglePMByDomain(string domain)
-        {
-
-            domain = TrimDomainByRegex(domain);
-            TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where a.EnableBranding && string.Equals(a.CustomerURL, domain) && a.Id != 0 && a.GlobalTenant.IsActive
-                                                   select new TenantManagementPM()
-                                                   {
-                                                       Id = a.Id,
-                                                       MainColor = a.MainColor,
-                                                       SecondaryColor = a.SecondaryColor,
-                                                       TertiaryColor=a.TertiaryColor,
-                                                       BackgroundId = a.BackgroundId,
-                                                       MobileBackgroundId = a.MobileBackgroundId,
-                                                       ShipmentHeaderImageId = a.ShipmentHeaderImageId,
-                                                       ComapnylogoId = a.ComapnylogoId,
-                                                       InvertedLogoId = a.InvertedLogoId,
-                                                       BrowserIconId = a.BrowserIconId,
-                                                       CustomerURL = a.CustomerURL,
-                                                       ActivatePrivateSite = a.ActivatePrivateSite,
-                                                       EnableExportToExcel = a.EnableExportToExcel,
-                                                       ContactEmail = a.ContactEmail
-                                                   }).FirstOrDefault();
-
-
-            return TenantManagement;
-        }
-
-        public TenantManagementPM GetTenantBrandingDataByDomain(string domain)
-        {
-
-            domain = TrimDomainByRegex(domain);
-            TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
-                                                   select new TenantManagementPM()
-                                                   {
-                                                       Id = a.Id,
-                                                       MainColor = a.MainColor,
-                                                       SecondaryColor = a.SecondaryColor,
-                                                       TertiaryColor = a.TertiaryColor,
-                                                       BackgroundId = a.BackgroundId,
-                                                       MobileBackgroundId = a.MobileBackgroundId,
-                                                       ShipmentHeaderImageId = a.ShipmentHeaderImageId,
-                                                       ComapnylogoId = a.ComapnylogoId,
-                                                       InvertedLogoId = a.InvertedLogoId,
-                                                       BrowserIconId = a.BrowserIconId,
-                                                       CustomerURL = a.CustomerURL,
-                                                       ActivatePrivateSite = a.ActivatePrivateSite,
-                                                       ContactEmail = a.ContactEmail,
-                                                       EnableBranding = a.EnableBranding,
-                                                       EnableExportToExcel = a.EnableExportToExcel
-                                                   }).FirstOrDefault();
-
-
-            return TenantManagement;
-        }
-
-        public int GetTenantSinglePMByDomain(string domain)
-        {
-
-            domain = TrimDomainByRegex(domain);
-            int Tenant = (from a in repository.context.TenantManagements
-                          where a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
-                          select a.Id
-                                                  ).FirstOrDefault();
-
-            return Tenant;
-        }
-
-        public bool CheckIsdomainAlreadyExist(TenantManagementPM tenantManagement)
-        {
-
-            string domain = TrimDomainByRegex(tenantManagement.CustomerURL);
-            bool IsExist = (from a in repository.context.TenantManagements
-                            where a.CustomerURL == domain && a.Id != tenantManagement.Id
-                            select a.Id).Any();
-
-            return IsExist;
-        }
-
-
-        private string TrimDomainByRegex(string domain)
-        {
-            domain = domain.EndsWith("/") ? domain.Substring(0, domain.Length - 1) : domain;
-            domain = Regex.Replace(domain, @"^(?:http(?:s)?://)?(?:www(?:[0-9]+)?\.)?", string.Empty, RegexOptions.IgnoreCase);
-
-            return domain;
-        }
-
-        public int GetShipmentBuildMonth(int tenant)
-        {
-            double? res = (from a in repository.context.TenantManagements
-                           where a.Id == tenant && a.ActivatePrivateSite
-                           select a.PermissionBuildMonths).ToList().FirstOrDefault();
-
-            return res != null ? (int)res.Value : 6;
         }
 
         public TenantManagementPM GetSinglePM(int id)
@@ -240,7 +140,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LoginPageNotes = a.LoginPageNotes,
                                                      SupportActivated = a.SupportActivated,
                                                      SupportEmail = a.SupportEmail,
-                                                     TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                                                      IsMultiPackage = a.IsMultiPackage,
                                                      Technology = a.Technology,
                                                      MobileLastDate = a.MobileLastDate,
@@ -253,10 +152,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      RegisteredAirlines = a.RegisteredAirlines,
                                                      PendingAirlines = a.PendingAirlines,
                                                      EnableBranding = a.EnableBranding,
-                                                     EnableExportToExcel = a.EnableExportToExcel,
-                                                     ActivatePrivateSite = a.ActivatePrivateSite,
-                                                     ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
-                                                     DeclarationMessage = a.DeclarationMessage,
                                                      ContactEmail = a.ContactEmail,
                                                      CustomerURL = a.CustomerURL,
                                                      HideSharedlogistics = a.HideSharedlogistics,
@@ -268,64 +163,13 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      AgentSharedLogisticsStatisticsLastWeek = a.AgentSharedLogisticsStatisticsLastWeek,
                                                      AgentSharedLogisticsStatisticsLastMonth = a.AgentSharedLogisticsStatisticsLastMonth,
                                                      ChangeHeaderColor = a.ChangeHeaderColor,
-                                                     HeaderColor = a.HeaderColor,
                                                      StockTypeCode = a.StockTypeCode,
                                                      IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
                                                      IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                      MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                      TotalPrice = a.TotalPrice,
-                                                     SupportDomain = a.SupportDomain,
-                                                     TotalNumberOfUsers = a.TotalNumberOfUsers,
-                                                     TotalFreeUsers = a.TotalFreeUsers,
-                                                     AveragePrice = a.AveragePrice,
-                                                     TotalPaymentamount = a.TotalPaymentamount,
-                                                     MainColor = a.MainColor,// != null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
-                                                     SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
-                                                     TertiaryColor = a.TertiaryColor,
-                                                     BackgroundId = a.BackgroundId,
-                                                     MobileBackgroundId = a.MobileBackgroundId,
-                                                     ShipmentHeaderImageId = a.ShipmentHeaderImageId,
-                                                     PermissionBuildMonths = a.PermissionBuildMonths,
-                                                     ComapnylogoId = a.ComapnylogoId,
-                                                     InvertedLogoId = a.InvertedLogoId,
-                                                     BrowserIconId = a.BrowserIconId,
-                                                     NoPaymentForChildTenants = a.NoPaymentForChildTenants,
-                                                     LastEbookingSentDate = a.LastEbookingSentDate,
-                                                     LastSISentDate = a.LastSISentDate,
-                                                     NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
-                                                     NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
-                                                     LastContainerStatusReceived = a.LastContainerStatusReceived,
-                                                     LastTariffUpdateDate = a.LastTariffUpdateDate,
-                                                     LastTariffUsageDate = a.LastTariffUsageDate,
-                                                     LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
-                                                     LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
-                                                     ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
-                                                      AmitalApiToken = a.AmitalApiToken,
-                                                      WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
-                                                     CargoTokenTimeout = a.CargoTokenTimeout,
-                                                     IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                                                     ShowMoneyOrder=a.ShowMoneyOrder,
-                                                     DigitalPortalLastDate = a.DigitalPortalLastDate,
-                                                     DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
-                                                     DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
-                                                     DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                                                     DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                                                     DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
-                                                     DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
-                                                     DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter,
-                                                     DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                                                     CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
-                                                     CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
-                                                     LogoURL = a.LogoURL,
-                                                     ServiceAgreementURL = a.ServiceAgreementURL,
-
-                                                     ExportTenant = a.ExportTenant,
-                                                     ExportLoginCredintial = a.ExportLoginCredintial,
-													 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-                                                     MinutsTimeOutSession = a.MinutsTimeOutSession,
-
-												 }).FirstOrDefault();
+                                                 }).FirstOrDefault();
                     if (tenant != null)
                     {
                         TenantAddOnQuery tenantAddOnQuery = new TenantAddOnQuery(tenant.Id);
@@ -343,11 +187,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                             tenant.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                             tenant.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
-                            tenant.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                             tenant.IsTestTenant = ten.IsTestTenant;
-                            tenant.IsHybrid = ten.IsHybrid;
-                            tenant.EcommerceSupportEmail = ten.EcommerceSupportEmail;
-                            tenant.EcommerceTenant = ten.EcommerceTenant;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -472,7 +312,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LoginPageNotes = a.LoginPageNotes,
                                                   SupportActivated = a.SupportActivated,
                                                   SupportEmail = a.SupportEmail,
-                                                  TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                                                   IsMultiPackage = a.IsMultiPackage,
                                                   Technology = a.Technology,
                                                   MobileLastDate = a.MobileLastDate,
@@ -485,10 +324,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   RegisteredAirlines = a.RegisteredAirlines,
                                                   PendingAirlines = a.PendingAirlines,
                                                   EnableBranding = a.EnableBranding,
-                                                  EnableExportToExcel = a.EnableExportToExcel,
-                                                  ActivatePrivateSite = a.ActivatePrivateSite,
-                                                  ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
-                                                  DeclarationMessage = a.DeclarationMessage,
                                                   ContactEmail = a.ContactEmail,
                                                   CustomerURL = a.CustomerURL,
                                                   HideSharedlogistics = a.HideSharedlogistics,
@@ -506,57 +341,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                                   MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                   TotalPrice = a.TotalPrice,
-                                                  SupportDomain = a.SupportDomain,
-                                                  TotalNumberOfUsers = a.TotalNumberOfUsers,
-                                                  TotalFreeUsers = a.TotalFreeUsers,
-                                                  AveragePrice = a.AveragePrice,
-                                                  TotalPaymentamount = a.TotalPaymentamount,
-                                                  MainColor = a.MainColor,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
-                                                  SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
-                                                  TertiaryColor = a.TertiaryColor,
-                                                  BackgroundId = a.BackgroundId,
-                                                  MobileBackgroundId = a.MobileBackgroundId,
-                                                  ComapnylogoId = a.ComapnylogoId,
-                                                  InvertedLogoId = a.InvertedLogoId,
-                                                  BrowserIconId = a.BrowserIconId,
-                                                  ShipmentHeaderImageId = a.ShipmentHeaderImageId,
-                                                  PermissionBuildMonths = a.PermissionBuildMonths,
-                                                  NoPaymentForChildTenants = a.NoPaymentForChildTenants,
-                                                  LastEbookingSentDate = a.LastEbookingSentDate,
-                                                  LastSISentDate = a.LastSISentDate,
-                                                  NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
-                                                  NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
-                                                  LastContainerStatusReceived = a.LastContainerStatusReceived,
-                                                  LastTariffUpdateDate = a.LastTariffUpdateDate,
-                                                  LastTariffUsageDate = a.LastTariffUsageDate,
-                                                  LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
-                                                  LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
-                                                  ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
-                                                  WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
-                                                  CargoTokenTimeout = a.CargoTokenTimeout,
-                                                  IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                                                  ShowMoneyOrder = a.ShowMoneyOrder,
-
-                                                  DigitalPortalLastDate = a.DigitalPortalLastDate,
-                                                  DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
-                                                  DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
-                                                  DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                                                  DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                                                  DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
-                                                  DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
-                                                  DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                                                  DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                                                  CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
-                                                  CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
-                                                  LogoURL = a.LogoURL,
-                                                  ServiceAgreementURL = a.ServiceAgreementURL,
-												  SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-
-                                                  ExportLoginCredintial=a.ExportLoginCredintial,
-                                                  ExportTenant=a.ExportTenant,
-												  MinutsTimeOutSession = a.MinutsTimeOutSession,
-												  AmitalApiToken = a.AmitalApiToken
-											  }).FirstOrDefault();
+                                              }).FirstOrDefault();
 
                 if (tenant1 != null)
                 {
@@ -576,11 +361,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                         tenant1.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                         tenant1.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
-                        tenant1.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                         tenant1.IsTestTenant = ten.IsTestTenant;
-                        tenant1.IsHybrid = ten.IsHybrid;
-                        tenant1.EcommerceSupportEmail = ten.EcommerceSupportEmail;
-                        tenant1.EcommerceTenant = ten.EcommerceTenant;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -703,7 +484,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LoginPageNotes = a.LoginPageNotes,
                         SupportActivated = a.SupportActivated,
                         SupportEmail = a.SupportEmail,
-                        TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                         IsMultiPackage = a.IsMultiPackage,
                         Technology = a.Technology,
                         MobileLastDate = a.MobileLastDate,
@@ -716,10 +496,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         RegisteredAirlines = a.RegisteredAirlines,
                         PendingAirlines = a.PendingAirlines,
                         EnableBranding = a.EnableBranding,
-                        EnableExportToExcel = a.EnableExportToExcel,
-                        ActivatePrivateSite = a.ActivatePrivateSite,
-                        ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
-                        DeclarationMessage = a.DeclarationMessage,
                         ContactEmail = a.ContactEmail,
                         CustomerURL = a.CustomerURL,
                         HideSharedlogistics = a.HideSharedlogistics,
@@ -737,43 +513,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                         MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                         TotalPrice = a.TotalPrice,
-                        SupportDomain = a.SupportDomain,
-                        TotalNumberOfUsers = a.TotalNumberOfUsers,
-                        TotalFreeUsers = a.TotalFreeUsers,
-                        AveragePrice = a.AveragePrice,
-                        TotalPaymentamount = a.TotalPaymentamount,
-                        NoPaymentForChildTenants = a.NoPaymentForChildTenants,
-                        LastEbookingSentDate = a.LastEbookingSentDate,
-                        LastSISentDate = a.LastSISentDate,
-                        NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
-                        NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
-                        LastContainerStatusReceived = a.LastContainerStatusReceived,
-                        LastTariffUpdateDate = a.LastTariffUpdateDate,
-                        LastTariffUsageDate = a.LastTariffUsageDate,
-                        LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
-                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
-                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
-                        WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
-                        CargoTokenTimeout = a.CargoTokenTimeout,
-                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                        ShowMoneyOrder = a.ShowMoneyOrder,
-
-                        DigitalPortalLastDate = a.DigitalPortalLastDate,
-                        DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
-                        DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
-                        DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                        DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                        DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
-                        DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
-                        DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                        DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                        CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
-                        CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
-                        LogoURL = a.LogoURL,
-                        ServiceAgreementURL = a.ServiceAgreementURL,
-						SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-						MinutsTimeOutSession = a.MinutsTimeOutSession,
-					});
+                    });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
         {
@@ -872,7 +612,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     TenantTypeCode = entity.TenantTypeCode,
                     TenantConnectedToAirlineCode = entity.TenantConnectedToAirlineCode,
                     SupportEmail = entity.SupportEmail,
-                    TranzilaPaymentWithBit=entity.TranzilaPaymentWithBit,
                     SupportActivated = entity.SupportActivated,
                     IsMultiPackage = entity.IsMultiPackage,
                     Technology = entity.Technology,
@@ -886,9 +625,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     RegisteredAirlines = entity.RegisteredAirlines,
                     PendingAirlines = entity.PendingAirlines,
                     EnableBranding = entity.EnableBranding,
-                    EnableExportToExcel = entity.EnableExportToExcel,
-                    ActivatedforDeclarationApprove = entity.ActivatedforDeclarationApprove,
-                    DeclarationMessage = entity.DeclarationMessage,
                     ContactEmail = entity.ContactEmail,
                     CustomerURL = entity.CustomerURL,
                     HideSharedlogistics = entity.HideSharedlogistics,
@@ -904,38 +640,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     IsINTTRAOnlyDemo = entity.IsINTTRAOnlyDemo,
                     MainAdditionalPackageApplied = entity.MainAdditionalPackageApplied,
                     TotalPrice = entity.TotalPrice,
-                    NoPaymentForChildTenants = entity.NoPaymentForChildTenants,
-                    LastEbookingSentDate = entity.LastEbookingSentDate,
-                    LastSISentDate = entity.LastSISentDate,
-                    NumberOfBookingSentLastWeek = entity.NumberOfBookingSentLastWeek,
-                    NumberOfSISentLastWeek = entity.NumberOfSISentLastWeek,
-                    LastContainerStatusReceived = entity.LastContainerStatusReceived,
-                    LastTariffUpdateDate = entity.LastTariffUpdateDate,
-                    LastTariffUsageDate = entity.LastTariffUsageDate,
-                    LastWeekCreatedTariffs = entity.LastWeekCreatedTariffs,
-                    LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
-                    ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
-                    WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
-                    IsContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid,
-
-
-                    DigitalPortalLastDate = entity.DigitalPortalLastDate,
-                    DigitalPortalTotalLastWeek = entity.DigitalPortalTotalLastWeek,
-                    DigitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth,
-                    DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
-                    DigitalPortalMobTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
-
-                    DPArchiveShipmentCreateFilter = entity.DPArchiveShipmentCreateFilter,
-                    DPArchiveShipmentArrivalFilter = entity.DPArchiveShipmentArrivalFilter,
-                    DPArchiveShipmentDepartFilter = entity.DPArchiveShipmentDepartFilter,
-                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
-                    ShowMoneyOrder = entity.ShowMoneyOrder,
-                    CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
-                    CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
-                    LogoURL = entity.LogoURL,
-                    ServiceAgreementURL = entity.ServiceAgreementURL,
-					MinutsTimeOutSession = entity.MinutsTimeOutSession,
-				};
+                };
             }
 
             return myResult;
@@ -1037,7 +742,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        TenantConnectedToAirlineCode = a.TenantConnectedToAirlineCode,
                        SupportActivated = a.SupportActivated,
                        SupportEmail = a.SupportEmail,
-                       TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                        IsMultiPackage = a.IsMultiPackage,
                        MobileLastDate = a.MobileLastDate,
                        MobileTotalLastWeek = a.MobileTotalLastWeek,
@@ -1046,10 +750,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        ShardLogisticTotalLastWeek = a.ShardLogisticTotalLastWeek,
                        ShardLogisticTotalLastMonth = a.ShardLogisticTotalLastMonth,
                        EnableBranding = a.EnableBranding,
-                       EnableExportToExcel = a.EnableExportToExcel,
-                       ActivatePrivateSite = a.ActivatePrivateSite,
-                       ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
-                       DeclarationMessage = a.DeclarationMessage,
                        ContactEmail = a.ContactEmail,
                        CustomerURL = a.CustomerURL,
                        HideSharedlogistics = a.HideSharedlogistics,
@@ -1066,38 +766,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                        MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                        TotalPrice = a.TotalPrice,
-                       NoPaymentForChildTenants = a.NoPaymentForChildTenants,
-                       LastEbookingSentDate = a.LastEbookingSentDate,
-                       LastSISentDate = a.LastSISentDate,
-                       NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
-                       NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
-                       LastContainerStatusReceived = a.LastContainerStatusReceived,
-                       LastTariffUpdateDate = a.LastTariffUpdateDate,
-                       LastTariffUsageDate = a.LastTariffUsageDate,
-                       LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
-                       LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
-                       ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
-                       WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
-                       IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                       PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
-                       PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : null : null,
-                       ShowMoneyOrder = a.ShowMoneyOrder,
-                       DigitalPortalLastDate = a.DigitalPortalLastDate,
-                       DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
-                       DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
-                       DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                       DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                       DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
-                       DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
-                       DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                       DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                       CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
-                       CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
-                       LogoURL = a.LogoURL,
-                       ServiceAgreementURL = a.ServiceAgreementURL,
-					   SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-					   MinutsTimeOutSession = a.MinutsTimeOutSession,
-				   };
+                   };
         }
 
         public int ComputeDaysLeft(DateTime? date)
@@ -1130,22 +799,35 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             TenantManagementLicenseQuery licenseQuery = new TenantManagementLicenseQuery(entityPM.Id);
             entityPM.TenantManagementLicenses = licenseQuery.GetTenantManagementLicensePMs(entityPM.Id).ToList();
 
-            if (entityPM.MainAdditionalPackageApplied)
+            if (entityPM.IsMultiPackage)
             {
-                if (entityPM.PackagesCodes_PK == null)
-                {
-                    entityPM.PackagesCodes_PK = new List<string>();
-                }
+                List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
+                entityPM.PackagesCodes_PK = licensesCodes;
 
-                if (entityPM.PackagesCodes_BS == null)
-                {
-                    entityPM.PackagesCodes_BS = new List<string>();
-                }
+                PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
+                entityPM.PackagesCodes_BS = (from a in connectedPackageRepository.context.PackageConnectedPackages
+                                             where licensesCodes.Contains(a.PackageCode)
+                                             group a by a.ConnectedPackageCode into g
+                                             select g.Key).ToList();
 
-                if (entityPM.PackageCode != null)
+            }
+
+            if (entityPM.PackageCode != null)
+            {
+                PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
+
+                if (!entityPM.IsMultiPackage)
                 {
-                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
-                    Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
+                    if (entityPM.PackagesCodes_PK == null)
+                    {
+                        entityPM.PackagesCodes_PK = new List<string>();
+                    }
+
+                    if (entityPM.PackagesCodes_BS == null)
+                    {
+                        entityPM.PackagesCodes_BS = new List<string>();
+                    }
 
                     if (pckg.FeaturePackageTypeCode == "BS")
                     {
@@ -1165,78 +847,13 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         entityPM.PackagesCodes_BS = myCodes;
                     }
                 }
-
-                if (entityPM.IsMultiPackage)
-                {
-                    List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
-                    entityPM.PackagesCodes_PK.AddRange(licensesCodes);
-
-                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
-                    entityPM.PackagesCodes_BS.AddRange((from a in connectedPackageRepository.context.PackageConnectedPackages
-                                                        where licensesCodes.Contains(a.PackageCode)
-                                                        group a by a.ConnectedPackageCode into g
-                                                        select g.Key).ToList());
-                }
             }
 
-            else
+            if (entityPM.TemporalPackageCode != null)
             {
-                if (entityPM.IsMultiPackage)
-                {
-                    List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
-                    entityPM.PackagesCodes_PK = licensesCodes;
-
-                    PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
-                    entityPM.PackagesCodes_BS = (from a in connectedPackageRepository.context.PackageConnectedPackages
-                                                 where licensesCodes.Contains(a.PackageCode)
-                                                 group a by a.ConnectedPackageCode into g
-                                                 select g.Key).ToList();
-
-                }
-
-                if (entityPM.PackageCode != null)
-                {
-                    PackageRepository pckgRep = new PackageRepository(tenant);
-                    Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
-
-                    if (!entityPM.IsMultiPackage)
-                    {
-                        if (entityPM.PackagesCodes_PK == null)
-                        {
-                            entityPM.PackagesCodes_PK = new List<string>();
-                        }
-
-                        if (entityPM.PackagesCodes_BS == null)
-                        {
-                            entityPM.PackagesCodes_BS = new List<string>();
-                        }
-
-                        if (pckg.FeaturePackageTypeCode == "BS")
-                        {
-                            entityPM.PackagesCodes_BS.Add(pckg.Code);
-                        }
-
-                        else
-                        {
-                            entityPM.PackagesCodes_PK.Add(pckg.Code);
-
-                            PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
-                            List<string> myCodes = (from a in connectedPackageRepository.context.PackageConnectedPackages
-                                                    where pckg.Code == a.PackageCode
-                                                    group a by a.ConnectedPackageCode into g
-                                                    select g.Key).ToList();
-
-                            entityPM.PackagesCodes_BS = myCodes;
-                        }
-                    }
-                }
-
-                if (entityPM.TemporalPackageCode != null)
-                {
-                    PackageRepository pckgRep = new PackageRepository(entityPM.Id);
-                    Package pckg = pckgRep.GetSinglePackage(entityPM.TemporalPackageCode);
-                    entityPM.TemporalPackageName = pckg.Name;
-                }
+                PackageRepository pckgRep = new PackageRepository(entityPM.Id);
+                Package pckg = pckgRep.GetSinglePackage(entityPM.TemporalPackageCode);
+                entityPM.TemporalPackageName = pckg.Name;
             }
         }
 
@@ -1328,7 +945,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              LoginPageNotes = a.LoginPageNotes,
                                              SupportActivated = a.SupportActivated,
                                              SupportEmail = a.SupportEmail,
-                                             TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                                              IsMultiPackage = a.IsMultiPackage,
                                              Technology = a.Technology,
                                              MobileLastDate = a.MobileLastDate,
@@ -1341,10 +957,6 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              RegisteredAirlines = a.RegisteredAirlines,
                                              PendingAirlines = a.PendingAirlines,
                                              EnableBranding = a.EnableBranding,
-                                             EnableExportToExcel = a.EnableExportToExcel,
-                                             ActivatePrivateSite = a.ActivatePrivateSite,
-                                             ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
-                                             DeclarationMessage = a.DeclarationMessage,
                                              ContactEmail = a.ContactEmail,
                                              CustomerURL = a.CustomerURL,
                                              HideSharedlogistics = a.HideSharedlogistics,
@@ -1360,46 +972,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
                                              MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                              TotalPrice = a.TotalPrice,
-                                             SupportDomain = a.SupportDomain,
-                                             TotalNumberOfUsers = a.TotalNumberOfUsers,
-                                             TotalFreeUsers = a.TotalFreeUsers,
-                                             AveragePrice = a.AveragePrice,
-                                             TotalPaymentamount = a.TotalPaymentamount,
-                                             NoPaymentForChildTenants = a.NoPaymentForChildTenants,
-                                             LastEbookingSentDate = a.LastEbookingSentDate,
-                                             LastSISentDate = a.LastSISentDate,
-                                             NumberOfBookingSentLastWeek = a.NumberOfBookingSentLastWeek,
-                                             NumberOfSISentLastWeek = a.NumberOfSISentLastWeek,
-                                             LastContainerStatusReceived = a.LastContainerStatusReceived,
-                                             LastTariffUpdateDate = a.LastTariffUpdateDate,
-                                             LastTariffUsageDate = a.LastTariffUsageDate,
-                                             LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
-                                             LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
-                                             ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
-                                             WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
-                                             CargoTokenTimeout = a.CargoTokenTimeout,
-                                             SecondaryColor = a.SecondaryColor,
-                                             TertiaryColor = a.TertiaryColor,
-
-                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
-                                             ComapnylogoId = a.ComapnylogoId,
-                                             ShowMoneyOrder=a.ShowMoneyOrder,
-                                             DigitalPortalLastDate = a.DigitalPortalLastDate,
-                                             DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
-                                             DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
-                                             DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
-                                             DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
-                                             DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
-                                             DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
-                                             DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
-                                             DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
-                                             CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
-                                             CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
-                                             LogoURL = a.LogoURL,
-                                             ServiceAgreementURL = a.ServiceAgreementURL,
-											 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
-											 MinutsTimeOutSession = a.MinutsTimeOutSession,
-										 }).FirstOrDefault();
+                                         }).FirstOrDefault();
 
             return tenant;
         }
@@ -1410,11 +983,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                select new TenantManagementDW()
                                                {
                                                    TenantNumber = a.Id,
-                                                   FreeUsers = a.TotalFreeUsers,
+                                                   FreeUsers = a.FreeUsers,
                                                    IsRecurring = a.IsRecurring,
-                                                   LicensePrice = a.AveragePrice,
+                                                   LicensePrice = a.LicensePrice,
                                                    Notes = a.Notes,
-                                                   NumberOfUsers = a.TotalNumberOfUsers == null ? 0 : a.TotalNumberOfUsers.Value,
+                                                   NumberOfUsers = a.NumberOfUsers,
                                                    PaidUntilDate = a.PaidUntilDate,
                                                    PaymentChannel = a.PaymentChannel != null ? a.PaymentChannel.Name : "",
                                                    PaymentCurrency = a.PaymentCurrency != null ? a.PaymentCurrency.Name : "",
@@ -1425,9 +998,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                    MainPackage = a.PackageName,
                                                    CRMYN = a.PackageCode == "LOGI" ? "Y" : "N",
                                                    EAWBYN = a.IsAWBStockPrepaid || a.PackageCode == "EAWB" || a.PackageCode == "BUBK" ? "Y" : "N",
-                                                   MainPackageNumberOfUsers = a.MainAdditionalPackageApplied ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : (!a.IsMultiPackage ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0),
-                                                   CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
-                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? (a.NumberOfUsers == null ? 0 : a.NumberOfUsers.Value) : 0,
+                                                   MainPackageNumberOfUsers = !a.IsMultiPackage ? a.NumberOfUsers : 0,
+                                                   CRMNumberOfUsers = !a.IsMultiPackage && a.PackageCode == "LOGI" ? a.NumberOfUsers : 0,
+                                                   EAWBNumberOfUsers = !a.IsMultiPackage && (a.PackageCode == "EAWB" || a.PackageCode == "BUBK") ? a.NumberOfUsers : 0,
                                                }).OrderBy(d => d.TenantNumber).Skip(skip).Take(take).ToList();
 
             List<int> tenantManagementIds = new List<int>();
@@ -1479,13 +1052,13 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                         #region Main Package Number of User
                         TenantManagementLicensePM package = multiPackage.Where(d => d.PackageCode != "EAWB" || d.PackageCode != "LOGI").OrderByDescending(d => d.NumberOfUsers).FirstOrDefault();
-                        if (package != null) item.MainPackageNumberOfUsers = package.NumberOfUsers != null ? (int)package.NumberOfUsers : 0;
+                        if (package != null) item.MainPackageNumberOfUsers = (int)package.NumberOfUsers;
 
                         #endregion
 
                         #region CRM  Number of User
                         TenantManagementLicensePM crmPackage = multiPackage.Where(d => d.PackageCode == "LOGI").FirstOrDefault();
-                        if (crmPackage != null) item.CRMNumberOfUsers = crmPackage.NumberOfUsers != null ? (int)crmPackage.NumberOfUsers : 0;
+                        if (crmPackage != null) item.CRMNumberOfUsers = (int)crmPackage.NumberOfUsers;
                         else item.CRMNumberOfUsers = 0;
 
 
@@ -1493,7 +1066,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
                         #region E-AWB  Number of User
                         TenantManagementLicensePM eAWBBackage = multiPackage.Where(d => d.PackageCode == "EAWB" || d.PackageCode == "BUBK").FirstOrDefault();
-                        if (eAWBBackage != null) item.EAWBNumberOfUsers = eAWBBackage.NumberOfUsers != null ? (int)eAWBBackage.NumberOfUsers : 0;
+                        if (eAWBBackage != null) item.EAWBNumberOfUsers = (int)eAWBBackage.NumberOfUsers;
                         else item.EAWBNumberOfUsers = 0;
 
 
@@ -1518,159 +1091,5 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return tenantManagementLicensePM != null ? true : false;
         }
-
-        public string GetSystemDomain(int id)
-        {
-            string fromEmail = "no-reply@";
-            fromEmail +=(IsLogboxEnvironment() ? GetLogboxDomainByTenant(id) :"amital.co.il" );
-
-            return fromEmail;
-        }
-
-        private bool IsCloudEnvironment()
-        {
-            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
-            bool isCloudEnvironment = workEnvironment == "cloud";
-            return isCloudEnvironment;
-        }
-
-        private bool IsLogboxEnvironment()
-        {
-            bool isLogboxEnvironment = SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
-            return isLogboxEnvironment;
-        }
-
-        private string GetLogboxDomainByTenant(int tenantId)
-        {
-            string logboxDomain = "logbox.co.il";
-            string privateLabelDomain = GetPrivateLableDomain(tenantId);
-            if (!string.IsNullOrEmpty(privateLabelDomain))
-            {
-                return privateLabelDomain;
-            }
-            return logboxDomain;
-        }
-
-        private string GetPrivateLableDomain(int tenant)
-        {
-            string privateLabelId = GetPrivateLabelIdByTenant(tenant);
-            string privateLabelDomain = GetPrivateLableDomainById(privateLabelId);
-
-            return privateLabelDomain;
-        }
-
-        private string GetPrivateLableDomainById(string id)
-        {
-            string privateLabelDomain = "";
-            if (!string.IsNullOrEmpty(id))
-            {
-                privateLabelDomain = (from a in repository.context.TenantManagmentPrivateLabels
-                                      where a.Id == id
-                                      select a.PrivateLabelDomain).FirstOrDefault();
-            }
-
-            return privateLabelDomain;
-        }
-
-        private string GetPrivateLabelIdByTenant(int tenant)
-        {
-            return (from a in repository.context.GlobalTenants
-                    where a.Id == tenant
-                    select a.PrivateLabelId).FirstOrDefault();
-        }	
-
-		public List<TenantManagementPM> GetByTenantNumbers(List<int> tenantNumbers)
-        {
-            IQueryable<TenantManagementLicensePM> tenantManagementLicenses = GetTenantManagementLicensesByTenantNumbers(tenantNumbers);
-
-            List<TenantManagementPM> tenantManagements = repository.context.TenantManagements.Where(a => tenantNumbers.Contains(a.Id))
-                .Select(a => new TenantManagementPM()
-                {
-                    Id = a.Id,
-                    Name = a.Name,
-                    PackageCode = a.PackageCode,
-                    PackageName = a.PackageName,
-                    TotalPrice = a.TotalPrice,
-                    SupportDomain = a.SupportDomain,
-                    TotalNumberOfUsers = a.TotalNumberOfUsers,
-                    TotalFreeUsers = a.TotalFreeUsers,
-                    AveragePrice = a.AveragePrice,
-                    TotalPaymentamount = a.TotalPaymentamount,
-                    ResellerCommission = a.ResellerCommission,
-                    PaymentCurrencyCode = a.PaymentCurrencyCode,
-                    MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
-                    IsMultiPackage = a.IsMultiPackage,
-                    NumberOfUsers = a.NumberOfUsers,
-                    TenantManagementLicenses = tenantManagementLicenses.Where(b => b.Tenant == a.Id).ToList(),
-                    PaymentChannelCode = a.PaymentChannelCode
-                }).ToList();
-
-            return tenantManagements;
-        }
-
-        private IQueryable<TenantManagementLicensePM> GetTenantManagementLicensesByTenantNumbers(List<int> tenantNumbers)
-        {
-            return repository.context.TenantManagementLicenses.Where(a => tenantNumbers.Contains(a.Tenant))
-                .Select(a => new TenantManagementLicensePM()
-                {
-                    Id = a.Id,
-                    Tenant = a.Tenant,
-                    PackageCode = a.PackageCode,
-                    NumberOfUsers = a.NumberOfUsers,
-                    FreeUsers = a.FreeUsers,
-                    Price = a.Price,
-                    TotalPrice = a.TotalPrice,
-                });
-        }
-
-        public List<TenantManagement> GetWhereHavePermissionBuildMonths()
-        {
-            IQueryable<TenantManagement> q;
-            if (tenant == 0)
-            {
-                q = from a in repository.context.TenantManagements
-                    where a.PermissionBuildMonths != null
-                    select a;
-            }
-            else
-            {
-                q = from a in repository.context.TenantManagements
-                    where a.Id == tenant && a.PermissionBuildMonths != null
-                    select a;
-            }
-
-            return q.ToList();
-        }
-
-        public bool GetSearchAbsoluteValuePublicByTenant(int tenant)
-        {
-            string entityName = "GetSearchAbsoluteValuePublicByTenant" + tenant;
-
-			bool isSearchAbsoluteValuePublic = false;
-
-            if (HttpContext.Current != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null) { 
-
-					isSearchAbsoluteValuePublic = (from a in repository.context.TenantManagements
-                            where a.Id == tenant
-                            select a.SearchAbsoluteValuePublic).FirstOrDefault();
-
-					CacheManager.CacheWrapper.Insert(entityName, isSearchAbsoluteValuePublic);
-
-				}
-				else
-			    {
-				   isSearchAbsoluteValuePublic = (bool)CacheManager.CacheWrapper.Get(entityName);
-			    }
-		    }
-            else
-            {
-				isSearchAbsoluteValuePublic = (from a in repository.context.TenantManagements
-											   where a.Id == tenant
-											   select a.SearchAbsoluteValuePublic).FirstOrDefault();
-			}
-            return isSearchAbsoluteValuePublic;
-        }	
-	}
+    }
 }

@@ -1,4 +1,4 @@
-export class ChartingDataClass {
+﻿export class ChartingDataClass {
 
     private id: string;
     private groupedId: string;
@@ -225,46 +225,9 @@ export class ChartingDataClass {
         this.timeProperty = value;
     }
 
-    private countryName: string;
-    public get CountryName() { return this.countryName; }
-    public set CountryName(value: string) {
-        this.countryName = value;
-    }
 
-    private countryId: string;
-    public get CountryId() { return this.countryId; }
-    public set CountryId(value: string) {
-        this.countryId = value;
-    }
 
-    private total: number;
-    public get Total() { return this.total; }
-    public set Total(value: number) {
-        this.total = value;
-    }
 
-    private count_All: number;
-    public get Count_All() { return this.count_All; }
-    public set Count_All(value: number) {
-        this.count_All = value;
-    }
 
-    private count_Converted: number;
-    public get Count_Converted() { return this.count_Converted; }
-    public set Count_Converted(value: number) {
-        this.count_Converted = value;
-    }
 
-    private transportModeId: string;
-    public get TransportModeId() { return this.transportModeId; }
-    public set TransportModeId(value: string) {
-        this.transportModeId = value;
-    }
-
-    private directionId: string;
-    public get DirectionId() { return this.directionId; }
-    public set DirectionId(value: string) {
-        this.directionId = value;
-    }
-    
 }

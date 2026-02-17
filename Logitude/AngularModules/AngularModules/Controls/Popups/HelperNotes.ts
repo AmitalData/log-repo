@@ -6,9 +6,9 @@ import {ShipmentPM} from '../../Shipment/EntityPMs/ShipmentPM';
 
 @Component({
     selector: "HelperNotes",
-    
+    moduleId: module.id,
     templateUrl: './HelperNotes.html',
-    inputs: ['Title', 'EntityTitle', 'Text', 'IconCode', 'IsEnabled', 'ShipmentPM', 'QuotePM','IsCustom'],
+    inputs: ['Title', 'EntityTitle', 'Text', 'IconCode', 'IsEnabled', 'ShipmentPM', 'QuotePM'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -25,7 +25,6 @@ export class HelperNotes implements OnInit, OnDestroy {
     public QuotePM: QuotePM;
     public ShipmentPM: ShipmentPM;
     public IsEnabled: boolean = true;
-    public IsCustom: boolean = false;
     public IconCode: string;
     public IconPath: string;
     public IconOpacity: number = 1;
@@ -80,12 +79,6 @@ export class HelperNotes implements OnInit, OnDestroy {
             case "B": {
                 file = "Blue.png";
                 this.IconOpacity = AppTool.IsNullOrEmpty(this.Text) ? 0.5 : 1;
-                break;
-            }
-
-            case "R": {
-                file = AppTool.IsNullOrEmpty(this.Text) ? "Rosie.png" : "Or.png";
-                this.IconOpacity = 1;
                 break;
             }
 
@@ -242,8 +235,6 @@ export class HelperNotes implements OnInit, OnDestroy {
 
     public NotesList: HelperNoteItem[];
     SetNotesList() {
-        if(this.IsCustom)
-            return;
         if (this.QuotePM) {
             this.BuildQuoteNotesList();
         }

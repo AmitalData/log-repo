@@ -28,16 +28,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string SearchFields { get; set; }
         [DataMember]
         public bool IsHybrid { get; set; }
-        [DataMember]
         public string DisplayName { get; set; }
-        [DataMember]
-        public int? StatusLocalWeight { get; set; }
-        [DataMember]
-        public string EntityStatusTypeCode { get; set; }
-        [DataMember]
-        public bool  AllowPartial { get; set; }
-        [DataMember]
-        public bool IsDigitalPortal { get; set; }
-        public bool IsFromWorkerRole { get; set; }
     }
 }

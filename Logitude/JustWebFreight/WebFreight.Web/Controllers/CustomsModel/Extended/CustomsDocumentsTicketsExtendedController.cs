@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -89,109 +89,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
-        }
-        public HttpResponseMessage GetIsConnectDec(string documentsfilingid,string entityId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                   
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-
-
-
-                        ICustomContext MyContext = CustomContext.GetContext(tenant);
-                        CustomsDocumentsTicketQueryService queryService = new CustomsDocumentsTicketQueryService(MyContext);
-                    
-
-                        List<string> decConnect= queryService.GetIsConnectDec(documentsfilingid, entityId);
-                       var conDec = new ConnectedDeclarations();
-                        conDec.decConnect = decConnect;
-                      
-                        return Request.CreateResponse(HttpStatusCode.OK, conDec);
-                   
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-
-        public HttpResponseMessage GetIsConnectTicket(string documentsfilingid, string entityId, int tenant)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-
-
-                    ICustomContext MyContext = CustomContext.GetContext(tenant);
-                    CustomsDocumentsTicketQueryService queryService = new CustomsDocumentsTicketQueryService(MyContext);
-                    
-
-                    List<string> decConnect = queryService.GetDocConnectTicket(documentsfilingid, entityId, tenant);
-                    var conDec = new ConnectedDeclarations();
-                    conDec.decConnect = decConnect;
-
-                    return Request.CreateResponse(HttpStatusCode.OK, conDec);
-
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-
-        public HttpResponseMessage GetIsSendToCustomsAndNotConnectTicket(string documentsfilingid, int tenant, string entityId)
-        {
-           
-                try
-                {
-
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                    ICustomContext MyContext = CustomContext.GetContext(tenant);
-                    CustomsDocumentsTicketQueryService queryService = new CustomsDocumentsTicketQueryService(MyContext);
-
-                    bool response = queryService.IsSendToCustomsAndNotConnectTicket(documentsfilingid, entityId, tenant);
-                    
-
-                    return Request.CreateResponse(HttpStatusCode.OK, response);
-
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-           
-        }
-        public class ConnectedDeclarations
-        {
-            public List<string> decConnect { get; set; }
         }
     }
 }

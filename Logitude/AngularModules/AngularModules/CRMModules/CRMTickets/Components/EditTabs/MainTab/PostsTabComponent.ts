@@ -2,7 +2,7 @@
 
 @Component({
     selector: 'DetailsTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './PostsTabComponent.html',
 })
 

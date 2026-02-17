@@ -7,7 +7,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'CRMComponent',
-    
+    moduleId: module.id,
     templateUrl: './CRMWorkspaceComponent.html',
     providers: [EntityResourceService],
 })
@@ -54,7 +54,7 @@ export class CRMWorkspaceComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -87,7 +87,7 @@ export class CRMWorkspaceComponent {
 
                         case "OVE": {
                             if (this.Page_OVE == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
                                     this._entityResourceService.getEntityResourceByTableName("Opportunity", 0).subscribe(response2 => {
                                         SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/OverviewWorkspaceComponent', myLocation.viewContainerRef)
                                             .then(cmpRef => {
@@ -107,13 +107,11 @@ export class CRMWorkspaceComponent {
 
                         case "CUS": {
                             if (this.Page_CUS == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("AccountingNote",0).subscribe((response: any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
                                     SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/CustomerWorkspaceComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_CUS = cmpRef.instance;
-                                            });
-                                    });
+                                        });
                                 });
                             }
 
@@ -133,7 +131,7 @@ export class CRMWorkspaceComponent {
 
                         case "ACT": {
                             if (this.Page_ACT == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
                                     SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/ActivityWorkspaceComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_ACT = cmpRef.instance;
@@ -149,7 +147,7 @@ export class CRMWorkspaceComponent {
 
                         case "OPP": {
                             if (this.Page_OPP == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Opportunity", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Opportunity", 0).subscribe(response => {
                                     SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/OpportunityWorkspaceComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_OPP = cmpRef.instance;
@@ -162,7 +160,7 @@ export class CRMWorkspaceComponent {
 
                         case "CON": {
                             if (this.Page_CON == null) {
-                                this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response => {
                                     SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/ContactWorkspaceComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.Page_CON = cmpRef.instance;

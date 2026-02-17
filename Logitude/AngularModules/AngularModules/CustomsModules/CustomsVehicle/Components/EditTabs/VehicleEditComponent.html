@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .FlipImgHoriz {
         transform: rotate(180deg);
     }
@@ -29,7 +29,7 @@
                                         <td style="vertical-align: top;">
                                             <ul>
                                                 <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.code" [class.SelectedMenuItem]="item.code === SelectedTabCode"
-                                                    [style.text-align]='right' id="{{item.code |IdGeneratorPipe}}">
+                                                    [style.text-align]='right'>
                                                     <div style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px; right: 5px; padding-left: 5px;">{{item.textCode | TextCodeTranslationPipe}}</div>
                                                     <img *ngIf="SelectedTabCode == item.code" class="LeftCenter FlipImgHoriz" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
 
@@ -50,31 +50,27 @@
                                     <div class="ScrollContent">
                                         <div class="FillParent" style="padding:7px;">
 
-
-                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'General'" id="General">
-                                                <div LocationDirective Code="General" id="GeneralComponent"></div>
+                                            
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'General'">
+                                                <div LocationDirective Code="General"></div>
                                             </div>
 
+                                            
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'VehicleMoreDetailsTabComponent'">
                                                 <div LocationDirective Code="VehicleMoreDetailsTabComponent"></div>
                                             </div>
-
+                                            
                                             <div class="MediaStretch" [hidden]="SelectedTabCode != 'VehiclesOwnersAndSafetyTabComponent'">
                                                 <div LocationDirective Code="VehiclesOwnersAndSafetyTabComponent"></div>
                                             </div>
-
-                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'CustomsDocumentsComponent'">
-                                                <div LocationDirective Code="CustomsDocumentsComponent"></div>
-                                            </div>
-                                          
-
-<!--hello this is my adjustment-->
-
                                             
+
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </td>
                     </tr>
                 </table>
@@ -97,7 +93,7 @@
         </td>
 
         <td style="width: 57px;vertical-align: bottom;">
-            <button class="RedButton" (click)="OkButtonClicked()" id="OK-AddVehicle">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
         </td>
         <td style="width: 10px;vertical-align: bottom;">
             <div></div>

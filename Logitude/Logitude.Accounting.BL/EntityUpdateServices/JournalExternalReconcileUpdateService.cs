@@ -19,13 +19,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 case ChangeSetOperation.None:
                 case ChangeSetOperation.Insert:
-                case ChangeSetOperation.Delete:
                     break;
                 case ChangeSetOperation.Update:
-                
+                case ChangeSetOperation.Delete:
                 default:
-                    throw new ApplicationException(@"JournalExternalReconcilePM only insert allowed(so far 20190729 )
-from 20210630 delet also allowed ");
+                    throw new Exception("JournalExternalReconcilePM only insert allowed(so far 20190729 )");
                     break;
             }
             base.OnUpdating(entityPM);

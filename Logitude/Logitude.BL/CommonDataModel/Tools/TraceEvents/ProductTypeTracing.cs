@@ -2,8 +2,8 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

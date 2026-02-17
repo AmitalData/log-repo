@@ -69,7 +69,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 }
                 catch (Exception e)
                 {
-                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "RevaluationWorkerRole : Run() Method", null);
+                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "AccountingJournalApproveWR : Run() Method", null);
                     Thread.Sleep(10000);
                 }
 

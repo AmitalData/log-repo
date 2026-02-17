@@ -23,17 +23,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             entityParentPM.PaymentMethodLastLineNumber += 1;
             entityPM.Line = entityParentPM.PaymentMethodLastLineNumber;
         }
-        protected override void OnUpdating(DeclarationPaymentMethodPM entityPM)
-        {
-            if(entityPM.InternalBankId == "")
-            {
-                entityPM.InternalBankId = null;
-            }
-            base.OnUpdating(entityPM);
-        }
 
         protected override void AfterUpdating(DeclarationPaymentMethodPM entityPM,DeclarationPaymentPM entityParentPM)
         {
+            //if (entityPM.ChangeSetOp == ChangeSetOperation.Insert || entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+            //{
+            //    SubmitChanges();
+            //    ICustomContext context = MainContext as CustomContext;
+            //    DeclarationPaymentMethodRepository declarationPaymentMethodRepository = new DeclarationPaymentMethodRepository(context);
+            //    List<DeclarationPaymentMethod> declarationPaymentMethods = declarationPaymentMethodRepository.GetMulti(new DeclarationPaymentKeys() { DeclarationId = entityPM.DeclarationId });
+            //    declarationPaymentMethods = declarationPaymentMethods.OrderBy(d => d.Line).ToList();
+            //    int index = 0;
+            //    foreach (DeclarationPaymentMethod item in declarationPaymentMethods)
+            //    {
+            //        index += 1;
+            //        item.SequenceNumeric = index;
+            //        declarationPaymentMethodRepository.Update(item);
+            //        if (item.DeclarationId == entityPM.DeclarationId && item.Line == entityPM.Line)
+            //        {
+            //            entityPM.SequenceNumeric = item.SequenceNumeric;
+            //        }
+            //    }
+            //    declarationPaymentMethodRepository.SubmitChanges();
+            //}
             
         }
     }

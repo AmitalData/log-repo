@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityValidators
 {

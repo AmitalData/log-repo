@@ -1,10 +1,5 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.Data;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +19,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(CL_NG_8344_Web02_ClientSearchByIDDetail customResponse, ClientSearchRequestParams requestParams)
         {
             //Analyze message 8344- Client Search By ID Detail
-
-            var clientQueryService = new ClientQueryService(requestParams.Tenant);
-            ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
-            var clientUpdateService = new ClientUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-            var clientsPoaUpdateService = new ClientsPoaUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            string authorizedId = setting?.CustomsAgentId;
-            string authorizerId = null;
-            if (customResponse.GeneralDetails?.externalID != null) {
-                authorizerId = customResponse.GeneralDetails.externalID.Value.ToString();
-            }
-
             this.MyResponseData = new ClientSearchByIDResponseData();
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
@@ -158,14 +141,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         customerActivity.CustomerIndicationList = new List<CustomerIndication>();
                         foreach (var customerIndicationItem in customerActivityItem.CustomerIndication)
-                        {                            
+                        {
                             var customerIndication = new CustomerIndication();
                             customerIndication.CustomerIndicationTypeID = customerIndicationItem.CustomerIndicationTypeID.ToString();
                             customerIndication.CustomerIndicationTypeName = customerIndicationItem.CustomerIndicationTypeName;
                             if (customerIndicationItem.endDate != null && customerIndicationItem.endDateSpecified == true)
                             {
                                 customerIndication.EndDate = customerIndicationItem.endDate.Value.ToString("dd/MM/yyyy");
-                            }
+                            }                          
                             customerIndication.IsActive = customerIndicationItem.isActive;
                             customerIndication.StartDate = customerIndicationItem.startDate.Date.ToString("dd/MM/yyyy");
 
@@ -225,87 +208,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
+
             this.MyResponseData.UserMessage = "התקלנו נתונים ליבואן";
-
-
-            if (!string.IsNullOrEmpty(authorizerId) && !string.IsNullOrEmpty(authorizedId))
-            {
-                authorizerId = authorizerId.PadLeft(9, '0');
-                string clientId = clientQueryService.GetIdByCode(authorizerId.ToString(), requestParams.Tenant);
-
-                if (!string.IsNullOrEmpty(clientId))
-                {
-                    var client = clientQueryService.GetSingle(clientId, true, false);
-
-                    if (client != null)
-                    {
-                        client.ClientPoas
-                            .Where(cp => cp.AuthorizedExternalId == authorizedId && cp.AuthorizerExternalId == authorizerId).ToList()
-                            .ForEach(entity => entity.ChangeSetOp = ChangeSetOperation.Delete);
-                        if(customResponse.AuthorizedList!=null&& customResponse.AuthorizedList.Length > 0) { 
-                        customResponse.AuthorizedList.ToList().ForEach(poa =>
-                        {
-                            var entity = new ClientsPoaPM
-                            {
-                                AuthorizerPassportCountry = null,
-                                AuthorizedExternalId = authorizedId,
-                                AuthorizerExternalId = authorizerId,
-                                AuthorizerPassportNumber = null,
-                                AuthorizerPassportType = null,
-                                PoaID = poa.poaID.ToString(),
-                                StartDate = poa.startDate,
-                                EndDate = poa.endDate.GetValueOrDefault(),
-                                PoaAuthorizationType = poa.PoaAuthorizationTypeID.ToString(),
-                                PoaStatus = poa.poaStatus.ToString(),
-                                ClientId = clientId,
-                            };
-
-                            entity.ChangeSetOp = ChangeSetOperation.Insert;
-                            client.ClientPoas.Add(entity);
-                        });
-
-                        }
-
-
-                        client.ClientIndications
-                                   .Where(ci => ci.ClientId == client.Id && ci.Tenant == requestParams.Tenant).ToList()
-                                   .ForEach(entity => entity.ChangeSetOp = ChangeSetOperation.Delete);
-
-                        if (customResponse.CustomerActivity != null && customResponse.CustomerActivity.Length > 0)
-                        {
-                            foreach (var customerActivityItem in customResponse.CustomerActivity)
-                            {
-                                if (customerActivityItem.CustomerIndication != null && customerActivityItem.CustomerIndication.Length > 0)
-                                {
-
-
-                                   
-                                    customerActivityItem.CustomerIndication.ToList().ForEach(indication =>
-                                           {
-                                               var entity = new ClientIndicationPM
-                                               {
-
-                                                   ClientId = clientId,
-                                                   CustomerIndicationTypeID = indication.CustomerIndicationTypeID.ToString(),
-                                                   IsActive = indication.isActive,
-                                                   StartDate = indication.startDate.Date,
-                                                   EndDate = indication.endDate,
-
-
-                                               };
-
-                                               entity.ChangeSetOp = ChangeSetOperation.Insert;
-                                               client.ClientIndications.Add(entity);
-                                           });
-                                }
-                            }
-                        }
-                                               
-                      client.ChangeSetOp = ChangeSetOperation.Update;
-                      clientUpdateService.Update(client, true);
-                     }                  
-                }
-            }
         }
     }
 }

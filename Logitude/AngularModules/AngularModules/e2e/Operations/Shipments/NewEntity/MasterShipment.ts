@@ -26,20 +26,16 @@ export class MasterShipment {
 
         this.Helper.WaitByIdAndFill('Master_AgentReference1_1', ShipperRef);
         if (Direction == 'Domestic') {
-            this.Helper.ItemsPresent('Master_MainCarriageFromPortId');
             this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'eze');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Master_MainCarriageFromPortId', 'eze');
 
-            this.Helper.ItemsPresent('Master_MainCarriageToPortId');
             this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'eze');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Master_MainCarriageToPortId', 'eze');
         }
         else {
-            this.Helper.ItemsPresent('Master_MainCarriageFromPortId');
             this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'eze');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Master_MainCarriageFromPortId', 'eze');
 
-            this.Helper.ItemsPresent('Shipment_MainCarriageToPortId');
             this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'mvd');
             this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Master_MainCarriageToPortId', 'mvd');
 

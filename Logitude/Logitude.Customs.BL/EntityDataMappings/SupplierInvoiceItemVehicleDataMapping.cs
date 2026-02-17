@@ -41,16 +41,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(SupplierInvoiceItemVehiclePM entityPM, SupplierInvoiceItemVehicle entityPOCO)
         {
             CustomMappedPMProperties.Add(PMPropertyNames.RichbitFileStatus);
-            CustomMappedPMProperties.Add(PMPropertyNames.VehicleTypeName);
 
-            if (entityPOCO.VehicleTypeCode != null)
-            {
-                CargoIdentityQualifierQueryService cargoIdentityQualifierQueryService = new CargoIdentityQualifierQueryService(entityPOCO.Tenant);
-                CargoIdentityQualifierPM cargoIdentityQualifier = cargoIdentityQualifierQueryService.GetSingle(entityPOCO.VehicleTypeCode, false, true); ;
-                if (cargoIdentityQualifier != null)
-                    entityPM.VehicleTypeName = cargoIdentityQualifier.LocalName;
-                
-            }
 
             if (entityPOCO.RichbitFileNumber != null || entityPOCO.VehicleChassisNumber != null)
             {
@@ -58,14 +49,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 VehiclePM vehicle = vehicleQueryService.GetVehicleByVehicleChassisNumberOrRichbitFileNumber(entityPOCO.VehicleChassisNumber, entityPOCO.RichbitFileNumber, entityPOCO.Tenant);
                 if (vehicle != null)
                     entityPM.RichbitFileStatus = vehicle.StatusName;
-            }
-            if(entityPOCO.VehicleChassisNumber != null)
-            {
-                entityPM.VehicleChassisNumberSource = entityPOCO.VehicleChassisNumber;
-            }
-            if(entityPOCO.RichbitFileNumber != null)
-            {
-                entityPM.RichbitFileNumberSource = entityPOCO.RichbitFileNumber;
             }
         }
    }

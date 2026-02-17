@@ -31,11 +31,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             return (from record in context.Accounts where record.Tenant == tenant select record);
         }
-        public IQueryable<Account> GetAccounts1(int tenant)
-        {
-            return (from record in context.Accounts where record.Tenant == tenant select record);
-        }
-        
+
         public IQueryable<Account> GetAccountsByTenant(int tenant)
         {
             return (from record in context.Accounts where record.Tenant == tenant select record);

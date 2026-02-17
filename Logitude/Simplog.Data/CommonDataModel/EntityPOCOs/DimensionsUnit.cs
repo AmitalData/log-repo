@@ -10,7 +10,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [Key]
         public string Code { get; set; }
         public string Name { get; set; }
-        public string PrintAs { get; set; }
         public string SearchFields { get; set; }
         //public List<Shipment> Shipments { get; set; }
         //public List<Tenant> Tenants { get; set; }

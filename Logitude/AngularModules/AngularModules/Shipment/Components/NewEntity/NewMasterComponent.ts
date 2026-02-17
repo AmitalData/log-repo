@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool, DateTool, FormatTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -29,22 +29,13 @@ import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../Common/Services/AWBStackDomainService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
-import { ContactInputTemplateArgs } from '../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ShipmentSubTypeListService } from '../../services/standardlists/shipmentsubtypelistservice';
-import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
-import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { VesselList } from '../../../Common/EntityLists/VesselList';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './NewMasterComponent.html',
 })
 
-export class NewMasterComponent extends BaseComponent implements OnInit, AfterViewInit {
-    public ShipmentTypeName: string = null;
-
+export class NewMasterComponent extends BaseComponent implements OnInit {
     public TenantPM: TenantPM;
     public EntityPM: ShipmentPM;
     public DataContext = this;
@@ -56,13 +47,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     public OkButtonLabel: string;
     public AgentDependencyProperty1: string = "AG";
     public AgentDependencyProperty1IsList: boolean = false;
-    @ViewChild(ChildDirective) Child: ChildDirective;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsChooseVesselVisible: boolean = false;
-    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
-      this.SessionIndex = this.CurrentSession.SessionIndex;
+        this.SessionIndex = SessionLocator.Index;
         this.InitializeServices();
         this.TenantPM = SessionLocator.TenantPM;
         this.EntityPM = this.myShipmentPMService.GetNewEntityPM();
@@ -73,16 +62,16 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.AgentDependencyProperty1 = "CS,AG";
             this.AgentDependencyProperty1IsList = true;
         }
-    }
 
-    public SubTypeFeatureToggle: FeatureToggleList;
+        this.BuildAdditionalFields();
+    }
     public ScreenIsReady: boolean = false;
+
     ngOnInit() {
         var listservice: EntityListService = new EntityListService();
         var loadPr = listservice.getMock("Port");
         loadPr.then((res: any) => {
-            res.subscribe((resp: any) => {
-                this.SubTypeFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SUB")[0]; 
+            res.subscribe(resp => {
                 this.ScreenIsReady = true;
 
                 this.BuildFiltersLists();
@@ -92,35 +81,12 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                 }
 
                 this.LoadAllowedAirline();
-                this.LoadShipmentSubTypes();
             });
         });
 
     }
 
-    private GeneratedComponent: any;
-    ngAfterViewInit() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
-            .then(cmpRef => {
-                this.GeneratedComponent = cmpRef.instance;
-
-                cmpRef.instance.LoadCompleted.subscribe(s => {
-                    this.SetUIProperties_GeneratedComponent();
-                });
-
-                var screenCode = "NewMaster";
-                cmpRef.instance.LabelWidth = 110;
-                cmpRef.instance.Run(this.EntityPM, "Shipment", screenCode, false, false, this.ObjectTableName);
-            });
-    }
-
-    SetUIProperties_GeneratedComponent() {
-        if (this.GeneratedComponent) {
-            this.GeneratedComponent.SetEnabled(this.IsScreenEnabled);
-        }
-    }
-
-    SourceEntityPM: ShipmentPM;
+    private SourceEntityPM: ShipmentPM;
     public IsBuildFromQuote: boolean = false;
     public IsCopyFromShipment: boolean = false;
     public IsMasterCreatedFromHouse: boolean = false;
@@ -130,11 +96,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
             this.IsMasterCreatedFromHouse = args.IsMasterCreatedFromHouse;
-
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
-            if (featureToggle) {
-                this.IsVesselFreeTextVisible = true;
-            }
 
             this.BuildFiltersLists();
             this.SetUIProperties();
@@ -149,7 +110,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     private myIncotermListService: IncotermListService;
     private myPartnersDomainService: PartnersDomainService;
     private myShipmentPMService: ShipmentPMService;
-    private myShipmentSubTypeListService: ShipmentSubTypeListService;
     InitializeServices() {
         this.myPortListService = new PortListService();
         this.myCardListService = new CardListService();
@@ -158,7 +118,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.myIncotermListService = new IncotermListService();
         this.myPartnersDomainService = new PartnersDomainService();
         this.myShipmentPMService = new ShipmentPMService();
-        this.myShipmentSubTypeListService = new ShipmentSubTypeListService();
     }
     LoadAllowedAirline() {
         if (SessionLocator.TenantManagementJS.IsRestrictedByAirline) {
@@ -187,24 +146,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             }
         }
     }
-
-    private allShipmentSubTypes: ShipmentSubTypeList[] = [];
-    LoadShipmentSubTypes() {
-        this.allShipmentSubTypes = [];
-
-        this.myShipmentSubTypeListService.getAll().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.allShipmentSubTypes = myResponse.Result;
-                this.allShipmentSubTypes = this.allShipmentSubTypes.filter(d => !d.Inactive);
-            }
-        });
-    }
-
+    
     public DirectionsList: FilterClass[] = [];
     public TransportModesList: FilterClass[] = [];
     public ShipmentTypesList: FilterClass[] = [];
     public ShipmentLevelsList: FilterClass[] = [];
-    public ShipmentSubTypesList: FilterClass[] = [];
     BuildFiltersLists() {
         this.DirectionsList = [];
         this.TransportModesList = [];
@@ -276,73 +222,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             }
         }
     }
-    BuildShipmentSubTypes() {
-        this.ShipmentSubTypesList = [];
 
-        this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId  || d.ShipmentTypeCode == null).forEach(item => {
-            this.ShipmentSubTypesList.push(new FilterClass(item.Id, item.Name));
-        });
-
-        this.SetDefaultSubType();
-    }
-    private SetDefaultSubType() {
-        var subTypeCode: string = null;
-        switch (this.ShipmentTypeId) {
-            case "Air":
-                {
-                    subTypeCode = "Air";
-                    break;
-                }
-
-            case "FCLD":
-                {
-                    subTypeCode = "FCL";
-                    break;
-                }
-
-            case "LCLD":
-                {
-                    subTypeCode = "LCL";
-                    break;
-                }
-
-            case "FTL":
-                {
-                    subTypeCode = "FTL";
-                    break;
-                }
-
-            case "LTL":
-                {
-                    subTypeCode = "LTL";
-                    break;
-                }
-
-            case "MyGI":
-                {
-                    subTypeCode = "MyGI";
-                    break;
-                }
-
-            case "MyGO":
-                {
-                    subTypeCode = "MyGO";
-                    break;
-                }
-        }
-
-        var subType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.Code == subTypeCode)[0];
-        if (subType) {
-            this.ShipmentSubTypeId = subType.Id;
-        }
-
-        else {
-            var defaultSubType: ShipmentSubTypeList = this.allShipmentSubTypes.filter(d => d.ShipmentTypeCode == this.ShipmentTypeId)[0];
-            if (defaultSubType) {
-                this.ShipmentSubTypeId = defaultSubType.Id;
-            }
-        }
-    }
     public ScreenOpacity: number = 0.7;
     public IsScreenEnabled: boolean = false;
     SetScreenEnabled() {
@@ -379,12 +259,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isScreenEnabled);
             this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, isScreenEnabled);
         }
-
+                
         this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MAWBOBLDate", this.ObjectTableName, isScreenEnabled);
-        this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("FreightPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("OtherPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
@@ -419,11 +298,10 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.IsDirectionListEnabled = true;
             this.IsTransportModesListEnabled = AppTool.IsNullOrEmpty(this.DirectionId) ? false : true;
             this.IsMasterTypesListEnabled = true;
-            this.IsShipmentSubTypesListEnabled = true;
         }
 
         this.SetScreenEnabled();
-        this.SetUIProperties();
+        this.SetUIProperties();        
         this.SetUnits();
         this.SetLabels();
         this.SetPartners();
@@ -454,14 +332,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
-    private isShipmentSubTypesListEnabled: boolean = false;
-    get IsShipmentSubTypesListEnabled() { return this.isShipmentSubTypesListEnabled; }
-    set IsShipmentSubTypesListEnabled(value: boolean) {
-        if (this.isShipmentSubTypesListEnabled != value) {
-            this.isShipmentSubTypesListEnabled = value;
-        }
-    }
-
     get DirectionId() { return this.EntityPM.DirectionId; }
     set DirectionId(newValue: string) {
         if (this.EntityPM.DirectionId != newValue) {
@@ -482,19 +352,10 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.MainCarriageFromPortId = null;
             this.MainCarriageToPortId = null;
             this.MainCarriageCarrierId = null;
-
-            if (newValue == "A") {
-                this.ShipmentTypeId = "Air";
-            }
-
-            else {
-                this.ShipmentTypeId = null;
-            }
-
+            this.ShipmentTypeId = null;
             this.SetOrderDetails();
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
-            this.BuildShipmentSubTypes();
             this.LoadAllowedAirline();
             this.ValidateMasterField();
         }
@@ -506,8 +367,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.EntityPM.ShipmentTypeId = newValue;
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-
-            this.BuildShipmentSubTypes();
             this.SetOrderDetails();
             this.OnFiltersChanged();
         }
@@ -521,13 +380,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.SetScreenEnabled();
             this.SetOrderDetails();
             this.ValidateMasterField();
-        }
-    }
-
-    get ShipmentSubTypeId() { return this.EntityPM.ShipmentSubTypeId; }
-    set ShipmentSubTypeId(newValue: string) {
-        if (this.EntityPM.ShipmentSubTypeId != newValue) {
-            this.EntityPM.ShipmentSubTypeId = newValue;
         }
     }
 
@@ -595,14 +447,14 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
 
         else {
-            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightLabel = TextCodeTranslator.Translate("Master.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
     SetUnits() {
         var myDimensionsUnitCode = this.TenantPM.DimensionsUnitCode;
         var myVolumeUnitCode = this.TenantPM.VolumeUnitCode;
         var myGrossWeightUnitCode = this.TenantPM.GrossWeightUnitCode;
-        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
+        var myChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId, this.ShipmentTypeId);
 
         if (this.DirectionId == "D") {
             if (!AppTool.IsNullOrEmpty(this.TenantPM.CountryCode)) {
@@ -628,9 +480,9 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                 this.EntityPM.GrossWeightUnitCode = myGrossWeightUnitCode;
             }
 
-
-            this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
-
+            if (AppTool.IsNullOrEmpty(this.EntityPM.ChargeableWeightUnitCode)) {
+                this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
+            }
 
             if (this.EntityPM.Ratio == null) {
                 this.EntityPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, this.TenantPM.CountryCode);
@@ -718,22 +570,10 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     }
 
     SetUIProperties() {
-        this.IsChooseVesselVisible = false;
-        if (this.TransportModeId == "O") {
-            this.IsChooseVesselVisible = true;
-        }
-
         this.SetUIProperties_Agent();
         this.SetUIProperties_Ports();
         this.SetUIProperties_MasterField();
-
-        if (this.IsLCLEntity) {
-            this.SetUIProperties_OrderDetails();
-        }
-
-        else {
-            this.SetUIProperties_Containers();
-        }
+        this.SetUIProperties_OrderDetails();
     }
     SetUIProperties_Agent() {
         var isFieldRequired: boolean = false;
@@ -776,42 +616,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.UIProperties.SetEnabled("BookingVolume", this.ObjectTableName, isFieldsEnabled);
         this.UIProperties.SetEnabled("OrderChargeableWeight", this.ObjectTableName, isFieldsEnabled);
         this.UIProperties.SetEnabled("BookingNumberOfPackages", this.ObjectTableName, isFieldsEnabled);
-
-        var isNoOfPackagesRequired = false;
-        if (!AppTool.IsNullOrZero(this.OrderGrossWeight) || !AppTool.IsNullOrZero(this.BookingVolume) || !AppTool.IsNullOrZero(this.OrderChargeableWeight)) {
-            if (AppTool.IsNullOrZero(this.BookingNumberOfPackages)) {
-                isNoOfPackagesRequired = true;
-            }
-        }
-
-        this.UIProperties.SetRequired("BookingNumberOfPackages", this.ObjectTableName, isNoOfPackagesRequired);
-    }
-    SetUIProperties_Containers() {
-        this.UIProperties.SetEnabled("PackageTypeId1", this.ObjectTableName, this.Quantity1 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId2", this.ObjectTableName, this.Quantity2 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId3", this.ObjectTableName, this.Quantity3 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId4", this.ObjectTableName, this.Quantity4 > 0);
-        this.UIProperties.SetEnabled("PackageTypeId5", this.ObjectTableName, this.Quantity5 > 0);
-
-        if (AppTool.IsNullOrZero(this.Quantity1)) {
-            this.PackageTypeId1 = null;
-        }
-
-        if (AppTool.IsNullOrZero(this.Quantity2)) {
-            this.PackageTypeId2 = null;
-        }
-
-        if (AppTool.IsNullOrZero(this.Quantity3)) {
-            this.PackageTypeId3 = null;
-        }
-
-        if (AppTool.IsNullOrZero(this.Quantity4)) {
-            this.PackageTypeId4 = null;
-        }
-
-        if (AppTool.IsNullOrZero(this.Quantity5)) {
-            this.PackageTypeId5 = null;
-        }
     }
 
     // Agent
@@ -828,7 +632,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                 this.EntityPM.AgentReference1 = null;
                 this.EntityPM.AgentReference2 = null;
                 this.AgentAddressId = null;
-                this.IsCustomerCreditLimitEnabled = false;
             }
 
             else {
@@ -840,7 +643,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                             this.EntityPM.AgentName = myCardList.EnglishName;
                             this.EntityPM.AgentNote = myCardList.Notes;
                             this.AgentAddressId = myCardList.MainAddressId;
-                            this.IsCustomerCreditLimitEnabled = myCardList.IsCreditLimitEnabled; 
                         }
                     }
                 });
@@ -1101,7 +903,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
 
         if (!AppTool.IsNullOrEmpty(this.Master)) {
-            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM)
+            this.myShipmentDomainService.ValidateShipmentMasterFieldExistance(this.EntityPM.Id, this.EntityPM.BookingId, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentLevelCode, this.EntityPM.IsCancelled)
                 .subscribe((myResult: any) => {
 
                     if (AppTool.IsNullOrEmpty(myResult)) {
@@ -1138,46 +940,13 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
-    private mainCarriageVessel: VesselList;
-    get MainCarriageVessel() { return this.mainCarriageVessel; }
-    set MainCarriageVessel(value: VesselList) {
-        if (this.mainCarriageVessel != value) {
-            this.mainCarriageVessel = value;
-        }
-
-        this.MainCarriageVesselName = null;
-        if (!AppTool.IsNullOrEmpty(value)) {
-            this.MainCarriageVesselName = value.EnglishName;
-        }
-    }
-
-    get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
-    set MainCarriageVesselName(newValue: string) {
-        if (this.EntityPM.MainCarriageVesselName != newValue) {
-            this.EntityPM.MainCarriageVesselName = newValue;
-
-            if (this.IsVesselFreeTextVisible) {
-                this.MainCarriageVesselId = null;
-            }
-        }
-    }
-
-    ChooseVesselClicked() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 775;
-        logitudeWindow.Height = 570;
-        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, IdProperty: "MainCarriageVesselId", NameProperty: "MainCarriageVesselName" };
-        logitudeWindow.Title = "Vessel Search";
-        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/ChooseVesselComponent");
-    }
-
     get Notes() { return this.EntityPM.Notes; }
     set Notes(newValue: string) {
         if (this.EntityPM.Notes != newValue) {
             this.EntityPM.Notes = newValue;
         }
     }
-
+   
     get FreightPrepaidCollectId() { return this.EntityPM.FreightPrepaidCollectId; }
     set FreightPrepaidCollectId(newValue: string) {
         if (this.EntityPM.FreightPrepaidCollectId != newValue) {
@@ -1198,7 +967,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         if (this.EntityPM.OrderGrossWeight != newValue) {
             this.EntityPM.OrderGrossWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight();
-            this.SetUIProperties_OrderDetails();
         }
     }
 
@@ -1207,7 +975,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         if (this.EntityPM.BookingVolume != newValue) {
             this.EntityPM.BookingVolume = AppTool.Round(newValue, 3);
             this.ComputeOrderVolumetricWeight();
-            this.SetUIProperties_OrderDetails();
         }
     }
 
@@ -1225,8 +992,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             var myResult: number = AppTool.Round(newValue, 3);
             this.EntityPM.OrderChargeableWeight = myResult;
 
-            this.SetUIProperties_OrderDetails();
-
             if (this.OrderGrossWeight == null && this.OrderVolumetricWeight == null) {
                 this.EntityPM.OrderVolumetricWeight = myResult;
                 this.EntityPM.OrderGrossWeight = AppTool.GetWeightFromWeight(this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.GrossWeightUnitCode, myResult);
@@ -1239,8 +1004,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     set BookingNumberOfPackages(newValue: number) {
         if (this.EntityPM.BookingNumberOfPackages != newValue) {
             this.EntityPM.BookingNumberOfPackages = newValue;
-
-            this.SetUIProperties_OrderDetails();
         }
     }
 
@@ -1279,7 +1042,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     set Quantity1(newValue: number) {
         if (this.EntityPM.Quantity1 != newValue) {
             this.EntityPM.Quantity1 = newValue;
-            this.SetUIProperties_Containers();
         }
     }
 
@@ -1287,7 +1049,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     set Quantity2(newValue: number) {
         if (this.EntityPM.Quantity2 != newValue) {
             this.EntityPM.Quantity2 = newValue;
-            this.SetUIProperties_Containers();
         }
     }
 
@@ -1295,7 +1056,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     set Quantity3(newValue: number) {
         if (this.EntityPM.Quantity3 != newValue) {
             this.EntityPM.Quantity3 = newValue;
-            this.SetUIProperties_Containers();
         }
     }
 
@@ -1303,7 +1063,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     set Quantity4(newValue: number) {
         if (this.EntityPM.Quantity4 != newValue) {
             this.EntityPM.Quantity4 = newValue;
-            this.SetUIProperties_Containers();
         }
     }
 
@@ -1311,7 +1070,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     set Quantity5(newValue: number) {
         if (this.EntityPM.Quantity5 != newValue) {
             this.EntityPM.Quantity5 = newValue;
-            this.SetUIProperties_Containers();
         }
     }
 
@@ -1352,6 +1110,53 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     set PackageTypeId5(newValue: string) {
         if (this.EntityPM.PackageTypeId5 != newValue) {
             this.EntityPM.PackageTypeId5 = newValue;
+        }
+    }
+
+    // Additional Fields
+    private timerToken: any;
+    private Retries: number = 0;
+    private GeneratedComponent: any;
+    BuildAdditionalFields() {
+        this.RunComponent();
+    }
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+    LoadChildComponent() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                this.GeneratedComponent = cmpRef.instance;
+
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+                    this.SetUIProperties_GeneratedComponent();
+                });
+
+                var screenCode = "NewMaster";
+                cmpRef.instance.LabelWidth = 110;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
+    }
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+    SetUIProperties_GeneratedComponent() {
+        if (this.GeneratedComponent) {
+            this.GeneratedComponent.SetEnabled(this.IsScreenEnabled);
         }
     }
 
@@ -1663,138 +1468,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
-    private isCopyPreCarriage: boolean = false;
-    get IsCopyPreCarriage() { return this.isCopyPreCarriage; }
-    set IsCopyPreCarriage(value) {
-        if (this.isCopyPreCarriage != value) {
-            this.isCopyPreCarriage = value;
-
-            if (value == true) {
-                this.CopyPreCarriageValues();
-            }
-
-            else {
-                this.SetPreCarriageValuesToNull();
-
-            }
-        }
-    }
-
-    private isCopyOnCarriage: boolean = false;
-    get IsCopyOnCarriage() { return this.isCopyOnCarriage; }
-    set IsCopyOnCarriage(value) {
-        if (this.isCopyOnCarriage != value) {
-            this.isCopyOnCarriage = value;
-
-            if (value == true) {
-                this.CopyOnCarriageValues();
-            }
-
-            else {
-                this.SetOnCarriageValuesToNull();
-
-            }
-        }
-    }
-
-    private CopyPreCarriageValues() {
-        this.EntityPM.PreCarriageFromPortId = this.SourceEntityPM.PreCarriageFromPortId;
-        this.EntityPM.PreCarriageFromPortCode = this.SourceEntityPM.PreCarriageFromPortCode;
-        this.EntityPM.PreCarriageFromPortName = this.SourceEntityPM.PreCarriageFromPortName;
-        this.EntityPM.PreCarriageFromPortCountryCode = this.SourceEntityPM.PreCarriageFromPortCountryCode;
-        this.EntityPM.PreCarriageFromPortCountryName = this.SourceEntityPM.PreCarriageFromPortCountryName;
-        this.EntityPM.PreCarriageToPortId = this.SourceEntityPM.PreCarriageToPortId;
-        this.EntityPM.PreCarriageToPortCode = this.SourceEntityPM.PreCarriageToPortCode;
-        this.EntityPM.PreCarriageToPortName = this.SourceEntityPM.PreCarriageToPortName;
-        this.EntityPM.PreCarriageToPortCountryCode = this.SourceEntityPM.PreCarriageToPortCountryCode;
-        this.EntityPM.PreCarriageToPortCountryName = this.SourceEntityPM.PreCarriageToPortCountryName;
-        this.EntityPM.PreCarriageCarrierId = this.SourceEntityPM.PreCarriageCarrierId;
-        this.EntityPM.PreCarriageCarrierCode = this.SourceEntityPM.PreCarriageCarrierCode;
-        this.EntityPM.PreCarriageCarrierName = this.SourceEntityPM.PreCarriageCarrierName;
-        this.EntityPM.PreCarriageCarrierNumber = this.SourceEntityPM.PreCarriageCarrierNumber;
-        this.EntityPM.PreCarriageCarrierWebSite = this.SourceEntityPM.PreCarriageCarrierWebSite;
-        this.EntityPM.PreCarriageTransportModeId = this.SourceEntityPM.PreCarriageTransportModeId;
-        this.EntityPM.PreCarriageVesselId = this.SourceEntityPM.PreCarriageVesselId;
-        this.EntityPM.PreCarriageVesselName = this.SourceEntityPM.PreCarriageVesselName;
-        this.EntityPM.PreCarriageETD = this.SourceEntityPM.PreCarriageETD;
-        this.EntityPM.PreCarriageATD = this.SourceEntityPM.PreCarriageATD;
-        this.EntityPM.PreCarriageETA = this.SourceEntityPM.PreCarriageETA;
-        this.EntityPM.PreCarriageATA = this.SourceEntityPM.PreCarriageATA;
-    }
-    private CopyOnCarriageValues() {
-        this.EntityPM.OnCarriageFromPortId = this.SourceEntityPM.OnCarriageFromPortId;
-        this.EntityPM.OnCarriageFromPortCode = this.SourceEntityPM.OnCarriageFromPortCode;
-        this.EntityPM.OnCarriageFromPortName = this.SourceEntityPM.OnCarriageFromPortName;
-        this.EntityPM.OnCarriageFromPortCountryCode = this.SourceEntityPM.OnCarriageFromPortCountryCode;
-        this.EntityPM.OnCarriageFromPortCountryName = this.SourceEntityPM.OnCarriageFromPortCountryName;
-        this.EntityPM.OnCarriageToPortId = this.SourceEntityPM.OnCarriageToPortId;
-        this.EntityPM.OnCarriageToPortCode = this.SourceEntityPM.OnCarriageToPortCode;
-        this.EntityPM.OnCarriageToPortName = this.SourceEntityPM.OnCarriageToPortName;
-        this.EntityPM.OnCarriageToPortCountryCode = this.SourceEntityPM.OnCarriageToPortCountryCode;
-        this.EntityPM.OnCarriageToPortCountryName = this.SourceEntityPM.OnCarriageToPortCountryName;
-        this.EntityPM.OnCarriageCarrierId = this.SourceEntityPM.OnCarriageCarrierId;
-        this.EntityPM.OnCarriageCarrierCode = this.SourceEntityPM.OnCarriageCarrierCode;
-        this.EntityPM.OnCarriageCarrierName = this.SourceEntityPM.OnCarriageCarrierName;
-        this.EntityPM.OnCarriageCarrierNumber = this.SourceEntityPM.OnCarriageCarrierNumber;
-        this.EntityPM.OnCarriageCarrierWebSite = this.SourceEntityPM.OnCarriageCarrierWebSite;
-        this.EntityPM.OnCarriageTransportModeId = this.SourceEntityPM.OnCarriageTransportModeId;
-        this.EntityPM.OnCarriageVesselId = this.SourceEntityPM.OnCarriageVesselId;
-        this.EntityPM.OnCarriageVesselName = this.SourceEntityPM.OnCarriageVesselName;
-        this.EntityPM.OnCarriageETD = this.SourceEntityPM.OnCarriageETD;
-        this.EntityPM.OnCarriageATD = this.SourceEntityPM.OnCarriageATD;
-        this.EntityPM.OnCarriageETA = this.SourceEntityPM.OnCarriageETA;
-        this.EntityPM.OnCarriageATA = this.SourceEntityPM.OnCarriageATA;
-    }
-
-    private SetPreCarriageValuesToNull() {
-        this.EntityPM.PreCarriageFromPortId = null;
-        this.EntityPM.PreCarriageFromPortCode = null;
-        this.EntityPM.PreCarriageFromPortName = null;
-        this.EntityPM.PreCarriageFromPortCountryCode = null;
-        this.EntityPM.PreCarriageFromPortCountryName = null;
-        this.EntityPM.PreCarriageToPortId = null;
-        this.EntityPM.PreCarriageToPortCode = null;
-        this.EntityPM.PreCarriageToPortName = null;
-        this.EntityPM.PreCarriageToPortCountryCode = null;
-        this.EntityPM.PreCarriageToPortCountryName = null;
-        this.EntityPM.PreCarriageCarrierId = null;
-        this.EntityPM.PreCarriageCarrierCode = null;
-        this.EntityPM.PreCarriageCarrierName = null;
-        this.EntityPM.PreCarriageCarrierNumber = null;
-        this.EntityPM.PreCarriageCarrierWebSite = null;
-        this.EntityPM.PreCarriageTransportModeId = null;
-        this.EntityPM.PreCarriageVesselId = null;
-        this.EntityPM.PreCarriageVesselName = null;
-        this.EntityPM.PreCarriageETD = null;
-        this.EntityPM.PreCarriageATD = null;
-        this.EntityPM.PreCarriageETA = null;
-        this.EntityPM.PreCarriageATA = null;
-    }
-    private SetOnCarriageValuesToNull() {
-        this.EntityPM.OnCarriageFromPortId = null;
-        this.EntityPM.OnCarriageFromPortCode = null;
-        this.EntityPM.OnCarriageFromPortName = null;
-        this.EntityPM.OnCarriageFromPortCountryCode = null;
-        this.EntityPM.OnCarriageFromPortCountryName = null;
-        this.EntityPM.OnCarriageToPortId = null;
-        this.EntityPM.OnCarriageToPortCode = null;
-        this.EntityPM.OnCarriageToPortName = null;
-        this.EntityPM.OnCarriageToPortCountryCode = null;
-        this.EntityPM.OnCarriageToPortCountryName = null;
-        this.EntityPM.OnCarriageCarrierId = null;
-        this.EntityPM.OnCarriageCarrierCode = null;
-        this.EntityPM.OnCarriageCarrierName = null;
-        this.EntityPM.OnCarriageCarrierNumber = null;
-        this.EntityPM.OnCarriageCarrierWebSite = null;
-        this.EntityPM.OnCarriageTransportModeId = null;
-        this.EntityPM.OnCarriageVesselId = null;
-        this.EntityPM.OnCarriageVesselName = null;
-        this.EntityPM.OnCarriageETD = null;
-        this.EntityPM.OnCarriageATD = null;
-        this.EntityPM.OnCarriageETA = null;
-        this.EntityPM.OnCarriageATA = null;
-    }
-
     public IsCopyDescriptionEnabled: boolean = false;
     private isCopyDescription: boolean = false;
     get IsCopyDescription() { return this.isCopyDescription; }
@@ -1832,7 +1505,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                 this.EntityPM.NumberOfPackages = this.SourceEntityPM.NumberOfPackages;
                 this.EntityPM.TEU = this.SourceEntityPM.TEU;
                 this.EntityPM.GrossWeightPerTon = this.SourceEntityPM.GrossWeightPerTon;
-                this.EntityPM.GrossWeightPerStorageDays = this.SourceEntityPM.GrossWeightPerStorageDays;
             }
 
             else {
@@ -1856,7 +1528,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                 this.EntityPM.NumberOfPackages = null;
                 this.EntityPM.TEU = null;
                 this.EntityPM.GrossWeightPerTon = null;
-                this.EntityPM.GrossWeightPerStorageDays = null;
             }
 
             this.SetUIProperties_OrderDetails();
@@ -1865,29 +1536,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
     // Commands
     CancelButtonClicked() {
-        if (this.EntityPM.IsDirty) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 450;
-            confirmWindow.Height = 190;
-            confirmWindow.ShowCancelButton = false;
-            confirmWindow.YesButtonText = "Don't Save";
-            confirmWindow.NoButtonText = "Cancel";
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show("You are about to cancel Shipment and all data will be lost");
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.CloseWizardWindow();
-                }
-                else if (confirmWindow.No) {
-                    //nth
-                }
-            });
-        }
-        else {
-            this.CloseWizardWindow();
-        }
-    }
-    private CloseWizardWindow() {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
@@ -1898,12 +1546,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
         var validator = new ShipmentValidator();
         this.ValidationErrorsList = validator.Validate(this.EntityPM);
-
-        if (!AppTool.IsNullOrZero(this.OrderGrossWeight) || !AppTool.IsNullOrZero(this.BookingVolume) || !AppTool.IsNullOrZero(this.OrderChargeableWeight)) {
-            if (AppTool.IsNullOrZero(this.BookingNumberOfPackages)) {
-                this.ValidationErrorsList.push("Number of Packages is required");
-            }
-        }
 
         if (AppTool.IsNullOrEmpty(this.AgentId)) {
             var message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -1916,7 +1558,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
                 if (!this.IsMasterFieldValid) {
                     this.ValidationErrorsList.push(this.MasterFieldValidityMessage);
-                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -1944,6 +1585,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.SetPartnersOnFinish();
         this.SetCountryECOnFinish();
         this.SetOrderPackagesOnFinish();
+        this.SetPickupDeliveryOnFinish();
         this.SetInlandDomesticOnFinish();
     }
     SetPartnersOnFinish() {
@@ -2077,6 +1719,50 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             }
         }
     }
+    SetPickupDeliveryOnFinish() {
+        //this.EntityPM.ShipmentPickUps = [];
+        //this.EntityPM.ShipmentDeliveries = [];
+
+        //if (this.IncludePickUp) {
+        //    var typeCode = "PART";
+        //    if (AppTool.IsNullOrEmpty(this.PickUpAddressId)) {
+        //        typeCode = "CASL";
+        //    }
+
+        //    var newPickUp = new ShipmentPickUpPM(this.EntityPM);
+        //    newPickUp.Tenant = SessionLocator.Tenant;
+        //    newPickUp.PickUpDeliveryTypeCode = "PICK";
+        //    newPickUp.PickUpDeliveryFromTypeCode = typeCode;
+        //    newPickUp.FromAddressCity = this.FromAddressCity;
+        //    newPickUp.FromAddressCountryId = this.FromAddressCountryId;
+        //    newPickUp.FromAddressZipCode = this.FromAddressZipCode;
+        //    newPickUp.FromPartnerCardId = this.ShipperId;
+        //    newPickUp.FromAddressId = this.PickUpAddressId;
+        //    newPickUp.PickUpDeliveryToTypeCode = "PORT";
+        //    newPickUp.ToPortId = this.MainCarriageFromPortId;
+        //    this.EntityPM.AddPickUp(newPickUp);
+        //}
+
+        //if (this.IncludeDelivery) {
+        //    var typeCode = "PART";
+        //    if (AppTool.IsNullOrEmpty(this.DeliveryAddressId)) {
+        //        typeCode = "CASL";
+        //    }
+
+        //    var newDelivery = new ShipmentDeliveryPM(this.EntityPM);
+        //    newDelivery.Tenant = SessionLocator.Tenant;
+        //    newDelivery.PickUpDeliveryTypeCode = "DELV";
+        //    newDelivery.PickUpDeliveryFromTypeCode = "PORT";
+        //    newDelivery.FromPortId = this.MainCarriageToPortId;
+        //    newDelivery.PickUpDeliveryToTypeCode = typeCode;
+        //    newDelivery.ToAddressCity = this.ToAddressCity;
+        //    newDelivery.ToAddressCountryId = this.ToAddressCountryId;
+        //    newDelivery.ToAddressZipCode = this.ToAddressZipCode;
+        //    newDelivery.ToPartnerCardId = this.ConsigneeId;
+        //    newDelivery.ToAddressId = this.DeliveryAddressId;
+        //    this.EntityPM.AddDelivery(newDelivery);
+        //}
+    }
 
     SetInlandDomesticOnFinish() {
         if (this.IsInlandDomestic) {
@@ -2137,8 +1823,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                                     }
 
                                     else {
-                                        this.CurrentSession.StopBusyIndicator();
-
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "AWB exists in the stock";
                                         confirmWindow.Show("Do you want to get this awb from stock?");
@@ -2192,68 +1876,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     }
 
     SubmitCreatingShipment() {
-        var isCheckCreditLimit = this.IsCheckCreditLimit();
-        if (isCheckCreditLimit) {
-            this.ValidateCreditLimit();
-        }
-        else {
-            this.CompleteSubmitCreatingShipment();
-        }
-    }
-    private IsCustomerCreditLimitEnabled = false;
-    IsCheckCreditLimit() {
-        var isCheck = false;
-        var HasCreditLimitFeature: boolean = false;
-        var IsCreditLimitActivated: boolean = false;
-        var IsCreditLimitHasAction: boolean = false;
-        HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
-        if (HasCreditLimitFeature) {
-            IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
-            IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.ShipmentCreationBlock == false && ObjectsLocator.CreditLimitSettingPM.ShipmentCreationWarning == true) ? true : false;
-        }
-
-        if (HasCreditLimitFeature && IsCreditLimitActivated && IsCreditLimitHasAction && this.IsCustomerCreditLimitEnabled) {
-            isCheck = true;
-        }
-        return isCheck;
-    }
-
-    ValidateCreditLimit() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        if (this.myShipmentDomainService == null) {
-            this.myShipmentDomainService = new ShipmentDomainService();
-        }
-        this.myShipmentDomainService.GetCustomerCreditLimitDetails(this.AgentId, this.EntityPM.QuoteId, this.IsBuildFromQuote).subscribe((myResponse: ServiceResponse) => {
-            this.CurrentSession.StopBusyIndicator();
-            if (!myResponse.HasError) {
-                var warnings: string = myResponse.Result;
-                if (!AppTool.IsNullOrEmpty(warnings)) {
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Width = 450;
-                    confirmWindow.Height = 200;
-                    confirmWindow.ShowCancelButton = false;
-                    confirmWindow.YesButtonText = "Continue";
-                    confirmWindow.NoButtonText = "Cancel";
-                    confirmWindow.Title = "Credit limit";
-                    confirmWindow.Show(warnings);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.CompleteSubmitCreatingShipment();
-                        }
-                        else if (confirmWindow.No) {
-                            //nth
-                        }
-                    });
-                }
-                else {
-                    this.CompleteSubmitCreatingShipment();
-                }
-            }
-        });
-    }
-
-    CompleteSubmitCreatingShipment() {
-        this.CurrentSession.StartBusyIndicator("Creating...");
 
         this.myShipmentPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
@@ -2308,26 +1930,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                 }
             }
         });
-    }
-    AddContact(partnerId: string) {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.Title = "New Contact";
-        var args = new ContactInputTemplateArgs();
-        args.CustomerId = partnerId;
-        args.CardDependencyProperty1 ="AG";
-        args.CustomerLable = "Agent";
-        args.ComponentName = "Partners";
-        logWindow.WindowArgs = args;
-        logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewContactComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewContactWindowClosed($event));
-    }
-
-    OnNewContactWindowClosed(arg: any) {
-        if (arg != 'cancel') {
-            this.AgentContactId = arg;           
-        }
     }
 }
 

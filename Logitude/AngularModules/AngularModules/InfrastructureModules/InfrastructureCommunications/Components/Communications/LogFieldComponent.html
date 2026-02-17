@@ -38,16 +38,14 @@
 
         <tr style="vertical-align:top;">
             <td style="margin-left:5px;" colspan="4">
-
                 
                 <input type="text" [id]="_inputLogId" [(ngModel)]="_Log" style="width:20px;position: absolute; left: -1000px; top: -1000px;"  >
                 <div>
                     <button class="Button" title="Copy to clipboard" (click)="CopyLog2Clipboard()" style="width:50px;float:left;margin-left:100px;">העתק</button>
                     <div style="margin:10px;vertical-align:top;" class="CustomMultiLinesText">
 
-                        <textarea  *ngIf="UseTextarea"  class="NotesTextArea" [readonly]="true">{{_Log}}</textarea>
 
-                        <div *ngIf="!UseTextarea" style="font-family:'Lucida Sans Unicode'; white-space: normal; word-wrap: break-word;;margin-top:5px;margin-bottom:5px; margin-left:10px;margin-right:10px;font-size:15px">
+                        <div style="font-family:'Lucida Sans Unicode'; white-space: normal; word-wrap: break-word;;margin-top:5px;margin-bottom:5px; margin-left:10px;margin-right:10px;font-size:15px">
                             {{_Log}}
                         </div>
                     </div>

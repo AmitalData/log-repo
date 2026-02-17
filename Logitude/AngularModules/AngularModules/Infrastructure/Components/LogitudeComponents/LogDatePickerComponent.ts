@@ -3,6 +3,7 @@ declare var SelectingElement: any;
 import {
     Directive,
     ElementRef,
+    Renderer,
     Input,
     Output,
     Component,
@@ -35,7 +36,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
 
 @Component({
     selector: "LogDatePicker",
-
+    moduleId: module.id,
     templateUrl: "./LogDatePickerComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, LogCalendarComponent, TimeSelectComponent, FixedPositionDirective],
     inputs: [
@@ -49,13 +50,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "FocusOnMe",
         "IsFreeValue",
         "ForceSubscribe",
-        "RefreshMe",
-        "IsDisabled",
-        "IsDisabledWithColor",
-        "DisableRules",
-        "DataCy",
-        "ForceDisabled",
-        "ForceSetValidity",
+        "RefreshMe"
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -86,15 +81,7 @@ export class LogDatePickerComponent
     public InputType: string;
     public IsFreeValue: boolean = false;
     public ForceSubscribe: boolean = false;
-     @Input() UseDefaultPosition: boolean = false;
-     public DisableRules: boolean = false;
 
-    public DataCy: string;
-
-    public ForceDisabled: boolean = false;
-
-    public ForceSetValidity: boolean = false;
- 
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
@@ -104,19 +91,7 @@ export class LogDatePickerComponent
         return this.isDisabled;
     }
     public set IsDisabled(newValue: boolean) {
-        if (this.ForceDisabled) {
-            this.isDisabled = true;
-        }else{
-            this.isDisabled = this.IsFreeValue ? false : newValue;
-        }
-    }
-
-    private isDisabledWithColor: boolean;
-    public get IsDisabledWithColor() {
-        return this.isDisabledWithColor;
-    }
-    public set IsDisabledWithColor(newValue: boolean) {
-        this.isDisabledWithColor = newValue;
+        this.isDisabled = newValue;
     }
     public TimeMode: string;
     InputValue: string;
@@ -347,9 +322,9 @@ export class LogDatePickerComponent
             )[0];
             if (!this.ObjectField) {
                 objectFieldAvailable = false;
-            } else if (this.ObjectField.HelpTextCodeCode != null) {
+            } else if (this.ObjectField.HelpTextCodeId != null) {
                 this.ObjectFieldHelp = TextCodeTranslator.Translate(
-                    this.ObjectField.HelpTextCodeCode
+                    this.ObjectField.HelpTextTextCodeCode
                 );
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
@@ -396,22 +371,102 @@ export class LogDatePickerComponent
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
         //if (objectFieldAvailable) {
         if (objectFieldAvailable || this.ForceSubscribe) {
-            //this.ctrl.valueChanges.subscribe((res:any)=> {
+            //this.ctrl.valueChanges.subscribe(res=> {
             //    this.uiProperty.UIPropertyChanged.emit("valuechanges");
             //    this.ValueChanged.emit(res);
 
-            this.uiProperty.UIPropertyChanged.subscribe((value) => {
-                this.HandleUIPropertyChanged(value);
+            this.uiProperty.UIPropertyChanged.subscribe(value => {
+                if (value == "datevaluechanges") {
+                    if (this.ObjectField && this.ObjectField.IsCustom) {
+                        var customFieldClass: CustomFieldClass = this
+                            .DataContext[this.ObjectFieldName];
+                        if (
+                            customFieldClass != null &&
+                            customFieldClass != undefined
+                        ) {
+                            var valueDate = customFieldClass.GetFieldDataTypeValue(
+                                this.ObjectField,
+                                customFieldClass.Value
+                            );
+                        } else {
+                            console.warn(
+                                "Custom Fields are not implemented in: " +
+                                this.ObjectTableName
+                            );
+                        }
+
+                        this.GetParsedDate(valueDate);
+                    } else {
+                        this.GetParsedDate(
+                            this.DataContext[this.ObjectFieldName]
+                        );
+                    }
+                    return;
+                }
+                if (value instanceof UIPropertyArgs) {
+                    var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                    var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+                    if (
+                        uiProperty.FieldName == this.ObjectFieldName &&
+                        uiProperty.ObjectTableName == this.ObjectTableName
+                    ) {
+                        if (uiPropertyArgs.property == "IsEnabled") {
+                            var isEnabled = uiPropertyArgs.newValue;
+                            this.IsDisabled = !isEnabled;
+                            this.uiProperty.IsEnabled = isEnabled;
+                            if (this.IsDisabled) {
+                                this.SetDisabled();
+                            } else {
+                                this.SetEnabled();
+                            }
+                        } else if (
+                            uiPropertyArgs.property == "IsRequired" ||
+                            uiPropertyArgs.property == "IsValid"
+                        ) {
+                            if (!this.isFirstTime) {
+                                this.ValidateField(false);
+                            } else {
+                                this.isFirstTime = false;
+                            }
+                        }
+                        if (this.InputType == "date") {
+                            var timeUIProperty: UIProperty = this.DataContext.UIProperties.GetUIProperty(
+                                this.ObjectFieldName + "_timepicker",
+                                this.ObjectTableName,
+                                this.DataContext
+                            );
+                            if (
+                                timeUIProperty != null &&
+                                timeUIProperty != undefined
+                            ) {
+                                timeUIProperty.UIPropertyChanged.emit(value);
+                            }
+                        }
+                    } else if (
+                        uiProperty.FieldName.indexOf("_timepicker") > -1
+                    ) {
+                        if (uiPropertyArgs.property == "IsEnabled") {
+                            var isEnabled = uiPropertyArgs.newValue;
+                            this.IsDisabled = !isEnabled;
+                            this.uiProperty.IsEnabled = isEnabled;
+                            if (this.IsDisabled) {
+                                this.SetDisabled();
+                            } else {
+                                this.SetEnabled();
+                            }
+                        } else if (
+                            uiPropertyArgs.property == "IsRequired" ||
+                            uiPropertyArgs.property == "IsValid"
+                        ) {
+                            if (!this.isFirstTime) {
+                                this.ValidateField(false);
+                            } else {
+                                this.isFirstTime = false;
+                            }
+                        }
+                    }
+                }
             });
-
-            if (this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties) {
-                const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
-                pmuiProperty?.UIPropertyChanged.subscribe((value) => {
-                    this.HandleUIPropertyChanged(value);
-                    //this.DetectChanges();
-                });
-            }
-
         }
 
         if (!objectFieldAvailable && !this.NoObjectField) {
@@ -422,99 +477,7 @@ export class LogDatePickerComponent
 
         this.SetParsedDateValueToDatePickerInput();
     }
-    private HandleUIPropertyChanged(value: any) {
-        if (value == "datevaluechanges") {
-            if (this.ObjectField && this.ObjectField.IsCustom) {
-                var customFieldClass: CustomFieldClass = this
-                    .DataContext[this.ObjectFieldName];
-                if (
-                    customFieldClass != null &&
-                    customFieldClass != undefined
-                ) {
-                    var valueDate = customFieldClass.GetFieldDataTypeValue(
-                        this.ObjectField,
-                        customFieldClass.Value
-                    );
-                } else {
-                    console.warn(
-                        "Custom Fields are not implemented in: " +
-                        this.ObjectTableName
-                    );
-                }
-
-                this.GetParsedDate(valueDate);
-            } else {
-                this.GetParsedDate(
-                    this.DataContext[this.ObjectFieldName]
-                );
-            }
-            return;
-        }
-        if (value instanceof UIPropertyArgs) {
-            var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-            var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-            if (
-                uiProperty.FieldName == this.ObjectFieldName &&
-                uiProperty.ObjectTableName == this.ObjectTableName
-            ) {
-                if (uiPropertyArgs.property == "IsEnabled") {
-                    var isEnabled = uiPropertyArgs.newValue;
-                    this.IsDisabled = !isEnabled;
-                    this.uiProperty.IsEnabled = isEnabled;
-                    if (this.IsDisabled) {
-                        this.SetDisabled();
-                    } else {
-                        this.SetEnabled();
-                    }
-                } else if (
-                    uiPropertyArgs.property == "IsRequired" ||
-                    uiPropertyArgs.property == "IsValid"
-                ) {
-                    if (!this.isFirstTime) {
-                        this.ValidateField(false);
-                    } else {
-                        this.isFirstTime = false;
-                    }
-                }
-                if (this.InputType == "date") {
-                    var timeUIProperty: UIProperty = this.DataContext.UIProperties.GetUIProperty(
-                        this.ObjectFieldName + "_timepicker",
-                        this.ObjectTableName,
-                        this.DataContext
-                    );
-                    if (
-                        timeUIProperty != null &&
-                        timeUIProperty != undefined
-                    ) {
-                        timeUIProperty.UIPropertyChanged.emit(value);
-                    }
-                }
-            } else if (
-                uiProperty.FieldName.indexOf("_timepicker") > -1
-            ) {
-                if (uiPropertyArgs.property == "IsEnabled") {
-                    var isEnabled = uiPropertyArgs.newValue;
-                    this.IsDisabled = !isEnabled;
-                    this.uiProperty.IsEnabled = isEnabled;
-                    if (this.IsDisabled) {
-                        this.SetDisabled();
-                    } else {
-                        this.SetEnabled();
-                    }
-                } else if (
-                    uiPropertyArgs.property == "IsRequired" ||
-                    uiPropertyArgs.property == "IsValid"
-                ) {
-                    if (!this.isFirstTime) {
-                        this.ValidateField(false);
-                    } else {
-                        this.isFirstTime = false;
-                    }
-                }
-            }
-        }
-    }
-    SetParsedDateValueToDatePickerInput() {
+    SetParsedDateValueToDatePickerInput(){
         var valueDate = this.DataContext[this.ObjectFieldName];
         if (this.ObjectField && this.ObjectField.IsCustom) {
             var customFieldClass: CustomFieldClass = this.DataContext[
@@ -648,7 +611,7 @@ export class LogDatePickerComponent
 
         if (this.uiProperty.ValidValue) {
             this.DatePickerInputDivStyle = null;
-        } else {
+        }else {
             this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
         }
 
@@ -1148,13 +1111,12 @@ export class LogDatePickerComponent
                 var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
                     this.ObjectFieldName + "_timepicker",
                     this.ObjectTableName,
-                    this.DataContext,
-                    !this.DisableRules
+                    this.DataContext
                 );
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
 
-                if (!this.IsFreeValue || this.ForceSetValidity) {
+                if (!this.IsFreeValue) {
                     this.SetValidity(true, null);
                     this.ValidateField();
                 }
@@ -2390,31 +2352,15 @@ export class LogDatePickerComponent
     SetDisabled() {
         var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
-            this.AddDisabledClass(inputDiv);
-        }
-    }
-
-    private AddDisabledClass(inputDiv: HTMLElement) {
-        if (this.IsDisabledWithColor)
-            inputDiv.classList.add("DatePickerInputDivDisabledWithColor");
-
-        else
             inputDiv.classList.add("DatePickerInputDivDisabled");
+        }
     }
 
     SetEnabled() {
         var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
-            this.RemoveDisabledClass(inputDiv);
-        }
-    }
-
-    private RemoveDisabledClass(inputDiv: HTMLElement) {
-        if (this.IsDisabledWithColor)
-            inputDiv.classList.remove("DatePickerInputDivDisabledWithColor");
-
-        else
             inputDiv.classList.remove("DatePickerInputDivDisabled");
+        }
     }
 
     GetDate(
@@ -2534,13 +2480,13 @@ export class LogDatePickerComponent
     }
 
     SetValidity(validValue: boolean, errorMessage) {
-        if (!this.IsFreeValue || this.ForceSetValidity) {
+        if (!this.IsFreeValue) {
             var siblingUIProperty: UIProperty = null;
             if (this.uiProperty) {
                 this.uiProperty.ValidValue = validValue;
                 this.uiProperty.ValidationError = errorMessage;
                 if (!validValue) {
-
+                    
                     this.DatePickerInputDivStyle = {
                         border: "1px solid #ff0000"
                     };

@@ -21,10 +21,10 @@ export class DocumentTypeCopyPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -78,11 +78,6 @@ export class DocumentTypeCopyPM {
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
        
 	 
-    private isOriginal: boolean;
-    public get IsOriginal() { return this.isOriginal; }
-    public set IsOriginal(newValue: boolean) { if (this.isOriginal != newValue) { this.isOriginal = newValue; this.MarkAsDirty("IsOriginal"); } }
-       
-	 
 
     public OldEntityPM: DocumentTypeCopyPM;
 	    
@@ -93,10 +88,7 @@ export class DocumentTypeCopyPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -106,7 +98,6 @@ export class DocumentTypeCopyPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "DocumentTypeCopy");
            
         }
-	 }
     }
     private MyClone: DocumentTypeCopyPM;
 

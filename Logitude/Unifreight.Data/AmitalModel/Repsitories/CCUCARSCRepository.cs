@@ -23,10 +23,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUCARSC GetSingle(int FILENO, int LINENO, int COUNTER , int? tenant)
+        public CCUCARSC GetSingle(int FILENO, int LINENO, int COUNTER)
         {
             return (from a in context.CCUCARSCs
-                    where a.FILENO == FILENO && a.LINENO == LINENO && a.COUNTER == COUNTER && a.TENANT == tenant
+                    where a.FILENO == FILENO && a.LINENO == LINENO && a.COUNTER == COUNTER
                     select a).FirstOrDefault();
         }
 
@@ -39,26 +39,29 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUCARSC entity)
         {
             context.CCUCARSCs.Add(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUCARSC entity)
         {
-             {
+            //if (entity.EntityState == System.Data.EntityState.Unchanged)
+            {
                 context.CCUCARSCs.Attach(entity);
             }
-       
+            //context.AddToCCUCARSCs 
+            //context.CCUCARSCs.DeleteAllOnSubmit //ther isn't
+            //http://forums.devart.com/viewtopic.php?t=13223
+            //context.ExecuteStoreCommand 
             context.CCUCARSCs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUCARSC entity)
         {
-             {
+            //if (entity.EntityState == System.Data.EntityState.Unchanged)
+            {
                 context.CCUCARSCs.Attach(entity); context.SetAsModified(entity);
             }
            
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+
         }
 
         public List<CCUCARSC> All()
@@ -80,20 +83,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             var keys = entityKeys as CCUCUSTITEMKeys;
             return (from a in context.CCUCARSCs
-                    where a.FILENO == keys.FILENO && a.LINENO == keys.LINENO && a.TENANT == keys.TENANT
+                    where a.FILENO == keys.FILENO && a.LINENO == keys.LINENO
                     select a).ToList();
         }
 
         public CCUCARSC GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUCARSCKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO, keys.COUNTER, keys.TENANT);
+            return this.GetSingle(keys.FILENO, keys.LINENO, keys.COUNTER);
         }
 
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUCARSC>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
+            return context.DeleteWhere<CCUCARSC>(rec => rec.FILENO == keys.FILENO);
         }
     }
 }

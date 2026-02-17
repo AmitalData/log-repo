@@ -4,9 +4,9 @@
         <tr class="TabTitleRow">
             <td colspan="2">{{'WarehouseEntry.TH.Routings' | TextCodeTranslationPipe}}</td>
         </tr>
-        <tr style="height: auto; ">
-            <td style="width: 400px;vertical-align:top">
-                <div style="height: auto;vertical-align:top; width: 100%; margin-top: -5px;">
+        <tr style="height: 170px; ">
+            <td style="width: 400px;">
+                <div style="height: 170px; width: 100%; margin-top: -5px;">
                     <table>
 
 
@@ -14,7 +14,7 @@
                             <td>
                                 <table>
                                     <tr class="FormFieldRow">
-                                        <td style="width: 115px;">
+                                        <td style="width: 90px;">
                                             <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -49,7 +49,7 @@
                             <td>
                                 <table>
                                     <tr class="FormFieldRow">
-                                        <td style="width: 115px;">
+                                        <td style="width: 90px;">
                                             <LogLabel  [NoObjectField]="true" [Text]="'Destination'"  [DataContext]="DataContext"></LogLabel>
                                         </td>
 
@@ -79,11 +79,11 @@
                         </tr>
 
 
-                        <tr >
+                        <tr>
                             <td>
                                 <table>
                                     <tr>
-                                        <td style="width:107px">
+                                        <td style="width:82px">
                          
                                         </td>
                                         <td>
@@ -225,63 +225,10 @@
                                             </table>
                                         </td>
                                     </tr>
-
-
                                 </table>
                                
                             </td>
                         </tr>
-
-                        <tr class="FormFieldRow">
-                            <td>
-                                <table>
-                                    <tr class="FormFieldRow">
-                                        <td style="width: 115px;">
-                                            <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                               
-                                            <LogLov [ObjectFieldName]="'TruckerId'"
-                                                    [SelectedValue]="TruckerId"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Carrier'"
-                                                    [DependencyFilter1Value]="'TR'">
-                                            </LogLov>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr><td colspan="2"></td></tr>
-                                </table>
-                            </td>
-
-
-                        </tr>
-
-                        <tr class="FormFieldRow">
-                            <td>
-                                <table>
-                                    <tr class="FormFieldRow">
-                                        <td style="width: 115px;">
-                                            <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                        </td>
-
-                                        <td>
-                                 
-                                            <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr><td colspan="2"></td></tr>
-                                </table>
-                            </td>
-
-
-                        </tr>
-
 
                         <tr>
                             <td>

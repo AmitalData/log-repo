@@ -11,7 +11,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'btnComponent',
     templateUrl: './btnComponent.html',
@@ -75,7 +75,7 @@ export class btnComponent implements OnInit {
 
             case "Warehouse":
                 {
-                    this.GetInUseWarehouse(this.rowData.Code);
+                    this.GetInUseCarrier("WH", this.rowData.Code);
                     break;
                 }
         }
@@ -118,7 +118,7 @@ export class btnComponent implements OnInit {
 
     GetPortCopyToCurrentTenant() {
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetPortCopyToCurrentTenant(this.entityId).subscribe((myResult:any) => {
+        myService.GetPortCopyToCurrentTenant(this.entityId).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
 
@@ -134,7 +134,7 @@ export class btnComponent implements OnInit {
     private IsCompleted: boolean = false;
     GetCarrierCopyToCurrentTenant() {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetCarrierCopyToCurrentTenant(this.entityId).subscribe((myResult:any) => {
+        myService.GetCarrierCopyToCurrentTenant(this.entityId).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
 
@@ -150,7 +150,7 @@ export class btnComponent implements OnInit {
     
     GetInUseCarrier( type: string, code: string) {
         var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetInUseCarrier(type, code).subscribe((myResult:any) => {
+        myService.GetInUseCarrier(type, code).subscribe(myResult => {
             this.InUseVisibile = myResult.Result;
         });   
     }
@@ -169,12 +169,5 @@ export class btnComponent implements OnInit {
 
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
-    }
-
-    GetInUseWarehouse(code: string) {
-        var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetInUseWarehouse(code).subscribe((myResult:any) => {
-            this.InUseVisibile = myResult.Result;
-        });
     }
 }

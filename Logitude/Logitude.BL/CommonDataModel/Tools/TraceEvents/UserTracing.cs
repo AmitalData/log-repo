@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.BL.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 
@@ -17,7 +17,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
     {
         public static void Trace(UserPM entityPM, User poco, bool isNewEntity)
         {
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), 0);
+            ContactPM loggedContact = new ContactQuery(0).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), 0);
 
             if (loggedContact == null)
             {

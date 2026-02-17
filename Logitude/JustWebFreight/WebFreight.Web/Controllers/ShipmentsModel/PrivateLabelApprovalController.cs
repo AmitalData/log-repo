@@ -13,7 +13,7 @@ using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Counters;
@@ -28,7 +28,7 @@ using Logitude.BL.CommonDataModel.CodePropertiesMapping;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.QueueService;
@@ -42,7 +42,6 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.ServiceBus.Messaging;
 using Logitude.SystemLogs;
-using Logitude.Customs.BL.EntityQueryServices;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
@@ -114,7 +113,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
 
                     };
 
-                        communicationLogRepository.Add(commLog);
+                    communicationLogRepository.Add(commLog);
                     communicationLogRepository.SubmitChanges();
                     string filename = document.Id + "." + document.Extension;
                     string filePath = "tenant" + commLog.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
@@ -170,7 +169,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() }}, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() }});
                 //BrokeredMessage message = new BrokeredMessage();
 
                 //message.Properties["CommunicationLogId"] = communicationLogId;

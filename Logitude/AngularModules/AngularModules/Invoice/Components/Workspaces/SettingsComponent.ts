@@ -6,7 +6,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'SettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './SettingsComponent.html',
 })
 
@@ -36,7 +36,7 @@ export class SettingsComponent {
     }
 
     onSATSettingsClicked() {
-        this._entityResourceService.getEntityResourceByTableName("SATInterfaceSetting", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("SATInterfaceSetting", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 800;
             logitudeWindow.Height = 550;
@@ -61,7 +61,7 @@ export class SettingsComponent {
 
     OpenAccountingSettings() {
 
-        this._entityResourceService.getEntityResourceByTableName("AccountingSetting", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("AccountingSetting", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 800;
             logitudeWindow.Height = 550;

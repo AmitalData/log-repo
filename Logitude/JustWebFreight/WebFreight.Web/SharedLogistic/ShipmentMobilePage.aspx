@@ -7,16 +7,14 @@
 <head runat="server">
     <title></title>
 
-    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-<%--    <link href="../css/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />--%>
-    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
+    <link href="http://cdn.kendostatic.com/2013.1.319/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2013.1.319/styles/kendo.mobile.all.min.css" rel="stylesheet" />
 
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"></script>
 
+    <script type="text/javascript" src="../HtmlHelpers/JS/jquery.dateFormat-1.0.js"></script>
     <script type="text/javascript" src="../HtmlHelpers/JS/Logitude.Converters.js"></script>
     <script type="text/javascript" src="../HtmlHelpers/JS/ContactActivityLog.js"></script>
 

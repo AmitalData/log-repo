@@ -1,9 +1,8 @@
-﻿using Logitude.Server.Tools.QueueService;
-using Microsoft.ServiceBus.Messaging;
+﻿using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Server.Infrastructure;
@@ -25,28 +24,23 @@ namespace Logitude.Server.Tools.Helpers
 
           if (tenantpm.IsMobileActivated)
          {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("contactunseenentityqueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "TenantName", tenantpm.Company }, { "TraceEventId", traceEventId}, { "SourceEventDate", DateTime.UtcNow.ToString() } }, tenant, null, null, null, null);
+             using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
+             {
 
+                 QueueClient client = ServiceBusQueueHelper.CreateContactUnseenEntityQueue(tenant);
+                 BrokeredMessage message = new BrokeredMessage();
+              
+                 message.Properties["Tenant"] = tenant;
+                 message.Properties["TenantName"] = tenantpm.Company;
+                 message.Properties["TraceEventId"] = traceEventId;
+                 message.Properties["SourceEventDate"] = DateTime.UtcNow;
+                 client.Send(message);
+          
 
-                //using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
-                //{
-
-                //    QueueClient client = ServiceBusQueueHelper.CreateContactUnseenEntityQueue(tenant);
-                //    BrokeredMessage message = new BrokeredMessage();
-
-                //    message.Properties["Tenant"] = tenant;
-                //    message.Properties["TenantName"] = tenantpm.Company;
-                //    message.Properties["TraceEventId"] = traceEventId;
-                //    message.Properties["SourceEventDate"] = DateTime.UtcNow;
-                //    client.Send(message);
-
-
-                //    scope.Complete();
-                //}
-            }
-           
+                 scope.Complete();
+             }
+         }
+            //}
         }
     }
 }

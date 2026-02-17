@@ -9,7 +9,7 @@
 <div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px;">
-        <CheckBox (Checked)="ExtPageCheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']" [IsEnabled]="rowData['InReconcileProgress'] == false && rowData['InProgressExternalReconcile'] == false "></CheckBox>
+        <CheckBox (Checked)="ExtPageCheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']" [IsEnabled]="rowData['InReconcileProgress'] == false"></CheckBox>
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'ReferenceDate'" [style.text-align]="isRTL ? 'right' : 'left'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>

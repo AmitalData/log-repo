@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
@@ -28,7 +28,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'BookingDetailsTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './BookingDetailsTabComponent.html',
 })
 
@@ -676,7 +676,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
         }
 
         else {
-            this.myAirlineService.getSingleFromCache(myAirlineId).subscribe((myResult:any) => {
+            this.myAirlineService.getSingleFromCache(myAirlineId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: AirlineList = myResponse.Result;
@@ -954,7 +954,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
 
         else {
             var myService: PortListService = new PortListService();
-            myService.getSingle(myPortId).subscribe((myResult:any) => {
+            myService.getSingle(myPortId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: PortList = myResponse.Result;
@@ -984,7 +984,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
 
         else {
             var myService: PortListService = new PortListService();
-            myService.getSingle(myPortId).subscribe((myResult:any) => {
+            myService.getSingle(myPortId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: PortList = myResponse.Result;
@@ -1015,7 +1015,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
 
         else {
             var myService: PortListService = new PortListService();
-            myService.getSingle(myPortId).subscribe((myResult:any) => {
+            myService.getSingle(myPortId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: PortList = myResponse.Result;
@@ -1046,7 +1046,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
 
         else {
             var myService: PortListService = new PortListService();
-            myService.getSingle(myPortId).subscribe((myResult:any) => {
+            myService.getSingle(myPortId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: PortList = myResponse.Result;
@@ -1075,7 +1075,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
 
         else {
             var myService: PortListService = new PortListService();
-            myService.getSingle(myPortId).subscribe((myResult:any) => {
+            myService.getSingle(myPortId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: PortList = myResponse.Result;
@@ -1104,7 +1104,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
 
         else {
             var myService: PortListService = new PortListService();
-            myService.getSingle(myPortId).subscribe((myResult:any) => {
+            myService.getSingle(myPortId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: PortList = myResponse.Result;
@@ -1176,7 +1176,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(this.Master)) {
             var myMasterFieldError: string = "";
 
-            myBookingDomainService.ValidateBookingMasterFieldExistance(this.EntityPM.Id, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionCode, this.EntityPM.TransportModeCode, this.EntityPM.IsCancelled, this.EntityPM.Tenant).subscribe((myResult:any) => {
+            myBookingDomainService.ValidateBookingMasterFieldExistance(this.EntityPM.Id, this.EntityPM.Master, this.EntityPM.AirlinePrefix, this.EntityPM.DirectionCode, this.EntityPM.TransportModeCode, this.EntityPM.IsCancelled, this.EntityPM.Tenant).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     myMasterFieldError = myResponse.Result;
@@ -1206,7 +1206,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(this.Master)) {
                 if (this.Master.length == 8 && !this.EntityPM.MainCarriageIsFromStack && !this.EntityPM.MAWBTakenFromStack) {
                     if (FormatTool.IsNumeric(this.Master)) {
-                        this.StackDomainService.GetMAWBStackPMByNumber(+this.Master).subscribe((myResult:any) => {
+                        this.StackDomainService.GetMAWBStackPMByNumber(+this.Master).subscribe(myResult => {
                             var myResponse: ServiceResponse = myResult;
 
                             if (!myResponse.HasError) {
@@ -1339,7 +1339,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
 
     private GetAirline() {
         if (!AppTool.IsNullOrEmpty(this.MainCarriageCarrierId)) {
-            this.myAirlineService.getSingleFromCache(this.MainCarriageCarrierId).subscribe((myResult:any) => {
+            this.myAirlineService.getSingleFromCache(this.MainCarriageCarrierId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: AirlineList = myResponse.Result;
@@ -1369,7 +1369,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
         }
     }
     private GetTenantZeroAirline(airlineCode: string) {
-        this.myPartnersDomainService.GetAirlineByCode(airlineCode, 0).subscribe((myResult:any) => {
+        this.myPartnersDomainService.GetAirlineByCode(airlineCode, 0).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var airlinePM: AirlinePM = myResponse.Result;
@@ -1511,7 +1511,7 @@ export class BookingDetailsTabComponent extends BaseComponent {
         logWindow.Height = 530;
         logWindow.WindowArgs = args;
         logWindow.Title = "Flights Schedules";
-        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe(response=> {
             logWindow.Show('./CommonModules/CommonFlightsSchedules/Components/FlightsSchedules/FlightsSchedulesComponent');
             logWindow.ComponentLoaded.subscribe(comp => {
                 logWindow.WindowClosed.subscribe((event: any) => {

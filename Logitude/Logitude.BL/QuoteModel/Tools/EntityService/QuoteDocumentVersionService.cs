@@ -8,10 +8,10 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -71,7 +71,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             byte[] pdfData = new byte[] { };
             if (entityPM.VersionType == "G")
             {
-                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(entityPM.QuoteId, entityPM.QuoteTemplateId, entityPM.CreatedByUserId, entityPM.Tenant,null, null, entityPM.VersionNumber);
+                pdfData = quoteTemplateService.GetQuoteTemplatePdfReport(entityPM.QuoteId, entityPM.QuoteTemplateId, entityPM.CreatedByUserId, entityPM.Tenant,null);
             }
 
             DocumentRepository documentRep = new DocumentRepository(commonContext);

@@ -40,7 +40,6 @@ namespace Logitude.BL.DataContracts
         public int ShippingInstructionsLast7DaysCount { get; set; }
         public int ContainerStatusLast7DaysCount { get; set; }
         public int EBookingInProgressCount { get; set; }
-        public int PendingApprovalDocumentsCount { get; set; }
     }
 
     public class FlightSummary

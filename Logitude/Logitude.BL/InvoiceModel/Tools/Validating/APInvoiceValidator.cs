@@ -2,7 +2,7 @@
 using System.Linq;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 
 using Logitude.BL.CommonDataModel;
@@ -32,55 +32,61 @@ using System.Web;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.DataContracts;
 
-using Logitude.BL.Resolvers;
-
-using System.Text.RegularExpressions;
-using System.Data.Entity.Core.Objects;
-using Logitude.BL.CommonDataModel.EntityLists;
-
-
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
     public class APInvoiceValidator
     {
-        public static void Validate(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext context, ICommonDataContext commonContext, string MainShipmentConcurrencyGUID = null)
+        public static void Validate(APInvoicePM entityPM, IInvoiceContext myContext, string MainShipmentConcurrencyGUID = null)
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
-            if (!isNew)
+            APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(myContext);
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(entityPM.Tenant);
+
+
+            AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings
+                                                     where d.Id == entityPM.Tenant
+                                                     select d).FirstOrDefault();
+
+
+            bool isVatNumberMandatoryInAP = false;
+            if (myAccountingSetting != null)
             {
-                ValidateConcurrencyGUID(entityPM, entityPOCO);
+                isVatNumberMandatoryInAP = myAccountingSetting.IsVatNumberMandatoryInAP;
             }
 
-            ValidateInvoiceFields(entityPM);
-
-            AccountingSetting accountingSetting = (from d in commonContext.AccountingSettings where d.Id == entityPM.Tenant select d).FirstOrDefault();
-            if (accountingSetting != null)
+            if (entityPM.InvoiceDate > TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant))
             {
-                if (accountingSetting.IsVatNumberMandatoryInAP && entityPM.VendorCountry == "ISRAEL")
-                {
-                    if (string.IsNullOrEmpty(entityPM.VATNumber) && (entityPM.VendorCountry == "IL" || entityPM.VendorCountry == null))
-                    {
-                        throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
-                    }
-                }
+                string msg = TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
 
-                if (!accountingSetting.EnableEnteringTotalVAT)
-                {
-                    if (entityPM.TotalVATOnly)
-                    {
-                        if (isNew)
-                        {
-                            throw new ApplicationException("Tenant setting doesn’t allow total VATs");
-                        }
+            if (entityPM.InvoiceDate > entityPM.AccountingDate)
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
 
-                        else if (!entityPOCO.TotalVATOnly)
-                        {
-                            throw new ApplicationException("Tenant setting doesn’t allow total VATs");
-                        }
-                    }
+            if (isVatNumberMandatoryInAP)
+            {
+                if (string.IsNullOrEmpty(entityPM.VATNumber))
+                {
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.VATNumber", entityPM.Tenant)));
                 }
             }
+
+
+            List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+
+            List<string> allVatsIds = (from d in activeLines
+                                       where d.VatTypeId != null
+                                       group d by d.VatTypeId into g
+                                       select g.Key).ToList();
+
+            List<VatType> allVats = (from f in myCommonContext.VatTypes
+                                     where allVatsIds.Contains(f.Id)
+                                     && f.Tenant == entityPM.Tenant
+                                     select f).ToList();
 
             if (entityPM.IsMultipleEntities)
             {
@@ -97,12 +103,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         double? invoiceAmount = (double)MethodHelper.Round(entityPM.AmountInInvoiceCurrency, 2);
 
-                        if (entityPM.AmountInInvoiceCurrency == null)
+                        if (invoiceAmount == 0 || invoiceAmount == null)
                         {
                             throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                         }
 
-                        else if (!entityPM.IsExternalEntity)
+                        else
                         {
                             //double? d1 = entityPM.InvoiceMultipleShipments.Sum(s => s.SubTotalInInvoiceCurrency);
                             //double? d2 = entityPM.InvoiceMultipleShipments.Sum(s => s.TotalVATAmount);
@@ -128,312 +134,62 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             else
             {
+                if (activeLines.Count == 0)
+                {
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
+
                 if (entityPM.InvoiceExpectedAmount == null)
                 {
                     throw new ApplicationException(msgRequired.Replace("%FieldName", TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant)));
                 }
 
-                else if (!entityPM.IsExternalEntity && entityPM.InvoiceExpectedAmount != entityPM.AmountInInvoiceCurrency)
+                else if (entityPM.InvoiceExpectedAmount != entityPM.AmountInInvoiceCurrency)
                 {
                     string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceAmountNotMatched", entityPM.Tenant);
                     throw new ApplicationException(msg);
                 }
 
-                ValidateInvoiceAmountDue(entityPM, entityPOCO, isNew, context);
-                ValidateNormalInvoiceLines(entityPM, commonContext, accountingSetting, msgRequired);
+                foreach (APInvoiceLinePM item in activeLines)
+                {
+                    if (item.InvoiceCurrencyAmount == 0)
+                    {
+                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
+                        throw new ApplicationException(msg);
+                    }
+
+                    if (item.VatTypeId == null)
+                    {
+                        string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant);
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", field));
+                    }
+
+                    else
+                    {
+                        if (item.VatPercentage == null)
+                        {
+                            VatType vattType = allVats.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
+                            if (vattType != null)
+                            {
+                                if (!vattType.IsMultiPercentage)
+                                {
+                                    string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatPercentage", entityPM.Tenant);
+                                    throw new ApplicationException(msgRequired.Replace("%FieldName", field));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                ValidateMultiVatPercentages(entityPM, myAccountingSetting, allVats);
                 ValidateShipmentConcurrencyGUID(entityPM, MainShipmentConcurrencyGUID);
             }
 
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
-            ValidateFullAccounting(entityPM, isNew);
-            ValidateExternalAPI(entityPM, commonContext);
-            ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
-        }
-
-        private static void ValidateNormalInvoiceLines(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
-        {
-            List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-            Tenant tenantPOCO = GetTenant(entityPM.Tenant);
-            if (activeLines.Count == 0)
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
-                throw new ApplicationException(msg);
-            }
-
-            else if (activeLines.Where(d => d.InvoiceCurrencyAmount == 0).Any())
-            {
-                if (entityPM.CreatedFromAPI && entityPM.IsGeneralInvoice && tenantPOCO.AccountingActivated) { }
-                else
-                {
-                    string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
-                    throw new ApplicationException(msg);
-                }
-            }
-
-            else
-            {
-                if (entityPM.TotalVATOnly)
-                {
-                    ValidateTotalVATOnly(entityPM, commonContext, accountingSetting, msgRequired);
-                }
-
-                else
-                {
-                    ValidateInvoiceLinesVAT(entityPM, commonContext, accountingSetting, msgRequired);
-                }
-            }
-        }
-
-        private static void ValidateTotalVATOnly(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
-        {
-            List<APInvoiceTotalVATPM> activeTotalVats = entityPM.TotalVATs.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-
-            if (activeTotalVats.Count == 0)
-            {
-                throw new ApplicationException("You should have at least 1 invoice total VAT");
-            }
-
-            else
-            {
-                List<VatType> allVatTypes = (from f in commonContext.VatTypes where f.Tenant == entityPM.Tenant select f).ToList();
-
-                foreach (APInvoiceTotalVATPM item in activeTotalVats)
-                {
-                    if (item.VatTypeId == null)
-                    {
-                        string field = TranslateTextsClass.Translate("APInvoiceTotalVAT.F.VatTypeId", entityPM.Tenant);
-                        throw new ApplicationException(msgRequired.Replace("%FieldName", field));
-                    }
-
-                    else if (item.VatPercent == null)
-                    {
-                        VatType itemVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
-
-                        if (itemVatType != null)
-                        {
-                            if (itemVatType.IsMultiPercentage)
-                            {
-                                if (entityPM.StatusCode == null || entityPM.StatusCode == "WA")
-                                {
-                                    if (!accountingSetting.EnableMultiPercentageVATTypes)
-                                    {
-                                        throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
-                                    }
-                                }
-                            }
-
-                            else
-                            {
-                                string field = TranslateTextsClass.Translate("APInvoiceTotalVAT.F.VatPercent", entityPM.Tenant);
-                                throw new ApplicationException(msgRequired.Replace("%FieldName", field));
-                            }
-                        }
-                    }
-                }
-
-
-                List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ExcludeFromTaxReport != true).ToList();
-                if (activeLines != null && activeLines.Count > 0 && activeTotalVats != null && activeTotalVats.Count > 0)
-                {
-                    List<string> expenses = new List<string>();
-
-                    List<string> chTypeIds = activeLines.Select(ln => ln.ChargesTypeId).ToList();
-                    if (chTypeIds != null && chTypeIds.Count > 0)
-                    {
-
-                        ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(entityPM.Tenant);
-                        IQueryable<ChargesTypeList> query = chargesTypeQuery.GetChargesTypeListsByTenant(entityPM.Tenant);
-                        if (query != null)
-                        {
-                            expenses = query.Where(ch => ch.IsExpense == true).Select(ch => ch.Id).ToList();
-                        }
-                    }
-
-
-
-                    double? localtotal = 0;
-                    double? totallines = 0;
-                    if (expenses != null && expenses.Count > 0)
-                    {
-                        foreach (APInvoiceLinePM line in activeLines)
-                        {
-                            var chTypeId = line.ChargesTypeId;
-                            if (chTypeId == null || (chTypeId != null && !expenses.Contains(chTypeId)))
-                            {
-                                localtotal += line.LocalCurrencyAmount;
-                            }
-                        }
-                        totallines = activeLines.Sum(ln => ln.LocalCurrencyAmount);
-                    }
-                    else
-                    {
-                        localtotal = activeLines.Sum(ln => ln.LocalCurrencyAmount);
-                        totallines = localtotal;
-                    }
-                    double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
-                    if (localtotal > 0 && totalVat < 0)
-                    {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
-                    }
-                    else if (localtotal < 0 && totalVat > 0)
-                    {
-                        throw new ApplicationException("Reference " + entityPM.InvoiceNumber + ":   total lines is " + totallines.ToString() + ", of which reportable amount " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
-                    }
-                }
-            }
-        }
-
-        private static void ValidateInvoiceLinesVAT(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
-        {
-            List<VatType> allVatTypes = (from f in commonContext.VatTypes where f.Tenant == entityPM.Tenant select f).ToList();
-
-            List<APInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-
-            foreach (APInvoiceLinePM item in lines)
-            {
-                if (item.VatTypeId == null)
-                {
-                    string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", field));
-                }
-
-                else if (item.VatPercentage == null)
-                {
-                    VatType itemVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
-
-                    if (itemVatType != null)
-                    {
-                        if (itemVatType.IsMultiPercentage)
-                        {
-                            if (entityPM.StatusCode == null || entityPM.StatusCode == "WA")
-                            {
-                                if (!accountingSetting.EnableMultiPercentageVATTypes)
-                                {
-                                    throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            string field = TranslateTextsClass.Translate("ARInvoiceLine.F.VatPercentage", entityPM.Tenant);
-                            throw new ApplicationException(msgRequired.Replace("%FieldName", field));
-                        }
-                    }
-                }
-            }
-
-
-
-
-            List<APInvoiceTotalVATPM> activeTotalVats = entityPM.TotalVATs.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-
-            List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-            if (activeLines != null && activeLines.Count > 0 && activeTotalVats != null && activeTotalVats.Count > 0)
-            {
-                List<string> expenses = new List<string>();
-
-                List<string> chTypeIds = activeLines.Select(ln => ln.ChargesTypeId).ToList();
-                if (chTypeIds != null && chTypeIds.Count > 0)
-                {
-
-                    ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(entityPM.Tenant);
-                    IQueryable<ChargesTypeList> query = chargesTypeQuery.GetChargesTypeListsByTenant(entityPM.Tenant);
-                    if (query != null)
-                    {
-                        expenses = query.Where(ch => ch.IsExpense == true).Select(ch => ch.Id).ToList();
-                    }
-                }
-
-                double? localtotal = 0;
-                if (expenses != null && expenses.Count > 0)
-                {
-                    foreach (APInvoiceLinePM line in activeLines)
-                    {
-                        var chTypeId = line.ChargesTypeId;
-                        if (chTypeId == null || (chTypeId != null && !expenses.Contains(chTypeId)))
-                        {
-                            localtotal += line.LocalCurrencyAmount;
-                        }
-                    }
-                }
-                else
-                    localtotal = activeLines.Sum(ln => ln.LocalCurrencyAmount);
-
-                double totalVat = activeTotalVats.Sum(tv => tv.LocalVATAmount);
-                if (localtotal > 0 && totalVat < 0)
-                {
-                    throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is positive,  but VAT " + totalVat + " is negative");
-                }
-                else if (localtotal < 0 && totalVat > 0)
-                {
-                    throw new ApplicationException("Reference " + entityPM.InvoiceNumber + "   total " + localtotal.ToString() + " is negaive,  but VAT " + totalVat + " is positive");
-                }
-            }
-
-        }
-
-        private static void ValidateInvoiceFields(APInvoicePM entityPM)
-        {
-            if (entityPM.InvoiceDate > TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant))
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
-                throw new ApplicationException(msg);
-            }
-
-            if (entityPM.InvoiceDate > entityPM.AccountingDate)
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
-                throw new ApplicationException(msg);
-            }
-        }
-
-        private static void ValidateUnUpdateFields(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew)
-        {
-            if (!isNew)
-            {
-                bool isEditingEnabled = IsEditingEntityEnabled(entityPOCO);
-
-                if (!isEditingEnabled)
-                {
-                    if (entityPM.InvoiceCurrencyExchangeRate != entityPOCO.InvoiceCurrencyExchangeRate)
-                    {
-                        string fieldLabel = TranslateTextsClass.Translate("APInvoice.F.InvoiceCurrencyExchangeRate", entityPM.Tenant);
-                        throw new ApplicationException("Can't update " + fieldLabel);
-                    }
-
-                    if (entityPM.AmountInInvoiceCurrency != entityPOCO.AmountInInvoiceCurrency)
-                    {
-                        string fieldLabel = TranslateTextsClass.Translate("APInvoice.F.AmountInInvoiceCurrency", entityPM.Tenant);
-                        throw new ApplicationException("Can't update " + fieldLabel);
-                    }
-                }
-            }
-        }
-
-        public static void CheckInvoiceNumberFormat(string invoiceNumber, int tenant)
-        {
-            bool showLocal = SetShowLocal(tenant);
-            Regex regex = new Regex("^[A-Za-z0-9]*$");
-            if (!regex.IsMatch(invoiceNumber))
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.O.InvalidNumber", tenant, showLocal);
-                throw new ApplicationException(msg);
-
-            }
-
-        }
-
-        private static bool SetShowLocal(int tenant)
-        {
-            bool showLocal = false;
-            var user = GetLoggedContact(tenant);
-            if (user != null)
-            {
-                showLocal = !(GetLoggedContact(tenant).DontShowLocal);
-            }
-            return showLocal;
+            ValidateFullAccounting(entityPM.Tenant, entityPM.VendorId, entityPM.InvoiceCurrencyId, entityPM.AccountingDate);
+            ValidateExternalAPI(entityPM, myCommonContext);
         }
 
         private static void ValidateExternalAPI(APInvoicePM entityPM, ICommonDataContext myCommonContext)
@@ -508,157 +264,73 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
-                    if (!entityPM.IsExternalEntity)
+                    double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
+                    //double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
+                    //if (lineForiegnAmount != lineForiegnAmount_Computed)
+                    //{
+                    //    throw new ApplicationException("Wrong Line Foriegn Amount");
+                    //}
+
+
+                    double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
+                    double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
+                    if (lineLocalAmount != lineLocalAmount_Computed)
                     {
-                        double? lineForiegnAmount = MethodHelper.Round(item.ForiegnCurrencyAmount, 2);
-                        //double? lineForiegnAmount_Computed = MethodHelper.Round(item.Quantity * item.UnitPrice, 2);
-                        //if (lineForiegnAmount != lineForiegnAmount_Computed)
-                        //{
-                        //    throw new ApplicationException("Wrong Line Foriegn Amount");
-                        //}
+                        throw new ApplicationException("Wrong Line Local Amount");
+                    }
 
-
-                        double? lineLocalAmount = MethodHelper.Round(item.LocalCurrencyAmount, 2);
-                        double? lineLocalAmount_Computed = MethodHelper.Round(item.ForiegnCurrencyAmount * item.ForiegnExchangeRate, 2);
-                        if (lineLocalAmount != lineLocalAmount_Computed)
+                    double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
+                    double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                    double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
+                    if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
+                    {
+                        if (lineInvoiceAmount != lineForiegnAmount)
                         {
-                            throw new ApplicationException("Wrong Line Local Amount");
+                            throw new ApplicationException("Wrong Line Invoice Amount");
                         }
+                    }
 
-                        double? lineInvoiceAmount = MethodHelper.Round(item.InvoiceCurrencyAmount, 2);
-                        double? exchangeRate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
-                        double? lineInvoiceAmount_Computed = MethodHelper.Round((item.LocalCurrencyAmount / exchangeRate), 2);
-                        if (item.ForiegnCurrencyId == entityPM.InvoiceCurrencyId)
+                    else
+                    {
+                        if (lineInvoiceAmount != lineInvoiceAmount_Computed)
                         {
-                            if (lineInvoiceAmount != lineForiegnAmount)
-                            {
-                                throw new ApplicationException("Wrong Line Invoice Amount");
-                            }
-                        }
-
-                        else
-                        {
-                            if (lineInvoiceAmount != lineInvoiceAmount_Computed)
-                            {
-                                throw new ApplicationException("Wrong Line Invoice Amount");
-                            }
+                            throw new ApplicationException("Wrong Line Invoice Amount");
                         }
                     }
                 }
                 #endregion
 
-                #region Sub-Totals
+                #region Lines Amounts VS Invoice Amount
                 double? subTotal = 0;
                 double? subTotal_Local = 0;
-                List<APInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
-                if (lines.Count > 0)
-                {
-                    subTotal = MethodHelper.Round(lines.Sum(s => s.InvoiceCurrencyAmount), 2);
-                    subTotal_Local = MethodHelper.Round(lines.Sum(s => s.LocalCurrencyAmount), 2);
-                }
-
-                if (!entityPM.IsExternalEntity && entityPM.SubTotalInInvoiceCurrency != subTotal)
-                {
-                    throw new ApplicationException("Wrong Sub Total Amount");
-                }
-
-                if (!entityPM.IsExternalEntity && entityPM.SubTotalInLocalCurrency != subTotal_Local)
-                {
-                    throw new ApplicationException("Wrong Sub Total Local Amount");
-                }
-                #endregion
-
-                #region Invoice Amount
                 double? sumOfVATsAmounts = 0;
                 double? sumOfVATsAmounts_Local = 0;
                 double? sumOfVATsAmounts_Profit = 0;
                 double? Amount = 0;
                 double? Amount_Local = 0;
                 double? Amount_Profit = 0;
-                List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
-                List<InvoiceTotalsClass> group_TotalVATs = new List<InvoiceTotalsClass>();
+                List<APInvoiceLinePM> lines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
 
-                if (entityPM.TotalVATOnly)
+                if (lines.Count > 0)
                 {
-                    List<APInvoiceTotalVATPM> items = entityPM.TotalVATs.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete && d.VatTypeId != null).ToList();
-                    if (items.Count > 0)
-                    {
-                        DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-                        List<VatType> allVatTypes = (from d in myCommonContext.VatTypes where d.Tenant == tenant select d).ToList();
-                        List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == tenant select d).ToList();
-                        VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
-                        VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
-                        List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, todayDate);
+                    subTotal = MethodHelper.Round(lines.Sum(s => s.InvoiceCurrencyAmount), 2);
+                    subTotal_Local = MethodHelper.Round(lines.Sum(s => s.LocalCurrencyAmount), 2);
 
-                        foreach (APInvoiceTotalVATPM item in items)
-                        {
-                            VatType lineVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
-
-                            if (lineVatType != null)
-                            {
-                                if (!lineVatType.IsMultiPercentage)
-                                {
-                                    InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                    {
-                                        Id = item.VatTypeId,
-                                        VatTypeId = item.VatTypeId,
-                                        VatTypePercentage = MethodHelper.GetValue(item.VatPercent),
-                                        LocalCurrencyAmount = item.LocalVATAmount,
-                                        InvoiceCurrencyAmount = item.InvoiceCurrencyVATAmount,
-                                        ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyVATAmount),
-                                        ExternalVatCard = item.ExternalVATCard,
-                                        ExternalTAXItemId = lineVatType.ExternalTAXItemId,
-                                    };
-
-                                    group_Source.Add(newItem);
-                                }
-
-                                else
-                                {
-                                    List<VATTypesGroup> vatTypesGroup = allVatGroups.Where(d => d.GroupVATTypeId == item.VatTypeId).ToList();
-
-                                    foreach (VATTypesGroup itemGroup in vatTypesGroup)
-                                    {
-                                        InvoiceTotalsClass newItem = new InvoiceTotalsClass()
-                                        {
-                                            Id = itemGroup.SingleVATTypeId,
-                                            VatTypeId = itemGroup.SingleVATTypeId,
-                                            LocalCurrencyAmount = item.LocalVATAmount,
-                                            InvoiceCurrencyAmount = item.InvoiceCurrencyVATAmount,
-                                            ProfitCurrencyAmount = MethodHelper.GetValue(item.ProfitCurrencyVATAmount),
-                                        };
-
-                                        VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                        if (vatType != null)
-                                        {
-                                            newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
-                                        }
-
-                                        VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemGroup.SingleVATTypeId).FirstOrDefault();
-                                        if (myPercentagePM != null)
-                                        {
-                                            newItem.VatTypePercentage = MethodHelper.GetValue(myPercentagePM.Percentage);
-                                        }
-
-                                        group_Source.Add(newItem);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                else if (lines.Count > 0)
-                {
+                    #region
                     DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
+
                     List<VatType> allVatTypes = (from d in myCommonContext.VatTypes where d.Tenant == tenant select d).ToList();
                     List<VATTypesGroup> allVatGroups = (from d in myCommonContext.VATTypesGroups where d.Tenant == tenant select d).ToList();
+
                     VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(myCommonContext);
                     VatTypePercentageQuery myVatTypePercentageQuery = new VatTypePercentageQuery(vatTypePercentageRepository);
                     List<VatTypePercentagePM> allVatPercentages = myVatTypePercentageQuery.GetVatTypePercentagePMByDate(tenant, todayDate);
 
+                    List<InvoiceTotalsClass> group_Source = new List<InvoiceTotalsClass>();
+
                     foreach (APInvoiceLinePM item in lines)
                     {
+                        #region
                         VatType lineVatType = allVatTypes.Where(d => d.Id == item.VatTypeId).FirstOrDefault();
 
                         if (lineVatType != null)
@@ -708,11 +380,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                 }
                             }
                         }
+                        #endregion
                     }
-                }
 
-                if (group_Source.Count > 0)
-                {
                     List<InvoiceTotalsClass> group_data
                         = (from items in group_Source
                            group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
@@ -726,34 +396,26 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                ProfitCurrencyAmount = g.Sum(s => s.ProfitCurrencyAmount),
                            }).ToList();
 
-
                     foreach (InvoiceTotalsClass item in group_data)
                     {
-                        item.VatTypePercentage = MethodHelper.Roundd(item.VatTypePercentage, 3);
-
-                        if (entityPM.TotalVATOnly)
+                        ARInvoiceTotalVAT record = new ARInvoiceTotalVAT()
                         {
-                            item.LocalCurrencyVATAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2);
-                            item.ProfitCurrencyVATAmount = MethodHelper.Roundd(item.ProfitCurrencyAmount, 2);
-                            item.InvoiceCurrencyVATAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2);
-                            item.LocalCurrencyAmount = 0;
-                            item.ProfitCurrencyAmount = 0;
-                            item.InvoiceCurrencyAmount = 0;
-                        }
+                            Tenant = entityPM.Tenant,
+                            ARInvoiceId = entityPM.Id,
+                            VatTypeId = item.Id,
+                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
+                            LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
+                            InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
+                            ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
+                        };
 
-                        else
-                        {
-                            item.LocalCurrencyAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2);
-                            item.ProfitCurrencyAmount = MethodHelper.Roundd(item.ProfitCurrencyAmount, 2);
-                            item.InvoiceCurrencyAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2);
-                            item.LocalCurrencyVATAmount = MethodHelper.Roundd((item.LocalCurrencyAmount * item.VatTypePercentage / 100), 2);
-                            item.ProfitCurrencyVATAmount = MethodHelper.Roundd((item.ProfitCurrencyAmount * item.VatTypePercentage / 100), 2);
-                            item.InvoiceCurrencyVATAmount = MethodHelper.Roundd((item.InvoiceCurrencyAmount * item.VatTypePercentage / 100), 2);
-                        }
+                        record.LocalVATAmount = MethodHelper.Roundd((record.LocalVatableAmount * record.VatPercent / 100), 2);
+                        record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
+                        record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
 
-                        sumOfVATsAmounts += item.InvoiceCurrencyVATAmount;
-                        sumOfVATsAmounts_Local += item.LocalCurrencyVATAmount;
-                        sumOfVATsAmounts_Profit += item.ProfitCurrencyVATAmount;
+                        sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
+                        sumOfVATsAmounts_Local += record.LocalVATAmount;
+                        sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
                     }
 
                     Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
@@ -768,28 +430,46 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         Amount_Profit = MethodHelper.Round(Amount_Local / entityPM.ProfitCurrencyExchangeRate, 2);
                     }
+                    #endregion
                 }
 
-                if (!entityPM.IsExternalEntity && entityPM.AmountInInvoiceCurrency != Amount)
+                if (entityPM.SubTotalInInvoiceCurrency != subTotal)
+                {
+                    throw new ApplicationException("Wrong Sub Total Amount");
+                }
+
+                if (entityPM.SubTotalInLocalCurrency != subTotal_Local)
+                {
+                    throw new ApplicationException("Wrong Sub Total Local Amount");
+                }
+
+                if (entityPM.AmountInInvoiceCurrency != Amount)
                 {
                     throw new ApplicationException("Wrong Invoice Total Amount");
                 }
 
-                bool differentCurrencies =  entityPM.IsExternalEntity && entityPM.InvoiceLines != null && entityPM.InvoiceLines
-                    .Select(line => line.ForiegnCurrencyCode ?? String.Empty)
-                    .Distinct().Count() > 1;
-
-                if ((!entityPM.IsExternalEntity || differentCurrencies) && entityPM.AmountInLocalCurrency != Amount_Local)
+                if (entityPM.AmountInLocalCurrency != Amount_Local)
                 {
                     throw new ApplicationException("Wrong Invoice Total Local Amount");
                 }
-                #endregion
- 
-            }
- 
 
-                
-               
+                //entityPM.SubTotalInInvoiceCurrency = subTotal;
+                //entityPM.SubTotalInLocalCurrency = subTotal_Local;
+                //entityPM.AmountInInvoiceCurrency = Amount;
+                //entityPM.AmountInLocalCurrency = Amount_Local;
+                //entityPM.AmountInProfitCurrency = Amount_Profit;
+                #endregion
+
+                #region Local Amount
+                double? localAmount = MethodHelper.Round(entityPM.AmountInLocalCurrency, 2);
+                //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
+                double? localAmount_Computed = MethodHelper.Round(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate, 2);
+                if (localAmount != localAmount_Computed)
+                {
+                    throw new ApplicationException("Wrong Invoice Local Amount");
+                }
+                #endregion
+            }
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -826,106 +506,78 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-
-        public static void ValidateFullAccounting(APInvoicePM invoicePM, bool inNew)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
+        private static void ValidateMultiVatPercentages(APInvoicePM entityPM, AccountingSetting accountingSetting, List<VatType> allVats)
         {
-            Tenant tenantPOCO = GetTenant(invoicePM.Tenant);
-
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated && !invoicePM.IsUpdateFromPaymentService)
+            if (entityPM.StatusCode == null || entityPM.StatusCode == "WA")
             {
-                string errors = "";
-                ValidateInvoiceGLaccount(invoicePM, ref errors, invoicePM.Tenant);
-                if (inNew)
-                    ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
-                ThrowErrors(errors);
+                if (allVats.Count > 0)
+                {
+                    if (accountingSetting != null)
+                    {
+                        if (!accountingSetting.EnableMultiPercentageVATTypes)
+                        {
+                            if (allVats.Where(d => d.IsMultiPercentage).Any())
+                            {
+                                throw new ApplicationException("Your accounting settings doesn't enable Multi-percentage VATs");
+                            }
+                        }
+                    }
+                }
             }
         }
-
-        private static Tenant GetTenant(int tenant)
+        public static void ValidateFullAccounting(int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
         {
+            var errors = "";
+
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            return tenantPOCO;
-        }
-        private static void ThrowErrors(string errors)
-        {
-            if (!string.IsNullOrEmpty(errors))
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
-                errors = errors.TrimEnd(';');
-                throw new ApplicationException(errors);
-            }
+                bool useLocal = true;
+                var user = GetLoggedContact(tenant);
+                if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
 
-        }
+                GLAccountPM glAccount = getGLAccount(vendorId, tenant);
 
-        private static void ValidateAccountingPeriod(APInvoicePM invoicePM, ref string errors, int tenant)
-        {
-            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
-
-
-            IAccountingContext myContext = AccountingContext.GetContext(tenant);
-            AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
-            AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(invoicePM.AccountingDate.Value.Year, "1", tenant);
-            if (accountingPeriodList != null && invoicePM.AccountingDate != null)
-            {
-                var month = invoicePM.AccountingDate.Value.Month;
-
-                if (invoicePM.IsExternalEntity)
+                if (glAccount == null)
                 {
-                    if (month <= accountingPeriodList.ClosedMonth)
-                    {
 
-                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.VendorNoGLAccount",tenant, useLocal);
+                    errors += msg + ";";
+                }
+                if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
+                {
+                    if (glAccount.CurrencyId != invoiceCurrencyId)
+                    {
+                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + " "+ glAccount.CurrencyName + " ";
+                        errors += msg + ";";
+                    }
+                }
+
+                IAccountingContext myContext = AccountingContext.GetContext(tenant);
+                AccountingPeriodListQueryService accountingPeriodQuery = new AccountingPeriodListQueryService(myContext);
+                AccountingPeriodList accountingPeriodList = accountingPeriodQuery.GetByYear(accountingDate.Value.Year, "1", tenant);
+                if (accountingPeriodList != null && accountingDate != null)
+                {
+                    var month = accountingDate.Value.Month;
+                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                    {
+                        
+                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
                         errors += msg + ";";
                     }
                 }
                 else
                 {
-                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
-                    {
-
-                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
-                        errors += msg + ";";
-                    }
-                }
-            }
-            else
-            {
-                string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
-                errors += msg + ";";
-            }
-
-        }
-
-        private static void ValidateInvoiceGLaccount(APInvoicePM invoicePM, ref string errors, int tenant)
-        {
-            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
-
-            GLAccountPM glAccount = GetInvoiceGLAccount(invoicePM, tenant);
-
-            if (glAccount == null)
-            {
-                string msg = TranslateTextsClass.Translate("APInvoice.M.VendorNoGLAccount", tenant, showLocal);
-                errors += msg + ";";
-            }
-
-            if (glAccount != null && (glAccount.IsMultiCurrency == null || glAccount.IsMultiCurrency == false))
-            {
-                if (glAccount.CurrencyId != invoicePM.InvoiceCurrencyId)
-                {
-                    string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, showLocal) + " " + glAccount.CurrencyName + " ";
+                    string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
                     errors += msg + ";";
                 }
+                if (!string.IsNullOrEmpty(errors))
+                {
+                    errors = errors.TrimEnd(';');
+                    throw new ApplicationException(errors);
+                }
             }
-        }
-
-        private static GLAccountPM GetInvoiceGLAccount(APInvoicePM invoicePM, int tenant)
-        {
-            GLAccountPM glAccount;
-            if (invoicePM.VendorGLAccountId != null)
-                glAccount = GetGLAccountById(invoicePM.VendorGLAccountId, tenant);
-            else
-                glAccount = GetGLAccountByCardId(invoicePM.VendorId, tenant);
-            return glAccount;
         }
 
         public static string ValidateFullAccountingInvoiceDate(DateTime? invoiceDate, int tenant, string email)
@@ -934,9 +586,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
-
-                bool useLocal = !(GetLoggedContact(tenant, email).DontShowLocal);
-
+              
+                bool useLocal = !(GetLoggedContact(tenant,email).DontShowLocal);
+            
                 DateTime date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 DateTime last180days = date.AddDays(-180);
                 if (invoiceDate < last180days)
@@ -947,33 +599,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             else return null;
         }
-        public static string ValidateConfirmationNumber(DateTime? invoiceDate, decimal localVATAmount, int tenant, string email)
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
-            {
 
-                bool useLocal = !(GetLoggedContact(tenant, email).DontShowLocal);
-                IInvoiceContext objectContext = InvoiceContext.GetContext(tenant);
-                var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
-                                                 where a.Tenant == tenant && a.FromDate <= invoiceDate && a.InActive == false
-                                                 orderby a.FromDate descending
-                                                 select a
-                                            ).FirstOrDefault();
-                if (localVATAmount >= confirmationNumberDefault?.AmountForConfirmationNumber)
-                {
-                    return TranslateTextsClass.Translate("Accounting.General.O.ConfirmationNumberValidation", tenant, useLocal);
-                }
-                else return null;
-            }
-            else return null;
-        }
-        private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
+
+        private static GLAccountPM getGLAccount(string vendorId, int tenant)
         {
             GLAccountPM glaAccount = null;
             CardRepository cardRep = new CardRepository(tenant);
-            Card card = cardRep.GetSingleCard(cardId, tenant);
+            Card card = cardRep.GetSingleCard(vendorId, tenant);
             if (card != null)
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
@@ -982,14 +614,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             return glaAccount;
         }
-        private static GLAccountPM GetGLAccountById(string glaccountId, int tenant)
-        {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            GLAccountPM glaAccount = glAccountQuery.GetSingleGLAccountPM(glaccountId, tenant);
-            return glaAccount;
-        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
-        private static ContactPM GetLoggedContact(int tenant, string email = null)
+        private static ContactPM GetLoggedContact( int tenant, string email = null)
         {
             if (OverrideGetLoggedContactFunc != null)
             {
@@ -998,23 +624,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             ContactPM loggedContact = null;
             if (email != null)
             {
-                loggedContact = GetLoggedContactByAuthTokenEmail(email, tenant);
+                loggedContact= GetLoggedContactByAuthTokenEmail(email, tenant);
             }
             else
             {
-                loggedContact = new ContactQuery(tenant).GetSingleByEmail(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
+                loggedContact = new ContactQuery(tenant).GetSingleByEmail( AuthenticationUtil.ResolveUserIdentityName(tenant) , tenant);
             }
             if (loggedContact == null)
             {
                 loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
             }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { };
+            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() {  };
             return loggedContact;
         }
         private static void ValidateOnVoid(APInvoicePM entityPM)
         {
             if (entityPM.SetVoided)
-            {
+            {               
                 if (entityPM.InvoicePayments.Count > 0)
                 {
                     string msg = TranslateTextsClass.Translate("APInvoice.M.DisconnectPayments", entityPM.Tenant);
@@ -1045,53 +671,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         throw new OptimisticConcurrencyException(msg);
                     }
                 }
-            }
-        }
-        private static bool IsEditingEntityEnabled(APInvoice entityPOCO)
-        {
-            bool myResult = false;
-
-            if (entityPOCO != null)
-            {
-                if (string.IsNullOrEmpty(entityPOCO.Id))
-                {
-                    myResult = true;
-                }
-
-                else if (string.IsNullOrEmpty(entityPOCO.StatusCode))
-                {
-                    myResult = true;
-                }
-
-                else if (entityPOCO.StatusCode == "WA")
-                {
-                    myResult = true;
-                }
-            }
-
-            return myResult;
-        }
-
-        private static void ValidateInvoiceAmountDue(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext context)
-        {
-            if (!isNew && !entityPM.IsUpdateFromPaymentService)
-            {
-                IQueryable<APInvoicePayment> allConnectedPaymentsFromDB = (from a in context.APInvoicePayments where a.APInvoiceId == entityPM.Id && a.Tenant == entityPM.Tenant select a);
-                List<APInvoicePaymentPM> allConnectedPaymentsFromUI = entityPM.InvoicePayments;
-
-                if (allConnectedPaymentsFromDB.Count() != allConnectedPaymentsFromUI.Count && entityPM.AmountDue != entityPOCO.AmountDue)
-                {
-                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-                    throw new ApplicationException(msg);
-                }
-            }
-        }
-        private static void ValidateConcurrencyGUID(APInvoicePM entityPM, APInvoice entityPOCO)
-        {
-            if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
-            {
-                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-                throw new OptimisticConcurrencyException(msg);
             }
         }
     }

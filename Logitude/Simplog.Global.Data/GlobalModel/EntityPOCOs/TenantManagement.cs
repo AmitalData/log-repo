@@ -22,7 +22,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public DateTime? FirstPaymentDate { get; set; }      
         public DateTime? PaidUntilDate { get; set; }
         public bool IsTrial { get; set; }
-        public int? NumberOfUsers { get; set; }
+        public int NumberOfUsers { get; set; }
         public string SearchFields { get; set; }
         public int? FreeUsers { get; set; }
         public bool IsRecurring { get; set; }
@@ -118,10 +118,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string RegisteredAirlines { get; set; }
         public string PendingAirlines { get; set; }
         public bool EnableBranding { get; set; }
-        public bool TranzilaPaymentWithBit { get; set; }
-        public bool EnableExportToExcel { get; set; }
-        public bool ActivatedforDeclarationApprove { get; set; }
-        public string DeclarationMessage { get; set; }
         public string CustomerURL { get; set; }
         public bool HideSharedlogistics { get; set; }
         public string ContactEmail { get; set; }        
@@ -137,15 +133,11 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public bool IsParentTenant { get; set; }
         public int? ParentTenantId { get; set; }
-        public bool ChangeHeaderColor { get; set; } 
-        public string HeaderColor { get; set; }
+        public bool ChangeHeaderColor { get; set; }
+
         public DateTime? AgentSharedLogisticsStatisticsLastDate { get; set; }
         public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
         public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
-        public bool ShowMoneyOrder { get; set; }
-        public bool CargoTrackingPublicShowEvents { get; set; }
-        public bool CargoTrackingPrivateShowEvents { get; set; }
-
 
 
         [ForeignKey("RecurringPeriodCode")]
@@ -186,62 +178,12 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public bool IsINTTRAStockPrepaid { get; set; }
 
+
         public string PackageCodeSearchField { get; set; }
 
         public bool IsINTTRAOnlyDemo { get; set; }
 
         public bool MainAdditionalPackageApplied { get; set; }
-        public string SupportDomain { get; set; }
-        public string MainColor { get; set; }
-        public string SecondaryColor { get; set; }
-        public string TertiaryColor { get; set; }
-        public int? TotalNumberOfUsers { get; set; }
-        public int? TotalFreeUsers { get; set; }
-        public double? AveragePrice { get; set; }
-        public double? TotalPaymentamount { get; set; }
-     
-        public string BackgroundId { get; set; }
-        public string MobileBackgroundId { get; set; }
-        public string ComapnylogoId { get; set; }
-        public string InvertedLogoId { get; set; }
-        public string BrowserIconId { get; set; }
-        public string ShipmentHeaderImageId { get; set; }
 
-        public bool NoPaymentForChildTenants { get; set; }
-
-        public DateTime? LastEbookingSentDate { get; set; }
-        public DateTime? LastSISentDate { get; set; }
-        public int NumberOfBookingSentLastWeek { get; set; }
-        public int NumberOfSISentLastWeek { get; set; }
-        public DateTime? LastContainerStatusReceived { get; set; }
-        public DateTime? LastTariffUpdateDate { get; set; }
-        public DateTime? LastTariffUsageDate { get; set; }
-        public int LastWeekCreatedTariffs { get; set; }
-        public int LastMonthCreatedTariffs { get; set; }
-        public int ScheduledTasksLimitPerReport { get; set; }
-         public string AmitalApiToken { get; set; }
-         public double? PermissionBuildMonths { get; set; }
-        public string WhatsAppMessagingPhoneNumber { get; set; }
-        public double? CargoTokenTimeout { get; set; }
-        public bool ActivatePrivateSite { get; set; }
-        public bool IsContainerTrackingPrepaid { get; set; }
-
-        public DateTime? DigitalPortalLastDate { get; set; }
-        public int? DigitalPortalTotalLastWeek { get; set; }
-        public int? DigitalPortalTotalLastMonth { get; set; }
-        public DateTime? DigitalPortalMobileLastDate { get; set; }
-        public int? DigitalPortalMobTotalLastWeek { get; set; }
-        public int? DigitalPortalMobTotalLastMonth { get; set; }          
-        public int? DPArchiveShipmentCreateFilter { get; set; }
-        public int? DPArchiveShipmentArrivalFilter { get; set; }
-        public int? DPArchiveShipmentDepartFilter { get; set; }
-        public string LogoURL { get; set; }
-        public string ServiceAgreementURL { get; set; }
-        public string ExportLoginCredintial { get; set; }
-        public int? ExportTenant { get; set; }
-		public bool SearchAbsoluteValuePublic { get; set; }
-		public int? MinutsTimeOutSession { get; set; }
-
-	}
-
+    }
 }

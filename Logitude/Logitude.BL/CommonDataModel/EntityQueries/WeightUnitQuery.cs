@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Collections.Generic;
+using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -13,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         WeightUnitRepository repository;
 
-
+        public WeightUnitQuery()
+        {
+            repository = new WeightUnitRepository(); 
+        }
 
         public WeightUnitQuery(int tenant)
         {
@@ -33,7 +39,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         Code = a.Code,
                         Name = a.Name,
-                        PrintAs = a.PrintAs,
                         SearchFields = a.SearchFields,
                     }).FirstOrDefault();
         }
@@ -46,7 +51,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                          {
                              Code = a.Code,
                              Name = a.Name,
-                             PrintAs = a.PrintAs,
                              SearchFields = a.SearchFields,
                          }).FirstOrDefault();
             return wUnit;
@@ -59,7 +63,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         Code = a.Code,
                         Name = a.Name,
-                        PrintAs = a.PrintAs,
                         SearchFields = a.SearchFields,
                     });
         }
@@ -71,11 +74,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 {
                                                     Name = entity.Name,
                                                     Code = entity.Code,
-                                                    PrintAs = entity.PrintAs,
                                                     SearchFields = entity.SearchFields,
                                                 };
             return result;
         }
-
     }
 }

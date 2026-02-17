@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -10,6 +10,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class TarrifFromToRepository:IRepository<TarrifFromTo>
     {
         ICommonDataContext commonDataContext;
+
+        public TarrifFromToRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TarrifFromToRepository(ICommonDataContext context)
         {

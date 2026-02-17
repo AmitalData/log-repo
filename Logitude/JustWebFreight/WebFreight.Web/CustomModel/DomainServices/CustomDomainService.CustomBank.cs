@@ -205,9 +205,8 @@ namespace WebFreight.Web.CustomModel.DomainServices
             }
 
             SecurityUtility.AuthenticationOnTenant(tenant);
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
-            string customBankDefault = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", customerCode, tenant);
+            string customBankDefault = GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", customerCode, tenant);
             return customBankDefault;
         }
     }

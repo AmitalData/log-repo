@@ -1,4 +1,4 @@
-import {EventEmitter} from '@angular/core';
+﻿import {EventEmitter} from '@angular/core';
 
 
 export class ObservableCollection {
@@ -19,7 +19,7 @@ export class ObservableCollection {
         if (myCollection) {
             this.Collection = myCollection;
             this.UpdateLength();
-            this.Changed.emit({ IsCollection: true, PreventScroll: preventScroll, Items: myCollection});
+            this.Changed.emit({ IsCollection: true, PreventScroll: preventScroll });
         }
     }
 
@@ -96,10 +96,6 @@ export class ObservableCollection {
         }
 
         this.Length = myResult;
-    }
-    public FindIndex(code: string) {
-        var index =  this.Collection.findIndex(x => x.code === code) ;
-        return index
     }
 
 }

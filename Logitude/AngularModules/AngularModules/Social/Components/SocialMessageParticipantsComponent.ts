@@ -16,7 +16,7 @@ import {ConversationHeaderParticipantExtendedPMService} from '../Services/Extend
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SocialMessageParticipantsComponent',
     templateUrl: './SocialMessageParticipantsComponent.html',
 

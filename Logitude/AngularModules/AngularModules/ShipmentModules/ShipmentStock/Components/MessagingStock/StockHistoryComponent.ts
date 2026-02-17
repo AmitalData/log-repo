@@ -4,7 +4,7 @@ import { ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDoma
 import { MessagingStockUsageHistoryList } from '../../../../Shipment/EntityLists/MessagingStockUsageHistoryList';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './StockHistoryComponent.html',
 })

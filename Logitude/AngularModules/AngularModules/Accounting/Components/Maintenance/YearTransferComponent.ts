@@ -23,7 +23,7 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'YearTransferComponent',
     templateUrl: './YearTransferComponent.html',
     providers: [EntityArgs],

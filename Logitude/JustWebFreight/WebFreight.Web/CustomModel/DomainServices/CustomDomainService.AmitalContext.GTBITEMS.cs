@@ -50,13 +50,12 @@ namespace WebFreight.Web.CustomModel.DomainServices
                 var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
                 var itemRepo = new GTBITEMRepository(GetAmitalContext(tenant));
 
-                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-                string partner = defaultValueQueryService.GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDefault" + sw.ElapsedMilliseconds);
+                string partner = GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
+                    Debug.WriteLine("GetDefault" + sw.ElapsedMilliseconds);
                 if (partner == "S") // If Supplier get Unifreight card
                 {
-                    customerCode = defaultValueQueryService.GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDefaultAccountNumber" + sw.ElapsedMilliseconds);
+                    customerCode = GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
+                        Debug.WriteLine("GetDefaultAccountNumber" + sw.ElapsedMilliseconds);
                 }
 
                 if (string.IsNullOrWhiteSpace(customerCode))
@@ -100,7 +99,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
         //         .Take(top);
 
         //        var aynList = q.ToList();
-        //       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ToList():" + sw.ElapsedMilliseconds);
+        //        Debug.WriteLine("ToList():" + sw.ElapsedMilliseconds);
         //    var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, rec.ic, tenant)).ToList();
         //    return l;
         //    //var listService = new GTBITEMQueryService(GetAmitalContext(tenant));
@@ -136,14 +135,14 @@ namespace WebFreight.Web.CustomModel.DomainServices
                 q = q.Take(top);
 
                 var aynList = q.ToList();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ToList():" + sw.ElapsedMilliseconds);
+                Debug.WriteLine("ToList():" + sw.ElapsedMilliseconds);
                 var l = aynList.Select(rec => GetCustomsPartnersItemList(rec.itm, cardDetails, tenant)).ToList();
                 return l;
 
             }
             finally
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GTBITEMS" + sw.ElapsedMilliseconds);
+                Debug.WriteLine("GTBITEMS" + sw.ElapsedMilliseconds);
             }
         }
 
@@ -155,9 +154,36 @@ namespace WebFreight.Web.CustomModel.DomainServices
 
         }
 
-        
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            var myGDFDATAQueryService = new GDFDATAQueryService(GetAmitalContext(tenant));
 
-       
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
+
+        private string GetDefaultAccountNumber(string DISTRID, string DEFID, string BRANCHID, string SHORTDEFDATA, int tenant)
+        {
+            var myGDFDATAQueryService = new GDFDATAQueryService(GetAmitalContext(tenant));
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || SHORTDEFDATA == null)
+            {
+                return ("");
+            }
+
+            string accountNumber = myGDFDATAQueryService.GetCardIdByDefaultValue(DISTRID, DEFID, BRANCHID, SHORTDEFDATA);
+
+            return (accountNumber);
+        }
 
         public CustomsPartnersItemPM GetGTBITEMDetailsByPartnerAndItem(string customerCode, string itemId, int tenant, string search)
         {
@@ -171,11 +197,10 @@ namespace WebFreight.Web.CustomModel.DomainServices
             var cardRepo = new GNDCARDRepository(GetAmitalContext(tenant));
             var itemRepo = new GTBITEMRepository(GetAmitalContext(tenant));
 
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-            string partner = defaultValueQueryService.GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
+            string partner = GetDefault("ISRAEL", "CIM_SIVUG_103", "NON", customerCode, tenant); // S=Supplier I=Client
             if (partner == "S") // If Supplier get Unifreight card
             {
-                customerCode = defaultValueQueryService.GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
+                customerCode = GetDefaultAccountNumber("ISRAEL", "CEX_CUS_SUP", "NON", customerCode, tenant);
             }
 
             if (string.IsNullOrWhiteSpace(customerCode))

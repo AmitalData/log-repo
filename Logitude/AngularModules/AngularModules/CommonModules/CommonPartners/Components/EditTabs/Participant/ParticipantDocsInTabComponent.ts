@@ -4,7 +4,7 @@ import { ParticipantPM } from '../../../../../Common/EntityPMs/ParticipantPM';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ParticipantDocsInTabComponent.html',
 })
 

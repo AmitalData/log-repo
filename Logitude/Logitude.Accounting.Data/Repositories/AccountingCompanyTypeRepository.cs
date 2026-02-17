@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -28,29 +27,12 @@ namespace Logitude.Accounting.Data.Repositories
 
                     select a).FirstOrDefault();
         }
-        public AccountingCompanyType GetSingleAccountingCompanyTypeByCode(string Code, int tenant, bool getFromCache)
+        public AccountingCompanyType GetSingleAccountingCompanyTypeByCode(string Code, int tenant)
         {
-            string entityName = "AccountingCompanyType" + Code + tenant;
-            AccountingCompanyType entity;
-            if (getFromCache)
-            {
-                entity = CacheManager.GetOrInsertNewObject(entityName, () =>
-                {
-                    return (from a in context.AccountingCompanyTypes
-                            where a.Code == Code && a.Tenant == tenant
+            return (from a in context.AccountingCompanyTypes
+                    where a.Code == Code && a.Tenant == tenant
 
-                            select a).FirstOrDefault();
-                });
-            }
-            else
-            {
-                entity = (from a in context.AccountingCompanyTypes
-                          where a.Code == Code && a.Tenant == tenant
-
-                          select a).FirstOrDefault();
-
-            }
-            return entity;
+                    select a).FirstOrDefault();
         }
 
     }

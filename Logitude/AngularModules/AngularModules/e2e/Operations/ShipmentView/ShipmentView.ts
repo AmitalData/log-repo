@@ -39,19 +39,13 @@ export class ShipmentView {
     }
 
     EditNewView() {
-     //  browser.sleep(1000)
-      // this.helper.WaitByIdAndClick('Refresh_2');
-        this.helper.ItemsVisibility('QueryList_0_0')
-        this.helper.ItemsPresentWithOutClick('QueryList_0_0')
+        browser.sleep(1000)
+        this.helper.WaitBusyIndicator()
         this.helper.WaitByIdAndClick('QueryList_0_0');
-        this.helper.WaitByIdAndClick('SearchFieldsId_0_0');
-        this.helper.WaitByIdAndClick('QueryList_0_0');
-       // this.helper.ItemsVisibility('ViewFiltersButton')
         this.helper.WaitActionButtonAndClick('ActionButtonsParent', true);
-        this.helper.ItemsPresentforCSS('.ListBoxItem');
-        this.helper.WaitBusyIndicator();
+        this.helper.waitByCss('.ListBoxItem');
         this.helper.WaitByIdAndFill('NewViewSearchFields_0_1', "account");
-        this.helper.ItemsPresentforCSS('.ListBoxItem');
+        this.helper.waitByCss('.ListBoxItem');
         this.helper.WaitByCssAndClick_FromTagInsideList('.ListBoxItem', 0);
         this.helper.WaitByIdAndClick("NewButton.View.Add");
         this.helper.WaitByIdAndClick("NewButton.View.Create");

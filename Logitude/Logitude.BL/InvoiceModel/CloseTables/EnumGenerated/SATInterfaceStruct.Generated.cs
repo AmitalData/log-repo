@@ -12,8 +12,8 @@ namespace Logitude.BL.InvoiceModel.CloseTables
     {   
        public const string Contpaq = "CONT";  
        public const string None = "NONE";  
+       public const string Profact32 = "PROF";  
        public const string Profact33 = "PROF33";  
-       public const string Profact40 = "PROF40";  
     }
 }
 

@@ -8,14 +8,12 @@
 //------------------------------------------------------------------------------
 
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
-import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
-import {GLAccountCurrencyPM} from './GLAccountCurrencyPM';
-import {UIProperties} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import { CustomerDebtNotificationPM } from './CustomerDebtNotificationPM';
+import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class GLAccountPM {
 
@@ -76,10 +74,7 @@ export class GLAccountPM {
     public get CurrencyId() { return this.currencyId; }
     public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
        
-    private paymentTerms: string;
-    public get PaymentTerms() { return this.paymentTerms; }
-    public set PaymentTerms(newValue: string) { if (this.paymentTerms != newValue) { this.paymentTerms = newValue; this.MarkAsDirty("PaymentTerms"); } }
-       
+	 
     private revenueExpenseType: string;
     public get RevenueExpenseType() { return this.revenueExpenseType; }
     public set RevenueExpenseType(newValue: string) { if (this.revenueExpenseType != newValue) { this.revenueExpenseType = newValue; this.MarkAsDirty("RevenueExpenseType"); } }
@@ -143,17 +138,7 @@ export class GLAccountPM {
     private reconcileMethodName: string;
     public get ReconcileMethodName() { return this.reconcileMethodName; }
     public set ReconcileMethodName(newValue: string) { if (this.reconcileMethodName != newValue) { this.reconcileMethodName = newValue; this.MarkAsDirty("ReconcileMethodName"); } }
-
-    private exchangeRateId: string;
-    public get ExchangeRateId() { return this.exchangeRateId; }
-    public set ExchangeRateId(newValue: string) { if (this.exchangeRateId != newValue) { this.exchangeRateId = newValue; this.MarkAsDirty("ExchangeRateId"); } }
        
-	 
-    private exchangeRateName: string;
-    public get ExchangeRateName() { return this.exchangeRateName; }
-    public set ExchangeRateName(newValue: string) { if (this.exchangeRateName != newValue) { this.exchangeRateName = newValue; this.MarkAsDirty("ExchangeRateName"); } }
-       
-
 	 
     private controlAccountId: string;
     public get ControlAccountId() { return this.controlAccountId; }
@@ -273,10 +258,7 @@ export class GLAccountPM {
     private parentAccountNumber: string;
     public get ParentAccountNumber() { return this.parentAccountNumber; }
     public set ParentAccountNumber(newValue: string) { if (this.parentAccountNumber != newValue) { this.parentAccountNumber = newValue; this.MarkAsDirty("ParentAccountNumber"); } }
-    
-    private parentCurrencyGLAccountCardId: string;
-    public get ParentCurrencyGLAccountCardId() { return this.parentCurrencyGLAccountCardId; }
-    public set ParentCurrencyGLAccountCardId(newValue: string) { if (this.parentCurrencyGLAccountCardId != newValue) { this.parentCurrencyGLAccountCardId = newValue; this.MarkAsDirty("parentCurrencyGLAccountCardId"); } }
+       
 	 
     private customerGLAccountInternalNumber: string;
     public get CustomerGLAccountInternalNumber() { return this.customerGLAccountInternalNumber; }
@@ -582,377 +564,11 @@ export class GLAccountPM {
     public set AllowEditChequePayToName(newValue: boolean) { if (this.allowEditChequePayToName != newValue) { this.allowEditChequePayToName = newValue; this.MarkAsDirty("AllowEditChequePayToName"); } }
        
 	 
-    private activeForInterest: boolean;
-    public get ActiveForInterest() { return this.activeForInterest; }
-    public set ActiveForInterest(newValue: boolean) { if (this.activeForInterest != newValue) { this.activeForInterest = newValue; this.MarkAsDirty("ActiveForInterest"); } }
-       
-	 
-    private interestCalculationStartDate: Date;
-    public get InterestCalculationStartDate() { return this.interestCalculationStartDate; }
-    public set InterestCalculationStartDate(newValue: Date) { if (this.interestCalculationStartDate != newValue) { this.interestCalculationStartDate = newValue; this.MarkAsDirty("InterestCalculationStartDate"); } }
-       
-	 
-    private activeForInterestCreditInvoice: boolean;
-    public get ActiveForInterestCreditInvoice() { return this.activeForInterestCreditInvoice; }
-    public set ActiveForInterestCreditInvoice(newValue: boolean) { if (this.activeForInterestCreditInvoice != newValue) { this.activeForInterestCreditInvoice = newValue; this.MarkAsDirty("ActiveForInterestCreditInvoice"); } }
-       
-	 
-     
-	private gLAccountInterestPeriods: GLAccountInterestPeriodPM[];
-    get  GLAccountInterestPeriods() {
-        if (this.gLAccountInterestPeriods == null) {
-            this.gLAccountInterestPeriods = [];
-        }
-
-        return this.gLAccountInterestPeriods;
-    }
-    set  GLAccountInterestPeriods(newValue: GLAccountInterestPeriodPM[]) {
-        if (this.gLAccountInterestPeriods != newValue) {
-            this.gLAccountInterestPeriods = newValue;
-        }
-    }
-    public AddGLAccountInterestPeriod(item: GLAccountInterestPeriodPM) {
-        if (item != null) {
-            var index = this. GLAccountInterestPeriods.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. GLAccountInterestPeriods.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveGLAccountInterestPeriod(item: GLAccountInterestPeriodPM) {
-        if (item != null) {
-            var index = this. GLAccountInterestPeriods.indexOf(item);
-            if (index > -1) {
-                this. GLAccountInterestPeriods.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public GLAccountInterestPeriods: Array<GLAccountInterestPeriodPM>= [];
-     private interestCreditLimit: number;
-    public get InterestCreditLimit() { return this.interestCreditLimit; }
-    public set InterestCreditLimit(newValue: number) { if (this.interestCreditLimit != newValue) { this.interestCreditLimit = newValue; this.MarkAsDirty("InterestCreditLimit"); } }
-       
-    private interestOpenBalance: number;
-    public get InterestOpenBalance() { return this.interestOpenBalance; }
-    public set InterestOpenBalance(newValue: number) { if (this.interestOpenBalance != newValue) { this.interestOpenBalance = newValue; this.MarkAsDirty("InterestOpenBalance"); } }
-
-    private nameForPrintingCheques: string;
-    public get NameForPrintingCheques() { return this.nameForPrintingCheques; }
-    public set NameForPrintingCheques(newValue: string) { if (this.nameForPrintingCheques != newValue) { this.nameForPrintingCheques = newValue; this.MarkAsDirty("NameForPrintingCheques"); } }
-       
-	 
-    private smallcashbook: boolean;
-    public get Smallcashbook() { return this.smallcashbook; }
-    public set Smallcashbook(newValue: boolean) { if (this.smallcashbook != newValue) { this.smallcashbook = newValue; this.MarkAsDirty("Smallcashbook"); } }
-       
-	 
-    private minimumInterestInvoiceBilling: number;
-    public get MinimumInterestInvoiceBilling() { return this.minimumInterestInvoiceBilling; }
-    public set MinimumInterestInvoiceBilling(newValue: number) { if (this.minimumInterestInvoiceBilling != newValue) { this.minimumInterestInvoiceBilling = newValue; this.MarkAsDirty("MinimumInterestInvoiceBilling"); } }
-       
-	 
-    private isSplitted: boolean;
-    public get IsSplitted() { return this.isSplitted; }
-    public set IsSplitted(newValue: boolean) { if (this.isSplitted != newValue) { this.isSplitted = newValue; this.MarkAsDirty("IsSplitted"); } }
-       
-	 
-    private salesmanName: string;
-    public get SalesmanName() { return this.salesmanName; }
-    public set SalesmanName(newValue: string) { if (this.salesmanName != newValue) { this.salesmanName = newValue; this.MarkAsDirty("SalesmanName"); } }
-       
-	 
-    private collectorName: string;
-    public get CollectorName() { return this.collectorName; }
-    public set CollectorName(newValue: string) { if (this.collectorName != newValue) { this.collectorName = newValue; this.MarkAsDirty("CollectorName"); } }
-       
-	 
-    private splitCurrencyAccount: string;
-    public get SplitCurrencyAccount() { return this.splitCurrencyAccount; }
-    public set SplitCurrencyAccount(newValue: string) { if (this.splitCurrencyAccount != newValue) { this.splitCurrencyAccount = newValue; this.MarkAsDirty("SplitCurrencyAccount"); } }
-       
-	 
-    private parentName: string;
-    public get ParentName() { return this.parentName; }
-    public set ParentName(newValue: string) { if (this.parentName != newValue) { this.parentName = newValue; this.MarkAsDirty("ParentName"); } }
-       
-	 
-     
-	private gLAccountCurrencies: GLAccountCurrencyPM[];
-    get  GLAccountCurrencies() {
-        if (this.gLAccountCurrencies == null) {
-            this.gLAccountCurrencies = [];
-        }
-
-        return this.gLAccountCurrencies;
-    }
-    set  GLAccountCurrencies(newValue: GLAccountCurrencyPM[]) {
-        if (this.gLAccountCurrencies != newValue) {
-            this.gLAccountCurrencies = newValue;
-        }
-    }
-    public AddGLAccountCurrency(item: GLAccountCurrencyPM) {
-        if (item != null) {
-            var index = this. GLAccountCurrencies.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. GLAccountCurrencies.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveGLAccountCurrency(item: GLAccountCurrencyPM) {
-        if (item != null) {
-            var index = this. GLAccountCurrencies.indexOf(item);
-            if (index > -1) {
-                this. GLAccountCurrencies.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public GLAccountCurrencies: Array<GLAccountCurrencyPM>= [];
-     private parentCurrencyId: string;
-    public get ParentCurrencyId() { return this.parentCurrencyId; }
-    public set ParentCurrencyId(newValue: string) { if (this.parentCurrencyId != newValue) { this.parentCurrencyId = newValue; this.MarkAsDirty("ParentCurrencyId"); } }
-       
-	 
-    private reportingAsAnotherDocument: boolean;
-    public get ReportingAsAnotherDocument() { return this.reportingAsAnotherDocument; }
-    public set ReportingAsAnotherDocument(newValue: boolean) { if (this.reportingAsAnotherDocument != newValue) { this.reportingAsAnotherDocument = newValue; this.MarkAsDirty("ReportingAsAnotherDocument"); } }
-       
-	 
-    private creditAllotmentPercentage: number;
-    public get CreditAllotmentPercentage() { return this.creditAllotmentPercentage; }
-    public set CreditAllotmentPercentage(newValue: number) { if (this.creditAllotmentPercentage != newValue) { this.creditAllotmentPercentage = newValue; this.MarkAsDirty("CreditAllotmentPercentage"); } }
-       
-	 
-    private relatedGLAccount: string;
-    public get RelatedGLAccount() { return this.relatedGLAccount; }
-    public set RelatedGLAccount(newValue: string) { if (this.relatedGLAccount != newValue) { this.relatedGLAccount = newValue; this.MarkAsDirty("RelatedGLAccount"); } }
-       
-	 
-     
-	private gLAccountChildren: GLAccountPM[];
-    get  GLAccountChildren() {
-        if (this.gLAccountChildren == null) {
-            this.gLAccountChildren = [];
-        }
-
-        return this.gLAccountChildren;
-    }
-    set  GLAccountChildren(newValue: GLAccountPM[]) {
-        if (this.gLAccountChildren != newValue) {
-            this.gLAccountChildren = newValue;
-        }
-    }
-    private cardsDataId: string;
-    public get CardsDataId() { return this.cardsDataId; }
-    public set CardsDataId(newValue: string) { if (this.cardsDataId != newValue) { this.cardsDataId = newValue; this.MarkAsDirty("CardsDataId"); } }
-       
-	 
-    private paymentTermName: string;
-    public get PaymentTermName() { return this.paymentTermName; }
-    public set PaymentTermName(newValue: string) { if (this.paymentTermName != newValue) { this.paymentTermName = newValue; this.MarkAsDirty("PaymentTermName"); } }
-       
-	 
-    private period0: number;
-    public get Period0() { return this.period0; }
-    public set Period0(newValue: number) { if (this.period0 != newValue) { this.period0 = newValue; this.MarkAsDirty("Period0"); } }
-       
-	 
-    private period1: number;
-    public get Period1() { return this.period1; }
-    public set Period1(newValue: number) { if (this.period1 != newValue) { this.period1 = newValue; this.MarkAsDirty("Period1"); } }
-       
-	 
-    private period2: number;
-    public get Period2() { return this.period2; }
-    public set Period2(newValue: number) { if (this.period2 != newValue) { this.period2 = newValue; this.MarkAsDirty("Period2"); } }
-       
-	 
-    private period3: number;
-    public get Period3() { return this.period3; }
-    public set Period3(newValue: number) { if (this.period3 != newValue) { this.period3 = newValue; this.MarkAsDirty("Period3"); } }
-       
-	 
-    private period4: number;
-    public get Period4() { return this.period4; }
-    public set Period4(newValue: number) { if (this.period4 != newValue) { this.period4 = newValue; this.MarkAsDirty("Period4"); } }
-       
-	 
-    private period5: number;
-    public get Period5() { return this.period5; }
-    public set Period5(newValue: number) { if (this.period5 != newValue) { this.period5 = newValue; this.MarkAsDirty("Period5"); } }
-       
-	 
-    private periodPast: number;
-    public get PeriodPast() { return this.periodPast; }
-    public set PeriodPast(newValue: number) { if (this.periodPast != newValue) { this.periodPast = newValue; this.MarkAsDirty("PeriodPast"); } }
-       
-	 
-    private periodFuture: number;
-    public get PeriodFuture() { return this.periodFuture; }
-    public set PeriodFuture(newValue: number) { if (this.periodFuture != newValue) { this.periodFuture = newValue; this.MarkAsDirty("PeriodFuture"); } }
-       
-	 
-    private totalOpenTransactions: number;
-    public get TotalOpenTransactions() { return this.totalOpenTransactions; }
-    public set TotalOpenTransactions(newValue: number) { if (this.totalOpenTransactions != newValue) { this.totalOpenTransactions = newValue; this.MarkAsDirty("TotalOpenTransactions"); } }
-       
-	 
-    private lastReconciledBy: string;
-    public get LastReconciledBy() { return this.lastReconciledBy; }
-    public set LastReconciledBy(newValue: string) { if (this.lastReconciledBy != newValue) { this.lastReconciledBy = newValue; this.MarkAsDirty("LastReconciledBy"); } }
-       
-	 
-    private lastReconcileDate: Date;
-    public get LastReconcileDate() { return this.lastReconcileDate; }
-    public set LastReconcileDate(newValue: Date) { if (this.lastReconcileDate != newValue) { this.lastReconcileDate = newValue; this.MarkAsDirty("LastReconcileDate"); } }
-       
-	 
-    private creditLimit: number;
-    public get CreditLimit() { return this.creditLimit; }
-    public set CreditLimit(newValue: number) { if (this.creditLimit != newValue) { this.creditLimit = newValue; this.MarkAsDirty("CreditLimit"); } }
-       
-	 
-    private paymentTerm: string;
-    public get PaymentTerm() { return this.paymentTerm; }
-    public set PaymentTerm(newValue: string) { if (this.paymentTerm != newValue) { this.paymentTerm = newValue; this.MarkAsDirty("PaymentTerm"); } }
-       
-	 
-    private totalOpenShipments: number;
-    public get TotalOpenShipments() { return this.totalOpenShipments; }
-    public set TotalOpenShipments(newValue: number) { if (this.totalOpenShipments != newValue) { this.totalOpenShipments = newValue; this.MarkAsDirty("TotalOpenShipments"); } }
-       
-	 
-    private phone: string;
-    public get Phone() { return this.phone; }
-    public set Phone(newValue: string) { if (this.phone != newValue) { this.phone = newValue; this.MarkAsDirty("Phone"); } }
-       
-	 
-    private salesman: string;
-    public get Salesman() { return this.salesman; }
-    public set Salesman(newValue: string) { if (this.salesman != newValue) { this.salesman = newValue; this.MarkAsDirty("Salesman"); } }
-       
-	 
-    private collector: string;
-    public get Collector() { return this.collector; }
-    public set Collector(newValue: string) { if (this.collector != newValue) { this.collector = newValue; this.MarkAsDirty("Collector"); } }
-       
-	 
-    private followupDate: Date;
-    public get FollowupDate() { return this.followupDate; }
-    public set FollowupDate(newValue: Date) { if (this.followupDate != newValue) { this.followupDate = newValue; this.MarkAsDirty("FollowupDate"); } }
-       
-	 
-    private followupNotes: string;
-    public get FollowupNotes() { return this.followupNotes; }
-    public set FollowupNotes(newValue: string) { if (this.followupNotes != newValue) { this.followupNotes = newValue; this.MarkAsDirty("FollowupNotes"); } }
-       
-	 
-    private gLAccountFollowUpDate: Date;
-    public get GLAccountFollowUpDate() { return this.gLAccountFollowUpDate; }
-    public set GLAccountFollowUpDate(newValue: Date) { if (this.gLAccountFollowUpDate != newValue) { this.gLAccountFollowUpDate = newValue; this.MarkAsDirty("GLAccountFollowUpDate"); } }
-       
-	 
-    private gLAccountFollowUpRemarks: string;
-    public get GLAccountFollowUpRemarks() { return this.gLAccountFollowUpRemarks; }
-    public set GLAccountFollowUpRemarks(newValue: string) { if (this.gLAccountFollowUpRemarks != newValue) { this.gLAccountFollowUpRemarks = newValue; this.MarkAsDirty("GLAccountFollowUpRemarks"); } }
-       
-	 
-    private calculatedAgingPeriod1: number;
-    public get CalculatedAgingPeriod1() { return this.calculatedAgingPeriod1; }
-    public set CalculatedAgingPeriod1(newValue: number) { if (this.calculatedAgingPeriod1 != newValue) { this.calculatedAgingPeriod1 = newValue; this.MarkAsDirty("CalculatedAgingPeriod1"); } }
-       
-	 
-    private calculatedAgingPeriod2: number;
-    public get CalculatedAgingPeriod2() { return this.calculatedAgingPeriod2; }
-    public set CalculatedAgingPeriod2(newValue: number) { if (this.calculatedAgingPeriod2 != newValue) { this.calculatedAgingPeriod2 = newValue; this.MarkAsDirty("CalculatedAgingPeriod2"); } }
-       
-	 
-    private calculatedAgingPeriod3: number;
-    public get CalculatedAgingPeriod3() { return this.calculatedAgingPeriod3; }
-    public set CalculatedAgingPeriod3(newValue: number) { if (this.calculatedAgingPeriod3 != newValue) { this.calculatedAgingPeriod3 = newValue; this.MarkAsDirty("CalculatedAgingPeriod3"); } }
-       
-	 
-    private insuredCreditLimit: number;
-    public get InsuredCreditLimit() { return this.insuredCreditLimit; }
-    public set InsuredCreditLimit(newValue: number) { if (this.insuredCreditLimit != newValue) { this.insuredCreditLimit = newValue; this.MarkAsDirty("InsuredCreditLimit"); } }
-       
-	 
-    private postponedChequesCommission: number;
-    public get PostponedChequesCommission() { return this.postponedChequesCommission; }
-    public set PostponedChequesCommission(newValue: number) { if (this.postponedChequesCommission != newValue) { this.postponedChequesCommission = newValue; this.MarkAsDirty("PostponedChequesCommission"); } }
-       
-	 
-    private balanceInForeignCurrency: number;
-    public get BalanceInForeignCurrency() { return this.balanceInForeignCurrency; }
-    public set BalanceInForeignCurrency(newValue: number) { if (this.balanceInForeignCurrency != newValue) { this.balanceInForeignCurrency = newValue; this.MarkAsDirty("BalanceInForeignCurrency"); } }
-       
-	 
-    private foreignBalanceInDue: number;
-    public get ForeignBalanceInDue() { return this.foreignBalanceInDue; }
-    public set ForeignBalanceInDue(newValue: number) { if (this.foreignBalanceInDue != newValue) { this.foreignBalanceInDue = newValue; this.MarkAsDirty("ForeignBalanceInDue"); } }
-       
-	 
-    private chartOfAccountSecurityLevel: number;
-    public get ChartOfAccountSecurityLevel() { return this.chartOfAccountSecurityLevel; }
-    public set ChartOfAccountSecurityLevel(newValue: number) { if (this.chartOfAccountSecurityLevel != newValue) { this.chartOfAccountSecurityLevel = newValue; this.MarkAsDirty("ChartOfAccountSecurityLevel"); } }
-       
-    private obligo: number;
-    public get Obligo() { return this.obligo; }
-    public set Obligo(newValue: number) { if (this.obligo != newValue) { this.obligo = newValue; this.MarkAsDirty("Obligo"); } }
-       
-	 
-    private creditUsed: number;
-    public get CreditUsed() { return this.creditUsed; }
-    public set CreditUsed(newValue: number) { if (this.creditUsed != newValue) { this.creditUsed = newValue; this.MarkAsDirty("CreditUsed"); } }
-
-	 
-    private insuredCreditPercentage: number;
-    public get InsuredCreditPercentage() { return this.insuredCreditPercentage; }
-    public set InsuredCreditPercentage(newValue: number) { if (this.insuredCreditPercentage != newValue) { this.insuredCreditPercentage = newValue; this.MarkAsDirty("InsuredCreditPercentage"); } }
-    
-	 
-    private dateFormat: string;
-    public get DateFormat() { return this.dateFormat; }
-    public set DateFormat(newValue: string) { if (this.dateFormat != newValue) { this.dateFormat = newValue; this.MarkAsDirty("DateFormat"); } }
-    
-    private contactId: string;
-    public get ContactId() { return this.contactId; }
-    public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
-
-	 
-    private contactName: string;
-    public get ContactName() { return this.contactName; }
-    public set ContactName(newValue: string) { if (this.contactName != newValue) { this.contactName = newValue; this.MarkAsDirty("ContactName"); } }
-    
-    private markDate: Date;
-    public get MarkDate() { return this.markDate; }
-    public set MarkDate(newValue: Date) { if (this.markDate != newValue) { this.markDate = newValue;  } }
-     
-    private cardCountryCode: string;
-    public get CardCountryCode() { return this.cardCountryCode; }
-    public set CardCountryCode(newValue: string) { if (this.cardCountryCode != newValue) { this.cardCountryCode = newValue;  } }
-     
-    private foreignCurrencyInterest: boolean;
-    public get ForeignCurrencyInterest() { return this.foreignCurrencyInterest; }
-    public set ForeignCurrencyInterest(newValue: boolean) { if (this.foreignCurrencyInterest != newValue) { this.foreignCurrencyInterest = newValue; this.MarkAsDirty("ForeignCurrencyInterest"); } }
-
-    private customerDebtNotification: CustomerDebtNotificationPM;
-    public get CustomerDebtNotification() { return this.customerDebtNotification; }
-    public set CustomerDebtNotification(newValue: CustomerDebtNotificationPM) { if (this.customerDebtNotification != newValue) { this.customerDebtNotification = newValue; this.MarkAsDirty("CustomerDebtNotification"); } }
-       
 
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -960,7 +576,6 @@ export class GLAccountPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "GLAccount");
            
         }
-       }
     }
 
     private MyClone: GLAccountPM;
@@ -973,4 +588,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

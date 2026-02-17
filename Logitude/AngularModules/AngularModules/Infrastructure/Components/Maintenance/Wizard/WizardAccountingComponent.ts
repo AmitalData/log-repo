@@ -8,7 +8,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {TextCodeTranslator} from '../../../Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WizardAccountingComponent.html',
 })
 

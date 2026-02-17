@@ -4,189 +4,129 @@ import {Validator} from '../../Infrastructure/Validators/Validator';
 import {ARPaymentPM} from '../EntityPMs/ARPaymentPM';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
-
+import { forEach } from '@angular/router/src/utils/collection';
+import { MessageWindow } from '../../controls/Windows/MessageWindow';
 export class ARPaymentValidator {
-   Validate(entityPm: ARPaymentPM) {
+    public Validate(entityPm: ARPaymentPM) {
 
-    var validationResults = [];
+        var validationResults = [];
 
-    var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-    Validator.TryValidateObject(entityPm, null, validationResults);
+        Validator.TryValidateObject(entityPm, null, validationResults);
 
 
 
-    var isNegativeAmountEnabled: boolean = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments && entityPm.AccountingPaymentMethodCode == "FS" ? true : false;
+        var isNegativeAmountEnabled: boolean = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments && entityPm.AccountingPaymentMethodCode == "FS" ? true : false;
 
-    if (entityPm.RegisterDate == null) {
-      validationResults.push(msg.replace("%FieldName", "Register Date"));
-    }
-
-    else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
-      validationResults.push(TextCodeTranslator.Translate("ARPayment.M.CantSetFutureDatePayment"));
-    }
-
-    if (entityPm.AmountInPaymentCurrency == 0) {
-      var isAllowed = false;
-
-      if (entityPm.AccountingPaymentMethodCode != null) {
-        if (entityPm.AccountingPaymentMethodCode.toUpperCase() == "FS") {
-
-          isAllowed = true;
-
-          
+        if (entityPm.RegisterDate == null) {
+            validationResults.push(msg.replace("%FieldName", "Register Date"));
         }
-      }
 
-      if (!isAllowed) {
-        validationResults.push(TextCodeTranslator.Translate("ARPayment.M.CantSetZeroAmount"));
-      }
-    }
-
-    if (entityPm.AccountingPaymentMethodCode == "CH") {
-        if(entityPm.IsFullAccounting){
-          this.ValidatePaymentChequeFields(entityPm, validationResults, msg);
+        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
+            validationResults.push(TextCodeTranslator.Translate("ARPayment.M.CantSetFutureDatePayment"));
         }
-    }
 
-    if (entityPm.AccountingPaymentMethodCode == "BT") {
-      if(entityPm.IsFullAccounting)
-          this.ValidateBankTransferFields(entityPm, validationResults, msg);
-    }
+        if (entityPm.AmountInPaymentCurrency == 0) {
+            var isAllowed = false;
 
-    if (entityPm.HasInvoicesErrors) {
-      validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentInvoicesHaveErrors"));
-    }
+            if (entityPm.AccountingPaymentMethodCode != null) {
+                if (entityPm.AccountingPaymentMethodCode.toUpperCase() == "FS") {
 
-    var myLinesPaidAmount = 0;
-    var isNoPaidAmount: boolean;
-    entityPm.PaymentInvoices.forEach(item => {
-      myLinesPaidAmount += item.PaymentAmount;
+                    isAllowed = true;
 
-      if (AppTool.IsNullOrZero(item.ForeignAmount)) {
-        isNoPaidAmount = true;
-      }
-    });
+                    //if (entityPm.PaymentInvoices.length == 0) {
+                    //    validationResults.push("You should have 1 Invoice line at least");
+                    //}
 
-    if (isNoPaidAmount == true) {
-      validationResults.push("Can't connect lines with zero Amount to Pay");
-    }
+                    //else {
+                    //    isAllowed = true;
+                    //}
+                }
+            }
 
-    var myLinesPaidAmountRounded = AppTool.Round(myLinesPaidAmount, 2);
-
-    if (isNegativeAmountEnabled == false) {
-      if (entityPm.AmountInPaymentCurrency < 0) {
-        validationResults.push(TextCodeTranslator.Translate("ARPayment.M.CantSetMinusAmount"));
-      }
-
-      if (myLinesPaidAmountRounded < 0) {
-        validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentAmountPaidCantBeMinus"));
-      }
-    }
-
-    if (myLinesPaidAmountRounded > entityPm.AmountInPaymentCurrency) {
-      validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentAmountPaidCantBeBigger"));
-    }
-
-    if (entityPm.AccountingPaymentMethodCode == "CC") {
-      if (AppTool.IsNullOrEmpty(entityPm.CreditCardTypeId)) {
-        validationResults.push("Credit Card Type Field is required");
-      }
-    }
-
-      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
-      if (AppTool.IsNullOrEmpty(entityPm.MetodoPagoCode)) {
-        validationResults.push("Metodo Pago Field is Required");
-      }
-
-      if (AppTool.IsNullOrEmpty(entityPm.SATPaymentMethodCode)) {
-        validationResults.push("Forma Pago Field is Required");
-      }
-
-      if (entityPm.SATPaymentMethodCode == "99") {
-        validationResults.push("Forma Pago value can't be 'Por Definir'.Please choose another value.");
-      }
-
-
-      if (!AppTool.IsNullOrEmpty(entityPm.TipoCadenaPago) && entityPm.TipoCadenaPago == "01" && entityPm.SATPaymentMethodCode == "03") {
-        if (AppTool.IsNullOrEmpty(entityPm.CertPago))
-          validationResults.push(msg.replace("%FieldName", "Cert Pago"));
-
-        if (AppTool.IsNullOrEmpty(entityPm.CadPago))
-          validationResults.push(msg.replace("%FieldName", "Cad Pago"));
-
-        if (AppTool.IsNullOrEmpty(entityPm.SelloPago))
-          validationResults.push(msg.replace("%FieldName", "Sello Pago"));
-      }
-
-    }
-
-    if (!SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
-      if (entityPm.IsPaymentNumberManuallySet) {
-        if (AppTool.IsNullOrEmpty(entityPm.StatusCode) || entityPm.StatusCode == "DR") {
-          validationResults.push("Accounting Settings don't allow manual payment number");
+            if (!isAllowed) {
+                validationResults.push(TextCodeTranslator.Translate("ARPayment.M.CantSetZeroAmount"));
+            }
         }
-      }
-    }
+
+        if (entityPm.AccountingPaymentMethodCode == "CH") {
+            if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
+                validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
+            }
+        }
 
 
-    if (!SessionLocator.TenantPM.AccountingActivated && entityPm.AccountingPaymentMethodCode != "CA" && entityPm.AccountingPaymentMethodCode != "FS" && entityPm.ValueDate == null) {
-      validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
-    }
 
-    return validationResults;
-  }
-    async ValidatePaymentChequeFields(entityPm: ARPaymentPM, validationResults: any[], msg: string) {
-        if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
-            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
+        if (entityPm.HasInvoicesErrors) {
+            validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentInvoicesHaveErrors"));
         }
-        if (AppTool.IsNullOrEmpty(entityPm.Bank)) {
-            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.Bank")));
-        }
-        if (AppTool.IsNullOrEmpty(entityPm.Account)) {
-            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.Account")));
-        }
-        if (AppTool.IsNullOrEmpty(entityPm.BankBranch)) {
-            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankBranch")));
-        }
-        if (AppTool.IsNullOrEmpty(entityPm.BranchId)) {
-            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BranchId")));
-        }
-    }
-    arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
 
-    
-    async ValidateDuplicateCheque(bank:string,bankBranch:string,bankAccount:string,chequeOrPaymentRef:string): Promise<string> {
-      return new Promise<string>((resolve) => {
-        if(!AppTool.IsNullOrEmpty(bank) && !AppTool.IsNullOrEmpty(bankBranch) && !AppTool.IsNullOrEmpty(bankAccount) && !AppTool.IsNullOrEmpty(chequeOrPaymentRef)) {
-          this.arPaymentChequeOperationsService.CheckARPaymentChequeAlreadyExists(bank, bankBranch, bankAccount, chequeOrPaymentRef).subscribe((result) => {
-            if (result && !result.HasError) {
-                                  
-                  resolve(result);
-                    
-              } else {
-                  resolve("");
-              }
-          });
+        var myLinesPaidAmount = 0;
+        var isNoPaidAmount: boolean;
+        entityPm.PaymentInvoices.forEach(item => {
+            myLinesPaidAmount += item.PaymentAmount;
+
+            if (AppTool.IsNullOrZero(item.ForeignAmount)) {
+                isNoPaidAmount = true;
+            }
+        });
+
+        if (isNoPaidAmount == true) {
+            validationResults.push("Can't connect lines with zero Amount to Pay");
         }
-        else {
-          resolve("");
+
+        var myLinesPaidAmountRounded = AppTool.Round(myLinesPaidAmount, 2);
+
+        if (isNegativeAmountEnabled == false) {
+            if (entityPm.AmountInPaymentCurrency < 0) {
+                validationResults.push(TextCodeTranslator.Translate("ARPayment.M.CantSetMinusAmount"));
+            }
+
+            if (myLinesPaidAmountRounded < 0) {
+                validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentAmountPaidCantBeMinus"));
+            }
         }
-      });
-    
+
+        if (myLinesPaidAmountRounded > entityPm.AmountInPaymentCurrency) {
+            validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentAmountPaidCantBeBigger"));
+        }
+
+        if (entityPm.AccountingPaymentMethodCode == "CC") {
+            if (AppTool.IsNullOrEmpty(entityPm.CreditCardTypeId)) {
+                validationResults.push("Credit Card Type Field is required");
+            }
+      }
+
+      if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (AppTool.IsNullOrEmpty(entityPm.MetodoPagoCode)) {
+            validationResults.push("Metodo Pago Field is Required");
+        }
+
+        if (AppTool.IsNullOrEmpty(entityPm.SATPaymentMethodCode)) {
+          validationResults.push("Forma Pago Field is Required");
+        }
+
+        if (entityPm.SATPaymentMethodCode == "99") {
+          validationResults.push("Forma Pago value can't be 'Por Definir'.Please choose another value.");
+          }
+
+
+          if (!AppTool.IsNullOrEmpty(entityPm.TipoCadenaPago) && entityPm.TipoCadenaPago == "01" && entityPm.SATPaymentMethodCode == "03") {
+              if (AppTool.IsNullOrEmpty(entityPm.CertPago))
+                  validationResults.push(msg.replace("%FieldName", "Cert Pago"));
+
+              if (AppTool.IsNullOrEmpty(entityPm.CadPago))
+                  validationResults.push(msg.replace("%FieldName", "Cad Pago"));
+
+              if (AppTool.IsNullOrEmpty(entityPm.SelloPago))
+                  validationResults.push(msg.replace("%FieldName", "Sello Pago"));
+          }
+
+        }
+
+        return validationResults;
     }
-    private ValidateBankTransferFields(entityPm: ARPaymentPM, validationResults: any[], msg: string) {
-      if (AppTool.IsNullOrEmpty(entityPm.AmountInPaymentCurrency)) {
-        validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.AmountInPaymentCurrency")));
-      }
-      if (AppTool.IsNullOrEmpty(entityPm.ValueDate)) {
-          validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.ValueDate")));
-      }
-      if (AppTool.IsNullOrEmpty(entityPm.BankAccountId)) {
-          validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankAccountId")));
-      }
-}
 
     public static ValidateCurrenctEntity(entityPm: ARPaymentPM) {
         var errors = [];
@@ -201,7 +141,7 @@ export class ARPaymentValidator {
             errors.push(msg.replace("%FieldName", "Register Date"));
         }
 
-        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
+        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARPayment.M.CantSetFutureDatePayment"));
         }
 
@@ -213,7 +153,13 @@ export class ARPaymentValidator {
 
                     isAllowed = true;
 
-                  
+                    //if (entityPm.PaymentInvoices.length == 0) {
+                    //    errors.push("You should have 1 Invoice line at least");
+                    //}
+
+                    //else {
+                    //    isAllowed = true;
+                    //}
                 }
             }
 
@@ -268,7 +214,7 @@ export class ARPaymentValidator {
             }
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(entityPm.MetodoPagoCode)) {
                 errors.push("Metodo Pago Field is Required");
             }
@@ -293,14 +239,6 @@ export class ARPaymentValidator {
                     errors.push(msg.replace("%FieldName", "Sello Pago"));
             }
 
-        }
-
-        if (!SessionLocator.AccountingSettingPM.AllowManualARPaymentNumber) {
-            if (entityPm.IsPaymentNumberManuallySet) {
-                if (AppTool.IsNullOrEmpty(entityPm.StatusCode) || entityPm.StatusCode == "DR") {
-                    errors.push("Accounting Settings don't allow manual payment number");
-                }
-            }
         }
 
         var isValid = true;

@@ -3,10 +3,10 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -42,7 +42,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 GeneralDomainService service = new GeneralDomainService();
-                List<FieldsTranslations> result = service.GetTranslationsByParamForCustomization(tenant, typeCode, tableId, translationLanguageCode);
+                List<FieldsTranslations> result = service.GetTranslationsByParam(tenant, typeCode, tableId, translationLanguageCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result.OrderBy(d => d.ObjectTableName));
             }
@@ -81,7 +81,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-               
+
                 ObjectFieldRepository ObjectFieldsRepository = new ObjectFieldRepository(tenant);
                 //this.ChangeConnectionString(tenant);
                 ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(ObjectFieldsRepository);
@@ -102,9 +102,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-             
+
                 DataTypeRepository dataTypeRepository = new DataTypeRepository(tenant);
-                List<FieldDataType> result = dataTypeRepository.GetDataTypes();
+                List<FieldDataType> result = dataTypeRepository.GetDataTypes().Where(d => d.Code != "Byte[]" && d.Code != "Emails" && d.Code != "Constant" && d.Code != "List" && d.Code != "SigDouble" && d.Code != "UnsDecimal" && d.Code != "UnsInteger").ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
@@ -163,7 +163,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-               
+
                 GeneralDomainService domain = new GeneralDomainService();
                 List<FieldsTranslations> result = domain.GetTranslationsForExport(tenant).Where(a => a.TypeCode == typeCode).ToList();
 
@@ -332,7 +332,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     CustomPickListService customPickListService = new CustomPickListService(objectContext, authToken.Tenant);
                     foreach (var entityPM in args.CustomPickListPMs)
                     {
-                        SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                         if (!string.IsNullOrEmpty(entityPM.Id))
                         {
                             customPickListService.Update(entityPM);
@@ -347,17 +346,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (args.RemovedCustomPickListPMs != null && args.RemovedCustomPickListPMs.Count > 0)
                 {
-                    CustomPickListService customPickListService = new CustomPickListService(objectContext, authToken.Tenant);
                     CustomPickListRepository repo = new CustomPickListRepository(authToken.Tenant);
                     foreach (var entityPM in args.RemovedCustomPickListPMs)
                     {
-                        SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                         var Column = repo.GetSingleCustomPickList(entityPM.Id, entityPM.Tenant);
                         if (Column != null)
                         {
                             repo.Remove(Column);
                             repo.SubmitChanges();
-                            customPickListService.ProcessPickListCToolMessage(entityPM, "DeleteCustomPickListValue");
                         }
                     }
                 }
@@ -382,7 +378,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
-                    
+
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
                     if (args != null)
@@ -440,6 +436,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+
                 GeneralDomainService service = new GeneralDomainService();
                 List<FieldsTranslations> result = service.GetAllFieldsTranslationsByFilters(tenant, language, objectTableId, textCodeType);
 
@@ -473,13 +470,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return myResult;
         }
 
-        private bool IsCustomObjectHeaderScreen(Screen screen)
-        {
-            if (screen == null)
-                return false;
-            return screen.IsHeaderScreen;
-        }
-
         public HttpResponseMessage PutScreenFields(ScreenLayoutArgs args)
         {
             try
@@ -495,45 +485,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 var MyTenantFields = MyQuery.GetScreenFieldPMsByTenant(authToken.Tenant).Where(a => a.Tenant != 0);
                 ScreenFieldService MyService = new ScreenFieldService(objectContext, authToken.Tenant);
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
-                var screen  = myRepo.GetByCode(args.ScreenCode, authToken.Tenant);
-                if(screen == null || IsCustomObjectHeaderScreen(screen))
+                var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenId, authToken.Tenant);
+                if (ScreenModification == null)
                 {
-                    var ScreenModification = myRepo.GetScreenModificationByScreen(args.ScreenCode, authToken.Tenant);
-
-                    if (ScreenModification == null)
+                    ScreenModification = new ScreenModification()
                     {
-                        ScreenModification = new ScreenModification()
-                        {
-                            Tenant = authToken.Tenant,
-                            ScreenId = args.ScreenId,
-                            ScreenCode = args.ScreenCode,
-                            NumberOfColumns = args.Columns,
-                            NumberOfRows = args.Rows,
-                            Id = IdCounter.GetNumber("ScreenModification", authToken.Tenant)
-                        };
-                        objectContext.ScreenModifications.Add(ScreenModification);
-                        objectContext.SaveChanges();
-                    }
-                    else
-                    {
-                        ScreenModification.NumberOfRows = args.Rows;
-                        ScreenModification.NumberOfColumns = args.Columns;
-
-                        myRepo.context.ScreenModifications.Attach(ScreenModification);
-                        myRepo.context.SetAsModified(ScreenModification);
-                        myRepo.context.SaveChanges();
-                    }
+                        Tenant = authToken.Tenant,
+                        ScreenId = args.ScreenId,
+                        NumberOfColumns = args.Columns,
+                        NumberOfRows = args.Rows,
+                        Id = IdCounter.GetNumber("ScreenModification", authToken.Tenant)
+                    };
+                    objectContext.ScreenModifications.Add(ScreenModification);
+                    objectContext.SaveChanges();
                 }
                 else
                 {
-                    SaveScreen(screen, myRepo , args);
+                    ScreenModification.NumberOfRows = args.Rows;
+                    ScreenModification.NumberOfColumns = args.Columns;
+
+                    myRepo.context.ScreenModifications.Attach(ScreenModification);
+                    myRepo.context.SetAsModified(ScreenModification);
+                    myRepo.context.SaveChanges();
                 }
-     
                 if (args.ScreenFields != null && args.ScreenFields.Count > 0)
                 {
                     foreach (var item in args.ScreenFields)
                     {
-                        var temp = MyTenantFields.Where(a => a.ObjectFieldCode == item.ObjectFieldCode && a.ScreenCode == item.ScreenCode).FirstOrDefault();
+                        var temp = MyTenantFields.Where(a => a.ObjectFieldId == item.ObjectFieldId && a.ScreenId == item.ScreenId).FirstOrDefault();
                         if (temp != null)
                         {
                             item.Id = temp.Id;
@@ -560,9 +539,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
-
-                new ScreenSectionService(objectContext, authToken.Tenant).Update(args.ScreenSections, screen);
-
                 return Request.CreateResponse(HttpStatusCode.OK, args);
             }
 
@@ -572,19 +548,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private void SaveScreen(Screen screen, ScreensRepository myRepo, ScreenLayoutArgs args)
-        {
-            screen.NumberOfRows = args.Rows;
-            screen.NumberOfColumns = args.Columns;
-            screen.SortedByFieldCode = args.SortedByFieldCode;
-            screen.SortedType = args.SortedType;
-            screen.RelatedScreenCode = args.RelatedScreenCode;
-            myRepo.context.Screens.Attach(screen);
-            myRepo.context.SetAsModified(screen);
-            myRepo.context.SaveChanges();
-        }
-
-        public HttpResponseMessage GetScreenModificationByScreenCode(string ScreenCode)
+        public HttpResponseMessage GetScreenModificationByScreenId(string ScreenId)
         {
             try
             {
@@ -594,7 +558,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ScreensRepository myRepo = new ScreensRepository(authToken.Tenant);
-                var temp = myRepo.GetScreenModificationByScreen(ScreenCode, authToken.Tenant);
+                var temp = myRepo.GetScreenModificationByScreen(ScreenId, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, temp);
             }
@@ -615,27 +579,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(0);
                 ObjectFieldPM objectFieldPM = objectFieldQuery.GetSinglePM(id, authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, objectFieldPM);
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        public HttpResponseMessage GetSingleObjectFieldByFieldCodeFromZeroTenant(string fieldCode)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(0);
-                ObjectFieldPM objectFieldPM = objectFieldQuery.GetObjectFieldByFieldCode(fieldCode, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, objectFieldPM);
 
@@ -676,6 +619,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+
                 ObjectFieldRepository objectFieldsRepository = new ObjectFieldRepository(tenant);
 
                 List<ObjectFieldModification> result = objectFieldsRepository.GetAllObjectFieldModificationByTenant(tenant);
@@ -687,26 +631,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        public HttpResponseMessage GetObjectTableIdByName(string objectTableName)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-
-                GeneralDomainService service = new GeneralDomainService();
-                var objectTable = service.GetObjectTableIDByName(objectTableName, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, objectTable.Id);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
         }
     }
 }

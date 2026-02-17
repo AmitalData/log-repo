@@ -3,7 +3,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -36,13 +36,6 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             string featureToggle = "featuretoggle" + entityPM.ToggleCode + entityPM.TenantNumber;
             if (CacheManager.CacheWrapper.Get(featureToggle) != null) CacheManager.CacheWrapper.Invalidate(featureToggle);
-
-
-            if (EntityPOCO != null)
-            {
-                featureToggle = "featuretoggle" + EntityPOCO.ToggleCode + EntityPOCO.TenantNumber;
-                if (CacheManager.CacheWrapper.Get(featureToggle) != null) CacheManager.CacheWrapper.Invalidate(featureToggle);
-            }
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {

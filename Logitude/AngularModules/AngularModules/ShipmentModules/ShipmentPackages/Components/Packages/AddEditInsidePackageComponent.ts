@@ -5,10 +5,9 @@ import {InsideShipmentPackagePM} from '../../../../Shipment/EntityPMs/InsideShip
 import {InsideShipmentPackageItem} from './PackagesTabComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditInsidePackageComponent.html',
 })
 
@@ -37,33 +36,9 @@ export class AddEditInsidePackageComponent {
     SetLabels() {
         this.TareLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Tare').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumeLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Volume').replace('%VolumeCode', this.DataContext.ShipmentPM.VolumeUnitCode);
-        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.O.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
+        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
-    }
-
-    MultiHarmonizeClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { PackagePM: this.DataContext.ShipmentPackagePM, InsidePackagePM: this.EntityPM, ShipmentPM: this.DataContext.ShipmentPM, IsEditingEnabled: this.DataContext.IsEditingEnabled };
-        logWindow.Title = "Inside Package Multi-Harmonize";
-        logWindow.Show("./ShipmentModules/ShipmentPackages/Components/Packages/AddEditPackageHarmonizeComponent");
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
-                this.DataContext.SetUIProperties_Harmonize();
-            }
-        });
-    }
-
-    ChooseHarmonizeClicked() {
-        if (this.DataContext) {
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("HarmonizeCode") + " Search";
-            logitudeWindow.WindowArgs = { Entity: this.DataContext, FieldName: 'Harmonize' };
-            logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
-            logitudeWindow.WindowClosed.subscribe(s => {
-
-            });
-        }
     }
 
     CancelButtonClicked() {

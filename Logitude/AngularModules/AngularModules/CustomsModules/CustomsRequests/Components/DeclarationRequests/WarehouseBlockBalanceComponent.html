@@ -1,815 +1,666 @@
-<!-- WarehouseBlockBalanceComponent view  -->
+﻿<!-- WarehouseBlockBalanceComponent view  -->
 <div>
 
-  <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
+    <custom-message-wrapper [CustomSendOptionsButtonCanForcePersonalSign]="false">
 
-    <!-- Request -->
-    <div class="class-request-content">
-      <table style="width: 600px; height: 60px;">
-        <!-- Request Fields -->
-        <!--Radio Buttons-->
-        <tr class="FormFieldRow" style="height: 30px;">
-          <td>
-            <table>
-              <tr>
-                <td style="width:120px">
-                  <div class="RadioButton">
-                    <input id="ByDeclarationRadio" type="radio" name="DeclarationRadio" [checked]="IsByDeclarationNumber" (click)="SetIsByDeclarationNumber(true)" />
-                    <label for="ByDeclarationRadio">{{'Customs.Declaration.O.ByDeclarationOrFile' | TextCodeTranslationPipe}}</label>
-                  </div>
-                </td>
+        <!-- Request -->
+        <div class="class-request-content">
+            <table style="width: 600px; height: 60px;">
+                <!-- Request Fields -->
+                <!--Radio Buttons-->
+                <tr class="FormFieldRow" style="height: 30px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:120px">
+                                    <div class="RadioButton">
+                                        <input id="ByDeclarationRadio" type="radio" name="DeclarationRadio" [checked]="IsByDeclarationNumber" (click)="SetIsByDeclarationNumber(true)" />
+                                        <label for="ByDeclarationRadio">{{'Customs.Declaration.O.ByDeclarationOrFile' | TextCodeTranslationPipe}}</label>
+                                    </div>
+                                </td>
 
-                <td style="width:120px">
-                  <div class="RadioButton">
-                    <input id="ByStorageSite" type="radio" name="StorageSite" [checked]="IsByStorageSite" (click)="SetIsByStorageSite(true)" />
-                    <label for="ByStorageSite">{{'Customs.Declaration.O.ByStorageSite' | TextCodeTranslationPipe}}</label>
-                  </div>
-                </td>
+                                <td style="width:120px">
+                                    <div class="RadioButton">
+                                        <input id="ByStorageSite" type="radio" name="StorageSite" [checked]="IsByStorageSite" (click)="SetIsByStorageSite(true)" />
+                                        <label for="ByStorageSite">{{'Customs.Declaration.O.ByStorageSite' | TextCodeTranslationPipe}}</label>
+                                    </div>
+                                </td>
 
-                <td>
-                  <div></div>
-                </td>
-              </tr>
+                                <td> <div></div> </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!--ByDeclaration-->
+                <tr class="FormFieldRow" *ngIf="IsByDeclarationNumber" style="height: 30px">
+                    <td>
+                        <table style="width: 700px; padding-top: 10px;">
+                            <tr class="FormFieldRow" style="height: 30px">
+                                <!-- Request.CustomFileNo-->
+                                <td style="width: 90px">
+                                    <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td class="FormFieldRow" style="width: 150px; padding-right: 36px;">
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'"[DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true"
+                                                (LostFocus)="CustomFileNoTextChanged($event)"
+                                                [Text]="CustomFileNo"></LogTextBox>
+                                </td>
+
+                                <td style="width: 10px;"><div></div></td>
+
+                                <!-- Request.DeclarationNumber-->
+                                <td style="width: 90px">
+                                    <LogLabel [ObjectFieldName]="'DeclarationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 170px; padding-right: 36px;">
+                                    <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'"[DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                [HideColumns]="true" [Text]="DeclarationNumber"
+                                                (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
+
+                                </td>
+
+                                <td style="width: 5px;"><div></div></td>
+
+                                <!-- Request.DisplayGoodsItemByInvoice-->
+                                <td style="width: 150px ">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'הצגת נתוני סחורות לפי חשבון'"></LogLabel>
+                                </td>
+                                <td style="width: 16px;">
+                                    <LogCheckBox [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!--ByStorageSite-->
+                <tr class="FormFieldRow" *ngIf="IsByStorageSite" style="height: 30px;">
+                    <td>
+                        <table style="width: 700px; padding-top: 10px;">
+                            <tr class="FormFieldRow" style="height: 30px">
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="'Customs.Consignment'" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width: 150px;">
+                                    <LogLov [ObjectFieldName]="'StorageSiteNumber'"
+                                            [ObjectTableName]="'Customs.DeliverySiteType'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Customs.DeliverySiteType'"
+                                            [HideLastColumn]="true"
+                                            [HideColumns]="true"
+                                            [SelectedValue]="StorageSiteNumber">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width: 5px;"><div></div></td>
+
+                                <td style="width: 90px;">
+                                    <LogLabel [ObjectFieldName]="'WarehouseBlockNumber'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.WarehouseBlockNumber'"></LogLabel>
+                                </td>
+                                <td style="width: 170px;">
+                                    <LogTextBox [ObjectFieldName]="'WarehouseBlockNumber'" [Text]="WarehouseBlockNumber" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+
+                                <td style="width: 5px;"><div></div></td>
+
+                                <!-- Request.DisplayGoodsItemByInvoice-->
+                                <td style="width: 150px ">
+                                    <LogLabel [NoObjectField]="true" [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'הצגת נתוני סחורות לפי חשבון'"></LogLabel>
+                                </td>
+                                <td style="width: 16px;">
+                                    <LogCheckBox [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                </td>
+
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><div></div></td>
+                </tr>
             </table>
-          </td>
-        </tr>
-
-        <!--ByDeclaration-->
-        <tr class="FormFieldRow" *ngIf="IsByDeclarationNumber" style="height: 30px">
-          <td>
-            <table style="width: 700px; padding-top: 10px;">
-              <tr class="FormFieldRow" style="height: 30px">
-                <!-- Request.CustomFileNo-->
-                <td style="width: 90px">
-                  <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                </td>
-                <td class="FormFieldRow" style="width: 150px; padding-right: 36px;">
-                  <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                              [HideColumns]="true"
-                              (LostFocus)="CustomFileNoTextChanged($event)"
-                              [Text]="CustomFileNo"></LogTextBox>
-                </td>
-
-                <td style="width: 10px;">
-                  <div></div>
-                </td>
-
-                <!-- Request.DeclarationNumber-->
-                <td style="width: 90px">
-                  <LogLabel [ObjectFieldName]="'DeclarationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                </td>
-                <td style="width: 170px; padding-right: 36px;">
-                  <LogTextBox [ObjectFieldName]="'DeclarationNumber'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                              [HideColumns]="true" [Text]="DeclarationNumber"
-                              (LostFocus)="DeclarationNumberTextChanged($event)"></LogTextBox>
-
-                </td>
-
-                <td style="width: 5px;">
-                  <div></div>
-                </td>
-
-                <!-- Request.DisplayGoodsItemByInvoice-->
-                <td style="width: 150px ">
-                  <LogLabel [NoObjectField]="true" [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'הצגת נתוני סחורות לפי חשבון'"></LogLabel>
-                </td>
-                <td style="width: 16px;">
-                  <LogCheckBox [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                </td>
-
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <!--ByStorageSite-->
-        <tr class="FormFieldRow" *ngIf="IsByStorageSite" style="height: 30px;">
-          <td>
-            <table style="width: 700px; padding-top: 10px;">
-              <tr class="FormFieldRow" style="height: 30px">
-                <td style="width: 90px;">
-                  <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="'Customs.Consignment'" [DataContext]="DataContext"></LogLabel>
-                </td>
-                <td style="width: 150px;">
-                  <LogLov [ObjectFieldName]="'StorageSiteNumber'"
-                          [ObjectTableName]="'Customs.DeliverySiteType'"
-                          [DataContext]="DataContext"
-                          [LookUpTableName]="'Customs.DeliverySiteType'"
-                          [HideLastColumn]="true"
-                          [HideColumns]="true"
-                          [SelectedValue]="StorageSiteNumber">
-                  </LogLov>
-                </td>
-
-                <td style="width: 5px;">
-                  <div></div>
-                </td>
-
-                <td style="width: 90px;">
-                  <LogLabel [ObjectFieldName]="'WarehouseBlockNumber'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.WarehouseBlockNumber'"></LogLabel>
-                </td>
-                <td style="width: 170px;">
-                  <LogTextBox [ObjectFieldName]="'WarehouseBlockNumber'" [Text]="WarehouseBlockNumber" [DataContext]="DataContext"></LogTextBox>
-                </td>
-
-                <td style="width: 5px;">
-                  <div></div>
-                </td>
-
-                <!-- Request.DisplayGoodsItemByInvoice-->
-                <td style="width: 150px ">
-                  <LogLabel [NoObjectField]="true" [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'הצגת נתוני סחורות לפי חשבון'"></LogLabel>
-                </td>
-                <td style="width: 16px;">
-                  <LogCheckBox [ObjectFieldName]="'DisplayGoodsItemByInvoice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                </td>
-
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <div></div>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- Response -->
-    <div class="class-response-content" style="width: 800px;height: 520px;">
-      <div class="ScrollViewer">
-        <div class="ScrollContent" style="padding-top: 15px;" >
-          <table style="width: 800px;height: 460px;padding-top: 10px;">
-
-            <!--General Details-->
-            <tr style="height: 46px; width: 100%">
-              <td>
-                <fieldset [disabled]="true">
-                  <table>
-                    <tr class="FormFieldRow">
-                      <td style="width: 100px;">
-                        <LogLabel [ObjectFieldName]="'SiteText'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.SiteText'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'SiteText'" [Text]="SiteText" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'OpeningDate'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.OpeningDate'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'OpeningDate'" [Text]="OpeningDate" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'LogicalPackagesQuantityBalance'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.LogicalPackagesQuantityBalance'"> </LogLabel>
-                      </td>
-                      <td style="width: 130px;">
-                        <LogTextBox [ObjectFieldName]="'LogicalPackagesQuantityBalance'" [Text]="LogicalPackagesQuantityBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-                    </tr>
-
-                    <tr class="FormFieldRow">
-                      <td style="width: 100px;">
-                        <LogLabel [ObjectFieldName]="'ResponseDeclarationNumber'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.DeclarationNumber'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'ResponseDeclarationNumber'" [Text]="ResponseDeclarationNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'OriginalOpeningDate'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.OriginalOpeningDate'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'OriginalOpeningDate'" [Text]="OriginalOpeningDate" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'PhysicalPackagesQuantityBalance'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.PhysicalPackagesQuantityBalance'"> </LogLabel>
-                      </td>
-                      <td style="width: 130px;">
-                        <LogTextBox [ObjectFieldName]="'PhysicalPackagesQuantityBalance'" [Text]="PhysicalPackagesQuantityBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-                    </tr>
-
-                    <tr class="FormFieldRow">
-                      <td style="width: 100px;">
-                        <LogLabel [ObjectFieldName]="'ResponseWarehouseBlockNumber'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.WarehouseBlockNumber'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'ResponseWarehouseBlockNumber'" [Text]="ResponseWarehouseBlockNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'MaxStorageDate'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.MaxStorageDate'"> </LogLabel>
-                      </td>
-                      <td style="width: 130px;">
-                        <LogTextBox [ObjectFieldName]="'MaxStorageDate'" [Text]="MaxStorageDate" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'Value'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.Value'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'Value'" [Text]="Value" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div></div>
-                      </td>
-
-                    </tr>
-
-                    <tr class="FormFieldRow">
-                      <td style="width: 100px;">
-                        <LogLabel [ObjectFieldName]="'ImporterTitle'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationFilter.F.GeneralDetailsName'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'ImporterTitle'" [Text]="ImporterTitle" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'BlockClosureDate'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeCertificate.F.GeneralDetailsCertificateID'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <!-- [Text]="BlockClosureDate" is removed be cause there is no variable in ts file-->
-                        <LogTextBox [ObjectFieldName]="'BlockClosureDate'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'StorageEntryPortChargeBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryPortChargeBalance'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px;">
-                        <LogTextBox [ObjectFieldName]="'StorageEntryPortChargeBalance'" [Text]="StorageEntryPortChargeBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div></div>
-                      </td>
-
-                    </tr>
-
-                    <tr class="FormFieldRow">
-                      <td style="width: 100px;">
-                        <LogLabel [ObjectFieldName]="'StorageEntryTransportBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryTransportBalance'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px; text-align:left">
-                        <LogTextBox style="text-align:left" [IsFreeText]="true" [ObjectFieldName]="'StorageEntryTransportBalance'" [Text]="StorageEntryTransportBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-                      <td>
-                        <div style="width:10px"></div>
-                      </td>
-
-                      <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'StorageEntryInsuranceBalance'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.StorageEntryInsuranceBalance'"> </LogLabel>
-                      </td>
-                      <td style="width: 140px; text-align:left">
-                        <LogTextBox style="width: 140px; text-align:left" [ObjectFieldName]="'StorageEntryInsuranceBalance'" [Text]="StorageEntryInsuranceBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                      </td>
-
-
-                      <td>
-                        <div></div>
-                      </td>
-
-                    </tr>
-
-
-                    <tr>
-                      <td>
-                        <div></div>
-                      </td>
-                    </tr>
-                  </table>
-                </fieldset>
-              </td>
-            </tr>
-
-            <!--Action List-->
-            <tr style="width: 100%">
-              <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.BlockLogicalActivities'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr class="FormFieldRow" style="height:1px">
-              <td colspan="5" style="width: 100% ; height : 15%">
-                <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                  <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ActionList">
-
-                    <!-- ActionDate -->
-                    <log-column [width]="'80'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.ActionDate' | TextCodeTranslationPipe"
-                                [binding]="'ActionDate'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.ActionDate}}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- ActionPackagesQuantity -->
-                    <log-column [width]="'120'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.ActionPackagesQuantity' | TextCodeTranslationPipe"
-                                [binding]="'ActionPackagesQuantity'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.ActionPackagesQuantity}}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- PackagesQuantityAfterAction -->
-                    <log-column [width]="'120'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterAction' | TextCodeTranslationPipe"
-                                [binding]="'PackagesQuantityAfterAction'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.PackagesQuantityAfterAction }}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- ActionValue -->
-                    <log-column [width]="'120'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.ActionValue' | TextCodeTranslationPipe"
-                                [binding]="'ActionValue'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.ActionValue }}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- ValueAfterAction -->
-                    <log-column [width]="'130'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.ValueAfterAction' | TextCodeTranslationPipe"
-                                [binding]="'ValueAfterAction'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.ValueAfterAction }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- GovernmentProcedureTypeText -->
-                    <log-column [width]="'100'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.GovernmentProcedureType' | TextCodeTranslationPipe"
-                                [binding]="'GovernmentProcedureTypeText'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.GovernmentProcedureTypeText }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- DeclarationNumber -->
-                    <log-column [width]="'110'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.DeclarationNumber' | TextCodeTranslationPipe"
-                                [binding]="'DeclarationNumber'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.DeclarationNumber }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                  </logitude-edit-grid>
-                </div>
-              </td>
-            </tr>
-
-            <!--StorageActionList-->
-            <tr style="width: 80%">
-              <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.BlockStorageActivities'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr class="FormFieldRow" style="height:1px;">
-              <td colspan="5" style="width: 700px ; height : 15%">
-                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                  <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="StorageActionList" (RowDataLoaded)="OnRowLoaded($event)">
-
-                    <!-- PackingDetailsList -->
-                    <log-row-details>
-                      <row-template>
-                        <ng-template let-item>
-                          <div style="min-height: 55px; width: 600px; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
-                            <div style="position: absolute; top: 0px; right: 10px; bottom: 0px; left: 10px;">
-                              <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="item.PackingDetailsListObs">
-                                <!-- PackingTypeText -->
-                                <log-column [width]="'100'" [Alignment]="'right'"
-                                            [header]="'Customs.WarehouseBlockBalance.O.PackingType' | TextCodeTranslationPipe"
-                                            [binding]="'PackingTypeText'">
-                                  <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                      <div style="width:100%;height:100%;">
-                                        <div class="RightCenter">
-                                          <span>{{item.PackingTypeText }}</span>
-                                        </div>
-                                      </div>
-                                    </log-cell-template>
-                                  </ng-template>
-                                </log-column>
-
-                                <!-- StorageActionPackagesQuantity -->
-                                <log-column [width]="'130'" [Alignment]="'right'"
-                                            [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesQuantity' | TextCodeTranslationPipe"
-                                            [binding]="'StorageActionPackagesQuantity'">
-                                  <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                      <div style="width:100%;height:100%;">
-                                        <div class="RightCenter">
-                                          <span>{{item.StorageActionPackagesQuantity }}</span>
-                                        </div>
-                                      </div>
-                                    </log-cell-template>
-                                  </ng-template>
-                                </log-column>
-
-                                <!-- PackagesQuantityAfterStorageAction -->
-                                <log-column [width]="'120'" [Alignment]="'right'"
-                                            [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterStorageAction' | TextCodeTranslationPipe"
-                                            [binding]="'PackagesQuantityAfterStorageAction'">
-                                  <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                      <div style="width:100%;height:100%;">
-                                        <div class="RightCenter">
-                                          <span>{{item.PackagesQuantityAfterStorageAction }}</span>
-                                        </div>
-                                      </div>
-                                    </log-cell-template>
-                                  </ng-template>
-                                </log-column>
-
-                                <!-- StorageActionPackagesWeight -->
-                                <log-column [width]="'80'" [Alignment]="'right'"
-                                            [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesWeight' | TextCodeTranslationPipe"
-                                            [binding]="'StorageActionPackagesWeight'">
-                                  <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                      <div style="width:100%;height:100%;">
-                                        <div class="RightCenter">
-                                          <span>{{item.StorageActionPackagesWeight }}</span>
-                                        </div>
-                                      </div>
-                                    </log-cell-template>
-                                  </ng-template>
-                                </log-column>
-
-                                <!-- PackagesWeightAfterStorageAction -->
-                                <log-column [width]="'120'" [Alignment]="'right'"
-                                            [header]="'Customs.WarehouseBlockBalance.O.PackagesWeightAfterStorageAction' | TextCodeTranslationPipe"
-                                            [binding]="'PackagesWeightAfterStorageAction'">
-                                  <ng-template let-item>
-                                    <log-cell-template #logcelltemplate>
-                                      <div style="width:100%;height:100%;">
-                                        <div class="RightCenter">
-                                          <span>{{item.PackagesWeightAfterStorageAction }}</span>
-                                        </div>
-                                      </div>
-                                    </log-cell-template>
-                                  </ng-template>
-                                </log-column>
-
-                              </logitude-edit-grid>
-                            </div>
-                          </div>
-                        </ng-template>
-                      </row-template>
-                    </log-row-details>
-
-                    <!-- StorageActionType -->
-                    <log-column [width]="'100'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.StorageActionType' | TextCodeTranslationPipe"
-                                [binding]="'StorageActionType'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.StorageActionType}}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- StorageActionDate -->
-                    <log-column [width]="'90'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.StorageActionDate' | TextCodeTranslationPipe"
-                                [binding]="'StorageActionDate'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.StorageActionDate}}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- StorageActionPackagesQuantity -->
-                    <log-column [width]="'120'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesQuantity' | TextCodeTranslationPipe"
-                                [binding]="'StorageActionPackagesQuantity'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.StorageActionPackagesQuantity }}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- PackagesQuantityAfterStorageAction -->
-                    <log-column [width]="'120'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterStorageAction' | TextCodeTranslationPipe"
-                                [binding]="'PackagesQuantityAfterStorageAction'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.PackagesQuantityAfterStorageAction }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- StorageReferenceType -->
-                    <log-column [width]="'100'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.StorageReferenceType' | TextCodeTranslationPipe"
-                                [binding]="'StorageReferenceType'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.StorageReferenceType }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- CargoMovementReference -->
-                    <log-column [width]="'100'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.CargoMovementReference' | TextCodeTranslationPipe"
-                                [binding]="'CargoMovementReference'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.CargoMovementReference }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- StorageUnloadingExceptionTypeText -->
-                    <log-column [width]="'120'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.StorageUnloadingExceptionType' | TextCodeTranslationPipe"
-                                [binding]="'StorageUnloadingExceptionTypeText'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.StorageUnloadingExceptionTypeText }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                  </logitude-edit-grid>
-                </div>
-              </td>
-
-              <td>
-                <div></div>
-              </td>
-            </tr>
-
-            <!--BlockSpecialActivitiesList-->
-            <tr style="width: 100%">
-              <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.SpecialActivities'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr class="FormFieldRow" style="height:1px">
-              <td colspan="5" style="width: 270px ; height : 15%">
-                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                  <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="BlockSpecialActivitiesList">
-
-                    <!-- SpecialActivityTypeName -->
-                    <log-column [width]="'250'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.SpecialActivityType' | TextCodeTranslationPipe"
-                                [binding]="'SpecialActivityTypeName'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.SpecialActivityTypeName}}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                  </logitude-edit-grid>
-                </div>
-              </td>
-            </tr>
-
-            <!--GoodsItemByInvoiceList-->
-            <tr style="width: 100%">
-              <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
-                {{'Customs.General.O.GoodsItemByInvoice'| TextCodeTranslationPipe}}
-              </td>
-            </tr>
-            <tr class="FormFieldRow" style="height:1px">
-              <td colspan="5" style="width: 100% ; height : 15%">
-                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
-                  <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="GoodsItemByInvoiceList">
-
-                    <!-- InvoiceSequenceNumber -->
-                    <log-column [width]="'100'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.InvoiceSequenceNumber' | TextCodeTranslationPipe"
-                                [binding]="'InvoiceSequenceNumber'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.InvoiceSequenceNumber}}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- GoodsItemSequenceNumber -->
-                    <log-column [width]="'90'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.GoodsItemSequenceNumber' | TextCodeTranslationPipe"
-                                [binding]="'GoodsItemSequenceNumber'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.GoodsItemSequenceNumber}}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- RemainingQuantity -->
-                    <log-column [width]="'100'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.RemainingQuantity' | TextCodeTranslationPipe"
-                                [binding]="'RemainingQuantity'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div class="RightCenter">
-                            <span>{{item.RemainingQuantity }}</span>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- GoodsPriceBase -->
-                    <log-column [width]="'100'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceBase' | TextCodeTranslationPipe"
-                                [binding]="'GoodsPriceBase'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.GoodsPriceBase }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- GoodsPriceMAD -->
-                    <log-column [width]="'140'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceMAD' | TextCodeTranslationPipe"
-                                [binding]="'GoodsPriceMAD'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.GoodsPriceMAD }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- GoodsPriceMADAEF -->
-                    <log-column [width]="'90'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceMADAEF' | TextCodeTranslationPipe"
-                                [binding]="'GoodsPriceMADAEF'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.GoodsPriceMADAEF }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- CurrencyType -->
-                    <log-column [width]="'90'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.CurrencyType' | TextCodeTranslationPipe"
-                                [binding]="'CurrencyType'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.CurrencyType }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                    <!-- ExchangeRate -->
-                    <log-column [width]="'90'" [Alignment]="'right'"
-                                [header]="'Customs.WarehouseBlockBalance.O.ExchangeRate' | TextCodeTranslationPipe"
-                                [binding]="'ExchangeRate'">
-                      <ng-template let-item>
-                        <log-cell-template #logcelltemplate>
-                          <div style="width:100%;height:100%;">
-                            <div class="RightCenter">
-                              <span>{{item.ExchangeRate }}</span>
-                            </div>
-                          </div>
-                        </log-cell-template>
-                      </ng-template>
-                    </log-column>
-
-                  </logitude-edit-grid>
-                </div>
-              </td>
-            </tr>
-
-          </table>
         </div>
-      </div>
-    </div>
 
-  </custom-message-wrapper>
+        <!-- Response -->       
+        <div class="class-response-content" style="width: 800px;height: 460px;">
+            <div class="ScrollViewer">
+                <div class="ScrollContent">
+                    <table style="width: 800px;height: 460px;padding-top: 10px;">
+
+                        <!--General Details-->
+                        <tr style="height: 46px; width: 100%">
+                            <td>
+                                <fieldset [disabled]="true">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'SiteText'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.SiteText'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'SiteText'" [Text]="SiteText" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'OpeningDate'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.OpeningDate'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'OpeningDate'" [Text]="OpeningDate" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'LogicalPackagesQuantityBalance'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.LogicalPackagesQuantityBalance'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogTextBox [ObjectFieldName]="'LogicalPackagesQuantityBalance'" [Text]="LogicalPackagesQuantityBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'ResponseDeclarationNumber'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.DeclarationNumber'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'ResponseDeclarationNumber'" [Text]="ResponseDeclarationNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'OriginalOpeningDate'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.OriginalOpeningDate'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'OriginalOpeningDate'" [Text]="OriginalOpeningDate" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'PhysicalPackagesQuantityBalance'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.PhysicalPackagesQuantityBalance'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogTextBox [ObjectFieldName]="'PhysicalPackagesQuantityBalance'" [Text]="PhysicalPackagesQuantityBalance" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'ResponseWarehouseBlockNumber'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.WarehouseBlockNumber'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'ResponseWarehouseBlockNumber'" [Text]="ResponseWarehouseBlockNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'MaxStorageDate'" [DataContext]="DataContext" [TextCode]="'Customs.WarehouseBlockBalance.O.MaxStorageDate'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 130px;">
+                                                <LogTextBox [ObjectFieldName]="'MaxStorageDate'" [Text]="MaxStorageDate" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'Value'" [DataContext]="DataContext" [TextCode]="'Customs.BlockListInWarehouse.O.Value'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'Value'" [Text]="Value" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 100px;">
+                                                <LogLabel [ObjectFieldName]="'ImporterTitle'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationFilter.F.GeneralDetailsName'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <LogTextBox [ObjectFieldName]="'ImporterTitle'" [Text]="ImporterTitle" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div style="width:10px"></div></td>
+
+                                            <td style="width: 130px;">
+                                                <LogLabel [ObjectFieldName]="'BlockClosureDate'" [DataContext]="DataContext" [TextCode]="'Customs.GuaranteeCertificate.F.GeneralDetailsCertificateID'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 140px;">
+                                                <!-- [Text]="BlockClosureDate" is removed be cause there is no variable in ts file-->
+                                                <LogTextBox [ObjectFieldName]="'BlockClosureDate'" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                            </td>
+
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+
+                        <!--Action List-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.BlockLogicalActivities'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 100% ; height : 15%">
+                                <div div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ActionList">
+
+                                        <!-- ActionDate -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.ActionDate' | TextCodeTranslationPipe"
+                                                    [binding]="'ActionDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.ActionDate}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- ActionPackagesQuantity -->
+                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.ActionPackagesQuantity' | TextCodeTranslationPipe"
+                                                    [binding]="'ActionPackagesQuantity'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.ActionPackagesQuantity}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- PackagesQuantityAfterAction -->
+                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterAction' | TextCodeTranslationPipe"
+                                                    [binding]="'PackagesQuantityAfterAction'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.PackagesQuantityAfterAction }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- ActionValue -->
+                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.ActionValue' | TextCodeTranslationPipe"
+                                                    [binding]="'ActionValue'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.ActionValue }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- ValueAfterAction -->
+                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.ValueAfterAction' | TextCodeTranslationPipe"
+                                                    [binding]="'ValueAfterAction'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ValueAfterAction }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GovernmentProcedureTypeText -->
+                                        <log-column [width]="'110'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.GovernmentProcedureType' | TextCodeTranslationPipe"
+                                                    [binding]="'GovernmentProcedureTypeText'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GovernmentProcedureTypeText }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- DeclarationNumber -->
+                                        <log-column [width]="'110'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.DeclarationNumber' | TextCodeTranslationPipe"
+                                                    [binding]="'DeclarationNumber'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DeclarationNumber }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--StorageActionList-->
+                        <tr style="width: 80%">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.BlockStorageActivities'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px;">
+                            <td colspan="5" style="width: 700px ; height : 15%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="StorageActionList" (RowDataLoaded)="OnRowLoaded($event)">
+
+                                        <!-- PackingDetailsList -->
+                                        <log-row-details>
+                                            <row-template template="let item">
+                                                <div style="min-height: 55px; width: 600px; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
+                                                    <div style="position: absolute; top: 0px; right: 10px; bottom: 0px; left: 10px;">
+                                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="item.PackingDetailsListObs">
+                                                            <!-- PackingTypeText -->
+                                                            <log-column [width]="'100'" [Alignment]="'right'"
+                                                                        [header]="'Customs.WarehouseBlockBalance.O.PackingType' | TextCodeTranslationPipe"
+                                                                        [binding]="'PackingTypeText'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width:100%;height:100%;">
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.PackingTypeText }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- StorageActionPackagesQuantity -->
+                                                            <log-column [width]="'130'" [Alignment]="'right'"
+                                                                        [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesQuantity' | TextCodeTranslationPipe"
+                                                                        [binding]="'StorageActionPackagesQuantity'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width:100%;height:100%;">
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.StorageActionPackagesQuantity }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- PackagesQuantityAfterStorageAction -->
+                                                            <log-column [width]="'120'" [Alignment]="'right'"
+                                                                        [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterStorageAction' | TextCodeTranslationPipe"
+                                                                        [binding]="'PackagesQuantityAfterStorageAction'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width:100%;height:100%;">
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.PackagesQuantityAfterStorageAction }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- StorageActionPackagesWeight -->
+                                                            <log-column [width]="'80'" [Alignment]="'right'"
+                                                                        [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesWeight' | TextCodeTranslationPipe"
+                                                                        [binding]="'StorageActionPackagesWeight'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width:100%;height:100%;">
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.StorageActionPackagesWeight }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                            <!-- PackagesWeightAfterStorageAction -->
+                                                            <log-column [width]="'120'" [Alignment]="'right'"
+                                                                        [header]="'Customs.WarehouseBlockBalance.O.PackagesWeightAfterStorageAction' | TextCodeTranslationPipe"
+                                                                        [binding]="'PackagesWeightAfterStorageAction'">
+                                                                <log-cell-template template="let item" #logcelltemplate>
+                                                                    <div style="width:100%;height:100%;">
+                                                                        <div class="RightCenter">
+                                                                            <span>{{item.PackagesWeightAfterStorageAction }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </log-cell-template>
+                                                            </log-column>
+
+                                                        </logitude-edit-grid>
+                                                    </div>
+                                                </div>
+                                            </row-template>
+                                        </log-row-details>
+
+                                        <!-- StorageActionType -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.StorageActionType' | TextCodeTranslationPipe"
+                                                    [binding]="'StorageActionType'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.StorageActionType}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- StorageActionDate -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.StorageActionDate' | TextCodeTranslationPipe"
+                                                    [binding]="'StorageActionDate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.StorageActionDate}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- StorageActionPackagesQuantity -->
+                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.StorageActionPackagesQuantity' | TextCodeTranslationPipe"
+                                                    [binding]="'StorageActionPackagesQuantity'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.StorageActionPackagesQuantity }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- PackagesQuantityAfterStorageAction -->
+                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.PackagesQuantityAfterStorageAction' | TextCodeTranslationPipe"
+                                                    [binding]="'PackagesQuantityAfterStorageAction'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.PackagesQuantityAfterStorageAction }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- StorageReferenceType -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.StorageReferenceType' | TextCodeTranslationPipe"
+                                                    [binding]="'StorageReferenceType'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.StorageReferenceType }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- StorageUnloadingExceptionTypeText -->
+                                        <log-column [width]="'120'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.StorageUnloadingExceptionType' | TextCodeTranslationPipe"
+                                                    [binding]="'StorageUnloadingExceptionTypeText'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.StorageUnloadingExceptionTypeText }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+
+                            <td><div></div></td>
+                        </tr>
+
+                        <!--BlockSpecialActivitiesList-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.SpecialActivities'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 270px ; height : 15%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="BlockSpecialActivitiesList">
+
+                                        <!-- SpecialActivityTypeName -->
+                                        <log-column [width]="'250'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.SpecialActivityType' | TextCodeTranslationPipe"
+                                                    [binding]="'SpecialActivityTypeName'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.SpecialActivityTypeName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!--GoodsItemByInvoiceList-->
+                        <tr style="width: 100%">
+                            <td style="width: 200px;height:25px; font-size: 12px; color: #1B90CB;">
+                                {{'Customs.General.O.GoodsItemByInvoice'| TextCodeTranslationPipe}}
+                            </td>
+                        </tr>
+                        <tr class="FormFieldRow" style="height:1px">
+                            <td colspan="5" style="width: 100% ; height : 15%">
+                                <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="GoodsItemByInvoiceList">
+
+                                        <!-- InvoiceSequenceNumber -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.InvoiceSequenceNumber' | TextCodeTranslationPipe"
+                                                    [binding]="'InvoiceSequenceNumber'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.InvoiceSequenceNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GoodsItemSequenceNumber -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.GoodsItemSequenceNumber' | TextCodeTranslationPipe"
+                                                    [binding]="'GoodsItemSequenceNumber'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.GoodsItemSequenceNumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- RemainingQuantity -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.RemainingQuantity' | TextCodeTranslationPipe"
+                                                    [binding]="'RemainingQuantity'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div class="RightCenter">
+                                                    <span>{{item.RemainingQuantity }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GoodsPriceBase -->
+                                        <log-column [width]="'100'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceBase' | TextCodeTranslationPipe"
+                                                    [binding]="'GoodsPriceBase'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GoodsPriceBase }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GoodsPriceMAD -->
+                                        <log-column [width]="'140'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceMAD' | TextCodeTranslationPipe"
+                                                    [binding]="'GoodsPriceMAD'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GoodsPriceMAD }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- GoodsPriceMADAEF -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.GoodsPriceMADAEF' | TextCodeTranslationPipe"
+                                                    [binding]="'GoodsPriceMADAEF'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.GoodsPriceMADAEF }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- CurrencyType -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.CurrencyType' | TextCodeTranslationPipe"
+                                                    [binding]="'CurrencyType'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.CurrencyType }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                        <!-- ExchangeRate -->
+                                        <log-column [width]="'90'" [Alignment]="'right'"
+                                                    [header]="'Customs.WarehouseBlockBalance.O.ExchangeRate' | TextCodeTranslationPipe"
+                                                    [binding]="'ExchangeRate'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="width:100%;height:100%;">
+                                                    <div class="RightCenter">
+                                                        <span>{{item.ExchangeRate }}</span>
+                                                    </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
+                                    </logitude-edit-grid>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </custom-message-wrapper>
 </div>

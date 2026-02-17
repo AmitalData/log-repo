@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -11,25 +10,25 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {AddAddressContactForClientRequestParams} from '../../DataContract/RequestParams/AddAddressContactForClientRequestParams';
 import {ClientSearchRequestParams} from '../../DataContract/RequestParams/ClientSearchRequestParams';
 import {CreateClientRequestParams} from '../../DataContract/RequestParams/CreateClientRequestParams';
+import {ClientPM} from '../../EntityPMs/ClientPM';
+import {ClientAddressPM} from '../../EntityPMs/ClientAddressPM';
+import {ClientsAddressCommTypePM} from '../../EntityPMs/ClientsAddressCommTypePM';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import { ClientAddressPM } from 'Customs/EntityPMs/ClientAddressPM';
-import { ClientPM } from 'Customs/EntityPMs/ClientPM';
-import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
 
 @Injectable()
 
 export class ClientMessagesService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Client';
 
     }
 
     PostUpdateDeleteClientAddressContactRequest(entity: AddAddressContactForClientRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -43,13 +42,13 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostUpdateDeleteClientAddressContactRequest/',
                 hahahah,
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -58,7 +57,7 @@ export class ClientMessagesService {
 
     PostClientRequest(entity: ClientSearchRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -74,13 +73,13 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostClientRequest/',
                 hahahahah,
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -89,7 +88,7 @@ export class ClientMessagesService {
 
     PostClientSearchByIDRequest(entity: ClientSearchRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -101,18 +100,18 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostClientSearchByIDRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     CreateClientRequest(entity: CreateClientRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -124,13 +123,13 @@ export class ClientMessagesService {
             return this._http.post(
                 this._apiUrl + '/CreateClientRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -140,11 +139,11 @@ export class ClientMessagesService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         code = encodeURIComponent(code);
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetSingleClientPMByCode?' + 'code=' + code + "&isIncludeAll=" + isIncludeAll,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                { headers: authHeader }).map(response => {
 
-                var pm = response;
+                var pm = response.json();
 
 
                 var entity: ClientPM;
@@ -156,66 +155,29 @@ export class ClientMessagesService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
 
         });
     }
 
-    GetSingleClientPMByPassportNumberOrCountry(passportNumber: string, passportCountryCode: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        //code = encodeURIComponent(code);
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleClientPMByPassportNumberOrCountry?' + 'passportNumber=' + passportNumber + "&passportCountryCode=" + passportCountryCode,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                    var pm = response;
-                    var entity: ClientPM;
-                    if (pm) {
-                        entity = this.MapJsonToEntityPM(pm);
-                    }
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = entity;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-
-        });
-    }
-
-    PutRecallClientsForCutomsRequest(fileUploadParamerter: any, isForCardsTable: boolean = false) {
+    PutRecallClientsForCutomsRequest(fileUploadParamerter: any) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest?' + "isForCardsTable=" + isForCardsTable, JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutRecallClientsForCutomsRequest', JSON.stringify(fileUploadParamerter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
-        }
-        );
-
-    }
-    PutRecallClientsConcurrencyGuidForCutomsRequest(fileUploadParamerter: any) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/PutRecallClientsConcurrencyGUIDForCutomsRequest', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-
-                pmresponse.Result = result;
-                return pmresponse;
-
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
         );
 

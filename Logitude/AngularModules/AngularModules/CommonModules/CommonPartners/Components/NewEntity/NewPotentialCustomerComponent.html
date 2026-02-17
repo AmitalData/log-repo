@@ -210,7 +210,7 @@
                                                                                 </td>
 
                                                                                 <td>
-                                                                                    <span id="{{'SelectLink' | IdGeneratorAsyncPipe | async}}" class="hyperlink" (click)="SelectCityCommand()">Select</span>
+                                                                                    <span id="{{'SelectLink' | IdGeneratorPipe}}" class="hyperlink" (click)="SelectCityCommand()">Select</span>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -337,7 +337,7 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="width: 16px;">
-                                                                                    <CheckBox [IsChecked]="IsAddContactChecked" id="{{'AddContactCheckBox' | IdGeneratorAsyncPipe | async}}"(Checked)="IsAddContactChecked = $event"></CheckBox>
+                                                                                    <CheckBox [IsChecked]="IsAddContactChecked" (Checked)="IsAddContactChecked = $event"></CheckBox>
                                                                                 </td>
 
                                                                                 <td style="width: 5px;">
@@ -539,7 +539,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button  id="{{'Cancel-DontCreatePotCustomer' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button  id="{{'Cancel-DontCreatePotCustomer' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -547,7 +547,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddPotCustomer' | IdGeneratorAsyncPipe | async}}"  class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button id="{{'Ok-AddPotCustomer' | IdGeneratorPipe}}"  class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -10,10 +10,9 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {

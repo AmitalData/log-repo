@@ -33,6 +33,5 @@ export class CreditLimitSettingList {
 		TruckersInvoicesBlock: boolean;
 		VendorsInvoicesBlock: boolean;
 		WarehousesInvoicesBlock: boolean;
-		ShipmentCreationWarning: boolean;
 	
 }

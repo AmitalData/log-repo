@@ -174,10 +174,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     documentRequestParams.Child1EntityId = declarationConstraintPM.ConstraintNumber;
                     var listConnectedEntity = new List<UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity>();
                     var entityXml = new UnifreightIIG.Common.MessageLib.Ransom.ConnectedEntity();
-                    entityXml.entityType = declarationPM.Direction=="E"? 11188 : 1055;
+                    entityXml.entityType = 1055;
                     entityXml.entityIdKey1 = customResponse.ConstraintApprovalDecision.LeadDocumentIDNum;
-
-                    
                     listConnectedEntity.Add(entityXml);
                     
                     VAL_NG_8227_MSG_520_RequiredDocumentMessage myVAL_NG_8227_MSG_520_RequiredDocumentMessage = new VAL_NG_8227_MSG_520_RequiredDocumentMessage();

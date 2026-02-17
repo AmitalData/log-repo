@@ -1,28 +1,26 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CLAIM_2340_ClaimRequestRequestParams } from '../../DataContract/RequestParams/CLAIM_2340_ClaimRequestRequestParams';
-import { ContinuousRequestOnClaimFileRequestParams } from '../../DataContract/RequestParams/ContinuousRequestOnClaimFileRequestParams';
 
 
 @Injectable()
 
 export class ClaimWebService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ClaimWebService';
     }
 
     CheckIfCorporationNameExists(tenant: number) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -31,18 +29,20 @@ export class ClaimWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/CheckIfCorporationNameExists/?tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/CheckIfCorporationNameExists/?tenant=" + tenant, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
         });
     }
 
     GetRequiredFieldsForClaim(claimId: string) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -51,12 +51,14 @@ export class ClaimWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetRequiredFieldsForClaim/?claimId=" + claimId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetRequiredFieldsForClaim/?claimId=" + claimId, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -64,7 +66,7 @@ export class ClaimWebService {
 
     PostSendClaimRequest(entity: CLAIM_2340_ClaimRequestRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -76,31 +78,10 @@ export class ClaimWebService {
             return this._http.post(
                 this._apiUrl + '/PostSendClaimRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    PostSendContinuousRequestOnClaim(entity: ContinuousRequestOnClaimFileRequestParams) {
-
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostSendContinuousRequestOnClaim/',
-                JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
 }

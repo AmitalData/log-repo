@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.Helpers;
-using System.Data.Entity.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -14,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public CommunicationLogRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CommunicationLogRepository(ICommonDataContext context)
         {
@@ -25,56 +27,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
-        public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant , string to, string correlationID)
-        {
-            (commonDataContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            DateTime dateTime = DateTime.Now.AddDays(-1);// 
-            var q = (from a in context.CommunicationLogs
-                     where a.To == to && a.EntityId== entityId && a.CommunicationStatusTypeCode=="W" && a.CorrelationID == correlationID
-                     select a);
-            q = q.Where(r => r.CreateDate > dateTime);//bad solution - need time !!!
-            var log = q.FirstOrDefault();
-            return log;
- 
-        }
-        public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant, List<string> subjects)
-        {
-            (commonDataContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
-            DateTime dateTime = DateTime.Now.AddDays(-3);// 
-            var q = (from a in context.CommunicationLogs
-                     where  a.EntityId == entityId && a.CommunicationStatusTypeCode == "W" && subjects.Contains(a.Subject)
-                     select a);
-            q = q.Where(r => r.CreateDate > dateTime);//bad solution - need time !!!
-            var log = q.FirstOrDefault();
-            if (log != null)
-            {
-                log.CommunicationStatusTypeCode = "D";
-                this.Update(log);
-
-                this.SubmitChanges();
-            }
-            return log;
-
-        }
-
-        public CommunicationLog GetSingleCommunicationByCorrelationID(int tenant, string correlationID)
-        {
-            (commonDataContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-            bool lastDay = true;
-            var q = (from a in context.CommunicationLogs
-                     where a.CorrelationID == correlationID
-                     select a);
-            if (lastDay)//bad solution - need time !!!
-            {
-                DateTime dateTime = DateTime.Now.AddDays(-1);// 
-                q = q.Where(r => r.CreateDate > dateTime);
-            }
-            var log = q.FirstOrDefault();
-            return log;
-
-        }
         public CommunicationLog GetSingleCommunicationLog(string id,int tenant)
         {
             var q = (from a in context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ObjectTable").Include("InternalDocument").Include("ExternalDocument").Include("Document").Include("CurrentTenant")
@@ -89,21 +42,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         }
 
-        public int GetEmailCommunicationLogCountForTenantInLasthour(int tenant)
+        public int GetCommunicationLogCountForTenantInLasthour(int tenant)
         {
 
             DateTime datetime = TenantServerConfigration.GetCurrentDateTime(tenant).AddHours(-1);
             return (from a in context.CommunicationLogs
-                    where a.Tenant == tenant && a.CreateDate > datetime && a.CommunicationLogTypeCode == "E"
+                    where a.Tenant == tenant && a.CreateDate > datetime 
                     select a).Count();
         }
 
 
 
-        public CommunicationLog GetSingleCommunicationLogIdAndTenant(string id, int tenant)
+        public CommunicationLog GetSingleCommunicationLog(string id, int tenant, DateTime? createDate)
         {
             return (from a in context.CommunicationLogs.Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser").Include("CreatedByUser.Contact").Include("ObjectTable").Include("InternalDocument").Include("ExternalDocument").Include("Document").Include("CurrentTenant")
-                    where a.Id == id && a.Tenant == tenant 
+                    where a.Id == id && a.Tenant == tenant && a.CreateDate == createDate
                     select a).FirstOrDefault();
         }
 
@@ -142,20 +95,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
         }
 
-        public bool CommunicationOutGoingLogInProgress(string entityId, string objectTableId, int tenant,string subject=null)
-        {
-            var q = (from a in context.CommunicationLogs
-                     where a.EntityId == entityId && a.ObjectTableId == objectTableId
-                     && a.Tenant == tenant && a.InOut == "O" && a.CommunicationStatusTypeCode == "W"
-                     select a);
-            if (!string.IsNullOrWhiteSpace(subject))
-            {
-                q = q.Where(r => r.Subject == subject);
-            }
-            return q.Any();
-        }
-
-
         public CommunicationLog GetSpecificCommunicationLogForEntity(string entityId, int tenant, DateTime date)
         {
             CommunicationLog log = (from a in context.CommunicationLogs.Include("Document").Include("CreatedByUser").Include("CommunicationLogType").Include("CommunicationStatusType").Include("CreatedByUser.Contact").Include("ObjectTable").Include("CurrentTenant")
@@ -170,14 +109,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from a in context.CommunicationLogs.Include("Document")
                     where a.EntityId == entityId && a.QueueName == queueName && a.Tenant == tenant && a.Subject == subject
-                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
-
-        }
-        public CommunicationLog GetCommunicationLogByEntityIdAndSubject(string entityId, string subject, int tenant, string exceptCommLogId = "", string commStatus = "")
-        {
-            return (from a in context.CommunicationLogs
-                    where a.EntityId == entityId  && a.Tenant == tenant && a.Subject == subject
-                    && a.Id != exceptCommLogId && (string.IsNullOrEmpty(commStatus) || a.CommunicationStatusTypeCode == commStatus)
                     select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
 
         }
@@ -245,15 +176,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public CommunicationLog GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
-        }
-
-        public bool IsCommunicationLogExsit(string xmlId, int tenant)
-        {
-            var communicationLog = (from a in context.CommunicationLogs
-                     where a.UniqueNumber == xmlId
-                     && a.Tenant == tenant select a);
-           
-            return communicationLog.Any();
         }
     }
 }

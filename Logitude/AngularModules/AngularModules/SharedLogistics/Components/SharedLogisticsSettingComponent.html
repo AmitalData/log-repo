@@ -1,481 +1,186 @@
-
-<style>
+﻿<style>
     .MessageText {
         white-space: normal;
         word-wrap: break-word;
         overflow-x: hidden;
         overflow-y: auto;
-        line-height: 18px;
+        line-height:18px;
     }
 </style>
-
+ 
 <table>
-    <tr style="height:90%;vertical-align:top;">
-        <td>
+
+
+
+    <tr style="height:100%;vertical-align:top">
+
+
+        <td style="height:100% ;position: relative;vertical-align:top">
             <table>
+
+                <tr style="height:15px"> <td><div></div></td>   </tr>
+                <!--Activate Shared Logistics-->
+                <tr style="height:30px;">
+                    <td style="width:5px;"><div style="width:5px"></div></td>
+                    <td style="width:20px;text-align:left;">
+                        <div class="CheckBox">
+                            <input [attr.id]="IsSharedLogisticsActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivatedEnable" [(ngModel)]="IsSharedLogisticsActivated" class="CenterCenter" (change)="OnShardLogisticChange()" id="test" type="checkbox" />
+                            <label [attr.for]="IsSharedLogisticsActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                        </div>
+                    </td>
+                    <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Shared Logistics</div></td>
+                </tr>
+
+                <!--Box-->
+                <tr style="height:100%">
+                    <td colspan="3">
+                        <div style="border:1px solid gray;height:100%">
+                            <table>
+
+                                <tr style="height:5px"><td></td></tr>
+
+
+                                <!-- Activate Web Access-->
+                                <tr *ngIf="IsShowActivateWebAccessArea" style="height:100px;vertical-align:top">
+                                    <td>
+                                        <table style="text-align:left">
+                                            <tr style="height:30px;">
+                                                <td style="width:5px;"><div style="width:5px"></div></td>
+                                                <td style="width:20px;text-align:left;">
+                                                    <div class="CheckBox">
+                                                        <input [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                        <label [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                    </div>
+                                                </td>
+                                                <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Web Access</div></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="3" style="vertical-align:top">
+                                                 
+                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;overflow:hidden">This option will allow your partners (Customers and Agents) to view specific information about their shipments. To activate customers you need to choose which ones from the Invitations section in the shared logistics module.</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+
+                                </tr>
+
+
+                     <tr *ngIf="!IsShowMobileActivateArea && IsShowActivateWebAccessArea && IsShowAreaColseAndCancelButton " style="height:50px"><td></td></tr>
+
+                                <!--Activate Mobile-->
+                                <tr *ngIf="IsShowMobileActivateArea" style="height:100px;vertical-align:top">
+                                    <td>
+                                        <table style="text-align:left">
+                                            <tr style="height:30px;">
+                                                <td style="width:5px;"><div style="width:5px"></div></td>
+                                                <td style="width:20px;text-align:left;">
+                                                    <div class="CheckBox">
+                                                        <input [attr.id]="IsMobileActivatedCheckboxBoxId" [disabled]="!IsMobileActivatedEnable" [(ngModel)]="IsMobileActivated" class="CenterCenter" id="test" type="checkbox" />
+                                                        <label [attr.for]="IsMobileActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                    </div>
+                                                </td>
+                                                <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Mobile</div></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="3" style="vertical-align:top">
+
+                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;">This option will allow your partners to view specific information about their shipments using our mobile app</div>
+
+
+
+
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr *ngIf="!IsShowActivateWebAccessArea && IsShowMobileActivateArea && IsShowAreaColseAndCancelButton" style="height:50px"><td></td></tr>
+                         
+                                <!--Send Link in email messages to your partners.-->
+                                <tr style="height:60px;vertical-align:top">
+                                    <td>
+                                        <table style="text-align:left">
+                                            <tr style="height:30px;">
+                                                <td style="width:5px;"><div style="width:5px"></div></td>
+                                                <td style="width:20px;text-align:left;">
+                                                    <div class="CheckBox">
+                                                        <input [attr.id]="SharedLogisticsMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMessageLink" class="CenterCenter" id="test" type="checkbox" />
+                                                        <label [attr.for]="SharedLogisticsMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
+                                                    </div>
+                                                </td>
+                                                <td><div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Send Link in email messages to your partners.</div></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="3" style="vertical-align:top">
+                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will automatically send a link within each email message sent to the partners, that will enable shipment viewing.</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+
+                                    </td>
+
+                                </tr>
+
+
+
+
+                                <tr><td></td></tr>
+
+
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+
+            </table>
+
+        </td>
+
+
+
+    </tr>
+
+    <tr *ngIf="IsShowAreaColseAndCancelButton" style="height:10px"> <td><div></div></td>   </tr>
+    <tr *ngIf="IsShowAreaColseAndCancelButton" style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
                 <tr>
                     <td>
-                        <div class="MediaFill" style="margin-top: 12px;"> 
-                            <div class="TabControl">
-                                <div class="TabControlHead">
-                                    <ul>
-                                        <li [class.Selected]="SelectedTabCode == 'ACT'" (click)="SelectedTabChange('ACT')">
-                                            <div [attr.data-cy]="'Activation Settings'" style="width:150px;text-align:center;font-size:11px;color:black" class="InnerChild">
-                                                <span>Activation Settings</span>
-                                            </div>
-                                        </li>
+                        <div>
 
-                                        <li *ngIf="SharedTitleType == 'DigitalPortal'" [class.Selected]="SelectedTabCode == 'DPGS'" (click)="SelectedTabChange('DPGS')">
-                                            <div [attr.data-cy]="'General Settings'" style="width:150px;text-align:center;font-size:11px;color:black" class="InnerChild">
-                                                <span>General Settings</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
 
-                                <div class="TabControlBody" style="border: 0;">
-                                    <!--Tab 1: Activation settings tab -->
-                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'ACT'">
-                                        <div class="MediaFillAbsolute">
-                                            <table>
-                                                <tr style="height:100%;vertical-align:top">
-                                                    <td style="height:100% ;position: relative;vertical-align:top">
-                                                        <table>
-                                                            <tr style="height:15px">
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-                                                            <!--Activate Shared Logistics-->
-                                                            <tr style="height:30px;">
-                                                                <td style="width:5px;">
-                                                                    <div style="width:5px"></div>
-                                                                </td>
-                                                                <td style="width:20px;text-align:left;">
-                                                                    <div class="CheckBox">
-                                                                        <input [attr.id]="IsSharedLogisticsActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivatedEnable" [(ngModel)]="IsSharedLogisticsActivated" class="CenterCenter" (change)="OnShardLogisticChange()" id="test" type="checkbox" />
-                                                                        <label [attr.data-cy]="'Activate Shared Logistics'" [attr.for]="IsSharedLogisticsActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate {{SharedTitleType == 'CargoTracking' ? 'Cargo Tracking' : (SharedTitleType == 'DigitalPortal' ? 'Digital Portal' : 'Shared Logistics')}}</div>
-                                                                </td>
-                                                            </tr>
-                                            
-                                                            <!--Box-->
-                                                            <tr style="height:100%">
-                                                                <td colspan="3">
-                                                                    <div style="border:1px solid gray;height:100%">
-                                                                        <ScrollViewer>
-                                                                            <table>
-                                                                                <tr style="height:5px">
-                                                                                    <td></td>
-                                                                                </tr>
-                                                                                <!-- Activate Web Access-->
-                                                                                <tr *ngIf="IsShowActivateWebAccessArea" style="height:100px;vertical-align:top">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <div class="CheckBox">
-                                                                                                        <input [attr.data-cy]="'Activate Web Access'" *ngIf="SharedTitleType != 'CargoTracking' && SharedTitleType != 'DigitalPortal'" [attr.id]="IsWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                                                                        <label *ngIf="SharedTitleType != 'CargoTracking' && SharedTitleType != 'DigitalPortal'" [attr.for]="IsWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                                                                        <input *ngIf="SharedTitleType == 'CargoTracking'" [attr.id]="IsCargoTrackWebAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsCargoTrackWebAccessActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                                                                        <label *ngIf="SharedTitleType == 'CargoTracking'" [attr.for]="IsCargoTrackWebAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                                                                        <input *ngIf="SharedTitleType == 'DigitalPortal'" [attr.id]="IsDigitalPortalAccessActivatedCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="IsDigitalPortalAccessActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                                                                        <label *ngIf="SharedTitleType == 'DigitalPortal'" [attr.for]="IsDigitalPortalAccessActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div [style.font-weight]="SharedTitleType == 'DigitalPortal' ? 'bold' : 'normal'" style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px;">Activate Web Access</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td colspan="3" style="vertical-align:top">
-                                            
-                                                                                                    <div *ngIf="SharedTitleType != 'DigitalPortal'" class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;overflow:hidden">This option will allow your partners (Customers and Agents) to view specific information about their shipments. To activate customers you need to choose which ones from the Invitations section in the {{SharedTitleType == 'CargoTracking' ? 'Cargo Tracking' : (SharedTitleType == 'DigitalPortal' ? 'Digital Portal' : 'Shared Logistics')}} module.</div>
-                                                                                                    <div *ngIf="SharedTitleType == 'DigitalPortal'" class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;overflow:hidden">This option allows your customers to view specific shipment information without logging in. To enable this option, select which customers to invite from the "Invitations" section in the Digital Portal module.</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                            
-                                                                                <tr *ngIf="!IsShowMobileActivateArea && IsShowActivateWebAccessArea && IsShowAreaColseAndCancelButton && SharedTitleType != 'CargoTracking' && SharedTitleType != 'DigitalPortal'" style="height:50px">
-                                                                                    <td></td>
-                                                                                </tr>
-                                            
-                                                                                <!--Activate Mobile-->
-                                                                                <tr *ngIf="IsShowMobileActivateArea" style="height:100px;vertical-align:top">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <div class="CheckBox">
-                                                                                                        <input [attr.data-cy]="'Activate Mobile'" [attr.id]="IsMobileActivatedCheckboxBoxId" [disabled]="!IsMobileActivatedEnable" [(ngModel)]="IsMobileActivated" class="CenterCenter" id="test" type="checkbox" />
-                                                                                                        <label [attr.for]="IsMobileActivatedCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Activate Mobile</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td colspan="3" style="vertical-align:top">
-                                            
-                                                                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top;">This option will allow your partners to view specific information about their shipments using our mobile app</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                            
-                                            
-                                                                                    </td>
-                                            
-                                                                                </tr>
-                                            
-                                                                                <tr *ngIf="!IsShowActivateWebAccessArea && IsShowMobileActivateArea && IsShowAreaColseAndCancelButton" style="height:50px">
-                                                                                    <td></td>
-                                                                                </tr>
-                                            
-                                                                                <!--Send Link in email messages to your partners.-->
-                                                                                <tr [style.height]="SharedTitleType == 'DigitalPortal' ? '90px' : '100px'" style="vertical-align:top" *ngIf="!IsCargoTracking">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <div class="CheckBox">
-                                                                                                        <input [attr.data-cy]="'Send Link in email messages to your partners'" [attr.id]="SharedLogisticsMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMessageLink" (change)="OnSharedLogisticsMessageLink()" class="CenterCenter" id="test" type="checkbox" />
-                                                                                                        <label [attr.for]="SharedLogisticsMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div *ngIf="SharedTitleType != 'DigitalPortal'" style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Send Link in email messages to your partners.</div>
-                                                                                                    <div *ngIf="SharedTitleType == 'DigitalPortal'" style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px;font-weight: bold;">Send Link in Email Messages to Your Customers</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td *ngIf="SharedTitleType != 'DigitalPortal'" colspan="3" style="vertical-align:top">
-                                                                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will add a link within each email message sent to the partners, that will enable shipment viewing. Email templates must have the Shipment number field.</div>
-                                                                                                </td>
-                                            
-                                                                                                <td *ngIf="SharedTitleType == 'DigitalPortal'" colspan="3" style="vertical-align:top">
-                                                                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">When you enable this option, a link with the shipment number will be included in each email message sent to your customers so they can view shipments.</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                            
-                                            
-                                                                                    </td>
-                                            
-                                                                                </tr>
-                                            
-                                                                                <!-- DisplayDocumentsAndEvents As child for 'Send Link in email messages to your partners', This for DigitalPortal Only-->
-                                                                                <tr *ngIf="IsDigitalPortal" style="height:100px;vertical-align:top;">
-                                                                                    <td style="padding-left: 60px;">
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <CheckBox [DataCy]="'Display Documents & Events in messages link'" [IsEnabled]="SharedLogisticsMessageLink" [IsChecked]="DisplayDocumentsAndEvents" (Checked)="DisplayDocumentsAndEvents = $event"></CheckBox>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div *ngIf="SharedTitleType == 'DigitalPortal'" style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px;font-weight: bold;">Display Documents & Events in Messages Link</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td colspan="3" style="vertical-align:top">
-                                                                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Giving you full control over what has to be shared. By enabling the "Send Link in Email Messages to Your Customers" feature, you can show/hide the documents and events that will be viewed online.</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                            
-                                                                                <!-- DisplayDocumentsAndEvents -->
-                                                                                <tr *ngIf="SharedTitleType != 'DigitalPortal' && !IsCargoTracking" style="height:80px;vertical-align:top">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <CheckBox [DataCy]="'Display Documents & Events in messages link'" [IsChecked]="DisplayDocumentsAndEvents" (Checked)="DisplayDocumentsAndEvents = $event"></CheckBox>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div *ngIf="SharedTitleType != 'DigitalPortal'" style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Display Documents & Events in messages link</div>
-                                                                                                    <div *ngIf="SharedTitleType == 'DigitalPortal'" style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px;font-weight: bold;">Display Documents & Events in Messages Link</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td *ngIf="!IsDigitalPortalAccessActivated" colspan="3" style="vertical-align:top">
-                                            
-                                                                                                    <div></div>
-                                                                                                </td>
-                                            
-                                                                                                <td *ngIf="IsDigitalPortalAccessActivated" colspan="3" style="vertical-align:top">
-                                                                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Use this setting to show / hide the documents and events records from view online link sent by enabling "Send Link in email messages to your partners" feature.</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                            
-                                                                                <!--Send Master Link in email messages to your partners.-->
-                                                                                <tr *ngIf="SharedLogisticsMasterMessageLinkEnable" style="height:100px;vertical-align:top">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <div class="CheckBox">
-                                                                                                        <input [attr.data-cy]="'Enable Masters Documents Link for Agents'" [attr.id]="SharedLogisticsMasterMessageLinkCheckboxBoxId" [disabled]="!IsSharedLogisticsActivated" [(ngModel)]="SharedLogisticsMasterMessageLink" class="CenterCenter" id="test" type="checkbox" />
-                                                                                                        <label [attr.for]="SharedLogisticsMasterMessageLinkCheckboxBoxId" class="CenterCenter" id="test"></label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div [style.font-weight]="SharedTitleType == 'DigitalPortal' ? 'bold' : 'normal'"  style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Enable Masters Documents Link for Agents</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td colspan="3" style="vertical-align:top">
-                                                                                                    <div *ngIf="SharedTitleType != 'DigitalPortal'" class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will add a link within each master email message sent to the agent, that will enable viewing documents from the master and its connected houses.</div>
-                                                                                                    <div *ngIf="SharedTitleType == 'DigitalPortal'" class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">Enabling this feature will add a link within each master email message sent to the agents to allow them to view documents from the master and its connected houses.</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                            
-                                                                                <tr *ngIf="SharedTitleType == 'DigitalPortal' && ShowMultiUnitsOfMeasurementsEnable" style="height:100px;vertical-align:top">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <div class="CheckBox">
-                                                                                                        <input [attr.data-cy]="'Show Multi units of measurements'" [attr.id]="SharedLogisticsMultiUnitsOfMeasurementsId" [(ngModel)]="ShowMultiUnitsOfMeasurements" class="CenterCenter" id="test" type="checkbox" />
-                                                                                                        <label [attr.for]="SharedLogisticsMultiUnitsOfMeasurementsId" class="CenterCenter" id="test"></label>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px;font-weight: bold;">Show Multi units of measurements</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td colspan="3" style="vertical-align:top">
-                                                                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">
-                                                                                                        By choosing this option, you can show/hide values in Imperial units of measurement (lb, CBF) in addition to Metric units of measurement (kg, CBM). Disabling it will only show Metric units.
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                            
-                                                                                <tr *ngIf="IsShowQuotesRequestActivatedInSharedLogistics" style="height:80px;vertical-align:top">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <CheckBox [DataCy]="'Enable Quotes Requests in Shared Logistics'" [IsEnabled]="IsSharedLogisticsActivated" [IsChecked]="IsQuotesRequestActivatedInSharedLogistics" (Checked)="IsQuotesRequestActivatedInSharedLogistics = $event"></CheckBox>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px">Enable Quotes Requests in {{SharedTitleType == 'CargoTracking' ? 'Cargo Tracking' : 'Shared Logistics'}}</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                            
-                                                                                            <tr>
-                                                                                                <td colspan="3" style="vertical-align:top">
-                                            
-                                                                                                    <div></div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                            
-                                            
-                                                                                    </td>
-                                            
-                                                                                </tr>
-                                                                                
-                                                                                <!--Approve Uploaded Documents-->
-                                                                                <tr *ngIf="SharedTitleType == 'DigitalPortal' && ShowApproveUploadedDocumentsEnabled" style="height:100px;vertical-align:top">
-                                                                                    <td>
-                                                                                        <table style="text-align:left">
-                                                                                            <tr style="height:30px;">
-                                                                                                <td style="width:5px;">
-                                                                                                    <div style="width:5px"></div>
-                                                                                                </td>
-                                                                                                <td style="width:20px;text-align:left;">
-                                                                                                    <div class="CheckBox">
-                                                                                                        <CheckBox [DataCy]="'Approve Uploaded Documents'" [IsChecked]="ApproveUploadedDocuments" (Checked)="ApproveUploadedDocuments = $event"></CheckBox>
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <div style="text-align:left;margin-top:-3px;font-size:14px;margin-left:40px;font-weight: bold;">Approve Uploaded Documents</div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td colspan="3" style="vertical-align:top">
-                                                                                                    <div class="MessageText" style="display:block;margin-left:5px;font-size:12px;margin-top:5px;vertical-align:top">
-                                                                                                        Use this setting to see all the shipments that contain documents need to be approve and approve them when your customers sent you by the digital portal.
-                                                                                                    </div>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                            
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div></div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </ScrollViewer>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            
-                                                <tr *ngIf="IsShowAreaColseAndCancelButton" style="height:10px">
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                                <tr *ngIf="IsShowAreaColseAndCancelButton" style="height: 32px;">
-                                                    <td style="vertical-align: bottom">
-                                                        <table style="height: 22px;">
-                                                            <tr>
-                                                                <td>
-                                                                    <div>
-                                                                    </div>
-                                                                </td>
-                                            
-                                                                <td style="width: 57px;">
-                                                                    <div>
-                                                                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
-                                                                    </div>
-                                                                </td>
-                                            
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-                                            
-                                                                <td style="width: 57px;">
-                                                                    <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            
-                                            </table>                                            
-                                        </div>
-                                    </div>
-                                    <!--Tab 2: Digital protal general settings tab -->
-                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'DPGS'">
-                                        <div class="MediaFillAbsolute">
-                                            <table>
-                                                <tr style="height:100%">
-                                                    <td>
-                                                        <div style="border:1px solid lightGray;height:100%;padding:24px 0 0 24px">
-                                                            <div style="margin-bottom: 12px;font-size: 14px;font-weight: bold;">Shipment archiving setting</div>
-                                                            <div style="margin-bottom: 12px;font-size: 12px;">To control the archiving shipment settings, use the following options</div>
-                                                            <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center; margin-top: 30px;">
-                                                                <span style="margin-right: 16px;display: inline-block; width:240px;">
-                                                                    Shipment Created more than
-                                                                </span>
-                                                                <span>
-                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select option'" (SelectedItemChanged)="ShipmentCreatedSelectedFilter = $event" [ItemsSource]="ShipmentCreatedFilters" [SelectedItem]="ShipmentCreatedSelectedFilter" [Binding]="'name'"></ComboBox>
-                                                                </span>
-                                                            </div>   
-                                                            <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center; margin-top: 60px;">
-                                                                <span style="margin-right: 16px;display: inline-block; width:240px;">
-                                                                    <div>Shipment Arrival more than</div>
-                                                                    <div>(Import, inland domestic & drop shipments)</div>
-                                                                </span>
-                                                                <span>
-                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select option'"  (SelectedItemChanged)="ShipmentArrivalSelectedFilter = $event" [ItemsSource]="ShipmentCreatedFilters" [SelectedItem]="ShipmentArrivalSelectedFilter" [Binding]="'name'"></ComboBox>
-                                                                </span>
-                                                            </div>   
-                                                            <div style="width: 100%; display: flex; justify-content: flex-start; align-items: center; margin-top: 60px;">
-                                                                <span style="margin-right: 16px;display: inline-block; width:240px;">
-                                                                    <div>Shipment Departed more than</div>
-                                                                    <div>(Export shipments)</div>
-                                                                </span>
-                                                                <span>
-                                                                    <ComboBox style="width:250px;float:left;" [WaterMark]="'Select option'" (SelectedItemChanged)="ShipmentDepartSelectedFilter = $event" [ItemsSource]="ShipmentCreatedFilters" [SelectedItem]="ShipmentDepartSelectedFilter" [Binding]="'name'"></ComboBox>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <tr style="height: 32px;">
-                                                    <td style="vertical-align: bottom">
-                                                        <table style="height: 22px;">
-                                                            <tr>
-                                                                <td>
-                                                                    <div>
-                                                                    </div>
-                                                                </td>
-                                            
-                                                                <td style="width: 57px;">
-                                                                    <div>
-                                                                        <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
-                                                                    </div>
-                                                                </td>
-                                            
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
-                                            
-                                                                <td style="width: 57px;">
-                                                                    <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
+
 </table>
 

@@ -1,13 +1,13 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+﻿import {Component, ViewChild, ViewContainerRef, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import { ChildDirective } from '../../../Infrastructure/Directives/ChildDirective';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 
-export class FieldTemplateComponent implements AfterViewInit {
+export class FieldTemplateComponent {
     public Entity: any = null;
     public FieldName: string = null;
     public FieldValue: any = null;
@@ -20,46 +20,11 @@ export class FieldTemplateComponent implements AfterViewInit {
     public IsHeaderScreenTemplate: boolean = false;
     public localCurrency: string = "(" + SessionLocator.LocalCurrencyCode + ")";
     public ProfitCurrency: string = "(" + SessionLocator.TenantPM.ProfitCurrencyCode + ")";
-    public NumberFieldRightPadding = "20px";
-    @ViewChild(ChildDirective) Child: ChildDirective;
-    private CurrentSession = SessionLocator.SelectedSession;
+    @ViewChild('SpotLight', { read: ViewContainerRef }) SpotLightViewContainerRef: ViewContainerRef;
     constructor() {
 
     }
-    public containerEstimatedDates = [{estimatedDate: 'MainCarriageETA', actaulDate: 'MainCarriageATA'},
-                                      {estimatedDate: 'MainCarriageETD', actaulDate: 'MainCarriageATD'},
-                                      {estimatedDate: 'EstimatedEmptyPickupDate', actaulDate: 'ActualEmptyPickupDate'},
-                                      {estimatedDate: 'EstimatedPOLArrival', actaulDate: 'ActualPOLArrival'},
-                                      {estimatedDate: 'EstimatedPOLLoaded', actaulDate: 'ActualPOLLoaded'},
-                                      {estimatedDate: 'EstimatedPOLVesselDeparture', actaulDate: 'ActualPOLVesselDeparture'},
-                                      {estimatedDate: 'EstimatedTrans1VesselArrival', actaulDate: 'ActualTransshipment1VesselArrival'},
-                                      {estimatedDate: 'EstimatedTransshipment1Discharge', actaulDate: 'ActualTransshipment1Discharge'},
-                                      {estimatedDate: 'EstimatedTransshipment1Loaded', actaulDate: 'ActualTransshipment1Loaded'},
-                                      {estimatedDate: 'EstimatedTrans1VesselDeparture', actaulDate: 'ActualTrans1VesselDeparture'},
-                                      {estimatedDate: 'EstimatedTrans2VesselArrival', actaulDate: 'ActualTransshipment2VesselArrival'},
-                                      {estimatedDate: 'EstimatedTransshipment2Discharge', actaulDate: 'ActualTransshipment2Discharge'},
-                                      {estimatedDate: 'EstimatedTransshipment2Loaded', actaulDate: 'ActualTransshipment2Loaded'},
-                                      {estimatedDate: 'EstimatedTrans2VesselDeparture', actaulDate: 'ActualTrans1Vesse2Departure'},
-                                      {estimatedDate: 'EstimatedTrans3VesselArrival', actaulDate: 'ActualTransshipment3VesselArrival'},
-                                      {estimatedDate: 'EstimatedTransshipment3Discharge', actaulDate: 'ActualTransshipment3Discharge'},
-                                      {estimatedDate: 'EstimatedTransshipment3Loaded', actaulDate: 'ActualTransshipment3Loaded'},
-                                      {estimatedDate: 'EstimatedTrans3VesselDeparture', actaulDate: 'ActualTrans1Vesse3Departure'},
-                                      {estimatedDate: 'EstimatedTrans4VesselArrival', actaulDate: 'ActualTransshipment4VesselArrival'},
-                                      {estimatedDate: 'EstimatedTransshipment4Discharge', actaulDate: 'ActualTransshipment4Discharge'},
-                                      {estimatedDate: 'EstimatedTransshipment4Loaded', actaulDate: 'ActualTransshipment4Loaded'},
-                                      {estimatedDate: 'EstimatedTrans1Vesse4Departure', actaulDate: 'ActualTrans4VesselDeparture'},
-                                      {estimatedDate: 'EstimatedPODVesselArrival', actaulDate: 'ActualPODVesselArrival'},
-                                      {estimatedDate: 'EstimatedPODDischarge', actaulDate: 'ActualPODDischarge'},
-                                      {estimatedDate: 'EstimatedPODDeparture', actaulDate: 'ActualPODDeparture'},
-                                      {estimatedDate: 'OnCarriageETD', actaulDate: 'OnCarriageATD'},
-                                      {estimatedDate: 'EstimatedLIFArrival', actaulDate: 'ActualLIFArrival'},
-                                      {estimatedDate: 'EstimatedOnCarriageDeparture', actaulDate: 'ActualOnCarriageDeparture'},
-                                      {estimatedDate: 'EstimatedEmptyReturn', actaulDate: 'ActualEmptyReturn'},
-                                      {estimatedDate: 'ShipmentDeliveryETA', actaulDate: 'ShipmentDeliveryATA'},
-                                      {estimatedDate: 'ShipmentDeliveryETD', actaulDate: 'ShipmentDeliveryATD'},
-                                      {estimatedDate: 'PreCarriageETD', actaulDate: 'PreCarriageATD'},
-                                      {estimatedDate: 'OnCarriageETA', actaulDate: 'OnCarriageATA'},
-                                    ]; 
+    
     public Run(args: any) {
         this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];
@@ -106,33 +71,40 @@ export class FieldTemplateComponent implements AfterViewInit {
                 }
             }
 
-            //if (this.IsSpotLightTemplate) {
-            //    this.RunComponent();
-            //}
+            if (this.IsSpotLightTemplate) {
+                this.RunComponent();
+            }
         }
     }
 
-    ngAfterViewInit() {
-        if (this.IsSpotLightTemplate) {
-            this.RunComponent();
-        }
-    }
-
+    private Retries: number = 0;
+    private timerToken: any;
     RunComponent() {
-        if (this.Child.Location) {
-            this.Child.Location.clear();
+        if (this.SpotLightViewContainerRef) {
+            this.SpotLightViewContainerRef.clear();
 
             var myComponentPath = "./Shipment/Components/Spotlight/ShipmentSpotlightComponent";
-            SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
+            SessionLocator.DynamicLoader.Load(myComponentPath, this.SpotLightViewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.Run(this.Entity.Id);
                 });
         }
 
-        //else {
-        //    this.RunComponentTimer();
-        //}
-    }    
+        else {
+            this.RunComponentTimer();
+        }
+    }
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
 
     public FWBStatusSource: string = null;
     public FWBStatusTooltip: string = null;
@@ -169,31 +141,5 @@ export class FieldTemplateComponent implements AfterViewInit {
             myResult.replace("Accepted", "Accepted by airline");
         }
         return myResult;
-    }
-
-    ViewShipmentClicked() {
-        if (this.Entity != null) {
-            var tableName = "Shipment";
-            var entityId = this.Entity.ShipmentId;
-
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: tableName, });
-
-                    let isEditComponentSaved = false;
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        if (isEditComponentSaved) {
-
-                        }
-                    });
-
-                    cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                        if (isSaveSuccess) {
-                            isEditComponentSaved = true;
-                        }
-                    });
-                });
-        }
     }
 }

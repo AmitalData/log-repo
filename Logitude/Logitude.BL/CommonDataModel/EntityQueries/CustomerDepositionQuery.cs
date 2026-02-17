@@ -9,7 +9,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -21,7 +21,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerDepositionRepository repository;
 
-
+        public CustomerDepositionQuery()
+        {
+            repository = new CustomerDepositionRepository();
+        }
 
         public CustomerDepositionQuery(int tenant)
         {

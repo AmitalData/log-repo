@@ -22,7 +22,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 @Component({
 
-    
+    moduleId: module.id,
     templateUrl: './DeclarationTaxesTabComponent.html',
 })
 
@@ -53,12 +53,12 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe(response => {
 
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe((response:any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe(response => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe(response => {
                             this.EntityPM = this.entityArgs.EntityPM;
                             this.ObjectTableName = this.entityArgs.ObjectTableName;
                             this._entityListService = new EntityListService();
@@ -81,12 +81,12 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
         this.CD = null;
     }
     SetWindowArgs(args: any) {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsTax").subscribe(response => {
 
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe((response:any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe((response:any) => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsExchangeRate").subscribe(response => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationTax").subscribe(response => {
                             this.EntityPM = args.EntityPM;
                             this.EntityId = this.EntityPM.Id;
                             this.CIFValue = this.EntityPM.CIFValue;
@@ -252,7 +252,7 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
         this.CurrencyRatesView.Clear();
         this._DeclarationExtendedListService.GetCurrenciesCodesForDeclaration(this.EntityPM.Id, this.EntityPM.Tenant)
             .subscribe(
-            (res:any) => {
+            (res) => {
 
                 let aSupplierInvoiceCurrency = res.Result as SupplierInvoiceCurrency[];
                 this.CurrencyRatesView.InsertCollection(aSupplierInvoiceCurrency);
@@ -370,11 +370,7 @@ export class DeclarationTaxesTabComponent implements OnInit, OnDestroy {
     get PlatformFee() { return this.EntityPM == null ? null : this.EntityPM.PlatformFee; }
     get DealValue() { return this.EntityPM == null ? null : this.EntityPM.DealValue; }
     get LoadingFactor() { return this.EntityPM == null ? null : this.EntityPM.LoadingFactor; }
-    get FOBValueNIS() {
-        return this.EntityPM == null ? null : this.EntityPM.FOBValueNIS ;
-    }
-    get FOBValueDollar() { return this.EntityPM == null ? null : this.EntityPM.FOBValueDollar; }
-
+    
 
 
     public SelectedRow2: any = null;

@@ -1,4 +1,4 @@
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+﻿import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 
 export class ConstituentPM {
@@ -31,19 +31,14 @@ export class ConstituentPM {
     public get EntityParentPM() { return this.entityParentPM; }
     public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
 
-    public ConcurrencyGUID: string;
-
     public UniqueKey: string;
 
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-            if (this.EntityParentPM) {
-                this.EntityParentPM.MarkAsDirty();
-            }
-        }
+        this.IsDirty = true;
+        if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
     }
 
     private MyClone: ConstituentPM;

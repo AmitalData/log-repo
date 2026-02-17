@@ -18,16 +18,13 @@ import { PackageTypeListService } from '../../Common/Services/StandardLists/Pack
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddEditWarehouseEntryPackagesAndContainers',
     templateUrl: './AddEditWarehouseEntryPackagesAndContainers.html',
     providers: [WarehouseEntryPackagePMExtendedService],
 })
 
 export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
-  public IsDependencyFilter2Value: any;
-  public WarehouseEntryPackage: any;
-
     private _entityResourceService: EntityResourceService = new EntityResourceService();
    
     public ValidationErrorsList: string[];
@@ -60,7 +57,7 @@ export class AddEditWarehouseEntryPackagesAndContainers implements OnInit {
     }
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntryPackage").subscribe(response => {
             this.Start(args);
         });
     }
@@ -246,7 +243,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
     ChargeableWeightUnitCode: string;
     GrossWeightUnitCode: string;
     IsDependencyFilter2Value: boolean;
-    IsCFSWarehouse: boolean = false;
     WarehouseEntryPM: WarehouseEntryPM;
     public IsVehicleDetails: boolean = false;
 
@@ -261,7 +257,7 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.DimensionsUnitCode = this.WarehouseEntryPM.DimensionsUnitCode;
         this.IsDependencyFilter2Value = this.EntityPM.IsContainer;
         this.ReleasesNumber = this.EntityPM.ReleasesNumber;
-        this.IsCFSWarehouse = this.FatherComponent.IsCFSWarehouse;
+
 
         this.SetLabel();
         this.SetUIProperties();
@@ -269,11 +265,15 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.IsVehicleDetails = false;
     }
 
+
     SetLabel() {
         this.VolumeLabel = "Volume (" + this.VolumeUnitCode + ")";
         this.GrossWeightLabel = "Weight (" + this.GrossWeightUnitCode + ")";
         this.DimensionsLabel = "Dimensions(L-W-H) (" + this.DimensionsUnitCode + ")";
         this.VolumetricWeightLabel = "Volumetric Weight (" + this.ChargeableWeightUnitCode + ")";
+
+     
+
     }
 
 
@@ -334,7 +334,6 @@ export class WarehouseEntryPackageItem extends BaseComponent {
         this.UIProperties.SetEnabled("Length", this.ObjectTableName, isDimensionEnabled);
         this.UIProperties.SetEnabled("Volume", this.ObjectTableName, isVolumeEnabled);
         this.UIProperties.SetEnabled("Weight", this.ObjectTableName, isGrossWeightEnabled);
-        this.UIProperties.SetEnabled("Quantity", this.ObjectTableName, !this.IsCFSWarehouse);
         this.UIProperties.SetEnabled("VolumetricWeight", this.ObjectTableName, false);
     }
 

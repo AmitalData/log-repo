@@ -18,7 +18,7 @@
                     <!-- Customer -->
                     <td style="width: 65px;" class="Label">Customer:</td>
                     <td style="width: 180px;">
-                        <LogLov [ShowInActive]="true" [NoObjectField]="true"
+                        <LogLov [NoObjectField]="true"
                                 [ObjectFieldName]="'CustomerId'"
                                 [SelectedValue]="CustomerId"
                                 [DataContext]="DataContext"
@@ -30,7 +30,7 @@
                     <!-- Salesman -->
                     <td style="width: 65px;" class="Label">Salesman:</td>
                     <td style="width: 180px;">
-                        <LogLov [ShowInActive]="true" [NoObjectField]="true"
+                        <LogLov [NoObjectField]="true"
                                 [ObjectFieldName]="'SalesmanUserId'"
                                 [SelectedValue]="SalesmanUserId"
                                 [DataContext]="DataContext"
@@ -51,7 +51,7 @@
                     </td>
                    
                     <td style="width: 80px;">
-                        <button class="GreenButton" (click)="RunButtonClicked()">{{RunReportTitle}}</button>
+                        <button class="GreenButton" (click)="RunButtonClicked()">Run Report</button>
                     </td>
                     <td><div></div></td>
                 </tr>

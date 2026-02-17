@@ -6,7 +6,7 @@ import { TextCodeTranslator } from              '../../../Infrastructure/Utiliti
 
 @Component({
     selector: 'dropdown-button',
-    
+    moduleId: module.id,
     host: {
         '(document:click)': 'handleClick($event)',
     },
@@ -20,8 +20,6 @@ export class DropdownButtonComponent implements OnInit {
     public IsDisabled: boolean
     @Input()
     public Dropdownbutton_Text: string = "Show Dropdown Content";
-    @Input()
-    public dataCy: string; // Optional stable selector for e2e tests
     
     _Dropdownbutton_TextCode: string;
     @Input()

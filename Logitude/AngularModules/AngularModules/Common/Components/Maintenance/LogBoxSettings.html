@@ -102,12 +102,12 @@
                                 </td>
                             </tr>
 
-                            <tr *ngIf="ShowAutoArchiveOnInvoice" class="FormFieldRow">
+                            <tr class="FormFieldRow">
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width: 230px;">
-                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Auto Archive On Invoice - Customs</label>
+                                            <td style="width: 224px;">
+                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Auto Archive On Invoice</label>
                                             </td>
                                             <td style="width:10px;"></td>
                                             <td>
@@ -119,22 +119,7 @@
                                 </td>
                             </tr>
 
-                            <tr *ngIf="ShowAutoArchiveOnPODExport" class="FormFieldRow">
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td style="width: 230px;">
-                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Auto Archive On POD Export</label>
-                                            </td>
-                                            <td style="width:10px;"></td>
-                                            <td>
-                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'AutoArchiveOnPODExport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
+
 
                             <!-- IsCustomerTenantShare -->
                             <!--<tr class="FormFieldRow" *ngIf="IsCustomerTenantShareVisible">

@@ -20,7 +20,7 @@ export class AutomationResultEmailRecipientPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -50,24 +50,11 @@ export class AutomationResultEmailRecipientPM {
     public set RecipientType(newValue: string) { if (this.recipientType != newValue) { this.recipientType = newValue; this.MarkAsDirty("RecipientType"); } }
        
 	 
-    private partnerObjectFieldCode: string;
-    public get PartnerObjectFieldCode() { return this.partnerObjectFieldCode; }
-    public set PartnerObjectFieldCode(newValue: string) { if (this.partnerObjectFieldCode != newValue) { this.partnerObjectFieldCode = newValue; this.MarkAsDirty("PartnerObjectFieldCode"); } }
-       
-	 
-    private isNotifyBack: boolean;
-    public get IsNotifyBack() { return this.isNotifyBack; }
-    public set IsNotifyBack(newValue: boolean) { if (this.isNotifyBack != newValue) { this.isNotifyBack = newValue; this.MarkAsDirty("IsNotifyBack"); } }
-       
-	 
 
     public OldEntityPM: AutomationResultEmailRecipientPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -75,7 +62,6 @@ export class AutomationResultEmailRecipientPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AutomationResultEmailRecipient");
            
         }
-	 }
     }
     private MyClone: AutomationResultEmailRecipientPM;
 

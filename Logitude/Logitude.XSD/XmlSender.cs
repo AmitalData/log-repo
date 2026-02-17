@@ -5,10 +5,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -65,25 +65,17 @@ namespace Logitude.XSD
         }
         private void CheckDemoTenantData()
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            if (Tenant == 65)
             {
-                SettingRepository mySettingRepository = new SettingRepository();
-                var isDemoTenant = mySettingRepository.IsDemoTenant(Tenant.ToString());
+                this.IsDemoTenant = true;
+            }
 
-                if (isDemoTenant)
+            else if (XmlTypeCode == "FWB" || XmlTypeCode == "FHL")
+            {
+                if (IsEAWBOnlyDemo)
                 {
                     this.IsDemoTenant = true;
                 }
-
-                else if (XmlTypeCode == "FWB" || XmlTypeCode == "FHL")
-                {
-                    if (IsEAWBOnlyDemo)
-                    {
-                        this.IsDemoTenant = true;
-                    }
-                }
-
-                scope.Complete();
             }
         }
         private void GetLoggedContactData()
@@ -300,7 +292,7 @@ namespace Logitude.XSD
                         //}
 
                         DbQueueService queueservice = new DbQueueService(queueName, Tenant);
-                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } }, Tenant);
+                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
                     }
 
                     catch (Exception ex)

@@ -6,7 +6,7 @@ import {EntityArgs} from  '../../../../Infrastructure/DataContracts/EntityArgs';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AnalyzeQueueErrorsTabComponent.html',
 })
 

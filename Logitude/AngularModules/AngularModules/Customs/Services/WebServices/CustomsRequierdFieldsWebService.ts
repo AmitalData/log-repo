@@ -1,7 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -13,17 +12,17 @@ import {RequierdFieldObject} from '../../../CustomsModules/CustomsMaintenance/Co
 @Injectable()
 
 export class CustomsRequierdFieldsWebService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequierdFields';
 
     }
 
     GetSomeObjectTables() {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -34,39 +33,15 @@ export class CustomsRequierdFieldsWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetSomeObjectTables/", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSomeObjectTables/", {
+                    headers: authHeader
+                }).map(response => {
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     //serviceResponse = response;
-                    serviceResponse.Result = response;
+                    serviceResponse.Result = response.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-
-        }
-
-        );
-    }
-
-    GetSomeExportObjectTables() {
-
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.get(this._apiUrl + "/GetSomeExportObjectTables/", ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    //serviceResponse = response;
-                    serviceResponse.Result = response;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -75,7 +50,7 @@ export class CustomsRequierdFieldsWebService {
 
     GetCustomsRequiredFieldListsByObjectTable(objectTableId: string) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -86,13 +61,15 @@ export class CustomsRequierdFieldsWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetCustomsRequiredFieldListsByObjectTable/?objectTableId=" + objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetCustomsRequiredFieldListsByObjectTable/?objectTableId=" + objectTableId, {
+                headers: authHeader
+            }).map(response => {
 
                 var srv = new CustomsRequiredFieldListService();
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
 
                 if (serviceResponse.Result) {
@@ -107,48 +84,7 @@ export class CustomsRequierdFieldsWebService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-
-        }
-
-        );
-    }
-
-    GetExportCustomsRequiredFieldListsByObjectTable(objectTableId: string) {
-
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.get(this._apiUrl + "/GetExportCustomsRequiredFieldListsByObjectTable/?objectTableId=" + objectTableId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var srv = new CustomsRequiredFieldListService();
-
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-
-                serviceResponse.Result = response;
-                var _mappedListsArray: Array<CustomsRequiredFieldList> = [];
-
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: CustomsRequiredFieldList;
-                        entity = srv.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -156,7 +92,7 @@ export class CustomsRequierdFieldsWebService {
     }
 
     PostRequiredFields(fields: RequierdFieldObject[]) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -169,13 +105,13 @@ export class CustomsRequierdFieldsWebService {
             return this._http.post(
                 this._apiUrl + '/PostRequiredFields/',
                 JSON.stringify(fields),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );

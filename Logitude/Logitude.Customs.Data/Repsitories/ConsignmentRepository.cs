@@ -30,13 +30,7 @@ namespace Logitude.Customs.Data.Repsitories
         public Consignment GetConsignmentByIdentifiers(string cargoTypeCode, string manifestNumber, string secondCargoID, int tenant)
         {
             return (from a in context.Consignments
-                    where a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower() & a.SecondCargoID.ToLower() == secondCargoID.ToLower()
-                    select a).ToList().FirstOrDefault();
-        }
-        public Consignment GetConsignmentByKeys(int tenant,string cargoTypeCode, string manifestNumber, string secondCargoID,string thirdCargoID)
-        {
-            return (from a in context.Consignments
-                    where a.Tenant== tenant && a.CargoTypeCode.ToLower() == cargoTypeCode.ToLower() & a.ManifestNumber.ToLower() == manifestNumber.ToLower() & a.SecondCargoID.ToLower() == secondCargoID.ToLower() && a.ThirdCargoID.ToLower() == thirdCargoID.ToLower()
+                    where a.CargoTypeCode == cargoTypeCode & a.ManifestNumber == manifestNumber & a.SecondCargoID == secondCargoID
                     select a).ToList().FirstOrDefault();
         }
         public int? GetMaxCounterKey(string declarationId, int tenant)
@@ -85,57 +79,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as DbContextBase)
                 .DeleteWhere<Consignment>(rec => rec.DeclarationId == entityKeyFields.Id);
         }
-        public string GetManfiestNumberByDecId(string declarationId, int tenant)
-        {
-            return (from a in context.Consignments
-                    where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select a.ManifestNumber).FirstOrDefault();
-        }
 
-
-        public List<Consignment> GetConsgnmentByDeclarationIdForDataMapping(string declarationId, int tenant)
-        {
-            return (from a in context.Consignments
-                    where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select new                    
-                    {
-                        ManifestNumber = a.ManifestNumber,
-                        SecondCargoID=a.SecondCargoID,
-                        ThirdCargoID=a.ThirdCargoID,
-                    }).ToList().Select(x=>new Consignment { ManifestNumber = x.ManifestNumber, SecondCargoID = x.SecondCargoID, ThirdCargoID = x.ThirdCargoID }).ToList();
-        }
-
-
-
-
-        public List<Consignment> GetAllByExportStorageID(int tenant,string ExportStorageID)
-        {
-            return (from a in context.Consignments
-                   where a.Tenant == tenant && a.ExportStoragesId == ExportStorageID
-                   select a).ToList();
-
-        }
-        public List<Consignment> GetConsgnmentByDeclarationId(string declarationId, int tenant)
-        {
-            return (from a in context.Consignments
-                    where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select a).ToList();
-        }
-
-        public IQueryable<Consignment> GetConsigmentByExportContainerizationID(string exportContainerizationID, int tenant)
-        { 
-            var query = (from b in context.Consignments
-                         where b.ExportContainerizationID == exportContainerizationID && b.Tenant == tenant
-                         select b); 
-
-            return query;
-
-                
-        }
-
-
-
-  
         //partial void onRemove(Consignment entity)
         //{
         //    //entity.DeclarationId
@@ -157,13 +101,7 @@ namespace Logitude.Customs.Data.Repsitories
         //    }
         //    throw new Exception("preventing Clear Consignments - Validation (CALL#291407)");
         //}
-
-
-
-    }
-
-
-
+   }
 
 }
    

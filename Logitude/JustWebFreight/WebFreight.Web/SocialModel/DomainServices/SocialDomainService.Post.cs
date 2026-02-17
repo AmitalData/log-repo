@@ -5,7 +5,7 @@ using Logitude.Social.Data;
 using Logitude.Social.Data.EntityListQueryServices;
 using Logitude.Social.Data.EntityLists;
 using Microsoft.ServiceBus.Messaging;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;

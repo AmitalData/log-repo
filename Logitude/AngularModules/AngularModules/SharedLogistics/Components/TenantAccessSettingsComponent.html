@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .MessageText {
         white-space: normal;
         word-wrap: break-word;
@@ -19,7 +19,7 @@
             <table>
                 <tr>
                     <td style="width:50px">
-                        <CheckBox (Checked)="CustomerTenantShareCustomsFile = $event" [IsChecked]="CustomerTenantShareCustomsFile" [IsEnabled]="IsCustomerTenantShareEnable"></CheckBox>
+                        <CheckBox (Checked)="IsCustomerTenantShare = $event" [IsChecked]="IsCustomerTenantShare" [IsEnabled]="IsCustomerTenantShareEnable"></CheckBox>
                     </td>
 
                     <td class="Label" style="font-size:medium">

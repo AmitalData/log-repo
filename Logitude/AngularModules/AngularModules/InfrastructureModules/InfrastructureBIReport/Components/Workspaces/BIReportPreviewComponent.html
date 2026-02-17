@@ -87,7 +87,7 @@
                             </tr>
 
                             <!-- Back Button + Title -->
-                            <tr *ngIf="!IsScheduler" style="height: 1px;">
+                            <tr style="height: 1px;">
                                 <td>
                                     <table>
                                         <tr>
@@ -113,7 +113,7 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="width:20px;float:left;" *ngIf="HasRunFeature">
+                                            <td style="width:20px;float:left;">
                                                 <IconButton [Name]="'Edit'" [Title]="'Edit report'" [disabled]="IsNewEntity" (click)="EditBIReportClicked()"></IconButton>
                                             </td>
 
@@ -129,14 +129,8 @@
                                 <td></td>
                             </tr>
 
-                            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-                                <td>
-                                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
-                                </td>
-                            </tr>
-
                             <!-- Filters -->
-                            <tr *ngIf="SelectedFiltersDataSource && HasRunFeature" style="height: 1px;">
+                            <tr *ngIf="SelectedFiltersDataSource" style="height: 1px;">
                                 <td>
                                     <table class="BodyBackground">
                                         <tr>
@@ -152,14 +146,14 @@
                                                                 </td>
                                                             </tr>
                                                             <!--<tr>
-                                        <td>
-                                            <div style="float:right;width:150px;margin-right: -12px;">
-                                                <LogCheckBox [ObjectFieldName]="'ShowStaticFilters'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
-                                                <label style="margin-right:-10px;">Show Fixed Filters</label>
-
-                                            </div>
-                                        </td>
-                                    </tr>-->
+                                                                <td>
+                                                                    <div style="float:right;width:150px;margin-right: -12px;">
+                                                                        <LogCheckBox [ObjectFieldName]="'ShowStaticFilters'" [DataContext]="DataContext" style="float:right;"></LogCheckBox>
+                                                                        <label style="margin-right:-10px;">Show Fixed Filters</label>
+                                                                        
+                                                                    </div>
+                                                                </td>
+                                                            </tr>-->
                                                         </table>
                                                     </div>
                                                 </div>
@@ -171,7 +165,7 @@
                             </tr>
 
 
-                            <tr style="height: 1px;" *ngIf="HasRunFeature">
+                            <tr style="height: 1px;">
                                 <td style="display:block;border-bottom:1px solid gray;height:30px;background-color:#D1D6D8">
                                     <table>
                                         <tr style="height: 2px;">
@@ -184,124 +178,19 @@
                                                 <div></div>
                                             </td>
 
-                                            <!--<td style="width: 130px;">
-                        <button [disabled]="IsNewEntity || HasValidationError" class="Button" style="width:130px;float:left;" (click)="ExportToExcelClicked()">
-                            <img style="margin-left:2px;margin-right:2px;" class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" />
-                            <span style="line-height: 19px;margin-left:2px;margin-right:2px;">Download Excel</span>
-                        </button>
-                    </td>-->
-
-
-                                            <td [hidden]="!HasDownloadFeature" style="width: 95px;">
-                                                <div style="vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
-                                                    <div sstyle="background-color:#D1D6D8">
-
-                                                        <table class="LeftCenter">
-                                                            <tr>
-                                                                <td style="width:5px">
-                                                                    <div style="width:5px"></div>
-                                                                </td>
-
-                                                                <!--<td style="width:20px">
-                                            <img style="left:0" title="Export To Excel" src="./Images/Buttons/excelicon.png" />
-                                        </td>-->
-
-
-                                                                <td>
-                                                                    <span style="line-height: 19px;margin-left:2px;margin-right:2px;">Download</span>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-
-                                                                <td style="width:10px">
-
-
-                                                                    <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
-                                                                    <div style="float:right;left:-65px;width:140px" class="ToggleButtonMenu">
-
-                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportButtonClicked('Excel')">
-                                                                            <div>Excel File</div>
-                                                                        </button>
-
-
-                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportToExcelAdvancedButtonClick()">
-                                                                            <div>Excel File (Advanced)</div>
-                                                                        </button>
-
-                                                                        <button [disabled]="IsNewEntity || HasValidationError" (click)="ExportButtonClicked('Pdf')">
-                                                                            <div>Pdf File</div>
-                                                                        </button>
-                                                                    </div>
-
-                                                                </td>
-                                                                <td style="width:5px">
-                                                                    <div style="width:5px"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-
-
-
-
-
-                                                    </div>
-
-
-
-
-
-
-                                                </div>
+                                            <td style="width: 130px;">
+                                                <button [disabled]="IsNewEntity || HasValidationError" class="Button" style="width:130px;float:left;" (click)="ExportToExcelClicked()">
+                                                    <img style="margin-left:2px;margin-right:2px;" class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png"/>
+                                                    <span style="line-height: 19px;margin-left:2px;margin-right:2px;">Download Excel</span>
+                                                </button>
                                             </td>
 
-                                            <td [hidden]="!IsScheduler" style="width: 5px;">
-                                                <div></div>
-                                            </td>
-                                            <td [hidden]="!IsScheduler" style="width: 338px">
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td class="CellStertched" style="width:80px;vertical-align:central">
-                                                                <p style="font-size:12px;color:#6E7172">Template</p>
-                                                            </td>
-                                                            
-                                                            <td style="vertical-align:central;width:203px">
-                                                                <div style="text-align:left;width:203px;vertical-align:central">
-                                                                    <ComboBox [CyData]="'DocumentTypeTemplateList'" style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateSelected=$event" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="DocumentTypeTemplateSelected" [Binding]="'Description'"></ComboBox>
-                                                                </div>
-                                                            </td>
-
-
-
-                                                            <td class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;vertical-align:central">
-                                                                <div class="EditButton" (click)="EditDocumentTemplate(DocumentTypeTemplateSelected)" style="display:inline;width:18px;">
-                                                                    <IconButton [disabled]="!IsEnableEditTemplate" [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
-                                                                </div>
-
-                                                            </td>
-
-                                                            <td class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central">
-
-                                                                <IconButton [disabled]="!IsEnableAddTemplate" [Name]="'Add'" [IsSmall]="true" (click)="AddDocumentTypeTemplate()"></IconButton>
-
-                                                            </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-
-                                            </td>
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
 
                                             <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
-                                                <button id="{{'RunBIReport' | IdGeneratorAsyncPipe | async}}" [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">{{IsScheduler ? 'Preview' : 'Run'}} Report</button>
+                                                <button [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">Run Report</button>
                                             </td>
 
                                             <td style="width: 5px;">
@@ -323,24 +212,17 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="float:right;width:260px; ">
+                                            <td style="float:right;width:240px; ">
                                                 <table>
                                                     <tr>
-                                                        <td [hidden]="!IsScheduler" style="width: 100px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td [hidden]="!CanScheduler" style="width: 25px;">
-                                                            <button class="Button" style="width:25px;float:left;" (click)="onBIReportSchedulerClick()"><img class="CenterCenter" style="width: 22px;height: 22px; " title="Report Scheduler" src="./Images/ReportScheduler.png" /></button>
-                                                        </td>
                                                         <td [hidden]="!HasCopyFeature" style="width: 25px;">
                                                             <button class="Button" style="width:25px;float:left;" (click)="onCopyBIReportClick()"><img class="CenterCenter" title="Copy" src="./Images/Buttons/copy.report.png" /></button>
                                                         </td>
-                                                        <td style="width: 25px;" [attr.title]="!hasFixedFilter ? filterButtonTitle : ''">
-                                                            <button *ngIf="ShowStaticFilters == true" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = false"><img style="width:23px;" class="CenterCenter" [attr.title]="ShowStaticFilters ? 'Hide fixed filters' : ''" src="./Images/HideFilters.png" /></button>
-                                                            <button *ngIf="ShowStaticFilters == false" [disabled]="!hasFixedFilter" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = true"><img style="width:23px;" class="CenterCenter" [attr.title]="!ShowStaticFilters ? 'Show fixed filters' : ''" src="./Images/ShowFilters.png" /></button>
+                                                        <td style="width: 25px;">
+                                                            <button *ngIf="ShowStaticFilters == true" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = false"><img style="width:23px;" class="CenterCenter" title="Hide fixed filters" src="./Images/HideFilters.png" /></button>
+                                                            <button *ngIf="ShowStaticFilters == false" class="Button" style="width:25px;float:left;" (click)="ShowStaticFilters = true"><img style="width:23px;" class="CenterCenter" title="Show fixed filters" src="./Images/ShowFilters.png" /></button>
                                                         </td>
-                                                        <td [hidden]="IsScheduler" style="width: 25px;">
+                                                        <td style="width: 25px;">
                                                             <button class="Button" style="width:25px;float:left;" (click)="onBIReportColumnsClick()"><img style="width:18px;" class="CenterCenter" title="Show/Hide/Reorder Column(s)" src="./Images/Columns.png" /></button>
                                                             <!--<img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="'LeftCenter'" />-->
                                                         </td>
@@ -354,21 +236,21 @@
                                                             <div></div>
                                                         </td>
 
-                                                        <td [hidden]="IsScheduler" style="width: 57px;">
-                                                            <button id="{{'EditQueryBuilder' | IdGeneratorAsyncPipe | async}}" [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                                        <td style="width: 57px;">
+                                                            <button [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
                                                         </td>
 
-                                                        <td *ngIf="!IsScheduler" style="width: 2px;">
+                                                        <td style="width: 2px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td *ngIf="!IsScheduler" style="width: 55px;">
-                                                            <button *ngIf="!HasChanges" class="Button" style="width:60px" (click)="SaveBIReport()">
-                                                                <img [ngStyle]="{'margin-left': '2px'}" style="width:13px" src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
+                                                        <td style="width: 55px;">
+                                                            <button *ngIf="!HasChanges" class="Button" (click)="SaveBIReport()">
+                                                                <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
                                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                                             </button>
-                                                            <button *ngIf="HasChanges" class="EntityChangesButton" style="width:60px" (click)="SaveBIReport()">
-                                                                <img src="./Images/Buttons/Save.Red.png" style="width:13px" [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
+                                                            <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()">
+                                                                <img src="./Images/Buttons/Save.Red.png" [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
                                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                                             </button>
                                                         </td>
@@ -390,7 +272,7 @@
                                 </td>
                             </tr>
 
-                            <tr *ngIf="HasRunFeature">
+                            <tr>
                                 <td>
                                     <!--    [multiSortKey]="'ctrl'" [columnTypes]="columnTypes" [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" [enableCellChangeFlash]="true" -->
                                     <div class="MediaFill">
@@ -405,7 +287,6 @@
                                                          [rowSelection]="'multiple'"
                                                          [multiSortKey]="'ctrl'"
                                                          [accentedSort]="'true'"
-                                                         [suppressFieldDotNotation]="true"
                                                          (gridReady)="onGridReady($event)"
                                                          (sortChanged)="onSortChanged($event)"
                                                          (columnResized)="onColumnResized($event)"
@@ -413,10 +294,6 @@
                                         </ag-grid-angular>
                                     </div>
                                 </td>
-                            </tr>
-
-                            <tr *ngIf="!HasRunFeature">
-                                <td></td>
                             </tr>
 
                             <tr style="height: 20px;">
@@ -429,7 +306,7 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </div>    
 </div>
 
 <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>

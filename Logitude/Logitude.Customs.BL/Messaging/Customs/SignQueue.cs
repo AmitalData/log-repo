@@ -18,7 +18,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Unifreight.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.Messaging.Customs
 {
@@ -74,10 +73,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     if (q.StartAt.HasValue)
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("In the middle of sign ?? ");
+                        Debug.Write("In the middle of sign ?? ");
                         if (DateTime.Now.Subtract(q.StartAt.Value) < TimeSpan.FromMinutes(_SignQueueTimeOutInMints))
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("less 4 min , Waiting ...");
+                            Debug.Write("less 4 min , Waiting ...");
                             return;
                         }
                     }
@@ -91,21 +90,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     MustSignByPersonalID = mustSignByPersonalID,
                     SignatureBy = SignQueueBy //GetSignatureBy(InterfaceTypeCode, SignQueueBy) // exchange rate 
                 };
-                if (
-                    CustomsSettingQueryService.GetSettingByTenant(tenant).CompanyType == "B" //Courier
-                    &&
-                    newQue.SignatureBy == SignQueueByType.SignQueueByPersonId
-                    )
-                {
-                    string availableSignServer = GetAvailableSignServer(newQue.Tenant, newQue.SignatureBy, newQue.MustSignByPersonalID);
-                    if (!string.IsNullOrWhiteSpace(availableSignServer))
-                    {
-                        newQue.MustSignByPersonalID = SignCertificateClass.GetPersonID(availableSignServer);
-                    }
-
-                }
-                
-
                 _MyQueue.Add(newQue);
                 switch (newQue.SignatureBy)
                 {
@@ -150,14 +134,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
             try
             {
 
-                
+
                 InterfaceTypeCode = CustomsRequestsSheetId = "";
                 currTenant = null;
                 var PersonId = SignCertificateClass.Get(CurrentSignCertificate).PersonId;
                 var customsAgentId = SignCertificateClass.Get(CurrentSignCertificate).CustomsAgentId;
-
-                var courierPersonalIdDefault = GetCourierPersonalIdDefault(GetTenantBy(customsAgentId));
-
                 lock ((this._MyQueue as ICollection).SyncRoot)
                 {
 
@@ -201,14 +182,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
         }
 
-        private int GetTenantBy(string customsAgentId)
-        {
-            var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
-            CustomsSettingPM customsSettingPM = customsSettingQueryService.GetSettingPMByCustomsAgentId(customsAgentId);
-            return customsSettingPM?.Tenant ?? 0;
-        }
-
-        public void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn)
+        private void UpsertMySubscribeSignServerList(string CurrentSignCertificate, bool isPersonalSignOn, bool isServerSignOn)
         {
             try
             {
@@ -258,8 +232,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 lock ((this._MyQueue as ICollection).SyncRoot)
                 {
                     var mySignServer = _MySubscribeSignServerStatusList
-                        .Where(rec => (rec.MachineName ?? "").Equals(myReqSignData.MachineName, StringComparison.OrdinalIgnoreCase))
-                        .Where(rec => (rec.UserName ?? "").Equals(myReqSignData.UserName, StringComparison.OrdinalIgnoreCase))
+                        .Where(rec => rec.MachineName.Equals(myReqSignData.MachineName, StringComparison.OrdinalIgnoreCase))
+                        .Where(rec => rec.UserName.Equals(myReqSignData.UserName, StringComparison.OrdinalIgnoreCase))
                     .FirstOrDefault();
                     if (mySignServer != null)
                     {
@@ -387,15 +361,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                         }
                     }
 
-                    var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
+                    var customsSettingQueryService = new CustomsSettingQueryService(0);
                     var listSetting = customsSettingQueryService.GetAll()
                         .Where(rec => !string.IsNullOrWhiteSpace(rec.CustomsAgentId) && !string.IsNullOrWhiteSpace(rec.IIGServiceAddress))
-                        .Where(rec => rec.Tenant > 0)
-                        
-                        .Where(rec => rec.IsConnectedToUniFreight)// export pilot multi tenant => use queue db 
-                        ;
-                    ;
-
+                        .Where(rec => rec.Tenant > 0);
                     foreach (var item in listSetting)
                     {
                         JustRefreshDb(item.Tenant);
@@ -504,7 +473,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             //userPersonID = "049028392";//yaron c;
             return userPersonID;
         }
-        public static List<int> GetTenantListOfPersonID(string userPersonID, int seedDbTenant)
+        public List<int> GetTenantListOfPersonID(string userPersonID, int seedDbTenant)
         {
             var userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(seedDbTenant);
             List<int> myPersonTenantList = userRep.GetPersonTenantList(userPersonID) ?? new List<int>();
@@ -539,23 +508,23 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             var mySignCertificateClass = SignCertificateClass.Get(CurrentSignCertificate);
 
-            var userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(SignQueue.CurrentTenant);
+            var userRep = new Simplog.Data.CommonDataModel.Repositories.UserRepository(0);
             var intLIst = userRep.GetPersonTenantList(mySignCertificateClass.PersonId);
             var tenantCommaDelimitedList = "";
             if (intLIst.Count < 1) return tenantCommaDelimitedList;
             tenantCommaDelimitedList = string.Join(",", intLIst.Select(t => t.ToString()));
             return tenantCommaDelimitedList;
         }
-        public static string GetCustomsAgentIdFromTenant(int tenant)
+        private string GetCustomsAgentIdFromTenant(int tenant)
         {
-            var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
-            var pm = customsSettingQueryService.GetSettingByTenantN(tenant, false);
+            var customsSettingQueryService = new CustomsSettingQueryService(0);
+            var pm = customsSettingQueryService.GetSettingByTenantN(tenant);
             return pm.CustomsAgentId;
         }
         public static string GetCompanyTenant(string CurrentSignCertificate)
         {
             var mySignCertificateClass = SignCertificateClass.Get(CurrentSignCertificate);
-            var customsSettingQueryService = new CustomsSettingQueryService(SignQueue.CurrentTenant);
+            var customsSettingQueryService = new CustomsSettingQueryService(0);
             var pm = customsSettingQueryService.GetSettingPMByCustomsAgentId(mySignCertificateClass.CustomsAgentId);
             if (pm == null || String.IsNullOrWhiteSpace(pm.CustomsAgentId))
             {
@@ -569,7 +538,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             , string personId
             )
         {
-       
+
             SubscribeSignServer availableSignServer = null;
             var copyOfMySubscribeSignServerList = GetCopyOfMySubscribeSignServerList(tenant);
             if (copyOfMySubscribeSignServerList == null)
@@ -583,32 +552,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
                     availableSignServer = copyOfMySubscribeSignServerList
                     .FirstOrDefault(rec =>
-                        //rec.CompanyTenant == tenant.ToString() && rec.IsCompanySignOn == true);
-                        rec.MySignCertificateClass.CustomsAgentId == GetCustomsAgentIdFromTenant(tenant)
-                        && rec.IsCompanySignOn == true);
+                        rec.CompanyTenant == tenant.ToString() && rec.IsCompanySignOn == true);
                     break;
                 case SignQueueByType.SignQueueByPersonId:
-
-                    var courierPersonalIdDefault = GetCourierPersonalIdDefault(tenant);
                     if (String.IsNullOrWhiteSpace(personId))
                     {
-                        if (String.IsNullOrWhiteSpace(courierPersonalIdDefault))
-                        {
-                            return null;
-                        }    
+                        return null;
                     }
                     availableSignServer = copyOfMySubscribeSignServerList
                     .FirstOrDefault(rec => rec.IsPersonalSignOn == true &&
                         rec.MySignCertificateClass
                         .PersonId.Equals(personId, StringComparison.OrdinalIgnoreCase));
-                    if (availableSignServer == null)
-                    {
-                        
-                        availableSignServer = copyOfMySubscribeSignServerList
-                    .FirstOrDefault(rec => rec.IsPersonalSignOn == true &&
-                        rec.MySignCertificateClass
-                        .PersonId.Equals(courierPersonalIdDefault, StringComparison.OrdinalIgnoreCase));
-                    }
                     break;
                 default:
                     throw new Exception("GetAvailableSignServer() while SignatureBy Not P/C");
@@ -620,19 +574,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 return null;
             }
             return availableSignServer.SignCertificate;
-        }
-
-        public static string GetCourierPersonalIdDefault(int tenant)
-        {
-
-            if (CustomsSettingQueryService.GetSettingByTenant(tenant).CompanyType == "B")//Courier)
-            {
-                DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-
-                string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_PERSONID", "NON", "NON", tenant);
-                return defValue;
-            }
-            return null;
         }
 
         public List<SignQueuePM> GetSignQueueList(int tenant)
@@ -663,12 +604,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             List<SubscribeSignServer> myCopy = null;
 
-
             lock ((this._MyQueue as ICollection).SyncRoot)
             {
                 myCopy = _MySubscribeSignServerList
-                    .Where(rec => rec.CompanyTenant == tenant.ToString() || rec.TenantListFromPersonID.Contains(tenant)
-                      || rec.MySignCertificateClass.CustomsAgentId  == GetCustomsAgentIdFromTenant(tenant)) //multi tenant 
+                    .Where(rec => rec.CompanyTenant == tenant.ToString() || rec.TenantListFromPersonID.Contains(tenant))
                     .ToList();
                 myCopy = myCopy.Where(rec => DateTime.Now.Subtract(rec.LastAccessedAt) < TimeSpan.FromMinutes(SubscribeSignServerTimeOutInMinutes))
                     .ToList(); ;
@@ -712,8 +651,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
         public static string CustomRequestSign { get { return "CustomRequestSign"; } }
 
         public static string CustomRequestSignPersonal { get { return "CustomRequestSignPersonal"; } }
-        
-        public static int CurrentTenant = SettingUtil.GetCurrentTenant();
     }
 
 

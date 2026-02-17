@@ -1,17 +1,19 @@
 using System.Data.Entity;
-using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Data.Entity.Core.Objects;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+
+//using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel
 {
     public interface IWebFreightContext : IContext
     {
 
-        IDbSet<RuleUpdateHistory> RuleUpdateHistories { get; }
+
         IDbSet<CounterLastNumber> CounterLastNumbers { get; }
         IDbSet<TransportMode> TransportModes { get; }
         IDbSet<Direction> Directions { get; }
@@ -24,18 +26,14 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<FieldDataType> FieldDataTypes { get; }
         IDbSet<Translation> Translations { get; }
         IDbSet<TranslationHeader> TranslationHeaders { get; }
-        DbSet<TextCode> TextCodes { get; }
+        IDbSet<TextCode> TextCodes { get; }
         IDbSet<ObjectTable> ObjectTables { get; }
-        DbSet<ObjectField> ObjectFieldsDbSet { get; }
-        IQueryable<ObjectField> ObjectFields { get; }
+        IDbSet<ObjectField> ObjectFields { get; }
         IDbSet<Screen> Screens { get; }
         IDbSet<ScreenField> ScreenFields { get; }
         IDbSet<TextCodeType> TextCodeTypes { get; }
         IDbSet<RatesTable> RatesTable { get; }
-        IDbSet<AdditionalCurrencyRate> AdditionalCurrencyRates { get; }
-        IDbSet<CurrencyRate> CurrencyRates { get; }
         IDbSet<EventType> EventType { get; }
-        IDbSet<EventRemark> EventRemarks { get; }
         IDbSet<TraceEvent> TraceEvent { get; }
         IDbSet<Rank> Ranks { get; }
         IDbSet<Document> Documents { get; }
@@ -52,7 +50,6 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<GeneralLock> GeneralLocks { get; }
         IDbSet<IATACode> IATACodes { get; }
         IDbSet<ChargesGroup> ChargesGroups { get; }
-        IDbSet<QuoteChargesGroup> QuoteChargesGroups { get; }
         IDbSet<VolumeUnit> VolumeUnits { get; }
         IDbSet<EntityStatus> EntityStatus { get; }
         IDbSet<DescriptionOfGoods> DescriptionOfGoods { get; }
@@ -75,7 +72,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<ObjectFieldModification> ObjectFieldModifications { get; }
         IDbSet<ScreenModification> ScreenModifications { get; }
         IDbSet<ImageDetail> ImageDetails { get; }
-        IDbSet<ImageLibrary> ImageLibraries { get; }
+        IDbSet<ImageLibrary> ImageLibrarys { get; }
         IDbSet<PermissionType> PermissionTypes { get; }
         IDbSet<ObjectTableType> ObjectTableTypes { get; }
         IDbSet<RuleConditionField> RuleConditionFields { get; }
@@ -108,25 +105,8 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<SharedUserQuery> SharedUserQueries { get; }
         IDbSet<DWCategories> DWCategories { get; }
         IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
+        //IDbSet<SchedulerLogs> SchedulerLogs { get; }
         IDbSet<SchedulerProcedure> SchedulerProcedures { get; }
-        IDbSet<WorkerRoleName> WorkerRoleNames { get; }
-
-        IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs { get; }
-        IDbSet<EntityStatusType> EntityStatusTypes { get; }
-        IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs { get; }
-        IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields { get; }
-        IDbSet<ScreenSection> ScreenSections { get; }
-        IDbSet<TabModification> TabsModifications { get; }
-        IDbSet<CustomChildObject> CustomChildObjects { get; }
-        IDbSet<DataCustomObject> DataCustomObjects { get; }
-        IDbSet<ReferenceCustomObject> ReferenceCustomObjects { get; }
-        IDbSet<DeploymentPackage> DeploymentPackages { get; }
-        IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions { get; }
-        IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
-        IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs { get; }
-        IDbSet<SearchIndex> SearchIndexes { get; }
-        IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories { get; }
-        DbContextTransaction GetSnapshotTransaction();
 
         void SetAsModified(object entity);
         void DetectChanges();

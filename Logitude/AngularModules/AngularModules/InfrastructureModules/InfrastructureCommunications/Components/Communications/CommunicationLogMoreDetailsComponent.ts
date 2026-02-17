@@ -1,12 +1,12 @@
-declare var window: any;
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+﻿declare var window: any;
+import { Directive, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'communication-log-more-details',
     templateUrl: './CommunicationLogMoreDetailsComponent.html',
@@ -17,26 +17,14 @@ export class CommunicationLogMoreDetailsComponent
 {
     MyTabs: LogTab[] = [];
     selectedTab: LogTab;
-    resurceReady: boolean = false;
-
     public get SelectedTab() { return this.selectedTab; }
     public set SelectedTab(tab: LogTab) {
         this.selectedTab = tab;
     }
 
-    constructor(
-        private _entityResourceService: EntityResourceService,
-        private cd: ChangeDetectorRef,
-    ) {
-        this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response: any) => {
-            this.resurceReady = true;
-            this.cd.detectChanges()            
-        });
-     }
-
     ngOnInit() {
+        
     }
-
     OnSelectedChanged(tab: LogTab) {
         if (!AppTool.IsNullOrEmpty(tab)) {
             this.SelectedTab = tab;
@@ -44,6 +32,7 @@ export class CommunicationLogMoreDetailsComponent
         }
     }
    
+    
     SetWindowArgs(CustomsRequestsSheetList: any) {
         //alert();
         var tab = new LogTab();

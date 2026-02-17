@@ -3,7 +3,7 @@ import {UserExtendedList} from '../../../Common/Services/ExtendedLists/UserExten
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ColumnCheckBoxComponent.html',
 })
 
@@ -16,32 +16,20 @@ export class ColumnCheckBoxComponent {
     public rowData: UserExtendedList;
     public fieldName: any;
     public packageCode: string;
-    public packageName: string;
     public columnIndex: string;
     public IsEnabled: boolean = true;
-    public LicenseManagementTitle = "";
-    public mainAdditionalPackageApplied = "false";
-
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName.split(",");
         this.packageCode = this.fieldName[0];
         this.columnIndex = this.fieldName[1];
-        this.packageName = this.fieldName[2];
-        this.mainAdditionalPackageApplied = this.fieldName[3];
-        this.SetIsChecked();
-        this.SetLicenseManagementTitle();
-    
+        
+        this.SetIsChecked();   
+
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
             this.CD.detectChanges();
         }
-    }
-
-    private SetLicenseManagementTitle() {
-        this.LicenseManagementTitle = "";
-        if (this.mainAdditionalPackageApplied == "true")
-            this.LicenseManagementTitle = "To remove the main package (" + this.packageName + ") from a user, please make sure the 'Additional Packages Only' field is checked for that user.";
     }
 
     private SetIsChecked() {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -29,8 +29,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
             this.Property(t => t.Description)
                 .IsRequired()
-                .HasMaxLength(80)
-                .IsUnicode(true);
+                .HasMaxLength(40)
+                .IsUnicode(false);
 
             this.Property(t => t.LastUpdatedByUserId)
                 .HasMaxLength(15)
@@ -61,8 +61,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsEnabledForCustomers)
                 .IsRequired();
 
-            this.Property(t => t.IsSystem)
-                .IsRequired();
+
 
             this.Property(t => t.InternalRemarks)
                .HasMaxLength(500)
@@ -84,70 +83,16 @@ namespace Simplog.Data.CommonDataModel.Mapping
            .HasMaxLength(500)
            .IsUnicode(true);
 
-
-            this.Property(t => t.DefultAttachmentsXML)
-                .IsMaxLength()
-                .IsUnicode(true);
-
-
-            this.Property(t => t.To)
-                .HasMaxLength(4000)
-                .IsUnicode(false);
-
-            this.Property(t => t.AutomationId)
-                 .HasMaxLength(15)
-                .IsUnicode(false);
-
-            this.Property(t => t.AttachedExternalDocumentsIds) 
-               .HasMaxLength(300)
-               .IsUnicode(false);
-
-            this.Property(t => t.EntityId)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-            this.Property(t => t.ObjectTableId)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-
-
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.CC)
-                .HasMaxLength(500)
-                .IsUnicode(true);
-
-                this.Property(t => t.BCC)
-             .HasMaxLength(500)
-             .IsUnicode(true);
-
-                this.Property(t => t.To)
-                 .HasMaxLength(500)
-                 .IsUnicode(true);
-
-
-            }
-            else
-            {
-                this.Property(t => t.CC)
+            this.Property(t => t.CC)
                 .HasMaxLength(4000)
                 .IsUnicode(true);
-                this.Property(t => t.BCC)
-             .HasMaxLength(4000)
-             .IsUnicode(true);
-
-             this.Property(t => t.To)
-             .HasMaxLength(4000)
-             .IsUnicode(true);
-
-
-            }
 
 
 
-
-           
+            this.Property(t => t.BCC)
+                .HasMaxLength(4000)
+                .IsUnicode(true);
+            
 
 
             //OriginalTemplateId 
@@ -193,14 +138,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CC).HasColumnName("CC");
             this.Property(t => t.BCC).HasColumnName("BCC");
 
-            this.Property(t => t.DefultAttachmentsXML).HasColumnName("DefultAttachmentsXML");
-            this.Property(t => t.To).HasColumnName("To");
-
-            this.Property(t => t.AutomationId).HasColumnName("AutomationId");
-
-            this.Property(t => t.AttachedExternalDocumentsIds).HasColumnName("AttachedExternalDocumentsIds");
-            this.Property(t => t.IsSystem).HasColumnName("IsSystem");
-
+            
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
             if (dbms == "oracle")
             {
@@ -214,8 +153,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 
 
             }
-            this.Property(t => t.EntityId).HasColumnName("EntityId");
-            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
+
 
             // Relationships
             this.HasRequired(t => t.DocumentType)
@@ -230,13 +168,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.OriginalTemplate)
                 .WithMany()
                 .HasForeignKey(d => d.OriginalTemplateId);
-
-
-            this.HasOptional(t => t.Automation)
-                .WithMany()
-                .HasForeignKey(d => d.AutomationId);
-
-
 
         }
     }

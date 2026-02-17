@@ -14,16 +14,15 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.CRM.BL.EntityQueryServices;
-using Logitude.BL.Helpers;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {
@@ -159,8 +158,6 @@ namespace Logitude.CRM.BL.EntityDataMappings
                                   </t:Section>
                                 </t:RadDocument>";
 
-            string emailFooterMessage = SetEmailFooterMessage();
-
             entityPM.TicketFooter = @"<t:RadDocument xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation' xmlns:t='clr-namespace:Telerik.Windows.Documents.Model;assembly=Telerik.Windows.Documents' xmlns:s='clr-namespace:Telerik.Windows.Documents.Model.Styles;assembly=Telerik.Windows.Documents' xmlns:r='clr-namespace:Telerik.Windows.Documents.Model.Revisions;assembly=Telerik.Windows.Documents' xmlns:n='clr-namespace:Telerik.Windows.Documents.Model.Notes;assembly=Telerik.Windows.Documents' xmlns:th='clr-namespace:Telerik.Windows.Documents.Model.Themes;assembly=Telerik.Windows.Documents' version='1.2' LayoutMode='Flow' LineSpacing='1.15' LineSpacingType='Auto' ParagraphDefaultSpacingAfter='12' ParagraphDefaultSpacingBefore='0' SelectedBibliographicStyleName='\APA.XSL' StyleName='defaultDocumentStyle'>
                               <t:RadDocument.Captions>
                                 <t:CaptionDefinition IsDefault='True' IsLinkedToHeading='False' Label='Figure' LinkedHeadingLevel='0' NumberingFormat='Arabic' SeparatorType='Hyphen'/>
@@ -210,7 +207,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                                   <t:TableRow Height='20.4833221435547'>
                                     <t:TableCell Borders='0,Inherit,#FF000000,none,,' ColumnSpan='10' RowSpan='1' TextAlignment='Center' VerticalAlignment='Center'>
                                       <t:Paragraph Background='#FF98D0DE' TextAlignment='Center'>
-                                        <t:Span FontFamily='Lucida Sans Unicode' FontSize='11' Text='" + emailFooterMessage + @"'/>
+                                        <t:Span FontFamily='Lucida Sans Unicode' FontSize='11' Text='This email is service from Unifreight!'/>
                                       </t:Paragraph>
                                     </t:TableCell>
                                   </t:TableRow>
@@ -219,7 +216,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                               </t:Section>
                             </t:RadDocument>";
 
-            entityPM.TicketReplyto = this.GetReplyToEmail(entityPOCO.Tenant, entityPOCO.GuidId, entityPM.SupportMailboxId);
+            entityPM.TicketReplyto = this.GetReplyToEmail(entityPOCO.Tenant,entityPOCO.GuidId);
             entityPM.EntityNumber = entityPM.ShipmentNumber != null ? entityPM.ShipmentNumber : entityPM.QuoteNumber;
 
 
@@ -331,8 +328,8 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 if (severity != null)
                 {
                     entityPM.SeverityName = severity.Name;
-                    entityPM.SeverityCode = severity.Code;
-
+                    entityPM.SeverityCode= severity.Code;
+                 
                 }
             }
 
@@ -417,13 +414,6 @@ namespace Logitude.CRM.BL.EntityDataMappings
             }
         }
 
-        private string SetEmailFooterMessage()
-        {
-           
-            return  "This email is a service from Unifreight Cloud Generation!";
-
-        }
-
         private void BuildSearchFields(TicketPM entityPM, Ticket entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
@@ -463,7 +453,6 @@ namespace Logitude.CRM.BL.EntityDataMappings
                 MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentNumber);
             }
 
-            mySearchFields = AddCustomFieldsToSearchFields(entityPM, mySearchFields);
             if (mySearchFields.Length > 1000)
             {
                 mySearchFields = mySearchFields.Substring(0, 1000);
@@ -473,59 +462,26 @@ namespace Logitude.CRM.BL.EntityDataMappings
             entityPOCO.SearchFields = mySearchFields;
         }
 
-        private static string AddCustomFieldsToSearchFields(TicketPM entityPM, string mySearchFields)
-        {
-            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", entityPM.Tenant).Where(o => o.DataTypeCode == "Text" || o.DataTypeCode == "nText" || o.DataTypeCode == "PickList").ToList();
-            string searchFields = mySearchFields;
-
-            foreach (ObjectField field in customFields)
-            {
-                searchFields = AddCustomFieldValueToSearchFields(entityPM, searchFields, field);
-            }
-            return searchFields;
-        }
-
-        private static string AddCustomFieldValueToSearchFields(TicketPM entityPM, string mySearchFields, ObjectField field)
-        {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
-            string searchFields = mySearchFields;
-
-            object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);
-            if (value != null)
-            {
-                MethodHelper.AddToSearchFields(ref searchFields, value.ToString());
-            }
-
-            return searchFields;
-        }
-
-        public string GetReplyToEmail(int tenant, string guidId, string supportMailboxId)
+        public string GetReplyToEmail(int tenant, string guidId)
         {
             string email = "";
-            var mailBox = this.GetDefaultSupportMailBox(tenant, supportMailboxId);
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement myTenant = tenantManagementRepository.GetSingleTenantManagement(tenant);
                 if (myTenant != null)
                 {
-                    string supportDomain = myTenant.SupportDomain;
-                    if (!string.IsNullOrEmpty(supportDomain))
-                        email = mailBox + "+" + guidId + "-ex"+"@" + supportDomain;
+                    string supportEmail = myTenant.SupportEmail;
+                    if (!string.IsNullOrEmpty(supportEmail))
+                        email = supportEmail.Split('@')[0] + "+" + guidId + "-ex"+"@" + supportEmail.Split('@')[1];
                 }
+
                 scope.Complete();
             }
+
             return email;
         }
 
-        private string GetDefaultSupportMailBox(int tenant, string supportMailboxId)
-        {
-            string mailBox = null;
-            SupportMailboxRepository mailboxRepository = new SupportMailboxRepository(tenant);
-            SupportMailbox supportMailbox = mailboxRepository.GetSingle(supportMailboxId, tenant);
-            mailBox = supportMailbox != null ? supportMailbox.Mailbox : null;
-            return mailBox;
-        }
-    }
+   }
 }
    

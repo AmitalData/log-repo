@@ -20,9 +20,9 @@ export class TariffVersionAllInChargePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	                  this.EntityParentPM = _entityParentPM;
-                this.UIProperties = new UIProperties(this);
-                this.IsDirty = false;
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
       }
 
 	 
@@ -62,11 +62,6 @@ export class TariffVersionAllInChargePM {
     public set TariffId(newValue: string) { if (this.tariffId != newValue) { this.tariffId = newValue; this.MarkAsDirty("TariffId"); } }
        
 	 
-    private chargesTypeCode: string;
-    public get ChargesTypeCode() { return this.chargesTypeCode; }
-    public set ChargesTypeCode(newValue: string) { if (this.chargesTypeCode != newValue) { this.chargesTypeCode = newValue; this.MarkAsDirty("ChargesTypeCode"); } }
-       
-	 
 
     public OldEntityPM: TariffVersionAllInChargePM;
 	
@@ -81,10 +76,7 @@ export class TariffVersionAllInChargePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -94,7 +86,6 @@ export class TariffVersionAllInChargePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffVersionAllInCharge");
            
         }
-       }
     }
 
     private MyClone: TariffVersionAllInChargePM;

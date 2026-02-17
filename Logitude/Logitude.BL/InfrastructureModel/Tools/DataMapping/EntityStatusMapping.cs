@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
@@ -27,11 +27,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityStatus.Tenant = entityStatusPM.Tenant;
             entityStatus.Code = entityStatusPM.Code;
             entityStatus.InActive = entityStatusPM.InActive;
-            entityStatus.SearchFields = entityStatusPM.Code + "," + entityStatusPM.Name + "," + (table != null ? table.Name : "") +  "," + entityStatusPM.DisplayName;
-            entityStatus.EntityStatusTypeCode = entityStatusPM.EntityStatusTypeCode;
-            entityStatus.StatusLocalWeight = entityStatusPM.StatusLocalWeight;
-            entityStatus.AllowPartial = entityStatusPM.AllowPartial;
-            entityStatus.IsDigitalPortal = entityStatusPM.IsDigitalPortal;
+            entityStatus.SearchFields = entityStatusPM.Code + "," + entityStatusPM.Name + "," + (table != null ? table.Name : "");    
         }
     }
 }

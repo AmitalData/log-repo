@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel.DomainServices.Server;
 using System.ServiceModel.DomainServices.Server.ApplicationServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
@@ -39,11 +39,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool DontShowLocalLabels { get; set; }
         public string ComputedKey { get; set; }
         public string CompanyName { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public virtual ContactLastLogin ContactLastLogin { get; set; }
 
-        //public virtual SharedLogisticsContactLastLogin SharedLogisticsContactLastLogin { get; set; }
+        public virtual SharedLogisticsContactLastLogin SharedLogisticsContactLastLogin { get; set; }
 
         [ForeignKey("ImageDetailId")]
         public ImageDetail ImageDetail { get; set; }
@@ -70,7 +69,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         }
 
         public string Position { get; set; }
-        public string DigitalPortalLanguage { get; set; }
         public bool BirthdayReminder { get; set; }
         public bool AnniversaryReminder { get; set; }
 
@@ -87,7 +85,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public ColorIndex ColorIndex { get; set; }
 
         public DateTime? CreateDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
-        public bool? ContactForAccounting { get; set; }
     }
 }

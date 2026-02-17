@@ -1,11 +1,10 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -16,7 +15,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.EntityOtherServices
@@ -32,17 +30,12 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
         private IWorkbook workbook;
         private IWorksheet sheet1;
         private DataTable dataTable;
-        private ExcelEngine excelEngine;
         private ICommonDataContext commoContext;
         private IShipmentsContext shipmentsContext;
+        private ShipmentPayableRepository shipmentPayableRepository;
         private ShipmentPackageRepository shipmentPackageRepository;
         private ShippingLineRepository shippingLineRepository;
         private AddressRepository addressRepository;
-        private CountryCityRepository countryCityRepository;
-        private PortRepository PortRepository;
-        private ShipmentSubTypeRepository shipmentSubTypeRepository;
-        private ShipmentSubTypeQuery shipmentSubTypeQuery;
-        private ContactRepository contactRepository;
         public CustomsTransferService(List<ShipmentDataView> shipments, string filename, string type, int tenant)
         {
             this.tenant = tenant;
@@ -52,24 +45,20 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
             commoContext = CommonDataContext.GetContext(tenant);
             shipmentsContext = ShipmentsContext.GetContext(tenant);
+            shipmentPayableRepository = new ShipmentPayableRepository(shipmentsContext);
             shipmentPackageRepository = new ShipmentPackageRepository(shipmentsContext);
             shippingLineRepository = new ShippingLineRepository(commoContext);
             addressRepository = new AddressRepository(commoContext);
-            countryCityRepository = new CountryCityRepository(commoContext);
-            PortRepository = new PortRepository(commoContext);
-            shipmentSubTypeRepository = new ShipmentSubTypeRepository(tenant);
-            shipmentSubTypeQuery = new ShipmentSubTypeQuery(shipmentSubTypeRepository);
-            contactRepository = new ContactRepository(tenant);
+
             this.InitializeExcelFile();            
         }
 
         private void InitializeExcelFile()
         {
             memory = new System.IO.MemoryStream();
-            excelEngine = new ExcelEngine();
+            ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             this.workbook = excelEngine.Excel.Workbooks.Create(1);
-            workbook.Version = ExcelVersion.Excel2007;
 
             this.CreateAndDesignExcelSheet();
             this.CreateAndDesignDataTable();
@@ -82,15 +71,12 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             {
                 case "AMOS":
                     {
-                        sheet1.Range["A1:AY1"].CellStyle.Font.Bold = true;
-                        sheet1.Range["A1:AY1"].CellStyle.Font.Size = 10;
-                        sheet1.Range["A1:AY1"].CellStyle.Font.FontName = "Calibri";
-                        sheet1.Range["A1:AY1"].CellStyle.Font.Color = ExcelKnownColors.Black;
-                        sheet1.Range["A1:AY1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
-                        sheet1.Range["A1:AY1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-                        sheet1.Range["K1"].EntireColumn.IsStringsPreserved = true;
-                        sheet1.Range["O1"].EntireColumn.IsStringsPreserved = true;
-                        sheet1.Range["AQ2"].EntireColumn.IsStringsPreserved = true;
+                        sheet1.Range["A1:AX1"].CellStyle.Font.Bold = true;
+                        sheet1.Range["A1:AX1"].CellStyle.Font.Size = 10;
+                        sheet1.Range["A1:AX1"].CellStyle.Font.FontName = "Calibri";
+                        sheet1.Range["A1:AX1"].CellStyle.Font.Color = ExcelKnownColors.Black;
+                        sheet1.Range["A1:AX1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
+                        sheet1.Range["A1:AX1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         break;
                     }
 
@@ -103,8 +89,6 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         sheet1.Range["A1:AB1"].CellStyle.Font.Color = ExcelKnownColors.White;
                         sheet1.Range["A1:AB1"].CellStyle.Color = System.Drawing.Color.Orange;
                         sheet1.Range["A1:AB1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-                        sheet1.Range["B1"].EntireColumn.IsStringsPreserved = true;
-                        sheet1.Range["G1"].EntireColumn.IsStringsPreserved = true;
                         break;
                     }
             }
@@ -127,11 +111,11 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         dataTable.Columns.Add("Name_of_Vessel");
                         dataTable.Columns.Add("Number_of_Trip");
                         dataTable.Columns.Add("Type_of_Operation");
-                        dataTable.Columns.Add("Number_Of_BL", typeof(string));
+                        dataTable.Columns.Add("Number_Of_BL");
                         dataTable.Columns.Add("Port_of_Loading_Unloading");
                         dataTable.Columns.Add("Country_of_Port_of_Loading_Unloading");
                         dataTable.Columns.Add("Type_of_BL");
-                        dataTable.Columns.Add("Number_of_BL_Reference", typeof(string));
+                        dataTable.Columns.Add("Number_of_BL_Reference");
                         dataTable.Columns.Add("Type_of_Port");
                         dataTable.Columns.Add("Key_of_port");
                         dataTable.Columns.Add("Country_of_Port");
@@ -167,19 +151,18 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         dataTable.Columns.Add("Service_Type_Code");
                         dataTable.Columns.Add("Gross_Weight");
                         dataTable.Columns.Add("Total_Number_of_Pieces2");
-                        dataTable.Columns.Add("Referencia");
                         break;
                     }
 
                 case "AMAS":
                     {
                         dataTable.Columns.Add("Type Oper");
-                        dataTable.Columns.Add("Master B/L", typeof(string));
+                        dataTable.Columns.Add("Master B/L");
                         dataTable.Columns.Add("ORIGIN_AIRPORT_CODE");
                         dataTable.Columns.Add("ORIGIN_AIRPORT");
                         dataTable.Columns.Add("DESTINATION_AIRPORT_CODE");
                         dataTable.Columns.Add("DESTINATION_AIRPORT");
-                        dataTable.Columns.Add("House B/L", typeof(string));
+                        dataTable.Columns.Add("House B/L");
                         dataTable.Columns.Add("CURRENCY");
                         dataTable.Columns.Add("Code IATA Carrier");
                         dataTable.Columns.Add("CARRIER (AEROLINEA)");
@@ -257,31 +240,6 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     string shipmentType = item.ShipmentTypeName;
                     int totalInsidePackages = item.NumberOfInsidePackages;
 
-                    string portId = "";
-                    if (item.ShipmentLevelCode == "H")
-                    {
-                        if (string.IsNullOrEmpty(item.MasterShipmentDataId))
-                        {
-                            portId = item.DirectionId == "I" ? item.ToPortId : item.FromPortId;
-                        }
-
-                        else
-                        {
-                            portId = item.DirectionId == "I" ? item.MainCarriageFinalDestinationPortId : item.MainCarriageFromPortId;
-                        }
-                    }
-
-                    else
-                    {
-                        portId = item.DirectionId == "I" ? item.MainCarriageFinalDestinationPortId : item.MainCarriageFromPortId;
-                    }
-
-                    Port customsSectionPort = null;
-                    if(!string.IsNullOrEmpty(portId))
-                    {
-                        customsSectionPort = PortRepository.GetSinglePort(tenant, portId);
-                    }
-
                     #region packages
                     foreach (ShipmentPackage package in myShipmentPackages)
                     {
@@ -327,14 +285,12 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                         if (string.IsNullOrEmpty(containerType))
                         {
-                            containerType = item.ShipmentTypeId == "LCL"  || item.ShipmentTypeId == "LCLD" ? (package.LCLPackageType == null ? "" : package.LCLPackageType.Code) : (package.PackageType == null ? "" : package.PackageType.Code);
+                            containerType = package.PackageType == null ? "" : package.PackageType.Code;
                         }
 
                         else
                         {
-                            containerType += item.ShipmentTypeId == "LCL" || item.ShipmentTypeId == "LCLD" ? 
-                                (", " + (package.LCLPackageType == null ? "" : package.LCLPackageType.Code)):
-                                (", " + (package.PackageType == null ? "" : package.PackageType.Code));
+                            containerType += ", " + (package.PackageType == null ? "" : package.PackageType.Code);
                         }
                     }
                     #endregion
@@ -362,50 +318,27 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                             dangerousUNNumber += ", " + package.UnNumber;
                         }                        
                     }
-                    Contact emergancyContact = null;
-                    if (item.EmergencyContactId != null)
-                    {
-                        emergancyContact = contactRepository.GetSingleContact(item.EmergencyContactId, tenant);
-                    }
                     #endregion
-
-                    ShipmentSubTypePM shipmentSubType = shipmentSubTypeQuery.GetSinglePM(item.ShipmentSubTypeId,tenant);
 
                     DataRow row = dataTable.NewRow();
                     row[0] = index++;
                     //row[1] = ;
                     row[2] = myTenant == null ? "" : myTenant.CAAT;
                     row[3] = "8";
-                    row[4] = customsSectionPort == null ? "" : customsSectionPort.CombinedCode;
+                    //row[4] = ;
                     //row[5] = ;
                     row[6] = carrier == null ? "" : carrier.SCACCode;
                     row[7] = item.MainCarriageVesselName;
                     row[8] = item.MainCarriageCarrierNumber;
                     row[9] = item.DirectionId == "E" ? "2" : "1";
-
-                    if (!string.IsNullOrEmpty(item.House))
-                    {
-                        string house = item.House.Trim();
-                        house = Regex.Replace(item.House, @"[^0-9a-zA-Z.,+]+", "");
-
-                        row[10] = house;
-                    }
-
-                    row[11] = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode;
-                    row[12] = item.ShipmentLevelCode == "H"? item.FromPortCountryCode : item.MainCarriageFromPortCountryCode;
+                    row[10] = item.House;
+                    //row[11] = ;
+                    //row[12] = ;
                     row[13] = "H";
-
-                    if (!string.IsNullOrEmpty(item.Master))
-                    {
-                        string master = item.Master.Trim();
-                        master = Regex.Replace(item.Master, @"[^0-9a-zA-Z.,+]+", "");
-
-                        row[14] = master;
-                    }
-
+                    row[14] = item.House;
                     row[15] = "2";
-                    row[16] = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode;
-                    row[17] = item.ShipmentLevelCode == "H"? item.ToPortCountryCode : item.MainCarriageFinalDestinationCountryCode;
+                    //row[16] = ;
+                    //row[17] = ;
                     row[18] = "1";
                     row[19] = item.ShipperName;
                     //row[20] = ;
@@ -419,62 +352,33 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     //row[28] = ;
                     row[29] = this.GetAddress(consigneeAddress);
                     row[30] = "1";
-
-                    if (dangerousShipmentPackages.Count > 0 || item.IsDangerous)
-                    {
-                        row[31] = "Y";
-                    }
-
-                    else
-                    {
-                        row[31] = "0";
-                    }
-                    
-                    if (shipmentSubType != null && shipmentSubType.Code == "BBU" && (item.ShipmentTypeId == "LCL" || item.ShipmentTypeId == "LCLD"))
-                    {
-                        row[32] = myShipmentPackages.Count > 0 ? "43" : "";
-                    }
-                    else
-                    {
-                        row[32] = myShipmentPackages.Count > 0 ? "1" : "";
-                    } 
-                    
+                    row[31] = "";
+                    row[32] = "";
                     row[33] = marksAndNumbers;
-                    row[34] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
+                    row[34] = totalInsidePackages;
                     row[35] = grossWeight;
                     row[36] = "";
                     row[37] = generalDescription;
                     row[38] = "";
-                    //row[39] = "";
+                    row[39] = "";
                     row[40] = dangerousClassNumber;
                     row[41] = dangerousUNNumber;
-                    row[42] = emergancyContact != null ? emergancyContact.BusinessPhone : "";
-                    row[43] = emergancyContact != null ? emergancyContact.EnglishName : null;
+                    row[42] = "";
+                    row[43] = "";
                     row[44] = "1";
                     row[45] = containerNumber;
                     row[46] = containerType;
                     row[47] = shipmentType;
                     row[48] = grossWeight;
-                    row[49] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
-                    row[50] = ".";
+                    row[49] = totalInsidePackages;
 
                     dataTable.Rows.Add(row);
                 }
             }
-
-            try
-            {
-                sheet1.ImportDataTable(dataTable, true, 1, 1);
-                workbook.SaveAs(memory);
-                workbook.Close();
-                excelEngine.Dispose();
-                return memory.ToArray();
-            }
-
-            catch (Exception ex)
-            {
-                throw new ApplicationException(ex.Message);
-            }
+            
+            sheet1.ImportDataTable(dataTable, true, 1, 1);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
         }
         public byte[] ExportAirAMANACShipmentToExcel()
         {   
@@ -487,6 +391,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     shipperAddress = addressRepository.GetSingleAddress(item.ShipperAddressId, tenant);
                     consigneeAddress = addressRepository.GetSingleAddress(item.ConsigneeAddressId, tenant);
+                    List<ShipmentPayable> shipmentPayables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(item.Id, tenant);
 
                     string typeOper = item.TransportModeId;
                     switch(item.DirectionId)
@@ -506,29 +411,26 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
 
                     DataRow row = dataTable.NewRow();
                     row[0] = typeOper;
-                    row[1] = item.AirlinePrefix + item.Master;
+                    row[1] = item.LongMaster;
                     row[2] = item.MainCarriageFromPortCode;
                     row[3] = item.MainCarriageFromPortName;
                     row[4] = item.MainCarriageFinalDestinationPortCode;
                     row[5] = item.MainCarriageFinalDestinationPortName;
-                    
-                    if (!string.IsNullOrEmpty(item.House))
-                    {
-                        string house = item.House.Trim();
-                        house = Regex.Replace(item.House, @"[^0-9a-zA-Z.,+]+", "");
+                    row[6] = item.House;
 
-                        row[6] = house;
-                    }
-                                        
-                    if (!string.IsNullOrEmpty(item.ValueOfGoodsCurrencyId))
+                    if (shipmentPayables.Count > 0)
                     {
-                        Currency currency = CurrencyRepository.GetSingleCurrency(item.ValueOfGoodsCurrencyId, tenant, true);
-                        if (currency != null)
+                        ShipmentPayable shipmentPayable = shipmentPayables.Where(d => d.ChargesType != null && d.ChargesType.ChargesGroupCode == "FRT").FirstOrDefault();
+                        if (shipmentPayable != null)
                         {
-                            row[7] = currency.Code;
+                            Currency currency = CurrencyRepository.GetSingleCurrency(shipmentPayable.CurrencyId, tenant, true);
+                            if (currency != null)
+                            {
+                                row[7] = shipmentPayable.Currency.Code;
+                            }
                         }
                     }
-                    
+
                     row[8] = item.MainCarriageCarrierCode;
                     row[9] = item.MainCarriageCarrierName;
                     row[10] = item.NumberOfPackages;
@@ -536,61 +438,33 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[12] = item.ShipperName;
                     row[13] = this.ComputeAddressStreet(shipperAddress);
 
-                    if (shipperAddress != null)
+                    if (shipperAddress != null && !string.IsNullOrEmpty(shipperAddress.CountryId))
                     {
-                        if (!string.IsNullOrEmpty(shipperAddress.CountryId))
+                        Country shipperCountry = CountryRepository.GetSingleCountry(shipperAddress.CountryId, tenant, true);
+                        if (shipperCountry != null)
                         {
-                            Country shipperCountry = CountryRepository.GetSingleCountry(shipperAddress.CountryId, tenant, true);
-                            if (shipperCountry != null)
-                            {
-                                row[14] = shipperCountry.Code;
-                                row[15] = shipperCountry.EnglishName;
-                            }
-
-                            CountryCity countryCity = countryCityRepository.GetSingleCountryCityByNameAndCountry(shipperAddress.City, shipperAddress.CountryId, tenant);
-                            if (countryCity != null)
-                            {
-                                row[16] = countryCity.Code;
-                            }
-
-                            else
-                            {
-                                row[16] = shipperAddress.City;
-                            }
+                            row[14] = shipperCountry.Code;
+                            row[15] = shipperCountry.EnglishName;
                         }
-
-                        row[17] = shipperAddress.City;
                     }
 
+                    //row[16] = shipment.ShipperCityCode;
+                    row[17] = shipperAddress == null ? "" : shipperAddress.City;
                     row[18] = item.ConsigneeName;
                     row[19] = this.ComputeAddressStreet(consigneeAddress);
 
-                    if (consigneeAddress != null)
+                    if (consigneeAddress != null && !string.IsNullOrEmpty(consigneeAddress.CountryId))
                     {
-                        if (!string.IsNullOrEmpty(consigneeAddress.CountryId))
+                        Country consigneeCountry = CountryRepository.GetSingleCountry(consigneeAddress.CountryId, tenant, true);
+                        if (consigneeCountry != null)
                         {
-                            Country consigneeCountry = CountryRepository.GetSingleCountry(consigneeAddress.CountryId, tenant, true);
-                            if (consigneeCountry != null)
-                            {
-                                row[20] = consigneeCountry.Code;
-                                row[21] = consigneeCountry.EnglishName;
-                            }
-
-                            CountryCity countryCity = countryCityRepository.GetSingleCountryCityByNameAndCountry(consigneeAddress.City, consigneeAddress.CountryId, tenant);
-                            if (countryCity != null)
-                            {
-                                row[22] = countryCity.Code;
-                            }
-
-                            else
-                            {
-                                row[22] = consigneeAddress.City;
-                            }
+                            row[20] = consigneeCountry.Code;
+                            row[21] = consigneeCountry.EnglishName;
                         }
-
-                        row[23] = consigneeAddress.City;
                     }
-                     
+
+                    row[22] = item.MainCarriageFinalDestinationPortCode;
+                    row[23] = consigneeAddress == null ? "" : consigneeAddress.City;
                     row[24] = item.DescriptionOfGoods;
                     row[25] = item.IsDangerous ? "ED" : "";
                     row[26] = item.DangerousUnNumber;
@@ -600,17 +474,9 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 }
             }
 
-            try
-            {
-                sheet1.ImportDataTable(dataTable, true, 1, 1);
-                workbook.SaveAs(memory);
-                return memory.ToArray();
-            }
-
-            catch (Exception ex)
-            {
-                throw new ApplicationException(ex.Message);
-            }
+            sheet1.ImportDataTable(dataTable, true, 1, 1);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
         }
 
         private string ComputeAddressStreet(Address address)
@@ -703,7 +569,8 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                 {
                     FileName = fileProps[0],
                     HasExternalContainer = true,
-                    Extension = "xlsx",
+                    //FolderName = "others",
+                    Extension = "xls",
                     Tenant = tenant,
                     FileSize = ComputedData.Length,
                 };

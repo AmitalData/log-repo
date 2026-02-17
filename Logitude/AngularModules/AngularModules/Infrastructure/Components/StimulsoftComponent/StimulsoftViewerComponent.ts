@@ -1,33 +1,32 @@
 
 declare var System: any;
 declare var window: any;
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { BuildStimulReportResult, EditableFieldPosition } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/BuildStimulReportResult';
-import { StimulsoftArg } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/StimulsoftArg';
-import { DocumentTypeTemplatePMService } from '../../../Common/Services/StandardPMs/DocumentTypeTemplatePMService';
-import { ReportService } from '../../../Common/Services/ExtendedLists/ReportService';
-import { ReportsTemplateList } from '../../../Common/EntityLists/ReportsTemplateList';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { DocumentTypeTemplatePM } from '../../../Common/EntityPMs/DocumentTypeTemplatePM';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-declare var SelectionInput, GetPercentageImageHeight, SetNewValue, jQuery, HTMLID: any;
-import { DocumentTypeTemplatePMExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
-import { DocumentTypeTemplateFilter } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/DocumentTypeTemplateFilter';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { GeneralEmailSender } from '../../../Infrastructure/Helpers/GeneralEmailSender';
-import { AttachmentsList } from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
-import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { SchedulerReportMessageTemplateService } from './Services/SchedulerReportMessageTemplateService';
-import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
-import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import {Component, AfterViewInit, OnInit} from '@angular/core';
+import {BuildStimulReportResult, EditableFieldPosition} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/BuildStimulReportResult';
+import {StimulsoftArg} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/StimulsoftArg';
+import {DocumentTypeTemplatePMService} from '../../../Common/Services/StandardPMs/DocumentTypeTemplatePMService';
+import {ReportService} from '../../../Common/Services/ExtendedLists/ReportService';
+import {ReportsTemplateList} from '../../../Common/EntityLists/ReportsTemplateList';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {DocumentTypeTemplatePM} from '../../../Common/EntityPMs/DocumentTypeTemplatePM';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+declare var SelectionInput, GetPercentageImageHeight, SetNewValue, jQuery , HTMLID: any;
+import {DocumentTypeTemplatePMExtendedService} from '../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import {DocumentTypeTemplateFilter} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/DocumentTypeTemplateFilter';
+import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {GeneralEmailSender} from '../../../Infrastructure/Helpers/GeneralEmailSender';
+import {AttachmentsList} from '../../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/Filters/AttachmentsList';
+import {ReportsTemplateListExtendedService} from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-
+    moduleId: module.id,
 
     selector: 'StimulsoftViewer',
     templateUrl: './StimulsoftViewerComponent.html',
@@ -45,13 +44,13 @@ export class StimulsoftViewerComponent implements OnInit {
     ScreenWidth: string;
     ImageWidth: string;
     ImageHeight: string;
-    NumberofEditedfield: number = 0;
+    NumberofEditedfield: number =0;
     IsShowSendButton: boolean = false;
     IsShowReportManageTemplateLink: boolean = false;
     ExportDataOnly: boolean = false;
     ExportObjectFormatting: boolean = false;
     UseOnePageHeaderandFooter: boolean = false;
-
+     
     Precentage: number;
     OrginalImageWidth: string;
     ImageMargeLeft: string = "15px";
@@ -76,45 +75,21 @@ export class StimulsoftViewerComponent implements OnInit {
     HeightImg: number = 1;
     MaxScreenwidth: string;
     IsEditingEnabled: boolean;
-    IsSchedulerReport: boolean = false;
     IsShowShiftToolbar: boolean = false;
     ShowReportsTemlatesLists: boolean = false;
-    ShowMessageTemlatesLists: boolean = false;
     PreviewStimualDivId: string;
     ViewerContentDivId: string;
 
-    TemplateType: string = "R";
-    TemplateTypeName: string = "PDF Template";
-
     SelectedReportsTemplateList: ReportsTemplateList;
-    SelectedExcelReportsTemplateList: ReportsTemplateList;
-    SelectedMessageTemplateList: ReportsTemplateList;
     ReportsTemplatesLists: ReportsTemplateList[] = [];
-    ExcelReportsTemplatesLists: ReportsTemplateList[] = [];
-    MessageTemplatesLists: ReportsTemplateList[] = [];
-    EntityPM: any;
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     public reportService: ReportService;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
-    IsEnableReportTemplateExcel: boolean = false;
-    IsEnableButtonExcel: boolean = false;
 
-    SelectedFontSize: number;
-    FontSizeLists: number[] = [];
+
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private schedulerReportMessageTemplateService: SchedulerReportMessageTemplateService;
-    LayoutDirection: string = 'ltr';
-
     constructor() {
-        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-
-
-        this.FillFontSizeLists();
-
-        if (this.schedulerReportMessageTemplateService == null) {
-            this.schedulerReportMessageTemplateService = new SchedulerReportMessageTemplateService();
-        }
 
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
@@ -136,73 +111,17 @@ export class StimulsoftViewerComponent implements OnInit {
         this.PreviewStimualDivId = Guid.newGuid();
         this.ViewerContentDivId = Guid.newGuid();
     }
-
-
-    FillFontSizeLists() {
-
-        let fontSizes = "8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72";
-        fontSizes.split(',').forEach((fontsize) => {
-            this.FontSizeLists.push(Number(fontsize));
-        });
-
-        this.SelectedFontSize = this.FontSizeLists[0];
-    }
-    ngAfterViewInit() {
-        this.SetReportTypeClickText(this.StimulsoftArgData?.TemplateType);
-
-     }
+    ngAfterViewInit() { }
     ngOnInit() {
 
         this.StimulsoftArgData.StimulsoftViewerComponent = this;
-        this.EntityPM = this.StimulsoftArgData.ReportsPreviewComponent.Report;
-        
-        const processMenuTemplateId = this.StimulsoftArgData?.ProcessMenuTemplateId;
-        const templates = this.StimulsoftArgData?.ReportsTemplateLists ?? [];
-        const selected = templates.find(t => t.Id === processMenuTemplateId);
-
-        if (!AppTool.IsNullOrEmpty(processMenuTemplateId) && selected) {
-
-            this.TemplateType = selected?.TemplateType ?? "R";
-            this.SetReportTypeClickText(this.TemplateType);
-
-            if (this.TemplateType === "E") {
-                this.StimulsoftArgData.DefaultExcelTemplateId = processMenuTemplateId;
-                this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "E" && t.UseStimul);
-            } 
-            else {
-                this.StimulsoftArgData.DefaultTemplateId = processMenuTemplateId;
-                this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
-            }
-
-            this.StimulsoftArgData.TemplateDescription = selected.Description;
-            console.log('matching template found for ProcessMenuTemplateId:', processMenuTemplateId);
-            this.SelectedReportsTemplateList = selected ?? null;
-        }
-        else {
-            console.log('No matching template found for ProcessMenuTemplateId:');
-            this.ReportsTemplatesLists = templates.filter(t => t.TemplateType === "R");
-            this.SelectedReportsTemplateList = this.ReportsTemplatesLists.find(t => t.Id === this.StimulsoftArgData.DefaultTemplateId) ?? null;
-        }
-
-        this.ExcelReportsTemplatesLists = this.StimulsoftArgData.ReportsTemplateLists.filter(d => d.TemplateType == "E" && !d.UseStimul);
-        const noTemplate = new ReportsTemplateList();
-        noTemplate.Id = "DefExcelTempId";
-        noTemplate.Description = "All Fields";
-
-        this.ExcelReportsTemplatesLists.push(noTemplate);
-
-        this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists;
-        this.MessageTemplatesLists = this.StimulsoftArgData.MessageTemplateLists.filter(messageTemplate => messageTemplate.EntityId == this.StimulsoftArgData.EntityId || AppTool.IsNullOrEmpty(messageTemplate.EntityId));
+        this.ReportsTemplatesLists = this.StimulsoftArgData.ReportsTemplateLists;
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
-        
-        this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(d => d.Id == this.EntityPM.DefaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
-        
-        if (this.MessageTemplatesLists) {
-            this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultMessageTemplateId)[0];
+        if (this.ReportsTemplatesLists) {
+            this.SelectedReportsTemplateList = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
         }
 
         this.ShowReportsTemlatesLists = this.StimulsoftArgData.ShowReportsTemlatesLists;
-        this.ShowMessageTemlatesLists = this.StimulsoftArgData.IsSchedulerReport && this.StimulsoftArgData.ResultType == "Email";
         if ((this.StimulsoftArgData.ReportsPreviewComponent && this.StimulsoftArgData.ReportsPreviewComponent.FilterConrolHeight) || this.StimulsoftArgData.TypePage != "Report") {
 
             if (this.StimulsoftArgData.ScreenHeight && this.StimulsoftArgData.ScreenWidth) {
@@ -215,48 +134,34 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.SetStimualData();
 
             }
-        }    
-        this.IsEnableButtonExcel = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "REE")[0] ? true : false;
-    
-        if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.StimulsoftArgData.IsExcelReportAllowed == true) {
-            this.IsEnableReportTemplateExcel = true;
         }
-    }
 
-    SetReportTypeClickText(templateType: string) {
-        if (AppTool.IsNullOrEmpty(templateType))
-            return;
-        this.TemplateType = templateType;
-        this.TemplateTypeName = templateType == "E" ? "Excel Template" : "PDF Template";
     }
 
 
-    IsShowStimulImage: boolean = true;
+
     SetStimualData() {
 
-        var isDisablePreview = this.StimulsoftArgData.ReportFliter ? this.StimulsoftArgData.ReportFliter.DisablePreview : false;
+        this.BuildStimulImage(this.StimulsoftArgData.BuildStimulReportResult, this);
 
-        this.IsShowStimulImage = !isDisablePreview;
         if (this.StimulsoftArgData.ShowStimulHeader) this.Headervisibility = "block";
+
         if (this.StimulsoftArgData.ShowStimulFooter) this.Footervisibility = "block";
 
-        if (!isDisablePreview) this.BuildStimulImage(this.StimulsoftArgData.BuildStimulReportResult, this);
+
         this.IsShowExportMicrosoftExcel = this.StimulsoftArgData.IsShowExportMicrosoftExcel;
         this.IsShowExportPrinttoPDF = this.StimulsoftArgData.IsShowExportPrinttoPDF;
-
         this.IsShowSendButton = this.StimulsoftArgData.IsShowSendButton;
-        if (this.StimulsoftArgData.IsSchedulerReport) {
-            this.IsSchedulerReport = true;
-            this.IsShowExportPrinttoPDF = false;
-            this.IsShowSendButton = false;
-            this.IsShowExportMicrosoftExcel = false;
-        }
+
+   
+
+
+    
 
         this.PagesCount = this.StimulsoftArgData.PagesCount;
         if (this.PagesCount == null) this.PagesCount = 0;
         this.NumberOfPage = this.StimulsoftArgData.NumberOfPage;
 
-        if (isDisablePreview) this.IsEditingEnabled = true;
         this.SetEnableButtonPager();
 
 
@@ -264,7 +169,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
 
     BuildStimulImage(buildStimulReportResult: BuildStimulReportResult, dataContext: any) {
-
+       
 
         var element = document.getElementById(this.ViewerContentDivId);
 
@@ -315,14 +220,14 @@ export class StimulsoftViewerComponent implements OnInit {
     }
 
 
-    EditableFieldPositions: EditableFieldPosition[]
+
     BuildEditableField(editableFieldPosition: EditableFieldPosition[], dataContext: any) {
-        this.EditableFieldPositions = editableFieldPosition;
+
 
         var numberofEditedfield = this.NumberofEditedfield;
         var element = document.getElementById(dataContext.ViewerContentDivId);
 
-
+  
         if (editableFieldPosition && editableFieldPosition.length > 0) {
 
             editableFieldPosition.forEach((item) => {
@@ -337,6 +242,7 @@ export class StimulsoftViewerComponent implements OnInit {
                         fontSize = (dataContext.ImageWidthNumber / perfont).toString() + "px";
                     }
                     else fontSize = item.FontSize.toString() + "px";
+
 
 
                     var Left = (item.Left * precePageWidth).toString() + "px";
@@ -391,19 +297,17 @@ export class StimulsoftViewerComponent implements OnInit {
                                     if ((fieldvalueArea.value != textarea.value) || (AppTool.IsNullOrEmpty(textarea.value))) {
                                         field.NewValue = textarea.value;
                                         field.Status = "Change";
-                                        field.IsTextValueChange = true;
                                     }
                                 }
                                 else {
-                                    if (field.FieldValue == oldValueArea.value) dataContext.ResetTextValueEditableField(field);
+                                    if (field.FieldValue == oldValueArea.value) field.Status = "";
                                     else {
                                         field.Status = "Change";
-                                        field.IsTextValueChange = true;
                                         field.NewValue = field.OldValue;
-                                        field.ReturnToOriginValue =field.IsFontSizeChange? false:true;
+                                        field.ReturnToOriginValue = true;
                                     }
 
-                                    field.IsEditedField = (field.IsFontSizeChange || field.FontSize != field.OriginalFontSize);
+                                    field.IsEditedField = false;
 
                                 }
 
@@ -419,7 +323,6 @@ export class StimulsoftViewerComponent implements OnInit {
                             textarea.style.backgroundColor = "white";
                             textarea.style.borderColor = "red";
                             textarea.style.borderRadius = "3px"
-                            dataContext.SelectTextBoxElement = textarea;
 
                             if (editableFieldPosition != null) {
 
@@ -490,21 +393,18 @@ export class StimulsoftViewerComponent implements OnInit {
                                         if (field != null) {
                                             field.NewValue = newValue;
                                             field.Status = "Change";
-                                            field.IsTextValueChange = true;
-
                                         }
                                     }
                                 }
                                 else {
                                     if (field.FieldValue == field.OldValue) {
-                                        field.Status =field.IsFontSizeChange? field.Status:"";
+                                        field.Status = "";
                                         field.NewValue = "";
                                     }
                                     else {
                                         field.Status = "Change";
-                                        field.IsTextValueChange = true;
                                         field.NewValue = field.OldValue;
-                                        field.ReturnToOriginValue =field.IsFontSizeChange? false:true;
+                                        field.ReturnToOriginValue = true;
                                     }
 
                                     field.IsEditedField = false;
@@ -536,70 +436,9 @@ export class StimulsoftViewerComponent implements OnInit {
                 selectelement.style.backgroundColor = "white";
                 selectelement.style.borderColor = "red";
                 selectelement.style.borderRadius = "3px"
-                dataContext.SelectTextBoxElement = selectelement;
                 selectelement.focus();
             }
         }
-    }
-    selectTextBoxElement: HTMLElement;
-    get SelectTextBoxElement() {
-        return this.selectTextBoxElement;
-    }
-    set SelectTextBoxElement(value: HTMLElement) {
-        if (value == this.selectTextBoxElement) return;
-        this.selectTextBoxElement = value;
-        this.SetSelectedFontSize();
-    }
-
-
-
-    SetSelectedFontSize() {
-
-        if (!this.SelectTextBoxElement) return;
-        if (!this.EditableFieldPositions || this.EditableFieldPositions.length == 0) return;
-        let elementKey = this.SelectTextBoxElement.id;
-        let editableField = this.EditableFieldPositions.filter(d => d.Key == elementKey)[0];
-        if (!editableField) return;
-        let fontSize = editableField.Status == "Change" && editableField.IsFontSizeChange ? editableField.NewFontSize : editableField.FontSize;
-
-        this.SelectedFontSize  = this.FontSizeLists.reduce(function (prev, curr) {
-            return (Math.abs(curr - fontSize) < Math.abs(prev - fontSize) ? curr : prev);
-        });
-
-
-    }
-
-    FontSizeSelectedItemChanged(fontSize: number) {
-        this.SelectedFontSize = fontSize;
-        if (!this.SelectTextBoxElement) return;
-        let elementKey = this.SelectTextBoxElement.id;
-        let editableField = this.EditableFieldPositions.filter(d => d.Key == elementKey)[0];
-        if (!editableField) return;
-        if (editableField.NewFontSize == fontSize) return;
-        editableField.NewFontSize = fontSize;
-        editableField.Status = "Change";
-        editableField.IsFontSizeChange = true;
-
-        if (!editableField.NewValue) {
-            editableField.NewValue = editableField.FieldValue;
-        }
-        editableField.IsTextValueChange = true;
-        editableField.IsEditedField = true;
-        editableField.ReturnToOriginValue = false;
-        this.SetElementFontSize(fontSize , this.SelectTextBoxElement);
-
-    }
-
-
-
-    CalculateFontSizeDependedOnScreenSize(fontSize: number) {
-
-        if (AppTool.IsNullOrEmpty(this.OrginalImageWidth)) return fontSize;
-        return (this.ImageWidthNumber / (Number(this.OrginalImageWidth) / fontSize));
-    }
-
-    SetElementFontSize(fontSize: number, element: HTMLElement) {
-        element.style.fontSize = (this.CalculateFontSizeDependedOnScreenSize(fontSize) + "px");
     }
 
     SetScreenWidthAndHeight(screenWidth: number, screenHeight: number) {
@@ -614,7 +453,7 @@ export class StimulsoftViewerComponent implements OnInit {
             this.IsShowShiftToolbar = true;
             if (this.StimulsoftArgData.EditDocumentComponent) {
                 if (this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists) {
-                    var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d => d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
+                    var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d=> d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
                     if (item) {
                         this.HorizontalShift = item.HorizontalShift;
                         this.VerticalShift = item.VerticalShift;
@@ -628,7 +467,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         }
 
-        var imagewidth = screenWidth - 30;//Marge 15 left and 15 right
+        var imagewidth = screenWidth-30;//Marge 15 left and 15 right 
         var imageheight = imagewidth * this.Precentage;
         if (imageheight > screenHeight) {
             imagewidth -= 15;// scrol 15
@@ -638,7 +477,7 @@ export class StimulsoftViewerComponent implements OnInit {
         this.ImageHeight = this.CustomPixel(imagewidth * this.Precentage);
 
 
-        // ReSize Text Box
+       // ReSize Text Box
         //this.ImageHeightNumber = (imagewidth * this.Precentage) / (1653 * this.Precentage);
         //this.PrecentageImagewidth = imagewidth / 1653;
 
@@ -671,10 +510,10 @@ export class StimulsoftViewerComponent implements OnInit {
 
     }
 
-    SaveToExcelFileAdvanced(exportDataOnly: boolean = false, exportObjectFormatting: boolean = false, useOnePageHeaderAndFooter: boolean = false) {
+    SaveToExcelFileAdvanced(exportDataOnly: boolean = false, exportObjectFormatting: boolean = false , useOnePageHeaderAndFooter: boolean = false) {
 
         if (this.StimulsoftArgData.ReportKey) {
-            this.SaveReport(this.StimulsoftArgData.ReportKey, this.StimulsoftArgData.Tenant, "MicrosoftExceAdvanced", exportDataOnly, exportObjectFormatting, useOnePageHeaderAndFooter);
+            this.SaveReport(this.StimulsoftArgData.ReportKey, this.StimulsoftArgData.Tenant, "MicrosoftExceAdvanced", exportDataOnly,  exportObjectFormatting , useOnePageHeaderAndFooter  );
         }
     }
 
@@ -685,69 +524,28 @@ export class StimulsoftViewerComponent implements OnInit {
         }
     }
 
-    ReportTemplatesChange(item, runReport) {
+    ReportTemplatesChange(item) {
         if (this.StimulsoftArgData) {
             if (item) {
-                if (this.TemplateType === "E") 
-                    this.StimulsoftArgData.DefaultExcelTemplateId = item.Id;
-                else
-                    this.StimulsoftArgData.DefaultTemplateId = item.Id;
-
+                this.StimulsoftArgData.DefaultTemplateId = item.Id;
                 this.StimulsoftArgData.TemplateDescription = item.Description;
-                if (this.StimulsoftArgData.ReportFilterConmponent && runReport) {
-                    this.RunReport();
+                if (this.StimulsoftArgData.ReportFilterConmponent) {
+
+                    if (this.StimulsoftArgData.ReportFilterConmponent['RunReport']) {
+                        this.StimulsoftArgData.ReportFilterConmponent.RunReport(true);
+                    } else if (this.StimulsoftArgData.ReportFilterConmponent['RunButtonClicked']) {
+                        this.StimulsoftArgData.ReportFilterConmponent.RunButtonClicked();
+                    }
+
+
+
                 }
             } else {
-                if (this.TemplateType === "E")
-                    this.StimulsoftArgData.DefaultExcelTemplateId = "";
-                else
-                    this.StimulsoftArgData.DefaultTemplateId = "";
+                this.StimulsoftArgData.DefaultTemplateId = "";
             }
         }
     }
-
-      
-      ReportExcelTemplatesChange(item: any) {
-
-        this.SelectedExcelReportsTemplateList = item ?? null;
-    
-        if (this.StimulsoftArgData) {
-            this.StimulsoftArgData.DefaultExcelNoStimId = item ? item.Id : null;
-        }
-    }
-
-    MessageTemplatesChange(item) {
-        if (!this.StimulsoftArgData) return;
-        this.StimulsoftArgData.DefaultMessageTemplateId = item ? item.Id : "";
-        this.SelectedMessageTemplateList = item;
-    }
-
-
-    private RunReport() {
-        if (this.TemplateType === "E") {
-            if (!this.ReportsTemplatesLists.length) {
-                new MessageWindow().Show("There is no Excel Template for this report");
-                return;
-            }
-
-            if (!this.SelectedReportsTemplateList) {
-                new MessageWindow().Show("Please select an Excel Template");
-                return;
-            }
-            
-        }
-        if(this.SelectedExcelReportsTemplateList?.Id === "DefExcelTempId"){
-            this.StimulsoftArgData.DefaultExcelNoStimId = "DefExcelTempId";
-        }
-        if (this.StimulsoftArgData.ReportFilterConmponent['RunReport']) {
-            this.StimulsoftArgData.ReportFilterConmponent.RunReport(true);
-            return;
-        }
-        if (this.StimulsoftArgData.ReportFilterConmponent['RunButtonClicked']) {
-            this.StimulsoftArgData.ReportFilterConmponent.RunButtonClicked();
-            return;
-        }
-    }
+  
 
     CustomPixel(pixel: any) {
 
@@ -769,7 +567,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
 
     EmailSender: GeneralEmailSender;
-    SendDocumentFile(docuemnt: any) {
+    SendDocumentFile(docuemnt:any) {
 
         var attachment = new AttachmentsList();
         attachment.Tenant = SessionLocator.Tenant;
@@ -777,18 +575,18 @@ export class StimulsoftViewerComponent implements OnInit {
         attachment.FileSize = docuemnt.FileSize;
         attachment.ShowRemoveLink = true;
         attachment.Id = docuemnt.Id;
-        attachment.FileExtension = docuemnt.Extension ? docuemnt.Extension.replace(".", "") : "";
+        attachment.FileExtension = docuemnt.Extension ? docuemnt.Extension.replace(".", ""):"";
 
 
         var attachmentsList = new Array<AttachmentsList>();
         attachmentsList.push(attachment);
         var subject: string = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Title : "Report";
         var entityId: string = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : "" : "";
-        var reportFliter:ReportFliter = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent?.ReportFliter : null;
+
         if (!this.EmailSender || (this.EmailSender && !this.EmailSender.LoadingSendingComponent)) {
-            this.EmailSender = new GeneralEmailSender("Report", "", entityId, "StimualReport", null, null, "", subject, attachmentsList,null,this.EntityPM, null,null,null,null,null,reportFliter);
+            this.EmailSender = new GeneralEmailSender("Report", "", entityId, "StimualReport", null, null, "", subject, attachmentsList);
             this.EmailSender.PartnersObslist = this.StimulsoftArgData.PartnersObslist;
-            this.EmailSender.SendMessage(this.StimulsoftArgData.ReportFilterConmponent.GLAccountId);
+            this.EmailSender.SendMessage();
         }
     }
 
@@ -798,9 +596,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         //  var fileName: string = this.StimulsoftArgData.ReportKey + "@" + (this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Name:"");
         var fileName: string = this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription;
-        var displayName = this.StimulsoftArgData.ReportsPreviewComponent ? this.StimulsoftArgData.ReportsPreviewComponent.Title : "Report";
-
-        this.reportService.GetPrepareSendReport(type, fileName, SessionLocator.Tenant, displayName).subscribe((res: any) => {
+        this.reportService.GetPrepareSendReport(type, fileName , SessionLocator.Tenant).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
 
             var pmResponse: ServiceResponse = res;
@@ -817,7 +613,7 @@ export class StimulsoftViewerComponent implements OnInit {
 
         });
 
-
+      
     }
 
 
@@ -859,26 +655,8 @@ export class StimulsoftViewerComponent implements OnInit {
         }
     }
 
-    public IsEditableFieldChanged(field: EditableFieldPosition) {
-        return field.FieldValue != field.NewValue || field.FontSize != field.NewFontSize
-    }
-
-ResetEditableField(field: EditableFieldPosition){
-                            field.Status = "";
-                           field.IsFontSizeChange = false;
-                           field.IsTextValueChange = false;
-}
-
-    ResetTextValueEditableField(field: EditableFieldPosition) {
-        if (field.IsFontSizeChange) return;
-        field.Status = "";
-        field.IsTextValueChange = false;
-    }
-
-
-
-    GoToPage(numberOfPage: number, processName: string) {
-
+    GoToPage(numberOfPage: number, processName:string) {
+    
         this.SaveShift();
         if (this.StimulsoftArgData.EditDocumentComponent) {
 
@@ -891,9 +669,8 @@ ResetEditableField(field: EditableFieldPosition){
             filter.PageIndex = numberOfPage;
             filter.EditableFieldLists = [];
             if (this.EditableField != null && this.EditableField.length > 0) {
-
                 this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                    if (this.IsEditableFieldChanged(field) ) {
+                    if (field.FieldValue != field.NewValue) {
                         filter.EditableFieldLists.push(field);
                     }
                 });
@@ -903,15 +680,13 @@ ResetEditableField(field: EditableFieldPosition){
 
                 this.CurrentSession.StartBusyIndicatorSaving();
 
-                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res: any) => {
+                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     this.CurrentSession.StopBusyIndicator();
 
                     if (!pmResponse.HasError) {
-                        this.EditableField.filter(d => d.Status == "Change" ).forEach((field) => {
-
-                           this.ResetEditableField(field);
-
+                        this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
+                            field.Status = "";
                         });
 
                         if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
@@ -927,7 +702,7 @@ ResetEditableField(field: EditableFieldPosition){
                         }
                     }
 
-
+          
 
                 });
             }
@@ -939,12 +714,12 @@ ResetEditableField(field: EditableFieldPosition){
     }
 
 
-    SaveEditFieldComplete(processName: string) {
+    SaveEditFieldComplete(processName: string ) {
 
         if (this.StimulsoftArgData.ReportsPreviewComponent) {
             this.StimulsoftArgData.ReportFliter.ProcessType = processName;
             this.StimulsoftArgData.ReportFliter.NumberOfPage = this.StimulsoftArgData.NumberOfPage;
-            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true ,true);
+            this.StimulsoftArgData.ReportsPreviewComponent.GenerateReport(this.StimulsoftArgData.ReportFliter, true);
         }
         else {
             if (this.StimulsoftArgData.EditDocumentComponent) {
@@ -968,12 +743,12 @@ ResetEditableField(field: EditableFieldPosition){
     }
 
     GoToFirstPage() {
-        if (this.PagesCount > 1 && this.StimulsoftArgData.NumberOfPage != 1) {
+        if (this.PagesCount > 1 && this.StimulsoftArgData.NumberOfPage!=1) {
             var saveIndexPage = this.StimulsoftArgData.NumberOfPage - 1;
             this.StimulsoftArgData.NumberOfPage = 1;
             this.GoToPage(saveIndexPage, "FirstPage");
         }
-
+        
 
     }
 
@@ -998,14 +773,10 @@ ResetEditableField(field: EditableFieldPosition){
 
 
     }
-
-
-
-
-
+    
     documenttypetemplatePM: DocumentTypeTemplatePM;
-    SaveReport(reportKey: string, tenant: number, processType: string, exportDataOnly: boolean = false, exportObjectFormatting: boolean = false, useOnePageHeaderAndFooter: boolean = false) {
-
+    SaveReport(reportKey: string, tenant: number, processType: string, exportDataOnly: boolean = false,  exportObjectFormatting: boolean = false , useOnePageHeaderAndFooter: boolean = false) {
+    
         var advanceSetting: string = "";
 
         if (processType == "MicrosoftExce") advanceSetting = "&UseOnePageHF=" + true;
@@ -1021,136 +792,67 @@ ResetEditableField(field: EditableFieldPosition){
             if (exportDataOnly) advanceSetting += ("&exportDataOnly=" + true);
             if (exportObjectFormatting) advanceSetting += ("&exportObjectForm=" + true);
 
-
+          
         }
 
         if (this.StimulsoftArgData.ReportsPreviewComponent) {
-
-
             var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + reportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=" + processType + advanceSetting;
             window.open(url);
         }
     }
 
-    DownloadDisablePreview() {
-        //var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + this.StimulsoftArgData.ReportKey + "@" + this.StimulsoftArgData.TemplateDescription + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=DisablePreview"
-        //window.open(url);
-
-    }
-
-
-
     ManagementReport() {
 
-        if (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) 
-        {
+        if (this.StimulsoftArgData && this.StimulsoftArgData.ReportsPreviewComponent && this.StimulsoftArgData.ReportsPreviewComponent.Report && this.StimulsoftArgData.ReportsPreviewComponent.Report.Id) {
             var reportId: string = this.StimulsoftArgData.ReportsPreviewComponent.Report.Id;
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
-                    const instance = cmpRef.instance;
-                    instance.ComponentRef = cmpRef;
-                    instance.Run({ EntityId: reportId, ObjectTableName: "Report", SelectedTabCode: "RPTP" });
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
 
-                    const loadTemplates = (runReport: boolean, isRefreshDefaultTemplate: boolean = true) => {
-                        const entity = instance.EntityPM;
-                        const defaultTemplateId = entity?.DefaultTemplateId || "";
-                        const defaultExcelTemplateId = entity?.DefaultExcelTemplateId || "";
-                        const defaultExcelNoStimId = entity?.DefaultExcelNoStimId || "";
-        
-                        this.LoadReportTemplate(defaultTemplateId, runReport, defaultExcelTemplateId, isRefreshDefaultTemplate, defaultExcelNoStimId);
-                    };
-        
-                    instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => { if(isSaveSuccess) loadTemplates(false, true)});
-                    instance.SaveCompleted.subscribe(() => loadTemplates(false, true));
-                    instance.BackCompleted.subscribe(() => loadTemplates(false, false));
-                   
+                    let isEditComponentSaved = false;
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+
+                        var defultTemplateId: any = cmpRef.instance.EntityPM ? cmpRef.instance.EntityPM.DefaultTemplateId : "";
+
+                        this.LoadReportTemplate(defultTemplateId);  
+           
+                    });
+
+                    cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                        if (isSaveSuccess) {
+                            var defultTemplateId: any = cmpRef.instance.EntityPM ? cmpRef.instance.EntityPM.DefaultTemplateId : "";
+                            this.LoadReportTemplate(defultTemplateId);  
+                        }
+                    });
+
                 });
         }
     }
 
-    LoadReportTemplate(defultTemplateId: any, runReport, defaultExcelTemplateId: any = "", isRefreshDefaultTemplate: boolean = true, defaultExcelNoStimId : any = "") {
-        const reportId = this.StimulsoftArgData.ReportsPreviewComponent.Report.Id;
-        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportId).subscribe((myResponse: ServiceResponse) => {
+    IsRefreshReportsTemplateList: boolean = false;
+    LoadReportTemplate(defultTemplateId:any) {
+
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(this.StimulsoftArgData.ReportsPreviewComponent.Report.Id, "R").subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
+                this.ReportsTemplatesLists = this.StimulsoftArgData.ReportsPreviewComponent.ReportsTemplateLists = this.StimulsoftArgData.ReportsTemplateLists = myResponse.Result;
+                var item: any = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0]; 
 
-                const allTemplates = myResponse.Result;
-                this.ReportsTemplatesLists = allTemplates.filter(t => t.TemplateType === this.TemplateType && (this.TemplateType !== "E" || t.UseStimul));
-                this.ExcelReportsTemplatesLists = allTemplates.filter(t => t.TemplateType === "E" && !t.UseStimul);
-
-                const noTemplate = new ReportsTemplateList();
-                noTemplate.Id = "DefExcelTempId";
-                noTemplate.Description = "All Fields";
-
-                this.ExcelReportsTemplatesLists.push(noTemplate);
-
-                this.StimulsoftArgData.ReportsPreviewComponent.ReportsTemplateLists = this.ReportsTemplatesLists;
-                this.StimulsoftArgData.ReportsTemplateLists = this.ReportsTemplatesLists;
-
-                if (!isRefreshDefaultTemplate) 
-                {
-                    if(AppTool.IsNullOrEmpty(this.StimulsoftArgData.DefaultExcelNoStimId))
-                        this.StimulsoftArgData.DefaultExcelNoStimId = defaultExcelNoStimId;
-                    if(AppTool.IsNullOrEmpty(this.StimulsoftArgData.DefaultExcelTemplateId))
-                        this.StimulsoftArgData.DefaultExcelTemplateId = defaultExcelTemplateId;
-                    if(AppTool.IsNullOrEmpty(this.StimulsoftArgData.DefaultTemplateId))
-                        this.StimulsoftArgData.DefaultTemplateId = defultTemplateId;
-                    this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(a => a.Id === this.StimulsoftArgData.DefaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
-                    
-                    const defaultTemplateId = this.TemplateType === "E" ? this.StimulsoftArgData.DefaultExcelTemplateId : this.StimulsoftArgData.DefaultTemplateId;
-                    this.SelectedReportsTemplateList = this.ReportsTemplatesLists.find(a => a.Id === defaultTemplateId) ?? null;
-                    
-                    return;
+                if (!item) {
+                    this.StimulsoftArgData.ReportsPreviewComponent.Report.DefaultTemplateId = this.StimulsoftArgData.DefaultTemplateId = defultTemplateId;
+                    item= this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
                 }
 
-                let item = this.SetDefaultTemplate(defultTemplateId, defaultExcelTemplateId, defaultExcelNoStimId);
-                this.SelectedReportsTemplateList = item ?? null;
-                
-                 
-                this.SelectedExcelReportsTemplateList = this.ExcelReportsTemplatesLists.find(t => t.Id === defaultExcelNoStimId) ?? this.ExcelReportsTemplatesLists[0];
-                
-                this.ReportTemplatesChange(item, runReport);
-                
+                this.SelectedReportsTemplateList = this.ReportsTemplatesLists.filter(d => d.Id == this.StimulsoftArgData.DefaultTemplateId)[0];
+                this.IsRefreshReportsTemplateList = !this.IsRefreshReportsTemplateList;
+                this.ReportTemplatesChange(item);
+
             }
 
         });
 
     }
 
-
-    SetDefaultTemplate(defaultTemplateId: any, defaultExcelTemplateId: any, defaultExcelNoStimId: any = "") {
-        
-        
-        this.StimulsoftArgData.ReportsPreviewComponent.Report.DefaultTemplateId = defaultTemplateId;
-        this.StimulsoftArgData.DefaultTemplateId = defaultTemplateId;
-        this.StimulsoftArgData.DefaultExcelTemplateId = defaultExcelTemplateId;
-    
-        if (!AppTool.IsNullOrEmpty(defaultExcelNoStimId)) {
-            this.StimulsoftArgData.DefaultExcelNoStimId = defaultExcelNoStimId;
-        }
-    
-        const searchId = this.TemplateType === "E" 
-            ? this.StimulsoftArgData.DefaultExcelTemplateId 
-            : this.StimulsoftArgData.DefaultTemplateId;
-    
-        const item = this.ReportsTemplatesLists.find(t => t.Id === searchId && (this.TemplateType !== "E" || t.UseStimul));
-    
-        return item;
-    }
-
-    GetDefaultTemplate(any) {
-        if (this.TemplateType == "R") {
-            return any.DefaultTemplateId;
-        }
-        if (this.TemplateType == "E") {
-            return any.DefaultExcelTemplateId;
-        }
-    }
-    
-    ReportTypeClick(type: string, text: string) {
-        this.TemplateType = type;
-        this.LoadReportTemplate(this.StimulsoftArgData.DefaultTemplateId, false, this.StimulsoftArgData.DefaultExcelTemplateId, true, this.StimulsoftArgData.DefaultExcelNoStimId);
-        this.TemplateTypeName = text;
-    }
 
 
 
@@ -1162,7 +864,7 @@ ResetEditableField(field: EditableFieldPosition){
 
     public RefreshStimual() {
 
-        this.StimulsoftArgData.EditDocumentComponent.LoadstimulData(null, this.StimulsoftArgData.EditDocumentComponent.IsDisplayOnly, true, this.StimulsoftArgData.NumberOfPage, "GenerateReport", this.StimulsoftArgData.ReportKey, "", false);
+        this.StimulsoftArgData.EditDocumentComponent.LoadstimulData(null, this.StimulsoftArgData.EditDocumentComponent.IsDisplayOnly, true, this.StimulsoftArgData.NumberOfPage, "GenerateReport", this.StimulsoftArgData.ReportKey, "" ,false);
     }
 
 
@@ -1171,7 +873,7 @@ ResetEditableField(field: EditableFieldPosition){
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
         if (this.StimulsoftArgData.EditDocumentComponent) {
             if (this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists) {
-                var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d => d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
+                var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d=> d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
                 if (item) {
                     var isChange: boolean = false;
                     if (item.HorizontalShift != this.HorizontalShift) isChange = true;
@@ -1197,12 +899,12 @@ ResetEditableField(field: EditableFieldPosition){
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
-
+     
 
     }
     UpdateDocumentTypeTemplate(item: any, isCloseEditWindow: boolean) {
 
-        this.documentTypeTemplatePMService.update(item).subscribe((myResult: any) => {
+        this.documentTypeTemplatePMService.update(item).subscribe(myResult=> {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
@@ -1217,7 +919,7 @@ ResetEditableField(field: EditableFieldPosition){
                     //if (!this.StimulsoftArgData.EditDocumentComponent.IsDisplayOnly) {
                     //    this.StimulsoftArgData.EditDocumentComponent.SaveEditFeild();
                     //}
-                    this.StimulsoftArgData.EditDocumentComponent.CloseButtonClicked();
+                     this.StimulsoftArgData.EditDocumentComponent.CloseButtonClicked();
 
                 }
                 else {
@@ -1236,16 +938,16 @@ ResetEditableField(field: EditableFieldPosition){
     }
 
     GetDocumentTypeTemplate(Id: any, mode: string, isCloseEditWindow: boolean) {
-        this.documentTypeTemplatePMService.get(Id).subscribe((res: any) => {
+        this.documentTypeTemplatePMService.get(Id).subscribe(res=> {
             var pmResponse: ServiceResponse = res;
 
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
 
                 if (myResult) {
-                    var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d => d.Id == myResult.Id)[0];
+                    var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d=> d.Id == myResult.Id)[0];
                     if (item && this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists) {
-                        this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d => d.Id != myResult.Id);
+                        this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d=> d.Id != myResult.Id);
                         this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.push(myResult);
                     }
                     else {
@@ -1279,7 +981,7 @@ ResetEditableField(field: EditableFieldPosition){
 
         var ischange = false;
         if (this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists) {
-            var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d => d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
+            var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d=> d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
             if (item) {
 
                 if (item.HorizontalShift != this.HorizontalShift || item.VerticalShift != this.VerticalShift) {
@@ -1295,7 +997,7 @@ ResetEditableField(field: EditableFieldPosition){
 
 
     SaveShift() {
-
+   
         if (this.StimulsoftArgData.EditDocumentComponent) {
             if (this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists) {
                 var item = this.StimulsoftArgData.EditDocumentComponent.DocumentTypeTemplatePMLists.filter(d => d.Id == this.StimulsoftArgData.DocumenttypetemplateId)[0];
@@ -1307,17 +1009,17 @@ ResetEditableField(field: EditableFieldPosition){
                     item.HorizontalShift = this.HorizontalShift;
                     item.VerticalShift = this.VerticalShift;
                     if (isChange) {
-                        this.documentTypeTemplatePMService.update(item).subscribe((myResult: any) => {
+                        this.documentTypeTemplatePMService.update(item).subscribe(myResult => {
                             if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
                                 this.StimulsoftArgData.EditDocumentComponent.DataViewModel.IsRefreshPrintConrol = true;
                             }
                         });
                     }
                 }
-
+                
             }
         }
-
+      
     }
 
     ResetButtonClick() {
@@ -1332,9 +1034,6 @@ ResetEditableField(field: EditableFieldPosition){
                         element.style.borderColor = "#808080";
                         element.style.borderRadius = "0px";
                         SetNewValue(element, item.OldValue, item.ControlType);
-                        this.SetElementFontSize(item.OriginalFontSize, element);
-
-
                     }
                     else {
 
@@ -1346,11 +1045,9 @@ ResetEditableField(field: EditableFieldPosition){
                 }
 
                 item.IsEditedField = false;
+                item.Status = "";
                 item.FieldValue = item.OldValue;
                 item.NewValue = "";
-                item.FontSize = item.OriginalFontSize;
-                item.NewFontSize = null;
-                this.ResetEditableField(item);
 
             });
 
@@ -1380,13 +1077,13 @@ ResetEditableField(field: EditableFieldPosition){
     IsSaveEditField: boolean = false;
 
     SaveEditFeild(numberOfPage: number) {
-
+    
         if (this.StimulsoftArgData && this.StimulsoftArgData.EditDocumentComponent) {
             this.SaveShift();
             var editableFieldLists: any[] = [];
             if (this.EditableField != null && this.EditableField.length > 0) {
                 this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                    if (this.IsEditableFieldChanged(field)) {
+                    if (field.FieldValue != field.NewValue) {
                         editableFieldLists.push(field);
                     }
                 });
@@ -1395,7 +1092,7 @@ ResetEditableField(field: EditableFieldPosition){
             if (editableFieldLists.length > 0 || this.StimulsoftArgData.IsReset) {
                 if (this.StimulsoftArgData.IsReset) {
 
-                    this.StimulsoftArgData.EditDocumentComponent._exportDocumentService.GetResetEditableFields(this.StimulsoftArgData.EditDocumentComponent.CurrentDocumentOutId).subscribe((res: any) => {
+                    this.StimulsoftArgData.EditDocumentComponent._exportDocumentService.GetResetEditableFields(this.StimulsoftArgData.EditDocumentComponent.CurrentDocumentOutId).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             if (this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
@@ -1418,7 +1115,7 @@ ResetEditableField(field: EditableFieldPosition){
 
 
         }
-
+        
     }
 
     SaveStimualFeild(numberOfPage: number) {
@@ -1435,18 +1132,18 @@ ResetEditableField(field: EditableFieldPosition){
             filter.EditableFieldLists = [];
             if (this.EditableField != null && this.EditableField.length > 0) {
                 this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
-                    if (this.IsEditableFieldChanged(field)) {
+                    if (field.FieldValue != field.NewValue) {
                         filter.EditableFieldLists.push(field);
                     }
                 });
             }
 
             if (filter.EditableFieldLists && filter.EditableFieldLists.length > 0) {
-                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res: any) => {
+                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
-                        this.EditableField.filter(d => d.Status == "Change" ).forEach((field) => {
-                            this.ResetEditableField(field);
+                        this.EditableField.filter(d => d.Status == "Change").forEach((field) => {
+                            field.Status = "";
                         });
 
                         if (this.StimulsoftArgData.EditDocumentComponent && this.StimulsoftArgData.EditDocumentComponent.DataViewModel) {
@@ -1463,59 +1160,4 @@ ResetEditableField(field: EditableFieldPosition){
 
     }
 
-    EditMessageTemplate(selectedMessageTemplateList) {
-
-        if (!selectedMessageTemplateList) return;
-        let args = {
-            EntityId: (this.StimulsoftArgData?.EntityId) ? this.StimulsoftArgData.EntityId : null,
-            ObjectTableId: (this.StimulsoftArgData?.ObjectTableId) ? this.StimulsoftArgData.ObjectTableId : null,
-            DataViewModel: this,
-            ParentEntityId: (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : null,
-        }
-        this.schedulerReportMessageTemplateService.SetArgs(args);
-        this.schedulerReportMessageTemplateService.Edit(selectedMessageTemplateList);
-    }
-
-    
-    AddMessageTemplate() {
-        let args = {
-            EntityId: (this.StimulsoftArgData?.EntityId) ? this.StimulsoftArgData.EntityId : null,
-            ObjectTableId: (this.StimulsoftArgData?.ObjectTableId) ? this.StimulsoftArgData.ObjectTableId : null,
-            DataViewModel: this,
-            ParentEntityId: (this.StimulsoftArgData?.ReportsPreviewComponent?.Report?.Id) ? this.StimulsoftArgData.ReportsPreviewComponent.Report.Id : null,
-        }
-        this.schedulerReportMessageTemplateService.SetArgs(args);
-        this.schedulerReportMessageTemplateService.Add();
-    }
-
-    EditMessageTemplateListFromPM(reportTemplatePM) {
-        if (!reportTemplatePM) return;
-        let reportTemplateList = this.schedulerReportMessageTemplateService.MapMessageTemplatePMToList(reportTemplatePM);
-        this.MessageTemplatesLists = this.MessageTemplatesLists.filter(temp => temp.Id != reportTemplatePM.Id);
-        this.MessageTemplatesLists.push(reportTemplateList);
-        this.MessageTemplatesChange(reportTemplateList);
-        this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(temp => temp.Id == reportTemplateList.Id)[0];
-    }
-
-    AddNewMessageTemplateListFromPM(reportTemplatePM) {
-        if (!reportTemplatePM) return;
-        let reportTemplateList = this.schedulerReportMessageTemplateService.MapMessageTemplatePMToList(reportTemplatePM);
-        this.MessageTemplatesLists.push(reportTemplateList);
-        this.SelectedMessageTemplateList = this.MessageTemplatesLists.filter(temp => temp.Id == reportTemplateList.Id)[0];
-        this.MessageTemplatesChange(reportTemplateList);
-        this.EditMessageTemplate(reportTemplateList);
-    }
-
-    RefreshMessageTemplate(type: string) {
-        this.ShowMessageTemlatesLists = (type == "Email");
-    }
-
-    async ExportToExcel() {
-        
-        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = true;
-       
-        if (this.StimulsoftArgData.ReportFilterConmponent) {
-            this.RunReport();
-        }
-    }
 }

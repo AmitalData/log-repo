@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
 
                 if (isAuthentication)
                 {
-                   // SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
                     TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
                     TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(id);
                     PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -79,9 +79,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                 }
                 else
                 {
-
-                    throw new Exception("Sorry you're not authenticated to view company info.");
-
+                    throw new Exception("Sorry you’re not authenticated to view company info.");
                 }
 
 			}

@@ -1,6 +1,4 @@
 ﻿
-using Microsoft.Practices.Unity;
-using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
@@ -10,7 +8,6 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -22,21 +19,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.SystemTableServiceReference;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
-using Logitude.CustomsMessaging.Utils;
-using Simplog.Server.Infrastructure.Helpers;
 
- 
-using Devart.Data.Oracle;
-using Simplog.Data.InfrastructureModel;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Transactions;
-//using System.Data.OracleClient;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
- 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class UniCourierBatchSend1170_MsgResponseService : ResponseServiceBase
@@ -53,81 +36,85 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            var objectTableId =ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            var objectTableId =
+    //ObjectTableRepository.GetObjectTableByName("Customs.CustomsClosedTable");
+    ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
-            //var qs = new DeclarationCourierStatusQueryService(context);
-            var repo = new DeclarationCourierStatusRepository(context);
-            List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
-            decimal minValPay = GetMinValPay(requestParams.Tenant);
-
-            if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
+            var qs = new DeclarationCourierStatusQueryService(context);
+            List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
+            if (customResponse.DeclarationsList != null && customResponse.DeclarationsList.Count > 0)
             {
-
-                mess.AppendLine($"מפוצל כבר !!!");
-
-                List<DeclarationCourierStatus> ServerSplitDeclarationsList
-                    = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, customResponse.CourierMasterId);
+                listPM = qs.GetDeclarationsByIds(customResponse.DeclarationsList, requestParams.Tenant);
             }
             else
             {
-                mess.AppendLine($"ראשי - מפצל");
-                mess.AppendLine($"כל ההצהרות יפוצלו.....");
-                if (customResponse.ClientFilterDeclarationsList != null && customResponse.ClientFilterDeclarationsList.Count > 0)
+                listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+                   customResponse.SelectedBOLValue,
+                   customResponse.SelectedStatusValue,
+                   customResponse.SelectedTotalInvoiceValue);
+                if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
-                    mess.AppendLine($"סומנו בצד הלקוח ");
-
-                    listPoco = repo.GetDeclarationsByIdsExpectDecWithHatraDate(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+                    var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue);
+                    listPM = listPM.Concat(listPM2).ToList();
                 }
-                else
+            }
+            if (listPM.Count == 0)
+            {
+                mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
+            }
+            else
+            {
+
+                listPM = listPM.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
+                if (listPM.Count == 0)
                 {
-                    mess.AppendLine($"GetByMasterIDCourierManifestStatusCode");
-                    listPoco = GetByMasterIDCourierManifestStatusCode(customResponse, requestParams, repo, minValPay);
-                }
-                if (listPoco.Count == 0)
-                {
-                    mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Manifest) send for master {requestParams.AppicationId} ");
-                }
-                else
-                {
-                    if (customResponse.CourierDeclarationStatusCode == "RV")
-                    {
-                        listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode != "P")).ToList();
-                    }
-                    else
-                    {
-                        //listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
-                    }
-                        
-                    if (listPoco.Count == 0)
-                    {
-                        mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
-                    }
-                    else
-                    {
-                        //CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(requestParams, mess, objectTableId, objectTableIdCourierMaster, listPM);
-
-                        listPoco.Select(r=>r.DeclarationId).ToList().ChunkBy(100)
-    .ForEach(list100 =>
-    {
-        customResponse.ServerSplitDeclarationsList = list100;
-        customResponse.LoggingUserId = requestParams.LoggingUserId;
-
-        //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
-        var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
-        CreateDCAInUCB1170_MsgMessagingService
-        .CreateCRS_DCAIn<DCAInUCB1170WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
-
-    });
-                    }
-
-
-
+                    mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
                 }
             }
 
-            
+            foreach (var itemPM in listPM)
+            {
+                try
+                {
+                    var requestParams1170 = new MANIFESTRequestRequestParams()
+                    {
+                        Tenant = requestParams.Tenant,
+                        //IsFakeResponse = true,
+                        //RequestName = requestName,
+                        //ResponseName = responseName,
+                        LoggingEnabled = true,
+                        LoggingObjectTableId = objectTableId,
+                        LoggingEntityId = itemPM.DeclarationId,
+                        LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                        LoggingEntityId2 = objectTableIdCourierMaster,
+                        //AppicationId = itemPM.DeclarationId,
+                        InterfaceTypeCode = "1170",
+
+                        //LoggingEntityReference = declarationNumber,
+                        LoggingUserId = requestParams.LoggingUserId,
+                        RequestVIA = SendRequestVIA.WebServiceBatch,
+
+
+                        DeclarationId = itemPM.DeclarationId,
+                        LoggingEntityReference = itemPM.DeclarationId,
+                        //ImportManifest =""
+
+                    };
+
+                    SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
+                    LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                    mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                }
+                catch (System.Exception ee1)
+                {
+
+                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
+                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
+                }
+            }
 
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
 
@@ -139,195 +126,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-
-
-        private static List<DeclarationCourierStatus> GetByMasterIDCourierManifestStatusCode(DCAInUCB1170WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository qs, decimal minValPay)
-        {
-            List<DeclarationCourierStatus> listPM;
-            if (customResponse.IsWorkSheetFromExcel)
-            {
-                listPM = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "R",
-               customResponse.SelectedBOLValue,
-               customResponse.SelectedStatusValue,
-               customResponse.SelectedTotalInvoiceValue,
-               customResponse.SelectedFastIndividualProcessValue,
-               customResponse.SelectedCustomStatusValue,
-               customResponse.SelectedFinalReleaseValue, minValPay);
-                if (customResponse.CourierDeclarationStatusCode == "RV")
-                {
-                    var listPM2 = qs.GeCourierManifestStatusCodeFromExcel(requestParams.Tenant, requestParams.LoggingUserId, "V", customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue,
-                    customResponse.SelectedTotalInvoiceValue,
-                    customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue, minValPay);
-                    listPM = listPM.Concat(listPM2).ToList();
-                }
-            }
-            else
-            {
-                listPM = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
-             customResponse.SelectedBOLValue,
-             customResponse.SelectedStatusValue,
-             customResponse.SelectedTotalInvoiceValue,
-             customResponse.SelectedFastIndividualProcessValue,
-             customResponse.SelectedCustomStatusValue,
-             customResponse.SelectedFinalReleaseValue, minValPay);
-                if (customResponse.CourierDeclarationStatusCode == "RV")
-                {
-                    var listPM2 = qs.GetByMasterIDCourierManifestStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue,
-                    customResponse.SelectedTotalInvoiceValue,
-                    customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue,
-                    customResponse.SelectedFinalReleaseValue, minValPay);
-                    listPM = listPM.Concat(listPM2).ToList();
-                }
-            }
-            return listPM;
-        }
-
-        private static void CreateCRS1170UpdateCOURIERMANIFESTSTATUSCODE_Inprogress(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPM, string courierMasterId)
-        {
-            //if is EffectiveFlight : TenantPriority = 98
-            var context = CustomContext.GetContext(requestParams.Tenant);
-            CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(context);
-            bool isEffectiveFlight = myCourierMasterQueryService.GetSingle(courierMasterId, false, false)?.EffectiveFlight ?? false;
-
-
-            var listDeclarationIdCreateCRS = new List<string>();
-            foreach (var itemPM in listPM)
-            {
-                try
-                {
-                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
-                    {
-                        Create1170(requestParams, mess, objectTableId, objectTableIdCourierMaster, itemPM, isEffectiveFlight);
-
-                        RealSetDeclarationCourierManifestStatusCode(requestParams.Tenant, itemPM.DeclarationId);
-
-
-                        //string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID ='{itemPM.DeclarationId}' ";
-                        //CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-
-                        scopeNewCRS.Complete();
-                    }
-                    listDeclarationIdCreateCRS.Add(itemPM.DeclarationId);
-
-
-                }
-                catch (System.Exception ee1)
-                {
-
-                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
-                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
-                }
-            }
-//            listDeclarationIdCreateCRS.ChunkBy(100)
-//.ForEach(list100 =>
-//{
-//    string inList = String.Join(",", list100.Select(declarationId => $"'{declarationId}'").ToArray());
-//    string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
-
-//    CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-//});
-        }
-
-
-
-        public static void RealSetDeclarationCourierManifestStatusCode(int tenant, string declarationId)
-        {
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
-            if (dbms == "oracle")
-            {
-
-                using (OracleConnection con = new OracleConnection(strConnString))
-                {
-                    string cmd = "Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
-                    cmd = cmd + "  where DECLARATIONID=:p1 ";
-
-                    OracleCommand oracleCommand = new OracleCommand(cmd, con);
-                    oracleCommand.Parameters.Add(new OracleParameter("p1", declarationId));
-                    con.Open();
-                    oracleCommand.ExecuteNonQuery();
-                    con.Close();
-                }
-
-            }
-            else
-            {
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    string cmd = "Update Customs.DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I'";
-                    cmd = cmd + " where DECLARATIONID=" + "'" + declarationId + "'";
-
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
-            }
-        }
-
-
-        private static void Create1170(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, DeclarationCourierStatus itemPM, bool isEffectiveFlight)
-        {
-           
-
-            var requestParams1170 = new MANIFESTRequestRequestParams()
-            {
-                Tenant = requestParams.Tenant,
-                //IsFakeResponse = true,
-                //RequestName = requestName,
-                //ResponseName = responseName,
-                LoggingEnabled = true,
-                LoggingObjectTableId = objectTableId,
-                LoggingEntityId = itemPM.DeclarationId,
-                LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                LoggingEntityId2 = objectTableIdCourierMaster,
-                //AppicationId = itemPM.DeclarationId,
-                InterfaceTypeCode = "1170",
-
-                //LoggingEntityReference = declarationNumber,
-                LoggingUserId = requestParams.LoggingUserId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-
-
-                DeclarationId = itemPM.DeclarationId,
-                LoggingEntityReference = itemPM.DeclarationId,
-                //ImportManifest =""
-                ParentId = requestParams.CustomsRequestsSheetId,
-            };
-            if (isEffectiveFlight)
-            {
-                requestParams1170.TenantPriority = 98;
-            }
-
-            SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-            mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-        }
-
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCB1170WithResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
         }
-        private decimal GetMinValPay(int tenant)
-        {
-            const decimal fallback = 75m;
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-            var s = defaultValueQueryService.GetDefault("ISRAEL", "CGO_MINVAL_PAY", "NON", "NON", tenant);
 
-            if (string.IsNullOrWhiteSpace(s)) return fallback;
-
-            var normalized = s.Trim().Replace(",", ".");
-            if (decimal.TryParse(normalized, NumberStyles.Any, CultureInfo.InvariantCulture, out var val) && val > 0)
-                return val;
-
-            return fallback;
-        }
 
     }
 }

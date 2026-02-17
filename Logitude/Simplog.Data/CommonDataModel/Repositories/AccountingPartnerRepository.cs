@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 
@@ -17,6 +17,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
+        public AccountingPartnerRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AccountingPartnerRepository(int tenant)
         {
@@ -41,10 +45,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public AccountingPartner GetSingleAccountingPartnerByCode(string code,int tenant)
         {
             return (from record in context.AccountingPartners.Include("Card") where record.Card.Code == code && record.Tenant == tenant select record).FirstOrDefault();
-        }
-        public List<AccountingPartner> GetAccountingPartnersByIds(List<string> ids, int tenant)
-        {
-            return (from record in context.AccountingPartners where ids.Contains(record.Id) && record.Tenant == tenant select record).ToList();
         }
         public void Add(AccountingPartner entity)
         {

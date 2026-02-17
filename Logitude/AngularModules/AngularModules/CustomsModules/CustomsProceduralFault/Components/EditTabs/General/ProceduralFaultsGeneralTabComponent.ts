@@ -16,7 +16,7 @@ import { ProceduralFaultPMService } from '../../../../../Customs/Services/Standa
 import { ProceduralFaultPM } from '../../../../../Customs/EntityPMs/ProceduralFaultPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ProceduralFaultsGeneralTabComponent.html',
     providers: [EntityArgs],
 }) 
@@ -28,12 +28,10 @@ export class ProceduralFaultsGeneralTabComponent extends BaseComponent {
     public DataContext: any = this;
     public IsNewEntity: boolean = false;
     public ValidationErrorsList: any[];
-    
+
     public entityResourceService: EntityResourceService = new EntityResourceService();
     private proceduralFaultPMService: ProceduralFaultPMService = new ProceduralFaultPMService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public isEntityChange: boolean = false;
-
     constructor(public entityArgs: EntityArgs) {
         super();
     }
@@ -130,8 +128,7 @@ export class ProceduralFaultsGeneralTabComponent extends BaseComponent {
 
 
     OkButtonClicked() {
-        this.proceduralFaultPMService.update(this.EntityPM).subscribe((response:any) => {
-            this.isEntityChange = true;
+        this.proceduralFaultPMService.update(this.EntityPM).subscribe(response => {
             var result = response.Result;
             this.CurrentSession.CloseCurrentWindow();
 

@@ -1,47 +1,53 @@
 import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {BranchPM} from '../../../Common/EntityPMs/BranchPM';
 import {INTTRASettingPM} from '../../../Common/EntityPMs/INTTRASettingPM';
 import {BranchPMService} from '../../../Common/Services/StandardPMs/BranchPMService';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
 
 @Injectable()
 
 export class INTTRADomainService {
     private _apiUrl: string;
-  private _http: HttpClient;
+    private _http: Http;
     constructor() {
-      this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/INTTRADomain';
     }
 
     GetINTTRASettings() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetINTTRASettings';
 
-        return defer(() => {
-          return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var itemJSON = response;
+                var itemJSON = response.json();
                 var itemMapped: INTTRASettingsHelper = this.MapINTTRASettingsHelper(itemJSON);
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = itemMapped;
                 return serviceResponse;
 
-          }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     UpdateINTTRASettings(entityPM: INTTRASettingsHelper) {
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
             var mappedEntity: INTTRASettingsHelper = this.MapINTTRASettingsHelper(entityPM, false);
 
-          return this._http.put(this._apiUrl + '/PutINTTRASettings', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.put(this._apiUrl + '/PutINTTRASettings', JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
 
                 var mappedResult: INTTRASettingsHelper = this.MapINTTRASettingsHelper(myJsonResult, true, entityPM);
 
@@ -49,7 +55,7 @@ export class INTTRADomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-          }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     MapINTTRASettingsHelper(jsonPM: any, getCallMap: boolean = true, entity: INTTRASettingsHelper = null) {
@@ -145,24 +151,26 @@ export class INTTRADomainService {
     }
 
     GetINTTRACommunicationSettings() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetINTTRACommunicationSettings';
 
-        return defer(() => {
-          return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var itemJSON = response;
+                var itemJSON = response.json();
                 var itemMapped: INTTRACommunicationSettingsHelper = this.MapINTTRACommunicationSettingsHelper(itemJSON);
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = itemMapped;
                 return serviceResponse;
 
-          }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     UpdateINTTRACommunicationSettings(entityPM: INTTRACommunicationSettingsHelper) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -170,8 +178,8 @@ export class INTTRADomainService {
 
             var mappedEntity: INTTRACommunicationSettingsHelper = this.MapINTTRACommunicationSettingsHelper(entityPM, false);
 
-          return this._http.put(this._apiUrl + '/PutINTTRACommunicationSettings', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.put(this._apiUrl + '/PutINTTRACommunicationSettings', JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
 
                 var mappedResult: INTTRACommunicationSettingsHelper = this.MapINTTRACommunicationSettingsHelper(myJsonResult, true, entityPM);
 
@@ -179,7 +187,7 @@ export class INTTRADomainService {
                 myResponse.Result = mappedResult;
                 return myResponse;
 
-          }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     MapINTTRACommunicationSettingsHelper(jsonPM: any, getCallMap: boolean = true, entityPM: INTTRACommunicationSettingsHelper = null) {

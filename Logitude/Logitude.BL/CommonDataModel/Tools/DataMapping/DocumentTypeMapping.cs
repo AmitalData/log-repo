@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -45,7 +45,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             documentType.CustomerRoleId = documentTypePM.CustomerRoleId;
             documentType.IsAgentView = documentTypePM.IsAgentView;
             documentType.IsCustomerView = documentTypePM.IsCustomerView;
-            documentType.IsCustomerUploadPermission = documentTypePM.IsCustomerUploadPermission;
             documentType.IsReadOnly = documentTypePM.IsReadOnly;
             documentType.IsDocumentOneTimePrintLimited = documentTypePM.IsDocumentOneTimePrintLimited;
             documentType.LimitedPrintCopyId = documentTypePM.LimitedPrintCopyId;
@@ -66,17 +65,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             documentType.IsInlandDigitalSignRequired = documentTypePM.IsInlandDigitalSignRequired;
             documentType.IsSystemAdditionalPrintingFields = documentTypePM.IsSystemAdditionalPrintingFields;
             documentType.PrintingFieldsScreenCode = documentTypePM.PrintingFieldsScreenCode;
-            documentType.AddedManually = documentTypePM.AddedManually;
-
-            documentType.OnPrintPopulateDateFieldName = documentTypePM.OnPrintPopulateDateFieldName;
-
-            documentType.OnSendPopulateDateFieldName = documentTypePM.OnSendPopulateDateFieldName;
-
-            documentType.OnUploadPopulateDateFieldName = documentTypePM.OnUploadPopulateDateFieldName;
-
-
-
-
         }
     }
 }

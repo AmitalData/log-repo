@@ -28,22 +28,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int RetryNumber { get; set; }
         public DateTime? StartDate { get; set; }
         public string ExecutedByServerName { get; set; }
-         
-
-        public bool DisablePreview { get; set; }
-
-        public string SearchFields { get; set; }
-
-        public bool NotDisplayInMenu { get; set; }
 
         [ForeignKey("StatusCode")]
         public virtual CommunicationStatusType CommunicationStatusType { get; set; }
 
         [ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; }
-
-        [ForeignKey("ReportId")]
-        public virtual Report Report { get; set; }
 
 
 

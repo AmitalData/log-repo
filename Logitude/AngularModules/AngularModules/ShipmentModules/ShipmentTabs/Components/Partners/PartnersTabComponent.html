@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .BoxItemContent .Body > td {
         background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 49.79%,rgba(238, 238, 238, 1) 69.34%,rgba(226, 226, 226, 1) 83.57%,rgba(209, 209, 209, 1) 95.15%,rgba(199, 199, 199, 1) 100%);
@@ -21,10 +21,6 @@
     .BoxItemContent .Title td, .BoxItemContent .Title div, .BoxItemContent .Title span {
         line-height: 25px;
         white-space: nowrap;
-    }
-
-    .Unassigned {
-        background: rgba(247, 227, 227, 1);
     }
 
     .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
@@ -115,26 +111,25 @@
                         </td>
 
                         <td style="width: 100px" *ngIf="ShowAddPartners">
-                            <div tabindex="0" id="{{ 'PartnerToggle' | IdGeneratorAsyncPipe | async}}" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
+                            <div tabindex="0" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
                                 <label>{{'Shipment.B.Partners.AddPartners' | TextCodeTranslationPipe}}</label>
                                 <img src="./Images/ToggleIcon.png" />
                                 <div class="ToggleButtonMenu" style="width: 200px">
-                                    <button id="{{ 'SHIPR' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'Shipment.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'CONSI' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'Shipment.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'AGENT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'Shipment.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'ISSAG' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_ISSAG" (click)="AddPartner('ISSAG')" *ngIf="EntityPM.TransportModeId == 'A'">{{'Shipment.B.Partners.AddIssuingCarrierAgent' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'CSAEX' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CSAEX" (click)="AddPartner('CSAEX')">{{'Shipment.B.Partners.AddCustomsAgentExport' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'CSAIM' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CSAIM" (click)="AddPartner('CSAIM')">{{'Shipment.B.Partners.AddCustomsAgentImport' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'NOTF1' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_NOTF1" (click)="AddPartner('NOTF1')">{{'Shipment.B.Partners.AddNotify1' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'NOTF2' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_NOTF2" (click)="AddPartner('NOTF2')">{{'Shipment.B.Partners.AddNotify2' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'SHPNT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_SHPNT" (click)="AddPartner('SHPNT')">{{'Shipment.B.Partners.AddShipperNotExporter' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'CONNT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CONNT" (click)="AddPartner('CONNT')">{{'Shipment.B.Partners.AddConsigneeNotImporter' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'FRTFR' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_FRTFR" (click)="AddPartner('FRTFR')">{{'Shipment.B.Partners.AddFreightForwarder' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'COLOD' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_COLOD" (click)="AddPartner('COLOD')">Add Coloader</button>
-                                    <button id="{{ 'CLERN' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CLERN" (click)="AddPartner('CLERN')">Add Custom Clearance Point</button>
-                                    <button id="{{ 'CONSL' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CONSL" (click)="AddPartner('CONSL')">Add Consolidator</button>
-                                    <button id="{{ 'REAGT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_REAGT" (click)="AddPartner('REAGT')">Add Releasing Agent</button>
-                                    <button id="{{ 'REAGT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_TRUCK" (click)="AddPartner('TRUCK')">Add Trucker</button>
+                                    <button id="{{ 'SHIPR' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'Shipment.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'CONSI' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'Shipment.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'AGENT' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'Shipment.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'ISSAG' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_ISSAG" (click)="AddPartner('ISSAG')" *ngIf="EntityPM.TransportModeId == 'A'">{{'Shipment.B.Partners.AddIssuingCarrierAgent' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'CSAEX' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CSAEX" (click)="AddPartner('CSAEX')">{{'Shipment.B.Partners.AddCustomsAgentExport' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'CSAIM' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CSAIM" (click)="AddPartner('CSAIM')">{{'Shipment.B.Partners.AddCustomsAgentImport' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'NOTF1' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_NOTF1" (click)="AddPartner('NOTF1')">{{'Shipment.B.Partners.AddNotify1' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'NOTF2' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_NOTF2" (click)="AddPartner('NOTF2')">{{'Shipment.B.Partners.AddNotify2' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'SHPNT' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_SHPNT" (click)="AddPartner('SHPNT')">{{'Shipment.B.Partners.AddShipperNotExporter' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'CONNT' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CONNT" (click)="AddPartner('CONNT')">{{'Shipment.B.Partners.AddConsigneeNotImporter' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'FRTFR' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_FRTFR" (click)="AddPartner('FRTFR')">{{'Shipment.B.Partners.AddFreightForwarder' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'COLOD' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_COLOD" (click)="AddPartner('COLOD')">Add Coloader</button>
+                                    <button id="{{ 'CLERN' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CLERN" (click)="AddPartner('CLERN')">Add Custom Clearance Point</button>
+                                    <button id="{{ 'CONSL' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CONSL" (click)="AddPartner('CONSL')">Add Consolidator</button>
+                                    <button id="{{ 'REAGT' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_REAGT" (click)="AddPartner('REAGT')">Add Releasing Agent</button>
                                 </div>
                             </div>
                         </td>
@@ -148,14 +143,14 @@
                 <div class="MediaFill">
                     <ScrollViewer>
                         <ul>
-                            <li class="BoxItem" *ngFor="let item of ItemsCollection" [attr.data-cy]="'BoxItem_' + item.PartnerTypeName">
+                            <li class="BoxItem" *ngFor="let item of ItemsCollection">
                                 <table>
                                     <tr>
                                         <td>
                                             <div class="MediaFill">
                                                 <div class="BoxItemContent">
                                                     <table class="FixedTable">
-                                                        <tr [attr.class]="item.PartnerHeaderClassName" style="height: 25px;">
+                                                        <tr class="Title" style="height: 25px;">
                                                             <td>
                                                                 <table>
                                                                     <tr>
@@ -168,13 +163,13 @@
                                                                         </td>
 
                                                                         <td>
-                                                                            <div class="MediaFill TextTrimming" style="color: #282E30; font-size: 14px; padding-left: 5px;" data-cy="PartnerName">
+                                                                            <div class="MediaFill TextTrimming" style="color: #282E30; font-size: 14px; padding-left: 5px;">
                                                                                 {{item.Name}}
                                                                             </div>
                                                                         </td>
 
                                                                         <td style="width: 18px;">
-                                                                            <IconButton [ExternalId]="'-'+item.FullCode" *ngIf="!EntityPM.IsManifestSentToAgent || item.Code !='AGENT'" [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="item.IsEditPartnerEnabled" (click)="EditPartner(item)"></IconButton>
+                                                                            <IconButton [ExternalId]="'-'+item.FullCode" *ngIf="!EntityPM.IsManifestSentToAgent || item.Code !='AGENT'" [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="!IsEditDisabled" (click)="EditPartner(item)"></IconButton>
                                                                             <IconButton  [ExternalId]="'-'+item.FullCode" *ngIf="item.Code=='AGENT' && EntityPM.IsManifestSentToAgent" [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="false" (click)="EditPartner(item)"></IconButton>
                                                                         </td>
 

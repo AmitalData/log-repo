@@ -15,7 +15,7 @@ import { AdditionalServiceListService } from '../../../../Common/Services/Standa
 import { AdditionalServiceList } from '../../../../Common/EntityLists/AdditionalServiceList';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ContactInputTemplate.html',
 })
 
@@ -37,7 +37,7 @@ export class ContactInputTemplate extends BaseComponent {
     public ProductsList: Array<ProductItem> = [];
     public ServicesList: Array<AdditionalServiceItem> = [];
     public IsProductsAreaVisible: boolean = false;
-    public IsAdditionalServicesAreaVisible: boolean = false; 
+    public IsAdditionalServicesAreaVisible: boolean = false;
     constructor() {
         super();
         this.EntityPM = new ContactPM();
@@ -84,22 +84,16 @@ export class ContactInputTemplate extends BaseComponent {
         this.IsCustomerVisible = args.IsCustomerVisible;
         this.CardId = args.CardId;
         this.ShowSearchContacts = args.ShowSearchContacts;
-
-        if (!AppTool.IsNullOrEmpty(args.CustomerLable)) {
-            this.CustomerLable = args.CustomerLable;
-            this.CardDependencyProperty1 = args.CardDependencyProperty1;
-        }
+               
         if (!AppTool.IsNullOrEmpty(args.CustomerId)) {
             this.CustomerId = args.CustomerId;
-         
         }
-        if (args.ComponentName == "Partners") {
-            this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
-        }
+
         if (args.ComponentName == "Ticket") {
             this.CardId = args.CustomerId;
             this.EntityPM.CustomerId = args.CustomerId;
             this.CardDependencyProperty1 = args.CustomerId;
+            this.CustomerLable = args.CustomerLable;
             this.DependencyFilter1IsList = args.CardDependencyProperty1IsList;
             this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
         }
@@ -136,7 +130,7 @@ export class ContactInputTemplate extends BaseComponent {
 
     public IsEditingEnabled: boolean = false;
     public IsEditingEmailEnabled: boolean = false;
-    public IsBlockingUnifreightCustomer: boolean = false; 
+    public IsBlockingUnifreightCustomer: boolean = false;
     private SetUIProperties() {
 
         this.IsEditingEnabled = true;
@@ -147,22 +141,8 @@ export class ContactInputTemplate extends BaseComponent {
                 this.IsEditingEmailEnabled = false;
             }
         }
-
-        var isBlockingUnifreightCustomer = false;
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ExternalId)) {
-            if (this.EntityPM != null) {
-                if (SessionLocator.TenantPM.IsHybrid ) {
-                    isBlockingUnifreightCustomer = true; 
-                }
-            }
-        }
-
-        this.IsBlockingUnifreightCustomer = isBlockingUnifreightCustomer;
-        this.IsEditingEnabled = !isBlockingUnifreightCustomer;
-        this.IsEditingEmailEnabled = this.IsBlockingUnifreightCustomer == true ? false : this.IsEditingEmailEnabled;
-
-        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.IsEditingEmailEnabled );
+        
+        this.UIProperties.SetEnabled("Email", this.ObjectTableName, this.IsEditingEmailEnabled);
         this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("Position", this.ObjectTableName, this.IsEditingEnabled);
@@ -198,7 +178,7 @@ export class ContactInputTemplate extends BaseComponent {
     private BuildProductsList() {
         this.ProductsList = [];
 
-        this.DomainService.GetCardContactProducts(this.CardId, this.EntityPM.Id).subscribe((result:any) => {
+        this.DomainService.GetCardContactProducts(this.CardId, this.EntityPM.Id).subscribe(result => {
             var products: CardContactProductPM[] = result.Result;
 
             products.forEach(item => {
@@ -211,7 +191,7 @@ export class ContactInputTemplate extends BaseComponent {
         this.ServicesList = [];
 
         var service: AdditionalServiceListService = new AdditionalServiceListService();
-        service.getAllFromCache().subscribe((result:any) => {
+        service.getAllFromCache().subscribe(result => {
             var fullServicesList = result.Result;
 
             fullServicesList.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 }).forEach(item => {
@@ -249,13 +229,6 @@ export class ContactInputTemplate extends BaseComponent {
     set LocalName(newValue: string) {
         if (this.EntityPM.LocalName != newValue) {
             this.EntityPM.LocalName = newValue;
-        }
-    }
-
-    get ExternalId() { return this.EntityPM.ExternalId; }
-    set ExternalId(newValue: string) {
-        if (this.EntityPM.ExternalId != newValue) {
-            this.EntityPM.ExternalId = newValue;
         }
     }
 
@@ -414,7 +387,6 @@ export class ContactInputTemplate extends BaseComponent {
     public Info2Text: string = null;
     private loadedContact: ContactPM = null;
     private allCardContacts: any[] = [];
-    public LoadedContactId: string = null;
     public EmailLostFocus(email: string) {
 
         this.Info1Text = null;
@@ -425,12 +397,11 @@ export class ContactInputTemplate extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(email)) {
             if (email.indexOf('@') > -1 && email.indexOf('.') > -1) {
-                this.DomainService.GetContactsByEmail(email).subscribe((myResult:any) => {
+                this.DomainService.GetContactsByEmail(email).subscribe(myResult => {
                     if (myResult != null) {
                         this.loadedContact = myResult[0];
 
                         if (this.loadedContact != null) {
-                            this.LoadedContactId = this.loadedContact.Id;
                             this.EnglishName = this.loadedContact.EnglishName;
                             this.LocalName = this.loadedContact.LocalName;
                             this.Email = this.loadedContact.Email;
@@ -451,7 +422,6 @@ export class ContactInputTemplate extends BaseComponent {
                             this.IsOceanExport = this.loadedContact.IsOceanExport;
                             this.IsOceanImport = this.loadedContact.IsOceanImport;
                             this.HasCardContact = this.loadedContact.HasCardContact;
-                            this.ExternalId = this.loadedContact.ExternalId;
                             this.SetIsProductsVisible();
 
                             if (!AppTool.IsNullOrEmpty(this.CardId)) {
@@ -504,20 +474,6 @@ export class ContactInputTemplate extends BaseComponent {
         }
 
         return errors;
-    }
-
-    IsInactiveContactExists() {
-        var output: boolean = false;
-
-        if (this.CardId) {
-            if (this.loadedContact) {
-                if (this.loadedContact.InActive) {
-                    output = true;
-                }
-            }
-        }
-
-        return output;
     }
 
     private ValidateContactExist() {
@@ -598,7 +554,7 @@ export class AdditionalServiceItem {
             if (value) {
                 var name = null;
                 var service: AdditionalServiceListService = new AdditionalServiceListService();
-                service.getSingleFromCache(this.entityList.Id).subscribe((myResult:any) => {
+                service.getSingleFromCache(this.entityList.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         var list: AdditionalServiceList = myResponse.Result;

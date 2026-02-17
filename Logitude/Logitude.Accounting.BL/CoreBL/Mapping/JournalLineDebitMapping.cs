@@ -78,7 +78,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
                     if (parent.ControlAccountId != _JournalLine.DebitControlAccountId)
                     {
-                        throw new ApplicationException("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
+                        throw new Exception("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
                     }
                     MyLedgerTransaction.ControlAccountId = _JournalLine.DebitControlAccountId;
                     //if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
@@ -87,11 +87,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                     //}
                     if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
                     {
-                        throw new ApplicationException("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
+                        throw new Exception("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
                     }
                     //if (MyLedgerTransaction.ControlAccountId != _JournalLine.DebitControlAccountId)
                     //{
-                    //    throw new ApplicationException("(MyLedgerTransaction.ControlAccountId != _JournalLine.DebitControlAccountId)");
+                    //    throw new Exception("(MyLedgerTransaction.ControlAccountId != _JournalLine.DebitControlAccountId)");
                     //}
                 }
                 else

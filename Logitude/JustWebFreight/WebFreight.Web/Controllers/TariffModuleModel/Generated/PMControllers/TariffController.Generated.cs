@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -100,15 +100,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                         service.Update(entityPM, true);
 
-                        ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Tariff", 0, true);
-                        string email = HttpContext.Current.User.Identity.Name;
-                        ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-                        Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-                        if (loggedContact != null)
-                        {
-                            ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
-                        }
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Tariff", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
+                        //}
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -148,15 +148,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
-                        ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Tariff", 0, true);
-                        string email = HttpContext.Current.User.Identity.Name;
-                        ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-                        Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-                        if (loggedContact != null)
-                        {
-                            ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
-                        }
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Tariff", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                           //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);

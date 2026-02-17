@@ -1,4 +1,4 @@
-<style type="text/css">
+﻿<style type="text/css">
     .SystemDefaultsBox {
         width: 100%;
         height: 100%;
@@ -175,25 +175,25 @@
                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Keys"
                                                 [UseVirtuallization]="true">
 
-                                              <log-column [Alignment]="'right'" [header]="'Key'" [width]="'550'" [binding]="'Key'">
-                                                <ng-template let-item>
-                                                  <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                                    <div class="TextTrimming" text-start>
-                                                      <span>{{item.Key}}</span>
-                                                    </div>
-                                                  </log-cell-template>
-                                                </ng-template>
-                                              </log-column>
+                                                <log-column [Alignment]="'right'"
+                                                    [header]="'Key'" [width]="'550'"
+                                                    [binding]="'Key'">
+                                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                                        <div class="TextTrimming" text-start>
+                                                            <span>{{item.Key}}</span>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
 
-                                              <log-column [Alignment]="'center'" [header]="'Count'" [width]="'150'" [binding]="'Count'">
-                                                <ng-template let-item>
-                                                  <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                                    <div class="TextTrimming" [style.text-align]="'center'">
-                                                      <span>{{item.Count}}</span>
-                                                    </div>
-                                                  </log-cell-template>
-                                                </ng-template>
-                                              </log-column>
+                                                <log-column [Alignment]="'center'"
+                                                    [header]="'Count'" [width]="'150'"
+                                                    [binding]="'Count'">
+                                                    <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
+                                                        <div class="TextTrimming" [style.text-align]="'center'">
+                                                            <span>{{item.Count}}</span>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </log-column>
 
                                             </logitude-edit-grid>
 

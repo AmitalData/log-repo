@@ -50,7 +50,7 @@ GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles/QuoteModel","../../Logit
 
 
 
-GenerateAllControllers("../EntityFiles/QuoteModel","../../JustWebFreight/WebFreight.Web/Controllers","QuotesContext","QuoteModel");
+GenerateAllControllers("../EntityFiles/QuoteModel","../.../JustWebFreight/WebFreight.Web/Controllers","QuotesContext","QuoteModel");
 
 
 

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomsDocumentsDefinitionList> GetIqueryableList(IQueryable<CustomsDocumentsDefinition> iQueryable)
         {
-		IQueryable<CustomsDocumentsDefinitionList> query = (from a in iQueryable.Include("CustomDocumentType").Include("TransportMode").Include("GovernmentProcedureType").Include("CargoIdentifireType").Include("LeadDocumentType")
+		IQueryable<CustomsDocumentsDefinitionList> query = (from a in iQueryable.Include("CustomDocumentType").Include("CustomsTransportMode").Include("GovernmentProcedureType").Include("CargoIdentifireType")
                                                             select new CustomsDocumentsDefinitionList()
 											                {
 					                                            Id = a.Id,
@@ -33,13 +33,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 ProcessTypeCode = a.ProcessTypeCode,
                                                                 ProcessTypeName = a.GovernmentProcedureType != null ? a.GovernmentProcedureType.LocalName : null,
                                                                 TransportationTypeCode = a.TransportationTypeCode,
-                                                                TransportationTypeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
+                                                                TransportationTypeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
                                                                 Mandatory = a.Mandatory,
-                                                                Inactive = a.Inactive,
-                                                                DeclarationTypeCode = a.DeclarationTypeCode,
-                                                                DeclarationTypeName = a.LeadDocumentType != null ? a.LeadDocumentType.LocalName : null,
-
-                                                            });
+                                                                Inactive = a.Inactive,					
+		                    	                            });
             return query;
 		}
 

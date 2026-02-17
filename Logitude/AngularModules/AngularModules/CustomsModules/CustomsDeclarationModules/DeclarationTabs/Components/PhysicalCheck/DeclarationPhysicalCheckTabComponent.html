@@ -36,102 +36,84 @@
                                                     [ItemSource]="physicalCheckList">
                                     <!-- DeclarationNo -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.DeclarationNo' | TextCodeTranslationPipe" [binding]="'DeclarationNo'" [width]="'120'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.DeclarationNo}}</span>
                                             </div>
 
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- Customer -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.CustomerCode' | TextCodeTranslationPipe" [binding]="'CustomerName'" [width]="'140'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.CustomerName}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- StorageSite -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.StorageSiteCode' | TextCodeTranslationPipe" [binding]="'StorageSiteName'" [width]="'110'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.StorageSiteName}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- CheckSite -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.CheckSiteCode' | TextCodeTranslationPipe" [binding]="'CheckSiteName'" [width]="'110'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.CheckSiteName}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- QueueType -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.QueueTypeCode' | TextCodeTranslationPipe" [binding]="'QueueTypeName'" [width]="'110'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.QueueTypeName}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- CheckId -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.CheckId' | TextCodeTranslationPipe" [binding]="'CheckId'" [width]="'110'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.CheckId}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- LimitDate -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.LimitDate' | TextCodeTranslationPipe" [binding]="'LimitDate'" [width]="'100'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.LimitDate | DateTimeToDatePipe}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- ContainerNubmer -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.ContainerNubmer' | TextCodeTranslationPipe" [binding]="'ContainerNubmer'" [width]="'110'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.ContainerNubmer}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                     <!-- Operation -->
                                     <log-column [header]="'Customs.PhysicalCheck.F.OperationCode' | TextCodeTranslationPipe" [binding]="'OperationName'" [width]="'110'" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.OperationName}}</span>
                                             </div>
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>

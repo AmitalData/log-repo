@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -39,7 +39,6 @@ using Logitude.BL.InvoiceModel;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
-
 
 namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 { 
@@ -94,7 +93,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         APInvoiceService service = new APInvoiceService(MyContext, entityPM.Tenant);
-                        entityPM.CreatedFromAPI = true;
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

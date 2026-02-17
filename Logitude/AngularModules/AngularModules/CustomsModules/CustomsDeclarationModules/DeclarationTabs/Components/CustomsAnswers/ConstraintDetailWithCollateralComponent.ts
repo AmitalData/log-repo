@@ -31,7 +31,7 @@ import {DeclarationMessagesService} from '../../../../../Customs/Services/WebSer
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ConstraintDetailWithCollateralComponent.html',
 })
 
@@ -130,7 +130,7 @@ export class ConstraintDetailWithCollateralComponent extends BaseComponent {
 
     ColleteralButtonClicked() {
         var windowArgs: any = {};
-            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe((response:any) => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe(response => {
                 
                 windowArgs.CurrentEntity = this.customsCollateralPM;
                 var logWindow = new LogitudeWindow();

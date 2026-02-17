@@ -16,7 +16,7 @@ import {StateList} from '../../../EntityLists/StateList';
 import {CountryList} from '../../../EntityLists/CountryList';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditBranchAddressComponent.html',
 })
 
@@ -234,7 +234,7 @@ export class AddEditBranchAddressComponent extends BaseComponent {
         var myService: AddressPMService = new AddressPMService();
 
         if (AppTool.IsNullOrEmpty(this.AddressPM.Id)) {
-            myService.insert(this.AddressPM).subscribe((myResult:any) => {
+            myService.insert(this.AddressPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.StopBusyIndicator();
@@ -249,7 +249,7 @@ export class AddEditBranchAddressComponent extends BaseComponent {
         }
 
         else {
-            myService.update(this.AddressPM).subscribe((myResult:any) => {
+            myService.update(this.AddressPM).subscribe(myResult => {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     this.CurrentSession.StopBusyIndicator();

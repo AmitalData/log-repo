@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -37,8 +37,6 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.CommonDataModel;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -46,7 +44,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
     public partial class GLAccountsController : ApiController
     {
-      
+
 
         public HttpResponseMessage GetSingleByDispalyNumberAndTenant(string displayNumber, int tenant)
         {
@@ -70,28 +68,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-        public HttpResponseMessage GetTotalOpenChequesInLocalCurById(string glaccountId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", tenant);
 
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                GLAccountQueryService gLAccountQuery = new GLAccountQueryService(MyContext);                
-                decimal TotalOpenChequesInLocalCur = gLAccountQuery.GetTotalOpenChequesInLocalCurById(glaccountId, tenant);                
-
-                return Request.CreateResponse(HttpStatusCode.OK, TotalOpenChequesInLocalCur);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
         public HttpResponseMessage CheckIfSplitted(string accountId)
         {
             try
@@ -253,7 +230,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                  return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetConnectedCardsForGLAccount(string accountId)
         {
             try
@@ -275,56 +252,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-        public HttpResponseMessage GetGLAReconcilationCount(string accountId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("GLAccount", "READ", authToken.Tenant);
-
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(authToken.Tenant);
-                var reconcilationCount = LedgerTransactionreop.getRecoCount(accountId, authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, reconcilationCount);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
 
 
 
 
-
-
-         //[HttpPost]
-        //public HttpResponseMessage UpdateFromCsv(ImageParameter fileUploadParamerter)
-        //{
-        //    try
-        //    {
-        //        string token = HttpContext.Current.Request.Headers["Token"];
-        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-        //        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-        //        ICommonDataContext objectContext = CommonDataContext.GetContext(authToken.Tenant);
-        //        IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
-
-        //        GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(accountingContext, new Dictionary<string, IContext>(), authToken.Tenant);
-        //        byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
-        //        var res = gLAccountUpdateService.UpdateFromCsv(data, authToken.Tenant);
-
-        //        return Request.CreateResponse(HttpStatusCode.OK, res);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-        //    }
-        //}
-  
         public HttpResponseMessage GetSingleByInternalNumberAndTenant(string internalNumber, int tenant)
         {
             try
@@ -349,7 +280,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         }
 
 
-        
+      
 
 
 

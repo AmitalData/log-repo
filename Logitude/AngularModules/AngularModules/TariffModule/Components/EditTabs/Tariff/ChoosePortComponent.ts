@@ -6,7 +6,7 @@ import { PortList } from '../../../../Common/EntityLists/PortList';
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ChoosePortComponent.html',
 })
 

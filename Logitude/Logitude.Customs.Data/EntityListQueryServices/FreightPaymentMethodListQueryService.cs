@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
-using Logitude.Customs.Data.CustomFilters;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -36,8 +35,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<FreightPaymentMethod> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<FreightPaymentMethod> iQueryable)
         {
-            FreightPaymentMethodCustomFilters customFilters = new FreightPaymentMethodCustomFilters();
-            iQueryable = customFilters.GetFilteredQuery(queryOperations, iQueryable);
             return iQueryable;
         }
 	}

@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -15,7 +15,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Validators;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Transactions;
 using Logitude.Server.Tools.Counters;
@@ -43,9 +43,6 @@ using System.Data.Entity;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
-using System.ComponentModel;
-using WebFreight.Web.Helpers.APIHelpers;
-using Logitude.SystemLogs;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -64,11 +61,9 @@ namespace WebFreight.Web.WcfApi
             Response response = new Response();
             try
             {
-                if (!entityPM.IsCustomShipment) {
-                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                    SecurityUtility.CheckContactFeature("Shipment", "UPDATE", entityPM.Tenant);//UPDATE//READ
-				}
-				using (TransactionScope scope = TransactionFactory.GetTransaction())
+                SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "UPDATE", entityPM.Tenant);//UPDATE//READ
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     //IdCounter.GetNumber("Shipment", 1);
                     //Thread.Sleep(6000);
@@ -94,11 +89,6 @@ namespace WebFreight.Web.WcfApi
                     TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
                     TenantQuery tenantQuery = new TenantQuery(tenantRepository);
                     TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-                    CountryRepository countryRepository = new CountryRepository(commoncontext);
-                    AddressRepository addressRepository = new AddressRepository(commoncontext);
-                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext);
-                    ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
-
                     // ???????????
                     //"system@tenant1.com"
 
@@ -113,13 +103,13 @@ namespace WebFreight.Web.WcfApi
                     if (String.IsNullOrEmpty(entityPM.VolumeUnitCode))
                         entityPM.VolumeUnitCode = tenantPM.VolumeUnitCode;
 
-                    if (String.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
-                        entityPM.GrossWeightUnitCode = tenantPM.GrossWeightUnitCode;
+					if (String.IsNullOrEmpty(entityPM.GrossWeightUnitCode))
+						entityPM.GrossWeightUnitCode = tenantPM.GrossWeightUnitCode;
 
-                    if (String.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
-                        entityPM.ChargeableWeightUnitCode = tenantPM.ChargeableWeightUnitCode;
-
-                    if (string.IsNullOrEmpty(entityPM.StatusId))
+					if (String.IsNullOrEmpty(entityPM.ChargeableWeightUnitCode))
+						entityPM.ChargeableWeightUnitCode = tenantPM.ChargeableWeightUnitCode;
+ 
+					if (string.IsNullOrEmpty(entityPM.StatusId))
                     {
                         EntityStatus status = EntityStatusRepository.GetSingleEntityStatusByCode("OPOP", entityPM.Tenant, true);
                         if (status == null)
@@ -141,44 +131,36 @@ namespace WebFreight.Web.WcfApi
                         else
                         {
                             response.HasError = true;
-                            response.ErrorMessage = $"StatusId value doesn't exist in the database, insert this entity before using it. Tenant:[{entityPM.Tenant}];StatusCode:[{entityPM.StatusId}]";
+                            response.ErrorMessage = "StatusId field doesn't exist in the database,Upsert this entity before using it.";
                             return response;
                         }
 
                     }
-                    User user = null;
 
-					if(!entityPM.IsCustomShipment) 
-                    { 
-                       ClassLevelValidator validationClass = new ClassLevelValidator("Shipment", entityPM.Tenant) { IsHybrid = true };
-                       if (!validationClass.IsValid(entityPM, entityPM, null))
-                       {
-                           response.HasError = true;
-                           response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
-                           return response;
-                       }
-					
 
-					    user = userrepository.GetSingleUserByCode(entityPM.CreatedByUserId, entityPM.Tenant, true);
-                       if (user != null)
-                       {
-                           entityPM.CreatedByUserId = user.Id;
-                       }
-                       else
-                       {
-                           response.HasError = true;
-                           response.ErrorMessage = "CreatedByUserId field doesn’t  exist!";
-                           return response;
-                       }
-					}
+                    ClassLevelValidator validationClass = new ClassLevelValidator("Shipment", entityPM.Tenant) { IsHybrid = true };
+                    if (!validationClass.IsValid(entityPM, entityPM, null))
+                    {
+                        response.HasError = true;
+                        response.ErrorMessage = validationClass.GetErrorMessage(entityPM, null);
+                        return response;
+                    }
+
+                    User user = userrepository.GetSingleUserByCode(entityPM.CreatedByUserId, entityPM.Tenant, true);
+                    if (user != null)
+                    {
+                        entityPM.CreatedByUserId = user.Id;
+                    }
                     else
                     {
-						 user = userrepository.GetSingleUserById(entityPM.CreatedByUserId);
-					}
-					if (string.IsNullOrWhiteSpace(entityPM.MasterShipmentDataId))
-                    {
-                        entityPM.MasterShipmentDataId = null;
+                        response.HasError = true;
+                        response.ErrorMessage = "CreatedByUserId field doesn’t  exist!";
+                        return response;
                     }
+					if (string.IsNullOrWhiteSpace(entityPM.MasterShipmentDataId))
+					{
+						entityPM.MasterShipmentDataId = null;
+					}
 
                     #region Resolving Keys
 
@@ -353,22 +335,6 @@ namespace WebFreight.Web.WcfApi
                         }
                     }
 
-                    if (entityPM.TruckerId != null)
-                    {
-                        Trucker trucker = truckerRepository.GetSingleTruckerByCode(entityPM.TruckerId, entityPM.Tenant);
-                        if (trucker != null)
-                        {
-                            entityPM.TruckerId = trucker.Id;
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "TruckerId field doesn't exist in the database, Upsert this entity before using it.";
-                            return response;
-                        }
-                    }
-
-
                     if (entityPM.MainCarriageCarrierId != null)
                     {
                         string cardId = cardsReporistory.GetCardIdByCode(entityPM.MainCarriageCarrierId, entityPM.Tenant);
@@ -494,22 +460,16 @@ namespace WebFreight.Web.WcfApi
                     if (!string.IsNullOrEmpty(entityPM.QuoteNumber))
                     {
                         QuoteRepository quoteRepository = new QuoteRepository(entityPM.Tenant);
-						Quote quoteEntity = quoteRepository.GetQuoteByNumber(entityPM.QuoteNumber, entityPM.Tenant);
-                        if (quoteEntity != null)
+                        string quoteentityId = quoteRepository.GetQuoteId(entityPM.QuoteNumber, entityPM.Tenant);
+                        if (quoteentityId != null)
                         {
-                            entityPM.QuoteId = quoteEntity.Id;
-
-                            quoteEntity.ShipmentNumber = entityPM.ShipmentNumber;
-                            quoteRepository.Update(quoteEntity);
-                            quoteRepository.SubmitChanges();
-						}
+                            entityPM.QuoteId = quoteentityId;
+                        }
                         else
                         {
-                            ExceptionHandler.HandleException(new Exception("QuoteNumber field doesn't exist in the database"), DateTime.Now, entityPM.Tenant, 
-                                null, null, "QuoteNumber field doesn't exist in the database,Upsert this entity before using it.",  null);
-                            //response.HasError = true;
-                            //response.ErrorMessage = "QuoteNumber field doesn't exist in the database,Upsert this entity before using it.";
-                            //return response;
+                            response.HasError = true;
+                            response.ErrorMessage = "QuoteNumber field doesn't exist in the database,Upsert this entity before using it.";
+                            return response;
                         }
                     }
 
@@ -672,7 +632,7 @@ namespace WebFreight.Web.WcfApi
                                     return response;
                                 }
                             }
-                            else
+                            ﻿else
                             {
                                 response.HasError = true;
                                 response.ErrorMessage = "PackageTypeId field is required";
@@ -682,42 +642,15 @@ namespace WebFreight.Web.WcfApi
 
                     }
 
-                    MapShipmentPickUps(entityPM, cardsReporistory, countryRepository);
-                    MapShipmentDeliveries(entityPM, cardsReporistory, countryRepository);
-
                     #endregion
-
-                    #region WarehouseLeg
-                    MapWarehouseLeg(entityPM, cardsReporistory, addressRepository);
-                    #endregion
-
-                    #region CustomAgent
-                    MapCustomAgent(entityPM, cardsReporistory);
-                    #endregion
-
-                    #region ForwarderPartner
-                    MapForwarderPartnert(entityPM, cardsReporistory);
-                    #endregion
-
-                    #region FreightForwarder
-                    MapFreightForwarder(entityPM, cardsReporistory);
-                    #endregion
-
-                    CalculateShipmentPackagesTotalFields(entityPM);
-
-                    MapDatesFields(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
 
                     if (response.HasError)
                     {
                         return response;
                     }
-                    Contact contact = null;
-					if (!entityPM.IsCustomShipment)
-                     contact = ContactRepository.GetSingleContact(user.Id, entityPM.Tenant, true);
-                    else
-					 contact = ContactRepository.GetSingleContact(user.Id, user.Tenant, true);
 
-					ShipmentService service = null;
+                    Contact contact = ContactRepository.GetSingleContact(user.Id, entityPM.Tenant, true);
+                    ShipmentService service = new ShipmentService(objectContext, entityPM, contact.Email);
 
                     Shipment entity = shipmentRepository.GetSingleShipmentOnlyByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
                     if (entity == null)
@@ -725,8 +658,7 @@ namespace WebFreight.Web.WcfApi
 
                         entityPM.StatusDate = entityPM.CreateDateTime;
 
-                        service = new ShipmentService(objectContext, entityPM, contact.Email);
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(),new List<ShipmentUnassignedFieldPM>());
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>());
 
                         service.Create();
 
@@ -769,7 +701,18 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusId = entity.StatusId;
                         entityPM.StatusDate = entity.StatusDate;
                         entityPM.LastStatusLogDate = entity.LastStatusLogDate;
-                        entityPM.IsShipmentOrder = false;
+
+
+                        ShipmentPackageQuery shipPackageQuery = new ShipmentPackageQuery(new ShipmentPackageRepository(objectContext));
+                        List<ShipmentPackagePM> shipmentPackages = shipPackageQuery.GetShipmentPackages(entity.Id, entity.ShipmentNumber, entity.Tenant);
+                        foreach (ShipmentPackagePM package in shipmentPackages)
+                        {
+                            package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                            entityPM.ShipmentPackages.Add(package);
+                        }
+
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>());
+
 
                         if (entity.ShipmentLevelCode == "H" && entityPM.ShipmentLevelCode == "D")
                         {
@@ -780,38 +723,6 @@ namespace WebFreight.Web.WcfApi
                         {
                             entityPM.ConvertFromDirectToHouse = true;
                         }
-
-                        service = new ShipmentService(objectContext, entityPM, contact.Email);//Prob... Refactore on ShipmentService.
-
-                        ShipmentPackageQuery shipPackageQuery = new ShipmentPackageQuery(new ShipmentPackageRepository(objectContext));
-                        List<ShipmentPackagePM> shipmentPackages = shipPackageQuery.GetShipmentPackages(entity.Id, entity.ShipmentNumber, entity.Tenant);
-                        foreach (ShipmentPackagePM package in shipmentPackages)
-                        {
-                            package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                            entityPM.ShipmentPackages.Add(package);
-                        }
-
-
-                        var shipmentPickUpQuery = new ShipmentPickUpQuery(new ShipmentPickUpDeliveryRepository(objectContext));
-                        List<ShipmentPickUpPM> shipmentPickUps = shipmentPickUpQuery.GetShipmentPickUpPMsByTenantAndShipment(entity.Id, entity.Tenant);
-                        foreach (var pickUpPM in shipmentPickUps)
-                        {
-                            pickUpPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                            entityPM.ShipmentPickUps.Add(pickUpPM);
-                        }
-
-                        var shipmentDeliveryQuery = new ShipmentDeliveryQuery(new ShipmentPickUpDeliveryRepository(objectContext));
-                        List<ShipmentDeliveryPM> shipmentDeliveries = shipmentDeliveryQuery.GetShipmentDeliveryPMsByTenantAndShipment(entity.Id, entity.Tenant);
-                        foreach (var deliveryPM in shipmentDeliveries)
-                        {
-                            deliveryPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                            entityPM.ShipmentDeliveries.Add(deliveryPM);
-                        }
-
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
-
-
-
 
                         if (entityPM.ShipmentLevelCode == "A")
                         {
@@ -831,7 +742,7 @@ namespace WebFreight.Web.WcfApi
                                     shipment.ExceptionDate = entity.ExceptionDate;
                                     shipment.ExceptionDescription = entity.ExceptionDescription;
                                     shipment.LastExceptionDescription = entity.LastExceptionDescription;
-
+                                    
                                     shipmentRepository.Update(shipment);
                                 }
 
@@ -852,66 +763,19 @@ namespace WebFreight.Web.WcfApi
                             entityPM.NoFreightFile = !hasConnectedShipments;
                         }
 
-                        if (entityPM.DirectionId != entity.DirectionId)
-                        {
-                            var vResponse = ValidateDirectionConversion(entityPM);
-                            if (vResponse.HasError)
-                            {
-                                return vResponse;
-                            }
-                            else
-                            {
-                                DirectionRepository directionRepository = new DirectionRepository(0);
-                                var directionsList = directionRepository.GetDirections();
-                                var oldDirectionName = directionsList.FirstOrDefault(d => d.Id == entity.DirectionId);
-                                var currentDirectionName = directionsList.FirstOrDefault(d => d.Id == entityPM.DirectionId);
-
-                                entityPM.ShipmentDirectionConverted = true;
-                                entityPM.EventNote = "Converted from [" + oldDirectionName + "] to [" + currentDirectionName + "]";
-                            }
-
-                        }
-                        if (entityPM.IsCustomShipment)
-                        {
-							entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
-							entityPM.StatusId = entity.StatusId;
-							entityPM.ShipmentNumber = entity.ShipmentNumber;
-							entityPM.BranchId = entity.BranchId;
-							entityPM.CreatedByUserId = entity.CreatedByUserId;
-							entityPM.DepartmentId = entity.DepartmentId;
-							entityPM.DirectionId = entity.DirectionId;
-							entityPM.TransportModeId = entity.TransportModeId;
-							entityPM.FreightPrepaidCollectId = entity.FreightPrepaidCollectId;
-							entityPM.OtherPrepaidCollectId = entity.OtherPrepaidCollectId;
-							entityPM.CustomerId = entity.CustomerId;
-							entityPM.UpdatedByUserId = entity.UpdatedByUserId;
-							entityPM.LastUpdateDate = DateTime.Now;
-						}
-
                         service.Update();
 
                         entityPM.SecurityKey = entity.SecurityKey;
 
                     }
 
-                    if (entityPM != null)
-                    {
-                        RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
-                    }
-
+                    // RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
                     response.Result = entityPM.Id;
                     response.Result2 = entityPM.SecurityKey;
 
                     scope.Complete();
                     return response;
                 }
-            }
-            catch (ApplicationException ex)
-            {
-                response.HasError = true;
-                response.ErrorMessage = ex.Message;
-                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
-                return response;
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
             {
@@ -950,385 +814,8 @@ namespace WebFreight.Web.WcfApi
             }
 
 
-        }
-
-        private static void CalculateShipmentPackagesTotalFields(ShipmentPM entityPM)
-        {
-            double? shipmentChargeableWeight = entityPM.ChargeableWeight;
-            double? shipmentGrossWeight = entityPM.GrossWeight;
-            ComputeHelper.ComputeTotals(entityPM);
-            CalculateChargeableWeight(entityPM, shipmentChargeableWeight);
-            CalculateGrossWeight(entityPM, shipmentGrossWeight);
-        }
-
-        private static void CalculateChargeableWeight(ShipmentPM entityPM, double? shipmentChargeableWeight)
-        {
-            if (shipmentChargeableWeight == entityPM.ChargeableWeight) return;
-            entityPM.ChargeableWeight = shipmentChargeableWeight;
-            entityPM.ChargeableWeightEdited = true;
-        }
-
-        private static void CalculateGrossWeight(ShipmentPM entityPM, double? shipmentGrossWeight)
-        {
-            if (shipmentGrossWeight == entityPM.GrossWeight) return;
-            entityPM.GrossWeight = shipmentGrossWeight;
-            entityPM.GrossWeightEdited = true;
-        }
-
-        private void MapDatesFields(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
-        {
-            Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
-
-            if (shipment == null)
-                return;
-              
-            ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(shipment.Id, entityPM.Tenant);
-
-            if (shipmentAdditionalCloudData == null)
-                return;
-            
-            MapPaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository, shipmentAdditionalCloudData);
-            shipmentAdditionalCloudData.GatepassDocumentsReady = entityPM.GatepassDocumentsReady;
-            shipmentAdditionalCloudData.GoodsClassification = entityPM.GoodsClassification;
-            shipmentAdditionalCloudData.DocumentInspection = entityPM.DocumentInspection;
-            shipmentAdditionalCloudData.InvoiceIssuedDate = entityPM.InvoiceIssuedDate;
-
-            UpdateShipmentAdditionalCloudData(shipmentAdditionalCloudDataRepository, shipmentAdditionalCloudData);
 
         }
-
-        private void MapPaymentRequestDateTime(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
-        {
-            if (entityPM.PaymentRequestDateTime != null)
-            {
-                 shipmentAdditionalCloudData.PaymentRequestDateTime = entityPM.PaymentRequestDateTime;
-            }
-        }
-
-        private static void UpdateShipmentAdditionalCloudData( ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
-        {
-            shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
-            shipmentAdditionalCloudDataRepository.SubmitChanges();
-        }
-        private void MapFreightForwarder(ShipmentPM entityPM, CardRepository cardsReporistory)
-        {
-            if (entityPM.FreightForwarderId == null)
-                return;
-            string cardId = cardsReporistory.GetCardIdByCode(entityPM.FreightForwarderId, entityPM.Tenant);
-
-            if(string.IsNullOrEmpty(cardId))
-                throw new ApplicationException("FreightForwarderId field doesn't exist in the database,Upsert this entity before using it.");
-
-            entityPM.FreightForwarderId = cardId;
-
-        }
-
-
-        private void MapForwarderPartnert(ShipmentPM entityPM, CardRepository cardsReporistory)
-        {
-           if (entityPM.ForwarderPartnerId != null)
-            {
-                string cardId = cardsReporistory.GetCardIdByCode(entityPM.ForwarderPartnerId, entityPM.Tenant);
-                if (!string.IsNullOrEmpty(cardId))
-                {
-                    entityPM.ForwarderPartnerId = cardId;
-                }
-                else
-                {
-                    throw new ApplicationException("ForwarderPartnerId field doesn't exist in the database,Upsert this entity before using it.");
-                }
-            }
-              
-        }
-
-        private void MapCustomAgent(ShipmentPM entityPM, CardRepository cardsReporistory)
-        {
-
-            if (entityPM.CustomAgentImportId == "--")
-            {
-                entityPM.CustomAgentImportId = null;
-            }
-
-            if (entityPM.CustomAgentImportId != null)
-            {
-                Card customAgent = cardsReporistory.GetSingleCardByCode(entityPM.CustomAgentImportId, entityPM.Tenant, false);
-
-                if (customAgent != null && !string.IsNullOrEmpty(customAgent.Id))
-                {
-                    entityPM.CustomAgentImportId = customAgent.Id;
-                }
-                else
-                {
-                    throw new ApplicationException("CustomAgentImportId field doesn't exist in the database, Upsert this entity before using it.");
-                }
-            }
-         
-        }
-
-        private  void MapShipmentPickUps(ShipmentPM entityPM, CardRepository cardsReporistory, CountryRepository countryRepository)
-        {
-            foreach (var pickUp in entityPM.ShipmentPickUps)
-            {
-                pickUp.ChangeSetOp = ChangeSetOperation.Insert;
-                pickUp.PickUpDeliveryTypeCode = "PICK";
-                if (pickUp.CarrierId != null)
-                {
-                    string cardId = cardsReporistory.GetCardIdByCode(pickUp.CarrierId, entityPM.Tenant);
-                    if (!string.IsNullOrEmpty(cardId))
-                    {
-                        pickUp.CarrierId = cardId;
-                    }
-                    else
-                    {
-                        throw new ApplicationException($"Pickup CarrierId field ({pickUp.CarrierId}) doesn't exist in the database,Upsert this entity before using it.");
-                    }
-                }
-
-                if (pickUp.FromAddressCountryId != null)
-                {
-                    var entityId = countryRepository.GetCountryIdByCode(pickUp.FromAddressCountryId, entityPM.Tenant);
-                    if (!string.IsNullOrEmpty(entityId))
-                    {
-                        pickUp.FromAddressCountryId = entityId;
-                    }
-                    else
-                    {
-                        throw new ApplicationException($"Pickup FromAddressCountryId field ({pickUp.FromAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
-                    }
-                }
-
-                if (pickUp.ToAddressCountryId != null)
-                {
-                    var entityId = countryRepository.GetCountryIdByCode(pickUp.ToAddressCountryId, entityPM.Tenant);
-                    if (!string.IsNullOrEmpty(entityId))
-                    {
-                        pickUp.ToAddressCountryId = entityId;
-                    }
-                    else
-                    {
-                        throw new ApplicationException($"Pickup ToAddressCountryId field ({pickUp.ToAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
-                    }
-                }
-
-                if (string.IsNullOrEmpty(pickUp.PickUpDeliveryFromTypeCode))
-                {
-                    pickUp.PickUpDeliveryFromTypeCode = "CASL";
-                }
-                if (string.IsNullOrEmpty(pickUp.PickUpDeliveryToTypeCode))
-                {
-                    pickUp.PickUpDeliveryToTypeCode = "CASL";
-                }
-
-                if (string.IsNullOrEmpty(pickUp.TransportModeCode))
-                {
-                    pickUp.TransportModeCode = "BYTR";
-                }
-
-                if(pickUp.PickUpDeliveryFromTypeCode == "CASL")
-                {
-                    var errorsStrBuilder = new StringBuilder();
-                    if (pickUp.FromAddressCountryId == null)
-                        errorsStrBuilder.Append("FromAddressCountryId field is required");
-                    if (pickUp.FromAddressCity == null)
-                        errorsStrBuilder.Append("FromAddressCity field is required");
-
-                    if (pickUp.ToAddressCountryId == null)
-                        errorsStrBuilder.Append("ToAddressCountryId field is required");
-                    if (pickUp.ToAddressCity == null)
-                        errorsStrBuilder.Append("ToAddressCity field is required");
-                }
-
-            }
-        }
-
-        private void MapShipmentDeliveries(ShipmentPM entityPM, CardRepository cardsReporistory, CountryRepository countryRepository)
-        {
-            foreach (var deliveryPM in entityPM.ShipmentDeliveries)
-            {
-                deliveryPM.ChangeSetOp = ChangeSetOperation.Insert;
-                deliveryPM.PickUpDeliveryTypeCode = "DELV";
-                if (deliveryPM.CarrierId != null)
-                {
-                    string cardId = cardsReporistory.GetCardIdByCode(deliveryPM.CarrierId, entityPM.Tenant);
-                    if (!string.IsNullOrEmpty(cardId))
-                    {
-                        deliveryPM.CarrierId = cardId;
-                    }
-                    else
-                    {
-                        throw new ApplicationException($"Pickup CarrierId field ({deliveryPM.CarrierId}) doesn't exist in the database,Upsert this entity before using it.");
-                    }
-                }
-
-                if (deliveryPM.FromAddressCountryId != null)
-                {
-                    var entityId = countryRepository.GetCountryIdByCode(deliveryPM.FromAddressCountryId, entityPM.Tenant);
-                    if (!string.IsNullOrEmpty(entityId))
-                    {
-                        deliveryPM.FromAddressCountryId = entityId;
-                    }
-                    else
-                    {
-                        throw new ApplicationException($"Pickup FromAddressCountryId field ({deliveryPM.FromAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
-                    }
-                }
-
-                if (deliveryPM.ToAddressCountryId != null)
-                {
-                    var entityId = countryRepository.GetCountryIdByCode(deliveryPM.ToAddressCountryId, entityPM.Tenant);
-                    if (!string.IsNullOrEmpty(entityId))
-                    {
-                        deliveryPM.ToAddressCountryId = entityId;
-                    }
-                    else
-                    {
-                        throw new ApplicationException($"Pickup ToAddressCountryId field ({deliveryPM.ToAddressCountryId}) doesn't exist in the database,Upsert this entity before using it.");
-                    }
-                }
-
-                if (string.IsNullOrEmpty(deliveryPM.PickUpDeliveryFromTypeCode))
-                {
-                    deliveryPM.PickUpDeliveryFromTypeCode = "CASL";
-                }
-                if (string.IsNullOrEmpty(deliveryPM.PickUpDeliveryToTypeCode))
-                {
-                    deliveryPM.PickUpDeliveryToTypeCode = "CASL";
-                }
-
-                if (string.IsNullOrEmpty(deliveryPM.TransportModeCode))
-                {
-                    deliveryPM.TransportModeCode = "BYTR";
-                }
-
-                if (deliveryPM.PickUpDeliveryFromTypeCode == "CASL")
-                {
-                    var errorsStrBuilder = new StringBuilder();
-                    if (deliveryPM.FromAddressCountryId == null)
-                        errorsStrBuilder.Append("FromAddressCountryId field is required");
-                    if (deliveryPM.FromAddressCity == null)
-                        errorsStrBuilder.Append("FromAddressCity field is required");
-
-                    if (deliveryPM.ToAddressCountryId == null)
-                        errorsStrBuilder.Append("ToAddressCountryId field is required");
-                    if (deliveryPM.ToAddressCity == null)
-                        errorsStrBuilder.Append("ToAddressCity field is required");
-                }
-
-            }
-        }
-
-        private void MapWarehouseLeg(ShipmentPM entityPM, CardRepository cardsReporistory, AddressRepository addressRepository)
-        {
-            if (entityPM.WarehouseLegWarehouseId == "--")
-                entityPM.WarehouseLegWarehouseId = null;
-            
-            if (entityPM.WarehouseLegWarehouseId != null)
-            {
-                Card warehouseCard = cardsReporistory.GetSingleCardByCode(entityPM.WarehouseLegWarehouseId, entityPM.Tenant, false);
-                if (warehouseCard != null && !string.IsNullOrEmpty(warehouseCard.Id))
-                {
-                    entityPM.WarehouseLegWarehouseId = warehouseCard.Id;
-                    entityPM.WarehouseLegTerminalName = warehouseCard.EnglishName;
-                    //MapWarehouseLegAddressId(entityPM, addressRepository, warehouseCard.Id);
-                }
-                else
-                {
-                    throw new ApplicationException("WarehouseLegWarehouseId field doesn't exist in the database,Upsert this entity before using it.");
-                }
-            }
-            else if(entityPM.WarehouseLegActualEntryDate != null)
-            {
-                throw new ApplicationException("WarehouseLegWarehouseId field doesn't exist in the database,Upsert WarehouseLegWarehouseId before using WarehouseLegActualEntryDate");
-            }
-        }
-
-        private static void MapWarehouseLegAddressId(ShipmentPM entityPM, AddressRepository addressRepository, string warehouseCardId)
-        {
-            Address warehouseAddress = addressRepository.GetMainAddressByCardId(warehouseCardId, entityPM.Tenant);
-            if (warehouseAddress != null)
-            {
-                entityPM.WarehouseLegAddressId = warehouseAddress.Id;
-            }
-        }
-
-        private static Response ValidateDirectionConversion(ShipmentPM entityPM)
-        {
-            Response response = new Response(); 
-            StringBuilder errors = new StringBuilder();
-            var isInlandDomestic = entityPM.TransportModeId == "I" && entityPM.DirectionId == "D";
-            if (isInlandDomestic)
-            {
-                if (string.IsNullOrEmpty(entityPM.ConsigneeId))
-                {
-                    errors.AppendLine("ConsigneeId field is required.");
-                }
-
-                if (string.IsNullOrEmpty(entityPM.ShipperId))
-                {
-                    errors.AppendLine("ShipperId field is required.");
-                }
-
-                if (entityPM.ShipmentLevelCode == "C")
-                {
-
-                    errors.AppendLine("Master inland domestic are not allowed");
-                }
-
-                else if (entityPM.ShipmentLevelCode == "H")
-                {
-                    errors.AppendLine("House inland domestic shipments are not allowed");
-                }
-
-                if (entityPM.ShipmentLevelCode != "C")
-                {
-                    if (!string.IsNullOrEmpty(entityPM.ShipperId) && !string.IsNullOrEmpty(entityPM.ConsigneeId))
-                    {
-                        if (entityPM.FromCountryId != entityPM.ToCountryId)
-                        {
-                            if (entityPM.FromCountryIsEC == false || entityPM.ToCountryIsEC == false)
-                            {
-                                errors.AppendLine("Both Addresses must be in the same country since the direction is Domestic");
-                            }
-                        }
-                    }
-                }
-            }
-
-            else
-            {
-                if (string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
-                {
-                    errors.AppendLine("MainCarriageFromPortId field is required.");
-                }
-                if (entityPM.DirectionId == "D")
-                {
-                    if (!string.IsNullOrEmpty(entityPM.MainCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
-                    {
-                        if (entityPM.FromCountryId != entityPM.ToCountryId)
-                        {
-                            if (entityPM.FromCountryIsEC == false || entityPM.ToCountryIsEC == false)
-                            {
-                                errors.AppendLine("Both Ports must be in the same country since the direction is Domestic");
-                            }
-                        }
-                    }
-                }
-            }
-
-            //if (entityPM.ShipmentLevelCode != "C")
-            //{
-            //    if (string.IsNullOrEmpty(entityPM.CustomerId))
-            //    {
-            //        errors.AppendLine("CustomerId field is required");
-            //    }
-            //}
-
-            response.HasError = errors.Length > 0;
-            response.ErrorMessage = errors.ToString();
-
-            return response;
-        }
-
 
         public Response Cancel(string shipmentNumber, int tenant)
         {
@@ -1549,6 +1036,7 @@ namespace WebFreight.Web.WcfApi
                                 shipmentRepository.Update(entityPoco);
                                 shipmentsContext.SaveChanges();
 
+                                RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
                                 RunStoredProcedureClass.CreateShipmentQueue(entityPM.Id, entityPM.Tenant);
                             }
 
@@ -1585,8 +1073,6 @@ namespace WebFreight.Web.WcfApi
 
 
                         }
-
-                        RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
 
                         response.Result = entityPoco.StatusId;
                     }
@@ -1662,14 +1148,14 @@ namespace WebFreight.Web.WcfApi
                         ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);
                         string objectTableId = objectTable.Id;
 
-                        var shipmentEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId);
+                        List<TraceEvent> shipmentEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId).ToList();
                         List<TraceEventParams> toBuildEvents = new List<TraceEventParams>();
                         foreach (TraceEventPM traceEvent in eventsList)
                         {
                             bool exists = false;
                             if (!string.IsNullOrEmpty(traceEvent.ExternalId))
                             {
-                                exists = shipmentEvents.Where(e => e.ExternalId != null && e.ExternalId.Trim() == traceEvent.ExternalId.Trim()).Any();
+                                exists = shipmentEvents.Where(e => e.ExternalId == traceEvent.ExternalId).Any();
                             }
 
                             if (!exists)
@@ -1754,6 +1240,7 @@ namespace WebFreight.Web.WcfApi
                                     shipmentRepository.Update(entityPoco);
                                     shipmentsContext.SaveChanges();
 
+                                    RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
                                     RunStoredProcedureClass.CreateShipmentQueue(entityPM.Id, entityPM.Tenant);
                                 }
 
@@ -1828,9 +1315,6 @@ namespace WebFreight.Web.WcfApi
                             }
                         }
 
-                        RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
-
-
                         if (!response.HasError)
                         {
                             response.Result = entityPoco.StatusId;
@@ -1896,10 +1380,17 @@ namespace WebFreight.Web.WcfApi
                 string Where = " Where Shipments.Tenant = @Tenant and Shipments.IsOperationalClosed = @IsOperationalClosed and Shipments.IsCancelled = @IsCancelled";
                 if (!string.IsNullOrEmpty(filters.SearchFields))
                 { 
-                   
+                    if (LogitudeSettings.DeploymentStage == "Simplog")
+                    {
+                        parameters.Add(new SqlParameter("@SearchFields", "%" + filters.SearchFields + "%"));
+                        Where += " and Shipments.SearchFields like @SearchFields";
+                    }
+                    else
+                    {
                         parameters.Add(new SqlParameter("@SearchFields", "\"" + filters.SearchFields + "*\""));
                         Where += " and Contains(Shipments.SearchFields,@SearchFields)";
-                   
+                    }
+
                 }
                 if (filters.MyShipments && !string.IsNullOrEmpty(filters.Email))
                 {
@@ -2021,8 +1512,8 @@ namespace WebFreight.Web.WcfApi
                             //ShipmentTracing.DeleteShipmentTraceEvent(entityPM, traceEvent.Id, tenant, true);
                             this.DeleteShipmentTraceEvent(entityPM, traceEvent.Id, tenant, true);
 
-                            RunStoredProcedureClass.CreateShipmentQueue(entityPM.Id, entityPM.Tenant);
                             RunStoredProcedureClass.UpdateShipmentStatus(entityPM.Id, entityPM.Tenant);
+                            RunStoredProcedureClass.CreateShipmentQueue(entityPM.Id, entityPM.Tenant);
 
                             response.Result = entityPM.StatusId;
                         }

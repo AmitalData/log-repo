@@ -23,8 +23,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         public string ObjectFieldObjectTableName { get; set; }
 
-        public string ObjectFieldCode { get; set; }
-        public int? SectionNumber { get; set; }
+       
 
     }
 }

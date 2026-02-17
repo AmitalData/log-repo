@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -24,7 +24,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public CustomerProductActualDataRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CustomerProductActualData> GetCustomerProductActualDatas(int tenant)
         {

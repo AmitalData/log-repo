@@ -132,11 +132,6 @@ export class DateTimePipe {
                         myResult = AppTool.PadLeft(myFormats.DateParts.Day + "", 2, "0") + "." + AppTool.PadLeft(myFormats.DateParts.Month + "", 2, "0") + "." + myFormats.DateParts.Year.toString().substr(-2);
                         break;
                     }
-
-                    case "MY": { // time management pipe 'day/month'
-                        myResult = myFormats.DateParts.Month + "/" + myFormats.DateParts.Year;
-                        break;
-                    }
                     default: {
                         // Today:Yesterday:Tomorrow:ShortDate Format
                         myResult = myFormats.DateString;

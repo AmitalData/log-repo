@@ -30,11 +30,11 @@
         <td style="height: 100%;">
 
             <div *ngIf="FieldName == 'TransportModeId'" class="MediaFillRelative">
-                <img *ngIf="FieldValue" class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
+                <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
             </div>
 
             <div *ngIf="FieldName == 'DirectionId'" class="MediaFillRelative">
-                <img *ngIf="FieldValue" class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
+                <img class="CenterCenter" [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity['DirectionName']" />
             </div>
 
             <div *ngIf="ObjectTableName == 'WarehouseEntry' && IsHeaderScreenTemplate && FieldName == 'EntryReferencesAndDate'">

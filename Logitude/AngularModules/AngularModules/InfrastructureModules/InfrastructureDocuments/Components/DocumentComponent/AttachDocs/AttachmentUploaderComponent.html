@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
@@ -13,16 +13,6 @@
         background: -o-linear-gradient(left,red,orange,yellow,green,blue,indigo);
         background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indig);
         background: linear-gradient(to right, red,orange,yellow,green,blue,indigo);*/
-    }
-
-    .file-drop-area {
-        border-top: 1px solid;
-        border-color: slategray;
-        padding: 20px;
-        text-align: center;
-    }
-    .file-drop-area.drag-over {
-        background-color: #f2f2f2;
     }
 
 </style>
@@ -77,7 +67,7 @@
 
             <td>
 
-                <table *ngIf="!HasUploadDragDropFeature">
+                <table>
 
                     <tr style="height:10px"><td colspan="6"><div></div></td></tr>
 
@@ -89,7 +79,7 @@
                         <td style="width:62px;text-align:left">
 
                             <button [disabled]="!UploadButtonIsEnabled"  style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
-                            <input [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event, null)" style="display:none;width:65px" class="upload" />
+                            <input [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
 
                         </td>
                         <td  style="background-color:white">
@@ -97,7 +87,7 @@
                                 <div class="myBar" [attr.id]="ProgressBarId" style="height:16px;margin:1px;"></div>
                             </div>
 
-
+                       
 
                         </td>
 
@@ -125,7 +115,7 @@
                     <tr *ngIf="UploadedSuccessfully" style="height:20px">
                         <td style="width:10px;"><div></div> </td>
                         <td style="width:62px;text-align:left;font-size:11px;color:dimgray"><span></span></td>
-                        <td id="{{'FileUploadedSuccessfully' | IdGeneratorAsyncPipe | async}}" style="text-align:left"><span style="color:#009161;font-size:11px;text-align:left">{{'DocsIn.M.FileUploadedSuccessfully' | TextCodeTranslationPipe}}</span></td>
+                        <td style="text-align:left"><span style="color:#009161;font-size:11px;text-align:left">{{'DocsIn.M.FileUploadedSuccessfully' | TextCodeTranslationPipe}}</span></td>
                         <td colspan="3"><div></div></td>
                     </tr>
 
@@ -138,101 +128,6 @@
 
                 </table>
 
-                <table *ngIf="HasUploadDragDropFeature">
-                    <tr style="height:30px">
-                        <td style="width:10px;"><div></div> </td>
-                        <td style="width:62px;text-align:left"><span style="font-size:11px;color:dimgray">File Name:</span></td>
-                        <td colspan="4" style="text-align:left"><span style="text-align:left;width:350px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block;color:dimgray;font-size:11px;vertical-align:central;margin-top:6px">{{FileName}}</span></td>
-                    </tr>
-                    <tr style="height:30px">
-                        <td style="width:10px;"><div></div> </td>
-                        <td style="width:62px;text-align:left;font-size:11px;color:dimgray"><span>File Size:</span></td>
-                        <td style="text-align:left"><span style="font-size:11px;color:dimgray">{{FileSize}}</span></td>
-                        <td colspan="3"><div></div></td>
-                    </tr>
-                    <tr class="file-drop-area">
-                        <td style="width:10px;">
-                            <div>
-                            </div>
-                        </td>
-                        <td colspan="2" style="background-color:white;">
-                            <div style="height:95%;" [style.border]="UploadedSuccessfully ? 'none' : '2px dashed #ccc'" [style.padding-top]="UploadedSuccessfully ? '0' : '22%'" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-                                <table *ngIf="!UploadedSuccessfully" style="height: 85px;">
-                                    <tr *ngIf="!IsShowProgressBar">
-                                        <td>
-                                            <img src="./Images/Icons/downloaduparrow.png" style="width:30px;height:22px;"/>
-                                        </td>
-                                    </tr>
-                                    <tr *ngIf="!IsShowProgressBar">
-                                        <td>
-                                            <div style="color:slategray; font-style:italic; text-align:center;font-size:13px;height:25px;">Drag and drop file here or</div>
-                                        </td>
-                                    </tr>
-                                    <tr *ngIf="!IsShowProgressBar">
-                                        <td>
-                                            <button [disabled]="!UploadButtonIsEnabled" style="width:80px;margin-left:45%;font-size:12px;height:25px;" class="Button" (click)="OpenUpLoadFile()">Browse</button>
-                                            <input [attr.id]="DragDropUploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event, null)" style="display:none;width:65px" class="upload" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <table style="height:30px;">
-                                                <tr>
-                                                    <td>
-                                                        <div *ngIf="IsShowProgressBar" style="height:20px;border:1px solid gray;border-radius:3px;margin-left:27%;width:50%;display: inline-block;">
-                                                            <div class="myBar" [attr.id]="DragDropProgressBarId" style="height:16px;margin:1px;"></div>
-                                                        </div>
-                                                        <div style="display: inline-block;padding-right: 45%;color:gray;width:50%;">
-                                                            {{ProgressBarPercentText}}
-                                                        </div>
-                                                    </td>
-                                                    <td style="width:30px;color:gray">
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table *ngIf="UploadedSuccessfully">
-                                    <tr>
-                                        <td style="width:10px;">
-                                            <div></div>
-                                        </td>
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td style="width:100%">
-                                                        <div style="height:100%;">
-                                                            <div style="height:100%">
-                                                                <table *ngIf="IsPDF">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe" style="width:100%;height:100%;margin-bottom:5px;">Loading...</iframe>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                                <table *ngIf="!IsPDF">
-                                                                    <tr>
-                                                                        <td style="height:1px;text-align:center;">
-                                                                            <span style="font-size: 21px;color:gray;">Document preview is available for PDF files only.</span>
-                                                                            <button style="width: 80px; margin-left: 45%;" class="Button" (click)="DownloadDocumentFile()">Download</button>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>             
-                        </td>
-                        <td style="width:4px;"></td>
-                        <td style="width:10px;"></td>
-                    </tr>
-                </table>
 
              
             </td>

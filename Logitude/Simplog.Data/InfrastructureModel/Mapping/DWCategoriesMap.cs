@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -21,20 +21,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.ToTable("DWCategories");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Name).HasColumnName("Name");
-            //#if ORACLE_DB
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.Index).HasColumnName("CatIndex");
-            }
-            //#elseelse
-            else
-            {
-                this.Property(t => t.Index).HasColumnName("Index");
-            }
-            //#endif
-
-           
+            this.Property(t => t.Index).HasColumnName("Index");
 
 
         }

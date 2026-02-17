@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class TogglePM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -39,19 +39,11 @@ export class TogglePM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private description: string;
-    public get Description() { return this.description; }
-    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
-       
-	 
 
     public OldEntityPM: TogglePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -59,7 +51,6 @@ export class TogglePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Toggle");
            
         }
-       }
     }
 
     private MyClone: TogglePM;

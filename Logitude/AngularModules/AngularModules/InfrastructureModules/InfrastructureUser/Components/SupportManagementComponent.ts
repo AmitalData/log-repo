@@ -9,7 +9,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SupportManagement',
     templateUrl: './SupportManagementComponent.html',
 })

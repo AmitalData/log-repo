@@ -39,8 +39,7 @@ export class TariffMenuButtonsHandler {
                         }
 
                         case "EditPriceSteps": {
-                            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS"
-                                || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+                            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
                                 menuButton.IsHidden = true;
                             }
                             break;
@@ -119,14 +118,13 @@ export class TariffMenuButtonsHandler {
         
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Price Steps";
-        logWindow.WindowArgs = [this.EntityPM.PriceSteps, this.EntityPM.UnitOfMeasurementCode];
+        logWindow.WindowArgs = this.EntityPM.PriceSteps;
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (d != "cancel") {
                     var steps = s.DefaultPriceSteps;
                     this.EntityPM.PriceSteps = steps;
-                    this.EntityPM.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                    // this.CurrentSession.SessionEvent.emit("PriceStepsModified");
                 }

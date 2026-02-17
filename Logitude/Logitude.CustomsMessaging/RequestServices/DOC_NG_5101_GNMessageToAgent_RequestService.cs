@@ -44,7 +44,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 msgCode = 5,
                 //msgString = myNotificationPM.ResponseNotes,
-                msgString = lastNotificationReplyPM.ResponseToCustoms.Replace('"', '\''),
+                msgString = lastNotificationReplyPM.ResponseToCustoms,
             };
 
             if (!string.IsNullOrWhiteSpace(myNotificationPM.Reference2Number))
@@ -55,26 +55,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 _DOC_NG_5101_GNMessageToAgent.MessageToAgent.responseToMessage = reference2Number;
                 _DOC_NG_5101_GNMessageToAgent.MessageToAgent.responseToMessageSpecified = true;
             }
-            else if(!string.IsNullOrWhiteSpace(myNotificationPM.ResponseToMessage))
-            {
-                int responseToMessage;
-                int.TryParse(myNotificationPM.ResponseToMessage, out responseToMessage);
-                _DOC_NG_5101_GNMessageToAgent.MessageToAgent.responseToMessage = responseToMessage;
-            }
-            var decNum = myDeclarationPM?.DeclarationNumber;
-            if (string.IsNullOrEmpty(decNum))
-            {
-                DeclarationQueryService declarationQueryService = new DeclarationQueryService(myDeclarationPM.Tenant);
-                decNum = declarationQueryService.GetDeclaratNumberByCustomFileNo(myDeclarationPM.Tenant, myDeclarationPM.CustomFileNo, myDeclarationPM.Direction);
-
-            }
 
             _DOC_NG_5101_GNMessageToAgent.MessageToAgent.RelatedEntity = new ConnectedEntity()
             {
-                entityIdKey1 = decNum,
-                entityType = myDeclarationPM.Direction == "E" ? (myDeclarationPM.DeclarationTypeCode == "3" ? 10404 : 11188) : 1055,
+                entityIdKey1 = myDeclarationPM.DeclarationNumber,
+                entityType = 1055,
             };
-
 
             this.MyRequestSheetParam = new RequestSheetParam()
             {

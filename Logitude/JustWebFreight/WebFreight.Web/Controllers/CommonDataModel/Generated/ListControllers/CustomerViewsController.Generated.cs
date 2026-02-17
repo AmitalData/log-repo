@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -17,7 +17,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.Helpers;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -29,7 +29,6 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using Logitude.BL.Helpers;
-using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -79,7 +78,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IQueryable<CustomerList> entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
 
                 List<CustomerList> listResult = entityLists.ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -181,11 +180,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
-                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CardSearchField").FirstOrDefault();
-                queryOperations.QueryFilterItems.Remove(item);
-                string searchvalue = item != null ? item.FieldValue != null ? !string.IsNullOrEmpty(item.FieldValue.ToString()) ? item.FieldValue.ToString() : null : null : null;
-
-
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 CustomerRepository customerRepository = new CustomerRepository(MyContext);
                 IQueryable<CustomersDataView> entityPocos = customerRepository.GetCustomersDataViews(tenant);
@@ -203,32 +197,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
                 entityPocos = myFilter.RunFilter(entityPocos);
 
-
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                {
-                    AdditionalTreeFilter = filters.TreeFilters,
-                    ObjectTableName = "Customer",
-                    ParentEntityId = filters.ParentEntityId,
-                    ParentObjectTableName = filters.ParentObjectTableName,
-                    Tenant = tenant,
-                    ParentEntity = filters.ParentEntity
-                };
-
-
                 entityPocos = genericFilter.GetFilteredQuery<CustomersDataView>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<CustomerList> entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
+
                 entityLists = genericFilter.GetFilteredQuery<CustomerList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<CustomerList>(entityLists, treeFilterQueryArgs);
-
-                if (!string.IsNullOrEmpty(searchvalue))
-                {
-                    CustomerDataSearchService customerDataSearchService = new CustomerDataSearchService();
-                    entityLists = customerDataSearchService.Run(new CustomerSearchArgs() { SearchText = searchvalue, Tenant = tenant, EntityLists = entityLists, SortByColumnName = queryOperations.SortByColumnName, SortDirectin = queryOperations.SortDirectin, PageSize = queryOperations.PageSize, FilterItems = queryOperations.QueryFilterItems }).AsQueryable();
-                }
 
 
-                else if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
                     PropertyInfo propInfo = typeof(CustomerList).GetProperty(queryOperations.SortByColumnName);
 
@@ -301,11 +277,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 if (filters.GetCount)
                 {
                     response.Count = entityLists.Count();
-
-                    if (filters.DontApplyVirtualization)
-                    {
-                        if (response.Count > filters.PageSize) response.Count = filters.PageSize;
-                    }
                 }
                 if (!queryOperations.GetAll)
                 {
@@ -315,8 +286,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 }
 
-                List<CustomerList> listResult = entityLists.ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                List< CustomerList > listResult = entityLists.ToList();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
 
                 response.Result = listResult;

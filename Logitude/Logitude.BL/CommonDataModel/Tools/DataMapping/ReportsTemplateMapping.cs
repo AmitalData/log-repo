@@ -1,6 +1,6 @@
 ﻿
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +34,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.Subject = entityPM.Subject;
             entityPOCO.ReplyTo = entityPM.ReplyTo;
             entityPOCO.From = entityPM.From;
-
-            entityPOCO.ObjectTableId = entityPM.ObjectTableId;
-            entityPOCO.EntityId = entityPM.EntityId;
-            entityPOCO.IsCopiedAtSignup = entityPM.IsCopiedAtSignup;
-            entityPOCO.UseStimul = entityPM.UseStimul;
-            entityPOCO.OriginalTemplateId = entityPM.OriginalTemplateId;
-
+            //  entityPOCO.CurrentVersion = entityPM.CurrentVersion;
 
         }
     }

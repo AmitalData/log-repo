@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public BranchRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public BranchRepository(ICommonDataContext context)
         {
@@ -29,17 +32,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Branches where record.Tenant == tenant select record);
         }
+
         public Branch GetSingleBranch(string id, int tenant)
-        {
-                string key = $"GetSingleBranch({id}, {tenant})";
-                return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<Branch>(key, () =>
-                {
-                    return GetSingleBranchReal(id, tenant);
-                });
-
-
-        }
-        private Branch GetSingleBranchReal(string id, int tenant)
         {
             return (from record in context.Branches where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
@@ -122,7 +116,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Branch entity;
             if (getFromCache)
             {
-               
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -144,8 +139,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (Branch)CacheManager.CacheWrapper.Get(entityName);
                     }
-                
-             
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    entity = (from record in context.Branches where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                }
             }
             else
             {
@@ -165,11 +164,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Branch GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
-        }
-
-        public Branch GetBranchByCounterCode(string counterCode, int tenant)
-        {
-            return (from branch in context.Branches where branch.CounterCode == counterCode && branch.Tenant == tenant select branch)?.FirstOrDefault();
         }
     }
 }

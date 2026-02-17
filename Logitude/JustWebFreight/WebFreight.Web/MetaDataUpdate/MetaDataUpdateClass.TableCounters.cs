@@ -1,14 +1,12 @@
-﻿ using Logitude.Server.Tools.Counters;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -16,7 +14,6 @@ namespace WebFreight.Web.MetaDataUpdate
     {
         private void CreateTableCounters()
         {
-            List<ObjectTable> tenantObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
             CounterRepository = new CounterRepository(ObjectContext);
             List<Counter> zeroCounters = CounterRepository.GetCounters(0).ToList();
             ObjectContext = WebFreightContext.GetContext(0);
@@ -29,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter shipmentCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id,//ShipmentObject.Id,
+                    ObjectTableId = ShipmentObject.Id,
                     Code = "SHIP",
                     Tenant = 0,
                     Name = "Shipment",
@@ -128,6 +125,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 //    Parameter2 = "I",
                 //};
 
+
+
                 CounterDefinitionRepository.Add(shipment_Export_Air_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Ocean_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Inland_Counter);
@@ -138,33 +137,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 //CounterDefinitionRepository.Add(shipment_Domestic_Air_Counter);
                 //CounterDefinitionRepository.Add(shipment_Domestic_Ocean_Counter);
                 //CounterDefinitionRepository.Add(shipment_Domestic_Inland_Counter);
-
-            }
-            #endregion
-
-            #region ShipmentPickUpDelivery Counters
-            if (!zeroCounters.Where(c => c.Code == "SHDV" && c.Tenant == 0).Any())
-            {
-                Counter shipmentDeliveryCounter = new Counter()
-                {
-                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "ShipmentPickUpDelivery").FirstOrDefault().Id,
-                    Code = "SHDV",
-                    Tenant = 0,
-                    Name = "Shipment Delivery Number",
-                };
-
-                CounterDefinition shipmentDelivery_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = shipmentDeliveryCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "DLV",
-                };
-
-                CounterRepository.Add(shipmentDeliveryCounter);
-                CounterDefinitionRepository.Add(shipmentDelivery_CounterDef);
             }
             #endregion
 
@@ -295,7 +267,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter hawbCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id,//ShipmentObject.Id,
+                    ObjectTableId = ShipmentObject.Id,
                     Code = "HAWB",
                     Tenant = 0,
                     Name = "Export HAWB/FBL/HBL",
@@ -314,7 +286,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter quoteCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Quote").FirstOrDefault().Id,//QuoteObject.Id,
+                    ObjectTableId = QuoteObject.Id,
                     Code = "QUOT",
                     Tenant = 0,
                     Name = "Quote",
@@ -432,7 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter myCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Invoice").FirstOrDefault().Id,//InvoiceObject.Id,
+                    ObjectTableId = InvoiceObject.Id,
                     Code = "CNST",
                     Tenant = 0,
                     Name = "Constituent Invoice",
@@ -456,7 +428,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter myCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Invoice").FirstOrDefault().Id,//InvoiceObject.Id,
+                    ObjectTableId = InvoiceObject.Id,
                     Code = "INVC",
                     Tenant = 0,
                     Name = "A/R Invoice",
@@ -527,16 +499,6 @@ namespace WebFreight.Web.MetaDataUpdate
                     Prefix = "CC",
                 };
 
-                CounterDefinition myCounterDefinition_10 = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = myCounter.Id,
-                    Tenant = 0,
-                    StartNumber = 1000,
-                    Parameter1 = "COD",
-                    Prefix = "COD",
-                };
-
                 CounterRepository.Add(myCounter);
                 CounterDefinitionRepository.Add(myCounterDefinition_01);
                 CounterDefinitionRepository.Add(myCounterDefinition_02);
@@ -545,40 +507,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CounterDefinitionRepository.Add(myCounterDefinition_05);
                 CounterDefinitionRepository.Add(myCounterDefinition_06);
                 CounterDefinitionRepository.Add(myCounterDefinition_07);
-                CounterDefinitionRepository.Add(myCounterDefinition_10);
-
-
-                if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Cloud))
-                {
-                    CounterDefinition myCounterDefinition_08 = new CounterDefinition()
-                    {
-                        Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                        CounterId = myCounter.Id,
-                        Tenant = 0,
-                        StartNumber = 1000,
-                        Parameter1 = "IT",
-                        Prefix = "IT",
-                    };
-
-                    CounterDefinition myCounterDefinition_09 = new CounterDefinition()
-                    {
-                        Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                        CounterId = myCounter.Id,
-                        Tenant = 0,
-                        StartNumber = 1000,
-                        Parameter1 = "IC",
-                        Prefix = "IC",
-                    };
-
-                    CounterDefinitionRepository.Add(myCounterDefinition_08);
-                    CounterDefinitionRepository.Add(myCounterDefinition_09);
-                }
-           
-
-         
-               
-
-            }
+            }            
             #endregion
 
             #region AP Invoice Counters
@@ -587,7 +516,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter APinvoiceCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "APInvoice").FirstOrDefault().Id,//APInvoiceObject.Id,
+                    ObjectTableId = APInvoiceObject.Id,
                     Code = "APIC",
                     Tenant = 0,
                     Name = "A/P Invoice",
@@ -646,7 +575,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter arPaymentCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "ARPayment").FirstOrDefault().Id,//ARPaymentObject.Id,
+                    ObjectTableId = ARPaymentObject.Id,
                     Code = "ARPT",
                     Tenant = 0,
                     Name = "A/R Payment",
@@ -674,7 +603,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Counter apPaymentCounter = new Counter()
                 {
                     Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "APPayment").FirstOrDefault().Id,//APPaymentObject.Id,
+                    ObjectTableId = APPaymentObject.Id,
                     Code = "APPT",
                     Tenant = 0,
                     Name = "A/P Payment",
@@ -694,161 +623,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             #endregion
 
-            #region Card Counters
-
-            if (!zeroCounters.Where(c => c.Code == "CADC" && c.Tenant == 0).Any())
-            {
-                Counter cardCounter = new Counter()
-                {
-                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
-                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "Card").FirstOrDefault().Id,//APPaymentObject.Id,
-                    Code = "CADC",
-                    Tenant = 0,
-                    Name = "Card",
-                };
-
-                CounterDefinition AccountingPartner_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "AC",
-                    UsePerBranch = true,
-                };
-
-                CounterRepository.Add(cardCounter);
-                CounterDefinitionRepository.Add(AccountingPartner_CounterDef);
-                CounterDefinition Agent_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "AG",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(Agent_CounterDef);
-                CounterDefinition AirLine_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "AL",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(AirLine_CounterDef);
-                CounterDefinition CustomAgent_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "CG",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(CustomAgent_CounterDef);
-                CounterDefinition Coloader_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "CO",  
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(Coloader_CounterDef);
-
-                CounterDefinition Customer_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "CS",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(Customer_CounterDef);
-
-                CounterDefinition Others_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "OT",  
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(Others_CounterDef);
-
-                CounterDefinition PotentialCustomer_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "PO",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(PotentialCustomer_CounterDef);
-
-                CounterDefinition ShippingAgent_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "SG",  
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(ShippingAgent_CounterDef);
-                CounterDefinition ShippingLine_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "SL",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(ShippingLine_CounterDef);
-                CounterDefinition Trucker_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "TR",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(Trucker_CounterDef);
-                CounterDefinition Vendor_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "VD",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(Vendor_CounterDef);
-                CounterDefinition Warehouse_CounterDef = new CounterDefinition()
-                {
-                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
-                    CounterId = cardCounter.Id,
-                    Tenant = 0,
-                    StartNumber = -1,
-                    Parameter1 = "WH",
-                    UsePerBranch = true,
-                };
-                CounterDefinitionRepository.Add(Warehouse_CounterDef);
-
-            }
-            #endregion
-
-
-
+         
             this.ObjectContext.SaveChanges();
         }
 
@@ -1495,47 +1270,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             return 0;
             #endregion
-        }
-
-        public void CreateShipmentDeliveryCounters()
-        {
-            ObjectContext = WebFreightContext.GetContext(0);
-            CounterRepository = new CounterRepository(ObjectContext);
-            CounterDefinitionRepository = new CounterDefinitionRepository(ObjectContext);
-            List<Counter> counters = CounterRepository.All().ToList();
-
-            List<ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
-            ObjectTable shipmentPickUpDeliveryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPickUpDelivery" && d.Tenant == 0).FirstOrDefault();
-
-            List<GlobalTenant> globalTenants = GlobalTenantRepository.GetGlobalTenants();
-
-            foreach (GlobalTenant tenant in globalTenants)
-            {
-                if (!counters.Where(c => c.Code == "SHDV" && c.Tenant == tenant.Id).Any())
-                {
-                    Counter shipmentDeliveryCounter = new Counter()
-                    {
-                        Id = IdCounter.GetNumber("Counter", tenant.Id).ToString(),
-                        ObjectTableId = shipmentPickUpDeliveryObjectTable.Id,
-                        Code = "SHDV",
-                        Tenant = tenant.Id,
-                        Name = "Shipment Delivery Number",
-                    };
-
-                    CounterDefinition shipmentDelivery_CounterDef = new CounterDefinition()
-                    {
-                        Id = IdCounter.GetNumber("CounterDefinition", tenant.Id).ToString(),
-                        CounterId = shipmentDeliveryCounter.Id,
-                        Tenant = tenant.Id,
-                        StartNumber = 1000,
-                        Parameter1 = "DLV",
-                    };
-
-                    CounterRepository.Add(shipmentDeliveryCounter);
-                    CounterDefinitionRepository.Add(shipmentDelivery_CounterDef);
-                }
-            }
-            this.ObjectContext.SaveChanges();
         }
     }
 }

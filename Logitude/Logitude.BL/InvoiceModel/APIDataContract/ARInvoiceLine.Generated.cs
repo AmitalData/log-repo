@@ -64,8 +64,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string GLAccountId { get; set; }
     
     public ARInvoiceLineAction ARInvoiceLineAction { get; set; }
-    
-    public double? InvoiceCurrencyExchangeRate { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

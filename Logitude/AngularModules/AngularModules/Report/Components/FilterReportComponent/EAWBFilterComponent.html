@@ -28,7 +28,7 @@
                             <!-- Origin -->
                             <td style="width: 1px; padding-right: 5px;" class="Label">Origin:</td>
                             <td style="width: 180px; min-width: 180px;">
-                                <LogLov [ShowInActive]="true" 
+                                <LogLov 
                                         [ObjectFieldName]="'MainCarriageFromPortId'"
                                         [ObjectTableName]="'Booking'"
                                         [DataContext]="DataContext"
@@ -41,7 +41,7 @@
                             <!-- Destination -->
                             <td style="width: 1px; padding-right: 5px;" class="Label">Destination:</td>
                             <td style="width: 180px; min-width: 180px;">
-                                <LogLov [ShowInActive]="true" 
+                                <LogLov 
                                         [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
                                         [ObjectTableName]="'Booking'"
                                         [DataContext]="DataContext"
@@ -58,7 +58,7 @@
                             </td>
                             <td style="width:10px;min-width:10px"></td>
                             <td style="width: 90px;min-width:90px">
-                                <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
+                                <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
                             </td>
 
                             <td >

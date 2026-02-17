@@ -3,7 +3,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
@@ -31,7 +31,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SATInterfaceSettingQuery sATInterfaceSettingQuery = new SATInterfaceSettingQuery(authToken.Tenant);
-                SATInterfaceSettingPM SATInterfaceSettingPM = sATInterfaceSettingQuery.GetSinglePM(id);
+                SATInterfaceSettingPM SATInterfaceSettingPM = sATInterfaceSettingQuery.GetSinglePM(id, authToken.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -54,7 +54,6 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 SATInterfaceSettingQuery sATInterfaceSettingQuery = new SATInterfaceSettingQuery(authToken.Tenant);
                 SATInterfaceSettingPM SATInterfaceSettingPM = sATInterfaceSettingQuery.GetSATInterfaceSettingPMByTenant(authToken.Tenant);
 

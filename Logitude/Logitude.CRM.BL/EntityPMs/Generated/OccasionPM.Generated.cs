@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -653,60 +653,7 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
-	  private bool isAllAdded ;
-	  	  
-       
-	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsAllAdded  
-	   {
-	    
-	     get
-		{
-		   return isAllAdded;
-		 }
-		 set
-		 {
-		   if(isAllAdded != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAllAdded",OldValue=isAllAdded,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isAllAdded=value;
-		   }
-			
-		 }
-	   }
-
-	   private List<OccasionInviteePM> removedOccasionInvitees;
-	 
-	   [DataMember]
-	   public virtual List<OccasionInviteePM> RemovedOccasionInvitees  
-	   {
-	        get
-             {
-                 if (removedOccasionInvitees == null)
-                 {
-                     removedOccasionInvitees = new List<OccasionInviteePM>();
-                 }
-                 return removedOccasionInvitees;
-              }
-             set { removedOccasionInvitees = value; }
-	    }
-		   
-	   private List<OccasionInviteePM>  deletedRemovedOccasionInvitees;
-	   public virtual List<OccasionInviteePM> DeletedRemovedOccasionInvitees  
-	   {
-	        get
-             {
-                 if ( deletedRemovedOccasionInvitees == null)
-                 {
-                      deletedRemovedOccasionInvitees = new List<OccasionInviteePM>();
-                 }
-                 return  deletedRemovedOccasionInvitees;
-              }
-             set {  deletedRemovedOccasionInvitees = value; }
-	    }
-	     }
+   }
    
 }
 	 

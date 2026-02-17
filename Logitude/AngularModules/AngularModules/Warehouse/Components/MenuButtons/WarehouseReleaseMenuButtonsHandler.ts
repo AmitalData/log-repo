@@ -248,7 +248,7 @@ export class WarehouseReleaseMenuButtonsHandler {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Cancel Release");
                 var warehouseReleasePMExtendedService: WarehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
-                warehouseReleasePMExtendedService.CancelRelease(this.EntityPM).subscribe((res:any) => {
+                warehouseReleasePMExtendedService.CancelRelease(this.EntityPM).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
 
                     this.CurrentSession.StopBusyIndicator();
@@ -256,7 +256,7 @@ export class WarehouseReleaseMenuButtonsHandler {
                     if (!pmResponse.HasError) {
                         this.EntityPM = pmResponse.Result;
                         this.CurrentSession.FireEvent("CancelRelease");
-                        this.entityArgs.EditComponent.SaveChanges();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                     } else {
 

@@ -72,7 +72,7 @@
                         [LookUpTableName]="'Card'"
                         [DisplayMemberPath]="'EnglishName'"
                         [DependencyFilter1IsList]="'true'"
-                        [ShowInActive]="true"
+                        [ShowInActive]="'true'"
                         [DependencyFilter1Value]="'CS'">
 
 
@@ -92,7 +92,7 @@
                         [LookUpTableName]="'Card'"
                         [DisplayMemberPath]="'EnglishName'"
                         [DependencyFilter1IsList]="'true'"
-                        [ShowInActive]="true"
+                        [ShowInActive]="'true'"
                         [DependencyFilter1Value]="'AG'">
 
 
@@ -106,7 +106,7 @@
         <td style="width:120px">
             <div style="width:150px">
 
-                <DirectionsFilter [SelectedValue]="MySelectedDirectionFilter" (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
+                <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
 
             </div>
 
@@ -117,7 +117,7 @@
 
         <td style="width:90px;">
             <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
+                <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
             </button>
 
         </td>

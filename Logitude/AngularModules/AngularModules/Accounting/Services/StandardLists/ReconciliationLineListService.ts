@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -22,10 +21,10 @@ import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorag
 @Injectable()
 
 export class ReconciliationLineListService {
-	private _http: HttpClient;
+	private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconciliationLineViews';
     }
 
@@ -60,15 +59,18 @@ export class ReconciliationLineListService {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
 
-        
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-	   return defer(() => {
-           return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
+	   return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
-               var serviceResponse: ServiceResponse;
-               serviceResponse = response.body;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response.json();
 
                 // var _mappedListsArray: Array< ReconciliationLineList> = [];
                 // if (serviceResponse.Result) {
@@ -88,7 +90,7 @@ export class ReconciliationLineListService {
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ReconciliationLine", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
 
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));;
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 

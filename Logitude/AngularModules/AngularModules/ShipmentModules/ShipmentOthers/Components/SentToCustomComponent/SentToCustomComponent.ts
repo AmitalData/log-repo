@@ -3,6 +3,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
+import {CustomsWizardArgs, ArtemusWizardArgs} from '../../../../Shipment/Args';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {LogitudeWindow} from  '../../../../Controls/Windows/LogitudeWindow'; 
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
@@ -15,10 +16,10 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {CommonDomainService} from'../../../../Common/Services/CommonDomainService'; 
 import {CustomsInterfaceSettingList} from '../../../../Common/EntityLists/CustomsInterfaceSettingList'; 
 import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 
 @Component({
-    selector: 'SentToCustomComponent',    
+    selector: 'SentToCustomComponent',
+    moduleId: module.id,
     templateUrl: './SentToCustomComponent.html',
 })
 
@@ -27,7 +28,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
     public ValidationErrorsList: string[] = [];
     public DataContext: SentToCustomComponent = this;
     public ObjectTableName = "ShipmentCustomsTransmission";
-    private AMSFeatureToggle: FeatureToggleList;
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public MessageText: string;
@@ -79,7 +79,6 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
     }
     SetWindowArgs(windowArgs: ShipmentPM) {
         this.EntityPM = windowArgs;
-        this.AMSFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AMS")[0];
         this.FillData();
     }
     FillData() {
@@ -240,37 +239,31 @@ export class SentToCustomComponent extends BaseComponent implements OnDestroy {
         }
     }
     CheckArtemusVisibility_BOL() {
-        this.IsATMSVisible_BOL = false;
-
         if (FeatureLocator.HasFeaturePermession("Shipment", "SendToArtemus")) {
-            if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H")) {
-                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
-                    if (this.EntityPM.DirectionId == "I") {
-                        this.IsATMSVisible_BOL = true;
-                    }
 
-                    else if (this.EntityPM.DirectionId == "E" && this.AMSFeatureToggle != null) {
-                        this.IsATMSVisible_BOL = true;
-                    }
+            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "I" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H")) {
+                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
+                    this.IsATMSVisible_BOL = true;
                 }
             }
+            else {
+                this.IsATMSVisible_BOL = false;
+            }
+
         }
     }
     CheckArtemusVisibility_VOG() {
-        this.IsATMSVisible_VOG = false;
-
         if (FeatureLocator.HasFeaturePermession("Shipment", "SendToArtemus")) {
-            if (this.EntityPM.TransportModeId == "O" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C")) {
-                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
-                    if (this.EntityPM.DirectionId == "I") {
-                        this.IsATMSVisible_VOG = true;
-                    }
 
-                    else if (this.EntityPM.DirectionId == "E" && this.AMSFeatureToggle != null) {
-                        this.IsATMSVisible_VOG = true;
-                    }
+            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "I" && (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C")) {
+                if (ObjectsLocator.CustomsInterfaceSettingPM.ImportToUSAInterfaceCode == "ART") {
+                    this.IsATMSVisible_VOG = true;
                 }
             }
+            else {
+                this.IsATMSVisible_VOG = false;
+            }
+
         }
     }
     CheckAESVisibility() {

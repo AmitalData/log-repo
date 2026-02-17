@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
+﻿import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChildren}  from '@angular/core';
 import {AutomationPM} from '../../../../Common/EntityPMs/AutomationPMExtended';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
@@ -10,10 +10,10 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {FieldValueResolver} from '../../../../Infrastructure/Utilities/FieldValueResolver';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AutomationsConditionAreaComponent',
     templateUrl: './AutomationsConditionAreaComponent.html',
-    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight', 'NoEntity', 'CanSetValueFromField', 'AddFirstLine', 'IsDelay'],
+    inputs: ['AutomationCondationLists', 'Title', 'TiggerComponent', 'CondationListType', 'IsDisabled', 'ListHeight'],
 
 })
 export class AutomationsConditionAreaComponent extends BaseComponent implements OnInit {
@@ -23,28 +23,18 @@ export class AutomationsConditionAreaComponent extends BaseComponent implements 
     Title: string;
     CondationListType: string;
     IsDisabled: boolean = false;
-    AddFirstLine: boolean = false;
     ListHeight: string = "120px";
     TiggerComponent: any;
-    NoEntity: boolean = false;
-    IsDelay: boolean = false;
-
-    CanSetValueFromField: boolean = true;
-    public cyData: string;
     constructor() {
         super();
       
     }
-
     item: any;
-    ngOnInit() { 
+    ngOnInit() {
         if (!this.ListHeight) {
             this.ListHeight = "120px";
         }
-        if(this.AddFirstLine){
-            this.AddAutomationConditionMethod();
-        }
-        this.cyData = this.CondationListType + (this.IsDelay ? "Delay":"") +"ConditionIdArea";
+
     }
 
 

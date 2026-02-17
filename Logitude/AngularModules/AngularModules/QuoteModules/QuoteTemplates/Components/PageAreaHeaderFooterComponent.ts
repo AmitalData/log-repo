@@ -13,7 +13,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'PageAreaHeaderFooterComponent',
-    
+    moduleId: module.id,
     templateUrl: './PageAreaHeaderFooterComponent.html',
 })
 
@@ -103,7 +103,7 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
 
      LoadDesignAreaFreeText(headerDesignId: string) {
-         this.quoteTemplateTextDesignPMService.get(headerDesignId).subscribe((res:any) => {
+         this.quoteTemplateTextDesignPMService.get(headerDesignId).subscribe(res => {
              var pmResponse: ServiceResponse = res;
        
              if (!pmResponse.HasError && pmResponse.Result) {
@@ -220,7 +220,7 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
         if (this.DesignAreaFreeTextPM && this.DesignAreaFreeTextPM.IsDirty) {
 
-            this.quoteTemplateTextDesignPMService.update(this.DesignAreaFreeTextPM).subscribe((res:any) => {
+            this.quoteTemplateTextDesignPMService.update(this.DesignAreaFreeTextPM).subscribe(res => {
                 this.SaveQuoteTemplateSetting();
             });
         }
@@ -233,7 +233,7 @@ export class PageAreaHeaderFooterComponent extends BaseComponent implements OnIn
 
     SaveQuoteTemplateSetting() {
     if (this.QuoteTemplateSettingPM.IsDirty) {
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
+            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 this.QuoteTemplateSettingPM.IsDirty = false;
                 this.SaveCompleted();
 

@@ -14,10 +14,9 @@ import {AirlineListService} from '../../../../Common/Services/StandardLists/Airl
 import {AirlineList} from '../../../../Common/EntityLists/AirlineList';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { VatNumberValidator, VATValidatorArgs } from '../../../../Infrastructure/Validators/VatNumberValidator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewAirlineComponent.html',
 })
 
@@ -62,7 +61,6 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
         this.AirlinePM.CarrierTypeId = "AL";
         this.AirlinePM.TransportModeId = "A";
         this.AirlinePM.AddedManually = true;
-        this.SetUIProperties_VAT();
     }
 
     Initialize() {
@@ -88,19 +86,6 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
     get IsSaveEnabled() { return this.isSaveEnabled; }
     set IsSaveEnabled(value: boolean) {
         this.isSaveEnabled = value;
-    }
-
-    get VatNumber() { return this.AirlinePM.VatNumber; }
-    set VatNumber(value: string) {
-        if (this.AirlinePM.VatNumber != value) { 
-            this.AirlinePM.VatNumber = value;
-            this.SetUIProperties_VAT();
-        }
-    }
-
-    private SetUIProperties_VAT() {
-        var vatErrors = this.ValidateVatNumber();
-        this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, vatErrors.length > 0 ? true : false);
     }
 
     get Code() { return this.AirlinePM.Code; }
@@ -187,31 +172,14 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
     }
 
     OkButtonClicked() {
-
         var errors: string[] = [];
         Validator.TryValidateObject(this.DataContext.AirlinePM, this.ObjectTableName, errors);
-        var vatErrors = this.ValidateVatNumber();
-        vatErrors?.forEach(item => {
-            errors.push(item);
-        });
         this.ValidationErrorsList = errors;
+
         if (this.ValidationErrorsList.length == 0) {
 
             this.SubmitCreatingAirline();
         }
-    }
-
-    ValidateVatNumber(): string[] {
-        var args = new VATValidatorArgs();
-        args.PartnerTypeId ="AL";
-        args.VATNumber = this.VatNumber;
-        args.CountryId = this.AirlinePM.CountryId;
-        args.CountryName = this.AirlinePM.CountryName;
-        args.CountryEnglishName = this.AirlinePM.CountryName;
-        args.SetReady = false;
-        VatNumberValidator.ValidateVatFormat(args);
-        VatNumberValidator.ValidateVatMandatory(args);
-        return args.Errors;
     }
 
     SubmitCreatingAirline() {

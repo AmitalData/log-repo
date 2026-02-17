@@ -13,12 +13,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.UnitTest.Utils;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Def.EntityPMs;
@@ -51,15 +51,15 @@ namespace Logitude.UnitTest.Accounting
             A.CallTo(() => fakeIAccountingContext.GLAccounts)
                 .Returns(new MockObjectSet<GLAccount>(pocoGLAccountList));
 
-            var JournalActionTypeList = new List<Logitude.Accounting.Data.EntityPOCOs.JournalActionType>()
+            var JournalActionTypeList = new List<JournalActionType>()
             {
-                new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="1", Id="1", EnglishName ="Credit" },
-                new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="2", Id="2", EnglishName ="Debit " },
-                new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="3", Id="3", EnglishName ="Debit And Credit" },
-         //     new Logitude.Accounting.Data.EntityPOCOs.JournalActionType() { Tenant=1, Code="4", Id="4", EnglishName ="Debit, Credit And Vat deduction " },
+                new JournalActionType() { Tenant=1, Code="1", Id="1", EnglishName ="Credit" },
+                new JournalActionType() { Tenant=1, Code="2", Id="2", EnglishName ="Debit " },
+                new JournalActionType() { Tenant=1, Code="3", Id="3", EnglishName ="Debit And Credit" },
+                new JournalActionType() { Tenant=1, Code="4", Id="4", EnglishName ="Debit, Credit And Vat deduction " },
             };
             A.CallTo(() => fakeIAccountingContext.JournalActionTypes)
-                .Returns(new MockObjectSet<Logitude.Accounting.Data.EntityPOCOs.JournalActionType>(JournalActionTypeList));
+                .Returns(new MockObjectSet<JournalActionType>(JournalActionTypeList));
             return fakeIAccountingContext;
         }
 

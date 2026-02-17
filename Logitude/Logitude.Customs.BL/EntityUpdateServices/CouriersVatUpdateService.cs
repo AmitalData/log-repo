@@ -19,11 +19,11 @@ using Simplog.Data.CommonDataModel;
 using System.IO;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Diagnostics;
 using Logitude.Customs.Data.Repsitories;
 
@@ -128,7 +128,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         bool IsVatNumberExisit(string vatNumber, int tenant, string entityId = null)
         {
             CouriersVatRepository repo = new CouriersVatRepository(tenant);
-            var exist = repo.GetByVatNumber(vatNumber, entityId, tenant);
+            var exist = repo.GetByVatNumber(vatNumber, entityId);
 
             return ( (exist != null) ? true : false );
 

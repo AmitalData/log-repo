@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace WebFreight.Web.MetaDataUpdate
             EntityStatusRepository = new EntityStatusRepository(ObjectContext);
             EventTypeRepository = new EventTypeRepository(ObjectContext);
             List<EntityStatus> tenantEntityStatus = EntityStatusRepository.GetEntityStatusByTenant(0).ToList();
-            Dictionary<string, EventType> tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).GroupBy(d => d.Code+d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+            Dictionary<string, EventType> tenantEventTypes = EventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 
             #region objecrtTables
             ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", 0);
@@ -951,7 +951,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 IsFollowUp = true,
                 FollowUpEnglishName = "Warehouse Release",
                 FollowUpLocalName = "Warehouse Release",
-                EntityStatusId = tenantEntityStatus.Where(d => d.Tenant == 0 && d.Code == "SRIM").FirstOrDefault().Id,
                 ObjectTableId = shipmentObject.Id,
                 ShortView = true,
                 EventTypeCategoryCode = "LEG",
@@ -3150,27 +3149,27 @@ namespace WebFreight.Web.MetaDataUpdate
 			}, EventTypeRepository, tenantEventTypes);
 			#endregion
 
-			//#region BankAccountLite
-			//AddEventTypes.AddEventType(new EventTypeDetails()
-   //         {
-   //             Code = "UPBA",
-   //             EnglishName = "Updated",
-   //             Tenant = 0,
-   //             LocalName = "Updated",
-   //             ObjectTableId = BankAccountLiteObject.Id,
-   //             ShortView = false,
-   //         }, EventTypeRepository, tenantEventTypes);
+			#region BankAccountLite
+			AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "UPBA",
+                EnglishName = "Updated",
+                Tenant = 0,
+                LocalName = "Updated",
+                ObjectTableId = BankAccountLiteObject.Id,
+                ShortView = false,
+            }, EventTypeRepository, tenantEventTypes);
 
-   //         AddEventTypes.AddEventType(new EventTypeDetails()
-   //         {
-   //             Code = "CRBA",
-   //             EnglishName = "Created",
-   //             Tenant = 0,
-   //             LocalName = "Created",
-   //             ObjectTableId = BankAccountLiteObject.Id,
-   //             ShortView = true,
-   //         }, EventTypeRepository, tenantEventTypes);
-   //         #endregion 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "CRBA",
+                EnglishName = "Created",
+                Tenant = 0,
+                LocalName = "Created",
+                ObjectTableId = BankAccountLiteObject.Id,
+                ShortView = true,
+            }, EventTypeRepository, tenantEventTypes);
+            #endregion 
 
             #region APPayment
             AddEventTypes.AddEventType(new EventTypeDetails() { Code = "APPA", EnglishName = "Approved", LocalName = "Approved", Tenant = 0, ObjectTableId = apPaymentObject.Id, ShortView = true, }, EventTypeRepository, tenantEventTypes);
@@ -3910,7 +3909,57 @@ namespace WebFreight.Web.MetaDataUpdate
                 ShortView = true,
             }, EventTypeRepository, tenantEventTypes);
             #endregion
-            
+
+            #region ARPaymentMethod
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "UARM",
+                EnglishName = "AR Payment Method Updated",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "AR Payment Method Updated",
+                ObjectTableId = ARPaymentMethodObject.Id,
+                ShortView = false,
+            }, EventTypeRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "CARM",
+                EnglishName = "Created",
+                Tenant = 0,
+                AddedManually = false,
+                IsManualEntry = false,
+                LocalName = "Created",
+                ObjectTableId = ARPaymentMethodObject.Id,
+                ShortView = true,
+            }, EventTypeRepository, tenantEventTypes);
+            #endregion
+
+            #region APPaymentMethod
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "UAPM",
+                EnglishName = "AP Payment Method Updated",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "AP Payment Method Updated",
+                ObjectTableId = APPaymentMethodObject.Id,
+                ShortView = false,
+            }, EventTypeRepository, tenantEventTypes);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "CAPM",
+                EnglishName = "Created",
+                Tenant = 0,
+                AddedManually = false,
+                IsManualEntry = false,
+                LocalName = "Created",
+                ObjectTableId = APPaymentMethodObject.Id,
+                ShortView = true,
+            }, EventTypeRepository, tenantEventTypes);
+            #endregion
+
             #region AccountingTransferHeader            
             AddEventTypes.AddEventType(new EventTypeDetails()
             {

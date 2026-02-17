@@ -101,9 +101,7 @@
     }
 </style>
 
-<div 
-     class="ComboBox"
-     [attr.data-cy]="CyData" 
+<div class="ComboBox"
      [attr.id]="ControlId"
      (keydown)="OnKeyDown($event)"
      (blur)="OnLostFocus()"
@@ -119,7 +117,7 @@
             </td>
 
             <td>
-                <div  class="FillParent">
+                <div class="FillParent">
                     <div [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" class="TextTrimming">{{Text}}</div>
                     <div [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" class="TextTrimming Label" *ngIf="!Text">{{WaterMark}}</div>
                 </div>
@@ -158,28 +156,26 @@
         </tr>
     </table>
 
-    <div  class="ComboBoxDropdown" [attr.id]="DropdownId" style="z-index:5;" [hidden]="!IsOpened">
+    <div class="ComboBoxDropdown" [attr.id]="DropdownId" style="z-index:5;" [hidden]="!IsOpened">
         <div class="ScrollViewer">
-            <ul class="ScrollContent" [attr.id]="ListControlId" *ngIf="!WithCheckBoxes">
-                <li [attr.data-cy]=(ListType+item.Name) id="{{'ComboBoxItem' | IdGeneratorAsyncPipe | async}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource" [class.SelectedComboboxItem]="item === SelectedItem" (mousedown)="ItemClicked(item)">
-                    <span *ngIf="Binding == null && BindingTextCode == null" [title]="item">{{item}}</span>
-                    <span *ngIf="Binding == null && BindingTextCode != null" [title]="item[BindingTextCode] | TextCodeTranslationPipe">{{item[BindingTextCode] | TextCodeTranslationPipe}}</span>
-                    <span *ngIf="Binding != null && AdditionalTitleBinding == null" [title]="item[Binding]">{{item[Binding]}}</span>
-                    <span *ngIf="Binding != null && AdditionalTitleBinding != null" [title]="item[AdditionalTitleBinding] + ',' + item[Binding]">{{item[Binding]}}</span>
+            <ul class="ScrollContent" [attr.id]="ListControlId" *ngIf="!WithIcons">
+                <li id="{{'ComboBoxItem' | IdGeneratorPipe}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource" [class.SelectedComboboxItem]="item === SelectedItem" (mousedown)="ItemClicked(item)">
+                    <span *ngIf="Binding == null" [title]="item">{{item}}</span>
+                    <span *ngIf="Binding != null" [title]="item[Binding]">{{item[Binding]}}</span>
                 </li>
             </ul>
 
-            <ul class="ScrollContent" [attr.id]="ListControlId" *ngIf="WithCheckBoxes">
-                <li id="{{'ComboBoxItem' | IdGeneratorAsyncPipe | async}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource; let i = index" [class.SelectedComboboxItem]="item === SelectedItem">
+            <ul class="ScrollContent" [attr.id]="ListControlId" *ngIf="WithIcons">
+                <li style="height:25px; line-height: 25px; min-height: 25px" id="{{'ComboBoxItem' | IdGeneratorPipe}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource; let i = index" [class.SelectedComboboxItem]="item === SelectedItem">
                     <table>
                         <tr>
                             <td style="width:25px">
                                 <CheckBox (Checked)="ClickItem(item,i)" [IsChecked]="item.Checked"></CheckBox>
                             </td>
-                            <td style="padding-left:2px;width:25px" *ngIf="WithIcons">
+                            <td style="padding-left:2px;width:25px">
                                 <img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[0] && (item.Code[0]=='A' || item.Code[0]=='I' || item.Code[0]=='O')" [attr.src]="'./Images/TransportModes/' + item.Code[0] + '.png'" />
                             </td>
-                            <td style="padding-left:2px;width:25px" *ngIf="WithIcons">
+                            <td style="padding-left:2px;width:25px">
                                 <img style="margin-top:2px;" class="CenterCenter" *ngIf="item.Code[1]" [attr.src]="'./Images/Directions/' + item.Code[1] + '.png'" />
                             </td>
                             <td style="padding-left:2px">

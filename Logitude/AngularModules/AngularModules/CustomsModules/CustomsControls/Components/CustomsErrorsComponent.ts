@@ -26,19 +26,16 @@ import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 @Component({
     selector: 'CustomsErrorsComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomsErrorsComponent.html',
 })
 
 export class CustomsErrorsComponent {
     Errors: string[];
-    Warning: string[];
     ErrorsCount: string;
     NoButtonVisibility: boolean;
     CancelButtonVisibility: boolean;
     CancelButtonText: string;
-    CloseButtonVisibility: boolean;
-    CloseButtonText: string;
     NoButtonText: string;
     SaveButtonText: string;
     ComponentHeight: string;
@@ -46,14 +43,12 @@ export class CustomsErrorsComponent {
     SetWindowArgs(windowArgs) {
         this.ComponentHeight = windowArgs.ComponentHeight;
         this.Errors = windowArgs.Errors;
-        this.Warning =  windowArgs.Warning;
         this.ErrorsCount = "Errors Found: ";
         if (this.Errors) {
             this.ErrorsCount = this.ErrorsCount + this.Errors.length;
         }
         this.NoButtonText = TextCodeTranslator.Translate('Customs.General.B.No');
         this.CancelButtonText = TextCodeTranslator.Translate('Customs.General.B.Cancel');
-        this.CloseButtonText = TextCodeTranslator.Translate('Customs.General.B.Close');
         this.SaveButtonText = TextCodeTranslator.Translate('Customs.General.B.OK');
         this.CancelButtonVisibility = windowArgs.CancelButtonVisibility;
         this.NoButtonVisibility = windowArgs.NoButtonVisibility;
@@ -62,9 +57,6 @@ export class CustomsErrorsComponent {
         }
         if (windowArgs.CancelButtonText) {
             this.CancelButtonText = windowArgs.CancelButtonText;
-        }
-        if (windowArgs.CloseButtonText) {
-            this.CloseButtonText = windowArgs.CloseButtonText;
         }
         if (windowArgs.SaveButtonText) {
             this.SaveButtonText = windowArgs.SaveButtonText;
@@ -81,8 +73,5 @@ export class CustomsErrorsComponent {
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("cancel");
-    }
-    CloseButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("close");
     }
 }

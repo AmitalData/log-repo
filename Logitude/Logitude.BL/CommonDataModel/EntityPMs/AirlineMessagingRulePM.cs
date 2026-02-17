@@ -18,7 +18,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CreatedByUserId { get; set; }
         public DateTime? CreateDate { get; set; }
         public string UpdatedByUserId { get; set; }
-        public string RuleFieldCode { get; set; }
         public DateTime? UpdateDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

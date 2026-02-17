@@ -7,7 +7,6 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {DocumentsFilingExtendedPMService} from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
 
@@ -54,7 +53,7 @@ export class EditShipmentButtonListTemplate {
         if (SessionLocator.PrivateLableSettings) {
             this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
             if (SessionLocator.PrivateLableSettings) {
-                this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
+                this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
                     if (res.Result == false) {
                         this.HasSharedDocs = false;
                     }
@@ -65,10 +64,9 @@ export class EditShipmentButtonListTemplate {
         if (AppTool.IsNullOrEmpty(this.rowData['ForwarderShipmentNumber']) && this.fieldName == "EditShipmentButtonListTemplate" + "All Shipments") {
             this.ShowButtons = false;
         }
-
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -78,9 +76,8 @@ export class EditShipmentButtonListTemplate {
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Edit Shipment" });
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
                 newWindow.Width = 600;

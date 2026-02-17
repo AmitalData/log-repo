@@ -28,15 +28,7 @@ namespace Logitude.WarehouseLib.Data.Repositories
             return myResult;
         }
 
-        public IQueryable<WarehouseEntry> GetActiveWarehouseEntriesByshipmentId(string shipmentId, int tenant)
-        {
-            IQueryable<WarehouseEntry> myResult = (from a in context.WarehouseEntries orderby(a.ActualEntryDate)
-                                                   where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode != "CAEA" && a.ActualEntryDate != null
-                                                   select a);
-            return myResult;
-        }
-
-
+  
 
         public List<WarehouseEntry> GetWarehouseEntriesFromIdList(List<string> ids, int tenant)
         {

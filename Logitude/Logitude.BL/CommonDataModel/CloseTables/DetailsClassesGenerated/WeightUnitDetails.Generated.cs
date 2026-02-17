@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs; 
 using Simplog.Data.CommonDataModel;
 
@@ -26,7 +26,6 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "kg,kilogram", 
                 Code = "KG", 
                 Name = "Kilogram", 
-                PrintAs = "kg", 
 			});
 			 
             all.Add(new WeightUnitDetails()
@@ -34,7 +33,6 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "mt,metric ton", 
                 Code = "MT", 
                 Name = "Metric Ton", 
-                PrintAs = "Mt", 
 			});
 			 
             all.Add(new WeightUnitDetails()
@@ -42,7 +40,6 @@ namespace Logitude.BL.CommonDataModel
                 SearchFields = "lb,pound", 
                 Code = "LB", 
                 Name = "Pound", 
-                PrintAs = "lb", 
 			});
 			
             return all;
@@ -52,13 +49,12 @@ namespace Logitude.BL.CommonDataModel
         {   
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Code = this.Code;  
-		    newPoco.Name = this.Name;  
-		    newPoco.PrintAs = this.PrintAs;   
+		    newPoco.Name = this.Name;   
         }
 
 		public string GetSearchFields(WeightUnit rec)
         {   
-           return String.Concat(rec.Code,",",rec.Name,",",rec.PrintAs,",");
+           return String.Concat(rec.Code,",",rec.Name,",");
         }
    }
 }

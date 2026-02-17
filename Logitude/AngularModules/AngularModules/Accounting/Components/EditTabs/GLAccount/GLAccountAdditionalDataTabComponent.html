@@ -1,4 +1,4 @@
-<style>   
+﻿<style>   
      .disconnectButton 
     {
          visibility:hidden;
@@ -28,12 +28,7 @@
                 </td>
                 <td><div></div></td>
                 <td style="text-align:center;width:50px">
-                    <span style="font-size:12px; padding-right:5px;padding-top:5px" id="{{'AddSplittedbyCurrency' | IdGeneratorAsyncPipe | async}}"    class="hyperlink" (click)="Add()">{{'GLAccounts.O.Add' | TextCodeTranslationPipe}}</span>
-
-                </td>
-
-                <td style="text-align:center;width:50px">
-                    <span style="font-size:12px; padding-right:5px;padding-top:5px" class="hyperlink" (click)="Connect()">{{'GLAccount.O.Connect' | TextCodeTranslationPipe}}</span>
+                    <span style="font-size:12px; padding-right:5px;padding-top:5px" class="hyperlink" (click)="Add()">{{'GLAccounts.O.Add' | TextCodeTranslationPipe}}</span>
 
                 </td>
                 <td style="width:10px"></td>
@@ -43,66 +38,45 @@
 </tr>
 
 <tr>
-    <td style="height: 40%;width:480px">
+    <td style="height: 40%;width:400px">
         <div class="CellContent" style="bottom: 75px;">
             <logitude-edit-grid GridHeight="100%" [ItemSource]="ConnectedGLAccounts">
 
 
                 <!-- CurrencyCode -->
                 <log-column [header]="'GLAccount.F.CurrencyCode' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'CurrencyCode'">
-                    <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                             <span>{{item.CurrencyCode}}</span> <span></span>
                         </div>
 
                     </log-cell-template>
-                </ng-template>
                 </log-column>
 
 
                 <log-column [header]="'GLAccount.F.DisplayNumber' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'CustomerGLAccountNumber'">
-                    <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                         <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                           
                             <span class="hyperlink" (click)="item.ConnectedGLAccountClicked(item)">{{item.DisplayNumber}}</span>
                         </div>
 
                     </log-cell-template>
-                </ng-template>
                 </log-column>
 
 
 
                 <log-column [width]="'75'" [header]="'GLAccount.F.Inactive' | TextCodeTranslationPipe"  [Alignment]="'center'" [Editable]="true" [visibility]="'visibile'">
-                    <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
-                        <div *ngIf="!IsConnectedWithExistGLAccount(item.DisplayNumber)" style="width: 30px;   height:20px;padding-top:3px;align-self:center;padding-right:30px; padding-left:30px  ">
-                            <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event,item.BalanceInLocalCurrency)"></LogCheckBox>
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                        <div style="width: 30px;   height:20px;padding-top:3px;align-self:center;padding-right:30px; padding-left:30px  ">
+                            <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event)"></LogCheckBox>
                         </div>
 
 
 
                     </log-cell-template>
-                </ng-template>
                 </log-column>
 
-                <log-column [width]="'75'" [header]="'GLAccount.O.Disconnect' | TextCodeTranslationPipe"  [Alignment]="'center'" [Editable]="true" [visibility]="'visibile'">
-                    <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
-                      
-                        <div [style.text-align]="'center'" class="TextTrimming">
-                            <button style="height: 18px;margin:auto;margin-top:3px;" class="Button sm" (click)="ConfirmDisConnect(item.entityPM)">
-                                {{'GLAccount.O.Disconnect' | TextCodeTranslationPipe}}
-                            </button>
-                        </div>
-
-                    </log-cell-template>
-                </ng-template>
-                </log-column>
-
-             
 
             </logitude-edit-grid>
         </div>
@@ -139,34 +113,29 @@
 
                 <!-- CurrencyCode -->
                 <log-column [header]="'GLAccount.F.DisplayNumber' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'DisplayNumber'">
-                    <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                             <span class="hyperlink" (click)="item.GLAccountHyperlinkClicked(item)">{{item.DisplayNumber}}</span>
 
                         </div>
 
                     </log-cell-template>
-                </ng-template>
                 </log-column>
 
 
                 <log-column [header]="'GLAccount.F.LocalName' | TextCodeTranslationPipe" [width]="'140'" [Alignment]="'center'" [binding]="'LocalName'">
-                    <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                         <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                             <span>{{item.LocalName }}</span>
                         </div>
 
                     </log-cell-template>
-                </ng-template>
                 </log-column>
 
 
 
                 <log-column [header]="''" [width]="'95'" [Editable]="true" [visibility]="'visibile'">
-                    <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                         <div *ngIf="item.IsRowHover" style="height:20px;padding-top:3px; padding-right:5px;padding-left:5px" class="disconnectButton">
                             <button class="Button" (click)="item.DisconnectClicked(item)">{{'Accounting.General.O.Disconnect' |TextCodeTranslationPipe}}</button>
 
@@ -175,7 +144,6 @@
 
 
                     </log-cell-template>
-                    </ng-template>
                 </log-column>
 
 

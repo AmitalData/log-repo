@@ -26,7 +26,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 //import { VehicleMessagesService } from '../../../Services/WebServices/VehicleMessagesService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VehiclesSelectionComponent.html',
 })
 
@@ -48,8 +48,8 @@ export class VehiclesSelectionComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();

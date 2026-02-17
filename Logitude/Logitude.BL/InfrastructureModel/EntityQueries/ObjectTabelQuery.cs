@@ -10,7 +10,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -39,7 +39,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
 
-               currentLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+               currentLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                      where a.Tenant == tenant && a.LastUpdateDate > sinceDate
                                      select new ObjectTablePM()
                                      {
@@ -60,7 +60,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          Name = a.Name,
                                          Tenant = a.Tenant,
                                          CacheOnClient = a.CacheOnClient,
-                                         HeaderScreenCode = a.HeaderScreenCode,
+                                         HeaderScreenCode = a.HeaderScreen.Code,
                                          HasCounter = a.HasCounter,
                                          EnableAddFromLOV = a.EnableAddFromLOV,
                                          EnableEditFromLOV = a.EnableEditFromLOV,
@@ -71,7 +71,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          HasCustomFields = a.HasCustomFields,
                                          CustomFieldsCount = a.CustomFieldsCount,
                                          DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                         DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                         DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                          SearchFields = a.SearchFields,
                                          IsSaveButtonVisible = a.IsSaveButtonVisible,
                                          MainTipCode = a.MainTipCode,
@@ -81,11 +81,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AllowCustomFields = a.AllowCustomFields,
                                          MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                          DBTableName = a.DBTableName,
-                                         DBTableShortName = a.DBTableShortName,
                                          HasDynamicHeader = a.HasDynamicHeader,
                                          IsLookUp = a.IsLookUp,
                                          HasDocuments = a.HasDocuments,
-                                         NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                         NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                          HasCustomValidator = a.HasCustomValidator,
                                          ClientModuleName = a.ClientModuleName,
                                          ServerModuleName = a.ServerModuleName,
@@ -101,35 +100,21 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          CodeField = a.CodeField,
                                          NameField = a.NameField,
                                          DisableSearchBox = a.DisableSearchBox,
-                                         AllowedInTicket = a.AllowedInTicket,
+                                         AllowedInQueues = a.AllowedInQueues,
                                          LovDisplayMemberPath=a.LovDisplayMemberPath,
                                          LovDisplayMemberPathLocal=a.LovDisplayMemberPathLocal,
                                          IsTabsHidden = a.IsTabsHidden,
-                                         ParentObjectTableName = a.ParentObjectTableName,
-                                         AvailableInCustomization = a.AvailableInCustomization,
-                                         ParentObjectTableId = a.ParentObjectTableId,
-                                         IsCustom = a.IsCustom,
-                                         SupportSubEntity = a.SupportSubEntity,
-                                         ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                         FullNameTextCodeId = a.FullNameTextCodeId,
-                                         FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                         FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                         AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-										 IsLock = a.IsLock,
-										 RelatedEntity = a.RelatedEntity,
-										 ThisKey = a.ThisKey,
-										 RelatedKey = a.RelatedKey,
-									 }).ToList();
+                                     }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
+             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
 
-             zeroLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+             zeroLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                 where a.Tenant == 0 && a.LastUpdateDate > sinceDate
                                 select new ObjectTablePM()
                                 {
-                                    NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                    NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                     LookUp1 = a.LookUp1,
                                     LookUp2 = a.LookUp2,
                                     AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -147,7 +132,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     Name = a.Name,
                                     Tenant = a.Tenant,
                                     CacheOnClient = a.CacheOnClient,
-                                    HeaderScreenCode = a.HeaderScreenCode,
+                                    HeaderScreenCode = a.HeaderScreen.Code,
                                     HasCounter = a.HasCounter,
                                     EnableAddFromLOV = a.EnableAddFromLOV,
                                     EnableEditFromLOV = a.EnableEditFromLOV,
@@ -158,7 +143,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     HasCustomFields = a.HasCustomFields,
                                     CustomFieldsCount = a.CustomFieldsCount,
                                     DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                    DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                    DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                     SearchFields = a.SearchFields,
                                     IsSaveButtonVisible = a.IsSaveButtonVisible,
                                     MainTipCode = a.MainTipCode,
@@ -168,7 +153,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     AllowCustomFields = a.AllowCustomFields,
                                     MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                     DBTableName = a.DBTableName,
-                                    DBTableShortName = a.DBTableShortName,
                                     HasDynamicHeader = a.HasDynamicHeader,
                                     IsLookUp = a.IsLookUp,
                                     HasDocuments = a.HasDocuments,
@@ -187,25 +171,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     NameField = a.NameField,
                                     SplitComponentPath = a.SplitComponentPath,
                                     DisableSearchBox = a.DisableSearchBox,
-                                    AllowedInTicket = a.AllowedInTicket,
+                                    AllowedInQueues = a.AllowedInQueues,
                                     LovDisplayMemberPath = a.LovDisplayMemberPath,
                                     LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                     IsTabsHidden = a.IsTabsHidden,
-                                    ParentObjectTableName = a.ParentObjectTableName,
-                                    AvailableInCustomization = a.AvailableInCustomization,
-                                    ParentObjectTableId = a.ParentObjectTableId,
-                                    IsCustom = a.IsCustom,
-                                    SupportSubEntity = a.SupportSubEntity,
-                                    ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                    FullNameTextCodeId = a.FullNameTextCodeId,
-                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-									IsLock = a.IsLock,
-									RelatedEntity = a.RelatedEntity,
-									ThisKey = a.ThisKey,
-									RelatedKey = a.RelatedKey,
-								}).ToList();
+                                }).ToList();
             }
 
             return currentLastUpdates.Concat(zeroLastUpdates).AsQueryable<ObjectTablePM>();
@@ -219,11 +189,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
 
-               currentObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+               currentObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                        where a.Tenant == tenant
                                        select new ObjectTablePM()
                                        {
-                                           NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                           NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                            LookUp1 = a.LookUp1,
                                            LookUp2 = a.LookUp2,
                                            AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -241,7 +211,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            Name = a.Name,
                                            Tenant = a.Tenant,
                                            CacheOnClient = a.CacheOnClient,
-                                           HeaderScreenCode = a.HeaderScreenCode,
+                                           HeaderScreenCode = a.HeaderScreen.Code,
                                            HasCounter = a.HasCounter,
                                            EnableAddFromLOV = a.EnableAddFromLOV,
                                            EnableEditFromLOV = a.EnableEditFromLOV,
@@ -252,7 +222,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            HasCustomFields = a.HasCustomFields,
                                            CustomFieldsCount = a.CustomFieldsCount,
                                            DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                           DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                           DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                            SearchFields = a.SearchFields,
                                            IsSaveButtonVisible = a.IsSaveButtonVisible,
                                            MainTipCode = a.MainTipCode,
@@ -262,7 +232,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            AllowCustomFields = a.AllowCustomFields,
                                            MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                            DBTableName = a.DBTableName,
-                                           DBTableShortName = a.DBTableShortName,
                                            HasDynamicHeader = a.HasDynamicHeader,
                                            IsLookUp = a.IsLookUp,
                                            HasDocuments = a.HasDocuments,
@@ -281,54 +250,23 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            NameField = a.NameField,
                                            SplitComponentPath = a.SplitComponentPath,
                                            DisableSearchBox = a.DisableSearchBox,
-                                           AllowedInTicket = a.AllowedInTicket,
+                                           AllowedInQueues = a.AllowedInQueues,
                                            LovDisplayMemberPath = a.LovDisplayMemberPath,
                                            LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                            IsTabsHidden = a.IsTabsHidden,
-                                           ParentObjectTableName = a.ParentObjectTableName,
-                                           AvailableInCustomization = a.AvailableInCustomization,
-                                           ParentObjectTableId = a.ParentObjectTableId,
-                                           IsCustom = a.IsCustom,
-                                           SupportSubEntity = a.SupportSubEntity,
-                                           ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                           FullNameTextCodeId = a.FullNameTextCodeId,
-                                           FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                           FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                           AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-										   IsLock = a.IsLock,
-										   RelatedEntity = a.RelatedEntity,
-										   ThisKey = a.ThisKey,
-										   RelatedKey = a.RelatedKey,
-                                           ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
-									   }).ToList();
+                                       }).ToList();
             }
             if (tenant != 0)
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    zeroObjectTables = GetTenantZeroObjectTables();
-                }
-            }
+                    WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
 
-            return currentObjectTables.Concat(zeroObjectTables).AsQueryable<ObjectTablePM>();
-        }
-
-        private List<ObjectTablePM> GetTenantZeroObjectTables()
-        {
-            string tenantZeroObjectTablesCacheKeyName = "tenantZeroObjectTables";
-
-
-            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName) != null)
-            {
-                return (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName);
-            }
-
-
-            List<ObjectTablePM> zeroObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                                    where a.Tenant == 0
+                    zeroObjectTables = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+                                        where a.Tenant == 0
                                         select new ObjectTablePM()
                                         {
-                                            NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                            NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                             LookUp1 = a.LookUp1,
                                             LookUp2 = a.LookUp2,
                                             AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -346,7 +284,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             Name = a.Name,
                                             Tenant = a.Tenant,
                                             CacheOnClient = a.CacheOnClient,
-                                            HeaderScreenCode = a.HeaderScreenCode,
+                                            HeaderScreenCode = a.HeaderScreen.Code,
                                             HasCounter = a.HasCounter,
                                             EnableAddFromLOV = a.EnableAddFromLOV,
                                             EnableEditFromLOV = a.EnableEditFromLOV,
@@ -357,7 +295,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             HasCustomFields = a.HasCustomFields,
                                             CustomFieldsCount = a.CustomFieldsCount,
                                             DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                            DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                            DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                             SearchFields = a.SearchFields,
                                             IsSaveButtonVisible = a.IsSaveButtonVisible,
                                             MainTipCode = a.MainTipCode,
@@ -367,7 +305,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AllowCustomFields = a.AllowCustomFields,
                                             MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                             DBTableName = a.DBTableName,
-                                            DBTableShortName = a.DBTableShortName,
                                             HasDynamicHeader = a.HasDynamicHeader,
                                             IsLookUp = a.IsLookUp,
                                             HasDocuments = a.HasDocuments,
@@ -386,44 +323,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             CodeField = a.CodeField,
                                             NameField = a.NameField,
                                             DisableSearchBox = a.DisableSearchBox,
-                                            AllowedInTicket = a.AllowedInTicket,
+                                            AllowedInQueues = a.AllowedInQueues,
                                             LovDisplayMemberPath = a.LovDisplayMemberPath,
                                             LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                             IsTabsHidden = a.IsTabsHidden,
-                                            ParentObjectTableName = a.ParentObjectTableName,
-                                            AvailableInCustomization = a.AvailableInCustomization,
-                                            ParentObjectTableId = a.ParentObjectTableId,
-                                            IsCustom = a.IsCustom,
-                                            SupportSubEntity = a.SupportSubEntity,
-                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                            FullNameTextCodeId = a.FullNameTextCodeId,
-                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-											IsLock = a.IsLock,
-											RelatedEntity = a.RelatedEntity,
-											ThisKey = a.ThisKey,
-											RelatedKey = a.RelatedKey,
-                                            ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
                                         }).ToList();
+                }
+            }
 
-            CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-
-
-            return zeroObjectTables;
+            return currentObjectTables.Concat(zeroObjectTables).AsQueryable<ObjectTablePM>();
         }
-
         public static List<ObjectTablePM> GetObjectTablesWithTenantZero(int tenant)
-        {
-            string entityKeyString = $"GetObjectTablesWithTenantZero({tenant})";
-            List<ObjectTablePM> myres = CacheManager.GetOrInsertNewObject<List<ObjectTablePM>>(entityKeyString, () => {
-
-                
-                return GetObjectTablesWithTenantZeroBadCache(tenant);
-            });
-            return myres;
-        }
-        static List<ObjectTablePM> GetObjectTablesWithTenantZeroBadCache(int tenant)
         {
             
             string listName = "tenantzerotextobjecttablepms";
@@ -432,7 +342,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             List<ObjectTablePM> result = new List<ObjectTablePM>();
             List<ObjectTablePM> currentTenantTables = new List<ObjectTablePM>();
             List<ObjectTablePM> zeroTenantTables = new List<ObjectTablePM>();
-            var contextTenant = SettingUtil.GetCurrentTenant();
+             
             if (tenant != 0)
             {
                 if (HttpContext.Current != null)
@@ -441,12 +351,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                         {
-                            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
-                            currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+                            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                            currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                                    where (a.Tenant == tenant && a.InActive == false)
                                                    select new ObjectTablePM()
                                                    {
-                                                       NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                                       NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                                        LookUp1 = a.LookUp1,
                                                        LookUp2 = a.LookUp2,
                                                        AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -464,7 +374,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        Name = a.Name,
                                                        Tenant = a.Tenant,
                                                        CacheOnClient = a.CacheOnClient,
-                                                       HeaderScreenCode = a.HeaderScreenCode,
+                                                       HeaderScreenCode = a.HeaderScreen.Code,
                                                        HasCounter = a.HasCounter,
                                                        EnableAddFromLOV = a.EnableAddFromLOV,
                                                        EnableEditFromLOV = a.EnableEditFromLOV,
@@ -475,7 +385,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        HasCustomFields = a.HasCustomFields,
                                                        CustomFieldsCount = a.CustomFieldsCount,
                                                        DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                       DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                                       DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                                        SearchFields = a.SearchFields,
                                                        IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                        MainTipCode = a.MainTipCode,
@@ -485,7 +395,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        AllowCustomFields = a.AllowCustomFields,
                                                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                        DBTableName = a.DBTableName,
-                                                       DBTableShortName = a.DBTableShortName,
                                                        HasDynamicHeader = a.HasDynamicHeader,
                                                        IsLookUp = a.IsLookUp,
                                                        HasDocuments = a.HasDocuments,
@@ -504,23 +413,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        NameField = a.NameField,
                                                        SplitComponentPath = a.SplitComponentPath,
                                                        DisableSearchBox = a.DisableSearchBox,
-                                                       AllowedInTicket = a.AllowedInTicket,
+                                                       AllowedInQueues = a.AllowedInQueues,
                                                        LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                        LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                                        IsTabsHidden = a.IsTabsHidden,
-                                                       ParentObjectTableName = a.ParentObjectTableName,
-                                                       AvailableInCustomization = a.AvailableInCustomization,
-                                                       SupportSubEntity = a.SupportSubEntity,
-                                                       ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                       FullNameTextCodeId = a.FullNameTextCodeId,
-                                                       FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                       FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                       AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-													   IsLock = a.IsLock,
-													   RelatedEntity = a.RelatedEntity,
-													   ThisKey = a.ThisKey,
-													   RelatedKey = a.RelatedKey,
-												   }).ToList();
+                                                   }).ToList();
                             scope.Complete();
                         }
 
@@ -535,12 +432,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
-                        currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                                where (a.Tenant == tenant && a.InActive == false)
                                                select new ObjectTablePM()
                                                {
-                                                   NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                                   NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                                    LookUp1 = a.LookUp1,
                                                    LookUp2 = a.LookUp2,
                                                    AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -558,7 +455,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    Name = a.Name,
                                                    Tenant = a.Tenant,
                                                    CacheOnClient = a.CacheOnClient,
-                                                   HeaderScreenCode = a.HeaderScreenCode,
+                                                   HeaderScreenCode = a.HeaderScreen.Code,
                                                    HasCounter = a.HasCounter,
                                                    EnableAddFromLOV = a.EnableAddFromLOV,
                                                    EnableEditFromLOV = a.EnableEditFromLOV,
@@ -569,7 +466,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    HasCustomFields = a.HasCustomFields,
                                                    CustomFieldsCount = a.CustomFieldsCount,
                                                    DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                                   DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                                    SearchFields = a.SearchFields,
                                                    IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                    MainTipCode = a.MainTipCode,
@@ -579,7 +476,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowCustomFields = a.AllowCustomFields,
                                                    MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                    DBTableName = a.DBTableName,
-                                                   DBTableShortName = a.DBTableShortName,
                                                    HasDynamicHeader = a.HasDynamicHeader,
                                                    IsLookUp = a.IsLookUp,
                                                    HasDocuments = a.HasDocuments,
@@ -598,23 +494,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    NameField = a.NameField,
                                                    SplitComponentPath = a.SplitComponentPath,
                                                    DisableSearchBox = a.DisableSearchBox,
-                                                   AllowedInTicket = a.AllowedInTicket,
+                                                   AllowedInQueues = a.AllowedInQueues,
                                                    LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                    LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                                    IsTabsHidden = a.IsTabsHidden,
-                                                   ParentObjectTableName = a.ParentObjectTableName,
-                                                   AvailableInCustomization = a.AvailableInCustomization,
-                                                   SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                   FullNameTextCodeId = a.FullNameTextCodeId,
-                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                   FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-												   IsLock = a.IsLock,
-												   RelatedEntity = a.RelatedEntity,
-												   ThisKey = a.ThisKey,
-												   RelatedKey = a.RelatedKey,
-											   }).ToList();
+                                               }).ToList();
                         scope.Complete();
                     }
                 }
@@ -626,12 +510,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
-                        zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
-                                            where (a.Tenant == 0 && a.InActive == false)
+                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+                                               where (a.Tenant == 0 && a.InActive == false)
                                                select new ObjectTablePM()
                                                {
-                                                   NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                                   NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                                    LookUp1 = a.LookUp1,
                                                    LookUp2 = a.LookUp2,
                                                    AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -649,7 +533,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    Name = a.Name,                                                   
                                                    Tenant = a.Tenant,
                                                    CacheOnClient = a.CacheOnClient,
-                                                   HeaderScreenCode = a.HeaderScreenCode,
+                                                   HeaderScreenCode = a.HeaderScreen.Code,
                                                    HasCounter = a.HasCounter,
                                                    EnableAddFromLOV = a.EnableAddFromLOV,
                                                    EnableEditFromLOV = a.EnableEditFromLOV,
@@ -660,7 +544,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    HasCustomFields = a.HasCustomFields,
                                                    CustomFieldsCount = a.CustomFieldsCount,
                                                    DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                                   DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                                    SearchFields = a.SearchFields,
                                                    IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                    MainTipCode = a.MainTipCode,
@@ -670,7 +554,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowCustomFields = a.AllowCustomFields,
                                                    MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                    DBTableName = a.DBTableName,
-                                                   DBTableShortName = a.DBTableShortName,
                                                    HasDynamicHeader = a.HasDynamicHeader,
                                                    IsLookUp = a.IsLookUp,
                                                    HasDocuments = a.HasDocuments,
@@ -689,25 +572,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    NameField = a.NameField,
                                                    SplitComponentPath = a.SplitComponentPath,
                                                    DisableSearchBox = a.DisableSearchBox,
-                                                   AllowedInTicket = a.AllowedInTicket,
+                                                   AllowedInQueues = a.AllowedInQueues,
                                                    LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                    LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                                    IsTabsHidden = a.IsTabsHidden,
-                                                   ParentObjectTableName = a.ParentObjectTableName,
-                                                   AvailableInCustomization = a.AvailableInCustomization,
-                                                   ParentObjectTableId = a.ParentObjectTableId,
-                                                   IsCustom = a.IsCustom,
-                                                   SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                   FullNameTextCodeId = a.FullNameTextCodeId,
-                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                   FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-												   IsLock = a.IsLock,
-												   RelatedEntity = a.RelatedEntity,
-												   ThisKey = a.ThisKey,
-												   RelatedKey = a.RelatedKey,
-											   }).ToList();
+                                               }).ToList();
 
                         scope.Complete();
                     }
@@ -724,12 +593,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
-                    zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
+                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM()
                                         {
-                                            NewButtonTextCodeCode = a.NewButtonTextCodeCode,
+                                            NewButtonTextCodeCode = a.NewButtonTextCode.Code,
                                             LookUp1 = a.LookUp1,
                                             LookUp2 = a.LookUp2,
                                             AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -747,7 +616,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             Name = a.Name,
                                             Tenant = a.Tenant,
                                             CacheOnClient = a.CacheOnClient,
-                                            HeaderScreenCode = a.HeaderScreenCode,
+                                            HeaderScreenCode = a.HeaderScreen.Code,
                                             HasCounter = a.HasCounter,
                                             EnableAddFromLOV = a.EnableAddFromLOV,
                                             EnableEditFromLOV = a.EnableEditFromLOV,
@@ -758,7 +627,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             HasCustomFields = a.HasCustomFields,
                                             CustomFieldsCount = a.CustomFieldsCount,
                                             DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                            DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                            DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                             SearchFields = a.SearchFields,
                                             IsSaveButtonVisible = a.IsSaveButtonVisible,
                                             MainTipCode = a.MainTipCode,
@@ -768,7 +637,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AllowCustomFields = a.AllowCustomFields,
                                             MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                             DBTableName = a.DBTableName,
-                                            DBTableShortName = a.DBTableShortName,
                                             HasDynamicHeader = a.HasDynamicHeader,
                                             IsLookUp = a.IsLookUp,
                                             HasDocuments = a.HasDocuments,
@@ -787,25 +655,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             NameField = a.NameField,
                                             SplitComponentPath = a.SplitComponentPath,
                                             DisableSearchBox = a.DisableSearchBox,
-                                            AllowedInTicket = a.AllowedInTicket,
+                                            AllowedInQueues = a.AllowedInQueues,
                                             LovDisplayMemberPath = a.LovDisplayMemberPath,
                                             LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                             IsTabsHidden = a.IsTabsHidden,
-                                            ParentObjectTableName = a.ParentObjectTableName,
-                                            AvailableInCustomization = a.AvailableInCustomization,
-                                            ParentObjectTableId = a.ParentObjectTableId,
-                                            IsCustom = a.IsCustom,
-                                            SupportSubEntity = a.SupportSubEntity,
-                                            ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                            FullNameTextCodeId = a.FullNameTextCodeId,
-                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-											IsLock = a.IsLock,
-											RelatedEntity = a.RelatedEntity,
-											ThisKey = a.ThisKey,
-											RelatedKey = a.RelatedKey,
-										}).ToList();
+                                        }).ToList();
 
 
                     scope.Complete();
@@ -858,28 +712,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return table;
-        }
-		public ObjectTablePM GetObjectTableByNameOrId(string name, int tenant)
-		{
-			ObjectTablePM table = null;
-			if (!string.IsNullOrEmpty(name))
-			{
-				table = GetObjectTablesWithTenantZero(tenant).Where(t => t.Name.ToLower() == name.ToLower() || t.Id == name).FirstOrDefault();
-			}
-
-			return table;
-		}
-		public ObjectTablePM GetObjectTableByDBName(string name, int tenant)
-		{
-			ObjectTablePM table = null;
-			if (!string.IsNullOrEmpty(name))
-			{
-				table = GetObjectTablesWithTenantZero(tenant).Where(t => t.DBTableName?.ToLower() == name.ToLower()).FirstOrDefault();
-			}
-
-			return table;
-		}
-		public ObjectTablePM GetObjectTablePMById(string id, int tenant)
+        }        
+        public ObjectTablePM GetObjectTablePMById(string id, int tenant)
         {
             ObjectTablePM table = null;
             if (!string.IsNullOrEmpty(id))
@@ -914,34 +748,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 t.Name == "Customs.SupplierInvoiceFreightAmount" ||
                 t.Name == "Customs.Claim" || 
                 t.Name == "Customs.ClaimsRelatedEntity" ||
-                t.Name == "Customs.CourierMaster"||
-                 t.Name == "Customs.SupplierInvoicePayment" ||
-                   t.Name == "Customs.DeclarationExportRecipient"
+                t.Name == "Customs.CourierMaster"
                 ).ToList();           
-
-
-            return tables;
-        }
-
-        public List<ObjectTablePM> GetSomeExportObjectTables(int tenant)
-        {
-            List<ObjectTablePM> tables = null;
-
-
-            tables = GetObjectTablesWithTenantZero(tenant).Where(t => t.Name == "Customs.Declaration" ||
-                t.Name == "Customs.Consignment" ||
-                t.Name == "Customs.ConsignmentPackage" ||
-                t.Name == "Customs.SupplierInvoice" ||
-                t.Name == "Customs.SupplierInvoiceItem" ||
-                t.Name == "Customs.DeclarationExportRecipient"
-                ).ToList();
-
 
             return tables;
         }
         public IQueryable<ObjectTableList> GetIQueryableEntityList(IQueryable<ObjectTable> iQueryable)
         {
-            IQueryable<ObjectTableList> result = from a in iQueryable.Include("FullNameTextCode")
+            IQueryable<ObjectTableList> result = from a in iQueryable
                                                  select new ObjectTableList()
                                                  {
                                                      AutoCompleteSearchWindow = a.AutoCompleteSearchWindow,
@@ -949,7 +763,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      DependencyFilter2 = a.DependencyFilter2,
                                                      DependencyFilter3 = a.DependencyFilter3,
                                                      HeaderScreenId = a.HeaderScreenId,
-                                                     HeaderScreenCode=a.HeaderScreenCode,
                                                      Id = a.Id,
                                                      IsClosed = a.IsClosed,
                                                      IsNewWizard = a.IsNewWizard,
@@ -963,7 +776,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      IsMain = a.IsMain,
                                                      IsRestrictable = a.IsRestrictable,
                                                      DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                     DescriptionTextCodeCode = a.DescriptionTextCodeCode,
+                                                     DescriptionTextCodeCode = a.DescriptionTextCode.Code,
                                                      SearchFields = a.SearchFields,
                                                      IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                      MainTipCode = a.MainTipCode,
@@ -973,7 +786,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      AllowCustomFields = a.AllowCustomFields,
                                                      MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                      DBTableName = a.DBTableName,
-                                                     DBTableShortName = a.DBTableShortName,
                                                      IsLookUp = a.IsLookUp,
                                                      HasDocuments = a.HasDocuments,
                                                      HasCustomValidator = a.HasCustomValidator,
@@ -987,34 +799,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      SplitComponentPath = a.SplitComponentPath,
                                                      AllowedForComputingPartners = a.AllowedForComputingPartners,
                                                      DisableSearchBox = a.DisableSearchBox,
-                                                     AllowedInTicket = a.AllowedInTicket,
+                                                     AllowedInQueues = a.AllowedInQueues,
                                                      CodeField = a.CodeField,
                                                      NameField = a.NameField,
                                                      LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                      LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                                      IsTabsHidden = a.IsTabsHidden,
-                                                     ParentObjectTableName = a.ParentObjectTableName,
-                                                     AvailableInCustomization = a.AvailableInCustomization,
-                                                     ParentObjectTableId = a.ParentObjectTableId,
-                                                     IsCustom = a.IsCustom,
-                                                     SupportSubEntity = a.SupportSubEntity,
-                                                     ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                     LookUp1 = a.LookUp1,
-                                                     LookUp2 = a.LookUp2,
-                                                     FullNameTextCodeId = a.FullNameTextCodeId,
-                                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                     AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-													 IsLock = a.IsLock,
-													 RelatedEntity = a.RelatedEntity,
-													 ThisKey = a.ThisKey,
-													 RelatedKey = a.RelatedKey,
-												 };
+                                                 };
             return result;
         }  
         public ObjectTableList GetObjectTableList(string id, int tenant)
         {
-            ObjectTableList ObjectTableList = (from a in repository.context.ObjectTables.Include("FullNameTextCode")
+            ObjectTableList ObjectTableList = (from a in repository.context.ObjectTables
                                                where (a.Tenant == tenant || a.Tenant == 0)
                                                && a.Id == id
                                                && a.InActive == false
@@ -1025,7 +821,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    DependencyFilter2 = a.DependencyFilter2,
                                                    DependencyFilter3 = a.DependencyFilter3,
                                                    HeaderScreenId = a.HeaderScreenId,
-                                                   HeaderScreenCode = a.HeaderScreenCode,
                                                    Id = a.Id,
                                                    IsClosed = a.IsClosed,
                                                    IsNewWizard = a.IsNewWizard,
@@ -1039,7 +834,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    IsMain = a.IsMain,
                                                    IsRestrictable = a.IsRestrictable,
                                                    DescriptionTextCodeId = a.DescriptionTextCodeId,
-                                                   DescriptionTextCodeCode = a.DescriptionTextCodeCode,
                                                    SearchFields = a.SearchFields,
                                                    IsSaveButtonVisible = a.IsSaveButtonVisible,
                                                    MainTipCode = a.MainTipCode,
@@ -1049,7 +843,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowCustomFields = a.AllowCustomFields,
                                                    MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                    DBTableName = a.DBTableName,
-                                                   DBTableShortName = a.DBTableShortName,
                                                    AllowedForComputingPartners = a.AllowedForComputingPartners,
                                                    CodeField = a.CodeField,
                                                    NameField = a.NameField,
@@ -1065,44 +858,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    HasFiltersMenu = a.HasFiltersMenu,
                                                    SplitComponentPath = a.SplitComponentPath,
                                                    DisableSearchBox = a.DisableSearchBox,
-                                                   AllowedInTicket = a.AllowedInTicket,
+                                                   AllowedInQueues = a.AllowedInQueues,
                                                    LovDisplayMemberPath = a.LovDisplayMemberPath,
                                                    LovDisplayMemberPathLocal = a.LovDisplayMemberPathLocal,
                                                    IsTabsHidden = a.IsTabsHidden,
-                                                   ParentObjectTableName = a.ParentObjectTableName,
-                                                   AvailableInCustomization = a.AvailableInCustomization,
-                                                   ParentObjectTableId = a.ParentObjectTableId,
-                                                   IsCustom = a.IsCustom,
-                                                   SupportSubEntity = a.SupportSubEntity,
-                                                   ApplyGenericCustomFields = a.ApplyGenericCustomFields,
-                                                   FullNameTextCodeId = a.FullNameTextCodeId,
-                                                   FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                   FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
-                                                   AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-												   IsLock = a.IsLock,
-												   RelatedEntity = a.RelatedEntity,
-												   ThisKey = a.ThisKey,
-												   RelatedKey = a.RelatedKey,
-											   }).FirstOrDefault();
+                                               }).FirstOrDefault();
 
 
 
             return ObjectTableList;
-        } 
-        
-        public string GetObjectTableIdByName(string tableName)
-        {
-            return repository.GetObjectTableIdByName(tableName);
-        }
-
-        public string GetObjectTableNamesById(string id,int tenant)
-        {
-            var item = repository.GetSingleObjectTable(id, tenant, true);
-            if (item != null)
-            {
-                return item.Name;
-            }
-            return null;
-        }
+        }       
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -173,36 +173,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return Temp;
         }
 
-        public APILogsPM GetSingleByCorrelationIdAndTenant(string correlationId, int tenant)
-        {
-            return (from a in repository.webFreightContext.APILogs
-                    where a.Tenant == tenant && a.CorrelationId == correlationId
-                    select new APILogsPM() {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        CorrelationId = a.CorrelationId,
-                        CreateDate = a.CreateDate,
-                        CreateDateUTC = a.CreateDateUTC,
-                        Direction = a.Direction,
-                        EntityId = a.EntityId,
-                        ExpirationDate = a.ExpirationDate,
-                        LastExceptionMessage = a.LastExceptionMessage,
-                        LastUpdateDate = a.LastUpdateDate,
-                        LastUpdateDateUTC = a.LastUpdateDateUTC,
-                        NumberOfRetries = a.NumberOfRetries,
-                        ObjectTableId = a.ObjectTableId,
-                        PartnerName = a.PartnerName,
-                        Refrence = a.Refrence,
-                        SearchFields = a.SearchFields,
-                        Status = a.Status,
-                        Subject = a.Subject,
-                        StatusName = a.Status == "D" ? "Done" : a.Status == "I" ? "In Progress" : "Faild",
-                        CustomerId = a.CustomerId,
-                        BatchNumber = a.BatchNumber,
-                        QueueMessage = a.QueueMessage,
-                        QueueType = a.QueueType,
-                        QueueMessageMoreDetailsId = a.QueueMessageMoreDetailsId
-                    }).FirstOrDefault();
-        }
+
     }
 }

@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .disabled {
         pointer-events: none;
         opacity: 0.7;
@@ -64,14 +64,12 @@
 
 
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe" [binding]="'ItemCode'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplate [RIndex]="item.rowIndex" >
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex" >
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemCode}}</span>
                                             </div>
                                             
                                         </log-cell-template>
-</ng-template>
 
 
                                     </log-column>
@@ -79,43 +77,38 @@
 
 
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemDescription' | TextCodeTranslationPipe" [binding]="'ItemDescription'" [width]="'80'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
                                             
                                         </log-cell-template>
-</ng-template>
 
 
                                     </log-column>
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe" [binding]="'ClassificationCode'" [width]="'120'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplateOfClassificationCode [RIndex]="item.rowIndex">
-                                            <div class="TextTrimming" style="text-align:right;width:120px" *ngIf="logcelltemplateOfClassificationCode.IsDisplayMode">
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
+                                            <div class="TextTrimming" style="text-align:right;width:120px" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ClassificationCode}}</span>
                                                 <span style="font-size:10px">{{item.QunatityTypeCode}}</span>
                                             </div>
-                                            <div *ngIf="logcelltemplateOfClassificationCode.IsEditMode">
+                                            <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #ClassificationTextBox [ObjectFieldName]="'ClassificationCode'" [DataContext]="item" [FocusOnMe]="true" 
                                                             [InputType]="'integertext'"
                                                             [Text]="item.ClassificationCode" [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true"
-                                                            (LostFocus)="item.OnClassificationLostFocus(logcelltemplateOfClassificationCode,ClassificationTextBox)" [DebounceTime]="1" 
-                                                            (KeyUp)="item.ClassificationKeyUp($event,logcelltemplateOfClassificationCode,ClassificationTextBox)"></LogTextBox>
+                                                            (LostFocus)="item.OnClassificationLostFocus(logcelltemplate,ClassificationTextBox)" [DebounceTime]="1" 
+                                                            (KeyUp)="item.ClassificationKeyUp($event,logcelltemplate,ClassificationTextBox)"></LogTextBox>
 
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
 
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.TradeAgreementCode' | TextCodeTranslationPipe" [binding]="'TradeAgreementCode'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.TradeAgreementName}}</span>
                                             </div>
@@ -131,13 +124,11 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
                                     </log-column>
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantity' | TextCodeTranslationPipe" [binding]="'InvoiceQuantity'" [width]="'80'" [Editable]="true" [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.InvoiceQuantity }}</span>
                                             </div>
@@ -148,14 +139,12 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
 
                                     </log-column>
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.InvoiceQuantityType' | TextCodeTranslationPipe" [binding]="'InvoiceQuantityType'" [width]="'50'" [Editable]="true" [Alignment]="'right'">
 
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.InvoiceQuantityType}}</span>
                                             </div>
@@ -171,13 +160,11 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.ItemPrice' | TextCodeTranslationPipe" [binding]="'ItemPrice'" [width]="'90'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemPrice | NumbersPipe:'N2'}}</span>
                                             </div>
@@ -188,14 +175,12 @@
 
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
 
                                     </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoiceItem.F.OriginCountryCode' | TextCodeTranslationPipe" [binding]="'OriginCountryCode'" [width]="'100'" [Editable]="true" [Alignment]="'right'">
-                                        <ng-template let-item>
-<log-cell-template   #logcelltemplate [RIndex]="item.rowIndex">
+                                        <log-cell-template template="let item"  #logcelltemplate [RIndex]="item.rowIndex">
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.OriginCountryName}}</span>
                                             </div>
@@ -211,7 +196,6 @@
                                                 </LogLov>
                                             </div>
                                         </log-cell-template>
-</ng-template>
 
                                     </log-column>
 
@@ -219,17 +203,15 @@
                            
 
                                     <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                        <ng-template let-item>
-<log-cell-template [IgnoreMods]="true"  #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
 
                                             <span class="CellSeparator" style="float: right;"></span>
 
                                             <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [disabled]="IsDisplayOnly" [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
                                             </div>
                                            
                                         </log-cell-template>
-</ng-template>
                                     </log-column>
 
 

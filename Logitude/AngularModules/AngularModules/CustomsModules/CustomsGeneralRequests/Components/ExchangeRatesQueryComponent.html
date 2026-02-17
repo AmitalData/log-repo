@@ -1,4 +1,4 @@
-
+﻿
 <div>
     <!-- ExchangeRatesQueryComponent  view  -->
     <custom-message-wrapper>
@@ -63,33 +63,6 @@
 
                     <td><div></div></td>
                 </tr>
-                <!--<tr >
-                    <td colspan="3">
-                        <MultiSelectLOV [DataContext]="DataContext"
-                                        [PlaceHolder]="'בחר משתמשים'"
-                                        [LayoutDirection]="'rtl'"
-                                        [LOVListComponentPropName]="'LOVListCurrencys'">
-                            <span class="class-MultiSelectLOV-content">
-                                <LogLov [ObjectFieldName]="'UserId'"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [DataContext]="DataContext"
-                                        [HideColumns]="true"
-                                        [LookUpTableName]="'User'"
-                                        [DisplayMemberPath]="'LocalName'">
-                                </LogLov>
-                            </span>
-                        </MultiSelectLOV>
-                    </td>
-                   
-
-                    <td><div></div></td>
-                    <td style="width: 200px"></td>
-                    <td style="width:10px"></td>
-
-                    <td style="width: 200px; padding-right: 36px;"></td>
-
-                    <td><div></div></td>
-                </tr>-->
                 <tr class="FormFieldRow" style="height:1px">
                     <td><div></div></td>    
                 </tr>
@@ -102,20 +75,18 @@
                 <tr class="FormFieldRow" style="height:1px">
                     <!--background-color :aquamarine;-->
                     <td colspan="5" style="width: 100% ; height : 100%">
-                        <div id="CustomsRequest_ExchangeRates_RatesGrid" class="GeneratedGridContainer" style="width: 100% ; height : 100%">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ExchangeRatesQueryObservableList" >
 
                                 <!-- CurrencyTypeCode -->
                                 <log-column [header]="'קוד מטבע'"
                                             [binding]="'CurrencyTypeId'"
                                             [width]="'100'" [Alignment]="'Right'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CurrencyTypeId}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- CurrencyTypeName -->
@@ -123,13 +94,11 @@
                                             [header]="'Customs.ExchangeRate.O.CurrencyTypeName' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="'Right'"
                                             [binding]="'Content'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CurrencyTypeName}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- CustomsCurrencyRate -->
@@ -138,13 +107,11 @@
                                             [header]="'שער'"
                                             [binding]="'CustomsCurrencyRate'"
                                             [width]="'100'" [Alignment]="'Right'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.CustomsCurrencyRate}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                                 <!-- StartDate -->
@@ -152,14 +119,12 @@
                                 <log-column 
                                             [header]="'תאריך שער'"
                                             [width]="'150'" [Alignment]="'Right'" [binding]="'StartDate'">
-                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
                                         <div class="RightCenter">
                                             <span>{{item.StartDate  | DateTimeToDatePipe  }}</span>
                                             
                                         </div>
                                     </log-cell-template>
-</ng-template>
                                 </log-column>
 
                             </logitude-edit-grid>

@@ -21,10 +21,6 @@ namespace Logitude.Accounting.Def.EntityPMs
         public string AssessingOfficeNumber { get; set; }
         [DataMember]
         public string ExternalDisplayNumber { get; set; }
-
-
-        public string Change2MultiCurrencyNotes { get; set; }
-        [DataMember]
-        public string ParentCurrencyGLAccountCardId { get; set; }
+        
     }
 }

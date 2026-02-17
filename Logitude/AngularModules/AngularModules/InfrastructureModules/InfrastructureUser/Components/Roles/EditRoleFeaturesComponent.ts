@@ -15,7 +15,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditRoleFeaturesComponent.html',
 })
 
@@ -88,60 +88,35 @@ export class EditRoleFeaturesComponent {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myDomainService.GetSelectedAndUnselectedRoleFeatures(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var loadedFeatures: FeaturePM[] = myResponse.Result;
 
-            if (myResponse.HasError) {
-                this.BuildCollections();
-                this.CurrentSession.StopBusyIndicator();
-            }
-
-            var loadedFeatures: FeaturePM[] = myResponse.Result;
-            if (SessionLocator.Tenant == 0) {
-                this.allFeatures = loadedFeatures;
-                this.Build();
-                return;
-            }
-
-            if (!this.IsCustomRole) {
-                this.allFeatures = loadedFeatures;
-                this.Build();
-                return;
-            }
-
-            this.myDomainService.GetAllowedFeaturesForRole(this.EntityPM.ParentRoleId).subscribe(roleFeatures => {
-                if (roleFeatures.HasError) {
-                    this.Build();
-                    return;
+                if (SessionLocator.Tenant == 0) {
+                    this.allFeatures = loadedFeatures;
                 }
-                var parentRoleFeaturesDectionary = this.GetRoleFeaturesDectionary(roleFeatures.Result);
-                loadedFeatures.forEach(item => {
-                    if (parentRoleFeaturesDectionary[this.GetFeatureDictionaryKey(item)]) {
-                        this.allFeatures.push(item);
-                    }
-                });
-                this.Build();
-            });
-        });
-    }
-    Build() {
-        
-        this.CurrentSession.StopBusyIndicator();
-        this.allFeatures.forEach(itemFeature => {
-            this.allFeaturesItems.push(new RoleFeatureClass(itemFeature, this));
-        });
-        this.BuildCollections();
-    }
 
-    GetRoleFeaturesDectionary(roleFeatures: Array<FeaturePM>) {
-        var dictionary:{[key:string]:FeaturePM} = {};
-        roleFeatures.forEach(features => {
-            if(!dictionary[this.GetFeatureDictionaryKey(features)]){
-                dictionary[this.GetFeatureDictionaryKey(features)] = features;
+                else {
+                    if (this.IsCustomRole) {
+                        loadedFeatures.forEach(item => {
+                            if (FeatureLocator.HasFeaturePermessionByObjectTableId(item.ObjectTableId, item.Code)) {
+                                this.allFeatures.push(item);
+                            }
+                        });
+                    }
+
+                    else {
+                        this.allFeatures = loadedFeatures;
+                    }
+                }
+
+                this.allFeatures.forEach(itemFeature => {
+                    this.allFeaturesItems.push(new RoleFeatureClass(itemFeature, this));
+                });
             }
+
+            this.BuildCollections();
+            this.CurrentSession.StopBusyIndicator();
         });
-        return dictionary;
-    }
-    GetFeatureDictionaryKey(features: FeaturePM) {
-        return features.ObjectTableId + features.Code.toLowerCase();
     }
     private BuildCollections() {
         this.BuildTablesLists();

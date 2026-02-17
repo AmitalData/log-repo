@@ -6,6 +6,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { SearchTextBox } from '../../../../Controls/SearchTextBox';
 import { IconButton } from '../../../../Controls/IconButton';
 import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+import { Http, Response } from '@angular/http';
 import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -36,15 +37,12 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { HybridPartnerPMService } from '../../../../Common/Services/StandardPMs/HybridPartnerPMService';
 
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 @Component({
-
+    moduleId: module.id,
     templateUrl: './LogBoxApprovePaymentComponent.html'
 })
 
 export class LogBoxApprovePaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
-    public SearchText: string = null;
-    public DeleteDocumentClicked(item: any) { }
 
     DataContext: LogBoxApprovePaymentComponent = this;
     private myCommonDomainService: CommonDomainService;
@@ -133,12 +131,12 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe((theResult: any) => {
+            this._HybridPartnerPMService.get(this.ForwarderPartnerId).subscribe(theResult => {
                 if (!theResult.HasError) {
                     this.PartnerName = theResult.Result.Name;
                 }
             });
-            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res: any) => {
+            this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
                 var Result = [];
 
                 Result = res.Result.filter(a => a.IsDeleted == false && a.HasFile == true);
@@ -150,9 +148,9 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
 
                 var DRELID = "";
 
-
-
-                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe((myResult: any) => {
+              
+                
+                this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
                     if (myResult.Result) {
                         var DRELDecFormDocs = [];
                         var DRELOtherDocs = [];
@@ -206,9 +204,9 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     ApproveButtonClicked() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult: any) => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
-            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {// || !AppTool.IsNullOrEmpty(entity.DenyReason)
+            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
@@ -220,10 +218,8 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                entity.DenyReason = "";
-                this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
+                this._ShipmentAdditionalCloudDataService.update(entity).subscribe(AdditionalResult => {
                     ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
-                    MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Approve Declaration" });
                     this.DimApproveButton = true;
                     var today = new Date();
                     var d = today.getDate();
@@ -267,9 +263,9 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         newWindow.Height = 280;
         newWindow.RTL = true;
 
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult: any) => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
-            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
+            if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
@@ -306,7 +302,7 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
     }
 
     DownloadDocumentFile(item) {
-        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res: any) => {
+        this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe(res => {
             var EntityNumber = "";
             if (this.EntityPm != null) {
                 EntityNumber = this.EntityPm.ShipmentNumber;
@@ -444,12 +440,20 @@ export class LogBoxApprovePaymentComponent extends BaseComponent implements OnIn
         var newWindow = new LogitudeWindow();
         newWindow.Width = 550;
         newWindow.Height = 230;
+        //if (this.Language == 'HB') {
+        //    newWindow.RTL = true;
+        //}
+        //else {
         newWindow.RTL = this.RTL;
+        //}
         newWindow.Title = TextCodeTranslator.Translate("Shipment.O.TaxInformation");//"פרטי מס";
         var windowArgs: any = {};
+        //windowArgs.IsNew = false;
 
         windowArgs.AdditionalData = this.AdditionalData;
         newWindow.WindowArgs = windowArgs;
+        //newWindow.Add(control); 
         newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/TaxScreenComponent');
+
     }
 }

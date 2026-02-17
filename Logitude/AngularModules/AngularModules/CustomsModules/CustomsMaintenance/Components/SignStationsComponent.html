@@ -1,14 +1,10 @@
-<style>
+﻿<style>
 
 </style>
 
 <table  *ngIf="_TranslationLoaded ||  false" style="padding-top: 10px;width:100%">
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="3">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-        </td>
-    </tr>
+    
     <tr >
         <td>
             <table style="padding-top: 10px;" >

@@ -14,7 +14,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Id { get; set; }
         public string DWObjectFieldCode { get; set; }
         public string DWCategoryCode { get; set; }
-        public string DWObjectTableCode { get; set; }
 
         //[ForeignKey("DWObjectFieldCode")]
         //public virtual DWObjectField DWObjectField { get; set; }

@@ -8,16 +8,11 @@ import { EditTabsComponent } from '../EditEntity/EditShipmentTabs.po';
 describe('Operations Module', () => {
     let page: OperationsComp = new OperationsComp();
     let EditShipmentTabs: EditTabsComponent;
-    var originalTimeout;
-    var shipperRef1;
-    beforeEach(function () {
-        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000000;
-    });
 
-    afterEach(function () {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-    });
+    var shipperRef1;
+    afterEach(() => {
+        // browser.switchTo().alert().accept();
+    })
     it('Create Shipment .. ', function () {
         browser.ignoreSynchronization = true;
         shipperRef1 = page.DoOperations(browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);

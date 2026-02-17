@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.TruckersInvoicesBlock = entityPM.TruckersInvoicesBlock;
             entityPOCO.VendorsInvoicesBlock = entityPM.VendorsInvoicesBlock;
             entityPOCO.WarehousesInvoicesBlock = entityPM.WarehousesInvoicesBlock;
-            entityPOCO.ShipmentCreationWarning = entityPM.ShipmentCreationWarning;
         }
     }
 }

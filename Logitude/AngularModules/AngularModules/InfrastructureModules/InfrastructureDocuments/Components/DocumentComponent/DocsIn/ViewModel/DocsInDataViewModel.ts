@@ -2,7 +2,6 @@ declare var System: any;
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {LogitudeWindow} from '../../../../../../Controls/Windows/LogitudeWindow';
-import {FeatureLocator} from '../../../../../../Infrastructure/Utilities/FeatureLocator';
 import {DocumentsFilingPM} from '../../../../../../Common/EntityPMs/DocumentsFilingPM';
 import {DocsInTabComponent} from '../../../../../../Infrastructure/Components/Documents/DocsInTabComponent';
 import {SessionLocator} from '../../../../../../Infrastructure/Utilities/SessionLocator';
@@ -21,13 +20,9 @@ export class DocsInDataViewModel extends BaseComponent{
     Id: string;
     Key: string;
     DataContext: any = this;
-    AllowChangeReceiveDateDocsIn : boolean = false;
     public EntityId: string;
     public ChildEntityId: string;
     public ChildReference: string;
-    public EntityNumber: string;
-    public ExternalEntityReference: string;
-    public ExternalEntityName: string;
     public ExternalDocuments: DocumentsFilingPM[];
     CurrentDocument: DocumentsFilingPM;
     public ObjectTableId: string;
@@ -44,7 +39,7 @@ export class DocsInDataViewModel extends BaseComponent{
     //DocumentId: string;
     ReceivedByUserId: string;
     ReceivedByUserName: string;
-    ReceivedByPartner: string;
+
     private receivedDate: Date;
     public get ReceivedDate() {
         if (this.CurrentDocument) {
@@ -74,16 +69,11 @@ export class DocsInDataViewModel extends BaseComponent{
 
     }
 
-    private setUIProperties(){
-    if (FeatureLocator.HasFeaturePermession("General", "ChangeReceiveDateDocsIn")) {
-                this.AllowChangeReceiveDateDocsIn = true;
-        }
-     this.UIProperties.SetEnabled("ReceivedDate", this.DocsInComponent.ObjectTableName , this.AllowChangeReceiveDateDocsIn);
-}
+
 
     get SecurityId() {
         if (this.CurrentDocument) {
-            return this.CurrentDocument.SecurityId; 
+            return this.CurrentDocument.SecurityId;
         }
         else return "";
     }
@@ -97,21 +87,18 @@ export class DocsInDataViewModel extends BaseComponent{
 
 
 
-    private  note:string;
+
     public get Note() {
 
         if (this.CurrentDocument) {
-            this.note= this.CurrentDocument.Notes;
-        }
-        return this.note;
+            return this.CurrentDocument.Notes;
+        } else return "";
+
     }
     public set Note(newValue: string) {
 
-        if (this.note != newValue) {
-            this.note = newValue;
-            if (this.CurrentDocument != null) {
-                this.CurrentDocument.Notes = this.note;
-            }
+        if (this.CurrentDocument != null && this.CurrentDocument.Notes != newValue ) {
+            this.CurrentDocument.Notes = newValue;
         }
     }
 
@@ -260,7 +247,7 @@ export class DocsInDataViewModel extends BaseComponent{
    
     public HasFollowUp: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(currentDocument: DocumentsFilingPM, docsInTabComponent: DocsInTabComponent, documentType: any, entityId: string, childEntityId: string, childReference: string, externalDocuments: DocumentsFilingPM[], objectTableId: string, entityNumber: string, externalEntityName: string, externalEntityReference:string) {
+    constructor(currentDocument: DocumentsFilingPM, docsInTabComponent: DocsInTabComponent, documentType: any, entityId: string, childEntityId: string, childReference: string, externalDocuments: DocumentsFilingPM[], objectTableId: string) {
         super();
         this.Key = Guid.newGuid();
         this.DocsInComponent = docsInTabComponent;
@@ -275,9 +262,7 @@ export class DocsInDataViewModel extends BaseComponent{
         this.DocumentTypeId = documentType.Id;
         this.DocumentTypeName = documentType.Name;
         this.CurrentDocument = currentDocument;
-        this.EntityNumber = entityNumber;
-        this.ExternalEntityName = externalEntityName;
-        this.ExternalEntityReference = externalEntityReference;
+ 
         if (!this.CurrentDocument) {
 
             if (this.ExternalDocuments) {
@@ -288,7 +273,6 @@ export class DocsInDataViewModel extends BaseComponent{
          
             this.ReceivedByUserId = this.CurrentDocument.ReceivedByUserId;
             this.ReceivedByUserName = this.CurrentDocument.ReceivedByUserName;
-            this.ReceivedByPartner = this.CurrentDocument.ReceivedByPartner;
             this.ExternalDocumentId = this.CurrentDocument.Id;
             this.FollowUpId = this.CurrentDocument.FollowUpId;
             this.ReceivedDate = this.CurrentDocument.ReceivedDate;
@@ -303,12 +287,12 @@ export class DocsInDataViewModel extends BaseComponent{
             if (this.CurrentDocument.FileExtension) {
                 this.Extention = this.CurrentDocument.FileExtension.toUpperCase();
                 this.SetAttachedIconVisibility = true;
-            }   
+            }
 
             else this.SetAttachedIconVisibility = false;
 
         }
-          this.setUIProperties();
+
 
     }
 
@@ -329,7 +313,6 @@ export class DocsInDataViewModel extends BaseComponent{
 
             this.ReceivedByUserId = this.CurrentDocument.ReceivedByUserId;
             this.ReceivedByUserName = this.CurrentDocument.ReceivedByUserName;
-            this.ReceivedByPartner = this.CurrentDocument.ReceivedByPartner;
             this.ReceivedDate = this.CurrentDocument.ReceivedDate;
             this.DocumentHasFile = true;
             this.SetAttachedButtonVisibility = false;
@@ -337,14 +320,13 @@ export class DocsInDataViewModel extends BaseComponent{
             this.DownloadButtonVisibility = true;
             this.Received = this.CurrentDocument.Received;
             if (this.DocsInComponent.ObjectTableName == "Shipment") {
-                this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.DocsInComponent.EntityId, this.FileName,"DOUP").subscribe((res:any) => {
+                this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentShipmentEvent(this.DocsInComponent.EntityId, this.FileName,"DOUP").subscribe(res => {
 
                 });
             }
          
             this.DocsInComponent.CheckHasDocuments();
 
-            if (this.CurrentSession.CurrentEditComponent) this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
         }
 
@@ -354,7 +336,7 @@ export class DocsInDataViewModel extends BaseComponent{
     CreateDocument(propertyName: string, value: any) {
 
         if (this.CurrentDocument == null) {
-            this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.Id, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant,this.ExternalEntityName, this.ExternalEntityReference, this.EntityNumber).subscribe((res:any) => {
+            this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.Id, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe(res => {
 
 
                 var pmResponse: ServiceResponse = res;
@@ -392,7 +374,7 @@ export class DocsInDataViewModel extends BaseComponent{
                             case "Upload":
 
                                 this.DocsInComponent.IsClickToUpload = false;
-                                this.UploadDocument();
+                                this.UploadButtonClicked();
                                 break;
                         }
 
@@ -465,7 +447,7 @@ export class DocsInDataViewModel extends BaseComponent{
             if (messageLoading) {
                 this.CurrentSession.StartBusyIndicator(messageLoading);
             }
-            this.DocsInComponent.documentsFilingPMService.update(this.CurrentDocument).subscribe((res:any) => {
+            this.DocsInComponent.documentsFilingPMService.update(this.CurrentDocument).subscribe(res => {
                 this.CurrentSession.StopBusyIndicator();
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -572,38 +554,30 @@ export class DocsInDataViewModel extends BaseComponent{
 
         if (!this.DocsInComponent.IsClickToUpload) {
             this.DocsInComponent.IsClickToUpload = true;
-            if (this.CurrentSession.CurrentEditComponent && this.CurrentSession.CurrentEditComponent.EntityPM && this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {
-                this.DocsInComponent.AttachExternalRequested(this);
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
-            }
+            if (this.CurrentDocument != null) this.ShowAttachExternal();
             else {
-                this.UploadDocument();
+                this.isUpload = true;
+                this.Exists = true;
+               // this.DocsInComponent.IsClickToUpload = false;
             }
 
         }
-    }
-
-
-    public UploadDocument() {
-
-        if (this.CurrentDocument != null) {
-            this.ShowAttachExternal();
-
-        }
-        else {
-            this.isUpload = true;
-            this.Exists = true;
-            // this.DocsInComponent.IsClickToUpload = false;
-        }
-
     }
 
     IsEnableLinkAttachExternal: boolean;
 
     ShowAttachExternal() {
  
+        //var OnCloseAttachmentUploadEvent= new EventEmitter();
 
-        this.FirstTime = true;
+
+        //OnCloseAttachmentUploadEvent.subscribe(($event: any) => {
+
+        //    this.OnUploadComplete();
+        //    AppTool.KillEventEmitter(OnCloseAttachmentUploadEvent);
+
+        //});
+
         this.IsEnableLinkAttachExternal = false;
         var windowArgs: any = {};
         windowArgs.EntityId = this.EntityId;
@@ -611,18 +585,16 @@ export class DocsInDataViewModel extends BaseComponent{
         windowArgs.RequsetPageName = "DocIn";
         windowArgs.CurrentDocument = this.CurrentDocument;
         windowArgs.TiggerViewModel = this;
-        let hasUploadDragDropFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "UDD")[0] ? true : false;
+
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = hasUploadDragDropFeature ? 900 : 450;
-        logitudeWindow.Height = hasUploadDragDropFeature ? 600 : 300;
-        logitudeWindow.Title = hasUploadDragDropFeature && this.CurrentDocument ? this.CurrentDocument.DocumentTypeName + " File Uploading" : "File Uploading";
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 300;
+        logitudeWindow.Title = "File Uploading";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/AttachDocs/AttachmentUploaderComponent");
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
         
             this.DocsInComponent.IsClickToUpload = false;
-            if (this.DocsInComponent.IsShipmentPendingApprovalList() && this.DocumentHasFile)
-                this.DocsInComponent.RefreshButtonClicked();
         });
 
 
@@ -666,7 +638,7 @@ export class DocsInDataViewModel extends BaseComponent{
     AdditionalButtonClicked() {
         //  Creating Document"
         this.CurrentSession.StartBusyIndicator("Creating Document");
-        this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.CurrentDocument.DocumentTypeId, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant, this.ExternalEntityName, this.ExternalEntityReference, this.EntityNumber).subscribe((res:any) => {
+        this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.CurrentDocument.DocumentTypeId, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe(res => {
 
             this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;

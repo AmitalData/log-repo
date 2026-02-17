@@ -34,15 +34,12 @@ namespace Simplog.Data.QuoteModel.Repositories
         {
             return (from a in context.Quotes where a.QuoteNumber == quoteNumber && a.Tenant == tenant select a.Id).FirstOrDefault();
         }
-		public Quote GetQuoteByNumber(string quoteNumber, int tenant)
-		{
-			return (from a in context.Quotes where a.QuoteNumber == quoteNumber && a.Tenant == tenant select a).FirstOrDefault();
-		}
-		public int GetQuotesCount(int tenant)
+
+        public int GetQuotesCount(int tenant)
         {
             return (from record in context.Quotes where record.Tenant == tenant && record.IsCancelled == false select record).Count();
         }
-
+        
         public IQueryable<Quote> GetQuotes(int tenant)
         {
             return (from d in context.Quotes.Include("Stage").Include("Rating") where d.Tenant == tenant select d);
@@ -65,7 +62,7 @@ namespace Simplog.Data.QuoteModel.Repositories
 
         public Quote GetSingleQuote(string id, int tenant)
         {
-            return (from record in context.Quotes.Include("ShipperCard").Include("CustomerCard").Include("Incoterm").Include("FromPort").Include("Stage").Include("Rating").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard")
+            return (from record in context.Quotes.Include("Incoterm").Include("FromPort").Include("Stage").Include("Rating").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AgentCard").Include("NotifyCard")
                     where record.Id == id && record.Tenant == tenant 
                     select record).FirstOrDefault();
         }
@@ -79,7 +76,7 @@ namespace Simplog.Data.QuoteModel.Repositories
 
         public Quote GetSingleQuoteByNumber(string number, int tenant)
         {
-            return (from record in context.Quotes.Include("Incoterm").Include("FromPort").Include("Stage").Include("Rating").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("UpdatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact")
+            return (from record in context.Quotes.Include("Incoterm").Include("FromPort").Include("Stage").Include("Rating").Include("QuoteType").Include("TransportMode").Include("Direction").Include("ToPort").Include("ShipmentType").Include("ToPort.Country").Include("FromPort.Country").Include("CreatedByUser.Contact").Include("MainCarriageCarrierCard").Include("Department").Include("Branch").Include("FromPartnerAddress").Include("ToPartnerAddress").Include("FromPartnerAddress.Country").Include("ToPartnerAddress.Country").Include("FreelancerCard").Include("BusinessUnit").Include("QuoteClosingReason").Include("SalesmanUser").Include("SalesmanUser.Contact")
                     where record.QuoteNumber == number && record.Tenant == tenant
                     select record).FirstOrDefault();
         }
@@ -220,6 +217,10 @@ namespace Simplog.Data.QuoteModel.Repositories
 
             return list;
         }
+
+
+
+
 
         public List<Quote> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -31,7 +31,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.IsAutoComplete = objectTablePM.IsAutoComplete;
             objectTable.SortingByObjectField = objectTablePM.SortingByObjectField;
             objectTable.DBTableName = objectTablePM.DBTableName;
-            objectTable.DBTableShortName = objectTablePM.DBTableShortName;
             objectTable.HasCustomFields = objectTablePM.HasCustomFields;
             objectTable.CustomFieldsCount = objectTablePM.CustomFieldsCount;
             objectTable.DescriptionTextCodeId = objectTablePM.DescriptionTextCodeId;
@@ -43,6 +42,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.IsComposition = objectTablePM.IsComposition;
             objectTable.MaxNumberOfCustomFields = objectTablePM.MaxNumberOfCustomFields;
             objectTable.AllowCustomFields = objectTablePM.AllowCustomFields;
+            objectTable.DBTableName = objectTablePM.DBTableName;
             objectTable.HasDocuments = objectTablePM.HasDocuments;
             objectTable.HasCustomValidator = objectTablePM.HasCustomValidator;
             objectTable.ClientModuleName = objectTablePM.ClientModuleName;
@@ -58,25 +58,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.CodeField = objectTablePM.CodeField;
             objectTable.NameField = objectTablePM.NameField;
             objectTable.DisableSearchBox = objectTablePM.DisableSearchBox;
-            objectTable.AllowedInTicket = objectTablePM.AllowedInTicket;
+            objectTable.AllowedInQueues = objectTablePM.AllowedInQueues;
             objectTable.IsTabsHidden = objectTablePM.IsTabsHidden;
-            objectTable.DescriptionTextCodeCode = objectTablePM.DescriptionTextCodeCode;
-            objectTable.NewButtonTextCodeCode = objectTablePM.NewButtonTextCodeCode;
-            objectTable.HeaderScreenCode = objectTablePM.HeaderScreenCode;
-            objectTable.ParentObjectTableName = objectTablePM.ParentObjectTableName;
-            objectTable.AvailableInCustomization = objectTablePM.AvailableInCustomization;
-            objectTable.ParentObjectTableId = objectTablePM.ParentObjectTableId;
-            objectTable.IsCustom = objectTablePM.IsCustom;
-            objectTable.SupportSubEntity = objectTablePM.SupportSubEntity;
-            objectTable.ApplyGenericCustomFields = objectTablePM.ApplyGenericCustomFields;
-            objectTable.FullNameTextCodeId = objectTablePM.FullNameTextCodeId;
-            objectTable.FullNameTextCodeCode = objectTablePM.FullNameTextCodeCode;
-            objectTable.AvailableInDocumentTypes = objectTablePM.AvailableInDocumentTypes;
-			objectTable.IsLock = objectTablePM.IsLock;
-			objectTable.RelatedEntity = objectTablePM.RelatedEntity;
-			objectTable.ThisKey = objectTablePM.ThisKey;
-			objectTable.RelatedKey = objectTablePM.RelatedKey;
-            objectTable.ShowFastSearch = objectTablePM.ShowFastSearch;
         }
-	}
+    }
 }

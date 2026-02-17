@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting">
-  <Sql Version="1">
-    <![CDATA[
-
-    Update  Cards set GLAccountDisplayNumber = (select GLAccounts.DisplayNumber from GLAccounts WHERE GLAccounts.Id = Cards.GLAccountId) where Cards.GLAccountId is not  null and Cards.GLAccountDisplayNumber is null
-
-    ]]>       
-  </Sql>
-</Script>

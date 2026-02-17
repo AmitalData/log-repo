@@ -30,16 +30,9 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<PhysicalCheck> GetPhysicalChecksByDeclarationId(string declarationId, int tenant)
         {
+
             return (from a in context.PhysicalChecks.Include("Declaration").Include("StorageSite").Include("CheckSite").Include("CheckQueueType").Include("Operation").Include("Declaration.CustomerCard")
                     where a.DeclarationId == declarationId && a.Tenant == tenant
-                    select a).ToList();
-        }
-
-
-        public List<PhysicalCheck> GetPhysicalChecksByDeclarationIds(List<string> declarationIds, int tenant)
-        {
-            return (from a in context.PhysicalChecks.Include("Declaration").Include("StorageSite").Include("CheckSite").Include("CheckQueueType").Include("Operation").Include("Declaration.CustomerCard")
-                    where declarationIds.Contains(a.DeclarationId) && a.Tenant == tenant
                     select a).ToList();
         }
 

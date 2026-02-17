@@ -3,30 +3,30 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { PriceStepPM } from '../../../../Infrastructure/EntityPMs/PriceStepPM';
+import { PriceStepsPM } from '../../../../Infrastructure/EntityPMs/PriceStepsPM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffSettingPM } from '../../../../TariffModule/EntityPMs/TariffSettingPM';
 import { TenantPM } from "../../../../Common/EntityPMs/TenantPM";
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
-import { PriceStepPMService } from '../../../../Infrastructure/Services/StandardPMs/PriceStepPMService';
+import { PriceStepsPMService } from '../../../../Infrastructure/Services/StandardPMs/PriceStepsPMService';
 
 @Component({
     selector: 'PriceStepsGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './PriceStepsGeneralTabComponent.html',
 })
 
 export class PriceStepsGeneralTabComponent extends BaseComponent implements OnInit {
     public DataContext: PriceStepsGeneralTabComponent = this;
-    public ObjectTableName: string = "PriceStep";
-    public EntityPM: PriceStepPM;
+    public ObjectTableName: string = "PriceSteps";
+    public EntityPM: PriceStepsPM;
     public TenantPM: TenantPM;
     public PriceStepsText: string;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public isNewEntity: boolean = false;
+    private isNewEntity: boolean = false;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -43,15 +43,14 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         }
     }
 
-    public PriceStepId: string; 
     SetWindowArgs(args) {
-        this.PriceStepId = args;
-        this.GetSinglePriceSteps();
+        var entityId = args;
+        this.GetSinglePriceSteps(entityId);
     }
 
-    GetSinglePriceSteps() {
-        var service: PriceStepPMService = new PriceStepPMService();
-        service.get(this.PriceStepId).subscribe((result: ServiceResponse) => {
+    GetSinglePriceSteps(entityId: string) {
+        var service: PriceStepsPMService = new PriceStepsPMService();
+        service.get(entityId).subscribe((result: ServiceResponse) => {
             if (result) {
                 if (!result.HasError) {
                     this.EntityPM = result.Result;
@@ -63,7 +62,7 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     }
 
     InitializeNewEntity() {
-        this.EntityPM = new PriceStepPM();
+        this.EntityPM = new PriceStepsPM();
         var todayDate: Date = DateTool.GetCurrentDateTimeAsUtc();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreateDate = todayDate;
@@ -77,15 +76,13 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     EditPriceSteps() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Price Steps";
-        logWindow.WindowArgs = [this.Steps, this.EntityPM.UnitOfMeasurementCode];
+        logWindow.WindowArgs = this.Steps;
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (d && d != "cancel") {
                     var steps = s.DefaultPriceSteps;
                     this.Steps = steps;
-                    this.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
-                    this.EntityPM.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
                     this.GetPriceSteps(this.Steps);
                 }
             });
@@ -111,13 +108,6 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
             this.EntityPM.Name = value;
-        }
-    }
-
-    get UnitOfMeasurementCode() { return this.EntityPM.UnitOfMeasurementCode; }
-    set UnitOfMeasurementCode(value: string) {
-        if (this.EntityPM.UnitOfMeasurementCode != value) {
-            this.EntityPM.UnitOfMeasurementCode = value;
         }
     }
 
@@ -163,34 +153,14 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         Validator.TryValidateObject(this.EntityPM, this.DataContext.ObjectTableName, this.ValidationErrorsList);
         if (this.ValidationErrorsList.length == 0) {
-            if (this.PriceStepId == null) {
-                this.SubmitCreatingPriceSteps();
-            }
-            else {
-                this.SubmitUpdatingPriceSteps();
-            }
-            
+            this.SubmitCreatingPriceSteps();
         }
     }
 
     SubmitCreatingPriceSteps() {
-        var service: PriceStepPMService = new PriceStepPMService();
+        var service: PriceStepsPMService = new PriceStepsPMService();
 
         service.insert(this.EntityPM).subscribe((result: ServiceResponse) => {
-            if (result) {
-                if (!result.HasError) {
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                }
-                else {
-                    this.ValidationErrorsList = result.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            }
-        });
-    }
-    SubmitUpdatingPriceSteps() {
-        var service: PriceStepPMService = new PriceStepPMService();
-        service.update(this.EntityPM).subscribe((result: ServiceResponse) => {
             if (result) {
                 if (!result.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");

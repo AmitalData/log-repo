@@ -53,13 +53,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 PackageMeasureQualifierPM packageMeasureQualifier = packageMeasureQualifierQueryService.GetSingle(entityPOCO.PackageMeasureQualifierCode, false, true);
                 entityPM.PackageMeasureQualifierName = packageMeasureQualifier.LocalName;
             }
-
-            if (entityPOCO.GrossMassMeasureTypeCode != null)
-            {
-                MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(entityPOCO.Tenant);
-                MeasurmentUnitPM measurmentUnit = measurmentUnitQueryService.GetSingle(entityPOCO.GrossMassMeasureTypeCode, false, true);
-                entityPM.GrossMassMeasureTypeName = measurmentUnit.LocalName;
-            }
         }
    }
 

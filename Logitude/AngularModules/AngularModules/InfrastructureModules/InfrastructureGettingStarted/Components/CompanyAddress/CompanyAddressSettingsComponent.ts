@@ -19,11 +19,10 @@ import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'CompanyAddressSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './CompanyAddressSettingsComponent.html',
 })
 
@@ -42,8 +41,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public LocalAddressDataContext: AddressItem; 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsDemoTenant = false;
-
     constructor() {
         super();      
     }
@@ -66,8 +63,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
                 this.LoadAddressPM();
                 this.GetDemoMessageVisibility();
 
-                if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString()) && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
-                    this.IsDemoTenant = true;
+                if (this.TenantPm.Id == 65 && SessionLocator.LoggedUserPM.Email.toLowerCase() != "customercare@logitudeworld.com‏") {
                     this.SetUIPropertiesHitVisible();
                 }
 
@@ -129,7 +125,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     InitializeData() {
         if (this.TenantAddress != null) {
             var countryListService: CountryListService = new CountryListService();
-            countryListService.getAllFromCache().subscribe((result:any) => {                
+            countryListService.getAllFromCache().subscribe(result => {                
                 this.SetUIProperties_State();
 
                 if (AppTool.IsNullOrEmpty(this.TenantAddress.Id)) {
@@ -174,7 +170,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetEnabled("Signature", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("PhoneNumber", this.AddressObjectTableName, false);
         this.UIProperties.SetEnabled("FaxNumber", this.AddressObjectTableName, false);
-        this.UIProperties.SetEnabled("StateId", this.AddressObjectTableName, false);       
     }
 
     // Cach Lists 
@@ -191,7 +186,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
     public DemoMessageVisibility: boolean = false;
     private GetDemoMessageVisibility() {
         var result = false;
-        if (ObjectsLocator.IsDemoTenant(this.TenantPm.Id.toString())) {
+        if (this.TenantPm.Id == 65) {
             result = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -217,20 +212,6 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
 
                 this.UIProperties.SetRequired("Name", "Address", false);
             }
-        }
-    }
-
-    get InvoicePrintNotes() { return this.TenantPm.InvoicePrintNotes; }
-    set InvoicePrintNotes(value: string) {
-        if (this.TenantPm.InvoicePrintNotes != value) {
-            this.TenantPm.InvoicePrintNotes = value;
-        }
-    }
-
-    get InvoicePrintNotesLocal() { return this.TenantPm.InvoicePrintNotesLocal; }
-    set InvoicePrintNotesLocal(value: string) {
-        if (this.TenantPm.InvoicePrintNotesLocal != value) {
-            this.TenantPm.InvoicePrintNotesLocal = value;
         }
     }
 
@@ -431,7 +412,7 @@ export class CompanyAddressSettingsComponent extends BaseComponent implements On
             }
         }
 
-        this.UIProperties.SetEnabled("StateId", "Address", isEnabled && !this.IsDemoTenant);
+        this.UIProperties.SetEnabled("StateId", "Address", isEnabled);
     }
     private SetUIProperties_StateRequired() {
         var isRequired = false;
@@ -755,7 +736,7 @@ export class AddressItem extends BaseComponent {
             }
         }
 
-        this.UIProperties.SetEnabled("StateId", "Address", isEnabled && !this.father.IsDemoTenant);
+        this.UIProperties.SetEnabled("StateId", "Address", isEnabled);
     }
     private SetUIProperties_StateRequired() {
         var isRequired = false;

@@ -22,8 +22,6 @@ using MeatadataGeneratorTool.DataContractsModule;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Diagnostics;
-using System.IO;
-using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool
 {
@@ -32,27 +30,10 @@ namespace MeatadataGeneratorTool
         public string Code { get; set; }
         public string Name { get; set; }
     }
-
-    public class DxmlDatabaseType
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class DxmlDatabaseSchema
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
-    }
-
     public class ObjectTableViewModel : PropertyChangedImplementation
     {
 
         public List<ObjectTableType> ObjectTableTypes { get; set; }
-
-        public List<DxmlDatabaseType> DxmlDatabaseTypes { get; set; }
-
-        public List<DxmlDatabaseSchema> DxmlDatabaseSchemas { get; set; }
 
         public ObservableCollection<ObjectFieldsViewModel> ObsList { get; set; }
 
@@ -398,14 +379,6 @@ namespace MeatadataGeneratorTool
             ToBeDisplayOnLookUpList = new ObservableCollection<ObjectFieldsViewModel>();
             ToBeDisplayOnLookUpLocalList = new ObservableCollection<ObjectFieldsViewModel>();
             ObjectTableTypes = new List<ObjectTableType>() { new ObjectTableType { Code = "MD", Name = "Master Data" }, new ObjectTableType() { Code = "BR", Name = "Business Record" } };
-            DxmlDatabaseTypes = new List<DxmlDatabaseType>() {
-                new DxmlDatabaseType { Code = "Main", Name = "Main Database" },
-                new DxmlDatabaseType { Code = "Global", Name = "Global Database" },
-                new DxmlDatabaseType() { Code = "SystemLogs", Name = "SystemLogs Database" },
-                new DxmlDatabaseType() { Code = "CargoTracking", Name = "CargoTracking Database" } };
-            DxmlDatabaseSchemas = new List<DxmlDatabaseSchema>() {
-                new DxmlDatabaseSchema { Code = "dbo", Name = "Dbo Schema" },
-                new DxmlDatabaseSchema() { Code = "Customs", Name = "Customs Schema" } };
             this.AdditionalTextCodesList = new ObservableCollection<TextCodesViewModel>();
             this.AdditionalFeaturesList = new ObservableCollection<FeaturesViewModel>();
 			this.AdditionalFeaturesTempList = new ObservableCollection<FeaturesViewModel>();
@@ -708,67 +681,24 @@ namespace MeatadataGeneratorTool
             }
             rows.Clear();
 
-            if (CLoseTableDataGrid.Columns.Count == 0)
-            {
-
-                foreach (var objectField in this.ObsList)
-                {
-                    var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
-                    TempColumn.Header = objectField.FieldName;
-                    Binding bind = new Binding();
-                    bind.Mode = BindingMode.OneWay;
-
-                    bind.Converter = new RowIndexConverter();
-                    bind.ConverterParameter = objectField.FieldName;
-                    TempColumn.Binding = bind;
-                    CLoseTableDataGrid.Columns.Add(TempColumn);
-                }
-               var itemWithMaxColumns = Rows.OrderByDescending(r => r._data.Count).FirstOrDefault();
-                //if (itemWithMaxColumns != null)
-                //{
-                //    foreach (var xx in itemWithMaxColumns._data)
-                //    {
-                //        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
-                //        TempColumn.Header = xx.Key;
-                //        Binding bind = new Binding();
-                //        bind.Mode = BindingMode.OneWay;
-                      
-                //        bind.Converter = new RowIndexConverter();
-                //        bind.ConverterParameter = xx.Key;
-                //        TempColumn.Binding = bind;
-                //        CLoseTableDataGrid.Columns.Add(TempColumn);
-                //    }
-                //}
-
-                var missingDataRows = Rows.Where(r => r._data.Count < itemWithMaxColumns._data.Count);
-                foreach(var item in missingDataRows)
-                {
-                    var list =  itemWithMaxColumns._data.Where(d => !item._data.ContainsKey(d.Key)).ToList();
-                    foreach(var missedData in list)
-                    {
-                        item._data.Add(missedData.Key, null);
-                    }
-                    //item._data.Add()
-                }
-            }
 
             foreach (var item in Rows)
             {
                 rows.Add(item);
-                //if (CLoseTableDataGrid.Columns.Count == 0)
-                //{
-                //    foreach (var xx in item._data)
-                //    {
-                //        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
-                //        TempColumn.Header = xx.Key;
-                //        Binding bind = new Binding();
-                //        bind.Mode = BindingMode.OneWay;
-                //        bind.Converter = new RowIndexConverter();
-                //        bind.ConverterParameter = xx.Key;
-                //        TempColumn.Binding = bind;
-                //        CLoseTableDataGrid.Columns.Add(TempColumn);
-                //    }
-                //}
+                if (CLoseTableDataGrid.Columns.Count == 0)
+                {
+                    foreach (var xx in item._data)
+                    {
+                        var TempColumn = new DataGridTextColumn() { MinWidth = 120 };
+                        TempColumn.Header = xx.Key;
+                        Binding bind = new Binding();
+                        bind.Mode = BindingMode.OneWay;
+                        bind.Converter = new RowIndexConverter();
+                        bind.ConverterParameter = xx.Key;
+                        TempColumn.Binding = bind;
+                        CLoseTableDataGrid.Columns.Add(TempColumn);
+                    }
+                }
             }
 
             CLoseTableDataGrid.ItemsSource = rows;
@@ -1000,10 +930,6 @@ namespace MeatadataGeneratorTool
             }
         }
 
-        
-
-          
-
         MenuButtonViewModel selectedMenuItem;
         public MenuButtonViewModel SelectedMenuItem
         {
@@ -1230,13 +1156,6 @@ namespace MeatadataGeneratorTool
             set { objectTableName = value; FirePropertyChanged("ObjectTableName"); }
         }
 
-        string parentObjectTableName;
-        public string ParentObjectTableName
-        {
-            get { return parentObjectTableName; }
-            set { parentObjectTableName = value; FirePropertyChanged("ParentObjectTableName"); }
-        }
-
         string defaultText;
 
         public string DefaultText
@@ -1338,20 +1257,6 @@ namespace MeatadataGeneratorTool
             set { applyOnPropertyChangedCode = value; FirePropertyChanged("ApplyOnPropertyChangedCode"); }
         }
 
-        bool tenantZeroData;
-        public bool TenantZeroData
-        {
-            get { return tenantZeroData; }
-            set { tenantZeroData = value; FirePropertyChanged("TenantZeroData"); }
-        }
-
-        bool showFastSearch = false;
-        public bool ShowFastSearch
-        {
-            get { return showFastSearch; }
-            set { showFastSearch = value; FirePropertyChanged("ShowFastSearch"); }
-        }
-
 
         bool hasApiHelper;
         public bool HasApiHelper
@@ -1367,12 +1272,6 @@ namespace MeatadataGeneratorTool
             set { allowedForComputingPartners = value; FirePropertyChanged("AllowedForComputingPartners"); }
         }
 
-        bool isMetadataOnlyTable;
-        public bool IsMetadataOnlyTable
-        {
-            get { return isMetadataOnlyTable; }
-            set { isMetadataOnlyTable = value; FirePropertyChanged("IsMetadataOnlyTable"); }
-        }
 
         string parentTableName;
 
@@ -1389,20 +1288,6 @@ namespace MeatadataGeneratorTool
             set { dBTableName = value; IsDirty = true; FirePropertyChanged("DBTableName"); }
         }
 
-        string dBTableOldNames;
-        public string DBTableOldNames
-        {
-            get { return dBTableOldNames; }
-            set { dBTableOldNames = value; FirePropertyChanged("DBTableOldNames"); }
-        }
-
-        string dBTableShortName;
-        public string DBTableShortName
-        {
-            get { return dBTableShortName; }
-            set { dBTableShortName = value; IsDirty = true; FirePropertyChanged("DBTableShortName"); }
-        }
-        
         string olddBTableName;
         public string OldDBTableName
         {
@@ -1689,20 +1574,6 @@ namespace MeatadataGeneratorTool
             set { objectTableTypeCode = value; FirePropertyChanged("ObjectTableTypeCode"); }
         }
 
-        string dxmlDatabaseTypeCode;
-        public string DxmlDatabaseTypeCode
-        {
-            get { return dxmlDatabaseTypeCode; }
-            set { dxmlDatabaseTypeCode = value; FirePropertyChanged("DxmlDatabaseTypeCode"); }
-        }
-
-        string dxmlDatabaseSchemaCode;
-        public string DxmlDatabaseSchemaCode
-        {
-            get { return dxmlDatabaseSchemaCode; }
-            set { dxmlDatabaseSchemaCode = value; FirePropertyChanged("DxmlDatabaseSchemaCode"); }
-        }
-
         int maxNumberOfCustomFields;
         public int MaxNumberOfCustomFields
         {
@@ -1757,35 +1628,6 @@ namespace MeatadataGeneratorTool
             set { hasCustomFields = value; FirePropertyChanged("HasCustomFields"); }
         }
 
-        bool availableInCustomization;
-
-        public bool AvailableInCustomization
-        {
-            get { return availableInCustomization; }
-            set { availableInCustomization = value; FirePropertyChanged("AvailableInCustomization"); }
-        }
-
-        bool supportSubEntity;
-
-        public bool SupportSubEntity
-        {
-            get { return supportSubEntity; }
-            set { supportSubEntity = value; FirePropertyChanged("SupportSubEntity"); }
-        }
-
-        bool applyGenericCustomFields;
-        public bool ApplyGenericCustomFields
-        {
-            get { return applyGenericCustomFields; }
-            set { applyGenericCustomFields = value; FirePropertyChanged("ApplyGenericCustomFields"); }
-        }
-
-        bool availableInDocumentTypes;
-        public bool AvailableInDocumentTypes
-        {
-            get { return availableInDocumentTypes; }
-            set { availableInDocumentTypes = value; FirePropertyChanged("AvailableInDocumentTypes"); }
-        }
 
         bool hasShortTitle;
 
@@ -1820,6 +1662,9 @@ namespace MeatadataGeneratorTool
             get { return hasCustomValidator; }
             set { hasCustomValidator = value; FirePropertyChanged("HasCustomValidator"); }
         }
+
+
+
 
         string clientModuleName;
 
@@ -1876,13 +1721,6 @@ namespace MeatadataGeneratorTool
             set { isTabsHidden = value; FirePropertyChanged("IsTabsHidden"); }
         }
 
-        bool isBusinessUnitEnabled;
-        public bool IsBusinessUnitEnabled
-        {
-            get { return isBusinessUnitEnabled; }
-            set { isBusinessUnitEnabled = value; FirePropertyChanged("IsBusinessUnitEnabled"); }
-        }
-
         ObjectFieldsViewModel selectedObjectField;
 
         public ObjectFieldsViewModel SelectedObjectField
@@ -1896,46 +1734,12 @@ namespace MeatadataGeneratorTool
                 FirePropertyChanged("SelectedObjectField");
             }
         }
-		bool isLock;
-		public bool IsLock
-		{
-			get { return isLock; }
-			set { isLock = value; FirePropertyChanged("IsLock"); FirePropertyChanged("IsLockFontWeight"); }
-		}
-		string relatedEntity;
-		public string RelatedEntity
-		{
-			get { return relatedEntity; }
-			set { relatedEntity = value; FirePropertyChanged("RelatedEntity"); FirePropertyChanged("IsLockFontWeight"); }
-		}
-		string thisKey;
-		public string ThisKey
-		{
-			get { return thisKey; }
-			set { thisKey = value; FirePropertyChanged("ThisKey"); }
-		}
-		string relatedKey;
-		public string RelatedKey
-		{
-			get { return relatedKey; }
-			set { relatedKey = value; FirePropertyChanged("RelatedKey"); }
-		}
 
-		public string IsLockFontWeight
-		{
-			get
-			{
-				string result = "Normal";
-				if (IsLock && !string.IsNullOrEmpty(RelatedEntity))
-				{
-					result = "Bold";
-				}
-				return result;
-			}
-			set { }
-		}
-		// commands
-		public RelayCommand<ObjectFieldsViewModel> RemoveFieldCommand
+
+
+
+        // commands
+        public RelayCommand<ObjectFieldsViewModel> RemoveFieldCommand
         {
             get { return new RelayCommand<ObjectFieldsViewModel>(m => this.RemoveFieldMethod(m)); }
         }
@@ -2016,47 +1820,6 @@ namespace MeatadataGeneratorTool
             TableDataWindow.Show();
         }
 
-
-
-        public RelayCommand EditTableDataCommand
-        {
-            get { return new RelayCommand(() => this.EditTableDataMethod()); }
-        }
-        private void EditTableDataMethod()
-        {
-
-            if (CLoseTableDataGrid.SelectedItem != null)
-            {
-                CloseTablesDataViewModel model = new CloseTablesDataViewModel(this, true);
-                var rowData =  (CLoseTableDataGrid.SelectedItem as Row)._data;
-
-                Dictionary<string, string> FieldsDictionaryTemp = new Dictionary<string, string>();
-
-                foreach (var k in rowData.Keys)
-                {
-                    if (!this.FieldsDictionary.ContainsKey(k))
-                        this.FieldsDictionary.Add(k, rowData[k] != null ? rowData[k].ToString() : null);
-                    else 
-                        FieldsDictionaryTemp.Add(k, rowData[k] != null ? rowData[k].ToString() : null);
-                }
-
-                if(FieldsDictionaryTemp.Count > 0 )
-                {
-                    this.FieldsDictionary = FieldsDictionaryTemp;
-                }
-
-                TablesDataUserControl = new TablesDataUserControl();
-                TablesDataUserControl.DataContext = model;
-
-                TableDataWindow = new Window();
-                TableDataWindow.Width = 500;
-                TableDataWindow.Height = 400;
-                TableDataWindow.Content = TablesDataUserControl;
-                TableDataWindow.Show();
-            }
-        }
-
-
         public EventTypesControl EventsControl;
         public Window EventsWindow = new Window();
         public RelayCommand AddEventTypeCommand
@@ -2093,7 +1856,7 @@ namespace MeatadataGeneratorTool
 
             DCWindow = new Window();
             DCWindow.Width = 500;
-            DCWindow.Height = 235;
+            DCWindow.Height = 185;
             DCWindow.Content = DataContractControl;
             DCWindow.Show();
         }
@@ -2200,27 +1963,6 @@ namespace MeatadataGeneratorTool
                 this.SelectedTab = TabsObsList[selectedIndex];
 
             FirePropertyChanged("TabsObsList");
-        }
-
-        public RelayCommand<ScreensViewModel> RemoveScreenCommand
-        {
-            get { return new RelayCommand<ScreensViewModel>(m => this.RemoveScreenMethod(m)); }
-        }
-
-        private void RemoveScreenMethod(ScreensViewModel DelScr)
-        {
-            int selectedIndex = ScreensObsList.IndexOf(DelScr);
-            if (selectedIndex != 0)
-            {
-                selectedIndex -= 1;
-            }
-
-            ScreensObsList.Remove(DelScr);
-
-            if (ScreensObsList.Count > 0)
-                this.SelectedScreen = ScreensObsList[selectedIndex];
-
-            FirePropertyChanged("ScreensObsList");
         }
 
         public RelayCommand<MenuButtonViewModel> RemoveMenuButtonCommand
@@ -2741,87 +2483,12 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
-            //if ((ObjectTableName.Contains("Customs") ? ObjectTableName.Substring(9).Length > 30 : ObjectTableName.Length > 30) || (DBTableName.Contains("Customs") ? DBTableName.Substring(9).Length > 30 : DBTableName.Length > 30))
-            //{
-            //    ErrorMessages = "ObjectTableName and DataBase Table Name Shouldn't be more than 30 char. length ..";
-            //    ErrorsVisibility = Visibility.Visible;
-            //    return false;
-            //}
-
-            if (string.IsNullOrEmpty(DxmlDatabaseTypeCode) && ObsList.Where(f => f.IsDBField).Any())
+            if ((ObjectTableName.Contains("Customs") ? ObjectTableName.Substring(9).Length > 30 : ObjectTableName.Length > 30) || (DBTableName.Contains("Customs") ? DBTableName.Substring(9).Length > 30 : DBTableName.Length > 30))
             {
-                ErrorMessages = "Database Type is Required";
+                ErrorMessages = "ObjectTableName and DataBase Table Name Shouldn't be more than 30 char. length ..";
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
-
-            if (string.IsNullOrEmpty(DxmlDatabaseSchemaCode) && ObsList.Where(f => f.IsDBField).Any())
-            {
-                ErrorMessages = "Database Schema is Required";
-                ErrorsVisibility = Visibility.Visible;
-                return false;
-            }
-            if (IsLock && !string.IsNullOrEmpty(RelatedEntity) && (string.IsNullOrEmpty(ThisKey) || string.IsNullOrEmpty(RelatedKey)))
-            {
-                ErrorMessages = "Is RelatedEntity, fields is required ..";
-                ErrorsVisibility = Visibility.Visible;
-                return false;
-            }
-            if(IsLock && !string.IsNullOrEmpty(RelatedEntity) && !string.IsNullOrEmpty(ThisKey) && !string.IsNullOrEmpty(RelatedKey)) { 
-                string[] thisKeys = ThisKey.Split(',');
-                string[] relatedKeys = RelatedKey.Split(',');
-                if(thisKeys.Length != 2 || relatedKeys.Length != 2) { 
-					ErrorMessages = "This Key and Related Key should be in the format of 'Key1,Key2'";
-					ErrorsVisibility = Visibility.Visible;
-					return false;
-				}
-
-			}
-            if (IsLock && string.IsNullOrEmpty(RelatedEntity) && string.IsNullOrEmpty(ThisKey)) 
-            {
-				ErrorMessages = "IsLock must parameter1";
-				ErrorsVisibility = Visibility.Visible;
-				return false;
-
-			}
-
-
-
-            if (IsClosed)
-            {
-                var errorMessagesBuilder = new StringBuilder();
-
-                var closeTableCodeField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableCode);
-                if (closeTableCodeField == null)
-                {
-                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' is required.");
-                }
-                else if (closeTableCodeField.FieldDataType != "Text")
-                {
-                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' must be of type Text.");
-                }
-
-                var closeTableNameField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableName);
-                if (closeTableNameField == null)
-                {
-                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' is required.");
-                }
-                else if (closeTableNameField.FieldDataType != "Text")
-                {
-                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' must be of type Text.");
-                }
-
-                if (errorMessagesBuilder.Length > 0)
-                {
-                    ErrorMessages = errorMessagesBuilder.ToString().Trim();
-                    ErrorsVisibility = Visibility.Visible;
-                    return false;
-                }
-            }
-
-
-
-
             try
             {
                 ErrorsVisibility = Visibility.Collapsed;
@@ -2934,16 +2601,7 @@ namespace MeatadataGeneratorTool
                 }
                 if (DataContractsObsList != null)
                 {
-                    //if (!(ErrorMessages.Contains("Cannot Find Foreign Entity") || ErrorMessages.Contains("Database Type is Required") || ErrorMessages.Contains("Database Schema is Required")))
-                    //{
-                    //    ErrorMessages = "";
-                    //}
-                    //else
-                    //{
-                    //    ErrorMessages = string.Join("\n\n", ErrorMessages.Split(new string[] { "\n\n" }, StringSplitOptions.None).Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required")).ToArray());
-                    //    ErrorMessages = string.Join("\n", ErrorMessages.Split('\n').Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required") || l.Contains("Field Errors:") || string.IsNullOrEmpty(l)).ToArray());
-                    //}
-
+                    ErrorMessages = "";
                     foreach (var item in DataContractsObsList)
                     {
                         if (item.DCFieldsObsList != null && item.DCFieldsObsList.Where(a => a.IsKey == true).Count() == 0)
@@ -2957,30 +2615,12 @@ namespace MeatadataGeneratorTool
                     }
                 }
 
-                if(AdditionalTextCodesList != null)
-                {
-                    foreach (var item in AdditionalTextCodesList)
-                    {
-                        this.ValidateTextCodes(item);
-                    }
-                }
-                if (AdditionalFeaturesList != null)
-                {
-                    foreach (var item in AdditionalFeaturesList)
-                    {
-                        this.ValidateFeatures(item);
-                    }
-                }
 
                 if (ErrorMessages == "")
                 {
                     //UpdateObsList(this);
                     succeeded = true;
-
                     XmlGeneratorClass.GenerateXmlFileFromTool(this);
-
-                    XmlGeneratorClass.GenerateDXMLFileFromTool(this);
-
                     // App.CurrentControl.Close();
                     Environment.Exit(0);
                 }
@@ -2989,6 +2629,7 @@ namespace MeatadataGeneratorTool
                     ErrorsVisibility = Visibility.Visible;
                 }
             }
+
             catch (Exception ex)
             {
                 string error = ex.Message + "\n" + ex.StackTrace != null ? ex.StackTrace : "";
@@ -3025,22 +2666,7 @@ namespace MeatadataGeneratorTool
             {
                 str.AppendLine("Default Text is Required");
             }
-            else if (ContainsHebrewCharacters(item.DefaultText))
-            {
-                str.AppendLine("Default Text cannot contain Hebrew characters");
-            }
-            if (!string.IsNullOrEmpty(item.ListLableDefaultText) && ContainsHebrewCharacters(item.ListLableDefaultText))
-            {
-                str.AppendLine("'List Lable Default Text' cannot contain Hebrew characters");
-            }
-            if (!string.IsNullOrEmpty(item.HelpTextDefaultText) && ContainsHebrewCharacters(item.HelpTextDefaultText))
-            {
-                str.AppendLine("'HelpText Default Text' cannot contain Hebrew characters");
-            }
-            if (!string.IsNullOrEmpty(item.ShortFieldLableDefaultText) && ContainsHebrewCharacters(item.ShortFieldLableDefaultText))
-            {
-                str.AppendLine("'Short Field Lable Default Text' cannot contain Hebrew characters");
-            }
+
             if (string.IsNullOrEmpty(item.FieldName))
             {
                 str.AppendLine("Field Name is Required");
@@ -3169,16 +2795,6 @@ namespace MeatadataGeneratorTool
                 }
             }
 
-            if (item.IsForeignKey && !string.IsNullOrEmpty(item.ForeignEntity))
-            {
-                string foreignEntityFileName = App.GetForeignEntityFileName(item.ForeignEntity);
-
-                if (!App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == foreignEntityFileName.ToLower() + ".lxml").Any() && !App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == foreignEntityFileName.ToLower() + ".dxml").Any())
-                {
-                    str.AppendLine("Cannot Find Foreign Entity " + item.ForeignEntity);
-                }
-            }
-
             if (!string.IsNullOrEmpty(ErrorMessages))
             {
                 ErrorsVisibility = Visibility.Visible;
@@ -3204,10 +2820,6 @@ namespace MeatadataGeneratorTool
             if (string.IsNullOrEmpty(item.TextCode))
             {
                 str.AppendLine("Default Text is Required");
-            }
-            else if (ContainsHebrewCharacters(item.TextCode))
-            {
-                str.AppendLine($"Queries, {item?.Code} - Text cannot contain Hebrew characters");
             }
             if (string.IsNullOrEmpty(item.QueryGroupCode))
             {
@@ -3303,10 +2915,6 @@ namespace MeatadataGeneratorTool
             {
                 str.AppendLine("Tab Name is Required");
             }
-            else if (ContainsHebrewCharacters(item.Name))
-            {
-                str.AppendLine($"Tabs, {item?.Code} - Tab Name cannot contain Hebrew characters");
-            }
             if (!string.IsNullOrEmpty(ErrorMessages))
             {
                 ErrorsVisibility = Visibility.Visible;
@@ -3325,16 +2933,12 @@ namespace MeatadataGeneratorTool
 
             if (string.IsNullOrEmpty(item.EventCode))
             {
-                str.AppendLine("Event Code is Required");   
+                str.AppendLine("Event Code is Required");
             }
 
             if (string.IsNullOrEmpty(item.DefaultText))
             {
                 str.AppendLine("Default Text is Required");
-            }
-            else if (ContainsHebrewCharacters(item.DefaultText))
-            {
-                str.AppendLine($"MenuButton, {item?.EventCode} - Default Text cannot contain Hebrew characters");
             }
 
             if (string.IsNullOrEmpty(item.SelectedMenuButtonType))
@@ -3361,10 +2965,6 @@ namespace MeatadataGeneratorTool
             if (string.IsNullOrEmpty(DefaultText))
             {
                 str.AppendLine("Default Text is Required");
-            }
-            else if (ContainsHebrewCharacters(DefaultText))
-            {
-                str.AppendLine("Default Text cannot contain Hebrew characters");
             }
 
             if (string.IsNullOrEmpty(KeyPropertyPath))
@@ -3422,53 +3022,6 @@ namespace MeatadataGeneratorTool
             }
 
             FirePropertyChanged("ErrorMessages");
-        }
-
-
-
-        private void ValidateTextCodes(TextCodesViewModel item)
-        {
-            StringBuilder str = new StringBuilder();
-
-            if (!string.IsNullOrEmpty(item.DefaultText) && ContainsHebrewCharacters(item.DefaultText))
-            {
-                str.AppendLine($"TextCodes, {item?.Code} - Default Text cannot contain Hebrew characters");
-            }
-            if (!string.IsNullOrEmpty(ErrorMessages))
-            {
-                ErrorsVisibility = Visibility.Visible;
-            }
-
-            if (!string.IsNullOrEmpty(str.ToString()))
-            {
-                ErrorMessages = ErrorMessages + "\n" + str.ToString();
-            }
-            FirePropertyChanged("ErrorMessages");
-        }
-
-        private void ValidateFeatures(FeaturesViewModel item)
-        {
-            StringBuilder str = new StringBuilder();
-
-            if (!string.IsNullOrEmpty(item.FeatureDefaultText) && ContainsHebrewCharacters(item.FeatureDefaultText))
-            {
-                str.AppendLine($"Features, {item?.Code} - Default Text cannot contain Hebrew characters");
-            }
-            if (!string.IsNullOrEmpty(ErrorMessages))
-            {
-                ErrorsVisibility = Visibility.Visible;
-            }
-
-            if (!string.IsNullOrEmpty(str.ToString()))
-            {
-                ErrorMessages = ErrorMessages + "\n" + str.ToString();
-            }
-            FirePropertyChanged("ErrorMessages");
-        }
-
-        private bool ContainsHebrewCharacters(string text)
-        {
-            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
         }
 
         private string queryGroupCode;

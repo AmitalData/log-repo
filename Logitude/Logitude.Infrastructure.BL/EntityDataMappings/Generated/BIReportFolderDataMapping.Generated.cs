@@ -31,9 +31,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         Name, 
 	         Description, 
-	         Index, 
-	         PermissionForAll, 
-	         PermittedByUserId,
+	         Index,
 	      }
 
 
@@ -51,9 +49,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Description, 
 	         Index, 
 	         CreatedByUserName, 
-	         UpdatedByUserName, 
-	         PermissionForAll, 
-	         PermittedByUserId,
+	         UpdatedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -105,16 +101,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Index))
             {
 				entityPOCO.Index = entityPM.Index;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermissionForAll))
-            {
-				entityPOCO.PermissionForAll = entityPM.PermissionForAll;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermittedByUserId))
-            {
-				entityPOCO.PermittedByUserId = entityPM.PermittedByUserId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -173,16 +159,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Index = entityPOCO.Index;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PermissionForAll))
-            {
-					entityPM.PermissionForAll = entityPOCO.PermissionForAll;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PermittedByUserId))
-            {
-					entityPM.PermittedByUserId = entityPOCO.PermittedByUserId;
-            }
-
 		}
 
 		public void PMToOldPM(BIReportFolderPM entityPM, BIReportFolderPM oldEntityPM)
@@ -232,16 +208,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Index))
             {
                 oldEntityPM.Index = entityPM.Index;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermissionForAll))
-            {
-                oldEntityPM.PermissionForAll = entityPM.PermissionForAll;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PermittedByUserId))
-            {
-                oldEntityPM.PermittedByUserId = entityPM.PermittedByUserId;
             }
 			
 		}

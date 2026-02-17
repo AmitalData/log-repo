@@ -2,7 +2,6 @@
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,20 +20,17 @@ namespace Logitude.Server.Tools.SQL
 {
     public class ExecuteStoredProcedures
     {
-        public static object Execute(string procedureName, int contextTenant, List<StoredProcedureParam> storedProcedureParams)
+        public static object Execute(string procedureName, int tenant, List<StoredProcedureParam> storedProcedureParams)
         {
+
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                //throw new Exception("to do ExecuteStoredProcedures.ExecuteOracle meanwhile there is only 1 ()real  Call"); 
-                if (procedureName.Contains("dbo."))
-                {
-                    procedureName = procedureName.Split('.')[1];
-                }
-                return ExecuteOracle(procedureName, contextTenant, storedProcedureParams);
+                throw new Exception("to do ExecuteStoredProcedures.ExecuteOracle meanwhile there is only 1 ()real  Call"); 
+                return ExecuteOracle(procedureName, tenant, storedProcedureParams);
             }
             else
             {
-                return ExecuteMMSQL(procedureName, contextTenant, storedProcedureParams);
+                return ExecuteMMSQL(procedureName, tenant, storedProcedureParams);
             }
 
 
@@ -43,16 +39,10 @@ namespace Logitude.Server.Tools.SQL
         public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;
+
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                if (tenant > 0)
-                {
-                    currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-                }
-                else
-                {
-                    currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                }
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
             }
 
             string dbConnectionInfo = currentDb.DBConnection;
@@ -66,26 +56,26 @@ namespace Logitude.Server.Tools.SQL
 
         static object ExecuteOracle(string procedureName, int tenant, List<StoredProcedureParam> storedProcedureParams)
         {
-//#if true
-//		    return null;
-//#else 
+#if true
+		    return null;
+#else 
               
             string strConnString = GetConnection(tenant);
             object outValue = null;
-            using (OracleConnection cn = new OracleConnection(strConnString))
+           using (DbConnection cn = (CommonDataContext.GetContext(tenant) as DbContext).Database.Connection)
             {
                 
                 var cmd = new OracleCommand();
-                cmd.Connection = cn;
+                cmd.Connection = cn as OracleConnection;
                 cmd.CommandText = // "usp_UpdateQueueCommunicationLo";
-                    procedureName.Substring(0, Math.Min(procedureName.Length, 30));
+                    procedureName.Substring(0, Math.Min(procedureName.Length, 30))
                 cmd.CommandType = CommandType.StoredProcedure;
 
 
                 foreach (StoredProcedureParam parameter in storedProcedureParams)
                 {
                     OracleParameter param = ToOracleParameter(parameter);
-                        //ToOracleParamName(parameter.ParamName), parameter.ParamDBType, parameter.ParamSize);
+                        ToOracleParamName(parameter.ParamName), parameter.ParamDBType, parameter.ParamSize);
                     param.Direction = parameter.Direction;
                     if (parameter.Value != null)
                     {
@@ -104,7 +94,7 @@ namespace Logitude.Server.Tools.SQL
                 }
             }
             return outValue;
-//#endif
+#endif
 
         }
 
@@ -134,7 +124,7 @@ namespace Logitude.Server.Tools.SQL
             {
                 SqlCommand cmd = new SqlCommand(procedureName, cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandTimeout = 1200;
+
                 foreach (StoredProcedureParam parameter in storedProcedureParams)
                 {
                     SqlParameter param = new SqlParameter(parameter.ParamName, parameter.ParamDBType, parameter.ParamSize);

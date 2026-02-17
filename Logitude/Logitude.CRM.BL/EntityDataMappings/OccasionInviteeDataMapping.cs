@@ -11,7 +11,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL.EntityPMs; 
 using Logitude.CRM.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
@@ -46,10 +46,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
                     entityPM.ContactMobile = contact.Mobile;
                     entityPM.ContactTel = contact.BusinessPhone;
                     entityPM.ContactPosition = contact.Position;
-                    CardContactRepository cardContactRepository = new CardContactRepository(entityPOCO.Tenant);
-                    List<string> contactIds = new List<string>() { entityPOCO.ContactId };
-                    var customersNames = cardContactRepository.GetCardsContactsForContactIds_Names(contactIds, entityPOCO.Tenant);
-                    entityPM.CustomerName = customersNames;
+                    entityPM.CustomerName = contact.CompanyName;
                 }
             }
 

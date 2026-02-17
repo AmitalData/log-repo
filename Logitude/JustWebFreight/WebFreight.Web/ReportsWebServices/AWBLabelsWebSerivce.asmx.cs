@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using WebFreight.Web.DataProviders;
@@ -32,22 +32,18 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class AWBLabelsWebSerivce : System.Web.Services.WebService
     {
-        public ShipmentPM shipmentPM;
         [WebMethod]
         public byte[] GetAWBLabelsData(string shipmentId, int tenant, string documentTypeId)
         {
             List<AWBLabelsDataProvider> awbLabelsList = GetAWBLabelsDataProvider(shipmentId, tenant, documentTypeId);
             XmlSerializer serializer = new XmlSerializer(typeof(List<AWBLabelsDataProvider>));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, awbLabelsList);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
-            
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, awbLabelsList);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         public List<AWBLabelsDataProvider> GetAWBLabelsDataProvider(string shipmentId, int tenant,string documentTypeId)
@@ -60,7 +56,7 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
 
             if (shipmentPM != null)
             {
@@ -68,7 +64,6 @@ namespace WebFreight.Web.ReportsWebServices
                 myDataProvider.MAWBFull = shipmentPM.Master != null ? shipmentPM.Master : "";
                 myDataProvider.HAWBFull = shipmentPM.House != null ? shipmentPM.House : "";
                 myDataProvider.BookingNumber = shipmentPM.BookingConfirmationNumber != null ? shipmentPM.BookingConfirmationNumber : "";
-                myDataProvider.FlightNumber = shipmentPM.MainCarriageCarrierNumber != null ? shipmentPM.MainCarriageCarrierNumber : "";
 
                 if (!string.IsNullOrEmpty(shipmentPM.LongMaster))
                 {
@@ -77,7 +72,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 myDataProvider.HouseNumber = shipmentPM.House != null ? shipmentPM.House : "";
-                myDataProvider.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
 
                 #region Amounts
                 if (shipmentPM.GrossWeight != null)
@@ -88,16 +82,6 @@ namespace WebFreight.Web.ReportsWebServices
                 if (shipmentPM.GrossWeightUnitCode != null)
                 {
                     myDataProvider.ChargeableWeight = myDataProvider.ChargeableWeight + " " + shipmentPM.GrossWeightUnitCode;
-                }
-
-                if (shipmentPM.ChargeableWeight != null)
-                {
-                    myDataProvider.ActualChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
-                }
-
-                if (shipmentPM.ChargeableWeightUnitCode != null)
-                {
-                    myDataProvider.ActualChargeableWeight = myDataProvider.ActualChargeableWeight + " " + shipmentPM.ChargeableWeightUnitCode;
                 }
 
                 if (shipmentPM.NumberOfPackages != null)
@@ -142,13 +126,13 @@ namespace WebFreight.Web.ReportsWebServices
                 DocumentType currentdocumentType = commonContext.DocumentTypes.Where(doc => doc.Id == documentTypeId).FirstOrDefault();
                 if (currentdocumentType != null)
                 {
-                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.EntityId == shipmentPM.Id && fc.Tenant == tenant).ToList();
+                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
 
-                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id && fc.Tenant == tenant).ToList();
+                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == currentdocumentType.Id).ToList();
 
                     //AdditionalInformation
                     FormCustomField additionalInformationCustomField = (from a in customfieldsList
-                                                                        where a.FieldCode == "AdditionalInformation"
+                                                                        where a.FieldCode == "AdditionalInformation" && a.EntityId == shipmentPM.Id
                                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField additionalInformationDocumentCustom = (from a in documentCustomfieldsList
@@ -157,7 +141,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     // NumberOfLabels
                     FormCustomField numberOfLabelsCustomField = (from a in customfieldsList
-                                                                 where a.FieldCode == "NumberOfLabels"
+                                                                 where a.FieldCode == "NumberOfLabels" && a.EntityId == shipmentPM.Id
                                                                  select a).FirstOrDefault();
 
                     DocumentTypeCustomField numberOfLabelsnDocumentCustom = (from a in documentCustomfieldsList
@@ -166,7 +150,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     //Contents
                     FormCustomField contentsCustomField = (from a in customfieldsList
-                                                                        where a.FieldCode == "Contents"
+                                                                        where a.FieldCode == "Contents" && a.EntityId == shipmentPM.Id
                                                                         select a).FirstOrDefault();
 
                     DocumentTypeCustomField contentsDocumentCustom = (from a in documentCustomfieldsList
@@ -226,7 +210,6 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.NumberOfLabels = myDataProvider.NumberOfLabels;
                     newlabel.Contents = myDataProvider.Contents;
 
-                    newlabel.ActualChargeableWeight = myDataProvider.ActualChargeableWeight;
                     newlabel.ChargeableWeight = myDataProvider.ChargeableWeight;
                     newlabel.MainCarriageCarrierCode = myDataProvider.MainCarriageCarrierCode;
                     newlabel.MainCarriageCarrierName = myDataProvider.MainCarriageCarrierName;
@@ -251,10 +234,8 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.HouseNumber = myDataProvider.HouseNumber;
                     newlabel.UserName = myDataProvider.UserName;
                     newlabel.ConsigneePhoneNumber = myDataProvider.ConsigneePhoneNumber;
-                    newlabel.AirlineLogo = myDataProvider.AirlineLogo;
-                    newlabel.FlightNumber = myDataProvider.FlightNumber;
 
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, newlabel);
 
                     newlabel.PieceNumber = counter.ToString();

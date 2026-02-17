@@ -4,7 +4,7 @@ import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
 
 @Component({
     selector: 'TicketDocsOutTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './TicketDocsOutTabComponent.html',
 })
 

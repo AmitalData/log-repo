@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,20 +26,19 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 { 
@@ -154,6 +153,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         EventTypeService service = new EventTypeService(MyContext, entityPM.Tenant);
+ 
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);

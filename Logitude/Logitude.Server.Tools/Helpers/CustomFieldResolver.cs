@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Logitude.BL.Helpers.CustomFieldsResolver;
-using Logitude.Server.Tools.CustomFields;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 
@@ -15,81 +11,507 @@ namespace Logitude.BL.Helpers
 {
     public class CustomFieldResolver
     {
-        public Object lockMe = new Object();
-        public Dictionary<string, object> definedObjects = new Dictionary<string, object>();
-        public CultureInfo en = new CultureInfo("en-US");
-        public bool UsingParallelMechanisim;
-        public List<CustomPickList> customPickLists;
-        public List<LookUpFieldDataStorage> LookUpFieldsDataStorage;
-        public CustomFieldResolver(int tenant)
-        {
-            CustomPickListRepository customPickListRepository = new CustomPickListRepository(tenant);
-            customPickLists = customPickListRepository.GetCustomPickListsCashe(tenant);
-            LookUpFieldsDataStorage = new List<LookUpFieldDataStorage>();
-        }
-        public void SetFieldValue(CustomFieldResolverArgs customFieldResolverArgs)
-        {
-            CustomFieldSingleSetter.SetFieldValue(customFieldResolverArgs);
-        }
+        Dictionary<string, object> definedObjects = new Dictionary<string, object>();
+        static CultureInfo en = new CultureInfo("en-US");
 
-        public void SetCustomFieldsValues(string objectTableName, int tenant, List<object> listQuery)
+        public void SetCustomFieldsValues(string objectTableName, int tenant, List<Object> listQuery)
         {
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
-            CustomFieldMultiSetter.SetCustomFieldsValues(objectTableName, tenant, listQuery);
+            foreach (ObjectField field in customFields)
+            {
+                foreach (object list in listQuery)
+                {
+                    if (list != null)
+                    {
+                        PropertyInfo propInfo = list.GetType().GetProperty(field.FieldName);
+
+                        object newValue = customFieldResolver.GetFieldValue(list, field, tenant);
+
+                        propInfo.SetValue(list, newValue, null);
+                    }
+                }
+            }
         }
 
         public void SetDataProviderCustomFieldsValues(string objectTableName, int tenant, Object entity, Object provider, string propertyIdientifier = null)
         {
-            CustomFieldMultiSetter.SetDataProviderCustomFieldsValues(new CustomFieldDataProviderSetterValueArgs { 
-                objectTableName = objectTableName,
-                tenant = tenant,
-                entity = entity,
-                provider = provider,
-                propertyIdientifier = propertyIdientifier
-            });
+            if (entity != null && provider != null)
+            {
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
+
+                foreach (ObjectField field in customFields)
+                {
+                    PropertyInfo propInfo = entity.GetType().GetProperty(field.FieldName);
+
+                    if (propInfo != null)
+                    {
+                        object newValue = customFieldResolver.GetFieldValue(entity, field, tenant);
+                        PropertyInfo providerPropInfo = null;
+
+                        if (!string.IsNullOrEmpty(propertyIdientifier))
+                        {
+                            providerPropInfo = provider.GetType().GetProperty(propertyIdientifier + field.FieldName);
+                        }
+
+                        else
+                        {
+                            providerPropInfo = provider.GetType().GetProperty(objectTableName + field.FieldName);
+                        }
+                        
+                        if (providerPropInfo != null)
+                        {
+                            providerPropInfo.SetValue(provider, newValue, null);
+                        }
+                    }
+                }
+            }
         }
 
         public string GetFieldValue(object entity, ObjectField objectField, int tenant, bool externalAPICall = false)
         {
-            return CustomFieldGetter.Get(new CustomFieldGetterArgs { 
-                entity = entity,
-                objectField = objectField,
-                tenant = tenant,
-                customFieldResolver = this,
-                externalAPICall = externalAPICall,
-            });
+            string resultValue = null;
+            object currentEntity = entity;
+
+            PropertyInfo propertyPathPi = currentEntity.GetType().GetProperty(objectField.FieldName);
+
+            if (propertyPathPi != null)
+            {
+                object value = propertyPathPi.GetValue(currentEntity, null);
+
+                if (value != null)
+                {
+                    if (value.GetType() == typeof(CustomFieldClass))
+                    {
+                        CustomFieldClass classvalue = value as CustomFieldClass;
+                        value = classvalue.Value;
+                    }
+                }
+
+                if (objectField != null)
+                {
+                    Assembly blAssembly = Assembly.Load("Logitude.BL");
+
+                    if (objectField.DataTypeCode == "LookUp" && value != null)
+                    {
+                        string insideEntityName = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant).Name;
+                        if (insideEntityName == "Carrier")
+                        {
+                            insideEntityName = "Card";
+                        }
+
+                        string insideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
+
+                        Type insideEntityType = blAssembly.GetType(insideTypePath);
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        object insideEntityRepository = null;
+
+                        if (insideEntityType != null)
+                        {
+                            if (definedObjects.Keys.Contains(insideTypePath))
+                            {
+                                insideEntityRepository = definedObjects[insideTypePath];
+                            }
+
+                            if (insideEntityRepository == null)
+                            {
+                                insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
+
+                                definedObjects.Add(insideTypePath, insideEntityRepository);
+                            }
+                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
+                            if (insideMethodInfo == null)
+                            {
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM"); 
+                            }
+                            if (insideMethodInfo == null)
+                            {
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
+                            }
+                            object insideEntity = null;
+
+                            if (insideMethodInfo != null)
+                            {
+                                ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
+                                object[] parameters = new object[] {};
+                                switch (parametersInfo.Count())
+                                {
+                                    case 1:
+                                        parameters = new object[] { value };
+                                        break;
+                                    case 2:
+                                        parameters = new object[] { value, tenant };
+                                        break;
+                                    case 3:
+                                        parameters = new object[] { value, tenant, false };
+                                        break;
+                                    default:
+                                        parameters = new object[] { value, tenant };
+                                        break;
+                                }
+                                 
+
+                                insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
+
+                                if (insideEntity != null)
+                                {
+                                    ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
+                                    string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
+                                    if (externalAPICall)
+                                    {
+                                        lookupProperty = "Code";
+                                    }
+
+                                    PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
+                                    if (insidePropertyPathPi != null)
+                                    {
+                                        object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
+                                        if (insideValue != null)
+                                        {
+                                            if (insideValue is DateTime)
+                                            {
+                                                DateTime date = (DateTime)insideValue;
+                                                insideValue = date.ToShortDateString();
+                                            }
+                                        }
+
+                                        resultValue = (insideValue != null ? insideValue.ToString() : null);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (objectField.DataTypeCode == "PickList")
+                    {
+                        if (value != null)
+                        {
+
+                            CustomPickListRepository customPickListRepository = new CustomPickListRepository(tenant);
+                            CustomPickList picklist = customPickListRepository.GetSingleCustomPickList(value.ToString(), tenant);
+                            if (picklist != null)
+                            {
+                                resultValue = picklist.Value;
+                            }
+                        }
+                    }
+
+                    if (objectField.DataTypeCode != "LookUp" && objectField.DataTypeCode != "PickList")
+                    {
+                        string valueString = value != null ? value.ToString() : null;
+                        if (!String.IsNullOrEmpty(valueString))
+                        {
+                            resultValue = GetFieldDataType(objectField, valueString);
+                        }
+                    }
+                }
+            }
+
+            if (resultValue == "")
+            {
+                resultValue = null;
+            }
+
+            return resultValue;
         }
+
+        private static DateTime? ConvertToDate(string arg)
+        {
+            DateTime? date = null;
+
+            if (!string.IsNullOrEmpty(arg))
+            {
+                date = new DateTime(System.Convert.ToInt32(arg.Substring(0, 4)), System.Convert.ToInt32(arg.Substring(4, 2)), System.Convert.ToInt32(arg.Substring(6, 2)), System.Convert.ToInt32(arg.Substring(8, 2)), System.Convert.ToInt32(arg.Substring(10, 2)), System.Convert.ToInt32(arg.Substring(12, 2)));
+            }
+
+            return date;
+        }
+
+        private static string GetFieldDataType(ObjectField field, string customField)
+        {
+            if (field != null && customField != null)
+            {
+                switch (field.DataTypeCode.Trim())
+                {
+                    case "Text":
+                    case "Emails":
+                    case "nText":
+                        {
+                            return customField.ToString();
+                        }
+
+                    case "DateTime":
+                        {
+                            DateTime? date = ConvertToDate(customField);
+                            return date.Value.ToString(@"dd MMM yyyy HH':'mm':'ss", en.DateTimeFormat);
+                        }
+
+                    case "Date":
+                        {
+                            DateTime? date = ConvertToDate(customField);
+                            return date.Value.ToString(@"dd MMM yyyy", en.DateTimeFormat);
+                        }
+
+                    case "UnsDecimal":
+                    case "Decimal":
+                        {
+                            decimal d = 0;
+
+                            if (customField.Length >= 15)
+                            {
+                                customField = customField.Insert(customField.Length - 3, ".");
+                            }
+
+                            decimal.TryParse(customField, out d);
+
+                            return d.ToString();
+                        }
+
+                    case "Integer":
+                    case "UnsInteger":
+                        {
+                            int i = 0;
+                            int.TryParse(customField, out i);
+
+                            return i.ToString();
+                        }
+
+                    case "Double":
+                    case "SigDouble":
+                        {
+                            double d = 0;
+
+                            if (customField.Length >= 15)
+                            {
+                                customField = customField.Insert(customField.Length - 3, ".");
+                            }
+
+                            double.TryParse(customField, out d);
+                            return d.ToString();
+                        }
+
+                    case "Boolean":
+                        {
+                            bool b = false;
+                            bool.TryParse(customField, out b);
+                            return b.ToString();
+                        }
+
+                    default:
+                        {
+                            return null;
+                        }
+                }
+            }
+
+            return null;
+        }
+
+
 
         public string GetFieldValue2(object value, ObjectField objectField, int tenant)
         {
-            return CustomFieldGetter.Get2(value, objectField, tenant, this);
+            string resultValue = null;
+            if (value != null)
+            {
+                if (objectField != null)
+                {
+                    Assembly blAssembly = Assembly.Load("Logitude.BL");
+
+                    if (objectField.DataTypeCode == "LookUp" && value != null)
+                    {
+                        string insideEntityName = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant).Name;
+                        if (insideEntityName == "Carrier")
+                        {
+                            insideEntityName = "Card";
+                        }
+
+                        string insideTypePath = "Logitude.BL.ShipmentsModel.EntityQueries." + insideEntityName + "Query";
+
+                        Type insideEntityType = blAssembly.GetType(insideTypePath);
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL.CommonDataModel.EntityQueries." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL.InfrastructureModel.EntityQueries." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        if (insideEntityType == null)
+                        {
+                            insideTypePath = "Logitude.BL.QuoteModel.EntityQueries." + insideEntityName + "Query";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                        }
+
+                        bool isGeneratedQuery = false;
+                        if (insideEntityType == null)
+                        {
+                            //Logitude.CRM.BL.EntityQueryServices
+                            blAssembly = Assembly.Load("Logitude.CRM.BL");
+                            insideTypePath = "Logitude.CRM.BL.EntityQueryServices." + insideEntityName + "QueryService";
+                            insideEntityType = blAssembly.GetType(insideTypePath);
+                            if (insideEntityType != null)
+                            {
+                                isGeneratedQuery = true;
+                            }
+                            
+                        }
+
+                        object insideEntityRepository = null;
+
+                        if (insideEntityType != null)
+                        {
+                            if (definedObjects.Keys.Contains(insideTypePath))
+                            {
+                                insideEntityRepository = definedObjects[insideTypePath];
+                            }
+
+                            if (insideEntityRepository == null)
+                            {
+                                insideEntityRepository = Activator.CreateInstance(insideEntityType, tenant);
+
+                                definedObjects.Add(insideTypePath, insideEntityRepository);
+                            }
+
+                            MethodInfo insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetCustomSinglePM");
+                            
+                            if (insideMethodInfo == null)
+                            {
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSinglePM");
+                            }
+                            if (insideMethodInfo == null)
+                            {
+                                insideMethodInfo = insideEntityRepository.GetType().GetMethod("GetSingle");
+                            }
+                            object insideEntity = null;
+
+                            if (insideMethodInfo != null)
+                            {
+                                ParameterInfo[] parametersInfo = insideMethodInfo.GetParameters();
+                                object[] parameters = new object[] { };
+                                if (!isGeneratedQuery)
+                                {
+                                    switch (parametersInfo.Count())
+                                    {
+                                        case 1:
+                                            parameters = new object[] { value };
+                                            break;
+                                        case 2:
+                                            parameters = new object[] { value, tenant };
+                                            break;
+                                        case 3:
+                                            parameters = new object[] { value, tenant, false };
+                                            break;
+                                        default:
+                                            parameters = new object[] { value, tenant };
+                                            break;
+                                    }
+                                }
+                                else parameters = new object[] { value, false, false };
+                                   
+
+
+                                insideEntity = insideMethodInfo.Invoke(insideEntityRepository, parameters);
+
+                                if (insideEntity != null)
+                                {
+                                    ObjectTable lookupTable = ObjectTableRepository.GetSingleObjectTableById(objectField.LookUpTableId, objectField.Tenant);
+                                    string lookupProperty = lookupTable.LookUp2 != null ? lookupTable.LookUp2 : lookupTable.LookUp1;
+                                    PropertyInfo insidePropertyPathPi = insideEntity.GetType().GetProperty(lookupProperty);
+                                    if (insidePropertyPathPi != null)
+                                    {
+                                        object insideValue = insidePropertyPathPi.GetValue(insideEntity, null);
+                                        if (insideValue != null)
+                                        {
+                                            if (insideValue is DateTime)
+                                            {
+                                                DateTime date = (DateTime)insideValue;
+                                                insideValue = date.ToShortDateString();
+                                            }
+                                        }
+
+                                        resultValue = (insideValue != null ? insideValue.ToString() : null);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (objectField.DataTypeCode == "PickList")
+                    {
+                        if (value != null)
+                        {
+                            CustomPickListRepository customPickListRepository = new CustomPickListRepository(tenant);
+                            CustomPickList picklist = customPickListRepository.GetSingleCustomPickList(value.ToString(), tenant);
+
+                            if (picklist != null)
+                            {
+                                resultValue = picklist.Value;
+                            }
+                        }
+                    }
+
+                    if (objectField.DataTypeCode != "LookUp" && objectField.DataTypeCode != "PickList")
+                    {
+                        string valueString = value != null ? value.ToString() : null;
+                        if (!String.IsNullOrEmpty(valueString))
+                        {
+                            resultValue = GetFieldDataType(objectField, valueString);
+                        }
+                    }
+                }
+            }
+
+            if (resultValue == "")
+            {
+                resultValue = null;
+            }
+
+            return resultValue;
         }
-    }
 
-    public class CustomFieldResolverArgs
-    {
-        public string ObjectTableName { get; set; }
-        public object EntityPM { get; set; }
-        public string FieldCode { get; set; }
-        public string FieldValue { get; set; }
-        public int Tenant { get; set; }
-    }
 
-    public class LookUpFieldValueGetterArgs
-    {
-        public ObjectField ObjectField { get; set; }
-        public int Tenant { get; set; }
-        public bool ExternalAPICall { get; set; }
-        public object Value { get; set; }
-        public string InsideTypePath { get; set; }
-        public Type InsideEntityType { get; set; }
-    }
 
-    public class LookUpFieldDataStorage
-    {
-        public string FieldValue { get; set; }
-        public object Value { get; set; }
-        public string LookUpTableId { get; set; }
-        public int Tenant { get; set; }
+
+
+
+
     }
 }

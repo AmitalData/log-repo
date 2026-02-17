@@ -4,7 +4,7 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './OccasionDocsInTabComponent.html',
 })
 

@@ -45,14 +45,6 @@ namespace WebFreight.Web.CustomModel.DomainServices
             customContext = CustomContext.GetContext(tenant);
             DeclarationListQueryService listService = new DeclarationListQueryService(customContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            // Sets the command timeout for all the commands
-            //if (queryOperations.GetAll)
-            {
-                (customContext as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.CommandTimeout = 300;
-                //(customContext as System.Data.Entity.DbContext).Database.Connection.ConnectionTimeout = 300;
-            }
-
-
             return listService.GetList(queryOperations, tenant);
 
 
@@ -68,158 +60,8 @@ namespace WebFreight.Web.CustomModel.DomainServices
             return queryService.GetListCount(queryOperations, tenant);
         }
 
-        public List<DeclarationReferantDataList> GetDeclarationReferantDataFilters(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
 
-            customContext = CustomContext.GetContext(tenant);
-            DeclarationReferantDataListQueryService listService = new DeclarationReferantDataListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return listService.GetList(queryOperations, tenant);
-
-
-        }
-
-        public int GetDeclarationReferantDataFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-            customContext = CustomContext.GetContext(tenant);
-            DeclarationReferantDataListQueryService queryService = new DeclarationReferantDataListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
-        }
-
-        public List<ExportStorageList> GetExportStorageFilters(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-
-            customContext = CustomContext.GetContext(tenant);
-            ExportStorageListQueryService listService = new ExportStorageListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return listService.GetList(queryOperations, tenant);
-
-
-        }
-
-        public int GetExportStorageFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-            customContext = CustomContext.GetContext(tenant);
-            ExportStorageListQueryService queryService = new ExportStorageListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
-        }
-
-
-        public List<ContainerizationList> GetContainerizationFilters(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-
-            customContext = CustomContext.GetContext(tenant);
-            ContainerizationListQueryService listService = new ContainerizationListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return listService.GetList(queryOperations, tenant);
-        }
-
-        public int GetContainerizationFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-            customContext = CustomContext.GetContext(tenant);
-            ContainerizationListQueryService queryService = new ContainerizationListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
-        }
-
-        public List<DeclarationCourierStatusList> GetDeclarationCourierStatusFilters(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-
-            customContext = CustomContext.GetContext(tenant);
-            DeclarationCourierStatusListQueryService listService = new DeclarationCourierStatusListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return listService.GetDeclarationCourierStatusListPendingBulk(queryOperations, tenant);
-
-
-        }
-
-        public int GetDeclarationCourierStatusFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-            customContext = CustomContext.GetContext(tenant);
-            DeclarationCourierStatusListQueryService queryService = new DeclarationCourierStatusListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetDeclarationCourierStatusforPendingBulkFeedListCount(queryOperations, tenant);
-        }
-
-
-        public List<CourierMasterList> GetCourierMasterFilters(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            ////SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-
-            customContext = CustomContext.GetContext(tenant);
-            var listService = new CourierMasterListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return listService.GetList(queryOperations, tenant);
-
-
-        }
-
-        public int GetCourierMasterFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", tenant);
-            customContext = CustomContext.GetContext(tenant);
-            var queryService = new CourierMasterListQueryService(customContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
-        }
-		public List<DeclarationCargoSplitList> GetDeclarationCargoSplitFilters(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var listService = new DeclarationCargoSplitListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return listService.GetList(queryOperations, tenant);
-
-		}
-
-		public int GetDeclarationCargoSplitFiltersCount(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var queryService = new DeclarationCargoSplitListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return queryService.GetListCount(queryOperations, tenant);
-		}
-		public List<ClaimList> GetClaimFilters(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var listService = new ClaimListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return listService.GetList(queryOperations, tenant);
-
-
-		}
-
-		public int GetClaimFiltersCount(byte[] xmlFilters, int tenant)
-		{
-			SecurityUtility.AuthenticationOnTenant(tenant);
-			customContext = CustomContext.GetContext(tenant);
-			var queryService = new ClaimListQueryService(customContext);
-			QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-			return queryService.GetListCount(queryOperations, tenant);
-		}
-		public DeclarationPM GetSingleDeclarationPM(string id, int tenant)
+        public DeclarationPM GetSingleDeclarationPM(string id, int tenant)
         {
             customContext = CustomContext.GetContext(tenant);
             declarationQuery = new DeclarationQueryService(customContext);
@@ -252,29 +94,6 @@ namespace WebFreight.Web.CustomModel.DomainServices
             List<ConsignmentPM> myConsignmentPM = declarationQuery.GetConsignmentListPMByDeclarationId(DeclarationId, tenant);
 
             return myConsignmentPM;
-        }
-
-        [Query]
-        public List<DeclarationPendingPM> GetDeclarationPendingListPMByDeclarationId(string declarationId, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
-            if (customContext == null)
-            {
-                customContext = CustomContext.GetContext(tenant);
-            }
-
-            customContext = CustomContext.GetContext(tenant);
-            DeclarationRepository declarationRep = new DeclarationRepository(customContext);
-
-            if (string.IsNullOrWhiteSpace(declarationId))
-            {
-                return null;
-            }
-            declarationQuery = new DeclarationQueryService(customContext);
-            List<DeclarationPendingPM> myDeclarationPendingPM = declarationQuery.GetDeclarationPendingListPMByDeclarationId(declarationId, tenant);
-
-            return myDeclarationPendingPM;
         }
 
         [Query]
@@ -363,11 +182,11 @@ namespace WebFreight.Web.CustomModel.DomainServices
             }
         }
 
-        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant,bool isExportClose=false)
+        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant)
         {
             customContext = CustomContext.GetContext(tenant);
             declarationQuery = new DeclarationQueryService(customContext);
-            return declarationQuery.GetDeclarationCorrection(declarationId, tenant, isExportClose);
+            return declarationQuery.GetDeclarationCorrection(declarationId, tenant);
 
         }
 

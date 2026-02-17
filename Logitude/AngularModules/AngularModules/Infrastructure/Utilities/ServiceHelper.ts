@@ -1,21 +1,19 @@
 
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {Http, Headers, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {AppTool, DateTool} from '../Tools';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 import {Guid} from '../Utilities/Guid';
 import {SessionInfo} from '../Utilities/SessionInfo';
 import {SessionLocator} from '../Utilities/SessionLocator';
 import {LogitudeErrorHandler} from '../Utilities/LogitudeErrorHandler';
-import { LoginService } from '../Services/LoginService';
-import { of } from 'rxjs';
-import { isNullOrUndefined } from 'util';
-import { GeneralLockService } from 'Infrastructure/Services/ExtendedLists/GeneralLockService';
+import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
+import {LoginService} from '../Services/LoginService';
 declare var window: any;
 
 export class ServiceHelper {
-    public static HttpClient: HttpClient;
-
+    public static Http: Http;
     private static _CurrentSession = SessionLocator.SelectedSession;
     private static get CurrentSession() {
         if (this._CurrentSession == null) {
@@ -30,120 +28,16 @@ export class ServiceHelper {
         var response: ServiceResponse;
         response = new ServiceResponse();
         response.HasError = true;
-      if (error instanceof HttpErrorResponse) {
-            
-        if (error.status == 400) {
-          var apiException = error.error;
-            if (apiException.ErrorType == "Exception"
-                || apiException.ErrorType == "ModelStateError"
-                || apiException.ErrorType == "DbEntityValidationException"
-                || apiException.ErrorType == "ApplicationException"
-                || apiException.ErrorType == "EntityCommandExecutionException"
-                || apiException.ErrorType == "NullReferenceException"
-                || apiException.ErrorType == "SecurityException") {
-
-                    var errorMessage: string = apiException.ShortErrorMessage;
-                    if (!AppTool.IsNullOrEmpty(apiException.ShortErrorMessage)) {
-                        errorMessage = apiException.ShortErrorMessage;
-                    }
-                    else if (!AppTool.IsNullOrEmpty(apiException.ErrorMessage)) {
-                        errorMessage = apiException.ErrorMessage;
-
-                    }
-                    else {
-                        errorMessage = apiException.ExceptionMessage;
-
-                    }
-                    if (errorMessage) {
-                        if (errorMessage.indexOf('session expiration') == -1) {
-                            if (errorMessage.indexOf(';') != -1) {
-                                var errArray = errorMessage.split(';');
-                                for (var k in errArray) {
-                                    response.ErrorsArray.push(errArray[k]);
-                                }
-                            }
-                            else {
-                                response.ErrorsArray.push(errorMessage);
-                            }
-                        }
-                     
-                    }
-
-                }
-
-
-                else if (apiException.ErrorType == "AutenticationException") {
-                    if (!SessionLocator.IsSiguOut) {
-                        SessionLocator.HomeComponent.SignoutClicked();
-                    }
-                }
-
-                // Ayman: please leave this commented
-
-                else if (apiException.ErrorType == "OptimisticConcurrencyException") {
-                    //var message: string = TextCodeTranslator.Translate("General.M.CantUpdateRecord");
-                    response.ErrorsArray.push(apiException.ShortErrorMessage);
-                }
-                else if (apiException.ErrorType == "WorkflowValidationException") {
-                    response.ErrorsArray = apiException?.ErrorMessages || [];
-                }
-                else {
-                    ServiceHelper.LogServiceError(apiException.ShortErrorMessage, apiException.ErrorMessage);
-                }
-            }
-            else {
-                if (error.status == 0) {
-                    console.log(error.message);
-                    const apiException = error.error;
-                    let additionalDetails = "";
-                    if (SessionLocator.LoggedUserPM.Email.toLowerCase().indexOf('specflow') > -1 || SessionLocator.LoggedUserPM.Email == "specflowtest@logitudeworld.com" || SessionLocator.LoggedUserPM.Email == "BDDSpecialCases@mail.com" || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") {
-                        additionalDetails = ": " + (!isNullOrUndefined(apiException?.ExceptionMessage) ? apiException?.ExceptionMessage : (!isNullOrUndefined(error.message) ? error.message : error.statusText));
-                    }
-                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem" + additionalDetails, "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
-                }
-                else if (error.status == 500) {
-                    console.log(error);
-                    response.ErrorsArray.push(error?.statusText);
-                    try {
-                        var errorObject = JSON.parse(error["_body"]);
-                        ServiceHelper.LogServiceError(errorObject.Message + " " + errorObject.ExceptionMessage, errorObject.StackTrace);
-                    }
-                    catch (e) { }
-                    //ServiceHelper._LogitudeErrorHandler.handleError(error);
-                }
-            }
-        }
-        else if (error instanceof HttpErrorResponse)  {
-            response = ServiceHelper.HttpClientHandleServiceError(error);
-        }
-        else {
-
-            var exceptionmessage = error.message + '\n' + error.stack;
-            response.ErrorsArray.push(exceptionmessage);
-
-            ServiceHelper._LogitudeErrorHandler.handleError(error);
-        }
-
-        return of(response);
-    }
-
-
-    private static HttpClientHandleServiceError(error: any) {
-
-        var response: ServiceResponse;
-        response = new ServiceResponse();
-        response.HasError = true;
-
-      if (error instanceof HttpErrorResponse) {
-          
+        if (error instanceof Response) {
+            //var mm = error.json();
             if (error.status == 400) {
-                var apiException = error.error;
+                var apiException = error.json();
                 if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException" || apiException.ErrorType == "EntityCommandExecutionException" || apiException.ErrorType == "NullReferenceException") {
 
-                    var errorMessage: string = apiException.ShortErrorMessage;
+                    var errorMessage:string = apiException.ShortErrorMessage;
                     if (apiException.ShortErrorMessage) {
                         errorMessage = apiException.ShortErrorMessage;
-                        // response.ErrorsArray.push(apiException.ShortErrorMessage);
+                       // response.ErrorsArray.push(apiException.ShortErrorMessage);
                     }
                     else {
                         errorMessage = apiException.ExceptionMessage;
@@ -174,7 +68,7 @@ export class ServiceHelper {
                 }
 
                 // Ayman: please leave this commented
-
+               
                 else if (apiException.ErrorType == "OptimisticConcurrencyException") {
                     //var message: string = TextCodeTranslator.Translate("General.M.CantUpdateRecord");
                     response.ErrorsArray.push(apiException.ShortErrorMessage);
@@ -186,20 +80,15 @@ export class ServiceHelper {
             }
             else {
                 if (error.status == 0) {
-                    console.log(error.message);
-                    const apiException = error.error;
-                    let additionalDetails = "";
-                    if (SessionLocator.LoggedUserPM.Email.toLowerCase().indexOf('specflow') > -1 || SessionLocator.LoggedUserPM.Email == "angular@fnarsoft.com" || SessionLocator.LoggedUserPM.Email == "specflowtest@logitudeworld.com" || SessionLocator.LoggedUserPM.Email == "BDDSpecialCases@mail.com" || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") {
-                        additionalDetails = ": " + (!isNullOrUndefined(apiException?.ExceptionMessage) ? apiException?.ExceptionMessage : (!isNullOrUndefined(error.message) ? error.message : error.statusText));
-                    }
-                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem" + additionalDetails, "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
+
+                    ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem", "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
                 }
                 else if (error.status == 500) {
                     try {
                         var errorObject = JSON.parse(error["_body"]);
                         ServiceHelper.LogServiceError(errorObject.Message + " " + errorObject.ExceptionMessage, errorObject.StackTrace);
                     }
-                    catch (e) { }
+                    catch(e){}
                     //ServiceHelper._LogitudeErrorHandler.handleError(error);
                 }
             }
@@ -212,7 +101,7 @@ export class ServiceHelper {
             ServiceHelper._LogitudeErrorHandler.handleError(error);
         }
 
-       return response;
+        return Observable.of(response);
     }
 
     public static HandleTimerServiceError(error: any) {
@@ -220,10 +109,10 @@ export class ServiceHelper {
         var response: ServiceResponse;
         response = new ServiceResponse();
         response.HasError = true;
-      if (error instanceof HttpErrorResponse) {
+        if (error instanceof Response) {
             //var mm = error.json();
-        if (error.status == 400) {
-          var apiException = error.error;
+            if (error.status == 400) {
+                var apiException = error.json();
                 if (apiException.ErrorType == "Exception" || apiException.ErrorType == "ModelStateError" || apiException.ErrorType == "DbEntityValidationException" || apiException.ErrorType == "ApplicationException") {
 
                     var errorMessage: string = apiException.ShortErrorMessage;
@@ -287,59 +176,51 @@ export class ServiceHelper {
              
         }
 
-        return of(response);
+        return Observable.of(response);
     }
 
     private static LogServiceError(exception: string, stackTrace: string, logException = true) {
         try {
             if (exception) {
-
-                if (exception.startsWith("Sorry! you have no permission to do this operation"))
-                    return;
-
                 if (this.CurrentSession) {
                     this.CurrentSession.StopBusyIndicator();
 
                     if (!this.CurrentSession.IsShowErrorWindow) {
-                         
-                            this.CurrentSession.IsShowErrorWindow = true;
-                            const mywindow = new MessageWindow();
-                            mywindow.Show(exception);
+                        this.CurrentSession.IsShowErrorWindow = true;
+                        var mywindow = new MessageWindow();
+                        mywindow.Show(exception);
 
+                        mywindow.WindowClosed.subscribe(($event: any) => {
+                            this.CurrentSession.IsShowErrorWindow = false;
+                            if (exception) {
+                                if (exception.indexOf("Internet Connection Problem") > -1) {
+                                    var loginService: LoginService = new LoginService();
+                                    loginService.GetDocumentDownloadToken().subscribe(myResult => {
+                                        if (myResult) {
+                                            SessionInfo.DocumentDownloadToken = myResult;
+                                        }
+                                    });
 
-                            mywindow.WindowClosed.subscribe(() => {
-                                this.CurrentSession.IsShowErrorWindow = false;
-                                if (exception) {
-                                    if (exception.indexOf("Internet Connection Problem") > -1) {
-                                        const loginService: LoginService = new LoginService();
-                                        loginService.GetDocumentDownloadToken().subscribe((myResult: any) => {
-                                            if (myResult) {
-                                                SessionInfo.DocumentDownloadToken = myResult;
-                                            }
-                                        });
-
-                                    }
                                 }
-                            });
-                        
+                            }
+                        });
                     }
                 }
+            }
 
+            if (exception && stackTrace && logException  === true) {
 
-                if (stackTrace && logException === true) {
+                var errorLog: ErrorLogPM = new ErrorLogPM();
+                errorLog.Id = Guid.newGuid();
+                errorLog.ClientDate = new Date();
+                errorLog.Tenant = SessionInfo.LoggedUserTenant;
+                errorLog.Tier = "Client";
+                errorLog.UserName = SessionInfo.LoggedUserEmail;
+                errorLog.Exception = exception;
+                errorLog.StackTrace = stackTrace;
+                window.sessionStorage.setItem(["ErrorLogs", errorLog.Id], JSON.stringify(errorLog));
 
-                    var errorLog: ErrorLogPM = new ErrorLogPM();
-                    errorLog.Id = Guid.newGuid();
-                    errorLog.ClientDate = new Date();
-                    errorLog.Tenant = SessionInfo.LoggedUserTenant;
-                    errorLog.Tier = "Client";
-                    errorLog.UserName = SessionInfo.LoggedUserEmail;
-                    errorLog.Exception = exception;
-                    errorLog.StackTrace = stackTrace;
-                    window.sessionStorage.setItem(["ErrorLogs", errorLog.Id], JSON.stringify(errorLog));
-
-                    console.error(exception);
-                }
+                console.error(exception);
             }
         }
 
@@ -501,150 +382,6 @@ export class ServiceHelper {
 
     public static GetLDocumentDownloadToken() {
         return SessionInfo.DocumentDownloadToken;
-    }
-
-    public static GetHttpHeaders() {
-
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                //'Accept': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken(),
-                //'workerrolename': "development"
-            })
-        };
-
-        if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
-            httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
-          //  httpOptions.headers = httpOptions.headers.set('workerrolename', SessionLocator.WorkerRoleName);
-
-            //console.log(SessionLocator.WorkerRoleName);
-
-        return httpOptions;
-    }
-    public static GetHttpHeadersGeneralLock() {
-
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-                
-            })
-        };
-
-        if (!AppTool.IsNullOrEmpty(sessionStorage.getItem('SessionId'))) {      
-            var Index = SessionLocator.HomeComponent.Tabs.find(x => x.IsSelected).Index;
-            httpOptions.headers = httpOptions.headers.append('SessionId', sessionStorage.getItem('SessionId') + '_' + Index);
-        }
-        return httpOptions;
-    }
-
-    public static GetHttpHeadersForblob() {
-
-        const httpOptions = {
-            responseType: 'blob' as 'json',
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            })
-        };
-
-        if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
-            httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
-
-        return httpOptions;
-    }
-    public static GetHttpFullHeaders() {
-
-        const httpOptions: { headers; observe; } = {
-
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
-            }),
-
-            observe: 'response'
-        };
-
-        if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
-            httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
-
-        return httpOptions;
-    }
-
-    public static GetHttpHeadersWithoutToken() {
-
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-            })
-        };
-
-        return httpOptions;
-    }
-
-    public static GetHttpFullHeadersWithoutToken() {
-
-        const httpOptions: { headers; observe; } = {
-
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-            }),
-
-            observe: 'response'
-        };
-
-        return httpOptions;
-    }
-    public static OpenWindowWithParams( url:string,  params: any[]) {
-        var mapForm = document.createElement("form");
-        mapForm.target = "_blank";
-        mapForm.method = "POST"; // or "post" if appropriate
-        mapForm.action = url;
-        for (var i = 0; i < params.length; i++) {
-            var mapInput = document.createElement("input");
-            mapInput.type = "hidden";
-            mapInput.name = params[i].name;
-            mapInput.setAttribute("value", params[i].value);
-            mapForm.appendChild(mapInput);
-        }
-        document.body.appendChild(mapForm);
-        mapForm.submit();
-        document.body.removeChild(mapForm);
-    }
-
-    public static CheckIsLock(entityId: string, objectTableName: string, isFromCahnge: boolean = false) {
-
-        var generalLockService = new GeneralLockService();
-
-        generalLockService.PostCheckLock(entityId, objectTableName,isFromCahnge).subscribe(myResult => {
-           if(myResult.Result != null) 
-           {
-              var generalLock = myResult.Result;
-              this.CurrentSession.CurrentEditComponent.IsLock.emit([true, objectTableName, entityId, generalLock.UserName]);
-           }
-           else 
-           {
-              this.CurrentSession.CurrentEditComponent.IsLock.emit([false, objectTableName, entityId,null]);
-           }
-           
-        });
-    }
-    public static  DeleteGeneralLock(entityId: string, objectTableName: string) {
-
-        var generalLockService = new GeneralLockService();
-
-        generalLockService.DeleteGeneralLock(entityId, objectTableName).subscribe(myResult => {
-
-        });
-    }
-    public static  DeleteGeneralLockBySessionId() {
-
-        var generalLockService = new GeneralLockService();
-
-        generalLockService.DeleteGeneralLockBySessionId().subscribe(myResult => {
-
-        });
     }
 }
 

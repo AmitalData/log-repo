@@ -1,6 +1,6 @@
-
+﻿
 <style>
-    .DisbleBox {
+     .DisbleBox {
         display: inline-block;
         border: 1px solid #ffd800;
         border-radius: 5px;
@@ -11,7 +11,8 @@
         font-family: sans-serif;
     }
 </style>
-<div style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;" *ngIf="!fromLog">
+
+<div style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">
     <table class="noselect" *ngIf="Loaded && EntityResource">
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td colspan="3">
@@ -21,19 +22,19 @@
 
         <tr>
             <td colspan="3">
-                <div class="DisbleBox">
-                    הזן סוג מסמך מכס ל {{DocumentTypeId}}-{{UnifaceNAME_HEB}}
+                <div class="DisbleBox" >
+                    הזן סוג מסמך מכס ל {{DocumentTypeId}}-{{UnifaceNAME_HEB}} 
                 </div>
             </td>
         </tr>
 
 
-
+        
         <tr>
             <td colspan="3">
                 <table>
                     <tr class="FormFieldRow">
-                        <td class="tbl1Label" style="width: 150px;">
+                        <td class="tbl1Label"  style="width: 150px;">
                             <LogLabel [NoObjectField]="true"
                                       [ObjectFieldName]="'CustomsDoucumentTypeCode'"
                                       [ObjectTableName]="ObjectTableName"
@@ -41,9 +42,9 @@
 
                             </LogLabel>
                         </td>
+                        
 
-
-
+                        
 
                         <td style="width: 200px; padding-right: 36px;">
                             <!-- ExchangeRatesQueryComponent  Request.SubjectText-->
@@ -57,7 +58,7 @@
                         </td>
 
                         <td>
-                            <IconButton *ngIf="!IsNew" [IsSmall]="true" style="float: left; padding-left: 5px;" [Name]="'Delete'" (click)="DeleteRow()" title="הסר קישור"></IconButton>
+                            <IconButton *ngIf="!IsNew" [IsSmall]="true" style="float: left; padding-left: 5px;" [Name]="'Delete'" (click)="DeleteRow()"  title="הסר קישור" ></IconButton>
                         </td>
 
 
@@ -67,101 +68,7 @@
             </td>
         </tr>
 
-
-
-
-
-        <tr class="FormFieldRow">
-            <td colspan="3"></td>
-        </tr>
-
-        <tr>
-            <td colspan="3"></td>
-        </tr>
-        <!-- footer -->
-        <tr class="FormFieldRow">
-            <td colspan="3">
-                <table>
-                    <tr>
-                        <td></td>
-                        <td style="width: 57px;">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
-                        </td>
-
-
-
-                        <td style="width: 5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 57px;">
-                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
-
-<!--<div style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">-->
-<div *ngIf="fromLog">
-    <table class="noselect" *ngIf="Loaded && EntityResource" style="width:400px">
-        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-            <td colspan="3">
-                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="3">
-                <div class="DisbleBox">
-                    הזן סוג מסמך מכס ל {{DocumentTypeId}}-{{UnifaceNAME_HEB}}
-                </div>
-            </td>
-        </tr>
-
-
-
-        <tr>
-            <td colspan="3">
-                <table>
-                    <tr class="FormFieldRow">
-                        <td class="tbl1Label" style="width: 150px;">
-                            <LogLabel [NoObjectField]="true"
-                                      [ObjectFieldName]="'CustomsDoucumentTypeCode'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
-
-                            </LogLabel>
-                        </td>
-
-
-
-
-                        <td style="width: 200px; padding-right: 36px;">
-                            <!-- ExchangeRatesQueryComponent  Request.SubjectText-->
-                            <LogLov [ObjectFieldName]="'CustomsDoucumentTypeCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [HideColumns]="true"
-                                    [LookUpTableName]="'Customs.CustomDocumentType'"
-                                    [DisplayMemberPath]="'LocalName'">
-                            </LogLov>
-                        </td>
-
-                        <td>
-                            <IconButton *ngIf="!IsNew" [IsSmall]="true" style="float: left; padding-left: 5px;" [Name]="'Delete'" (click)="DeleteRow()" title="הסר קישור"></IconButton>
-                        </td>
-
-
-                    </tr>
-
-                </table>
-            </td>
-        </tr>
-
-
+        
 
 
 
@@ -169,7 +76,7 @@
             <td colspan="3"></td>
         </tr>
 
-        <tr>
+        <tr >
             <td colspan="3"></td>
         </tr>
         <!-- footer -->

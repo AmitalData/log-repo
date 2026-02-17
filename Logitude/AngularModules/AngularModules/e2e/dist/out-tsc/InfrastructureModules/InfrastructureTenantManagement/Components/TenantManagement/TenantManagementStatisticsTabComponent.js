@@ -92,21 +92,11 @@ var TenantManagementStatisticsTabComponent = /** @class */ (function (_super) {
         this.MobileLastDate = this.EntityPM.MobileLastDate;
         this.MobileTotalLastWeek = this.EntityPM.MobileTotalLastWeek;
         this.MobileTotalLastMonth = this.EntityPM.MobileTotalLastMonth;
-        this.DigitalPortalLastDate = this.EntityPM.DigitalPortalLastDate;
-        this.DigitalPortalMobTotalLastMonth = this.EntityPM.DigitalPortalMobTotalLastMonth;
-        this.DigitalPortalMobTotalLastWeek = this.EntityPM.DigitalPortalMobTotalLastWeek;
-        this.DigitalPortalMobileLastDate = this.EntityPM.DigitalPortalMobileLastDate;
-        this.DigitalPortalTotalLastMonth = this.EntityPM.DigitalPortalTotalLastMonth;
-        this.DigitalPortalTotalLastWeek = this.EntityPM.DigitalPortalTotalLastWeek;
         this.AgentSharedLogisticsStatisticsLastDate = this.EntityPM.AgentSharedLogisticsStatisticsLastDate;
         this.AgentSharedLogisticsStatisticsLastWeek = this.EntityPM.AgentSharedLogisticsStatisticsLastWeek;
         this.AgentSharedLogisticsStatisticsLastMonth = this.EntityPM.AgentSharedLogisticsStatisticsLastMonth;
-        this.DPArchiveShipmentCreateFilter = this.EntityPM.DPArchiveShipmentCreateFilter;
-        this.DPArchiveShipmentArrivalFilter = this.EntityPM.DPArchiveShipmentArrivalFilter;
-        this.DPArchiveShipmentDepartFilter = this.EntityPM.DPArchiveShipmentDepartFilter;
         this.SetColors();
     };
-    
     TenantManagementStatisticsTabComponent.prototype.SetColors = function () {
         var todayDate = Tools_1.DateTool.GetCurrentDateAsUtc();
         var date7 = Tools_1.DateTool.AddDays(todayDate, -7).valueOf();
@@ -174,23 +164,6 @@ var TenantManagementStatisticsTabComponent = /** @class */ (function (_super) {
                 this.MobileLastDateColor = Tools_1.FontTool.Red;
             }
         }
-
-        if (this.EntityPM.DigitalPortalLastDate != null) {
-            var myDate = new Date(this.EntityPM.DigitalPortalLastDate.valueOf()).valueOf();
-
-            if (myDate < date7) {
-                this.DigitalPortalLastDateColor = FontTool.Red;
-            }
-        }
-        
-        if (this.EntityPM.DigitalPortalMobileLastDate != null) {
-            var myDate = new Date(this.EntityPM.DigitalPortalMobileLastDate.valueOf()).valueOf();
-
-            if (myDate < date7) {
-                this.DigitalPortalMobileLastDateColor = FontTool.Red;
-            }
-        }
-
         if (this.EntityPM.AgentSharedLogisticsStatisticsLastDate != null) {
             var myDate = new Date(this.EntityPM.AgentSharedLogisticsStatisticsLastDate.valueOf()).valueOf();
             if (myDate < date7) {

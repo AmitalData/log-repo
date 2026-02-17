@@ -20,7 +20,7 @@ export class CountryPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -115,19 +115,11 @@ export class CountryPM {
     public set IsNorthAmerica(newValue: boolean) { if (this.isNorthAmerica != newValue) { this.isNorthAmerica = newValue; this.MarkAsDirty("IsNorthAmerica"); } }
        
 	 
-    private isGreaterChina: boolean;
-    public get IsGreaterChina() { return this.isGreaterChina; }
-    public set IsGreaterChina(newValue: boolean) { if (this.isGreaterChina != newValue) { this.isGreaterChina = newValue; this.MarkAsDirty("IsGreaterChina"); } }
-       
-	 
 
     public OldEntityPM: CountryPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -135,7 +127,6 @@ export class CountryPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Country");
            
         }
-	 }
     }
     private MyClone: CountryPM;
 

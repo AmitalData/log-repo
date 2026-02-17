@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<entity Id="&quot;b5d5677b-a06f-4331-ac9c-3f107eab7bf7&quot;" Code="&quot;DIM_ContainerStatuses&quot;" Name="&quot;DIM_ContainerStatuses&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="true" DefaultFilterBy="&quot;[Name]&quot;" HasPivotColumn="false" HasCustomFields="false" MaxNumberOfCustomFields="0">
-  <fields>
-    <field Id="&quot;a5466c32-bc24-4410-aa16-bf43b9479004&quot;" Code="&quot;[Code]&quot;" Name="&quot;Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="3" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Name]&quot;" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" UseUnitSelection="false" />
-    <field Id="&quot;97f8a8df-94bb-48d8-a6c7-f1dfc3bd9a8a&quot;" Code="&quot;[Name]&quot;" Name="&quot;Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="100" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Code]&quot;" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="false" IsMultipleSelection="false" UseUnitSelection="false" />
-    <field Id="&quot;660bfdc8-8f98-42d5-9c49-769cd5940f7e&quot;" Code="&quot;[Automatic Last Update Date]&quot;" Name="&quot;Last Update Date&quot;" DataTypeCode="&quot;DateTime&quot;" IsRequired="false" MinLength="0" MaxLength="0" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="false" HideTree="false" CannotFilter="false" IsCustom="false" DontDisplayInView="true" IsMultipleSelection="false" UseUnitSelection="false" />
-  </fields>
-</entity>

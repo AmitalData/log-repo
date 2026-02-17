@@ -1,0 +1,69 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/App",
+    "baseUrl": "./",
+    "module": "es2015",
+    "types": []
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts",
+
+    "bin",
+    "obj",
+    "dist",
+    "e2e",
+    "node_modules",
+
+    //"Js",
+    "Images",
+    "Stimulsoft",
+    "_Resources",
+
+    ".angular-cli.json",
+    ".editorconfig",
+    ".gitignore",
+    "karma.conf.js",
+    "package.json",
+    "polyfills.ts",
+    "protractor.conf.js",
+    "README.md",
+    "tsconfig.json",
+    "tslint.json",
+
+    "webpack.config.js",
+    "webpack.config-prod.js",
+
+    
+    "Shipment",
+    "CRM",
+    "Booking",
+    "Accounting",
+    "Dashboard",
+    "Invoice",
+    "Quote",
+    "Report",
+    "Social",
+    "TimeManagement",
+    "Warehouse",
+    "ShipmentModules",
+    "QuoteModules",
+    "InvoiceModules",
+
+
+    "Js/zone/ng_zone.d.ts",
+
+    "Controls/AutoCompleteBoxComponent.ts",
+    "CRM/Components/MenuButtons/PackageSelectionComponent.ts",
+    "CRM/Components/Tickets/Workspace/NewTicketCreatedComponent.ts",
+    "Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/ListHeaderTemplateComponent.ts",
+    "Infrastructure/Components/StimulsoftComponent/StimulsoftDesignerComponent.ts",
+    "Report/Components/FiltersComponent/CRM/CustomerPotentialActualComponent.ts",
+    "Shipment/Components/HeaderScreenTemplates/IsAccountingClosedHeaderTemplate.ts",
+    "Shipment/Components/HeaderScreenTemplates/IsOperationalClosedHeaderTemplate.ts",
+    "Shipment/Components/ListTemplates/DirectionCellDisplayListTemplate.ts",
+    "Shipment/Components/ListTemplates/RoutingCellDisplayListTemplate.ts",
+    "Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate.ts"
+  ]
+}

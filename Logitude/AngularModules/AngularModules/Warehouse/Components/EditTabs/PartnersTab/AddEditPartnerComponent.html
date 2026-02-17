@@ -1,4 +1,4 @@
-<style type="text/css">
+﻿<style type="text/css">
     .PartnerTemplateRow, .PartnerTemplateRow td, .PartnerTemplateRow td div, .PartnerTemplateRow td span {
         color: #6E7172;
         font-size: 10px;
@@ -67,9 +67,7 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
-
-                                              [DependencyFilter1Value]="DataContext.CardDependencyProperty1"
-                                              [DependencyFilter1IsList]="true"
+    
                                             [HideAdd]="true"
                                             [HideAddLink]="true"
                                             (SelectedItemChanged)="DataContext.PartnerCardList = $event">
@@ -155,21 +153,8 @@
                                                         <td>
                                                             <table>
                                                                 <tr>
-                                                                    <td style="width: 300px;">
-                                                                        <LogLov [ObjectFieldName]="DataContext.PartnerAddressIdProperty"
-                                                                                [SelectedValue]="DataContext.AddressId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Address'"
-                                                                                [DependencyFilter1Value]="DataContext.PartnerId">
-                                                                        </LogLov>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div style="float: right;">
-                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DataContext.EditAddressClicked()" [IsEnabled]="DataContext.AddressId && DataContext.IsEditingEnabled"></IconButton>
-                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="DataContext.AddAddressClicked()" [IsEnabled]="DataContext.IsEditingEnabled && DataContext.PartnerId"></IconButton>
-                                                                        </div>
+                                                                    <td class="Label">
+                                                                        Main Address
                                                                     </td>
                                                                 </tr>
                                                             </table>

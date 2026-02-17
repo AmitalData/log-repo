@@ -12,7 +12,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './INTTRASettingsComponent.html',
 })
 
@@ -179,17 +179,6 @@ export class INTTRASettingsComponent extends BaseComponent {
                 });
             });
         } 
-    }
-    DeleteFTPClicked(Code: string) {
-        if (Code == "Out") {
-            this.OutSettingsId = null;
-            this.OutSettingsHost = null;
-        }
-
-        else if (Code == "In") {
-            this.InSettingsId = null;
-            this.InSettingsHost = null;
-        }
     }
 
     CancelButtonClicked() {

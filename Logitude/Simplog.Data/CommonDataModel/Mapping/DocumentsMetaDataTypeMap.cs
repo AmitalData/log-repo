@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -24,7 +24,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             
             this.Property(t => t.Code)
                 .IsRequired()
-                .HasMaxLength(7)
+                .HasMaxLength(5)
                 .IsUnicode(false);
 
             this.Property(t => t.EnglishName)
@@ -36,9 +36,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
                .HasMaxLength(60)
                .IsUnicode(true);
 
-            this.Property(t => t.CustomsMetaDataCode)
-                .HasMaxLength(6)
-                .IsUnicode(true);
+            //this.Property(t => t.CustomsMetaDataCode)
+            //    .HasMaxLength(15)
+            //    .IsUnicode(false);
 
 
             this.Property(t => t.Format)
@@ -58,7 +58,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.EnglishName).HasColumnName("EnglishName");
             this.Property(t => t.LocalName).HasColumnName("LocalName");
-            this.Property(t => t.CustomsMetaDataCode).HasColumnName("CustomsMetaDataCode");
+            //this.Property(t => t.CustomsMetaDataCode).HasColumnName("CustomsMetaDataCode");
             this.Property(t => t.Format).HasColumnName("Format");
             this.Property(t => t.InActive).HasColumnName("InActive");
 

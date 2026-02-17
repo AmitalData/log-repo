@@ -91,7 +91,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
             };
 
-            var bankAccountOnCreatingService = A.Fake<BankAccountOnCreatingService>(option => option.Implements<IBankAccountOnCreatingService>());
+            var bankAccountOnCreatingService = A.Fake<BankAccountOnCreatingService>(option => option.CallsBaseMethods());
             //A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             //A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             //A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);

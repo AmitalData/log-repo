@@ -26,22 +26,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string FilterHtmlComponentUrl { get; set; }
         public string DefaultTemplateId { get; set; }
         public string DefaultMessageTemplateId { get; set; }
-        public string DefaultExcelNoStimId { get; set; }
-        public string FeatureUniqeCode { get; set; }
-        public bool AvailableForScheduling { get; set; }
-        public bool DisablePreview { get; set; }
-        public string DefaultExcelTemplateId { get; set; }
-        public bool IsExcelReportAllowed { get; set; }
-
-        [ForeignKey("DefaultExcelTemplateId")]
-        public ReportsTemplate ReportsTemplateDefaultExcel { get; set; }
 
 
         [ForeignKey("DefaultMessageTemplateId")]
         public ReportsTemplate ReportsTemplateDefaultMessage { get; set; }
-        
-        [ForeignKey("DefaultExcelNoStimId")]
-        public ReportsTemplate TemplateDefExcelNoStim { get; set; }
 
 
         [ForeignKey("DefaultTemplateId")]
@@ -51,7 +39,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("ReportGroupId")]
         public virtual ReportGroup ReportGroup { get; set; }
 
-        //[ForeignKey("FeatureId")]
+        [ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
 
         [ForeignKey("ReportDocumentId")]

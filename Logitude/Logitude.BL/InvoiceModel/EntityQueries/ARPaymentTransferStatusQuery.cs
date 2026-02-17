@@ -52,24 +52,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).FirstOrDefault();
         }
 
-
-        public ARPaymentTransferStatusPM GetSinglePM(string code)
-        {
-            return (from a in repository.context.ARPaymentTransferStatuses
-                    where a.Code == code
-                    select new ARPaymentTransferStatusPM()
-                    {
-                        Code = a.Code,
-                        Name = a.Name,
-                        SearchFields = a.SearchFields,
-                    }).FirstOrDefault();
-        }
-
-
-
-
-
-
         public IQueryable<ARPaymentTransferStatusList> GetIQueryableEntityList(IQueryable<ARPaymentTransferStatus> iQueryable)
         {
             IQueryable<ARPaymentTransferStatusList> result = from entity in iQueryable

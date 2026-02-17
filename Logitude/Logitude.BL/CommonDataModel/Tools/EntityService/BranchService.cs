@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -45,7 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new Branch();
             this.Poco.Id = this.entityPm.Id;
 
-            BranchValidating.Validate(entityPM, entityRepository);
+            BranchValidating.Validate(entityPM);
             if (!entityPm.IsHybrid)
             {
                 BranchTracing.Trace(entityPM, Poco, isNewEntity);
@@ -62,7 +62,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleBranch(entityPM.Id, entityPm.Tenant);
 
-            BranchValidating.Validate(entityPM, entityRepository);
+            BranchValidating.Validate(entityPM);
             if (!entityPm.IsHybrid)
             {
                 BranchTracing.Trace(entityPM, Poco, isNewEntity);

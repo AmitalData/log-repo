@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -42,38 +40,21 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public Master GetMasterById(string Id,int Tenant, string include, string ComputingPartnerName = "")
+		public Master GetMasterById(string Id,int Tenant)
         { 
 		    try
             {
-								
-				var temp = query.GetSinglePMWithInclude(Id, Tenant, include);
+
+				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Shipment with Id " + Id + " doesn't exist");
 
-				return MasterDataMapping(temp,Tenant,ComputingPartnerName);
+				return MasterDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
-                throw ex;
-            }
-        }
-		
-		public Master GetMasterByShipmentNumber(string ShipmentNumber,int Tenant, string include, string ComputingPartnerName = "")
-        { 
-		    try
-            {
-								
-				var temp = query.GetSinglePMWithIncludeByShipmentNumber(ShipmentNumber, Tenant, include);
-				 if (temp == null)
-                    throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
 
-				return MasterDataMapping(temp,Tenant,ComputingPartnerName);
-			}
-
-            catch (Exception ex)
-            {
                 throw ex;
             }
         }
@@ -84,168 +65,136 @@ using Simplog.Data.ShipmentsModel;
             {
 				   
 				   var temp = new Master(); 
-				   temp.Id = MyEntityPM.Id; 
-
-			  
+				   temp.Id = MyEntityPM.Id;			  
 				   if(MyEntityPM.DirectionId != null)
 				   {
 					   DirectionQueryService DirectionService0 = new DirectionQueryService(Tenant);
-					   					   temp.Direction = DirectionService0.GetDirectionById(MyEntityPM.DirectionId,Tenant,ComputingPartnerName); 
+					   					   temp.Direction = DirectionService0.GetDirectionById(MyEntityPM.DirectionId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.TransportModeId != null)
 				   {
 					   TransportModeQueryService TransportModeService1 = new TransportModeQueryService(Tenant);
-					   					   temp.TransportMode = TransportModeService1.GetTransportModeById(MyEntityPM.TransportModeId,Tenant,ComputingPartnerName); 
+					   					   temp.TransportMode = TransportModeService1.GetTransportModeById(MyEntityPM.TransportModeId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.ShipmentTypeId != null)
 				   {
 					   ShipmentTypeQueryService ShipmentTypeService2 = new ShipmentTypeQueryService(Tenant);
-					   					   temp.ShipmentType = ShipmentTypeService2.ShipmentTypeCustomDataMapping(MyEntityPM.ShipmentTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.ShipmentType = ShipmentTypeService2.ShipmentTypeCustomDataMapping(MyEntityPM.ShipmentTypeId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.ShipperId != null)
 				   {
 					   CardQueryService CardService3 = new CardQueryService(Tenant);
-					   					   temp.Shipper = CardService3.GetCardById(MyEntityPM.ShipperId,Tenant,ComputingPartnerName); 
+					   					   temp.Shipper = CardService3.GetCardById(MyEntityPM.ShipperId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.ShipperReference1 = MyEntityPM.ShipperReference1;
-				   temp.ShipperReference2 = MyEntityPM.ShipperReference2; 
-
-			  
+				   temp.ShipperReference2 = MyEntityPM.ShipperReference2;			  
 				   if(MyEntityPM.ConsigneeId != null)
 				   {
 					   CardQueryService CardService4 = new CardQueryService(Tenant);
-					   					   temp.Consignee = CardService4.GetCardById(MyEntityPM.ConsigneeId,Tenant,ComputingPartnerName); 
+					   					   temp.Consignee = CardService4.GetCardById(MyEntityPM.ConsigneeId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.ConsigneeReference1 = MyEntityPM.ConsigneeReference1;
-				   temp.ConsigneeReference2 = MyEntityPM.ConsigneeReference2; 
-
-			  
+				   temp.ConsigneeReference2 = MyEntityPM.ConsigneeReference2;			  
 				   if(MyEntityPM.AgentId != null)
 				   {
 					   CardQueryService CardService5 = new CardQueryService(Tenant);
-					   					   temp.Agent = CardService5.GetCardById(MyEntityPM.AgentId,Tenant,ComputingPartnerName); 
+					   					   temp.Agent = CardService5.GetCardById(MyEntityPM.AgentId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.AgentReference1 = MyEntityPM.AgentReference1;
-				   temp.AgentReference2 = MyEntityPM.AgentReference2; 
-
-			  
+				   temp.AgentReference2 = MyEntityPM.AgentReference2;			  
 				   if(MyEntityPM.FromPortId != null)
 				   {
 					   PortQueryService PortService6 = new PortQueryService(Tenant);
-					   					   temp.FromPort = PortService6.GetPortById(MyEntityPM.FromPortId,Tenant,ComputingPartnerName); 
+					   					   temp.FromPort = PortService6.GetPortById(MyEntityPM.FromPortId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.ToPortId != null)
 				   {
 					   PortQueryService PortService7 = new PortQueryService(Tenant);
-					   					   temp.ToPort = PortService7.GetPortById(MyEntityPM.ToPortId,Tenant,ComputingPartnerName); 
+					   					   temp.ToPort = PortService7.GetPortById(MyEntityPM.ToPortId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.GrossWeightUnitCode != null)
 				   {
 					   WeightUnitQueryService WeightUnitService8 = new WeightUnitQueryService(Tenant);
-					   					   temp.GrossWeightUnit = WeightUnitService8.GetWeightUnitByCode(MyEntityPM.GrossWeightUnitCode,Tenant,ComputingPartnerName); 
+					   					   temp.GrossWeightUnit = WeightUnitService8.GetWeightUnitByCode(MyEntityPM.GrossWeightUnitCode,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.ChargeableWeightUnitCode != null)
 				   {
 					   WeightUnitQueryService WeightUnitService9 = new WeightUnitQueryService(Tenant);
-					   					   temp.ChargeableWeightUnit = WeightUnitService9.GetWeightUnitByCode(MyEntityPM.ChargeableWeightUnitCode,Tenant,ComputingPartnerName); 
+					   					   temp.ChargeableWeightUnit = WeightUnitService9.GetWeightUnitByCode(MyEntityPM.ChargeableWeightUnitCode,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.VolumeUnitCode != null)
 				   {
 					   VolumeUnitQueryService VolumeUnitService10 = new VolumeUnitQueryService(Tenant);
-					   					   temp.VolumeUnit = VolumeUnitService10.GetVolumeUnitByCode(MyEntityPM.VolumeUnitCode,Tenant,ComputingPartnerName); 
+					   					   temp.VolumeUnit = VolumeUnitService10.GetVolumeUnitByCode(MyEntityPM.VolumeUnitCode,Tenant); 
 			       
 					   				   }
 				   
 				   temp.DescriptionOfGoods = MyEntityPM.DescriptionOfGoods;
-				   temp.Commodity = MyEntityPM.AWBCommodityItemNumber; 
-
-			  
+				   temp.Commodity = MyEntityPM.AWBCommodityItemNumber;			  
 				   if(MyEntityPM.BranchId != null)
 				   {
 					   BranchQueryService BranchService11 = new BranchQueryService(Tenant);
-					   					   temp.Branch = BranchService11.GetBranchById(MyEntityPM.BranchId,Tenant,ComputingPartnerName); 
+					   					   temp.Branch = BranchService11.GetBranchById(MyEntityPM.BranchId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.DepartmentId != null)
 				   {
 					   DepartmentQueryService DepartmentService12 = new DepartmentQueryService(Tenant);
-					   					   temp.Department = DepartmentService12.GetDepartmentById(MyEntityPM.DepartmentId,Tenant,ComputingPartnerName); 
+					   					   temp.Department = DepartmentService12.GetDepartmentById(MyEntityPM.DepartmentId,Tenant); 
 			       
 					   				   }
 				   
-				   temp.MasterNumber = MyEntityPM.Master; 
-
-			  
+				   temp.MasterNumber = MyEntityPM.Master;			  
 				   if(MyEntityPM.MainCarriageCarrierId != null)
 				   {
 					   CardQueryService CardService13 = new CardQueryService(Tenant);
-					   					   temp.MainCarriageCarrier = CardService13.GetCardById(MyEntityPM.MainCarriageCarrierId,Tenant,ComputingPartnerName); 
+					   					   temp.MainCarriageCarrier = CardService13.GetCardById(MyEntityPM.MainCarriageCarrierId,Tenant); 
 			       
 					   				   }
 				   
-				   temp.MainCarriageCarrierNumber = MyEntityPM.MainCarriageCarrierNumber; 
-
-			  
+				   temp.MainCarriageCarrierNumber = MyEntityPM.MainCarriageCarrierNumber;			  
 				   if(MyEntityPM.CreatedByUserId != null)
 				   {
 					   UserQueryService UserService14 = new UserQueryService(Tenant);
-					   					   temp.CreatedByUser = UserService14.GetUserById(MyEntityPM.CreatedByUserId,Tenant,ComputingPartnerName); 
+					   					   temp.CreatedByUser = UserService14.GetUserById(MyEntityPM.CreatedByUserId,Tenant); 
 			       
 					   				   }
 				   
 				if(MyEntityPM.ShipmentDeliveries != null && MyEntityPM.ShipmentDeliveries.Count > 0)
 				{
 					 DeliveryQueryService DeliveryService15 = new DeliveryQueryService(Tenant);
-					 temp.Deliveries = DeliveryService15.DeliveryDataMapping(MyEntityPM.ShipmentDeliveries,Tenant,ComputingPartnerName);
+					 temp.Deliveries = DeliveryService15.DeliveryDataMapping(MyEntityPM.ShipmentDeliveries,Tenant);
 				}
 
 							 
 				if(MyEntityPM.ShipmentPickUps != null && MyEntityPM.ShipmentPickUps.Count > 0)
 				{
 					 PickUpQueryService PickUpService15 = new PickUpQueryService(Tenant);
-					 temp.PickUps = PickUpService15.PickUpDataMapping(MyEntityPM.ShipmentPickUps,Tenant,ComputingPartnerName);
+					 temp.PickUps = PickUpService15.PickUpDataMapping(MyEntityPM.ShipmentPickUps,Tenant);
 				}
 
-							  
-
-				
+							 				
 				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"Shipment");
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 				 
@@ -253,17 +202,15 @@ using Simplog.Data.ShipmentsModel;
 				if(MyEntityPM.ShipmentConsoleShipments != null && MyEntityPM.ShipmentConsoleShipments.Count > 0)
 				{
 					 HouseQueryService HouseService16 = new HouseQueryService(Tenant);
-					 temp.Houses = HouseService16.HouseCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentConsoleShipments,Tenant,ComputingPartnerName);
+					 temp.Houses = HouseService16.HouseCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentConsoleShipments,Tenant);
 				}
 
 							 
-				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed; 
-
-			  
+				   temp.IsOperationalClosed = MyEntityPM.IsOperationalClosed;			  
 				   if(MyEntityPM.MainCarriageVesselId != null)
 				   {
 					   VesselQueryService VesselService16 = new VesselQueryService(Tenant);
-					   					   temp.Vessel = VesselService16.GetVesselById(MyEntityPM.MainCarriageVesselId,Tenant,ComputingPartnerName); 
+					   					   temp.Vessel = VesselService16.GetVesselById(MyEntityPM.MainCarriageVesselId,Tenant); 
 			       
 					   				   }
 				   
@@ -273,226 +220,24 @@ using Simplog.Data.ShipmentsModel;
 				if(MyEntityPM.ShipmentReceivables != null && MyEntityPM.ShipmentReceivables.Count > 0)
 				{
 					 ReceivableQueryService ReceivableService17 = new ReceivableQueryService(Tenant);
-					 temp.Receivables = ReceivableService17.ReceivableDataMapping(MyEntityPM.ShipmentReceivables,Tenant,ComputingPartnerName);
+					 temp.Receivables = ReceivableService17.ReceivableDataMapping(MyEntityPM.ShipmentReceivables,Tenant);
 				}
 
 							 
 				if(MyEntityPM.ShipmentPayables != null && MyEntityPM.ShipmentPayables.Count > 0)
 				{
 					 PayableQueryService PayableService17 = new PayableQueryService(Tenant);
-					 temp.Payables = PayableService17.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant,ComputingPartnerName);
+					 temp.Payables = PayableService17.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant);
 				}
 
-							  
-
-			  
+							 			  
 				   if(MyEntityPM.DimensionsUnitCode != null)
 				   {
 					   DimensionsUnitQueryService DimensionsUnitService17 = new DimensionsUnitQueryService(Tenant);
-					   					   temp.DimensionsUnit = DimensionsUnitService17.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant,ComputingPartnerName); 
+					   					   temp.DimensionsUnit = DimensionsUnitService17.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant); 
 			       
 					   				   }
-				   
-				   temp.OrderNumberOfPackages = MyEntityPM.BookingNumberOfPackages;
-				   temp.OrderGrossWeight = MyEntityPM.OrderGrossWeight;
-				   temp.OrderVolume = MyEntityPM.BookingVolume;
-				   temp.OrderChargeableWeight = MyEntityPM.OrderChargeableWeight;
-				   temp.OrderIsDangerouseGoods = MyEntityPM.OrderIsDangerouseGoods;
-				   temp.MainHarmonize = MyEntityPM.MainHarmonize; 
-
-			  
-				   if(MyEntityPM.SalesmanUserId != null)
-				   {
-					   UserQueryService UserService18 = new UserQueryService(Tenant);
-					   					   temp.Salesman = UserService18.GetUserById(MyEntityPM.SalesmanUserId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.AccountManagerUserId != null)
-				   {
-					   UserQueryService UserService19 = new UserQueryService(Tenant);
-					   					   temp.AccountManager = UserService19.GetUserById(MyEntityPM.AccountManagerUserId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.SpecialServicesTypeId != null)
-				   {
-					   SpecialServicesTypeQueryService SpecialServicesTypeService20 = new SpecialServicesTypeQueryService(Tenant);
-					   					   temp.SpecialServicesType = SpecialServicesTypeService20.GetSpecialServicesTypeById(MyEntityPM.SpecialServicesTypeId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.ShipperNotExporterId != null)
-				   {
-					   CardQueryService CardService21 = new CardQueryService(Tenant);
-					   					   temp.ShipperNotExporter = CardService21.GetCardById(MyEntityPM.ShipperNotExporterId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.CustomAgentImportId != null)
-				   {
-					   CardQueryService CardService22 = new CardQueryService(Tenant);
-					   					   temp.CustomAgentImport = CardService22.GetCardById(MyEntityPM.CustomAgentImportId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.ReleasingAgentId != null)
-				   {
-					   CardQueryService CardService23 = new CardQueryService(Tenant);
-					   					   temp.ReleasingAgent = CardService23.GetCardById(MyEntityPM.ReleasingAgentId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.FreightForwarderId != null)
-				   {
-					   CardQueryService CardService24 = new CardQueryService(Tenant);
-					   					   temp.FreightForwarder = CardService24.GetCardById(MyEntityPM.FreightForwarderId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				   temp.MasterDate = MyEntityPM.MAWBOBLDate;
-				   temp.Ratio = MyEntityPM.Ratio;
-				if(MyEntityPM.MainCarriageLegs != null && MyEntityPM.MainCarriageLegs.Count > 0)
-				{
-					 MainCarriageLegQueryService MainCarriageLegService25 = new MainCarriageLegQueryService(Tenant);
-					 temp.MainCarriageLegs = MainCarriageLegService25.MainCarriageLegDataMapping(MyEntityPM.MainCarriageLegs,Tenant,ComputingPartnerName);
-				}
-
-							 
-				   temp.ShipmentNumber = MyEntityPM.ShipmentNumber;
-				   temp.ConcurrencyGUID = MyEntityPM.ConcurrencyGUID; 
-
-			  
-				   if(MyEntityPM.StatusId != null)
-				   {
-					   EntityStatusQueryService EntityStatusService25 = new EntityStatusQueryService(Tenant);
-					   					   temp.Status = EntityStatusService25.GetEntityStatusById(MyEntityPM.StatusId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
-				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
-				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
-				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;
-				   temp.PlannedCargoReadyDate = MyEntityPM.PlannedCargoReadyDate;
-				   temp.ApprovedCargoReadyDate = MyEntityPM.ApprovedCargoReadyDate; 
-
-			  
-				   if(MyEntityPM.HandlerUserId != null)
-				   {
-					   UserQueryService UserService26 = new UserQueryService(Tenant);
-					   					   temp.HandlerUser = UserService26.GetUserById(MyEntityPM.HandlerUserId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
-				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
-				   temp.ShipperNotExporterReference1 = MyEntityPM.ShipperNotExporterReference1;
-				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;
-				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate; 
-
-			  
-				   if(MyEntityPM.Notify1Id != null)
-				   {
-					   CardQueryService CardService27 = new CardQueryService(Tenant);
-					   					   temp.Notify1 = CardService27.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				if(MyEntityPM.EventList != null && MyEntityPM.EventList.Count > 0)
-				{
-					 EventQueryService EventService28 = new EventQueryService(Tenant);
-					 temp.EventList = EventService28.EventCustomDataMapping(MyEntityPM,MyEntityPM.EventList,Tenant,ComputingPartnerName);
-				}
-
-							 
-				if(MyEntityPM.AddManualEvents != null && MyEntityPM.AddManualEvents.Count > 0)
-				{
-					 EventQueryService EventService28 = new EventQueryService(Tenant);
-					 temp.AddManualEvents = EventService28.EventCustomDataMapping(MyEntityPM,MyEntityPM.AddManualEvents,Tenant,ComputingPartnerName);
-				}
-
-							  
-
-			  
-				   if(MyEntityPM.UnassignedShipperAddressId != null)
-				   {
-					   AddressQueryService AddressService28 = new AddressQueryService(Tenant);
-					   					   temp.UnassignedShipperAddress = AddressService28.AddressCustomDataMapping(MyEntityPM.UnassignedShipperAddressId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.UnassignedConsigneeAddressId != null)
-				   {
-					   AddressQueryService AddressService29 = new AddressQueryService(Tenant);
-					   					   temp.UnassignedConsigneeAddress = AddressService29.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeAddressId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.Notify2Id != null)
-				   {
-					   CardQueryService CardService30 = new CardQueryService(Tenant);
-					   					   temp.Notify2 = CardService30.GetCardById(MyEntityPM.Notify2Id,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				   temp.Notify2Reference = MyEntityPM.Notify2Reference;
-				   temp.NumberOfPackages = MyEntityPM.NumberOfPackages; 
-
-			  
-				   if(MyEntityPM.FreightPrepaidCollectId != null)
-				   {
-					   PrepaidCollectQueryService PrepaidCollectService31 = new PrepaidCollectQueryService(Tenant);
-					   					   temp.FreightPrepaidCollect = PrepaidCollectService31.GetPrepaidCollectById(MyEntityPM.FreightPrepaidCollectId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.OtherPrepaidCollectId != null)
-				   {
-					   PrepaidCollectQueryService PrepaidCollectService32 = new PrepaidCollectQueryService(Tenant);
-					   					   temp.OtherPrepaidCollect = PrepaidCollectService32.GetPrepaidCollectById(MyEntityPM.OtherPrepaidCollectId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
-				{
-					 AirPackageQueryService AirPackageService33 = new AirPackageQueryService(Tenant);
-					 temp.AirPackages = AirPackageService33.AirPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
-				}
-
-							 
-				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
-				{
-					 OceanOrInlandPackageQueryService OceanOrInlandPackageService33 = new OceanOrInlandPackageQueryService(Tenant);
-					 temp.OceanOrInlandPackages = OceanOrInlandPackageService33.OceanOrInlandPackageCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
-				}
-
-							 
-				if(MyEntityPM.ShipmentPackages != null && MyEntityPM.ShipmentPackages.Count > 0)
-				{
-					 ContainerQueryService ContainerService33 = new ContainerQueryService(Tenant);
-					 temp.Containers = ContainerService33.ContainerCustomDataMapping(MyEntityPM,MyEntityPM.ShipmentPackages,Tenant,ComputingPartnerName);
-				}
-
-							 					
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -502,7 +247,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public ShipmentPM MasterDataMappingAndValidatin(Master MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public ShipmentPM MasterDataMappingAndValidatin(Master MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -511,24 +256,11 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
-					{
-						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant  );
-					} 
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
-					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
+					    throw new ApplicationException("Shipment with Id " + MyEntity.Id + " doesn't exist");
 					} 
-				 
-										 
-					if(IsUpdate == true)
-					{
-					    
-					      temp.NewConcurrencyGUID = Guid.NewGuid().ToString(); 
-						
-					}
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -541,49 +273,29 @@ using Simplog.Data.ShipmentsModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//} 
-
-						
+						//}
 					}
 					DirectionQueryService DirectionDirectionService = new DirectionQueryService(Tenant);
 					if(MyEntity.Direction != null)
 					{
-						var myDirectionPM = DirectionDirectionService.DirectionDataMappingAndValidatin(MyEntity.Direction,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myDirectionPM != null)
-						{ 
-
+						var myDirectionPM = DirectionDirectionService.DirectionDataMappingAndValidatin(MyEntity.Direction,Tenant,ComputingPartnerName);
+												if(myDirectionPM != null)
+						{
+							temp.DirectionId = myDirectionPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.DirectionId = myDirectionPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
 					if(MyEntity.TransportMode != null)
 					{
-						var myTransportModePM = TransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.TransportMode,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myTransportModePM != null)
-						{ 
-
+						var myTransportModePM = TransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.TransportMode,Tenant,ComputingPartnerName);
+												if(myTransportModePM != null)
+						{
+							temp.TransportModeId = myTransportModePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.TransportModeId = myTransportModePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
@@ -591,342 +303,181 @@ using Simplog.Data.ShipmentsModel;
 					if(MyEntity.ShipmentType != null)
 					{
 						var myShipmentTypePM = ShipmentTypeShipmentTypeService.ShipmentTypeCustomDataMappingAndValidatin(MyEntity.ShipmentType,Tenant);
-						
-						if(myShipmentTypePM != null)
-						{ 
-
+												if(myShipmentTypePM != null)
+						{
+							temp.ShipmentTypeId = myShipmentTypePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.ShipmentTypeId = myShipmentTypePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					CardQueryService ShipperCardService = new CardQueryService(Tenant);
 					if(MyEntity.Shipper != null)
 					{
-						var myShipperPM = ShipperCardService.CardDataMappingAndValidatin(MyEntity.Shipper,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myShipperPM != null)
-						{ 
-
-						 								
-								temp.ShipperId = myShipperPM.Id;
-						  
-
-							
-						} 
-
+						var myShipperPM = ShipperCardService.CardDataMappingAndValidatin(MyEntity.Shipper,Tenant,ComputingPartnerName);
+												if(myShipperPM != null)
+						{
+							temp.ShipperId = myShipperPM.Id;
+						}
+						 
 					}
 			
 					
-                    							
-						temp.ShipperReference1 = MyEntity.ShipperReference1;
-
-					 
-
-					
-                    							
-						temp.ShipperReference2 = MyEntity.ShipperReference2;
-
-					 
-
-					
+					temp.ShipperReference1 = MyEntity.ShipperReference1;
+					temp.ShipperReference2 = MyEntity.ShipperReference2;
 					CardQueryService ConsigneeCardService = new CardQueryService(Tenant);
 					if(MyEntity.Consignee != null)
 					{
-						var myConsigneePM = ConsigneeCardService.CardDataMappingAndValidatin(MyEntity.Consignee,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myConsigneePM != null)
-						{ 
-
-						 								
-								temp.ConsigneeId = myConsigneePM.Id;
-						  
-
-							
-						} 
-
+						var myConsigneePM = ConsigneeCardService.CardDataMappingAndValidatin(MyEntity.Consignee,Tenant,ComputingPartnerName);
+												if(myConsigneePM != null)
+						{
+							temp.ConsigneeId = myConsigneePM.Id;
+						}
+						 
 					}
 			
 					
-                    							
-						temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
-
-					 
-
-					
-                    							
-						temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
-
-					 
-
-					
+					temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
+					temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
 					CardQueryService AgentCardService = new CardQueryService(Tenant);
 					if(MyEntity.Agent != null)
 					{
-						var myAgentPM = AgentCardService.CardDataMappingAndValidatin(MyEntity.Agent,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myAgentPM != null)
-						{ 
-
-						 								
-								temp.AgentId = myAgentPM.Id;
-						  
-
-							
-						} 
-
+						var myAgentPM = AgentCardService.CardDataMappingAndValidatin(MyEntity.Agent,Tenant,ComputingPartnerName);
+												if(myAgentPM != null)
+						{
+							temp.AgentId = myAgentPM.Id;
+						}
+						 
 					}
 			
 					
-                    							
-						temp.AgentReference1 = MyEntity.AgentReference1;
-
-					 
-
-					
-                    							
-						temp.AgentReference2 = MyEntity.AgentReference2;
-
-					 
-
-					
+					temp.AgentReference1 = MyEntity.AgentReference1;
+					temp.AgentReference2 = MyEntity.AgentReference2;
 					PortQueryService FromPortPortService = new PortQueryService(Tenant);
 					if(MyEntity.FromPort != null)
 					{
-						var myFromPortPM = FromPortPortService.PortDataMappingAndValidatin(MyEntity.FromPort,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myFromPortPM != null)
-						{ 
-
+						var myFromPortPM = FromPortPortService.PortDataMappingAndValidatin(MyEntity.FromPort,Tenant,ComputingPartnerName);
+												if(myFromPortPM != null)
+						{
+							temp.FromPortId = myFromPortPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.FromPortId = myFromPortPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					PortQueryService ToPortPortService = new PortQueryService(Tenant);
 					if(MyEntity.ToPort != null)
 					{
-						var myToPortPM = ToPortPortService.PortDataMappingAndValidatin(MyEntity.ToPort,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myToPortPM != null)
-						{ 
-
+						var myToPortPM = ToPortPortService.PortDataMappingAndValidatin(MyEntity.ToPort,Tenant,ComputingPartnerName);
+												if(myToPortPM != null)
+						{
+							temp.ToPortId = myToPortPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.ToPortId = myToPortPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					WeightUnitQueryService GrossWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
 					if(MyEntity.GrossWeightUnit != null)
 					{
-						var myGrossWeightUnitPM = GrossWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.GrossWeightUnit,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myGrossWeightUnitPM != null)
-						{ 
-
+						var myGrossWeightUnitPM = GrossWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.GrossWeightUnit,Tenant,ComputingPartnerName);
+												if(myGrossWeightUnitPM != null)
+						{
+							temp.GrossWeightUnitCode = myGrossWeightUnitPM.Code;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.GrossWeightUnitCode = myGrossWeightUnitPM.Code;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					WeightUnitQueryService ChargeableWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
 					if(MyEntity.ChargeableWeightUnit != null)
 					{
-						var myChargeableWeightUnitPM = ChargeableWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.ChargeableWeightUnit,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myChargeableWeightUnitPM != null)
-						{ 
-
+						var myChargeableWeightUnitPM = ChargeableWeightUnitWeightUnitService.WeightUnitDataMappingAndValidatin(MyEntity.ChargeableWeightUnit,Tenant,ComputingPartnerName);
+												if(myChargeableWeightUnitPM != null)
+						{
+							temp.ChargeableWeightUnitCode = myChargeableWeightUnitPM.Code;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.ChargeableWeightUnitCode = myChargeableWeightUnitPM.Code;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					VolumeUnitQueryService VolumeUnitVolumeUnitService = new VolumeUnitQueryService(Tenant);
 					if(MyEntity.VolumeUnit != null)
 					{
-						var myVolumeUnitPM = VolumeUnitVolumeUnitService.VolumeUnitDataMappingAndValidatin(MyEntity.VolumeUnit,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myVolumeUnitPM != null)
-						{ 
-
+						var myVolumeUnitPM = VolumeUnitVolumeUnitService.VolumeUnitDataMappingAndValidatin(MyEntity.VolumeUnit,Tenant,ComputingPartnerName);
+												if(myVolumeUnitPM != null)
+						{
+							temp.VolumeUnitCode = myVolumeUnitPM.Code;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.VolumeUnitCode = myVolumeUnitPM.Code;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    							
-						temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
-
-					 
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.AWBCommodityItemNumber = MyEntity.Commodity;
-
-										}  
-
-					
+					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
+					temp.AWBCommodityItemNumber = MyEntity.Commodity;
 					BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
 					if(MyEntity.Branch != null)
 					{
-						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myBranchPM != null)
-						{ 
-
-						 								
-								temp.BranchId = myBranchPM.Id;
-						  
-
-							
-						} 
-
+						var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch,Tenant,ComputingPartnerName);
+												if(myBranchPM != null)
+						{
+							temp.BranchId = myBranchPM.Id;
+						}
+						 
 					}
 			
 					
 					DepartmentQueryService DepartmentDepartmentService = new DepartmentQueryService(Tenant);
 					if(MyEntity.Department != null)
 					{
-						var myDepartmentPM = DepartmentDepartmentService.DepartmentDataMappingAndValidatin(MyEntity.Department,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myDepartmentPM != null)
-						{ 
-
-						 								
-								temp.DepartmentId = myDepartmentPM.Id;
-						  
-
-							
-						} 
-
+						var myDepartmentPM = DepartmentDepartmentService.DepartmentDataMappingAndValidatin(MyEntity.Department,Tenant,ComputingPartnerName);
+												if(myDepartmentPM != null)
+						{
+							temp.DepartmentId = myDepartmentPM.Id;
+						}
+						 
 					}
 			
 					
-                    							
-						temp.Master = MyEntity.MasterNumber;
-
-					 
-
-					
+					temp.Master = MyEntity.MasterNumber;
 					CardQueryService MainCarriageCarrierCardService = new CardQueryService(Tenant);
 					if(MyEntity.MainCarriageCarrier != null)
 					{
-						var myMainCarriageCarrierPM = MainCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageCarrier,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myMainCarriageCarrierPM != null)
-						{ 
-
-						 								
-								temp.MainCarriageCarrierId = myMainCarriageCarrierPM.Id;
-						  
-
-							
-						} 
-
+						var myMainCarriageCarrierPM = MainCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageCarrier,Tenant,ComputingPartnerName);
+												if(myMainCarriageCarrierPM != null)
+						{
+							temp.MainCarriageCarrierId = myMainCarriageCarrierPM.Id;
+						}
+						 
 					}
 			
 					
-                    							
-						temp.MainCarriageCarrierNumber = MyEntity.MainCarriageCarrierNumber;
-
-					 
-
-					
+					temp.MainCarriageCarrierNumber = MyEntity.MainCarriageCarrierNumber;
 					UserQueryService CreatedByUserUserService = new UserQueryService(Tenant);
 					if(MyEntity.CreatedByUser != null)
 					{
-						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myCreatedByUserPM != null)
-						{ 
-
+						var myCreatedByUserPM = CreatedByUserUserService.UserDataMappingAndValidatin(MyEntity.CreatedByUser,Tenant,ComputingPartnerName);
+												if(myCreatedByUserPM != null)
+						{
+							temp.CreatedByUserId = myCreatedByUserPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.CreatedByUserId = myCreatedByUserPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					 
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService33 = new DeliveryQueryService(Tenant);
-						 								
-							temp.ShipmentDeliveries = DeliveryService33.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-
-						
+						DeliveryQueryService DeliveryService18 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService18.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								  
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService33 = new PickUpQueryService(Tenant);
-						 								
-							temp.ShipmentPickUps = PickUpService33.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-
-						
+						PickUpQueryService PickUpService18 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService18.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -940,655 +491,56 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService33 = new HouseQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.ShipmentConsoleShipments = HouseService33.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
+						HouseQueryService HouseService18 = new HouseQueryService(Tenant);
+						temp.ShipmentConsoleShipments = HouseService18.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 					}
 
 								 
-                    
-					if(!IsUpdate)
-					{							
-						temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
-
-										}  
-
-					
+					temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
 					VesselQueryService VesselVesselService = new VesselQueryService(Tenant);
 					if(MyEntity.Vessel != null)
 					{
-						var myVesselPM = VesselVesselService.VesselDataMappingAndValidatin(MyEntity.Vessel,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myVesselPM != null)
-						{ 
-
-						 								
-								temp.MainCarriageVesselId = myVesselPM.Id;
-						  
-
-							
-						} 
-
+						var myVesselPM = VesselVesselService.VesselDataMappingAndValidatin(MyEntity.Vessel,Tenant,ComputingPartnerName);
+												if(myVesselPM != null)
+						{
+							temp.MainCarriageVesselId = myVesselPM.Id;
+						}
+						 
 					}
 			
 					
-                    							
-						temp.MainCarriageATA = MyEntity.MainCarriageATA;
-
-					 
-
-					
-                    							
-						temp.MainCarriageATD = MyEntity.MainCarriageATD;
-
-					 
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
-
-										}  
-
-					 
+					temp.MainCarriageATA = MyEntity.MainCarriageATA;
+					temp.MainCarriageATD = MyEntity.MainCarriageATD;
+					temp.IsAccountingClosed = MyEntity.IsAccountingClosed; 
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService33 = new ReceivableQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.ShipmentReceivables = ReceivableService33.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
+						ReceivableQueryService ReceivableService18 = new ReceivableQueryService(Tenant);
+						temp.ShipmentReceivables = ReceivableService18.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
 					}
 
 								  
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService33 = new PayableQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.ShipmentPayables = PayableService33.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
+						PayableQueryService PayableService18 = new PayableQueryService(Tenant);
+						temp.ShipmentPayables = PayableService18.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
 					}
 
 								 
 					DimensionsUnitQueryService DimensionsUnitDimensionsUnitService = new DimensionsUnitQueryService(Tenant);
 					if(MyEntity.DimensionsUnit != null)
 					{
-						var myDimensionsUnitPM = DimensionsUnitDimensionsUnitService.DimensionsUnitDataMappingAndValidatin(MyEntity.DimensionsUnit,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myDimensionsUnitPM != null)
-						{ 
-
+						var myDimensionsUnitPM = DimensionsUnitDimensionsUnitService.DimensionsUnitDataMappingAndValidatin(MyEntity.DimensionsUnit,Tenant,ComputingPartnerName);
+												if(myDimensionsUnitPM != null)
+						{
+							temp.DimensionsUnitCode = myDimensionsUnitPM.Code;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.DimensionsUnitCode = myDimensionsUnitPM.Code;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.BookingNumberOfPackages = MyEntity.OrderNumberOfPackages;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.OrderGrossWeight = MyEntity.OrderGrossWeight;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.BookingVolume = MyEntity.OrderVolume;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.OrderChargeableWeight = MyEntity.OrderChargeableWeight;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.OrderIsDangerouseGoods = MyEntity.OrderIsDangerouseGoods;
-
-										}  
-
-					
-                    							
-						temp.MainHarmonize = MyEntity.MainHarmonize;
-
-					 
-
-					
-					UserQueryService SalesmanUserService = new UserQueryService(Tenant);
-					if(MyEntity.Salesman != null)
-					{
-						var mySalesmanPM = SalesmanUserService.UserDataMappingAndValidatin(MyEntity.Salesman,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(mySalesmanPM != null)
-						{ 
-
-						 								
-								temp.SalesmanUserId = mySalesmanPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					UserQueryService AccountManagerUserService = new UserQueryService(Tenant);
-					if(MyEntity.AccountManager != null)
-					{
-						var myAccountManagerPM = AccountManagerUserService.UserDataMappingAndValidatin(MyEntity.AccountManager,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myAccountManagerPM != null)
-						{ 
-
-						 								
-								temp.AccountManagerUserId = myAccountManagerPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					SpecialServicesTypeQueryService SpecialServicesTypeSpecialServicesTypeService = new SpecialServicesTypeQueryService(Tenant);
-					if(MyEntity.SpecialServicesType != null)
-					{
-						var mySpecialServicesTypePM = SpecialServicesTypeSpecialServicesTypeService.SpecialServicesTypeDataMappingAndValidatin(MyEntity.SpecialServicesType,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(mySpecialServicesTypePM != null)
-						{ 
-
-						 								
-								temp.SpecialServicesTypeId = mySpecialServicesTypePM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					CardQueryService ShipperNotExporterCardService = new CardQueryService(Tenant);
-					if(MyEntity.ShipperNotExporter != null)
-					{
-						var myShipperNotExporterPM = ShipperNotExporterCardService.CardDataMappingAndValidatin(MyEntity.ShipperNotExporter,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myShipperNotExporterPM != null)
-						{ 
-
-						 								
-								temp.ShipperNotExporterId = myShipperNotExporterPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					CardQueryService CustomAgentImportCardService = new CardQueryService(Tenant);
-					if(MyEntity.CustomAgentImport != null)
-					{
-						var myCustomAgentImportPM = CustomAgentImportCardService.CardDataMappingAndValidatin(MyEntity.CustomAgentImport,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myCustomAgentImportPM != null)
-						{ 
-
-						 								
-								temp.CustomAgentImportId = myCustomAgentImportPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					CardQueryService ReleasingAgentCardService = new CardQueryService(Tenant);
-					if(MyEntity.ReleasingAgent != null)
-					{
-						var myReleasingAgentPM = ReleasingAgentCardService.CardDataMappingAndValidatin(MyEntity.ReleasingAgent,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myReleasingAgentPM != null)
-						{ 
-
-						 								
-								temp.ReleasingAgentId = myReleasingAgentPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					CardQueryService FreightForwarderCardService = new CardQueryService(Tenant);
-					if(MyEntity.FreightForwarder != null)
-					{
-						var myFreightForwarderPM = FreightForwarderCardService.CardDataMappingAndValidatin(MyEntity.FreightForwarder,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myFreightForwarderPM != null)
-						{ 
-
-						 								
-								temp.FreightForwarderId = myFreightForwarderPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.MAWBOBLDate = MyEntity.MasterDate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Ratio = MyEntity.Ratio;
-
-										}  
-
-					 
-
-					if(MyEntity.MainCarriageLegs != null && MyEntity.MainCarriageLegs.Count > 0)
-					{
-						MainCarriageLegQueryService MainCarriageLegService33 = new MainCarriageLegQueryService(Tenant);
-						 								
-							temp.MainCarriageLegs = MainCarriageLegService33.MainCarriageLegDataMappingAndValidatin(MyEntity.MainCarriageLegs,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-
-						
-					}
-
-								 
-                    
-					if(!IsUpdate)
-					{							
-						temp.ShipmentNumber = MyEntity.ShipmentNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ConcurrencyGUID = MyEntity.ConcurrencyGUID;
-
-										}  
-
-					
-					EntityStatusQueryService StatusEntityStatusService = new EntityStatusQueryService(Tenant);
-					if(MyEntity.Status != null)
-					{
-						var myStatusPM = StatusEntityStatusService.EntityStatusDataMappingAndValidatin(MyEntity.Status,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myStatusPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.StatusId = myStatusPM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.EstimatedFinalArrivalDate = MyEntity.EstimatedFinalArrivalDate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ActualFinalArrivalDate = MyEntity.ActualFinalArrivalDate;
-
-										}  
-
-					
-                    							
-						temp.IsHTSMissing = MyEntity.IsHTSMissing;
-
-					 
-
-					
-                    							
-						temp.PlannedCargoReadyDate = MyEntity.PlannedCargoReadyDate;
-
-					 
-
-					
-                    							
-						temp.ApprovedCargoReadyDate = MyEntity.ApprovedCargoReadyDate;
-
-					 
-
-					
-					UserQueryService HandlerUserUserService = new UserQueryService(Tenant);
-					if(MyEntity.HandlerUser != null)
-					{
-						var myHandlerUserPM = HandlerUserUserService.UserDataMappingAndValidatin(MyEntity.HandlerUser,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myHandlerUserPM != null)
-						{ 
-
-						 								
-								temp.HandlerUserId = myHandlerUserPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-                    							
-						temp.Notify1Reference = MyEntity.Notify1Reference;
-
-					 
-
-					
-                    							
-						temp.Notify1Reference2 = MyEntity.Notify1Reference2;
-
-					 
-
-					
-                    							
-						temp.ShipperNotExporterReference1 = MyEntity.ShipperNotExporterReference1;
-
-					 
-
-					
-                    							
-						temp.ShipperNotExporterReference2 = MyEntity.ShipperNotExporterReference2;
-
-					 
-
-					
-                    							
-						temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
-
-					 
-
-					
-					CardQueryService Notify1CardService = new CardQueryService(Tenant);
-					if(MyEntity.Notify1 != null)
-					{
-						var myNotify1PM = Notify1CardService.CardDataMappingAndValidatin(MyEntity.Notify1,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myNotify1PM != null)
-						{ 
-
-						 								
-								temp.Notify1Id = myNotify1PM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					 
-
-					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
-					{
-						EventQueryService EventService33 = new EventQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.EventList = EventService33.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
-					}
-
-								  
-
-					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
-					{
-						EventQueryService EventService33 = new EventQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.AddManualEvents = EventService33.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
-					}
-
-								 
-					AddressQueryService UnassignedShipperAddressAddressService = new AddressQueryService(Tenant);
-					if(MyEntity.UnassignedShipperAddress != null)
-					{
-						var myUnassignedShipperAddressPM = UnassignedShipperAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.UnassignedShipperAddress,Tenant);
-						
-						if(myUnassignedShipperAddressPM != null)
-						{ 
-
-						 								
-								temp.UnassignedShipperAddressId = myUnassignedShipperAddressPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					AddressQueryService UnassignedConsigneeAddressAddressService = new AddressQueryService(Tenant);
-					if(MyEntity.UnassignedConsigneeAddress != null)
-					{
-						var myUnassignedConsigneeAddressPM = UnassignedConsigneeAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.UnassignedConsigneeAddress,Tenant);
-						
-						if(myUnassignedConsigneeAddressPM != null)
-						{ 
-
-						 								
-								temp.UnassignedConsigneeAddressId = myUnassignedConsigneeAddressPM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-					CardQueryService Notify2CardService = new CardQueryService(Tenant);
-					if(MyEntity.Notify2 != null)
-					{
-						var myNotify2PM = Notify2CardService.CardDataMappingAndValidatin(MyEntity.Notify2,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myNotify2PM != null)
-						{ 
-
-						 								
-								temp.Notify2Id = myNotify2PM.Id;
-						  
-
-							
-						} 
-
-					}
-			
-					
-                    							
-						temp.Notify2Reference = MyEntity.Notify2Reference;
-
-					 
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.NumberOfPackages = MyEntity.NumberOfPackages;
-
-										}  
-
-					
-					PrepaidCollectQueryService FreightPrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
-					if(MyEntity.FreightPrepaidCollect != null)
-					{
-						var myFreightPrepaidCollectPM = FreightPrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(MyEntity.FreightPrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myFreightPrepaidCollectPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.FreightPrepaidCollectId = myFreightPrepaidCollectPM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-					
-					PrepaidCollectQueryService OtherPrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
-					if(MyEntity.OtherPrepaidCollect != null)
-					{
-						var myOtherPrepaidCollectPM = OtherPrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(MyEntity.OtherPrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myOtherPrepaidCollectPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.OtherPrepaidCollectId = myOtherPrepaidCollectPM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-					 
-
-					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
-					{
-						AirPackageQueryService AirPackageService33 = new AirPackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.ShipmentPackages = AirPackageService33.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
-					}
-
-								  
-
-					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
-					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService33 = new OceanOrInlandPackageQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.ShipmentPackages = OceanOrInlandPackageService33.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
-					}
-
-								  
-
-					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
-					{
-						ContainerQueryService ContainerService33 = new ContainerQueryService(Tenant);
-						  
-						if(!IsUpdate)
-						{								
-							temp.ShipmentPackages = ContainerService33.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
-
-					 
-						}  
-
-						
-					}
-
-								 					   
-					return temp;
+										   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -1596,8 +548,6 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

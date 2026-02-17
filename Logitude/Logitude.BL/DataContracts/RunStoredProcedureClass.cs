@@ -1,19 +1,16 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -46,31 +43,8 @@ namespace Logitude.BL.DataContracts
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
-
+           
         }
-
-
-        public static  void UpdateCardSearcsRecords(string cardId, int tenant)
-        {
-            string strConnString = GetConnection(tenant);
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
-                SqlCommand cmd = new SqlCommand("usp_UpdateCardSearchFunction", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter param1 = new SqlParameter("@CardId", SqlDbType.VarChar);
-                param1.Direction = ParameterDirection.Input;
-                param1.Value = cardId;
-                cmd.Parameters.Add(param1);
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-
-
-
         public static void UpdateShipmentOperationalDate(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -89,6 +63,9 @@ namespace Logitude.BL.DataContracts
                 cn.Close();
             }
         }
+
+
+
 
         public static void DeleteQBOTranslations(int tenant)
         {
@@ -138,35 +115,53 @@ namespace Logitude.BL.DataContracts
             }
         }
 
+        private static bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
+        {
+            if (loggedTenant.CustomerTenantShareExportFile == true) //&& FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
+            {
+                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private static bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
+        {
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public static void CreateShipmentQueue(string shipmentId, int tenant)
         {
-            try
+             try
             {
-
-                var tenantQuery = new TenantQuery(tenant);
-                var tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-                var ShipmentQuery = new ShipmentQuery(tenant);
-                var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
-                if (entityPM != null && tenantPM != null)
-                {
-                    //Duplicated Logic Should Be Replaced --
-                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && IsImportShipmentsAllowedForLogBox(tenantPM, entityPM) && IsLogBoxQueueEnabled(entityPM, tenantPM.Id))
+               
+                    var tenantQuery = new TenantQuery(tenant);
+                    var tenantPM = tenantQuery.GetSinglePM(tenant);
+                    var ShipmentQuery = new ShipmentQuery(tenant);
+                    var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
+                    if (entityPM != null && tenantPM != null)
                     {
-                        CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-                        CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
-
-                        PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, entityPM, customerTenantAccessInfo);
-
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && privateLabelShipmentService.IsShipmentsAllowedForLogBox())
+                        if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
                         {
-                            var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-                            IQueueService queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CustomerId", entityPM.CustomerId } }, tenant, null, entityPM.CustomerId);
+                            CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
+                            CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
 
-                        }
-                    }
-                }
+                            if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
+                            {
+                                var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
+                                IQueueService queueservice = new DbQueueService();
+                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", customerTenantAccessInfo.CustomerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", entityPM.CustomerId } }, null, entityPM.CustomerId);
+                            }
+                        }  
+                    } 
             }
             catch (Exception ex)
             {
@@ -182,18 +177,6 @@ namespace Logitude.BL.DataContracts
                 }
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "web role", null, ip);
             }
-        }
-
-        //Duplicated Logic Should Be Replaced --
-        private static bool IsLogBoxQueueEnabled(ShipmentPM entityPM, int tenant)
-        {
-            if (string.IsNullOrEmpty(entityPM.CustomerShipmentNumber) && entityPM.CustomerTenantNumber != null) return true;
-
-            CustomerRepository customerRepository = new CustomerRepository(tenant);
-            Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
-            if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer)) return true;
-
-            return false;
         }
 
         public static void UpdateCustomConnectToShipment(string shipmentId, int tenant)
@@ -238,24 +221,6 @@ namespace Logitude.BL.DataContracts
             using (SqlConnection cn = new SqlConnection(strConnString))
             {
                 SqlCommand cmd = new SqlCommand("dbo.usp_UpdateShipmentRegistryDate", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter param1 = new SqlParameter("@ShipmentId", SqlDbType.VarChar);
-                param1.Direction = ParameterDirection.Input;
-                param1.Value = myShipmentId;
-                cmd.Parameters.Add(param1);
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-        public static void UpdateShipmentFirstApprovalDate(string myShipmentId, int tenant)
-        {
-            string strConnString = GetConnection(tenant);
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
-                SqlCommand cmd = new SqlCommand("dbo.usp_ComputeShipmentFirstApprovalDate", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter param1 = new SqlParameter("@ShipmentId", SqlDbType.VarChar);
@@ -380,206 +345,17 @@ namespace Logitude.BL.DataContracts
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
+                //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
 
+            }
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
         }
-
-        public static void RunEreaseTenantData(int tenant, string procedureName)
-        {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-                string strConnString = GetConnection(tenant);
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    SqlCommand cmd = new SqlCommand(procedureName, cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameter param1 = new SqlParameter("@Tenant", SqlDbType.Int);
-                    param1.Direction = ParameterDirection.Input;
-                    param1.Value = tenant;
-                    cmd.Parameters.Add(param1);
-                    cmd.CommandTimeout = 6000;
-
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    cn.Close();
-                }
-
-                scope.Complete();
-            }
-        }
-
-        public static void RunChangeSystemCurrencyProcedure(string procedureName, string currencyCode, int tenant)
-        {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                string strConnString = GetConnection(tenant);
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    SqlCommand cmd = new SqlCommand(procedureName, cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameter param1 = new SqlParameter("@NewCurrencyCode", SqlDbType.VarChar);
-                    SqlParameter param2 = new SqlParameter("@Tenant", SqlDbType.Int);
-                    param1.Direction = ParameterDirection.Input;
-                    param2.Direction = ParameterDirection.Input;
-                    param1.Value = currencyCode;
-                    param2.Value = tenant;
-                    cmd.Parameters.Add(param1);
-                    cmd.Parameters.Add(param2);
-
-                    cmd.CommandTimeout = 6000;
-
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    cn.Close();
-
-                }
-
-                scope.Complete();
-            }
-        }
-
-
-
-        public static void UpdatePortSearcsFields(string portId, int tenant)
-        {
-            string strConnString = GetConnection(tenant);
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
-                SqlCommand cmd = new SqlCommand("usp_UpdatePortSearchFieldsFunction", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter param1 = new SqlParameter("@PortId", SqlDbType.VarChar);
-                param1.Direction = ParameterDirection.Input;
-                param1.Value = portId;
-                cmd.Parameters.Add(param1);
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-
-        public static void UpdateJouranlLinesLineNumber(string journalId, int tenant)
-        {
-            string strConnString = GetConnection(tenant);
-
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
-                SqlCommand cmd = new SqlCommand("dbo.usp_UpdateJournalLinesSequence", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter param1 = new SqlParameter("@V_JOURANLID", SqlDbType.VarChar);
-                param1.Direction = ParameterDirection.Input;
-                param1.Value = journalId;
-                cmd.Parameters.Add(param1);
-
-                SqlParameter param3 = new SqlParameter("@V_Tenant", SqlDbType.Int);
-                param3.Direction = ParameterDirection.Input;
-                param3.Value = tenant;
-                cmd.Parameters.Add(param3);
-
-
-
-
-
-
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-
-
-        }
-
-
-        public static int Update_LT_Foreign(int tenant, string accountId)
-        {
-            try
-            {
-
-
-                string strConnString = GetConnection(tenant);
-
-                using (SqlConnection connection = new SqlConnection(strConnString))
-                {
-                    SqlCommand command = new SqlCommand("dbo.usp_UpdateLTForeign", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameter param1 = new SqlParameter("@V_Tenant", SqlDbType.Int);
-                    param1.Direction = ParameterDirection.Input;
-                    param1.Value = tenant;
-                    command.Parameters.Add(param1);
-
-                    SqlParameter param2 = new SqlParameter("@V_AccountId", SqlDbType.VarChar);
-                    param2.Direction = ParameterDirection.Input;
-                    param2.Value = accountId;
-                    command.Parameters.Add(param2);
-
-                    connection.Open();
-                    int transactionsMade = command.ExecuteNonQuery();
-                    connection.Close();
-                    return transactionsMade;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ex.Message);
-                throw;
-            }
-        }
-
-        public static int Update_LT_Local(int tenant, string accountId, string accountingCurrencyId)
-        {
-            try
-            {
-                string strConnString = GetConnection(tenant);
-
-                using (SqlConnection connection = new SqlConnection(strConnString))
-                {
-                    SqlCommand command = new SqlCommand("dbo.usp_UpdateLTLocal", connection);
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    SqlParameter param1 = new SqlParameter("@V_Tenant", SqlDbType.Int);
-                    param1.Direction = ParameterDirection.Input;
-                    param1.Value = tenant;
-                    command.Parameters.Add(param1);
-
-                    SqlParameter param2 = new SqlParameter("@V_AccountId", SqlDbType.VarChar);
-                    param2.Direction = ParameterDirection.Input;
-                    param2.Value = accountId;
-                    command.Parameters.Add(param2);
-
-                    SqlParameter param3 = new SqlParameter("@V_AccountingCurrencyId", SqlDbType.VarChar);
-                    param3.Direction = ParameterDirection.Input;
-                    param3.Value = accountingCurrencyId;
-                    command.Parameters.Add(param3);
-
-                    connection.Open();
-                    int transactionsMade = command.ExecuteNonQuery();
-                    connection.Close();
-                    return transactionsMade;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Update_LT_Foreign", null, ex.Message);
-                throw;
-            }
-}
-
     }
 }

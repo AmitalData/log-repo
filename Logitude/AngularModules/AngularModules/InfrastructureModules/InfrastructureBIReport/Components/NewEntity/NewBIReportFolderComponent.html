@@ -1,4 +1,4 @@
-<table *ngIf="IsReady">
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -16,14 +16,8 @@
                     </td>
 
                     <td style="width:260px;">
-                        <LogTextBox id="{{'BIFolderName' | IdGeneratorAsyncPipe | async}}" [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                     </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr style="height:5px;">
                     <td>
                         <div></div>
                     </td>
@@ -40,7 +34,7 @@
                             <tr>
                                 <td style="width:260px;height:85px;">
                                     <div class="MediaFill">
-                                        <LogTextBox id="{{'BIFolderDescription' | IdGeneratorAsyncPipe | async}}" [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </td>
                                 <td><div></div></td>
@@ -49,76 +43,12 @@
                     </td>
                 </tr>
 
-                <!-- Share With -->
-                <tr class="FormFieldRow" *ngIf="IsShareFolderAvailable">
-                    <td style="padding-left:10px;"><label>Share with:</label></td>
-                    <td style="width:150px;">
-                        <ComboBox [ItemsSource]="ShareValuesList" [SelectedItem]="ShareValueSelectedItem" [Binding]="'Name'" (SelectedItemChanged)="ShareValueSelectedItem = $event"></ComboBox>
-                    </td>
-                    <td style="width:30px;" *ngIf="IsChooseUsersVisible">
-                        <Hyperlink style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr style="height:10px;" *ngIf="IsShareFolderAvailable">
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-                <tr style="height:200px;" *ngIf="IsShareFolderAvailable">
-                    <td>
-                        <div class="MediaFill">
-                            <div class="SimpleGridView" style="width:450px;" *ngIf="IsChooseUsersVisible">
-                                <div class="SimpleGridViewHeader">
-                                    <table>
-                                        <tr>
-                                            <td style="width:200px; min-width:200px; max-width:200px; text-align:center">Email</td>
-                                            <td style="width:200px; min-width:200px; max-width:200px; text-align:center ">Name</td>
-                                            <td class="LastChild">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class="SimpleGridViewBody">
-                                    <table>
-                                        <tr class="SimpleGridViewRow" *ngFor="let item of SharedWithUsersItemsSource">
-                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                {{item.Email}}
-                                            </td>
-
-                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
-                                                {{item.Name}}
-                                            </td>
-
-                                            <td class="CellTools">
-                                                <span class="CellSeparator"></span>
-                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteUser(item)"></IconButton>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="3">
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-
                 <tr>
                     <td colspan="3">
                         <div></div>
                     </td>
                 </tr>
+
             </table>
         </td>
     </tr>
@@ -132,7 +62,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -140,7 +70,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OKButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

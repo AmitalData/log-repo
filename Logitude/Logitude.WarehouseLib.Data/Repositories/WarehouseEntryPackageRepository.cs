@@ -29,13 +29,8 @@ namespace Logitude.WarehouseLib.Data.Repositories
                     select a).ToList();
         }
 
-        public List<string> GetWareHouseEntriesIdsByPackagesIds(List<string> warehousePackagesIds, int tenant)
-        {
-            List<string> warehouseEntriesIds = (from a in context.WarehouseEntryPackages
-                                                where a.Tenant == tenant && warehousePackagesIds.Contains(a.Id)
-                                                select a.WarehouseEntryId).ToList();
-            return warehouseEntriesIds;
-        }
+
+
 
     }
 

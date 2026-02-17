@@ -20,9 +20,9 @@ import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 
 @Component({
     selector: 'DWDate',
-    
+    moduleId: module.id,
     templateUrl: './DWDateComponent.html',
-    inputs: ['DataContext', 'Operation', 'ObjectFieldName', 'SelectedValue', 'IsShowTime'],
+    inputs: ['DataContext', 'Operation', 'ObjectFieldName', 'SelectedValue'],
 
 })
 
@@ -32,12 +32,10 @@ export class DWDateComponent extends BaseComponent {
     RangeLists: string[];
     SelectedValue: any;
     DataContext: any;
-
-    Context: any = this;
     ObjectFieldName: string;
     Item: any;
     IsLoad: boolean = false;
-    IsShowTime: boolean;
+
     @Output() ValueChanged = new EventEmitter();
     constructor() {
         super();
@@ -51,7 +49,7 @@ export class DWDateComponent extends BaseComponent {
     DateValue: Date;
     SelectedRange: string = "Day";
     IntervalValue: number = 1;
-    ObjectTableName: string;
+
 
     ShowRange: boolean = false;
     ShowInterval: boolean = false;
@@ -59,13 +57,6 @@ export class DWDateComponent extends BaseComponent {
 
     ngOnInit() {
 
-        if (this.DataContext) {
-            this.ObjectTableName = this.DataContext.ParentDimTabelName;
-            this.IsShowTime = this.DataContext.DataTypeCode == "DateTime" ? true:false;
-        }
-
-
-        if (!this.ObjectTableName) this.ObjectTableName = "QueryBuilder";
         this.FillListRange();
         this.ShowControl();
         this.InitializeComponent();
@@ -242,7 +233,7 @@ export class DWDateComponent extends BaseComponent {
 
             if (this.SelectedValue) {
                 if (this.Operation == "Before" || this.Operation == "After") {
-                    this.DateValue = this.SelectedValue;
+                    this.DateValue = this.ConvertDateToString(this.SelectedValue);
                 }
 
                 else if (this.Operation == "Previous" || this.Operation == "Next") {
@@ -266,34 +257,14 @@ export class DWDateComponent extends BaseComponent {
             this.IsLoad = true;
         }
 
-
         ConvertDateToString(value: any) {
-            var result = new Date();
-            if (value) {
-                var date = new Date(value);
-                result.setUTCFullYear(date.getUTCFullYear());
-                result.setUTCMonth(date.getUTCMonth());
-                result.setUTCDate(date.getUTCDate());
-            }
-
-            if (!AppTool.IsNullOrEmpty(value)) {
-                var dateValues = value.toString().split(' ')[0];
-                if (!AppTool.IsNullOrEmpty(dateValues) && dateValues.split('-').length == 3) {
-                    var day = dateValues.split('-')[2];
-                    if (!AppTool.IsNullOrEmpty(day)) {
-                        var orginalDay = Number(day);
-                        var newDay = date.getUTCDate();
-                        if (newDay < orginalDay) {
-                            var diffDay = orginalDay - newDay;
-                            result.setUTCDate(date.getUTCDate() + diffDay);
-                        }
-                    }
-                }
-            }
-            return result;
+            var date = new Date(value);
+            var year = date.getUTCFullYear();
+            var month = date.getUTCMonth() + 1;
+            var day = date.getUTCDate() + 1;
+            var dateString = month + "/" + day + "/" + year;
+            return new Date(dateString);
         }
-
-
         GetDateFormats(myFormats: any) {
             var result = "";
             if (myFormats) {
@@ -302,15 +273,7 @@ export class DWDateComponent extends BaseComponent {
                 var stringOfYear = AppTool.PadLeft("" + myDateParts.Year, 4, '0');
                 var stringOfMonth = AppTool.PadLeft("" + myDateParts.Month, 2, '0');
                 var stringOfDay = AppTool.PadLeft("" + myDateParts.Day, 2, '0');
-                var stringOfHours = AppTool.PadLeft("" + myDateParts.Hours, 2, '0');
-                var stringOfMinutes = AppTool.PadLeft("" + myDateParts.Minutes, 2, '0');
-                var stringOfSeconds = AppTool.PadLeft("" + myDateParts.Seconds, 2, '0');
                 result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
-                if (this.IsShowTime) {
-                    result += (" " + stringOfHours + ":" + stringOfMinutes + ":" + stringOfSeconds);
-
-                }
-
 
             }
             return result;

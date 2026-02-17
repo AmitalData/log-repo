@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -11,10 +11,6 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -39,7 +35,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<APInvoiceLinePM> GetInvoiceLinesByInvoiceId(string invoiceId, int tenant)
         {
-            List<APInvoiceLine> myData = (from a in repository.context.APInvoiceLines.Include("Currency")
+            List<APInvoiceLine> myData = (from a in repository.context.APInvoiceLines
                                           where a.Tenant == tenant
                                           && a.APInvoiceId == invoiceId
                                           select a).ToList();
@@ -179,11 +175,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 Tenant = a.Tenant,
                                 EntityId = a.EntityId,
                                 EntityPayableId = a.EntityPayableId,
-                                PayableDebitGLAcountId = a.PayableDebitGLAcountId,
-
                                 RefundAmount = a.RefundAmount,
                                 ForiegnCurrencyId = a.ForiegnCurrencyId,
-                                ForiegnCurrencyCode = a.Currency?.Code,
                                 ForiegnExchangeRate = a.ForiegnExchangeRate,
                                 ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
                                 DebitAccount = a.DebitAccount,
@@ -196,13 +189,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 PrepaidCollectId = a.PrepaidCollectId,
                                 ContainerTypeId = a.ContainerTypeId,
                                 Quantity = a.Quantity,
-                                ExcludeFromTaxReport = a.ExcludeFromTaxReport,
-                                IsPrepaidExpenses = a.IsPrepaidExpenses,
                             }).ToList();
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
                 APInvoiceTotalVATRepository invoiceTotalVatRepository = new APInvoiceTotalVATRepository(tenant);
-                GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
 
                 List<APInvoiceTotalVAT> totalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(invoiceId, tenant).ToList();
 
@@ -235,9 +225,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             item.VendorName = vendorCard.EnglishName;
                         }
                     }
-                    
 
-                   
                     if (!string.IsNullOrEmpty(item.VatTypeId))
                     {
                         VatType vatType = VatTypeRepository.GetSingleVatType(item.VatTypeId, tenant, true);
@@ -245,31 +233,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         {
                             item.VatTypeName = vatType.EnglishName;
                             item.VatIsMultiPercentage = vatType.IsMultiPercentage;
-                            item.VatRecognizedPercentage = (vatType.RecognizedPercentage != null  && vatType.RecognizedPercentage != 0 )? vatType.RecognizedPercentage / 100: vatType.RecognizedPercentage ;
                         }
                     }
 
                     if (!string.IsNullOrEmpty(item.ChargesTypeId))
                     {
                         ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
-                        
                         if (chargesType != null)
                         {
                             item.ChargesTypeCode = chargesType.Code;
                             item.ChargesTypeName = chargesType.EnglishName;
-                            if (!string.IsNullOrEmpty(chargesType.PayableDebitGLAcountId) && string.IsNullOrEmpty(item.PayableDebitGLAcountId))
-                            {
-                                item.PayableDebitGLAcountId = chargesType.PayableDebitGLAcountId;
-                            }
                         }
-                    }
-
-                    GLAccount PayableDebitGLAcount = gLAccountRepository.GetSingle(item.PayableDebitGLAcountId, tenant);
-                    if (PayableDebitGLAcount != null)
-                    {
-                        item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
-
-
                     }
                 }
             }
@@ -279,28 +253,20 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<APInvoiceLinePM> GetInvoiceLinesByInvoiceIds(List<string> invoiceIds, int tenant)
         {
-            List<APInvoiceLinePM> list = new List<APInvoiceLinePM>();
-            const int sqlLimit = 5000;
-            int iterations = invoiceIds.Count() / sqlLimit;
-            for (int i = 0; i <= iterations; i++)
-            {
-                var tempInvoiceIds = invoiceIds.Skip(i * sqlLimit).Take(sqlLimit).ToList();
-                List<APInvoiceLinePM> tempList = (from a in repository.context.APInvoiceLines
-                                                  where a.Tenant == tenant
-                                                  && tempInvoiceIds.Contains(a.APInvoiceId)
-                                                  select new APInvoiceLinePM()
-                                                  {
+            List<APInvoiceLinePM> lines = (from a in repository.context.APInvoiceLines
+                                          where a.Tenant == tenant
+                                          && invoiceIds.Contains(a.APInvoiceId)
+                                          select new APInvoiceLinePM() {
 
-                                                      APInvoiceId = a.APInvoiceId,
-                                                      Description = a.Description,
-                                                      VatPercentage = a.VatPercentage,
-                                                      LineNumber = a.LineNumber,
-                                                      LocalCurrencyAmount = a.LocalCurrencyAmount,
-                                                  }).ToList();
-                list.AddRange(tempList);
-            }
-            return list;
+                                              APInvoiceId = a.APInvoiceId,
+                                              Description = a.Description,
+                                              VatPercentage = a.VatPercentage,
+                                              LineNumber = a.LineNumber,
+                                              LocalCurrencyAmount = a.LocalCurrencyAmount,
+                                          }).ToList();
 
+
+            return lines;
         }
 
     }

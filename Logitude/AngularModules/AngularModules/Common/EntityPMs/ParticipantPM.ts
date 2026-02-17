@@ -17,15 +17,13 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class ParticipantPM extends ObjectCustomFieldPM {
+export class ParticipantPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		  super("Participant");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -310,10 +308,7 @@ export class ParticipantPM extends ObjectCustomFieldPM {
     public OldEntityPM: ParticipantPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -321,7 +316,6 @@ export class ParticipantPM extends ObjectCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Participant");
            
         }
-	 }
     }
     private MyClone: ParticipantPM;
 

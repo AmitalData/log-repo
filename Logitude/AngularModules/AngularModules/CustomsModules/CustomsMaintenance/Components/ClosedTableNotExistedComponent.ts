@@ -18,7 +18,7 @@ import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/Requ
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClosedTableNotExistedComponent.html',
 })
 
@@ -49,7 +49,7 @@ export class ClosedTableNotExistedComponent implements OnInit {
 
     }
     ngOnInit() {
-        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        //this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             //this._entityListService = new EntityListService();
             
             //this.RefreshBtnClick()
@@ -61,7 +61,7 @@ export class ClosedTableNotExistedComponent implements OnInit {
 
             let myIIGGeneralMessagesService = new IIGGeneralMessagesService();
             myIIGGeneralMessagesService.PostFillNotExistedClosedTables(systemTableRequestParams).subscribe(
-                (res:any) => {
+                res => {
                     this._Rows = res.Result;
                     //this._ObservableList.InsertCollection(res.Result);
                     this.rowCount = this._Rows.length;

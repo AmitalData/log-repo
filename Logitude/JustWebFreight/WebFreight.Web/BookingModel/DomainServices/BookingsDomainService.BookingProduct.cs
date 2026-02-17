@@ -94,13 +94,13 @@ namespace WebFreight.Web.BookingModel.DomainServices
             return queryService.GetListCount(queryOperations);
         }
 
-        public void InsertBookingProduct(BookingProductPM entityPM,int tenant)
+        public void InsertBookingProduct(BookingProductPM entityPM)
         {
             SecurityUtility.AuthenticationOnTenant(0);
 
             if (objectContext == null)
             {
-                objectContext = BookingContext.GetContext(tenant);
+                objectContext = BookingContext.GetContext(0);
             }
 
             entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -110,20 +110,20 @@ namespace WebFreight.Web.BookingModel.DomainServices
             TableLastUpdateClass.UpdateTableHistory(0, "BookingProduct");
         }
 
-        public void UpdateBookingProduct(BookingProductPM entityPM, int tenant)
+        public void UpdateBookingProduct(BookingProductPM entityPM)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            SecurityUtility.AuthenticationOnTenant(0);
 
             if (objectContext == null)
             {
-                objectContext = BookingContext.GetContext(tenant);
+                objectContext = BookingContext.GetContext(0);
             }
 
             entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             BookingProductUpdateService service = new BookingProductUpdateService(objectContext, new Dictionary<string, IContext>(), 0);
             service.Update(entityPM, true);
 
-            TableLastUpdateClass.UpdateTableHistory(tenant, "BookingProduct");
+            TableLastUpdateClass.UpdateTableHistory(0, "BookingProduct");
         }
     }
 }

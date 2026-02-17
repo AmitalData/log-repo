@@ -30,50 +30,18 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-        public DateTime? GetCB_LastUpdateDate(int tenant)
-        {
-            return (from a in context.CustomsSettings
-                    select a.CB_LastUpdateDate).FirstOrDefault();
-        }
-
-
-        public CustomsSetting GetTenantByCustomsAgentId(string customsAgentId)
-        {
-            return (from a in context.CustomsSettings
-                    where a.CustomsAgentId == customsAgentId
-                    select a).FirstOrDefault();
-        }
         public IQueryable<CustomsSetting> GetRealAll()
         {
             return from a in context.CustomsSettings
                    select a;
         }
 
-        public bool AnyCourierTenant()
-        {
-            return this.context.CustomsSettings.Any(r => r.CompanyType == "B");
-        }
         public AmitalRestrictOwnerModel GetMyAmitalRestrictOwnerModel(bool getFromCache, int tenant = 1, string UnifreightUserId = null)
         {
             var res = InjectionUtil.Instance.GetAmitalRestrictOwnerModel(getFromCache, tenant, UnifreightUserId);
             return res;
         }
-
-        public CustomsSetting GetSettingByTenantCache(int tenant)
-        {
-            string key = $"RepoGetSettingByTenant{tenant}";
-            var res = CacheManager.GetOrInsertNewObject<CustomsSetting>(key,
-                () =>
-            {
-                var repo = new CustomsSettingRepository(tenant);
-                return repo.GetSettingByTenant(tenant);
-
-            });
-            return res;
-            
-        }
-
-    }
+   }
 
 }
    

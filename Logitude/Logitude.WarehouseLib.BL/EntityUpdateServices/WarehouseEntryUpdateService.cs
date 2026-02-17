@@ -2,16 +2,15 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.Helpers;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -36,19 +35,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                 entityPM.EntryNumber = TableCounter.GetNumber(entityPM.Tenant, "WAEC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
 
-                SetPartnerContactField(entityPM);
-                new MainEntityChangeService(new EntityChangeArgs()
-                {
-                    EntityPM = entityPM,
-                    ProcessType = "OnCreate",
-                    ObjectTableName = "WarehouseEntry",
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    StartDate = DateTime.Now,
-                    EntityReference = entityPM.EntryNumber
-                }).AddEntityChange();
             }
-
         }
 
         private void UpdateShipment(WarehouseEntryPM entityPM)
@@ -87,64 +74,10 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
         }
 
 
-        protected override void Trace(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO, string changesXml)
-        {
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                if (entityPM.DirectionId == "I")
-                {
-                    string overManifestNotes = "";
-                    entityPM.WarehouseEntryPackages.ForEach(entryPackage =>
-                    {
-                        if (entryPackage.OverManifest > 0)
-                        {
-                            overManifestNotes += GetOverManifestWarningMessage(entryPackage.OverManifest, entryPackage.Quantity);
-                        }
-                    });
 
-                    if (!string.IsNullOrEmpty(overManifestNotes))
-                    {
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = entityPM.Tenant,
-                            EventTypeCode = "OVMA",
-                            UserId = entityPM.UpdatedByUserId,
-                            EntityId = entityPM.Id,
-                            ObjectTableName = "WarehouseEntry",
-                            Notes = overManifestNotes
-                        });
-                    }
-                }
-            }
 
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
-            {
-                if (entityPM.StatusCode != entityPOCO.StatusCode)
-                {
-                    if (entityPM.StatusCode == "CAEA")
-                    {
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = entityPM.Tenant,
-                            EventTypeCode = "CAEA",
-                            UserId = entityPM.UpdatedByUserId,
-                            EntityId = entityPM.Id,
-                            ObjectTableName = "WarehouseEntry",
-                        });
-                    }
-                }
-            }
-        }
-
-        private string GetOverManifestWarningMessage(int overManifest, int oldQuantity)
-        {
-            string isOrAre = overManifest == 1 ? "is" : "are";
-            string warningMessage = overManifest + " out of " + oldQuantity + " packages " + isOrAre + " over manifest\n";
-            return warningMessage;
-        }
         protected override void OnUpdating(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
         {
-
             AddTraceEvents(entityPM, entityPOCO);
 
             if (entityPM.StatusCode != entityPOCO.StatusCode)
@@ -153,39 +86,6 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             }
 
             base.OnUpdating(entityPM, entityPOCO);
-
-            if (entityPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update) return;
-
-            if (!entityPM.IsUpdateByAutomation)
-            {
-                SetPartnerContactField(entityPM);
-                new MainEntityChangeService(new EntityChangeArgs()
-                {
-                    EntityPM = entityPM,
-                    OldEntityPM = this.OldEntityPM,
-                    ProcessType = "OnUpdate",
-                    EntityChangeFieldXml = this.EntityChangeFieldXml,
-                    ObjectTableName = "WarehouseEntry",
-                    EntityId = entityPM.Id,
-                    Tenant = entityPM.Tenant,
-                    EntityReference = entityPM.EntryNumber
-                }).AddEntityChange();
-            }
-        }
-
-        public void SetPartnerContactField(WarehouseEntryPM entityPM)
-        {
-            entityPM.ShipperPrimaryContactId = GetPrimaryContactId(entityPM.ShipperId, entityPM.Tenant);
-            entityPM.CustomerPrimaryContactId = GetPrimaryContactId(entityPM.CustomerId, entityPM.Tenant);
-            entityPM.ConsigneePrimaryContactId = GetPrimaryContactId(entityPM.ConsigneeId, entityPM.Tenant);
-        }
-
-        private string GetPrimaryContactId(string cardId, int tenant)
-        {
-            CardQuery cardQuery = new CardQuery(tenant);
-            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
-            if (cardPM == null) return null;
-            return cardPM.PrimaryContactId;
         }
 
         private void AddTraceEvents(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
@@ -236,9 +136,9 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("WarehouseEntry", 0, true);
-            string email = GetLoggedUserEmail(entityPM);
+            string email = HttpContext.Current.User.Identity.Name;
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant, true);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant,true);
             if (loggedContact != null)
             {
                 ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, typeCode, loggedContact.Id);
@@ -246,14 +146,6 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
 
             }
-        }
-
-        private string GetLoggedUserEmail(WarehouseEntryPM entityPM)
-        {
-            if (HttpContext.Current != null) return HttpContext.Current.User.Identity.Name;
-            UserRepository userRepository = new UserRepository(entityPM.Tenant);
-            User loggedUser = userRepository.GetSingleUserById(entityPM.UpdatedByUserId);
-            return loggedUser?.Contact?.Email;
         }
         private void ValidatePorts(WarehouseEntryPM entityPM)
         {

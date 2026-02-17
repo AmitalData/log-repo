@@ -14,7 +14,7 @@ import { GLAccountTaxWithholdingTabComponent } from './GLAccountTaxWithholdingTa
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditTaxWithholdingLineComponent.html',
 
 })

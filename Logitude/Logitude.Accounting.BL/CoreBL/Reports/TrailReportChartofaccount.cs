@@ -50,14 +50,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             if (true || !base.NotUsingControlAccount()) // in the level we take only cards==1 
             {
 
-//                IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId =
-//Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
+                IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId =
+Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
 
-//                qLocalAmountsOfAccountTransStart_GroupByCOATypeId_All =
-//                    qLocalAmountsOfAccountTransStart_JoinAccountsWhereNotControlAccount_GroupByCOATypeId.Union(
-//                qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                 qLocalAmountsOfAccountTransStart_GroupByCOATypeId_All =
-                  qLocalAmountsOfAccountTransStart_JoinAccountsWhereNotControlAccount_GroupByCOATypeId;
+                    qLocalAmountsOfAccountTransStart_JoinAccountsWhereNotControlAccount_GroupByCOATypeId.Union(
+                qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
             }
 
 
@@ -72,13 +70,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransEnd_GroupByCOATypeId_All = null;
             if (true || !base.NotUsingControlAccount()) // in the level we take only cards==1 
             {
-                //IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId =
-                //    Init_LocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
-                //qLocalAmountsOfAccountTransEnd_GroupByCOATypeId_All =
-                //    qLocalAmountsOfAccount_TransEnd_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
-                //    qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
+                IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId =
+                    Init_LocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
                 qLocalAmountsOfAccountTransEnd_GroupByCOATypeId_All =
-                    qLocalAmountsOfAccount_TransEnd_JoinAccountsNotControlAccount_GroupByCOATypeId;
+                    qLocalAmountsOfAccount_TransEnd_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
+                    qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
             }
 
             //var sqlqAccumulateTranactionBeginOfMonthToDateTillToDateInculde = ((ObjectQuery)qAccumulateTranactionBeginOfMonthToDateTillToDateInculde).ToTraceString();
@@ -93,7 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool addAllChatOfAccountTyps = true;
             if (addAllChatOfAccountTyps)
             {
-                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData, _TrailReportParam.ChartOfAccountsTypeCodeList);
+                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
             }
 
             if (testNow)
@@ -124,7 +120,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                   on chartf.GLAccountId equals data.GLAccountId
                                   into groupJoin
                                   from groupJoinData in groupJoin.DefaultIfEmpty()
-                                  select new TrailReportM2()
+                                  select new TrailReportM()
                                   {
                                       ChartOfAcountType = chartf.ChartOfAccountTypeCode,
                                       ChartOfAcount1 = chartf.Level1Id,
@@ -132,40 +128,22 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                       ChartOfAcount3 = chartf.Level3Id,
                                       ChartOfAcount4 = chartf.Level4Id,
                                       ChartOfAcount5 = chartf.Level5Id,
-
-
+                                      ChartOfAcountName1 = chartf.Level1Name,
+                                      ChartOfAcountName2 = chartf.Level2Name,
+                                      ChartOfAcountName3 = chartf.Level3Name,
+                                      ChartOfAcountName4 = chartf.Level4Name,
+                                      ChartOfAcountName5 = chartf.Level5Name,
                                       ChartOfAcountCode1 = chartf.Level1Code,
                                       ChartOfAcountCode2 = chartf.Level2Code,
                                       ChartOfAcountCode3 = chartf.Level3Code,
                                       ChartOfAcountCode4 = chartf.Level4Code,
                                       ChartOfAcountCode5 = chartf.Level5Code,
 
-                                      ChartOfAcountName1 = chartf.Level1Name,
-                                      ChartOfAcountName2 = chartf.Level2Name,
-                                      ChartOfAcountName3 = chartf.Level3Name,
-                                      ChartOfAcountName4 = chartf.Level4Name,
-                                      ChartOfAcountName5 = chartf.Level5Name,
 
 
-
-
-                                      ChartOfAccountId = chartf.ChartOfAccountId,
                                       GLAccountName = chartf.GLAccountName,
-                                      GLAccountNumber = chartf.GLAccountNumber, 
+
                                       GLAccountId = chartf.GLAccountId,
-
-
-                                      ChartOfAcountName1English = chartf.Level1English,
-                                      ChartOfAcountName2English = chartf.Level2English,
-                                      ChartOfAcountName3English = chartf.Level3English,
-                                      ChartOfAcountName4English = chartf.Level4English,
-                                      ChartOfAcountName5English = chartf.Level5English,
-
-                                      GLAccountEnglish = chartf.GLAccountEnglish,
-                                      ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
-                                      ChartOfAccountsEnglish = chartf.ChartOfAccountsEnglish,
-
-                                      
 
                                       CurrencyId = groupJoinData.CurrencyId,
 
@@ -196,26 +174,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              trailReportRow.ChartOfAcount3,
                              trailReportRow.ChartOfAcount4,
                              trailReportRow.ChartOfAcount5,
-
-
-                             trailReportRow.ChartOfAcountCode1,
-                             trailReportRow.ChartOfAcountCode2,
-                             trailReportRow.ChartOfAcountCode3,
-                             trailReportRow.ChartOfAcountCode4,
-                             trailReportRow.ChartOfAcountCode5,
-
                              trailReportRow.ChartOfAcountName1,
                              trailReportRow.ChartOfAcountName2,
                              trailReportRow.ChartOfAcountName3,
                              trailReportRow.ChartOfAcountName4,
                              trailReportRow.ChartOfAcountName5,
-
-                             trailReportRow.ChartOfAcountName1English,
-                             trailReportRow.ChartOfAcountName2English,
-                             trailReportRow.ChartOfAcountName3English,
-                             trailReportRow.ChartOfAcountName4English,
-                             trailReportRow.ChartOfAcountName5English,
-
+                             trailReportRow.ChartOfAcountCode1,
+                             trailReportRow.ChartOfAcountCode2,
+                             trailReportRow.ChartOfAcountCode3,
+                             trailReportRow.ChartOfAcountCode4,
+                             trailReportRow.ChartOfAcountCode5,
 
 
 
@@ -236,41 +204,23 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                  ChartOfAcount3 = gCOA.Key.ChartOfAcount3,
                                  ChartOfAcount4 = gCOA.Key.ChartOfAcount4,
                                  ChartOfAcount5 = gCOA.Key.ChartOfAcount5,
-
-
+                                 ChartOfAcountName1 = gCOA.Key.ChartOfAcountName1,
+                                 ChartOfAcountName2 = gCOA.Key.ChartOfAcountName2,
+                                 ChartOfAcountName3 = gCOA.Key.ChartOfAcountName3,
+                                 ChartOfAcountName4 = gCOA.Key.ChartOfAcountName4,
+                                 ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
                                  ChartOfAcountCode1 = gCOA.Key.ChartOfAcountCode1,
                                  ChartOfAcountCode2 = gCOA.Key.ChartOfAcountCode2,
                                  ChartOfAcountCode3 = gCOA.Key.ChartOfAcountCode3,
                                  ChartOfAcountCode4 = gCOA.Key.ChartOfAcountCode4,
                                  ChartOfAcountCode5 = gCOA.Key.ChartOfAcountCode5,
 
-                                 ChartOfAcountName1 = gCOA.Key.ChartOfAcountName1,
-                                 ChartOfAcountName2 = gCOA.Key.ChartOfAcountName2,
-                                 ChartOfAcountName3 = gCOA.Key.ChartOfAcountName3,
-                                 ChartOfAcountName4 = gCOA.Key.ChartOfAcountName4,
-                                 ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
 
-
-
-
-                                 ChartOfAccountId = "",
                                  GLAccountName = "",//gCOA.Key.GLAccountName,
-                                 GLAccountNumber = "",
 
-                                 GLAccountId = "",//gCOA.Key.GLAccountId,
+                     GLAccountId = "",//gCOA.Key.GLAccountId,
 
-
-                                 ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
-                                 ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
-                                 ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
-                                 ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
-                                 ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
-
-                                 GLAccountEnglish = "",
-                                 ChartOfAccountsTypeEnglish = "",
-                                 ChartOfAccountsEnglish = "",
-
-                                 CurrencyId = "",
+                     CurrencyId = "",
 
 
                                  LocalOpenBalance = gCOA.Sum(x => x.LocalOpenBalance),
@@ -309,7 +259,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                  ChartOfAcount3 = "",
                                  ChartOfAcount4 = "",
                                  ChartOfAcount5 = "",
-
+                                 ChartOfAcountName1 = "",
+                                 ChartOfAcountName2 = "",
+                                 ChartOfAcountName3 = "",
+                                 ChartOfAcountName4 = "",
+                                 ChartOfAcountName5 = "",
 
                                  ChartOfAcountCode1 = "",
                                  ChartOfAcountCode2 = "",
@@ -317,33 +271,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                  ChartOfAcountCode4 = "",
                                  ChartOfAcountCode5 = "",
 
-                                 ChartOfAcountName1 = "",
-                                 ChartOfAcountName2 = "",
-                                 ChartOfAcountName3 = "",
-                                 ChartOfAcountName4 = "",
-                                 ChartOfAcountName5 = "",
 
-
-
-                                 ChartOfAccountId = "",
                                  GLAccountName = "",
-                                 GLAccountNumber = "",
-                                 
 
                                  GLAccountId = g.Key.COAType,
-
-
-
-                                 ChartOfAcountName1English = "",
-                                 ChartOfAcountName2English = "",
-                                 ChartOfAcountName3English = "",
-                                 ChartOfAcountName4English = "",
-                                 ChartOfAcountName5English = "",
-
-                                 GLAccountEnglish = "",
-                                 ChartOfAccountsTypeEnglish = "",
-                                 ChartOfAccountsEnglish = "",
-
                                  CurrencyId = "",//g.Key.CurrencyId,
 
                      LocalOpenBalance =
@@ -709,21 +640,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData, List<string> chartOfAccountsTypes)
+        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
         {
-            var allChartTypes = _AccountingContext.ChartOfAccountsTypes.AsQueryable();
-            IQueryable<Data.EntityPOCOs.ChartOfAccountsType> chartTypes = null;
-            if (chartOfAccountsTypes != null && chartOfAccountsTypes.Count > 0)
-            {
-                chartTypes = allChartTypes.Where(coa => chartOfAccountsTypes.Contains(coa.Code));
-            }
-            else
-            {
-                chartTypes = allChartTypes;
-            }
-
             _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
-            chartTypes.Select(r => new TrailReportTemp()
+            _AccountingContext.ChartOfAccountsTypes.Select(r => new TrailReportTemp()
             {
                 AccountId_COAType = r.Code,
 

@@ -73,10 +73,7 @@ export class OpportunityClosingReasonPM {
     public OldEntityPM: OpportunityClosingReasonPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -84,7 +81,6 @@ export class OpportunityClosingReasonPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "OpportunityClosingReason");
            
         }
-       }
     }
 
     private MyClone: OpportunityClosingReasonPM;

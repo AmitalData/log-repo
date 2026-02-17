@@ -1,5 +1,4 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.Validators;
+﻿using Logitude.BL.Validators;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentDeliveryValidator), "IsShipmentDeliveryValid")]
-    public class ShipmentDeliveryPM: ChildEntitiesCustomFieldPM
+    public class ShipmentDeliveryPM
     {
         [Key]
         public string Id { get; set; }
@@ -24,8 +23,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PickUpDeliveryNumber { get; set; }
-        public int PickUpDeliveryIndex { get; set; }
-        public int ChildIndex { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PickUpDeliveryTypeCode { get; set; }
@@ -121,7 +118,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierId { get; set; }
         public string CarrierCode { get; set; }
         public string CarrierName { get; set; }
-        public string CarrierTypeName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CarrierNumber { get; set; }
@@ -170,10 +166,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool IsCancelled { get; set; }
 
-        public string ParentPickUpDeliveryId { get; set; }
-        public int? ChildDeliveryIndex { get; set; }
-        public string BookingConfirmationNumber { get; set; }
-
         private List<ShipmentPickUpDeliveryPackagePM> shipmentPickUpDeliveryPackages;
         [Include]
         [Composition]
@@ -204,26 +196,5 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public int SplitIndex { get; set; }
         public bool IsFromSplit { get; set; }
-        public string StandaloneShipmentId { get; set; }
-        public string StandaloneShipmentNumber { get; set; }
-        public bool IsConnectedToStandalone { get; set; }
-        public string CarrierLocalName { get; set; }
-        public string DeliveryContact { get; set; }
-        public string ResponsibilityCode { get; set; }
-        public string Responsibility { get; set; }
-        public string PackageTypeCode { get; set; }
-        public string PackageTypeName { get; set; }
-        public int? Quantity { get; set; }
-        public double? GrossWeight { get; set; }
-        public double? Volume { get; set; }
-        public double? CustomerChargeableWeight { get; set; }
-        public double? TruckerChargeableWeight { get; set; }
-        public string DescriptionOfGoods { get; set; }
-        public string Commodity { get; set; }
-        public string FromAddressCityId { get; set; }
-        public string ToAddressCityId { get; set; }
-        public DateTime? CreateDate { get; set; }
-
-        public string ChangeSet { get; set; }
     }
 }

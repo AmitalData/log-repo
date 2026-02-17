@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {Guid} from '../../../../../Infrastructure/Utilities/Guid';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AttachDocsOut',
     templateUrl: './AttachDocsOutComponent.html',
 })
@@ -97,8 +97,6 @@ export class AttachDocsOutComponent implements OnInit {
             item.FileSize = doc.FileSize;
             item.DocumentTypeCopyNameWithDocumentTypeName = doc.DocumentTypeCopyNameWithDocumentTypeName;
             item.ShowRemoveLink = true;
-            item.DirectionCode = "O";
-
             this.AttachmentsLists.push(item);
            
         });

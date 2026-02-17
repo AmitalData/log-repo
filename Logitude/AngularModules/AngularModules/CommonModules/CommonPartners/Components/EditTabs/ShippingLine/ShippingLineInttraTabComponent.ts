@@ -5,7 +5,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShippingLineInttraTabComponent.html',
 })
 

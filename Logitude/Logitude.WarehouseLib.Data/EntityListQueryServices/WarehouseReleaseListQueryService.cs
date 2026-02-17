@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -59,7 +59,6 @@ namespace Logitude.WarehouseLib.Data.EntityListQueryServices
                                                           TotalQuantity = a.TotalQuantity,
                                                           DirectionName = a.Direction != null ? a.Direction.Name : "",
                                                           TransportModeName = a.TransportMode != null ? a.TransportMode.Name : "",
-                                                          MasterShipmentNumber = a.MasterShipmentNumber,
                                                       });
             return query;
         }

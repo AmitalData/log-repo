@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -65,7 +63,7 @@ using Simplog.Data.QuoteModel;
             }
         } 
 
-		public List<QuotePriceStepsPM> QuotePriceStepsDataMappingAndValidatin(List<QuotePriceSteps> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<QuotePriceStepsPM> QuotePriceStepsDataMappingAndValidatin(List<QuotePriceSteps> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -78,14 +76,11 @@ using Simplog.Data.QuoteModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("QuotePriceSteps with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -98,46 +93,16 @@ using Simplog.Data.QuoteModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//} 
-
-						
+						//}
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Step = item.PriceBreakStep;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.CostUnitPrice = item.CostUnitPrice;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.SaleUnitPrice = item.SaleUnitPrice;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.MeasurementUnit = item.MeasurementUnit;
-
-										}  
-
-										   
+					temp.Step = item.PriceBreakStep;
+					temp.CostUnitPrice = item.CostUnitPrice;
+					temp.SaleUnitPrice = item.SaleUnitPrice;
+					temp.MeasurementUnit = item.MeasurementUnit;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -145,8 +110,6 @@ using Simplog.Data.QuoteModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

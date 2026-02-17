@@ -1,4 +1,4 @@
-<table>
+﻿<table>
     <tr>
         <td>
             <fieldset [disabled]="!IsControlEnabled">
@@ -22,39 +22,34 @@
                                         <!-- ExceptionType -->
                                         <log-column [header]="'Customs.ClaimsRelatedEntitiesAmount.F.PaymentTypeCode' | TextCodeTranslationPipe"
                                                     [width]="'70'" [Alignment]="'right'" [binding]="'ExceptionType'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.ExceptionType}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- ExceptionDescription -->
                                         <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                                     [width]="'450'" [Alignment]="'right'" [binding]="'ExceptionDescription'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span data-toggle="tooltip" data-placement="bottom" title="{{item.ExceptionDescription}}">{{item.ExceptionDescription}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!--<log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                                     [width]="'350'" [Alignment]="'right'" [binding]="'ExceptionDescription'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%; white-space: nowrap;">
                                                     <a title="Show Exception Description" href="#" (click)="ShowMore(item.ExceptionDescription,item.ExceptionType)">
                                                         {{item.ExceptionDescription }}
                                                     </a>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>-->
+
 
                                     </logitude-edit-grid>
                                 </div>

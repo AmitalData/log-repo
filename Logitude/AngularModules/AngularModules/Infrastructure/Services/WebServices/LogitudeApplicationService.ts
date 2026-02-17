@@ -1,43 +1,59 @@
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { SessionInfo } from '../../Utilities/SessionInfo';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
-import { Injectable } from '@angular/core';
-
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import {Observable} from 'rxjs/Observable';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {SessionInfo} from '../../Utilities/SessionInfo';
 @Injectable()
+
 export class LogitudeApplicationService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/LogitudeApplication';
     }
 
     GetCheckIsupgradingSystem() {
-        return this._http.get(this._apiUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result = response;
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-            serviceResponse.Result = result;
+        var authHeader = new Headers();
+        authHeader.append('Content-Type', 'application/json');
+        return this._http.get(this._apiUrl
+            , {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
 
-            return serviceResponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+            });
+
     }
 
     GetCurrenctUserValidity() {
-        var url = this._apiUrl + '/GetCurrenctUserValidity?clientEmail=' + SessionInfo.LoggedUserEmail + "&documentToken=" + SessionInfo.DocumentDownloadToken + '&tenant=' + SessionInfo.LoggedUserTenant;
+        var authHeader = new Headers();
+        authHeader.append('Content-Type', 'application/json');
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCurrenctUserValidity?clientEmail=' + SessionInfo.LoggedUserEmail + "&documentToken=" + SessionInfo.DocumentDownloadToken + '&tenant=' + SessionInfo.LoggedUserTenant 
+                , {
+                    headers: authHeader,
+                }).map(res => {
 
-                serviceResponse.Result = response
+                    var response: ServiceResponse;
+                    response = new ServiceResponse();
 
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleTimerServiceError));
+                    response.Result = res.json();
+
+                    return response;
+
+                }).catch(ServiceHelper.HandleTimerServiceError);
         });
+
     }
 }
+

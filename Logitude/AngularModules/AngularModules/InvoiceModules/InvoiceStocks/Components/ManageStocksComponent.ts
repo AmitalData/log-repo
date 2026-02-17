@@ -7,7 +7,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ARInvoiceStockListService } from '../../../Invoice/Services/StandardLists/ARInvoiceStockListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ManageStocksComponent.html',
 })
 
@@ -19,8 +19,8 @@ export class ManageStocksComponent {
     private ARInvoiceStockListService: ARInvoiceStockListService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
-            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoiceStockLine", 0).subscribe(response => {
             this.IsVisibile = true;
             this.ARInvoiceStockListService = new ARInvoiceStockListService();
             this.LoadData();

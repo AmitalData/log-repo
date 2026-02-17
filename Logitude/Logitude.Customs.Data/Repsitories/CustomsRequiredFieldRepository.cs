@@ -22,40 +22,22 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<CustomsRequiredField> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant,string type= "A")
+        public List<CustomsRequiredField> GetCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant)
         {
             List<CustomsRequiredField> requiredFields;
 
             requiredFields = (from a in context.CustomsRequiredFields
-                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant && ((type == "I" && a.IsImport == true)  || (type == "E" && a.IsExport==true) || type=="A")
-                              select a).ToList();
-            return requiredFields;
-        }
-        public List<CustomsRequiredField> GetCustomWarningFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
-        {
-            List<CustomsRequiredField> requiredFields;
-
-            requiredFields = (from a in context.CustomsRequiredFields
-                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant && a.WarningExport == true
-                              select a).ToList();
-            return requiredFields;
-        }
-        public List<CustomsRequiredField> GetExportCustomRequiredFieldsByObjectTable(string ObjectTableId, int Tenant, string type = "A")
-        {
-            List<CustomsRequiredField> requiredFields;
-
-            requiredFields = (from a in context.CustomsRequiredFields
-                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant && ((a.IsExport == true) || (a.WarningExport==true))
+                              where a.ObjectTableId == ObjectTableId && a.Tenant == Tenant
                               select a).ToList();
             return requiredFields;
         }
 
-        public CustomsRequiredField GetCustomRequiredFieldsByObjectFieldCode(string ObjectFieldCode, int Tenant)
+        public CustomsRequiredField GetCustomRequiredFieldsByObjectFieldId(string ObjectFieldId, int Tenant)
         {
             CustomsRequiredField requiredFields;
 
             requiredFields = (from a in context.CustomsRequiredFields
-                              where a.ObjectfieldCode == ObjectFieldCode && a.Tenant == Tenant
+                              where a.ObjectfieldId == ObjectFieldId && a.Tenant == Tenant
                               select a).FirstOrDefault();
             return requiredFields;
         }

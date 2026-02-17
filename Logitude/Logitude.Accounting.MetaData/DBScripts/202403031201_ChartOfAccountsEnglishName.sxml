@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="false" Pre="true">
-	<Sql Version="3">
-		<![CDATA[
-		
-    update ChartOfAccounts set EnglishName ='' where EnglishName is null
-
-     ]]>
-	</Sql>
-</Script>

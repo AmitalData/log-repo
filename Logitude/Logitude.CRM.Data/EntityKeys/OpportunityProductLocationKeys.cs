@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,8 +28,7 @@ namespace Logitude.CRM.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return OpportunityId+'_'+OpportunityProductTypeCode+'_'+LineNumber ;
-                 
+          return OpportunityId+'_'+OpportunityProductTypeCode+'_'+LineNumber;
       }
 
       public override string GetEntityPMName()

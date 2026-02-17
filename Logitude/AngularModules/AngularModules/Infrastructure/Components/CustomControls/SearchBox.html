@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SearchBox input::-webkit-input-placeholder {
         font-family: Arial;
@@ -263,7 +263,7 @@
                                             <div></div>
                                         </td>
 
-                                        <td class="TextTrimming" title="{{item.ShipmentNumber}}" style="width: 70px; min-width: 70px; max-width: 70px; font-size: 10px; color: #6E7172;">{{item.ShipmentNumber}}</td>
+                                        <td class="TextTrimming" style="width: 70px; min-width: 70px; max-width: 70px; font-size: 10px; color: #6E7172;">{{item.ShipmentNumber}}</td>
 
                                         <td class="TextTrimming" style="width: 175px; min-width:175px; max-width:175px;" title="Customer">
                                             <span style="font-size: 10px; color: #1B90CB;" class="TextTrimming">{{item.CustomerName}}</span>
@@ -427,22 +427,18 @@
 
                                 <!-- GLAccount -->
                                 <table *ngIf="ObjectTableName == 'CardGLAccount' || ObjectTableName == 'CustomerGLAccount'|| ObjectTableName == 'VendorGLAccount'">
-                                    <tr [style.text-align]="isRTL ? 'right' : 'left'" [attr.title]="item.LocalName">
+                                    <tr [style.text-align]="isRTL ? 'right' : 'left'">
 
                                         <td style="width: 80px; min-width: 80px; max-width: 80px; padding-left: 5px;padding-right: 5px" class="TextTrimming">
-                                            <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'">{{item.DisplayNumber}}</span>
+                                            <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'" >{{item.DisplayNumber}}</span>
                                         </td>
 
-                                        <td style=" max-width: 150px; min-width: 150px;" class="TextTrimming">
-                                            <span style="font-size: 12px; color: #1B90CB; " [style.text-align]="isRTL ? 'right' : 'left'">{{item.LocalName}}</span>
-                                        </td>
-
-                                        <td style=" max-width: 50px; min-width: 50px;" class="TextTrimming">
-                                            <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'">{{item.IsMultiCurrency ? showLocals ? 'רב' : 'Multi'  : item.CurrencyCode}}</span>
+                                        <td style="width: 150px; max-width: 150px; min-width: 150px;" class="TextTrimming">
+                                            <span style="font-size: 12px; color: #1B90CB; " [style.text-align]="isRTL ? 'right' : 'left'" >{{item.LocalName}}</span>
                                         </td>
 
                                         <td style="width: 65px; max-width: 65px; min-width: 65px; padding-right: 5px;padding-left: 5px" class="TextTrimming">
-                                            <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'">{{item.ChartOfAccountsName}}</span>
+                                            <span style="font-size: 10px; color: #919191; " [style.text-align]="isRTL ? 'right' : 'left'" >{{item.ChartOfAccountsName}}</span>
                                         </td>
 
                                         <td>
@@ -694,26 +690,15 @@
                                 </table>
 
                                 <!--  Customs.CustomsItems -->
-                                <table *ngIf="ObjectTableName == 'Customs.CustomsItems' || ObjectTableName == 'Customs.CustomsItem'">
+                                <table *ngIf="ObjectTableName == 'Customs.CustomsItems'">
                                     <tr>
 
-                                       <!--<td style="width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
+                                        <!--<td style="width: 50px; padding-right: 5px;text-align: right;" class="TextTrimming">
                                             <span style="font-size: 8px; color: #4e4e4e; text-align: right;">{{item.ID}}</span>
-                                       </td>-->
+                                        </td>-->
 
                                         <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
                                             <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.FullClassification}}</span>
-                                        </td>
-
-                                    </tr>
-                                </table>
-
-                                 <!--  Customs.ClientsTapag -->
-                                 <table *ngIf="ObjectTableName == 'Customs.ClientsTapag'">
-                                    <tr>
-
-                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
-                                            <span style="font-size: 10px; color: #1982b7; text-align: right;">{{item.TapagNumber}}</span>
                                         </td>
 
                                     </tr>
@@ -751,24 +736,6 @@
                                         </td>
 
                                     </tr>
-                                </table>
-                                 <!--  JoinCustomsItem -->
-                                 <table *ngIf="ObjectTableName == 'JoinCustomsItem'">
-                                    <tr>
-
-                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
-
-                                            <span style="font-size: 10px; color: #4e4e4e; text-align: right;">{{item.FullClassification}}</span>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td style="padding-right: 5px;text-align: right;" class="TextTrimming">
-                                            <span style="font-size: 9px; color: #1982b7; text-align: right;">{{item.Title}}</span>
-
-                                        </td>
-                                    </tr>                                   
                                 </table>
 
                             </li>

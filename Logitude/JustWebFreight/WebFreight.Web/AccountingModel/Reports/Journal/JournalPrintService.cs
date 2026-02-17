@@ -7,7 +7,7 @@ using Logitude.BL.Interfaces;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
@@ -25,7 +25,6 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
 {
     class JournalPrintService
     {
-        public JournalPM journalPM;
         public void BuildJournalReport(string entityId, int tenant, string documentOutId)
         {
             // 1 
@@ -53,12 +52,12 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
             //Build report
             Byte[] templatedata = null;
             StiReport report = new StiReport();
-            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(tenant);
 
 
             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
-            DocumentTypeTemplatePM defaulttemplate = documentTypeTemplateQuery.GetById(documentOut.DocumentTemplateId, tenant);
+            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(documentOut.DocumentTemplateId);
 
             if (defaulttemplate != null)
                 templatedata = defaulttemplate.TemplateBody;
@@ -68,7 +67,6 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
             {
                 if (templatedata.Length != 0)
                 {
-                    defaulttemplate.DocumentOutId = documentOut?.Id;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     report = exportDocumentHelper.LoadandRender( defaulttemplate, currentBusinessObject, tenant);
                 }
@@ -85,7 +83,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Journal
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
 
-            journalPM = journalQuery.GetSingle(entityId, true, false);
+            JournalPM journalPM = journalQuery.GetSingle(entityId, true, false);
    
             if(journalPM != null)
             {

@@ -5,7 +5,7 @@ using System.Transactions;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -70,7 +70,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                    IWebFreightContext context = WebFreightContext.GetContext(0);
                     zeroRuleConditionField = (from a in context.RuleConditionFields.Include("ObjectField") 
                                             where a.Tenant == 0
                                             select a).ToList();
@@ -94,7 +94,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 foreach (RuleConditionField field in ruleConditionField)
                 {
                     RuleConditionField existedRuleField = (from a in selectedFields
-                                                   where a.ObjectFieldCode == field.ObjectFieldCode && a.ObjectTableRuleId == field.ObjectTableRuleId
+                                                   where a.ObjectFieldId == field.ObjectFieldId && a.ObjectTableRuleId == field.ObjectTableRuleId
                                                    select a).FirstOrDefault();
                     if (existedRuleField != null)
                     {

@@ -1,12 +1,11 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import {Http, Headers} from '@angular/http';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import { defer, of } from 'rxjs';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Utilities/ServiceHelper';
 
 import {DWQueryFilterPM} from '../../EntityPMs/DWQueryFilterPM';
@@ -16,7 +15,7 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 export class DWQueryFilterPMService {
 
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     private _serviceArgs: ServiceArgs;
     constructor() {
 
@@ -34,15 +33,17 @@ export class DWQueryFilterPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getDWqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                var pms = response.body;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getDWqueryfiltersbytenant?' + 'tenant=' + tenant + '&loggedcontactid=' + userid, {
+                headers: authHeader
+            }).map(response => {
+                var pms = response.json();
 
                 return pms;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+            });
+        }
+
+        );
 
     }
 
@@ -52,21 +53,23 @@ export class DWQueryFilterPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getDWqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&dwobjecttableid=' + dwobjecttableid + '&dwqueryid=' + dwqueryid + '&loggedcontactid=' + userid, ServiceHelper.GetHttpFullHeaders())
-                .pipe(
-                    map((response: HttpResponse<any>) => {
-                        var pms = response.body;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getDWqueryfiltersbytenantuserobjecttablequery?' + 'tenant=' + tenant + '&dwobjecttableid=' + dwobjecttableid + '&dwqueryid=' + dwqueryid + '&loggedcontactid=' + userid, {
+                headers: authHeader
+            }).map(response => {
+                var pms = response.json();
 
-                        return pms;
-                    }), catchError(ServiceHelper.HandleServiceError));
-        });
+                return pms;
+            });
+        }
+
+        );
 
     }
 
     insert(entityPM: DWQueryFilterPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -79,42 +82,43 @@ export class DWQueryFilterPMService {
             var errorsArray = [];//validator.Validate("DWQueryFilter", entityPM);
 
 
-            var serviceResponse: EntityPMServiceResponse;
-            serviceResponse = new EntityPMServiceResponse();
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: DWQueryFilterPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                        var pm = response.body;
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: DWQueryFilterPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                            serviceResponse.Result = mappedResult;
+                            response.Result = mappedResult;
                         }
 
 
 
-                        return serviceResponse;
+                        return response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(response);
 
             }
-        });
+        }
+
+        );
     }
 
     delete(entityPM: DWQueryFilterPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -127,38 +131,39 @@ export class DWQueryFilterPMService {
             var errorsArray = [];//validator.Validate("DWQueryFilter", entityPM);
 
 
-            var serviceResponse: EntityPMServiceResponse;
-            serviceResponse = new EntityPMServiceResponse();
+            var response: EntityPMServiceResponse;
+            response = new EntityPMServiceResponse();
             if (errorsArray.length == 0) {
                 var mappedEntity: DWQueryFilterPM;
 
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-                    .pipe(
-                        map((response: HttpResponse<any>) => {
-                            var pm = response.body;
-                            if (pm) {
-                                var mappedResult: DWQueryFilterPM;
-                                mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
-                                serviceResponse.Result = mappedResult;
-                            }
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
+                        if (pm) {
+                            var mappedResult: DWQueryFilterPM;
+                            mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                            response.Result = mappedResult;
+                        }
 
 
 
-                            return serviceResponse;
+                        return response;
 
-                        }), catchError(ServiceHelper.HandleServiceError));
+                    });
             }
             else {
 
-                serviceResponse.HasError = true;
-                serviceResponse.ErrorsArray = errorsArray;
+                response.HasError = true;
+                response.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(response);
 
             }
-        });
+        }
+
+        );
     }
 
     MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: DWQueryFilterPM = null) {

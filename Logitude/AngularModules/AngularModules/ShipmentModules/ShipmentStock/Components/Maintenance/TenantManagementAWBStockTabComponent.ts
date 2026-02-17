@@ -12,7 +12,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TenantManagementAWBStockTabComponent.html',
 })
 
@@ -49,7 +49,7 @@ export class TenantManagementAWBStockTabComponent implements OnInit {
         this.ItemsSource = [];
 
         var service: ShipmentDomainService = new ShipmentDomainService();
-        service.GetMessagingStockListForTenantManagmentTab(this.EntityPM.Id).subscribe((result:any) => {
+        service.GetMessagingStockListForTenantManagmentTab(this.EntityPM.Id).subscribe(result => {
             var allStocks: MessagingStockList[] = result.Result;
             if (allStocks) {
                 allStocks.sort((a, b) => { return (DateTool.GetDateFromDate(a.StartDate) === DateTool.GetDateFromDate(b.StartDate)) ? 0 : (DateTool.GetDateFromDate(a.StartDate) > DateTool.GetDateFromDate(b.StartDate)) ? -1 : 1 }).forEach(item => {

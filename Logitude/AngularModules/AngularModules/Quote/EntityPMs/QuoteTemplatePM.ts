@@ -122,11 +122,6 @@ export class QuoteTemplatePM {
     public set IsEnabledForCustomers(newValue: boolean) { if (this.isEnabledForCustomers != newValue) { this.isEnabledForCustomers = newValue; this.MarkAsDirty("IsEnabledForCustomers"); } }
        
 	 
-    private tenantName: string;
-    public get TenantName() { return this.tenantName; }
-    public set TenantName(newValue: string) { if (this.tenantName != newValue) { this.tenantName = newValue; this.MarkAsDirty("TenantName"); } }
-       
-	 
      
 	private templateSections: QuoteTemplateSectionPM[];
     get  TemplateSections() {
@@ -146,10 +141,7 @@ export class QuoteTemplatePM {
     public OldEntityPM: QuoteTemplatePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -157,7 +149,6 @@ export class QuoteTemplatePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplate");
            
         }
-	 }
     }
     private MyClone: QuoteTemplatePM;
 

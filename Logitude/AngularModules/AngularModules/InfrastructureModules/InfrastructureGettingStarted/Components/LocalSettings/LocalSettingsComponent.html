@@ -84,7 +84,7 @@
                     </td>
 
                     <td>
-                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:150px;" [ItemsSource]="TimeZonesList" (SelectedItemChanged)="TimeZoneSelectedItem = $event" [SelectedItem]="TimeZoneSelectedItem" [Binding]="'TimeZoneName'" attr.data-cy="{{'ComboBox_TimeZone'}}"></ComboBox>
+                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:150px;" [ItemsSource]="TimeZonesList" (SelectedItemChanged)="TimeZoneSelectedItem = $event" [SelectedItem]="TimeZoneSelectedItem" [Binding]="'TimeZoneName'"></ComboBox>
                     </td>
 
                     <td style="padding-left: 5px;">
@@ -99,7 +99,7 @@
                     </td>
 
                     <td>
-                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:200px;" [ItemsSource]="DateTimeFormatsList" [SelectedItem]="DateTimeFormatSelectedItem" (SelectedItemChanged)="DateTimeFormatSelectedChange($event)" [Binding]="'DisplayName'" attr.data-cy="{{'ComboBox_DateTimeFormat'}}"></ComboBox>
+                        <ComboBox [IsDisabled]="IsHitTestVisible" style="width:200px;" [ItemsSource]="DateTimeFormatsList" [SelectedItem]="DateTimeFormatSelectedItem" (SelectedItemChanged)="DateTimeFormatSelectedChange($event)" [Binding]="'DisplayName'"></ComboBox>
                     </td>
 
                     <td>
@@ -109,7 +109,7 @@
 
                 <tr class="FormFieldRow">
                     <td>
-                        <label>Number Format: </label>
+                        Number Format :
                     </td>
 
                     <td colspan="2">
@@ -120,7 +120,7 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'NumberFormat'"
-                                            [HideColumns]="false"> 
+                                            [HideColumns]="false">
                                     </LogLov>
                                 </td>
                                 <td>

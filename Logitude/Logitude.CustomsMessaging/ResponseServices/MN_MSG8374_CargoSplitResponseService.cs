@@ -22,7 +22,7 @@ using UnifreightIIG.Common.MessageLib.Storage;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.Docs;
 using UnifreightIIG.Common.CargoSplitSaveServiceReference;
 using Logitude.AmitalMessaging.Customs.CustomFile;
@@ -45,7 +45,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
     public class MN_MSG8374_CargoSplitResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, MN_MSG8374_CargoSplitRequestFeedBack_Message, CargoSplitRequestParams>
     {
-        DeclarationPM declaration = new DeclarationPM();
 
         public override void Update(MN_MSG8374_CargoSplitRequestFeedBack_Message customResponse, CargoSplitRequestParams requestParams)
         {
@@ -79,7 +78,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (customResponse.ResponseContentHeader.Exception == null)
             {
 
-                if (customResponse != null && customResponse.CargoSplitRequestResponse != null)
+                if (customResponse != null && customResponse.CargoSplitRequestResponse != null && customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified)
                 {
                     cargoSpllitRequestNumber = customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumber.ToString();
                     declarationCargoSplitID = myDeclarationCargoSplitQueryService.GetIdByDeclarationCargoSplitRequestNumber(cargoSpllitRequestNumber, requestParams.Tenant);
@@ -144,15 +143,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 succeeded = true;
                 applicationId = customResponse.ResponseContentHeader.ApplicationID.ToString();
                 hasException = false;
-                exceptionMessage = "בקשה לפיצול מטען נשלחה בהצלחה";
+                exceptionMessage = "מענה לבקשת פיצול מטען נשלח בהצלחה";
                 string userMess = null;
 
-                if ((string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
+                if ((customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified && string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
                  || (customResponse.CargoSplitRequestResponse.responseStatus != _DeclarationCargoSplitPM.ResponseStatusCode))
                 {
                     var DeclarationCargoSplitUpdateService = new DeclarationCargoSplitUpdateService(dbContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
                     _DeclarationCargoSplitPM.ChangeSetOp = ChangeSetOperation.Update;
-                    if (string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
+                    if (customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumberSpecified && string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.RequestNumber))
                     {
                         _DeclarationCargoSplitPM.RequestNumber = customResponse.CargoSplitRequestResponse.CargoSpllitRequestNumber.ToString();
                     }
@@ -162,7 +161,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         userMess = RaiseDeclarationCargoSplitResponseStatus(_DeclarationCargoSplitPM, customResponse, requestParams);
                         if (userMess != null) exceptionMessage = userMess;
                     }
-                    if (customResponse.CargoSplitRequestResponse.CargoIdentifier != null && declaration.Direction!="E")
+                    if (customResponse.CargoSplitRequestResponse.CargoIdentifier != null)
                     {
                         if (_DeclarationCargoSplitPM.DecCargoSplitCargoIdentifiers != null)
                         {
@@ -190,14 +189,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             _DeclarationCargoSplitPM.DecCargoSplitCargoIdentifiers = myDecCargoSplitCargoIdentifierPMList;
                         }
                     }
-                    if(declaration.Direction == "E")
-                    {
-                        var statuses = new List<string> { "1", "4", "6" };
-                        if (statuses.Contains(customResponse.CargoSplitRequestResponse.responseStatus))
-                        {
-                            _DeclarationCargoSplitPM.IsClosed = true;
-                        }
-                    }
                     DeclarationCargoSplitUpdateService.Update(_DeclarationCargoSplitPM, true);
                 }
                 else
@@ -218,17 +209,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     switch (_DeclarationCargoSplitPM.ResponseStatusCode)
                     {
                         case "1":
-                            notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " אושרה " + customsFileNo;
+                            notificationDescription = "בקשת פיצול מטען אושרה " + customsFileNo;
                             break;
                         case "2":
-                            notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " נדחתה " + customsFileNo;
+                            notificationDescription = "בקשת פיצול מטען נדחתה " + customsFileNo;
                             break;
                         case "4":
                         case "7":
-                            notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " בוטלה " + customsFileNo;
+                            notificationDescription = "בקשת פיצול מטען בוטלה " + customsFileNo;
                             break;
                         case "6":
-                            notificationDescription = "בוצע פיצול מטען  " + customsFileNo;
+                            notificationDescription = "בוצע פיצול מטען " + customsFileNo;
                             break;
                         default:
                             notificationDescription = "התקבל משוב לפיצול מטען " + customsFileNo;
@@ -280,6 +271,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string notificationStatusCode = "";
             string assigneToNotificationTypeCode = "I";
             string customsFileNo = "";
+            DeclarationPM declaration = new DeclarationPM();
 
             if (!string.IsNullOrWhiteSpace(_DeclarationCargoSplitPM.DeclarationId))
             {
@@ -296,26 +288,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case "1":
                     status = "CSA";
                     notificationDefinitionCode = "8374A";
-                    notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " אושרה " + customsFileNo;
+                    notificationDescription = "בקשת פיצול מטען אושרה " + customsFileNo;
                     userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " אושרה";
                     break;
                 case "2":
                     status = "CSJ";
                     notificationDefinitionCode = "8374J";
-                    notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " נדחתה " + customsFileNo;
+                    notificationDescription = "בקשת פיצול מטען נדחתה " + customsFileNo;
                     userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " נדחתה";
                     break;
                 case "4":
                 case "7":
                     status = "CSC";
                     notificationDefinitionCode = "8374C";
-                    notificationDescription = "בקשת פיצול מטען מס' " + _DeclarationCargoSplitPM.RequestNumber + " בוטלה " + customsFileNo;
+                    notificationDescription = "בקשת פיצול מטען בוטלה " + customsFileNo;
                     userMessage = "בקשת פיצול מטען " + _DeclarationCargoSplitPM.RequestNumber + " בוטלה";
                     break;
                 case "6":
                     status = "CSD";
                     notificationDefinitionCode = "8374D";
-                    notificationDescription = "בוצע פיצול מטען  " + customsFileNo;
+                    notificationDescription = "בוצע פיצול מטען " + customsFileNo;
                     userMessage = "בוצע פיצול מטען לבקשה " + _DeclarationCargoSplitPM.RequestNumber;
                     break;
             }
@@ -333,7 +325,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Start Sending Notification... ");
-                DoUpdateNotification(notificationDefinitionCode, _DeclarationCargoSplitPM.Tenant, customResponse.ResponseContentHeader.Remark, notificationDescription, assigneToNotificationTypeCode, declaration, _DeclarationCargoSplitPM);
+                DoUpdateNotification(notificationDefinitionCode, _DeclarationCargoSplitPM.Tenant, customResponse.ResponseContentHeader.Remark, notificationDescription, assigneToNotificationTypeCode, declaration);
             }
 
             this.MyRequestSheetParam.CustomFileNo = customsFileNo;
@@ -349,7 +341,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode, DeclarationPM connectedDeclarationPM, DeclarationCargoSplitPM _DeclarationCargoSplitPM)
+        private void DoUpdateNotification(string notificationDefinitionCode, int tenant, string responseToMessage, string description, string typeCode, DeclarationPM connectedDeclarationPM)
         {
             LogMessagingUtil.Instance.AppendLine("New Message To Agent Request Notification");
 
@@ -366,17 +358,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             newNotificationPM.Reference2Number = responseToMessage;
             newNotificationPM.DueDate = DateTime.Now;
             newNotificationPM.AssigneToNotificationTypeCode = typeCode;
-            if(_DeclarationCargoSplitPM != null)
-            {
-                newNotificationPM.EntityId = _DeclarationCargoSplitPM.Id;
-                newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.DeclarationCargoSplit");
-            }
 
             string customerId = null;
             string referentUserId = null;
             if (connectedDeclarationPM != null)
             {
-                if (_DeclarationCargoSplitPM != null) newNotificationPM.Reference2Number = _DeclarationCargoSplitPM.Id;
                 newNotificationPM.EntityId = connectedDeclarationPM.Id;
                 newNotificationPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 newNotificationPM.Reference1Number = connectedDeclarationPM.CustomFileNo;

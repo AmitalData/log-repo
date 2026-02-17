@@ -33,7 +33,11 @@ namespace CustomsWorkerRole
         {
 
         }
-       
+        protected override bool ProcessMessage(BrokeredMessage message, OverrideControllerModel controller = null)
+        {
+            ProcessMessage(message );
+            return true;
+        }
         protected override bool ProcessMessage_Db(CustomDBQueueMessage msgResponse)
         {
             ProcessMessage_DbOverride(msgResponse);
@@ -70,7 +74,7 @@ namespace CustomsWorkerRole
                     return;
                 }
                 //{"InterfaceTypeCode":"8250","Tenant":"1","CorrelationId":"4292c133-b256-45b2-9c89-b439b53c2ebb"}
-                string CorrelationId = message.GetProperty<string>(QueueExt.QueuePropertyNames.CorrelationId, "");
+                string CorrelationId= message.GetProperty<string>(QueueExt.QueuePropertyNames.CorrelationId,""); 
                 if (String.IsNullOrWhiteSpace(CorrelationId))
                 {
                     message.SafeComplete();
@@ -79,10 +83,7 @@ namespace CustomsWorkerRole
                     return;//
                 }
                 var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(analyzeClass);
-                anaO.MyOverrideControllerModel = new OverrideControllerModel()
-                {
-                    IsCustomsMessagingSheetWR = true
-                };
+
                 var resDat = anaO.SendSheet(tenant, CorrelationId);
 
                 message.SafeComplete();
@@ -508,7 +509,7 @@ namespace CustomsWorkerRole
                 //    var customsRequestsSheetService = CustomsRequestsSheetService
                 //        .CreateNew<Logitude.CustomsMessaging.Common.RequestParams.GenericRequestParams>(req);
                 //    var reqSheet = customsRequestsSheetService.GetRequestSheet();
-                //   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("reqSheet.Id" + reqSheet.Id);
+                //    Debug.WriteLine("reqSheet.Id" + reqSheet.Id);
                 //    var retrieved = CustomsRequestsSheetService
                 //        .Seed<Logitude.CustomsMessaging.Common.RequestParams.GenericRequestParams>(
                 //        //"1-8"
@@ -520,7 +521,7 @@ namespace CustomsWorkerRole
                 
                 var messService = new Logitude.CustomsMessaging.MessagingServices.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService();
                 var responseData = messService.SendSheet(req);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("reqSheet.Id" + responseData.CustomsRequestsSheetId);
+                Debug.WriteLine("reqSheet.Id" + responseData.CustomsRequestsSheetId);
                 var messService1 = new Logitude.CustomsMessaging.MessagingServices.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityMessagingService();
                 var newTaa = messService1.SendSheet(req.Tenant, responseData.CustomsRequestsSheetId);
 
@@ -567,7 +568,7 @@ namespace CustomsWorkerRole
                 //    var customsRequestsSheetService = CustomsRequestsSheetService
                 //        .CreateNew<Logitude.CustomsMessaging.Common.RequestParams.GenericRequestParams>(req);
                 //    var reqSheet = customsRequestsSheetService.GetRequestSheet();
-                //   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("reqSheet.Id" + reqSheet.Id);
+                //    Debug.WriteLine("reqSheet.Id" + reqSheet.Id);
                 //    var retrieved = CustomsRequestsSheetService
                 //        .Seed<Logitude.CustomsMessaging.Common.RequestParams.GenericRequestParams>(
                 //        //"1-8"
@@ -579,7 +580,7 @@ namespace CustomsWorkerRole
 
                 var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
                 var responseData = messService.SendSheet(req);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("reqSheet.Id" + responseData.CustomsRequestsSheetId);
+                Debug.WriteLine("reqSheet.Id" + responseData.CustomsRequestsSheetId);
                 var messService1 = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
                 var newTaa = messService1.SendSheet(req.Tenant, responseData.CustomsRequestsSheetId);
 

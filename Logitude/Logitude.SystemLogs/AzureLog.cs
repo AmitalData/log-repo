@@ -10,15 +10,12 @@ using Logitude.SystemLogs.Repositories;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Entity.Validation;
-using NLog;
 
 namespace Logitude.SystemLogs
 {
     public static class AzureLog
     {
-
-
-        public static void SaveFileToStorage(string filename, string fileContent, int tenant)
+        public static void SaveFileToStorage(string filename,string fileContent,int tenant)
         {
             try
             {
@@ -57,7 +54,7 @@ namespace Logitude.SystemLogs
             }
             catch (Exception ex) { }
         }
-        public static void SaveLogsInStorage(string log, string type, DateTime clientDate, string message, string stackTrace, int tenant, string userId, string userName, string IP, Exception cachedException = null)
+        public static void SaveLogsInStorage(string log, string type, DateTime clientDate, string message, string stackTrace, int tenant, string userId, string userName, string IP,Exception cachedException = null)
         {
             CloudBlobContainer blobContainer = null;
             CloudBlockBlob blobfile = null;
@@ -113,8 +110,8 @@ namespace Logitude.SystemLogs
                             }
 
                         case "E": // Errors Log
-                                  // AddLogRecord(log, tenant, stackTrace, clientDate, userId, userName, IP);
-                                  //blobfile = blobContainer.GetBlockBlobReference("errorslog.txt");
+                           // AddLogRecord(log, tenant, stackTrace, clientDate, userId, userName, IP);
+                            //blobfile = blobContainer.GetBlockBlobReference("errorslog.txt");
                             break;
 
                         case "P": // Performance Log
@@ -219,126 +216,92 @@ namespace Logitude.SystemLogs
         }
 
 
-        static void AddLogRecord(string exception, int tenant, string stackTrace, DateTime clientDate, string userId, string userName, string IP, Exception cachedException)
+        static void AddLogRecord(string exception,int tenant ,string stackTrace, DateTime clientDate,  string userId, string userName,string IP, Exception cachedException)
         {
-            try
+
+            if (!string.IsNullOrEmpty(exception) && exception.Contains("Sorry! you have no permission to do this operation"))
+                return;
+
+            var better1st7000ThenNothing = true;//itzik 
+            if (better1st7000ThenNothing)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(cachedException, string.Format("Tenant {0}, clientDate {1}, userID {2}, userName {3}, IP {4}, stackTrace {5}, exception:{6}",
-                              tenant, clientDate, userId, userName, IP, stackTrace, exception));
-
-                if (!string.IsNullOrEmpty(exception) && exception.Contains("Sorry! you have no permission to do this operation"))
-                    return;
-                string myStackTrace = GetStackTrace(exception);
-                if (!string.IsNullOrEmpty(myStackTrace))
+                exception = exception ?? "";
+                if (cachedException != null && cachedException.Source == "EntityFramework" && exception.Length > 7000)//Islam: take the start and the end if it is a db exception.
                 {
-                    stackTrace = myStackTrace;
+                    exception = exception.Substring(0, 3500) + exception.Substring(exception.Length - 3500, 3500);
                 }
-                if (stackTrace?.Length > 7000)
+                else
                 {
-                    stackTrace = stackTrace.Substring(0, 6999);
-                }
-                var better1st7000ThenNothing = true;//itzik 
-                if (better1st7000ThenNothing)
-                {
-
-                    exception = exception ?? "";
-                    if (cachedException != null && cachedException.Source == "EntityFramework" && exception.Length > 7000)//Islam: take the start and the end if it is a db exception.
-                    {
-                        exception = exception.Substring(0, 3500) + exception.Substring(exception.Length - 3500, 3500);
-                        //exception = HandleExceptionLength(exception);
-                    }
-                    else
-                    {
-                        exception = exception.Substring(0, Math.Min(7000, exception.Length));
-                    }
-                    if (LogitudeSettings.IsCostomsDeploy)
-                    {
-                        exception = exception.Substring(0, Math.Min(2000, exception.Length));
-                    }
-                }
-
-
-
-                if (String.IsNullOrWhiteSpace(userName))
-                {
-                    userName = userId;
-                }
-                if (String.IsNullOrWhiteSpace(userName) && LogitudeSettings.GetUserNameInject != null)
-                {
-                    userName = LogitudeSettings.GetUserNameInject(tenant);
-                }
-                if (String.IsNullOrWhiteSpace(userName))
-                {
-                    userName = "UnKnown";//Ismust
-                }
-                if (!string.IsNullOrEmpty(userName))
-                {
-                    userName = TruncateLongString(userName, 99);
-                }
-
-
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    ErrorLogRepository errorLogRrp = new ErrorLogRepository();
-                    ErrorLog errorLog = new ErrorLog()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        StackTrace = stackTrace,
-                        Exception = exception,
-                        Tenant = tenant,
-                        UserName = userName,
-                        LogDate = DateTime.Now,
-                        Tier = "Server",
-                        ClientDate = clientDate,
-                        SearchFields = "Server" + "," + userName + "," + exception + "," + tenant,
-                        IP = IP,
-                    };
-
-
-
-                    errorLogRrp.Add(errorLog);
-                    errorLogRrp.SubmitChanges();
-
-                    scope.Complete();
-
-                    try// mohammad : i didn't understand this code but it keeps throwing an exception
-                    {
-                        var curr = LogtitudeDomainScope.GetCurrent<ExceptionInErrorLog>();
-                        if (curr != null)
-                        {
-                            curr.ErrorlogId = errorLog.Id;
-                            curr.Message = exception;
-                        }
-                    }
-                    catch
-                    {
-                    }
-
-
+                    exception = exception.Substring(0, Math.Min(7000, exception.Length));
                 }
             }
-            catch (Exception ex)
-            {
+            
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+            if (String.IsNullOrWhiteSpace(userName))
+            {
+                userName=userId;
+            }
+            if (String.IsNullOrWhiteSpace(userName) && LogitudeSettings.GetUserNameInject != null)
+            {
+                userName = LogitudeSettings.GetUserNameInject(tenant);
+            }
+            if (String.IsNullOrWhiteSpace(userName))
+            {
+                userName = "UnKnown";//Ismust
+            }
+            if (!string.IsNullOrEmpty(userName))
+            {
+                userName = TruncateLongString(userName, 99);
             }
 
 
-
-        }
-
-        private static string GetStackTrace(string exception)
-        {
-            string StackTrace = "";
-            string[] myException = exception.Split('~');
-
-            if (myException.Length == 3)
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                //string Header = myException[0];
-                //string Body = myException[1]; 
-                StackTrace = myException[2];
+                ErrorLogRepository errorLogRrp = new ErrorLogRepository();
+                ErrorLog errorLog = new ErrorLog()
+                                   {
+                                       Id = Guid.NewGuid().ToString(),
+                                       StackTrace = stackTrace,
+                                       Exception = exception,
+                                       Tenant = tenant,
+                                       UserName = userName,
+                                       LogDate = DateTime.Now,
+                                       Tier = "Server",
+                                       ClientDate = clientDate,
+                                       SearchFields = "Server" + "," + userName + "," + exception + "," + tenant,
+                                       IP = IP,
+                                   };
+
+
+
+                errorLogRrp.Add(errorLog);
+                errorLogRrp.SubmitChanges();
+
+                scope.Complete();
+
+                try// mohammad : i didn't understand this code but it keeps throwing an exception
+                {
+                    var curr = LogtitudeDomainScope.GetCurrent<ExceptionInErrorLog>();
+                    if (curr != null)
+                    {
+                        curr.ErrorlogId = errorLog.Id;
+                        curr.Message = exception;
+                    }
+                }
+                catch
+                {
+                }
+
+
             }
-            return StackTrace;
+            //StorageAcountDetails.TableClient.GetTableReference("ErrorLogs");
+            //var serviceContext = StorageAcountDetails.TableClient.GetTableServiceContext();
+            //serviceContext.AddObject("ErrorLogs", errorLog);
+            //serviceContext.SaveChangesWithRetries();
+
+          //  errorsContext.ErrorLogsEntity.Add(errorLog);
+             
+           // errorsContext.SaveChanges();
         }
 
         public static void SaveWarmingLogsInStorage(string log, string type, int tenant)
@@ -354,13 +317,13 @@ namespace Logitude.SystemLogs
                 blobContainer = StorageAcountDetails.GetCurrentContainer("warminglogs");
                 blobContainer.CreateIfNotExists();
                 string machineInfo = (!string.IsNullOrEmpty(Environment.MachineName) ? Environment.MachineName : "").ToLower();
-                machineInfo = machineInfo + "_" + DateTime.Now.Date.ToShortDateString().ToLower();
+                machineInfo = machineInfo +"_"+ DateTime.Now.Date.ToShortDateString().ToLower();
                 switch (type)
                 {
 
                     case "E": // Errors Log
 
-                        blobfile = blobContainer.GetBlockBlobReference("warmingerrors_" + machineInfo + ".txt");
+                        blobfile = blobContainer.GetBlockBlobReference("warmingerrors_" + machineInfo+ ".txt");
                         break;
 
                     case "M": // Performance Log

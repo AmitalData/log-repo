@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,7 +21,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<ConsignmentPackageList> GetIqueryableList(IQueryable<ConsignmentPackage> iQueryable)
         {
-            IQueryable<ConsignmentPackageList> query = (from a in iQueryable.Include("PackageMeasureQualifier").Include("PackingType").Include("GrossMassMeasurmentUnit")
+            IQueryable<ConsignmentPackageList> query = (from a in iQueryable.Include("PackageMeasureQualifier").Include("PackingType")
+                                                        
                                                         select new ConsignmentPackageList()
                                                   {
                                                      ConsignmentNumber = a.ConsignmentNumber,
@@ -34,8 +35,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                     PackageQuantity= a.PackageQuantity,
                                                     PackageTypeCode = a.PackageTypeCode,
                                                     PackageTypeName= a.PackingType.EnglishName,
-                                                    GrossMassMeasureTypeCode = a.GrossMassMeasureTypeCode,
-                                                    GrossMassMeasureTypeName = a.GrossMassMeasurmentUnit.EnglishName,
                                                     Tenant = a.Tenant,
 
 

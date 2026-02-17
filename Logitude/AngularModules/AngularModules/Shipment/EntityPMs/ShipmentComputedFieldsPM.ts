@@ -20,7 +20,7 @@ export class ShipmentComputedFieldsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -110,11 +110,6 @@ export class ShipmentComputedFieldsPM {
     public set ContainersNumbers(newValue: string) { if (this.containersNumbers != newValue) { this.containersNumbers = newValue; this.MarkAsDirty("ContainersNumbers"); } }
        
 	 
-    private containersNumbersAndTypesArray: string;
-    public get ContainersNumbersAndTypesArray() { return this.containersNumbersAndTypesArray; }
-    public set ContainersNumbersAndTypesArray(newValue: string) { if (this.containersNumbersAndTypesArray != newValue) { this.containersNumbersAndTypesArray = newValue; this.MarkAsDirty("ContainersNumbersAndTypesArray"); } }
-       
-	 
     private firstPickupATD: Date;
     public get FirstPickupATD() { return this.firstPickupATD; }
     public set FirstPickupATD(newValue: Date) { if (this.firstPickupATD != newValue) { this.firstPickupATD = newValue; this.MarkAsDirty("FirstPickupATD"); } }
@@ -145,189 +140,11 @@ export class ShipmentComputedFieldsPM {
     public set FinalDeliveryATA(newValue: Date) { if (this.finalDeliveryATA != newValue) { this.finalDeliveryATA = newValue; this.MarkAsDirty("FinalDeliveryATA"); } }
        
 	 
-    private operationallyClosedByUserId: string;
-    public get OperationallyClosedByUserId() { return this.operationallyClosedByUserId; }
-    public set OperationallyClosedByUserId(newValue: string) { if (this.operationallyClosedByUserId != newValue) { this.operationallyClosedByUserId = newValue; this.MarkAsDirty("OperationallyClosedByUserId"); } }
-       
-	 
-    private numberOfDeliveries: number;
-    public get NumberOfDeliveries() { return this.numberOfDeliveries; }
-    public set NumberOfDeliveries(newValue: number) { if (this.numberOfDeliveries != newValue) { this.numberOfDeliveries = newValue; this.MarkAsDirty("NumberOfDeliveries"); } }
-       
-	 
-    private lastPickupETA: Date;
-    public get LastPickupETA() { return this.lastPickupETA; }
-    public set LastPickupETA(newValue: Date) { if (this.lastPickupETA != newValue) { this.lastPickupETA = newValue; this.MarkAsDirty("LastPickupETA"); } }
-       
-	 
-    private lastPickupETD: Date;
-    public get LastPickupETD() { return this.lastPickupETD; }
-    public set LastPickupETD(newValue: Date) { if (this.lastPickupETD != newValue) { this.lastPickupETD = newValue; this.MarkAsDirty("LastPickupETD"); } }
-       
-	 
-    private lastPickupATA: Date;
-    public get LastPickupATA() { return this.lastPickupATA; }
-    public set LastPickupATA(newValue: Date) { if (this.lastPickupATA != newValue) { this.lastPickupATA = newValue; this.MarkAsDirty("LastPickupATA"); } }
-       
-	 
-    private lastPickupATD: Date;
-    public get LastPickupATD() { return this.lastPickupATD; }
-    public set LastPickupATD(newValue: Date) { if (this.lastPickupATD != newValue) { this.lastPickupATD = newValue; this.MarkAsDirty("LastPickupATD"); } }
-       
-	 
-    private deliveryToPortId: string;
-    public get DeliveryToPortId() { return this.deliveryToPortId; }
-    public set DeliveryToPortId(newValue: string) { if (this.deliveryToPortId != newValue) { this.deliveryToPortId = newValue; this.MarkAsDirty("DeliveryToPortId"); } }
-       
-	 
-    private deliveryFrom: string;
-    public get DeliveryFrom() { return this.deliveryFrom; }
-    public set DeliveryFrom(newValue: string) { if (this.deliveryFrom != newValue) { this.deliveryFrom = newValue; this.MarkAsDirty("DeliveryFrom"); } }
-       
-	 
-    private deliveryTo: string;
-    public get DeliveryTo() { return this.deliveryTo; }
-    public set DeliveryTo(newValue: string) { if (this.deliveryTo != newValue) { this.deliveryTo = newValue; this.MarkAsDirty("DeliveryTo"); } }
-       
-	 
-    private pickupFrom: string;
-    public get PickupFrom() { return this.pickupFrom; }
-    public set PickupFrom(newValue: string) { if (this.pickupFrom != newValue) { this.pickupFrom = newValue; this.MarkAsDirty("PickupFrom"); } }
-       
-	 
-    private pickupTo: string;
-    public get PickupTo() { return this.pickupTo; }
-    public set PickupTo(newValue: string) { if (this.pickupTo != newValue) { this.pickupTo = newValue; this.MarkAsDirty("PickupTo"); } }
-       
-	 
-    private operationallyClosedByUserName: string;
-    public get OperationallyClosedByUserName() { return this.operationallyClosedByUserName; }
-    public set OperationallyClosedByUserName(newValue: string) { if (this.operationallyClosedByUserName != newValue) { this.operationallyClosedByUserName = newValue; this.MarkAsDirty("OperationallyClosedByUserName"); } }
-       
-	 
-    private createdFromDigital: boolean;
-    public get CreatedFromDigital() { return this.createdFromDigital; }
-    public set CreatedFromDigital(newValue: boolean) { if (this.createdFromDigital != newValue) { this.createdFromDigital = newValue; this.MarkAsDirty("CreatedFromDigital"); } }
-       
-	 
-    private deliveryTruckerId: string;
-    public get DeliveryTruckerId() { return this.deliveryTruckerId; }
-    public set DeliveryTruckerId(newValue: string) { if (this.deliveryTruckerId != newValue) { this.deliveryTruckerId = newValue; this.MarkAsDirty("DeliveryTruckerId"); } }
-       
-	 
-    private deliveryTruckerNumber: string;
-    public get DeliveryTruckerNumber() { return this.deliveryTruckerNumber; }
-    public set DeliveryTruckerNumber(newValue: string) { if (this.deliveryTruckerNumber != newValue) { this.deliveryTruckerNumber = newValue; this.MarkAsDirty("DeliveryTruckerNumber"); } }
-       
-	 
-    private deliveryDriver: string;
-    public get DeliveryDriver() { return this.deliveryDriver; }
-    public set DeliveryDriver(newValue: string) { if (this.deliveryDriver != newValue) { this.deliveryDriver = newValue; this.MarkAsDirty("DeliveryDriver"); } }
-       
-	 
-    private deliveryTrailerNumber: string;
-    public get DeliveryTrailerNumber() { return this.deliveryTrailerNumber; }
-    public set DeliveryTrailerNumber(newValue: string) { if (this.deliveryTrailerNumber != newValue) { this.deliveryTrailerNumber = newValue; this.MarkAsDirty("DeliveryTrailerNumber"); } }
-       
-	 
-    private deliveryNotes: string;
-    public get DeliveryNotes() { return this.deliveryNotes; }
-    public set DeliveryNotes(newValue: string) { if (this.deliveryNotes != newValue) { this.deliveryNotes = newValue; this.MarkAsDirty("DeliveryNotes"); } }
-       
-	 
-    private pickupTruckerId: string;
-    public get PickupTruckerId() { return this.pickupTruckerId; }
-    public set PickupTruckerId(newValue: string) { if (this.pickupTruckerId != newValue) { this.pickupTruckerId = newValue; this.MarkAsDirty("PickupTruckerId"); } }
-       
-	 
-    private pickupTruckerNumber: string;
-    public get PickupTruckerNumber() { return this.pickupTruckerNumber; }
-    public set PickupTruckerNumber(newValue: string) { if (this.pickupTruckerNumber != newValue) { this.pickupTruckerNumber = newValue; this.MarkAsDirty("PickupTruckerNumber"); } }
-       
-	 
-    private pickupDriver: string;
-    public get PickupDriver() { return this.pickupDriver; }
-    public set PickupDriver(newValue: string) { if (this.pickupDriver != newValue) { this.pickupDriver = newValue; this.MarkAsDirty("PickupDriver"); } }
-       
-	 
-    private pickupTrailerNumber: string;
-    public get PickupTrailerNumber() { return this.pickupTrailerNumber; }
-    public set PickupTrailerNumber(newValue: string) { if (this.pickupTrailerNumber != newValue) { this.pickupTrailerNumber = newValue; this.MarkAsDirty("PickupTrailerNumber"); } }
-       
-	 
-    private pickupNotes: string;
-    public get PickupNotes() { return this.pickupNotes; }
-    public set PickupNotes(newValue: string) { if (this.pickupNotes != newValue) { this.pickupNotes = newValue; this.MarkAsDirty("PickupNotes"); } }
-       
-	 
-    private deliveryDate: Date;
-    public get DeliveryDate() { return this.deliveryDate; }
-    public set DeliveryDate(newValue: Date) { if (this.deliveryDate != newValue) { this.deliveryDate = newValue; this.MarkAsDirty("DeliveryDate"); } }
-       
-	 
-    private onHandDate: Date;
-    public get OnHandDate() { return this.onHandDate; }
-    public set OnHandDate(newValue: Date) { if (this.onHandDate != newValue) { this.onHandDate = newValue; this.MarkAsDirty("OnHandDate"); } }
-       
-	 
-    private pODDate: Date;
-    public get PODDate() { return this.pODDate; }
-    public set PODDate(newValue: Date) { if (this.pODDate != newValue) { this.pODDate = newValue; this.MarkAsDirty("PODDate"); } }
-       
-	 
-    private bookingConfirmationSent: Date;
-    public get BookingConfirmationSent() { return this.bookingConfirmationSent; }
-    public set BookingConfirmationSent(newValue: Date) { if (this.bookingConfirmationSent != newValue) { this.bookingConfirmationSent = newValue; this.MarkAsDirty("BookingConfirmationSent"); } }
-       
-	 
-    private preAlertSent: Date;
-    public get PreAlertSent() { return this.preAlertSent; }
-    public set PreAlertSent(newValue: Date) { if (this.preAlertSent != newValue) { this.preAlertSent = newValue; this.MarkAsDirty("PreAlertSent"); } }
-       
-	 
-    private deliveryNoticeSent: Date;
-    public get DeliveryNoticeSent() { return this.deliveryNoticeSent; }
-    public set DeliveryNoticeSent(newValue: Date) { if (this.deliveryNoticeSent != newValue) { this.deliveryNoticeSent = newValue; this.MarkAsDirty("DeliveryNoticeSent"); } }
-       
-	 
-    private expectedArrivalNoticeSent: Date;
-    public get ExpectedArrivalNoticeSent() { return this.expectedArrivalNoticeSent; }
-    public set ExpectedArrivalNoticeSent(newValue: Date) { if (this.expectedArrivalNoticeSent != newValue) { this.expectedArrivalNoticeSent = newValue; this.MarkAsDirty("ExpectedArrivalNoticeSent"); } }
-       
-	 
-    private arrivalNoticeSent: Date;
-    public get ArrivalNoticeSent() { return this.arrivalNoticeSent; }
-    public set ArrivalNoticeSent(newValue: Date) { if (this.arrivalNoticeSent != newValue) { this.arrivalNoticeSent = newValue; this.MarkAsDirty("ArrivalNoticeSent"); } }
-       
-	 
-    private t1Received: Date;
-    public get T1Received() { return this.t1Received; }
-    public set T1Received(newValue: Date) { if (this.t1Received != newValue) { this.t1Received = newValue; this.MarkAsDirty("T1Received"); } }
-       
-	 
-    private accountingClosedByUserId: string;
-    public get AccountingClosedByUserId() { return this.accountingClosedByUserId; }
-    public set AccountingClosedByUserId(newValue: string) { if (this.accountingClosedByUserId != newValue) { this.accountingClosedByUserId = newValue; this.MarkAsDirty("AccountingClosedByUserId"); } }
-       
-	 
-    private packagesQuantityAndType: string;
-    public get PackagesQuantityAndType() { return this.packagesQuantityAndType; }
-    public set PackagesQuantityAndType(newValue: string) { if (this.packagesQuantityAndType != newValue) { this.packagesQuantityAndType = newValue; this.MarkAsDirty("PackagesQuantityAndType"); } }
-       
-	 
-    private isDocumentsNeedApprove: boolean;
-    public get IsDocumentsNeedApprove() { return this.isDocumentsNeedApprove; }
-    public set IsDocumentsNeedApprove(newValue: boolean) { if (this.isDocumentsNeedApprove != newValue) { this.isDocumentsNeedApprove = newValue; this.MarkAsDirty("IsDocumentsNeedApprove"); } }
-       
-	 
 
     public OldEntityPM: ShipmentComputedFieldsPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -335,7 +152,6 @@ export class ShipmentComputedFieldsPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentComputedFields");
            
         }
-	 }
     }
     private MyClone: ShipmentComputedFieldsPM;
 

@@ -21,10 +21,10 @@ export class CustomerTenantAccessCardPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -103,16 +103,6 @@ export class CustomerTenantAccessCardPM {
     public set BuildBatch(newValue: boolean) { if (this.buildBatch != newValue) { this.buildBatch = newValue; this.MarkAsDirty("BuildBatch"); } }
        
 	 
-    private isExportActivated: boolean;
-    public get IsExportActivated() { return this.isExportActivated; }
-    public set IsExportActivated(newValue: boolean) { if (this.isExportActivated != newValue) { this.isExportActivated = newValue; this.MarkAsDirty("IsExportActivated"); } }
-       
-	 
-    private isCustomsActivated: boolean;
-    public get IsCustomsActivated() { return this.isCustomsActivated; }
-    public set IsCustomsActivated(newValue: boolean) { if (this.isCustomsActivated != newValue) { this.isCustomsActivated = newValue; this.MarkAsDirty("IsCustomsActivated"); } }
-       
-	 
 
     public OldEntityPM: CustomerTenantAccessCardPM;
 	    
@@ -123,10 +113,7 @@ export class CustomerTenantAccessCardPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -136,7 +123,6 @@ export class CustomerTenantAccessCardPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerTenantAccessCard");
            
         }
-	 }
     }
     private MyClone: CustomerTenantAccessCardPM;
 

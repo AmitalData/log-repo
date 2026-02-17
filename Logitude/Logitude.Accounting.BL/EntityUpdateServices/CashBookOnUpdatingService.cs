@@ -1,7 +1,7 @@
 ﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -23,10 +23,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             return TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
         }
-        public CashBookOnUpdatingService()
-        {
 
-        }
         public virtual string GetLogContactId(CashBookPM entityPM)
         {
             //ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);

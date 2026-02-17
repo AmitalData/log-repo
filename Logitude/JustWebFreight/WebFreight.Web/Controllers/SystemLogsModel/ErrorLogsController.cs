@@ -3,7 +3,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;
@@ -58,11 +58,7 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    //SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                   // SecurityUtility.AuthenticationOnEntityTenant("ErrorLog", entityPM.Tenant, authToken.Tenant);
                     //SecurityUtility.CheckContactFeature("ErrorLog", "NEW", authToken.Tenant);
-
-
 
                     ErrorLog errorLogs = new ErrorLog();
 
@@ -77,13 +73,26 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
                     try
                     {
                         if (!systemLogContext.ErrorLogs.Where(a => a.Id == entityPM.Id).Any())
-                        {  
-                            if (entityPM.UserName == null)
+                        {
+                            errorLogs.Id = entityPM.Id;
+                            entityPM.LogDate = DateTime.Now;
+                            string ip = "";
+                            if (HttpContext.Current != null && HttpContext.Current.Request != null)
                             {
-                                entityPM.UserName = HttpContext.Current.User.Identity.Name;
+                                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                                if (string.IsNullOrEmpty(currentIP))
+                                {
+                                    currentIP = HttpContext.Current.Request.UserHostAddress;
+                                }
+                                ip = currentIP;
                             }
+                            entityPM.IP = ip;
                             MapErrorLogsErrorLogsPM(entityPM, errorLogs);
-                            ErrorsLogger.AddErrorLog(errorLogs);
+                            errorLogRepository.Add(errorLogs);
+
+                            errorLogRepository.SubmitChanges();
+
+                            scope.Complete();
                         }
                     }
                     catch (Exception ex)
@@ -92,22 +101,16 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
                         {
                             if (ex.InnerException.Message.Contains("Violation of PRIMARY KEY constraint") || ex.Message.Contains("Violation of PRIMARY KEY constraint"))
                             {
-                                try
-                                {
-                                    entityPM.Id = Guid.NewGuid().ToString();
-                                    errorLogRepository.SubmitChanges();
-                                }
-                                catch (Exception)
-                                {  
-                                } 
+                                entityPM.Id = Guid.NewGuid().ToString();
+                                errorLogRepository.SubmitChanges();
                             }
                         }
-                        //else
-                        //    throw ex;
+                        else
+                            throw ex;
                         //Cannot insert duplicate key in object 
 
                     }
-                     scope.Complete();
+                    //  scope.Complete();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -158,8 +161,6 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("ErrorLog", entityPM.Tenant, authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ErrorLog", "UPDATE", authToken.Tenant);
 
                         string entityName = "ErrorLog" + entityPM.Id + entityPM.Tenant;

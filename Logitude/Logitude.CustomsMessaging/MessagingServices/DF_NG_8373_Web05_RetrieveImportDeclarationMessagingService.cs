@@ -14,8 +14,7 @@ using UnifreightIIG.Common.ClientSdk;
 using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.Faults;
 using UnifreightIIG.Common.TheGateway;
-using Logitude.CustomsMessaging.FakeMessagingServices;
-using System.Xml.Serialization;
+
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -71,59 +70,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             return null;
         }
-        public UnifreightIIG.Common.RetrieveImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse CastMsg(UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse customResponse)
-        {
-
-
-            string DeclarationString;
-            using (var stringwriter = new System.IO.StringWriter())
-            {
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-
-              //  ns.Add("q", "http://malam.com/customs/DealFile/Declaration/DF_MSG10000_ImportDeclaration");
-                var serializer = new XmlSerializer(customResponse.GetType());
-                serializer.Serialize(stringwriter, customResponse, namespaces: ns);
-                DeclarationString = stringwriter.ToString();
-            }
-            //DeclarationString = DeclarationString.Replace("xmlns:q", "xmlns");
-            //DeclarationString = DeclarationString.Replace("<q:", "<");
-            //DeclarationString = DeclarationString.Replace("</q:", "</");
-
-            using (var stringReader = new System.IO.StringReader(DeclarationString))
-            {
-                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.RetrieveImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse));
-
-                try
-                {
-                    return serializer.Deserialize(stringReader) as UnifreightIIG.Common.RetrieveImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse;
-
-
-                }
-                catch (System.Exception ex)
-                {
-                    return null;
-                }
-
-            }
-
-
-        }
 
         protected override DF_NG_2754_MSG10004_ImportDeclarationResponse CallWS(DF_NG_8373_Web05_RetrieveImportDeclaration_Request customRequest, DeclarationRestoreRequestParams requestParams, out string exceptionMessage)
         {
             exceptionMessage = null;
             var response = new DF_NG_2754_MSG10004_ImportDeclarationResponse();
-            var response1 = new UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse();
-
-            if (requestParams.TestCase != null)
-            {
-
-                var Fake  = new Fake_2754_MSG10004_ImportDeclarationResponse(requestParams);
-                _ResponseHeader = Fake.CallWS(requestParams, out response1);
-                response = CastMsg(response1);
-                return response;
-            }
-
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))

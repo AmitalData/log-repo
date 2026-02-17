@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -9,7 +9,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
         public ContactMap()
         {
             this.HasKey(t => t.Id);
-            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(120).IsUnicode(true);
+            this.Property(t => t.EnglishName).IsRequired().HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.Email).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.BusinessPhone).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.Mobile).HasMaxLength(25).IsUnicode(false);
@@ -27,7 +27,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Position).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.ComputedKey).HasMaxLength(70).IsUnicode(false);
             this.Property(t => t.CompanyName).HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ExternalId).HasMaxLength(20).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Contacts");
@@ -53,7 +52,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UserType).HasColumnName("UserType");
             this.Property(t => t.DontShowLocalLabels).HasColumnName("DontShowLocalLabels");
             this.Property(t => t.BirthdayReminder).HasColumnName("BirthdayReminder");
-            this.Property(t => t.DigitalPortalLanguage).HasColumnName("DigitalPortalLanguage");
             this.Property(t => t.AnniversaryReminder).HasColumnName("AnniversaryReminder");
             this.Property(t => t.DoneDate).HasColumnName("DoneDate");
             this.Property(t => t.BirthDayOfYear).HasColumnName("BirthDayOfYear");
@@ -63,10 +61,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ComputedKey).HasColumnName("ComputedKey");
             this.Property(t => t.CompanyName).HasColumnName("CompanyName");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
-            this.Property(t => t.ExternalId).HasColumnName("ExternalId");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
-            this.Property(t => t.ContactForAccounting).HasColumnName("ContactForAccounting");
-
 
             // Relationships
             this.HasOptional(t => t.ColorIndex).WithMany().HasForeignKey(d => d.IndexColor);

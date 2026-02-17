@@ -1,19 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddQueries
     {
-        public static Query AddQuery(QueryDetails queryDetails, QueryRepository queryRepository, Dictionary<string, Query> tenantQueries, int contextTenant = 0)
+        public static Query AddQuery(QueryDetails queryDetails, QueryRepository queryRepository, Dictionary<string, Query> tenantQueries)
         {
             if (tenantQueries.Keys.Contains(queryDetails.Code + queryDetails.ObjectTableId))
             {
@@ -22,7 +21,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.IndexOrder = queryDetails.IndexOrder;
                 query.IsAddNewEntityEnabled = queryDetails.IsAddNewEntityEnabled;
                 query.OriginalQueryId = queryDetails.OriginalQueryId;
-                query.OriginalQueryCode = queryDetails.OriginalQueryCode;
                 query.QueryGroupCode = queryDetails.QueryGroupCode;
                 query.QuerySection = queryDetails.QuerySection;
                 query.SystemLevel = queryDetails.SystemLevel;
@@ -32,7 +30,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.DefaultSortDirection = queryDetails.DefaultSortDirection;
                 query.DefaultSortColumn = queryDetails.DefaultSortName;
                 query.NameTextCodeId = queryDetails.NameTextCodeId;
-                query.NameTextCodeCode = queryDetails.NameTextCodeCode;
                 query.SpotlightDataTemplate = queryDetails.SpotlightDataTemplate;
                 query.Customer = queryDetails.Customer;
                 query.Agent = queryDetails.Agent;
@@ -43,8 +40,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 query.Perspective = queryDetails.Perspective;
                 query.IsHiddenFromView = queryDetails.IsHiddenFromView;
                 query.IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly;
-                query.UniqueCode = queryDetails.Tenant!=0? queryDetails.ObjectTableName+"."+ queryDetails.UserId+ "." + queryDetails.Code: queryDetails.ObjectTableName +"." + queryDetails.Code;
-                query.FeatureUniqeCode = queryDetails.FeatureUniqeCode;
                 queryRepository.Update(query);
                 return query;
             }
@@ -59,7 +54,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     QuerySection = queryDetails.QuerySection,
                     QueryGroupCode = queryDetails.QueryGroupCode,
                     OriginalQueryId = queryDetails.OriginalQueryId,
-                    OriginalQueryCode = queryDetails.OriginalQueryCode,
                     ObjectTableId = queryDetails.ObjectTableId,
                     IsAddNewEntityEnabled = queryDetails.IsAddNewEntityEnabled,
                     IndexOrder = queryDetails.IndexOrder,
@@ -67,9 +61,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Code = queryDetails.Code,
                     DefaultSortDirection = queryDetails.DefaultSortDirection,
                     DefaultSortColumn = queryDetails.DefaultSortName,
-                    Id = IdCounter.GetNumber("Query", contextTenant).ToString(),
+                    Id = IdCounter.GetNumber("Query", queryDetails.Tenant).ToString(),
                     NameTextCodeId = queryDetails.NameTextCodeId,
-                    NameTextCodeCode = queryDetails.NameTextCodeCode,
                     SpotlightDataTemplate = queryDetails.SpotlightDataTemplate,
                     Agent = queryDetails.Agent,
                     Customer = queryDetails.Customer,
@@ -80,66 +73,17 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Perspective = queryDetails.Perspective,
                     IsHiddenFromView = queryDetails.IsHiddenFromView,
                     IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly,
-                    UniqueCode = queryDetails.Tenant != 0 ? queryDetails.ObjectTableName + "." + queryDetails.UserId + "." + queryDetails.Code : queryDetails.ObjectTableName + "." + queryDetails.Code,
-
-
-                FeatureUniqeCode = queryDetails.FeatureUniqeCode,
-
-                }; 
+                }; ;
                 queryRepository.Add(newQuery);
                 return newQuery;
             }
         }
 
-        public static Query AddQuery(QueryDetails queryDetails, List<Query> addedQueries, int contextTenant = 0)
+        public static QueryColumn AddQueryColumn(QueryColumnDetails queryColumnDetails, QueryColumnRepository queryColumnRepository, Dictionary<string, QueryColumn> tenantQueryColumn)
         {
-
-            Query newQuery = new Query()
+            if (tenantQueryColumn.Keys.Contains(queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldId))
             {
-                UserId = queryDetails.UserId,
-                TenantLevel = queryDetails.TenantLevel,
-                Tenant = queryDetails.Tenant,
-                SystemLevel = queryDetails.SystemLevel,
-                QuerySection = queryDetails.QuerySection,
-                QueryGroupCode = queryDetails.QueryGroupCode,
-                OriginalQueryId = queryDetails.OriginalQueryId,
-                OriginalQueryCode = queryDetails.OriginalQueryCode,
-                ObjectTableId = queryDetails.ObjectTableId,
-                IsAddNewEntityEnabled = queryDetails.IsAddNewEntityEnabled,
-                IndexOrder = queryDetails.IndexOrder,
-                DisplayCount = queryDetails.DisplayCount,
-                Code = queryDetails.Code,
-                DefaultSortDirection = queryDetails.DefaultSortDirection,
-                DefaultSortColumn = queryDetails.DefaultSortName,
-                Id = IdCounter.GetIdWithIdsRange("Query",100, contextTenant).ToString(),//IdCounter.GetNumber("Query", queryDetails.Tenant).ToString(),
-                NameTextCodeId = queryDetails.NameTextCodeId,
-                NameTextCodeCode = queryDetails.NameTextCodeCode,
-                SpotlightDataTemplate = queryDetails.SpotlightDataTemplate,
-                Agent = queryDetails.Agent,
-                Customer = queryDetails.Customer,
-                Internal = queryDetails.Internal,
-                FeatureId = queryDetails.FeatureId,
-                EditWizardName = queryDetails.EditWizardName,
-                EditWizardComponentPath = queryDetails.EditWizardComponentPath,
-                Perspective = queryDetails.Perspective,
-                IsHiddenFromView = queryDetails.IsHiddenFromView,
-                IsNewFromTenantZeroOnly = queryDetails.IsNewFromTenantZeroOnly,
-                UniqueCode = queryDetails.Tenant != 0 ? queryDetails.ObjectTableName + "." + queryDetails.UserId + "." + queryDetails.Code : queryDetails.ObjectTableName + "." + queryDetails.Code,
-
-
-                FeatureUniqeCode = queryDetails.FeatureUniqeCode,
-
-            };
-            addedQueries.Add(newQuery);
-            return newQuery;
-
-        }
-
-        public static QueryColumn AddQueryColumn(QueryColumnDetails queryColumnDetails, QueryColumnRepository queryColumnRepository, Dictionary<string, QueryColumn> tenantQueryColumn, int contextTenant = 0)
-        {
-            if (tenantQueryColumn.Keys.Contains(queryColumnDetails.QueryCode + queryColumnDetails.ObjectFieldCode))
-            {
-                QueryColumn queryColumn = tenantQueryColumn[queryColumnDetails.QueryCode + queryColumnDetails.ObjectFieldCode];
+                QueryColumn queryColumn = tenantQueryColumn[queryColumnDetails.QueryId + queryColumnDetails.ObjectFieldId];
                 queryColumn.ColumnWidth = queryColumnDetails.ColumnWidth;
                 queryColumn.IndexOrder = queryColumnDetails.IndexOrder;
                 queryColumn.Tenant = queryColumnDetails.Tenant;
@@ -155,51 +99,28 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ObjectFieldId = queryColumnDetails.ObjectFieldId,
                     IndexOrder = queryColumnDetails.IndexOrder,
                     ColumnWidth = queryColumnDetails.ColumnWidth,
-                    Id = IdCounter.GetNumber("QueryColumn", contextTenant).ToString(),
+                    Id = IdCounter.GetNumber("QueryColumn",queryColumnDetails.Tenant).ToString(),
                     QueryId = queryColumnDetails.QueryId,
-                    QueryCode = queryColumnDetails.QueryCode,
-                    ObjectFieldCode = queryColumnDetails.ObjectFieldCode,
                 };
                 queryColumnRepository.Add(newQureyColumn);
                 return newQureyColumn;
             }
         }
 
-        public static QueryColumn AddQueryColumn(QueryColumnDetails queryColumnDetails, List<QueryColumn> addedColumns,int contextTenant=0)
+       
+
+        public static AdvancedQueryFilter AddAdvancedQueryFilter(AdvancedFilterDetails advancedQueryFilterDetails, AdvancedQueryFilterRepository advancedQueryFilterRepository, Dictionary<string, AdvancedQueryFilter> tenantAdvancedQueryFilter)
         {
-
-            QueryColumn newQureyColumn = new QueryColumn()
+            if (tenantAdvancedQueryFilter.Keys.Contains(advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldId))
             {
-                Tenant = queryColumnDetails.Tenant,
-                ObjectFieldId = queryColumnDetails.ObjectFieldId,
-                IndexOrder = queryColumnDetails.IndexOrder,
-                ColumnWidth = queryColumnDetails.ColumnWidth,
-                Id = IdCounter.GetIdWithIdsRange("QueryColumn", 100, contextTenant).ToString(),//IdCounter.GetNumber("QueryColumn", queryColumnDetails.Tenant).ToString(),
-                QueryId = queryColumnDetails.QueryId,
-                QueryCode = queryColumnDetails.QueryCode,
-                ObjectFieldCode = queryColumnDetails.ObjectFieldCode,
-            };
-            addedColumns.Add(newQureyColumn);
-            return newQureyColumn;
-
-        }
-
-
-
-        public static AdvancedQueryFilter AddAdvancedQueryFilter(AdvancedFilterDetails advancedQueryFilterDetails, AdvancedQueryFilterRepository advancedQueryFilterRepository, Dictionary<string, AdvancedQueryFilter> tenantAdvancedQueryFilter,int contextTenant=0)
-        {
-            if (tenantAdvancedQueryFilter.Keys.Contains(advancedQueryFilterDetails.QueryCode + advancedQueryFilterDetails.ObjectFieldCode))
-            {
-                AdvancedQueryFilter advancedQueryFilter = tenantAdvancedQueryFilter[advancedQueryFilterDetails.QueryCode + advancedQueryFilterDetails.ObjectFieldCode];
+                AdvancedQueryFilter advancedQueryFilter = tenantAdvancedQueryFilter[advancedQueryFilterDetails.QueryId + advancedQueryFilterDetails.ObjectFieldId];
 
                 advancedQueryFilter.IndexOrder = advancedQueryFilterDetails.IndexOrder;
                 advancedQueryFilter.IsPredefined = advancedQueryFilterDetails.IsPredefined;
                 advancedQueryFilter.Operator = advancedQueryFilterDetails.Operator;
                 advancedQueryFilter.PredefinedValue = advancedQueryFilterDetails.PredefinedValue;
                 advancedQueryFilter.PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2;
-                advancedQueryFilter.CustomPredefined = advancedQueryFilterDetails.CustomPredefined;
                 advancedQueryFilter.Tenant = advancedQueryFilterDetails.Tenant;
-                advancedQueryFilter.ObjectFieldCode = advancedQueryFilterDetails.ObjectFieldCode;
                 advancedQueryFilterRepository.Update(advancedQueryFilter);
                 return advancedQueryFilter;
             }
@@ -214,37 +135,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Operator = advancedQueryFilterDetails.Operator,
                     PredefinedValue = advancedQueryFilterDetails.PredefinedValue,
                     PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2,
-                    CustomPredefined =advancedQueryFilterDetails.CustomPredefined,
-                    Id = IdCounter.GetNumber("AdvancedQueryFilter", contextTenant).ToString(),
+                    Id = IdCounter.GetNumber("AdvancedQueryFilter",advancedQueryFilterDetails.Tenant).ToString(),
                     QueryId = advancedQueryFilterDetails.QueryId,
-                    QueryCode = advancedQueryFilterDetails.QueryCode,
-                    ObjectFieldCode = advancedQueryFilterDetails.ObjectFieldCode,
                 };
                 advancedQueryFilterRepository.Add(newAdvancedQueryFilter);
                 return newAdvancedQueryFilter;
             }
-        }
-        public static AdvancedQueryFilter AddAdvancedQueryFilter(AdvancedFilterDetails advancedQueryFilterDetails, List<AdvancedQueryFilter> addedFilters, int contextTenant = 0)
-        {
-
-            AdvancedQueryFilter newAdvancedQueryFilter = new AdvancedQueryFilter()
-            {
-                Tenant = advancedQueryFilterDetails.Tenant,
-                ObjectFieldId = advancedQueryFilterDetails.ObjectFieldId,
-                IndexOrder = advancedQueryFilterDetails.IndexOrder,
-                IsPredefined = advancedQueryFilterDetails.IsPredefined,
-                Operator = advancedQueryFilterDetails.Operator,
-                PredefinedValue = advancedQueryFilterDetails.PredefinedValue,
-                PredefinedValue2 = advancedQueryFilterDetails.PredefinedValue2,
-                CustomPredefined = advancedQueryFilterDetails.CustomPredefined,
-                Id = IdCounter.GetIdWithIdsRange("AdvancedQueryFilter",50, contextTenant).ToString(),//IdCounter.GetNumber("AdvancedQueryFilter", advancedQueryFilterDetails.Tenant).ToString(),
-                QueryId = advancedQueryFilterDetails.QueryId,
-                QueryCode = advancedQueryFilterDetails.QueryCode,
-                ObjectFieldCode = advancedQueryFilterDetails.ObjectFieldCode,
-            };
-            addedFilters.Add(newAdvancedQueryFilter);
-            return newAdvancedQueryFilter;
-
         }
     }
 }

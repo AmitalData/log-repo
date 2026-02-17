@@ -51,14 +51,14 @@
                     <td style="width:20px;"><div></div></td>
 
                     <td style="width:150px">
-                        <DirectionsFilter [SelectedValue]="MySelectedDirectionFilter" (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>                       
+                        <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>                       
                     </td>
 
                     <td style="width:50px"><div style="width:50px"></div></td>
 
                     <!--run button-->
                     <td style="width:80px;">
-                        <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
                     </td>
 
                     <td><div></div></td>

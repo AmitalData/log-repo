@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
@@ -51,12 +51,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
             TaskScheduler.LastRunStartTimeUTC = TaskSchedulerPM.LastRunStartTimeUTC;
             TaskScheduler.AverageRunTime = TaskScheduler.AverageRunTime;
-            TaskScheduler.EntityId = TaskSchedulerPM.EntityId;
             TaskScheduler.MonthlyDay = 0;
-            TaskScheduler.ResultType = TaskSchedulerPM.ResultType;
-            TaskScheduler.Format = TaskSchedulerPM.Format;
-            TaskScheduler.AdvancedFormat = TaskSchedulerPM.AdvancedFormat;
-            TaskScheduler.ExecutedByServerName = TaskSchedulerPM.ExecutedByServerName;
+
+
         }
     }
 }

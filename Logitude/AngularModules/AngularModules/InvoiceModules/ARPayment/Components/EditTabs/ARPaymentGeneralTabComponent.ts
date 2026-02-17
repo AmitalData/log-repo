@@ -6,12 +6,10 @@ import {ARPaymentPM} from '../../../../Invoice/EntityPMs/ARPaymentPM';
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARPaymentGeneralTabComponent.html',
 })
 export class ARPaymentGeneralTabComponent extends BaseComponent implements OnInit {
-  public MetodoPagoCode: any;
-
     public EntityPM: ARPaymentPM;
     public ObjectTableName: string = "ARPayment";
     // public TenantPM: TenantPM;
@@ -22,7 +20,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     public DisplaySATSettings: boolean = false;
     public DisplayFechaPago: boolean = false;
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
 
@@ -33,9 +31,10 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
                 this.EntityPM.UIProperties.SetEnabled("MetodoPagoCode", this.ObjectTableName, false);
             }
 
-            
+            //var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "FPG" && d.TenantNumber == SessionLocator.Tenant)[0];
+            //if (featureToggle) {
                 this.DisplayFechaPago = true;
-          
+            //}
 
         }
 
@@ -68,7 +67,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -142,7 +141,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     }
 
     ValidateTipoCadenaPagoFields() {
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (!AppTool.IsNullOrEmpty(this.TipoCadenaPago) && this.TipoCadenaPago == "01" && this.SATPaymentMethodCode == "03") {
                 if (AppTool.IsNullOrEmpty(this.CertPago))
                     this.UIProperties.SetRequired("CertPago", "ARPayment", true);

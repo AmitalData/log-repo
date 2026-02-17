@@ -17,13 +17,11 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 @Component({
     selector: 'EmailNotificationsSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './EmailNotificationsSettingsComponent.html',
     providers: [EmailAlertSettingPMService],
 })
 export class EmailNotificationsSettingsComponent extends BaseComponent{
-  public imgNgStyle: any = null;
-
     //public EntityPM: EmailAlertSettingPM;
     public DataContext = this;
     public ObjectTableName: string = "EmailAlertSetting";
@@ -41,7 +39,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
     }
 
     LoadData() {
-        this.emailAlertSettingPMService.getAllEmailAlerts(SessionInfo.LoggedUserTenant).subscribe((response: ServiceResponse) => {
+        this.emailAlertSettingPMService.getAllEmailAlerts(SessionInfo.LoggedUserTenant).subscribe(response => {
             if (!response.HasError) {
                 this.AllAlerts = response.Result;
                 var ownerArr = this.AllAlerts.filter(a => a.SettingLevelCode == "OWNR");
@@ -86,7 +84,7 @@ export class EmailNotificationsSettingsComponent extends BaseComponent{
             return;
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this.emailAlertSettingPMService.updateAllAlerts(this.AllAlerts, SessionInfo.LoggedUserTenant).subscribe((response: ServiceResponse) => {
+        this.emailAlertSettingPMService.updateAllAlerts(this.AllAlerts, SessionInfo.LoggedUserTenant).subscribe(response => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (response.HasError)
             {

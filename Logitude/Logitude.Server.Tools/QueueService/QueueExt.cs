@@ -148,8 +148,6 @@ namespace Logitude.Server.Tools.Helpers
     {
         //CustomsMessagingOutBQ, 
         CustomsMessagingSheetBQ, SendDataToExternalServicesBQ, updateclosedtables, SendWEBAPIMessage2MamanQ
-            , AnalyzeQueueMQ
-            ,CustomsHSMSignWR
     }
     
 }

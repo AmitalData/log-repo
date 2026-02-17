@@ -1,4 +1,4 @@
-import {EntityArgs} from '../../../../../../Infrastructure/DataContracts/EntityArgs';
+﻿import {EntityArgs} from '../../../../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentTypeTemplateList} from '../../../../../../Common/EntityLists/DocumentTypeTemplateList';
 
 
@@ -19,7 +19,7 @@ export class DocumentTypeTemplateViewModel {
     TemplateSubject: string = "";
     TemplateCc: string = "";
     TemplateBcc: string = "";
-    To: string = "";
+
     
     public Id: string;
     public  Tenant: number;
@@ -63,8 +63,7 @@ export class DocumentTypeTemplateViewModel {
     public TemplateHeaderHeight: number;
     public TemplateFooterHeight: number;
     public TemplateTechnologyCode: string;
-    public IsSystem: boolean;
-    public DocumentDefultAttachments: any[];
+
 
 
 
@@ -147,13 +146,8 @@ export class DocumentTypeTemplateViewModel {
 
 				this.From = documentTypeTemplate.From;
 			    this.ReplyTo = documentTypeTemplate.ReplyTo;
-                this.CC = documentTypeTemplate.CC;
-                this.To = documentTypeTemplate.To;
-                this.IsSystem = documentTypeTemplate.IsSystem;
-                this.DocumentDefultAttachments = documentTypeTemplate.DocumentDefultAttachments ? documentTypeTemplate.DocumentDefultAttachments : [];
+				this.CC = documentTypeTemplate.CC;
 
-
-        
                 if (documentTypeTemplate.InActive) {
                     this.LableSetactive = "Mark as active";
                 }

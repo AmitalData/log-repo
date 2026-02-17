@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -22,7 +22,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InvoiceCreationWarning).HasColumnName("InvoiceCreationWarning");
             this.Property(t => t.InvoiceCreationBlock).HasColumnName("InvoiceCreationBlock");
             this.Property(t => t.ShipmentCreationBlock).HasColumnName("ShipmentCreationBlock");
-            this.Property(t => t.ShipmentCreationWarning).HasColumnName("ShipmentCreationWarning");
             this.Property(t => t.CustomersShipmentsBlock).HasColumnName("CustomersShipmentsBlock");
             this.Property(t => t.AgentsShipmentsBlock).HasColumnName("AgentsShipmentsBlock");
             this.Property(t => t.ShipperConsigneeShipmentBlock).HasColumnName("ShipperConsigneeShipmentBlock");

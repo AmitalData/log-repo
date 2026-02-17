@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -40,7 +40,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        HasExecutedRecord = a.HasExecutedRecord,
                                                        ObjectTableId = a.ObjectTableId,
                                                        ExecutionTime = a.ExecutionTime,
-
                                                    }).OrderByDescending(d => d.CreateDate).ToList();
             #region CreateByUserName
 
@@ -107,25 +106,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              HasExecutedRecord = a.HasExecutedRecord,
                              ObjectTableId = a.ObjectTableId,
                              ExecutionTime = a.ExecutionTime,
-                             CreateByUserName = a.CreateByUser != null ? a.CreateByUser.Contact.EnglishName : null,
+                             CreateByUserName = a.CreateByUser != null ? a.CreateByUser.Contact.EnglishName : "",
                              FollowUpAutomationFailedXml = a.FollowUpAutomationFailedXml,
                              FollowUpAutomationSsucceedXml = a.FollowUpAutomationSsucceedXml,
                              SetSLAAutomationFailedXml = a.SetSLAAutomationFailedXml,
                              SetSLAAutomationSsucceedXml = a.SetSLAAutomationSsucceedXml,
-                             QueuedTaskAutomationFailedXml = a.QueuedTaskAutomationFailedXml, 
-                             QueuedTaskAutomationSsucceedXml = a.QueuedTaskAutomationSsucceedXml,
-                             SendInterfaceAutomationFailedXml = a.SendInterfaceAutomationFailedXml,
-                             SendInterfaceAutomationSsucceedXml = a.SendInterfaceAutomationSsucceedXml,
-                             SendDocumentAutomationFailedXml = a.SendDocumentAutomationFailedXml,
-                             SendDocumentAutomationSsucceedXml = a.SendDocumentAutomationSsucceedXml,
-                             CreateTaskAutomationFailedXml = a.CreateTaskAutomationFailedXml ,
-                             CreateTaskAutomationSsucceedXml = a.CreateTaskAutomationSsucceedXml,
-                             OnUpdateDocumentAutomationFailedXml = a.OnUpdateDocumentAutomationFailedXml,
-                             OnUpdateDocumentAutomationSsucceedXml = a.OnUpdateDocumentAutomationSsucceedXml,
-
-                             EventAutomationFailedXml = a.EventAutomationFailedXml,
-                             EventAutomationSsucceedXml = a.EventAutomationSsucceedXml,
-
+                      
                          }).FirstOrDefault();
             return query;
         }

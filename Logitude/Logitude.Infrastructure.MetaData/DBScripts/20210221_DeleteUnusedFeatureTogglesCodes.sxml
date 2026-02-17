@@ -1,8 +1,0 @@
-﻿<Script DBType="Main" Module="Infrastructure" Pre="true">
-  <Sql Version="1">
-    <![CDATA[
-      DELETE FROM FeatureToggles WHERE ToggleCode = 'BDR' or  ToggleCode = 'BDW' or ToggleCode = 'CST' or ToggleCode = 'RRW' or ToggleCode = 'TJC' or ToggleCode = 'CWH';
-    ]]>       
-  </Sql>
-  <Oracle Version="1"></Oracle>
-</Script>

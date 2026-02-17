@@ -3,7 +3,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TMProjectPM} from '../../EntityPMs/TMProjectPM';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TMProjectHelperComponent.html',
 })
 

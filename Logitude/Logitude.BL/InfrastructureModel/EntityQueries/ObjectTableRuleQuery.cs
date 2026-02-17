@@ -9,7 +9,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -52,7 +52,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ActiveForNew = a.ActiveForNew,
                                                        ActiveForUpdate = a.ActiveForUpdate,
                                                        TriggerFieldId = a.TriggerFieldId,
-                                                       TriggerFieldCode = a.TriggerFieldCode,
                                                        TriggerTypeCode = a.TriggerTypeCode,
                                                        RuleNotificationTypeCode = a.RuleNotificationTypeCode,
                                                        Internal = a.Internal,
@@ -86,7 +85,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        ActiveForNew = a.ActiveForNew,
                                                        ActiveForUpdate = a.ActiveForUpdate,
                                                        TriggerFieldId = a.TriggerFieldId,
-                                                       TriggerFieldCode = a.TriggerFieldCode,
                                                        TriggerTypeCode = a.TriggerTypeCode,
                                                        RuleNotificationTypeCode = a.RuleNotificationTypeCode,
                                                        Internal = a.Internal,
@@ -133,8 +131,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 											   ActiveForNew = a.ActiveForNew,
 											   ActiveForUpdate = a.ActiveForUpdate,
 											   TriggerFieldId = a.TriggerFieldId,
-                                               TriggerFieldCode = a.TriggerFieldCode,
-                                               TriggerTypeCode = a.TriggerTypeCode,
+											   TriggerTypeCode = a.TriggerTypeCode,
 											   RuleNotificationTypeCode = a.RuleNotificationTypeCode,
 											   Internal = a.Internal,
 											   AdvancedCondition = a.AdvancedCondition,
@@ -156,7 +153,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
+                        WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
                         zeroTenantobjectTableRulePMs = (from a in repository.context.ObjectTableRules.Include("RuleType")
                                                         where a.Tenant == 0
                                                         select new ObjectTableRulePM()
@@ -175,7 +172,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                             ActiveForNew = a.ActiveForNew,
                                                             ActiveForUpdate = a.ActiveForUpdate,
                                                             TriggerFieldId = a.TriggerFieldId,
-                                                            TriggerFieldCode = a.TriggerFieldCode,
                                                             TriggerTypeCode = a.TriggerTypeCode,
                                                             RuleNotificationTypeCode = a.RuleNotificationTypeCode,
                                                             Internal = a.Internal,

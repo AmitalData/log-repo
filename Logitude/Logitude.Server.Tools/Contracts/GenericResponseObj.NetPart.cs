@@ -22,25 +22,10 @@ namespace Logitude.AmitalMessaging.Infrastructure
             set
             {
                 _StatusType = value;
-                //this.Status = _StatusType.ToString();
-                switch (value)
-                {
-                    case StatusEnum.TecinicalFailure:
-                        this.Status = "-500";
-                        break;
-                    case StatusEnum.BusinessError:
-                        this.Status = "-700";
-                        break;
-                    case StatusEnum.Success:
-                        this.Status = "0";
-                        break;
-                    default:
-                        break;
-                }
-
+                this.Status = _StatusType.ToString();
             }
         }
-        public string ExtStatus { get; set; }
 
+        
     }
 }

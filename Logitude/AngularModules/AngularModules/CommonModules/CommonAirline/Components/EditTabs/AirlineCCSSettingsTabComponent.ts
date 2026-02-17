@@ -5,7 +5,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AirlineCCSSettingsTabComponent.html',
 })
 

@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-    public class BankAccountValidateService : EntityValidateService<BankAccountPM>, IBankAccountValidateService
+    public class BankAccountValidateService: EntityValidateService<BankAccountPM>, IBankAccountValidateService
     {
         private IAccountingContext _MainContext;
         public BankAccountValidateService(IAccountingContext mainContext)
@@ -91,90 +91,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             CheckBankAndGLAccountsCurrency(bankAccountPM, useLocal);
-            CheckChequeCounterSerials(bankAccountPM, useLocal);
-        }
-        public virtual void CheckChequeCounterSerials(BankAccountPM bankAccountPM, bool useLocal)
-        {
-            var chequeCounterSerials = bankAccountPM.ChequeCounterSerials;
-            var hasChange = chequeCounterSerials.FirstOrDefault(c => c.ChangeSetOp != ChangeSetOperation.None);
-            if (hasChange == null)
-            {
-                return;
-            }
-            bool isValid = true;
-            int prevSeriesId = 0;
-            foreach (var serial in chequeCounterSerials)
-            {
-                if (serial.SeriesId != prevSeriesId + 1)
-                {
-                    isValid = false;
-                    break;
-                }
-                prevSeriesId = serial.SeriesId;
-                if (serial.ChequeCounterBegin < 0 || serial.ChequeCounterEnd < 0 || serial.ChequeCounterBegin >= serial.ChequeCounterEnd)
-                {
-                    isValid = false;
-                    break;
-                }
-            }
-            if (isValid)
-            {
-                isValid = ValidateSerialsOverlap(chequeCounterSerials);
-            }
-            if (isValid)
-            {
-                isValid = ValidateSerialsHaveAlreadyCheques(bankAccountPM, useLocal);
-            }
-            if (!isValid)
-            {
-                throw new ApplicationException("Invalid chequeCounterSerials");
-            }
+
         }
 
-        private bool ValidateSerialsOverlap(List<ChequeCounterSerialPM> chequeCounterSerials)
-        {
-            foreach (var item in chequeCounterSerials)
-            {
-                var overlapSerials = chequeCounterSerials.Where(s =>
-                    (item.ChequeCounterBegin >= s.ChequeCounterBegin && item.ChequeCounterBegin <= s.ChequeCounterEnd)
-                    ||
-                    (item.ChequeCounterEnd >= s.ChequeCounterBegin && item.ChequeCounterEnd <= s.ChequeCounterEnd));
-                if (overlapSerials != null && overlapSerials.Count() > 1)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        private bool ValidateSerialsHaveAlreadyCheques(BankAccountPM bankAccountPM, bool useLocal)
-        {
-            StringBuilder sb = new StringBuilder();
-            var futureSerials = bankAccountPM.ChequeCounterSerials.Where(x => x.SeriesId > bankAccountPM.ChequeCounterSeriesID).ToList();
-            var currentSerial = bankAccountPM.ChequeCounterSerials.FirstOrDefault(x => x.SeriesId == bankAccountPM.ChequeCounterSeriesID);
-            if (bankAccountPM.ChequeCounter == currentSerial.ChequeCounterBegin)
-            {
-                //if current serial has not started yet add it to check if its good. 
-                futureSerials.Add(currentSerial);
-            }
-            foreach (var item in futureSerials)
-            {
-                PaymentChequeQueryService service = new PaymentChequeQueryService(_MainContext);
-                var exists = service.GetPaymentChequesInRange(bankAccountPM.Id, item.ChequeCounterBegin, item.ChequeCounterEnd, item.Tenant);
-                if (exists.Count > 0)
-                {
-                    string msg = TextCodesTranslator.TranslateText("ChequeCounterSerial.O.ChequeSerialAlreadyUsed", bankAccountPM.Tenant, useLocal);
-                    sb.AppendFormat(msg, item.SeriesId);
-
-                }
-            }
-            if (sb.Length > 0)
-            {
-                throw new ApplicationException(sb.ToString());
-            }
-
-            return true;
-        }
-        public virtual void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal)
+        private static void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal)
         {
             //get glaccounts
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(bankAccountPM.Tenant);
@@ -184,7 +104,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (bankAccountPM.CurrencyId != _GLAccount?.CurrencyId
                 || bankAccountPM.CurrencyId != _DeferredGLAccount?.CurrencyId
-                || (bankAccountPM.CurrencyId != _TransferGLAcccount?.CurrencyId && _TransferGLAcccount != null))
+                || bankAccountPM.CurrencyId != _TransferGLAcccount?.CurrencyId)
             {
                 string msg = TextCodesTranslator.TranslateText("BankAccount.O.Bank_and_GL_Account_must_be_same_currency", bankAccountPM.Tenant, useLocal);
                 throw new ApplicationException(msg);
@@ -193,7 +113,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public virtual void CheckBankAccountExists(BankAccountPM entityPM)
         {
-            BankAccountList account = GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.CurrencyId, entityPM.Tenant);
+            BankAccountList account = GetUniqueAccount(entityPM.AccountNumber, entityPM.BranchNumber, entityPM.BankId, entityPM.Tenant);
             ValidationResult result;
             if (account != null)
             {
@@ -203,7 +123,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        public virtual void CheckGLAccountAlreadyConnectedToBankAccountOnInsert(BankAccountPM entityPM, bool useLocal)
+        public virtual void CheckGLAccountAlreadyConnectedToBankAccountOnInsert(BankAccountPM entityPM,bool useLocal)
         {
             ValidationResult result;
             if (!String.IsNullOrEmpty(entityPM.GLAccountId))
@@ -234,9 +154,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        public virtual void CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(BankAccountPM entityPM, BankAccount poco, bool useLocal)
-        {
-
+        public virtual void CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(BankAccountPM entityPM,BankAccount poco, bool useLocal) {
+            
             ValidationResult result;
             if (!String.IsNullOrEmpty(entityPM.GLAccountId) && entityPM.GLAccountId != poco.GLAccountId)
             {
@@ -266,7 +185,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        public virtual void CheckGLAccountHasTransactionsOnUpdate(BankAccountPM entityPM, BankAccount entityPOCO, bool useLocal)
+        public virtual void CheckGLAccountHasTransactionsOnUpdate(BankAccountPM entityPM,BankAccount entityPOCO, bool useLocal)
         {
             if (entityPM.GLAccountId != entityPOCO.GLAccountId)
             {
@@ -321,15 +240,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return TranslateTextsClassUtilResolver.Translate(code, tenant, useLocal);//TranslateTextsClass.Translate(code, tenant, useLocal);
         }
 
-        public virtual BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant)
+        public virtual BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             BankAccountListQueryService query = new BankAccountListQueryService(MyContext);
-            BankAccountList account = query.GetUniqueAccount(accountNumber, branchNumber, bankId, currencyId, tenant);
+            BankAccountList account = query.GetUniqueAccount(accountNumber, branchNumber, bankId, tenant);
             return account;
         }
 
-        public virtual BankAccountList GetByGLAccount(string gLAccountId, int tenant)
+        public virtual BankAccountList GetByGLAccount(string gLAccountId,int tenant)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             BankAccountListQueryService query = new BankAccountListQueryService(MyContext);
@@ -345,7 +264,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return account;
         }
 
-        public virtual BankAccount GetSingleBankAccount(string id, int tenant)
+        public virtual BankAccount GetSingleBankAccount(string id,int tenant)
         {
             BankAccountRepository repo = new BankAccountRepository(tenant);
             BankAccount poco = repo.GetSingle(id, tenant);
@@ -365,7 +284,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         void Validate(BankAccountPM entityPM);
         ContactPM GetLoggedContact(int tenant);
         string GetMessageTranslation(string code, int tenant, bool useLocal);
-        BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant);
+        BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant);
         BankAccountList GetByGLAccount(string glAccountId, int tenant);
         BankAccountList GetByDeferedGLAccount(string deferredGLAccountId, int tenant);
         BankAccount GetSingleBankAccount(string id, int tenant);
@@ -374,7 +293,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnInsert(BankAccountPM entityPM);
         void CheckGLAccountAlreadyConnectedToBankAccountOnUpdate(BankAccountPM entityPM, BankAccount poco, bool useLocal);
         void CheckDeferredGLAccountAlreadyConnectedToBankAccountOnUpdate(BankAccountPM entityPM, BankAccount poco);
-        void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal);
 
     }
 

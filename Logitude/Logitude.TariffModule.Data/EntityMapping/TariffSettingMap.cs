@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data;
@@ -34,14 +34,6 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.AirDefaultStepsId).HasColumnName("AirDefaultStepsId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LCLDefaultStepsId).HasColumnName("LCLDefaultStepsId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ContainerDefaults).HasColumnName("ContainerDefaults").HasMaxLength(50).IsUnicode(false);
-
-            this.Property(t => t.DefaultCurrencyId).HasColumnName("DefaultCurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.AirUnitOfMeasurementCode).HasColumnName("AirUnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
-
-            this.Property(t => t.LCLUnitOfMeasurementCode).HasColumnName("LCLUnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

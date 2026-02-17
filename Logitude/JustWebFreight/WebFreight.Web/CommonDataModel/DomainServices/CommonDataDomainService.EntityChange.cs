@@ -7,9 +7,9 @@ using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -54,33 +54,33 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
        
 
-        //public EntityChangeAutomationsSummary GetAutomationsByEntityChangeId(string entitychangeId, string objectTableName, int tenant)
-        //{
-        //    EntityChangeQuery EntityChangeQuery = new EntityChangeQuery(tenant);
-        //    EntityChangePM entityChangePM = EntityChangeQuery.GetSinglePM(entitychangeId, tenant);
+        public EntityChangeAutomationsSummary GetAutomationsByEntityChangeId(string entitychangeId, string objectTableName, int tenant)
+        {
+            EntityChangeQuery EntityChangeQuery = new EntityChangeQuery(tenant);
+            EntityChangePM entityChangePM = EntityChangeQuery.GetSinglePM(entitychangeId, tenant);
 
-        //    List<ObjectField> objectFieldLists = ObjectFieldRepository.GetObjectFieldsByObjectTableName(objectTableName, tenant);
-        //    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
-        //    EntityChangeAutomationsSummary entityChangeAutomationsSummary = new EntityChangeAutomationsSummary();
+            List<ObjectField> objectFieldLists = ObjectFieldRepository.GetObjectFieldsByObjectTableName(objectTableName, tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            EntityChangeAutomationsSummary entityChangeAutomationsSummary = new EntityChangeAutomationsSummary();
 
-        //    List<EntityChangeAutomation> entityChangeAutomation = new List<EntityChangeAutomation>();
-        //    EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
-        //    if (entityChangePM != null)
-        //    {
-        //        List<EntityChangeAutomation> list = entityChangeAutomationHelper.CreateEntityChangeAutomation(entityChangePM, "Email");
-        //        foreach (EntityChangeAutomation item in list)
-        //        {
-        //            entityChangeAutomation.Add(item);
-        //        }
+            List<EntityChangeAutomation> entityChangeAutomation = new List<EntityChangeAutomation>();
+            EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
+            if (entityChangePM != null)
+            {
+                List<EntityChangeAutomation> list = entityChangeAutomationHelper.CreateEntityChangeAutomation(entityChangePM, "Email");
+                foreach (EntityChangeAutomation item in list)
+                {
+                    entityChangeAutomation.Add(item);
+                }
 
-        //        entityChangeAutomation = entityChangeAutomation.OrderByDescending(d => d.CreateDate).ToList();
-        //        entityChangeAutomationsSummary.Id = entityChangePM.Id;
-        //    }
+                entityChangeAutomation = entityChangeAutomation.OrderByDescending(d => d.CreateDate).ToList();
+                entityChangeAutomationsSummary.Id = entityChangePM.Id;
+            }
 
-        //    entityChangeAutomationsSummary.EntityChangeAutomationList = entityChangeAutomation;
+            entityChangeAutomationsSummary.EntityChangeAutomationList = entityChangeAutomation;
 
-        //    return entityChangeAutomationsSummary;
-        //}
+            return entityChangeAutomationsSummary;
+        }
 
         
         

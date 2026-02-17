@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
 using MeatadataGeneratorTool.TabsModule;
@@ -21,13 +22,13 @@ using System.IO;
 using MeatadataGeneratorTool.Helpers;
 using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
-using System.Xml.Linq;
-using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool
 {
     public class XmlGeneratorClass
     {
+
+
         #region GenerateSQL
 
         private static string GeneratedSqlPath = ConfigurationManager.AppSettings["GeneratedSQLPath"];
@@ -176,7 +177,7 @@ namespace MeatadataGeneratorTool
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message);
-
+                           
                         }
 
                         try
@@ -187,7 +188,7 @@ namespace MeatadataGeneratorTool
                             XmlParserHelper ParserHelper = new XmlParserHelper();
                             ObjectTableViewModel mymodel = ParserHelper.LoadObjectTableData(mydocument);
                             var ForeignEntity = mymodel.DBTableName;
-                            var referencedColumn = mymodel.ObsList.Where(a => a.IsPrimaryKey).FirstOrDefault().FieldName;
+                            var referencedColumn = mymodel.ObsList.Where(a => a.IsPrimaryKey).FirstOrDefault().FieldName;;
                             XmlElement element7 = document.CreateElement("addForeignKeyConstraint");
                             element6.AppendChild(element7);
                             SetAttribute("baseColumnNames", model.FieldName, element7);
@@ -197,18 +198,18 @@ namespace MeatadataGeneratorTool
                             //SetAttribute("onUpdate", "RESTRICT", element7);
                             SetAttribute("referencedColumnNames", referencedColumn, element7);
                             SetAttribute("referencedTableName", ForeignEntity, element7);
-
+                             
                             stream.Close();
                         }
 
                         catch (Exception err)
                         {
-
+                            
                         };
-
+                        
                     }
                     /***********************************************************/
-
+                    
                 }
             }
             if (!FromOut)
@@ -251,18 +252,18 @@ namespace MeatadataGeneratorTool
         // Ignore
         public static void GenerateSQLXmlForAlterColumns(NameFormVM ALterFieldData, string DBTableName)
         {
-            string[] strArray = new string[]
-            {
-                DateTime.Now.Year.ToString(),
+            string[] strArray = new string[] 
+            { 
+                DateTime.Now.Year.ToString(), 
                 DateTime.Now.Month.ToString().Length == 1 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
                 DateTime.Now.Day.ToString().Length == 1 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString(),
                 DateTime.Now.Hour.ToString().Length == 1 ? "0" + DateTime.Now.Hour.ToString() : DateTime.Now.Hour.ToString(),
                 DateTime.Now.Minute.ToString().Length == 1 ? "0" + DateTime.Now.Minute.ToString() : DateTime.Now.Minute.ToString(),
                 DateTime.Now.Second.ToString().Length == 1 ? "0" + DateTime.Now.Second.ToString() : DateTime.Now.Second.ToString(),
                 "AlterColumn",
-                ALterFieldData.SelectedField.FieldName,
+                ALterFieldData.SelectedField.FieldName, 
                 "_InTable_",
-                DBTableName
+                DBTableName 
             };
             string str = string.Concat(strArray);
             XmlDocument document = new XmlDocument();
@@ -569,7 +570,7 @@ namespace MeatadataGeneratorTool
 
                                 }
                                 /***********************************************************/
-
+                              
                             }
                             Table.ObsList.Where(a => a.FieldName == model.FieldName).FirstOrDefault().IsNew = false;
                             Table.ObsList.Where(a => a.FieldName == model.FieldName).FirstOrDefault().IsChecked = false;
@@ -916,12 +917,16 @@ namespace MeatadataGeneratorTool
             //MessageBox.Show("Script Generated For Table Rename");
         }
 
+
         #endregion
 
         #region GenerateXmlFileFromTool
 
+
         public static void GenerateXmlFileFromTool(ObjectTableViewModel table)//execute when click ok button
         {
+
+
             XmlDocument doc = new XmlDocument();
             XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
             doc.AppendChild(xmlDeclaration);
@@ -940,57 +945,10 @@ namespace MeatadataGeneratorTool
             }
             SetAttribute("ObjectTableName", GetStringValue(table.ObjectTableName), entityElement);
             SetAttribute("IsNew", table.IsNew.ToString().ToLower(), entityElement);
-
             SetAttribute("DBTableName", GetStringValue(table.DBTableName), entityElement);
-
-            if (!string.IsNullOrEmpty(table.DBTableShortName))
-            {
-                SetAttribute("DBTableShortName", GetStringValue(table.DBTableShortName), entityElement);
-            }
+            SetAttribute("OldDBTableName", GetStringValue(table.OldDBTableName), entityElement);
 
 
-            string dbTableOldNames = null;
-
-            if (string.IsNullOrEmpty(table.DBTableOldNames))
-            {
-                string shortName = string.IsNullOrEmpty(table.DBTableShortName) ? null : "," + table.DBTableShortName;
-                dbTableOldNames = table.DBTableName + shortName;
-            }
-            else
-            {
-                dbTableOldNames = table.DBTableOldNames;
-
-                if (table.DBTableOldNames.Contains(","))
-                {
-                    if (!table.DBTableOldNames.Split(',').Contains(table.DBTableName))
-                    {
-                        dbTableOldNames = dbTableOldNames + "," + table.DBTableName;
-                    }
-
-                    if (!string.IsNullOrEmpty(table.DBTableShortName))
-                    {
-                        if (!table.DBTableOldNames.Split(',').Contains(table.DBTableShortName))
-                        {
-                            dbTableOldNames = dbTableOldNames + "," + table.DBTableShortName;
-                        }
-                    }
-                }
-                else
-                {
-                    string shortName = string.IsNullOrEmpty(table.DBTableShortName) ? null : "," + table.DBTableShortName;
-
-                    if (table.DBTableOldNames != table.DBTableName)
-                    {
-                        dbTableOldNames = dbTableOldNames + "," + table.DBTableName + shortName;
-                    }
-                    else
-                    {
-                        dbTableOldNames = dbTableOldNames + shortName;
-                    }
-                }
-            }
-
-            SetAttribute("DBTableOldNames", dbTableOldNames.Contains(",") ? string.Join(",", dbTableOldNames.Split(',').Distinct().ToArray()) : dbTableOldNames, entityElement);
 
             SetAttribute("ObjectTableSingular", GetStringValue(table.ObjectTableSingular), entityElement);
             SetAttribute("ObjectTablePlural", GetStringValue(table.ObjectTablePlural), entityElement);
@@ -1013,19 +971,14 @@ namespace MeatadataGeneratorTool
                 RemoveAttribute("DescriptionLocalDefaultText", entityElement);
             }
 
+           
+             
+          
 
             SetAttribute("HasCustomFilter", table.HasCustomFilter.ToString().ToLower(), entityElement);
             SetAttribute("HasCustomFields", table.HasCustomFields.ToString().ToLower(), entityElement);
-            SetAttribute("AvailableInCustomization", table.AvailableInCustomization.ToString().ToLower(), entityElement);
-            SetAttribute("SupportSubEntity", table.SupportSubEntity.ToString().ToLower(), entityElement);
-            SetAttribute("ApplyGenericCustomFields", table.ApplyGenericCustomFields.ToString().ToLower(), entityElement);
-            SetAttribute("AvailableInDocumentTypes", table.AvailableInDocumentTypes.ToString().ToLower(), entityElement);
-			SetAttribute("IsLock", table.IsLock.ToString().ToLower(), entityElement);
-			SetAttribute("RelatedEntity", GetStringValue(table.RelatedEntity), entityElement);
-			SetAttribute("ThisKey", GetStringValue(table.ThisKey), entityElement);
-			SetAttribute("RelatedKey", GetStringValue(table.RelatedKey), entityElement);
 
-			SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
+            SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
             SetAttribute("HasShortTitle", table.HasShortTitle.ToString().ToLower(), entityElement);
             SetAttribute("HasFiltersMenu", table.HasFiltersMenu.ToString().ToLower(), entityElement);
 
@@ -1089,23 +1042,13 @@ namespace MeatadataGeneratorTool
             SetAttribute("NoViewController", table.NoViewController.ToString().ToLower(), entityElement);
             SetAttribute("NoPMController", table.NoPMController.ToString().ToLower(), entityElement);
             SetAttribute("NoTS", table.NoTS.ToString().ToLower(), entityElement);
-            SetAttribute("NoDefaultFeatures", table.NoDefaultFeatures.ToString().ToLower(), entityElement);
-            SetAttribute("HasCompactSearch", table.HasCompactSearch.ToString().ToLower(), entityElement);
+			SetAttribute("NoDefaultFeatures", table.NoDefaultFeatures.ToString().ToLower(), entityElement);
+			SetAttribute("HasCompactSearch", table.HasCompactSearch.ToString().ToLower(), entityElement);
             SetAttribute("ApplyDefaultValues", table.ApplyDefaultValues.ToString().ToLower(), entityElement);
             SetAttribute("HasMenuButtons", table.HasMenuButtons.ToString().ToLower(), entityElement);
             SetAttribute("ApplyOnPropertyChangedCode", table.ApplyOnPropertyChangedCode.ToString().ToLower(), entityElement);
             SetAttribute("HasApiHelper", table.HasApiHelper.ToString().ToLower(), entityElement);
             SetAttribute("AllowedForComputingPartners", table.AllowedForComputingPartners.ToString().ToLower(), entityElement);
-            SetAttribute("IsBusinessUnitEnabled", table.IsBusinessUnitEnabled.ToString().ToLower(), entityElement);
-            SetAttribute("ParentObjectTableName", GetStringValue(table.ParentObjectTableName), entityElement);
-            SetAttribute("TenantZeroData", table.TenantZeroData.ToString().ToLower(), entityElement);
-            SetAttribute("ShowFastSearch", table.ShowFastSearch.ToString().ToLower(), entityElement);
-
-            if (table.IsMetadataOnlyTable != false)
-            {
-                SetAttribute("IsMetadataOnlyTable", table.IsMetadataOnlyTable.ToString().ToLower(), entityElement);
-
-            }
             if (!string.IsNullOrEmpty(table.QueryGroupCode1) && !string.IsNullOrEmpty(table.QueryGroupName1))
             {
                 SetAttribute("Code1", GetStringValue(table.QueryGroupCode1), entityElement, null);
@@ -1121,10 +1064,6 @@ namespace MeatadataGeneratorTool
             {
                 SetAttribute("SearchFields", GetStringValue(table.SearchFields), entityElement, null);
             }
-
-
-            SetAttribute("DxmlDatabaseTypeCode", table.DxmlDatabaseTypeCode, entityElement);
-            SetAttribute("DxmlDatabaseSchemaCode", table.DxmlDatabaseSchemaCode, entityElement);
 
             #endregion
 
@@ -1142,62 +1081,10 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("Id", GetStringValue(f.Id), fieldElement, null);
                 }
-
                 SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, null);
+				SetAttribute("GeneratedComponentPath", GetStringValue(f.GeneratedComponentPath), fieldElement, null);
 
-                if (!string.IsNullOrEmpty(f.ShortName))
-                {
-                    SetAttribute("ShortName", f.ShortName, fieldElement, null);
-                }
-
-
-                SetAttribute("GeneratedComponentPath", GetStringValue(f.GeneratedComponentPath), fieldElement, null);
-
-
-                string oldNames = null;
-
-                if (string.IsNullOrEmpty(f.OldNames))
-                {
-                    string shortName = string.IsNullOrEmpty(f.ShortName) ? null : "," + f.ShortName;
-                    oldNames = f.FieldName + shortName;
-                }
-                else
-                {
-                    oldNames = f.OldNames;
-
-                    if (f.OldNames.Contains(","))
-                    {
-                        if (!f.OldNames.Split(',').Contains(f.FieldName))
-                        {
-                            oldNames = oldNames + "," + f.FieldName;
-                        }
-
-                        if (!string.IsNullOrEmpty(f.ShortName))
-                        {
-                            if (!f.OldNames.Split(',').Contains(f.ShortName))
-                            {
-                                oldNames = oldNames + "," + f.ShortName;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        string shortName = string.IsNullOrEmpty(f.ShortName) ? null : "," + f.ShortName;
-
-                        if (f.OldNames != f.FieldName)
-                        {
-                            oldNames = oldNames + "," + f.FieldName + shortName;
-                        }
-                        else
-                        {
-                            oldNames = oldNames + shortName;
-                        }
-                    }
-                }
-
-                SetAttribute("OldNames", oldNames.Contains(",") ? string.Join(",", oldNames.Split(',').Distinct().ToArray()) : oldNames, fieldElement, null);
-
-                //SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
+				SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
                 SetAttribute("IsNew", f.IsNew.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsChecked", f.IsChecked.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsDeleted", f.IsDeleted.ToString().ToLower(), fieldElement, null);
@@ -1210,7 +1097,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("MaxLength", f.MaxLength.ToString(), fieldElement, null);
                 SetAttribute("IsRequired", f.IsRequired.ToString().ToLower(), fieldElement, null);
                 SetAttribute("CopyToDW", f.CopyToDW.ToString().ToLower(), fieldElement, null);
-                
+
                 SetAttribute("DisplayOnLookUp", f.DisplayOnLookUp.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayOnLookUpLocal", f.DisplayOnLookUpLocal.ToString().ToLower(), fieldElement, null);
                 SetAttribute("CanFilter", f.CanFilter.ToString().ToLower(), fieldElement, null);
@@ -1223,7 +1110,6 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ConverterName", GetStringValue(f.ConverterName), fieldElement, null);
                 SetAttribute("DataTemplateName", GetStringValue(f.DataTemplateName), fieldElement, null);
                 SetAttribute("IsCustomFilter", f.IsCustomFilter.ToString().ToLower(), fieldElement, null);
-                SetAttribute("IsListFilter", f.IsListFilter.ToString().ToLower(), fieldElement, null);
                 SetAttribute("Operator", GetStringValue(f.Operator), fieldElement, null);
                 SetAttribute("MultiLine", f.MultiLine.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsTimeFrameFilter", f.IsTimeFrameFilter.ToString().ToLower(), fieldElement, null);
@@ -1319,11 +1205,9 @@ namespace MeatadataGeneratorTool
 
                 SetAttribute("IsNullable", f.IsNullable.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsForeignKey", f.IsForeignKey.ToString().ToLower(), fieldElement, null);
-                SetAttribute("ForeignEntity", GetStringValue(f.ForeignEntity), fieldElement, null);
+                SetAttribute("ForeignEntity", f.ForeignEntity, fieldElement, null);
 
-                SetAttribute("DontBuildRelationOnDB", f.DontBuildRelationOnDB.ToString().ToLower(), fieldElement, null);
-
-                SetAttribute("NavigationPropertyName", GetStringValue(f.NavigationPropertyName), fieldElement, null);
+                SetAttribute("NavigationPropertyName", f.NavigationPropertyName, fieldElement, null);
 
                 SetAttribute("IsPrimaryKey", f.IsPrimaryKey.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInList", f.DisplayInList.ToString().ToLower(), fieldElement, null);
@@ -1335,12 +1219,9 @@ namespace MeatadataGeneratorTool
 
                 SetAttribute("HasDataBaseField", f.IsDBField.ToString().ToLower(), fieldElement, null);
                 SetAttribute("HasPMField", f.IsPMField.ToString().ToLower(), fieldElement, null);
-                if (f.IsPMField && !string.IsNullOrEmpty(f.TableRelatedPM) && !string.IsNullOrEmpty(f.FieldRelatedPM))
-                {
-                    SetAttribute("TableRelatedPM", f.TableRelatedPM.ToString(), fieldElement, null);
-                    SetAttribute("FieldRelatedPM", f.FieldRelatedPM.ToString(), fieldElement, null);
-                }
-				SetAttribute("ThisKey", GetStringValue(f.ThisKey), fieldElement, null);
+
+
+                SetAttribute("ThisKey", GetStringValue(f.ThisKey), fieldElement, null);
                 SetAttribute("OtherKey", GetStringValue(f.OtherKey), fieldElement, null);
                 SetAttribute("AssociationName", GetStringValue(f.AssociationName), fieldElement, null);
                 SetAttribute("IsComposition", f.IsComposition.ToString().ToLower(), fieldElement, null);
@@ -1367,14 +1248,6 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("RecordType", GetStringValue(f.RecordType), fieldElement, null);
                 }
-
-                if (!string.IsNullOrEmpty(f.AdditionalQuerySections))
-                {
-                    SetAttribute("AdditionalQuerySections", GetStringValue(f.AdditionalQuerySections), fieldElement, null);
-                }
-                SetAttribute("DisplayInRequiredFields", f.DisplayInRequiredFields.ToString().ToLower(), fieldElement, null);
-
-           
 
 
                 if (!string.IsNullOrEmpty(f.HtmlListComponentUrl))
@@ -1407,15 +1280,6 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("ModelName", GetStringValue(f.ModelName), fieldElement, null);
                 }
-                if (!string.IsNullOrEmpty(f.ObjectFieldDataMapping))
-                {
-                    SetAttribute("ObjectFieldDataMapping", GetStringValue(f.ObjectFieldDataMapping), fieldElement, null);
-                }
-                if (f.ObjectFieldDBOnly)
-                {
-                    SetAttribute("ObjectFieldDBOnly", "true", fieldElement, null);
-                }
-
             }
 
             #endregion
@@ -1446,7 +1310,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IndexOrder", table.QueriesObsList.IndexOf(f).ToString(), QueryElement, null);
                 SetAttribute("ObjectTableName", GetStringValue(f.ObjectTableName), QueryElement, null);
                 SetAttribute("QuerySection", GetStringValue(f.QuerySection), QueryElement, null);
-
+                
                 SetAttribute("SystemLevel", f.SystemLevel.ToString().ToLower(), QueryElement, null);
                 SetAttribute("IsAddNewEntity", f.IsAddNewEntity.ToString().ToLower(), QueryElement, null);
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), QueryElement, null);
@@ -1520,9 +1384,6 @@ namespace MeatadataGeneratorTool
                     }
 
                     SetAttribute("IndexOrder", q.IndexOrder.ToString(), QueryFilterElement, null);
-                    SetAttribute("CustomPredefined", q.CustomPredefined.ToString().ToLower(), QueryFilterElement, null);
-
-
 
                 }
             }
@@ -1545,7 +1406,6 @@ namespace MeatadataGeneratorTool
                     SetAttribute("Code", GetStringValue(f.Code), ScreenElement, null);
                 }
 
-
                 SetAttribute("NumberOfColumns", "2", ScreenElement, null);
                 SetAttribute("NumberOfRows", "1", ScreenElement, null);
 
@@ -1557,7 +1417,7 @@ namespace MeatadataGeneratorTool
                     || (f.ScreenFieldCol3ObsList != null && f.ScreenFieldCol3ObsList.Count > 0) || (f.ScreenFieldCol4ObsList != null && f.ScreenFieldCol4ObsList.Count > 0)
                     || (f.ScreenFieldCol5ObsList != null && f.ScreenFieldCol5ObsList.Count > 0))
                 {
-
+                   
                     int ColCount = 0;
                     int RowCount = 0;
                     if (f.ScreenFieldCol1ObsList != null && f.ScreenFieldCol1ObsList.Count > 0)
@@ -1588,8 +1448,8 @@ namespace MeatadataGeneratorTool
                     SetAttribute("NumberOfColumns", ColCount.ToString(), ScreenElement, null);
                     SetAttribute("NumberOfRows", RowCount.ToString(), ScreenElement, null);
 
-
-
+                  
+                   
                     for (int i = 0; i < ColCount; i++)
                     {
                         if (f.ScreenFieldCol1ObsList != null && f.ScreenFieldCol1ObsList.Count > 0)
@@ -1714,15 +1574,14 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TabElement, null);
                 SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), TabElement, null);
                 SetAttribute("HasGeneralFeature", f.HasGeneralFeature.ToString().ToLower(), TabElement, null);
-				SetAttribute("IsLocked", f.IsLocked.ToString().ToLower(), TabElement, null);
 
-			}
+            }
 
-			#endregion
+            #endregion
 
-			#region Event Types Properties
+            #region Event Types Properties
 
-			XmlElement TypesElement = doc.CreateElement("EventTypes");
+            XmlElement TypesElement = doc.CreateElement("EventTypes");
             entityElement.AppendChild(TypesElement);
 
             foreach (EventTypesViewModel f in table.EventTypesObsList)
@@ -1766,27 +1625,22 @@ namespace MeatadataGeneratorTool
                     foreach (var item in f._data)
                     {
                         int n = 0;
-                        if (item.Value != null)
+                        if (item.Value.ToString() == "true" || item.Value.ToString() == "false" || int.TryParse(item.Value.ToString(), out n))
                         {
-                            if (item.Value.ToString() == "true" || item.Value.ToString() == "false" || int.TryParse(item.Value.ToString(), out n))
+                            SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
+                        }
+                        else
+                        {
+                            if (item.Value.ToString().StartsWith("\""))
                             {
                                 SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
                             }
                             else
                             {
-                                if (item.Value.ToString().StartsWith("\""))
-                                {
-                                    SetAttribute(item.Key, item.Value.ToString(), RecordElement, null);
-                                }
-                                else
-                                {
-                                    SetAttribute(item.Key, GetStringValue(item.Value.ToString()), RecordElement, null);
-                                }
-
+                                SetAttribute(item.Key, GetStringValue(item.Value.ToString()), RecordElement, null);
                             }
+
                         }
-                        else
-                            SetAttribute(item.Key, null, RecordElement, null);
 
                     }
                 }
@@ -1819,7 +1673,7 @@ namespace MeatadataGeneratorTool
                     if (!string.IsNullOrEmpty(f.FeatureCode))
                     {
                         SetAttribute("FeatureCode", GetStringValue(f.FeatureCode), MenuButtonElement, null);
-
+                      
                     }
 
                     SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), MenuButtonElement, null);
@@ -1835,14 +1689,6 @@ namespace MeatadataGeneratorTool
                     if (!string.IsNullOrEmpty(f.FeatureDefaultText))
                     {
                         SetAttribute("FeatureDefaultText", GetStringValue(f.FeatureDefaultText), MenuButtonElement, null);
-                    }
-                    if (!string.IsNullOrEmpty(f.HtmlComponentPath))
-                    {
-                        SetAttribute("HtmlComponentPath", GetStringValue(f.HtmlComponentPath), MenuButtonElement, null);
-                    }
-                    if (f.Width != 0)
-                    {
-                        SetAttribute("Width", f.Width.ToString(), MenuButtonElement, null);
                     }
                     if (f.MenuButtonItems != null)
                     {
@@ -1879,14 +1725,6 @@ namespace MeatadataGeneratorTool
                             {
                                 SetAttribute("FeatureDefaultText", GetStringValue(item.FeatureDefaultText), MenuItemElement, null);
                             }
-                            if (!string.IsNullOrEmpty(item.HtmlComponentPath))
-                            {
-                                SetAttribute("HtmlComponentPath", GetStringValue(item.HtmlComponentPath), MenuItemElement, null);
-                            }
-                            if (item.Width != 0)
-                            {
-                                SetAttribute("Width", item.Width.ToString(), MenuItemElement, null);
-                            }
                         }
                     }
                 }
@@ -1907,7 +1745,6 @@ namespace MeatadataGeneratorTool
 
                     SetAttribute("Name", GetStringValue(f.DCName), DataContractElement, null);
                     SetAttribute("Version", GetStringValue(f.DCVersion), DataContractElement, null);
-                    SetAttribute("IncludeTenant0Data", f.IncludeTenant0Data.ToString().ToLower(), DataContractElement, null);
                     SetAttribute("ComputingPartnerName", GetStringValue(f.ComputingPartnerName), DataContractElement, null);
                     if (f.DCFieldsObsList != null)
                     {
@@ -1932,7 +1769,6 @@ namespace MeatadataGeneratorTool
                             SetAttribute("IsCloseField", item.IsCloseField.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCompositKey", item.IsCompositKey.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("CloseTableCode", GetStringValue(item.CloseTableCode), DCFieldElement, null);
-                            SetAttribute("IsUpdateAllowed", item.IsUpdateAllowed.ToString().ToLower(), DCFieldElement, null);
 
                         }
                     }
@@ -1956,7 +1792,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("LocalDefaultText", GetStringValue(f.LocalDefaultText), TextCodeElement, null);
                 SetAttribute("TextCodeTypeCode", GetStringValue(f.TextCodeTypeCode), TextCodeElement, null);
                 SetAttribute("IsSpellChecked", f.IsSpellChecked.ToString().ToLower(), TextCodeElement, null);
-
+                
 
 
             }
@@ -1981,7 +1817,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsOld", f.IsOld.ToString().ToLower(), TextCodeElement, null);
                 SetAttribute("IsCoreFeature", f.IsCoreFeature.ToString().ToLower(), TextCodeElement, null);
                 SetAttribute("IsBusinessUnitEnabled", f.IsBusinessUnitEnabled.ToString().ToLower(), TextCodeElement, null);
-                SetAttribute("ToggleCode", GetStringValue(f.ToggleCode), TextCodeElement, null);
+
 
 
             }
@@ -1996,316 +1832,15 @@ namespace MeatadataGeneratorTool
 
             if (!string.IsNullOrEmpty(App.DirectOpenPath))
             {
-                FileStream fileStream = new FileStream(App.DirectOpenPath, FileMode.Truncate, FileAccess.Write);
-                XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
-                XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
 
-                doc.Save(xmlWriter);
-                xmlWriter.Close();
-                xmlWriter.Dispose();
-                //doc.Save(App.DirectOpenPath);
+                doc.Save(App.DirectOpenPath);
+
             }
             else
             {
                 MessageBox.Show("file path in not valid!");
             }
 
-        }
-
-        #endregion
-
-        #region GenerateDXMLFileFromTool
-
-        public static void GenerateDXMLFileFromTool(ObjectTableViewModel table)
-        {
-            if (table.ObsList.Where(f => f.IsDBField).Any())
-            {
-                if (!string.IsNullOrEmpty(App.DirectOpenPath))
-                {
-                    string entityName = Path.GetFileName(App.DirectOpenPath).Replace(".lxml", string.Empty);
-                    string dxmlFilePath = App.DirectOpenPath.Replace("EntityFiles", "DBTables").Replace("lxml", "dxml");
-                    List<XElement> indexElements = new List<XElement>();
-                    List<XElement> uniqueConstraintElements = new List<XElement>();
-                    List<XElement> columnWithDefaultValueElements = new List<XElement>();
-                    List<XElement> columnWithIdentityElements = new List<XElement>();
-                    List<XElement> columnWithInitialValueScriptElements = new List<XElement>();
-
-                    if (File.Exists(dxmlFilePath))
-                    {
-                        XDocument oldDoc = XDocument.Load(dxmlFilePath);
-
-                        indexElements = oldDoc.Descendants("Index").ToList();
-                        uniqueConstraintElements = oldDoc.Descendants("UniqueConstraint").ToList();
-                        columnWithDefaultValueElements = oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList();
-                        columnWithIdentityElements = oldDoc.Descendants("Column").Where(x => x.Attribute("Identity") != null).ToList();
-                        columnWithInitialValueScriptElements = oldDoc.Descendants("Column").Where(x => x.Attribute("InitialValueScript") != null).ToList();
-                    }
-
-                    XmlDocument doc = new XmlDocument();
-                    XmlElement tableElement = (XmlElement)doc.AppendChild(doc.CreateElement("Table"));
-
-                    string tableName = table.DBTableName.ToLower().StartsWith("customs.") ? table.DBTableName.Split('.')[1] : table.DBTableName;
-
-                    tableElement.SetAttribute("Name", tableName);
-
-                    if (!string.IsNullOrEmpty(table.DBTableShortName))
-                    {
-                        tableElement.SetAttribute("ShortName", table.DBTableShortName);
-                    }
-
-                    string dbTableOldNames = null;
-
-                    if (!string.IsNullOrEmpty(table.DBTableOldNames))
-                    {
-                        string tableOldNames = string.Join(",", table.DBTableOldNames.Split(',').Select(n => n.ToLower().StartsWith("customs.") ? n.Split('.')[1] : n).ToArray());
-
-                        if (tableOldNames.Contains(","))
-                        {
-                            var oldNamesExceptName = tableOldNames.Split(',').Where(x => x?.ToLower() != tableName?.ToLower() && x?.ToLower() != table.DBTableShortName?.ToLower());
-
-                            dbTableOldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.Reverse().Distinct(StringComparer.OrdinalIgnoreCase).ToArray());
-                        }
-                        else
-                        {
-                            dbTableOldNames = tableName?.ToLower() == tableOldNames?.ToLower() ? null : tableOldNames;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(dbTableOldNames))
-                    {
-                        tableElement.SetAttribute("OldNames", dbTableOldNames);
-                    }
-
-
-                    tableElement.SetAttribute("Schema", table.DxmlDatabaseSchemaCode);
-                    tableElement.SetAttribute("DBType", table.DxmlDatabaseTypeCode);
-
-                    if (!string.IsNullOrEmpty(table.ClientModuleName))
-                    {
-                        tableElement.SetAttribute("Module", table.ClientModuleName);
-                    }
-
-                    foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField))
-                    {
-                        XmlElement columnElement = doc.CreateElement("Column");
-                        tableElement.AppendChild(columnElement);
-
-                        string fieldName = field.FieldName;
-                        string fieldShortName = field.ShortName;
-                        string fieldDataType = field.FieldDataType;
-                        int fieldMaxLength = field.MaxLength;
-                        bool fieldIsMaxLength = field.IsMaxLength;
-                        bool fieldIsPrimaryKey = field.IsPrimaryKey;
-                        bool fieldIsRequired = field.IsRequired;
-                        bool fieldIsNullable = field.IsNullable;
-                        bool fieldIsFixedLength = field.IsFixedLength;
-                        string fieldOldNames = field.OldNames;
-                        int? fieldNumberOfDigits = field.NumberOfDigits;
-                        int? fieldDigitsAfterPoint = field.DigitsAfterPoint;
-
-                        string dxmlColumnDataType = GetDataTypeForDXMLColumn(fieldDataType, fieldIsFixedLength);
-                        bool dxmlColumnNullable;
-
-                        if ((entityName.ToLower() == "Address".ToLower() && (fieldName.ToLower() == "City".ToLower() || fieldName.ToLower() == "CountryId".ToLower())))
-                        {
-                            dxmlColumnNullable = true;
-                        }
-                        else
-                        {
-                            dxmlColumnNullable = GetNullableForDXMLColumn(fieldIsRequired, fieldIsNullable, fieldIsPrimaryKey, dxmlColumnDataType);
-                        }
-
-
-                        int dxmlColumnSize = new string[] { "bit", "datetime", "datetime2", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
-
-                        columnElement.SetAttribute("Name", fieldName);
-
-                        if (!string.IsNullOrEmpty(fieldShortName))
-                        {
-                            columnElement.SetAttribute("ShortName", fieldShortName);
-                        }
-
-                        string oldNames = null;
-
-                        if (!String.IsNullOrEmpty(fieldOldNames))
-                        {
-                            if (fieldOldNames.Contains(","))
-                            {
-                                var oldNamesExceptName = fieldOldNames.Split(',').Where(x => x?.ToLower() != fieldName?.ToLower() && x?.ToLower() != fieldShortName?.ToLower());
-
-                                oldNames = oldNamesExceptName.Count() == 1 ? oldNamesExceptName.First() : string.Join(",", oldNamesExceptName.Reverse().Distinct(StringComparer.OrdinalIgnoreCase).ToArray());
-                            }
-                            else
-                            {
-                                oldNames = (fieldName?.ToLower() == fieldOldNames?.ToLower()) ? null : fieldOldNames;
-                            }
-                        }
-
-                        if (!String.IsNullOrEmpty(oldNames))
-                        {
-                            columnElement.SetAttribute("OldNames", oldNames);
-                        }
-
-                        columnElement.SetAttribute("Type", dxmlColumnDataType);
-
-                        if (dxmlColumnSize != 0)
-                        {
-                            columnElement.SetAttribute("Size", dxmlColumnSize.ToString());
-                        }
-
-                        if (dxmlColumnDataType == "decimal" && fieldNumberOfDigits != null)
-                        {
-                            columnElement.SetAttribute("Precision", fieldNumberOfDigits.ToString());
-                        }
-
-                        if (dxmlColumnDataType == "decimal" && fieldDigitsAfterPoint != null)
-                        {
-                            columnElement.SetAttribute("Scale", fieldDigitsAfterPoint.ToString());
-                        }
-
-                        string columnNames;
-                        if (!string.IsNullOrEmpty(field.OldNames))
-                        {
-                            columnNames = field.OldNames;
-                        }
-                        else
-                        {
-                            columnNames = field.FieldName;
-                        }
-
-                        XElement columnWithDefaultValueElement = columnWithDefaultValueElements.Where(x => (!columnNames.Contains(",") && x.Attribute("Name").Value == columnNames) || (columnNames.Contains(",") && columnNames.Split(',').Contains(x.Attribute("Name").Value))).FirstOrDefault();
-                        if (columnWithDefaultValueElement != null)
-                        {
-                            columnElement.SetAttribute("DefaultValue", columnWithDefaultValueElement.Attribute("DefaultValue").Value);
-                        }
-
-                        XElement columnWithIdentityElement = columnWithIdentityElements.Where(x => (!columnNames.Contains(",") && x.Attribute("Name").Value == columnNames) || (columnNames.Contains(",") && columnNames.Split(',').Contains(x.Attribute("Name").Value))).FirstOrDefault();
-                        if (columnWithIdentityElement != null)
-                        {
-                            columnElement.SetAttribute("Identity", columnWithIdentityElement.Attribute("Identity").Value);
-                        }
-
-                        XElement columnWithInitialValueScriptElement = columnWithInitialValueScriptElements.Where(x => (!columnNames.Contains(",") && x.Attribute("Name").Value == columnNames) || (columnNames.Contains(",") && columnNames.Split(',').Contains(x.Attribute("Name").Value))).FirstOrDefault();
-                        if (columnWithInitialValueScriptElement != null)
-                        {
-                            columnElement.SetAttribute("InitialValueScript", columnWithInitialValueScriptElement.Attribute("InitialValueScript").Value);
-                        }
-
-                        XmlElement constraintsElement = doc.CreateElement("Constraints");
-                        columnElement.AppendChild(constraintsElement);
-
-                        if (fieldIsPrimaryKey)
-                        {
-                            constraintsElement.SetAttribute("PrimaryKey", "true");
-                        }
-
-                        constraintsElement.SetAttribute("Nullable", dxmlColumnNullable ? "true" : "false");
-                    }
-
-                    List<string> processedForeignKeyFields = new List<string>();
-
-                    foreach (ObjectFieldsViewModel field in table.ObsList.Where(f => f.IsDBField && f.IsForeignKey))
-                    {
-                        if (!processedForeignKeyFields.Contains(field.FieldName))
-                        {
-                            XmlElement relationElement = doc.CreateElement("Relation");
-                            tableElement.AppendChild(relationElement);
-
-                            string dontBuildRelationOnDB = field.DontBuildRelationOnDB ? "true" : "false";
-
-                            string fieldNavigationPropertyName = field.NavigationPropertyName;
-
-                            string[] filedsWithSameNavigationPropertyName = table.ObsList.Where(f => f.IsDBField && f.IsForeignKey && f.NavigationPropertyName == fieldNavigationPropertyName).Select(f => f.FieldName).ToArray();
-
-                            string foreignKeyColumn = filedsWithSameNavigationPropertyName.Length == 1 ? filedsWithSameNavigationPropertyName[0] : string.Join(",", filedsWithSameNavigationPropertyName);
-
-                            relationElement.SetAttribute("ForeignKeyColumn", foreignKeyColumn);
-
-                            ForeignEntityData foreignEntityData;
-
-                            if (field.ForeignEntity.ToLower() == entityName.ToLower())
-                            {
-                                foreignEntityData = GetForeignEntityData(table);
-                            }
-                            else
-                            {
-                                foreignEntityData = GetForeignEntityData(field.ForeignEntity);
-                            }
-
-                            if (foreignEntityData != null)
-                            {
-                                relationElement.SetAttribute("ReferencedTable", foreignEntityData.ReferencedTable);
-                                relationElement.SetAttribute("ReferencedColumn", foreignEntityData.ReferencedColumn);
-                                relationElement.SetAttribute("ReferencedTableSchema", foreignEntityData.ReferencedTableSchema);
-                            }
-
-                            if (field.DontBuildRelationOnDB)
-                            {
-                                relationElement.SetAttribute("Ignore", dontBuildRelationOnDB);
-                            }
-
-                            foreach (string fieldName in filedsWithSameNavigationPropertyName)
-                            {
-                                processedForeignKeyFields.Add(fieldName);
-                            }
-                        }
-                    }
-
-                    foreach (var indexElement in indexElements)
-                    {
-                        XmlElement indexXmlElement = doc.CreateElement("Index");
-
-                        indexElement.Attributes().ToList().ForEach(element =>
-                        {
-                            indexXmlElement.SetAttribute(element.Name.LocalName, element.Value);
-                        });
-
-                        tableElement.AppendChild(indexXmlElement);
-                    }
-
-                    foreach (var uniqueConstraintElement in uniqueConstraintElements)
-                    {
-                        XmlElement uniqueConstraintXmlElement = doc.CreateElement("UniqueConstraint");
-
-                        uniqueConstraintElement.Attributes().ToList().ForEach(element =>
-                        {
-                            uniqueConstraintXmlElement.SetAttribute(element.Name.LocalName, element.Value);
-                        });
-
-                        tableElement.AppendChild(uniqueConstraintXmlElement);
-                    }
-
-                    try
-                    {
-                        //doc.Save(dxmlFilePath);
-                        FileStream fileStream;
-                        if (File.Exists(dxmlFilePath))
-                        {
-                            fileStream = new FileStream(dxmlFilePath, FileMode.Truncate, FileAccess.Write);
-                        }
-                        else
-                        {
-                            fileStream = new FileStream(dxmlFilePath, FileMode.CreateNew, FileAccess.Write);
-                        }
-
-                        XmlWriterSettings xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };
-                        XmlWriter xmlWriter = XmlWriter.Create(fileStream, xmlWriterSettings);
-
-                        doc.Save(xmlWriter);
-                        xmlWriter.Close();
-                        xmlWriter.Dispose();
-                        fileStream.Close();
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show("Error: " + exception.Message);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("DXML File Path Is Not Valid");
-                }
-            }
         }
 
         #endregion
@@ -2382,19 +1917,10 @@ namespace MeatadataGeneratorTool
 
         #region SetAttribute
 
-        private static void SetAttribute(string atrrName, string attrValue, XmlElement fieldElement, object field)
+        private static void SetAttribute(string atrrName, string attrValue, XmlElement fieldElement, ObjectField field)
         {
             if (attrValue != null)
             {
-                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
-                {
-                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
-
-                    attrValue = ConvertToBase64(attrValue);
-                    attrValue = "\"" + "BS64:" + attrValue + "\"";
-
-
-                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
         }
@@ -2407,28 +1933,8 @@ namespace MeatadataGeneratorTool
         {
             if (!string.IsNullOrEmpty(attrValue))
             {
-                if (IsHebrew(attrValue) && fieldElement.Name != "Record")
-                {
-                    fieldElement.SetAttribute(atrrName + "Back_up", attrValue);
-
-                    attrValue = ConvertToBase64(attrValue);
-                    attrValue = "\"" + "BS64:" + attrValue + "\"";
-                }
                 fieldElement.SetAttribute(atrrName, attrValue);
             }
-        }
-
-
-        private static bool IsHebrew(string text)
-        {
-            Regex hebrewRegex = new Regex(@"[\u0590-\u05FF]");
-            return hebrewRegex.IsMatch(text);
-        }
-
-        private static string ConvertToBase64(string text)
-        {
-            var bytes = Encoding.UTF8.GetBytes(text);
-            return Convert.ToBase64String(bytes);
         }
         #endregion
 
@@ -2453,166 +1959,5 @@ namespace MeatadataGeneratorTool
             return new string(chArray);
         }
 
-        private static string GetDataTypeForDXMLColumn(string type, bool isFixedLength)
-        {
-            switch (type)
-            {
-                case "Boolean":
-                    return "bit";
-                case "Constant":
-                case "PickList":
-                case "List":
-                case "Byte[]":
-                    return "varchar";
-                case "Date":
-                    return "date";
-                case "DateTime":
-                    return "datetime";
-                case "DateTime2":
-                    return "datetime2";
-                case "Decimal":
-                case "UnsDecimal":
-                    return "decimal";
-                case "Double":
-                case "SigDouble":
-                    return "float";
-                case "Integer":
-                case "UnsInteger":
-                    return "int";
-                case "nText":
-                    return "nvarchar";
-                case "LookUp":
-                case "Emails":
-                case "Text":
-                    return isFixedLength ? "char" : "varchar";
-                case "Raw":
-                    return "timestamp";
-                case "Binary":
-                    return "varbinary";
-                case "Time":
-                    return "time";
-                case "BigInteger":
-                    return "bigint";
-                default:
-                    return null;
-            }
-        }
-
-        private static bool GetNullableForDXMLColumn(bool fieldIsRequired, bool fieldIsNullable, bool fieldIsPrimaryKey, string dxmlColumnDataType)
-        {
-            if (fieldIsPrimaryKey)
-            {
-                return false;
-            }
-
-            if (new string[] { "bit", "datetime", "datetime2", "decimal", "float", "int" }.Contains(dxmlColumnDataType))
-            {
-                if (!fieldIsRequired && fieldIsNullable)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-
-            return !fieldIsRequired;
-        }
-
-        private static ForeignEntityData GetForeignEntityData(string foreignEntity)
-        {
-            string foreignEntityLXMLFilePath = GetForeignEntityLXMLFilePath(foreignEntity);
-
-            if (foreignEntityLXMLFilePath != null)
-            {
-                XDocument xmlDocument = new XDocument();
-                try
-                {
-                      xmlDocument = XDocument.Load(foreignEntityLXMLFilePath);
-
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show(foreignEntityLXMLFilePath);
-                   
-                }
-
-                string referencedTable = xmlDocument.Root.Attribute("DBTableName") == null ? null : xmlDocument.Root.Attribute("DBTableName").Value.Split('"')[1].Split('"')[0];
-                string referencedTableSchema = xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode") == null ? null : xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode").Value;
-
-                string[] primaryKeyFields = xmlDocument.Descendants("field").Where(x => x.Attribute("HasDataBaseField").Value == "true" && x.Attribute("IsPrimaryKey") != null && x.Attribute("IsPrimaryKey").Value == "true" && x.Attribute("FieldName") != null).Select(x => x.Attribute("FieldName").Value.Split('"')[1].Split('"')[0]).ToArray();
-                string referencedColumn = primaryKeyFields.Length > 0 ? string.Join(",", primaryKeyFields) : null;
-
-                return new ForeignEntityData
-                {
-                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
-                    ReferencedTableSchema = referencedTableSchema,
-                    ReferencedColumn = referencedColumn
-                };
-            }
-            else
-            {
-                string foreignEntityDXMLFilePath = GetForeignEntityDXMLFilePath(foreignEntity);
-
-                if (foreignEntityDXMLFilePath != null)
-                {
-                    XDocument xmlDocument = XDocument.Load(foreignEntityDXMLFilePath);
-
-                    string referencedTable = xmlDocument.Root.Attribute("Name") == null ? null : xmlDocument.Root.Attribute("Name").Value;
-                    string referencedTableSchema = xmlDocument.Root.Attribute("Schema") == null ? null : xmlDocument.Root.Attribute("Schema").Value;
-
-                    string[] primaryKeyFields = xmlDocument.Descendants("Column").Where(x => x.Elements("Constraints").First().Attribute("PrimaryKey") != null && x.Elements("Constraints").First().Attribute("PrimaryKey").Value == "true").Select(x => x.Attribute("Name").Value).ToArray();
-                    string referencedColumn = primaryKeyFields.Length > 0 ? string.Join(",", primaryKeyFields) : null;
-
-                    return new ForeignEntityData
-                    {
-                        ReferencedTable = referencedTable,
-                        ReferencedTableSchema = referencedTableSchema,
-                        ReferencedColumn = referencedColumn
-                    };
-                }
-            }
-
-            return null;
-        }
-
-        private static ForeignEntityData GetForeignEntityData(ObjectTableViewModel table)
-        {
-            if (table != null)
-            {
-                string referencedTable = table.DBTableName;
-                string referencedTableSchema = table.DxmlDatabaseSchemaCode;
-
-                string[] primaryKeyFields = table.ObsList.Where(f => f.IsDBField && f.IsPrimaryKey).Select(f => f.FieldName).ToArray();
-                string referencedColumn = primaryKeyFields.Length > 0 ? string.Join(",", primaryKeyFields) : null;
-
-                return new ForeignEntityData
-                {
-                    ReferencedTable = referencedTable.ToLower().StartsWith("customs.") ? referencedTable.Split('.')[1] : referencedTable,
-                    ReferencedTableSchema = referencedTableSchema,
-                    ReferencedColumn = referencedColumn
-                };
-            }
-
-            return null;
-        }
-
-        private static string GetForeignEntityLXMLFilePath(string foreignEntity)
-        {
-            string foreignEntityFileName = App.GetForeignEntityFileName(foreignEntity);
-            return App.LXMLFilesPaths.Where(l => Path.GetFileName(l).ToLower() == (foreignEntityFileName.ToLower() + ".lxml")).FirstOrDefault();
-        }
-
-        private static string GetForeignEntityDXMLFilePath(string foreignEntity)
-        {
-            string foreignEntityFileName = App.GetForeignEntityFileName(foreignEntity);
-            return App.DXMLFilesPaths.Where(d => Path.GetFileName(d).ToLower() == (foreignEntityFileName.ToLower() + ".dxml")).FirstOrDefault();
-        }
-
-        private class ForeignEntityData
-        {
-            public string ReferencedTable { get; set; }
-            public string ReferencedTableSchema { get; set; }
-            public string ReferencedColumn { get; set; }
-        }
     }
 }

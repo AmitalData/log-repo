@@ -27,14 +27,11 @@ import { CustomBanksCardPM } from '../../../../../Customs/EntityPMs/CustomBanksC
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PaymentOrdersGeneralTabComponent.html',
 })
 
 export class PaymentOrdersGeneralTabComponent extends BaseComponent {
-  public IsDisplayOnly: boolean = false;
-  public ProtestTypeCode: any;
-
     public DataContext: PaymentOrdersGeneralTabComponent = this;
     public EntityPM: PaymentOrderPM = new PaymentOrderPM();
     public ObjectTableName: string = "Customs.PaymentOrder";
@@ -65,7 +62,7 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
 
     imgNgStyle = "";
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService ) {
+    constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.LinesList = new ObservableCollection([]);
         this.MethodsList = new ObservableCollection([]);
@@ -73,12 +70,12 @@ export class PaymentOrdersGeneralTabComponent extends BaseComponent {
         this.banksList = [];
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         this.CurrentSession.StartBusyIndicator("");
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe((response:any) => {
-                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe((response:any) => {
-                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe((response:any) => {
-                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderMethod").subscribe(response => {
+                    this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderProtestReason").subscribe(response => {
+                        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsSetting").subscribe(response => {
+                            this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod").subscribe(response => {
                             if (this.entityArgs.EntityPM != null) {
                                 this.EntityPM = this.entityArgs.EntityPM;
                                 this.ObjectTableName = this.entityArgs.ObjectTableName;
@@ -689,8 +686,7 @@ export class PaymentMethodModel extends BaseComponent {
                                             this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
                                                 if (response) {
                                                     if (!response.HasError) {
-                                                        var agentBank = response.Result.filter(d => !d.InActive && d.PayerTypeCode == "3");
-                                                        this.BanksList = this.BanksList.concat(agentBank);
+                                                        this.BanksList = response.Result.filter(d => !d.InActive); 
                                                         if (this.InternalBankId != null) {
                                                             var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                             this.SelectedBank = bank;
@@ -703,8 +699,7 @@ export class PaymentMethodModel extends BaseComponent {
                                             this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
                                                 if (response) {
                                                     if (!response.HasError) {
-                                                        var agentBank = response.Result.filter(d => !d.InActive && d.PayerTypeCode == "3");
-                                                        this.BanksList = this.BanksList.concat(agentBank);
+                                                        this.BanksList = response.Result.filter(d => !d.InActive);
                                                         if (this.InternalBankId != null) {
                                                             var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                             this.SelectedBank = bank;

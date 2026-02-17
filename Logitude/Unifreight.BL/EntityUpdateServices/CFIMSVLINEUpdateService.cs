@@ -29,7 +29,7 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CFIMSVLINEPM entityPM)
         {
-            return new CFIMSVLINEKeys() { FILENO = entityPM.FILENO, COMID = entityPM.COMID, PAGENUM = entityPM.PAGENUM, LINENUM = entityPM.LINENUM, QUETYPE = entityPM.QUETYPE };
+            return new CFIMSVLINEKeys() { FILENO = entityPM.FILENO, COMID = entityPM.COMID, PAGENUM = entityPM.PAGENUM, LINENUM = entityPM.LINENUM };
         }
 
         protected override void OnCreating(CFIMSVLINEPM entityPM, EntityPM entityParentPM)

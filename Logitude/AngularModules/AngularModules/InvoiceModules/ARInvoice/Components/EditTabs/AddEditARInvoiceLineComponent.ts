@@ -9,7 +9,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditARInvoiceLineComponent.html',
 })
 
@@ -19,7 +19,6 @@ export class AddEditARInvoiceLineComponent {
     public DataContext: ARInvoiceLineItem;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsRegionalTaxVisible: boolean = false;
     constructor() {
     }
 
@@ -27,7 +26,6 @@ export class AddEditARInvoiceLineComponent {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         //this.DataContext.SetUIProperties();
-        this.IsRegionalTaxVisible = this.DataContext.fatherComponent.IsRegionalTaxVisible;
         this.SetLabels();
         this.Clone();
     }
@@ -122,7 +120,6 @@ export class AddEditARInvoiceLineComponent {
         this.myCloner.AddField('ForiegnCurrencyAmount');
         this.myCloner.AddField('LocalCurrencyAmount');
         this.myCloner.AddField('InvoiceCurrencyAmount');
-        this.myCloner.AddField('IsRegionalTax');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
     }

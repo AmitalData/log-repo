@@ -1,3 +1,0 @@
-
-ALTER TABLE ObjectFieldValidations
-DROP CONSTRAINT  FK_ObjectFieldValidationObjectField;

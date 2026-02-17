@@ -43,10 +43,7 @@ export class CallTypePM {
     public OldEntityPM: CallTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -54,7 +51,6 @@ export class CallTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CallType");
            
         }
-       }
     }
 
     private MyClone: CallTypePM;

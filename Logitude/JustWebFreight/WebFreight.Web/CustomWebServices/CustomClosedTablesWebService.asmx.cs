@@ -16,7 +16,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Reflection;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
@@ -92,7 +92,7 @@ namespace WebFreight.Web.CustomWebServices
 
 			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
 			//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-			queueservice.Send(messageProperties, tenant);
+			queueservice.Send(messageProperties);
 
 		}
 

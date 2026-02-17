@@ -21,10 +21,10 @@ export class APInvoiceTotalVATPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -113,11 +113,6 @@ export class APInvoiceTotalVATPM {
     public set VatRecognizedPercentage(newValue: number) { if (this.vatRecognizedPercentage != newValue) { this.vatRecognizedPercentage = newValue; this.MarkAsDirty("VatRecognizedPercentage"); } }
        
 	 
-    private localVatAmountWithVatRecognized: number;
-    public get LocalVatAmountWithVatRecognized() { return this.localVatAmountWithVatRecognized; }
-    public set LocalVatAmountWithVatRecognized(newValue: number) { if (this.localVatAmountWithVatRecognized != newValue) { this.localVatAmountWithVatRecognized = newValue; this.MarkAsDirty("LocalVatAmountWithVatRecognized"); } }
-       
-	 
 
     public OldEntityPM: APInvoiceTotalVATPM;
 	    
@@ -128,10 +123,7 @@ export class APInvoiceTotalVATPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -141,7 +133,6 @@ export class APInvoiceTotalVATPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APInvoiceTotalVAT");
            
         }
-	 }
     }
     private MyClone: APInvoiceTotalVATPM;
 

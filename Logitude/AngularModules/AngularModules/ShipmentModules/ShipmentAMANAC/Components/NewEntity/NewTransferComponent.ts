@@ -14,7 +14,7 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewTransferComponent.html',
 })
 
@@ -30,24 +30,21 @@ export class NewTransferComponent extends BaseComponent {
     private shipmentDomainService: ShipmentDomainService;
     constructor() {
         super();
-        this.InitEntityPM();
-        this.shipmentDomainService = new ShipmentDomainService();
-        this.BuildShipmentDatesList();
-        this.Listen();
-    }
-
-    private InitEntityPM() {
         this.EntityPM = new CustomsTransferHeaderPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.TransferDate = DateTool.GetCurrentDateTimeAsUtc();
-        this.EntityPM.CustomsTransferTypeCode = this.TransferTypeCode;
+
+        this.shipmentDomainService = new ShipmentDomainService();
+
+        this.BuildShipmentDatesList();
+        this.Listen();
     }
 
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "TransferCompleted") {
-                this.InitEntityPM();
+            if (s == "TransferExportFirstTime") {
+                this.IsFirstTimeLoading = true;
                 this.LoadData()
             }
         });
@@ -169,10 +166,6 @@ export class NewTransferComponent extends BaseComponent {
 
         this.AppendDateFilter(filters, date);
         filters.addAdditionalFilter("ShipmentLevelCode", "D,H", null, null, "InList", false, true, false, "string");
-        filters.addAdditionalFilter("IsCancelled", false, null, null, "Equals", false, false, false, "Boolean");
-        filters.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
-        filters.addAdditionalFilter("IsAccountingClosed", false, null, null, "Equals", false, false, false, "Boolean");
-        filters.addAdditionalFilter("AMANACShipmentsFilter", true, null, null, "Equals", true, false, false, "Boolean");
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, true, false, "string");
@@ -240,19 +233,19 @@ export class NewTransferComponent extends BaseComponent {
         }
 
         this.ItemsSource = myResultList.sort(function (a, b) { return a.DateTicks == b.DateTicks ? 0 : a.DateTicks < b.DateTicks ? -1 : 1; });
+        this.IsFirstTimeLoading = false;
         this.OnLinesSelected();
     }
     
     public SelectedCount: number = 0;
     public ExportButtonIsEnabled: boolean = false;
+    public IsFirstTimeLoading: boolean = true;
     OnLinesSelected() {
         this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
         this.ExportButtonIsEnabled = this.SelectedCount > 0 ? true : false;
     }
 
     ExportButtonClicked() {
-        this.EntityPM.CustomsTransferLines = [];
-
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
@@ -308,7 +301,9 @@ export class NewTransferComponent extends BaseComponent {
 
 export class NewTransferLine {
     constructor(private fatherComponent: NewTransferComponent) {
-        this.isChecked = fatherComponent.IsAllChecked;
+        if (fatherComponent.IsFirstTimeLoading) {
+            this.isChecked = true;
+        }
     }
 
     public Id: string;

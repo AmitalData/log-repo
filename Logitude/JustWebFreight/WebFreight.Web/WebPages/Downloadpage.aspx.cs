@@ -17,7 +17,7 @@ using System.Xml.XPath;
 using System.Xml;
 using System.Xml.Xsl;
 using WebFreight.Web.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
@@ -29,10 +29,6 @@ using WebFreight.Web.Helpers;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Core;
 using System.Net;
-using System.Diagnostics;
-using Newtonsoft.Json;
-using Logitude.BL.DataContracts;
-using WebFreight.Web.Helpers.WorkerRole.DocsOut;
 
 namespace WebFreight.Web.WebPages
 {
@@ -77,17 +73,7 @@ namespace WebFreight.Web.WebPages
             return available;
         }
 
-        StringBuilder _Logger = new StringBuilder();
-        Stopwatch _StopwatchLogger = Stopwatch.StartNew();
-        void LogIt(string mess)
-        {
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                return;
-            }
-            _Logger.Append(_StopwatchLogger.ElapsedMilliseconds).Append(":").AppendLine(mess);
-            _StopwatchLogger.Restart();
-        }
+
         int? tenant = null;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -101,27 +87,14 @@ namespace WebFreight.Web.WebPages
 
                 string securityKey = Request["securityId"] ?? "";
                 string token = Request["tempId"] ?? "";
-                bool forceDownload = Request["forceDownload"] != null && Request["forceDownload"] == "true";
                 string securityId = "";
                 string CustomName = "";
-                string Tenant = Request["tenant"] ?? "";
-                string cardId = Request["cardId"] ?? "";
-                string requestArea = Request["requestArea"] ?? "";
 
                 SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
                 bool isValid = securityDocumentResult.IsValid;
                 email = securityDocumentResult.Email;
                 string exceptionMessage = securityDocumentResult.ExceptionResult;
                 tenant = securityDocumentResult.Tenant;
-
-                if (securityKey == token)
-                {
-
-                    isValid = true;
-                    email = "system@tenant" + Tenant + ".com"; 
-                    tenant = int.Parse(Tenant);
-                } 
-                
 
 
                 bool overrideSecDueIsConnectedToUniFreight = false;
@@ -140,7 +113,7 @@ namespace WebFreight.Web.WebPages
 
                     if (overrideSecDueIsConnectedToUniFreight || CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0)
                     {
-                        isValid = CheckAuthenticationForNoUsers(cardId, isValid, overrideSecDueIsConnectedToUniFreight, requestArea);
+                        if (!overrideSecDueIsConnectedToUniFreight && !IsUser(email, (int)tenant)) isValid = false;
                     }
                     else isValid = false;
                 }
@@ -167,20 +140,13 @@ namespace WebFreight.Web.WebPages
                             {
                                 if (securityArray.Length > 0) securityId = securityArray[0];
                                 if (securityArray.Length > 1) filename = documentOutCopyId = securityArray[1];
-                                if (requestArea == "CargoTracking")
-                                {
-                                    CheckDocumentViewAccessForCargoTracking(null, securityId);
-                                }
+
                                 Document document = up.GetFileExtensionBySecurityIdAndCopyId(securityId, filename, (int)tenant);
                                 if (document != null)
                                 {
                                     documentExtension = document.Extension;
                                     CustomName = document.CalculatedFileName;
                                     filename = document.Id;
-                                    
-                                    if (requestArea == "ARInvoice") {
-                                        SetInterestReportInvoiceAsPrinted(securityId, document);
-                                    }
                                 }
                                 else isValid = false;
                             }
@@ -289,13 +255,7 @@ namespace WebFreight.Web.WebPages
                     {
                         Uploader up = new Uploader();
 
-                        if 
-                            (
-                            (!LogitudeSettings.IsCostomsDeploy &&  filestrings.Count() > 1) 
-                            ||
-                            (LogitudeSettings.IsCostomsDeploy && filestrings.Count() > 2)// copy from 18r01d
-                            )
-
+                        if (filestrings.Count() > 1)
                         {
                             documentExtension = "pdf";
                             filename += ".pdf";
@@ -308,30 +268,11 @@ namespace WebFreight.Web.WebPages
                             bool isTenantZero = (int)tenant == 0 ? true : false;
                             if (string.IsNullOrEmpty(securityKey))
                             {
-                                if (LogitudeSettings.IsCostomsDeploy && filestrings.Count() == 2)// copy from 18r01d
-                                {
-                                    filename = documentId = filestrings[1].ToString();
-                                }
-                                CheckDocumentViewAccessForCargoTracking(filename, requestArea);
                                 documentExtension = up.GetFileExtension(documentId, (int)tenant, isTenantZero);
 
                                 if (!string.IsNullOrEmpty(documentExtension))
                                 {
-                                    this.LogIt($"email:{email} DownloadFile(filename:{filename}, documentExtension, , (int)tenant, isTenantZero)");
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
-                                    if (_DatainByte == null)
-                                    {
-                                        this.LogIt($"Document file is empty!!!");
-                                    }
-                                    else
-                                    {
-                                        this.LogIt($"_DatainByte {_DatainByte.Length}= up.DownloadFile");
-                                    }
-
-                                    if (forceDownload && string.IsNullOrEmpty(CustomName))
-                                    {
-                                        CustomName = up.GetDocumentById(filename, (int)tenant)?.CalculatedFileName;
-                                    }
                                 }
                                 else isValid = false;
 
@@ -342,14 +283,12 @@ namespace WebFreight.Web.WebPages
                                 {
                                     if (!string.IsNullOrEmpty(BMKdocumentExtension) && !string.IsNullOrEmpty(BMKFileName))
                                     {
-                                        CheckDocumentViewAccessForCargoTracking(BMKFileName, requestArea);
                                         BMKDatainByte = up.DownloadFile(BMKFileName, BMKdocumentExtension, "", (int)tenant, isTenantZero);
                                     }
                                     else isValid = false;
 
                                     if (!string.IsNullOrEmpty(INIdocumentExtension) && !string.IsNullOrEmpty(INIFileName))
                                     {
-                                        CheckDocumentViewAccessForCargoTracking(INIFileName, requestArea);
                                         INIDatainByte = up.DownloadFile(INIFileName, INIdocumentExtension, "", (int)tenant, isTenantZero);
                                     }
                                     else isValid = false;
@@ -357,11 +296,6 @@ namespace WebFreight.Web.WebPages
 
                                else if (!string.IsNullOrEmpty(documentExtension) && !string.IsNullOrEmpty(filename))
                                 {
-                                    CheckDocumentViewAccessForCargoTracking(filename, requestArea);
-                                    _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
-                                }
-                                else if (string.IsNullOrEmpty(documentExtension) && !string.IsNullOrEmpty(filename))
-                                { 
                                     _DatainByte = up.DownloadFile(filename, documentExtension, "", (int)tenant, isTenantZero);
                                 }
                                 else isValid = false;
@@ -394,20 +328,9 @@ namespace WebFreight.Web.WebPages
                             }
                             documentExtension = "html";
                         }
-                        if (documentExtension == "json")
-                        {
-                            var result = Encoding.Default.GetString(_DatainByte);
-                            result = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(result), Newtonsoft.Json.Formatting.Indented);
-                            Response.Clear();
-                            Response.Write(result);
-                            HttpContext.Current.Response.ContentType = "application/json";
-                            HttpContext.Current.Response.AppendHeader("Content-Disposition", (forceDownload  ? "attachment" : "inline") + "; filename*=UTF-8''" + filename + "\"");
+                        string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + "." + documentExtension;
 
-                            return;
-                        }
-                        string documentName = (!string.IsNullOrEmpty(CustomName) ? CustomName : filename) + (!string.IsNullOrEmpty(documentExtension) ? ".":"") + documentExtension;
-
-                        if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", ""); 
+                        if (!string.IsNullOrEmpty(documentName)) documentName = documentName.Replace(" ", "");
 
                         // _DatainByte = sender as byte[];
                         HttpContext.Current.Response.Clear();
@@ -480,7 +403,7 @@ namespace WebFreight.Web.WebPages
                                 HttpContext.Current.Response.ContentType = "application/xml";
                                 ShowType = "inline";
                                 break;
-                            
+
                             case "html":
                                 //HttpContext.Current.Response.AddHeader("Content-Disposition", "inline;filename=" + documentName);
                                 HttpContext.Current.Response.ContentType = "application/html";
@@ -493,10 +416,6 @@ namespace WebFreight.Web.WebPages
 
                         }
 
-                        if (forceDownload)
-                        {
-                            ShowType = "attachment";
-                        }
 
                         if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                         {
@@ -526,22 +445,7 @@ namespace WebFreight.Web.WebPages
 
                         if (HttpContext.Current.Response.IsClientConnected)
                         {
-                            LogIt("Flush");
-                            try
-                            {
-                                HttpContext.Current.Response.Flush();
-                            }
-                            catch (Exception exFlush)
-                            {
-                                if (LogitudeSettings.IsCostomsDeploy)
-                                {
-                                    LogitudeSettings.HandleLogMe(_Logger.ToString() + Environment.NewLine + exFlush.ToString(), false, "exFlush", new DateTime(2019, 8, 1));
-                                }
-                                throw;
-
-
-                            }
-                            
+                            HttpContext.Current.Response.Flush();
                             HttpContext.Current.Response.Close();
                             HttpContext.Current.ApplicationInstance.CompleteRequest();
 
@@ -564,7 +468,6 @@ namespace WebFreight.Web.WebPages
                 }
 
             }
-           
             catch (ExceptionInErrorLog ExceptionInErrorLog)
             {
                 Response.Clear();
@@ -575,7 +478,6 @@ namespace WebFreight.Web.WebPages
 ExceptionInErrorLog.ToString()
     );
             }
-            
             catch (Exception errorInfo)
             {
                 string ErrorMessage = errorInfo.Message;
@@ -596,66 +498,6 @@ ExceptionInErrorLog.ToString()
             }
 
         }
-
-        private void SetInterestReportInvoiceAsPrinted(string securityKey, Document document)
-        {
-            DocumentsFilingRepository documentRepository = new DocumentsFilingRepository((int)tenant);
-            DocumentsFiling documentFiling = null;
-
-            if (!string.IsNullOrWhiteSpace(securityKey))
-            {
-                string encodedSecurityId = System.Net.WebUtility.UrlEncode(securityKey);
-                documentFiling = documentRepository.GetSingleDocumentFilingBySecurityId(encodedSecurityId, (int)tenant);
-            }
-            else
-            {
-                documentFiling = documentRepository.GetSingleDocumentFilingByDocumentId(document.Id, (int)tenant);
-            }
-            if(documentFiling != null)
-            {
-                ARInvoicePrintDetailsService aRInvoicePrintDetailsService = new ARInvoicePrintDetailsService((int)tenant, documentFiling.EntityId, email, true);
-                aRInvoicePrintDetailsService.Update(documentFiling.Id);
-            }
-        }
-
-        private void CheckDocumentViewAccessForCargoTracking(string documentId, string requestArea, string securityKey = null)
-        {
-            if (requestArea == "CargoTracking") { 
-                DocumentsFilingRepository documentRepository = new DocumentsFilingRepository((int)tenant);
-                DocumentsFiling documentFiling = null;
-
-                if (!string.IsNullOrWhiteSpace(securityKey))
-                {
-                    string securityId = System.Net.WebUtility.UrlEncode(securityKey);
-                    documentFiling = documentRepository.GetSingleDocumentFilingBySecurityId(securityId, (int)tenant);
-                } else {
-                    documentFiling = documentRepository.GetSingleDocumentFilingByDocumentId(documentId, (int)tenant);
-                }
-
-                if (documentFiling!= null && !documentFiling.DocumentType.IsCustomerView) {
-                    Response.Output.Write("Sorry you’re not authenticated to view this document.");
-                    throw new ApplicationException("Sorry you’re not authenticated to view this document.");
-                }
-            }
-        }
-
-        private bool CheckAuthenticationForNoUsers(string cardId, bool isValid, bool overrideSecDueIsConnectedToUniFreight, string requestArea)
-        {
-            if (IsUser(email, (int)tenant) || requestArea == "CargoTracking")
-                return isValid;
-
-            if (CheckSharedContactAuthenticationByCardId(cardId, (int)tenant))
-            {
-                return true;
-            }
-            else if (!overrideSecDueIsConnectedToUniFreight)
-            {
-                return false;
-            }
-
-            return isValid;
-        }
-
         public string BMKSecurityId;
         public string BMKFileName;
         public string BMKdocumentOutCopyId;
@@ -728,11 +570,10 @@ ExceptionInErrorLog.ToString()
                 HttpContext.Current.Response.Clear();
                 //HttpContext.Current.Response.AddHeader("Content-Length", _DatainByte.Length.ToString());
                 //HttpContext.Current.Response.AppendHeader("content-disposition", "attachment; filename=" + DocumentName);
-                //var ANSI = Encoding.GetEncoding("Windows-1252");
-                //byte[] INIDatainANSI = Encoding.Convert(Encoding.UTF8, ANSI, INIDatainByte);
+
+
                 Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
-                //files.Add(BMKdocumentName.Split('.')[0] + "." + "zip", CompressionFile(BMKdocumentName, BMKDatainByte));
-                files.Add(BMKdocumentName.Split('.')[0] + "." + "txt", BMKDatainByte);
+                files.Add(BMKdocumentName.Split('.')[0] + "." + "zip", CompressionFile(BMKdocumentName, BMKDatainByte));
 
 
                 files.Add(INIdocumentName, INIDatainByte);
@@ -933,42 +774,6 @@ ExceptionInErrorLog.ToString()
                 isUser = globalContext.GlobalContacts.Where(c => c.Email == email && (c.GlobalTenantId == tenant || c.GlobalTenantId == 0) && c.IsUser == true).Any();
             }
             return isUser;
-        }
-
-        public bool CheckSharedContactAuthenticationByCardId(string cardId, int tenant)
-        {
-            if (tenant == 0)
-                return true;
-
-            bool exists = CheckIfCardContactExistByCardIdAndTenant(cardId, tenant);
-
-            if (!exists)
-            {
-                throw new AutenticationException("Sorry! you are not authorized to read data!");
-            }
-
-            return true;
-
-        }
-
-        private bool CheckIfCardContactExistByCardIdAndTenant(string cardId, int tenant)
-        {
-            if (string.IsNullOrEmpty(email))
-            {
-                return false;
-            }
-
-            bool exists = false;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            ContactRepository contactrep = new ContactRepository(commonDataContext);
-            Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
-            if (contact != null)
-            {
-                CardContact cardContact = commonDataContext.CardContacts.Where(d => d.ContactId == contact.Id && d.CardId == cardId).FirstOrDefault();
-                exists = cardContact != null;
-            }
-
-            return exists;
         }
 
         private string GetReceivedCustomResponseCorrelationDocumentId(string requestComminicationId, string mtenant)

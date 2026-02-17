@@ -14,6 +14,5 @@ export class ChargesGroupList {
 		Tenant: number;
 		LocalName: string;
 		ViewOrder: number;
-		QuoteGroupSectionID: string;
 	
 }

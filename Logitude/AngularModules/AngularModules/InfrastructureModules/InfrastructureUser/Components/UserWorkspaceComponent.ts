@@ -1,7 +1,9 @@
 declare var window: any;
-import { Component, OnInit, ComponentRef, Output, EventEmitter, OnDestroy}  from '@angular/core';
+import {Component, OnInit, ComponentRef, Output, EventEmitter}  from '@angular/core';
+import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -16,16 +18,15 @@ import {PackageList} from '../../../Common/EntityLists/PackageList';
 import {PackageListService} from '../../../Common/Services/StandardLists/PackageListService';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {UserLicenseArgs} from '../../../Infrastructure/Args';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'UserWorkspace',
     templateUrl: './UserWorkspaceComponent.html',
     providers: [UserExtendedPMService]
 })
 
-export class UserWorkspaceComponent implements OnInit, OnDestroy {
+export class UserWorkspaceComponent implements OnInit {
     public ComponentRef: ComponentRef<UserWorkspaceComponent>;
     filterAgrs: ApiQueryFilters;
     private _entityResourceService: EntityResourceService;
@@ -33,24 +34,10 @@ export class UserWorkspaceComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _userExtendedPMService: UserExtendedPMService) {
         this._entityResourceService = new EntityResourceService();
-        this.Listen();
     }
 
     ngOnInit() {
 
-    }
-
-    private SessionEvent: any = null;
-    private Listen() {
-
-        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "RefreshUserWorkspace") {
-                this.LoadAllData();
-            }
-        });
-    }
-    ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     public BackButtonText = "Maintenance";
@@ -60,7 +47,7 @@ export class UserWorkspaceComponent implements OnInit, OnDestroy {
             this.BackButtonText = args.BackButtonText;
         }
 
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString()) && !SessionLocator.LoggedUserPM.IsCustomerCare) {
+        if (SessionLocator.Tenant == 65 && !SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.IsDemoTenant = true;
         }
 
@@ -101,7 +88,7 @@ export class UserWorkspaceComponent implements OnInit, OnDestroy {
     }
 
     private LoadUserLicenses() {
-        this._userExtendedPMService.GetUserLicenses().subscribe((myResult:any) => {
+        this._userExtendedPMService.GetUserLicenses().subscribe(myResult => {
             if (myResult == null) {
                 this.LicensesManagmentsList = [];
             }
@@ -123,7 +110,7 @@ export class UserWorkspaceComponent implements OnInit, OnDestroy {
         this.LicensesManagmentsList = [];
 
         var service: PackageListService = new PackageListService();
-        service.getAllFromCache().subscribe((result:any) => {
+        service.getAllFromCache().subscribe(result => {
             this.allPackages = result.Result;
             this.FillLicensesManagmentsList();
         });
@@ -232,7 +219,7 @@ export class UserWorkspaceComponent implements OnInit, OnDestroy {
         this.InitCounts();
         this.isLoadDataSummaryCompleted = false;
 
-        this._userExtendedPMService.GetUsersWorkspaceSummary(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._userExtendedPMService.GetUsersWorkspaceSummary(SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -432,7 +419,7 @@ export class UserWorkspaceComponent implements OnInit, OnDestroy {
     }
 
     ViewNewUserWindow() {
-        this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 965;
             logWindow.Height = 600;

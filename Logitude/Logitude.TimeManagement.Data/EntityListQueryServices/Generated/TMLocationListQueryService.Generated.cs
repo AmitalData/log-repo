@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -25,11 +25,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<TMLocationList> GetList(QueryOperations queryOperations, int tenant ){
-		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
-		 }
-
-        public List<TMLocationList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        public List<TMLocationList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -40,9 +36,9 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<TMLocation>(nonListQueryOperation, iQueryable);
 
@@ -51,7 +47,6 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
             IQueryable<TMLocationList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<TMLocationList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<TMLocationList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -148,14 +143,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
            
         }
 
-
-		
-        public int GetListCount(QueryOperations queryOperations ){
-		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
-
-		 }
-
-        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
+        public int GetListCount(QueryOperations queryOperations)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -166,24 +154,20 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
 			iQueryable = filter.GetFilteredQuery<TMLocation>(nonListQueryOperation, iQueryable);
-
-
 
             IQueryable<TMLocationList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<TMLocationList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<TMLocationList>(query2, treeFilterQueryArgs);
-
             int count = query2.Count();
             return count;
         }
 
-
+      
     }
 }
 	 

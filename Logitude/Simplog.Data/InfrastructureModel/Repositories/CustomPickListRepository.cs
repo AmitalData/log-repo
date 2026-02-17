@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.Mapping;
-using System.Transactions;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -31,32 +29,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public IQueryable<CustomPickList> GetCustomPickLists(int tenant)
         {
-			return context.CustomPickLists.Where(t=>t.Tenant == tenant);
-		}
+            return context.CustomPickLists.Where(t=>t.Tenant == tenant);
+        }
 
-		public List<CustomPickList> GetCustomPickListsCashe(int tenant)
-		{
-			List<CustomPickList> customPickLists;
-			string listName = "CustomPickList" + tenant;
-
-			if (CacheManager.CacheWrapper.Get(listName) == null)
-			{
-				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{
-					customPickLists = context.CustomPickLists.Where(t => t.Tenant == tenant).ToList();
-				}
-
-				CacheManager.CacheWrapper.Insert(listName, customPickLists, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-			}
-			else
-			{
-				customPickLists = (List<CustomPickList>)CacheManager.CacheWrapper.Get(listName);
-			}
-			return customPickLists;
-		}
-
-
-		public CustomPickList GetSingleCustomPickList(string id,int tenant)
+        public CustomPickList GetSingleCustomPickList(string id,int tenant)
         {
             return (from a in context.CustomPickLists  where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();   
         }

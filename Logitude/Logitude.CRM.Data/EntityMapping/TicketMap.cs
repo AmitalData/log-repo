@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data;
@@ -150,25 +150,6 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.SLAId).HasColumnName("SLAId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.EntityType).HasColumnName("EntityType").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.SupportMailboxId).HasColumnName("SupportMailboxId").HasMaxLength(15).IsUnicode(false);
-
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.LastCorrespondence).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.LastCorrespondence).HasMaxLength(4000);
-			}
-
-
-            this.Property(t => t.LastCorrespondence).HasColumnName("LastCorrespondence").IsUnicode(true);
-
-            this.Property(t => t.QuoteRequestFeedback).HasColumnName("QuoteRequestFeedback").HasMaxLength(100).IsUnicode(true);
-
-            this.Property(t => t.QuoteRequestComments).HasColumnName("QuoteRequestComments").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }

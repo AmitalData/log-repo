@@ -30,9 +30,7 @@ namespace CommunicationWorkerRole.Tasks
         public string MessageId { get; set; }
         string TaskId;
         string TaskHistoryId;
-        protected  int Tenant;
-        public bool IsStartedFromUI = false;
-
+        int Tenant;
         TaskSchedulerHistoryPM TaskSchedulerHistory;
         ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
          public TaskManagerBase(string Id, int tenant)
@@ -81,7 +79,7 @@ namespace CommunicationWorkerRole.Tasks
                     //TaskSchedulerHistoryRepository TaskSchedulerHistoryRepository = new TaskSchedulerHistoryRepository(Tenant);
 
 
-                    
+
                     Task.Status = null;
                     //queueservice.Complete();
                     TaskSchedulerHistoryPM LastExecutionHistory = SubmitLogsData();
@@ -89,10 +87,9 @@ namespace CommunicationWorkerRole.Tasks
                     Task.LastRunEndTimeUTC = LastExecutionHistory.EndDateTimeUTC;
                     Task.LastRunResult = LastExecutionHistory.LogType;
                     SchedulerHelper SchedulerHelper = new SchedulerHelper();
-                    if(!IsStartedFromUI)
-                         SchedulerHelper.AddSchedulerQueue(Task);
-                  
-					scope.Complete();
+                    SchedulerHelper.AddSchedulerQueue(Task);
+
+                    scope.Complete();
                 }
             }
             catch (ThreadAbortException e)
@@ -427,7 +424,7 @@ namespace CommunicationWorkerRole.Tasks
             var queueservice = new DbQueueService();
             var NextRunTime = DateTime.Now.AddSeconds(DelaySeconds + 0.0);
             queueservice.InitializeQueue("SchedularQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() }, { "Retries", task.Retries.ToString() } }, task.Tenant, null, null, null, NextRunTime);
+            queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() }, { "Retries", task.Retries.ToString() } }, null, null, null, NextRunTime);
             //var objectContext = WebFreightContext.GetContext(task.Tenant);
             //TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             //service.Update(task);

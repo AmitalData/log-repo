@@ -95,7 +95,7 @@
                                     <td class="HeaderScreenValue">
                                         <div class="TextTrimming" style="width: 100%; position: relative;">
                                             <a style="font-size: 11px;" *ngIf="PreviousPagePM" href="#"
-                                                (click)="OpenPrevPage()" id="PreviousPageNo">{{PreviousPagePM.PageNo}}</a>
+                                                (click)="OpenPrevPage()">{{PreviousPagePM.PageNo}}</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -264,7 +264,6 @@
                                                     <td>
                                                         <LogTextBox [ObjectFieldName]="'StartBalance'"
                                                             [ObjectTableName]="ExternalPageTable"
-                                                            [Text]="StartBalance"
                                                             [DataContext]="DataContext" [HideColumns]="true"
                                                             [InputType]="'decimal'"></LogTextBox>
                                                     </td>
@@ -307,29 +306,11 @@
                             <td colspan="3" style="width: 310px;">
 
                                 <div style="width: 30px; float: left;">
-                                    <IconButton *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked"
-                                                [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
+                                    <IconButton
+                                        *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked"
+                                        [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
                                 </div>
-                                <div *ngIf="!IsLeumi && (ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked)" style="width: 50px; float: left;">
-                                    <input class="upload" style="display: none;width:65px"
-                                           type="file" (change)="OnFileChanged($event)"
-                                           (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
-                                           #fileInput>
-                                    <a href="#" style="text-decoration:none">
-                                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
-                                        <input #myInput accept=".xlsx, .xls" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
-                                    </a>
-                                </div>
-                                <div *ngIf="IsLeumi && (ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked)" style="width: 50px; float: left;">
-                                    <input class="upload" style="display: none;width:65px"
-                                           type="file" (change)="OnTextFileChanged($event)"
-                                           (click)="fileInput.value = null" value="" accept=".dat"
-                                           #fileInput>
-                                    <a href="#" style="text-decoration:none">
-                                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
-                                        <input #myInput accept=".dat" type="file" [(ngModel)]="FileData" (change)="UploadTextFile($event)" (click)="UploadTextFile($event)" style="display:none;width:65px" class="upload" />
-                                    </a>
-                                </div>
+
                                 <div style="width: 220px; float: right;">
                                     <!--<SearchTextBox [ObjectTableName]="'ReconcileExternalPage'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>-->
                                 </div>
@@ -346,25 +327,22 @@
                         <tr style="height: 110px;">
                             <td colspan="3" style="height: 250px;">
                                 <div class="CellContent" *ngIf="AmountColHeader">
-
-                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                            [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
-                                                            [ItemSource]="PageLinesList" (RowEnded)="OnRowEnded($event)"
-                                                            (Ondblclick)="OnFocus()">
+                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                        [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
+                                        [ItemSource]="PageLinesList" (RowEnded)="OnRowEnded($event)"
+                                        (Ondblclick)="OnFocus()">
 
                                         <!-- LineNumber -->
                                         <log-column
                                             [header]="'ReconcileExternalPageLine.F.LineNumber' | TextCodeTranslationPipe"
                                             [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'"
                                             [binding]="'LineNumber'">
-                                            <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1"   #logcelltemplate
+                                            <log-cell-template [TabIndex]="-1" template="let item" #logcelltemplate
                                                 [IgnoreMods]="true">
                                                 <div style="text-align: center;" class="TextTrimming">
                                                     <span>{{item.LineNumber}}</span>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- ReferenceDate -->
@@ -372,9 +350,8 @@
                                             [header]="'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe"
                                             [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'"
                                             [binding]="'ReferenceDate'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div   [style.text-align]="isRTL ? 'right' : 'left'"
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="" [style.text-align]="isRTL ? 'right' : 'left'"
                                                     class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.ReferenceDate | DateTimeToDatePipe}}</span>
                                                 </div>
@@ -384,7 +361,6 @@
                                                         [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
 
@@ -392,11 +368,10 @@
                                         <!-- DebitAmount -->
                                         <log-column [header]="DebitAmountColHeader" [width]="'130'"
                                             [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAmount'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span   >{{ item.DebitAmount | NumbersPipe:'n2' }}</span>
+                                                    <span style="">{{ item.DebitAmount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [ObjectFieldName]="'DebitAmount'"
@@ -406,17 +381,15 @@
                                                         [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- CreditAmount -->
                                         <log-column [header]="CreditAmountColHeader" [width]="'130'"
                                             [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAmount'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming"
                                                     *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span  >{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
+                                                    <span style="">{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [ObjectFieldName]="'CreditAmount'"
@@ -426,7 +399,6 @@
                                                         [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
 
@@ -435,9 +407,8 @@
                                             [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="isRTL ? 'right' : 'left'"
                                             [binding]="'Reference'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div   [style.text-align]="isRTL ? 'right' : 'left'"
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="" [style.text-align]="isRTL ? 'right' : 'left'"
                                                     class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span style="padding: 0px 3px;">{{item.Reference}}</span>
                                                 </div>
@@ -449,7 +420,6 @@
                                                         [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- IsReconciled -->
@@ -457,8 +427,7 @@
                                             [header]="'ReconcileExternalPageLine.F.IsReconciled' | TextCodeTranslationPipe"
                                             [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'"
                                             [binding]="'IsReconciled'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: center;">
                                                     <span style="padding-left:30px; padding-right:30px"><img
                                                             *ngIf="item.IsReconciled"
@@ -466,16 +435,14 @@
                                                             src="./Images/CheckBoxIcon.png" /></span>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- Notes -->
                                         <log-column
                                             [header]="'ReconcileExternalPageLine.F.Notes' | TextCodeTranslationPipe"
                                             [width]="'220'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Notes'">
-                                            <ng-template let-item>
-                                            <log-cell-template   #logcelltemplate>
-                                                <div   [style.text-align]="isRTL ? 'right' : 'left'"
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="" [style.text-align]="isRTL ? 'right' : 'left'"
                                                     class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span style="padding: 0px 3px;">{{item.Notes}}</span>
                                                 </div>
@@ -486,21 +453,18 @@
                                                         [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                         <!-- Buttons -->
                                         <log-column *ngIf="ReconcileExternalPagePM.StatusCode == '1'" [width]="'55'"
                                             [Alignment]="'right'">
-                                            <ng-template let-item>
-                                            <log-cell-template  [IgnoreMods]="true">
+                                            <log-cell-template template="let item" [IgnoreMods]="true">
                                                 <!--<span class="CellSeparator" style="float: left;"></span>-->
                                                 <IconButton [Name]="'Delete'" [IsSmall]="true"
                                                     (click)="RemoveLineClicked(item)" [IsEnabled]="!IsDisplayOnly"
                                                     style="display: inline-block; float: left; margin-left:12px; margin-top:4px;">
                                                 </IconButton>
                                             </log-cell-template>
-                                        </ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -573,7 +537,7 @@
 
                     <td style="width: 57px;">
                         <button class="Button"
-                            (click)="CancelButtonClicked()" id="Close">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
+                            (click)="CancelButtonClicked()">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 7px;">
@@ -590,7 +554,7 @@
                     </td>
 
                     <td style="width: 75px;">
-                        <button class="GreenButton" (click)="ApproveButtonClicked()" id="Approve"
+                        <button class="GreenButton" (click)="ApproveButtonClicked()"
                             [disabled]="(ReconcileExternalPagePM.StatusCode == '2' && !isApprovedButtonClicked) || ReconcileExternalPagePM.StatusCode == '3'">{{'Accounting.General.O.Approve' | TextCodeTranslationPipe}}</button>
                     </td>
 

@@ -135,9 +135,7 @@
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'GLAccount'"
                                                             [DependencyFilter2Value]="'1'"
-                                                            [HideColumns]="false"
-                                                            [StartSearchFromChar]="3"
-                                                            [StartSearchFromNumber]="5">
+                                                            [HideColumns]="false">
                                                     </LogLov>
                                                 </td>
                                                 <td><div></div></td>
@@ -258,15 +256,15 @@
                                 <ul class="FiltersMenu">
                                     <li id="allcheques" (click)="FilterItemClicked('all')" style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'all'">
-                                        {{ 'CashBook.B.All' | TextCodeTranslationPipe }} ({{ChequesCounter.AllChequesCount}})
+                                        {{ 'CashBook.B.All' | TextCodeTranslationPipe }} ({{+PostdatesCount++CashCount}})
                                     </li>
                                     <li id="cashcheques" (click)="FilterItemClicked('cash')" style="width: 105px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'cash'">
-                                        {{ 'CashBook.B.CashCheques' | TextCodeTranslationPipe }} ({{ChequesCounter.CashChequesCount}})
+                                        {{ 'CashBook.B.CashCheques' | TextCodeTranslationPipe }} ({{CashCount}})
                                     </li>
                                     <li id="postdatedcheques" (click)="FilterItemClicked('postdated')" style="width: 135px; height: 22px;"
                                         [class.SelectedFilter]="FilterSelectedValue === 'postdated'">
-                                        {{ 'CashBook.B.PostdatedCheques' | TextCodeTranslationPipe }} ({{ChequesCounter.PostdatedChequesCount}})
+                                        {{ 'CashBook.B.PostdatedCheques' | TextCodeTranslationPipe }} ({{PostdatesCount}})
                                     </li>
                                 </ul>
 
@@ -276,29 +274,14 @@
                     <tr *ngIf="EntityPM.CashBookTypeCode == '1'" style="height: 50px;">
                         <td>
                             <div>
-                                {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}:
-                                <div style="font-size: 13px; font-weight: bold; color:#04c655;" [class.red]="TotalSum<=0">{{TotalSum | NumbersPipe:'N3'}} {{EntityPM.CurrencySign}}</div>
+                                {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}:  <div style="font-size: 13px; font-weight: bold; color:#04c655;" [class.red]="TotalSum<=0">{{TotalSum | NumbersPipe:'N3'}} {{EntityPM.CurrencySign}}</div>
                             </div>
                         </td>
                     </tr>
 
                     <tr *ngIf="EntityPM.CashBookTypeCode != '1'">
                         <td style="height: 100%; padding-bottom: 75px;">
-
-                            <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%"
-                                               GridHeight="100%"
-                                               [ObjectTable]="'CashBookLine'"
-                                               [dataSource]="DataSource"
-                                               [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                               [columns]="columns"
-                                               [autoLoad]="true"
-                                               [QueryChangeEvent]="onQueryChangeEvent"
-                                               [IsCustomTemplate]="true">
-                                </logitude-grid>
-                            </div>
-
-                            <!-- <div class="CellContent">
+                            <div class="CellContent">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                     [ItemSource]="ChequesList"
                                                     [UseVirtuallization]="true">
@@ -386,7 +369,7 @@
 
                                 </logitude-edit-grid>
 
-                            </div> -->
+                            </div>
                         </td>
                     </tr>
 

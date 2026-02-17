@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class CustDocsTicketWebServiceController : ApiController
     {
-        public HttpResponseMessage GetCustomsDocumentsTicketsByEntityIdAndChilds(string entityId, string childEntityId1, string childEntityId2, string childEntityId3, string parentEntityCode, bool isAir)
+        public HttpResponseMessage GetCustomsDocumentsTicketsByEntityIdAndChilds(string entityId, string childEntityId1, string childEntityId2, string childEntityId3, string parentEntityCode)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
 
                 CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(authToken.Tenant);
-                List<CustomsDocumentsTicketPM> customsDocumentsTickets = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, childEntityId1, childEntityId2, childEntityId3, authToken.Tenant, parentEntityCode, isAir);
+                List<CustomsDocumentsTicketPM> customsDocumentsTickets = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(entityId, childEntityId1, childEntityId2, childEntityId3, authToken.Tenant, parentEntityCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, customsDocumentsTickets);
             }

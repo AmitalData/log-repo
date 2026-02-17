@@ -1,4 +1,4 @@
-
+﻿
 
 <div *ngIf="!DocumentCustomArgs.EditCustomField" style="margin:5px">
     <table>
@@ -153,13 +153,13 @@
                                 <div style="vertical-align:top;width:317px" *ngSwitchCase="'Date'">
                                     <!--(ValueChanged)="ValueDateChange($event,item)"-->
 
-                                     <LogDatePicker (ValueChanged)="ValueDateChange($event,item)" [HideColumns]="true" *ngIf="item.IsLoad" [ObjectFieldName]="'FieldValue'" [DataContext]="item"></LogDatePicker>
+                                     <LogDatePicker (ValueChanged)="ValueDateChange($event,item)" [HideColumns]="true" *ngIf="item.IsLoad" [LogitudeForm]="myForm" [ObjectFieldName]="'FieldValue'" [DataContext]="item"></LogDatePicker>
 
                                  </div>
 
                                  <div style="vertical-align:top;width:317px;" *ngSwitchCase="'DateTime'">
 
-                                     <LogDatePicker [HideColumns]="true" (ValueChanged)="ValueDateChange($event,item)" *ngIf="item.IsLoad" [ObjectFieldName]="'FieldValue'" [DataContext]="item"></LogDatePicker>
+                                     <LogDatePicker [HideColumns]="true" (ValueChanged)="ValueDateChange($event,item)" *ngIf="item.IsLoad" [LogitudeForm]="myForm" [ObjectFieldName]="'FieldValue'" [DataContext]="item"></LogDatePicker>
 
                                   
                                  </div>

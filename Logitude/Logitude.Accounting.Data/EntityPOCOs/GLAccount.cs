@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -43,15 +43,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [ForeignKey("Currency")]
         [Column("CurrencyId")]
 	    public string CurrencyId { get; set; }
+	      
         public virtual Currency Currency { get; set; }
-
-
-        [ForeignKey("PaymentTerm")]
-        [Column("PaymentTerms")]
-	    public string PaymentTerms { get; set; }
-        public virtual PaymentTerm PaymentTerm { get; set; }
-
-
         [ForeignKey("RevenueExpense")]
         [Column("RevenueExpenseType")]
 	    public string RevenueExpenseType { get; set; }
@@ -76,12 +69,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ReconcileMethodCode { get; set; }
 	      
         public virtual ReconcileMethod ReconcileMethod { get; set; }
-
-        [ForeignKey("ExchangeRate")]
-        [Column("ExchangeRateId")]
-        public string ExchangeRateId { get; set; }
-
-        public virtual AdditionalCurrencyRate ExchangeRate { get; set; }
         [ForeignKey("ControlAccount")]
         [Column("ControlAccountId")]
 	    public string ControlAccountId { get; set; }
@@ -144,16 +131,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual Category5 Category5 { get; set; }
         [Column("IsVATExempt")]
 	    public bool? IsVATExempt { get; set; }
-        [ForeignKey("CollectorUser")]
-        [Column("CollectorId")]
-	    public string CollectorId { get; set; }
-	      
-        public virtual User CollectorUser { get; set; }
-        [ForeignKey("SalesmanUser")]
-        [Column("SalesmanUserId")]
-	    public string SalesmanUserId { get; set; }
-	      
-        public virtual User SalesmanUser { get; set; }
         [ForeignKey("WithholdingTaxDeductionType")]
         [Column("DeductionFileTypeId")]
 	    public string DeductionFileTypeId { get; set; }
@@ -195,47 +172,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime UpdateDate { get; set; }
         [Column("AllowEditChequePayToName")]
 	    public bool AllowEditChequePayToName { get; set; }
-        [Column("ActiveForInterest")]
-	    public bool ActiveForInterest { get; set; }
-        [Column("InterestCalculationStartDate")]
-	    public DateTime? InterestCalculationStartDate { get; set; }
-        [Column("ActiveForInterestCreditInvoice")]
-	    public bool ActiveForInterestCreditInvoice { get; set; }
-        [Column("InterestCreditLimit")]
-	    public decimal? InterestCreditLimit { get; set; }
-        [Column("InterestOpenBalance")]
-        public decimal? InterestOpenBalance { get; set; }
-        [Column("NameForPrintingCheques")]
-	    public string NameForPrintingCheques { get; set; }
-        [Column("Smallcashbook")]
-	    public bool Smallcashbook { get; set; }
-        [Column("MinimumInterestInvoiceBilling")]
-	    public int? MinimumInterestInvoiceBilling { get; set; }
-        [Column("ReportingAsAnotherDocument")]
-	    public bool ReportingAsAnotherDocument { get; set; }
-        [Column("CreditAllotmentPercentage")]
-	    public decimal? CreditAllotmentPercentage { get; set; }
-        [ForeignKey("GLAccountCardsData")]
-        [Column("CardsDataId")]
-	    public string CardsDataId { get; set; }
-	      
-        public virtual GLAccountCardsData GLAccountCardsData { get; set; }
-        [Column("PostponedChequesCommission")]
-	    public decimal? PostponedChequesCommission { get; set; }
-        [Column("DateFormat")]
-        public string DateFormat { get; set; }
-
-        [ForeignKey("Contact")]
-        [Column("ContactId")]
-        public string ContactId { get; set; }
-	      
-        public virtual Contact Contact { get; set; }
-
-        [Column("MarkDate")]
-        public DateTime? MarkDate { get; set; }
-
-        [Column("ForeignCurrencyInterest")]
-        public bool ForeignCurrencyInterest { get; set; }
     }
 }
 	 

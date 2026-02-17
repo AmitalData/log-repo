@@ -39,7 +39,7 @@ export class EditTabsComponent {
         this.ShipmentsTabScenario = new ShipmentsTabComponent();
     }
     GoToShipment() {
-        this.Operation.GoToMainMenu2('General.MH.Operations');
+        this.Operation.GoToMainMenu('General.MH.Operations');
         this.Operation.SelectMenuWorkSpaceTabs('SHIP');
         // this.QuickSearch.UseQuickSearch('SR1545342');
     }
@@ -55,7 +55,7 @@ export class EditTabsComponent {
             this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
             this.PackagesTabScenario.PackagesTab(ShipmentLevelCode, ShipmentType);
             this.RoutingTabScenario.RoutingTab(ShipmentLevelCode, ShipmentType, Direction);
-            //this.PayablesTabScenario.PayablesTab(shipperRef1, ShipmentType, false);
+            this.PayablesTabScenario.PayablesTab(shipperRef1, ShipmentType, false);
             //this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode, ShipmentType);
 
             if (ShipmentLevelCode == 'M') {

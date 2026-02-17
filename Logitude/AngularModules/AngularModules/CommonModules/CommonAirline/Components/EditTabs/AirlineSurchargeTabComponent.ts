@@ -20,7 +20,7 @@ import {TarrifChargePM} from '../../../../Common/EntityPMs/TarrifChargePM';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AirlineSurchargeTabComponent.html',
 })
 
@@ -43,7 +43,7 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe(response => {
             this.EntityPM = entityArgs.EntityPM;
             this.TenantPM = SessionLocator.TenantPM;
             this.setLabels();
@@ -74,6 +74,7 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
        this.TarrifHeaderFromLocation = TextCodeTranslator.Translate('TarrifHeader.O.FromLocation');
        this.TarrifHeaderToLocation = TextCodeTranslator.Translate('TarrifHeader.O.ToLocation');
        this.TarrifHeaderNotes = TextCodeTranslator.Translate('TarrifHeader.O.Notes');
+       var test = TextCodeTranslator.Translate('TarrifHeader.F.MeasurementId');
 
 
     }
@@ -198,8 +199,8 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
     //TarrifHeader.O.EditSurchargeTarrif
 
     private RunNewWindow(itemComponent: TariffHeaderItem, windowTitle: string) {
-        this._entityResourceService.getEntityResourceByTableName("TarrifCharge", 0).subscribe((response: any) => {
-            this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("TarrifCharge", 0).subscribe(response => {
+            this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe(response => {
                 this.Clone(itemComponent);
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Title = windowTitle;

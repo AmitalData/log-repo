@@ -122,10 +122,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             Journal parent = journalRepository.GetSingle(journalId, tenant);
             //JournalQueryService journalQueryService = new JournalQueryService(tenant);
             //JournalPM parent = journalQueryService.GetSingle(journalId, false, false);
-            AccountingEntityQueryService accountingEntityQueryService = new AccountingEntityQueryService(tenant);
-            var accountingEntity = accountingEntityQueryService.GetSingle(parent.AccountingEntityCode, false, true);
-            //AccountingEntityRepository accountingEntityRepository = new AccountingEntityRepository(tenant);
-            //var accountingEntity = accountingEntityRepository.GetSingle(parent.AccountingEntityCode);
+
+            AccountingEntityRepository accountingEntityRepository = new AccountingEntityRepository(tenant);
+            var accountingEntity = accountingEntityRepository.GetSingle(parent.AccountingEntityCode);
 
             entityPM.Source = parent.AccountingEntityId;
             entityPM.SourceType = accountingEntity.EnglishName;
@@ -197,34 +196,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
-            if (!string.IsNullOrEmpty(entityPM.Notes))
-            {
-                if (!(result.Split(',').Contains(entityPM.Notes)))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.Notes : result + "," + entityPM.Notes;
-                }
-            }
-
-            if (!(result.Split(',').Contains(entityPM.ForeignAmountCredit.ToString())))
-              {
-                    result = string.IsNullOrEmpty(result) ? entityPM.ForeignAmountCredit.ToString() : result + "," + entityPM.ForeignAmountCredit.ToString();
-              }
-          
-            if (!(result.Split(',').Contains(entityPM.ForeignAmountDebit.ToString())))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.ForeignAmountDebit.ToString() : result + "," + entityPM.ForeignAmountDebit.ToString();
-                }
-          
-                if (!(result.Split(',').Contains(entityPM.LocalAmountCredit.ToString())))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.LocalAmountCredit.ToString() : result + "," + entityPM.LocalAmountCredit.ToString();
-                }
-            
-                if (!(result.Split(',').Contains(entityPM.LocalAmountDebit.ToString())))
-                {
-                    result = string.IsNullOrEmpty(result) ? entityPM.LocalAmountDebit.ToString() : result + "," + entityPM.LocalAmountDebit.ToString();
-                }
-        
 
 
 

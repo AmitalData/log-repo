@@ -1,6 +1,5 @@
 ﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,28 +29,10 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public TenantType GetSingleTenantType(string code)
         {
-            string entityName = "TenantType" + code;
-            TenantType entity = (from i in context.TenantTypes
-                                 where i.Code == code
+            TenantType instance = (from i in context.TenantTypes
+                                 where i.Code == code                                 
                                  select i).FirstOrDefault();
-
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    entity = (TenantType)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-
-            return entity;
-            //TenantType instance = (from i in context.TenantTypes
-            //                     where i.Code == code                                 
-            //                     select i).FirstOrDefault();
-            //return instance;
+            return instance;
         }
 
         public IQueryable<TenantType> GetTenantTypes()

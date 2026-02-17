@@ -9,11 +9,11 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.XSD.INTTRA;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -73,7 +73,6 @@ namespace Logitude.XSD.INTTRA_Booking
         private Country FinalPortCountry;
         public ShippingLine MainShippingLine;
         public List<ShipmentOrderPackage> ShipmentOrderPackages = new List<ShipmentOrderPackage>();
-        public List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
         private List<ShipmentPackageHarmonize> AllHarmonizes = new List<ShipmentPackageHarmonize>();
         public IShipmentsContext shipmentContext;
@@ -83,6 +82,7 @@ namespace Logitude.XSD.INTTRA_Booking
         public ContactQuery contactQuery;
 
         private ShipmentMasterDataRepository shipmentMasterDataRepository;
+        private Vessel MainVessel;
         private void GetObjects()
         {
             this.Errors = new List<string>();
@@ -144,66 +144,58 @@ namespace Logitude.XSD.INTTRA_Booking
                     this.MoveType_Name = myTranslatedCode;
                 }
 
-                if (this.MasterData != null)
+                switch (this.MoveType_Name.ToLower())
                 {
-                    switch (this.MoveType_Name.ToLower())
-                    {
-                        case "doortodoor":
+                    case "doortodoor":
+                        {
+                            if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
                             {
-                                if (this.MasterData.PreCarriageFromPortId == null || this.MasterData.PreCarriageToPortId == null)
-                                {
-                                    this.Errors.Add("Pre Carriage is required");
-                                }
-
-                                if (this.MasterData.OnCarriageFromPortId == null || this.MasterData.OnCarriageToPortId == null)
-                                {
-                                    this.Errors.Add("On Carriage is required");
-                                }
-
-                                break;
+                                this.Errors.Add("Pre Carriage is required");
                             }
 
-                        case "doortoport":
+                            if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
                             {
-                                if (this.MasterData.PreCarriageFromPortId == null || this.MasterData.PreCarriageToPortId == null)
-                                {
-                                    this.Errors.Add("Pre Carriage is required");
-                                }
-
-                                break;
+                                this.Errors.Add("On Carriage is required");
                             }
 
-                        case "porttodoor":
-                            {
-                                if (this.MasterData.OnCarriageFromPortId == null || this.MasterData.OnCarriageToPortId == null)
-                                {
-                                    this.Errors.Add("On Carriage is required");
-                                }
+                            break;
+                        }
 
-                                break;
+                    case "doortoport":
+                        {
+                            if (this.Shipment.PreCarriageFromPortId == null || this.Shipment.PreCarriageToPortId == null)
+                            {
+                                this.Errors.Add("Pre Carriage is required");
                             }
 
-                        case "porttoport":
+                            break;
+                        }
+
+                    case "porttodoor":
+                        {
+                            if (this.Shipment.OnCarriageFromPortId == null || this.Shipment.OnCarriageToPortId == null)
                             {
-                                break;
+                                this.Errors.Add("On Carriage is required");
                             }
 
-                        default:
-                            {
-                                this.Errors.Add("Illegal value in move type");
-                                break;
-                            }
-                    }
+                            break;
+                        }
+
+                    case "porttoport":
+                        {
+                            break;
+                        }
+
+                    default:
+                        {
+                            this.Errors.Add("Illegal value in move type");
+                            break;
+                        }
                 }
             }
         }
         private void GetObjects_ShipmentFields()
         {
-            if (this.Shipment.INTTRAContractNumber == null)
-            {
-                this.Errors.Add("Contract Number is required");
-            }
-
             if (this.Shipment.ShipperId == null)
             {
                 this.Errors.Add("Shipper is required");
@@ -221,48 +213,30 @@ namespace Logitude.XSD.INTTRA_Booking
 
             if (this.MasterData.MainCarriageETD == null)
             {
-                if (this.MasterData.MainCarriageVesselName == null || this.MasterData.MainCarriageCarrierNumber == null)
-                {
+                if (this.MasterData.MainCarriageVesselId == null || this.MasterData.MainCarriageCarrierNumber == null)
                     this.Errors.Add("ETD or Main-Carriage Vessel and Voyage must be provided");
-                }
+            }
+
+            if (this.MasterData.MainCarriageVesselId != null)
+            {
+                this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
             }
         }
         private void GetObjects_ShipmentOrderPackages()
         {
+            this.ShipmentOrderPackages = (from d in shipmentContext.ShipmentOrderPackages
+                                          where d.Tenant == this.Tenant
+                                          && d.ShipmentId == this.ShipmentId
+                                          select d).ToList();
+
             if (string.IsNullOrEmpty(this.ShipmentPM.DescriptionOfGoods))
             {
                 this.Errors.Add("Shipment Description  of Goods is required");
             }
 
-            this.ShipmentOrderPackages = (from d in shipmentContext.ShipmentOrderPackages
-                                          where d.Tenant == this.Tenant
-                                          && d.ShipmentId == this.ShipmentId
-                                          select d).ToList();
-            this.ShipmentPackages = (from d in shipmentContext.ShipmentPackages
-                                     where d.Tenant == this.Tenant
-                                     && d.ShipmentId == this.ShipmentId
-                                     select d).ToList();
-            List<string> ShipmentPackagesIds = this.ShipmentPackages.Select(s => s.Id).ToList();
-            this.AllHarmonizes = (from d in shipmentContext.ShipmentPackageHarmonizes
-                                  where d.Tenant == this.Tenant
-                                  && ShipmentPackagesIds.Contains(d.PackageId)
-                                  select d).ToList();
-
-            if ((this.ShipmentPackages == null || (this.ShipmentPackages != null && this.ShipmentPackages.Count() == 0))
-                &&
-                (this.ShipmentOrderPackages == null || (this.ShipmentOrderPackages != null && this.ShipmentOrderPackages.Count() == 0)))
+            if (this.ShipmentOrderPackages == null || (this.ShipmentOrderPackages!= null && this.ShipmentOrderPackages.Count() == 0))
             {
-                this.Errors.Add("Shipment Order Packages or Shipment Packages are required");
-            }
-
-            else if ((this.ShipmentPackages != null && this.ShipmentPackages.Count() > 0) && this.ShipmentPackages.Where(d => d.Weight == null || d.Weight == 0).Any())
-            {
-                this.Errors.Add("All Containers should have Gross Weight");
-            }
-
-            else if ((this.ShipmentOrderPackages != null && this.ShipmentOrderPackages.Count() > 0) &&this.ShipmentOrderPackages.Where(d => d.GrossWeight == null || d.GrossWeight == 0).Any())
-            {
-                this.Errors.Add("All Shipment Order Packages should have Gross Weight");
+                this.Errors.Add("Shipment Order Packages is required");
             }
         }
 
@@ -449,36 +423,16 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageProperties_ReferenceInformations()
         {
-            this.ReferenceInformations = new List<INTTRA_Booking.ReferenceInformationType>();
             if (this.MasterData.BookingConfirmationNumber != null)
             {
+                this.ReferenceInformations = new List<INTTRA_Booking.ReferenceInformationType>();
                 this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
                 {
                     Type = INTTRA_Booking.ReferenceTypeValues.BookingNumber,
                     Value = this.MasterData.BookingConfirmationNumber,
                 });
-                this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
-                {
-                    Type = INTTRA_Booking.ReferenceTypeValues.ContractNumber,
-                    Value = this.Shipment.INTTRAContractNumber,
-                });
             }
-            if (this.Shipment.INTTRAContractNumber != null)
-            {
-                this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
-                {
-                    Type = INTTRA_Booking.ReferenceTypeValues.ContractNumber,
-                    Value = this.Shipment.INTTRAContractNumber,
-                });
-            }
-
-            this.ReferenceInformations.Add(new INTTRA_Booking.ReferenceInformationType()
-            {
-                Type = ReferenceTypeValues.FreightForwarderRefNumber,
-                Value = this.Shipment.ShipmentNumber,
-            });
         }
-
         private void BuildMessageProperties_Locations()
         {
             this.Locations = new List<INTTRA_Booking.LocationDateTimeType>();
@@ -534,14 +488,14 @@ namespace Logitude.XSD.INTTRA_Booking
                 },
             };
 
-            if (this.MasterData.MainCarriageCarrierNumber != null && this.MasterData.MainCarriageVesselName != null)
+            if (this.MasterData.MainCarriageCarrierNumber != null && this.MasterData.MainCarriageVesselId != null)
             {
                 transportationDetails.ConveyanceInformation.Identifier = new ConveyanceIdentifierType[]
                 {
                     new ConveyanceIdentifierType()
                     {
                         Type = ConveyanceIdentifierTypeValues.VesselName,
-                        Value = this.iNTTRAGeneralMethods.FormatString(this.MasterData.MainCarriageVesselName, 35),
+                        Value = this.iNTTRAGeneralMethods.FormatString(this.MainVessel.EnglishName, 35),
                     },
                     new ConveyanceIdentifierType()
                     {
@@ -835,6 +789,7 @@ namespace Logitude.XSD.INTTRA_Booking
         }
 
         // Message Details
+        private int lineNumber_Goods = 1;
         public List<INTTRA_Booking.GoodsDetailsType> GoodsDetails;
         public List<INTTRA_Booking.EquipmentDetailsType> EquipmentDetails;
         private List<PackageType> AllPackageTypes;
@@ -848,231 +803,72 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageDetails_EquipmentDetails()
         {
+       
+            var groupedOrders = (from d in this.ShipmentOrderPackages
+                                 group d by new { d.PackageTypeId } into g
+                                 select new
+                                 {
+                                     PackageTypeId = g.Key.PackageTypeId,
+                                     Quantity = g.Sum(s => s.Quantity),
+                                 });
+
+           
+            List<string> ids = groupedOrders.Select(s => s.PackageTypeId).ToList();
             this.AllPackageTypes = (from d in CommonContext.PackageTypes
                                     where d.Tenant == this.Tenant
+                                    && ids.Contains(d.Id)
                                     select d).ToList();
 
-            if (ShipmentPackages.Count > 0)
+            foreach (var item in this.AllPackageTypes)
             {
-                BuildMessageDetails_EquipmentDetails_ShipmentPackages();
-            }
-
-            else
-            {
-                BuildMessageDetails_EquipmentDetails_ShipmentOrderPackages();
-            }
-        }
-
-        private void BuildMessageDetails_EquipmentDetails_ShipmentPackages()
-        {
-            foreach (var item in ShipmentPackages)
-            {
-                PackageType packageType = this.AllPackageTypes.Where(a => a.Id == item.PackageTypeId).FirstOrDefault();
-
-                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType");
+                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
                 if (string.IsNullOrEmpty(myTranslatedCode))
                 {
                     this.Errors.Add("Partner code is required for all Package Types");
                 }
-
-                else
-                {
-                    INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
-                    {
-                        EquipmentType = new EquipmentTypeType()
-                        {
-                            EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType"),
-                        },
-                        NumberOfEquipment = item.Quantity + "",
-                        ImportExportHaulage = new ImportExportHaulageType()
-                        {
-                            HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
-                            CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
-                            CargoMovementTypeSpecified = true,
-                        }, 
-                        EquipmentGrossWeight = new GrossWeightType() {
-                            UOM = INTTRA_Booking.WeightUOMValues.KGM,
-                            Value = this.GetWeightInKG(item.Weight),
-                        }
-                    };
-
-                    if (item.NonActiveContainer)
-                    {
-                        itemDetails.EquipmentTemperature = new INTTRA_Booking.TemperatureType()
-                        {
-                            UOM = INTTRA_Booking.TemperatureUOMValues.CEL,
-                            Value = "999",
-                        };
-
-                        if (item.TemperatureUnitCode != "CEL")
-                        {
-                            itemDetails.EquipmentTemperature.UOM = INTTRA_Booking.TemperatureUOMValues.FAH;
-                        }
-                    }
-
-                    else if (item.Temperature != null)
-                    {
-                        item.Temperature = item.Temperature.Trim();
-
-                        if (!string.IsNullOrEmpty(item.Temperature))
-                        {
-                            if (!this.iNTTRAGeneralMethods.IsDecimalFormat(item.Temperature))
-                            {
-                                string msg = TranslateTextsClass.Translate("ShipmentPackage.F.Temperature", this.Tenant) + " invalid format";
-                                this.Errors.Add(msg);
-                            }
-
-                            else
-                            {
-                                itemDetails.EquipmentTemperature = new INTTRA_Booking.TemperatureType()
-                                {
-                                    UOM = INTTRA_Booking.TemperatureUOMValues.CEL,
-                                    Value = item.Temperature,
-                                };
-
-                                if (item.TemperatureUnitCode != "CEL")
-                                {
-                                    itemDetails.EquipmentTemperature.UOM = INTTRA_Booking.TemperatureUOMValues.FAH;
-                                }
-                            }
-                        }
-                    }
-
-                    this.EquipmentDetails.Add(itemDetails);
-                }
             }
 
-        }
-        private void BuildMessageDetails_EquipmentDetails_ShipmentOrderPackages()
-        {
-            var groupedPackages = (from d in this.ShipmentOrderPackages
-                                   group d by new { d.PackageTypeId } into g
-                                   select new
-                                   {
-                                       PackageTypeId = g.Key.PackageTypeId,
-                                       Quantity = g.Sum(s => s.Quantity),
-                                       Weight = g.Sum(s => s.GrossWeight),
-                                   });
-
-            foreach (var item in groupedPackages)
+            foreach (var item in groupedOrders)
             {
-                PackageType packageType = this.AllPackageTypes.Where(a => a.Id == item.PackageTypeId).FirstOrDefault();
-
-                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType");
-                if (string.IsNullOrEmpty(myTranslatedCode))
+                INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
                 {
-                    this.Errors.Add("Partner code is required for all Package Types");
-                }
-
-                else
-                {
-                    INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
+                    EquipmentType = new EquipmentTypeType()
                     {
-                        EquipmentType = new EquipmentTypeType()
-                        {
-                            EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(packageType.Code, "G-INTTRA", "PackageType"),
-                        },
-
-                        NumberOfEquipment = item.Quantity + "",
-                        ImportExportHaulage = new ImportExportHaulageType()
-                        {
-                            HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
-                            CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
-                            CargoMovementTypeSpecified = true,
-                        },
-                        EquipmentGrossWeight = new GrossWeightType()
-                        {
-                            UOM = INTTRA_Booking.WeightUOMValues.KGM,
-                            Value = this.GetWeightInKG(item.Weight),
-                        },
-                        
-                    };
-
-                    this.EquipmentDetails.Add(itemDetails);
-                }
+                        EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation( this.AllPackageTypes.Where(a=>a.Id == item.PackageTypeId).Select(d=>d.Code).FirstOrDefault(), "G-INTTRA", "PackageType"),
+                    },
+                    NumberOfEquipment = item.Quantity+ "",
+                    ImportExportHaulage = new ImportExportHaulageType()
+                    {
+                        HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
+                        CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
+                        CargoMovementTypeSpecified = true,
+                    }
+                };
+                this.EquipmentDetails.Add(itemDetails);
             }
         }
-
         private void BuildMessageDetails_GoodsDetails()
         {
-            string descriptionOfGoods = FormatHelper.FormatString(this.ShipmentPM.DescriptionOfGoods, FormatHelper.PatternType.NatureAndQuantityOfGoods);
-            INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType();
-            itemDetails.LineNumber = "1";
-            itemDetails.GoodDescription = !string.IsNullOrEmpty(descriptionOfGoods) ? this.iNTTRAGeneralMethods.GetStringList(descriptionOfGoods, 2, 1024).FirstOrDefault() : null;
-            itemDetails.PackageDetail = new PackageDetailType()
+            INTTRA_Booking.GoodsDetailsType itemDetails = new INTTRA_Booking.GoodsDetailsType()
             {
-                OuterPack = new OuterPackType(),
-            };
-            itemDetails.CommodityClassification = this.FillPackagesHarmonizeList().ToArray<INTTRA_Booking.CommodityClassificationType>();
+                LineNumber = "1",
+                GoodDescription = this.iNTTRAGeneralMethods.GetStringList(this.ShipmentPM.DescriptionOfGoods, 2, 1024).FirstOrDefault(),
+                PackageDetail = new PackageDetailType()
+                {
+                    OuterPack = new OuterPackType(),
                     
-               
-            
+                },
+                DetailsReferenceInformation = new ReferenceInformationType[]
+                {
+                    new ReferenceInformationType()
+                    {
+                        Type = ReferenceTypeValues.FreightForwarderRefNumber,
+                        Value = this.Shipment.ShipmentNumber,
+                    }
+                },
+            };
+
             this.GoodsDetails.Add(itemDetails);
-        }
-
-        private List<CommodityClassificationType> FillPackagesHarmonizeList()
-        {
-            List<INTTRA_Booking.CommodityClassificationType> commodityClassificationTypeList = new List<INTTRA_Booking.CommodityClassificationType>();
-            if (this.ShipmentPackages != null && this.ShipmentPackages.Count() > 0)
-            {
-                foreach (var myShipmentPackage in this.ShipmentPackages)
-                {
-                    if (myShipmentPackage.IsMultiHarmonize)
-                    {
-                        List<ShipmentPackageHarmonize> iHarmonizes = this.AllHarmonizes.Where(d => d.PackageId == myShipmentPackage.Id).ToList();
-
-                        if (iHarmonizes.Count > 0)
-                        {
-                            string iHarmonizeDescription = null;
-
-                            foreach (ShipmentPackageHarmonize itemHarmonize in iHarmonizes)
-                            {
-                                if (iHarmonizeDescription == null)
-                                {
-                                    iHarmonizeDescription =  itemHarmonize.Harmonize;
-                                }
-
-                                else
-                                {
-                                    iHarmonizeDescription += ", " + itemHarmonize.Harmonize;
-                                }
-                            }
-
-                            commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
-                            {
-                                Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,
-                                Value = iHarmonizeDescription,
-                            });
-                        }
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(myShipmentPackage.Harmonize))
-                        {
-                            string iHarmonizeDescription =  myShipmentPackage.Harmonize;
-
-                            commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
-                            {
-                                Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,
-                                Value = iHarmonizeDescription,
-                            });
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(Shipment.MainHarmonize))
-                {
-                    string iHarmonizeDescription = Shipment.MainHarmonize;
-                    commodityClassificationTypeList.Add(new INTTRA_Booking.CommodityClassificationType()
-                    {
-                        Type = INTTRA_Booking.CommodityClassificationTypeValues.USHTS,
-                        Value = iHarmonizeDescription,
-                    });
-                }
-            }
-            return commodityClassificationTypeList;
         }
 
         public System.DateTime TodayDate { get; set; }
@@ -1128,31 +924,6 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 this.Errors.Add("Out Settings is required");
             }
-        }
-        private decimal GetWeightInKG(double? weight)
-        {
-            decimal myResult = 0;
-
-            if (weight != null)
-            {
-                double? factorOfConvert = 1;
-
-                if (!string.IsNullOrEmpty(this.GrossWeightUnitCode))
-                {
-                    switch (this.GrossWeightUnitCode.ToUpper())
-                    {
-                        case "KG": { factorOfConvert = 1; break; }
-                        case "LB": { factorOfConvert = 0.45359237; break; }     // 1 LB = 0.45359237 KG
-                        case "MT": { factorOfConvert = 1000; break; }           // 1 mt = 1000 KG
-                    }
-                }
-
-                double? myComputedField = MethodHelper.Round(weight * factorOfConvert, 3);
-
-                myResult = (decimal)myComputedField.Value;
-            }
-
-            return myResult;
         }
     }
 }

@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FTPDetailComponent.html',
 })
 
@@ -129,22 +129,7 @@ export class FTPDetailComponent extends BaseComponent {
         if (this.EntityPM.InActive != value) {
             this.EntityPM.InActive = value;
         }
-    }
-
-    get PrivateKey() { return this.EntityPM.PrivateKey; }
-    set PrivateKey(value: string) {
-        if (this.EntityPM.PrivateKey != value) {
-            this.EntityPM.PrivateKey = value;
-        }
-    }
-
-    get Port() { return this.EntityPM.Port; }
-    set Port(value: string) {
-        if (this.EntityPM.Port != value) {
-            this.EntityPM.Port = value;
-        } 
-    }
-    
+  }
 
   get UseSFTP() { return this.EntityPM.UseSFTP; }
   set UseSFTP(value: boolean) {
@@ -171,7 +156,7 @@ export class FTPDetailComponent extends BaseComponent {
             var myService: FTPDetailPMService = new FTPDetailPMService();
 
             if (this.IsNew) {
-                myService.insert(this.EntityPM).subscribe((myResult:any) => {
+                myService.insert(this.EntityPM).subscribe(myResult => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.StopBusyIndicator();
@@ -186,7 +171,7 @@ export class FTPDetailComponent extends BaseComponent {
             }
 
             else {
-                myService.update(this.EntityPM).subscribe((myResult:any) => {
+                myService.update(this.EntityPM).subscribe(myResult => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.CurrentSession.StopBusyIndicator();

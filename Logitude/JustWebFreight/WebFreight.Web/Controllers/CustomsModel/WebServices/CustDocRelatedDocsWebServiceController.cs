@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -36,13 +36,12 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
-using Logitude.CustomsMessaging.MessagingServices;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class CustDocRelatedDocsWebServiceController : ApiController
     {
-        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue, string declarationType,string ExportFile,string files)
+        public HttpResponseMessage GetDocumentsFilingsForRelatedDocuments(string entityId, string childEntityId, string objectTableId, string directionCode, string referenceNumber, string filterVlaue)
         {
             try
             {
@@ -62,106 +61,60 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 List<DocumentsFilingPM> documentFilings = null;
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
-                CFICONNQueryService queryService = null;
-                bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(authToken.Tenant).IsConnectedToUniFreight;
-                if (declarationType != "E" && isConnectedToUniFreight)
-                {
-                    queryService = new CFICONNQueryService(AmitalContext.GetContext(authToken.Tenant));
-                }
-
+                CFICONNQueryService queryService = new CFICONNQueryService(AmitalContext.GetContext(authToken.Tenant));
 
                 //externalEntityReferences.Add("1091");
                 //externalEntityReferences.Add("1088");
                 //externalEntityReferences.Add("1057");
+               
+                    if (filterVlaue == "customs" )
+                    {
 
-                if (filterVlaue == "customs" )
-                {
-
-                    List<string> externalEntityReferences = null;
-                    if (declarationType == "E")
-                    {
-                        externalEntityReferences = new List<string> { referenceNumber };
-
-                    }
-                    if (referenceNumber != null)
-                    {
-                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant);
-                    }
-                    else
-                    {
-                        documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
-                    }
-                }
-                else if (filterVlaue == "forwarding")
-                    {
-                        List<string> externalEntityReferences = null;
-                        if (declarationType=="E")
+                        if (referenceNumber != null)
                         {
-                            externalEntityReferences = new List<string> { referenceNumber };
-
+                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, null, authToken.Tenant);
                         }
                         else
                         {
-                        if (!isConnectedToUniFreight)
-                        {
-                          if (files != null)
-                                externalEntityReferences = files.Split(',').ToList();
+                            documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
                         }
-                        else
-                        {                           
-                            externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
-
-                        }
- 
                     }
-                        if(externalEntityReferences!=null)
+                    else if (filterVlaue == "forwarding")
+                    {
+                        List<string> externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
+
                         documentFilings = documentsFilingQuery.GetDocumentsFilingsByRferenceForRelatedDocuments(authToken.Tenant, externalEntityReferences);
 
                     }
 
                     else if (filterVlaue == "all")
-                        {
-                            List<string> externalEntityReferences = null;
-
-
-                            if (declarationType != "E")
                     {
-                        if (isConnectedToUniFreight)
-                            externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
-                            else {
-                                    if (files != null)
-                                        externalEntityReferences = files.Split(',').ToList();
-                                }
-                    
-                            }
-                            else {
-                              externalEntityReferences = new List<string> { ExportFile };
-                            }
+                        List<string> externalEntityReferences = queryService.GetImportFilesByCustomFile(Convert.ToInt64(referenceNumber));
 
-                            if (referenceNumber != null && declarationType!="E")
-                            {
-                                documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant, declarationType);
-                            }
-                            else
-                            {
-                                documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, externalEntityReferences);
-                            }
+                        if (referenceNumber != null)
+                        {
+                            documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, externalEntityReferences, authToken.Tenant);
                         }
-
                         else
                         {
-                            if (referenceNumber != null)
-                            {
-                                documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, null, authToken.Tenant);
-                            }
-                            else
-                            {
-                                documentFilings =  documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
-                            }
+                            documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, externalEntityReferences);
                         }
+                    }
+
+                    else
+                    {
+                    if (referenceNumber != null)
+                    {
+                        documentFilings = documentsFilingQuery.GetDocumentsFilingsForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, referenceNumber, null, authToken.Tenant);
+                    }
+                    else
+                    {
+                        documentFilings = documentsFilingQuery.GetDocumentsFilingsByIdForRelatedDocuments(entityId, childEntityId, objectTableId, directionCode, authToken.Tenant, null);
+                    }
+                   }
                     
-                  
                
+
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentFilings);
@@ -172,7 +125,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage GetSingleDocumentsFilingPM(string id, bool checkOcr)
+        public HttpResponseMessage GetSingleDocumentsFilingPM(string id)
         {
             try
             {
@@ -181,7 +134,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
-                DocumentsFilingPM newExtDoc = documentsFilingQuery.GetSinglePM(id, authToken.Tenant, checkOcr);
+                DocumentsFilingPM newExtDoc = documentsFilingQuery.GetSinglePM(id, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, newExtDoc);
             }
             catch (Exception ex)
@@ -189,31 +142,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        [HttpGet]
-        public HttpResponseMessage UpsertSupplierInvioceByOcr(string declarationId, string documentsFilingId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-               
-
-                var messagingService = new DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, loggingUserId, declarationId, documentsFilingId);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
     }
 }

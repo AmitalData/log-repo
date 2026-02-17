@@ -6,7 +6,7 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {BranchPM} from '../../EntityPMs/BranchPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AccountingTab_Branch.html',
 })
 

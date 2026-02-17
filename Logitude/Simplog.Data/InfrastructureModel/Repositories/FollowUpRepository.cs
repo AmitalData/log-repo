@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
@@ -27,26 +27,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public IQueryable<FollowUp> GetFollowUps(int tenant)
         {
             return (from record in context.FollowUps.Include("EventType").Include("OwnerUser.Contact") where record.Tenant == tenant select record);
-        }
-
-        public string GetFollowUpIdByInternalDocumentId(int tenant, string internalDocumentId)
-        {
-            return context.FollowUps.FirstOrDefault(x => x.Tenant == tenant && x.InternalDocumentId == internalDocumentId)?.Id;
-        }
-
-        public Dictionary<string, string> GetFollowUpIdByInternalDocumentIds(int tenant, string[] internalDocumentIds)
-        {
-            return context.FollowUps.Where(x => x.Tenant == tenant && internalDocumentIds.Contains(x.InternalDocumentId)).ToDictionary(x => x.InternalDocumentId, x => x.Id);
-        }
-
-        public string GetFollowUpIdByDocumentsFilingId(int tenant, string documentsFilingId)
-        {
-            return context.FollowUps.FirstOrDefault(x => x.Tenant == tenant && x.DocumentsFilingId == documentsFilingId)?.Id;
-        }
-
-        public Dictionary<string, string> GetFollowUpIdByDocumentsFilingIds(int tenant, string[] documentsFilingId)
-        {
-            return context.FollowUps.Where(x => x.Tenant == tenant && documentsFilingId.Contains(x.DocumentsFilingId)).ToDictionary(x => x.DocumentsFilingId, x => x.Id);
         }
 
         public List<FollowUp> GetFollowUpsForDocOut(string docOutId,int tenant)
@@ -81,7 +61,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             List<FollowUp> followups = (from a in context.FollowUps.Include("EventType").Include("OwnerUser.Contact")
                                         where a.Tenant == tenant && a.ShipmentId == shipmentId
-                                        select a).OrderBy(a=>a.Id).ToList();
+                                        select a).ToList();
             return followups;
         }
 
@@ -200,13 +180,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return count;
         }
 
-        public IQueryable<FollowUp> GetFollowUpsForShipments(int tenant)
-        {
-            return (from a in context.FollowUps.Include("Shipment")
-                         where a.Tenant == tenant && a.ShipmentId != null
-                         select a);
-        }
-
+  
         public int GetFollowUpsCountForMasters(int tenant)
         {
             int count = (from a in context.FollowUps.Include("EventType").Include("OwnerUser.Contact")

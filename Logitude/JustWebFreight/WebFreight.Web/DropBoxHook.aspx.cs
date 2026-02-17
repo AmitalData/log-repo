@@ -1,7 +1,7 @@
 ﻿using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,7 @@ namespace WebFreight.Web
                             {
                                 IQueueService queueservice = new DbQueueService();
                                 queueservice.InitializeQueue("DrobBoxQueue", 0);
-                                queueservice.Send(new Dictionary<string, string>() { { "Tenant", currentTenant.Tenant.ToString() } }, currentTenant.Tenant, null, null);
+                                queueservice.Send(new Dictionary<string, string>() { { "Tenant", currentTenant.Tenant.ToString() } }, null, null);
                             }
                         }
                     }

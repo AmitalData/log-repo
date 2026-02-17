@@ -154,7 +154,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
 
                         }
                         else
@@ -184,7 +184,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
 
                         }
                         else
@@ -197,23 +197,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ITariffModuleContext MyContext = TariffModuleContext.GetContext(tenant);
 				TariffVersionListQueryService tariffVersionQuery = new TariffVersionListQueryService(MyContext);
 
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "TariffVersion",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
-
-
-                List<TariffVersionList> entityLists = tariffVersionQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
-
+                List<TariffVersionList> entityLists = tariffVersionQuery.GetList(queryOperations, tenant);
+				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = tariffVersionQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
+                    int count = tariffVersionQuery.GetListCount(queryOperations, tenant);
                     response.Count = count;
                 }
 

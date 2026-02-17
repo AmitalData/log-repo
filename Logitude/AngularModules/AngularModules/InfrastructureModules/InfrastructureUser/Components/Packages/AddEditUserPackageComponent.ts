@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditUserPackageComponent.html',
 })
 
@@ -122,7 +122,7 @@ export class AddEditUserPackageComponent extends BaseComponent {
         });
     }
 
-    CancelButtonClicked() {        
+    CancelButtonClicked() {
         if (this.IsEditMode) {
             this.RejectChanges();
         }

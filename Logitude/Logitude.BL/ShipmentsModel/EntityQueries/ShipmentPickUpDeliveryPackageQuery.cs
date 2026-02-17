@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -55,8 +55,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                   ChassisNumber = a.ChassisNumber,
                                                                   RegistrationNumber = a.RegistrationNumber,
                                                                   CountryId = a.CountryId,
-                                                                  ContainerEntityId = a.ContainerEntityId,
-                                                              }).OrderBy(a => a.Id).ToList();
+                                                              }).ToList();
 
             foreach (ShipmentPickUpDeliveryPackagePM package in packages)
             {
@@ -103,16 +102,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                             ChassisNumber = a.ChassisNumber,
                                                             RegistrationNumber = a.RegistrationNumber,
                                                             CountryId = a.CountryId,
-                                                            ContainerEntityId = a.ContainerEntityId,
                                                         }).FirstOrDefault();
 
             myResult.PickUpDeliveryPackageHarmonizes = query.GetPickUpDeliveryPackageHarmonizes(myResult.Id, tenant);
 
             return myResult;
-        }
-        public ShipmentPickUpDeliveryPackagePM GetSinglePM(string id, int tenant)
-        {
-            return GetSingleShipmentPickUpDeliveryPackagePM( id,  tenant);       
         }
     }
 }

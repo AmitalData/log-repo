@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -53,29 +52,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        VatAmount = a.VatAmount,
 
                                                        VatableInvoiceAmount = a.VatableInvoiceAmount,
-                                                       IsExternalLine= a.IsExternalLine,
+
                                                        StatusCode = a.StatusCode,
                                                        StatusEnglishName = a.TaxReportLineStatus != null ? a.TaxReportLineStatus.EnglishName : null,
                                                        StatusLocalName = a.TaxReportLineStatus != null ? a.TaxReportLineStatus.LocalName : null,
                                                        JournalNumber = a.Journal != null ? a.Journal.JournalNumber : null,
-                                                       UpdatedBUserName = a.UpdatedByUser.Contact.LocalName ==null? a.UpdatedByUser.Contact.EnglishName : a.UpdatedByUser.Contact.LocalName,
 
 
-
-
-                                                       TotalInvoiceAmount = a.TotalInvoiceAmount,
-
-                                                       OriginalReference =a.OriginalReference,
                                                        TransmitStatusCode = a.TransmitStatusCode,
 
                                                        JournalId = a.JournalId,
 
                                                        IsManuallyChanged = a.IsManuallyChanged,
-                                                       VatAmountRound = a.VatAmountRound,
 
                                                        IsEquipment = a.IsEquipment,
-                                                       SubTotalInLocalCurrency=a.SubTotalInLocalCurrency,
-                                                       ConfirmationNumber=a.ConfirmationNumber,
 
                                                    });
             return query;
@@ -91,9 +81,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return TaxReportLineListQuery;
 
         }
-
-       
-        
 
         private IQueryable<TaxReportLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TaxReportLine> iQueryable, int tenant)
         {

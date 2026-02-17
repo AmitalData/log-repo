@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -17,52 +16,21 @@ import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParam
 export class AccountingOpService {
     
 
-    private _http: HttpClient;
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AccountingOp';//AccountingOpController
     }
-    GetTestOperation(operationId: string, myparams:string) :any{
-        var url = this._apiUrl + '/GetTestOperation?operationId=' + operationId +'&myparams='+myparams;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var result = response;
-                
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-                return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    PostTestOperation(operationId: string, myparams): any {
-        var url = this._apiUrl + '/PostTestOperation';///?operationId=' + operationId;//+ '&myparams=' + myparams;
-        return defer(() => {
-            return this._http
-                .post(url, JSON.stringify(myparams), ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
-
-                var result = response;
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-                return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
     Generate1000(email: string): any {
- 
-        var url = this._apiUrl + '/GetGenerate1000?email=' + email;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
-                var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var url = this._apiUrl + '/GetGenerate1000?email=' + email;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var result = response.json();
                 var entity: JournalPM;
                 if (result) {
                     //entity = this.MapJsonToEntityPM(result);
@@ -72,40 +40,50 @@ export class AccountingOpService {
                 serviceResponse.Result = result;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
 
     }
     
     PutSystem1000File(fileUploadParamerter: ImageParameter) {
-         
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/PutSystem1000File', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutSystem1000File', JSON.stringify(fileUploadParamerter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
         );
 
     }
 
     PutFunctionalTestXLS(fileUploadParamerter: ImageParameter) {
-         
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/PutFunctionalTestXLS', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutFunctionalTestXLS', JSON.stringify(fileUploadParamerter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
 
                 pmresponse.Result = result;
                 return pmresponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
         );
 

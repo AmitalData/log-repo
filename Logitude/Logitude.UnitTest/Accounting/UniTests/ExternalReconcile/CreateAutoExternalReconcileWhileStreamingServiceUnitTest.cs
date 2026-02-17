@@ -17,7 +17,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
         int _Tenant = 1;
 
 
-        ///[TestMethod]
+        [TestMethod]
         public void CreateAutoEXTERNALReconcileWhileStreaming100_GoodExample_CheckSuccess()
         {
             BankAccountPM myBankAccountPM;
@@ -99,8 +99,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 TransferGLAcccountId = "BankAccountPM:TransferGLAcccountId",
                 GLAccountId = "BankAccountPM:GLAccountId",
                 BankCode = "BankCode",
-                BranchNumber = "BranchNumber",
-                CurrencyId="NIS"
+                BranchNumber = "BranchNumber"
 
             };
             myReconcileExternalPageLinePM = new ReconcileExternalPageLinePM()
@@ -160,7 +159,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                       new JournalLinePM()
                       {
                           Line=1,
-                          ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
+                          ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
                           DebitAccountId = myBankAccountPM.TransferGLAcccountId,
                           CreditAccountId= myBankAccountPM.GLAccountId,
 
@@ -171,7 +170,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     new JournalLinePM()
                       {
                         Line=2,
-                          ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
+                          ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
                           DebitAccountId = myBankAccountPM.TransferGLAcccountId,
                           CreditAccountId= myBankAccountPM.GLAccountId,
 

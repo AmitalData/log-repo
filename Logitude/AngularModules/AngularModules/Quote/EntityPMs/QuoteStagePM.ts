@@ -84,10 +84,7 @@ export class QuoteStagePM {
     public OldEntityPM: QuoteStagePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -95,7 +92,6 @@ export class QuoteStagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteStage");
            
         }
-	 }
     }
     private MyClone: QuoteStagePM;
 

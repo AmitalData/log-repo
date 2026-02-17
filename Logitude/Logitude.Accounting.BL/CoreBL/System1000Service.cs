@@ -42,6 +42,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public List<string> GetSystem1000FlatFile(IAccountingContext accountingContext, int tenant)
         {
+            StringBuilder flatFile = new StringBuilder();
             _sb.AppendLine($"GetDeductionFileNumberFromAccSetting({tenant})");
             _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, tenant);
             _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
@@ -50,7 +51,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool useLocal = true;
                 string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
                 if (String.IsNullOrEmpty(text)) text = "No Vendors found  with Vat Number and Deduction File Number";
-                throw new ApplicationException(text);
+                throw new Exception(text);
+            }
+
+            if (_AllVendorGLAccountCards == null)
+            {
+                bool useLocal = true;
+                string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "No Vendors found  with Vat Number and Deduction File Number";
+                throw new Exception(text);
             }
 
             var listOfAccounts = _AllVendorGLAccountCards.ToList();
@@ -59,38 +68,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool useLocal = true;
                 string text = TranslateTextsClassTranslate("System1000.O.NoVendors", 0, useLocal);
                 if (String.IsNullOrEmpty(text)) text = "No Vendors found with Vat Number and Deduction File Number";
-                throw new ApplicationException(text);
+                throw new Exception(text);
             }
-
-            List<GLAccount> listOfSmallCashbooks = new List<GLAccount>();
-            var smallCashbooks = GetQAllCashbookGLAccounts(accountingContext, tenant);
-            if (smallCashbooks != null)
-            {
-                listOfSmallCashbooks = smallCashbooks.ToList();
-                foreach (var cashbook in listOfSmallCashbooks)
-                {
-                    listOfAccounts.RemoveAll(c => c.Id == cashbook.Id);
-                }
-            }
-
-
-
-
-            List<String> glid_cache = new List<string>();
-            List<CardGLAccountDataView> workList = new List<CardGLAccountDataView>();
-            foreach (var item in listOfAccounts)
-            {
-                string glid = item.Id;
-                if (!glid_cache.Contains(glid))
-                {
-                    glid_cache.Add(glid);
-                    workList.Add(item);
-                }
-            }
-
 
             int chunkSize = 1000;
-            var listOf1000 = workList.Select((x, i) => new { Index = i, Value = x })
+            var listOf1000 = listOfAccounts.Select((x, i) => new { Index = i, Value = x })
             .GroupBy(x => x.Index / chunkSize)
             .Select(x => x.Select(v => v.Value).ToList())
             .ToList();
@@ -98,24 +80,13 @@ namespace Logitude.Accounting.BL.CoreBL
             var res = new List<string>();
             foreach (List<CardGLAccountDataView> listOfAccountsMax1000 in listOf1000)
             {
-                StringBuilder flatFile = new StringBuilder(); 
-
                 string header = "A" + _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                 flatFile.AppendLine(header);
                 int count = 0;
                 foreach (var obj in listOfAccountsMax1000)
                 {
-                    string tempDeductionFileNumber = "";
-                    if (!String.IsNullOrWhiteSpace(obj.ConsolidationVat))
-                    {
-                        tempDeductionFileNumber = obj.ConsolidationVat;
-                    }
-                    else
-                    {
-                        tempDeductionFileNumber = obj.VatNumber;
-                    }
                     string line = "B" + obj.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15)
-                        + tempDeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
+                        + obj.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9)
                         + obj.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
                     flatFile.AppendLine(line);
                     count++;
@@ -216,7 +187,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 string entityId = null;
                 string attachments = String.Join(",", attList.ToArray()); ;
                 string entityReference = null;
-                string from = SettingUtil.Emails.FromNoReply;
+                string from = "no-reply@LogitudeWorld.com";
                 string replyTo = "";
                 string res = /*htmlEditorHelper*/InjectionUtil.Instance.SendHtmlDocument(
                     bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
@@ -239,13 +210,6 @@ namespace Logitude.Accounting.BL.CoreBL
             return myVendorGLAccountCardList;
         }
 
-        private IQueryable<GLAccount> GetQAllCashbookGLAccounts(IAccountingContext accountingContext, int tenant)
-        {
-            var myGLAccountQueryService = new GLAccountQueryService(accountingContext);
-            var myCashbookGLAccountList = myGLAccountQueryService.GetQueryAllSmallCashbookAccount(tenant);
-            return myCashbookGLAccountList;
-        }
-
 
         private FullAccountingSettingPM GetDeductionFileNumberFromAccSetting(IAccountingContext accountingContext, int tenant)
         {
@@ -255,14 +219,14 @@ namespace Logitude.Accounting.BL.CoreBL
             var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
+                throw new Exception("No FullAccountingSettingPM  for tenant ");
             }
             if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.DeductionFileNumber))
             {
-                //   throw new ApplicationException("No myFullAccountingSettingPM.DeductionFileNumber  for tenant ");
+                //   throw new Exception("No myFullAccountingSettingPM.DeductionFileNumber  for tenant ");
                 text = TranslateTextsClassTranslate("System1000.O.DeductionFileNumber", 0, useLocal);
                 // Deduction File Number is undefined.
-                throw new ApplicationException(text);
+                throw new Exception(text);
             }
             return myFullAccountingSettingPM;
         }

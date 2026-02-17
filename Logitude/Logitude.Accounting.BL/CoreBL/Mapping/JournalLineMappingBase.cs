@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL;
-using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.Accounting.BL.CoreBL.Mapping
@@ -58,11 +57,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             MyLedgerTransaction.ForeignAmountCredit = System.Math.Round(MyLedgerTransaction.ForeignAmountCredit , 2);
             MyLedgerTransaction.ForeignAmountDebit = System.Math.Round(MyLedgerTransaction.ForeignAmountDebit , 2);
 
-            MyLedgerTransaction.OpenAmount = System.Math.Round(MyLedgerTransaction.OpenAmount, 2);//new Code Not Test
 
-            if (_JournalPM.AccountingEntityCode == AccountingEntityValues.Revaluation &&
-                MyLedgerTransaction.OpenAmount == 0)
-                MyLedgerTransaction.IsReconciled = true;
+
+            MyLedgerTransaction.OpenAmount = System.Math.Round(MyLedgerTransaction.OpenAmount, 2);//new Code Not Test
+            
+
 
             MyGLAccountTotalByMonth = DefaultMapGLAccountTotalByMounth(MyLedgerTransaction);
             AddGLAccountTotalByMounth(MyGLAccountTotalByMonth, MyLedgerTransaction);
@@ -121,39 +120,39 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             var journalKey = string.Join(",", new string[] { _JournalPM.Tenant.ToString(), _JournalPM.Id });
             if (journalLineKey != journalKey)
             {
-                throw new ApplicationException("if (journalLineKey !=journalKey )");
+                throw new Exception("if (journalLineKey !=journalKey )");
             }
             switch (_JournalLine.EnsureSettingActionTypeCodeEnum())
             {
-                case JournalActionTypeEnum.Credit:
+                case MyJournalActionTypeEnum.Credit:
                     if (this.MyMappingTypeEnum != MappingTypeEnum.Credit)
                     {
-                        throw new ApplicationException("this.MyMappingTypeEnum != MappingTypeEnum.Credit");
+                        throw new Exception("this.MyMappingTypeEnum != MappingTypeEnum.Credit");
                     }
                     break;
-                case JournalActionTypeEnum.Debit:
+                case MyJournalActionTypeEnum.Debit:
                     if (this.MyMappingTypeEnum != MappingTypeEnum.Debit)
                     {
-                        throw new ApplicationException("this.MyMappingTypeEnum != MappingTypeEnum.Debit");
+                        throw new Exception("this.MyMappingTypeEnum != MappingTypeEnum.Debit");
                     }
                     break;
-                case JournalActionTypeEnum.DebitAndCredit:
+                case MyJournalActionTypeEnum.DebitAndCredit:
                     if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)
                     {
 
                     }
                     else
                     {
-                        throw new ApplicationException("not if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)");
+                        throw new Exception("not if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)");
                     }
                     break;
-                case JournalActionTypeEnum.DebitCreditAndVatdeduction:
+                case MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
                     // all ok 
                     break;
-                case JournalActionTypeEnum.NotValid:
-                    throw new ApplicationException("case MyJournalActionTypeEnum.NotValid");
+                case MyJournalActionTypeEnum.NotValid:
+                    throw new Exception("case MyJournalActionTypeEnum.NotValid");
                 default:
-                    throw new ApplicationException("JournalApproveParser():JournalActionType is must ");
+                    throw new Exception("JournalApproveParser():JournalActionType is must ");
                     break;
             }
         }
@@ -197,7 +196,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             //MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;
             if (_JournalLine.AccountingDate == DateTime.MinValue)
             {
-                throw new ApplicationException("_JournalLine.AccountingDate is must");//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
+                throw new Exception("_JournalLine.AccountingDate is must");//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
             }
             MyLedgerTransaction.AccountingDate = _JournalLine.AccountingDate;//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
             
@@ -229,9 +228,6 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             AddIfNotNull(refs, _JournalLine.Reference2);
             AddIfNotNull(refs, _JournalLine.Reference3);
             AddIfNotNull(refs, _JournalLine.Notes);
-            AddIfNotNull(refs, _JournalLine.ForeignAmount.ToString());
-            AddIfNotNull(refs, _JournalLine.LocalAmount.ToString());           
-
             MyLedgerTransaction.SearchFields= string.Join(",", refs.ToArray());
 
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile/*.GetValueOrDefault()*/;
@@ -257,7 +253,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
         protected void MapExternalOpenAmount()
         {
-            if (_JournalLine.ExternalReconcileNumber != null && _JournalLine.ExternalOpenAmount.HasValue)
+            if (_JournalLine.ExternalOpenAmount.HasValue)
             {
                 //if (_JournalLine.ExternalOpenAmount.GetValueOrDefault() == 0)
                 //{
@@ -270,13 +266,12 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 //    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 //}
                 MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
-                if (_JournalLine.ActionTypeCodeEnum == JournalActionTypeEnum.Credit)
+                if (_JournalLine.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
                 {
                     MyLedgerTransaction.OpenAmount = -1 * _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 }
             }
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile;
-
         }
 
 

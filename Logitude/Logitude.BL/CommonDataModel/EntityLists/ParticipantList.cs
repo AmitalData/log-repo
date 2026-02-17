@@ -1,10 +1,13 @@
-﻿using Logitude.BL.InfrastructureModel.EntityLists;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class ParticipantList : CustomFieldList
+    public class ParticipantList
     {
         [Key]
         public string Id { get; set; }
@@ -42,9 +45,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ForwarderTenantName { get; set; }
         public bool IsDirect { get; set; }
         public DateTime? RegistrationDate { get; set; }
+
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
-        public string StateName { get; set; }
     }
 }

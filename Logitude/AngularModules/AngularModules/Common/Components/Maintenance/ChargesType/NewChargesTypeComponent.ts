@@ -11,11 +11,9 @@ import {ChargesGroupListService} from '../../../../Infrastructure/Services/Stand
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {VatTypeList} from '../../../EntityLists/VatTypeList';
 import {VatTypeListService} from '../../../Services/StandardLists/VatTypeListService';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ChargesTypePMInitService } from 'Common/EntityPMInitServices/ChargesTypePMInitService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewChargesTypeComponent.html',
 })
 
@@ -24,26 +22,17 @@ export class NewChargesTypeComponent extends BaseComponent {
     public ObjectTableName: string = "ChargesType";
     public EntityPM: ChargesTypePM;
     private CurrentSession = SessionLocator.SelectedSession;
-    public MeasurementsQueryFilters: ApiQueryFilters;
-    public IsChargeTypesRestrictedFeatureToggleOn = false;
-    public _chargesTypePMService: ChargesTypePMService = new ChargesTypePMService();
-    public AccountingActivated: boolean;
-    public ReceivableCreditGLAccountFilterItems: ApiQueryFilters;
-    public PayableDebitGLAcountFilterItems: ApiQueryFilters;
-
     constructor() {
         super();
 
-        this.AccountingActivated = SessionLocator.TenantPM.AccountingActivated && !document.getElementById('GeneralMHCRM')
-
-        this.EntityPM = this._chargesTypePMService.GetNewEntityPM();
-        if (this.AccountingActivated) {
-            ChargesTypePMInitService.InitValuesForAccounting(this.EntityPM, true);
-        }
-        else {
-            ChargesTypePMInitService.InitValues(this.EntityPM, true);
-        }
+        this.EntityPM = new ChargesTypePM();
+        this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.AddedManually = true;
+        this.IsAir = true;
+        this.IsInland = true;
+        this.IsOcean = true;
+        this.AWBPrintDescription = true;
+        this.ViewOrder = 100;
 
         if (SessionLocator.TenantPM.TenantVATManagement == false) {
             var myService = new VatTypeListService();
@@ -60,25 +49,7 @@ export class NewChargesTypeComponent extends BaseComponent {
             });
         }
 
-        this.BuildQueryFilters(); 
         this.SetUIProperties();
-        this.SetUIProperties_DirectionFields();
-        this.ReadChargeTypesRestrictedFeatureToggleFeature();
-
-        this.ReceivableCreditGLAccountFilterItems = new ApiQueryFilters();
-        this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
-        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("ReceivableCreditFilter", "1", null, null, "Equals", true, false, false, "string", false, true);
-        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
-    }
-
-    ReadChargeTypesRestrictedFeatureToggleFeature() {
-        this.IsChargeTypesRestrictedFeatureToggleOn = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTR")[0]
-            != null ? true : false;
-    }
-
-    private BuildQueryFilters() {
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
     }
 
     public CustomsFieldsIsVisible: boolean = false;
@@ -272,51 +243,6 @@ export class NewChargesTypeComponent extends BaseComponent {
         }
     }
 
-
-    get IsDirectionRestricted() { return this.EntityPM.IsDirectionRestricted; }
-    set IsDirectionRestricted(newValue: boolean) {
-        if (this.EntityPM.IsDirectionRestricted != newValue) {
-            this.EntityPM.IsDirectionRestricted = newValue;
-            this.SetUIProperties_DirectionFields();
-        }
-    }
-
-    SetIsDirectionRestricted(value: boolean) {
-        this.IsDirectionRestricted = value;
-    }
-
-    private SetUIProperties_DirectionFields() {
-        this.UIProperties.SetEnabled("IsActiveInExport", this.ObjectTableName, this.IsDirectionRestricted);
-        this.UIProperties.SetEnabled("IsActiveInImport", this.ObjectTableName, this.IsDirectionRestricted);
-        this.UIProperties.SetEnabled("IsActiveInDomestic", this.ObjectTableName, this.IsDirectionRestricted);
-        this.UIProperties.SetEnabled("IsActiveInDrop", this.ObjectTableName, this.IsDirectionRestricted);
-    }
-
-    get IsActiveInDomestic() { return this.EntityPM.IsActiveInDomestic; }
-    set IsActiveInDomestic(newValue: boolean) {
-        if (this.EntityPM.IsActiveInDomestic != newValue) {
-            this.EntityPM.IsActiveInDomestic = newValue;
-        }
-    }
-    get IsActiveInDrop() { return this.EntityPM.IsActiveInDrop; }
-    set IsActiveInDrop(newValue: boolean) {
-        if (this.EntityPM.IsActiveInDrop != newValue) {
-            this.EntityPM.IsActiveInDrop = newValue;
-        }
-    }
-    get IsActiveInExport() { return this.EntityPM.IsActiveInExport; }
-    set IsActiveInExport(newValue: boolean) {
-        if (this.EntityPM.IsActiveInExport != newValue) {
-            this.EntityPM.IsActiveInExport = newValue;
-        }
-    }
-    get IsActiveInImport() { return this.EntityPM.IsActiveInImport; }
-    set IsActiveInImport(newValue: boolean) {
-        if (this.EntityPM.IsActiveInImport != newValue) {
-            this.EntityPM.IsActiveInImport = newValue;
-        }
-    }
-
     // Pages Properties
     public Page1Hidden: boolean = false;
     public Page2Hidden: boolean = true;
@@ -326,36 +252,6 @@ export class NewChargesTypeComponent extends BaseComponent {
     public IsNextEnabled: boolean = true;
     public IsFinishEnabled: boolean = false;
 
-    get PayableDebitAccount() { return this.EntityPM.PayableDebitAccount; }
-    set PayableDebitAccount(value: string) {
-        if (this.EntityPM.PayableDebitAccount != value) {
-            this.EntityPM.PayableDebitAccount = value;
-        }
-    }
-
-    get PayableDebitGLAcountId() { return this.EntityPM.PayableDebitGLAcountId; }
-    set PayableDebitGLAcountId(value: string) {
-        if (this.EntityPM.PayableDebitGLAcountId != value) {
-            this.EntityPM.PayableDebitGLAcountId = value;
-            if (this.EntityPM.PayableDebitGLAcountId == null) this.EntityPM.PayDebitGLAcountLocalName = null;
-        }
-    }
-    
-    get ReceivableCreditAccount() { return this.EntityPM.ReceivableCreditAccount; }
-    set ReceivableCreditAccount(value: string) {
-        if (this.EntityPM.ReceivableCreditAccount != value) {
-            this.EntityPM.ReceivableCreditAccount = value;
-        }
-    }
-
-    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
-    set ReceivableCreditGLAccountId(value: string) {
-        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
-            this.EntityPM.ReceivableCreditGLAccountId = value;
-            if (this.EntityPM.ReceivableCreditGLAccountId == null) this.EntityPM.RecCreditGLAcountLocalName = null;
-        }
-    }
-    
     // Commands
     PreviousButtonClicked() {
         this.IsFinishEnabled = true;
@@ -424,7 +320,8 @@ export class NewChargesTypeComponent extends BaseComponent {
 
             this.CurrentSession.StartBusyIndicatorSaving();
             
-            this._chargesTypePMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            var myService: ChargesTypePMService = new ChargesTypePMService();
+            myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
                 this.CurrentSession.StopBusyIndicator();
 

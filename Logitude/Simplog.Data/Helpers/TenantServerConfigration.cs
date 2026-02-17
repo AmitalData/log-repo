@@ -1,8 +1,7 @@
 using System;
 using System.Web;
-using System.Threading;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -16,39 +15,11 @@ namespace Simplog.Data.Helpers
 {
     public static class TenantServerConfigration
     {
-        private static readonly object OverrideLock = new object();
-        private static Func<int, DateTime> _getCurrentDateTimeOverride;
-
-        public static IDisposable OverrideGetCurrentDateTime(Func<int, DateTime> overrideFunc)
-        {
-            if (overrideFunc == null)
-            {
-                throw new ArgumentNullException(nameof(overrideFunc));
-            }
-
-            lock (OverrideLock)
-            {
-                var previous = _getCurrentDateTimeOverride;
-                _getCurrentDateTimeOverride = overrideFunc;
-                return new OverrideScope(() =>
-                {
-                    lock (OverrideLock)
-                    {
-                        _getCurrentDateTimeOverride = previous;
-                    }
-                });
-            }
-        }
 
 
         public static DateTime GetCurrentDateTime(int tenant)
         {
-            var overrideAccessor = _getCurrentDateTimeOverride;
-            if (overrideAccessor != null)
-            {
-                return overrideAccessor(tenant);
-            }
-
+        
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 return DateTime.Now;
@@ -59,7 +30,8 @@ namespace Simplog.Data.Helpers
             //var stringDate = DateTime.Now.ToString(format);
             var dateTime = DateTime.UtcNow;//DateTime.ParseExact(stringDate, format, new CultureInfo("en-US"));
             string datetimeoffset = "datetimeoffset" + tenant;
-            if (CacheManager.CacheWrapper != null)
+
+            if (HttpContext.Current != null)
             {
                 if (CacheManager.CacheWrapper.Get(datetimeoffset) == null)
                 {
@@ -75,9 +47,16 @@ namespace Simplog.Data.Helpers
                     offsetHours = (double)CacheManager.CacheWrapper.Get(datetimeoffset);
                     dateTime = dateTime.AddHours(offsetHours);
                 }
+
             }
+            else
+            {
 
 
+                offsetHours = GetCurrentDateWithTimeZoneOffset(tenant);
+                dateTime = dateTime.AddHours(offsetHours);
+
+            }
 
 
             //double offsetHours = Entity.TimeZoneOffset;
@@ -101,28 +80,34 @@ namespace Simplog.Data.Helpers
             return dateTime;
 
         }
+
         private static double GetCurrentDateWithTimeZoneOffset(int tenant)
         {
 
             string entityName = "Tenant" + tenant;
 
             Tenant entity;
-
-            if (CacheManager.CacheWrapper.Get(entityName) == null)
+            if (HttpContext.Current != null)
             {
-                TenantRepository tenantRepository = new TenantRepository(tenant);
-                entity = tenantRepository.GetSingleTenant(tenant);
-                if (entity != null)
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {
-                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    TenantRepository tenantRepository = new TenantRepository(tenant);
+                    entity = tenantRepository.GetSingleTenant(tenant);
+                    if (entity != null)
+                    {
+                        CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
+                }
+                else
+                {
+                    entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
                 }
             }
             else
             {
-                entity = (Tenant)CacheManager.CacheWrapper.Get(entityName);
+                TenantRepository tenantRepository = new TenantRepository(tenant);
+                entity = tenantRepository.GetSingleTenant(tenant);
             }
-
-
 
             double offsetHours = 0;
             if (entity != null)
@@ -144,9 +129,11 @@ namespace Simplog.Data.Helpers
 
             return offsetHours;
         }
+
+
         public static string GetDbConnection(int tenant)
         {
-
+          
             GlobalDB currentDb;
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew))
             {
@@ -157,58 +144,10 @@ namespace Simplog.Data.Helpers
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
-        }
-        public static DateTime GetEndOfTodayDate(int tenant)
-        {
-            var todayDate = GetCurrentDateTime(tenant);
-            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 23, 59, 59, 59);
-            return todayDate;
-        }
-        public static DateTime GetStartOfTodayDate(int tenant)
-        {
-            var todayDate = GetCurrentDateTime(tenant);
-            todayDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 0, 0, 0, 0);
-            return todayDate;
-        }
-
-        public static DateTime GetLastOfCurrentMonthDate(int tenant)
-        {
-            var todayDate = GetCurrentDateTime(tenant);
-            return new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year,todayDate.Month), 0, 0, 0, 0);
-        }
-        public static DateTime GetStartOfCurrentMonthDate(int tenant)
-        {
-            var todayDate = GetCurrentDateTime(tenant);
-            return new DateTime(todayDate.Year, todayDate.Month, 1, 0, 0, 0, 0);
-        }
-
-        public static DateTime GetLastOfMonthDate(DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 0, 0, 0, 0);
-        }
-        public static DateTime GetStartOfMonthDate(DateTime todayDate)
-        {
-            return new DateTime(todayDate.Year, todayDate.Month, 1, 0, 0, 0, 0);
-        }
-
-        private sealed class OverrideScope : IDisposable
-        {
-            private Action _onDispose;
-
-            public OverrideScope(Action onDispose)
-            {
-                _onDispose = onDispose ?? throw new ArgumentNullException(nameof(onDispose));
-            }
-
-            public void Dispose()
-            {
-                var action = Interlocked.Exchange(ref _onDispose, null);
-                action?.Invoke();
-            }
         }
     }
 

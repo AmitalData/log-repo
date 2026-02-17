@@ -5,7 +5,7 @@ import {APInvoicePM} from '../../EntityPMs/APInvoicePM';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./APInvoiceHelperComponent.html",
 })
 

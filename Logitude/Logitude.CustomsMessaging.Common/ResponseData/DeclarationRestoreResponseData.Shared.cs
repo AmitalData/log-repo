@@ -10,12 +10,6 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
     {
         public string ResponseStatusXML { get; set; }
         public bool IsShowUserMessage { get; set; }
-
-        public ExportDeclarationDataResponseData exportDeclarationDataResponseData { get; set; }
-
     }
-
-
-
 }
 

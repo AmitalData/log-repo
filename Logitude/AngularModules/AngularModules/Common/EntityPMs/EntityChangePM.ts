@@ -1,4 +1,4 @@
-
+﻿
 
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 export class EntityChangePM {
@@ -117,22 +117,6 @@ export class EntityChangePM {
     public get SetSLAAutomationSsucceedXml() { return this.setSLAAutomationSsucceedXml; }
     public set SetSLAAutomationSsucceedXml(newValue: string) { this.setSLAAutomationSsucceedXml = newValue; this.MarkAsDirty(); }
 
-    private queuedTaskAutomationFailedXml: string;
-    public get QueuedTaskAutomationFailedXml() { return this.queuedTaskAutomationFailedXml; }
-    public set QueuedTaskAutomationFailedXml(newValue: string) { this.queuedTaskAutomationFailedXml = newValue; this.MarkAsDirty(); }
-
-
-    private queuedTaskAutomationSsucceedXml: string;
-    public get QueuedTaskAutomationSsucceedXml() { return this.queuedTaskAutomationSsucceedXml; }
-    public set QueuedTaskAutomationSsucceedXml(newValue: string) { this.queuedTaskAutomationSsucceedXml = newValue; this.MarkAsDirty(); }
-
-    private sendInterfaceAutomationFailedXml: string;
-    public get SendInterfaceAutomationFailedXml() { return this.sendInterfaceAutomationFailedXml; }
-    public set SendInterfaceAutomationFailedXml(newValue: string) { this.sendInterfaceAutomationFailedXml = newValue; this.MarkAsDirty(); }
-
-    private sendInterfaceAutomationSsucceedXml: string;
-    public get SendInterfaceAutomationSsucceedXml() { return this.sendInterfaceAutomationSsucceedXml; }
-    public set SendInterfaceAutomationSsucceedXml(newValue: string) { this.sendInterfaceAutomationSsucceedXml = newValue; this.MarkAsDirty(); }
 
 
     MarkAsDirty() {

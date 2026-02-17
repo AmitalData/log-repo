@@ -1,8 +1,8 @@
-declare var window: any;
+﻿declare var window: any;
 declare var System: any;
 import {Injectable} from '@angular/core';
 import {SessionLocator} from '../Utilities/SessionLocator';
-import { defer, of } from 'rxjs';
+import {Observable}     from 'rxjs/Rx';
 
 @Injectable()
 
@@ -13,7 +13,13 @@ export class EntityPMService {
 
     getSingle(objectTableName: string, id: string) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        var servicelink = this.GetServiceLink(table);
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "PMService";
+        var servicelink = './' + moduleName + '/Services/StandardPMs/' + servicename;
+       
         return new Promise((resolve) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                 resolve(service.get(id));
@@ -23,7 +29,13 @@ export class EntityPMService {
 
     getNewEntity(objectTableName: string) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        var servicelink = this.GetServiceLink(table);
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "PMService";
+        var servicelink = './' + moduleName + '/Services/StandardPMs/' + servicename;
+
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                 resolve(service.GetNewEntityPM());
@@ -31,22 +43,14 @@ export class EntityPMService {
         });
     }
 
-    update(objectTableName: string, entityPM: any, oldEntityPM: any = null) {
+    update(objectTableName: string, entityPM: any) {
         var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
-        var servicelink = this.GetServiceLink(table);
-        var hasPatchUpdateFeatureToggle = SessionLocator.FeatureToggles.filter(f => f.ToggleCode === "PUP")[0];
-
-        if(hasPatchUpdateFeatureToggle && oldEntityPM) {
-            return new Promise((resolve, reject) => {
-                SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
-                    if(Object.getPrototypeOf(service).update.length === 2) {
-                        resolve(service.update(entityPM, oldEntityPM));
-                    }else {
-                        resolve(service.update(entityPM));
-                    }
-                });
-            });
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
         }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "PMService";
+        var servicelink = './' + moduleName + '/Services/StandardPMs/' + servicename;
 
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
@@ -56,27 +60,19 @@ export class EntityPMService {
     }
 
     insert(objectTableName: string, entityPM: any) {
-        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];       
-        var servicelink = this.GetServiceLink(table);
+        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "PMService";
+        var servicelink = './' + moduleName + '/Services/StandardPMs/' + servicename;
+
         return new Promise((resolve, reject) => {
             SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                 resolve(service.insert(entityPM));
             });
         });
-    }
-
-    private GetServiceLink(table: any) {
-        let objectTableName = table.Name;
-        let type = table.ObjectTableTypeCode == "MD" ? "Reference" : "Data";
-        if (table?.IsCustom) {
-            return './Infrastructure/Services/StandardPMs/' + type + 'CustomObjectPMService';
-        }
-        if (objectTableName.indexOf('Customs.') > -1) {
-            objectTableName = objectTableName.split('.')[1];
-        }
-        let moduleName = table.ClientModuleName;
-        let servicename = objectTableName + "PMService";
-        return './' + moduleName + '/Services/StandardPMs/' + servicename;
     }
 
 }

@@ -189,7 +189,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             return query.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
         }
 
-        public ShipmentPM HouseCustomDataMappingAndValidatin(House MyEntity, int Tenant,string ComputingPartnerCode = "", bool IsUpdate = false)
+        public ShipmentPM HouseCustomDataMappingAndValidatin(House MyEntity, int Tenant,string ComputingPartnerCode = "")
         {
             try
             {
@@ -198,15 +198,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 TenantPM MyTenantPM = tenantQuery.GetSinglePM(Tenant);
                 UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + Tenant + ".com", Tenant, false);
 
-                ShipmentPM temp = HouseDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode, IsUpdate);
+                ShipmentPM temp = HouseDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode);
                 temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 temp.Tenant = Tenant;
                 temp.ShipmentLevelCode = "H";
                 temp.MainCarriageFromPortId = temp.FromPortId;
                 temp.MainCarriageToPortId = temp.ToPortId;
-                temp.MainCarriageToPortId = temp.ToPortId;
-                temp.FinalDistenationPortId = temp.ToPortId;
-                temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
                 temp.FHLStatusName = "Not Sent";
@@ -219,7 +216,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.StatusDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                 temp.AWBCurrencyId = MyTenantPM.FreightCurrencyId;
                 temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
-                temp.OnForwardingAdditionalTransportModeCode = "BYTR";
+                temp.OnCarriageAdditionalTransportModeCode = "BYTR";
 
                 if (string.IsNullOrEmpty(temp.VolumeUnitCode))
                 {
@@ -281,13 +278,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
                             break;
                         }
-                }
+                }               
 
-                if (temp.Ratio == null || temp.Ratio == 0)
-                {
-                    temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
-                }
-
+                temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
                 temp.DimFactor = this.GetDimFactorFromRatio(temp.Ratio, temp.DimensionsUnitCode, temp.ChargeableWeightUnitCode);
 
                 if (string.IsNullOrEmpty(temp.CreatedByUserId))
@@ -510,7 +503,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             return myResult;
         }
 
-        public List<ConsoleShipmentPM> HouseCustomDataMappingAndValidatin(Master myMaster, List<House> MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ConsoleShipmentPM> HouseCustomDataMappingAndValidatin(Master myMaster, List<House> MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
@@ -522,15 +515,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 var MyList = new List<ConsoleShipmentPM>();
                 foreach (var item in MyEntity)
                 {
-                    ShipmentPM temp = HouseCustomDataMappingAndValidatin(item, Tenant, ComputingPartnerName, IsUpdate);
+                    ShipmentPM temp = HouseCustomDataMappingAndValidatin(item, Tenant, ComputingPartnerName);
                     temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                     temp.Tenant = Tenant;
                     temp.ShipmentLevelCode = "H";
                     temp.MainCarriageFromPortId = temp.FromPortId;
                     temp.MainCarriageToPortId = temp.ToPortId;
-                    temp.MainCarriageToPortId = temp.ToPortId;
-                    temp.FinalDistenationPortId = temp.ToPortId;
-                    temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                     temp.FHLStatusCode = "NSEN";
                     temp.FWBStatusCode = "NSEN";
                     temp.FHLStatusName = "Not Sent";
@@ -548,7 +538,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     temp.DimensionsUnitCode = MyTenantPM.DimensionsUnitCode;
                     temp.GrossWeightUnitCode = MyTenantPM.GrossWeightUnitCode;
                     temp.ChargeableWeightUnitCode = MyTenantPM.ChargeableWeightUnitCode;
-                    temp.OnForwardingAdditionalTransportModeCode = "BYTR";
+                    temp.OnCarriageAdditionalTransportModeCode = "BYTR";
 
                     switch (temp.DirectionId)
                     {

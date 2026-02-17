@@ -15,8 +15,8 @@ using System.Web;
 
 namespace Logitude.Infrastructure.Data.Repsitories
 {
-    public partial class FeatureToggleRepository : IRepository<FeatureToggle>
-    {
+   public partial class FeatureToggleRepository:IRepository<FeatureToggle>
+   {
         public IQueryable<FeatureToggle> GetAllByToggleCodeList(List<string> toggleCodes, int tenant)
         {
             return from a in context.FeatureToggles
@@ -26,26 +26,11 @@ namespace Logitude.Infrastructure.Data.Repsitories
 
         public List<FeatureToggle> GetMulti(EntityKeyFields entityKeys)
         {
-
-            throw new NotImplementedException();
+            
+			throw new NotImplementedException();
         }
 
         public bool HasFeatureToggle(string toggleCode, int tenant)
-        {
-            string entityKeyString = $"HasFeatureToggle({toggleCode}, {tenant})";
-            MyDummyClass myDummyClass = CacheManager.GetOrInsertNewObject<MyDummyClass>(entityKeyString, () => {
-
-                MyDummyClass myDummyClass1 = new MyDummyClass();
-                myDummyClass1.MyBool = HasFeatureToggle_Slow(toggleCode, tenant);
-                return myDummyClass1;
-            });
-            return myDummyClass?.MyBool ?? false;
-
- 
-
-
-        }
-        /*public*/ bool HasFeatureToggle_Slow(string toggleCode, int tenant)
         {
             bool result = false;
             string featureToggleName = "featuretoggle" + toggleCode + tenant;
@@ -56,11 +41,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
 
-                        result = (from a in context.FeatureToggles
-                                  where a.ToggleCode == toggleCode
-                                  && (a.TenantNumber == tenant ||  (tenant >= a.FromTenantNumber && tenant <= a.ToTenantNumber)) 
-                                  && !a.Inactive
-                                  select a).Any();
+                        result = (from a in context.FeatureToggles where a.ToggleCode == toggleCode &&  a.TenantNumber == tenant && !a.Inactive select a).Any();
 
                         scope.Complete();
                     }
@@ -78,9 +59,7 @@ namespace Logitude.Infrastructure.Data.Repsitories
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
 
-                    result = (from a in context.FeatureToggles
-                              where a.ToggleCode == toggleCode && (a.TenantNumber == tenant || (tenant >= a.FromTenantNumber && tenant <= a.ToTenantNumber)) && !a.Inactive
-                              select a).Any();
+                    result = (from a in context.FeatureToggles where a.ToggleCode == toggleCode && a.TenantNumber == tenant && !a.Inactive  select a).Any();
 
                     scope.Complete();
                 }

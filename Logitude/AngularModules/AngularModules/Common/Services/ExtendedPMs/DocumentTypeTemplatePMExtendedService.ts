@@ -1,10 +1,9 @@
-
+﻿
 
 
 import {Injectable, } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {DocumentTypeTemplatePM} from '../../EntityPMs/DocumentTypeTemplatePM';
@@ -13,10 +12,10 @@ import {DocumentTypeTemplatePM} from '../../EntityPMs/DocumentTypeTemplatePM';
 @Injectable()
 export class DocumentTypeTemplatePMExtendedService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DocumentTypeTemplateExtended';
     }
 
@@ -27,9 +26,9 @@ export class DocumentTypeTemplatePMExtendedService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
 
-        return this._http.get(this._apiUrl + '/getsingledocumenttypetemplate/?' + 'id=' + id + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/getsingledocumenttypetemplate/?' + 'id=' + id + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result :any = response;
+            var result = response.json();
             var entity: DocumentTypeTemplatePM;
             entity = this.MapJsonToEntityPM(result);
 
@@ -38,7 +37,7 @@ export class DocumentTypeTemplatePMExtendedService {
 
             pmresponse.Result = entity;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     GetDocumentTypeTemplatesPMForDocumentType(documentTypeId: string, templateType: string, tenant: number) {
@@ -46,8 +45,8 @@ export class DocumentTypeTemplatePMExtendedService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
 
-        return this._http.get(this._apiUrl + '?documentTypeId=' + documentTypeId + '&templateType=' + templateType + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '?documentTypeId=' + documentTypeId + '&templateType=' + templateType + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+            var result = response.json();
             var entity: DocumentTypeTemplatePM;
             var DocumentTypeTemplatePMLists: DocumentTypeTemplatePM[];
             DocumentTypeTemplatePMLists = new Array<DocumentTypeTemplatePM>();
@@ -60,30 +59,7 @@ export class DocumentTypeTemplatePMExtendedService {
 
             pmresponse.Result = DocumentTypeTemplatePMLists;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-
-
-    GetDocumentTypeTemplatesForDocumentTypeCode(documentTypeCode: string, templateType: string, tenant: number) {
-
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-
-        return this._http.get(this._apiUrl + '/getDocumentTypeTemplatesForDocumentTypeCode?documentTypeCode=' + documentTypeCode + '&templateType=' + templateType + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
-            var entity: DocumentTypeTemplatePM;
-            var DocumentTypeTemplatePMLists: DocumentTypeTemplatePM[];
-            DocumentTypeTemplatePMLists = new Array<DocumentTypeTemplatePM>();
-            result.forEach((item) => {
-                entity = this.MapJsonToEntityPM(item);
-                DocumentTypeTemplatePMLists.push(entity);
-            });
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-
-            pmresponse.Result = DocumentTypeTemplatePMLists;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     GetTemplateBodyByDocumentTemplateId(documentTypeTemplateId: string, tenant: number) {
@@ -91,36 +67,36 @@ export class DocumentTypeTemplatePMExtendedService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
 
-        return this._http.get(this._apiUrl + '/GetTemplateBodyByDocumentTemplateId?documentTypeTemplateId=' + documentTypeTemplateId + "&tenant=" + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/GetTemplateBodyByDocumentTemplateId?documentTypeTemplateId=' + documentTypeTemplateId + "&tenant=" + tenant, { headers: authHeader }).map(response => {
         
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     GetTemplateBodyhtmlOrJsonByDocumentTemplateId(documentTyptemplateId: string, tenant: number, isHtml: boolean, pageType: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
 
-        return this._http.get(this._apiUrl + '?documentTyptemplateId=' + documentTyptemplateId + "&tenant=" + tenant + "&isHtml=" + isHtml + "&pagetype=" + pageType,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '?documentTyptemplateId=' + documentTyptemplateId + "&tenant=" + tenant + "&isHtml=" + isHtml + "&pagetype=" + pageType, { headers: authHeader }).map(response => {
    
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
   
     //string documentTypeId, int tenant
-    getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeId: string, editorToolCode:string ,tenant: number) {
+    getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeId: string, tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidandeditortoolcode/?' + 'documentTypeId=' + documentTypeId + '&editorToolCode=' + editorToolCode+ '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidforautomations/?' + 'documentTypeId=' + documentTypeId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
        
-            var result :any = response;
+            var result = response.json();
             var entity: DocumentTypeTemplatePM;
             var DocumentTypeTemplatePMLists: DocumentTypeTemplatePM[];
             DocumentTypeTemplatePMLists = new Array<DocumentTypeTemplatePM>();
@@ -133,32 +109,25 @@ export class DocumentTypeTemplatePMExtendedService {
 
             pmresponse.Result = DocumentTypeTemplatePMLists;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
-    getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode: string, tenant: number) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/getDocumentTypeTemplatesByDocumentTypeCode/?' + 'documentTypeCode=' + documentTypeCode + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
-    }
     SaveDocumentTemplate(filter: any) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/PutSaveDocumentTypeTemplate', JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result :any = response;
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutSaveDocumentTypeTemplate', JSON.stringify(filter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -170,15 +139,18 @@ export class DocumentTypeTemplatePMExtendedService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/PutConvertXmalByteTojosnObject', JSON.stringify(filter),ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result :any = response;
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutConvertXmalByteTojosnObject', JSON.stringify(filter), {
+                headers: authHeader,
+
+            }).map(response => {
+                var result = response.json();
 
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = result;
                 return pmresponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );

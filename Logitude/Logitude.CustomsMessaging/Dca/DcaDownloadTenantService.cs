@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.ServiceBus.Messaging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,63 +8,59 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Logitude.SystemLogs;
+using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure;
+//using Simplog.Global.Data.GlobalModel.Repositories;
+//using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.Helpers;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
 using System.Data.Entity.Validation;
 using System.Transactions;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Server.Tools;
+using Logitude.CustomsMessaging.MessagingServices;
 using Microsoft.Practices.Unity;
+using Logitude.Customs.Data.EntityLists;
 using System.Diagnostics;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.Customs.Def.ClosedTable;
 using Logitude.Customs.BL.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CustomsMessaging.Common.DCAParams;
 using System.Configuration;
-using System.Collections.Concurrent;
-using Logitude.BL.Security;
-using System.Globalization;
-using Logitude.Customs.BL.CloseTables;
-using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.Dca
 {
-    public  class DcaDownloadTenantService
+    public /*Test outside from C:\Users\itzik\Documents\Visual Studio 2012\Projects\CustomsWorkerRoleWindowsFormsApplication\CustomsWorkerRoleWindowsFormsApplication */
+        class DcaDownloadTenantService
     {
+        //private readonly string _PartnerID;
+        //private readonly string _UnifreightEnvironmentID;
+
+        //private readonly string _DownloadMoreParams;
         private readonly string _AppendToDownloadFolderName;
+        private readonly bool _EnableLog;
+        //private readonly CustomsDeploymentStage _CustomsDeploymentStage;
 
         private List<InterfaceTenantDefinitionManagementPM> _AllInterface;
         private CustomsSettingPM _CustomsSettingPM;
-        private readonly bool _EnableLog;
-
-        private bool _featureDcaSftp;   
-        
-        private PartnerSftpConfig _downloadCfg;     
-        private PartnerSftpConfig _uploadCfg;
-
-        private LegacyDcaManagerShim _legacyShim;
-        private SftpDcaManagerShim _downloadShim;
-        private IDcaManagerShim Shim => _currentShimForPass ?? (IDcaManagerShim)_downloadShim ?? _legacyShim;
-
-        private IDcaManagerShim _currentShimForPass;
-
 
         static List<DCAIncomeDirStateM> _LastAccessFileInDCADirList = new List<DCAIncomeDirStateM>();
-
+        
         private DCAIncomeDirStateM _MyDCAIncomeDirStateM;
-
-        private DCAIncomeDirStateM _LegacyDirState;
-        private DCAIncomeDirStateM _SftpDirState;
-
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
 
-        public const string InterfaceName_DownloadCustomsFilesFromSftp = "DWN_CUSTOMS_SFTP";
-        public const string InterfaceName_UploadNotNeeded9100FilesToSftp = "UPLOAD_NOTNEEDED9100_TOSFTP";
 
         public DcaDownloadTenantService(CustomsSettingPM customsSettingPM)
         {
+            // TODO: Complete member initialization
             this._CustomsSettingPM = customsSettingPM;
+            //_CustomsDeploymentStage = CustomsSettingUtil.GetCustomsDeploymentStage(customsSettingPM.Tenant);
             _MyDCAIncomeDirStateM = _LastAccessFileInDCADirList.FirstOrDefault(rec => rec.Tenant == _CustomsSettingPM.Tenant);
             if (_MyDCAIncomeDirStateM == null)
             {
@@ -79,68 +76,43 @@ namespace Logitude.CustomsMessaging.Dca
                     _LastAccessFileInDCADirList.Add(_MyDCAIncomeDirStateM);
                 }
             }
-
-            _LegacyDirState = _MyDCAIncomeDirStateM;
-            _SftpDirState = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant);
-
             _EnableLog = true;
             var interfaceTypeQueryService = new InterfaceTenantDefinitionQueryService(_CustomsSettingPM.Tenant);
+            //interfaceTypeQueryService.GetInterfaceManagementwithDefinition(_CustomsSettingPM.Tenant);
+            ////var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(_CustomsSettingPM.Tenant);
 
             _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant);
 
-#if true
-            _InterfaceListDCA=interfaceTypeQueryService.GetInterfaceListDCA(_AllInterface, customsSettingPM.CompanyType);
-#else
-
             _InterfaceListDCA = //(new IIGMessageQueryService()).GetAll().Where(mess => mess.Interactive.HasFlag(InterfaceType.InteractiveMode.DCA)); ;
-                   _AllInterface
-                   .Where(r => r.OverrideActive == true)
-
-                    //להתייחס לשדה Active מרמת ניהול מסרים
-                    .Where(r => r.InterfaceManagement.Active == true)
-
-
-
-                    .Where(
-                       r =>
-                    //ערכים NULL== הכל, C == רק עמילות, B == רק בלדרות
-                    string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)//All
-
-                    ||
-                    (
-                    !string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)
-                    &&
-                     r.InterfaceManagement.InterfaceType == customsSettingPM.CompanyType
-                     )
-                     )
-
-                   .Where(rec =>
+                   _AllInterface.Where(rec =>
+                       //rec.InterfaceManagement.INOUT ==  Logitude.Customs.BL.ClosedTable.InOutType.In  &&
+                       //!string.IsNullOrWhiteSpace(rec.InterfaceManagement.DcaPrefixName) && 
+                       //!rec.OverrideInActive &&
+                       ///////rec.Interactive == Logitude.Customs.BL.ClosedTable.InteractiveMode.DCABatchIn &&
                        !String.IsNullOrWhiteSpace(
                        rec.InterfaceManagement.DcaPrefixName +
                        rec.InterfaceManagement.DcaPrefixName2 +
                        rec.InterfaceManagement.DcaPrefixName3 +
                        rec.InterfaceManagement.DcaPrefixName4)
                        ).ToList();
-#endif
             _AllDcaPreFixWithoutInOutUpper = new List<string>();
-			_AllDcaPreFixByEnvironment = new List<string>();
+
+            
 
 
-
-
-			if (AddUnifreightTester == true)
+            if (AddUnifreightTester == true)
             {
-                _InterfaceListDCA.Add(interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant, "UT01").First());
+                _InterfaceListDCA.Add(interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant, "UT01").First());    
             }
-
+            
 
             var MessagingServiceInterfaceTypeCodes = new List<string>();
             MessagingServiceInterfaceTypeCodes =
                 ContainerAccessor.Container.Registrations
                 .Where(t => t.RegisteredType == typeof(IMessagingServiceInterfaceType))
                 .Select(t => t.Name).ToList();
-
-
+            
+            
             bool isExist = false;
             foreach (var rec in _InterfaceListDCA)
             {
@@ -155,14 +127,14 @@ namespace Logitude.CustomsMessaging.Dca
                 }
                 else if (rec.InterfaceManagement.InOut == "I")
                 {
-                    if (!MessagingServiceInterfaceTypeCodes.Contains(rec.InterfaceManagement.ResponseInterfaceCode))
+                        if (!MessagingServiceInterfaceTypeCodes.Contains(rec.InterfaceManagement.ResponseInterfaceCode))
                     {
                         isExist = true;
                     }
                 }
-
-
-
+                
+                    
+                
                 if (isExist)
                 {
 
@@ -174,64 +146,13 @@ namespace Logitude.CustomsMessaging.Dca
                 }
                 else
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due Not register in Container: Removing " + rec.Code);
+                    Debug.WriteLine("Due Not register in Container: Removing " + rec.Code);
                 }
 
-                if(rec.InterfaceManagement.Environment == "Export")
-                {
-					var l = GetAllPreFix(rec);
-					if (l.Count() > 0)
-					{
-						_AllDcaPreFixByEnvironment.AddRange(l);
-					}
-				}
 
             }
-            
-            FeatureQuery featureQuery = new FeatureQuery(customsSettingPM.Tenant);
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(
-                                   AuthenticationUtil.ResolveUserId(_CustomsSettingPM.Tenant),
-                                   _CustomsSettingPM.Tenant);
-
-            _featureDcaSftp =
-                features.Features.Any(f => f.Code.Equals("DownloadDcaSftp", StringComparison.OrdinalIgnoreCase));
-
-            
-            if (_featureDcaSftp)
-            {
-
-                _uploadCfg = LoadPartnerSftpConfig(
-                                   CustomsPartnerFtpDetails.TypeCode_Out,
-                                   InterfaceName_UploadNotNeeded9100FilesToSftp);
-
-                _downloadCfg = LoadPartnerSftpConfig(
-                                       CustomsPartnerFtpDetails.TypeCode_In,
-                                       InterfaceName_DownloadCustomsFilesFromSftp);
-                
-                if (_downloadCfg != null)
-                {
-                    _downloadShim = new SftpDcaManagerShim(_downloadCfg, _CustomsSettingPM.Tenant);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SFTP shim active for tenant {_CustomsSettingPM.Tenant}");
-                }
-            }
-
-            _legacyShim = new LegacyDcaManagerShim(GetDcaManagr());
-            if (_downloadShim == null)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                    $"Legacy shim active for tenant {_CustomsSettingPM.Tenant}");
-            }
-
-
         }
 
-        public bool HasFeature_DcaDirect9200()
-        {
-            string email = AuthenticationUtil.ResolveUserIdentityName(this._CustomsSettingPM.Tenant);
-            bool suppressUnifreightDCAServer = SecurityUtility.CheckFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"suppressUnifreightDCAServer={suppressUnifreightDCAServer} ");
-            return suppressUnifreightDCAServer;
-        }
         private List<string> GetAllPreFix(InterfaceTenantDefinitionManagementPM rec)
         {
             var splitter = new string[] { Environment.NewLine };
@@ -261,268 +182,30 @@ namespace Logitude.CustomsMessaging.Dca
             return DcaPrefixName;
         }
 
-        private static bool IsAppSettingOn(string appSettingKeyValueIsLogUntilDateyyyyMMdd)
+
+        public void DownloadAll(string debugIIGMessageId)
         {
-            bool IsOn = false;
-            DateTime  stopLogAt = DateTime.MinValue;
-            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings[appSettingKeyValueIsLogUntilDateyyyyMMdd];//"2018062018HD312280.LogUntilDateyyyyMMdd"];
-            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+
+
+
+
+
+            var suppressFeature = false;
+
+            if (!CanIStartWork())
             {
-
-
-                if(DateTime.TryParseExact(UntilDateyyyyMMdd,
-                                                        "yyyyMMdd",
-                                                        CultureInfo.InvariantCulture,
-                                                        DateTimeStyles.None,
-                                                        out stopLogAt))
-                {
-                    IsOn = DateTime.Now <= stopLogAt;
-
-                }
-
-
-            }
-            return IsOn;
-        }
-        public void DownloadAll(string debugIIGMessageId, DedicatedCourierDCAModel dedicatedCourierDCAModel)
-        {
-            bool run9200 =
-                   HasFeature_DcaDirect9200()        
-                   || dedicatedCourierDCAModel != null;
-
-            bool sftpFeature = _featureDcaSftp;     
-            if (run9200 && !sftpFeature)
-            {
-                this.Send9200(debugIIGMessageId, dedicatedCourierDCAModel);
                 return;
             }
-            if (sftpFeature)
-            {
-                this.Send9200(debugIIGMessageId, dedicatedCourierDCAModel);
-            }
-
-            if (sftpFeature)
-            {
-                var nowUtc = DateTime.UtcNow;
-                if (nowUtc - _SftpDirState.LastSftpPurgeUtc > TimeSpan.FromHours(24))
-                {
-                    try
-                    {
-                        _downloadShim.PurgeOldFiles();
-                        _SftpDirState.LastSftpPurgeUtc = nowUtc;
-                    }
-                    catch (Exception ex)
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"SFTP purge failed: {ex.Message}");
-                    }
-                }
-
-                RunIntakeOnceWithShim(_downloadShim, debugIIGMessageId);
-
-            }
-
-            RunIntakeOnceWithShim(_legacyShim, debugIIGMessageId);
-        }
-        private void RunIntakeOnceWithShim(IDcaManagerShim shim, string debugIIGMessageId)
-        {
-            // save current context
-            var savedShim = _currentShimForPass;
-            var savedState = _MyDCAIncomeDirStateM;
-
-            try
-            {
-                _currentShimForPass = shim;
-
-                _MyDCAIncomeDirStateM = (shim is SftpDcaManagerShim)
-                            ? (_SftpDirState ?? (_SftpDirState = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant)))
-                            : (_LegacyDirState ?? (_LegacyDirState = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant)));
-
-                if (!CanIStartWork())
-                    return;
-
-                _swDownAll = Stopwatch.StartNew();
-
-                bool multi = true;   // keep your current behavior
-                if (multi)
-                    Take50_MultiThread(debugIIGMessageId);
-                else
-                    Take50OneByOne(debugIIGMessageId);
-
-                _swDownAll.Stop();
-
-                if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
-                {
-                    MoveUnUseDCAFilesToDIr();
-                }
-            }
-            finally
-            {
-                // restore previous context
-                _currentShimForPass = savedShim;
-                _MyDCAIncomeDirStateM = savedState;
-            }
-        }
-        private void Send9200(string debugIIGMessageId, DedicatedCourierDCAModel dedicatedCourierDCAModel)
-        {
-            var sb = new StringBuilder();
-            var sw = Stopwatch.StartNew();
-
-            if (IsAppSettingOn("SuppressDownloadDCA.UntilDateyyyyMMdd"))
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SuppressDownloadDCA.UntilDateyyyyMMdd");
-            }
-            else
-            {
-                var dcaDirect9200TenantService = new DcaDirect9200TenantService(
-                    this._CustomsSettingPM,
-                    _AllDcaPreFixWithoutInOutUpper,
-                    this._InterfaceListDCA,
-                    _AllInterface,
-                    dedicatedCourierDCAModel,
-                    _AllDcaPreFixByEnvironment,
-                    _uploadCfg
-                    );
-                dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
-                if (dedicatedCourierDCAModel != null)
-                {
-                    var removeOldOrphanedFilesFromBackupService = new RemoveOldOrphanedFilesFromBackupService();
-                    removeOldOrphanedFilesFromBackupService.RemoveOldFiles(dedicatedCourierDCAModel.BackupPath);
-                }
-            }
-            sb.AppendLine($"DownloadAll({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
-            sw.Restart();
 
 
-            var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA, _AllDcaPreFixByEnvironment);
-            restoreWaitingImportService.RestoreWaitingImportSaveInDB();
-
-            sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString() + ":" + "DCAStopwatch");
-        }
-        static DateTime _LastErrordateTime = DateTime.MinValue;
-        private void Take50_MultiThread(string debugIIGMessageId)
-        {
-            int iMultiThread = 5;
-            int _totalDownload = 0;
-            List<DCAFileModel> dcaFileList = null;
-            while ((dcaFileList =
-                GetNextList(debugIIGMessageId, _totalDownload, iMultiThread)) != null)
-            {
-
-                ConcurrentQueue<Exception> exceptionQueue = new ConcurrentQueue<Exception>();
-                var timeout = 5 * 60 * 1000; // seconds == 5min
-                var cts = new CancellationTokenSource();
-                try
-                {
-
-
-                    using (var t = new Timer(_ => cts.Cancel(), null, timeout, -1))
-                    {
-
-
-                        Parallel.ForEach(dcaFileList,
-                            new ParallelOptions { CancellationToken = cts.Token },
-                            dcaFile =>
-                            {
-
-                                try
-                                {
-
-                                    var currSelectedFileDownload = dcaFile.SelectedFileDownload;
-                                    var messageDCA = _InterfaceListDCA
-                                        .First(rec =>
-                                            IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName) ||
-                                            IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName2) ||
-                                            IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName3) ||
-                                            IsMatch(currSelectedFileDownload, rec.InterfaceManagement.DcaPrefixName4)
-                                    );
-
-                                    var currMessagingService = GetMainMessagingService(messageDCA);
-                                    if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
-                                    {
-
-                                        try
-                                        {
-
-
-                                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
-                                            if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
-                                            {
-                                                _LastErrordateTime = DateTime.Now;
-                                                NetCommonHelper.Logger.DevLog.Instance.WriteError("NO MAIN Code (response 2754 of 2750 !!!)  currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log" + ":" + "DCANotIsRegistered");
-                                            }
-                                            string myMoreParams = "";
-                                            bool myErrorOccurred;
-                                            string myMessageOut = "";
-                                            Shim.DeleteIncomeFile(
-                   dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
-                      ref myMoreParams, out myErrorOccurred, out myMessageOut);
-                                        }
-                                        catch (Exception)
-                                        {
-
-                                        }
-
-                                        return;
-
-
-                                    }
+            _swDownAll = Stopwatch.StartNew();
 
 
 
-                                    bool dcaMessageFileSuccess = DoDcaMessageFile(messageDCA, dcaFile);
-                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
-                                    LogMessagingUtil.Instance.Clear();
-                                }
-                                catch (Exception e)
-                                {
-
-                                    exceptionQueue.Enqueue(e);
-                                }
-
-
-                            });
-                    }
-
-
-
-                }
-
-                catch (Exception eee)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, "DCAMulti");
-                  
-                }
-                finally
-                {
-
-                    try
-                    {
-                        exceptionQueue.ToList().ForEach(e1 =>
-                        {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1, "DCAMulti");
-                            
-                        });
-                    }
-                    catch
-                    {
-
-
-                    }
-
-                    cts.Dispose();
-                }
-
-            }
-        }
-
-
-
-        private void Take50OneByOne(string debugIIGMessageId)
-        {
-            int _totalDownload = 0;
+            _totalDownload = 0;
             DCAFileModel dcaFile = null;
-            while ((dcaFile = GetNext(debugIIGMessageId, _totalDownload)) != null)
+            //foreach (var dcaFile in ListOfDCAFile)
+            while ((dcaFile = GetNext(debugIIGMessageId)) != null)
             {
 
 
@@ -540,22 +223,28 @@ namespace Logitude.CustomsMessaging.Dca
                 {
 
 
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
+                    Debug.WriteLine("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
                     _totalDownload--;
                     continue;
+                    //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                     throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
+                    //return;
                 }
 
 
 
                 DoDcaMessageFile(messageDCA, dcaFile);
-
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
+                Debug.WriteLine("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
                 LogMessagingUtil.Instance.Clear();
 
 
 
 
+            }
+            _swDownAll.Stop();
+            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
+            {
+                MoveUnUseDCAFilesToDIr();
             }
         }
 
@@ -571,8 +260,12 @@ namespace Logitude.CustomsMessaging.Dca
 
             string searchPattren = "*.*";
             string ourSufix = CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
-            myFileListing = Shim.FileListing(
+            Debug.WriteLine(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
+            //searchPattren = "";
+            _DcaManager = GetDcaManagr();
+            myMoreParams = "";// _DownloadMoreParams;
+            myFileListing = _DcaManager.FileListing(
+//this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant), 
 searchPattren, _AppendToDownloadFolderName,
 ref myMoreParams,
 out myErrorOccurred,
@@ -580,7 +273,7 @@ out myMessageOut);
 
             if (myErrorOccurred)
             {
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                Thread.Sleep(TimeSpan.FromSeconds(3));
 
             }
             myFileListing = myFileListing ?? new List<string>();
@@ -590,20 +283,20 @@ out myMessageOut);
             {
                 if (!fileName.ToLower().EndsWith(ourSufix))
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{fileName} NOT  our Sufix  !!!!!!!! ");
+                    Debug.WriteLine($"{fileName} NOT  our Sufix  !!!!!!!! ");
                     MoveUnUseDCAFileToDir(fileName);
                 }
                 else
                 {
                     if (!DCAPrefixIsMapped(fileName))
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{fileName} NOT  Mapped in Prefix !!!!!!!! ");
+                        Debug.WriteLine($"{fileName} NOT  Mapped in Prefix !!!!!!!! ");
                         MoveUnUseDCAFileToDir(fileName);
 
                     }
                     else
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{fileName} is Mapped in Prefix ");
+                        Debug.WriteLine($"{fileName} is Mapped in Prefix ");
                     }
                 }
             }
@@ -613,24 +306,24 @@ out myMessageOut);
         {
             var model = DCAFilePraser.GetDCAFileModel(fileName);
 
-            bool res = _AllDcaPreFixWithoutInOutUpper.Contains(model.PrefixWithout_OutOrIn.ToUpper());
+            bool res= _AllDcaPreFixWithoutInOutUpper.Contains(model.PrefixWithout_OutOrIn.ToUpper());
             return res;
         }
 
         private bool MoveUnUseDCAFileToDir(string fileName)
         {
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("MoveUnUseDCAFileToDIr " + fileName);
+            Debug.WriteLine("MoveUnUseDCAFileToDIr " + fileName);
 
             string MoveUnUseDCAFilesToDIr = ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr");
 
-            using (var myDCAMoveIncomeFileToDirService = new DCAMoveIncomeFileToDirService(Shim))
+            using (var myDCAMoveIncomeFileToDirService = new DCAMoveIncomeFileToDirService(_DcaManager))
             {
 
                 return myDCAMoveIncomeFileToDirService.MoveItToDir(fileName, this._AppendToDownloadFolderName, MoveUnUseDCAFilesToDIr);
             }
         }
 
-        private List<DCAFileModel> GetNextList(string debugIIGMessageId, int _totalDownload, int take)
+        private DCAFileModel GetNext(string debugIIGMessageId)
         {
             var allXmlFileInMyBranch = _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch ?? new List<string>();//GetFileList();
             if (_swDownAll.Elapsed > TimeSpan.FromSeconds(60))
@@ -641,58 +334,15 @@ out myMessageOut);
 
             if (ListOfDCAFile.Count() < 1)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("After Filter nothing to Download ");
+                Debug.WriteLine("After Filter nothing to Download ");
                 return null;
             }
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
+            Debug.WriteLine("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
             _totalDownload++;
 
             if (_totalDownload > 50)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Download 50 DCA Files Try Next Tenant ");
-                return null;
-            }
-
-            var myList = ListOfDCAFile.Take(take).ToList();
-            myList.ForEach(
-                item =>
-                {
-                    ListOfDCAFile.Remove(item);
-                    if (
-                    !_MyDCAIncomeDirStateM
-                .LastAllXmlFileInMyBranch
-                .Remove(item.SelectedFileDownload)
-                )
-                    {
-                        throw new Exception("Unbelievable !?!?!?!");
-                    }
-
-                }
-
-                );
-
-            return myList;
-        }
-        private DCAFileModel GetNext(string debugIIGMessageId, int _totalDownload)
-        {
-            var allXmlFileInMyBranch = _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch ?? new List<string>();//GetFileList();
-            if (_swDownAll.Elapsed > TimeSpan.FromSeconds(60))
-            {
-                allXmlFileInMyBranch = _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = GetVaultFileListInCustomDeployStage("");
-            }
-            var ListOfDCAFile = GetListOfDCAFilesOrderByTime(debugIIGMessageId, allXmlFileInMyBranch);
-
-            if (ListOfDCAFile.Count() < 1)
-            {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("After Filter nothing to Download ");
-                return null;
-            }
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
-            _totalDownload++;
-
-            if (_totalDownload > 50)
-            {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Dowload 50 DCA Files Try Next Tenant ");
+                Debug.WriteLine("Dowload 50 DCA Files Try Next Tenant ");
                 return null;
             }
             var my1st = ListOfDCAFile.First();
@@ -718,16 +368,6 @@ out myMessageOut);
             ListOfDCAFile = ListOfDCAFile
                 .Where(file => _MyDCAIncomeDirStateM.FileMessagesNotBelong2OurEnvironment.Contains(file.SelectedFileDownload) == false)
                 .ToList();
-
-
-            var dcaUtil = new DcaFilterByEnvironmentService();
-            var res = dcaUtil.FilterByEnvironmentListOfDCAFile(_CustomsSettingPM.Tenant, ListOfDCAFile);
-            ListOfDCAFile = res.ListOfDCAFile;
-            
-
-
-
-
             if (!string.IsNullOrWhiteSpace(debugIIGMessageId))
             {
                 var myDebug = _InterfaceListDCA.Where(mess => mess.Code == debugIIGMessageId).First();
@@ -768,58 +408,43 @@ out myMessageOut);
             {
 
                 string myMessageOut = "";
-                var myMoreParams = "";
+                var myDcaManager = GetDcaManagr();// new DcaManager(_CustomsSettingPM.DCAServiceAddress, _CustomsSettingPM.DCAPartnerVault, _CustomsSettingPM.Tenant);
+                var myMoreParams = "";// _DownloadMoreParams;
 
                 var CurrentAllXmlFileInMyBranch = GetVaultFileListInCustomDeployStage();
 
-                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch == null)
-                    _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = new List<string>();
-
-                if (_currentShimForPass is SftpDcaManagerShim)
+                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch))
+                //unchanged
                 {
-                    if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.Count == 0
-                        && CurrentAllXmlFileInMyBranch.Count > 0)
-                    {
-                        _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
-                        _MyDCAIncomeDirStateM.Dir1stChangedAt = null;
-                        _MyDCAIncomeDirStateM.NothingChangeCount = 0;
-
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                            "SFTP: first listing contains files → starting immediately (no warm-up wait).");
-                        return true;
-                    }
-                }
-                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch, StringComparer.OrdinalIgnoreCase))
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir unchanged");
+                    Debug.WriteLine("DCADir unchanged");
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
                     if (_MyDCAIncomeDirStateM.Dir1stChangedAt.HasValue)
                     {
                         _MyDCAIncomeDirStateM.Dir1stChangedAt = null;
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Last time Dca Dir Changed ,But Now is Equal, Start Work");
+                        Debug.WriteLine("Last time Dca Dir Changed ,But Now is Equal, Start Work");
                         return true;
 
                     }
                     if (_MyDCAIncomeDirStateM.NothingChangeCount > 4)
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Nothing Change But 4 Round Pass Let try Again");
+                        Debug.WriteLine("Nothing Change But 4 Round Pass Let try Again");
                         _MyDCAIncomeDirStateM.NothingChangeCount = 0;
                         return true;
                     }
                     _MyDCAIncomeDirStateM.NothingChangeCount++;
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_MyLastAccessFileInDCADirM.LastAllXmlFileInMyBranch == CurrentAllXmlFileInMyBranch ==> Nothing to do FolderNotChange !! for this tenant ;");
+                    Debug.WriteLine("_MyLastAccessFileInDCADirM.LastAllXmlFileInMyBranch == CurrentAllXmlFileInMyBranch ==> Nothing to do FolderNotChange !! for this tenant ;");
                     return false;
                 }
                 else
                 {//
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir Changed ");
+                    Debug.WriteLine("DCADir Changed ");
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
                     if (_MyDCAIncomeDirStateM.Dir1stChangedAt.HasValue)
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir Changed Again !!!");
+                        Debug.WriteLine("DCADir Changed Again !!!");
                         if (DateTime.Now.Subtract(_MyDCAIncomeDirStateM.Dir1stChangedAt.GetValueOrDefault()) > TimeSpan.FromSeconds(30))
                         {
-                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("but Past 30 sec From 1stChange , Start Work");
+                            Debug.WriteLine("but Past 30 sec From 1stChange , Start Work");
                             _MyDCAIncomeDirStateM.Dir1stChangedAt = null;
                             return true;
                         }
@@ -871,9 +496,12 @@ out myMessageOut);
 
 
             var searchPattren = dcaPrefixName + "*" + CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
-            myMoreParams = "";
-            myFileListing = Shim.FileListing(
+            Debug.WriteLine(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
+            //searchPattren = "";
+            _DcaManager = GetDcaManagr();
+            myMoreParams = "";// _DownloadMoreParams;
+            myFileListing = _DcaManager.FileListing(
+                //this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant), 
 searchPattren, _AppendToDownloadFolderName,
 ref myMoreParams,
 out myErrorOccurred,
@@ -881,21 +509,16 @@ out myMessageOut);
 
             if (myErrorOccurred)
             {
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                Thread.Sleep(TimeSpan.FromSeconds(3));
 
             }
-            myFileListing = (myFileListing ?? new List<string>())
-                   .Where(n => !string.IsNullOrWhiteSpace(n))
-                   .Select(n => n.Trim())
-                   .Distinct(StringComparer.OrdinalIgnoreCase)
-                   .OrderBy(n => n, StringComparer.OrdinalIgnoreCase)
-                   .ToList();
+            myFileListing = myFileListing ?? new List<string>();
             return myFileListing;
         }
 
         private DcaManager GetDcaManagr()
         {
-            _DcaManager = _DcaManager ?? new DcaManager(_CustomsSettingPM.DCAServiceAddress, _CustomsSettingPM.DCAPartnerVault + GetDCAPartnerVaultDownloadSuffix(), _CustomsSettingPM.Tenant);
+            _DcaManager = _DcaManager ?? new DcaManager(_CustomsSettingPM.DCAServiceAddress, _CustomsSettingPM.DCAPartnerVault+ GetDCAPartnerVaultDownloadSuffix(), _CustomsSettingPM.Tenant);
             return _DcaManager;
         }
 
@@ -941,45 +564,54 @@ out myMessageOut);
         DcaManager _DcaManager;
         private List<string> _AllDcaPreFixWithoutInOutUpper;
         private Stopwatch _swDownAll;
-		private List<string> _AllDcaPreFixByEnvironment;
-
-		private bool DoDcaMessageFile(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile)
+        private int _totalDownload;
+        private bool DoDcaMessageFile(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile)
         {
             bool myErrorOccurred;
             string myMoreParams = "";
             string myMessageOut;
 
             string fileContentsBASE64 = "";
-            SetLastActivity?.Invoke();
+            string fileContents = "";
+            myMoreParams = "";// _DownloadMoreParams;
+
 
             try
             {
                 var sw = Stopwatch.StartNew();
-                fileContentsBASE64 = Shim.GetContentsBASE64OfDownloadIncomeFile(
+                fileContentsBASE64 = _DcaManager.GetContentsBASE64OfDownloadIncomeFile(
+                    //this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant),
             dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
+                    //out FileName, out FileContentsBASE64,
             ref myMoreParams,
             out myErrorOccurred, out myMessageOut);
                 dcaFile.DownloadLog = "GetContentsBASE64OfDownloadIncomeFile:Took=" + sw.Elapsed.ToString();
                 if (myErrorOccurred)
                 {
+                    if (_EnableLog)
+                    {
+                        //LogMessage(TRequestParams requestParams, string subject, string InOut, out string communicationLogId)
+                    }
                     return false;
                 }
 
 
                 SaveRequestSheet(messageDCA, dcaFile, fileContentsBASE64
+                    //messageBytes
                 );
-
                 LogDoneItemInMemoryAction?.Invoke();
             }
             catch (DbEntityValidationException ex)
             {
                 var log = LogMessagingUtil.Instance.ToString();
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
+                //_sbGatewayLog.Insert(0, "ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
+                //Debug.WriteLine("ProccessRequest():Exception " + FormatedException.ToString(), true);
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "DCA Wroker role DbEntityValidationException", null, null);
             }
             catch (CustomsRequestsSheetDomainModelServiceException ex)
             {
-
+                
                 if (ex.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.RequestCancelled)
                 {
                     ex.ChangeExceptionMessage("RequestCancelled :Deleting:" + dcaFile.SelectedFileDownload);
@@ -994,12 +626,12 @@ out myMessageOut);
                         string MoveUnUseDCAFilesToDIr = ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr");
 
                         return this.MoveUnUseDCAFileToDir(dcaFile.SelectedFileDownload);
-
-
+                        
+                        
                     }
                     else
                     {
-                        using (var myDCARenameIncomeFileService = new DCARenameIncomeFileService(Shim))
+                        using (var myDCARenameIncomeFileService = new DCARenameIncomeFileService(_DcaManager))
                         {
 
                             return myDCARenameIncomeFileService.RenameIt(messageDCA, dcaFile, this._AppendToDownloadFolderName);
@@ -1019,20 +651,27 @@ out myMessageOut);
             }
 
 
-            myMoreParams = "";
-            Shim.DeleteIncomeFile(
+            myMoreParams = "";// _DownloadMoreParams;
+            _DcaManager.DeleteIncomeFile(//this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant),
                dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
                   ref myMoreParams,
                 out myErrorOccurred, out myMessageOut);
 
             if (myErrorOccurred)
             {
+                if (_EnableLog)
+                {
+                    //LogMessage(TRequestParams requestParams, string subject, string InOut, out string communicationLogId)
+                }
                 return false;
             }
+            //PushToQueue();
             return true;
         }
 
-        private void SaveRequestSheet(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile, string fileContentsBASE64)
+        private void SaveRequestSheet(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile, string fileContentsBASE64
+            //byte[] messageBytes
+                )
         {
 
 
@@ -1041,9 +680,11 @@ out myMessageOut);
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log"); return;
+                Debug.WriteLine("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
+                Debug.WriteLine("Due infinite errors i cancel writing log"); return;
+                //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
+                //return;
             }
 
 
@@ -1054,6 +695,8 @@ out myMessageOut);
 
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
+                //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
+
                 anaO.DcaReceivedCustomResponseCorrelation(messageDCA.InterfaceManagement, _CustomsSettingPM.Tenant, dcaFile, fileContents);
                 scope.Complete();
             }
@@ -1063,10 +706,27 @@ out myMessageOut);
 
         private string GetExternalId(string selectedFile)
         {
-            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(selectedFile);
-            fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithoutExtension);
+            /*
+        In 
+
+        Customs Push
+        \\GK-UNISVC1\CyberArk_DCA\amital_shipping\Download\ranar\UDCAServerHistory\SendMN_MSG1171_SendManifestFeedBack_Message_Out.IL941079089.2014-06-15_12-46-40-871.a60c718f-3d68-4d15-9b9a-6043dabb7574.PRD.xml.zip
+
+
+        Return after our Req
+        "\\GK-UNISVC1\CyberArk_DCA\amital_shipping\Download\ranar\UDCAServerHistory\SaveMN_MSG1170_1171_MANIFESTRequest_Out.IL941079089.2014-06-15_09-22-58-890.20140615083441612924803021008.PRD.xml.zip"
+
+         */
+
+
+            //\\dev2008\CyberArk_DCA\dev64bit_amitestm53\Download\IIG\GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60.TST.xml
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(selectedFile);//GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60.TST.xml
+
+            fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithoutExtension);///GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60.TST
+            ///GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60
             var extension = Path.GetExtension(fileNameWithoutExtension);
-            extension = extension.Substring(1);
+            //.653bc69d-31e4-4e47-b973-28bd2cd8fe60
+            extension = extension.Substring(1);//remove dot 
             return extension;
         }
 
@@ -1074,6 +734,7 @@ out myMessageOut);
 
 
         public void TestDownloadFile(string dcaFile,
+            //byte[] bytsDcaFile
             string base64StringInnerUTF8
             )
         {
@@ -1087,8 +748,13 @@ out myMessageOut);
             {
                 throw new Exception("dcaFile=" + dcaFile + " Not found in InterfaceManagement.DcaPrefixName* ");
             }
+            //    var base64String =
+            //System.Convert.ToBase64String(bytsDcaFile,
+            //                       0,
+            //                       bytsDcaFile.Length);
             var selectedDcaFile = DCAFilePraser.GetDCAFileModel(dcaFile);
             this.SaveRequestSheet(messageDCA, selectedDcaFile,
+                //base64String
                  base64StringInnerUTF8
                  );
         }
@@ -1123,11 +789,14 @@ out myMessageOut);
             }
 
 
+            //string currMessagingService = GetMainMessagingService(messageDCA);
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(crs.InterfaceTypeCode))
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log"); return;
+                Debug.WriteLine("Due infinite errors i cancel writing log"); return;
+                //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + crs.InterfaceTypeCode);
+                //return;
             }
 
 
@@ -1146,38 +815,8 @@ out myMessageOut);
             }
         }
 
-        private PartnerSftpConfig LoadPartnerSftpConfig(string typeCode, string interfaceName)
-        {
-
-            var ftpQry = new CustomsPartnerFtpQueryService(_CustomsSettingPM.Tenant);
-
-            var partnerFtpPM = ftpQry.GetBy(
-                _CustomsSettingPM.Tenant,
-                interfaceName,
-                CustomsPartnerFtpDetails.PartnerCode_AMITAL,
-                typeCode);
-
-            if (partnerFtpPM == null|| partnerFtpPM.MyFtpDetail == null|| !partnerFtpPM.MyFtpDetail.UseSFTP)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                    $"No valid SFTP config found for interface {interfaceName}");
-                return null;
-            }
-            var ftpDetail = partnerFtpPM.MyFtpDetail;
-            return new PartnerSftpConfig
-            {
-                Host = ftpDetail.Host,
-                Username = ftpDetail.UserName,
-                Password = ftpDetail.Password,
-                RemotePath = string.IsNullOrWhiteSpace(ftpDetail.Folder) ? "/" : ftpDetail.Folder,
-                UsePrivateKey = false
-            };
-        }
-
-
         public bool AddUnifreightTester { get; set; }
         public Action LogDoneItemInMemoryAction { get; set; }
-        public Action SetLastActivity { get; set; }
     }
 
 
@@ -1189,7 +828,6 @@ out myMessageOut);
             ObjectCreatedAt = DateTime.Now;
             LastAllXmlFileInMyBranch = new List<string>();
             FileMessagesNotBelong2OurEnvironment = new HashSet<string>();
-            LastSftpPurgeUtc = DateTime.UtcNow;
         }
         public int Tenant { get; private set; }
         public DateTime ObjectCreatedAt { get; private set; }
@@ -1216,8 +854,5 @@ out myMessageOut);
         public int NothingChangeCount { get; set; }
 
         public HashSet<string> FileMessagesNotBelong2OurEnvironment { get; set; }
-        public DateTime LastSftpPurgeUtc { get; set; }
-
     }
-
 }

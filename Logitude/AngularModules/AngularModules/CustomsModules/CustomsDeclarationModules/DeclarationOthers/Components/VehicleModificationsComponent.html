@@ -1,4 +1,4 @@
-<!--VehicleModificationsComponent-->
+﻿<!--VehicleModificationsComponent-->
 <!--https://www.w3schools.com/css/css_rwd_grid.asp-->
 
 <style>
@@ -93,7 +93,7 @@
                                             [DataContext]="DataContext"
                                             [HideColumns]="true"
                                             [LookUpTableName]="'Customs.VehicleReductionType'"
-                                            (SelectedItemChanged)="OnLovItemChanged()"
+                                            (SelectedItemChanged)="OnLovItemChanged($event)"
                                             [DisplayMemberPath]="'LocalName'">
                                     </LogLov>
                                 </LogWaterMark>

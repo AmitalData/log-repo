@@ -5,7 +5,6 @@ using System.Text;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class PaymentChannelRepository: IRepository<PaymentChannel>
@@ -32,37 +31,12 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             PaymentChannel instance = (from i in context.PaymentChannels
                                  where i.Code == code                                 
                                  select i).FirstOrDefault();
-            string entityName = "PaymentChannel" + code;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && instance != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, instance, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    instance = (PaymentChannel)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
             return instance;
         }
 
         public IQueryable<PaymentChannel> GetPaymentChannels()
-        {            
-            IQueryable<PaymentChannel> items = context.PaymentChannels;
-            string entityName = "AllWebhookKeys";
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
-                {
-                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    items = (IQueryable<PaymentChannel>)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            return items;
+        {
+            return context.PaymentChannels;
         }
 
         public IQueryable<PaymentChannel> GetAll()

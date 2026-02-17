@@ -23,7 +23,7 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItemPie: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CompanyPerformanceComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -381,12 +381,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
 
     LoadZoomedQuotesData() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetQuotesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetQuotesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillZoomedQueries(result.Result, "Q");
             });
         }
         else {
-            this.crmDomainService.GetQuotesGroupBySalesman(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetQuotesGroupBySalesman(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillZoomedQueries(result.Result, "Q");
             });
         }
@@ -394,12 +394,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
 
     LoadZoomedOpportunitiesData() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetOpportunitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillZoomedQueries(result.Result, "O");
             });
         }
         else {
-            this.crmDomainService.GetOpportunitiesGroupBySalesman(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesGroupBySalesman(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillZoomedQueries(result.Result, "O");
             });
         }
@@ -407,12 +407,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
 
     LoadZoomedActivitiesData() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetActivitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetActivitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillZoomedActivitiesQueries(result.Result);
             });
         }
         else {
-            this.crmDomainService.GetActivitiesGroupBySalesman(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetActivitiesGroupBySalesman(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillZoomedActivitiesQueries(result.Result);
             });
         }
@@ -1031,12 +1031,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
     }
     LoadQuotes() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetQuotesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "").subscribe((result:any) => {
+            this.crmDomainService.GetQuotesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "").subscribe(result => {
                 this.FillQuotes(result);
             });
         }
         else {
-            this.crmDomainService.GetQuotesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "").subscribe((result:any) => {
+            this.crmDomainService.GetQuotesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "").subscribe(result => {
                 this.FillQuotes(result);
             });
         }
@@ -1085,12 +1085,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
     }
     LoadActivities() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetActivitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "").subscribe((result:any) => {
+            this.crmDomainService.GetActivitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "").subscribe(result => {
                 this.FillActivities(result);
             });
         }
         else {
-            this.crmDomainService.GetActivitiesChartData(this.SelectedDateFilter.Code, this.OwnerId, this.BusinessUnitId, "").subscribe((result:any) => {
+            this.crmDomainService.GetActivitiesChartData(this.SelectedDateFilter.Code, this.OwnerId, this.BusinessUnitId, "").subscribe(result => {
                 this.FillActivities(result);
             });
         }
@@ -1141,12 +1141,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
 
     LoadOpportunitiesByLeadSource() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetOpportunitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "LS").subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "LS").subscribe(result => {
                 this.FillOpportunitiesByLeadSource(result);
             });
         }
         else {
-            this.crmDomainService.GetOpportunitiesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "LS").subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "LS").subscribe(result => {
                 this.FillOpportunitiesByLeadSource(result);
             });
         }
@@ -1175,12 +1175,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
     }
     LoadOpportunitiesByType() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetOpportunitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "T").subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "T").subscribe(result => {
                 this.FillOppotuniriesByType(result);
             });
         }
         else {
-            this.crmDomainService.GetOpportunitiesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "T").subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "T").subscribe(result => {
                 this.FillOppotuniriesByType(result);
             });
         }
@@ -1209,12 +1209,12 @@ export class CompanyPerformanceComponent extends BaseComponent {
 
     LoadOpportunitiesByWonLost() {
         if (this.SelectedDateFilter.Code == "-1_-1") {
-            this.crmDomainService.GetOpportunitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "WL").subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesChartDataCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, "WL").subscribe(result => {
                 this.FillOpportunitiesByWonLost(result);
             });
         }
         else {
-            this.crmDomainService.GetOpportunitiesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "WL").subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesChartData(this.SelectedDateFilter.Code + "", this.OwnerId, this.BusinessUnitId, "WL").subscribe(result => {
                 this.FillOpportunitiesByWonLost(result);
             });
         }

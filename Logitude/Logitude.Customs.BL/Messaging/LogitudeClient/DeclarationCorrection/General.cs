@@ -19,7 +19,5 @@ namespace Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationCorrection
 
         public List<error> SystemMessages { get; set; }
 
-        public List<Reference> References { get; set; }
-
     }
 }

@@ -1,4 +1,4 @@
-
+﻿
 import {DocumentCustomFieldsComponent} from './Components/DocumentComponent/DocumentCustomFieldsComponent';
 import {GeneratedDocumentCustomFieldComponent} from './Components/DocumentComponent/GeneratedDocumentCustomFieldComponent'
 import {PrintDocumentComponent} from './Components/DocumentComponent/PrintDocumentComponent';
@@ -18,7 +18,6 @@ import { DocumentFilingBackupBatchesComponent} from './Components/DocumentsBacku
 import { AddDocumentFilingBackupBatchComponent} from './Components/DocumentsBackup/AddDocumentFilingBackupBatchComponent';
 import { DocumentFilingBackupSettingComponent} from './Components/DocumentsBackup/DocumentFilingBackupSettingComponent';
 import {DocumentTypeCopiesComponent} from './Components/DocumentType/Tab/DocumentTypeCopiesComponent';
-import {DocumentTypeCopyDetailsComponent} from './Components/DocumentType/Tab/DocumentTypeCopyDetailsComponent';
 import {AddEditDocumentTypeCustomFieldComponent} from './Components/DocumentType/Tab/AddEditDocumentTypeCustomFieldComponent';
 import {DocumentTypeCustomFieldsComponent} from './Components/DocumentType/Tab/DocumentTypeCustomFieldsComponent';
 import {PrintingOptionsComponent} from './Components/DocumentType/Tab/PrintingOptionsComponent';
@@ -33,25 +32,11 @@ import {NewReportTemplateComponent} from './Components/DocumentType/NewReportTem
 import {SendToContactsComponent} from './Components/SendMessageContacts/SendToContactsComponent';
 import {SharedDocumentsPermissionsComponent} from './Components/SharedDocument/SharedDocumentsPermissionsComponent';
 import {SharedDocumentComponent} from './Components/SharedDocument/SharedDocumentComponent';
-import { DocumentsFilingGeneralTabComponent } from './Components/DocumentsFiling/DocumentsFilingGeneralTabComponent';
-import { DocumentDefultAttachmentsComponent } from './Components/DocumentComponent/DocumentDefultAttachmentsComponent';
-import { DocumentDefaultExternalAttachmentsComponent } from './Components/DocumentComponent/DocumentDefaultExternalAttachmentsComponent';
-import { NewDocumentsMetadataTypeComponent } from './Components/DocumentsMetadataType/NewDocumentsMetadataTypeComponent';
-import { DocumentTypeMetadataComponent } from './Components/DocumentType/Tab/DocumentTypeMetadataComponent';
-import { AddOrEditDocumentTypeMetadataComponent } from './Components/DocumentType/Tab/AddOrEditDocumentTypeMetadataComponent';
-import { NewDocumentTypeMetaDataComponent } from './Components/DocumentTypeMetaData/NewDocumentTypeMetaDataComponent';
-
-
-
-
-
-
-
+import {DocumentsFilingGeneralTabComponent} from './Components/DocumentsFiling/DocumentsFilingGeneralTabComponent';
 
 export const Components =
     [
         DocumentTypeCopiesComponent,
-        DocumentTypeCopyDetailsComponent,
         AddEditDocumentTypeCustomFieldComponent,
         DocumentTypeCustomFieldsComponent,
         PrintingOptionsComponent,
@@ -85,12 +70,7 @@ export const Components =
         SharedDocumentsPermissionsComponent,
         SharedDocumentComponent,
         DocumentsFilingGeneralTabComponent,
-        DocumentDefultAttachmentsComponent,
-        DocumentDefaultExternalAttachmentsComponent,
-        NewDocumentsMetadataTypeComponent,
-        DocumentTypeMetadataComponent,
-        AddOrEditDocumentTypeMetadataComponent,
-        NewDocumentTypeMetaDataComponent,
+
     ];
 
 export class ModuleDeclarations {
@@ -100,7 +80,6 @@ export class ModuleDeclarations {
 
         switch (name) {
             case "DocumentTypeCopiesComponent": { myResult = DocumentTypeCopiesComponent; break; }
-            case "DocumentTypeCopyDetailsComponent": { myResult = DocumentTypeCopyDetailsComponent; break; }
             case "AddEditDocumentTypeCustomFieldComponent": { myResult = AddEditDocumentTypeCustomFieldComponent; break; }
             case "DocumentTypeCustomFieldsComponent": { myResult = DocumentTypeCustomFieldsComponent; break; }
             case "PrintingOptionsComponent": { myResult = PrintingOptionsComponent; break; }
@@ -134,12 +113,6 @@ export class ModuleDeclarations {
             case "SharedDocumentsPermissionsComponent": { myResult = SharedDocumentsPermissionsComponent; break; }
             case "SharedDocumentComponent": { myResult = SharedDocumentComponent; break; }
             case "DocumentsFilingGeneralTabComponent": { myResult = DocumentsFilingGeneralTabComponent; break; }
-            case "DocumentDefultAttachmentsComponent": { myResult = DocumentDefultAttachmentsComponent; break; }
-            case "DocumentDefaultExternalAttachmentsComponent": { myResult = DocumentDefaultExternalAttachmentsComponent; break; }
-            case "NewDocumentsMetadataTypeComponent": { myResult = NewDocumentsMetadataTypeComponent; break; }                 
-            case "DocumentTypeMetadataComponent": { myResult = DocumentTypeMetadataComponent; break; }
-            case "AddOrEditDocumentTypeMetadataComponent": { myResult = AddOrEditDocumentTypeMetadataComponent; break; }
-            case "NewDocumentTypeMetaDataComponent": { myResult = NewDocumentTypeMetaDataComponent; break; }
         }
 
         return myResult;

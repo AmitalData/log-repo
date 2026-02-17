@@ -25,11 +25,11 @@ using Simplog.Data.ShipmentsModel;
 { 
    public partial class OceanOrInlandPackageQueryService
    {
-		public List<OceanOrInlandPackage> OceanOrInlandPackageCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant,string ComputingPartnerName="")
+		public List<OceanOrInlandPackage> OceanOrInlandPackageCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant)
         {
             if (!string.IsNullOrEmpty(MyPM.ShipmentTypeId) && (MyPM.ShipmentTypeId.Contains("LCL") || MyPM.ShipmentTypeId.Contains("LTL")))
             {
-                return this.OceanOrInlandPackageDataMapping(MyEntityPMs, Tenant, ComputingPartnerName);
+                return this.OceanOrInlandPackageDataMapping(MyEntityPMs, Tenant);
             }
             else
             {
@@ -37,23 +37,19 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(House myHouse,List<OceanOrInlandPackage> MyEntities,int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+		public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(House myHouse,List<OceanOrInlandPackage> MyEntities,int Tenant, string ComputingPartnerName = "")
         {
-            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities,Tenant, ComputingPartnerName, IsUpdate);   
+            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities,Tenant, ComputingPartnerName);   
         }
 
-        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Direct myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Direct myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
-            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
-        }
-        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Master myMaster, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
-        {
-            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
 
-        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Customs myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ShipmentPackagePM> OceanOrInlandPackageCustomDataMappingAndValidatin(Customs myDirect, List<OceanOrInlandPackage> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
-            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.OceanOrInlandPackageDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
 
     }

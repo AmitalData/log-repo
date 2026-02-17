@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -20,8 +20,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             traceEvent.IsAddedManually = traceEventPM.IsAddedManually;
             traceEvent.Location = traceEventPM.Location;
             traceEvent.PartnerName = traceEventPM.PartnerName;
-            traceEvent.ChildEntityId = traceEventPM.ChildEntityId;
-            traceEvent.ChildObjectTableId = traceEventPM.ChildObjectTableId;
-        }
+     
+    }
     }
 }

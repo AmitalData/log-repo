@@ -11,7 +11,7 @@ import { CustomerPMService } from '../../../Common/Services/StandardPMs/Customer
 import { CustomerPM } from '../../../Common/EntityPMs/CustomerPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuoteHelperComponent.html',
 })
 

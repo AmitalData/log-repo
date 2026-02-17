@@ -1,6 +1,5 @@
-declare var window: any;
 import { ObjectsLocator } from './../../../../Infrastructure/Locators/ObjectsLocator';
-import { Component, Output, EventEmitter, OnInit, AfterViewInit ,ChangeDetectorRef} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
@@ -14,13 +13,11 @@ import { JournalPM } from '../../../EntityPMs/JournalPM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { JournalSummary } from '../../../DataContracts/AccountingSummery';
-import { FastSearchService } from 'Infrastructure/Components/ListComponent/FastSearchService';
-import { FastSearchResult, FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
-import { BehaviorSubject } from 'rxjs';
+import { RevaluationPM } from '../../../EntityPMs/RevaluationPM';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './JournalPageComponent.html',
 
 })
@@ -36,16 +33,15 @@ export class JournalPageComponent implements AfterViewInit {
     public isScreenLoaded: boolean = false;
     public isRTL: boolean = false;
     public showLocal: boolean = false;
+    constructor() {
 
-    searchDropdownOptions: FastSearchResult[] = [];    
-    fastSearchSettings: FastSearchSettings = null;
-    enableFastSearch = false;
-    constructor(private CD: ChangeDetectorRef, private fastSearchService: FastSearchService) {
-
-        this.enableFastSearch = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH");
+        // this.LoadAllScreenData();
         this.getResources();
+
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+
 
     }
 
@@ -72,19 +68,11 @@ export class JournalPageComponent implements AfterViewInit {
 
     public IsQueryVisible_MyViewsGroup: boolean = false;
 
-    async InitComponent() {
+    InitComponent() {
         this.LoadAllScreenData();
         this.SetQueriesVisibility();
 
         this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
-        var objectTable= window.ObjectTables.filter(d=> d.Name == "Journal")[0];
-        await this.fastSearchService.initFastSearch(objectTable, "Journal", "Journal", true ,"journalline");
-        this.fastSearchSettings = this.fastSearchService.Settings;
-        if (this.fastSearchSettings) {
-            this.fastSearchSettings.left = this.isRTL ? -1 : 0;
-            this.fastSearchSettings.tableName = "JournalLine";
-        }
-
     }
 
     RefreshButtonClicked() {
@@ -98,24 +86,20 @@ export class JournalPageComponent implements AfterViewInit {
     public All_journalsVisibility: boolean = false;
     public ExternalJournalsVisibility: boolean = false;
     public Auto_Created_JournalsVisibility: boolean = true;
-    public LoadCVS_JournalsVisibility: boolean = true;
-    public LoadMichpal_JournalsVisibility: boolean = true;
 
-    
     SetQueriesVisibility() {
         this.Draft_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "DraftJournal") ? true : false;
         this.Non_Approved_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "SavedJournal") ? true : false;
         this.Approved_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ApprovedJournal") ? true : false;
         this.All_journalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "JOURNAL") ? true : false;
         this.ExternalJournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ExternalJournals") ? true : false;
-        this.LoadCVS_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "LOADJOURNALCSV") ? true : false;
-        this.LoadMichpal_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "LOADJOURNALMICHPAL");
+        //this.Auto_Created_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "Auto_Created_Journals") ? true : false;
     }
 
     journalSummary: JournalSummary = new JournalSummary();
     LoadQueriesCounts() {
 
-        this._JournalExtendedListService.GetJournalsSummary().subscribe((myResult:JournalSummary) => {
+        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
             if (myResult != null) {
 
                 this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();
@@ -156,14 +140,14 @@ export class JournalPageComponent implements AfterViewInit {
         }
     }
 
-    ViewAccountingQuery(myQueryCode: string , filter : ApiQueryFilters = null) {
+    ViewAccountingQuery(myQueryCode: string) {
         if (myQueryCode != null) {
 
             var displayTitle = "";
             var queryCode = myQueryCode;
             queryCode = "All Journals";
 
-            var filters = filter ?? new ApiQueryFilters();
+            var filters = new ApiQueryFilters();
             switch (myQueryCode) {
                 case "Draft_Journals":
                     {
@@ -226,29 +210,6 @@ export class JournalPageComponent implements AfterViewInit {
                     });
             });
         }
-    }
-
-    ViewLedgerTransactionsQuery(){
-
-        var displayTitle = TextCodeTranslator.Translate("Accounting.General.O.LedgerTransactions");
-        var filters = new ApiQueryFilters();
-        var queryCode = "LedgerTransactions";
-
-        var listArgs = new ListComponentArgs();
-        listArgs.QueryCode = queryCode;
-        listArgs.Filters = filters;
-        listArgs.ObjectTableName = "LedgerTransaction";
-        listArgs.DisplayTitle = displayTitle;
-        // listArgs.BackButtonTitle = "Full Accounting";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run(listArgs);
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    this.CurrentSession.AddMenuReference(cmpRef);
-                });
-        });
     }
 
     ViewRevaluationQuery(){
@@ -383,7 +344,6 @@ export class JournalPageComponent implements AfterViewInit {
 
 
         var entityPM: JournalPM = new JournalPM();
-        entityPM.IsNew=true;
         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
@@ -401,7 +361,7 @@ export class JournalPageComponent implements AfterViewInit {
 
         var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         if (useLocal) {
-            var GeneralText = TextCodeTranslator.TranslateTable("Accounting.General.O.New");
+            var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
             var ChangedText = GeneralText.split('%')[0];
             var NewText = TextCodeTranslator.TranslateTable('Revaluation');
             var FinalText = NewText + " " + ChangedText;
@@ -423,96 +383,6 @@ export class JournalPageComponent implements AfterViewInit {
 
     }
 
-    LoadJournalFromFile() {
-        var logWindow = new LogitudeWindow();
-        logWindow.IsShowCloseButton = true;
-        logWindow.Width = 900;
-        logWindow.Height = 400;
-        logWindow.Title = TextCodeTranslator.Translate("Journal.Features.LOADJOURNALCSV");
-        logWindow.WindowArgs = {};
-        logWindow.WindowClosed.subscribe(($event: any) => {
 
-        });
-        logWindow.Show('./Accounting/Components/NewEntity/JournalCSVLoadComponent');
-
-    }
-    LoadJournalFromMichpalFile() {
-        var logWindow = new LogitudeWindow();
-        logWindow.IsShowCloseButton = true;
-        logWindow.Width = 900;
-        logWindow.Height = 400;
-        logWindow.Title = TextCodeTranslator.Translate("Journal.Features.LOADJOURNALMICHPAL");
-        logWindow.WindowArgs = {};
-        logWindow.WindowClosed.subscribe(($event: any) => {
-
-        });
-        logWindow.Show('./Accounting/Components/NewEntity/JournalMichpalLoadComponent');
-
-    }
-    async showRecentSearches(retrunIfLengthNotMet: boolean = false) {
-        if ( this.searchFields?.length >= this.fastSearchService.Settings.minimumSearchQueryLength)
-         {
-            if(!retrunIfLengthNotMet)
-               this.onSearchTextChangeEvent(this.searchFields,true);
-            return;
-         } 
-
-        this.searchDropdownOptions = await this.fastSearchService.getRecentSearches();
-        this.CD.detectChanges();    
-    }
-    public searchFields: string;
-    private timerToken: any;
-
-    onSearchTextChangeEvent(searchtext,ignoreSearchTextChange: boolean = false) {
-       
-        
-        const timer: number = this.fastSearchService.Settings.idleSearchTimeMs ?? 400;
-
-        console.log("Search");
-        if ((this.searchFields != searchtext || ignoreSearchTextChange) && !(searchtext == null && this.searchFields == "")) {
-            this.searchFields = searchtext;
-            if (this.timerToken) {
-                clearTimeout(this.timerToken);
-            }
-            this.timerToken = setTimeout(() => this.searchMethod(), timer);
-        }
-
-        this.showRecentSearches(true) 
-    }
-    CurrentQueryFilters: ApiQueryFilters;    
-    @Output() onQueryChangeEvent = new EventEmitter();
-
-
-    async searchMethod() {    
-       
-        try {
-            this.CurrentQueryFilters = new ApiQueryFilters();
-
-            if (this.searchFields?.length < this.fastSearchService.Settings.minimumSearchQueryLength) return;
-            this.CD.detectChanges();
-            this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields + "*");
-            if (this.searchDropdownOptions) {
-                this.CD.detectChanges();
-                return;
-            }    
-        } catch (error) {
-            
-               
-        } finally {
-        } 
-       
-
-        this.CD.detectChanges(); 
-           
-    }
-    searchDropdownSelected(optionSelected: FastSearchResult | string) {
-        this.onQueryChangeEvent.subscribe(a =>{
-            this.ViewAccountingQuery("All Journals",a?.Filters);
-        })
-        this.fastSearchService.searchDropdownSelected(optionSelected, this.CurrentQueryFilters, null, this.searchDropdownOptions, null, this.onRowSelected.bind(this), this.onQueryChangeEvent);
-    }
-    onRowSelected($event) {
-        this.EditJournal($event?.rowData);
-    }
 
 }

@@ -1,13 +1,12 @@
-import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+﻿import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../../Components/Filters/QueryFilterItem';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShipmentProfitVSQuoteEstimateComponent.html',
 })
 
@@ -81,81 +80,10 @@ export class ShipmentProfitVSQuoteEstimateComponent extends BaseComponent implem
             this.shipmentsTypeCode = value;
         }
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "CustomerId":
-                    this.CustomerId = queryFilterItem.FieldValue;
-                    break;
-                case "SalesmanUserId":
-                    this.SalesmanUserId =queryFilterItem.FieldValue;
-                    break;
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "IsLocalCurrency":
-                    this.SelectedCurrencyCode = queryFilterItem.FieldValue ?? this.LocalCurrencyCode;
-                    break;
-                case "ShipmentsTypeCode":
-                    this.ShipmentsTypeCode = queryFilterItem.FieldValue;
-                    break;
-            }
-   
-        }
-    }
 
     RunButtonClicked() {
         this.SetUIProperties();
 
-       
-
-        if (this.ValidateSelectedFilters()) {
-           
-            var myReportFliter: ReportFliter = new ReportFliter();
-            myReportFliter.NumberOfPage = 1;
-            myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-            this.RunReportEvent.emit(myReportFliter);
-        }
-    }
-    GetQueryFilterItems(){
-        var myFilterItems: QueryFilterItem[] = [];
-        myFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId));
-        myFilterItems.push(new QueryFilterItem("SalesmanUserId", this.SalesmanUserId));
-        myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-
-        if (this.ToDate != null) {
-            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
-        }
-
-        myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
-        myFilterItems.push(new QueryFilterItem("ShipmentsTypeCode", this.ShipmentsTypeCode));
-        return myFilterItems;
-    }
-
-    ValidateSelectedFilters(){
         var errors: string[] = [];
 
         if (AppTool.IsNullOrEmpty(this.FromDate)) {
@@ -163,6 +91,21 @@ export class ShipmentProfitVSQuoteEstimateComponent extends BaseComponent implem
         }
 
         this.ValidationErrorsList = errors;
-        return errors.length == 0;
+
+        if (errors.length == 0) {
+            var myFilterItems: QueryFilterItem[] = [];
+            myFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId));
+            myFilterItems.push(new QueryFilterItem("SalesmanUserId", this.SalesmanUserId));
+            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
+            myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
+            myFilterItems.push(new QueryFilterItem("ShipmentsTypeCode", this.ShipmentsTypeCode));
+
+            var myReportFliter: ReportFliter = new ReportFliter();
+            myReportFliter.NumberOfPage = 1;
+            myReportFliter.ProcessType = "GenerateReport";
+            myReportFliter.QueryFilterItemLists = myFilterItems;
+            this.RunReportEvent.emit(myReportFliter);
+        }
     }
 }

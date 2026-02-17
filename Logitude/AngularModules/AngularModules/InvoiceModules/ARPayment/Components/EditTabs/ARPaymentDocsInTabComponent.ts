@@ -5,7 +5,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ARPaymentPM} from '../../../../Invoice/EntityPMs/ARPaymentPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARPaymentDocsInTabComponent.html',
 })
 

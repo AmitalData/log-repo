@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -22,10 +21,10 @@ import {DeficitPM} from '../../EntityPMs/DeficitPM';
 @Injectable()
 
 export class DeficitPMService {
- private _http: HttpClient;
+ private _http: Http;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/deficits';      
     }
 
@@ -35,11 +34,11 @@ export class DeficitPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 		
-		 return defer(() => {
+		 return Observable.defer(() => {
                 return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
                     headers: authHeader
                 }).map(response => {
-                    var pm = response;
+                    var pm = response.json();
                     
 					
                     var entity: DeficitPM;
@@ -53,13 +52,13 @@ export class DeficitPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
             });                    
     }
 
 	 insert(entityPM: DeficitPM) {
          
-        return defer(() => {
+        return Observable.defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -80,7 +79,7 @@ export class DeficitPMService {
 				
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((res) => {
-                            var pm = res;
+                            var pm = res.json();
 							if(pm)
 							{
                                var mappedResult:  DeficitPM;
@@ -92,14 +91,14 @@ export class DeficitPMService {
                             
                             return serviceResponse;
 
-                        }),catchError(ServiceHelper.HandleServiceError));
+                        }).catch(ServiceHelper.HandleServiceError);
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return of(serviceResponse);
+                    return Observable.of(serviceResponse);
                    
                 }
             }
@@ -110,7 +109,7 @@ export class DeficitPMService {
     update(entityPM: DeficitPM) {
 
          
-            return defer(() => {
+            return Observable.defer(() => {
 
                 var authHeader = new Headers();
                 authHeader.append('Token', SessionInfo.Token);
@@ -131,7 +130,7 @@ export class DeficitPMService {
 				
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((res) => {
-                            var pm = res;
+                            var pm = res.json();
 							if(pm)
 							{
                                var mappedResult:  DeficitPM;
@@ -142,14 +141,14 @@ export class DeficitPMService {
                            
                             return serviceResponse;
 
-                        }),catchError(ServiceHelper.HandleServiceError));
+                        }).catch(ServiceHelper.HandleServiceError);
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return of(serviceResponse);
+                    return Observable.of(serviceResponse);
                    
                 }
             }

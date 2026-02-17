@@ -14,10 +14,9 @@ import {SendFSRArgs} from '../../FSRWizard/SendFSRComponent';
 import {AWBHelper, AWBCCSValidator} from '../../../../../Shipment/Tools';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
-import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'OverviewTabComponent',
     templateUrl: './AWBOverviewTabComponent.html',
 })
@@ -30,7 +29,6 @@ export class AWBOverviewTabComponent {
     public IsFullWizard: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    public PackagesResourcesReady: boolean = false;
     constructor() {
 
     }
@@ -104,7 +102,7 @@ export class AWBOverviewTabComponent {
             this.IsFNAReasonStatusVisible = true;
         }
 
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.TenantPM.Id.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+        if (SessionLocator.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
             this.IsDemoTenantStatusVisible = true;
         }
 

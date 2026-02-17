@@ -1,29 +1,28 @@
-using Confluent.Kafka;
-using Devart.Data.Oracle;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Transactions;
-using System.Web.UI.WebControls;
+
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+
+
+using System.Data.Common;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using Devart.Data.Oracle;
+using Simplog.Data.Helpers;
+
 namespace Logitude.Server.Tools.Helpers
 {
-    public partial class TableCounter
-    {
-        private static Object thisLock = new Object();
-        public static Dictionary<string, string> counterState;
-        public static string GetNumber(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null, bool saveCounter = false)
+    public class TableCounter
+    { 
+        public static string GetNumber(int tenant ,string counterCode,string parameter1,string parameter2, Dictionary<string, string> additionalParameters = null)
         {
             Counter counter = null;
             CounterDefinition counterDef = null;
@@ -35,15 +34,11 @@ namespace Logitude.Server.Tools.Helpers
                 counter = counterRepository.GetCounterByCode(counterCode, tenant);
                 string counterId = counter.Id;
                 tableCounters = counterDefRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
-                bool isCustomizedCounter = tableCounters.Where(c => c.IsCustomized).Any();
-                if (isCustomizedCounter && FeatureToggleHelper.HasFeatureToggle("ICC", tenant) && additionalParameters != null && additionalParameters.ContainsKey("[CustomizeCounterParameter2]") && !string.IsNullOrEmpty(additionalParameters["[CustomizeCounterParameter2]"]))
-                {
-                    counterDef = tableCounters.Where(c => c.IsCustomized && c.Parameter2 == additionalParameters["[CustomizeCounterParameter2]"]).FirstOrDefault();
-                }
-                else counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
+                counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
                 scope1.Complete();
             }
 
+            // to be deleted
             if (counterDef == null)
             {
                 if (counterCode == "MAST" || counterCode == "SHIP" || counterCode == "QUOT")
@@ -56,75 +51,36 @@ namespace Logitude.Server.Tools.Helpers
                     }
                 }
             }
+            //******
 
             string prefix = null;
             if (counterDef.UniquePerPrefix)
             {
                 prefix = counterDef.Prefix;
             }
-
-            string branchCounterCode = null;
-            if (FeatureToggleHelper.HasFeatureToggle("SPB", tenant) && counterDef.UsePerBranch && additionalParameters != null)
-            {
-                ValidateBranchCounterCode(additionalParameters);
-                branchCounterCode = additionalParameters["[B]"];
-            }
-
+            
             int startNumber = counterDef.StartNumber;
             string number = null;
-            string strConnString = GetConnection(tenant);
-            string counterLastNumberValue = string.Empty;
-            if (FeatureToggleHelper.HasFeatureToggle("LCP", tenant))
-            {
-                lock (thisLock)
-                {
-                    using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                    {
-                        counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode, saveCounter);
-                        scope.Complete();
-                    }
-                }
-            }
-            else
-            {
-                counterLastNumberValue = ExecuteNextTableNumberValueProcedure(tenant, counter, prefix, startNumber, strConnString, branchCounterCode, saveCounter);
-            }
-
-            number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
-
-            return number;
-        }
-        private static void ValidateBranchCounterCode(Dictionary<string, string> additionalParameters)
-        {
-            if (string.IsNullOrEmpty(additionalParameters["[BranchName]"]))
-            {
-                throw new Exception("Branch Field is required");
-            }
-            if (string.IsNullOrEmpty(additionalParameters["[B]"]))
-            {
-                throw new Exception("The Counter Code of the " + additionalParameters["[BranchName]"] + " Branch is required.");
-            }
-        }
-        private static string ExecuteNextTableNumberValueProcedure(int tenant, Counter counter, string prefix, int startNumber, string strConnString, string branchCounterCode,bool saveCounter)
-        {
-#if false
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                return TableCounter.ExecuteNextTableNumberValueProcedureCustoms(tenant, counter, prefix, startNumber, strConnString);
-            }
-#endif
-            string counterLastNumberValue;
+			string counterLastNumberValue;
+            string strConnString = GetConnection(tenant);//ConfigurationManager.ConnectionStrings["str"].ConnectionString;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
+
                 using (OracleConnection cn = new OracleConnection(strConnString))
                 {
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
-                    cmd.CommandText =
-                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", LogitudeDBSchema.LOGITUDE_MAIN,
-                    cmd.Connection.ConnectionString);
+                    cmd.CommandText = 
+                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +  "usp_GetNextTableNumberValue";
+                        DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableNumberValue", LogitudeDBSchema.LOGITUDE_MAIN ,
+                        cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
-
+                    /*
+                     v_pLastValue OUT NUMBER,
+--    v_pTenant      IN NUMBER,
+--    v_pCounterId   IN NVARCHAR2,
+--    v_pPrefix      IN NVARCHAR2,
+--    v_pStartNumber IN NUMBER */
                     try
                     {
                         OracleParameter lastValuePar = new OracleParameter("v_pLastValue", OracleDbType.Number);
@@ -163,10 +119,11 @@ namespace Logitude.Server.Tools.Helpers
                         cn.Open();
                         cmd.ExecuteNonQuery();
                         cn.Close();
-                        counterLastNumberValue = cmd.Parameters["v_pLastValue"].Value.ToString();
+						//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+						counterLastNumberValue = cmd.Parameters["v_pLastValue"].Value.ToString();
 
 
-                    }
+					}
                     catch (Exception ex)
                     {
                         System.Console.WriteLine("Exception: {0}", ex.ToString());
@@ -175,15 +132,14 @@ namespace Logitude.Server.Tools.Helpers
 
                     cn.Close();
                 }
+
+                 
             }
             else
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    
-                    string procedureName = string.IsNullOrEmpty(branchCounterCode)   ? "dbo.usp_GetNextTableNumberValueWithSnapshotView" : "dbo.usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot";
-                    SqlCommand cmd = new SqlCommand(procedureName, cn);
-
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableNumberValue", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     SqlParameter lastValuePar = new SqlParameter("@pLastValue", SqlDbType.Int);
@@ -191,14 +147,12 @@ namespace Logitude.Server.Tools.Helpers
                     SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
                     SqlParameter prefixPar = new SqlParameter("@pPrefix", SqlDbType.NVarChar);
                     SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
-                    SqlParameter counterStateIdPar = new SqlParameter("@pCounterStateId", SqlDbType.Int);
 
                     lastValuePar.Direction = ParameterDirection.Output;
                     counterIdPar.Direction = ParameterDirection.Input;
                     tenantPar.Direction = ParameterDirection.Input;
                     prefixPar.Direction = ParameterDirection.Input;
                     startNumberPar.Direction = ParameterDirection.Input;
-                    counterStateIdPar.Direction = ParameterDirection.Output;
 
                     counterIdPar.Value = counter.Id;
                     tenantPar.Value = tenant;
@@ -214,156 +168,115 @@ namespace Logitude.Server.Tools.Helpers
                         prefixPar.Value = DBNull.Value;
                     }
 
-
                     cmd.Parameters.Add(lastValuePar);
                     cmd.Parameters.Add(tenantPar);
                     cmd.Parameters.Add(prefixPar);
                     cmd.Parameters.Add(counterIdPar);
                     cmd.Parameters.Add(startNumberPar);
-                    cmd.Parameters.Add(counterStateIdPar);
 
-                    AddbranchCounterCodeParameter(branchCounterCode, cmd);
 
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
-                    counterLastNumberValue = cmd.Parameters["@pLastValue"].Value.ToString();
-                    if(saveCounter)
-                    {
-                        SaveCounter(cmd.Parameters["@pCounterStateId"].Value.ToString(), tenant, counter.ObjectTableId, cmd.Parameters["@pLastValue"].Value.ToString());
-                    }
+					//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["@pLastValue"].Value : counterDef.Prefix + cmd.Parameters["@pLastValue"].Value);
+					counterLastNumberValue = cmd.Parameters["@pLastValue"].Value.ToString();
 
 
-                }
+				}
+
+               
             }
 
-            return counterLastNumberValue;
-        }
+			number = GetCounterLastNumberWithPrefixSuffix(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
-        private static void AddbranchCounterCodeParameter(string branchCounterCode, SqlCommand cmd)
+			return number;
+		}
+
+		private static string GetCounterLastNumberWithPrefixSuffix(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
+		{
+			string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
+			string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
+
+
+			//if (!string.IsNullOrEmpty(counterPrefix))
+			//{
+			//number = (counterDef.Prefix != null ? counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value : counterDef.Prefix + cmd.Parameters["v_pLastValue"].Value);
+
+			//[MM],[YY] or [YYYY],[B]
+			ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
+			//YYYShipEEE (15 - 9) + 3 
+			if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
+			{
+				int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
+				counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(sizeOfStartNumber, '0');
+			}
+
+			counterLastNumberValue = counterPrefix + counterLastNumberValue + counterSuffix;
+
+			return counterLastNumberValue;
+		}
+
+		private static void ResolveCounterPrefixSuffixVariables(int tenant, Dictionary<string, string> additionalParameters, ref string counterPrefix, ref string counterSuffix)
+		{
+			DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
+			string MM = date.ToString("MM");
+			string YY = date.ToString("yy");
+			string YYYY = date.ToString("yyyy");
+
+			counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+			if (additionalParameters != null)
+			{
+				foreach (var k in additionalParameters.Keys)
+					counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
+			}
+
+			counterSuffix = counterSuffix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
+			if (additionalParameters != null)
+			{
+				foreach (var k in additionalParameters.Keys)
+					counterSuffix = counterSuffix.Replace(k, additionalParameters[k]);
+			}
+		}
+
+		public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
         {
-            if (string.IsNullOrEmpty(branchCounterCode)) return;
-            SqlParameter branchCounterCodePar = new SqlParameter("@pBranchCounterCode", SqlDbType.VarChar);
-            branchCounterCodePar.Direction = ParameterDirection.Input;
-            if (branchCounterCode != null)
-            {
-                branchCounterCodePar.Value = branchCounterCode;
-            }
-            else
-            {
-                branchCounterCodePar.Value = DBNull.Value;
-            }
-            cmd.Parameters.Add(branchCounterCodePar);
-        }
+            //ObjectTabelRepository tablesRepository = new ObjectTabelRepository();
+            //ObjectTablePM table = tablesRepository.GetObjectTableByCode(objectTableName, tenant);
 
-        private static string GetCounterLastNumberWithPrefixSuffix(Counter counter, CounterDefinition counterDef, int tenant, string counterLastNumberValue, Dictionary<string, string> additionalParameters)
-        {
-            string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
-            string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
-         
-            ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
-            if (counterDef.CounterSize != null && counterDef.CounterSize.Value > 0 && (counterPrefix + counterLastNumberValue + counterSuffix).Length < counterDef.CounterSize.Value)
-            {
-                int sizeOfStartNumber = (counterDef.CounterSize.Value - (counterPrefix + counterSuffix).Length);
-                counterLastNumberValue = counterLastNumberValue.ToString().PadLeft(sizeOfStartNumber, '0');
-            }
-
-            counterLastNumberValue = counterPrefix + counterLastNumberValue + counterSuffix;
-
-            return counterLastNumberValue;
-        }
-
-        private static void ResolveCounterPrefixSuffixVariables(int tenant, Dictionary<string, string> additionalParameters, ref string counterPrefix, ref string counterSuffix)
-        {
-            DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
-            string MM = date.ToString("MM");
-            string YY = date.ToString("yy");
-            string YYYY = date.ToString("yyyy");
-
-            counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-            counterSuffix = counterSuffix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-            if (additionalParameters != null)
-            {
-                foreach (var k in additionalParameters.Keys)
-                {
-                    if (k == "[B]" && !FeatureToggleHelper.HasFeatureToggle("BCC", tenant))
-                    {
-                        continue;
-                    }
-
-                    counterPrefix = counterPrefix.Replace(k, additionalParameters[k]);
-                    counterSuffix = counterSuffix.Replace(k, additionalParameters[k]);
-                }
-            }
-
-        }
-
-        public static string GetCounterPrefix(int tenant, string counterCode, string parameter1, string parameter2, Dictionary<string, string> additionalParameters = null)
-        {
             CounterDefinitionRepository counterDefinitionRep = new CounterDefinitionRepository(tenant);
             CounterRepository counterRepository = new CounterRepository(tenant);
             Counter counter = counterRepository.GetCounterByCode(counterCode, tenant);
+            //string objectTableId = counter.ObjectTableId;
             string counterId = counter.Id;
 
             List<CounterDefinition> tableCounters = counterDefinitionRep.GetCounterDefinitionsByCounterId(counterId, tenant).ToList();
             CounterDefinition counterDef = tableCounters.Where(c => c.Parameter1 == parameter1 && c.Parameter2 == parameter2).FirstOrDefault();
 
-            string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
-            string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
+			string counterPrefix = !string.IsNullOrEmpty(counterDef.Prefix) ? counterDef.Prefix : "";
+			string counterSuffix = !string.IsNullOrEmpty(counterDef.Suffix) ? counterDef.Suffix : "";
 
-            ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
+			ResolveCounterPrefixSuffixVariables(tenant, additionalParameters, ref counterPrefix, ref counterSuffix);
+			//ResolveCounterPrefixVariables(counter, counterDef, tenant, counterLastNumberValue, additionalParameters);
 
-            return counterPrefix;
+			return counterPrefix;
         }
 
-        public static string GetConnection(int tenant)
+		public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
+                //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
 
             }
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
-            return context.Database.Connection.ConnectionString;
-        }
-
-        public static void SaveCounter(string counterStateId, int tenant, string objectTableId, string lastValue)
-        {
-            counterState = counterState ?? new Dictionary<string, string>();
-
-
-            string key = $"{counterStateId}_{tenant}_{objectTableId}";
-            
-            // Remove any existing keys that match the tenant and objectTableId
-            counterState.Keys
-             .Where(k => k.EndsWith($"_{tenant}_{objectTableId}"))
-             .ToList()
-             .ForEach(k => counterState.Remove(k));
-            
-            // Store the new value
-            counterState[key] = lastValue;
-            
-        }
-
-        public static bool DoesCounterDefinitionExist(string counterCode, int tenant, string parameter1)
-        {
-            var counterRepository = new CounterRepository(tenant);
-            var definitionRepository = new CounterDefinitionRepository(tenant);
-
-            var counter = counterRepository.GetCounterByCode(counterCode, tenant);
-            if (counter?.Id == null)
-                return false;
-
-            var definitions = definitionRepository
-                .GetCounterDefinitionsByCounterId(counter.Id, tenant);
-
-            return definitions.Any(d => d.Parameter1 == parameter1 && d.StartNumber != -1);
+            return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
         }
     }
 }

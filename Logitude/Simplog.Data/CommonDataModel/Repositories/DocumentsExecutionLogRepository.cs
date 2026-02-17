@@ -2,7 +2,7 @@
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentsExecutionLogRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentsExecutionLogRepository(ICommonDataContext context)
         {
@@ -33,12 +36,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.DocumentsExecutionLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
-
-
-        public IQueryable<DocumentsExecutionLog> GetAllDocumentsExecutionLogs()
-        {
-            return (from record in context.DocumentsExecutionLogs  select record);
-        }
 
         public void Add(DocumentsExecutionLog entity)
         {

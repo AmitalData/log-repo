@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -68,10 +68,7 @@ namespace Logitude.Server.Tools.StorageService
 
 
         }
-        public Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName)
-        {
-            throw new NotImplementedException();
-        }
+
         public void WriteBlock(byte[] buffer, long sentBytes, string[] blockIdsList, int bufferNumber, BlobFileInfo fileInfo)
         {
             if (fileInfo.UnifreightFillingUploadBlock(buffer))
@@ -197,16 +194,6 @@ namespace Logitude.Server.Tools.StorageService
 
                 blobFileRepository.SubmitChanges();
             }
-        }
-
-        public void Dispose()
-        {
-          //  throw new NotImplementedException();
-        }
-
-        public void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo)
-        {
-            throw new NotImplementedException();
         }
     }
 }

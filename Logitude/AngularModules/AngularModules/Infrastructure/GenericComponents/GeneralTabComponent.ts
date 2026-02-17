@@ -1,78 +1,58 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { EntityArgs } from '../DataContracts/EntityArgs';
-import { SessionLocator } from '../Utilities/SessionLocator';
-import { ChildDirective } from '../Directives/ChildDirective';
- import { FeatureLocator } from '../Utilities/FeatureLocator';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {EntityArgs} from '../DataContracts/EntityArgs';
+import {SessionLocator} from '../Utilities/SessionLocator';
 
- import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
-import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
-declare var window:any;
-
-const generalTabTitleTextCode = 'General.O.General';
- @Component({
+@Component({
+    moduleId: module.id,
     templateUrl: './GeneralTabComponent.html',
 })
 
-export class GeneralTabComponent implements AfterViewInit {
+export class GeneralTabComponent {
+    private ObjectTableName: string = null;   
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     IsNewEntity: boolean = false;
-    private ObjectTableName: string = null;
-    @ViewChild(ChildDirective) Child: ChildDirective;
- 
-    title: string;
-    public DisplayTabNameInScreen: boolean = true;
-  constructor(private entityArgs: EntityArgs) {
- 
-        this.IsNewEntity = entityArgs.IsNewEntity;
-        this.ObjectTableName = entityArgs.ObjectTableName;
+    constructor(private entityArgs: EntityArgs) {
+        this.IsNewEntity = entityArgs.IsNewEntity;    
+        this.ObjectTableName = entityArgs.ObjectTableName;   
+        this.RunComponent();
     }
 
-    OPObjectTablesName = ["ChargesGroup"];
+    RunComponent() {
+        if (this.viewContainerRef) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+                .then(cmpRef => {
 
-    ngAfterViewInit() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
-            .then(cmpRef => {
+                    var ScreenCode = this.ObjectTableName + ".GeneralTabScreen";
 
-                var ScreenCode = this.ObjectTableName + ".GeneralTabScreen";
-
-                if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") {
-                    if (this.entityArgs.EntityPM.ShipmentLevelCode == "C") {
-                        ScreenCode = "Master.GeneralTabScreen";
+                    if (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master") {
+                        if (this.entityArgs.EntityPM.ShipmentLevelCode == "C") {
+                            ScreenCode = "Master.GeneralTabScreen";
+                        }
                     }
-                }
-                if (this.ObjectTableName == "BatchTaskExecution") {
-                    ScreenCode = "BatchTaskExecutionGeneralTabScreen";
-                }
-               
- 
-          this.SetTabTitle();
- 
-                cmpRef.instance.EntityArgs = this.entityArgs;
-                cmpRef.instance.Run(this.entityArgs.EntityPM, this.ObjectTableName, ScreenCode, this.IsNewEntity);
-            });
+                    if (this.ObjectTableName == "BatchTaskExecution") {
+                        ScreenCode = "BatchTaskExecutionGeneralTabScreen";
+                    }
+                    cmpRef.instance.EntityArgs = this.entityArgs;
+                    cmpRef.instance.Run(this.entityArgs.EntityPM, this.ObjectTableName, ScreenCode, this.IsNewEntity);
+                });
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
     }
 
-    private SetTabTitle()
-    {
-        const tab: ObjectTableTabPM = window.ObjectTableTabs.find(d => d.Code == this.entityArgs.SelectedTabCode);
-        this.DisplayTabNameInScreen = !tab?.HideTabNameInScreen;
-        if (!this.DisplayTabNameInScreen) return;
-        if (tab?.TabNameTextCodeDefaultText)
-            return this.title = tab.TabNameTextCodeDefaultText;
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
 
-        this.title = TextCodeTranslator.Translate(generalTabTitleTextCode);
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
-
-
-    //SetTabVisibility() {
-
-    //    const tab: ObjectTableTabPM = window.ObjectTableTabs.find(d => d.Code == this.entityArgs.SelectedTabCode);
-    //    const objectTableId = window.ObjectTables.filter((x: any) => x.Name === this.entityArgs.ObjectTableName)[0].Id;
-    //    if (!tab || !tab.ScreenCode) return;
-
-    //    let screen: any = window.Screens.filter((x: any) => x.ObjectTableId === objectTableId && x.Code.toLowerCase() == tab.ScreenCode.toLowerCase())[0];
-    //    if (!screen || screen.Type != "LIGHTENING") return;
-    //    this.IsShowTitle = false;
-    //}
-
 }
-

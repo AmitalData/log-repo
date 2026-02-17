@@ -1,14 +1,4 @@
-<style type="text/css">
-    .SectionTitle {
-        height: 20px;
-        line-height: 20px;
-        font-size: 14px;
-        color: #1B90CB;
-        user-select: text;
-        -webkit-user-select: text;
-    }
-</style>
-
+﻿
 <div class="TabHolder">
     <table>
         <tr class="TabTitleRow">
@@ -59,7 +49,6 @@
                                                         <td>
                                                             <fieldset class="MediaFill GroupBox">
                                                                 <legend>
-                                                                    <span *ngIf="IsFromRequired" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;"></span>
                                                                     <span>{{'ShipmentPickUpDelivery.O.From' | TextCodeTranslationPipe}}</span>
                                                                 </legend>
 
@@ -238,7 +227,7 @@
                                                         <td>
                                                             <fieldset class="MediaFill GroupBox">
                                                                 <legend>
-                                                                    <span *ngIf="IsToRequired" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;"></span>
+                                                                    <span style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px; display: inline-block;" *ngIf="FullResponsibility && !ToPartnerCardId"></span>
                                                                     <span>{{'ShipmentPickUpDelivery.O.To' | TextCodeTranslationPipe}}</span>
                                                                 </legend>
 
@@ -580,7 +569,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogLabel [ObjectFieldName]="'ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="ETATextCode"></LogLabel>
+                                                                        <LogLabel [ObjectFieldName]="'ETA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'ShipmentPickUpDelivery.F.ETA'"></LogLabel>
                                                                     </td>
 
                                                                     <td>
@@ -634,7 +623,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogLabel [ObjectFieldName]="'ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="ATATextCode"></LogLabel>
+                                                                        <LogLabel [ObjectFieldName]="'ATA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'ShipmentPickUpDelivery.F.ATA'"></LogLabel>
                                                                     </td>
 
                                                                     <td>
@@ -705,27 +694,6 @@
                                                             </table>
                                                         </td>
                                                     </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr style="height: 1px;">
-                                                        <td class="SectionTitle">Additional Fields</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <div>
-                                                                <div class="LocationDirective" #Child></div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="height:10px;"><td></td></tr>
-
-
                                                 </table>
                                             </td>
                                         </tr>

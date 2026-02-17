@@ -20,7 +20,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'PaymentOrderReplyComponent',
-    
+    moduleId: module.id,
     templateUrl: './PaymentOrderReplyComponent.html',
 })
 
@@ -49,8 +49,8 @@ implements AfterViewInit,IRequestsSheetMassagingComponent {
         this.ConnectedEntityDataList = new ObservableCollection([]);
         this.TaxParagraphList = new ObservableCollection([]);
         this.PaymentMethodsList = new ObservableCollection([]);
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
             });
         });
     }

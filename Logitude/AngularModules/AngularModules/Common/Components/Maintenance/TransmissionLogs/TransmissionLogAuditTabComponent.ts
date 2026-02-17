@@ -7,10 +7,10 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import { LogitudeMessagesTransmissionLogPM } from '../../../EntityPMs/LogitudeMessagesTransmissionLogPM';
 
 import {AppTool} from '../../../../Infrastructure/Tools';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 @Component({
     selector: 'TransmissionLogAuditTabComponent',
+    moduleId: module.id,
     templateUrl: './TransmissionLogAuditTabComponent.html',
 
 })

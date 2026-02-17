@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "1aa720b3-85c4-47a8-8f87-08ae6f620b65",
-		"name": "FullAccountingTesting",
+		"_postman_id": "3105db3b-00b1-4665-ad2a-8e1b205b46c5",
+		"name": "FullAccountingTesting copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,6 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "a918d90f-384d-49bc-8fb2-10ac0a489b87",
 						"exec": [
 							"pm.test(\"logged successfuly\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -88,6 +89,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "7243a2b0-1398-4c75-a8bf-690df9462e98",
 						"exec": [
 							"pm.test(\"CreateJounal \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -120,7 +122,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \r\n   \r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"CreateDate\":\"2019-05-26T18:51:56.7660529+00:00\",\r\n   \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n   \"TypeCode\":\"0\",\r\n   \"StatusCode\":\"2\",\r\n   \"CreatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"CreatedByUserName\":\"{{LoggedUserEnglishName}}\",\r\n   \"AccountingEntityCode\":\"1\",\r\n   \"JournalLines\":[  \r\n      {  \r\n         \r\n         \"Tenant\":\"{{Tenant}}\",\r\n         \"Line\":1,\r\n         \"ActionCode\":\"1\",\r\n         \"DebitAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-08-01T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n         \"DueDate\":\"2019-08-01T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"1\",\r\n         \"ActionTypeCodeEnum\":\"1\",\r\n         \"ChangeSetOp\":1\r\n      \r\n      },\r\n      {\r\n          \r\n         \"Tenant\":\"{{Tenant}}\",\r\n         \"Line\":2,\r\n         \"ActionCode\":\"2\",\r\n         \"DebitAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-08-01T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n         \"DueDate\":\"2019-08-01T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"2\",\r\n         \"ActionTypeCodeEnum\":\"2\",\r\n         \"ChangeSetOp\":1\r\n      \r\n      }\r\n   ],\r\n   \"UpdateDate\":\"2019-05-26T18:51:57.6763003+00:00\",\r\n   \"UpdatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"ApproveDate\":\"2019-05-26T18:51:57.6919354Z\",\r\n   \"ApprovedByUserId\":\"{{LoggedUserId}}\",\r\n   \"SearchFields\":\"1175\",\r\n   \"AccountingEntityReference\":\"1175\",\r\n   \"IsVoided\":false,\r\n   \"JournalReconciles\":[  \r\n   ],\r\n   \"IsLedgerCreated\":true,\r\n   \"ChangeSetOp\":1,\r\n   \"EncodeBase64NVARCHARFieldsBy\":null\r\n}"
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":\"{{Tenant}}\",\r\n   \"CreateDate\":\"2019-05-26T18:51:56.7660529+00:00\",\r\n   \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n   \"TypeCode\":\"0\",\r\n   \"StatusCode\":\"2\",\r\n   \"CreatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"CreatedByUserName\":\"{{LoggedUserEnglishName}}\",\r\n   \"AccountingEntityCode\":\"1\",\r\n   \"JournalLines\":[  \r\n      {  \r\n         \"$id\":\"2\",\r\n         \"Tenant\":\"{{Tenant}}\",\r\n         \"Line\":1,\r\n         \"ActionCode\":\"3\",\r\n         \"DebitAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-08-01T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-08-01T00:00:00Z\",\r\n         \"DueDate\":\"2019-08-01T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"3\",\r\n         \"ActionTypeCodeEnum\":3,\r\n         \"ChangeSetOp\":1\r\n      \r\n      }\r\n   ],\r\n   \"UpdateDate\":\"2019-05-26T18:51:57.6763003+00:00\",\r\n   \"UpdatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"ApproveDate\":\"2019-05-26T18:51:57.6919354Z\",\r\n   \"ApprovedByUserId\":\"{{LoggedUserId}}\",\r\n   \"SearchFields\":\"1175\",\r\n   \"AccountingEntityReference\":\"1175\",\r\n   \"IsVoided\":false,\r\n   \"JournalReconciles\":[  \r\n   ],\r\n   \"IsLedgerCreated\":true,\r\n   \"ChangeSetOp\":1,\r\n   \"EncodeBase64NVARCHARFieldsBy\":null\r\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/journals",
@@ -141,6 +143,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6d2c311a-d75b-44ab-b678-cced72bd5a70",
 						"exec": [
 							"pm.test(\"Update GlACcount\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -148,7 +151,7 @@
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
 							"     tests[\"GlAccountUpdatedsuccessfully: \" + idexist ] = (idexist);",
-							"    postman.setNextRequest(\"PostARinvoice\"); ",
+							"    postman.setNextRequest(\"UpdateChartOFAccount\"); ",
 							"    ",
 							"   ",
 							"    ",
@@ -192,11 +195,77 @@
 			"response": []
 		},
 		{
+			"name": "UpdateChartOFAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bf8353f-8eda-448e-be80-11b298e69737",
+						"exec": [
+							"pm.test(\"UpdateChartOfAccountRev01\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().Id);",
+							" ",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							" ",
+							"     tests[\"ChartOfAccountUpdatedsuccessfully : \" + idexist ] = (idexist);",
+							"    postman.setNextRequest(\"PostARinvoice\"); ",
+							"    ",
+							"   ",
+							"    ",
+							"});",
+							"     ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Id",
+						"value": "{{ChartOfAccountId}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n   \"Id\":\"{{VendorChartOfAccountId}}\",\r\n    \"Tenant\": \"{{Tenant}}\",\r\n    \"Code\": \"1PMCF\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart{{RandomNum}}\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n\r\n \r\n\r\n      "
+				},
+				"url": {
+					"raw": "{{URL}}/api/chartofaccounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "PostARinvoice",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "0eca0939-b870-4586-bf02-23ae51c380a9",
 						"exec": [
 							"pm.test(\"CreateARinvoice \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -230,7 +299,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"InvoiceNumber\":\"RN{{tot}}\",\r\n   \"ARInvoiceTypeCode\":\"IN\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n   \"BillToPartnerTypeId\":\"CS\",\r\n   \"InvoiceDate\":\"2020-08-02T00:00:00Z\",\r\n   \"DueDate\":\"2020-08-02T00:00:00Z\",\r\n   \"IssuedByUserId\":\"{{LoggedUserId}}\",\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"SubTotalInLocalCurrency\":4000.0,\r\n   \"SubTotalInInvoiceCurrency\":4000.0,\r\n   \"AmountInLocalCurrency\":4000.0,\r\n   \"AmountInInvoiceCurrency\":4000.0,\r\n   \"StatusCode\":\"AD\",\r\n   \"StatusName\":\"Unpaid\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"CreateDate\":\"2020-04-10T19:10:40.2580869Z\",\r\n   \"SearchFields\":\"1066,Accounting Customer 2 \",\r\n  \"IsGeneralInvoice\": true,\r\n   \"AmountDue\":4000.0,\r\n  \r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \"VATNumber\":\"5145599\",\r\n   \"AmountDueInLocalCurrency\":4000.0,\r\n   \"AmountDueInProfitCurrency\":2000.0,\r\n   \r\n\r\n   \"BranchId\":\"{{BranchId}}\",\r\n\r\n   \"InvoiceLines\":[  \r\n      {  \r\n      \t\"Tenant\":\"{{CurrentTenant}}\",\r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n     \r\n         \"ForiegnCurrencyAmount\":4000.0,\r\n         \"LocalCurrencyAmount\":4000.0,\r\n         \"InvoiceCurrencyAmount\":4000.0,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatAmount\":null,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LineNumber\":1,\r\n        \r\n         \"Quantity\":20.0,\r\n         \"UnitPrice\":200.0,\r\n         \"ViewOrder\":0,\r\n         \"MeasurementId\":null,\r\n         \"IsExchangeRateFixed\":false,\r\n        \r\n         \"ProfitCurrencyAmount\":2000.0,\r\n         \"InvoiceLocalCurrencyCode\":null,\r\n         \"InvoiceCurrencyCode\":null,\r\n         \"ChangeSetOp\":1,\r\n         \"CreditAccount\":\"{{CustomerGLAccountId}}\",\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"Notes\":null,\r\n         \"DateForInterest\":null,\r\n         \"ValueDate\":null,\r\n         \"GLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"LineActionCode\":\"1\"\r\n       \r\n      }\r\n   ]\r\n  ,\r\n  \r\n   \"SetApproved\":true,\r\n  \r\n   \"TotalAmountForTaxReport\":4000.0,\r\n   \"TotaVatableAmountForTaxReport\":0.0,\r\n   \"TotalVAT\":0.0,\r\n   \"IsFullAccounting\":true\r\n   \r\n}"
+					"raw": "{\r\n  \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"InvoiceNumber\":\"RN{{tot}}\",\r\n   \"ARInvoiceTypeCode\":\"IN\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n   \"BillToPartnerTypeId\":\"CS\",\r\n   \"InvoiceDate\":\"2019-08-02T00:00:00Z\",\r\n   \"DueDate\":\"2019-08-02T00:00:00Z\",\r\n   \"IssuedByUserId\":\"{{LoggedUserId}}\",\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"SubTotalInLocalCurrency\":4000.0,\r\n   \"SubTotalInInvoiceCurrency\":4000.0,\r\n   \"AmountInLocalCurrency\":4000.0,\r\n   \"AmountInInvoiceCurrency\":4000.0,\r\n   \"StatusCode\":\"AD\",\r\n   \"StatusName\":\"Unpaid\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"CreateDate\":\"2019-04-10T19:10:40.2580869Z\",\r\n   \"SearchFields\":\"1066,Accounting Customer 2 \",\r\n  \"IsGeneralInvoice\": true,\r\n   \"AmountDue\":4000.0,\r\n  \r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \"VATNumber\":\"5145599\",\r\n   \"AmountDueInLocalCurrency\":4000.0,\r\n   \"AmountDueInProfitCurrency\":2000.0,\r\n   \r\n\r\n   \"BranchId\":\"{{BranchId}}\",\r\n\r\n   \"InvoiceLines\":[  \r\n      {  \r\n      \t\"Tenant\":\"{{CurrentTenant}}\",\r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n     \r\n         \"ForiegnCurrencyAmount\":4000.0,\r\n         \"LocalCurrencyAmount\":4000.0,\r\n         \"InvoiceCurrencyAmount\":4000.0,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatAmount\":null,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LineNumber\":1,\r\n        \r\n         \"Quantity\":20.0,\r\n         \"UnitPrice\":200.0,\r\n         \"ViewOrder\":0,\r\n         \"MeasurementId\":null,\r\n         \"IsExchangeRateFixed\":false,\r\n        \r\n         \"ProfitCurrencyAmount\":2000.0,\r\n         \"InvoiceLocalCurrencyCode\":null,\r\n         \"InvoiceCurrencyCode\":null,\r\n         \"ChangeSetOp\":1,\r\n         \"CreditAccount\":\"{{CustomerGLAccountId}}\",\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"Notes\":null,\r\n         \"DateForInterest\":null,\r\n         \"ValueDate\":null,\r\n         \"GLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"LineActionCode\":\"1\"\r\n       \r\n      }\r\n   ]\r\n  ,\r\n  \r\n   \"SetApproved\":true,\r\n  \r\n   \"TotalAmountForTaxReport\":4000.0,\r\n   \"TotaVatableAmountForTaxReport\":0.0,\r\n   \"TotalVAT\":0.0,\r\n   \"IsFullAccounting\":true\r\n   \r\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/arinvoices",
@@ -251,6 +320,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "c8e678c7-54a1-4d6e-88cf-af1e9e0d5960",
 						"exec": [
 							"pm.test(\"GetARinvoice124\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -290,7 +360,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{InvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending\n&&",
+					"raw": "{{URL}}/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{InvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
 					"host": [
 						"{{URL}}"
 					],
@@ -359,6 +429,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "33b3da4e-7a5e-48e1-a4fb-9d8cfc32e035",
 						"exec": [
 							"pm.test(\"CreateAPinvoice \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -393,7 +464,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"InternalNumber\":\"Bill3005\",\r\n   \"InvoiceNumber\":\"PN{{tot}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n  \r\n   \"InvoiceDate\":\"2020-05-31T00:00:00Z\",\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"DueDate\":\"2020-06-10T00:00:00Z\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n  \r\n   \"SubTotalInLocalCurrency\":200.0,\r\n   \"SubTotalInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency_Summary\":200.0,\r\n   \"AmountInLocalCurrency\":200.0,\r\n   \"AmountInLocalCurrency_Summary\":200.0,\r\n   \"AmountInProfitCurrency\":100.0,\r\n   \"AmountInProfitCurrency_Summary\":null,\r\n   \"StatusCode\":\"AD\",\r\n   \"CreateDate\":\"2020-06-10T20:46:10.1943336Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"IsClosed\":false,\r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \r\n   \"InvoiceExpectedAmount\":200.0,\r\n   \r\n   \"SearchFields\":\"1205,test\",\r\n  \r\n  \r\n   \"AmountDue\":200.0,\r\n   \"RefundAmount\":null,\r\n   \"AmountDueInLocalCurrency\":1200.0,\r\n   \"AmountDueInProfitCurrency\":600.0,\r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \r\n \r\n   \"VATNumber\":\"5145599\",\r\n   \"AccountingDate\":\"2020-05-31T00:00:00Z\",\r\n   \"IsExternalEntity\":false,\r\n   \"IsGeneralInvoice\":true,\r\n  \r\n   \"InvoiceLines\":[\r\n      {\r\n         \r\n         \"LineNumber\":1,\r\n         \"Tenant\":{{CurrentTenant}},\r\n         \"InvoiceCurrencyAmount\":200.0,\r\n      \r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"VatIsMultiPercentage\":false,\r\n      \r\n         \"OpenAmount\":null,\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForiegnCurrencyAmount\":200.0,\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LocalCurrencyAmount\":200.0,\r\n         \"ProfitCurrencyAmount\":100.0,\r\n       \r\n         \"CorrectionNote\":null,\r\n         \"CorrectionByUserId\":null,\r\n         \"CorrectionDate\":null,\r\n         \"AmountTypeCode\":\"NEXP\",\r\n         \"ForiegnCurrencyCode\":\"NIS\",\r\n         \"ChangeSetOp\":1,\r\n         \"DebitAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"AuthorizedSignatory\":false,\r\n         \"PrepaidCollectId\":null\r\n      }\r\n   ],\r\n\r\n   \"TotalVATs\":[\r\n      {\r\n         \r\n       \"Tenant\":{{CurrentTenant}},\r\n         \"APInvoiceId\":null,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercent\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"VatTypeCell\":\"Exempt (0%)\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"InvoiceCurrencyVatableAmount\":200.0,\r\n         \"LocalVatableAmount\":200.0,\r\n         \"ProfitVatableAmount\":100.0,\r\n         \"InvoiceCurrencyVATAmount\":0.0,\r\n         \"LocalVATAmount\":0.0,\r\n         \"ProfitCurrencyVATAmount\":0.0,\r\n         \"ChangeSetOp\":1\r\n      }\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n\r\n   \"SetReSendQBO\":false,\r\n   \"JournalNumber\":\"1230\",\r\n   \"ShipmentConcurrencyGUID\":null,\r\n   \"ShipmentNewConcurrencyGUID\":null\r\n}"
+					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"InternalNumber\":\"Bill3005\",\r\n   \"InvoiceNumber\":\"PN{{tot}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n  \r\n   \"InvoiceDate\":\"2019-05-31T00:00:00Z\",\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"DueDate\":\"2019-06-10T00:00:00Z\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n  \r\n   \"SubTotalInLocalCurrency\":200.0,\r\n   \"SubTotalInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency_Summary\":200.0,\r\n   \"AmountInLocalCurrency\":200.0,\r\n   \"AmountInLocalCurrency_Summary\":200.0,\r\n   \"AmountInProfitCurrency\":100.0,\r\n   \"AmountInProfitCurrency_Summary\":null,\r\n   \"StatusCode\":\"AD\",\r\n   \"CreateDate\":\"2019-06-10T20:46:10.1943336Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"IsClosed\":false,\r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \r\n   \"InvoiceExpectedAmount\":200.0,\r\n   \r\n   \"SearchFields\":\"1205,test\",\r\n  \r\n  \r\n   \"AmountDue\":200.0,\r\n   \"RefundAmount\":null,\r\n   \"AmountDueInLocalCurrency\":1200.0,\r\n   \"AmountDueInProfitCurrency\":600.0,\r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \r\n \r\n   \"VATNumber\":\"5145599\",\r\n   \"AccountingDate\":\"2019-05-31T00:00:00Z\",\r\n   \"IsExternalEntity\":false,\r\n   \"IsGeneralInvoice\":true,\r\n  \r\n   \"InvoiceLines\":[\r\n      {\r\n         \r\n         \"LineNumber\":1,\r\n         \"Tenant\":{{CurrentTenant}},\r\n         \"InvoiceCurrencyAmount\":200.0,\r\n      \r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"VatIsMultiPercentage\":false,\r\n      \r\n         \"OpenAmount\":null,\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForiegnCurrencyAmount\":200.0,\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LocalCurrencyAmount\":200.0,\r\n         \"ProfitCurrencyAmount\":100.0,\r\n       \r\n         \"CorrectionNote\":null,\r\n         \"CorrectionByUserId\":null,\r\n         \"CorrectionDate\":null,\r\n         \"AmountTypeCode\":\"NEXP\",\r\n         \"ForiegnCurrencyCode\":\"NIS\",\r\n         \"ChangeSetOp\":1,\r\n         \"DebitAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"AuthorizedSignatory\":false,\r\n         \"PrepaidCollectId\":null\r\n      }\r\n   ],\r\n\r\n   \"TotalVATs\":[\r\n      {\r\n         \r\n       \"Tenant\":{{CurrentTenant}},\r\n         \"APInvoiceId\":null,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercent\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"VatTypeCell\":\"Exempt (0%)\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"InvoiceCurrencyVatableAmount\":200.0,\r\n         \"LocalVatableAmount\":200.0,\r\n         \"ProfitVatableAmount\":100.0,\r\n         \"InvoiceCurrencyVATAmount\":0.0,\r\n         \"LocalVATAmount\":0.0,\r\n         \"ProfitCurrencyVATAmount\":0.0,\r\n         \"ChangeSetOp\":1\r\n      }\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n\r\n   \"SetReSendQBO\":false,\r\n   \"JournalNumber\":\"1230\",\r\n   \"ShipmentConcurrencyGUID\":null,\r\n   \"ShipmentNewConcurrencyGUID\":null\r\n}"
 				},
 				"url": {
 					"raw": "{{URL}}/api/apinvoices",
@@ -414,6 +485,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "47b856b0-6676-479b-98e0-23be8494bcbe",
 						"exec": [
 							"pm.test(\"GetAPinvoice\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -509,6 +581,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "08a6f11f-e043-4afa-9961-54bd764aaba9",
 						"exec": [
 							"pm.test(\"CreateARPayment \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -567,6 +640,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "110314d4-0ade-4ab5-9da2-28668f51277e",
 						"exec": [
 							"pm.test(\"GetARpaymnet\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -601,7 +675,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending&&",
+					"raw": "{{URL}}/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
 					"host": [
 						"{{URL}}"
 					],
@@ -670,6 +744,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "1b3a55a1-8bb8-43c8-98b4-c88638bd1d32",
 						"exec": [
 							"pm.test(\"CreateAPPayment \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -725,6 +800,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "ca77557d-8492-4d13-9f18-d22c2e471f86",
 						"exec": [
 							"pm.test(\"GetAPpaymnet\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -759,7 +835,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APPaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending&&",
+					"raw": "{{URL}}/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APPaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
 					"host": [
 						"{{URL}}"
 					],
@@ -828,6 +904,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "1b57fd8a-d821-42ac-b0c0-6804ef74e67e",
 						"exec": [
 							"pm.test(\"PostCashbooks \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -904,11 +981,15 @@
 					"raw": "{\n  \n    \"tenant\": {{Tenant}},\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"AccountNumber\":\"CB{{tot}}\", \n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"cashBookTypeCode\": \"2\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"accountId\": \"{{BankGLAccountId}}\",\n    \"localName\": \"מבחן התרסקות\",\n    \"englishName\": \"Chash Book Test\",\n    \"branchId\": \"{{BranchCashBookId}}\"\n      \n}"
 				},
 				"url": {
-					"raw": "{{URL}}/api/cashbooks",
+					"raw": "https://test.logitudeworld.com/staging/api/cashbooks",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"staging",
 						"api",
 						"cashbooks"
 					]
@@ -922,6 +1003,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "3c995a26-be83-409e-bd97-f74af35c87ee",
 						"exec": [
 							"pm.test(\"GETCashBooks\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -941,7 +1023,7 @@
 							"    pm.environment.set(\"CashBookId\",idvalue);",
 							"    pm.environment.set(\"CashBooksAccountEnglishName\",idvalue2);",
 							"    tests[\"CashBooksExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"PostBankAccount\");  ",
+							"    postman.setNextRequest(\"PostPaymentCheques\");  ",
 							"",
 							"    }",
 							"});"
@@ -995,11 +1077,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/cashbookviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{CashBooksAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Ascending",
+					"raw": "https://test.logitudeworld.com/staging/api/cashbookviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{CashBooksAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Ascending",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"staging",
 						"api",
 						"cashbookviews",
 						"getbyfilters"
@@ -1056,238 +1142,12 @@
 			"response": []
 		},
 		{
-			"name": "PostBankAccount",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"PostBankAccount\", function () {",
-							"    pm.response.to.have.status(200);",
-							"    var idvalue = (pm.response.json().AccountNumber);",
-							"    var idvalue1 = (pm.response.json().Id);",
-							"    var idvalue2 = (pm.response.json().EnglishName);",
-							"    var id1exist = idvalue1 !== null;",
-							"    pm.expect(id1exist);",
-							"    pm.environment.set(\"BankAccountId\",idvalue1);",
-							"    pm.environment.set(\"BankAccountNumber\",idvalue);",
-							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
-							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
-							"    postman.setNextRequest(\"GETBankAccount\");",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
-						"key": "accept",
-						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "origin",
-						"value": "https://test.logitudeworld.com"
-					},
-					{
-						"key": "user-agent",
-						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}"
-					},
-					{
-						"key": "content-type",
-						"value": "application/json"
-					},
-					{
-						"key": "sec-fetch-site",
-						"value": "same-origin"
-					},
-					{
-						"key": "sec-fetch-mode",
-						"value": "cors"
-					},
-					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-					},
-					{
-						"key": "accept-encoding",
-						"value": "gzip, deflate, br"
-					},
-					{
-						"key": "accept-language",
-						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-					},
-					{
-						"key": "cookie",
-						"value": "email_cookie=sumaya@logitudeworld.com"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"tenant\": {{Tenant}},\n    \"bankId\": \"{{CodeId}}\",\n    \"branchNumber\": 99,\n    \"accountNumber\": \"BK{{tot}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"gLAccountId\": \"{{BankGLAccountId}}\",\n    \"deferredGLAccountId\": \"{{BankGLAccountId}}\",\n    \"transferGLAcccountId\": \"{{BankGLAccountId}}\",\n    \"EnglishName\":\"Bank Account Test\",\n    \"LocalName\":\"מבחן חשבון בנק\"\n}"
-				},
-				"url": {
-					"raw": "{{URL}}/api/bankaccounts",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"bankaccounts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GETBankAccount",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"GETBankAccount\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"     tests[\"BankAccountExsits : \" + false] = (true);",
-							"   }",
-							"   else {",
-							"    var idvalue=pm.response.json().Result[0].Id;",
-							"    var idvalue2 = (pm.response.json().Result[0].EnglishName);",
-							"    var idvalue1 = (pm.response.json().Result[0].AccountNumber);",
-							"    pm.environment.set(\"BankAccountId\",idvalue);",
-							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
-							"    pm.environment.set(\"BankAccountNumber\",idvalue1);",
-							"    tests[\"BankAccountExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"PostPaymentCheques\");  ",
-							"    }",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "authority",
-						"value": "test.logitudeworld.com"
-					},
-					{
-						"key": "accept",
-						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "user-agent",
-						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}"
-					},
-					{
-						"key": "sec-fetch-site",
-						"value": "same-origin"
-					},
-					{
-						"key": "sec-fetch-mode",
-						"value": "cors"
-					},
-					{
-						"key": "referer",
-						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
-					},
-					{
-						"key": "accept-encoding",
-						"value": "gzip, deflate, br"
-					},
-					{
-						"key": "accept-language",
-						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
-					},
-					{
-						"key": "cookie",
-						"value": "email_cookie=sumaya@logitudeworld.com"
-					}
-				],
-				"url": {
-					"raw": "{{URL}}/api/bankaccountviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{BankAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Desending",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"bankaccountviews",
-						"getbyfilters"
-					],
-					"query": [
-						{
-							"key": "ForceCacheRefresh",
-							"value": "false"
-						},
-						{
-							"key": "GetAll",
-							"value": "false"
-						},
-						{
-							"key": "Filter1Name",
-							"value": "SearchFields"
-						},
-						{
-							"key": "Filter1Operator",
-							"value": "Contains"
-						},
-						{
-							"key": "Filter1Value",
-							"value": "{{BankAccountNumber}}"
-						},
-						{
-							"key": "GetCount",
-							"value": "true"
-						},
-						{
-							"key": "PageIndex",
-							"value": "0"
-						},
-						{
-							"key": "PageSize",
-							"value": "22"
-						},
-						{
-							"key": "SortBy",
-							"value": "EnglishName"
-						},
-						{
-							"key": "SortDirection",
-							"value": "Desending"
-						},
-						{
-							"key": "AdditionalFilters",
-							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BKTest14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "PostPaymentCheques",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "7cb455b9-4a7c-41cd-a24a-949d0270769e",
 						"exec": [
 							"pm.test(\"PostPaymentCheques \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1361,7 +1221,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"tenant\": \"{{Tenant}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"ChequeNumber\":\"PC{{tot}}\",\n    \"valueDate\": \"2019-11-07T05:57:35.324Z\",\n    \"bankAccountId\": \"{{BankAccountId}}\",\n    \"localAmount\": 200,\n    \"payToGLAccountId\": \"{{BankGLAccountId}}\",\n    \"payToName\": \"Bank Account Test\",\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"SearchFields\":\"PC{{tot}}\"\n \n}",
+					"raw": "{\n    \"tenant\": \"{{Tenant}}\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"ChequeNumber\":\"PC{{tot}}\",\n    \"valueDate\": \"2019-11-07T05:57:35.324Z\",\n    \"bankAccountId\": \"1-606\",\n    \"localAmount\": 200,\n    \"payToGLAccountId\": \"{{BankGLAccountId}}\",\n    \"payToName\": \"Bank Account Test\",\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n    \"SearchFields\":\"PC{{tot}}\",\n \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1369,11 +1229,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/api/paymentcheques",
+					"raw": "https://test.logitudeworld.com/staging/api/paymentcheques",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"staging",
 						"api",
 						"paymentcheques"
 					]
@@ -1387,6 +1251,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "c22349bc-6f85-44fa-a8cd-455a5313254e",
 						"exec": [
 							"pm.test(\"GETPaymentCheques\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1397,7 +1262,7 @@
 							"    var idvalue=pm.response.json().Result[0].Id;",
 							"    pm.environment.set(\"PaymentChequeId\",idvalue);",
 							"    tests[\"PaymentChequesExsits : \" + true ] = (true);",
-							"    postman.setNextRequest(\"PostDeposit\");  ",
+							"    postman.setNextRequest(\"PostBankAccount\");  ",
 							"    }",
 							"});"
 						],
@@ -1450,11 +1315,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/paymentchequeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentChequeNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=CreateDate&SortDirection=Desending",
+					"raw": "https://test.logitudeworld.com/staging/api/paymentchequeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentChequeNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=CreateDate&SortDirection=Desending",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"staging",
 						"api",
 						"paymentchequeviews",
 						"getbyfilters"
@@ -1511,11 +1380,249 @@
 			"response": []
 		},
 		{
+			"name": "PostBankAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73604555-a246-4f9c-bf66-6793c2d14101",
+						"exec": [
+							"pm.test(\"PostBankAccount\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().AccountNumber);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = (pm.response.json().EnglishName);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"BankAccountId\",idvalue1);",
+							"    pm.environment.set(\"BankAccountNumber\",idvalue);",
+							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
+							"    tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETBankAccount\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "origin",
+						"value": "https://test.logitudeworld.com"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tenant\": {{Tenant}},\n    \"bankId\": \"{{BankCodeId}}\",\n    \"branchNumber\": 99,\n    \"accountNumber\": \"BKTest14\",\n    \"currencyId\": \"{{AccountingCurrencyId}}\",\n    \"gLAccountId\": \"{{BankGLAccountId}}\",\n    \"deferredGLAccountId\": \"{{BankGLAccountId}}\",\n    \"transferGLAcccountId\": \"{{BankGLAccountId}}\",\n    \"EnglishName\":\"Bank Account Test\",\n    \"LocalName\":\"מבחן חשבון בנק\",\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/bankaccounts",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"bankaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETBankAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5cf1e258-d713-4b9f-bb1e-6989e3e595a3",
+						"exec": [
+							"pm.test(\"GETBankAccount\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"BankAccountExsits : \" + false] = (true);",
+							"   }",
+							"   else {",
+							"    var idvalue=pm.response.json().Result[0].Id;",
+							"    var idvalue2 = (pm.response.json().Result[0].EnglishName);",
+							"    var idvalue1 = (pm.response.json().Result[0].AccountNumber);",
+							"    pm.environment.set(\"BankAccountId\",idvalue);",
+							"    pm.environment.set(\"BankAccountEnglishName\",idvalue2);",
+							"    pm.environment.set(\"BankAccountNumber\",idvalue1);",
+							"    tests[\"BankAccountExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostDeposit\");  ",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authority",
+						"value": "test.logitudeworld.com"
+					},
+					{
+						"key": "accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "referer",
+						"value": "https://test.logitudeworld.com/staging/Angular19061113/index.html"
+					},
+					{
+						"key": "accept-encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "accept-language",
+						"value": "ar-JO,ar;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "cookie",
+						"value": "email_cookie=sumaya@logitudeworld.com"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/staging/api/bankaccountviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{BankAccountNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=EnglishName&SortDirection=Desending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"staging",
+						"api",
+						"bankaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{BankAccountNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						},
+						{
+							"key": "SortBy",
+							"value": "EnglishName"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Desending"
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BKTest14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "PostDeposit",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "1318d93b-e5b7-45c9-b958-5979d0cb78b5",
 						"exec": [
 							"pm.test(\"PostDeposit\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1590,11 +1697,15 @@
 					"raw": "{\n    \"accountingDate\": \"2019-11-02T11:34:48.000Z\",\n    \"tenant\": {{Tenant}},\n    \"depositDate\": \"2019-11-02T11:34:48.000Z\",\n    \"cashBookId\": \"{{CashBookId}}\",\n    \"depositCurrencyId\": \"{{AccountingCurrencyId}}\",\n    \"depositBankAccountId\": \"{{BankAccountId}}\",\n    \"isCashDeposit\": true,\n    \"cashBookName\": \"{{CashBooksAccountEnglishName}}\",\n    \"bankAccountNumber\": \"{{BankAccountNumber}}\",\n    \"foreignAmount\": \"335\",\n    \"localDepositAmount\": 335,\n    \"createdByUserId\": \"{{LoggedUserId}}\",\n    \"updatedByUserId\": \"{{LoggedUserId}}\",\n}"
 				},
 				"url": {
-					"raw": "{{URL}}/api/bankdeposits",
+					"raw": "https://test.logitudeworld.com/staging/api/bankdeposits",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"staging",
 						"api",
 						"bankdeposits"
 					]
@@ -1608,6 +1719,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "79355fd2-26c3-4e24-a7cf-969179fc01c9",
 						"exec": [
 							"pm.test(\"GETDeposit\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1671,11 +1783,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/bankdepositviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{DepositNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=DepositNumber&SortDirection=Desending",
+					"raw": "https://test.logitudeworld.com/staging/api/bankdepositviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{DepositNumber}}&GetCount=true&PageIndex=0&PageSize=22&SortBy=DepositNumber&SortDirection=Desending",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"staging",
 						"api",
 						"bankdepositviews",
 						"getbyfilters"
@@ -1737,6 +1853,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "dc1963df-4617-43a7-8c46-e5d25efd2a6b",
 						"exec": [
 							"pm.test(\"Logged Out successfuly \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -1768,11 +1885,15 @@
 					"raw": "{\"Email\":\"khawla@logitudeworld.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":989} "
 				},
 				"url": {
-					"raw": "{{URL}}/api/authentication/GetSignOut",
+					"raw": "https://test.logitudeworld.com/TEST/api/authentication/GetSignOut",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"TEST",
 						"api",
 						"authentication",
 						"GetSignOut"
@@ -1781,5 +1902,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

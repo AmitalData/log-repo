@@ -11,9 +11,9 @@ using System.Web.Services;
 using System.Xml;
 using System.Xml.Serialization;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Syncfusion.Calculate;
@@ -34,8 +34,6 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
-using System.Data.Common;
-using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.WebServices
 {
@@ -65,9 +63,7 @@ namespace WebFreight.Web.WebServices
             byte[] bytes = null; 
             try
             {
-
-                bytes = new ExportToExcelHelper().ExportQueryToExcel(new ExportToExcelArgs() { XmlFilters = xmlFilters, QueryCode = queryId, Tenant = tenant, UserId = userid, TypeName = typename });
-
+                bytes = new ExportToExcelHelper().ExportQueryToExcel(xmlFilters, queryId, tenant, userid, typename).ToArray();
                 //FilterSerializer filterSerializer = new FilterSerializer();
                 //QueryRepository queryRep = new QueryRepository(tenant);
                 //QueryColumnRepository queryColumnRep = new QueryColumnRepository(tenant);
@@ -449,9 +445,8 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public byte[] ExportFeaturesToCSVFile()
         {
-            int tenant = 0;
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(0);
             var List = (from PackageFeature in commonDataContext.PackageFeatures
                         join Feature in commonDataContext.Features on PackageFeature.FeatureId equals Feature.Id into FeaturePackages
                         from FeaturePackage in FeaturePackages.DefaultIfEmpty()
@@ -529,11 +524,10 @@ namespace WebFreight.Web.WebServices
 
 
         [WebMethod]
-        public string ImportFeaturePackages(byte[] data)
+        public void ImportFeaturePackages(byte[] data)
         {
             ExportImportHelper helper = new ExportImportHelper();
             string error = helper.ImportPackageFeatures(data);
-            return error;
         }
 
         [WebMethod]
@@ -577,96 +571,26 @@ namespace WebFreight.Web.WebServices
 
             foreach (RoleFeature rolefeature in rolefeatures)
             {
-                Feature feature = featurrep.GetSingleFeatureByUniqeCode(rolefeature.FeatureUniqeCode);
-                if (feature != null)
-                {
-                    ObjectTable table = objecttablerep.GetSingleObjectTable(feature.ObjectTableId, 0, true);
-                    Role role = roles.Where(d => d.Id == rolefeature.RoleId).FirstOrDefault();
-                    string line = role.Code + "," + table.Name + "," + feature.Code + "," + rolefeature.FeatureAccessLevelCode;
-                    sb.AppendLine(line);
-                }
-             
-            }
-
-
-            byte[] buffer = Encoding.ASCII.GetBytes(sb.ToString());
-
-            return buffer;
-
-        }
-
-
-        [WebMethod]
-        public byte[] ExportRoleFeaturesFromSourceDB(string dbConnectionString)
-        {
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionString, null);
-            ICommonDataContext commonDataContext = new CommonDataContext(connection);
-            IWebFreightContext webDataContext = new WebFreightContext(connection);
-
-            RoleRepository roleRep = new RoleRepository(commonDataContext);
-            RoleFeatureRepository rep = new RoleFeatureRepository(commonDataContext);
-            FeatureRepository featurrep = new FeatureRepository(commonDataContext);
-            ObjectTableRepository objecttablerep = new ObjectTableRepository(webDataContext);
-            List<Role> roles = roleRep.GetRoles(0).ToList();
-            List<RoleFeature> rolefeatures = rep.GetRoleFeaturesByTenant(0).OrderBy(f => f.RoleId).ToList();
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (RoleFeature rolefeature in rolefeatures)
-            {
-                Feature feature = featurrep.GetSingleFeatureByUniqeCode(rolefeature.FeatureUniqeCode);
-                if (feature != null)
-                {
-                    ObjectTable table = objecttablerep.GetSingleObjectTable(feature.ObjectTableId, 0, true);
-                    Role role = roles.Where(d => d.Id == rolefeature.RoleId).FirstOrDefault();
-                    string line = role.Code + "," + table.Name + "," + feature.Code + "," + rolefeature.FeatureAccessLevelCode;
-                    sb.AppendLine(line);
-                }
-            }
-
-            byte[] buffer = Encoding.ASCII.GetBytes(sb.ToString());
-            return buffer;
-        }
-
-
-        [WebMethod]
-        public byte[] ExportPackagesFeaturesFromSourceDB(string dbConnectionString)
-        {
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionString, null);
-            ICommonDataContext commonDataContext = new CommonDataContext(connection);
-
-            var List = (from PackageFeature in commonDataContext.PackageFeatures
-                        join Feature in commonDataContext.Features on PackageFeature.FeatureId equals Feature.Id into FeaturePackages
-                        from FeaturePackage in FeaturePackages.DefaultIfEmpty()
-                        where PackageFeature.Tenant == 0
-                        orderby PackageFeature.PackageCode
-                        select new
-                        {
-                            PackageCode = PackageFeature.PackageCode,
-                            ObjectTableName = PackageFeature.Feature.ObjectTable.Name,
-                            FeatureCode = FeaturePackage.Code,
-                        }).ToList();
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var packagefeature in List)
-            {
-
-                string line = packagefeature.PackageCode + "," + packagefeature.ObjectTableName + "," + packagefeature.FeatureCode;
+                Feature feature = featurrep.GetSingleFeature(rolefeature.FeatureId);
+                ObjectTable table = objecttablerep.GetSingleObjectTable(feature.ObjectTableId, 0, true);
+                Role role = roles.Where(d => d.Id == rolefeature.RoleId).FirstOrDefault();
+                string line = role.Code + "," + table.Name + "," + feature.Code + "," + rolefeature.FeatureAccessLevelCode;
                 sb.AppendLine(line);
             }
 
+
             byte[] buffer = Encoding.ASCII.GetBytes(sb.ToString());
+
             return buffer;
+
         }
 
 
         [WebMethod]
-        public string ImportRoleFeatures(byte[] data)
+        public void ImportRoleFeatures(byte[] data)
         {
             ExportImportHelper helper = new WebServices.ExportImportHelper();
             string message = helper.ImportRoleFeatures(data);
-            return message;
         }
         
       

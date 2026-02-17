@@ -151,7 +151,7 @@ namespace WebFreight.Web.Helpers
                     shipmentComputedFields.IsDepositionRequired = true;
                     shipmentComputedFields.ImporterDepositionRequestDetails = depositionRequestAM.VendorCode + "^" + depositionRequestAM.VendorName;
                     ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields, shipmentComputedFieldsRepository.context);
+                    shipmentComputedFieldsHelper.UpdateShipmentComputedFields(shipmentComputedFields);
                 }
             }
             return shipmentId;

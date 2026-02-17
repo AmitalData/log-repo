@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
@@ -167,35 +166,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string BranchId { get; set; }
-
-        [DataMember]
-        public string CityId { get; set; }
-
-        [DataMember]
-        public string TransportationInstructions { get; set; }
-
-        [DataMember]
-        public string Responsibility { get; set; }
-        [DataMember]
-        public string TruckerId { get; set; }
-
-        private List<TruckerSettingPM> truckerSettings;
-        [DataMember]
-        public List<TruckerSettingPM> TruckerSettings
-        {
-            get
-            {
-                if(truckerSettings == null)
-                {
-                    truckerSettings = new List<TruckerSettingPM>();
-                }
-                return truckerSettings;
-            }
-            set { truckerSettings = value; }
-        }
-
-
-       
-
     }
 }

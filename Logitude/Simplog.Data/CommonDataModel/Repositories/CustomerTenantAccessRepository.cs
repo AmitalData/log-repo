@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public CustomerTenantAccessRepository()
+        {
+            commonDataContext=new CommonDataContext();
+        }
 
         public CustomerTenantAccessRepository(int tenant)
         {
@@ -28,10 +31,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public IQueryable<CustomerTenantAccess> GetCustomerTenantAccesses(int tenant)
         {
             return from a in context.CustomerTenantAccesses where a.Tenant == tenant select a;
-        }
-        public IQueryable<CustomerTenantAccess> GetCustomerTenantAccessesByCustomerTenant(int customerTenant)
-        {
-            return from a in context.CustomerTenantAccesses where a.CustomerTenant == customerTenant select a;
         }
 
         public IQueryable<CustomerTenantAccess> GetCustomerTenantAccessesByTenant(int tenant)

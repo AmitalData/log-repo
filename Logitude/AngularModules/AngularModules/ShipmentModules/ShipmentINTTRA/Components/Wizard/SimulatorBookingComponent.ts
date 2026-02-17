@@ -12,11 +12,9 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './SimulatorBookingComponent.html',
     providers: [EntityArgs]
 })
@@ -63,14 +61,8 @@ export class SimulatorBookingComponent extends BaseComponent {
     }
 
     SetWindowArgs(args) {
-
         this.EntityPM = args['Shipment'];
         this.IsEditMode = args['IsEditMode'];
-        this.InitializeValues();
-
-        this.RefresDataScreen();
-    }
-    InitializeValues() {
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.EntityPM.IsForINTTRA = true;
         this.entityArgs.ObjectTableName = this.ObjectTableName;
@@ -90,7 +82,10 @@ export class SimulatorBookingComponent extends BaseComponent {
                 }
             }
         });
+        this.RefresDataScreen();
+      
     }
+
     RefresDataScreen() {
         this.CheckSendingBookingEnabled();
         this.CheckUpdatingBookingEnabled();
@@ -159,7 +154,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                 if (this.CommunicationsPage == null) {
                     let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedTabCode)[0];
                     if (myLocation != null) {
-                        this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe(response => {
                             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationsTabComponent", myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.CommunicationsPage = cmpRef.instance;
@@ -175,7 +170,7 @@ export class SimulatorBookingComponent extends BaseComponent {
 
 
     // Requests
-    get MainCarriageVesselId() { return this.EntityPM.MainCarriageVesselId; }
+
     get MainCarriageCarrierCode() { return this.EntityPM.MainCarriageCarrierCode; }
     get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
     get MainCarriageCarrierNumber() { return this.EntityPM.MainCarriageCarrierNumber; }
@@ -286,8 +281,6 @@ export class SimulatorBookingComponent extends BaseComponent {
     }
 
     get INTTRABookingResponse_Voyage() { return this.EntityPM.INTTRABookingResponse_Voyage; }
-    get INTTRABookingResponse_Vessel() { return this.EntityPM.INTTRABookingResponse_Vessel; }
-    get INTTRABookingResponse_VesselId() { return this.EntityPM.INTTRABookingResponse_VesselId; }
     get INTTRABookingResponse_POLDate() { return this.EntityPM.INTTRABookingResponse_POLDate; }
     get INTTRABookingResponse_POFPort() { return this.EntityPM.INTTRABookingResponse_POFPort; }
     get INTTRABookingResponse_POFPortCode() { return this.EntityPM.INTTRABookingResponse_POFPortCode; }
@@ -299,66 +292,28 @@ export class SimulatorBookingComponent extends BaseComponent {
     get INTTRABookingResponse_PODCCode() { return this.EntityPM.INTTRABookingResponse_PODCCode; }
     get INTTRABookingResponse_PODCName() { return this.EntityPM.INTTRABookingResponse_PODCName; }
     get INTTRABookingResponse_ShippingLine() { return this.EntityPM.INTTRABookingResponse_ShippingLine; }
-    get INTTRABookingResponse_VesselColor() {
-        var color = "#282E30";
-        if (AppTool.IsNullOrEmpty(this.INTTRABookingResponse_VesselId)) {
-            color = "red";
-        }
-        return color;
-    }
+
     UpdateButtonClicked() {
         var confirmMsg = "Are you sure you want to update the routing?";
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show(confirmMsg);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                if (AppTool.IsNullOrEmpty(this.INTTRABookingResponse_VesselId)) {
-                    var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "Add Vessel";
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM};
-                    logitudeWindow.Width =650;
-                    logitudeWindow.Height = 230;
-                    logitudeWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/AddEBookingVesselComponent');
-                    logitudeWindow.WindowClosed.subscribe(s => {
-                        if (s == "ok") {
-                            this.AssignBookingToShipment();
-                        }
-                    });
-                }
-                else {
-                    this.AssignBookingToShipment();
-
-                }
+                this.EntityPM.INTTRABookingStatusCode = "CD";
+                this.EntityPM.MainCarriageETD = this.INTTRABookingResponse_POLDate;
+                this.EntityPM.MainCarriageETA = this.INTTRABookingResponse_PODDate;
+                this.EntityPM.MainCarriageCarrierNumber = this.INTTRABookingResponse_Voyage;
+                this.EntityPM.MainCarriageFromPortId = this.INTTRABookingResponse_POFPort;
+                this.EntityPM.MainCarriageToPortId = this.INTTRABookingResponse_PODPort;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
-
             if (confirmWindow.No) {
                 this.EntityPM.INTTRABookingStatusCode = "RU";
-                if (this.IsEditMode) {
-                    this.SubmitUpdatingShipment();
-                }
-                else {
-                    this.CurrentSession.CurrentEditComponent.SaveChanges();
-                }
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
             }
 
+            this.RefresDataScreen();
         });
-    }
-
-    private AssignBookingToShipment() {
-        this.EntityPM.INTTRABookingStatusCode = "CD";
-        this.EntityPM.MainCarriageETD = this.INTTRABookingResponse_POLDate;
-        this.EntityPM.MainCarriageETA = this.INTTRABookingResponse_PODDate;
-        this.EntityPM.MainCarriageCarrierNumber = this.INTTRABookingResponse_Voyage;
-        this.EntityPM.MainCarriageFromPortId = this.INTTRABookingResponse_POFPort;
-        this.EntityPM.MainCarriageToPortId = this.INTTRABookingResponse_PODPort;
-        this.EntityPM.MainCarriageVesselId = this.INTTRABookingResponse_VesselId;
-
-        if (this.IsEditMode) {
-            this.SubmitUpdatingShipment();
-        }
-        else {
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
-        }
     }
 
     public IsApplyChanges = false;
@@ -366,7 +321,7 @@ export class SimulatorBookingComponent extends BaseComponent {
         this.IsApplyChanges = false;
         if (this.EntityPM.INTTRABookingStatusCode == "WC" && this.INTTRABookingResponse_POFPortCode != null && this.INTTRABookingResponse_PODPortCode != null) {
             // Compare the Main leg
-            if ((this.MainCarriageCarrierNumber != this.INTTRABookingResponse_Voyage) || (this.MainCarriageVesselId != this.INTTRABookingResponse_VesselId) || (this.MainCarriageETD != this.INTTRABookingResponse_POLDate) ||
+            if ((this.MainCarriageCarrierNumber != this.INTTRABookingResponse_Voyage) || (this.MainCarriageETD != this.INTTRABookingResponse_POLDate) ||
                 (this.MainCarriageFromPortCode != this.INTTRABookingResponse_POFPortCode) || (this.MainCarriageToPortCode != this.INTTRABookingResponse_PODPortCode)) {
                 this.IsApplyChanges = true;
             }
@@ -415,7 +370,7 @@ export class SimulatorBookingComponent extends BaseComponent {
     }
 
     RefreshAnswersClicked() {
-      this.GetShipment();
+
     }
 
     EditShipmentClicked() {
@@ -431,35 +386,7 @@ export class SimulatorBookingComponent extends BaseComponent {
                 editWindow.WindowClosed.subscribe(d => {
                     this.EntityPM = s.EntityPM;
                 });
-            });
+            });      
         }
     }
-
-    private SubmitUpdatingShipment() {
-        var myService: ShipmentPMService = new ShipmentPMService();
-        myService.update(this.EntityPM).subscribe((myResult: ServiceResponse) => {
-
-            if (!myResult.HasError) {
-                this.GetShipment();
-            }
-
-            else {
-                this.ValidationErrorsList = myResult.ErrorsArray;
-            }
-        });
-    }
-    private GetShipment() {
-        var myService: ShipmentPMService = new ShipmentPMService();
-        myService.get(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
-            if (!myResult.HasError) {
-                this.EntityPM = myResult.Result;
-                this.RefresDataScreen();
-            }
-
-            else {
-                this.ValidationErrorsList = myResult.ErrorsArray;
-            }
-        });
-    }
-
 }

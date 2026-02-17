@@ -100,31 +100,6 @@ export class QuoteTemplateSettingPM {
     public set ShowFixedPriceContainers(newValue: boolean) { if (this.showFixedPriceContainers != newValue) { this.showFixedPriceContainers = newValue; this.MarkAsDirty("ShowFixedPriceContainers"); } }
        
 	 
-    private showUnitsContainers: boolean;
-    public get ShowUnitsContainers() { return this.showUnitsContainers; }
-    public set ShowUnitsContainers(newValue: boolean) { if (this.showUnitsContainers != newValue) { this.showUnitsContainers = newValue; this.MarkAsDirty("ShowUnitsContainers"); } }
-       
-	 
-    private showSaleIncludingVATContainers: boolean;
-    public get ShowSaleIncludingVATContainers() { return this.showSaleIncludingVATContainers; }
-    public set ShowSaleIncludingVATContainers(newValue: boolean) { if (this.showSaleIncludingVATContainers != newValue) { this.showSaleIncludingVATContainers = newValue; this.MarkAsDirty("ShowSaleIncludingVATContainers"); } }
-       
-	 
-    private showSaleIncludingVATPackages: boolean;
-    public get ShowSaleIncludingVATPackages() { return this.showSaleIncludingVATPackages; }
-    public set ShowSaleIncludingVATPackages(newValue: boolean) { if (this.showSaleIncludingVATPackages != newValue) { this.showSaleIncludingVATPackages = newValue; this.MarkAsDirty("ShowSaleIncludingVATPackages"); } }
-       
-	 
-    private showLocalSaleIncludingVATContainers: boolean;
-    public get ShowLocalSaleIncludingVATContainers() { return this.showLocalSaleIncludingVATContainers; }
-    public set ShowLocalSaleIncludingVATContainers(newValue: boolean) { if (this.showLocalSaleIncludingVATContainers != newValue) { this.showLocalSaleIncludingVATContainers = newValue; this.MarkAsDirty("ShowLocalSaleIncludingVATContainers"); } }
-       
-	 
-    private showLocalSaleIncludingVATPackages: boolean;
-    public get ShowLocalSaleIncludingVATPackages() { return this.showLocalSaleIncludingVATPackages; }
-    public set ShowLocalSaleIncludingVATPackages(newValue: boolean) { if (this.showLocalSaleIncludingVATPackages != newValue) { this.showLocalSaleIncludingVATPackages = newValue; this.MarkAsDirty("ShowLocalSaleIncludingVATPackages"); } }
-       
-	 
     private showChargeDescriptionPackages: boolean;
     public get ShowChargeDescriptionPackages() { return this.showChargeDescriptionPackages; }
     public set ShowChargeDescriptionPackages(newValue: boolean) { if (this.showChargeDescriptionPackages != newValue) { this.showChargeDescriptionPackages = newValue; this.MarkAsDirty("ShowChargeDescriptionPackages"); } }
@@ -789,190 +764,141 @@ export class QuoteTemplateSettingPM {
     public get DetailsTableColumWidthType() { return this.detailsTableColumWidthType; }
     public set DetailsTableColumWidthType(newValue: string) { if (this.detailsTableColumWidthType != newValue) { this.detailsTableColumWidthType = newValue; this.MarkAsDirty("DetailsTableColumWidthType"); } }
        
-	 
-    private showTotalPerChargeGroupPackages: boolean;
-    public get ShowTotalPerChargeGroupPackages() { return this.showTotalPerChargeGroupPackages; }
-    public set ShowTotalPerChargeGroupPackages(newValue: boolean) { if (this.showTotalPerChargeGroupPackages != newValue) { this.showTotalPerChargeGroupPackages = newValue; this.MarkAsDirty("ShowTotalPerChargeGroupPackages"); } }
-       
-	 
+   
     private showTotalPerChargeGroupContainers: boolean;
     public get ShowTotalPerChargeGroupContainers() { return this.showTotalPerChargeGroupContainers; }
     public set ShowTotalPerChargeGroupContainers(newValue: boolean) { if (this.showTotalPerChargeGroupContainers != newValue) { this.showTotalPerChargeGroupContainers = newValue; this.MarkAsDirty("ShowTotalPerChargeGroupContainers"); } }
-       
-	 
+
+
+    private showTotalPerChargeGroupPackages: boolean;
+    public get ShowTotalPerChargeGroupPackages() { return this.showTotalPerChargeGroupPackages; }
+    public set ShowTotalPerChargeGroupPackages(newValue: boolean) { if (this.showTotalPerChargeGroupPackages != newValue) { this.showTotalPerChargeGroupPackages = newValue; this.MarkAsDirty("ShowTotalPerChargeGroupPackages"); } }
+
+
+
     private showPageBreakBeforeTotalPerContainersTable: boolean;
     public get ShowPageBreakBeforeTotalPerContainersTable() { return this.showPageBreakBeforeTotalPerContainersTable; }
     public set ShowPageBreakBeforeTotalPerContainersTable(newValue: boolean) { if (this.showPageBreakBeforeTotalPerContainersTable != newValue) { this.showPageBreakBeforeTotalPerContainersTable = newValue; this.MarkAsDirty("ShowPageBreakBeforeTotalPerContainersTable"); } }
-       
-	 
+
+
+
+
     private totalPerContainersAdditionalTextDesignId: string;
     public get TotalPerContainersAdditionalTextDesignId() { return this.totalPerContainersAdditionalTextDesignId; }
     public set TotalPerContainersAdditionalTextDesignId(newValue: string) { if (this.totalPerContainersAdditionalTextDesignId != newValue) { this.totalPerContainersAdditionalTextDesignId = newValue; this.MarkAsDirty("TotalPerContainersAdditionalTextDesignId"); } }
-       
-	 
+
+
     private totalPerContainersTableDesignId: string;
     public get TotalPerContainersTableDesignId() { return this.totalPerContainersTableDesignId; }
     public set TotalPerContainersTableDesignId(newValue: string) { if (this.totalPerContainersTableDesignId != newValue) { this.totalPerContainersTableDesignId = newValue; this.MarkAsDirty("TotalPerContainersTableDesignId"); } }
-       
-	 
+
     private totalPerContainersCurrencyType: string;
     public get TotalPerContainersCurrencyType() { return this.totalPerContainersCurrencyType; }
     public set TotalPerContainersCurrencyType(newValue: string) { if (this.totalPerContainersCurrencyType != newValue) { this.totalPerContainersCurrencyType = newValue; this.MarkAsDirty("TotalPerContainersCurrencyType"); } }
-       
-	 
+
     private showTitleTotalPerContainersTable: boolean;
     public get ShowTitleTotalPerContainersTable() { return this.showTitleTotalPerContainersTable; }
     public set ShowTitleTotalPerContainersTable(newValue: boolean) { if (this.showTitleTotalPerContainersTable != newValue) { this.showTitleTotalPerContainersTable = newValue; this.MarkAsDirty("ShowTitleTotalPerContainersTable"); } }
-       
-	 
+
+
     private showChargeNotePackages: boolean;
     public get ShowChargeNotePackages() { return this.showChargeNotePackages; }
     public set ShowChargeNotePackages(newValue: boolean) { if (this.showChargeNotePackages != newValue) { this.showChargeNotePackages = newValue; this.MarkAsDirty("ShowChargeNotePackages"); } }
-       
-	 
+
+
+
     private showChargeNoteContainers: boolean;
     public get ShowChargeNoteContainers() { return this.showChargeNoteContainers; }
     public set ShowChargeNoteContainers(newValue: boolean) { if (this.showChargeNoteContainers != newValue) { this.showChargeNoteContainers = newValue; this.MarkAsDirty("ShowChargeNoteContainers"); } }
-       
-	 
+
     private showSaleMaxMinAmountPackages: boolean;
     public get ShowSaleMaxMinAmountPackages() { return this.showSaleMaxMinAmountPackages; }
     public set ShowSaleMaxMinAmountPackages(newValue: boolean) { if (this.showSaleMaxMinAmountPackages != newValue) { this.showSaleMaxMinAmountPackages = newValue; this.MarkAsDirty("ShowSaleMaxMinAmountPackages"); } }
-       
-	 
+
+
     private showSaleMaxMinAmountContainers: boolean;
     public get ShowSaleMaxMinAmountContainers() { return this.showSaleMaxMinAmountContainers; }
     public set ShowSaleMaxMinAmountContainers(newValue: boolean) { if (this.showSaleMaxMinAmountContainers != newValue) { this.showSaleMaxMinAmountContainers = newValue; this.MarkAsDirty("ShowSaleMaxMinAmountContainers"); } }
-       
-	 
+
+
+
+
     private showHeaderLabelsPackages: boolean;
     public get ShowHeaderLabelsPackages() { return this.showHeaderLabelsPackages; }
     public set ShowHeaderLabelsPackages(newValue: boolean) { if (this.showHeaderLabelsPackages != newValue) { this.showHeaderLabelsPackages = newValue; this.MarkAsDirty("ShowHeaderLabelsPackages"); } }
-       
-	 
+
+
     private showHeaderLabelsContainers: boolean;
     public get ShowHeaderLabelsContainers() { return this.showHeaderLabelsContainers; }
     public set ShowHeaderLabelsContainers(newValue: boolean) { if (this.showHeaderLabelsContainers != newValue) { this.showHeaderLabelsContainers = newValue; this.MarkAsDirty("ShowHeaderLabelsContainers"); } }
-       
-	 
+
+
+
     private spaceLinesBeforeContainers: number;
     public get SpaceLinesBeforeContainers() { return this.spaceLinesBeforeContainers; }
     public set SpaceLinesBeforeContainers(newValue: number) { if (this.spaceLinesBeforeContainers != newValue) { this.spaceLinesBeforeContainers = newValue; this.MarkAsDirty("SpaceLinesBeforeContainers"); } }
-       
-	 
+
+
     private spaceLinesBeforePackages: number;
     public get SpaceLinesBeforePackages() { return this.spaceLinesBeforePackages; }
     public set SpaceLinesBeforePackages(newValue: number) { if (this.spaceLinesBeforePackages != newValue) { this.spaceLinesBeforePackages = newValue; this.MarkAsDirty("SpaceLinesBeforePackages"); } }
-       
-	 
+
+
     private spaceLinesBeforeQuoteHeaders: number;
     public get SpaceLinesBeforeQuoteHeaders() { return this.spaceLinesBeforeQuoteHeaders; }
     public set SpaceLinesBeforeQuoteHeaders(newValue: number) { if (this.spaceLinesBeforeQuoteHeaders != newValue) { this.spaceLinesBeforeQuoteHeaders = newValue; this.MarkAsDirty("SpaceLinesBeforeQuoteHeaders"); } }
-       
-	 
+
+
     private spaceLinesBeforeQuoteDetails: number;
     public get SpaceLinesBeforeQuoteDetails() { return this.spaceLinesBeforeQuoteDetails; }
     public set SpaceLinesBeforeQuoteDetails(newValue: number) { if (this.spaceLinesBeforeQuoteDetails != newValue) { this.spaceLinesBeforeQuoteDetails = newValue; this.MarkAsDirty("SpaceLinesBeforeQuoteDetails"); } }
-       
-	 
+
+
     private spaceLinesBeforeHeaders: number;
     public get SpaceLinesBeforeHeaders() { return this.spaceLinesBeforeHeaders; }
     public set SpaceLinesBeforeHeaders(newValue: number) { if (this.spaceLinesBeforeHeaders != newValue) { this.spaceLinesBeforeHeaders = newValue; this.MarkAsDirty("SpaceLinesBeforeHeaders"); } }
-       
-	 
+
+
     private spaceLinesBeforeFooters: number;
     public get SpaceLinesBeforeFooters() { return this.spaceLinesBeforeFooters; }
     public set SpaceLinesBeforeFooters(newValue: number) { if (this.spaceLinesBeforeFooters != newValue) { this.spaceLinesBeforeFooters = newValue; this.MarkAsDirty("SpaceLinesBeforeFooters"); } }
-       
-	 
+
+
     private spaceLinesBeforePerContainers: number;
     public get SpaceLinesBeforePerContainers() { return this.spaceLinesBeforePerContainers; }
     public set SpaceLinesBeforePerContainers(newValue: number) { if (this.spaceLinesBeforePerContainers != newValue) { this.spaceLinesBeforePerContainers = newValue; this.MarkAsDirty("SpaceLinesBeforePerContainers"); } }
-       
-	 
+
+
     private quoteTemplatePDFMarginTop: number;
     public get QuoteTemplatePDFMarginTop() { return this.quoteTemplatePDFMarginTop; }
     public set QuoteTemplatePDFMarginTop(newValue: number) { if (this.quoteTemplatePDFMarginTop != newValue) { this.quoteTemplatePDFMarginTop = newValue; this.MarkAsDirty("QuoteTemplatePDFMarginTop"); } }
-       
-	 
+
     private quoteTemplatePDFMarginBottom: number;
     public get QuoteTemplatePDFMarginBottom() { return this.quoteTemplatePDFMarginBottom; }
     public set QuoteTemplatePDFMarginBottom(newValue: number) { if (this.quoteTemplatePDFMarginBottom != newValue) { this.quoteTemplatePDFMarginBottom = newValue; this.MarkAsDirty("QuoteTemplatePDFMarginBottom"); } }
-       
-	 
-    private showIncludedChargesPackages: boolean;
-    public get ShowIncludedChargesPackages() { return this.showIncludedChargesPackages; }
-    public set ShowIncludedChargesPackages(newValue: boolean) { if (this.showIncludedChargesPackages != newValue) { this.showIncludedChargesPackages = newValue; this.MarkAsDirty("ShowIncludedChargesPackages"); } }
-       
-	 
-    private showIncludedChargesContainers: boolean;
-    public get ShowIncludedChargesContainers() { return this.showIncludedChargesContainers; }
-    public set ShowIncludedChargesContainers(newValue: boolean) { if (this.showIncludedChargesContainers != newValue) { this.showIncludedChargesContainers = newValue; this.MarkAsDirty("ShowIncludedChargesContainers"); } }
-       
-	 
+
+
+    
     private showIncludedChargesPerContainers: boolean;
     public get ShowIncludedChargesPerContainers() { return this.showIncludedChargesPerContainers; }
     public set ShowIncludedChargesPerContainers(newValue: boolean) { if (this.showIncludedChargesPerContainers != newValue) { this.showIncludedChargesPerContainers = newValue; this.MarkAsDirty("ShowIncludedChargesPerContainers"); } }
-       
-	 
-    private showVATTypePackages: boolean;
-    public get ShowVATTypePackages() { return this.showVATTypePackages; }
-    public set ShowVATTypePackages(newValue: boolean) { if (this.showVATTypePackages != newValue) { this.showVATTypePackages = newValue; this.MarkAsDirty("ShowVATTypePackages"); } }
-       
-	 
-    private showVATTypeContainers: boolean;
-    public get ShowVATTypeContainers() { return this.showVATTypeContainers; }
-    public set ShowVATTypeContainers(newValue: boolean) { if (this.showVATTypeContainers != newValue) { this.showVATTypeContainers = newValue; this.MarkAsDirty("ShowVATTypeContainers"); } }
-       
-	 
-    private showVATPercentagePackages: boolean;
-    public get ShowVATPercentagePackages() { return this.showVATPercentagePackages; }
-    public set ShowVATPercentagePackages(newValue: boolean) { if (this.showVATPercentagePackages != newValue) { this.showVATPercentagePackages = newValue; this.MarkAsDirty("ShowVATPercentagePackages"); } }
-       
-	 
-    private showVATPercentageContainers: boolean;
-    public get ShowVATPercentageContainers() { return this.showVATPercentageContainers; }
-    public set ShowVATPercentageContainers(newValue: boolean) { if (this.showVATPercentageContainers != newValue) { this.showVATPercentageContainers = newValue; this.MarkAsDirty("ShowVATPercentageContainers"); } }
-       
-	 
-    private hidePageNumber: boolean;
-    public get HidePageNumber() { return this.hidePageNumber; }
-    public set HidePageNumber(newValue: boolean) { if (this.hidePageNumber != newValue) { this.hidePageNumber = newValue; this.MarkAsDirty("HidePageNumber"); } }
-       
-	 
-    private pageNumberingTextDesignId: string;
-    public get PageNumberingTextDesignId() { return this.pageNumberingTextDesignId; }
-    public set PageNumberingTextDesignId(newValue: string) { if (this.pageNumberingTextDesignId != newValue) { this.pageNumberingTextDesignId = newValue; this.MarkAsDirty("PageNumberingTextDesignId"); } }
-       
-	 
-    private showRegionalTAXPackages: boolean;
-    public get ShowRegionalTAXPackages() { return this.showRegionalTAXPackages; }
-    public set ShowRegionalTAXPackages(newValue: boolean) { if (this.showRegionalTAXPackages != newValue) { this.showRegionalTAXPackages = newValue; this.MarkAsDirty("ShowRegionalTAXPackages"); } }
-       
-	 
-    private showRegionalTAXContainers: boolean;
-    public get ShowRegionalTAXContainers() { return this.showRegionalTAXContainers; }
-    public set ShowRegionalTAXContainers(newValue: boolean) { if (this.showRegionalTAXContainers != newValue) { this.showRegionalTAXContainers = newValue; this.MarkAsDirty("ShowRegionalTAXContainers"); } }
-       
-	 
-    private xMLData: string;
-    public get XMLData() { return this.xMLData; }
-    public set XMLData(newValue: string) { if (this.xMLData != newValue) { this.xMLData = newValue; this.MarkAsDirty("XMLData"); } }
-       
-	 
-    private quoteTemplateSettingData: any;
-    public get QuoteTemplateSettingData() { return this.quoteTemplateSettingData; }
-    public set QuoteTemplateSettingData(newValue: any) { if (this.quoteTemplateSettingData != newValue) { this.quoteTemplateSettingData = newValue; this.MarkAsDirty("QuoteTemplateSettingData"); } }
-       
-	 
+
+    private showIncludedChargesPackages: boolean;
+    public get ShowIncludedChargesPackages() { return this.showIncludedChargesPackages; }
+    public set ShowIncludedChargesPackages(newValue: boolean) { if (this.showIncludedChargesPackages != newValue) { this.showIncludedChargesPackages = newValue; this.MarkAsDirty("ShowIncludedChargesPackages"); } }
+
+    private showIncludedChargesContainers: boolean;
+    public get ShowIncludedChargesContainers() { return this.showIncludedChargesContainers; }
+    public set ShowIncludedChargesContainers(newValue: boolean) { if (this.showIncludedChargesContainers != newValue) { this.showIncludedChargesContainers = newValue; this.MarkAsDirty("ShowIncludedChargesContainers"); } }
+
+
+
+
 
     public OldEntityPM: QuoteTemplateSettingPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -980,7 +906,6 @@ export class QuoteTemplateSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateSetting");
            
         }
-	 }
     }
     private MyClone: QuoteTemplateSettingPM;
 
@@ -992,4 +917,4 @@ export class QuoteTemplateSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

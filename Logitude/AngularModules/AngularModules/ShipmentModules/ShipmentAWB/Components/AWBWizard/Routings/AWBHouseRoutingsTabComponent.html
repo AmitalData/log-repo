@@ -1,4 +1,4 @@
-
+﻿
 <div class="TableHolder">
     <table>
         <tr style="height: 1px;">
@@ -10,23 +10,23 @@
                         </td>
 
                         <td>
-                            <CheckBox [IsChecked]="HasPreForwarding" (Checked)="HasPreForwarding = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Add Pre-Forwarding'"></CheckBox>
+                            <CheckBox [IsChecked]="HasPreCarriage" (Checked)="HasPreCarriage = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Add Pre-carriage'"></CheckBox>
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="HasPreForwarding">
+                    <tr class="FormFieldRow" *ngIf="HasPreCarriage">
                         <td style="width: 150px;">
-                            <LogLabel [ObjectFieldName]="'PreForwardingFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'PreCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
-                            <LogLov [ObjectFieldName]="'PreForwardingFromPortId'"
-                                    [SelectedValue]="PreForwardingFromPortId"
+                            <LogLov [ObjectFieldName]="'PreCarriageFromPortId'"
+                                    [SelectedValue]="PreCarriageFromPortId"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Port'"
                                     [DependencyFilter1Value]="'A'"
-                                    (SelectedItemChanged)="PreForwardingFromPort = $event">
+                                    (SelectedItemChanged)="PreCarriageFromPort = $event">
                             </LogLov>
                         </td>
                     </tr>
@@ -71,23 +71,23 @@
                         </td>
 
                         <td>
-                            <CheckBox [IsChecked]="HasOnForwarding" (Checked)="HasOnForwarding = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Add On-Forwarding'"></CheckBox>
+                            <CheckBox [IsChecked]="HasOnCarriage" (Checked)="HasOnCarriage = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Add On-carriage'"></CheckBox>
                         </td>
                     </tr>
 
-                    <tr class="FormFieldRow" *ngIf="HasOnForwarding">
+                    <tr class="FormFieldRow" *ngIf="HasOnCarriage">
                         <td>
-                            <LogLabel [ObjectFieldName]="'OnForwardingToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'OnCarriageToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
                         <td>
-                            <LogLov [ObjectFieldName]="'OnForwardingToPortId'"
-                                    [SelectedValue]="OnForwardingToPortId"
+                            <LogLov [ObjectFieldName]="'OnCarriageToPortId'"
+                                    [SelectedValue]="OnCarriageToPortId"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Port'"
                                     [DependencyFilter1Value]="'A'"
-                                    (SelectedItemChanged)="OnForwardingToPort = $event">
+                                    (SelectedItemChanged)="OnCarriageToPort = $event">
                             </LogLov>
                         </td>
                     </tr>

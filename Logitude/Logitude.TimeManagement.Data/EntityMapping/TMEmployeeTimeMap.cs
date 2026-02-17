@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data;
@@ -37,7 +37,7 @@ namespace Logitude.TimeManagement.Data.EntityMapping
 
             this.Property(t => t.EmployeeUserId).HasColumnName("EmployeeUserId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.DateOfWork).HasColumnName("DateOfWork").IsRequired();
+            this.Property(t => t.DateOfWork).HasColumnName("DateOfWork");
 
             this.Property(t => t.Description).HasColumnName("Description").IsRequired().HasMaxLength(500).IsUnicode(true);
 
@@ -47,7 +47,7 @@ namespace Logitude.TimeManagement.Data.EntityMapping
 
             this.Property(t => t.ProjectId).HasColumnName("ProjectId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.LocationCode).HasColumnName("LocationCode").IsRequired().HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.LocationCode).HasColumnName("LocationCode").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.AnalyzeQueueId).HasColumnName("AnalyzeQueueId").HasMaxLength(15).IsUnicode(false);
 

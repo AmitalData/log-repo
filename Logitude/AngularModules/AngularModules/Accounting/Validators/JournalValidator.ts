@@ -1,37 +1,32 @@
 import { JournalPM } from '../EntityPMs/JournalPM';
+import { JournalLinePM } from '../EntityPMs/JournalLinePM';
 import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
-import { VendorValidator } from 'Common/Validators/VendorValidator';
 
-const approvedStatus = '2';
 export class JournalValidator
 {
     private static CurrentSession = SessionLocator.SelectedSession;
-    public static SetAccountingDateInValid = false;
-
 
     public static ValidateJournal(entityPM: any)
     {
+
+
         return [];
     }
 
-    public static ValidateAccountingDate() {
-        var errors = [];
+    public static ValidateAccountingDate(entityPM: any) {
 
-        if(this.SetAccountingDateInValid){
-           errors.push(TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth"));
-        }
-        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
 
-        return errors;
+        return [];
     }
 
+    public static ValidateJournalLine(line: any) {
 
-    public static ValidateJournalLines(line: any ) {
         var errors = [];
         if (line) {
             if (line.ActionCode == null || line.ActionCode == undefined) {
+                // you must choose action code
                 errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseActionCode") + " " + line.Line  ); // + "You must choose action code for line "
             } else {
                 // Credit Account
@@ -57,9 +52,13 @@ export class JournalValidator
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseCurrency") + " " + line.Line  ); //You must choose Currency for line
 
                 }
-               
-               
-               
+
+                // Amount
+                if (!line.LocalAmount && !line.ForeignAmount) {
+                    //Amount is missing
+                    errors.push(TextCodeTranslator.Translate("Accounting.General.O.AmountIsMissing") + " " + line.Line  ); //Amount is missing for line
+
+                }
 
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
@@ -71,7 +70,6 @@ export class JournalValidator
                     }
                 }
 
-              
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line
@@ -88,35 +86,16 @@ export class JournalValidator
 
             }
         }
+        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
         return errors;
     }
 
-    public  async ValidateJournalLinesCountry(lines: any ) {
-        var errors = [];
-        const vendorSet = new Set<string>();
- 
- 
-        for (let line of lines) {
-            if((line.ActionCode === '2' || line.ActionCode === '3')  && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
-                const vendorValidator: VendorValidator = new VendorValidator();
-                const vendorEntry = line.DebitAccountNumber + "/" + line.DebitAccountName;
-                 if (!await vendorValidator.IsVendorCountryValid(line.DebitAccountId,line.DebitAccountCountryCode,)) {
-                    vendorSet.add(vendorEntry); 
-                }
-            }
-        }
-        if(vendorSet.size > 0) {
-            const vendorList = Array.from(vendorSet).join(", ");
-            errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor") +": "+ vendorList); 
-        }
-        return errors;
-    }
     public static ValidateTotals(entityPM: JournalPM) {
 
         var errors = [];
 
-        if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3" || entityPM.StatusCode == "6" )
+        if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3")
         {
 
             var cSum: number = 0;
@@ -151,7 +130,7 @@ export class JournalValidator
                 }
 
             }
-            if (AppTool.Round(cSum, 2) !=  AppTool.Round(dSum,2)) {
+            if (cSum.toFixed(2) != dSum.toFixed(2)) {
                 errors.push(TextCodeTranslator.Translate("Accounting.General.O.TotalDebitMustEqualTotalCredit") + ": " + JournalValidator.Abs(dSum - cSum).toFixed(2)); //Total debit amount must be equal to total credit amount, There is a difference of
                 this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             } else {
@@ -160,44 +139,30 @@ export class JournalValidator
         }
         return errors;
     }
-    FillErrorList(result:string[]) {
-        if (result.length > 0) {
-            for (var error in result) {
-                this.errorList.push(result[error]);
-            }
-        }
-      }
-    errorList: string[];
-    public Validate(entityPM: JournalPM) {
-        
-        var oldEntity:any = entityPM.OldEntityPM;
-        if(oldEntity && oldEntity?.statusCode == approvedStatus)
-            return [];
 
+    public Validate(entityPM: JournalPM) {
 
         JournalValidator.CurrentSession = SessionLocator.SelectedSession;
 
-        this.errorList = [];
+        var errors = [];
         var result = [];
-
-        
-        result = JournalValidator.ValidateAccountingDate();
-        this.FillErrorList(result);
-
-        for (var line in entityPM.JournalLines) {
-            var journalLine = entityPM.JournalLines[line];
-            result = JournalValidator.ValidateJournalLines(journalLine);
-            this.FillErrorList(result);
+        // Validate last row of journal lines
+        if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
+            var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
         }
-       
+        result = JournalValidator.ValidateJournalLine(lastRow)
+        if (result.length > 0) {
+            return result;
+        }
 
-
+        // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
-        this.FillErrorList(result);
-      
-        return this.errorList ;
-    }
+        if (result.length > 0) {
+            return result;
+        }
 
+        return errors;
+    }
 
     public static Abs(number: number) {
         return number < 0 ? number * -1 : number;
@@ -208,16 +173,25 @@ export class JournalValidator
         if (day > 0 && day < 32) {
             var lastDayOfMonth = this.lastDay(date.getFullYear(), date.getMonth());
             if (day > lastDayOfMonth) {
-                
+                //error
+                //this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
                 return false;
-                
+                //var t = setTimeout(() => {
+                //    this.AccDay = value;
+                //});
             } else {
-                
+                //this.UIProperties.SetValidity("AccDay", this.ObjectTableName, true, "valid");
+                //this.AccountingDate = new Date(date.setDate(day));
                 return true;
 
             }
         } else {
-            
+            //error
+            //this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
+            //this.isValid = false;
+            //var t = setTimeout(() => {
+            //    this.AccDay = value;
+            //});
             return false;
         }
 

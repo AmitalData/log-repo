@@ -6,7 +6,7 @@ using Logitude.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.CommonDataModel.Repositories;
 
@@ -22,7 +22,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel;
 using WebFreight.Web.GlobalModelDB;
 using WebFreight.Web.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.DataContracts;

@@ -4,11 +4,11 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -708,7 +708,7 @@ namespace WebFreight.Web.WcfApi
                         }
 
                         QuoteChargeQuery quoteChargeQuery = new QuoteChargeQuery(new QuoteChargeRepository(objectContext));
-                        List<QuoteChargePM> quoteCharges = quoteChargeQuery.GetQuoteChargesForDeleting(entity.Id, entity.Tenant);
+                        List<QuoteChargePM> quoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entity.Id, entity.Tenant);
                         foreach (QuoteChargePM charge in quoteCharges)
                         {
                             charge.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
@@ -851,11 +851,7 @@ namespace WebFreight.Web.WcfApi
                             newDocumentFiling.HasCopies = true;
                             newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
                             
-                         // newDocumentFiling.SecurityId = newDocumentFiling.Id + StringHelper.GetRandomString(10);
-                            string com_id = newDocumentFiling.Id;        // Length = 30
-                            string com_md5 = CreateMD5(com_id); // Length = 32 
-                            string com_short = newDocumentFiling.Id.Substring(0, 8);
-                            newDocumentFiling.SecurityId = com_short + com_md5; // Length = 40
+                            newDocumentFiling.SecurityId = newDocumentFiling.Id + StringHelper.GetRandomString(10);
 
                             documentsFilingRepository.Add(newDocumentFiling);
 
@@ -1072,41 +1068,6 @@ namespace WebFreight.Web.WcfApi
         }
 
 
-        private static string CreateMD5(string input)
-
-        {
-
-            // Use input string to calculate MD5 hash
-
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-
-            {
-
-                byte[] inputBytes = System.Text.Encoding.Unicode.GetBytes(input);
-
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                //return Convert.ToHexString(hashBytes); // .NET 5 +
-
-                //Convert the byte array to hexadecimal string prior to.NET 5
-
-                StringBuilder sb = new System.Text.StringBuilder();
-
-                for (int i = 0; i < hashBytes.Length; i++)
-
-                {
-
-                    sb.Append(hashBytes[i].ToString("X2"));
-
-                }
-
-                return sb.ToString();
-
-            }
-
-        }
-
-
         public List<QuoteList> GetQuoteList(DataContracts.QuoteApiFilters filters, int tenant, ref Response response)
         {
 
@@ -1275,7 +1236,7 @@ namespace WebFreight.Web.WcfApi
                         ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", 0, true);
                         string objectTableId = objectTable.Id;
 
-                        var quoteEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId);
+                        List<TraceEvent> quoteEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId).ToList();
                         List<TraceEventParams> toBuildEvents = new List<TraceEventParams>();
                         foreach (TraceEventPM traceEvent in eventsList)
                         {

@@ -20,7 +20,7 @@ export class ReportPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -120,44 +120,11 @@ export class ReportPM {
     public set DefaultMessageTemplateId(newValue: string) { if (this.defaultMessageTemplateId != newValue) { this.defaultMessageTemplateId = newValue; this.MarkAsDirty("DefaultMessageTemplateId"); } }
        
 	 
-    private defaultExcelNoStimId: string;
-    public get DefaultExcelNoStimId() { return this.defaultExcelNoStimId; }
-    public set DefaultExcelNoStimId(newValue: string) { if (this.defaultExcelNoStimId != newValue) { this.defaultExcelNoStimId = newValue; this.MarkAsDirty("DefaultExcelNoStimId"); } }
-
-    private featureUniqeCode: string;
-    public get FeatureUniqeCode() { return this.featureUniqeCode; }
-    public set FeatureUniqeCode(newValue: string) { if (this.featureUniqeCode != newValue) { this.featureUniqeCode = newValue; this.MarkAsDirty("FeatureUniqeCode"); } }
-       
-	 
-    private availableForScheduling: boolean;
-    public get AvailableForScheduling() { return this.availableForScheduling; }
-    public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
-       
-	 
-    private disablePreview: boolean;
-    public get DisablePreview() { return this.disablePreview; }
-    public set DisablePreview(newValue: boolean) { if (this.disablePreview != newValue) { this.disablePreview = newValue; this.MarkAsDirty("DisablePreview"); } }
-       
-	 
-    private defaultExcelTemplateId: string;
-    public get DefaultExcelTemplateId() { return this.defaultExcelTemplateId; }
-    public set DefaultExcelTemplateId(newValue: string) { if (this.defaultExcelTemplateId != newValue) { this.defaultExcelTemplateId = newValue; this.MarkAsDirty("DefaultExcelTemplateId"); } }
-     
-    
-	 
-    private isExcelReportAllowed: boolean; 
-    public get IsExcelReportAllowed() { return this.isExcelReportAllowed; }
-    public set IsExcelReportAllowed(newValue: boolean) { if (this.isExcelReportAllowed != newValue) { this.isExcelReportAllowed = newValue; this.MarkAsDirty("IsExcelReportAllowed"); } }
-       
-	 
 
     public OldEntityPM: ReportPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -165,7 +132,6 @@ export class ReportPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Report");
            
         }
-	 }
     }
     private MyClone: ReportPM;
 
@@ -177,4 +143,4 @@ export class ReportPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

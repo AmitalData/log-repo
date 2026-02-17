@@ -29,7 +29,7 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
                         if (item.FieldValue != null)
                         {
                             string myAirlineId = item.FieldValue.ToString();
-                            queryableData = queryableData.Where(d => d.AirlineId == myAirlineId);
+                            queryableData = queryableData.Where(d => d.AirlineId == null || d.AirlineId == myAirlineId);
                         }                        
                     }
                 }

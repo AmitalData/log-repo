@@ -8,7 +8,7 @@ import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelp
 import {DownloadManager} from '../../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AttachDocsIn',
     templateUrl: './AttachmentDocsInComponent.html',
 })
@@ -68,9 +68,8 @@ export class AttachmentDocsInComponent implements OnInit {
             item.Tenant = doc.Tenant;
             item.FileSize = doc.FileSize;
             item.FileExtension = doc.FileExtension;
-            item.DocumentTypeCopyNameWithDocumentTypeName = doc.CalculatedFileName ? doc.CalculatedFileName : doc.FileName; 
+            item.DocumentTypeCopyNameWithDocumentTypeName = doc.DocumentTypeName;
             item.ShowRemoveLink = true;
-            item.DirectionCode =  "I";
             this.AttachmentsLists.push(item);
 
         }); 

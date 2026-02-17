@@ -1,4 +1,4 @@
-
+﻿
 <table>
 
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -20,7 +20,7 @@
 
             <td>
                 <LogLov  
-                        [ObjectFieldName]="'QuoteClosingReasonId'"
+                        [ObjectFieldName]="'QuoteClosingReasonCode'"
                         [ObjectTableName]="'QuoteClosingReason'"
                         [DataContext]="DataContext"
                         [LookUpTableName]="'Quote'">

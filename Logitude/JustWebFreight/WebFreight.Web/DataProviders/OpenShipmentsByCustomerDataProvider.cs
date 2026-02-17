@@ -49,7 +49,6 @@ namespace WebFreight.Web.DataProviders
         public string PortOfDischargeName { get; set; }
         public int? NumberOfContainers { get; set; }
         public DateTime? ETA { get; set; }
-        public DateTime? ATA { get; set; }
         public bool IsCancelled { get; set; }
         public string ContainersNumbersArray { get; set; }
         public string ContainersNumbersAndTypesArray { get; set; }
@@ -67,14 +66,5 @@ namespace WebFreight.Web.DataProviders
         public DateTime? Transshipment1ETD { get; set; }
         public DateTime? Transshipment2ETD { get; set; }
         public DateTime? Transshipment3ETD { get; set; }
-        public string ShippingLine { get; set; }
-        public string Voyage { get; set; }
-        public string Vessel { get; set; }
-        public string LastDeliveryToAddress { get; set; }
-        public string FistPickupFromAddress { get; set; }
-
-        public DateTime? MainCarriageATD { get; set; }
-        public string ShipperReference1 { get; set; }
-        public string ShipperReference2 { get; set; }
     }
 }

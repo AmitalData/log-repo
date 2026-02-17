@@ -1,8 +1,7 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {DocumentsFilingPM} from '../../EntityPMs/DocumentsFilingPM';
 import {DocumentTypeCustomFieldPM} from '../../EntityPMs/DocumentTypeCustomFieldPM';
 import {FormCustomFieldPM} from '../../EntityPMs/FormCustomFieldPM';
@@ -19,10 +18,10 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 @Injectable()
 export class DocumentTypeCustomFieldService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DocumentTypeCustomField';
     }
 
@@ -33,8 +32,8 @@ export class DocumentTypeCustomFieldService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '?tenant=' + tenant + '&documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&entityTypeId=' + entityTypeId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '?tenant=' + tenant + '&documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&entityTypeId=' + entityTypeId, { headers: authHeader }).map(response => {
+            var result = response.json();
                 var entity: FormCustomFieldPM;
                 var FromDocumentTypeCustomFieldLists: FormCustomFieldPM[];
                 FromDocumentTypeCustomFieldLists = new Array<FormCustomFieldPM>();
@@ -49,7 +48,7 @@ export class DocumentTypeCustomFieldService {
                 pmresponse.Result = FromDocumentTypeCustomFieldLists;
                 return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     getDocumentTypeCustomFieldsByDocument(tenant: number, documentTypeId: string) {
@@ -57,8 +56,8 @@ export class DocumentTypeCustomFieldService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '?tenant=' + tenant + '&documentTypeId=' + documentTypeId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '?tenant=' + tenant + '&documentTypeId=' + documentTypeId, { headers: authHeader }).map(response => {
+            var result = response.json();
                 var entity: DocumentTypeCustomFieldPM;
                 var  DocumentTypeCustomFieldLists: DocumentTypeCustomFieldPM[];
                 DocumentTypeCustomFieldLists = new Array<DocumentTypeCustomFieldPM>();
@@ -74,7 +73,7 @@ export class DocumentTypeCustomFieldService {
                 pmresponse.Result = DocumentTypeCustomFieldLists;
                 return pmresponse;
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
@@ -82,7 +81,7 @@ export class DocumentTypeCustomFieldService {
     update(entityPM: DocumentTypeCustomFieldPM) {
 
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -95,8 +94,9 @@ export class DocumentTypeCustomFieldService {
             if (errorsArray.length == 0) {
                 var mappedEntity: DocumentTypeCustomFieldPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                return this._http.put(this._apiUrl + '/putdocumenttypecustomfield', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                return this._http.put(this._apiUrl + '/putdocumenttypecustomfield', JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: DocumentTypeCustomFieldPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -104,14 +104,14 @@ export class DocumentTypeCustomFieldService {
                         }
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         }
@@ -123,7 +123,7 @@ export class DocumentTypeCustomFieldService {
 
     Insert(entityPM: DocumentTypeCustomFieldPM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -138,8 +138,9 @@ export class DocumentTypeCustomFieldService {
             if (errorsArray.length == 0) {
                 var mappedEntity: DocumentTypeCustomFieldPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-                return this._http.post(this._apiUrl + '/postdocumenttypecustomfield', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                return this._http.post(this._apiUrl + '/postdocumenttypecustomfield', JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: DocumentTypeCustomFieldPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -148,14 +149,14 @@ export class DocumentTypeCustomFieldService {
 
                         return response;
 
-                    }));
+                    });
             }
             else {
 
                 response.HasError = true;
                 response.ErrorsArray = errorsArray;
 
-                return of(response);
+                return Observable.of(response);
 
             }
         }
@@ -167,7 +168,7 @@ export class DocumentTypeCustomFieldService {
     UpdateFormCustomField(entityPM: FormCustomFieldPM) {
 
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -180,8 +181,9 @@ export class DocumentTypeCustomFieldService {
             if (errorsArray.length == 0) {
                 var mappedEntity: FormCustomFieldPM;
                 mappedEntity = this.MapFormCustomFieldsByDocumentJsonToEntityPM(entityPM, false);
-                return this._http.put(this._apiUrl + '/putFormCustomField', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                return this._http.put(this._apiUrl + '/putFormCustomField', JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: FormCustomFieldPM;
                             mappedResult = this.MapFormCustomFieldsByDocumentJsonToEntityPM(pm, true, entityPM);
@@ -189,14 +191,14 @@ export class DocumentTypeCustomFieldService {
                         }
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         }

@@ -21,7 +21,7 @@ import {EmployeeGroupPM} from '../../../EntityPMs/EmployeeGroupPM';
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItemPie, ResetItem, makeAMLineChart, Lineclick, ResetLineclick: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ByOpenedTicketComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -206,7 +206,7 @@ export class ByOpenedTicketComponent extends BaseComponent {
 
                         var service: CRMDomainService = new CRMDomainService();
                         if (employeeGroupLinesdIds != null && employeeGroupLinesdIds.length > 0) {
-                            service.GetUsersByEmployeeGroupIds(myIds).subscribe((myResult:any) => {
+                            service.GetUsersByEmployeeGroupIds(myIds).subscribe(myResult => {
                                 var myResponse: ServiceResponse = myResult;
                                 if (!myResponse.HasError) {
                                     loadedUsersList = myResponse.Result.sort((a, b) => { return (a.EnglishName === b.EnglishName) ? 0 : (a.EnglishName < b.EnglishName) ? -1 : 1 });
@@ -555,7 +555,7 @@ export class ByOpenedTicketComponent extends BaseComponent {
     }
 
     LoadOpenedTicketsByOwner() {
-        this.crmDomainService.GetOpenedTicketsByOpenedStage(this.SelectedDateIndex, this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetOpenedTicketsByOpenedStage(this.SelectedDateIndex, this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             try {
                 var elm = document.getElementById(this.OpenTicketsId);
                 elm.innerHTML = "";
@@ -645,7 +645,7 @@ export class ByOpenedTicketComponent extends BaseComponent {
     }
     
     LoadOpenedSLAViolationData() {
-        this.crmDomainService.GetOpenedTicketsBySLAViolation(this.SelectedDateIndex,this.SelectedDateFilter.Code, this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetOpenedTicketsBySLAViolation(this.SelectedDateIndex,this.SelectedDateFilter.Code, this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             if (result.Result.length == 0) {
                 this.SLAViolationIdExistance = false;
                 try {
@@ -799,7 +799,7 @@ export class ByOpenedTicketComponent extends BaseComponent {
     }
 
     LoadOpenedTicketsOwnerData() {
-        this.crmDomainService.GetOpenedTicketsGroupByOwner(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetOpenedTicketsGroupByOwner(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             if (this.CurrentTicketByTicketOwnerChart != null) {
                 this.CurrentTicketByTicketOwnerChart.clear();
                 this.CurrentTicketByTicketOwnerChart = null;
@@ -822,7 +822,7 @@ export class ByOpenedTicketComponent extends BaseComponent {
     }
 
     LoadOpenedTicketsSeverityData() {
-        this.crmDomainService.GetOpenedTicketsGroupBySeverity(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetOpenedTicketsGroupBySeverity(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             try {
                 if (this.CurrentTicketBySeverityChart != null) {
                     this.CurrentTicketBySeverityChart.clear();
@@ -844,7 +844,7 @@ export class ByOpenedTicketComponent extends BaseComponent {
         });
     }
     LoadOpenedTicketsClassificationData() {
-        this.crmDomainService.GetOpenedTicketsGroupByClassification(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe((result:any) => {
+        this.crmDomainService.GetOpenedTicketsGroupByClassification(this.SelectedDateFilter.Code + "", this.OwnerId, this.EmployeeGroupId).subscribe(result => {
             try {
                 if (this.CurrentTicketByClassificationChart != null) {
                     this.CurrentTicketByClassificationChart.clear();

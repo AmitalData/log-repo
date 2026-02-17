@@ -13,7 +13,7 @@ import { TMProjectListService } from '../../Services/StandardLists/TMProjectList
 
 @Component({
     selector: 'NewLineComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewLineComponent.html',
 })
 

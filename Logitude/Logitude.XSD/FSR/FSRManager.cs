@@ -1,5 +1,4 @@
-﻿using Logitude.BL.DataContracts;
-using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
@@ -9,10 +8,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -110,8 +109,6 @@ namespace Logitude.XSD.FSR
                     #region
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        var isDemoTenant = false;
-
                         string myTTY = null;
                         string myCCSMessageType = null;
 
@@ -120,8 +117,6 @@ namespace Logitude.XSD.FSR
                         {
                             TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                             TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
-                            SettingRepository mySettingRepository = new SettingRepository();
-                            isDemoTenant = mySettingRepository.IsDemoTenant(tenant.ToString());
 
                             if (tenantManagement != null)
                             {
@@ -141,7 +136,7 @@ namespace Logitude.XSD.FSR
                             myPrefix = string.Format("{0:d3}", myPrefix);
 
                             #region GetDemoTenantData
-                            if (isDemoTenant)
+                            if (tenant == 65)
                             {
                                 myResultClass.IsDemoTenant = true;
 
@@ -344,7 +339,7 @@ namespace Logitude.XSD.FSR
                                     //}
 
                                     DbQueueService queueservice = new DbQueueService("champmessageoutqueue", tenant);
-                                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
                                 }
 
                                 catch (Exception ex)
@@ -489,7 +484,6 @@ namespace Logitude.XSD.FSR
                         airlineRepository.Add(newAirline);
                         cardRepository.SubmitChanges();
                         airlineRepository.SubmitChanges();
-                        RunStoredProcedureClass.UpdateCardSearcsRecords(newCard.Id, newCard.Tenant);
 
                         airlineId = newAirline.Id;
                         airlineCode = newCard.Code;

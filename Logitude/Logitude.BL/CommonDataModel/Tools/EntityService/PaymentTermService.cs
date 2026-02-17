@@ -4,7 +4,7 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -40,7 +40,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("PaymentTerm", tenant).ToString();
             this.Poco = new PaymentTerm();
             this.Poco.Id = this.entityPM.Id;
-            this.entityPM.AddedManually = true;
+
             PaymentTermValidating.Validate(theEntityPm);
             PaymentTermTracing.Trace(theEntityPm, Poco, isNewEntity);
             PaymentTermMapping.MapEntity(theEntityPm, Poco, isNewEntity);

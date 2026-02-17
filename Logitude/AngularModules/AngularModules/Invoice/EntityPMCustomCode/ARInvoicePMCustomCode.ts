@@ -6,7 +6,7 @@ export class ARInvoicePMCustomCode {
     public static ApplyEntityChanged(propertyName: string, entityPM: ARInvoicePM) {
        
         entityPM.UIProperties.SetRequired("SATPaymentMethodCode", "ARInvoice", false);
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(entityPM.SATPaymentMethodCode)) {
                 entityPM.UIProperties.SetRequired("SATPaymentMethodCode", "ARInvoice", true);
             }

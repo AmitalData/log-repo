@@ -1,16 +1,17 @@
 import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
 import {ContactItemClass} from '../../../../CommonModules/CommonPartners/Components/EditTabs/ContactsTabComponent';
 import {ContactInputTemplate, ContactInputTemplateArgs} from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
 import {AppTool} from '../../../../Infrastructure/Tools';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PartnersDomainService, PartnerServicePM} from '../../../../Common/Services/PartnersDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './AddEditContactComponent.html',
 })
 
@@ -21,10 +22,7 @@ export class AddEditContactComponent {
     public DataContext: ContactItemClass;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
-    public IsHasExternalId = false;
-    public IsFromCustomerEdit = false;
-
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
@@ -38,9 +36,6 @@ export class AddEditContactComponent {
         if (dataContext.fatherComponent) {
             this.CardId = dataContext.fatherComponent.EntityId;
             this.DomainService = dataContext.fatherComponent.DomainService;
-
-            this.IsHasExternalId =  !AppTool.IsNullOrEmpty(dataContext.ExternalId)? true: false  ;
-
         }
         else {
             this.CardId = dataContext.EntityPM.CardId;
@@ -54,7 +49,6 @@ export class AddEditContactComponent {
     SetWindowArgs(args: any) {
         if (args) {
             this.ShowSecondPartOfWindow = args.ShowSecondPartOfWindow;
-            this.IsFromCustomerEdit = args.IsFromCustomerEdit;
         }
     }
 
@@ -77,7 +71,7 @@ export class AddEditContactComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     } 
@@ -117,82 +111,39 @@ export class AddEditContactComponent {
     }
 
     OkButtonClicked() {
-
         this.CurrentSession.StartBusyIndicatorSaving();
 
         this.ValidationErrorsList = this.ContactTemplate.Validate();
-
         if (this.ValidationErrorsList.length > 0) {
             this.CurrentSession.StopBusyIndicator();
         }
 
         else {
-
             if (!this.EntityPM.IsDirty) {
-                this.CurrentSession.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
             }
 
             else {
-
-                if (this.ContactTemplate.IsInactiveContactExists()) {
-
-                    this.CurrentSession.StopBusyIndicator();
-
-                    var args = new PartnerServicePM();
-                    args.IsConnectingInactiveContact = true;
-                    args.InactiveContactId = this.ContactTemplate.LoadedContactId;
-
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Title = "Activate Contact";
-                    confirmWindow.NoButtonText = "Re-activate";
-                    confirmWindow.YesButtonText = "Keep inactive";
-                    confirmWindow.ShowCancelButton = true;
-
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.No) {
-                            this.CurrentSession.StartBusyIndicatorSaving();                            
-                            args.IsReactivatingContact = true;
-                            this.Save(args);
-                        }
-
-                        else if (confirmWindow.Yes) {
-                            this.CurrentSession.StartBusyIndicatorSaving();
-                            this.Save(args);
-                        }
-                    });
-
-                    confirmWindow.Show("Please note that this contact is inactive, after adding to the partner");
-                }
-
-                else {
-
-                    if (this.DataContext.IsNewEntity) {
-                        if (this.DataContext.fatherComponent && this.DataContext.fatherComponent.ItemsSource.length == 0) {
-                            this.DataContext.fatherComponent.EntityPM.IsFirstContactToAdd = true;
-                            this.DataContext.fatherComponent.EntityPM.PrimaryContactId = this.EntityPM.Id;
-                        }
+                if (this.DataContext.IsNewEntity) {
+                    if (this.DataContext.fatherComponent && this.DataContext.fatherComponent.ItemsSource.length == 0) {
+                        this.DataContext.fatherComponent.EntityPM.IsFirstContactToAdd = true;
+                        this.DataContext.fatherComponent.EntityPM.PrimaryContactId = this.EntityPM.Id;
                     }
-
-                    this.Save();
                 }
+
+                this.Save();
             }
-        }
+        }        
     }
 
     private LoadCompletedEvent: any = null;
-    private Save(args: PartnerServicePM = null) {
-
-        if (!args) {
-            args = new PartnerServicePM();
-        }
-
+    private Save() {
+        var args = new PartnerServicePM();
         args.Tenant = this.EntityPM.Tenant;
         args.ContactId = this.EntityPM.Id;
         args.PartnerId = this.EntityPM.CardId;
         args.Contact = this.EntityPM;
         args.IsContactDirty = this.EntityPM.IsDirty;
-        args.ExternalId = this.EntityPM.ExternalId;
 
         if (this.DataContext.fatherComponent) {
             args.IsPartnerDirty = this.DataContext.fatherComponent.EntityPM.IsDirty;
@@ -214,7 +165,7 @@ export class AddEditContactComponent {
             else {
                 this.DataContext.EntityPM = myResponse.Result.Contact;
 
-                if (!this.CurrentSession.CurrentEditComponent || this.IsFromCustomerEdit ) {
+                if (!this.CurrentSession.CurrentEditComponent) {
                     if (this.DataContext.IsNewEntity) {
                         this.DataContext.IsNewEntity = false;
                     }

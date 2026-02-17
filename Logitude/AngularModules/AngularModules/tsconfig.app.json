@@ -2,15 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/App",
+    "baseUrl": "./",
+    "module": "es2015",
     "types": []
   },
-  "files": [
-    "App/Bootstraper.ts",
-    "polyfills.ts"
-  ],
-  "include": [
-    "**/*.d.ts"
-  ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts",
@@ -26,61 +21,35 @@
     "Stimulsoft",
     "_Resources",
 
-
+    ".angular-cli.json",
     ".editorconfig",
     ".gitignore",
     "karma.conf.js",
     "package.json",
     "polyfills.ts",
-    //"protractor.conf.js",
+    "protractor.conf.js",
     "README.md",
     "tsconfig.json",
     "tslint.json",
 
-    //"Accounting",
-    //"Booking",
-    //"Common",
-    //"CommonModules",
-    //"Controls",
-    //"CRM",
-    //"CRMModules",
-    //"Customs",
-    //"CustomsModules",
-    //"Dashboard",
-    //"Infrastructure",
-    //"InfrastructureModules",
-    //"Invoice",
-    //"InvoiceModules",
-    //"Quote",
-    //"QuoteModules", // function is too long 716
-    //"Report",
-    //"SharedLogistics",
-    //"Shipment",
-    //"ShipmentModules",
-    //"Social",
-    //"TariffModule",
-    //"TimeManagement",
-    //"Warehouse",
+    "webpack.config.js",
+    "webpack.config-prod.js",
 
-    "Js/zone/ng_zone.d.ts"
-    //"Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/ListHeaderTemplateComponent.ts",
-    //"App/AppComponent_Cust.ts",
-    //"App/Module_APP_CUST.ts",
-    //"Infrastructure/Utilities/DynamicLoader_Cust.ts",
+    "Customs",
+    "CustomsModule",
+    "Js/zone/ng_zone.d.ts",
 
-
-
-    //"Controls/AutoCompleteBoxComponent.ts",
-    //"CRM/Components/MenuButtons/PackageSelectionComponent.ts",
-    //"CRM/Components/Tickets/Workspace/NewTicketCreatedComponent.ts",
-    //"Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/ListHeaderTemplateComponent.ts",
-    //"Infrastructure/Components/StimulsoftComponent/StimulsoftDesignerComponent.ts",
-    //"Report/Components/FiltersComponent/CRM/CustomerPotentialActualComponent.ts",
-    //"Shipment/Components/HeaderScreenTemplates/IsAccountingClosedHeaderTemplate.ts",
-    //"Shipment/Components/HeaderScreenTemplates/IsOperationalClosedHeaderTemplate.ts",
-    //"Shipment/Components/ListTemplates/DirectionCellDisplayListTemplate.ts",
-    //"Shipment/Components/ListTemplates/RoutingCellDisplayListTemplate.ts",
-    //"Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate.ts",
-    //"CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent.ts"
+    "Controls/AutoCompleteBoxComponent.ts",
+    "CRM/Components/MenuButtons/PackageSelectionComponent.ts",
+    "CRM/Components/Tickets/Workspace/NewTicketCreatedComponent.ts",
+    "Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/ListHeaderTemplateComponent.ts",
+    "Infrastructure/Components/StimulsoftComponent/StimulsoftDesignerComponent.ts",
+    "Report/Components/FiltersComponent/CRM/CustomerPotentialActualComponent.ts",
+    "Shipment/Components/HeaderScreenTemplates/IsAccountingClosedHeaderTemplate.ts",
+    "Shipment/Components/HeaderScreenTemplates/IsOperationalClosedHeaderTemplate.ts",
+    "Shipment/Components/ListTemplates/DirectionCellDisplayListTemplate.ts",
+    "Shipment/Components/ListTemplates/RoutingCellDisplayListTemplate.ts",
+    "Shipment/Components/ListTemplates/TransportModeCellDisplayListTemplate.ts",
+    "CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DeclarationSupplierInvoiceTabComponent.ts"
   ]
 }

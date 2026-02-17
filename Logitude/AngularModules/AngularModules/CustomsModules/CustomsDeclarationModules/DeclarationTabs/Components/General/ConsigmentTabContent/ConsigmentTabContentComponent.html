@@ -1,9 +1,9 @@
 <style>
-    .disabled {
+
+    .disabled{
         pointer-events: none;
         opacity: 0.7;
     }
-
     .subTitle {
         color: #1b90cb;
         font-size: 14px;
@@ -14,7 +14,8 @@
         height: 25px !important;
     }
 
-    .SiteListItem {}
+    .SiteListItem {
+    }
 
     .DeleteIconButton {
         display: none;
@@ -23,74 +24,7 @@
     .SiteListItem:hover:not(:first-child) .DeleteIconButton {
         display: block !important;
     }
-
-    .LogLovContainer {
-        height: 100%;
-        width: 100%;
-        background: white;
-        font-size: 11px;
-        color: #45494A;
-        border-radius: 3px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        position: relative;
-    }
-
-    .LogLOVControl {
-        display: block;
-        height: 22px;
-        min-height: 22px;
-        max-height: 22px;
-        line-height: 22px;
-        width: 100%;
-        position: relative;
-    }
-
-    .LogLovInputDiv {
-        height: 100%;
-        width: 100%;
-        line-height: 22px;
-        width: 100%;
-        border: 1px solid #AAAAAA;
-        outline: none;
-        font-size: 11px;
-        color: #45494A;
-        background: white;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -moz-box-shadow: inset 0 0 3px #AAAAAA;
-        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
-        box-shadow: inset 0 0 3px #AAAAAA;
-        text-decoration: none;
-        vertical-align: middle;
-    }
-
-    .LogLovInputDiv:disabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .LogLovInputDiv:hover:not(:disabled),
-    .LogLovInputDiv:focus:not(:disabled) {
-        border: 1px solid #3BB3E2;
-    }
-
-    .button_ellipsis {
-        width: 30px;
-        text-align: center;
-        font-weight: bold;
-        cursor: pointer;
-        background-color: white;
-        color: black;
-        border: 1px solid #e7e7e7;
-    }
-
-    .button_ellipsis:hover {
-        background-color: #e7e7e7;
-    }
 </style>
-
 <table>
     <tr>
         <td colspan="6">
@@ -98,658 +32,80 @@
                 <table>
 
                     <!-- tab filters-->
-                    <tr *ngIf="declarationPM.Direction!='E'">
+                    <tr>
                         <td colspan="2">
                             <table>
-                                <tr>
-                                    <td style="width: 750px;">
-                                        <table style="table-layout: fixed;">
-
-                                            <tr style="height: 25px;">
-                                                <!-- CargoTypeCode -->
-                                                <td style="width: 105px;">
-                                                    <LogLabel [ObjectFieldName]="'CargoTypeCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td style="width: 105px;">
-                                                    <LogLov [ObjectFieldName]="'CargoTypeCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true"
-                                                        [LookUpTableName]="'Customs.CargoIdentifireType'">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <!-- ManifestNumber -->
-                                                <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'ManifestNumber'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td style="width: 125px; ">
-                                                    <LogTextBox [ObjectFieldName]="'ManifestNumber'"
-                                                        [Placeholder]="ManifestNumberPlaceholder"
-                                                        [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                        [DataContext]="DataContext"></LogTextBox>
-                                                </td>
-
-                                                <td style="width: 40px;">
-                                                    <div style="width: 20px;">
-                                                        <!--*ngIf="!IsDisplayOnly" -->
-                                                        <IconButton *ngIf="CargoTypeCode == '20'" style="float:left;"
-                                                            [IsSmall]="true" [Name]="'search'" [IsIconOnly]="true"
-                                                            (click)="CargoQueryRequestMethod()"></IconButton>
-
-                                                        <IconButton *ngIf="CargoTypeCode == '8'" style="float:left;"
-                                                            [Name]="'Edit'" [IsSmall]="true"
-                                                            (click)="openKanamDeclaration()"></IconButton>
-
-                                                        <!--<span class="CellSeparator" style="float: right;"></span>-->
-
-
-                                                    </div>
-                                                </td>
-
-                                                <!--<td style="width: 40px;"><div></div></td>-->
-                                                <!-- SecondCargoID -->
-                                                <td style="width: 92px;">
-                                                    <LogLabel [ObjectFieldName]="'SecondCargoID'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td style="width: 130px; ">
-                                                    <LogTextBoxV2 *ngIf="CargoTypeCode != '17'"
-                                                        [ObjectFieldName]="'SecondCargoID'"
-                                                        [Placeholder]="SecondCargoIDPlaceholder"
-                                                        [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                        [DataContext]="DataContext" [Text]="SecondCargoID"
-                                                        (LostFocus)="OnSecondCargoLostFocus()"></LogTextBoxV2>
-
-                                                    <SearchBox *ngIf="CargoTypeCode == '17'"
-                                                        [ObjectTableName]="'Customs.CouriersVat'" [IsQuickSearch]="true"
-                                                        [DropDownWidth]="130" [DisplayMember]="'VatNumber'"
-                                                        [DisplayText]="SecondCargoID" [ItemHeight]="22"
-                                                        [HideIcons]="true" [Watermark]="'הזן ח.פ בלדר'"
-                                                        [MaxPopupItemsCount]="12" [IsDisabled]="IsDisplayOnly"
-                                                        (ItemClicked)="CouriersVat = $event"
-                                                        (TextChanged)="CouriersVatTextChanged($event)"></SearchBox>
-
-                                                </td>
-                                                <td
-                                                    style="width: 110px; min-width: 110px; max-width: 110px; text-align: right; padding-right: 5px;">
-                                                    <div *ngIf="CouriersVat && CargoTypeCode == '17'"
-                                                        style="padding-right: 10px; color: #646464; font-size: 11px;">
-                                                        {{CouriersVat.LocalName}}</div>
-                                                    <div *ngIf="CargoTypeCode == '11'" style="width: 20px;">
-                                                        <!--*ngIf="!IsDisplayOnly"-->
-                                                        <IconButton style="float:left;" [IsSmall]="true"
-                                                            [Name]="'search'" [IsIconOnly]="true"
-                                                            (click)="CargoQueryRequestMethod()"></IconButton>
-                                                    </div>
-                                                </td>
-                                                <!--<td style="width: 20px;">
-
-                                                    <div *ngIf="CargoTypeCode == '8'" style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="openKanamDeclaration()"></IconButton>
-                                                    </div>-->
-                                                <!--<span class="CellSeparator" style="float: right;"></span>-->
-
-                                                <!--</td>-->
-                                            </tr>
-
-                                            <tr style="height: 25px;">
-
-                                                <!-- ThirdCargoID -->
-                                                <td>
-                                                    <div [hidden]="CargoTypeCode=='17'">
-                                                        <LogLabel [ObjectFieldName]="'ThirdCargoID'"
-                                                            [ObjectTableName]="'Customs.Consignment'"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </div>
-                                                    <div [hidden]="CargoTypeCode!='17'">
-
-                                                        <LogLabel [ObjectFieldName]="'CargoDate'"
-                                                            [ObjectTableName]="'Customs.Consignment'"
-                                                            [DataContext]="DataContext"></LogLabel>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [hidden]="CargoTypeCode=='17'">
-                                                        <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
-                                                            [Placeholder]="ThirdCargoIdPlaceholder"
-                                                            [ObjectTableName]="'Customs.Consignment'"
-                                                            [HideColumns]="true" [Text]="ThirdCargoID"
-                                                            [DataContext]="DataContext"></LogTextBox>
-                                                    </div>
-                                                    <div [hidden]="CargoTypeCode!='17'">
-                                                        <LogDatePicker [ObjectFieldName]="'CargoDate'"
-                                                            [ObjectTableName]="'Customs.Consignment'"
-                                                            [SelectedDateValue]="CargoDate" [DataContext]="DataContext"
-                                                            [HideColumns]="true"></LogDatePicker>
-                                                    </div>
-                                                </td>
-
-                                                <td style="width: 20px;">
-                                                    <div style="width: 20px;">
-                                                        <!--*ngIf="!IsDisplayOnly" -->
-                                                        <IconButton *ngIf="CargoTypeCode == '1'" [IsSmall]="true"
-                                                            [Name]="'search'" [IsIconOnly]="true"
-                                                            (click)="MasterBOLRequestMethod()" style="float:left;">
-                                                        </IconButton>
-                                                        <IconButton *ngIf="CargoTypeCode == '17'" [IsSmall]="true"
-                                                            [Name]="'search'" [IsIconOnly]="true"
-                                                            (click)="CourierBOLRequestMethod()" style="float:left;">
-                                                        </IconButton>
-                                                    </div>
-                                                </td>
-
-                                                <!-- ManifestDate -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'ManifestDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'ManifestDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true">
-                                                    </LogDatePicker>
-                                                </td>
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <!-- OriginCountryCode -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'OriginCountryCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'OriginCountryCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true"
-                                                        [LookUpTableName]="'Customs.CustomsCountry'">
-                                                    </LogLov>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-
-                                            <tr style="height: 25px;">
-
-                                                <!-- LoadingPortCode -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'LoadingPortCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <!--Customs.Consignment-->
-                                                    <LogLov [ObjectFieldName]="'LoadingPortCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true"
-                                                        [QueryFilterItems]="LoadingPortFilterItems"
-                                                        [LookUpTableName]="'Customs.InternationalSite'"
-                                                        [SelectedValue]="LoadingPortCode">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <!-- UnloadPortCode -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'UnloadPortCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'UnloadPortCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true"
-                                                        [DisplayMemberPath]="'LocalName'"
-                                                        [LookUpTableName]="'Customs.UnloadingSiteType'">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <!-- UnloadDate -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'UnloadDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'UnloadDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true">
-                                                    </LogDatePicker>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-
-                                            <tr style="height: 25px;">
-
-                                                <!-- StorageSiteCode -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'StorageSiteCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'StorageSiteCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [SelectedValue]="StorageSiteCode"
-                                                        [HideColumns]="true"
-                                                        [LookUpTableName]="'Customs.DeliverySiteType'">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <!-- ReceiverWarehouseCode -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'ReceiverWarehouseCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'ReceiverWarehouseCode'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true"
-                                                        [DisplayMemberPath]="'LocalName'"
-                                                        [LookUpTableName]="'Customs.RegisteredWarehouseSiteType'">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <!-- CargoDescription -->
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'CargoDescription'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td rowspan="2" style="vertical-align: top;padding-top: 2px;">
-                                                    <LogTextBox [ObjectFieldName]="'CargoDescription'"
-                                                        [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                        [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-
-                                            <tr style="height: 25px;">
-
-                                                <!-- IsLastReleaseFromWarehous -->
-                                                <td style="vertical-align: top;padding-top: 2px;">
-                                                    <LogLabel [ObjectFieldName]="'IsLastReleaseFromWarehous'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </td>
-                                                <td style="vertical-align: top;padding-top: 2px;">
-                                                    <LogLov [ObjectFieldName]="'IsLastReleaseFromWarehous'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext" [HideColumns]="true"
-                                                        [LookUpTableName]="'Customs.LastReleaseFromWarehouse'">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <!-- Site List -->
-                                                <td rowspan="2" colspan="3">
-                                                    <div
-                                                        style="height: 60px; overflow-x: hidden; overflow-y: auto; float: right; width: 90%;">
-                                                        <ul>
-                                                            <li class="SiteListItem"
-                                                                style="text-align: right; height:25px;"
-                                                                *ngFor="let item of SiteList">
-                                                                <div
-                                                                    style="width: 98px; text-align: right; height: 100%;float: right;">
-                                                                    <LogLabel [ObjectFieldName]="'SiteCode'"
-                                                                        [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
-                                                                        [DataContext]="DataContext"></LogLabel>
-                                                                </div>
-                                                                <div
-                                                                    style="width: 35px; text-align: center; height: 100%;float: right; padding-top: 5px;">
-                                                                    {{item.TransitionNumber}}
-                                                                </div>
-                                                                <div [class.disabled]="IsDisplayOnly"
-                                                                    style="position: relative; width: 47%; text-align: center; height: 100%;float: right; padding-top: 2px;">
-                                                                    <LogLov [ObjectFieldName]="'SiteCode'"
-                                                                        [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
-                                                                        [DataContext]="item" [HideColumns]="true"
-                                                                        [DisplayMemberPath]="'LocalName'"
-                                                                        [HideMaintenanceIcon]="true"
-                                                                        (SelectedItemChanged)="item.SiteCodeChanged(item.Code)"
-                                                                        [LookUpTableName]="'Customs.InternalBorderSiteType'">
-                                                                    </LogLov>
-
-                                                                    <div class="DeleteIconButton" style="width:30px">
-                                                                        <IconButton [IsSmall]="true" [Name]="'Delete'"
-                                                                            [IsIconOnly]="true"
-                                                                            (click)="item.DeleteSiteButtonClicked()"
-                                                                            style="position: absolute;top: 3px;left: 20px;">
-                                                                        </IconButton>
-                                                                    </div>
-                                                                </div>
-
-                                                            </li>
-                                                        </ul>
-                                                        <div style="clear: both;"></div>
-                                                    </div>
-                                                    <div
-                                                        style="vertical-align:top;padding-top:7px; padding-right: 3px; float: right;">
-                                                        <IconButton style="float: right;" [IsSmall]="true"
-                                                            [Name]="'Add'" (click)="AddSiteButtonClicked()"
-                                                            [IsEnabled]="AddSiteEnabled"></IconButton>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align:top;padding-top:7px; padding-right: 3px;">
-                                                    <!--<IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddSiteButtonClicked()" [IsEnabled]="AddSiteEnabled"></IconButton>-->
-                                                </td>
-
-
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td *ngIf="ShowExcludeConsignmentBoolean" style="vertical-align: middle;padding-top: 2px;">
-                                                    <LogLabel [ObjectFieldName]="'ExcludeConsignment'"
-                                                        [DataContext]="DataContext"
-                                                        [ObjectTableName]="'Customs.Declaration'"></LogLabel>
-                                                </td>
-                                                <td *ngIf="ShowExcludeConsignmentBoolean">
-                                                    <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly"
-                                                        [IsChecked]="ExcludeConsignment"
-                                                        (Checked)="ExcludeConsignment = $event"></CheckBox>
-                                                    <HelpIcon style="float: right; padding-right: 10px;"
-                                                        [HideHeader]="true"
-                                                        [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe"
-                                                        [IconSize]="14"></HelpIcon>
-                                                </td>
-                                                <td *ngIf="ShowExcludeConsignmentBoolean" style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td *ngIf="_ShowExcludeManifest" style="vertical-align: middle;padding-top: 2px;">
-                                                    <LogLabel [ObjectFieldName]="'ExcludeManifest'"
-                                                        [DataContext]="DataContext"
-                                                        [ObjectTableName]="'Customs.Declaration'"></LogLabel>
-                                                </td>
-                                                <td *ngIf="_ShowExcludeManifest">
-                                                    <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly"
-                                                        [IsChecked]="ExcludeManifest"
-                                                        (Checked)="ExcludeManifest = $event"></CheckBox>
-                                                    <HelpIcon style="float: right; padding-right: 10px;"
-                                                        [HideHeader]="true"
-                                                        [Text]="'Customs.Declaration.O.IsSendManifest' | TextCodeTranslationPipe"
-                                                        [IconSize]="14"></HelpIcon>
-                                                </td>
-                                                <td style="width: 10px;">
-                                                    <div></div>
-                                                </td>
-                                                <!--removed due task 45549-->
-                                                <!--<td>
-            <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
-                <LogLabel [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
-                          [DataContext]="DataContext"></LogLabel>
-            </div>
-        </td>
-        <td rowspan="2" style="vertical-align: top;padding-top: 2px;">
-            <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
-                <LogTextBox [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
-                            [HideColumns]="true"
-                            [DataContext]="DataContext"></LogTextBox>
-            </div>
-        </td>-->
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-
-                                            <!-- CrateNumber -->
-                                            <tr *ngIf="IsCourierDeclaration">
-                                                <!--
-    <td style="width: 135px;">
-        <LogLabel [ObjectFieldName]="'CrateNumber'" [ObjectTableName]="'Customs.DeclarationCourierStatus'"
-                  [DataContext]="DataContext"></LogLabel>
-    </td>
-        -->
-                                                <LogLabel [NoObjectField]="true" [ObjectFieldName]="'CrateNumber'"
-                                                    [DataContext]="DataContext" [Text]="'מספר ארגז'">
-
-                                                </LogLabel>
-
-                                                <td style="width: 125px; ">
-
-                                                    <LogTextBox [ObjectFieldName]="'CrateNumber'"
-                                                        [ObjectTableName]="'Customs.DeclarationCourierStatus'"
-                                                        [HideColumns]="true" [InputType]="'text'"
-                                                        [DataContext]="DataContext" [Text]="CrateNumber">
-
-                                                    </LogTextBox>
-
-
-                                                </td>
-
-                                                <!--
-    <td class="HeaderScreenValue">
-        <div class="TextTrimming" style="width: 100%; position: relative;">
-            {{_DeclarationCourierStatus.CrateNumber}}
-        </div>
-    </td>
-        -->
-                                                <td></td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-
-                                            </tr>
-                                            <tr *ngIf="!ShowExcludeConsignmentBoolean">
-                                                <td>
-                                                    <div>&nbsp;</div>
-                                                </td>
-                                                <td>
-                                                    <div> </div>
-                                                </td>
-                                                <td>
-                                                    <div> </div>
-                                                </td>
-                                                <td>
-                                                    <div> </div>
-                                                </td>
-                                            </tr>
-                                            <tr *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)"
-                                                style="height: 28px;">
-                                                <!--removed due task 45549-->
-                                                <!-- WeightValue -->
-                                                <!--<td>
-            <LogLabel [ObjectFieldName]="'WeightValue'"
-                      [DataContext]="DataContext"
-                      [TextCode]="'Customs.General.O.WeightValue'">
-            </LogLabel>
-        </td>
-        <td>
-            <LogLov [ObjectFieldName]="'WeightValue'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [HideColumns]="true"
-                    [LookUpTableName]="'Customs.FreightPaymentMethod'"
-                    [SelectedValue]="WeightValue"
-                    [QueryFilterItems]="WeightValueFilterItems">
-            </LogLov>
-        </td>-->
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr *ngIf="declarationPM.Direction=='E' && this.EntityPM.ConsignmentType=='I'">
-                        <td colspan="2">
-                            <table>
-                                <td style="width: 650px;">
+                                <td style="width: 750px;">
                                     <table style="table-layout: fixed;">
-                                        <tr style="height: 25px;">
-                                            <!-- CargoTypeCode -->
-                                            <td style="width: 105px;">
-                                                <LogLabel [ObjectFieldName]="'ConsignmentType'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
-                                            </td>
-
-                                            <td style="width: 105px;">
-                                                <select class="LogLovContainer LogLOVControl LogLovInputDiv"
-                                                    [class.disabled]="IsDisplayOnly"
-                                                    style="width:  105px; cursor:pointer;" #selectControl
-                                                    (change)="ConsignmentTypeSelectionChanged(selectControl.value)">
-                                                    <option *ngFor="let c of ConsignmentTypes" [value]="c.Id"
-                                                        [selected]="c.Id==ConsignmentType">{{c.Value}}</option>
-                                                </select>
-                                            </td>
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 135px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 125px; ">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 40px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 92px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 130px; ">
-                                                <div></div>
-                                            </td>
-
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
 
                                         <tr style="height: 25px;">
                                             <!-- CargoTypeCode -->
                                             <td style="width: 105px;">
-                                                <LogLabel [ObjectFieldName]="'CargoTypeCodeForExport'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'CargoTypeCode'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 105px;">
-                                                <LogLov [ObjectFieldName]="'CargoTypeCodeForExport'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [HideColumns]="true"
-                                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                                    [QueryFilterItems]="ImportCargoTypeFilterItems">
+                                                <LogLov [ObjectFieldName]="'CargoTypeCode'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [LookUpTableName]="'Customs.CargoIdentifireType'">
                                                 </LogLov>
                                             </td>
 
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
+                                            <td style="width: 10px;"><div></div></td>
 
                                             <!-- ManifestNumber -->
                                             <td style="width: 135px;">
-                                                <LogLabel [ObjectFieldName]="'ManifestNumber'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'ManifestNumber'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 125px; ">
-                                                <LogTextBox [ObjectFieldName]="'ManifestNumber'"
-                                                    [Placeholder]="ManifestNumberPlaceholder"
-                                                    [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                    [DataContext]="DataContext"></LogTextBox>
+                                                <LogTextBox [ObjectFieldName]="'ManifestNumber'" [Placeholder]="ManifestNumberPlaceholder" [ObjectTableName]="'Customs.Consignment'"
+                                                            [HideColumns]="true"
+                                                            [DataContext]="DataContext"></LogTextBox>
                                             </td>
 
                                             <td style="width: 40px;">
-                                                <div style="width: 20px;">
-                                                    <!--*ngIf="!IsDisplayOnly" -->
-                                                    <IconButton *ngIf="CargoTypeCode == '20'" style="float:left;"
-                                                        [IsSmall]="true" [Name]="'search'" [IsIconOnly]="true"
-                                                        (click)="CargoQueryRequestMethod()"></IconButton>
+                                                <div *ngIf="!IsDisplayOnly" style="width: 20px;">
+                                                    <IconButton *ngIf="CargoTypeCode == 20" style="float:left;" [IsSmall]="true" [Name]="'search'"
+                                                                [IsIconOnly]="true"
+                                                                (click)="CargoQueryRequestMethod()"></IconButton>
                                                 </div>
                                             </td>
 
                                             <!--<td style="width: 40px;"><div></div></td>-->
                                             <!-- SecondCargoID -->
                                             <td style="width: 92px;">
-                                                <LogLabel [ObjectFieldName]="'SecondCargoID'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'SecondCargoID'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 130px; ">
-                                                <LogTextBoxV2 *ngIf="CargoTypeCode != '17'"
-                                                    [ObjectFieldName]="'SecondCargoID'"
-                                                    [Placeholder]="SecondCargoIDPlaceholder"
-                                                    [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                    [DataContext]="DataContext" [Text]="SecondCargoID"
-                                                    (LostFocus)="OnSecondCargoLostFocus()"></LogTextBoxV2>
+                                                <LogTextBoxV2 *ngIf="CargoTypeCode != 17" [ObjectFieldName]="'SecondCargoID'" [Placeholder]="SecondCargoIDPlaceholder" [ObjectTableName]="'Customs.Consignment'"
+                                                            [HideColumns]="true"
+                                                            [DataContext]="DataContext" [Text]="SecondCargoID" (LostFocus)="OnSecondCargoLostFocus()"></LogTextBoxV2>
 
-                                                <SearchBox *ngIf="CargoTypeCode == '17'"
-                                                    [ObjectTableName]="'Customs.CouriersVat'" [IsQuickSearch]="true"
-                                                    [DropDownWidth]="130" [DisplayMember]="'VatNumber'"
-                                                    [DisplayText]="SecondCargoID" [ItemHeight]="22" [HideIcons]="true"
-                                                    [Watermark]="'הזן ח.פ בלדר'" [MaxPopupItemsCount]="12"
-                                                    [IsDisabled]="IsDisplayOnly" (ItemClicked)="CouriersVat = $event"
-                                                    (TextChanged)="CouriersVatTextChanged($event)"></SearchBox>
+                                                <SearchBox *ngIf="CargoTypeCode == 17"
+                                                           [ObjectTableName]="'Customs.CouriersVat'"
+                                                           [IsQuickSearch]="true"
+                                                           [DropDownWidth]="130"
+                                                           [DisplayMember]="'VatNumber'"
+                                                           [DisplayText]="SecondCargoID"
+                                                           [ItemHeight]="22"
+                                                           [HideIcons]="true"
+                                                           [Watermark]="'הזן ח.פ בלדר'"
+                                                           [MaxPopupItemsCount]="12"
+                                                           [IsDisabled]="IsDisplayOnly"
+                                                           (ItemClicked)="CouriersVat = $event"
+                                                           (TextChanged)="CouriersVatTextChanged($event)"></SearchBox>
 
                                             </td>
-                                            <td
-                                                style="width: 110px; min-width: 110px; max-width: 110px; text-align: right; padding-right: 5px;">
-                                                <div *ngIf="CouriersVat && CargoTypeCode == '17'"
-                                                    style="padding-right: 10px; color: #646464; font-size: 11px;">
-                                                    {{CouriersVat.LocalName}}</div>
-                                                <div *ngIf="CargoTypeCode == '11'" style="width: 20px;">
-                                                    <!--*ngIf="!IsDisplayOnly"-->
-                                                    <IconButton style="float:left;" [IsSmall]="true" [Name]="'search'"
-                                                        [IsIconOnly]="true" (click)="CargoQueryRequestMethod()">
-                                                    </IconButton>
+                                            <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: right; padding-right: 5px;">
+                                                <div *ngIf="CouriersVat && CargoTypeCode == 17" style="padding-right: 10px; color: #646464; font-size: 11px;">{{CouriersVat.LocalName}}</div>
+                                                <div *ngIf="CargoTypeCode == 11" style="width: 20px;">
+                                                    <IconButton *ngIf="!IsDisplayOnly" style="float:left;" [IsSmall]="true" [Name]="'search'"
+                                                                [IsIconOnly]="true"
+                                                                (click)="CargoQueryRequestMethod()"></IconButton>
                                                 </div>
                                             </td>
                                         </tr>
@@ -758,697 +114,209 @@
 
                                             <!-- ThirdCargoID -->
                                             <td>
-                                                <div [hidden]="CargoTypeCode=='17'">
-                                                    <LogLabel [ObjectFieldName]="'ThirdCargoID'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </div>
-                                                <div [hidden]="CargoTypeCode!='17'">
-
-                                                    <LogLabel [ObjectFieldName]="'CargoDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </div>
+                                                <LogLabel [ObjectFieldName]="'ThirdCargoID'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'CargoDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
-                                                <div [hidden]="CargoTypeCode=='17'">
-                                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
-                                                        [Placeholder]="ThirdCargoIdPlaceholder"
-                                                        [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                        [Text]="ThirdCargoID" [DataContext]="DataContext"></LogTextBox>
-                                                </div>
-                                                <div [hidden]="CargoTypeCode!='17'">
-                                                    <LogDatePicker [ObjectFieldName]="'CargoDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [SelectedDateValue]="CargoDate" [DataContext]="DataContext"
-                                                        [HideColumns]="true"></LogDatePicker>
-                                                </div>
+                                                <LogTextBox [ObjectFieldName]="'ThirdCargoID'" [Placeholder]="ThirdCargoIdPlaceholder" [ObjectTableName]="'Customs.Consignment'"
+                                                            [HideColumns]="true" [Text]="ThirdCargoID"
+                                                            [DataContext]="DataContext"></LogTextBox>
+
+                                                <LogDatePicker [ObjectFieldName]="'CargoDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                               [SelectedDateValue]="CargoDate"
+                                                               [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                             </td>
 
                                             <td style="width: 20px;">
-                                                <div style="width: 20px;">
-                                                    <!--*ngIf="!IsDisplayOnly" -->
-                                                    <IconButton *ngIf="CargoTypeCode == '1'" [IsSmall]="true"
-                                                        [Name]="'search'" [IsIconOnly]="true"
-                                                        (click)="MasterBOLRequestMethod()" style="float:left;">
-                                                    </IconButton>
-                                                    <IconButton *ngIf="CargoTypeCode == '17'" [IsSmall]="true"
-                                                        [Name]="'search'" [IsIconOnly]="true"
-                                                        (click)="CourierBOLRequestMethod()" style="float:left;">
-                                                    </IconButton>
+                                                <div *ngIf="!IsDisplayOnly" style="width: 20px;">
+                                                    <IconButton *ngIf="CargoTypeCode == 1" [IsSmall]="true"
+                                                                [Name]="'search'"
+                                                                [IsIconOnly]="true"
+                                                                (click)="MasterBOLRequestMethod()"
+                                                                style="float:left;"></IconButton>
+                                                    <IconButton *ngIf="CargoTypeCode == 17" [IsSmall]="true"
+                                                                [Name]="'search'"
+                                                                [IsIconOnly]="true"
+                                                                (click)="CourierBOLRequestMethod()"
+                                                                style="float:left;"></IconButton>
                                                 </div>
                                             </td>
 
                                             <!-- ManifestDate -->
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'ManifestDate'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'ManifestDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td>
-                                                <LogDatePicker [ObjectFieldName]="'ManifestDate'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                <LogDatePicker [ObjectFieldName]="'ManifestDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                               [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                             </td>
 
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
+                                            <td style="width: 10px;"><div></div></td>
 
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'OriginCountryCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogLabel>
+                                            <!-- OriginCountryCode -->
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'OriginCountryCode'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
-
-                                            <td style="width: 160px;">
+                                            <td>
                                                 <LogLov [ObjectFieldName]="'OriginCountryCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.CustomsCountry'"
-                                                    [DisplayMemberPath]="'LocalName'"
-                                                    [SelectedValue]="OriginCountryCode" [HideColumns]="true">
-                                                </LogLov>
-
-
-                                            </td>
-
-                                            <td>
-                                                <div></div>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr style="height: 25px;">
-
-                                            <!-- UnloadPortCode -->
-
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'UnloadPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [Text]="'נמל פריקה'"></LogLabel>
-                                            </td>
-
-                                            <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'UnloadPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.UnloadingSiteType'"
-                                                    [DisplayMemberPath]="'LocalName'" [HideColumns]="true">
-                                                </LogLov>
-
-
-                                            </td>
-
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <!-- ExportUnloadingPortCode -->
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'LoadingPortCode'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"
-                                                    [Text]="'אתר טעינה אחרון'"></LogLabel>
-                                            </td>
-
-                                            <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'LoadingPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.InternationalSite'"
-                                                    [DisplayMemberPath]="'LocalName'" [HideColumns]="true">
-                                                </LogLov>
-                                            </td>
-
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <!-- CargoDescription -->
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'CargoDescription'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td rowspan="2" style="vertical-align: top;padding-top: 2px;">
-                                                <LogTextBox [ObjectFieldName]="'CargoDescription'"
-                                                    [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                    [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'StorageSiteCodeExport'"
-                                                    [ObjectTableName]="ObjectTableName" 
-                                                    [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="width: 160px;">
-
-                                                <LogLov [ObjectFieldName]="'StorageSiteCodeExport'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.DeliverySiteType'"
-                                                    [DisplayMemberPath]="'LocalName'" [HideColumns]="true">
-                                                </LogLov>
-                                            </td>
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'ExportRecieverWareHouseCode'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"
-                                                    [Text]="'אתר ביניים'"></LogLabel>
-                                            </td>
-
-                                            <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'ExportRecieverWareHouseCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.DeliverySiteType'"
-                                                    [DisplayMemberPath]="'LocalName'"
-                                                    [SelectedValue]="ExportRecieverWareHouseCode" [HideColumns]="true">
-                                                </LogLov>
-
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height: 25px;">
-
-                                            <td style="vertical-align: top;padding-top: 2px;">
-                                                <LogLabel [ObjectFieldName]="'IsLastReleaseFromWarehous'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"
-                                                    [Text]="'שחרור אחרון'"></LogLabel>
-                                            </td>
-
-                                            <td style="vertical-align: top;padding-top: 2px;">
-                                                <LogCheckBox [ObjectFieldName]="'IsLastReleaseFromWarehous'"
-                                                    [Checked]="DataContext.LastReleaseFromWarehouse"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogCheckBox>
-
-
-                                            </td>
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <!-- Site List -->
-                                            <td rowspan="2" colspan="3">
-                                                <div
-                                                    style="height: 25px; overflow-x: hidden; overflow-y: auto; float: right; width: 90%;">
-                                                    <ul>
-                                                        <li class="SiteListItem" style="text-align: right; height:25px;"
-                                                            *ngFor="let item of SiteList">
-                                                            <div
-                                                                style="width: 98px; text-align: right; height: 100%;float: right;">
-                                                                <LogLabel [ObjectFieldName]="'SiteCode'"
-                                                                    [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
-                                                                    [DataContext]="DataContext"></LogLabel>
-                                                            </div>
-                                                            <div
-                                                                style="width: 35px; text-align: center; height: 100%;float: right; padding-top: 5px;">
-                                                                {{item.TransitionNumber}}
-                                                            </div>
-                                                            <div [class.disabled]="IsDisplayOnly"
-                                                                style="position: relative; width: 47%; text-align: center; height: 100%;float: right; padding-top: 2px;">
-                                                                <LogLov [ObjectFieldName]="'SiteCode'"
-                                                                    [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
-                                                                    [DataContext]="item" [HideColumns]="true"
-                                                                    [DisplayMemberPath]="'LocalName'"
-                                                                    [HideMaintenanceIcon]="true"
-                                                                    [LookUpTableName]="'Customs.InternalBorderSiteType'">
-                                                                </LogLov>
-
-                                                                <div class="DeleteIconButton" style="width:30px">
-                                                                    <IconButton [IsSmall]="true" [Name]="'Delete'"
-                                                                        [IsIconOnly]="true"
-                                                                        (click)="item.DeleteSiteButtonClicked()"
-                                                                        style="position: absolute;top: 3px;left: 20px;">
-                                                                    </IconButton>
-                                                                </div>
-                                                            </div>
-
-                                                        </li>
-                                                    </ul>
-                                                    <div style="clear: both;"></div>
-                                                </div>
-                                                <div
-                                                    style="vertical-align:top;padding-top:7px; padding-right: 3px; float: right;">
-                                                    <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'"
-                                                        (click)="AddSiteButtonClicked()" [IsEnabled]="AddSiteEnabled">
-                                                    </IconButton>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                        <tr *ngIf="ShowExcludeConsignmentBoolean">
-                                            <td style="vertical-align: middle;padding-top: 2px;">
-                                                <LogLabel [ObjectFieldName]="'ExcludeConsignment'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="'Customs.Declaration'"></LogLabel>
-                                            </td>
-                                            <td>
-                                                <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly"
-                                                    [IsChecked]="ExcludeConsignment"
-                                                    (Checked)="ExcludeConsignment = $event"></CheckBox>
-                                                <HelpIcon style="float: right; padding-right: 10px;" [HideHeader]="true"
-                                                    [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe"
-                                                    [IconSize]="14"></HelpIcon>
-                                            </td>
-                                            <td></td>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </table>
-                        </td>
-                    </tr>
-
-
-                    <tr *ngIf="declarationPM.Direction=='E' && this.EntityPM.ConsignmentType !='I'">
-                        <td colspan="2">
-                            <table>
-                                <td style="width: 650px;">
-                                    <table style="table-layout: fixed;">
-                                        <tr style="height: 25px;">
-                                            <!-- CargoTypeCode -->
-                                            <td style="width: 105px;">
-                                                <LogLabel [ObjectFieldName]="'ConsignmentType'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
-                                            </td>
-
-                                            <td style="width: 105px;">
-                                                <select [class.disabled]="IsDisplayOnly"
-                                                    class="LogLovContainer LogLOVControl LogLovInputDiv"
-                                                    style="width:  105px; cursor:pointer;" #selectControl
-                                                    (change)="ConsignmentTypeSelectionChanged(selectControl.value)">
-                                                    <option *ngFor="let c of ConsignmentTypes" [value]="c.Id"
-                                                        [selected]="c.Id==ConsignmentType">{{c.Value}}</option>
-                                                </select>
-                                            </td>
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 135px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 125px; ">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 40px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 92px;">
-                                                <div></div>
-                                            </td>
-                                            <td style="width: 130px; ">
-                                                <div></div>
-                                            </td>
-
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height: 25px;">
-                                            <!-- CargoTypeCode -->
-                                            <td style="width: 105px;">
-                                                <LogLabel [ObjectFieldName]="'CargoTypeCode'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [NoObjectField]="true"
-                                                    [Text]="'מזהה מטען'"></LogLabel>
-                                            </td>
-                                            <td style="width: 105px;">
-                                                <LogLov [ObjectFieldName]="'CargoTypeCodeForExport'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext" [HideColumns]="true"
-                                                    [LookUpTableName]="'Customs.CargoIdentifireType'"
-                                                    [QueryFilterItems]="ExportCargoTypeFilterItems">
-                                                </LogLov>
-                                            </td>
-
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <!-- ManifestNumber -->
-                                            <td style="width: 135px;">
-                                                <LogLabel [ObjectFieldName]="'ManifestNumber'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 125px; ">
-                                                <LogTextBox [ObjectFieldName]="'ManifestNumber'"
-                                                    [Placeholder]="ManifestNumberPlaceholder"
-                                                    [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                    [DataContext]="DataContext" [Text]="ManifestNumber"
-                                                    (LostFocus)="onBlurCargoId('a', $event)" ></LogTextBox>
-                                            </td>
-
-                                            <td style="width: 40px;">
-                                                <div style="width: 20px;">
-                                                    <!--*ngIf="!IsDisplayOnly" -->
-                                                    <IconButton *ngIf="CargoTypeCode == '20'" style="float:left;"
-                                                        [IsSmall]="true" [Name]="'search'" [IsIconOnly]="true"
-                                                        (click)="CargoQueryRequestMethod()"></IconButton>
-                                                </div>
-                                            </td>
-
-                                            <!--<td style="width: 40px;"><div></div></td>-->
-                                            <!-- SecondCargoID -->
-                                            <td style="width: 92px;">
-                                                <LogLabel [ObjectFieldName]="'SecondCargoID'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 130px; ">
-                                                <LogTextBoxV2 *ngIf="CargoTypeCode != '17'"
-                                                    [ObjectFieldName]="'SecondCargoID'"
-                                                    [Placeholder]="SecondCargoIDPlaceholder"
-                                                    [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                    [DataContext]="DataContext" [Text]="SecondCargoID"
-                                                    (LostFocus)="OnSecondCargoLostFocus();onBlurCargoId('b', $event)"></LogTextBoxV2>
-
-                                                <SearchBox *ngIf="CargoTypeCode == '17'"
-                                                    [ObjectTableName]="'Customs.CouriersVat'" [IsQuickSearch]="true"
-                                                    [DropDownWidth]="130" [DisplayMember]="'VatNumber'"
-                                                    [DisplayText]="SecondCargoID" [ItemHeight]="22" [HideIcons]="true"
-                                                    [Watermark]="'הזן ח.פ בלדר'" [MaxPopupItemsCount]="12"
-                                                    [IsDisabled]="IsDisplayOnly" (ItemClicked)="CouriersVat = $event"
-                                                    (TextChanged)="CouriersVatTextChanged($event)"></SearchBox>
-
-                                            </td>
-                                            <td
-                                                style="width: 110px; min-width: 110px; max-width: 110px; text-align: right; padding-right: 5px;">
-                                                <div *ngIf="CouriersVat && CargoTypeCode == '17'"
-                                                    style="padding-right: 10px; color: #646464; font-size: 11px;">
-                                                    {{CouriersVat.LocalName}}</div>
-                                                <div *ngIf="CargoTypeCode == '11'" style="width: 20px;">
-                                                    <!--*ngIf="!IsDisplayOnly"-->
-                                                    <IconButton style="float:left;" [IsSmall]="true" [Name]="'search'"
-                                                        [IsIconOnly]="true" (click)="CargoQueryRequestMethod()">
-                                                    </IconButton>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <tr style="height: 25px;">
-
-                                            <!-- ThirdCargoID -->
-                                            <td>
-                                                <div [hidden]="CargoTypeCode=='17'">
-                                                    <LogLabel [ObjectFieldName]="'ThirdCargoID'"
                                                         [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </div>
-                                                <div [hidden]="CargoTypeCode!='17'">
-
-                                                    <LogLabel [ObjectFieldName]="'CargoDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [DataContext]="DataContext"></LogLabel>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div [hidden]="CargoTypeCode=='17'">
-                                                    <LogTextBox [ObjectFieldName]="'ThirdCargoID'"
-                                                        [Placeholder]="ThirdCargoIdPlaceholder"
-                                                        [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                        [Text]="ThirdCargoID" [DataContext]="DataContext"
-                                                        (LostFocus)="onBlurCargoId('c', $event)"></LogTextBox>
-                                                </div>
-                                                <div [hidden]="CargoTypeCode!='17'">
-                                                    <LogDatePicker [ObjectFieldName]="'CargoDate'"
-                                                        [ObjectTableName]="'Customs.Consignment'"
-                                                        [SelectedDateValue]="CargoDate" [DataContext]="DataContext"
-                                                        [HideColumns]="true"></LogDatePicker>
-                                                </div>
-                                            </td>
-
-                                            <td style="width: 20px;">
-                                                <div style="width: 20px;">
-                                                    <!--*ngIf="!IsDisplayOnly" -->
-                                                    <IconButton *ngIf="CargoTypeCode == '1'" [IsSmall]="true"
-                                                        [Name]="'search'" [IsIconOnly]="true"
-                                                        (click)="MasterBOLRequestMethod()" style="float:left;">
-                                                    </IconButton>
-                                                    <IconButton *ngIf="CargoTypeCode == '17'" [IsSmall]="true"
-                                                        [Name]="'search'" [IsIconOnly]="true"
-                                                        (click)="CourierBOLRequestMethod()" style="float:left;">
-                                                    </IconButton>
-                                                </div>
-                                            </td>
-
-
-                                            <td style="vertical-align: top;padding-top: 2px; width: 160px;">
-                                                <LogLabel [ObjectFieldName]="'ShipCode'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="vertical-align: top;padding-top: 2px;width: 160px;">
-                                                <LogLov [ObjectFieldName]="'ShipCode'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.CustomsShip'"
-                                                    [DisplayMemberPath]="'LocalName'" [SelectedValue]="ShipCode"
-                                                    [HideColumns]="true">
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [LookUpTableName]="'Customs.CustomsCountry'">
                                                 </LogLov>
-
-
                                             </td>
-
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'FinalDestinationPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogLabel>
-                                            </td>
-
-                                            <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'FinalDestinationPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.InternationalSite'"
-                                                    [DisplayMemberPath]="'LocalName'"
-                                                    [SelectedValue]="FinalDestinationPortCode" [HideColumns]="true">
-                                                </LogLov>
-
-
-                                            </td>
-
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                            <td><div></div></td>
 
                                         </tr>
 
                                         <tr style="height: 25px;">
 
                                             <!-- LoadingPortCode -->
-
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'ExportLoadingPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogLabel>
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'LoadingPortCode'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
-
-                                            <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'ExportLoadingPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.LoadingSiteType'"
-                                                    [DisplayMemberPath]="'LocalName'"
-                                                    [SelectedValue]="ExportLoadingPortCode" [HideColumns]="true">
+                                            <td>
+                                                <!--Customs.Consignment-->
+                                                <LogLov [ObjectFieldName]="'LoadingPortCode'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [QueryFilterItems]="LoadingPortFilterItems"
+                                                        [LookUpTableName]="'Customs.InternationalSite'"
+                                                        [SelectedValue]="LoadingPortCode">
                                                 </LogLov>
-
-
                                             </td>
 
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
+                                            <td style="width: 10px;"><div></div></td>
 
                                             <!-- UnloadPortCode -->
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'ExportUnloadingPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogLabel>
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'UnloadPortCode'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
-
-                                            <td style="width: 160px;">
-                                                <!--(SelectedItemChanged)="CustomsShip = $event"-->
-                                                <LogLov [ObjectFieldName]="'ExportUnloadingPortCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.InternationalSite'"
-                                                    [DisplayMemberPath]="'LocalName'"  
-                                                    [SelectedValue]="ExportUnloadingPortCode" [HideColumns]="true">
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'UnloadPortCode'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'LocalName'"
+                                                        [LookUpTableName]="'Customs.UnloadingSiteType'">
                                                 </LogLov>
                                             </td>
 
-                                            <td style="width: 10px;">
-                                                <div></div>
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <!-- UnloadDate -->
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'UnloadDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
+                                            <td>
+                                                <LogDatePicker [ObjectFieldName]="'UnloadDate'" [ObjectTableName]="'Customs.Consignment'"
+                                                               [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            </td>
+                                            <td><div></div></td>
+
+                                        </tr>
+
+                                        <tr style="height: 25px;">
+
+                                            <!-- StorageSiteCode -->
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'StorageSiteCode'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'StorageSiteCode'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
+                                                        [DataContext]="DataContext"
+                                                        [SelectedValue]="StorageSiteCode"
+                                                        [HideColumns]="true"
+                                                        [LookUpTableName]="'Customs.DeliverySiteType'">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <!-- ReceiverWarehouseCode -->
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'ReceiverWarehouseCode'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'ReceiverWarehouseCode'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'LocalName'"
+                                                        [LookUpTableName]="'Customs.RegisteredWarehouseSiteType'">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width: 10px;"><div></div></td>
 
                                             <!-- CargoDescription -->
                                             <td>
-                                                <LogLabel [ObjectFieldName]="'CargoDescription'"
-                                                    [ObjectTableName]="'Customs.Consignment'"
-                                                    [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ObjectFieldName]="'CargoDescription'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td rowspan="2" style="vertical-align: top;padding-top: 2px;">
-                                                <LogTextBox [ObjectFieldName]="'CargoDescription'"
-                                                    [ObjectTableName]="'Customs.Consignment'" [HideColumns]="true"
-                                                    [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                                                <LogTextBox [ObjectFieldName]="'CargoDescription'" [ObjectTableName]="'Customs.Consignment'"
+                                                            [HideColumns]="true"
+                                                            [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
                                             </td>
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                            <td><div></div></td>
 
                                         </tr>
 
-                                        <tr>
+                                        <tr style="height: 25px;">
 
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'StorageSiteCodeExport'"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext"></LogLabel>
+                                            <!-- IsLastReleaseFromWarehous -->
+                                            <td style="vertical-align: top;padding-top: 2px;">
+                                                <LogLabel [ObjectFieldName]="'IsLastReleaseFromWarehous'" [ObjectTableName]="'Customs.Consignment'"
+                                                          [DataContext]="DataContext"></LogLabel>
                                             </td>
-
-                                            <td style="width: 160px;">
-
-                                                <LogLov [ObjectFieldName]="'StorageSiteCodeExport'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.DeliverySiteType'"
-                                                    [DisplayMemberPath]="'LocalName'" [SelectedValue]="StorageSiteCodeExport"
-                                                    [HideColumns]="true">
+                                            <td style="vertical-align: top;padding-top: 2px;">
+                                                <LogLov [ObjectFieldName]="'IsLastReleaseFromWarehous'"
+                                                        [ObjectTableName]="'Customs.Consignment'"
+                                                        [DataContext]="DataContext"
+                                                        [HideColumns]="true"
+                                                        [LookUpTableName]="'Customs.LastReleaseFromWarehouse'">
                                                 </LogLov>
                                             </td>
 
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-
-                                            <td style="width: 150px;">
-                                                <LogLabel [ObjectFieldName]="'ExportRecieverWareHouseCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogLabel>
-                                            </td>
-
-                                            <td style="width: 160px;">
-                                                <LogLov [ObjectFieldName]="'ExportRecieverWareHouseCode'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [LookUpTableName]="'Customs.DeliverySiteType'"
-                                                    [DisplayMemberPath]="'LocalName'"
-                                                    [SelectedValue]="ExportRecieverWareHouseCode" [HideColumns]="true">
-                                                </LogLov>
-
-                                            </td>
-
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
-
-
-                                            <td>
-                                                <div></div>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr style="height:25px; ">
-                                 
-                                            <td style="vertical-align: top;padding-top: 2px; ">
-                                                <LogLabel [ObjectFieldName]="'IsDangerousGoods'"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogLabel>
-                                            </td>
-
-                                            <td style=" vertical-align: top;padding-top: 2px;">
-
-
-                                                <LogCheckBox [ObjectFieldName]="'IsDangerousGoods'"
-                                                    [Checked]="DataContext.IsDangerousGoods"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                </LogCheckBox>
-
-
-                                            </td>
-                                            <td style="width: 10px;">
-                                                <div></div>
-                                            </td>
+                                            <td style="width: 10px;"><div></div></td>
 
                                             <!-- Site List -->
                                             <td rowspan="2" colspan="3">
-                                                <div 
-                                                    style="height:60px; float: right; overflow-x: hidden; overflow-y: auto; width: 90%;">
-                                                    <ul >
-                                                        <li class="SiteListItem" style="text-align: right; height:25px;"
-                                                            *ngFor="let item of SiteList">
-                                                            <div
-                                                                style="width: 98px; text-align: right; height: 100%;float: right;">
-                                                                <LogLabel [ObjectFieldName]="'SiteCode'"
-                                                                    [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
-                                                                    [DataContext]="DataContext"></LogLabel>
+                                                <div style="height: 60px; overflow-x: hidden; overflow-y: auto; float: right; width: 90%;">
+                                                    <ul>
+                                                        <li class="SiteListItem" style="text-align: right; height:25px;" *ngFor="let item of SiteList">
+                                                            <div style="width: 98px; text-align: right; height: 100%;float: right;">
+                                                                <LogLabel [ObjectFieldName]="'SiteCode'" [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
+                                                                          [DataContext]="DataContext"></LogLabel>
                                                             </div>
-                                                            <div
-                                                                style="width: 35px; text-align: center; height: 100%;float: right; padding-top: 5px;">
+                                                            <div style="width: 35px; text-align: center; height: 100%;float: right; padding-top: 5px;">
                                                                 {{item.TransitionNumber}}
                                                             </div>
-                                                            <div [class.disabled]="IsDisplayOnly"
-                                                                style="position: relative; width: 47%; text-align: center; height: 100%;float: right; padding-top: 2px;">
+                                                            <div [class.disabled]="IsDisplayOnly" style="position: relative; width: 47%; text-align: center; height: 100%;float: right; padding-top: 2px;">
                                                                 <LogLov [ObjectFieldName]="'SiteCode'"
-                                                                    [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
-                                                                    [DataContext]="item" [HideColumns]="true"
-                                                                    [DisplayMemberPath]="'LocalName'"
-                                                                    [HideMaintenanceIcon]="true"
-                                                                    [LookUpTableName]="'Customs.InternalBorderSiteType'">
+                                                                        [ObjectTableName]="'Customs.ConsignmentInternalTransition'"
+                                                                        [DataContext]="item"
+                                                                        [HideColumns]="true"
+                                                                        [DisplayMemberPath]="'LocalName'"
+                                                                        [HideMaintenanceIcon]="true"
+                                                                        [LookUpTableName]="'Customs.InternalBorderSiteType'">
                                                                 </LogLov>
 
                                                                 <div class="DeleteIconButton" style="width:30px">
-                                                                    <IconButton [IsSmall]="true" [Name]="'Delete'"
-                                                                        [IsIconOnly]="true"
-                                                                        (click)="item.DeleteSiteButtonClicked()"
-                                                                        style="position: absolute;top: 3px;left: 20px;">
-                                                                    </IconButton>
+                                                                    <IconButton [IsSmall]="true" [Name]="'Delete'" [IsIconOnly]="true" (click)="item.DeleteSiteButtonClicked()"
+                                                                                style="position: absolute;top: 3px;left: 20px;"></IconButton>
                                                                 </div>
                                                             </div>
 
@@ -1456,39 +324,54 @@
                                                     </ul>
                                                     <div style="clear: both;"></div>
                                                 </div>
-                                                <div
-                                                    style="vertical-align:top;padding-top:7px; padding-right: 3px; float: right;">
-                                                    <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'"
-                                                        (click)="AddSiteButtonClicked()" [IsEnabled]="AddSiteEnabled">
-                                                    </IconButton>
+                                                <div style="vertical-align:top;padding-top:7px; padding-right: 3px; float: right;">
+                                                    <IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddSiteButtonClicked()" [IsEnabled]="AddSiteEnabled"></IconButton>
                                                 </div>
                                             </td>
-
-
-                                            <!-- ManifestDate -->
-
-
-                                            <td style="vertical-align: middle;padding-top: 2px;"
-                                                *ngIf="ShowExcludeConsignmentBoolean">
-                                                <LogLabel [ObjectFieldName]="'ExcludeConsignment'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="'Customs.Declaration'"></LogLabel>
+                                            <td style="vertical-align:top;padding-top:7px; padding-right: 3px;">
+                                                <!--<IconButton style="float: right;" [IsSmall]="true" [Name]="'Add'" (click)="AddSiteButtonClicked()" [IsEnabled]="AddSiteEnabled"></IconButton>-->
                                             </td>
-                                            <td *ngIf="ShowExcludeConsignmentBoolean">
-                                                <CheckBox style="float: right; " [IsEnabled]="!ParentIsDisplayOnly"
-                                                    [IsChecked]="ExcludeConsignment"
-                                                    (Checked)="ExcludeConsignment = $event"></CheckBox>
-                                                <HelpIcon style="float: right; padding-right: 10px; "
-                                                    [HideHeader]="true"
-                                                    [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe"
-                                                    [IconSize]="14"></HelpIcon>
+
+
+                                            <td style="width: 10px;"><div></div></td>
+
+                                            <td>
+                                                <div></div>
                                             </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td><div></div></td>
+
+                                        </tr>
+                                        <tr *ngIf="ShowExcludeConsignmentBoolean">
+                                            <td style="vertical-align: middle;padding-top: 2px;">
+                                                <LogLabel [ObjectFieldName]="'ExcludeConsignment'" [DataContext]="DataContext" [ObjectTableName]="'Customs.Declaration'"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <CheckBox style="float: right;" [IsEnabled]="!ParentIsDisplayOnly" [IsChecked]="ExcludeConsignment" (Checked)="ExcludeConsignment = $event"></CheckBox>
+                                                <HelpIcon style="float: right; padding-right: 10px;" [HideHeader]="true" [Text]="'Customs.Declaration.O.consignmentShoudlnotSent' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+                                            </td>
+                                            <td></td>
+                                            <!--removed due task 45549-->
+                                            <!--<td>
+                                                <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
+                                                    <LogLabel [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </div>
+                                            </td>
+                                            <td rowspan="2" style="vertical-align: top;padding-top: 2px;">
+                                                <div *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)">
+                                                    <LogTextBox [ObjectFieldName]="'DeliveryPlaceName'" [ObjectTableName]="'Customs.Consignment'"
+                                                                [HideColumns]="true"
+                                                                [DataContext]="DataContext"></LogTextBox>
+                                                </div>
+                                            </td>-->
+                                            <td><div></div></td>
 
                                         </tr>
 
-
-                                        <tr *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)"
-                                            style="height: 28px;">
+                                        <tr *ngIf="(ShowExcludeConsignmentBoolean && IsCourierDeclaration)" style="height: 28px;">
                                             <!--removed due task 45549-->
                                             <!-- WeightValue -->
                                             <!--<td>
@@ -1507,9 +390,7 @@
                                                         [QueryFilterItems]="WeightValueFilterItems">
                                                 </LogLov>
                                             </td>-->
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                            <td><div></div></td>
                                         </tr>
 
                                     </table>
@@ -1518,206 +399,120 @@
                         </td>
                     </tr>
 
-                    <tr style="height: 15px;">
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+
+                    <tr style="height: 15px;"><td><div></div> </td></tr>
 
                     <tr style="height: 28px; padding-top: 10px;">
-                        <td class="subTitle">{{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}}
-                        </td>
-                        <td style="width: 30px; float: left;">
-                            <IconButton [Name]="'Add'" (click)="AddPackageButtonClicked()" [IsEnabled]="!IsDisplayOnly">
-                            </IconButton>
-                        </td>
+                        <td class="subTitle">{{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}}</td>
+                        <td style="width: 30px; float: left;"><IconButton [Name]="'Add'" (click)="AddPackageButtonClicked()" [IsEnabled]="!IsDisplayOnly"></IconButton></td>
                     </tr>
 
                     <!-- Edit Grid -->
                     <tr>
                         <td colspan="2" style="height: 100%;">
                             <div class="CellContent">
-                                <!--                                                     [Disabled]="IsDisplayOnly"
-                                -->
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ConsimentPackages"
-                                    (RowEnded)="OnRowEnded($event)" (Ondblclick)="OnFocus()"
-                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                    [ItemSource]="ConsimentPackages"
+                                                    [Disabled]="IsDisplayOnly"
+                                                    (RowEnded)="OnRowEnded($event)"
+                                                    (Ondblclick)="OnFocus()"
+                                                    (SelectedItemChanged)="OnRowSelected($event)"
+                                                    [SelectedRow]="SelectedRow">
 
                                     <!-- PackageMeasureQualifierCode -->
-                                    <log-column
-                                        [header]="'Customs.ConsignmentPackage.F.PackageMeasureQualifierCode' | TextCodeTranslationPipe"
-                                        [Disabled]="IsDisplayOnly" [width]="'200'" [Alignment]="'right'"
-                                        [binding]="'PackageMeasureQualifierCode'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming"
-                                                    *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.PackageMeasureQualifierName}}</span>
-                                                </div>
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogLov [ObjectFieldName]="'PackageMeasureQualifierCode'"
+                                    <log-column [header]="'Customs.ConsignmentPackage.F.PackageMeasureQualifierCode' | TextCodeTranslationPipe" [width]="'200'" [Alignment]="'right'" [binding]="'PackageMeasureQualifierCode'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.PackageMeasureQualifierName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'PackageMeasureQualifierCode'"
                                                         [ObjectTableName]="'Customs.ConsignmentPackage'"
                                                         [DataContext]="item"
                                                         [LookUpTableName]="'Customs.PackageMeasureQualifier'"
                                                         (SelectedItemChanged)="item.SetLocalName($event, 'PackageMeasureQualifierName')"
-                                                        [HideColumns]="true" [FocusOnMe]="'true'">
-                                                    </LogLov>
-                                                    <!--(SelectedItemChanged)="item.JournalActionType = $event"-->
+                                                        [HideColumns]="true"
+                                                        [FocusOnMe]="'true'">
+                                                </LogLov>
+                                                <!--(SelectedItemChanged)="item.JournalActionType = $event"-->
 
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- PackageTypeCode -->
-                                    <log-column
-                                        [header]="'Customs.ConsignmentPackage.F.PackageTypeCode' | TextCodeTranslationPipe"
-                                        [width]="'200'" [Alignment]="'right'" [Disabled]="IsDisplayOnly"
-                                        [binding]="'PackageTypeCode'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming"
-                                                    *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.PackageTypeName}}</span>
-                                                </div>
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogLov [ObjectFieldName]="'PackageTypeCode'"
+                                    <log-column [header]="'Customs.ConsignmentPackage.F.PackageTypeCode' | TextCodeTranslationPipe" [width]="'200'" [Alignment]="'right'" [binding]="'PackageTypeCode'">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.PackageTypeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'PackageTypeCode'"
                                                         [ObjectTableName]="'Customs.ConsignmentPackage'"
-                                                        [DataContext]="item" [LookUpTableName]="'Customs.PackingType'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'Customs.PackingType'"
                                                         [HideColumns]="true"
                                                         (SelectedItemChanged)="item.SetLocalName($event, 'PackageTypeName')"
                                                         [FocusOnMe]="'true'">
-                                                    </LogLov>
+                                                </LogLov>
 
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- PackageQuantity -->
-                                    <log-column [width]="'100'" [binding]="'PackageQuantity'" [Alignment]="'right'"
-                                        [Disabled]="IsDisplayOnly"
-                                        [header]="'Customs.ConsignmentPackage.F.PackageQuantity' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div style="width:100%;height:100%;text-align: right;">
-                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                        <span>{{item.PackageQuantity}}</span>
-                                                    </div>
-                                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                                        <LogTextBox [FocusOnMe]="'true'"
-                                                            [ObjectFieldName]="'PackageQuantity'"
-                                                            [InputType]="'integer'" [DataContext]="item"
-                                                            [ObjectTableName]="'Customs.ConsignmentPackage'"
-                                                            [HideColumns]="true"></LogTextBox>
-                                                    </div>
+                                    <log-column [width]="'100'" [binding]="'PackageQuantity'" [Alignment]="'right'" [header]="'Customs.ConsignmentPackage.F.PackageQuantity' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width:100%;height:100%;text-align: right;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.PackageQuantity}}</span>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'PackageQuantity'" [InputType]="'integer'" [DataContext]="item"
+                                                                [ObjectTableName]="'Customs.ConsignmentPackage'" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- GrossMassMeasure -->
-                                    <log-column [width]="'100'" [binding]="'GrossMassMeasure'"
-                                        [Disabled]="IsDisplayOnly" [Alignment]="'right'"
-                                        [header]="'Customs.ConsignmentPackage.F.GrossMassMeasure' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div style="text-align: right;width:100%;height:100%;">
-                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                        <span>{{item.GrossMassMeasure | NumbersPipe:'N2'}}</span>
-                                                    </div>
-                                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                                        <LogTextBox [FocusOnMe]="'true'"
-                                                            [ObjectFieldName]="'GrossMassMeasure'"
-                                                            [InputType]="'double'" [DataContext]="item"
-                                                            [ObjectTableName]="'Customs.ConsignmentPackage'"
-                                                            [HideColumns]="true"></LogTextBox>
-                                                    </div>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- GrossMassMeasureTypeCode -->
-                                    <log-column [Disabled]="IsDisplayOnly"
-                                        [header]="'Customs.ConsignmentPackage.F.GrossMassMeasureTypeCode' | TextCodeTranslationPipe"
-                                        [width]="'200'" [Alignment]="'right'" [binding]="'GrossMassMeasureTypeCode'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming"
-                                                    *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span>{{item.GrossMassMeasureTypeName}}</span>
+                                    <log-column [width]="'100'" [binding]="'GrossMassMeasure'" [Alignment]="'right'" [header]="'Customs.ConsignmentPackage.F.GrossMassMeasure' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align: right;width:100%;height:100%;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.GrossMassMeasure | NumbersPipe:'N2'}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogLov [ObjectFieldName]="'GrossMassMeasureTypeCode'"
-                                                        [ObjectTableName]="'Customs.ConsignmentPackage'"
-                                                        [DataContext]="item"
-                                                        [LookUpTableName]="'Customs.MeasurmentUnit'"
-                                                        [HideColumns]="true"
-                                                        (SelectedItemChanged)="item.SetLocalName($event, 'GrossMassMeasureTypeName')"
-                                                        [FocusOnMe]="'true'">
-                                                    </LogLov>
-
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GrossMassMeasure'" [InputType]="'double'" [DataContext]="item"
+                                                                [ObjectTableName]="'Customs.ConsignmentPackage'" [HideColumns]="true"></LogTextBox>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- MarksNumbers -->
-                                    <log-column [Disabled]="IsDisplayOnly" [width]="'100'" [binding]="'MarksNumbers'"
-                                        [Alignment]="'right'"
-                                        [header]="'Customs.ConsignmentPackage.F.MarksNumbers' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <div style="text-align: right;width:100%;height:100%;">
-                                                    <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                         <span>{{item.MarksNumbers}}</span> 
-                                                    </div>
-                                                    <div *ngIf="logcelltemplate.IsEditMode"
-                                                        style="height: 90%; width: 100%;">
-                                                        <LogTextBox [ObjectFieldName]="'MarksNumbers'"
-                                                            [InputType]="'ntext'" [DataContext]="item"
-                                                            [ObjectTableName]="'Customs.ConsignmentPackage'"
-                                                            [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
-                                                    </div>
+                                    <log-column [width]="'100'" [binding]="'MarksNumbers'" [Alignment]="'right'" [header]="'Customs.ConsignmentPackage.F.MarksNumbers' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="text-align: right;width:100%;height:100%;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span>{{item.MarksNumbers}}</span>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'MarksNumbers'" [InputType]="'ntext'" [DataContext]="item"
+                                                                [ObjectTableName]="'Customs.ConsignmentPackage'" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Buttons -->
-                                    <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="'left'"
-                                        [IgnoreColumn]="true" [Editable]="true">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" [TabIndex]="-1">
-                                                <!--<span class="CellSeparator"></span>-->
-                                                <!--<table>
-                                                <tr>
-                                                    <td>-->
-                                                       
-                                                <div
-                                                    style="width: 22px; float: right; height:20px; padding-top: 2px; display:block" class="removePackageButton">
-                                                    
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [IsIconOnly]="true"
-                                                         [IsEnabled]="!IsDisplayOnly"
-                                                        style="display: block; float: right; margin: 3px;"
-                                                        (click)="RemovePackageButton(item)"></IconButton>
-                                                </div>
-                                                <!--</td>
-                                                <td>-->
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block"
-                                                    *ngIf="IsCourierDeclaration">
-
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [IsIconOnly]="true"
-                                                        style="display: block; float: right; margin: 3px;"
-                                                        (click)="OpenEditDangerWindow(item)"></IconButton>
-                                                </div>
-
-                                                <!--</td>
-                                                    </tr>
-                                                </table>-->
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="'left'" [IgnoreColumn]="true">
+                                        <log-cell-template template="let item" [IgnoreMods]="true" [TabIndex]="-1">
+                                            <!--<span class="CellSeparator"></span>-->
+                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [IsIconOnly]="true"
+                                                        style="display: block; float: right; margin: 3px;" (click)="RemovePackageButton(item)"></IconButton>
+                                        </log-cell-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -1732,12 +527,3 @@
         </td>
     </tr>
 </table>
-<!--*ngIf="declarationPM && FeatureLocatorEXPORTDECLARATIONPSCREEN &&   this.declarationPM.Direction =='E' "-->
-<!--<span *ngIf="this.declarationPM &&   this.declarationPM.Direction =='E'  && this.FeatureLocatorEXPORTDECLARATIONPSCREEN "
-      class="LeftTop">
-    <button class="button_ellipsis" (click)="ShowExportConsScreen()">...</button>
-</span>-->
-<!--<span *ngIf="this.declarationPM &&   this.declarationPM.Direction =='E'  && this.FeatureLocatorEXPORTDECLARATIONPSCREEN "
-      class="LeftTop buttonelipsis"
-      style="background-color: white; color: black; border: 2px solid #e7e7e7; width: 30px; text-align: center; font-weight: bold;cursor: pointer;"
-      (click)="ShowExportConsScreen()">...E</span>-->

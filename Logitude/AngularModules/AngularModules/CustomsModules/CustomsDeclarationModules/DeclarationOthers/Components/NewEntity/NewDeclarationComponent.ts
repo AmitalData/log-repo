@@ -18,7 +18,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 @Component({
     selector: 'NewDeclarationComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewDeclarationComponent.html',
 })
 
@@ -41,7 +41,7 @@ export class NewDeclarationComponent extends BaseComponent implements OnInit {
 
         this.EntityPM = new DeclarationPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsTransportMode").subscribe((response:any) => { });
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsTransportMode").subscribe(response => { });
 
     }
 
@@ -144,7 +144,7 @@ export class NewDeclarationComponent extends BaseComponent implements OnInit {
     }
 
     SubmitChanges() {
-        this.declarationPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this.declarationPMService.insert(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

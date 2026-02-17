@@ -247,7 +247,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = tenant,
                     JournalId = id,
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     AccountingDate = jAccountingDate,
                     DueDate = jlDueDate,
                     LocalAmount = localAmount,
@@ -476,7 +476,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                {
                    Tenant = tenant,
                    JournalId = id,
-                   ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                   ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                    DueDate = jlDueDate,
                    AccountingDate= jlAccountingDate,
                    Line = jline,
@@ -520,7 +520,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -538,7 +538,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -567,7 +567,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(state2Check.Item3);
+                    Debug.WriteLine(state2Check.Item3);
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2
@@ -601,7 +601,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -623,7 +623,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -644,7 +644,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -663,7 +663,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 1,
@@ -698,7 +698,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,
@@ -760,7 +760,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 11,
@@ -781,7 +781,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 22.54353m,
@@ -802,7 +802,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 231.44m,
@@ -820,7 +820,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = -4531.55m,
@@ -842,7 +842,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
                     
                     var fakeJournalLineCreditMapping = CreateFake(state2Check);
 
@@ -891,7 +891,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 11,
@@ -913,7 +913,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 22.54353m,
@@ -934,7 +934,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = 231.44m,
@@ -953,7 +953,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = 1,
                     JournalId = "1-1",
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                     DueDate = new DateTime(2016, 3, 3),
                     AccountingDate = new DateTime(2016, 3, 3),
                     LocalAmount = -4531.55m,
@@ -978,7 +978,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
 
                     var fakeJournalLineCreditMapping = CreateFake(state2Check);
 

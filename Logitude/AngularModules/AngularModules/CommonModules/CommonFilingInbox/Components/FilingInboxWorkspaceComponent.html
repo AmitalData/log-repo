@@ -751,7 +751,7 @@
                                                                                                                     </li>
                                                                                                                 </ul>
 
-                                                                                                                <LogLov *ngIf="SelectedAttachment.ShowTypes == true" style="float: left;width: 130px;margin-left: 5px;"
+                                                                                                                <LogLov *ngIf="SelectedAttachment.ShowTypes == true" [LogitudeForm]="myForm" style="float: left;width: 130px;margin-left: 5px;"
                                                                                                                         [ObjectFieldName]="'DocumentTypeId'"
                                                                                                                         [SelectedValue]="SelectedAttachment.DocumentTypeId"
                                                                                                                         [DataContext]="SelectedAttachment.DataContext"

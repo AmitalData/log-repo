@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;

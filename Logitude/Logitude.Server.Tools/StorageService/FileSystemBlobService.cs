@@ -10,8 +10,6 @@ namespace Logitude.Server.Tools.StorageService
 {
     public class FileSystemBlobService : IBlobService
     {
-        //master master.PR1 changes (needed only on master branch
-        //master master.PR1 hot fix (needed  on master & R5 branches)
         public byte[] Read(BlobFileInfo fileInfo)
         {
             byte[] result = null;
@@ -30,13 +28,10 @@ namespace Logitude.Server.Tools.StorageService
             return result;
 
         }
-        public Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName)
-        {
-            throw new NotImplementedException();
-        }
+
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
-         
+
             string filepath = fileInfo.ContainerName + "/" + StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + fileInfo.Extension.ToLower(), fileInfo.FolderName);
             var blobService = GetService();
             var response = blobService.Write(data, filepath);
@@ -51,6 +46,7 @@ namespace Logitude.Server.Tools.StorageService
 
         public void WriteBlock(byte[] buffer, long sentBytes, string[] blockIdsList, int bufferNumber, BlobFileInfo fileInfo)
         {
+
             string filepath = fileInfo.ContainerName + "/" + StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + fileInfo.Extension.ToLower(), fileInfo.FolderName);
             var blobService = GetService();
             long filesize = fileInfo.FileSize != null ? (long)fileInfo.FileSize : 0;
@@ -113,16 +109,6 @@ namespace Logitude.Server.Tools.StorageService
         }
 
         public void AppendText(string text, BlobFileInfo fileInfo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            //throw new NotImplementedException();
-        }
-
-        public void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo)
         {
             throw new NotImplementedException();
         }

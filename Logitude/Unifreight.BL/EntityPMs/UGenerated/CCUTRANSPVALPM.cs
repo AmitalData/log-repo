@@ -13,19 +13,13 @@ namespace Unifreight.BL.EntityPMs
 
         public int LINENO { get; set; }
 
-        public decimal? TRANSPVALFC { get; set; }
+        public double? TRANSPVALFC { get; set; }
 
         public string CURRID { get; set; }
 
-        public decimal? TRANSPVAL { get; set; }
+        public double? TRANSPVAL { get; set; }
 
         public string CURRIDN { get; set; }
-
-        public int Tenant { get; set; }
-
-        public bool IS_SYNCH { get; set; }
-
-        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }
 

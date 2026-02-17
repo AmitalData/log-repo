@@ -1,17 +1,23 @@
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
 import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
 import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
-import { CardList } from '../../../../Common/EntityLists/CardList';
+import {CardList} from '../../../../Common/EntityLists/CardList';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
+import {AccountingSystemListService} from '../../../../Common/Services/StandardLists/AccountingSystemListService';
+import {AccountingSystemList} from '../../../../Common/EntityLists/AccountingSystemList';
 import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
 import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
+import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
 import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
 import {ChargeTypeAccountingPM} from '../../../../Common/EntityPMs/ChargeTypeAccountingPM';
@@ -20,7 +26,8 @@ import {InvoiceDomainService } from '../../../../Invoice/Services/InvoiceDomainS
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ARInvoicePMService} from '../../../../Invoice/Services/StandardPMs/ARInvoicePMService';
 
-@Component({   
+@Component({
+    moduleId: module.id,
     templateUrl: './ARInvoiceTransferTemplate.html',
 })
 
@@ -31,19 +38,16 @@ export class ARInvoiceTransferTemplate extends BaseComponent {
     public ItemsSource: ARInvoiceTransferLineArgs[] = [];
     public IsNew: boolean = false;
     public EntityId: string;
-    public IsAutoUpdatingFields: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
-    public InitTemplate(entity: ARInvoicePM) {
+    InitTemplate(entity: ARInvoicePM) {
         this.EntityPM = entity;
-        this.IsAutoUpdatingFields = true;
         this.BuildList();
     }
-    public SetWindowArgs(args: any) {
+    SetWindowArgs(args: any) {
         if (args) {
-            this.IsAutoUpdatingFields = true;
             this.EntityId = args.EntityId;
             this.IsNew = args.IsNewTemplate;
             this.GetSingleEntityPM();
@@ -67,12 +71,10 @@ export class ARInvoiceTransferTemplate extends BaseComponent {
             this.BuildList();
         }
     }
-
     public BuildList() {
         this.ItemsSource = [];
         this.ItemsSource.push(new ARInvoiceTransferLineArgs(this.EntityPM, null, this, "BLTO"));
         this.ItemsSource.push(new ARInvoiceTransferLineArgs(this.EntityPM, null, this, "CURR"));
-
         this.EntityPM.InvoiceLines.forEach(item => {
             this.ItemsSource.push(new ARInvoiceTransferLineArgs(null, item, this, "Line"));
         });
@@ -86,7 +88,6 @@ export class ARInvoiceTransferTemplate extends BaseComponent {
                 listGrouped.push(itemGrouped);
             }
         });
-
         listGrouped.forEach(item => {
             var linePM: ARInvoiceLinePM = this.EntityPM.InvoiceLines.filter(d => d.VatTypeId == item.VatTypeId && d.VatPercentage != null)[0];
             if (linePM != null) {
@@ -96,21 +97,17 @@ export class ARInvoiceTransferTemplate extends BaseComponent {
             }
         });
 
-        if (this.IsAutoUpdatingFields) {
-            this.UpdateTransferData();
-        }
+        this.UpdateTransferData();
     }
 
+    //UpdateTransferData
     UpdateTransferData() {
         if (this.EntityPM.TransferStatusCode != "TR" && this.EntityPM.TransferStatusCode != "IP" && this.EntityPM.TransferStatusCode != "ET") {
-
             var isReady = true;
-
             var isValid = this.ItemsSource.filter(d => AppTool.IsNullOrEmpty(d.EditingFieldValue))[0];
             if (isValid != null) {
                 isReady = false;
             }
-
             if (this.EntityPM.TransferStatusCode != "BL") {
                 this.TransferStatusCode = isReady ? "RD" : "NR";
             }
@@ -225,12 +222,10 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
     public ObjectTableName: string;
     public DataContext = this;
     public VatPercentage: number;
-    public IsTransferredEnabled: boolean = false;
+
     constructor(entity: ARInvoicePM, line: ARInvoiceLinePM, public father: ARInvoiceTransferTemplate, typeCode: string) {
         super();
-
-        this.Code = typeCode;
-
+        this.InitalizeServices();
         if (entity != null) {
             this.invoicePM = entity;
             this.ObjectTableName = "ARInvoice";
@@ -243,241 +238,84 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
             this.VatPercentage = line.VatPercentage;            
         }
 
-        this.InitalizeServices();
-        this.InitalizeProperties();
-        this.SetUIProperties();
-
-        if (this.father.IsAutoUpdatingFields && this.IsTransferredEnabled) {
-            this.FillFieldsData();
-        }
-    }
-
-    SetUIProperties() {
-
-        var isEnabled = true;
-
-        if (this.father.TransferStatusCode === "TR") {
-            isEnabled = false;
-        }
-
-        else if (this.invoicePM.StatusCode === "DR" || this.invoicePM.StatusCode === "LL" || this.invoicePM.StatusCode === "PR") {
-            isEnabled = false;
-        }
-
-        this.IsTransferredEnabled = isEnabled;
-
-        this.UIProperties.SetEnabled(this.EditingFieldName, this.ObjectTableName, this.IsTransferredEnabled);
-
+        this.Code = typeCode;
+        this.GetEditingFieldName();
+        this.GetDescriptionTitle();
+        this.GetDescriptionValue();
+        this.GetDescriptionHelp();
         this.GetDescriptionHelpVisibility();
-    }
-    GetDescriptionHelpVisibility() {
-        var result = false;
-
-        if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
-            result = true;
-        }
-
-        this.DescriptionHelpVisibility = result;
+        this.SetUIProperties();
+        this.FillFieldsData();
     }
 
     private CardListService: CardListService;
     private CurrencyListService: CurrencyListService;
     private VatTypeListService: VatTypeListService;
+    private PaymentTermListService: PaymentTermListService;
     private ChargesTypeListService: ChargesTypeListService;
-    private invoiceDomainService: InvoiceDomainService;
+    private InvoiceDomainService: InvoiceDomainService;
     InitalizeServices() {
         this.CardListService = new CardListService();
         this.CurrencyListService = new CurrencyListService();
         this.VatTypeListService = new VatTypeListService();
+        this.PaymentTermListService = new PaymentTermListService();
         this.ChargesTypeListService = new ChargesTypeListService();
-        this.invoiceDomainService = new InvoiceDomainService();
+        this.InvoiceDomainService = new InvoiceDomainService();
     }
 
-    public EditingFieldName: string;
-    public DescriptionTitle: string = "";
-    public DescriptionValue: string = "";
-    public DescriptionHelp: string = "";
-    public DescriptionHelpVisibility = false;
-    InitalizeProperties() {
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    this.EditingFieldName = "DebitAccount";
-                    this.DescriptionTitle = "Bill To";
-                    this.DescriptionValue = this.invoicePM.BillToName;
-                    this.DescriptionHelp = "Please enter credit account";
-                    break;
-                }
-
-            case "CURR":
-                {
-                    this.EditingFieldName = "AccountingExternalCode";
-                    this.DescriptionTitle = "Invoice Currency";
-                    this.DescriptionValue = this.invoicePM.InvoiceCurrencyCode;
-                    this.DescriptionHelp = "Please enter external code for " + this.invoicePM.InvoiceCurrencyCode;
-                    break;
-                }
-
-            case "Line":
-                {
-                    this.EditingFieldName = "CreditAccount";
-                    this.DescriptionTitle = "Charge Type";
-                    this.DescriptionValue = this.invoiceLinePM.Description;
-                    this.DescriptionHelp = "Please enter credit account";
-                    break;
-                }
-
-            case "TAX":
-                {
-                    this.EditingFieldName = "ExternalVATCard";
-                    this.DescriptionTitle = "VAT Type Tax Code";
-                    this.DescriptionValue = this.invoiceLinePM.VatTypeName;
-                    this.DescriptionHelp = "Please enter external tax code";
-                    break;
-                }
-        }
-    }
-
-    get EditingFieldValue() {
-        var result = "";
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    result = this.invoicePM.DebitAccount;
-                    break;
-                }
-
-            case "CURR":
-                {
-                    result = this.invoicePM.AccountingExternalCode;
-                    break;
-                }
-
-            case "Line":
-                {
-                    result = this.invoiceLinePM.CreditAccount;
-                    break;
-                }
-
-            case "TAX":
-                {
-                    result = this.invoiceLinePM.ExternalVATCard;
-                    break;
-                }
-        }
-
-        return result;
-    }
-    set EditingFieldValue(value: string) {
-        switch (this.Code) {
-            case "BLTO":
-                {
-                    if (this.invoicePM.DebitAccount != value) {
-                        this.invoicePM.DebitAccount = value;
-                    }
-
-                    break;
-                }
-
-            case "CURR":
-                {
-                    if (this.invoicePM.AccountingExternalCode != value) {
-                        this.invoicePM.AccountingExternalCode = value;
-                    }
-
-                    break;
-                }
-
-            case "Line":
-                {
-                    if (this.invoiceLinePM.CreditAccount != value) {
-                        this.invoiceLinePM.CreditAccount = value;
-
-                        this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.ChargesTypeId == this.invoiceLinePM.ChargesTypeId).forEach(item => {
-                            item.EditingFieldValue = value;
-                        });
-                    }
-
-                    break;
-                }
-
-
-            case "TAX":
-                {
-                    if (this.invoiceLinePM.ExternalVATCard != value) {
-                        this.invoiceLinePM.ExternalVATCard = value;
-
-                        this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
-                            item.EditingFieldValue = value;
-                        });
-                    }
-
-                    break;
-                }
-        }
-
-        this.father.UpdateTransferData();
-        this.GetDescriptionHelpVisibility();
-    }
-
+    // FillFieldsData
     private FillFieldsData() {
-        if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
-            switch (this.Code) {
-                case "BLTO":
-                    {
-                        this.GetCardData();
-                        break;
-                    }
+        if (this.IsTransferredEnabled) {
+            if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
+                switch (this.Code) {
+                    case "BLTO":
+                        {
+                            this.GetBillToData();                            
+                            break;
+                        }
 
-                case "CURR":
-                    {
-                        this.GetCurrencyData();
-                        break;
-                    }
+                    case "CURR":
+                        {
+                            this.GetCurrencyData();
+                            break;
+                        }
 
+                    case "VAT":
+                        {
+                            this.GetVatTypeData();
+                            break;
+                        }
+                    case "TAX":
+                        {
+                            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
+                                this.GetAccountingSystemData();
+                            }
+                            else {
+                                this.GetVatTypeData();
+                            }
 
-                case "Line":
-                    {
+                            break;
+                        }
+                    case "PYTM":
+                        {
+                            this.GetPaymentTermData();
+                            break;
+                        }
+                    default: {
                         this.GetChargesTypeData();
                         break;
                     }
-
-                case "TAX":
-                    {
-                        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
-                            this.GetAccountingSystemData();
-                        }
-
-                        else {
-                            this.GetVatTypeData();
-                        }
-
-                        break;
-                    }
+                }
             }
         }
     }
-    private GetCardData() {
+    private GetBillToData() {
         this.CardListService.getSingle(this.invoicePM.BillToId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                var myResult: CardList = response.Result;
-                if (myResult) {
-
-                    if (myResult.AccountingVATSplit) {
-                        this.GetCardDataBySplit();
-                    }
-
-                    else {
-                        this.EditingFieldValue = myResult.ReceivablesAccountingCard;
-                    }
+                var card: CardList = response.Result;
+                if (card != null) {
+                    this.EditingFieldValue = card.ReceivablesAccountingCard;
                 }
-            }
-        });
-    }
-    private GetCardDataBySplit() {
-        this.invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(this.invoicePM.BillToId, this.invoicePM.InvoiceCurrencyId, false).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                this.EditingFieldValue = response.Result;
             }
         });
     }
@@ -496,7 +334,17 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
             if (!response.HasError) {
                 var vat: VatTypeList = response.Result;
                 if (vat != null) {
-                    this.EditingFieldValue = vat.ReceivablesExternalId;
+                    this.EditingFieldValue = vat.ExternalTAXItemId;
+                }
+            }
+        });
+    }
+    private GetPaymentTermData() {
+        this.PaymentTermListService.getSingle(this.invoicePM.PaymentTermId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var payment: PaymentTermList = response.Result;
+                if (payment != null) {
+                    this.EditingFieldValue = payment.ExternalId;
                 }
             }
         });
@@ -506,11 +354,9 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
             if (!response.HasError) {
                 var charge: ChargesTypeList = response.Result;
                 if (charge != null) {
-
                     if (charge.AccountingVATSplit) {
-                        this.GetChargesTypeDataBySplit();
+                        this.GetChargeTypeAccountingList();
                     }
-
                     else {
                         this.EditingFieldValue = charge.ReceivableCreditAccount;
                     }
@@ -518,10 +364,10 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
             }
         });
     }
-    private GetChargesTypeDataBySplit() {
-        this.invoiceDomainService.GetSingleChargeTypeAccountingList(this.invoiceLinePM.ChargesTypeId, this.invoiceLinePM.VatTypeId).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var list: ChargeTypeAccountingList = response.Result;
+    private GetChargeTypeAccountingList() {
+        this.InvoiceDomainService.GetSingleChargeTypeAccountingList(this.invoiceLinePM.ChargesTypeId, this.invoiceLinePM.VatTypeId).subscribe((respo: ServiceResponse) => {
+            if (!respo.HasError) {
+                var list: ChargeTypeAccountingList = respo.Result;
                 if (list != null) {
                     this.EditingFieldValue = list.ReceivableCreditAccount;
                 }
@@ -530,6 +376,301 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
     }
     private GetAccountingSystemData() {
         this.EditingFieldValue = SessionLocator.AccountingSettingPM.ReceivableVATCard;
+    }
+
+    // SetUIProperties
+    private SetUIProperties() {
+        this.UIProperties.SetEnabled(this.EditingFieldName, this.ObjectTableName, this.IsTransferredEnabled);
+    }
+
+    // Props
+    public DescriptionTitle: string = "";
+    private GetDescriptionTitle() {
+        var result = "";
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    result = "Bill To";
+                    break;
+                }
+            case "CURR":
+                {
+                    result = "Invoice Currency";
+                    break;
+                }
+            case "PYTM":
+                {
+                    result = "Payment Term";
+                    break;
+                }
+            case "VAT":
+                {
+                    result = "VAT Type Item Code";
+                    break;
+                }
+            case "TAX":
+                {
+                    result = "VAT Type Tax Code";
+                    break;
+                }
+            default:
+                {
+                    result = "Charge Type";
+                    break;
+                }
+        }
+        this.DescriptionTitle = result;
+    }
+
+    public DescriptionValue: string = "";
+    private GetDescriptionValue() {
+        var result = "";
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    result = this.invoicePM.BillToName;
+                    break;
+                }
+
+            case "CURR":
+                {
+                    result = this.invoicePM.InvoiceCurrencyCode;
+                    break;
+                }
+
+            case "PYTM":
+                {
+                    result = this.invoicePM.PaymentTermName;
+                    break;
+                }
+
+
+            case "VAT":
+                {
+                    result = this.invoiceLinePM.VatTypeName;
+                    break;
+                }
+
+            case "TAX":
+                {
+                    result = this.invoiceLinePM.VatTypeName;
+                    break;
+                }
+
+            default:
+                {
+                    result = this.invoiceLinePM.Description;
+                    break;
+                }
+        }
+
+        this.DescriptionValue = result;
+    }
+
+    public DescriptionHelp: string = "";
+    private GetDescriptionHelp() {
+        var result = "";
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    result = "Please enter debit account";
+                    break;
+                }
+
+            case "CURR":
+                {
+                    result = "Please enter external code for " + this.invoicePM.InvoiceCurrencyCode;
+                    break;
+                }
+
+            case "PYTM":
+                {
+                    result = "Please enter external payment term";
+                    break;
+                }
+
+
+            case "VAT":
+                {
+                    result = "Please enter external vat card";
+                    break;
+                }
+
+            case "TAX":
+                {
+                    result = "Please enter external tax code";
+                    break;
+                }
+
+            default:
+                {
+                    result = "Please enter credit account";
+                    break;
+                }
+        }
+        this.DescriptionHelp = result;
+    }
+
+    public DescriptionHelpVisibility = false;
+    GetDescriptionHelpVisibility() {
+        var result = false;
+        if (AppTool.IsNullOrEmpty(this.EditingFieldValue)) {
+            result = true;
+        }
+        this.DescriptionHelpVisibility = result;
+    }
+    get IsTransferredEnabled() {
+        var myResult = true;
+        if (this.father.TransferStatusCode == "TR") {
+            myResult = false;
+        }
+        else if (this.invoicePM.StatusCode == "DR" || this.invoicePM.StatusCode == "LL") {
+            myResult = false;
+        }
+        return myResult;
+    }
+
+    public EditingFieldName: string;
+    GetEditingFieldName() {
+        var result = "";
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    result = "DebitAccount";
+                    break;
+                }
+
+            case "CURR":
+                {
+                    result = "AccountingExternalCode";
+                    break;
+                }
+
+            case "PYTM":
+                {
+                    result = "PaymentTermExternalId";
+                    break;
+                }
+
+            case "VAT":
+                {
+                    result = "ExternalTAXItemId";
+                    break;
+                }
+
+            case "TAX":
+                {
+                    result = "ExternalVATCard";
+                    break;
+                }
+
+            default:
+                {
+                    result = "CreditAccount";
+                    break;
+                }
+        }
+        this.EditingFieldName = result;
+    }
+
+    get EditingFieldValue()
+    {
+        var result = "";
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    result = this.invoicePM.DebitAccount;
+                    break;
+                }
+
+            case "CURR":
+                {
+                    result = this.invoicePM.AccountingExternalCode;
+                    break;
+                }
+
+            case "PYTM":
+                {
+                    result = this.invoicePM.PaymentTermExternalId;
+                    break;
+                }
+
+
+            case "VAT":
+                {
+                    result = this.invoiceLinePM.ExternalTAXItemId;
+                    break;
+                }
+
+            case "TAX":
+                {
+                    result = this.invoiceLinePM.ExternalVATCard;
+                    break;
+                }
+
+            default:
+                {
+                    result = this.invoiceLinePM.CreditAccount;
+                    break;
+                }
+        }
+
+        return result;
+    }
+    set EditingFieldValue(value:string)
+    {
+        switch (this.Code) {
+            case "BLTO":
+                {
+                    if (this.invoicePM.DebitAccount != value) {
+                        this.invoicePM.DebitAccount = value;
+                    }
+                    break;
+                }
+            case "CURR":
+                {
+                    if (this.invoicePM.AccountingExternalCode != value) {
+                        this.invoicePM.AccountingExternalCode = value;
+                    }
+                    break;
+                }
+            case "PYTM":
+                {
+                    if (this.invoicePM.PaymentTermExternalId != value) {
+                        this.invoicePM.PaymentTermExternalId = value;
+                    }
+                    break;
+                }
+            case "VAT":
+                {
+                    if (this.invoiceLinePM.ExternalTAXItemId != value) {
+                        this.invoiceLinePM.ExternalTAXItemId = value;
+                        this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+                            item.ExternalTAXItemId = value;
+                        });
+                    }
+                    break;
+                }
+            case "TAX":
+                {
+                    if (this.invoiceLinePM.ExternalVATCard != value) {
+                        this.invoiceLinePM.ExternalVATCard = value;
+                        this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+                            item.ExternalVATCard = value;
+                        }); 
+                    }
+                    break;
+                }
+            default:
+                {
+                    if (this.invoiceLinePM.CreditAccount != value) {
+                        this.invoiceLinePM.CreditAccount = value;
+                    }
+                    break;
+                }
+        }
+        this.father.UpdateTransferData();
+        this.GetDescriptionHelpVisibility();
     }
 
     get DebitAccount() { return this.invoicePM.DebitAccount; }
@@ -550,15 +691,23 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
         }
     }
 
-    get CreditAccount() { return this.invoiceLinePM.CreditAccount; }
-    set CreditAccount(value: string) {
-        if (this.invoiceLinePM.CreditAccount != value) {
-            this.invoiceLinePM.CreditAccount = value;
+    get PaymentTermExternalId() { return this.invoicePM.PaymentTermExternalId; }
+    set PaymentTermExternalId(value: string) {
+        if (this.invoicePM.PaymentTermExternalId != value) {
+            this.invoicePM.PaymentTermExternalId = value;
             this.father.UpdateTransferData();
             this.GetDescriptionHelpVisibility();
+        }
+    }
 
-            this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.ChargesTypeId == this.invoiceLinePM.ChargesTypeId).forEach(item => {
-                item.CreditAccount = value;
+    get ExternalTAXItemId() { return this.invoiceLinePM.ExternalTAXItemId; }
+    set ExternalTAXItemId(value: string) {
+        if (this.invoiceLinePM.ExternalTAXItemId != value) {
+            this.invoiceLinePM.ExternalTAXItemId = value;
+            this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+                item.ExternalTAXItemId = value;
+                this.father.UpdateTransferData();
+                this.GetDescriptionHelpVisibility();
             });
         }
     }
@@ -567,15 +716,24 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
     set ExternalVATCard(value: string) {
         if (this.invoiceLinePM.ExternalVATCard != value) {
             this.invoiceLinePM.ExternalVATCard = value;
-            this.father.UpdateTransferData();
-            this.GetDescriptionHelpVisibility();
-
-            this.father.ItemsSource.filter(d => d.Code == this.Code && d.invoiceLinePM.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
+            this.father.EntityPM.InvoiceLines.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId).forEach(item => {
                 item.ExternalVATCard = value;
-            });
+                this.father.UpdateTransferData();
+                this.GetDescriptionHelpVisibility();
+            }); 
         }
     }
-    
+
+    get CreditAccount() { return this.invoiceLinePM.CreditAccount; }
+    set CreditAccount(value: string) {
+        if (this.invoiceLinePM.CreditAccount != value) {
+            this.invoiceLinePM.CreditAccount = value;
+            this.father.UpdateTransferData();
+            this.GetDescriptionHelpVisibility();
+        }
+    }
+
+    // Commands
     EditClicked() {
         var tableName = "";
         var entityId = "";
@@ -665,13 +823,21 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                     tabCode = "CRAC";
                     break;
                 }
-
-            case "Line":
+            case "PYTM":
                 {
-                    tableName = "ChargesType";
-                    title = "Edit Charges Type";
-                    entityId = this.invoiceLinePM.ChargesTypeId;
-                    tabCode = "CHAC";
+                    tableName = "PaymentTerm";
+                    title = "Edit Payment Term";
+                    entityId = this.invoicePM.PaymentTermId;
+                    tabCode = "PTAC";
+                    break;
+                }
+
+            case "VAT":
+                {
+                    tableName = "VatType";
+                    title = "Edit VAT Type";
+                    entityId = this.invoiceLinePM.VatTypeId;
+                    tabCode = "VTAC";
                     break;
                 }
 
@@ -683,8 +849,16 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                     tabCode = "VTAC";
                     break;
                 }
-        }
 
+            default:
+                {
+                    tableName = "ChargesType";
+                    title = "Edit Charges Type";
+                    entityId = this.invoiceLinePM.ChargesTypeId;
+                    tabCode = "CHAC";
+                    break;
+                }
+        }
         var editWindow: LogitudeWindow = new LogitudeWindow();
         editWindow.IsFillScreen = true;
         editWindow.ShowHeaderButtons = true;
@@ -694,54 +868,54 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
             editWindow.WindowClosed.subscribe(d => {
                 var entity = s.EntityPM;
                 if (entity != null) {
-
-                    switch (this.Code) {
-                        case "BLTO": {
-                            if (entity.AccountingVATSplit) {
-                                this.GetCardDataBySplit();
-                            }
-
-                            else {
-                                this.EditingFieldValue = entity.ReceivablesAccountingCard;
-                            }
-
-                            break;
+                    if (this.Code == "BLTO") {
+                        this.EditingFieldValue = entity.ReceivablesAccountingCard;
+                    }
+                    else if (this.Code == "CURR") {
+                        this.EditingFieldValue = entity.AccountingExternalCode;
+                    }
+                    else if (this.Code == "PYTM") {
+                        this.EditingFieldValue = entity.ExternalId;
+                    }
+                    else if (this.Code == "VAT") {
+                        this.EditingFieldValue = entity.ExternalVATCard;
+                    }
+                    else if (this.Code == "TAX") {
+                        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
+                            this.EditingFieldValue = SessionLocator.AccountingSettingPM.ReceivableVATCard;
                         }
-
-                        case "CURR": {
-                            this.EditingFieldValue = entity.AccountingExternalCode;
-                            break;
-                        }
-
-                        case "Line": {
-
-                            if (entity.AccountingVATSplit) {
-                                var charge: ChargeTypeAccountingPM = entity.ChargeTypeAccountings.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId)[0];
-                                if (charge != null) {
-                                    this.EditingFieldValue = charge.ReceivableCreditAccount;
-                                }
-                            }
-
-                            else {
-                                this.EditingFieldValue = entity.ReceivableCreditAccount;
-                            }
-
-                            break;
-                        }
-
-                        case "TAX": {
-
-                            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "HV" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "RH") {
-                                this.EditingFieldValue = SessionLocator.AccountingSettingPM.ReceivableVATCard;
-                            }
-
-                            else {
-                                this.EditingFieldValue = entity.ReceivablesExternalId;
-                            }
-
-                            break;
+                        else {
+                            this.EditingFieldValue = entity.ExternalVATCard;
                         }
                     }
+                    else { // Charge Type
+                        if (entity.AccountingVATSplit) {
+                            this.father.ItemsSource.filter(d => d.Code == "Line").forEach(item => {
+                                if (item.invoiceLinePM.ChargesTypeId == entity.Id) {
+                                    var charge: ChargeTypeAccountingPM = entity.ChargeTypeAccountings.filter(d => d.VatTypeId == this.invoiceLinePM.VatTypeId)[0];
+                                    if (charge != null) {
+                                        item.EditingFieldValue = charge.ReceivableCreditAccount;
+                                    }
+                                }
+                            });
+                        }
+                        else {
+
+                            this.father.ItemsSource.filter(d => d.Code == "Line").forEach(item => {
+                                if (item.invoiceLinePM.ChargesTypeId == entity.Id) {
+                                    //if (this.father.isJournal) {
+                                    item.EditingFieldValue = entity.ReceivableCreditAccount;
+                                    // }
+
+                                    //else {
+                                    // item.EditingFieldValue = entity.ChargesTypeExternalCode;
+                                    //}
+                                }
+                            });
+                        }
+                    }
+
+                    this.father.UpdateTransferData();
                 }
             });
         });

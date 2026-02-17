@@ -1,5 +1,5 @@
 ﻿using Logitude.SystemLogs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -36,16 +36,11 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        public static object GetTableListData(string tableName, int tenant = 0,string modelName = null,int contextTenant=0)
+        public static object GetTableListData(string tableName, int tenant = 0,string modelName = null)
         {
-
-            if (tableName == "DescriptionOfGoods")
-            {
-                tableName = "DescriptionOfGood";
-            }
-
-            ObjectTableRepository obRepository = new ObjectTableRepository(contextTenant);
-            ObjectTable table = obRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
+           
+            ObjectTableRepository obRepository = new ObjectTableRepository(0);
+            ObjectTable table = obRepository.GetObjectTableByName(tableName, 0, true);
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             FilterSerializer filterSerializer = new FilterSerializer();
@@ -69,7 +64,7 @@ namespace WebFreight.Web.Helpers
 
             var MethodsInfo = getMethodsInfo("WebFreight.Web.ShipmentsModel.DomainServices.ShipmentsDomainService", tableName);
             bool stop = false;
-            if (MethodsInfo != null)
+            if (MethodsInfo != null && LogitudeSettings.WorkEnvironment!="customs")
             {
                 getListMethodInfo = MethodsInfo.ListMethodInfo;
                 getCountMethodInfo = MethodsInfo.CountMethodInfo;
@@ -214,7 +209,7 @@ namespace WebFreight.Web.Helpers
                     stop = true;
                 }
             }
-     
+
 
             if (stop == false)
             {
@@ -231,29 +226,6 @@ namespace WebFreight.Web.Helpers
             if (stop == false)
             {
                 MethodsInfo = getMethodsInfo("WebFreight.Web.WarehouseModel.DomainServices.WarehousesDomainService", tableName);
-                if (MethodsInfo != null)
-                {
-                    getListMethodInfo = MethodsInfo.ListMethodInfo;
-                    getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                    context = MethodsInfo.context;
-                    stop = true;
-                }
-            }
-            if (stop == false)
-            {
-                MethodsInfo = getMethodsInfo("WebFreight.Web.TariffModel.DomainServices.TariffDomainService", tableName);
-                if (MethodsInfo != null)
-                {
-                    getListMethodInfo = MethodsInfo.ListMethodInfo;
-                    getCountMethodInfo = MethodsInfo.CountMethodInfo;
-                    context = MethodsInfo.context;
-                    stop = true;
-                }
-            }
-
-            if (stop == false)
-            {
-                MethodsInfo = getMethodsInfo("WebFreight.Web.DashboardModel.DomainServices.DashboardDomainService", tableName);
                 if (MethodsInfo != null)
                 {
                     getListMethodInfo = MethodsInfo.ListMethodInfo;
@@ -383,11 +355,9 @@ namespace WebFreight.Web.Helpers
                         object listQuery = Activator.CreateInstance(tableQueryType, parameters1);
 
                         Type[] parameterstypes = new Type[] { typeof(QueryOperations), typeof(int) };
-                        Type[] parameterstypesGetListCount = new Type[] { typeof(QueryOperations) };
-
 
                         MethodInfo getListMethodInfo = listQuery.GetType().GetMethod("GetList", parameterstypes);
-                        MethodInfo getCountMethodInfo = listQuery.GetType().GetMethod("GetListCount" , parameterstypesGetListCount);
+                        MethodInfo getCountMethodInfo = listQuery.GetType().GetMethod("GetListCount");
 
 
                         if (getListMethodInfo != null && getCountMethodInfo != null)

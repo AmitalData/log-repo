@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -27,32 +26,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.FieldDataTypes.Add(entity);
         }
 
-        public List<FieldDataType> GetDataTypes()
+        public IQueryable<FieldDataType> GetDataTypes()
         {
-            var excludedFieldDataTypes = GetExcludedFieldDataTypes();
-            List<FieldDataType> fieldDataTypes = context.FieldDataTypes
-                .Where(d => !excludedFieldDataTypes.Contains(d.Code)).ToList();
-
-            return fieldDataTypes;
-        }
-
-        private List<string> GetExcludedFieldDataTypes()
-        {
-            List<string> excludedFieldDataTypes = new List<string>();
-            excludedFieldDataTypes.Add("Byte[]");
-            excludedFieldDataTypes.Add("Emails");
-            excludedFieldDataTypes.Add("Constant");
-            excludedFieldDataTypes.Add("List");
-            excludedFieldDataTypes.Add("SigDouble");
-            excludedFieldDataTypes.Add("UnsDecimal");
-            excludedFieldDataTypes.Add("UnsInteger");
-            excludedFieldDataTypes.Add("Raw");
-            excludedFieldDataTypes.Add("Binary");
-            excludedFieldDataTypes.Add("Text");
-            excludedFieldDataTypes.Add("Integer");
-            excludedFieldDataTypes.Add("Double");
-            excludedFieldDataTypes.Add("BigInteger");
-            return excludedFieldDataTypes;
+            
+            
+            return context.FieldDataTypes;
         }
 
         public void Remove(FieldDataType entity)

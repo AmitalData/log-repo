@@ -29,29 +29,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
 
-
-        public TextCodePM GetByCode(string code , int tenant)
-        {
-            return (from a in repository.context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser.Contact")
-                   where a.Code == code && a.Tenant == tenant
-                    select new TextCodePM()
-                   {
-                       Code = a.Code,
-                       DefaultText = a.DefaultText,
-                       DefaultTextPlural = a.DefaultTextPlural,
-                       Id = a.Id,
-                       ObjectTableId = a.ObjectTableId,
-                       ObjectTableName = a.ObjectTable.Name,
-                       Tenant = a.Tenant,
-                       TextCodeTypeCode = a.TextCodeTypeCode,
-                       IsSpellChecked = a.IsSpellChecked,
-                       SpellCheckDate = a.SpellCheckDate,
-                       SpellCheckedByUserId = a.SpellCheckedByUserId,
-                       InActive = a.InActive,
-                       LocalDefaultText = a.LocalDefaultText,
-                       SpellCheckedByUserName = a.SpellCheckedByUser == null ? null : a.SpellCheckedByUser.Contact.EnglishName,
-                   }).FirstOrDefault();
-        }
         public IQueryable<TextCodePM> GetTextCodePMsByTenant(int tenant)
         {
             IQueryable<TextCodePM> textcodes = from a in repository.context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser.Contact")
@@ -77,91 +54,67 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return textcodes;
         }
 
-        public IQueryable<TextCodePM> GetTenantZeroTextCodePMs()
-        {
-            IQueryable<TextCodePM> textcodes = from a in repository.context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser.Contact")
-                                               where a.Tenant == 0 && !a.InActive
-                                               select new TextCodePM()
-                                               {
-                                                   Code = a.Code,
-                                                   DefaultText = a.DefaultText,
-                                                   DefaultTextPlural = a.DefaultTextPlural,
-                                                   Id = a.Id,
-                                                   ObjectTableId = a.ObjectTableId,
-                                                   ObjectTableName = a.ObjectTable.Name,
-                                                   Tenant = a.Tenant,
-                                                   TextCodeTypeCode = a.TextCodeTypeCode,
-                                                   IsSpellChecked = a.IsSpellChecked,
-                                                   SpellCheckDate = a.SpellCheckDate,
-                                                   SpellCheckedByUserId = a.SpellCheckedByUserId,
-                                                   InActive = a.InActive,
-                                                   LocalDefaultText = a.LocalDefaultText,
-                                                   SpellCheckedByUserName = a.SpellCheckedByUser == null ? null : a.SpellCheckedByUser.Contact.EnglishName,
-                                               };
-
-            return textcodes;
-        }
-
 
         public List<TextCodePM> GetFilteredTextCodesForDefaultTranslation(int tenant, string objectTableId, string isSpellCheckedCode, string textCodeTypeCode, DateTime? selectedCheckDate, string checkDateFiler, string searchText, int skipDigit, int takeDigit)
         {
-            IQueryable<TextCodePM> textCodes = (from a in repository.context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser.Contact")
-                                                where a.Tenant == tenant
-                                                && !a.InActive
-                                                select new TextCodePM()
-                                                {
-                                                    Code = a.Code,
-                                                    DefaultText = a.DefaultText,
-                                                    DefaultTextPlural = a.DefaultTextPlural,
-                                                    Id = a.Id,
-                                                    ObjectTableId = a.ObjectTableId,
-                                                    ObjectTableName = a.ObjectTable.Name,
-                                                    Tenant = a.Tenant,
-                                                    TextCodeTypeCode = a.TextCodeTypeCode,
-                                                    IsSpellChecked = a.IsSpellChecked,
-                                                    SpellCheckDate = a.SpellCheckDate,
-                                                    SpellCheckedByUserId = a.SpellCheckedByUserId,
-                                                    InActive = a.InActive,
-                                                    LocalDefaultText = a.LocalDefaultText,
-                                                    SpellCheckedByUserName = a.SpellCheckedByUser == null ? null : a.SpellCheckedByUser.Contact.EnglishName,
-                                                });
+            List<TextCodePM> data = (from a in repository.context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser.Contact")
+                                     where a.Tenant == tenant
+                                     && !a.InActive
+                                     select new TextCodePM()
+                                     {
+                                         Code = a.Code,
+                                         DefaultText = a.DefaultText,
+                                         DefaultTextPlural = a.DefaultTextPlural,
+                                         Id = a.Id,
+                                         ObjectTableId = a.ObjectTableId,
+                                         ObjectTableName = a.ObjectTable.Name,
+                                         Tenant = a.Tenant,
+                                         TextCodeTypeCode = a.TextCodeTypeCode,
+                                         IsSpellChecked = a.IsSpellChecked,
+                                         SpellCheckDate = a.SpellCheckDate,
+                                         SpellCheckedByUserId = a.SpellCheckedByUserId,
+                                         InActive = a.InActive,
+                                         LocalDefaultText = a.LocalDefaultText,
+                                         SpellCheckedByUserName = a.SpellCheckedByUser == null ? null : a.SpellCheckedByUser.Contact.EnglishName,
+                                     }).ToList();
 
-            if (!string.IsNullOrEmpty(objectTableId))
-            {
-                textCodes = textCodes.Where(d => d.ObjectTableId == objectTableId);
-            }
+            List<TextCodePM> filteredListTable = string.IsNullOrEmpty(objectTableId) ? data : data.Where(d => d.ObjectTableId == objectTableId).ToList();
+            List<TextCodePM> filteredListSearch = string.IsNullOrEmpty(searchText) ? filteredListTable : filteredListTable.Where(d => d.Code.ToUpper().Contains(searchText.ToUpper()) || (!string.IsNullOrEmpty(d.DefaultText) && d.DefaultText.ToUpper().Contains(searchText.ToUpper())) || (!string.IsNullOrEmpty(d.LocalDefaultText) && d.LocalDefaultText.ToUpper().Contains(searchText.ToUpper()))).ToList();
+            List<TextCodePM> filteredListType = (textCodeTypeCode == "All") ? filteredListSearch : filteredListSearch.Where(d => d.TextCodeTypeCode == textCodeTypeCode).ToList();
+            List<TextCodePM> filteredListDate = new List<TextCodePM>();
+            List<TextCodePM> filteredListChecked = new List<TextCodePM>();
 
-            if (!string.IsNullOrEmpty(searchText))
+            if (selectedCheckDate == null || checkDateFiler == "None")
             {
-                textCodes = textCodes.Where(d => d.Code.ToUpper().Contains(searchText.ToUpper()) || (!string.IsNullOrEmpty(d.DefaultText) && d.DefaultText.ToUpper().Contains(searchText.ToUpper())) || (!string.IsNullOrEmpty(d.LocalDefaultText) && d.LocalDefaultText.ToUpper().Contains(searchText.ToUpper())));
-            }
-            if (textCodeTypeCode != "All")
-            {
-                textCodes = textCodes.Where(d => d.TextCodeTypeCode == textCodeTypeCode);
+                filteredListDate = filteredListType;
             }
 
             if (selectedCheckDate != null)
             {
-                if (checkDateFiler == "Equals") { textCodes = textCodes.Where(d => d.SpellCheckDate == selectedCheckDate); }
-                else if (checkDateFiler == "Bigger") { textCodes = textCodes.Where(d => d.SpellCheckDate > selectedCheckDate); }
-                else if (checkDateFiler == "Less") { textCodes = textCodes.Where(d => d.SpellCheckDate < selectedCheckDate); }
+                if (checkDateFiler == "Equals") { filteredListDate = filteredListType.Where(d => d.SpellCheckDate == selectedCheckDate).ToList(); }
+                else if (checkDateFiler == "Bigger") { filteredListDate = filteredListType.Where(d => d.SpellCheckDate > selectedCheckDate).ToList(); }
+                else if (checkDateFiler == "Less") { filteredListDate = filteredListType.Where(d => d.SpellCheckDate < selectedCheckDate).ToList(); }
             }
 
-            if (isSpellCheckedCode != "None")
+            if (isSpellCheckedCode == "None")
+            {
+                filteredListChecked = filteredListDate;
+            }
+
+            else if (isSpellCheckedCode != "None")
             {
                 if (isSpellCheckedCode == "True")
                 {
-                    textCodes = textCodes.Where(d => d.IsSpellChecked == true);
+                    filteredListChecked = filteredListDate.Where(d => d.IsSpellChecked == true).ToList();
                 }
 
                 else
                 {
-                    textCodes = textCodes.Where(d => d.IsSpellChecked == false);
+                    filteredListChecked = filteredListDate.Where(d => d.IsSpellChecked == false).ToList();
                 }
             }
 
-            return textCodes.OrderBy(d => d.Code).Skip(skipDigit).Take(takeDigit).ToList();
-
+            return filteredListChecked.OrderBy(d => d.Code).Skip(skipDigit).Take(takeDigit).ToList();
         }
 
 

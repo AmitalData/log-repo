@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,9 +19,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
     public partial class ReconcileExternalPageListQueryService
     {
-        const string approvedStatus = "2";
-
-        public IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
+	    public IQueryable<ReconcileExternalPageList> GetIqueryableList(IQueryable<ReconcileExternalPage> iQueryable)
         {
 		IQueryable<ReconcileExternalPageList> query = (from a in iQueryable.Include("BankPageEntryType")
                                             select new ReconcileExternalPageList()
@@ -85,8 +83,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             // Get list query with query filters 
             IQueryable<ReconcileExternalPageLineList>  listQuery = BasicListFilter(accountQuery, queryOperations, tenant);
 
-            //// Ordering
-            //listQuery = listQuery.OrderByDescending(a => a.ReferenceDate);
+            // Ordering
+            listQuery = listQuery.OrderByDescending(a => a.ReferenceDate);
 
             // Skip & Take
             var skipped = (queryOperations.PageIndex - 1);
@@ -169,86 +167,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<ReconcileExternalPageLineList> query2 = lineQuery.GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<ReconcileExternalPageLineList>(listQueryOperation, query2);
-
-            query2 = ApplyOrderBy(queryOperations, query2, tenant);
-
             return query2;
         }
-
-        private IQueryable<ReconcileExternalPageLineList> ApplyOrderBy(QueryOperations queryOperations, IQueryable<ReconcileExternalPageLineList> query2, int tenant)
-        {
-            GenericSort sortClass = new GenericSort();
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-            {
-                PropertyInfo propInfo = typeof(ReconcileExternalPageLineList).GetProperty(queryOperations.SortByColumnName);
-
-                List<ObjectField> objectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ReconcileExternalPageLine", tenant).ToList();
-
-                ObjectField objectField = (from a in objectFields
-                                           where a.FieldName == queryOperations.SortByColumnName
-                                           select a).FirstOrDefault();
-
-                if (objectField != null)
-                {
-                    if (objectField.IsCustom)
-                    {
-                        query2 = sortClass.GetSorterQuery<ReconcileExternalPageLineList, string>(queryOperations, query2);
-                    }
-                    else
-                    {
-                        switch (objectField.DataTypeCode.ToLower())
-                        {
-                            case "ntext":
-                            case "text":
-                                {
-                                    query2 = sortClass.GetSorterQuery<ReconcileExternalPageLineList, string>(queryOperations, query2);
-                                    break;
-                                }
-                            case "sigdouble":
-                            case "double":
-                                {
-                                    query2 = sortClass.GetSorterQuery<ReconcileExternalPageLineList, double>(queryOperations, query2);
-                                    break;
-                                }
-                            case "date":
-                            case "datetime":
-                                {
-                                    query2 = sortClass.GetSorterQuery<ReconcileExternalPageLineList, DateTime>(queryOperations, query2);
-                                    break;
-                                }
-                            case "unsinteger":
-                            case "integer":
-                                {
-                                    query2 = sortClass.GetSorterQuery<ReconcileExternalPageLineList, int>(queryOperations, query2);
-                                    break;
-                                }
-                            case "boolean":
-                                {
-                                    query2 = sortClass.GetSorterQuery<ReconcileExternalPageLineList, bool>(queryOperations, query2);
-                                    break;
-                                }
-                            case "unsdecimal":
-                            case "decimal":
-                                {
-                                    query2 = sortClass.GetSorterQuery<ReconcileExternalPageLineList, decimal>(queryOperations, query2);
-                                    break;
-                                }
-                            default:
-                                {
-                                    query2 = query2.OrderBy(d => d.ReferenceDate);
-                                    break;
-                                }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                query2 = query2.OrderBy(d => d.ReferenceDate);
-            }
-            return query2;
-        }
-
 
 
 
@@ -267,18 +187,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             
             return listQuery;
 
-        }
-
-
-        public List<ReconcileExternalPage> GetApprovedExternalPages(string objectTableId, string entityId, int tenant)
-        {
-            IQueryable<ReconcileExternalPage> pages = from page in context.ReconcileExternalPages
-                                                      where page.Tenant == tenant
-                                                      && page.EntityId == entityId
-                                                      && page.ObjectTableId == objectTableId
-                                                      && page.StatusCode == approvedStatus
-                                                      select page;
-            return pages.ToList();
         }
 
     }

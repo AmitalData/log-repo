@@ -7,8 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-
-import {EventRemarkPM} from './EventRemarkPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -22,7 +20,7 @@ export class EventTypePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -167,74 +165,11 @@ export class EventTypePM {
     public set AllowedInAutomation(newValue: boolean) { if (this.allowedInAutomation != newValue) { this.allowedInAutomation = newValue; this.MarkAsDirty("AllowedInAutomation"); } }
        
 	 
-    private customField: string;
-    public get CustomField() { return this.customField; }
-    public set CustomField(newValue: string) { if (this.customField != newValue) { this.customField = newValue; this.MarkAsDirty("CustomField"); } }
-       
-	 
-    private isStatusNotModified: boolean;
-    public get IsStatusNotModified() { return this.isStatusNotModified; }
-    public set IsStatusNotModified(newValue: boolean) { if (this.isStatusNotModified != newValue) { this.isStatusNotModified = newValue; this.MarkAsDirty("IsStatusNotModified"); } }
-       
-	 
-    private partnerCode: string;
-    public get PartnerCode() { return this.partnerCode; }
-    public set PartnerCode(newValue: string) { if (this.partnerCode != newValue) { this.partnerCode = newValue; this.MarkAsDirty("PartnerCode"); } }
-       
-	 
-    private eventTrigger: string;
-    public get EventTrigger() { return this.eventTrigger; }
-    public set EventTrigger(newValue: string) { if (this.eventTrigger != newValue) { this.eventTrigger = newValue; this.MarkAsDirty("EventTrigger"); } }
-       
-    private weight: number;
-    public get Weight() { return this.weight; }
-    public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
-     
-     
-	private eventRemarks: EventRemarkPM[];
-    get  EventRemarks() {
-        if (this.eventRemarks == null) {
-            this.eventRemarks = [];
-        }
-
-        return this.eventRemarks;
-    }
-    set  EventRemarks(newValue: EventRemarkPM[]) {
-        if (this.eventRemarks != newValue) {
-            this.eventRemarks = newValue;
-            this.MarkAsDirty("EventRemarks");
-        }
-    }
-    public AddEventRemarkPM(item: EventRemarkPM) {
-        if (item != null) {
-            var index = this.EventRemarks.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this. EventRemarks.push(item);
-                this.MarkAsDirty("EventRemarks");
-            }
-        }
-    }
-    public RemoveEventRemarkPM(item: EventRemarkPM) {
-        if (item != null) {
-            var index = this.EventRemarks.indexOf(item);
-            if (index > -1) {
-                this. EventRemarks.splice(index, 1);
-                this.MarkAsDirty("EventRemarks");
-            }
-        }
-    }
-	    //public EventRemarks: Array<EventRemarkPMPM>= [];
 
     public OldEntityPM: EventTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -242,7 +177,6 @@ export class EventTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "EventType");
            
         }
-	 }
     }
     private MyClone: EventTypePM;
 
@@ -254,4 +188,4 @@ export class EventTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

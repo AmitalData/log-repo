@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-        public List<ARPaymentInvoicePM> ARPaymentInvoiceDataMappingAndValidatin(List<ARPaymentInvoice> ARPaymentInvoices, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ARPaymentInvoicePM> ARPaymentInvoiceDataMappingAndValidatin(List<ARPaymentInvoice> ARPaymentInvoices, int Tenant, string ComputingPartnerName = "")
         {
             try
             {

@@ -1,29 +1,29 @@
-import {Injectable} from '@angular/core';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
- 
+
 @Injectable()
 
 export class ReconcileExternalPageExtendedListService {
-  
+    private _http: Http
     private _apiUrl: string;
-    private httpClient: HttpClient;
+
     constructor() {
-   
-        this.httpClient = ServiceHelper.HttpClient;
-         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
+        this._http = ServiceHelper.Http;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
 
 
     getExternalReoncilioationsByFilter(objectTableId: string, entityId: string, filters: ApiQueryFilters)
     {
-   
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
         var url = this._apiUrl + "/getExternalReoncilioationsByFilter";
 
         var urlparameters = '?objectTableId=' + objectTableId + '&entityId=' + entityId;
@@ -32,16 +32,19 @@ export class ReconcileExternalPageExtendedListService {
 
 
         var callUrl = url.concat(urlparameters);
-        return this.httpClient.get(callUrl,  ServiceHelper.GetHttpHeaders()).pipe(
-            map((response:ServiceResponse) => {
+
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                serviceResponse = response.json();
                 console.log("serviceResponse: ", serviceResponse);
 
                 return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError)); 
-  
+            }).catch(ServiceHelper.HandleServiceError);
+        });
     }
 
     private ParseFiltersIntoURI(filters: ApiQueryFilters, urlparameters: string)
@@ -70,7 +73,8 @@ export class ReconcileExternalPageExtendedListService {
     }
 
     getBankPageLinesByIds(Ids: string[]) {
-    
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
         var params: string = "";
         for (var id of Ids) {
@@ -78,18 +82,15 @@ export class ReconcileExternalPageExtendedListService {
         }
 
         var url = this._apiUrl + '/getBankPageLinesByIds?' + params;
-
-        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-   
+            }).catch(ServiceHelper.HandleServiceError);
+        });
     }
 
     MapJsonToEntityList(jsonList: any) {

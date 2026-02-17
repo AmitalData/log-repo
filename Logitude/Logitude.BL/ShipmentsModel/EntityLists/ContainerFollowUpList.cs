@@ -72,6 +72,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string EmptyContainerReturnTo { get; set; }
         public string ECRTransportModeCode { get; set; }
         public string ECRTransportModeName { get; set; }
-        public bool InTransit { get; set; }
+
     }
 }

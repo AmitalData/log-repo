@@ -5,7 +5,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 
 @Component({
     selector: 'log-footer',
-    
+    moduleId: module.id,
     templateUrl: './LogFooterComponent.html',
 })
 

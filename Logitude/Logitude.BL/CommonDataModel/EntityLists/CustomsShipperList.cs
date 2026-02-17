@@ -1,10 +1,13 @@
-﻿using Logitude.BL.InfrastructureModel.EntityLists;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-   public class CustomsShipperList : CustomFieldList
+   public class CustomsShipperList
     {
         [Key]
         public string Id { get; set; }
@@ -14,11 +17,14 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
         public string SearchFields { get; set; }
+
+
         public string EnglishName { get; set; }
         public string LocalName { get; set; }
         public string CountryId { get; set; }
         public string CountryCode { get; set; }
         public string CountryName { get; set; }
         public string ShipperVAT { get; set; }
+      
     }
 }

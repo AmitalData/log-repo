@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Data.Utils;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
-
 
 namespace Logitude.BL.CommonDataModel.CustomFilters
 {
@@ -31,7 +27,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
 
 
-        public IQueryable<Card> GetFilteredQuery(QueryOperations operations, IQueryable<Card> queryableData, bool fromShort=false, ICommonDataContext MyContext=null)
+        public IQueryable<Card> GetFilteredQuery(QueryOperations operations, IQueryable<Card> queryableData)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
@@ -68,35 +64,7 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                             queryableData = queryableData.Where(d => d.EnglishName.StartsWith(value) || d.Code.StartsWith(value) || d.LocalName.StartsWith(value));
                         }
                     }
-                    if (item.FieldName == "ActiveGLAccount" )
-                    {
-                        bool value = Convert.ToBoolean(item.FieldValue);
-                      
-                        if (value)
-                        {
-                            if (fromShort)
-                            {
-                                queryableData = (from card in queryableData
-                                                 join c in MyContext.AllActiveGLAccountsViews on card.GLAccountId equals c.Id into joinglaccount
-                                                 from a in joinglaccount.DefaultIfEmpty()
-                                                 where card.Tenant == tenant && card.GLAccountId != null  && a.Id==null
-                                                 select card
-                                    );
-                            
-
-
-                            }
-                            else {
-                                GLAccountRepository glAccountRepository = new GLAccountRepository(tenant);
-                                List<String> allGLAccountInActivityListId = glAccountRepository.GetAllInActivityAccountsByTenant(tenant).Select(g => g.Id).ToList();
-                                queryableData = queryableData.Where(d => !allGLAccountInActivityListId.Contains(d.GLAccountId) && d.GLAccountId != null);
-                            }
-                          
-
-                        }
-                    }
                 }
-                
             }
 
             #region Freelancer
@@ -110,8 +78,8 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
             return queryableData;
         }
 
-
        
+
         public IQueryable<Card> GetFreelancerCards(IQueryable<Card> queryableData, int tenant)
         {
             FreelancerCustomersUtil frlUtil = new FreelancerCustomersUtil(tenant);

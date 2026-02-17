@@ -33,25 +33,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All = null;
             if (true)// in the level we take only cards==1 
             {
-                //IQueryable<TrailReportTemp> qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode = Init_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode();
+                IQueryable<TrailReportTemp> qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode = Init_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode();
 
-                //qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
-                //    qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(
-                //qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode);
                 qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
-                    qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode;
+                    qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(
+                qAccumulate_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode);
             }
 
             IQueryable<TrailReportTemp> qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All = null;
             IQueryable<TrailReportTemp> qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode = Init_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode();
             if (true)// in the level we take only cards==1 
             {
-                //IQueryable<TrailReportTemp> qAccumulate_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode = Init_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode();
-                //qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
-                //    qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(
-                //    qAccumulate_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode);
+                IQueryable<TrailReportTemp> qAccumulate_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode = Init_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode();
                 qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
-                    qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode;
+                    qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(
+                    qAccumulate_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode);
             }
 
             IQueryable<TrailReportTemp> _QUnionAllMoneyData = qAccumulate_TotalStart_JoinAccounts_GroupByChartOfAccountsTypeCode.Union(qAccumulate_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All).Union(qAccumulate_TotalDelta2End_JoinAccounts_GroupByChartOfAccountsTypeCode).Union(qAccumulateTransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All);
@@ -59,7 +55,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool addAllChatOfAccountTyps = true;
             if (addAllChatOfAccountTyps)
             {
-                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData, _TrailReportParam.ChartOfAccountsTypeCodeList);
+                _QUnionAllMoneyData = AddAllChatOfAccountTypEmptyRows(_QUnionAllMoneyData);
             }
             if (testNow)
             {
@@ -97,7 +93,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                       ChartOfAcount5 = "",
 
                       GLAccountName = "",
-                      GLAccountEnglish = "",
 
                       GLAccountId = "",
                       CurrencyId = g.Key.CurrencyId,
@@ -472,21 +467,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return qAccumulateTotalsFrom0BCTilNotIncludeStartOfMonthFromDate;
         }
 
-        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData, List<string> chartOfAccountsTypes)
+        IQueryable<TrailReportTemp> AddAllChatOfAccountTypEmptyRows(IQueryable<TrailReportTemp> _QUnionAllMoneyData)
         {
-            var allChartTypes = _AccountingContext.ChartOfAccountsTypes.AsQueryable();
-            IQueryable<Data.EntityPOCOs.ChartOfAccountsType> chartTypes = null;
-            if (chartOfAccountsTypes != null && chartOfAccountsTypes.Count > 0)
-            {
-                chartTypes = allChartTypes.Where(coa => chartOfAccountsTypes.Contains(coa.Code));
-            }
-            else
-            {
-                chartTypes = allChartTypes;
-            }
-
             _QUnionAllMoneyData = _QUnionAllMoneyData.Concat(
-            chartTypes.Select(r => new TrailReportTemp()
+            _AccountingContext.ChartOfAccountsTypes.Select(r => new TrailReportTemp()
             {
                 AccountId_COAType = r.Code,
 

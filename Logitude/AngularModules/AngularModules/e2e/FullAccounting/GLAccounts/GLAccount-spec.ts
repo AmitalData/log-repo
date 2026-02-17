@@ -20,7 +20,7 @@ describe('GLAccount Module', function () {
 
 
     browser.ignoreSynchronization = true;
-    gn1.GoToMainMenu2('General.MH.FullAccounting');
+    gn1.GoToMainMenu('General.MH.FullAccounting');
     h.WaitByIdAndClick('FAGLAccouts');
     var GlaccountNumber = gn1.RandomNum();
       var s = 'My Auto GLAccount';

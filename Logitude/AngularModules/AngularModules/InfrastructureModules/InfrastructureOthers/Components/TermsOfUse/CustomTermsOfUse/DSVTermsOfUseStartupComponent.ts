@@ -1,4 +1,4 @@
-declare var System: any;
+﻿declare var System: any;
 declare var window: any;
 import {Component, OnInit, EventEmitter, Output}  from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -11,11 +11,9 @@ import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/Servi
 
 import {DateTool, AppTool} from '../../../../../Infrastructure/Tools';
 import {TermsOfUseStartupComponent} from '../TermsOfUseStartupComponent';
-import { PrivateLabelsBrandingDataService } from '../../../../../Infrastructure/Services/WebServices/PrivateLabelsBrandingDataService';
-
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'DSVTermsOfUseStartupComponent',
     templateUrl: './DSVTermsOfUseStartupComponent.html',
@@ -24,23 +22,11 @@ import { PrivateLabelsBrandingDataService } from '../../../../../Infrastructure/
 })
 
 export class DSVTermsOfUseStartupComponent extends TermsOfUseStartupComponent implements OnInit {
-    public BackgroundImage: string = "";
-    public LoginImage: string = "";
-    public MainLogo: string = "";
-    public showSpinner: boolean = true;
-
+     
     constructor() {
         super();
     }
 
-    ngOnInit() {
-        this.GetPrivateLabelsBrandingData();
-    }
-
-    GetPrivateLabelsBrandingData() {
-        this.BackgroundImage = PrivateLabelsBrandingDataService.GetBackgroundImageFromStorage();
-        this.MainLogo = PrivateLabelsBrandingDataService.GetMainLogoFromStorage();
-        this.LoginImage = PrivateLabelsBrandingDataService.GetLoginImageFromStorage();
-        this.showSpinner = false;
-    }
+    ngOnInit() { 
+    } 
 }

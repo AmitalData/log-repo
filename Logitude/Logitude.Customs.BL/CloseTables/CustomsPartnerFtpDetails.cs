@@ -1,8 +1,4 @@
-﻿using Logitude.Customs.BL.Messaging;
-using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
-using Logitude.Customs.BL.Messaging.ILOVS;
-using Logitude.Customs.BL.Messaging.ILSWS;
-using Logitude.Customs.BL.Messaging.Maman;
+﻿using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
@@ -17,54 +13,19 @@ namespace Logitude.Customs.BL.CloseTables
     public class CustomsPartnerFtpDetails
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
-        public const string InterfaceName_ECMMNTHR_REQUEST = "ECTHR";//EC = E-Commerce
-        public const string InterfaceName_ECMMNTHR_REQUEST_New = "ECTHR+NEW";//EC = E-Commerce
-        public const string InterfaceName_ECMMNTHR_RESPONE = "ECTH+RS";//EC = E-Commerce
-        public const string InterfaceName_ECOVSTHR = "ECOVSTHR";//EC = E-Commerce
-        public const string InterfaceName_ECOVSTHR_Response = "ECOVSTHR+RS";//EC = E-Commerce
-        public const string InterfaceName_ECMMNSPCL_REQUEST = "ECSPCL";//EC = E-Commerce
-        public const string InterfaceName_ECMMNSPCL_REQUEST_New = "ECSPCL+NEW";//EC = E-Commerce
-        public const string InterfaceName_ECMMNSPCL_Response = "ECSPCL+RS";//EC = E-Commerce
-        public const string InterfaceName_ECSWSTHR_REQUEST = "ECSWSTHR";//EC = E-Commerce
-        public const string InterfaceName_ECSWSTHR_RESPONE = "ECSWSTHR+RS";//EC = E-Commerce
-        public const string InterfaceName_ECSWSTHR_IN = "ECSWSTHR+IN";//EC = E-Commerce
-
-
-        public const string InterfaceName_ECOVSSPCL_REQUEST = "ECOVSSPCL+RQ";//EC = E-Commerce
-        public const string InterfaceName_ECOVSSPCL_RESPONE = "ECOVSSPCL+RS";//EC = E-Commerce
-        public const string InterfaceName_ECSWSSPCL_REQUEST = "ECSWSSPCL+RQ";//EC = E-Commerce
-        public const string InterfaceName_ECSWSSPCL_RESPONE = "ECSWSSPCL+RS";//EC = E-Commerce
+        public const string InterfaceName_ECTHR = "ECTHR";//EC = E-Commerce
+        public const string InterfaceName_ECSPCL = "ECSPCL";//EC = E-Commerce
         public const string InterfaceName_ECSTB = "ECSTB";//EC = E-Commerce
-        public const string InterfaceName_ECOVSTB = "ECOVSSTB";//EC = E-Commerce
-        public const string InterfaceName_ECSWSSTB = "ECSWSSTB";//EC = E-Commerce
         public const string InterfaceName_ECSTB_Splited = "ECSTB+P";//EC = E-Commerce
-        public const string InterfaceName_ECSWSSTB_Splited = "ECSWSSTB+P";//EC = E-Commerce
-        public const string InterfaceName_ECOVSTB_Splited = "ECOVSSTB+P";//EC = E-Commerce
         public const string InterfaceName_Ftp2Maman2470 = "ECM2470";//EC = E-Commerce 2 maman 2470
-        public const string InterfaceName_ECILSWSHAWB = "ECILSWSHAWB";//EC = E-Commerce
-        public const string InterfaceName_ECILSWSHAWB_Splited = "ECILSWSHAWB+P";//EC = E-Commerce
-        public const string InterfaceName_ImportAddOwner = "IMPORT_ADD_OWNER";
-        public const string InterfaceName_ImportPrintTracking = "IMPORT_PRINT_TRACKING";
-        public const string InterfaceName_SIIProductFileCheck = "SII_PRODUCT_FILE_CHECK";
-        public const string InterfaceName_SIIProductFileCheck_Response = "SII_PRODUCT_FILE_CHECK_R";
-        public const string InterfaceName_SIISendRequest = "SII_SEND_REQUEST";
-        public const string InterfaceName_SIISendRequest_Response = "SII_SEND_REQUEST_R";
-        public const string InterfaceName_DownloadCustomsFilesFromSftp = "DWN_CUSTOMS_SFTP";
-        public const string InterfaceName_UploadNotNeeded9100FilesToSftp = "UPLOAD_NOTNEEDED9100_TOSFTP";
-        public const string InterfaceName_Customs = "Customs";
-        public const string InterfaceName_SIIRequestStatus = "SII_REQUEST_STATUS";
         public const string PartnerCode_Mamam = "MAMAN";
-        public const string PartnerCode_ILOVS = "ILOVS";
-        public const string PartnerCode_ILSWS = "ILSWS";
-        public const string PartnerCode_AMITAL = "AMITAL";
-        public const string PartnerCode_CUSTOMS = "Customs";
-        public const string PartnerCode_SII = "SII";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
 
         public List<InterfaceDetails> GetAllInterfaceDetails()
         {
             var all = new List<InterfaceDetails>() { 
+            //all.Add(new KeyValuePair<string, string>("", ""));
 
             new InterfaceDetails()
             {
@@ -72,86 +33,28 @@ namespace Logitude.Customs.BL.CloseTables
                 Name = "תת מצהר לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                 Subject  /*FTPOutMamanSubManifestService*/ ="שידור פנימיים מסוכנים לממן",
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
             }
             ,
             new InterfaceDetails()
             {
-                Code = InterfaceName_ECMMNTHR_REQUEST,
+                Code = InterfaceName_ECTHR,
                 Name = "ש.מ.ב לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
-                ResponseCode = InterfaceName_ECMMNTHR_RESPONE
-            }
-            ,
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECMMNTHR_RESPONE,
-                Name = "ש.מ.ב מממן",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanQHAWBService,
-                Subject="ש.מ.ב מממן",
-                ServerInternalDef= true
-
-            }
-            ,
-
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECOVSTHR,
-                Name = "ש.מ.ב לאוברסיז",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                ResponseCode=InterfaceName_ECOVSTHR_Response,
-                WEBAPICredentialType = CourierWEBAPICredentialType.NetworkCredential
-
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
             }
 
             , new InterfaceDetails()
             {
-                Code = InterfaceName_ECMMNSPCL_REQUEST,
+                Code = InterfaceName_ECSPCL,
                 Name = "פעולות מיוחדות לממן",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
-                ResponseCode =InterfaceName_ECMMNSPCL_Response,
-                Priority =  PriorityEnum.High
-            }
-            , new InterfaceDetails()
-            {
-                Code = InterfaceName_ECMMNSPCL_REQUEST_New,
-                Name = "פעולות מיוחדות לממן לאתר החדש",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
-                ResponseCode =InterfaceName_ECMMNSPCL_Response,
-                Priority =  PriorityEnum.High
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
             }
             ,
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECMMNSPCL_Response,
-                Name = "פעולות מיוחדות מממן",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
 
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanQSPCLService,
-                Subject="פעולות מיוחדות מממן",
-                ServerInternalDef= true,
-                 Priority = PriorityEnum.High
-
-            }
-            ,
             new InterfaceDetails()
             {
                 Code = InterfaceName_ECSTB,
@@ -159,9 +62,9 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-
+                
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
-                Subject="Status/Availability Maman Raw"
+                Subject="Status / Availability Maman Raw"
             },
             new InterfaceDetails()
             {
@@ -170,9 +73,9 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-
+                
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
-                Subject="Status/Availability Maman",
+                Subject="Status / Availability Maman",
                 ServerInternalDef= true
             },
             new InterfaceDetails()
@@ -185,270 +88,11 @@ namespace Logitude.Customs.BL.CloseTables
 
                 //AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
                 Subject="2470 to Maman",
+                
+            },
+            
 
-            }
-            ,
-            new InterfaceDetails()
-            {
-
-
-                Code = InterfaceName_ECOVSTHR_Response,
-                Name = "ש.מ.ב מאוברסיז",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-
-
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.OVSHAWBService,
-                Subject="ש.מ.ב מאוברסיז",
-                ServerInternalDef= true
-            },
-
-             new InterfaceDetails()
-            {
-                Code = InterfaceName_ECOVSSPCL_REQUEST,
-                Name = "פעולות מיוחדות לאוברסיז",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                 ResponseCode =InterfaceName_ECOVSSPCL_RESPONE,
-                 WEBAPICredentialType = CourierWEBAPICredentialType.NetworkCredential
-            }
-             ,
-             new InterfaceDetails()
-            {
-                Code = InterfaceName_ECOVSSPCL_RESPONE,
-                Name = "פעולות מיוחדות מאוברסיז",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-
-                 AnalyzeQueueService = AnalyzeQueueServiceEnum.OVSSpecialActionService,
-                Subject= "פעולות מיוחדות מאוברסיז",
-                ServerInternalDef= true
-
-            }
-             ,
-
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECOVSTB,
-                Name = "סטטוס/זמינות מאוברסיז",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.OVSStatusAvailabilitySpliterService,
-                Subject="Status/Availability ILOVS Raw"
-            },
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECOVSTB_Splited,
-                Name = "סטטוס/זמינות מאוברסיז",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILOVS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.OVSStatusAvailabilityService,
-                Subject="Status/Availability ILOVS",
-                ServerInternalDef= true
-            },
-             new InterfaceDetails()
-            {
-                Code = InterfaceName_ECSWSSTB,
-                Name = "סטטוס/זמינות מסוויספורט",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SWSStatusAvailabilitySpliterService,
-                Subject="Status/Availability ILSWS Raw"
-            },
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECSWSSTB_Splited,
-                Name = "סטטוס/זמינות מסוויספורט",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SWSStatusAvailabilityService,
-                Subject="Status/Availability ILSWS",
-                ServerInternalDef= true
-            },
-
-              new InterfaceDetails()
-            {
-                Code = InterfaceName_ECSWSTHR_REQUEST,
-                Name = "ש.מ.ב לסוויספורט",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                Subject="ש.מ.ב  לסוויספורט",
-                ResponseCode = InterfaceName_ECSWSTHR_RESPONE,
-            },
-            new InterfaceDetails() // fake
-            {
-                Code = InterfaceName_ECSWSTHR_RESPONE,
-                Name = "ש.מ.ב  מסוויספורט",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
-                Subject="ש.מ.ב  מסוויספורט",
-                ServerInternalDef= true,
-
-            },
-              new InterfaceDetails() // real
-            {
-                Code = InterfaceName_ECSWSTHR_IN,
-                Name = "ש.מ.ב מסוויספורט",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.SwissPortQHAWBService,
-                Subject="ש.מ.ב מסוויספורט",
-
-            },
-             new InterfaceDetails()
-            {
-                Code = InterfaceName_ECSWSSPCL_REQUEST,
-                Name = "פעולות מיוחדות לסוויספורט",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                Subject="פעולות מיוחדות לסוויספורט",
-                ResponseCode =InterfaceName_ECSWSSPCL_RESPONE,
-            }
-             ,
-             new InterfaceDetails()
-            {
-                Code = InterfaceName_ECSWSSPCL_RESPONE,
-                Name = "פעולות מיוחדות מסוויספורט",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService = AnalyzeQueueServiceEnum.SWSSpecialActionService,
-                Subject= "פעולות מיוחדות לסוויספורט",
-                ServerInternalDef= true
-
-            },
-              new InterfaceDetails()
-            {
-                Code = InterfaceName_ECILSWSHAWB,
-                Name = "ש.מ.ב  מסוויספורט מרוכז",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBSpliterService,
-                Subject="CourierHawbFeedBack ILSWS Raw"
-            },
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECILSWSHAWB_Splited,
-                Name = "ש.מ.ב  מסוויספורט מרוכז",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_ILSWS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                AnalyzeQueueService= AnalyzeQueueServiceEnum.ILSWSMultiQHAWBService,
-                Subject="CourierHawbFeedBack ILSWS",
-                ServerInternalDef= true
-            },
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ECMMNTHR_REQUEST_New,
-                Name = "ש.מ.ב לממן לאתר החדש",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
-                ResponseCode = InterfaceName_ECMMNTHR_RESPONE
-            },
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ImportAddOwner,
-                Name = "בקשה להעברת אחריות - יצוא",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-            },
-            new InterfaceDetails()
-            {
-                Code = InterfaceName_ImportPrintTracking,
-                Name = "קבלת טופס איתור - יצוא",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_Mamam,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-            },
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_SIIProductFileCheck,
-                Name = "מכון תקנים - איתור תיק מוצר",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_SII,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-            },
-           
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_SIIProductFileCheck_Response,
-                Name = "מכון תקנים - איתור תיק מוצר",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_SII,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                ServerInternalDef= true,
-            },
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_SIISendRequest,
-                Name = "מכון תקנים - שליחת בקשה",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_SII,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-            },
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_SIISendRequest_Response,
-                Name = "מכון תקנים - שליחת בקשה",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_SII,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-                ServerInternalDef= true,
-            },
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_DownloadCustomsFilesFromSftp,
-                Name = "הורדת קבצי כספת משרת SFTP",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_AMITAL,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-            },
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_UploadNotNeeded9100FilesToSftp,
-                Name = "העלאת קבצי 9100 ל SFTP",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_AMITAL,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-            },
-            new InterfaceDetails()
-            {
-                Code= InterfaceName_Customs,
-                Name = "העלאת קבצי SFTP עבור כספות תהילה",
-                TypeCode = TypeCode_Out,
-                Partner = PartnerCode_CUSTOMS,
-                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-            },
-           new InterfaceDetails()
-            {
-                Code = InterfaceName_SIIRequestStatus,
-                Name = "מכון תקנים - סטטוס בקשה",
-                TypeCode = TypeCode_In,
-                Partner = PartnerCode_SII,
-                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
-            }
             };
-
             ///
 
             //all.Add(new KeyValuePair<string, string>("TST", "Test"));
@@ -467,21 +111,58 @@ namespace Logitude.Customs.BL.CloseTables
                     ProxyUtil.JsonConvertSerialize(r)));
             });
             return all;
+            all.Add(new KeyValuePair<string, string>(InterfaceName_SubManifest,
+                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
+                {
+                    Code = InterfaceName_SubManifest,
+                    Name = "תת מצהר לממן",
+                     TypeCode= TypeCode_Out,
+                    Partner = PartnerCode_Mamam,
+                    ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
+                }
+            )));
+            all.Add(new KeyValuePair<string, string>(InterfaceName_ECTHR,
+                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
+                {
+                    Code = InterfaceName_ECTHR,
+                    Name = "ש.מ.ב לממן",
+                    TypeCode = TypeCode_Out,
+                    Partner = PartnerCode_Mamam,
+                    ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+                }
+            )));
+            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSPCL,
+                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
+                {
+                    Code = InterfaceName_ECSPCL,
+                    Name = "פעולות מיוחדות לממן",
+                    TypeCode = TypeCode_Out,
+                    Partner = PartnerCode_Mamam,
+                    ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key
+                }
+            )));
 
+            all.Add(new KeyValuePair<string, string>(InterfaceName_ECSTB,
+                ProxyUtil.JsonConvertSerialize(new InterfaceDetails()
+                {
+                    Code = InterfaceName_ECSTB,
+                    Name = "סטטוס/זמינות ממן",
+                    TypeCode = TypeCode_In,
+                    Partner = PartnerCode_Mamam,
+                    ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key
+                }
+            )));
+            ///
+
+            //all.Add(new KeyValuePair<string, string>("TST", "Test"));
+            return all;
         }
-       
 
         public List<KeyValuePair<string, string>> GetAllPartnerCode()
         {
             var all = new List<KeyValuePair<string, string>>();
             all.Add(new KeyValuePair<string, string>("", ""));
             all.Add(new KeyValuePair<string, string>(PartnerCode_Mamam, "Mamam"));
-            all.Add(new KeyValuePair<string, string>(PartnerCode_ILOVS, "Overseas"));
-            all.Add(new KeyValuePair<string, string>(PartnerCode_ILSWS, "Swissport"));
-            all.Add(new KeyValuePair<string, string>(PartnerCode_SII, "SII"));
-            all.Add(new KeyValuePair<string, string>(PartnerCode_AMITAL, "Amital"));
-            all.Add(new KeyValuePair<string, string>(PartnerCode_CUSTOMS, "Customs"));
-
             return all;
         }
 
@@ -507,96 +188,22 @@ namespace Logitude.Customs.BL.CloseTables
             switch (@interface.AnalyzeQueueService)
             {
                 case AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService:
-                    return new MamanStatusAvailabilitySplitterQService(@interface);
+                    return new MamanStatusAvailabilitySplitterService(@interface);
                     break;
                 case AnalyzeQueueServiceEnum.MamanStatusAvailabilityService:
-                    return new MamanStatusAvailabilityQService(@interface);
+                    return new MamanStatusAvailabilityService(@interface);
                     break;
-                case AnalyzeQueueServiceEnum.OVSHAWBService:
-                    return new CourierOVSHAWBQService(@interface);
-                case AnalyzeQueueServiceEnum.SwissPortQHAWBService:
-                    return new ILSWSQHAWBService(@interface);
-                case AnalyzeQueueServiceEnum.OVSSpecialActionService:
-                    return new CourierOVSSpecialActionQService(@interface);
-                case AnalyzeQueueServiceEnum.SWSSpecialActionService:
-                    return new CourieSWSSpecialActionQService(@interface);
-                case AnalyzeQueueServiceEnum.OVSStatusAvailabilitySpliterService:
-                    return new CourierOVSStatusAvailabilitySplitterQService(@interface);
-                case AnalyzeQueueServiceEnum.OVSStatusAvailabilityService:
-                    return new CourierOVSStatusAvailabilityQService(@interface);
-                case AnalyzeQueueServiceEnum.SWSStatusAvailabilitySpliterService:
-                    return new CourierSWSStatusAvailabilitySplitterQService(@interface);
-                case AnalyzeQueueServiceEnum.SWSStatusAvailabilityService:
-                    return new CourierSWSStatusAvailabilityQService(@interface);
-                case AnalyzeQueueServiceEnum.MamanQHAWBService:
-                    return new MamanQHAWBService(@interface);
-                case AnalyzeQueueServiceEnum.MamanQSPCLService:
-                    return new MamanQSPCLService(@interface);
-                case AnalyzeQueueServiceEnum.ILSWSMultiQHAWBService:
-                    return new ILSWSQHAWBQService(@interface);
-                case AnalyzeQueueServiceEnum.ILSWSMultiQHAWBSpliterService:
-                    return new ILSWSQHAWBSplitterService(@interface);
-
                 default:
                     throw new Exception("No analyze service define " + @interface.Code);
                     break;
             }
         }
-#if false
-        public IWebAPIMessage2MamanAnalyzer GetResponseService(/*Courier2MamanCommSettings courier2MamanCommSettings*/string MessageCode)
-        {
-            IWebAPIMessage2MamanAnalyzer analyzer = null;
-
-            switch (/*courier2MamanCommSettings.*/MessageCode)
-            {
-                case CustomsPartnerFtpDetails.InterfaceName_ECMMNTHR_REQUEST:
-                    {
-                        analyzer = new CourierGWMessageECTHRDataMamanResponseService();
-                    }
-                    break;
-                case CustomsPartnerFtpDetails.InterfaceName_ECMMNSPCL_REQUEST:
-                    {
-                        analyzer = new CourierGWMessageECSpclMamanResponseService();
-                    }
-                    break;
-                case CustomsPartnerFtpDetails.InterfaceName_ECOVSTHR:
-                    {
-                        analyzer = new CourierOVSECTHMessageResponseService();
-                    }
-                    break;
-                default:
-                    throw new Exception("Please register  ");
-                    break;
-            }
-
-            return analyzer;
-        }
-#endif
-
     }
     public enum AnalyzeQueueServiceEnum
     {
         none,
         MamanStatusAvailabilitySpliterService,
         MamanStatusAvailabilityService,
-        OVSHAWBService,
-        OVSSpecialActionService,
-        OVSStatusAvailabilitySpliterService,
-        OVSStatusAvailabilityService,
-        SWSStatusAvailabilityService,
-        SWSStatusAvailabilitySpliterService,
-        MamanQHAWBService,
-        MamanQSPCLService,
-        SWSSpecialActionService,
-        SwissPortQHAWBService,
-        ILSWSMultiQHAWBService,
-        ILSWSMultiQHAWBSpliterService,
-    }
-    public enum CourierWEBAPICredentialType
-    {
-        none,
-        Bearer,
-        NetworkCredential,
     }
     public class InterfaceDetails
     {
@@ -606,26 +213,17 @@ namespace Logitude.Customs.BL.CloseTables
         public string TypeCode { get; set; }
         public string Partner { get; set; }
         public string ViaMethod { get; set; }
-        public CourierWEBAPICredentialType WEBAPICredentialType { get; set; }
         //public string QueueName { get; set; }
         public AnalyzeQueueServiceEnum AnalyzeQueueService { get; internal set; }
         public string Subject { get; internal set; }
         public bool ServerInternalDef { get; set; }
-        public string ResponseCode { get; set; }
-
-        public PriorityEnum Priority { get; set; }
     }
 
-    public enum PriorityEnum
-    {
-        Regular,
-        High
-    }
+
     public class WebApiDefinitionDTO
     {
         public string WEBAPIURL { get; set; }
         public string WEBAPIAuthenticationURL { get; set; }
-        public string ServiceUrl { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
 

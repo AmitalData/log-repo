@@ -25,20 +25,15 @@ namespace Unifreight.BL.EntityPMs
 
         public string WINDOWNO { get; set; }
 
-        public decimal? FOB { get; set; }
+        public double? FOB { get; set; }
 
-        public decimal? GENERALTAX { get; set; }
+        public double? GENERALTAX { get; set; }
 
-        public decimal? BUYTAX { get; set; }
+        public double? BUYTAX { get; set; }
 
-        public decimal? VATRESHIMON { get; set; }
+        public double? VATRESHIMON { get; set; }
 
         public string EXEMPTTYPE { get; set; }
 
-        public int Tenant { get; set; }
-
-        public bool IS_SYNCH { get; set; }
-
-        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

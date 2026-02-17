@@ -1,12 +1,10 @@
 ﻿using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.Helpers
 {
@@ -18,7 +16,8 @@ namespace WebFreight.Web.Helpers
    
             if (!string.IsNullOrEmpty(token))
             {
-                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext(0));
+                ICommonDataContext context = CommonDataContext.GetContext(0);
+                AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (authToken != null && authToken.ClientType == "DocumentDownload" && authToken.ExpirationDate != null)
                 {
@@ -33,7 +32,8 @@ namespace WebFreight.Web.Helpers
                     else result.ExceptionResult = "Sorry, your download link has expired.";
                 }
             }
-          
+           
+
             return result;
         }
 

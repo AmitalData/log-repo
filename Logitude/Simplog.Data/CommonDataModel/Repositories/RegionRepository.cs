@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class RegionRepository : IRepository<Region>
     {
         ICommonDataContext Context;
-
+        public RegionRepository()
+        {
+            Context = new CommonDataContext();
+        }
 
         public RegionRepository(ICommonDataContext context)
         {

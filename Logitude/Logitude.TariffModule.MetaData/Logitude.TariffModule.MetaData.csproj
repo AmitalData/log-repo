@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.TariffModule.MetaData</RootNamespace>
     <AssemblyName>Logitude.TariffModule.MetaData</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -77,40 +77,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="App.config" />
-    <None Include="DBScripts\202005262050_FillFreightChargeTypeIdOfTariffTable.sxml" />
-    <None Include="DBScripts\202006211023_SetTariffSettingDefaultCurrency.sxml" />
-    <None Include="DBScripts\202009152130_AddNewTariffProducts.sxml" />
-    <None Include="DBScripts\202201301600_FillUnitOfMeasurementCodeinTariffLines.sxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DBScripts\202201301600_FillUnitOfMeasurementCode.sxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DBScripts\202103242130_FillSellerPartnerTypeId.sxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DBScripts\202203160925_AddLocalCustomsTariffTypes.sxml" />
-    <None Include="DBScripts\202203231600_MapTariffCustomsBrokerToSeller.sxml" />
-    <None Include="DBTables\Tariff.dxml" />
-    <None Include="DBTables\TariffLine.dxml" />
-    <None Include="DBTables\TariffLinesContainersPrice.dxml" />
-    <None Include="DBTables\TariffProduct.dxml" />
-    <None Include="DBTables\TariffSetting.dxml" />
-    <None Include="DBTables\TariffSurchargesUpdate.dxml" />
-    <None Include="DBTables\TariffSurchargesUpdateMethod.dxml" />
-    <None Include="DBTables\TariffType.dxml" />
-    <None Include="DBTables\TariffVersion.dxml" />
-    <None Include="DBTables\TariffVersionAllInCharge.dxml" />
     <None Include="EntityFiles\TariffLine.lxml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EntityFiles\TariffLinesContainersPrice.lxml" />
-    <None Include="EntityFiles\TariffProduct.lxml" />
     <None Include="EntityFiles\TariffSetting.lxml" />
     <None Include="EntityFiles\TariffSurchargesUpdate.lxml" />
     <None Include="EntityFiles\TariffSurchargesUpdateMethod.lxml" />
@@ -124,7 +94,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\TariffVersionAllInCharge.lxml" />
-    <None Include="EntityFiles\TariffVersionUploadedExcel.lxml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -140,5 +109,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

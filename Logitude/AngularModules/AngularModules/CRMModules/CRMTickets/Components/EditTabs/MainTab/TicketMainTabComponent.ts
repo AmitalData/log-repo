@@ -1,42 +1,48 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
-import { TicketPM } from '../../../../../CRM/EntityPMs/TicketPM';
-import { TicketPMService } from '../../../../../CRM/Services/StandardPMs/TicketPMService';
-import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { CRMDomainService } from '../../../../../CRM/Services/CRMDomainService';
-import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
-import { LocationDirective } from '../../../../../Infrastructure/Utilities/LocationDirective';
-import { DetailsTabComponent } from '../MainTab/DetailsTabComponent';
-import { ActivitiesTabComponent } from '../MainTab/ActivitiesTabComponent';
-import { PostsTabComponent } from '../MainTab/PostsTabComponent';
-import { CorrespondencePM } from '../../../../../CRM/EntityPMs/CorrespondencePM';
-import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
-import { DocumentDataPM } from '../../../../../CRM/EntityPMs/DocumentDataPM';
-import { ServiceHelper } from '../../../../../Infrastructure/Utilities/ServiceHelper';
-import { CRMTool } from '../../../../../CRM/Tools';
-import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
-import { UserList } from '../../../../../Common/EntityLists/UserList';
-import { UserListService } from '../../../../../Common/Services/StandardLists/UserListService';
-import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CardListService } from '../../../../../Common/Services/StandardLists/CardListService';
-import { TicketClassificationListService } from '../../../../../CRM/Services/StandardLists/TicketClassificationListService';
-import { SendEmailArgs, ActivityInputArgs } from '../../../../../CRM/Args';
-import { TicketValidator } from '../../../../../CRM/Validators/TicketValidator';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService'
-import { ActivityList } from '../../../../../CRM/EntityLists/ActivityList';
-import { DateTimePipe } from '../../../../../Controls/Pipes/DateTimePipe';
-import { CommunicationLogPM } from '../../../../../Common/EntityPMs/CommunicationLogPM';
-import { ContactList } from '../../../../../Common/EntityLists/ContactList';
-import { ContactListService } from '../../../../../Common/Services/StandardLists/ContactListService';
-import { ContactPMService } from '../../../../../Common/Services/StandardPMs/ContactPMService';
-import { ContactPM } from '../../../../../Common/EntityPMs/ContactPM';
-
+import {Component, OnInit, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
+import {TicketPM} from '../../../../../CRM/EntityPMs/TicketPM';
+import {TicketPMService} from '../../../../../CRM/Services/StandardPMs/TicketPMService';
+import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs';
+import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {CRMDomainService} from '../../../../../CRM/Services/CRMDomainService';
+import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
+import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
+import {LocationDirective} from '../../../../../Infrastructure/Utilities/LocationDirective';
+import {DetailsTabComponent} from '../MainTab/DetailsTabComponent';
+import {ActivitiesTabComponent} from '../MainTab/ActivitiesTabComponent';
+import {PostsTabComponent} from '../MainTab/PostsTabComponent';
+import {CorrespondencePM} from '../../../../../CRM/EntityPMs/CorrespondencePM';
+import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
+import {DocumentDataPM} from '../../../../../CRM/EntityPMs/DocumentDataPM';
+import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper';
+import {CRMTool} from '../../../../../CRM/Tools'; 
+import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLocator';
+import {UserList} from '../../../../../Common/EntityLists/UserList';
+import {UserListService} from '../../../../../Common/Services/StandardLists/UserListService';
+import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {CardList} from '../../../../../Common/EntityLists/CardList';
+import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
+import {TicketClassificationList} from '../../../../../CRM/EntityLists/TicketClassificationList';
+import {TicketClassificationListService} from '../../../../../CRM/Services/StandardLists/TicketClassificationListService';
+import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
+import {SendEmailArgs, ActivityInputArgs} from '../../../../../CRM/Args';
+import {TicketValidator} from '../../../../../CRM/Validators/TicketValidator';
+import {RatingList} from '../../../../../CRM/EntityLists/RatingList';
+import {RatingListService} from '../../../../../CRM/Services/StandardLists/RatingListService';
+import {ListComponentArgs} from '../../../../../Infrastructure/Args';
+import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService'
+import {ActivityList} from '../../../../../CRM/EntityLists/ActivityList';
+import {DateTimePipe} from '../../../../../Controls/Pipes/DateTimePipe';
+import {CommunicationLogPM} from '../../../../../Common/EntityPMs/CommunicationLogPM';
+import {CommunicationLogPMService} from '../../../../../Common/Services/StandardPMs/CommunicationLogPMService';
+import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ContactList} from '../../../../../Common/EntityLists/ContactList';
+import {ContactListService} from '../../../../../Common/Services/StandardLists/ContactListService';
 declare var window: any;
+
 
 @Component({
     selector: 'MainTabComponent',
-
+    moduleId: module.id,
     templateUrl: './TicketMainTabComponent.html',
 })
 
@@ -47,12 +53,10 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     public LinkColor = "#1E4AC4";
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public TicketCommunicationLogs: CommunicationLogPM[] = [];
-    private ContactListService: ContactListService;
+    private ContactListService: ContactListService; 
     EntityId: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    private IsSendButoonClicked = false;
-
-    constructor(public entityArgs: EntityArgs, public _entityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs, public  _entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         if (this.EntityPM) {
@@ -67,7 +71,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
 
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
     private Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -84,11 +88,6 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
                     if (this.IsReload) {
                         this.IsReload = false;
                         this.entityArgs.EditComponent.ReloadEntityPM();
-                    }
-                    if (this.IsSendButoonClicked) {
-                        this.IsSendButoonClicked = false;
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                        this.SendEmail();
                     }
                     this.ReloadhData();
                 }
@@ -163,7 +162,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     }
     private SetUIProperties_EntityClosed() {
         this.IsTicketEditEnabled = CRMTool.IsTicketEditEnabled(this.EntityPM);
-        this.LinkColor = this.IsTicketEditEnabled ? "#1E4AC4" : "gray";
+        this.LinkColor = this.IsTicketEditEnabled ? "#1E4AC4" : "gray" ;
         this.IsTicketReplyEnabled = FeatureLocator.HasFeaturePermession("Ticket", "TicketReply") && CRMTool.IsTicketEditEnabled(this.EntityPM);
         this.IsTicketActivityEnabled = FeatureLocator.HasFeaturePermession("Ticket", "TicketActivities") && CRMTool.IsTicketEditEnabled(this.EntityPM);
         this.UIProperties.SetEnabled("ShipmentNumber", this.ObjectTableName, this.IsTicketEditEnabled);
@@ -216,27 +215,32 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
 
     private isTicketEditEnabled;
     get IsTicketEditEnabled() { return this.isTicketEditEnabled; }
-    set IsTicketEditEnabled(value: boolean) {
+    set IsTicketEditEnabled(value: boolean)
+    {
         if (this.isTicketEditEnabled != value) {
             this.isTicketEditEnabled = value;
         }
     }
 
-    private isTicketReplyEnabled;
-    get IsTicketReplyEnabled() {
+    private  isTicketReplyEnabled;
+    get IsTicketReplyEnabled()
+    {
         return this.isTicketReplyEnabled;
     }
-    set IsTicketReplyEnabled(value: boolean) {
+    set IsTicketReplyEnabled(value: boolean)
+    {
         if (this.isTicketReplyEnabled != value) {
             this.isTicketReplyEnabled = value;
         }
     }
 
     private isTicketActivityEnabled;
-    get IsTicketActivityEnabled() {
+    get IsTicketActivityEnabled()
+    {
         return this.isTicketActivityEnabled;
     }
-    set IsTicketActivityEnabled(value: boolean) {
+    set IsTicketActivityEnabled(value: boolean)
+    {
         if (this.isTicketActivityEnabled != value) {
             this.isTicketActivityEnabled = value;
         }
@@ -247,9 +251,9 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     public FirstCorrespondence: CorrespondenceViewModelData = null;
     FillTicketCorrespondenceLines() {
         this.CorrespondenceList = [];
-        this.EntityPM.TicketCorrespondence.sort((a, b) => { return (DateTool.GetDateParts(a.CreateDate).DateObject.valueOf() === DateTool.GetDateParts(b.CreateDate).DateObject.valueOf()) ? 0 : (DateTool.GetDateParts(a.CreateDate).DateObject.valueOf() > DateTool.GetDateParts(b.CreateDate).DateObject.valueOf()) ? -1 : 1 }).forEach(item => {
+        this.EntityPM.TicketCorrespondence.sort((a, b) => { return (DateTool.GetDateParts(a.CreateDate).DateObject.valueOf() === DateTool.GetDateParts(b.CreateDate).DateObject.valueOf()) ? 0 : (DateTool.GetDateParts(a.CreateDate).DateObject.valueOf()  > DateTool.GetDateParts(b.CreateDate).DateObject.valueOf() ) ? -1 : 1 }).forEach(item => {
             this.CorrespondenceList.push(new CorrespondenceViewModelData(item, this));
-        });
+        });   
 
         this.FirstCorrespondence = this.CorrespondenceList[0];
     }
@@ -265,15 +269,16 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
                 });
                 this.FillTicketCorrespondenceLines();
             }
-        });
+        });   
     }
 
     // Properties
-    get Subject() { return this.EntityPM.Subject; }
-    set Subject(value: string) {
+    get Subject(){ return this.EntityPM.Subject; }
+    set Subject(value:string)
+    {
         if (this.EntityPM.Subject != value) {
             this.EntityPM.Subject = value;
-
+           
         }
     }
 
@@ -384,7 +389,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     set TicketDescription(newValue: string) {
         this.EntityPM.TicketDescription = newValue;
     }
-
+   
     get MainClassificationId() { return this.EntityPM.MainClassificationId; }
     set MainClassificationId(newValue: string) {
         if (this.EntityPM.MainClassificationId != newValue) {
@@ -415,7 +420,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
                 var myService: TicketClassificationListService = new TicketClassificationListService();
                 myService.getSingleFromCache(this.MainClassificationId).subscribe((resp: ServiceResponse) => {
                     if (!resp.HasError) {
-                        var result = resp.Result;
+                        var result= resp.Result;
                         if (result != null) {
                             this.SeverityId = result.DefaultSeverityId;
                             this.EmployeeGroupId = result.EmployeeGroupId;
@@ -458,7 +463,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     set SeverityId(newValue: string) {
         if (this.EntityPM.SeverityId != newValue) {
             this.EntityPM.SeverityId = newValue;
-
+           
         }
     }
 
@@ -481,15 +486,17 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         return myResult;
     }
 
-    private correspondenceLine;
+    private  correspondenceLine;
     get CorrespondenceLine() { return this.correspondenceLine; }
-    set CorrespondenceLine(value: string) {
+    set CorrespondenceLine(value: string)
+    {
         if (this.correspondenceLine != value) {
             this.correspondenceLine = value;
         }
     }
 
-    get AddShipmentEnabled() {
+    get AddShipmentEnabled()
+    {
         return this.EntityPM.CompanyId == null ? false : true;
     }
 
@@ -506,12 +513,10 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
     private shipmentLinkNumberVisibility = false;
 
     // Send Email Command 
-    private code = "";
+    private code = ""; 
     SendEmailCommand(code: string) {
-        this.IsSendButoonClicked = true;
         this.code = code;
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
-        //this.SendEmail();
+        this.SendEmail();
     }
     SendEmail() {
         var validator: TicketValidator = new TicketValidator();
@@ -614,7 +619,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
                             SessionLocator.DynamicLoader.Load('./CRMModules/CRMTickets/Components/EditTabs/MainTab/PostsTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.PageChild_PT = cmpRef.instance;
-
+                                   
                                 });
                         }
                         break;
@@ -667,7 +672,7 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         logWindow.TitleIcon = windowTitleIcon;
         logWindow.WindowArgs = windowArgs;
 
-        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
             logWindow.Show('./CRMModules/CRMActivity/Components/NewEntity/NewActivityComponent');
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -676,11 +681,13 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
             });
         });
     }
-    private openActivitiesHeader = "Open Activities (0)";
-    get OpenActivitiesHeader() {
+    private  openActivitiesHeader = "Open Activities (0)";
+    get OpenActivitiesHeader()
+    {
         return this.openActivitiesHeader;
     }
-    set OpenActivitiesHeader(value: string) {
+    set OpenActivitiesHeader(value:string)
+    {
         this.openActivitiesHeader = value;
     }
     public ActivitiesContent: string = "";
@@ -694,10 +701,10 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         var myService: CRMDomainService = new CRMDomainService();
         myService.GetActivitiesByTicketId(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                var dataResult: ActivityList[] = myResponse.Result;
+                var dataResult: ActivityList[] = myResponse.Result; 
                 if (dataResult.length > 0) {
                     dataResult.filter(d => d.IsOpen).sort((a, b) => {
-                        return (DateTool.GetDateParts(a.DueDate).DateObject === DateTool.GetDateParts(b.DueDate).DateObject) ? 0 : (DateTool.GetDateParts(a.DueDate).DateObject > DateTool.GetDateParts(b.DueDate).DateObject) ? 1 : -1
+                        return (DateTool.GetDateParts(a.DueDate).DateObject === DateTool.GetDateParts(b.DueDate).DateObject) ? 0 : (DateTool.GetDateParts(a.DueDate).DateObject > DateTool.GetDateParts(b.DueDate).DateObject ) ? 1 : -1
                     }).forEach(item => {
                         this.ActivitiesList.push(new ActivityItemClass(item, this));
                     });
@@ -710,13 +717,13 @@ export class TicketMainTabComponent extends BaseComponent implements OnInit, Aft
         });
     }
 
-    private IsRefreshButton = false;
-    private IsReload = false;
+    private IsRefreshButton = false; 
+    private IsReload = false; 
     RefreshData() {
         this.IsReload = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
-
+    
     RefreshButtonClicked() {
         this.IsRefreshButton = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -740,6 +747,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
         this.Height = this.myBaseHight;
         this.ImageSrc = CRMTool.GetActivityImageSrc(this.entityPM.ActivityTypeCode);
         this.AttachmentsList = this.FillAttachments();
+        //this.OnTextBoxLoaded();
         this.RunComponentTimer();
         this.GetFlowDirection();
         this.RefreshTextAlgimentVariables();
@@ -748,101 +756,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
         this._TextAreaId2 = "TextArea_2" + idIndex;
         this.timerToken = setTimeout(() => this.GetRecipients(), 1);
         this.SourceText = this.GetSourceText();
-        this.UserImageDetailId = item.ContactImageDetailId;
-
-        this.ComputeUserNameImage();
-    }
-
-    UserImageDetailId: string;
-    UserImagebackground: string;
-    UserNameImage: string;
-    private ComputeUserNameImage() {
-        if (!this.UserImageDetailId) {
-            if (this.entityPM.ContactName) {
-                var Name: string[] = this.entityPM.ContactName.split(' ');
-
-                var userNameImage = "";
-
-                if (Name.length == 1) {
-                    if (Name[0]) {
-                        if (Name[0].length > 2) {
-                            userNameImage = Name[0].charAt(0);
-                            userNameImage += Name[0].charAt(1);
-                        }
-                        else {
-                            userNameImage = Name[0];
-                        }
-                    }
-
-                }
-                else if (Name.length > 1) {
-
-                    if (Name[0]) {
-                        if (Name[0].length > 1) {
-                            userNameImage += Name[0].charAt(0);
-                        }
-                        else {
-                            userNameImage += Name[0];
-                        }
-                    }
-
-                    if (Name[1]) {
-
-                        if (Name[1].length > 1) {
-                            userNameImage += Name[1].charAt(0);
-                        }
-                        else {
-                            userNameImage += Name[1];
-                        }
-                    }
-                    else {
-
-                        if (Name[0].length > 2) {
-
-                            userNameImage = Name[0].charAt(0);
-                            userNameImage += Name[0].charAt(1);
-
-
-                        }
-                        else {
-                            userNameImage = Name[0];
-                        }
-                    }
-
-                }
-
-                if (userNameImage) this.UserNameImage = userNameImage.toUpperCase();
-
-            }
-        }
-
-        this.UserImagebackground = this.entityPM.ContactDefaultColor;
-    }
-
-    ImageUploadedCompleted(event) {
-        var contactService: ContactPMService = new ContactPMService();
-        contactService.get(this.entityPM.CreatedByContactId).subscribe((res: any) => {
-            var pmResponse: ServiceResponse = res;
-            if (!pmResponse.HasError && pmResponse.Result) {
-                var contactPM: ContactPM = pmResponse.Result;
-
-                if (contactPM != null) {
-                    if (this.UserImageDetailId != event) {
-                        this.CurrentSession.StartBusyIndicatorSaving();
-
-                        this.UserImageDetailId = event;
-                        contactPM.ImageDetailId = event;
-                        contactService.update(contactPM).subscribe((res: any) => {
-                            var pmResponse: ServiceResponse = res;
-
-                            this.CurrentSession.StopBusyIndicator();
-                        });
-
-                        //this.BuildItemsSource();
-                    }
-                }
-            }
-        });
+        //this.GetRecipients();
     }
 
     private myBaseHight = "90px";
@@ -907,7 +821,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.OnTextBoxLoaded(), 1);
         }
     }
@@ -1091,7 +1005,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
         return this.entityPM.CreateDate;
     }
 
-    public Recipients = "";
+    public Recipients = ""; 
     GetRecipients() {
         var recipients = "";
         if (this.entityPM != null) {
@@ -1245,7 +1159,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
     }
 
     EditActivity() {
-        this.trigger._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response: any) => {
+        this.trigger._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -1559,7 +1473,7 @@ export class ActivityItemClass extends BaseComponent {
     }
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity)) {
-            this.father._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response: any) => {
+            this.father._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;

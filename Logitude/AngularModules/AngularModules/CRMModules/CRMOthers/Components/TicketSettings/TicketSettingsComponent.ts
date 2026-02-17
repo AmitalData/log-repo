@@ -10,7 +10,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 
 @Component({
     selector: 'TicketSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './TicketSettingsComponent.html',
 })
 

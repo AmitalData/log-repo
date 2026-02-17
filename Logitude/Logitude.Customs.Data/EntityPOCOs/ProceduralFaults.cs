@@ -1,0 +1,91 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+ 
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class ProceduralFault
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("ProceduralFaultNumber")]
+	    public string ProceduralFaultNumber { get; set; }
+        [ForeignKey("ProceduralFaultStatus")]
+        [Column("ProceduralFaultStatusCode")]
+	    public string ProceduralFaultStatusCode { get; set; }
+	      
+        public virtual ProceduralFaultStatus ProceduralFaultStatus { get; set; }
+        [Column("CreateDate")]
+	    public DateTime? CreateDate { get; set; }
+        [ForeignKey("ProceduralFaultInSourceType")]
+        [Column("InputTypeCode")]
+	    public string InputTypeCode { get; set; }
+	      
+        public virtual ProceduralFaultInSourceType ProceduralFaultInSourceType { get; set; }
+        [ForeignKey("FaultInspectionType")]
+        [Column("InspectionTypeCode")]
+	    public string InspectionTypeCode { get; set; }
+	      
+        public virtual FaultInspectionType FaultInspectionType { get; set; }
+        [ForeignKey("ProceduralFaultType")]
+        [Column("ProceduralFaultCode")]
+	    public string ProceduralFaultCode { get; set; }
+	      
+        public virtual ProceduralFaultType ProceduralFaultType { get; set; }
+        [ForeignKey("ProceduralFaultInProcessType")]
+        [Column("ProceduralFaultInputProcesCode")]
+	    public string ProceduralFaultInputProcesCode { get; set; }
+	      
+        public virtual ProceduralFaultInProcessType ProceduralFaultInProcessType { get; set; }
+        [ForeignKey("RansomViolationType")]
+        [Column("RansomViolationTypeCode")]
+	    public string RansomViolationTypeCode { get; set; }
+	      
+        public virtual RansomViolationType RansomViolationType { get; set; }
+        [Column("RansomViolationSum")]
+	    public decimal? RansomViolationSum { get; set; }
+        [Column("Remarks")]
+	    public string Remarks { get; set; }
+        [Column("IsCustomerResponsibility")]
+	    public bool IsCustomerResponsibility { get; set; }
+        [Column("IsAgentProceduralFaultCountabl")]
+	    public bool IsAgentProceduralFaultCountabl { get; set; }
+        [Column("IsCustProceduralFaultCountabl")]
+	    public bool IsCustProceduralFaultCountabl { get; set; }
+        [Column("IsAgentResponsibility")]
+	    public bool IsAgentResponsibility { get; set; }
+        [Column("UpdateDate")]
+	    public DateTime? UpdateDate { get; set; }
+        [Column("LeadingDocumentVersion")]
+	    public string LeadingDocumentVersion { get; set; }
+        [Column("Notes")]
+	    public string Notes { get; set; }
+        [Column("IsCancelled")]
+	    public bool IsCancelled { get; set; }
+        [Column("CancellationDate")]
+	    public DateTime? CancellationDate { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
+    }
+}
+	 

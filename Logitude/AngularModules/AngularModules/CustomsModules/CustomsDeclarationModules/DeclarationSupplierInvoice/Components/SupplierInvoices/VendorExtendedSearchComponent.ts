@@ -1,4 +1,4 @@
-import {AppTool} from '../../../../../Infrastructure/Tools';
+import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
 import {Component, EventEmitter, Output}  from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -8,24 +8,29 @@ import { EntityListService } from   '../../../../../Infrastructure/Services/Enti
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {VendorExtendedListService} from '../../../../../Customs/Services/ExtendedLists/VendorExtendedListService'
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-import { CustomSendOptionsArgs} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+
+import { CustomSendOptionsArgs, SendRequestVIA} from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { ImporterDeclarationRequestParams } from '../../../../../Customs/DataContract/RequestParams/ImporterDeclarationRequestParams';
 import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { VendorSearchByCustomsAgentRequestParams } from '../../../../../Customs/DataContract/RequestParams/VendorSearchByCustomsAgentRequestParams';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { VendorMessagesService } from '../../../../../Customs/Services/WebServices/VendorMessagesService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { retry } from 'rxjs/operator/retry';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+
 import { CustomsVendorPM } from '../../../../../Customs/EntityPMs/CustomsVendorPM';
 import { VendorCommunicationPM } from '../../../../../Customs/EntityPMs/VendorCommunicationPM';
 import { Validator } from '../../../../../Infrastructure/Validators/Validator';
 import { CustomsVendorPMService } from '../../../../../Customs/Services/StandardPMs/CustomsVendorPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VendorExtendedSearchComponent.html',
 })
 
@@ -243,8 +248,8 @@ export class VendorExtendedSearchComponent extends BaseComponent {
     }
 
     NewVendorButtonClicked() {
-        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsVendor").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.VendorCommunication").subscribe(response => {
                 var vendor = new CustomsVendorPM();
                 vendor.Tenant = SessionLocator.Tenant;
                 vendor.VendorTypeCode = "1";
@@ -365,7 +370,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
 
 
         ////   //{"$id":"1","NumberOfResult":null,"VendorResults":null,"HasException":true,"UserMessage":"SendWS failed:FaultException.Detail:FaultException`1\r\nThe content type text/xml of the response message does not match the content type of the binding (application/soap+xml; charset=utf-8). If using a custom encoder, be sure that the IsContentTypeSupported method is implemented properly. The first 39 bytes of the response were: '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n'.","Succeeded":false,"ContinueProcessInBackground":false,"CustomsRequestsSheetId":"6614faa1-e053-4556-ae24-16825f120d2d","CorrelationId":""}
-        CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession,searchParams.PBId, "חיפוש ספק", true)
+        CustomMessageProgressComponent.ShowProgressBar(searchParams.PBId, "חיפוש ספק", true)
             .then((myServiceResponse) => {
 
                 console.log("[Send] Response/ShowProgressBar : ", myServiceResponse);
@@ -458,7 +463,7 @@ export class VendorExtendedSearchComponent extends BaseComponent {
             }
 
             // Call service to add vendor
-            this.customsVendorPMService.insert(newVendor).subscribe((myResult:any) => {
+            this.customsVendorPMService.insert(newVendor).subscribe(myResult => {
 
                 var res: ServiceResponse = myResult;
                 if (!res.HasError) {

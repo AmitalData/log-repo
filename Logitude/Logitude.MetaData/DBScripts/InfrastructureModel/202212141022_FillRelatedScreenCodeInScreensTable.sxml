@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
-		<![CDATA[
-		update Screens set RelatedScreenCode=Screens.Code where RelatedScreenCode is null and Type = 'Grid'
-    ]]>
-	</Sql> 
-</Script>

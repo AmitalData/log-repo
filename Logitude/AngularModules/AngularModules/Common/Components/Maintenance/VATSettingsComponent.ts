@@ -7,6 +7,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { QuestionnaireList } from '../../../CRM/EntityLists/QuestionnaireList';
+import { QuestionnaireListService } from '../../../CRM/Services/StandardLists/QuestionnaireListService';
 import { VatFormatTypeListService } from '../../../Common/Services/StandardLists/VatFormatTypeListService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -14,6 +15,7 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 
 @Component({
     selector: 'VATSettingsComponent',
+    moduleId: module.id,
     templateUrl: './VATSettingsComponent.html',
 })
 
@@ -26,7 +28,6 @@ export class VATSettingsComponent extends BaseComponent {
     public IsVisibile = false;
     IsShowAreaDefaultQuestionnaire: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public VatUniquePartnerRadioEnabled: boolean = false;
     constructor() {
         super();
         this.CurrentSession.StartBusyIndicator("Loading...");
@@ -201,11 +202,6 @@ export class VATSettingsComponent extends BaseComponent {
     private SetUIProperties_VatUnique() {
         var isEnabled = false;
         var isRequired = false;
-        var uniquePartnerTypeEnabled = false;
-
-        if (this.VatUniqueTypeCode != "UNT") {
-            uniquePartnerTypeEnabled = true;
-        }
 
         if (this.VatUniqueTypeCode == "USC") {
             isEnabled = true;
@@ -217,7 +213,6 @@ export class VATSettingsComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("VatUniqueCountryId", this.ObjectTableName, isEnabled);
         this.UIProperties.SetRequired("VatUniqueCountryId", this.ObjectTableName, isRequired);
-        this.VatUniquePartnerRadioEnabled = uniquePartnerTypeEnabled;
     }
 
     //VAT# is mandatory for customers
@@ -366,13 +361,6 @@ export class VATSettingsComponent extends BaseComponent {
         }
         else {
             this.ApplyVATForCustomers = false;
-        }
-    }
-
-    get VatUniquePartnerTypeCode() { return this.tenantPM.VatUniquePartnerTypeCode; }
-    set VatUniquePartnerTypeCode(value: string) {
-        if (this.tenantPM.VatUniquePartnerTypeCode != value) {
-            this.tenantPM.VatUniquePartnerTypeCode = value;
         }
     }
 }

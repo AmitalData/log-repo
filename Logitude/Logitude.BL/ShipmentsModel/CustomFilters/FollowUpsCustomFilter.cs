@@ -73,18 +73,13 @@ namespace Logitude.BL.ShipmentsModel.CustomFilters
 
                     if (item.FieldName == "MyFollowUps")
                     {
-                        var userId = operations.UserId;
-                        if (string.IsNullOrEmpty(userId))
-                        {
-                            string email = SecurityUtility.GetAuthenticatedUser();
+                        string email = SecurityUtility.GetAuthenticatedUser();
 
-                            ContactQuery contactQuery = new ContactQuery(tenant);
+                        ContactQuery contactQuery = new ContactQuery(tenant);
 
-                            ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
-                            userId = loggedContact.Id;
-                        }
-                        
-                        queryableData = queryableData.Where(d => d.FollowUpOwnerId == userId);
+                        ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+
+                        queryableData = queryableData.Where(d => d.FollowUpOwnerId == loggedContact.Id);
                     }
                 }
             }

@@ -1,7 +1,5 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
@@ -11,27 +9,42 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Transactions;
-using System.Web;
 using System.Web.Http;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.GlobalModel
 {
     public class SystemMetadataLastUpdateController : ApiController
     {
-        public HttpResponseMessage GetSystemMetadataLastUpdates()
+        public HttpResponseMessage GetSystemMetadataLastUpdates(int tenant)
         {
             try
             {
+                string entityName = "SystemMetadataLastUpdates_" + tenant;
+                MetaDataLastUpdateDates metadatalastUpdates = null;
+                if (CacheManager.CacheWrapper != null)
+                {
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
+                        if (CacheManager.CacheWrapper.Get(entityName) == null && metadatalastUpdates != null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, metadatalastUpdates, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
+                        }
 
-                var metadatalastUpdates = GetSystemMetadataLastUpdatesCacheHandle(authToken.Tenant);
+                    }
+                    else
+                    {
+                        metadatalastUpdates = (MetaDataLastUpdateDates)CacheManager.CacheWrapper.Get(entityName);
+                    }
+                }
+                else
+                {
+                    metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, metadatalastUpdates);
             }
             catch (Exception ex)
@@ -42,40 +55,8 @@ namespace WebFreight.Web.Controllers.GlobalModel
 
         }
 
-        public MetaDataLastUpdateDates GetSystemMetadataLastUpdatesCacheHandle(int tenant)
-        {
-            string entityName = "SystemMetadataLastUpdates_" + tenant;
-            MetaDataLastUpdateDates metadatalastUpdates = null;
-            if (CacheManager.CacheWrapper != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-                    metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null && metadatalastUpdates != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, metadatalastUpdates, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
-                    }
-
-                }
-                else
-                {
-                    metadatalastUpdates = (MetaDataLastUpdateDates)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
-            else
-            {
-                metadatalastUpdates = GetSystemMetadataLastUpdateFromDB(tenant);
-            }
-            return metadatalastUpdates;
-        }
-
         private MetaDataLastUpdateDates GetSystemMetadataLastUpdateFromDB(int tenant)
         {
-
-
-
-
             MetaDataLastUpdateDates metadata = new MetaDataLastUpdateDates()
             {
                 Id = 1,

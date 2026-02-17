@@ -24,7 +24,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuestionnaireAnswersComponent.html',
     providers: [QuestionnairePMService, QuestionnaireAnswerPMService],
 })
@@ -72,7 +72,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
 
     //LoadData() {
     //    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-    //    this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe((response:any) => {
+    //    this._QuestionnairePMService.get(SessionLocator.TenantPM.DefaultQuestionnaireId).subscribe(response => {
 
     //        this.CurrentSession.CurrentWindow.StopBusyIndicator();
     //        this.EntityPM = response.Result;
@@ -95,7 +95,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
         filters.SortBy = 'Value';
         filters.addAdditionalFilter("IsMultipleChoice", true, null, null, "Equals", false, false, false, null, false, true);
 
-        this.customPickListListService.getAllFromCache(filters).subscribe((response:any) => {
+        this.customPickListListService.getAllFromCache(filters).subscribe(response => {
 
             var AllQuestionsArr: QuestionnaireQuestionPM[] = this.EntityPM.QuestionnaireQuestions;
            
@@ -282,7 +282,7 @@ export class QuestionnaireAnswersComponent extends BaseComponent{
                 }
             });
 
-            this._QuestionnaireAnswerPMService.insert(questionnaireAnswerPM).subscribe((response:any) => {
+            this._QuestionnaireAnswerPMService.insert(questionnaireAnswerPM).subscribe(response => {
                 if (response.HasError === false) {
                     this.CurrentSession.CurrentWindow.Close("ok");
                 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
  
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    HasShortTitle =  false,
 			      				    HasMenuButtons =  false,
 			      				    HasFiltersMenu =  false,
-                                    AllowedInTicket =  false,
+			      				    AllowedInQueues =  false,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -161,7 +161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   ObjectTable ShipmentPayableLineStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPayableLineStatus" && d.Tenant == 0).FirstOrDefault(); 
 
- 		  // TextCode ShipmentPayableLineStatusTextCode_ShipmentPayableLineStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPayableLineStatus", DefaultText = "Shipment Payable Line Status",LocalDefaultText = null, ObjectTableId = ShipmentPayableLineStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
+ 		   TextCode ShipmentPayableLineStatusTextCode_ShipmentPayableLineStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ShipmentPayableLineStatus", DefaultText = "Shipment Payable Line Status",LocalDefaultText = null, ObjectTableId = ShipmentPayableLineStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "T", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
    
 	    

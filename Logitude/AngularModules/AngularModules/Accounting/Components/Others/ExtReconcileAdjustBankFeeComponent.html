@@ -1,8 +1,4 @@
-<style>    
-    .red {
-        color: #d53737 !important;
-    }
-</style>
+
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -14,18 +10,7 @@
             <div class="TableHolder">
                 <table>
 
-                    <tr class="FormFieldRow">
-                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                            {{'ReconcileExternalPage.O.Difference' | TextCodeTranslationPipe}}
-                        </td>
 
-                        <td style="width: 180px;" text-start>
-                            <div style="font-size: 15px;color:#0f9776;" [class.red]="OrignalDifference<0" text-start>
-                                {{TotalDifference | NumbersPipe: 'N2'}} {{ TotalDifferenceCurrency }}
-                            </div>
-                        </td>
-                        <td><div></div></td>
-                    </tr>
 
                     <tr class="FormFieldRow">
                         <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
@@ -45,9 +30,7 @@
                                     [DependencyFilter2Value]="'1'"
                                     [QueryFilterItems]="GLAccountsFilterItems"
                                     (SelectedItemChanged)="GLAccount = $event"
-                                    [SelectedValue]="GLAccountId"
-                                    [StartSearchFromChar]="3"
-                                    [StartSearchFromNumber]="5">
+                                    [SelectedValue]="GLAccountId">
                             </LogLov>
                         </td>
                         <td><div></div></td>

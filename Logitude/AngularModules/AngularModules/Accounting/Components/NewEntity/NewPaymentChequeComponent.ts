@@ -20,7 +20,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'NewPaymentChequeComponent',
-    
+    moduleId: module.id,
  
     templateUrl: './NewPaymentChequeComponent.html',
 })
@@ -29,8 +29,6 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 export class NewPaymentChequeComponent extends BaseComponent
 {
-  public Currency: any;
-
     public DataContext = this;
     public ObjectTableName: string = "PaymentCheque";
     entityPM: PaymentChequePM = new PaymentChequePM();
@@ -40,8 +38,6 @@ export class NewPaymentChequeComponent extends BaseComponent
     EntityResourceService: EntityResourceService = new EntityResourceService();
     visible: boolean = false;
     public filterAgrs: ApiQueryFilters;
-    public BankAccountFilter: ApiQueryFilters;
-
     Height: number = 50;
     IsForignAmountVisibile = true;
     paymentChequeValidator: PaymentChequeValidator = new PaymentChequeValidator();
@@ -80,9 +76,6 @@ export class NewPaymentChequeComponent extends BaseComponent
     {
         this.filterAgrs = new ApiQueryFilters();
         this.filterAgrs.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string");
-
-        this.BankAccountFilter = new ApiQueryFilters();
-        this.BankAccountFilter.addAdditionalFilter("TransferGLAcccountId", "", null, null, "IsNotNull", false, false, false, "string");
 
     }
 
@@ -303,7 +296,7 @@ export class NewPaymentChequeComponent extends BaseComponent
 
         this.entityPM.BankAccountGLAccountId = this.BankAccount.DeferredGLAccountId;
         this.entityPM.PaymentChequeStatusCode = "1";
-        this.PaymentChequePMService.insert(this.entityPM).subscribe((myResult:any) => {
+        this.PaymentChequePMService.insert(this.entityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,18 +9,16 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.TariffModule.BL</RootNamespace>
     <AssemblyName>Logitude.TariffModule.BL</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,35 +26,17 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Logitude.BL">
       <HintPath>..\Logitude.BL\bin\Debug\Logitude.BL.dll</HintPath>
@@ -68,9 +47,18 @@
     <Reference Include="Logitude.SystemLogs">
       <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
     </Reference>
+    <Reference Include="Logitude.TariffModule.MetaData">
+      <HintPath>..\Logitude.TariffModule.MetaData\bin\Debug\Logitude.TariffModule.MetaData.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Simplog.Data">
+      <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Simplog.Data.Global">
       <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Data.Global.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplog.Server.Infrastructure">
+      <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -98,46 +86,34 @@
     <Compile Include="CloseTables\EnumGenerated\TariffSurchargesUpdateMethodStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TariffTypeStruct.Generated.cs" />
     <Compile Include="DataContracts\SurchargeSummary.cs" />
-    <Compile Include="DataContracts\TariffSearchArgs.cs" />
     <Compile Include="DataContracts\TariffSearchSummary.cs" />
     <Compile Include="DataContracts\TariffsSummary.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffLineDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\TariffLinesContainersPriceDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\TariffProductDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffSurchargesUpdateDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffSurchargesUpdateMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffVersionAllInChargeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffVersionDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\TariffVersionUploadedExcelDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\TariffDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffLineDataMapping.cs" />
-    <Compile Include="EntityDataMappings\TariffLinesContainersPriceDataMapping.cs" />
-    <Compile Include="EntityDataMappings\TariffProductDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffSurchargesUpdateDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffSurchargesUpdateMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffVersionAllInChargeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TariffVersionDataMapping.cs" />
-    <Compile Include="EntityDataMappings\TariffVersionUploadedExcelDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\TariffLinePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TariffLinesContainersPricePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TariffProductPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffSurchargesUpdateMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffSurchargesUpdatePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffVersionAllInChargePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TariffVersionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\TariffVersionUploadedExcelPM.Generated.cs" />
     <Compile Include="EntityPMs\TariffLineExpirationDatePM.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffLineQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\TariffLinesContainersPriceQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\TariffProductQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffSurchargesUpdateMethodQueryService.Generated.cs" />
@@ -145,17 +121,11 @@
     <Compile Include="EntityQueryServices\Generated\TariffTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionAllInChargeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\TariffVersionUploadedExcelQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\TariffLineQueryService.cs" />
-    <Compile Include="EntityQueryServices\TariffLinesContainersPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffSurchargesUpdateQueryService.cs" />
-    <Compile Include="EntityQueryServices\TariffTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffVersionQueryService.cs" />
-    <Compile Include="EntityQueryServices\TariffVersionUploadedExcelQueryService.cs" />
-    <Compile Include="EntityUpdateServices\Generated\TariffLinesContainersPriceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLineUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\TariffProductUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffSurchargesUpdateMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffSurchargesUpdateUpdateService.Generated.cs" />
@@ -163,30 +133,18 @@
     <Compile Include="EntityUpdateServices\Generated\TariffUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionAllInChargeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffVersionUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\TariffVersionUploadedExcelUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\TariffLinesContainersPriceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffLineUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\TariffProductUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffSurchargesUpdateUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionAllInChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\TariffVersionUploadedExcelUpdateService.cs" />
-    <Compile Include="Helpers\CustomsChargesGenerator.cs" />
-    <Compile Include="Helpers\PriceCheckManager.cs" />
-    <Compile Include="Helpers\SalesLocalChargesGenerator.cs" />
     <Compile Include="Helpers\TariffLineHelper.cs" />
-    <Compile Include="Helpers\TariffPricesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\TariffModuleClassLevelValidator.cs" />
     <Compile Include="Validators\TariffModuleValidationClass.cs" />
     <Compile Include="Validators\TariffModuleTranslateTextsClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="App.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -205,22 +163,6 @@
       <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
       <Name>Logitude.TariffModule.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
-      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
-      <Name>Simplog.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
-      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
-      <Name>Simplog.Server.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
 </Project>

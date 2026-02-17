@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -42,40 +40,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Vendor GetVendorById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Vendor GetVendorById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
-				return VendorDataMapping(temp,Tenant,ComputingPartnerName);
+				return VendorDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
 		
-		public Vendor GetVendorByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+		public Vendor GetVendorByCode(string Code,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePMByCode(Code, Tenant);				
+				var temp = query.GetSinglePMByCode(Code,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Code " + Code + " doesn't exist");
 
-				return VendorDataMapping(temp,Tenant,ComputingPartnerName);
+				return VendorDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -90,46 +88,31 @@ using Simplog.Data.CommonDataModel;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.VatNumber = MyEntityPM.VatNumber;
-				   temp.CreateDate = MyEntityPM.CreateDate; 
-
-			  
+				   temp.CreateDate = MyEntityPM.CreateDate;			  
 				   if(MyEntityPM.PaymentTermId != null)
 				   {
 					   PaymentTermQueryService PaymentTermService0 = new PaymentTermQueryService(Tenant);
-					   					   temp.PaymentTerm = PaymentTermService0.GetPaymentTermById(MyEntityPM.PaymentTermId,Tenant,ComputingPartnerName); 
+					   					   temp.PaymentTerm = PaymentTermService0.GetPaymentTermById(MyEntityPM.PaymentTermId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.MainAddressId != null)
 				   {
 					   AddressQueryService AddressService1 = new AddressQueryService(Tenant);
-					   					   temp.MainAddress = AddressService1.GetAddressById(MyEntityPM.MainAddressId,Tenant,ComputingPartnerName); 
+					   					   temp.MainAddress = AddressService1.GetAddressById(MyEntityPM.MainAddressId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(MyEntityPM.GLAccountId != null)
 				   {
 					   GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
-					   					   temp.GLAccount = GLAccountService2.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant,ComputingPartnerName); 
+					   					   temp.GLAccount = GLAccountService2.GLAccountCustomDataMapping(MyEntityPM.GLAccountId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.Code = MyEntityPM.Code;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");   
-
-			  
-				   if(MyEntityPM.BillingAddressId != null)
-				   {
-					   AddressQueryService AddressService3 = new AddressQueryService(Tenant);
-					   					   temp.BillingAddress = AddressService3.GetAddressById(MyEntityPM.BillingAddressId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.Code,ComputingPartnerName,"Card");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -139,7 +122,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public CardPM VendorDataMappingAndValidatin(Vendor MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public CardPM VendorDataMappingAndValidatin(Vendor MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -151,7 +134,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -163,18 +146,16 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant );
+						temp = query.GetSinglePMByCode(MyCode, Tenant);
 						
 						
 					}
 					
-					
-			  	   if(temp == null)
+					   					   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -187,81 +168,33 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//} 
-
-						
+						//}
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalName = MyEntity.LocalName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.VatNumber = MyEntity.VatNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.CreateDate = MyEntity.CreateDate;
-
-										}  
-
-					
+					temp.EnglishName = MyEntity.EnglishName;
+					temp.LocalName = MyEntity.LocalName;
+					temp.VatNumber = MyEntity.VatNumber;
+					temp.CreateDate = MyEntity.CreateDate;
 					PaymentTermQueryService PaymentTermPaymentTermService = new PaymentTermQueryService(Tenant);
 					if(MyEntity.PaymentTerm != null)
 					{
-						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myPaymentTermPM != null)
-						{ 
-
+						var myPaymentTermPM = PaymentTermPaymentTermService.PaymentTermDataMappingAndValidatin(MyEntity.PaymentTerm,Tenant,ComputingPartnerName);
+												if(myPaymentTermPM != null)
+						{
+							temp.PaymentTermId = myPaymentTermPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.PaymentTermId = myPaymentTermPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					AddressQueryService MainAddressAddressService = new AddressQueryService(Tenant);
 					if(MyEntity.MainAddress != null)
 					{
-						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myMainAddressPM != null)
-						{ 
-
+						var myMainAddressPM = MainAddressAddressService.AddressDataMappingAndValidatin(MyEntity.MainAddress,Tenant,ComputingPartnerName);
+												if(myMainAddressPM != null)
+						{
+							temp.MainAddressId = myMainAddressPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.MainAddressId = myMainAddressPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
@@ -269,71 +202,25 @@ using Simplog.Data.CommonDataModel;
 					if(MyEntity.GLAccount != null)
 					{
 						var myGLAccountPM = GLAccountGLAccountService.GLAccountCustomDataMappingAndValidatin(MyEntity.GLAccount,Tenant);
-						
-						if(myGLAccountPM != null)
-						{ 
-
+												if(myGLAccountPM != null)
+						{
+							temp.GLAccountId = myGLAccountPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.GLAccountId = myGLAccountPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{								
-							temp.Code = MyEntity.Code;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.Code;
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-						{								
-							temp.Code = MyEntity.PartnerCode;
-								
-						
-						}  
-
-						
-					}
-					AddressQueryService BillingAddressAddressService = new AddressQueryService(Tenant);
-					if(MyEntity.BillingAddress != null)
-					{
-						var myBillingAddressPM = BillingAddressAddressService.AddressDataMappingAndValidatin(MyEntity.BillingAddress,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myBillingAddressPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.BillingAddressId = myBillingAddressPM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-										   
-					return temp;
+						temp.Code = MyEntity.PartnerCode;
+					}					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -341,8 +228,6 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

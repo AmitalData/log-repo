@@ -3,7 +3,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,6 @@ namespace Logitude.Accounting.BL.Validators
 {
     public class ReconcileExternalPageValidator
     {
-        private const string approvedBankPageStatusCode = "2";
         public static ValidationResult IsReconciliationValid(ReconcileExternalPagePM entityPM, System.ComponentModel.DataAnnotations.ValidationContext context)
         {
             List<string> errorsList = new List<string>();
@@ -77,9 +76,24 @@ namespace Logitude.Accounting.BL.Validators
                     }
                 }
 
-                if (entityPM.StatusCode == approvedBankPageStatusCode)
+                //5 approve logic
+                if (entityPM.StatusCode == "2") // 2- Approved
                 {
-                    CheckPageDifference(entityPM, errorsList, useLocal);
+                    decimal sum = entityPM.StartBalance;
+                    if (entityPM.ReconcileExternalPageLines.Count > 0)
+                    {
+                        foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
+                        {
+                            sum -= line.DebitAmount;
+                            sum += line.CreditAmount;
+                            //sum += line.DebitAmount;
+                            //sum -= line.CreditAmount;
+                        }
+                    }
+                    if (sum != entityPM.CloseBalance)
+                    {
+                        errorsList.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.StartBalanceNotEqualEndBalance", entityPM.Tenant, useLocal));
+                    }
                 }
 
 
@@ -116,27 +130,6 @@ namespace Logitude.Accounting.BL.Validators
                 errorString = errorString.Remove(errorString.Length - 1);
                 return new ValidationResult("ReconcileExternalPage Not Valid" + ": " + errorString, errorsList);
             }
-        }
-
-        private static void CheckPageDifference(ReconcileExternalPagePM entityPM, List<string> errorsList, bool useLocal)
-        {
-            decimal calculatedClosedBalance = CalculatePageClosedBalance(entityPM);
-
-            if (calculatedClosedBalance != entityPM.CloseBalance)
-                errorsList.Add(TranslateTextsClass.Translate("ReconcileExternalPage.O.StartBalanceNotEqualEndBalance", entityPM.Tenant, useLocal));
-        }
-
-        private static decimal CalculatePageClosedBalance(ReconcileExternalPagePM entityPM)
-        {
-            decimal pageTotal = entityPM.StartBalance;
-            var notDeletedPageLines = entityPM.ReconcileExternalPageLines.Where(page => page.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-            foreach (ReconcileExternalPageLinePM line in notDeletedPageLines)
-            {
-                pageTotal -= line.DebitAmount;
-                pageTotal += line.CreditAmount;
-            }
-
-            return pageTotal;
         }
 
         private static ObjectTable GetObjectTable(ReconcileExternalPagePM entityPM)

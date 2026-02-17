@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .subTitle {
         color: #1b90cb;
@@ -55,9 +55,9 @@
                     </tr>
 
                     <tr style="height:100px">
-                        <td *ngIf="EntityPM.Direction!='E'">
+                        <td>
 
-                            <div>
+                            <div >
                                 <table style="margin:10px;">
                                     <tr class="FormFieldRow">
                                         <td>
@@ -131,64 +131,7 @@
 
 
                         </td>
-                        <td *ngIf="EntityPM.Direction=='E'">
-
-                            <div>
-                                <table style="margin:10px;">
- 
-                                    <tr class="FormFieldRow">
-                                        <td>
-                                            <div class="MyLabel">{{'Customs.Declaration.F.FOBValueNIS'| TextCodeTranslationPipe}}</div>
-                                        </td>
-                                        <td>
-                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
-                                            <div class="MyTextBox">  {{ FOBValueNIS | NumbersPipe :'N2' }} </div>
-                                        </td>
-
-                                        <td style="width:10px;"></td>
-                                        <td>
-                                            <div class="MyLabel">{{'Customs.Declaration.F.FOBValueDollar'| TextCodeTranslationPipe}}</div>
-                                        </td>
-                                        <td>
-                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
-                                            <div class="MyTextBox">  {{ FOBValueDollar | NumbersPipe :'N2' }} </div>
-                                        </td>
-                                      
-
-
-                                    </tr>
-
-                                    <tr class="FormFieldRow">
-
-
-                                        <td>
-                                            <div class="MyLabel">{{'Customs.Declaration.F.TotalTax'| TextCodeTranslationPipe}}</div>
-                                        </td>
-                                        <td>
-                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
-                                            <div class="MyTextBox">  {{ TotalTax | NumbersPipe :'N2' }} </div>
-                                        </td>
-
-                                        <td style="width:10px;"></td>
-                                        <td>
-                                            <div class="MyLabel">{{'Customs.Declaration.F.LoadingFactor'| TextCodeTranslationPipe}}</div>
-                                        </td>
-                                        <td>
-                                            <!--Text="{Binding CIFValue,StringFormat=\{0:N2\}}"-->
-                                            <div class="MyTextBox">  {{ LoadingFactor  }} </div>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                </table>
-                            </div>
-
-
-                        </td>
-
-                        <td>
+                        <td  >
 
                             <div style="width:300px;height:100px;margin-right:50px;">
                                 <div style="width: 100% ; height : 100%">
@@ -201,26 +144,22 @@
                                             <log-column [header]="'Customs.CustomsExchangeRate.F.CurrencyTypeCode' | TextCodeTranslationPipe"
                                                         [width]="'100'" [Alignment]="'right'"
                                                         [binding]="'InvoiceCurrencyId'">
-                                                <ng-template let-item>
-                                                    <log-cell-template #logcelltemplate>
-                                                        <div class="TextTrimming RightCenter">
-                                                            <span>{{item.InvoiceCurrencyId}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </ng-template>
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter">
+                                                        <span>{{item.InvoiceCurrencyId}}</span>
+                                                    </div>
+                                                </log-cell-template>
                                             </log-column>
 
                                             <!-- rate -->
                                             <log-column [header]="'Customs.CustomsExchangeRate.F.ExchangeRate' | TextCodeTranslationPipe"
                                                         [width]="'100'" [Alignment]="'right'"
                                                         [binding]="'ExchangeRate'">
-                                                <ng-template let-item>
-                                                    <log-cell-template #logcelltemplate>
-                                                        <div class="TextTrimming RightCenter">
-                                                            <span>{{item.ExchangeRate}}</span>
-                                                        </div>
-                                                    </log-cell-template>
-                                                </ng-template>
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="TextTrimming RightCenter" >
+                                                        <span>{{item.ExchangeRate}}</span>
+                                                    </div>
+                                                </log-cell-template>
                                             </log-column>
 
                                         </logitude-edit-grid>
@@ -255,20 +194,16 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'TaxTypeName'">
                                             <log-footer>
-                                                <ng-template let-item>  
-                                                <log-footer-template >
+                                                <log-footer-template template="let item">
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{'Customs.Declaration.O.TotalTaxes' | TextCodeTranslationPipe}}</div>
                                                 </log-footer-template>
-                                            </ng-template >  
                                             </log-footer>
 
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TaxTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
 
                                             
                                         </log-column>
@@ -278,20 +213,16 @@
                                                     [width]="'130'" [Alignment]="'right'"
                                                     [binding]="'TaxBaseAmount'">
                                             <log-footer>
-                                                <ng-template let-item>  
-                                                <log-footer-template >
+                                                <log-footer-template template="let item">
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TaxBaseAmountTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
-                                            </ng-template >  
                                             </log-footer>
 
-                                             <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                             <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TaxBaseAmount | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
 
                                            
                                         </log-column>
@@ -302,20 +233,16 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'TaxToPay'">
                                             <log-footer>
-                                                <ng-template let-item>  
-                                                <log-footer-template >
+                                                <log-footer-template template="let item">
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TaxToPayTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
-                                            </ng-template >  
                                             </log-footer>
 
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TaxToPay | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
 
@@ -324,19 +251,15 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'TotalAmount'">
                                             <log-footer>
-                                                <ng-template let-item>  
-                                                <log-footer-template >
+                                                <log-footer-template template="let item">
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{TotalAmountTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
-                                            </ng-template>  
                                             </log-footer>
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter">
                                                     <span>{{item.TotalAmount | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
 
@@ -346,19 +269,15 @@
                                                     [width]="'100'" [Alignment]="'right'"
                                                     [binding]="'DeferredTaxAmount'">
                                             <log-footer>
-                                                <ng-template let-item>  
-                                                <log-footer-template >
+                                                <log-footer-template template="let item">
                                                     <div class="TextTrimming RightCenter" style="font-size: 12px; font-weight: bold; color:#25446C;">{{DeferredTaxAmountTotal | NumbersPipe:'N2'}}</div>
                                                 </log-footer-template>
-                                            </ng-template>  
                                             </log-footer>
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming RightCenter" >
                                                     <span>{{item.DeferredTaxAmount | NumbersPipe :'N2'  }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>

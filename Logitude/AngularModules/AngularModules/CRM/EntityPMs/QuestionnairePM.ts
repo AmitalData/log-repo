@@ -123,10 +123,7 @@ export class QuestionnairePM {
     public OldEntityPM: QuestionnairePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -134,7 +131,6 @@ export class QuestionnairePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Questionnaire");
            
         }
-       }
     }
 
     private MyClone: QuestionnairePM;

@@ -10,7 +10,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 @Component({
     selector: 'AdvanceDesignTableComponent',
-    
+    moduleId: module.id,
     templateUrl: './AdvanceDesignTableComponent.html',
 })
 
@@ -95,7 +95,7 @@ export class AdvanceDesignTableComponent extends BaseComponent implements OnInit
 
         if (this.QuoteTemplateSettingPM.IsDirty) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
+            this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 this.CurrentSession.StopBusyIndicator();
                 this.QuoteTemplateSettingPM.IsDirty = false;
                 this.CurrentSession.CurrentWindow.Close("Refresh");

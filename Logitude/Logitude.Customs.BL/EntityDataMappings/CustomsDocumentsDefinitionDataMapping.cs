@@ -12,7 +12,6 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -37,21 +36,20 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.TransportationTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ProcessTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CargoTypeName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.DeclarationTypeName);
 
             if (!string.IsNullOrEmpty(entityPOCO.DocumentTypeCode))
             {
                 CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(entityPOCO.Tenant);
-                CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(entityPOCO.DocumentTypeCode, entityPOCO.Tenant);
+                CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingle(entityPOCO.DocumentTypeCode, false, true);
                 entityPM.DocumentTypeName = customDocumentTypePM.LocalName;
             }
 
 
             if (!string.IsNullOrEmpty(entityPOCO.TransportationTypeCode))
             {
-                TransportModeQuery TransportModeQueryService = new TransportModeQuery(entityPOCO.Tenant);
-                var TransportModePM = TransportModeQueryService.GetSinglePM(entityPOCO.TransportationTypeCode);
-                entityPM.TransportationTypeName = TransportModePM.LocalName;
+                CustomsTransportModeQueryService customsTransportModeQueryService = new CustomsTransportModeQueryService(entityPOCO.Tenant);
+                CustomsTransportModePM customsTransportModePM = customsTransportModeQueryService.GetSingle(entityPOCO.TransportationTypeCode, false, true);
+                entityPM.TransportationTypeName = customsTransportModePM.LocalName;
             }
 
             if (!string.IsNullOrEmpty(entityPOCO.ProcessTypeCode))
@@ -66,13 +64,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CargoIdentifireTypeQueryService cargoIdentifireTypeQueryService = new CargoIdentifireTypeQueryService(entityPOCO.Tenant);
                 CargoIdentifireTypePM cargoIdentifireTypePM = cargoIdentifireTypeQueryService.GetSingle(entityPOCO.CargoTypeCode, false, true);
                 entityPM.CargoTypeName = cargoIdentifireTypePM.LocalName;
-            }
-
-            if (!string.IsNullOrEmpty(entityPOCO.DeclarationTypeCode))
-            {
-                LeadDocumentTypeQueryService leadDocumentTypeQueryService = new LeadDocumentTypeQueryService(entityPOCO.Tenant);
-                LeadDocumentTypePM leadDocumentTypePM = leadDocumentTypeQueryService.GetSingle(entityPOCO.DeclarationTypeCode, false, true);
-                entityPM.DeclarationTypeName = leadDocumentTypePM.LocalName;
             }
         }
    }

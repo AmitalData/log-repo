@@ -14,10 +14,10 @@ using Logitude.TimeManagement.Data.EntityListQueryServices;
 using Logitude.TimeManagement.Data.EntityLists;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -779,7 +779,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                }, tenant);
+                });
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -842,7 +842,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                }, tenant);
+                });
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -1230,7 +1230,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     table.Rows.Add(row);
                 }
             }
-
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);

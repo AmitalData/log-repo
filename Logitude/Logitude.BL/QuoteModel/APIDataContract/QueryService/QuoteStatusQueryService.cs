@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.QuoteModel;

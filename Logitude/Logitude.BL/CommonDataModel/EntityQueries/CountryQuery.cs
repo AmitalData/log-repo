@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CountryRepository repository;
 
-
+        public CountryQuery()
+        {
+            repository = new CountryRepository(); 
+        }
 
         public CountryQuery(int tenant)
         {
@@ -58,7 +61,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                             HasCitiesList = a.HasCitiesList,
                                             IsNorthAmerica = a.IsNorthAmerica,
-                                            IsGreaterChina = a.IsGreaterChina,
                                         };
 
                         if (tenant == 0)
@@ -102,7 +104,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                              HasCitiesList = a.HasCitiesList,
                                              IsNorthAmerica = a.IsNorthAmerica,
-                                             IsGreaterChina = a.IsGreaterChina,
                                          }).FirstOrDefault();
                     entity = country;
                 }
@@ -136,18 +137,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                               HasCitiesList = a.HasCitiesList,
                                               IsNorthAmerica = a.IsNorthAmerica,
-                                              IsGreaterChina = a.IsGreaterChina,
                                           };
             return query;
         }
-
-        public IQueryable<Country> GetAllCountries()
-        {
-            IQueryable<Country> query = (from a in repository.context.Countries select a);
-                                           
-            return query;
-        }
-
 
         public IQueryable<CountryPM> GetCountriesByCodeOrName(string code, string name, int tenant)
         {
@@ -177,7 +169,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                             HasCitiesList = a.HasCitiesList,
                             IsNorthAmerica = a.IsNorthAmerica,
-                            IsGreaterChina = a.IsGreaterChina,
                         };
 
             IQueryable<CountryPM> query2 = null;
@@ -228,7 +219,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  SearchFields = f.SearchFields,
                                                  HasCitiesList = f.HasCitiesList,
                                                  IsNorthAmerica = f.IsNorthAmerica,
-                                                 IsGreaterChina = f.IsGreaterChina,
                                              };
             return result;
         }
@@ -255,7 +245,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                      HasCitiesList = a.HasCitiesList,
                                      IsNorthAmerica = a.IsNorthAmerica,
-                                     IsGreaterChina = a.IsGreaterChina,
                                  }).FirstOrDefault();
 
             return country;

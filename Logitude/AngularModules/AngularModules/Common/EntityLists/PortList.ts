@@ -28,6 +28,5 @@ export class PortList {
 		RecentlyAdded: string;
 		TransportModeId: string;
 		StateName: string;
-		StateCode: string;
 	
 }

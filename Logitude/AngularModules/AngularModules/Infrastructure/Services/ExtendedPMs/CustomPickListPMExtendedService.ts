@@ -1,56 +1,78 @@
+﻿
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { CustomPickListPM } from '../../EntityPMs/CustomPickListPM';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+
+import {CustomPickListPM} from '../../EntityPMs/CustomPickListPM';
+
+
 
 @Injectable()
+
 export class CustomPickListPMExtendedService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomPickListExtended';
     }
 
+
+
+
+
+
+
     GetCustomPickListsByCode(code: string, tenant: number) {
-        var url = this._apiUrl + '/GetCustomPickListsByCode/?' + 'code=' + code + '&tenant=' + tenant;
 
-        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetCustomPickListsByCode/?' + 'code=' + code + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result: any = response;
+            var result = response.json();
             var entity: CustomPickListPM;
             var CustomPickListPMLists: CustomPickListPM[];
             CustomPickListPMLists = new Array<CustomPickListPM>();
-
             result.forEach((item) => {
                 entity = this.MapJsonToEntityPM(item);
                 CustomPickListPMLists.push(entity);
             });
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
 
-            serviceResponse.Result = CustomPickListPMLists;
-            return serviceResponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+            pmresponse.Result = CustomPickListPMLists;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
     }
+
+
 
     InsertupdateCustomPickLists(CustomPickLists: any) {
-        var url = this._apiUrl + '/PutCreateUpdateCustomPickListPMs';
-
-        return defer(() => {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.put(url, JSON.stringify(CustomPickLists), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-                //var pm = response;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+            return this._http.put(this._apiUrl + '/PutCreateUpdateCustomPickListPMs', JSON.stringify(CustomPickLists),
+                { headers: authHeader }).map((res) => {
+                    var pm = res.json();
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
 
     }
+
 
     MapJsonToEntityPM(jsonPM: any) {
 
@@ -62,8 +84,11 @@ export class CustomPickListPMExtendedService {
             var property = jsonPMKeys[key];
             entityPM[property] = jsonPM[property];
         }
+
+
         entityPM.IsDirty = false;
 
         return entityPM;
     }
+
 }

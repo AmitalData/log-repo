@@ -17,7 +17,7 @@ import {CitySelectionArgs} from '../../Args';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 @Component({
     selector: 'CompetitorComponent',
-    
+    moduleId: module.id,
     templateUrl: './CompetitorComponent.html',
 })
 
@@ -118,7 +118,7 @@ export class CompetitorComponent extends BaseComponent {
            var  CountryCode = null;
            var CountryName = null;
            var countryListService: CountryListService = new CountryListService();
-           countryListService.getAllFromCache().subscribe((result:any) => {
+           countryListService.getAllFromCache().subscribe(result => {
                var list: CountryList = result.Result.filter(d => d.Tenant == SessionLocator.Tenant && d.Id == value)[0];
                if (list != null) {
                    CountryCode = list.Code;
@@ -166,7 +166,7 @@ export class CompetitorComponent extends BaseComponent {
         if (this.EntityPM.StateId != value) {
             this.EntityPM.StateId = value;
             var stateListService: StateListService = new StateListService();
-            stateListService.getAllFromCache().subscribe((result:any) => {
+            stateListService.getAllFromCache().subscribe(result => {
                 var list: StateList = result.Result.filter(d => d.Tenant == SessionLocator.Tenant && d.Id == value)[0];
                 if (list != null) {
                     this.StateName = list.EnglishName;
@@ -284,7 +284,7 @@ export class CompetitorComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicatorCreating();
             var myService = new CompetitorPMService();
-            myService.insert(this.EntityPM).subscribe((myResult:any) => {
+            myService.insert(this.EntityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

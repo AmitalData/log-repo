@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -296,88 +296,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private bool permissionForAll ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool PermissionForAll  
-	   {
-	    
-	     get
-		{
-		   return permissionForAll;
-		 }
-		 set
-		 {
-		   if(permissionForAll != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PermissionForAll",OldValue=permissionForAll,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   permissionForAll=value;
-		   }
-			
-		 }
-	   }
-	  private string permittedByUserId ;
-	  	  
-       
-	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string PermittedByUserId  
-	   {
-	    
-	     get
-		{
-		   return permittedByUserId;
-		 }
-		 set
-		 {
-		   if(permittedByUserId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PermittedByUserId",OldValue=permittedByUserId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   permittedByUserId=value;
-		   }
-			
-		 }
-	   }
-
-	   private List<BIFoldersPermissionPM> permittedBIFolders;
-	    
-       [Composition]
- 
-		     
-	   [Include]
-	   [Association("BIReportFolderBIFoldersPermission", "Id","FolderId")]
-	   [DataMember]
-	   public virtual List<BIFoldersPermissionPM> PermittedBIFolders  
-	   {
-	        get
-             {
-                 if (permittedBIFolders == null)
-                 {
-                     permittedBIFolders = new List<BIFoldersPermissionPM>();
-                 }
-                 return permittedBIFolders;
-              }
-             set { permittedBIFolders = value; }
-	    }
-		   
-	   private List<BIFoldersPermissionPM>  deletedPermittedBIFolders;
-	   public virtual List<BIFoldersPermissionPM> DeletedPermittedBIFolders  
-	   {
-	        get
-             {
-                 if ( deletedPermittedBIFolders == null)
-                 {
-                      deletedPermittedBIFolders = new List<BIFoldersPermissionPM>();
-                 }
-                 return  deletedPermittedBIFolders;
-              }
-             set {  deletedPermittedBIFolders = value; }
-	    }
-	  	    }
+   }
    
 }
 	 

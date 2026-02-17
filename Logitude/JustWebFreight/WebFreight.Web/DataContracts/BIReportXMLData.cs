@@ -15,11 +15,6 @@ namespace WebFreight.Web.DataContracts
         public BIReportPM BIReportPM { get; set; }
         public BITabularViewSettings BITabularViewSettings { get; set; }
         public string BIReportKey { get; set; }
-        public bool IncludeTotals { get; set; }
-        public string ExportDataType { get; set; }
-        public string BIReportsExecutionLogId { get; set; }
-
-        
     }
 
     [XmlRoot("BITabularViewSettings")]
@@ -48,10 +43,6 @@ namespace WebFreight.Web.DataContracts
         public string DataTypeCode { get; set; }
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string Name { get; set; }
-
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string FieldCode { get; set; }
-
 
     }
 }

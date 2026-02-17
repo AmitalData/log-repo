@@ -18,14 +18,14 @@ namespace Logitude.Server.Tools.QueueService
         private string QueueCode { get; set; }
         private QueueClient QueueClient { get; set; }
         private BrokeredMessage CurrentMessage { get; set; }
-        public void InitializeQueue(string queueCode, int tenant, string queueDefinitionGroup = null)
+        public void InitializeQueue(string queueCode, int tenant)
         {
             this.Tenant = tenant;
             this.QueueCode = queueCode;
             this.QueueClient = Communications.GetQueueClient(this.QueueCode);
         }
 
-        public void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
+        public void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         {
             using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())
             {
@@ -65,11 +65,6 @@ namespace Logitude.Server.Tools.QueueService
 
                 return response;
             }
-        }
-
-        public QueueResponse ReceiveDetailsByTenant(string objectTable, TimeSpan? serverWaitTime = null)
-        {
-            throw new NotImplementedException();
         }
 
         public void Complete()

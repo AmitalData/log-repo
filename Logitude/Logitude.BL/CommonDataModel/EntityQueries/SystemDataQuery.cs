@@ -6,14 +6,12 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -36,16 +34,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             Tenant tenant = TenantRepository.GetSingleTenant(tenantNum, true);
-            string supportEmail = GetSupportEmail(tenantNum);
-            string userSignatureImage = new ImageDetailsHtmlRenderingService().Render(user.SignatureImageId, user.Tenant);
+            string supportEmail = GetSupportEmail(tenantNum); 
 
             return new SystemDataPM()
             {
-                UserId = user != null ? user.Id : "",
-                Date = TenantServerConfigration.GetCurrentDateTime(tenantNum),
+                UserId = user != null ? user.Id:"",
+                Date = DateTime.Now.ToShortDateString(),
                 Signature = user != null ? user.Contact.Signature: null,
                 SignatureHtml = user != null ? user.Contact.SignatureHtml: null,
-                UserName = user!=null ? user.Contact.EnglishName: null,
+                UserName = user!=null ? user.Contact.EnglishName: "",
                 LocalCurrencyId = tenant.CurrencyId,
                 AddressId = tenant.AddressId,
                 Company = tenant.Company,
@@ -55,7 +52,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 Website = tenant.Website,
                 ContactId = user != null ? user.Id:"",
                 Supportemail = supportEmail,
-                UserSignatureImage = userSignatureImage,
             };
         }
 

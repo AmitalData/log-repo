@@ -6,7 +6,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 
 @Component({
     selector: 'NewCurrencyComponent',
-    
+    moduleId: module.id,
     templateUrl: './ParticipantGeneralTabComponent.html',
 })
 
@@ -22,7 +22,7 @@ export class ParticipantGeneralTabComponent extends BaseComponent {
         this.SetUIProperties();
         this.RunComponent();
     }
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     SetUIProperties() {
         this.UIProperties.SetEnabled("IsDirect", this.ObjectTableName, false);
@@ -57,7 +57,7 @@ export class ParticipantGeneralTabComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

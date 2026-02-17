@@ -11,7 +11,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { Validator } from '../../../../Infrastructure/Validators/Validator'; 
 
 import { VehiclePM } from '../../../../Customs/EntityPMs/VehiclePM';
 
@@ -24,10 +24,10 @@ import { INF_MSG_GenericResponseData } from '../../../../Customs/DataContract/Re
 
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 //import { VehicleMessagesService } from '../../../Services/WebServices/VehicleMessagesService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './VehicleMoreDetailsTabComponent.html',
 })
 
@@ -41,7 +41,7 @@ export class VehicleMoreDetailsTabComponent extends BaseComponent {
     public SubCountryCodeEnabled: boolean = false;
     IsDelete: boolean = false;
     public CurrentEditComponentId: string;
-    public refresh = false;
+
     //RequestParams: VehicleInsertUpdateDeleteMessageRequestParams;
     ResponseData: INF_MSG_GenericResponseData;
     //VehicleMessagesService: VehicleMessagesService = new VehicleMessagesService();
@@ -49,8 +49,8 @@ export class VehicleMoreDetailsTabComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService) {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe((response: any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Vehicle").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.Listen();
@@ -97,7 +97,7 @@ export class VehicleMoreDetailsTabComponent extends BaseComponent {
         }
     }
 
-    public SetTabArgs(args: any, valdationErrorList: any[] = null) {
+    public SetTabArgs(args: any, valdationErrorList: any[]=null) {
         this.EntityPM = args.EntityPM;
         this.IsNewEntity = args.IsNewEntity;
 
@@ -107,10 +107,7 @@ export class VehicleMoreDetailsTabComponent extends BaseComponent {
         this.SetFieldsEditability();
     }
 
-    public RefreshScreen(args: any) {
-        this.refresh = true
 
-    }
     SetFieldsEditability() {
         //this.UIProperties.SetEnabled("VehicleTypeCode", this.ObjectTableName, this.IsNewEntity);
         //this.UIProperties.SetEnabled("SubCountryCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityPM.CountryCode));
@@ -199,8 +196,7 @@ export class VehicleMoreDetailsTabComponent extends BaseComponent {
     get VehiclePowerKW() { return this.EntityPM != null ? this.EntityPM.VehiclePowerKW : null; }
     set VehiclePowerKW(value: number) {
         this.EntityPM.VehiclePowerKW = value;
-        this.OnVehiclePowerKWLostFocus(value);
-    }
+        this.OnVehiclePowerKWLostFocus(value);}
 
     //        public string MedalNumber
 
@@ -272,7 +268,7 @@ export class VehicleMoreDetailsTabComponent extends BaseComponent {
     set VehicleMaxPowerKW(value: number) { this.EntityPM.VehicleMaxPowerKW = value; }
 
     //#endregion
-
+    
 
     public SendButtonsVisibility: boolean = false;
 

@@ -86,13 +86,13 @@ namespace Logitude.Customs.BL.Messaging.L2U.CustomFile
             var info = myUServerCommunicationService.Send(myImmediately);
             if (String.IsNullOrWhiteSpace(info.ImmediatelyResponse))
             {
-                throw new Exception("ImmediatelyResponse is null" + " Urouter is failed, Try to restart urouter service");
+                throw new Exception("ImmediatelyResponse is null");
             }
             var GenericResponse = XmlGenericUtil<GenericResponse>.DeSerializeObject(info.ImmediatelyResponse);
             var genericResponseObj = GenericResponse.GenericResponseObj.FirstOrDefault();
             if (genericResponseObj == null)
             {
-                throw new Exception("GenericResponse.GenericResponseObj is null" + " Urouter is failed, Try to restart urouter service");
+                throw new Exception("GenericResponse.GenericResponseObj is null");
             }
             if (genericResponseObj.Status != "0")
             {

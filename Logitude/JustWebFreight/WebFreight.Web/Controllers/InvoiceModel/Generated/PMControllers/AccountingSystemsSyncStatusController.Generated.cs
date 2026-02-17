@@ -40,7 +40,6 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 
-
 namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
 { 
 

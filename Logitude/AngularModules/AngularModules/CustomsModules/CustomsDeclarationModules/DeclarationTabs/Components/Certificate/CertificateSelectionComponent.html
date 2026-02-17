@@ -19,66 +19,54 @@
 
 
                     <log-column [header]="'מספר אישור'" [width]="'70'" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate [TabIndex]="-1">
+                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right;color:blue" class="TextTrimming">
                                 <span>{{item.ReqConfirmationTypeCode}}</span>
                             </div>
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
 
                     <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ReqConfirmationTypeCode' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate [TabIndex]="-1">
+                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.ReqConfirmationTypeName}}</span>
                             </div>
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.AttachmentTypeCode' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate [TabIndex]="-1">
+                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.AttachmentTypeName}}</span>
                             </div>
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
                     <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateNumber' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate [TabIndex]="-1">
+                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.CertificateNumber}}</span>
                             </div>
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
 
                     <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.CertificateExemptionTypeCode' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate [TabIndex]="-1">
+                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.CertificateExemptionTypeName}}</span>
                             </div>
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
 
                     <log-column [header]="'Customs.SupplierInvioceItemCertificat.F.ResConfirmationTypeCode' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'right'">
-                        <ng-template let-item>
-<log-cell-template  #logcelltemplate [TabIndex]="-1">
+                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
                             <div style="text-align:right" class="TextTrimming">
                                 <span>{{item.ResConfirmationTypeName}}</span>
                             </div>
                         </log-cell-template>
-</ng-template>
                     </log-column>
 
 

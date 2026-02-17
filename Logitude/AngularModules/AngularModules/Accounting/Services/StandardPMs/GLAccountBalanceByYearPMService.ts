@@ -6,9 +6,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -21,19 +20,24 @@ import {GLAccountBalanceByYearPM} from '../../EntityPMs/GLAccountBalanceByYearPM
 @Injectable()
 
 export class GLAccountBalanceByYearPMService {
- private _http: HttpClient;
+ private _http: Http;
  private _apiUrl: string;
  constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/glaccountbalancesbyyear';      
     }
 
  get(accountid: string, year: number, currencyid: string) {
          
-        
-		 return defer(() => {
-             return this._http.get(this._apiUrl + '/getsingle?' + 'accountid=' + accountid + '&' + 'year=' + year + '&' + 'currencyid=' + currencyid, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                    var pm = response;
+         
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+		
+		 return Observable.defer(() => {
+                return this._http.get(this._apiUrl+'/getsingle?'+'accountid=' + accountid+'&'+'year=' + year+'&'+'currencyid=' + currencyid, {
+                    headers: authHeader
+                }).map(response => {
+                    var pm = response.json();
                     
 					
                     var entity: GLAccountBalanceByYearPM;
@@ -47,15 +51,17 @@ export class GLAccountBalanceByYearPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
             });                    
     }
 
 	 insert(entityPM: GLAccountBalanceByYearPM) {
          
-        return defer(() => {
+        return Observable.defer(() => {
 
-          
+                var authHeader = new Headers();
+                authHeader.append('Token', SessionInfo.Token);
+                authHeader.append('Content-Type', 'application/json');
 
                 var validator: ClassLevelValidator;
                  
@@ -70,8 +76,9 @@ export class GLAccountBalanceByYearPMService {
                     var mappedEntity: GLAccountBalanceByYearPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-                     return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                            var pm = res;
+				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                        { headers: authHeader }).map((res) => {
+                            var pm = res.json();
 							if(pm)
 							{
                                var mappedResult:  GLAccountBalanceByYearPM;
@@ -83,14 +90,14 @@ export class GLAccountBalanceByYearPMService {
                             
                             return serviceResponse;
 
-                        }),catchError(ServiceHelper.HandleServiceError));
+                        }).catch(ServiceHelper.HandleServiceError);
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return of(serviceResponse);
+                    return Observable.of(serviceResponse);
                    
                 }
             }
@@ -101,9 +108,11 @@ export class GLAccountBalanceByYearPMService {
     update(entityPM: GLAccountBalanceByYearPM) {
 
          
-            return defer(() => {
+            return Observable.defer(() => {
 
-   
+                var authHeader = new Headers();
+                authHeader.append('Token', SessionInfo.Token);
+                authHeader.append('Content-Type', 'application/json');
 
                 var validator: ClassLevelValidator;
                  
@@ -118,8 +127,9 @@ export class GLAccountBalanceByYearPMService {
                     var mappedEntity: GLAccountBalanceByYearPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 				
-                     return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                            var pm = res;
+				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                        { headers: authHeader }).map((res) => {
+                            var pm = res.json();
 							if(pm)
 							{
                                var mappedResult:  GLAccountBalanceByYearPM;
@@ -130,14 +140,14 @@ export class GLAccountBalanceByYearPMService {
                            
                             return serviceResponse;
 
-                        }),catchError(ServiceHelper.HandleServiceError));
+                        }).catch(ServiceHelper.HandleServiceError);
                 }
                 else {
 
                     serviceResponse.HasError = true;
                     serviceResponse.ErrorsArray = errorsArray;
 
-                    return of(serviceResponse);
+                    return Observable.of(serviceResponse);
                    
                 }
             }

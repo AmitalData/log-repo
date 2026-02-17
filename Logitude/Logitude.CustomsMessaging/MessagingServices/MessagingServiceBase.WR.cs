@@ -7,11 +7,11 @@ using System;
 using Logitude.AmitalMessaging.Utils;
 using System.Collections.Generic;
 using System.IO;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Customs.BL.EntityQueryServices;
@@ -30,8 +30,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public Nullable<CustomsCommandEnum> CurrentCustomsCommandWR {get;set;}
         private TResponseData SendSheet(CustomsCommandEnum currentWR)
         {
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet33::" + Environment.StackTrace);
-
             if (_CustomsRequestsSheetService == null)
             {
                 throw new Exception("SendSheetStateMachine():(_CustomsRequestsSheetService == null)");

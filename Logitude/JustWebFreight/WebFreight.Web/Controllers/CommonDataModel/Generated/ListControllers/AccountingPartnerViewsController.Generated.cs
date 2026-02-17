@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,20 +26,17 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
-using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
-using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
@@ -66,12 +63,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				AccountingPartnerRepository  accountingPartnerRepository = new AccountingPartnerRepository(MyContext);
-				
-				AccountingPartnerQuery  accountingPartnerQuery = new AccountingPartnerQuery(accountingPartnerRepository);
-				IQueryable<AccountingPartner> accountingPartners = accountingPartnerRepository.GetAccountingPartners(authToken.Tenant).Where(a=>a.Id == id);
-				AccountingPartnerList entityList = accountingPartnerQuery.GetIQueryableEntityList(accountingPartners).FirstOrDefault();
-				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-				customFieldResolver.SetCustomFieldsValues("AccountingPartner",  authToken.Tenant, new List<AccountingPartnerList> { entityList }.Cast<object>().ToList());
+				AccountingPartnerList entityList = null;
+				AccountingPartner entityPoco = accountingPartnerRepository.GetSingleAccountingPartner(id , authToken.Tenant);
+
+				if (entityPoco != null)
+				{
+									List<AccountingPartner> singleEntityList = new List<AccountingPartner>();
+					singleEntityList.Add(entityPoco);
+
+					AccountingPartnerQuery accountingPartnerQuery = new AccountingPartnerQuery(accountingPartnerRepository);
+					IQueryable<AccountingPartner> iQueryable = singleEntityList.AsQueryable();
+					IQueryable<AccountingPartnerList> iQueryableEntityList = accountingPartnerQuery.GetIQueryableEntityList(iQueryable);
+				    entityList = iQueryableEntityList.FirstOrDefault();
+
+			    }
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -97,15 +102,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				AccountingPartnerRepository  accountingPartnerRepository = new AccountingPartnerRepository(MyContext);
-				IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartners(authToken.Tenant);
+				IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartner(authToken.Tenant);
 
 				AccountingPartnerQuery accountingPartnerQuery = new AccountingPartnerQuery(accountingPartnerRepository);
 			    IQueryable<AccountingPartnerList> entityLists = accountingPartnerQuery.GetIQueryableEntityList(entityPocos);
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<AccountingPartnerList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-                customFieldResolver.SetCustomFieldsValues("AccountingPartner", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -133,7 +136,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     ObjectTableName = "AccountingPartner",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "AccountingPartners",
+                    QuerySection = "AccountingPartner",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -172,12 +175,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+							 queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-					
+
 
 
                 }
@@ -201,7 +204,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+							 queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                         }
                         else
                         {
@@ -213,28 +216,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "AccountingPartner",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
 
-								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 AccountingPartnerRepository  accountingPartnerRepository = new AccountingPartnerRepository(MyContext);
-                IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartners(tenant);
+                IQueryable<AccountingPartner> entityPocos = accountingPartnerRepository.GetAccountingPartner(tenant);
 
                 AccountingPartnerQuery accountingPartnerQuery = new AccountingPartnerQuery(accountingPartnerRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				                
 				AccountingPartnerCustomFilter customfilters = new AccountingPartnerCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
@@ -244,10 +236,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 IQueryable<AccountingPartnerList> entityLists = accountingPartnerQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<AccountingPartnerList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<AccountingPartnerList>(entityLists , treeFilterQueryArgs);
 
-		      
-			  								
+		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(AccountingPartnerList).GetProperty(queryOperations.SortByColumnName);
@@ -311,18 +301,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 				 }
                 }
-            }					  						
-	       else
+            }
+		    else
             {
                 entityLists = entityLists.OrderBy(d => d.Id);
-            } 
+            }
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-    		  }
+			  }
 			  	if(!queryOperations.GetAll)
 				 {
 
@@ -331,8 +321,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<AccountingPartnerList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
-               customFieldResolver.SetCustomFieldsValues("AccountingPartner", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

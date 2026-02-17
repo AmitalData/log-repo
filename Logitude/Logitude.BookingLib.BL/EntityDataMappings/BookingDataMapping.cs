@@ -11,7 +11,7 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.BL.EntityPMs; 
 using Logitude.BookingLib.Data;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BookingLib.Data.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;

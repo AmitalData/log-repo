@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -9,7 +9,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public RoleFeatureRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public RoleFeatureRepository(ICommonDataContext context)
         {
@@ -32,13 +35,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from a in context.RoleFeatures
                     where a.RoleId == roleId && a.FeatureId == featureId && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
-
-        public RoleFeature GetRoleFeatureByRoleAndFeatureUCode(string roleId, string FeatureUniqeCode, int tenant)
-        {
-            return (from a in context.RoleFeatures
-                    where a.RoleId == roleId && a.FeatureUniqeCode == FeatureUniqeCode && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 

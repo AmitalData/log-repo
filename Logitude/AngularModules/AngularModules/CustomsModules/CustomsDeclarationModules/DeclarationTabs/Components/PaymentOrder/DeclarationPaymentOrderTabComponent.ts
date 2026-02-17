@@ -19,7 +19,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DeclarationPaymentOrderTabComponent.html',
 })
 
@@ -40,8 +40,8 @@ export class DeclarationPaymentOrderTabComponent
         super();
         this.paymentOrderlist = new ObservableCollection([]);
         
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
 
@@ -115,7 +115,7 @@ export class DeclarationPaymentOrderTabComponent
     EditButtonClicked(item: PaymentOrderList) {
         if (!AppTool.IsNullOrEmpty(item)) {
             this.CurrentSession.StartBusyIndicatorLoading();
-            this.paymentOrderPMService.get(item.Id).subscribe((response:any) => {
+            this.paymentOrderPMService.get(item.Id).subscribe(response => {
                 this.CurrentSession.StopBusyIndicator();
                 var windowArgs: any = {};
                 windowArgs.EntityPM = response.Result;

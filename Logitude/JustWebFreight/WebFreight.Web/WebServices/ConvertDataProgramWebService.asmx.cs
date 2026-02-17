@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Services;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -590,15 +590,6 @@ namespace WebFreight.Web.WebServices
                 //}
             }
             context.SaveChanges();
-
-            foreach (Shipment shipment in shipments)
-            {
-                RunStoredProcedureClass.UpdateShipmentStatus(shipment.Id, shipment.Tenant);
-            }
-
-
-
-
         }
 
         public void CheckNextETAAndETDAndStatus(Shipment shipment, ShipmentRepository shipmentRep)
@@ -1265,14 +1256,14 @@ namespace WebFreight.Web.WebServices
                 if (shipmentPickUpDelivery.ATA != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("RCS", shipmentPickUpDelivery.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("RCS", shipmentPickUpDelivery.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                 }
 
                 if (shipmentPickUpDelivery.ATD != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("PICD", shipmentPickUpDelivery.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("PICD", shipmentPickUpDelivery.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                 }
             }
@@ -1285,14 +1276,14 @@ namespace WebFreight.Web.WebServices
                 if (shipmentPickUpDelivery.ATA != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("PIOD", shipmentPickUpDelivery.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("PIOD", shipmentPickUpDelivery.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                 }
 
                 if (shipmentPickUpDelivery.ATD != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("DELD", shipmentPickUpDelivery.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("DELD", shipmentPickUpDelivery.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                 }
             }
@@ -1304,7 +1295,7 @@ namespace WebFreight.Web.WebServices
             if (shipmentPm.MainCarriageATD != null)
             {
                 eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("DEP", shipment.Tenant);
+                EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("DEP", shipment.Tenant);
                 shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                 if (masterData != null)
                 {
@@ -1317,7 +1308,7 @@ namespace WebFreight.Web.WebServices
                 if (shipmentPm.Transshipment3ATA != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("ARR", shipment.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("ARR", shipment.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                     if (masterData != null)
                     {
@@ -1330,7 +1321,7 @@ namespace WebFreight.Web.WebServices
                 if (shipmentPm.Transshipment2ATA != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("ARR", shipment.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("ARR", shipment.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                     if (masterData != null)
                     {
@@ -1343,7 +1334,7 @@ namespace WebFreight.Web.WebServices
                 if (shipmentPm.Transshipment1ATA != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("ARR", shipment.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("ARR", shipment.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                     if (masterData != null)
                     {
@@ -1356,7 +1347,7 @@ namespace WebFreight.Web.WebServices
                 if (shipmentPm.MainCarriageATA != null)
                 {
                     eventTypeQuery = new EventTypeQuery(eventTypeRep);
-                    EventTypePM eventType = eventTypeQuery.GetSinglePMByCode("ARR", shipment.Tenant);
+                    EventTypePM eventType = eventTypeQuery.GetSingleEventTypePMByCode("ARR", shipment.Tenant);
                     shipment.StatusId = EntityStatusHelper.GetHighestStatusId(shipment.StatusId, eventType.EntityStatusId, shipment.Tenant);
                     if (masterData != null)
                     {

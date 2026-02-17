@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.ShipmentsModel;
@@ -87,7 +87,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 myResult.DeliveredNotReturned = (from myPackage in MyContext.ShipmentPackages
                                                  join db_Shipments in MyContext.Shipments on myPackage.ShipmentId equals db_Shipments.Id into PackagesShipments
                                                  from myShipment in PackagesShipments
-                                                 where myPackage.Tenant == tenant && myShipment.Tenant == tenant
+                                                 where myPackage.Tenant == tenant && myShipment.Tenant == tenant                                                                                                 
                                                  && myShipment.IsCancelled == false
                                                  && (myPackage.IsDeliveryFU && myPackage.DeliveryATA != null)
                                                  && (myPackage.IsEmptyContainerReturnFU && myPackage.EmptyContainerReturnATA == null)
@@ -119,11 +119,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                       //)
                                       select myPackage).Count();
 
-                myResult.ContainersCount = (from container in MyContext.Containers
-                                            where container.Tenant == tenant 
-                                            && container.IsCancelled == false && container.IsClosed == false
-                                            select container).Count();
-
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -132,35 +127,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetContainersQueriesCounts()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Container", "READ", tenant);
 
-                ContainersFUSummary myResult = new ContainersFUSummary();
-                myResult.Id = tenant;
-                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-                IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
-
-                myResult.ContainersCount = shipmentsContext.Containers
-                                                           .Where(container => container.Tenant == tenant
-                                                                            && container.IsCancelled == false 
-                                                                            && container.IsClosed == false)
-                                                           .Count();
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
 
         // StatusCode  StatusName   StatusWeight    EventTypeCode     ActionField        
         // SARR        Arrived      7               ARR               MainCarriageATA
@@ -177,6 +144,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int InTransit { get; set; }
         public int ArrivedNotDelivered { get; set; }
         public int DeliveredNotReturned { get; set; }
-        public int ContainersCount { get; set; }
     }
 }

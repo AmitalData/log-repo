@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -190,23 +190,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IBookingContext MyContext = BookingContext.GetContext(tenant);
 				BookingStatusListQueryService bookingStatusQuery = new BookingStatusListQueryService(MyContext);
 
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "BookingStatus",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
-
-
-                List<BookingStatusList> entityLists = bookingStatusQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
-
+                List<BookingStatusList> entityLists = bookingStatusQuery.GetList(queryOperations, tenant);
+				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = bookingStatusQuery.GetListCount(queryOperations , treeFilterQueryArgs);
+                    int count = bookingStatusQuery.GetListCount(queryOperations);
                     response.Count = count;
                 }
 

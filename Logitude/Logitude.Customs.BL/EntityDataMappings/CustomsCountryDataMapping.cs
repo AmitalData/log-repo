@@ -11,11 +11,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
-using Logitude.Customs.BL.EntityQueryServices;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Web;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -48,38 +43,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(CustomsCountryPM entityPM, CustomsCountry entityPOCO)
         {
-            this.CustomMappedPMProperties.Add(PMPropertyNames.TarriffName);
-
-            if (HttpContext.Current != null && HttpContext.Current.Request != null)
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                if (authToken != null)
-                {
-                    int tenant = authToken.Tenant;
-
-					CustomsCountryTenantQueryService customsCountryTenantQueryService = new CustomsCountryTenantQueryService(tenant);
-					CustomsCountryTenantPM customsCountryTenantPm = customsCountryTenantQueryService.GetByTenant(tenant, entityPOCO.Code).FirstOrDefault();
-					if (customsCountryTenantPm != null)
-					{
-						entityPM.Tenant = tenant;
-						entityPM.MalamId = customsCountryTenantPm.MalamId;
-						entityPM.TarriffCode = customsCountryTenantPm.TarriffCode;
-					}
-					if (entityPOCO.TarriffCode != null)
-                    {
-                        TradeAgreementQueryService tradeAgreementQueryService = new TradeAgreementQueryService(tenant);
-                        TradeAgreementPM tradeAgreementPM = tradeAgreementQueryService.GetSingle(entityPOCO.TarriffCode, false, true);
-                        if (tradeAgreementPM != null)
-                        {
-                            entityPM.TarriffName = tradeAgreementPM.LocalName;
-                        }
-                    }
-
-					
-
-				}
-			}
+            //throw new NotImplementedException();
         }
    }
 

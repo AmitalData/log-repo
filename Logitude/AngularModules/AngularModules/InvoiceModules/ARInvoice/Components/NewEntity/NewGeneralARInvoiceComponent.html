@@ -3,7 +3,7 @@
 
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" ></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>
     </tr>
 
@@ -50,13 +50,7 @@
                                 [LookUpTableName]="'Card'"
                                 [DependencyFilter1Value]="BillToDependencyValue1"
                                 [DependencyFilter2Value]="BillToDependencyValue2"
-                                [DependencyFilter1IsList]="BillToDependencyValue1IsList"
-                                [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                [CustomizedWidth]="BillToLovSizeForFullAccounting"
-                                [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                [DependencyFilter1IsList]="BillToDependencyValue1IsList">
                         </LogLov>
                     </td>
 
@@ -266,24 +260,6 @@
                     </td>
                 </tr>
 
-                <!-- PrintNotes -->
-                <tr class="FormFieldRow">
-                    <td>
-                        <LogLabel [ObjectFieldName]="'PrintNotes'" [ObjectTableName]="ObjectTableName"
-                                  [DataContext]="DataContext"></LogLabel>
-                    </td>
-
-                    <td>
-                        <LogTextBox [ObjectFieldName]="'PrintNotes'" [Text]="PrintNotes"
-                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-
                 <tr>
                     <td colspan="3">
                         <div></div>
@@ -303,7 +279,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'cancel-AddARInvoice' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'cancel-AddARInvoice' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -311,7 +287,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'ok-addArInvoice' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'ok-addArInvoice' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

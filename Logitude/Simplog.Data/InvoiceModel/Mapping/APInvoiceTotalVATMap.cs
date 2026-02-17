@@ -25,8 +25,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.VatPercent).HasColumnName("VatPercent");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.APInvoiceId).HasColumnName("APInvoiceId");
-            this.Property(t => t.ProfitCurrencyVATAmount).HasColumnName("ProfitCurrencyVATAmount").IsRequired();
-            this.Property(t => t.ProfitVatableAmount).HasColumnName("ProfitVatableAmount").IsRequired();
+            this.Property(t => t.ProfitCurrencyVATAmount).HasColumnName("ProfitCurrencyVATAmount");
+            this.Property(t => t.ProfitVatableAmount).HasColumnName("ProfitVatableAmount");
             this.Property(t => t.ExternalVATCard).HasColumnName("ExternalVATCard");
             this.Property(t => t.ExternalTAXItemId).HasColumnName("ExternalTAXItemId");
 

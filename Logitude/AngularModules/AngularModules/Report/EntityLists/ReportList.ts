@@ -1,4 +1,4 @@
-export class ReportList {
+﻿export class ReportList {
 
     Id: string;
     Tenant: number;
@@ -15,10 +15,5 @@ export class ReportList {
     InActive: boolean;
     FilterHtmlComponentUrl: string;
     DefaultTemplateId: string;
-    AvailableForScheduling: boolean;
-    DisablePreview: boolean;
-    IsExcelReportAllowed: boolean;
-    DefaultMessageTemplateId: string;
-    DefaultExcelNoStimId: string;
-    DefaultExcelTemplateId: string; 
 }
+ 

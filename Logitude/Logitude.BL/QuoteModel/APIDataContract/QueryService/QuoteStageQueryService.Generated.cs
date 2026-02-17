@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -42,21 +40,21 @@ using Simplog.Data.QuoteModel;
         }
 
 		
-		public QuoteStage GetQuoteStageById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public QuoteStage GetQuoteStageById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("QuoteStage with Id " + Id + " doesn't exist");
 
-				return QuoteStageDataMapping(temp,Tenant,ComputingPartnerName);
+				return QuoteStageDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -80,7 +78,7 @@ using Simplog.Data.QuoteModel;
             }
         } 
 
-		public QuoteStagePM QuoteStageDataMappingAndValidatin(QuoteStage MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public QuoteStagePM QuoteStageDataMappingAndValidatin(QuoteStage MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -89,14 +87,11 @@ using Simplog.Data.QuoteModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("QuoteStage with Id " + MyEntity.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -109,40 +104,16 @@ using Simplog.Data.QuoteModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//} 
-
-						
+						//}
 					}
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{								
-							temp.Code = MyEntity.Code;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.Code;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Name = MyEntity.Name;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Rank = MyEntity.Rank;
-
-										}  
-
-										   
-					return temp;
+					temp.Name = MyEntity.Name;
+					temp.Rank = MyEntity.Rank;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -150,8 +121,6 @@ using Simplog.Data.QuoteModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

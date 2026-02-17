@@ -20,7 +20,7 @@ export class AirlineMessagingRulePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -65,11 +65,6 @@ export class AirlineMessagingRulePM {
     public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
        
 	 
-    private ruleFieldCode: string;
-    public get RuleFieldCode() { return this.ruleFieldCode; }
-    public set RuleFieldCode(newValue: string) { if (this.ruleFieldCode != newValue) { this.ruleFieldCode = newValue; this.MarkAsDirty("RuleFieldCode"); } }
-       
-	 
     private updateDate: Date;
     public get UpdateDate() { return this.updateDate; }
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
@@ -94,10 +89,7 @@ export class AirlineMessagingRulePM {
     public OldEntityPM: AirlineMessagingRulePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -105,7 +97,6 @@ export class AirlineMessagingRulePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AirlineMessagingRule");
            
         }
-	 }
     }
     private MyClone: AirlineMessagingRulePM;
 

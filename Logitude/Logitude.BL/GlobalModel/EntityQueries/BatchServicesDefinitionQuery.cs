@@ -67,8 +67,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         public IQueryable<BatchServicesDefinitionPM> GetAllActiveBatchServicesDefinitions()
         {
 
-            var result = (from a in repository.context.BatchServicesDefinitions 
-                          where a.BatchServicesDefinitionMods.InActive == false && a.Code != "WorkFlowsWR"
+            var result = (from a in repository.context.BatchServicesDefinitions
+                          //join b in repository.context.BatchServicesDefinitionMods on a.Code equals b.Code
+                          where a.BatchServicesDefinitionMods.InActive == false
                           select new BatchServicesDefinitionPM()
                           {
                               ClassName = a.ClassName,
@@ -77,8 +78,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                               NumberOfThreads = a.BatchServicesDefinitionMods.NumberOfThreads,
                               Parameter1 = a.Parameter1,
                               Parameter2 = a.Parameter2,
-                              QueueDefinitionCode = a.QueueDefinitionCode,
-                              QueueBase = a.QueueBase
+                              QueueDefinitionCode = a.QueueDefinitionCode
                           }
                           );
 

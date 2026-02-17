@@ -12,7 +12,6 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -29,7 +28,7 @@ namespace Unifreight.BL.EntityUpdateServices
         
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUMSHGRPM entityPM)
         {
-            return new CCUMSHGRKeys() { FILENO = entityPM.FILENO, LINENO = entityPM.LINENO, Tenant = entityPM.Tenant };
+            return new CCUMSHGRKeys() { FILENO = entityPM.FILENO, LINENO = entityPM.LINENO };
         }
 
         protected override void OnCreating(CCUMSHGRPM entityPM, CCUFILEMPM entityParentPM)
@@ -41,16 +40,6 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override void OnUpdating(CCUMSHGRPM entityPM)
         {
-            if (entityPM.Tenant != 0)
-            {
-                CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
-                bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
-                if (!isConnectedToUnifreight)
-                {
-                    entityPM.IS_SYNCH = false;
-                    entityPM.LAST_UPDATE_DT = DateTime.Now;
-                }
-            }
 
         }
 

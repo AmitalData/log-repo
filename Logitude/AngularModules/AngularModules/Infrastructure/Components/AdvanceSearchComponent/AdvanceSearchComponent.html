@@ -110,32 +110,25 @@
             {{'General.O.AdvancedFilters' | TextCodeTranslationPipe}}
         </div>
 
-        <div *ngIf="IsShowWarringMessage" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" style="height:28px;margin-right: 20px;margin-left:20px;margin-top:2px;border:1px solid orange;border-radius:3px;background-color:#FFFAB4">
-            <div style="margin:3px 7px;font-weight:500">
-                You are not allowed to edit or remove the filters of this view. It was shared with view only mode.  <Hyperlink  style="margin-left:5px;margin-right:5px;" (click)="IsShowWarringMessage = false" [FontSize]="12" [Text]="'close'"></Hyperlink>
-
-            </div>
-        </div>
-
-
-        <div class="dropdown" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'" [style.pointer-events]="IsQueryViewOnly ? 'none' : ''"  [style.opacity]="IsQueryViewOnly ? '0.7' : ''" >
-            <div tabindex="0" class="ToggleButton" style="margin: auto; width: 80px !important; " [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" attr.data-cy="{{'AddFilterBtn'}}" [attr.data-selector]="ObjectTableName + '_AddFilterBtn'">
+        <div class="dropdown" [style.float]="LayoutDirection=='rtl' ? 'left' : 'right'">
+            <div tabindex="0" class="ToggleButton" style="margin: auto; width: 80px !important; " [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                 <!--<div (click)="FiltersBtnClicked()">-->
                 <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px','left': 'initial'} : {'left': '5px'}">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</label>
                 <img [ngStyle]="LayoutDirection == 'rtl' ? {'left': '3px','right': 'initial'} : {'right': '3px'}" src="./Images/ToggleIcon.png" />
                 <!--</div>-->
-                <div [id]="AdvanceQueryDropButtonId" class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right':'initial'} : {'right': '0', 'left':'initial'}"
+
+                <div [id]="AdvanceQueryDropButtonId" class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right':'initial'} : ''"
                       style="width: 500px;" >
 
                     <div>
                         <input type="text" [id]="AdvanceQuerySearchFieldsId" placeholder="Search" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;margin: 7px;width:200px;" [ngStyle]="LayoutDirection == 'rtl' ? {'background-position': 'left center','padding-left':'30px'} : {'background-position': 'right center','padding-right':'30px'}">
-                        <img *ngIf="SearchText" class="DeleteButton"  [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '4px;','margin-right': '-32px' ,'top' : TopImageRedX} : {'right': '4px;','margin-left': '-25px' ,'top' : TopImageRedX}" style="position: relative;display:inline-block;margin-left: -25px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
+                        <img *ngIf="SearchText" class="DeleteButton"  [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '4px;','margin-right': '-32px'} : {'right': '4px;','margin-left': '-25px'}" style="position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
                     </div>
                     <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
                         <div style="width: 50%;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                             <div *ngFor="let item of allFilterFieldsClass.FilterFields; let i = index">
-                                <div *ngIf="i%2 == 0" class="FiltersCheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true && item.CustomPredefined != true}">
-                                    <input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" attr.data-cy="{{'CheckBox_' + item.ObjectField.FullNameTextCodeCode }}" [disabled]="item.FieldName == 'AccountingDate' && QueryCode == 'LedgerTransaction.LedgerTransactions'"/>
+                                <div *ngIf="i%2 == 0" class="FiltersCheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
+                                    <input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();"/>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(0,((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length),(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</font>{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice((((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</label>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="!SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>
                                 </div>
@@ -143,8 +136,8 @@
                         </div>
                         <div style="width: 50%;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
                             <div *ngFor="let item of allFilterFieldsClass.FilterFields; let i = index">
-                                <div *ngIf="i%2 != 0" class="FiltersCheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true && item.CustomPredefined != true}">
-                                    <input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" attr.data-cy="{{'CheckBox_' + item.ObjectField.FullNameTextCodeCode }}" [disabled]="item.FieldName == 'AccountingDate' && QueryCode == 'LedgerTransaction.LedgerTransactions'"/>
+                                <div *ngIf="i%2 != 0" class="FiltersCheckBox" style="margin: 10px;" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
+                                    <input id="{{item.ControlId}}" type="checkbox" [(ngModel)]="item.Exists" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();"/>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(0,((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length),(((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</font>{{(item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).slice((((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + ((item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[1].length)))}}</label>
                                     <label [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px;','left': 'initial'} : {'left': '5px'}" *ngIf="!SearchText" [attr.for]="item.ControlId" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();">{{item.ObjectField.FullNameTextCodeCode | TextCodeTranslationPipe}}</label>
                                 </div>
@@ -158,12 +151,12 @@
 
         </div>
     </div>
-    <div style="height:165px;overflow:auto;width:100%;"  [style.pointer-events]="IsQueryViewOnly ? 'none' : ''"  [style.opacity]="IsQueryViewOnly ? '0.7' : ''">
+    <div style="height:165px;overflow:auto;width:100%;">
         <div style="width:47%;max-width:500px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'">
             <div *ngFor="let item of SelectedObjectFields; let i = index" [hidden]="item.DataTypeCode == 'Constant'" style="margin:5px;">
-                <table class="FilterItem" *ngIf="i%2 == 0" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true && item.CustomPredefined != true}">
+                <table class="FilterItem" *ngIf="i%2 == 0" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
                     <tr>
-                        <td *ngIf="item.ObjectField.FieldName != 'AccountingDate'" style="width: 16px;">
+                        <td style="width: 16px;">
                             <img class="DeleteButton" *ngIf="item.ObjectField.DataTypeCode != 'Constant'" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="item.onDeleteFilterClick()" />
                         </td>
                         <td style="width: 140px;">
@@ -180,13 +173,13 @@
                             <div *ngSwitchCase="'Text'" style="display: inline-flex;"> 
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;"  [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'nText'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'LookUp'" style="display: inline-flex;">
@@ -210,35 +203,30 @@
                             </div>
                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
-                                </div>
-                            </div>
-                            <div *ngSwitchCase="'DateTime2'" style="display: inline-flex;">
-                                <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Double'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Decimal'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'PickList'" style="display: inline-flex;">
@@ -264,9 +252,9 @@
         <div style="border-right: 1px solid #AAAAAA;margin-right: 4px;margin-left: 4px;" [ngStyle]="Height" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"></div>
         <div style="margin-top: -5px;width:47%;max-width:500px;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"> 
             <div *ngFor="let item of SelectedObjectFields; let i = index" [hidden]="item.DataTypeCode == 'Constant'" style="margin:5px;">
-                <table class="FilterItem" *ngIf="i%2 != 0" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true && item.CustomPredefined != true}">
+                <table class="FilterItem" *ngIf="i%2 != 0" [ngClass]="{FilterItemDisabled: item.IsPreDefined == true}">
                     <tr>
-                        <td *ngIf="item.ObjectField.FieldName != 'AccountingDate'" style="width: 16px;">
+                        <td style="width: 16px;">
                             <img class="DeleteButton" *ngIf="item.ObjectField.DataTypeCode != 'Constant'" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="item.onDeleteFilterClick()" />
                         </td>
                         <td style="width: 140px;">
@@ -283,13 +271,13 @@
                             <div *ngSwitchCase="'Text'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'nText'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'LookUp'" style="display: inline-flex;">
@@ -313,35 +301,30 @@
                             </div>
                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
-                                </div>
-                            </div>
-                            <div *ngSwitchCase="'DateTime2'" style="display: inline-flex;">
-                                <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode"  [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Double'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'Decimal'" style="display: inline-flex;">
                                 <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
+                                    <LogTextBox (ValueChanged)="item.onTextChange($event)" [InputType]="item.ObjectField.DataTypeCode" [LogitudeForm]="myForm" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="item.ObjectField.FieldName" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                 </div>
                             </div>
                             <div *ngSwitchCase="'PickList'" style="display: inline-flex;">

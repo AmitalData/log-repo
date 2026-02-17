@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -20,8 +20,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 helper.ObjectTableId = objectTableHelperDetails.ObjectTableId;
                 helper.Tenant = objectTableHelperDetails.Tenant;
                 helper.FeatureId = objectTableHelperDetails.FeatureId;
-                helper.FeatureUniqeCode = objectTableHelperDetails.FeatureUniqeCode;
-
 
                 helperRepository.Update(helper);
             }
@@ -34,7 +32,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     ControlPath = objectTableHelperDetails.ControlPath,
                     Code = objectTableHelperDetails.Code,
                     FeatureId=objectTableHelperDetails.FeatureId,
-                    FeatureUniqeCode = objectTableHelperDetails.FeatureUniqeCode,
                     Id = IdCounter.GetNumber("ObjectTableHelperControl", objectTableHelperDetails.Tenant).ToString(),
 
                 };

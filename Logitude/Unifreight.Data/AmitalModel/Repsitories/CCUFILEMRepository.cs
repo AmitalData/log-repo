@@ -25,10 +25,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUFILEM GetSingle(int FILENO,int? tenant)
+        public CCUFILEM GetSingle(int FILENO)
         {
             return (from a in context.CCUFILEMs
-                    where a.FILENO == FILENO && a.TENANT == tenant
+                    where a.FILENO == FILENO
                     select a).FirstOrDefault();
         }
 
@@ -41,7 +41,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUFILEM entity)
         {
             context.CCUFILEMs.Add(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUFILEM entity)
@@ -50,13 +49,11 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             AttachIfNot(entity);context.SetAsModified(entity); //context.CCUFILEMs.Attach(entity);
             //context.AddToCCUFILEMs 
             context.CCUFILEMs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUFILEM entity)
         {
             AttachIfNot(entity);context.SetAsModified(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
         void AttachIfNot(CCUFILEM entity)
         {
@@ -89,13 +86,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CCUFILEM GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUFILEMKeys;
-            return this.GetSingle(keys.FILENO, keys.TENANT);
+            return this.GetSingle(keys.FILENO);
         }
 
-        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO, int? tenant)
+        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO)
         {
             var rec = (from a in context.CCUFILEMs
-                       where a.CUSTOMFILENO == lCUSTOMFILENO && a.TENANT == tenant
+                       where a.CUSTOMFILENO == lCUSTOMFILENO
                        select a).FirstOrDefault();
             
             if (rec == null)
@@ -105,19 +102,21 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             return rec.FILENO;
         }
 
-        public int LockByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO, int tenant)
+        public int LockByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO)
         {
 
-            var succ =  context.FirstOrDefaultFUNOWAITWhere<CCUFILEM>( rec=> rec.CUSTOMFILENO == lCUSTOMFILENO && rec.TENANT==tenant);
-          
+            var succ =  context.FirstOrDefaultFUNOWAITWhere<CCUFILEM>( rec=> rec.CUSTOMFILENO == lCUSTOMFILENO);
+            //var oracleTransaction =Transaction.Current as OracleTransaction;
+            //context.Database.
             
             return succ;
         }
 
-         public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber, int tenant)
+        //<--- Yuval Chalup 19.11.2015 TASK-17450
+        public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber)
         {
             var rec = (from a in context.CCUFILEMs
-                       where a.RESHIMONNO == reshimonNumber && a.TENANT == tenant
+                       where a.RESHIMONNO == reshimonNumber
                        select a).FirstOrDefault();
             if (rec == null)
             {
@@ -125,11 +124,12 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             return rec;
         }
- 
-        public int FastDeleteMulti(EntityKeyFields parentEntityKeys)  
+        //Yuval Chalup 19.11.2015 TASK-17450 --->
+
+        public int FastDeleteMulti(EntityKeyFields parentEntityKeys) // moran 5.1.16 - AMI-55274
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUFILEM>(rec => rec.FILENO == keys.FILENO && rec.TENANT== keys.TENANT);
+            return context.DeleteWhere<CCUFILEM>(rec => rec.FILENO == keys.FILENO);
         }
 
         public void GetWeeklyStatistic(int tenant,
@@ -141,14 +141,15 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             TotalOpenCCULastWeek = LastMonthOpenByUserCCU = -1;
             var lastWeek = 
                 DateTime.Now.Add(TimeSpan.FromDays(-7));
+                //DateTime.Now.Date;
 
             var qLastMonth = (from a in context.CCUFILEMs
-                              where a.TENANT==tenant && a.OPENDATE > lastWeek
+                              where a.OPENDATE > lastWeek
                               select a);
             var qTotalOpenCCULastMonth =
                 (from a in qLastMonth
-                 where (a.FROMIIG == null || a.FROMIIG.Trim() == string.Empty)
-                 where (a.RESHIMONNON == null || a.RESHIMONNON.Trim() == string.Empty)
+                 where (a.FROMIIG == null || a.FROMIIG.Trim() == string.Empty)//String.IsNullOrWhiteSpace(a.FROMIIG)
+                 where (a.RESHIMONNON == null || a.RESHIMONNON.Trim() == string.Empty)//String.IsNullOrWhiteSpace(a.RESHIMONNON)
                  select a);
             var qLastMonthOpenByUserCCU =
                 (from a in qLastMonth
@@ -173,7 +174,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
 
             return;
- 
+            LastMonthOpenByUserCCU
+                = (from a in context.CCUFILEMs
+                   where a.OPENDATE > lastWeek
+                   select a.OPENBYUSER).Distinct().Count(); ;
         }
     }
 }

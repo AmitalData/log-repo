@@ -1,5 +1,5 @@
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {Component, Input}  from '@angular/core';
+import {Component}  from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {TenantManagementPM} from '../../../../Infrastructure/EntityPMs/TenantManagementPM';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -9,11 +9,9 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {HybridTenantThresholdPM} from '../../../../Common/EntityPMs/HybridTenantThresholdPM';
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
 import { HybridTenantThresholdPMService } from '../../../../Common/Services/StandardPMs/HybridTenantThresholdPMService';
-import { HybridTenantThresholdListService } from 'Common/Services/StandardLists/HybridTenantThresholdListService';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'HybridTenantThresholdComponent',
     templateUrl: './HybridTenantThresholdComponent.html',
 })
@@ -21,25 +19,14 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 export class HybridTenantThresholdComponent extends BaseComponent {
     public DataContext: HybridTenantThresholdComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() { super();  }
-
+    constructor() { super(); this.LoadHybridTenantThreshold(); }
     public EntityPM: HybridTenantThresholdPM;
     public Isupdate: boolean = false;
     public DataLoaded: boolean = false;
-    private listService: HybridTenantThresholdListService = new HybridTenantThresholdListService();
-    private service: HybridTenantThresholdPMService = new HybridTenantThresholdPMService();
-
-     type:number=0;
-     
-
-    SetDataContext(type: number) {
-      this.type=type
-      this.LoadHybridTenantThreshold();
-    }
     LoadHybridTenantThreshold() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        
-        this.service.get(SessionLocator.Tenant,this.type).subscribe((res:any) => {
+        var service: CommonDomainService = new CommonDomainService();
+        service.GetHybridTenantThresholdByIdTenant().subscribe(res => {
             if (!res.HasError) {
                 this.EntityPM = res.Result;
                 if (this.EntityPM == null) {
@@ -48,8 +35,6 @@ export class HybridTenantThresholdComponent extends BaseComponent {
                     this.EntityPM.WaitingThresold = 10;
                     this.EntityPM.FailedThresold = 10;
                     this.Isupdate = false;
-                    this.EntityPM.TypeCode=this.type;
-                
                 }
                 else {
                     this.Isupdate = true;
@@ -77,19 +62,7 @@ export class HybridTenantThresholdComponent extends BaseComponent {
         }
     }
 
-    public get TypeCode() {
-        var typeCode: number = 0;
-        if (this.EntityPM != null) {
-            typeCode = this.EntityPM.TypeCode;
-        }
-        return typeCode; 
-    }
 
-    public set TypeCode(value: number) {
-        if (value != this.EntityPM.TypeCode) {
-            this.EntityPM.TypeCode = value;
-        }
-    }
 
     public get FailedThresold() {
         var failedThresold: number = 0;
@@ -105,26 +78,18 @@ export class HybridTenantThresholdComponent extends BaseComponent {
         }
     }
 
-  
-
     CloseButtonClicked() { this.CurrentSession.CloseCurrentWindow(); }
     SaveButtonClicked() {
-         
+        var service: HybridTenantThresholdPMService = new HybridTenantThresholdPMService();
         if (!this.Isupdate) {
-            this.service.insert(this.EntityPM).subscribe((res:any) => {
+            service.insert(this.EntityPM).subscribe(res => {
                 this.CurrentSession.CloseCurrentWindow();
             });
         }
         else {
-            this.service.update(this.EntityPM).subscribe((res:any) => {
+            service.update(this.EntityPM).subscribe(res => {
                 this.CurrentSession.CloseCurrentWindow();
             });
         }
     }
 }
-
-export enum ThresholdTypes {
-    Hybrid,
-    Cloud,
-    
-  };

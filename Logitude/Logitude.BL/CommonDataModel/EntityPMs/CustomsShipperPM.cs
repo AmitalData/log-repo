@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
-  public  class CustomsShipperPM : ObjectCustomFieldPM
+  public  class CustomsShipperPM
     {
         [Key]
         public string Id { get; set; }
@@ -18,6 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? ValidityStartDate { get; set; }
         public DateTime? ValidityEndDate { get; set; }
         public string SearchFields { get; set; }
+
         public string EnglishName { get; set; }
         public string LocalName { get; set; }
         public string CountryId { get; set; }
@@ -25,13 +25,16 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CountryName { get; set; }
         public string ShipperVAT { get; set; }
         public string Code { get; set; }
+
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
         public string CityName { get; set; }
+        
         public bool IsChange { get; set; }
         private List<AddressPM> addresses;
+
         public virtual List<AddressPM> Addresses
         {
             get
@@ -44,5 +47,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
             set { addresses = value; }
         }
+
+
+
+
+
     }
 }

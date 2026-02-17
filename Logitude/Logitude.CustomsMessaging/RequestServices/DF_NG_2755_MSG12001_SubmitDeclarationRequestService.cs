@@ -20,7 +20,6 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference;
-using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -28,15 +27,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         : RequestServiceBase<DF_NG_2755_MSG12001_SubmitDeclaration, GenericRequestParams>
     {
         private ICustomContext dbContext;
-        public override void OnRequestFail(GenericRequestParams requestParams)
-        {
-            if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
-            {
-                CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
-            }
 
-            base.OnRequestFail(requestParams);
-        }
         public override void ManipulateRequestParams(GenericRequestParams requestParams)
         {
 
@@ -45,13 +36,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationPaymentsPM = DeclarationPaymentQueryService.GetSingle(requestParams.AppicationId, true, false);
             if (requestParams.RequestVIA == SendRequestVIA.Default)
             {
-                requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode ?? "2755", requestParams.RequestVIA);
+                requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode, requestParams.RequestVIA);
             }
 
-            var srverTime = DateTime.Now;// (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
+            var srverTime = (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
             if (
                 declarationPaymentsPM.FuturePaymentDateTime > srverTime &&
-                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime) > TimeSpan.FromMinutes(1)
+                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime.GetValueOrDefault()) > TimeSpan.FromMinutes(1)
                 )
             {
 
@@ -78,8 +69,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     case SendRequestVIA.WebServiceInteractive:
                         var myDF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
-                        DeclarationQueryService DeclarationQueryService = new DeclarationQueryService(this.dbContext);
-                        requestParams.DeclarationDirection = DeclarationQueryService.GetSingle(requestParams.LoggingEntityId, true, false)?.Direction;
                         myDF_MSG10000_ImportDeclarationRequestService.ManipulateRequestParams(requestParams);
                         break;
                     case SendRequestVIA.WebServiceBatch:
@@ -95,34 +84,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             base.ManipulateRequestParams(requestParams);
         }
 
-        private void AutoPaymentFromUni(ref GenericRequestParams requestParams)
-        {
-             if (requestParams.LoggingEntityReference != "AutoPayment")
-            {
-                return;
-            }
-        
-            var dic = UnifreightListsUtil.Deserialize(requestParams.UnifreightListOnServerOnly);
-            var bankId = UnifreightListsUtil.GetValue(ref dic, "InternalBankId");
-            var DeclarationQueryService = new DeclarationQueryService(this.dbContext);
-            var declarationPM = DeclarationQueryService.GetSingle(requestParams.LoggingEntityId, true, false);
-
-            if (string.IsNullOrEmpty(requestParams.AppicationId)) requestParams.AppicationId = requestParams.LoggingEntityId;
-
-
-            CheckLock(requestParams, declarationPM);
-            PaymentDateISNotNull(requestParams, declarationPM);
-            TotalTaxRequestedIsValid(requestParams, declarationPM);
-            DelSertPayment(
-          requestParams,
-          declarationPM,
-          bankId);
-        }
 
         private void UCB2755Batch(GenericRequestParams requestParams)
         {
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            if (requestParams.LoggingEntityId2 != objectTableIdCourierMaster && !requestParams.FromAutomate)
+            if (requestParams.LoggingEntityId2 != objectTableIdCourierMaster)
             {
                 return;
             }
@@ -198,9 +164,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             
             CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(this.dbContext);
             CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(requestParams.Tenant);
-            declarationPaymentPM.SignatoryIdentification = !string.IsNullOrEmpty(myDeclarationPM.SignerPersonalId)? myDeclarationPM.SignerPersonalId: CustomsSetting.CustomsAgentId; 
-              
-               
+            declarationPaymentPM.SignatoryIdentification =
+                //myDeclarationPM.SignerPersonalId;
+                CustomsSetting.CustomsAgentId;//לשים ח.פ של חברה 
 
             
             //if (declarationPaymentPM.DeclarationPaymentMethods == null || declarationPaymentPM.DeclarationPaymentMethods.Count() < 1)
@@ -303,7 +269,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);
@@ -329,21 +295,20 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             this.dbContext = CustomContext.GetContext(requestParams.Tenant);
             this.UCB2755Batch(requestParams);
-            this.AutoPaymentFromUni(ref requestParams);
-
-           var DeclarationPaymentQueryService = new DeclarationPaymentQueryService(this.dbContext);
+            var DeclarationPaymentQueryService = new DeclarationPaymentQueryService(this.dbContext);
             var declarationPaymentsPM = DeclarationPaymentQueryService.GetSingle(requestParams.AppicationId, true, false);
 
-            myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM, requestParams);
+            myDF_NG_2755_MSG12001_SubmitDeclaration.GeneralData = GetSubmitDeclarationGeneralData(declarationPaymentsPM);
             myDF_NG_2755_MSG12001_SubmitDeclaration.AnswerForCollateralRequest = GetSubmitDeclarationCollateralAnswer(declarationPaymentsPM);
 
             //Raise event PHF- Declaration Payment Sent
             SendPHF(declarationPaymentsPM, requestParams.LoggingUserId);
 
+
             return myDF_NG_2755_MSG12001_SubmitDeclaration;
         }
 
-        private DF_NG_2755_MSG12001_SubmitDeclarationGeneralData GetSubmitDeclarationGeneralData(Customs.Def.EntityPMs.DeclarationPaymentPM myDeclarationPaymentsPM, GenericRequestParams requestParams)
+        private DF_NG_2755_MSG12001_SubmitDeclarationGeneralData GetSubmitDeclarationGeneralData(Customs.Def.EntityPMs.DeclarationPaymentPM myDeclarationPaymentsPM)
         {
             var myGeneralData = new DF_NG_2755_MSG12001_SubmitDeclarationGeneralData();
             int signatoryIdentification = 0;
@@ -358,25 +323,13 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.RequestDescription = "הגשת תשלום " + declarationPM.DeclarationNumber + " " + declarationPM.VersionId;
 
             myGeneralData.declarationID = declarationPM.DeclarationNumber;
-            if (requestParams.RequestName == "send cancel payment request")
-            {
-                myGeneralData.declarationVersion = "9999";
-            }
-            else
-            {
-                myGeneralData.declarationVersion = declarationPM.VersionId;
-            }
-
+            myGeneralData.declarationVersion = declarationPM.VersionId;
             //myGeneralData.AgentFileReferenceID = declarationPM.ExternalDeclarationNumber;
             myGeneralData.AgentFileReferenceID = declarationPM.CustomFileNo;
 
             if (myDeclarationPaymentsPM.PaymentDate.HasValue)
             {
                 myGeneralData.submitDate = myDeclarationPaymentsPM.PaymentDate.Value;
-            }
-              if (myDeclarationPaymentsPM.AutomaticPayment==1 && ( !(myDeclarationPaymentsPM.PaymentDate.HasValue) || myDeclarationPaymentsPM.PaymentDate < DateTime.Now))
-            {
-                myGeneralData.submitDate = DateTime.Now;
             }
             /*else // temp
             {
@@ -479,15 +432,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             return myAnswerForCollateralList.ToArray();
         }
 
-
-
         private void SendPHF(DeclarationPaymentPM declarationPaymentPM, string loggingUserId)
         {
             try
             {
                 var declarationQueryService = new DeclarationQueryService(this.dbContext);
                 DeclarationPM connectedDeclarationPM = declarationQueryService.GetSingle(declarationPaymentPM.DeclarationId, false, false);
-                if (connectedDeclarationPM.IsCourierDeclaration) return;
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = declarationPaymentPM.Tenant,
@@ -497,7 +447,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     CommunicationLoggingEntityReference = connectedDeclarationPM.DeclarationNumber,
                     EntityId = declarationPaymentPM.DeclarationId,
                     UserId = loggingUserId,
-                    UServerDelayTime = TimeSpan.FromMinutes(5),
+
                     CommunicationSubject = "FU Status PHF from logitude ",
                     MyFUStatus = new AmitalEventTracerModel.FUStatus()
                     {
@@ -534,7 +484,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(this.dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(this.dbContext);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
+                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, false, false);
                     if (currentDeclarationCourierStatusPM == null)
                     {
                         currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()

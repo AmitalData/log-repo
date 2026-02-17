@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -25,8 +25,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsAddedManually { get; set; }
         public string Location { get; set; }
         public string PartnerName { get; set; }
-        public string ChildEntityId { get; set; }
-        public string ChildObjectTableId { get; set; }
+        
+
 
         [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
@@ -35,8 +35,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public virtual EventType EventType { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
-        [ForeignKey("ChildObjectTableId")]
-        public virtual ObjectTable ChildObjectTable { get; set; }
+        public virtual User User { get; set; }        
     }
 }

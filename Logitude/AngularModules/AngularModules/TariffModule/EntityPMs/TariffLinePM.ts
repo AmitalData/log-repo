@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 import {TariffVersionPM} from './TariffVersionPM';
-import {TariffLinesContainersPricePM} from './TariffLinesContainersPricePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -21,9 +20,9 @@ export class TariffLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	                  this.EntityParentPM = _entityParentPM;
-                this.UIProperties = new UIProperties(this);
-                this.IsDirty = false;
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
       }
 
 	 
@@ -398,245 +397,6 @@ export class TariffLinePM {
     public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
        
 	 
-     
-	private containersPrices: TariffLinesContainersPricePM[];
-    get  ContainersPrices() {
-        if (this.containersPrices == null) {
-            this.containersPrices = [];
-        }
-
-        return this.containersPrices;
-    }
-    set  ContainersPrices(newValue: TariffLinesContainersPricePM[]) {
-        if (this.containersPrices != newValue) {
-            this.containersPrices = newValue;
-        }
-    }
-    public AddTariffLinesContainersPrice(item: TariffLinesContainersPricePM) {
-        if (item != null) {
-            var index = this. ContainersPrices.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. ContainersPrices.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveTariffLinesContainersPrice(item: TariffLinesContainersPricePM) {
-        if (item != null) {
-            var index = this. ContainersPrices.indexOf(item);
-            if (index > -1) {
-                this. ContainersPrices.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public ContainersPrices: Array<TariffLinesContainersPricePM>= [];
-     private originPortCombinedCode: string;
-    public get OriginPortCombinedCode() { return this.originPortCombinedCode; }
-    public set OriginPortCombinedCode(newValue: string) { if (this.originPortCombinedCode != newValue) { this.originPortCombinedCode = newValue; this.MarkAsDirty("OriginPortCombinedCode"); } }
-       
-	 
-    private destinationPortCombinedCode: string;
-    public get DestinationPortCombinedCode() { return this.destinationPortCombinedCode; }
-    public set DestinationPortCombinedCode(newValue: string) { if (this.destinationPortCombinedCode != newValue) { this.destinationPortCombinedCode = newValue; this.MarkAsDirty("DestinationPortCombinedCode"); } }
-       
-	 
-    private transitTime: string;
-    public get TransitTime() { return this.transitTime; }
-    public set TransitTime(newValue: string) { if (this.transitTime != newValue) { this.transitTime = newValue; this.MarkAsDirty("TransitTime"); } }
-       
-	 
-    private originPortHasWrongTransMode: boolean;
-    public get OriginPortHasWrongTransMode() { return this.originPortHasWrongTransMode; }
-    public set OriginPortHasWrongTransMode(newValue: boolean) { if (this.originPortHasWrongTransMode != newValue) { this.originPortHasWrongTransMode = newValue; this.MarkAsDirty("OriginPortHasWrongTransMode"); } }
-       
-	 
-    private destinationPortHasWrongTransMode: boolean;
-    public get DestinationPortHasWrongTransMode() { return this.destinationPortHasWrongTransMode; }
-    public set DestinationPortHasWrongTransMode(newValue: boolean) { if (this.destinationPortHasWrongTransMode != newValue) { this.destinationPortHasWrongTransMode = newValue; this.MarkAsDirty("DestinationPortHasWrongTransMode"); } }
-       
-	 
-    private isMinPriceMinus: boolean;
-    public get IsMinPriceMinus() { return this.isMinPriceMinus; }
-    public set IsMinPriceMinus(newValue: boolean) { if (this.isMinPriceMinus != newValue) { this.isMinPriceMinus = newValue; this.MarkAsDirty("IsMinPriceMinus"); } }
-       
-	 
-    private isPrice1Minus: boolean;
-    public get IsPrice1Minus() { return this.isPrice1Minus; }
-    public set IsPrice1Minus(newValue: boolean) { if (this.isPrice1Minus != newValue) { this.isPrice1Minus = newValue; this.MarkAsDirty("IsPrice1Minus"); } }
-       
-	 
-    private isPrice2Minus: boolean;
-    public get IsPrice2Minus() { return this.isPrice2Minus; }
-    public set IsPrice2Minus(newValue: boolean) { if (this.isPrice2Minus != newValue) { this.isPrice2Minus = newValue; this.MarkAsDirty("IsPrice2Minus"); } }
-       
-	 
-    private isPrice3Minus: boolean;
-    public get IsPrice3Minus() { return this.isPrice3Minus; }
-    public set IsPrice3Minus(newValue: boolean) { if (this.isPrice3Minus != newValue) { this.isPrice3Minus = newValue; this.MarkAsDirty("IsPrice3Minus"); } }
-       
-	 
-    private isPrice4Minus: boolean;
-    public get IsPrice4Minus() { return this.isPrice4Minus; }
-    public set IsPrice4Minus(newValue: boolean) { if (this.isPrice4Minus != newValue) { this.isPrice4Minus = newValue; this.MarkAsDirty("IsPrice4Minus"); } }
-       
-	 
-    private isPrice5Minus: boolean;
-    public get IsPrice5Minus() { return this.isPrice5Minus; }
-    public set IsPrice5Minus(newValue: boolean) { if (this.isPrice5Minus != newValue) { this.isPrice5Minus = newValue; this.MarkAsDirty("IsPrice5Minus"); } }
-       
-	 
-    private isPrice6Minus: boolean;
-    public get IsPrice6Minus() { return this.isPrice6Minus; }
-    public set IsPrice6Minus(newValue: boolean) { if (this.isPrice6Minus != newValue) { this.isPrice6Minus = newValue; this.MarkAsDirty("IsPrice6Minus"); } }
-       
-	 
-    private isPrice7Minus: boolean;
-    public get IsPrice7Minus() { return this.isPrice7Minus; }
-    public set IsPrice7Minus(newValue: boolean) { if (this.isPrice7Minus != newValue) { this.isPrice7Minus = newValue; this.MarkAsDirty("IsPrice7Minus"); } }
-       
-	 
-    private isPrice8Minus: boolean;
-    public get IsPrice8Minus() { return this.isPrice8Minus; }
-    public set IsPrice8Minus(newValue: boolean) { if (this.isPrice8Minus != newValue) { this.isPrice8Minus = newValue; this.MarkAsDirty("IsPrice8Minus"); } }
-       
-	 
-    private lineEdited: boolean;
-    public get LineEdited() { return this.lineEdited; }
-    public set LineEdited(newValue: boolean) { if (this.lineEdited != newValue) { this.lineEdited = newValue; this.MarkAsDirty("LineEdited"); } }
-       
-	 
-    private isDifferentCurrenciesPerCharge: boolean;
-    public get IsDifferentCurrenciesPerCharge() { return this.isDifferentCurrenciesPerCharge; }
-    public set IsDifferentCurrenciesPerCharge(newValue: boolean) { if (this.isDifferentCurrenciesPerCharge != newValue) { this.isDifferentCurrenciesPerCharge = newValue; this.MarkAsDirty("IsDifferentCurrenciesPerCharge"); } }
-       
-	 
-    private surcharge1CurrencyId: string;
-    public get Surcharge1CurrencyId() { return this.surcharge1CurrencyId; }
-    public set Surcharge1CurrencyId(newValue: string) { if (this.surcharge1CurrencyId != newValue) { this.surcharge1CurrencyId = newValue; this.MarkAsDirty("Surcharge1CurrencyId"); } }
-       
-	 
-    private surcharge2CurrencyId: string;
-    public get Surcharge2CurrencyId() { return this.surcharge2CurrencyId; }
-    public set Surcharge2CurrencyId(newValue: string) { if (this.surcharge2CurrencyId != newValue) { this.surcharge2CurrencyId = newValue; this.MarkAsDirty("Surcharge2CurrencyId"); } }
-       
-	 
-    private surcharge3CurrencyId: string;
-    public get Surcharge3CurrencyId() { return this.surcharge3CurrencyId; }
-    public set Surcharge3CurrencyId(newValue: string) { if (this.surcharge3CurrencyId != newValue) { this.surcharge3CurrencyId = newValue; this.MarkAsDirty("Surcharge3CurrencyId"); } }
-       
-	 
-    private surcharge4CurrencyId: string;
-    public get Surcharge4CurrencyId() { return this.surcharge4CurrencyId; }
-    public set Surcharge4CurrencyId(newValue: string) { if (this.surcharge4CurrencyId != newValue) { this.surcharge4CurrencyId = newValue; this.MarkAsDirty("Surcharge4CurrencyId"); } }
-       
-	 
-    private surcharge5CurrencyId: string;
-    public get Surcharge5CurrencyId() { return this.surcharge5CurrencyId; }
-    public set Surcharge5CurrencyId(newValue: string) { if (this.surcharge5CurrencyId != newValue) { this.surcharge5CurrencyId = newValue; this.MarkAsDirty("Surcharge5CurrencyId"); } }
-       
-	 
-    private surcharge6CurrencyId: string;
-    public get Surcharge6CurrencyId() { return this.surcharge6CurrencyId; }
-    public set Surcharge6CurrencyId(newValue: string) { if (this.surcharge6CurrencyId != newValue) { this.surcharge6CurrencyId = newValue; this.MarkAsDirty("Surcharge6CurrencyId"); } }
-       
-	 
-    private surcharge7CurrencyId: string;
-    public get Surcharge7CurrencyId() { return this.surcharge7CurrencyId; }
-    public set Surcharge7CurrencyId(newValue: string) { if (this.surcharge7CurrencyId != newValue) { this.surcharge7CurrencyId = newValue; this.MarkAsDirty("Surcharge7CurrencyId"); } }
-       
-	 
-    private surcharge8CurrencyId: string;
-    public get Surcharge8CurrencyId() { return this.surcharge8CurrencyId; }
-    public set Surcharge8CurrencyId(newValue: string) { if (this.surcharge8CurrencyId != newValue) { this.surcharge8CurrencyId = newValue; this.MarkAsDirty("Surcharge8CurrencyId"); } }
-       
-	 
-    private surcharge9CurrencyId: string;
-    public get Surcharge9CurrencyId() { return this.surcharge9CurrencyId; }
-    public set Surcharge9CurrencyId(newValue: string) { if (this.surcharge9CurrencyId != newValue) { this.surcharge9CurrencyId = newValue; this.MarkAsDirty("Surcharge9CurrencyId"); } }
-       
-	 
-    private surcharge10CurrencyId: string;
-    public get Surcharge10CurrencyId() { return this.surcharge10CurrencyId; }
-    public set Surcharge10CurrencyId(newValue: string) { if (this.surcharge10CurrencyId != newValue) { this.surcharge10CurrencyId = newValue; this.MarkAsDirty("Surcharge10CurrencyId"); } }
-       
-	 
-    private viaPortId: string;
-    public get ViaPortId() { return this.viaPortId; }
-    public set ViaPortId(newValue: string) { if (this.viaPortId != newValue) { this.viaPortId = newValue; this.MarkAsDirty("ViaPortId"); } }
-       
-	 
-    private viaPortText: string;
-    public get ViaPortText() { return this.viaPortText; }
-    public set ViaPortText(newValue: string) { if (this.viaPortText != newValue) { this.viaPortText = newValue; this.MarkAsDirty("ViaPortText"); } }
-       
-	 
-    private viaPortName: string;
-    public get ViaPortName() { return this.viaPortName; }
-    public set ViaPortName(newValue: string) { if (this.viaPortName != newValue) { this.viaPortName = newValue; this.MarkAsDirty("ViaPortName"); } }
-       
-	 
-    private viaPortCombinedCode: string;
-    public get ViaPortCombinedCode() { return this.viaPortCombinedCode; }
-    public set ViaPortCombinedCode(newValue: string) { if (this.viaPortCombinedCode != newValue) { this.viaPortCombinedCode = newValue; this.MarkAsDirty("ViaPortCombinedCode"); } }
-       
-	 
-    private viaPortCode: string;
-    public get ViaPortCode() { return this.viaPortCode; }
-    public set ViaPortCode(newValue: string) { if (this.viaPortCode != newValue) { this.viaPortCode = newValue; this.MarkAsDirty("ViaPortCode"); } }
-       
-	 
-    private viaPortHasWrongTransMode: boolean;
-    public get ViaPortHasWrongTransMode() { return this.viaPortHasWrongTransMode; }
-    public set ViaPortHasWrongTransMode(newValue: boolean) { if (this.viaPortHasWrongTransMode != newValue) { this.viaPortHasWrongTransMode = newValue; this.MarkAsDirty("ViaPortHasWrongTransMode"); } }
-       
-	 
-    private fromCountryId: string;
-    public get FromCountryId() { return this.fromCountryId; }
-    public set FromCountryId(newValue: string) { if (this.fromCountryId != newValue) { this.fromCountryId = newValue; this.MarkAsDirty("FromCountryId"); } }
-       
-	 
-    private toCountryId: string;
-    public get ToCountryId() { return this.toCountryId; }
-    public set ToCountryId(newValue: string) { if (this.toCountryId != newValue) { this.toCountryId = newValue; this.MarkAsDirty("ToCountryId"); } }
-       
-	 
-    private fromCountryCode: string;
-    public get FromCountryCode() { return this.fromCountryCode; }
-    public set FromCountryCode(newValue: string) { if (this.fromCountryCode != newValue) { this.fromCountryCode = newValue; this.MarkAsDirty("FromCountryCode"); } }
-       
-	 
-    private toCountryCode: string;
-    public get ToCountryCode() { return this.toCountryCode; }
-    public set ToCountryCode(newValue: string) { if (this.toCountryCode != newValue) { this.toCountryCode = newValue; this.MarkAsDirty("ToCountryCode"); } }
-       
-	 
-    private fromCountryName: string;
-    public get FromCountryName() { return this.fromCountryName; }
-    public set FromCountryName(newValue: string) { if (this.fromCountryName != newValue) { this.fromCountryName = newValue; this.MarkAsDirty("FromCountryName"); } }
-       
-	 
-    private toCountryName: string;
-    public get ToCountryName() { return this.toCountryName; }
-    public set ToCountryName(newValue: string) { if (this.toCountryName != newValue) { this.toCountryName = newValue; this.MarkAsDirty("ToCountryName"); } }
-       
-	 
-    private isFromAllOtherCountries: boolean;
-    public get IsFromAllOtherCountries() { return this.isFromAllOtherCountries; }
-    public set IsFromAllOtherCountries(newValue: boolean) { if (this.isFromAllOtherCountries != newValue) { this.isFromAllOtherCountries = newValue; this.MarkAsDirty("IsFromAllOtherCountries"); } }
-       
-	 
-    private isToAllOtherCountries: boolean;
-    public get IsToAllOtherCountries() { return this.isToAllOtherCountries; }
-    public set IsToAllOtherCountries(newValue: boolean) { if (this.isToAllOtherCountries != newValue) { this.isToAllOtherCountries = newValue; this.MarkAsDirty("IsToAllOtherCountries"); } }
-       
-	 
-    private unitOfMeasurementCode: string;
-    public get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
-    public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
-       
-	 
 
     public OldEntityPM: TariffLinePM;
 	
@@ -651,10 +411,7 @@ export class TariffLinePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -664,7 +421,6 @@ export class TariffLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffLine");
            
         }
-       }
     }
 
     private MyClone: TariffLinePM;

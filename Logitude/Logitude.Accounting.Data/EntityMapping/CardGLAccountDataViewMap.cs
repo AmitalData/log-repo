@@ -1,5 +1,5 @@
 ﻿using Logitude.Accounting.Data.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -50,7 +50,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PreviousChartOfAccountsId).HasColumnName("PreviousChartOfAccountsId");
             this.Property(t => t.PreviousChartOfAccountsChangeDate).HasColumnName("PreviousChartOfAccountsChangeDate");
             this.Property(t => t.CustomerGLAccountId).HasColumnName("CustomerGLAccountId");
-            this.Property(t => t.ConsolidationVat).HasColumnName("ConsolidationVat ");
         //    this.Property(t => t.BalanceInLocalCurrency).HasColumnName("BalanceInLocalCurrency");
         //    this.Property(t => t.LocalBalanceInDue).HasColumnName("LocalBalanceInDue");
         //    this.Property(t => t.NextDueDate).HasColumnName("NextDueDate");

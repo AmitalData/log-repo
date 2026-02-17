@@ -11,7 +11,7 @@ import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 
 @Component({
     selector: "MainMenuFollowups",
-    
+    moduleId: module.id,
     templateUrl: './MainMenuFollowups.html',
     inputs: ['ObjectTableId', 'IsMainSidebarCollapsed'],
 })
@@ -22,7 +22,6 @@ export class MainMenuFollowups implements OnDestroy {
     public ObjectTableName: string;
     public BackButtonLabel: string;
     public IsMainSidebarCollapsed: boolean = false;
-    public ItemsCount: string = "0";
     private DomainService: InfrastructureDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -56,7 +55,6 @@ export class MainMenuFollowups implements OnDestroy {
     LoadData() {
         this.ItemsSource = [];
         this.SetIconPath();
-        this.ItemsCount = "0";
 
         var objectTable = window.ObjectTables.filter(x => x.Id === this.ObjectTableId)[0];
         if (objectTable) {
@@ -69,43 +67,35 @@ export class MainMenuFollowups implements OnDestroy {
                         var list: MainMenuFollowupItem[] = [];
 
                         if (this.ObjectTableName == "Quote") {
-                            this.BackButtonLabel = TextCodeTranslator.Translate("General.MH.Quotes");
+                            this.BackButtonLabel = TextCodeTranslator.Translate(" General.MH.Quotes");
                             
                             var myQuotes: QuoteList[] = myResponse.Result;
                             myQuotes.forEach(item => {
-                                if (list.length < 5) {
-                                    var newListItem = new MainMenuFollowupItem(this);
-                                    newListItem.Name = item.FollowUpType;
-                                    newListItem.Notes = item.FollowUpNotes;
-                                    newListItem.Date = item.FollowUpDate;
-                                    newListItem.EntityId = item.Id;
-                                    newListItem.EntityNumber = item.QuoteNumber;
-                                    newListItem.Initialize();
-                                    list.push(newListItem);
-                                }
+                                var newListItem = new MainMenuFollowupItem(this);
+                                newListItem.Name = item.FollowUpType;
+                                newListItem.Notes = item.FollowUpNotes;
+                                newListItem.Date = item.FollowUpDate;
+                                newListItem.EntityId = item.Id;
+                                newListItem.EntityNumber = item.QuoteNumber;
+                                newListItem.Initialize();
+                                list.push(newListItem);
                             });
-
-                            this.ItemsCount = myQuotes.length >= 6 ? "5+" : myQuotes.length + "";
                         }
 
                         else {
-                            this.BackButtonLabel = TextCodeTranslator.Translate("General.MH.Operations");
+                            this.BackButtonLabel = TextCodeTranslator.Translate(" General.MH.Operations");
 
                             var myShipments: ShipmentList[] = myResponse.Result;
                             myShipments.forEach(item => {
-                                if (list.length < 5) {
-                                    var newListItem = new MainMenuFollowupItem(this);
-                                    newListItem.Name = item.FollowUpType;
-                                    newListItem.Notes = item.FollowUpNotes;
-                                    newListItem.Date = item.FollowUpDate;
-                                    newListItem.EntityId = item.Id;
-                                    newListItem.EntityNumber = item.ShipmentNumber;
-                                    newListItem.Initialize();
-                                    list.push(newListItem);
-                                }
+                                var newListItem = new MainMenuFollowupItem(this);
+                                newListItem.Name = item.FollowUpType;
+                                newListItem.Notes = item.FollowUpNotes;
+                                newListItem.Date = item.FollowUpDate;
+                                newListItem.EntityId = item.Id;
+                                newListItem.EntityNumber = item.ShipmentNumber;
+                                newListItem.Initialize();
+                                list.push(newListItem);
                             });
-
-                            this.ItemsCount = myShipments.length >= 6 ? "5+" : myShipments.length + "";
                         }
 
                         this.ItemsSource = list;

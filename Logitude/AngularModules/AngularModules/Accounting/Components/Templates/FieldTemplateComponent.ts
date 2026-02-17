@@ -1,22 +1,21 @@
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import { Component } from '@angular/core';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { JournalPM } from '../../EntityPMs/JournalPM';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { JournalExtendedListService } from '../../Services/ExtendedLists/JournalExtendedListService';
 import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { JournalList } from '../../EntityLists/JournalList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
-import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 
 export class FieldTemplateComponent {
-    _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     public Entity: any = null;
     public FieldName: string = null;
     public FieldValue: any = null;
@@ -35,17 +34,6 @@ export class FieldTemplateComponent {
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     public tenantCurrency: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
-    public ColorByStatus: { [key: string]: string } = {
-        'Draft': '',
-        'Waiting for Approval': 'darkorange',
-        'Approved': 'green',
-        'Voided': 'darkred',
-        'Cancelled': 'darkred',
-        'In processing': 'rgb(35, 9, 182)',
-        'InProcessing': 'rgb(35, 9, 182)',
-        'Failed': 'rgb(4, 159, 152)'
-    };
-
     constructor() {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -63,17 +51,6 @@ export class FieldTemplateComponent {
 
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
-        }
-        
-        if (this.FieldName == "SplitCurrencyAccount") {
-            this.Entity.GLAccountCurrencies.forEach(glaAcc => {
-                this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(glaAcc.gLAccountId).subscribe((myResult: any) => {
-                    var result: ServiceResponse = myResult;
-                    if (!result.HasError) {
-                        glaAcc.GLAccountOpenTransactionsCount = result.Result;
-                    }
-                });
-            })
         }
         if (this.ObjectTableName == "Revaluation" && this.FieldName == "Status") {
             if (this.FieldValue == "Done") { this.fontColor = "green"; }
@@ -142,43 +119,6 @@ export class FieldTemplateComponent {
             else {
                 this.FieldValue = this.Entity.StatusLocalName;
             }
-            if (this.Entity.StatusTypeCode == "2") {
-                this.textColor = "orange";
-            }
-            else if (this.Entity.StatusTypeCode == "3") {
-                this.textColor = "green";
-            }
-            else if (this.Entity.StatusTypeCode == "4") {
-                this.textColor = "red";
-            }
-        }
-
-        if (this.ObjectTableName == "InterestReport") {
-           if(this.FieldName == "InterestReportStatusName"){
-            if (SessionLocator.LoggedUserPM.DontShowLocal) {
-                this.FieldValue = this.Entity.InterestReportStatusName;
-            }
-            else {
-                this.FieldValue = this.Entity.InterestReportStatusLocalName;
-            }
-
-            if (this.Entity.InterestReportStatusCode == "5") {
-                this.textColor = "orange";
-            }
-             else if (this.Entity.InterestReportStatusCode == "6") {
-                this.textColor = "red";
-            }
-
-           }
-          else if(this.FieldName == "InterestReportStatusLocalName"){
-            if (this.Entity.InterestReportStatusCode == "5") {
-                this.textColor = "orange";
-            }
-             else if (this.Entity.InterestReportStatusCode == "6") {
-                this.textColor = "red";
-            }
-          }
-
         }
 
         if (this.ObjectTableName == "OpenFormatReport" && this.FieldName == "CreatedByUserName") {
@@ -200,7 +140,6 @@ export class FieldTemplateComponent {
                 this.FieldValue = this.Entity.StatusLocalName;
             }
         }
-
     }
 
     Abs(num: number) {
@@ -220,20 +159,6 @@ export class FieldTemplateComponent {
                 });
         }
     }
-
-
-    OpenARInvoice(id) {
-        if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'ARInvoice' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                    });
-                });
-        }
-    }
-
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
@@ -267,28 +192,16 @@ export class FieldTemplateComponent {
     }
 
     OpenGLAccount(id) {
-
         if (!AppTool.IsNullOrEmpty(id)) {
-            GLAccountSecurityLevelService.CheckLevel(id).then(hasAccess =>
-            {
-                if (hasAccess) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef =>
-                        {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
-                            cmpRef.instance.BackCompleted.subscribe(bk =>
-                            {
-                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                            });
-                        });
-                } else {
-                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
-                }
-            });
-    }
-
-
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    });
+                });
+        }
     }
 
     OpenBankAccount(id) {
@@ -297,18 +210,6 @@ export class FieldTemplateComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'BankAccount', BackButtonLabel: 'Deposit' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                    });
-                });
-        }
-    }
-
-    OpenAPPayment(id) {
-        if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'APPayment' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });
@@ -343,35 +244,5 @@ export class FieldTemplateComponent {
         }
 
         return color;
-    }
-
-
-    GetCalculatedAgingPeriod(){
-
-        var periodsNames = this.GetAgingPeriodsNames();
-
-        if(!periodsNames)
-            return 0;
-
-        return this.CalculatePeriodTotalByPeriodsNames(periodsNames);
-    }
-
-    private CalculatePeriodTotalByPeriodsNames(periodsNames: string[])
-    {
-        var periodTotal = 0;
-        periodsNames.forEach(periodName =>
-        {
-            periodTotal += this.Entity[periodName];
-        });
-        return periodTotal;
-    }
-
-    GetAgingPeriodsNames() : string[]{
-        var periodNumber = Number(this.FieldName[this.FieldName.length-1]);
-        switch (periodNumber) {
-            case 1: return this.Entity.FirstPeriodsMonths?.split(',');
-            case 2: return this.Entity.SecondPeriodsMonths?.split(',');
-            case 3: return this.Entity.ThirdPeriodsMonths?.split(',');
-        }
     }
 }

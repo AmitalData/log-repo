@@ -1,72 +1,58 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, flatMap, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
-import { AppTool } from '../../Infrastructure/Tools';
-import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
-import { ApiQueryFilters } from '../../Infrastructure/DataContracts/ApiQueryFilters';
-import { CardPM } from '../EntityPMs/CardPM';
-import { AddressPM } from '../EntityPMs/AddressPM';
-import { ContactPM } from '../EntityPMs/ContactPM';
-import { AgentPM } from '../EntityPMs/AgentPM';
-import { CustomerPM } from '../EntityPMs/CustomerPM';
-import { CustomAgentPM } from '../EntityPMs/CustomAgentPM';
-import { ShippingAgentPM } from '../EntityPMs/ShippingAgentPM';
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {AppTool} from '../../Infrastructure/Tools';
+import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
+import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
+import {CardPM} from '../EntityPMs/CardPM';
+import {AddressPM} from '../EntityPMs/AddressPM';
+import {ContactPM} from '../EntityPMs/ContactPM';
+import {AgentPM} from '../EntityPMs/AgentPM';
+import {CustomerPM} from '../EntityPMs/CustomerPM';
+import {CustomAgentPM} from '../EntityPMs/CustomAgentPM';
+import {ShippingAgentPM} from '../EntityPMs/ShippingAgentPM';
 import { VendorPM } from '../EntityPMs/VendorPM';
 import { AccountingPartnerPM } from '../EntityPMs/AccountingPartnerPM';
-import { WarehousePM } from '../EntityPMs/WarehousePM';
-import { AirlinePM } from '../EntityPMs/AirlinePM';
-import { TruckerPM } from '../EntityPMs/TruckerPM';
-import { ShippingLinePM } from '../EntityPMs/ShippingLinePM';
-import { TarrifHeaderPM } from '../EntityPMs/TarrifHeaderPM';
-import { TarrifChargePM } from '../EntityPMs/TarrifChargePM';
-import { TarrifFromToPM } from '../EntityPMs/TarrifFromToPM';
-import { CardExternalAccountsByProductPM } from '../EntityPMs/CardExternalAccountsByProductPM';
-import { CardList } from '../EntityLists/CardList';
-import { AirlineList } from '../EntityLists/AirlineList';
-import { CustomerList } from '../EntityLists/CustomerList';
-import { CustomerListService } from './StandardLists/CustomerListService';
-import { AgentPMService } from './StandardPMs/AgentPMService';
-import { CustomerPMService } from './StandardPMs/CustomerPMService';
-import { CustomAgentPMService } from './StandardPMs/CustomAgentPMService';
-import { ShippingAgentPMService } from './StandardPMs/ShippingAgentPMService';
-import { VendorPMService } from './StandardPMs/VendorPMService';
-import { WarehousePMService } from './StandardPMs/WarehousePMService';
-import { AirlinePMService } from './StandardPMs/AirlinePMService';
-import { TruckerPMService } from './StandardPMs/TruckerPMService';
-import { ShippingLinePMService } from './StandardPMs/ShippingLinePMService';
-import { CustomerSalesNotePM } from '../EntityPMs/CustomerSalesNotePM';
-import { CardExternalAccountsByProductPMService } from './StandardPMs/CardExternalAccountsByProductPMService';
-import { Guid } from '../../Infrastructure/Utilities/Guid';
-import { SessionInfo } from '../../Infrastructure/Utilities/SessionInfo';
+import {WarehousePM} from '../EntityPMs/WarehousePM';
+import {AirlinePM} from '../EntityPMs/AirlinePM';
+import {TruckerPM} from '../EntityPMs/TruckerPM';
+import {ShippingLinePM} from '../EntityPMs/ShippingLinePM';
+import {TarrifHeaderPM} from '../EntityPMs/TarrifHeaderPM';
+import {TarrifChargePM}  from '../EntityPMs/TarrifChargePM';
+import {TarrifFromToPM}  from '../EntityPMs/TarrifFromToPM';
+import {CardExternalAccountsByProductPM}  from '../EntityPMs/CardExternalAccountsByProductPM';
+import {CardList} from '../EntityLists/CardList';
+import {AirlineList} from '../EntityLists/AirlineList';
+import {CustomerList} from '../EntityLists/CustomerList';
+import {CustomerListService} from './StandardLists/CustomerListService';
+import {AgentPMService} from './StandardPMs/AgentPMService';
+import {CustomerPMService} from './StandardPMs/CustomerPMService';
+import {CustomAgentPMService} from './StandardPMs/CustomAgentPMService';
+import {ShippingAgentPMService} from './StandardPMs/ShippingAgentPMService';
+import {VendorPMService} from './StandardPMs/VendorPMService';
+import {WarehousePMService} from './StandardPMs/WarehousePMService';
+import {AirlinePMService} from './StandardPMs/AirlinePMService';
+import {TruckerPMService} from './StandardPMs/TruckerPMService';
+import {ShippingLinePMService} from './StandardPMs/ShippingLinePMService';
+import {CustomerSalesNotePM} from '../EntityPMs/CustomerSalesNotePM';
+import {CardExternalAccountsByProductPMService} from './StandardPMs/CardExternalAccountsByProductPMService';
+import {Guid} from '../../Infrastructure/Utilities/Guid';
+import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
 import { CardContactAdditionalServicePM } from '../EntityPMs/CardContactAdditionalServicePM';
-import { CarrierAreaList } from '../EntityLists/CarrierAreaList';
-import { CarrierAreaPM } from '../EntityPMs/CarrierAreaPM';
-import { CarrierAreasPortPM } from '../EntityPMs/CarrierAreasPortPM';
-import { AccountingPartnerPMService } from './StandardPMs/AccountingPartnerPMService';
-import { TariffCarrierTranslationPM } from '../EntityPMs/TariffCarrierTranslationPM';
-import { WarehouseStoragePricingPM } from '../EntityPMs/WarehouseStoragePricingPM';
-import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
-import { ProductItemPM } from '../EntityPMs/ProductItemPM';
-import { HTSCodePM } from '../EntityPMs/HTSCodePM';
-import { CardContactProductPM } from '../EntityPMs/CardContactProductPM';
-import { CarrierServiceLinePM } from '../EntityPMs/CarrierServiceLinePM';
-import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { AirlineAreaList } from '../EntityLists/AirlineAreaList';
+import { AirlineAreaPM } from '../EntityPMs/AirlineAreaPM';
+import { AirlineAreasPortPM } from '../EntityPMs/AirlineAreasPortPM';
 
 @Injectable()
 
 export class PartnersDomainService {
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PartnersDomain';
     }
-
-
 
     GetAllowedAirlineId() {
         var authHeader = new Headers();
@@ -74,16 +60,16 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllowedAirlineId';
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myResult;
                 return myResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetAirlineRules(myAirlineCode: string, myMessageCode: string) {
@@ -94,10 +80,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetMessagingRulesForAirline?myAirlineCode=' + myAirlineCode + '&myMessageCode=' + myMessageCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<AirlineMessagingRuleList> = [];
 
                 for (var itemJeson in listJason) {
@@ -111,7 +97,7 @@ export class PartnersDomainService {
                 myResponse.Result = listMapped;
                 return myResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetAllAddressesPMsbyCardId(myCardId: string) {
@@ -120,10 +106,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllAddressesPMsbyCardId?myCardId=' + myCardId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<AddressPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -132,7 +118,7 @@ export class PartnersDomainService {
                 }
 
                 return listMapped;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -142,9 +128,9 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerCardListByTenantVatNumber?vatNumber=' + vatNumber;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
                 var listMapped: Array<CardList> = [];
 
                 for (var itemJeson in listJason) {
@@ -156,20 +142,20 @@ export class PartnersDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = listMapped;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
+    
     GetCustomerActualData(customerId: string, year: number, month: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomerActualData?customerId=' + customerId + '&year=' + year + '&month=' + month;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
                 return listJason;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+            }).catch(ServiceHelper.HandleServiceError);
+        });        
     }
 
     GetCustomerSalesNotes(entityId: string) {
@@ -178,10 +164,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerSalesNotes?entityId=' + entityId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<CustomerSalesNotePM> = [];
 
                 for (var itemJeson in listJason) {
@@ -190,7 +176,7 @@ export class PartnersDomainService {
                 }
 
                 return listMapped;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetAllContactsPMsbyCardId(myCardId: string) {
@@ -199,10 +185,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllContactsPMsbyCardId?myCardId=' + myCardId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<ContactPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -211,7 +197,7 @@ export class PartnersDomainService {
                 }
 
                 return listMapped;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetTarrifHeadersByCardIdAndTypeCode(cardId: string, typeCode: string, getAll: boolean) {
@@ -220,10 +206,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetTarrifHeadersByCardIdAndTypeCode?cardId=' + cardId + '&typeCode=' + typeCode + '&getAll=' + getAll;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<TarrifHeaderPM> = [];
 
                 for (var key in allLists) {
@@ -236,20 +222,19 @@ export class PartnersDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = _mappedListsArray;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
     GetContactsByEmail(email: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetContactsByEmail?email=' + email;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<ContactPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -258,7 +243,7 @@ export class PartnersDomainService {
                 }
 
                 return listMapped;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetCardContactsByContact(contactId: string) {
@@ -267,14 +252,16 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardContactsByContact?contactId=' + contactId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, {
+                headers: authHeader
+            }).map(response => {
+                var listJason = response.json();
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetCustomerProducts(customerId: string) {
@@ -283,11 +270,13 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerProducts?customerId=' + customerId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, {
+                headers: authHeader
+            }).map(response => {
+                var listJason = response.json();
                 return listJason;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
 
     }
@@ -298,114 +287,43 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerProductHistoryActualData?customerId=' + customerId + '&productTypeCode=' + productTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, {
+                headers: authHeader
+            }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = listJason;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    private CurrentSession = SessionLocator.SelectedSession;
-    
-    CheckDuplicate(entityPM:any){
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
 
-        var mappedEntity: PartnerServicePM = this.MapJsonToPartnerAddress(entityPM, false);
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/CheckDuplicate/', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
-                flatMap(response => {
-                    if (!AppTool.IsNullOrEmpty(response)) {
-                        return new Promise((resolve, reject) => {
-                            this.CurrentSession.StopBusyIndicator();
-                            var confirmWindow = new ConfirmWindow();
-                            confirmWindow.Title = "Warning";
-                            confirmWindow.Width = 450;
-                            confirmWindow.Height = 190;
-                            confirmWindow.YesButtonText =TextCodeTranslator.Translate("General.B.Ok");;
-                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");;
-                            confirmWindow.ShowCancelButton = false;
-                           
-                            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.VatNumberExisted")+": "+response);
-                            confirmWindow.WindowClosed.subscribe(c => {
-                                if (confirmWindow.Yes) {
-                                    resolve(false);
-                                } else {
-                                    resolve(true);
-                                }
-                            });
-                        });
-                    } else {
-                        return of(false);
-                    }
-                }),
-                catchError(ServiceHelper.HandleServiceError)
-            );
-        });
-    }
     PostPartnerAddress(entityPM: PartnerServicePM) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-    
-        var mappedEntity: PartnerServicePM = this.MapJsonToPartnerAddress(entityPM, false);
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/CheckDuplicate/', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
-                flatMap(response => {
-                    if (!AppTool.IsNullOrEmpty(response)) {
-                        return new Promise((resolve, reject) => {
-                            this.CurrentSession.StopBusyIndicator();
-                            var confirmWindow = new ConfirmWindow();
-                            confirmWindow.Title = "Warning";
-                            confirmWindow.Width = 450;
-                            confirmWindow.Height = 190;
-                            confirmWindow.YesButtonText =TextCodeTranslator.Translate("General.B.Ok");;
-                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");;
-                            confirmWindow.ShowCancelButton = false;
-                           
-                            confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.VatNumberExisted")+": "+response);
-                            confirmWindow.WindowClosed.subscribe(c => {
-                                if (confirmWindow.Yes) {
-                                    this.CurrentSession.StartBusyIndicatorSaving();
-                                    this.ContinueSaving(entityPM).toPromise().then(resolve).catch(reject);
-                                } else {
-                                    reject();
-                                }
-                            });
-                        });
-                    } else {
-                        return this.ContinueSaving(entityPM);
-                    }
-                }),
-                catchError(ServiceHelper.HandleServiceError)
-            );
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+
+            var mappedEntity: PartnerServicePM = this.MapJsonToPartnerAddress(entityPM, false);
+
+            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
+
+                var mappedResult: PartnerServicePM = this.MapJsonToPartnerAddress(myJsonResult, true, entityPM);
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = mappedResult;
+                return myResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    ContinueSaving(entityPM: PartnerServicePM) {
-        
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-
-        var mappedEntity: PartnerServicePM = this.MapJsonToPartnerAddress(entityPM, false);
-        return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-            var myJsonResult = res;
-            var mappedResult: PartnerServicePM = this.MapJsonToPartnerAddress(myJsonResult, true, entityPM);
-            var myResponse = new ServiceResponse();
-            myResponse.Result = mappedResult;
-            return myResponse;
-
-        }), catchError(ServiceHelper.HandleServiceError));
-    }
-
-
     Put(entityPM: PartnerExternalAccountsServicePM) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -413,28 +331,29 @@ export class PartnersDomainService {
 
             var mappedEntity: PartnerExternalAccountsServicePM = this.MapJsonToPartnerExternalAccounts(entityPM, false);
 
-            return this._http.put(this._apiUrl + "/PutPartnerExternalAccounts", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
+            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
+                var myJsonResult = res.json();
 
                 var mappedResult: PartnerExternalAccountsServicePM = this.MapJsonToPartnerExternalAccounts(myJsonResult, true, entityPM);
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
+        
     GetCarrierUpdate(entityId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetCarrierUpdate?entityId=' + entityId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -444,10 +363,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCarrierCopyToCurrentTenant?entityId=' + entityId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetIsCustomerConnectedToEntities(entityId: string) {
@@ -456,16 +375,16 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetIsCustomerConnectedToEntities?entityId=' + entityId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetCardsForContact(contactId: string) {
@@ -474,10 +393,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardsForContact?contactId=' + contactId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<CardPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -486,19 +405,19 @@ export class PartnersDomainService {
                 }
 
                 return listMapped;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetInUseCarrier(type: string, code: string) {
+    GetInUseCarrier( type: string, code: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetInUseCarrier?type=' + type + '&code=' + code;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetAirlineByPrefix(Prefix: string) {
@@ -507,10 +426,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlineByPrefix?Prefix=' + Prefix;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var mappedResult: AirlineList;
 
@@ -528,7 +447,7 @@ export class PartnersDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetAirlineByCode(code: string, tenant: number) {
@@ -537,10 +456,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlineByCode?code=' + code + '&tenant=' + tenant;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
 
                 var mappedResult: AirlinePM;
 
@@ -558,7 +477,7 @@ export class PartnersDomainService {
                 myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetAirlineByICAO(code: string, tenant: number) {
@@ -567,10 +486,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlineByICAO?code=' + code + '&tenant=' + tenant;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetShippingLineByCode(code: string, tenant: number) {
@@ -579,10 +498,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetShippingLineByCode?code=' + code + '&tenant=' + tenant;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetTruckerByCode(code: string, tenant: number) {
@@ -591,10 +510,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetTruckerByCode?code=' + code + '&tenant=' + tenant;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetWarehouseByCode(code: string, tenant: number) {
@@ -603,10 +522,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetWarehouseByCode?code=' + code + '&tenant=' + tenant;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetBillingAddressListByCardId(cardId: string) {
@@ -615,32 +534,32 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetBillingAddressListByCardId?cardId=' + cardId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
-    }
+    }   
     GetMainAddressListByCardId(cardId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetMainAddressListByCardId?cardId=' + cardId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetBillingOrMainAddressListByCardId(cardId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetBillingOrMainAddressListByCardId?cardId=' + cardId;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetAddressByCardAndType(cardId: string, type: string) {
@@ -649,10 +568,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAddressByCardAndType?cardId=' + cardId + '&type=' + type;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                return response.json();
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetCustomerById(id: string) {
@@ -661,42 +580,42 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCustomerById?id=' + id;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
                 var mappedResult: CustomerPM;
 
                 if (myJsonResult) {
                     mappedResult = new CustomerPM();
 
-                    var myCustomerPMService = new CustomerPMService();
-                    mappedResult = myCustomerPMService.MapJsonToEntityPM(myJsonResult);
+                    var myCustomerPMService = new CustomerPMService();                   
+                    mappedResult = myCustomerPMService.MapJsonToEntityPM(myJsonResult);                    
                 }
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
                 return myResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetIsVATUniqueForCustomer(vatNumber: string, customerId: string, countryId: string, partnerTypeId: string) {
+    GetIsVATUniqueForCustomer(vatNumber: string, customerId: string, countryId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetIsVATUniqueForCustomer?vatNumber=' + vatNumber + '&customerId=' + customerId + '&countryId=' + partnerTypeId + '&partnerTypeId=' + countryId;
+        var url = this._apiUrl + '/GetIsVATUniqueForCustomer?vatNumber=' + vatNumber + '&customerId=' + customerId + '&countryId=' + countryId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetCardExternalAccountsByProducts(myCardId: string) {
@@ -705,16 +624,16 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardExternalAccountsByProducts?myCardId=' + myCardId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myJsonResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
 
                 var myResponse: ServiceResponse;
                 myResponse = new ServiceResponse();
                 myResponse.Result = myJsonResult;
                 return myResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     GetCustomersQuickSearch(filters: ApiQueryFilters) {
@@ -749,10 +668,10 @@ export class PartnersDomainService {
         authHeader.append('Token', SessionInfo.Token);
         var callUrl = this._apiUrl.concat(urlparameters);//
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<CustomerList> = [];
 
                 var myService = new CustomerListService();
@@ -768,7 +687,7 @@ export class PartnersDomainService {
                 myResponse.Result = _mappedListsArray;
                 return myResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -833,7 +752,7 @@ export class PartnersDomainService {
 
             entityPM.IsDirty = false;
         }
-
+        
         return entityPM;
     }
     MapContactPM(jsonList: any, mapParent: boolean = true) {
@@ -856,10 +775,8 @@ export class PartnersDomainService {
 
             if (!AppTool.IsNullOrEmpty(entityPM.CardId)) {
                 var oldContactServices: CardContactAdditionalServicePM[] = [];
-                var oldContactProducts: CardContactProductPM[] = [];
                 if (entityPM.OldEntityPM && !mapParent) {
                     oldContactServices = entityPM.OldEntityPM.CardContactAdditionalServices;
-                    oldContactProducts = entityPM.OldEntityPM.CardContactProducts;
                 }
 
                 entityPM.CardContactAdditionalServices = new Array<CardContactAdditionalServicePM>();
@@ -927,73 +844,8 @@ export class PartnersDomainService {
                         }
                     }
                 }
-
-                entityPM.CardContactProducts = new Array<CardContactProductPM>();
-                for (var item in jsonList.CardContactProducts) {
-
-                    var jItem = jsonList.CardContactProducts[item];
-                    if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-                        continue;
-                    }
-                    var newProductPM: CardContactProductPM;
-                    if (mapParent) {
-                        newProductPM = new CardContactProductPM(entityPM);
-                    }
-                    else {
-                        newProductPM = new CardContactProductPM(null);
-                    }
-
-                    var pmKeysArray = Object.keys(jItem);
-                    for (var pmKey in pmKeysArray) {
-
-                        if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
-                            continue;
-                        }
-                        var pmProperty = pmKeysArray[pmKey];
-                        newProductPM[pmProperty] = jItem[pmProperty];
-                    }
-
-                    newProductPM.IsDirty = false;
-
-                    if (mapParent) {
-                        newProductPM.OldEntityPM = this.clone(newProductPM);
-                        newProductPM.UniqueKey = Guid.newGuid();
-                        newProductPM.ChangeSetOp = "None";
-                        jItem.ChangeSetOp = "None";
-
-                    }
-                    else {
-
-                        if (newProductPM.UniqueKey) {
-
-                            if (jItem.IsDirty)
-                                newProductPM.ChangeSetOp = "Update";
-                        }
-                        else {
-                            newProductPM.ChangeSetOp = "Insert";
-                        }
-
-                        newProductPM.OldEntityPM = null;
-                        newProductPM.EntityParentPM = null;
-                    }
-
-                    entityPM.CardContactProducts.push(newProductPM);
-                }
-
-                if (oldContactProducts) {
-
-                    for (var itemKey in oldContactProducts) {
-                        if (entityPM.CardContactProducts.filter(p => p.UniqueKey === oldContactProducts[itemKey].UniqueKey).length === 0) {
-
-                            if (oldContactProducts[itemKey]) {
-                                oldContactProducts[itemKey].ChangeSetOp = "Delete";
-                                entityPM.CardContactProducts.push(oldContactProducts[itemKey]);
-                            }
-                        }
-                    }
-                }
             }
-
+            
             entityPM.IsDirty = false;
 
             if (mapParent) {
@@ -1002,20 +854,15 @@ export class PartnersDomainService {
                 for (var m in entityPM.CardContactAdditionalServices) {
                     entityPM.OldEntityPM.CardContactAdditionalServices.push(this.clone(entityPM.CardContactAdditionalServices[m]));
                 }
-
-                entityPM.OldEntityPM.CardContactProducts = [];
-                for (var m in entityPM.CardContactProducts) {
-                    entityPM.OldEntityPM.CardContactProducts.push(this.clone(entityPM.CardContactProducts[m]));
-                }
             }
             else {
                 entityPM.OldEntityPM = null;
             }
         }
-
+        
         return entityPM;
     }
-
+    
     MapCustomerSalesNotePM(jsonList: any) {
         var entityPM: CustomerSalesNotePM = null;
 
@@ -1039,7 +886,7 @@ export class PartnersDomainService {
 
         return entityPM;
     }
-
+    
     MapTarrifHeaderPM(jsonPM: any, mapParent: boolean = true, entityPM: TarrifHeaderPM = null) {
 
 
@@ -1283,13 +1130,6 @@ export class PartnersDomainService {
                 }
             }
 
-            else if (property === "AccountingPartner") {
-                if (jsonPM[property]) {
-                    var myAccountingPartnerPMService = new AccountingPartnerPMService();
-                    entity[property] = myAccountingPartnerPMService.MapJsonToEntityPM(jsonPM[property], getCallMap);
-                }
-            }
-
             else if (property === "Warehouse") {
                 if (jsonPM[property]) {
                     var myWarehousePMService = new WarehousePMService();
@@ -1390,7 +1230,8 @@ export class PartnersDomainService {
     public SetPartner(args: PartnerServicePM, myPartner: any, partnerTypeId: string = null) {
         if (myPartner) {
 
-            if (partnerTypeId) {
+            if (partnerTypeId)
+            {
                 args.PartnerTypeId = partnerTypeId;
             }
 
@@ -1411,8 +1252,8 @@ export class PartnersDomainService {
 
                 else if (myPartner instanceof ShippingLinePM) {
                     args.PartnerTypeId = "SL";
-                }
-            }
+                }                
+            }          
 
             switch (args.PartnerTypeId) {
                 case "CS":
@@ -1438,11 +1279,6 @@ export class PartnersDomainService {
 
                 case "VD": {
                     args.Vendor = myPartner;
-                    break;
-                }
-
-                case "AC": {
-                    args.AccountingPartner = myPartner;
                     break;
                 }
 
@@ -1475,16 +1311,16 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRecentCustomers?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1493,10 +1329,10 @@ export class PartnersDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomersCounts?ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var myJsonResult = response;
+                var myJsonResult = response.json();
                 var myResult = new CRMSummary();
 
                 if (myJsonResult) {
@@ -1512,7 +1348,7 @@ export class PartnersDomainService {
                 serviceResponse.Result = myResult;
                 return serviceResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1521,9 +1357,9 @@ export class PartnersDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var url = this._apiUrl + '/GetCustomersDecreasedShipments?dataTypeCode=' + dataTypeCode + '&startDate=' + ServiceHelper.GetDateString(startDate) + '&timeRange=' + timeRange + '&ownerId=' + ownerId + '&businessUnitId=' + businessUnitId + '&RecordsTypeCode=' + RecordsTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var listJason = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
                 var listMapped: Array<CompareDataClass> = [];
 
                 for (var itemJeson in listJason) {
@@ -1536,7 +1372,7 @@ export class PartnersDomainService {
                 myResponse.Result = listMapped;
                 return myResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1559,16 +1395,16 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlinesBySearchTextAndTenant?AWBMessagesCCSTypeCode=' + AWBMessagesCCSTypeCode + '&searchText=' + searchText + '&tenant=' + tenant;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = allLists;
                 return serviceResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1578,14 +1414,15 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAllowAirline?isAllowed=' + isAllowed + "&code=" + code + "&myTenantId=" + myTenantId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
+
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1595,15 +1432,15 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetIsDirect?forwarderTenantId=' + forwarderTenantId + "&airlineTenantId=" + airlineTenantId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1613,15 +1450,15 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRegistrationRequested?isRequested=' + isRequested + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1631,15 +1468,15 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetRegisteringAirline?isRegistered=' + isRegistered + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode + "&loggedContactName=" + loggedContactName;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1649,15 +1486,15 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetSetIsDirect?isDirect=' + isDirect + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1667,15 +1504,15 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetSetIsDeclined?isDeclined=' + isDeclined + "&declineNotes=" + declineNotes + "&tenantAirlineId=" + tenantAirlineId + "&zeroAirlineId=" + zeroAirlineId + "&tenantManagmentId=" + tenantManagmentId + "&AWBMessagesCCSTypeCode=" + AWBMessagesCCSTypeCode;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1686,10 +1523,10 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetAirlinesForRequestedTenant?tenant=' + tenant;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<AirlineList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -1703,7 +1540,7 @@ export class PartnersDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1720,7 +1557,7 @@ export class PartnersDomainService {
         return entityList;
     }
 
-    GetAirlinesByFiltersAndTenant(filters: ApiQueryFilters, tenant: number) {
+    GetAirlinesByFiltersAndTenant(filters: ApiQueryFilters, tenant: number) {   
         var urlparameters = this._apiUrl + '/GetAirlinesByFiltersAndTenant?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -1748,9 +1585,9 @@ export class PartnersDomainService {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return defer(() => {
-            return this._http.get(urlparameters, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(urlparameters, { headers: authHeader }).map(response => {
+                var allLists = response.json();
                 var _mappedListsArray: Array<AirlineList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -1764,26 +1601,26 @@ export class PartnersDomainService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
-    }
+    }   
 
-    GetCustomerCreditLimitActualAmount(myCustomerId: string, invoiceId: string = null) {
+    GetCustomerCreditLimitActualAmount(myCustomerId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var myapiUrl = ServiceHelper.GetLogitudeURL() + 'api/InvoiceDomain';
 
-        var url = myapiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId + "&invoiceId=" + invoiceId;
+        var url = myapiUrl + '/GetCustomerCreditLimitActualAmount?myCustomerId=' + myCustomerId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var myResult = response;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
 
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -1793,47 +1630,44 @@ export class PartnersDomainService {
 
         var url = this._apiUrl + '/GetCardContactProducts?cardId=' + cardId + "&contactId=" + contactId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
-    GetAllCarrierAreasByCarrierId(carrierId: string) {
+    GetAllArilineAreasByAirlineId(airlineId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAllCarrierAreasByCarrierId?carrierId=' + carrierId;
+        var url = this._apiUrl + '/GetAllArilineAreasByAirlineId?airlineId=' + airlineId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
-                var listMapped: Array<CarrierAreaPM> = [];
+                var listJason = response.json();
+                var listMapped: Array<AirlineAreaPM> = [];
 
                 for (var itemJeson in listJason) {
-                    var itemMapped: CarrierAreaPM = this.MapCarrierAreaPM(listJason[itemJeson]);
+                    var itemMapped: AirlineAreaPM = this.MapAirlineAreaPM(listJason[itemJeson]);
                     listMapped.push(itemMapped);
                 }
 
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = listMapped;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+                return listMapped;
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    MapCarrierAreaPM(jsonList: any, mapParent: boolean = true) {
-        var entityPM: CarrierAreaPM = null;
+    MapAirlineAreaPM(jsonList: any, mapParent: boolean = true) {
+        var entityPM: AirlineAreaPM = null;
 
         if (jsonList) {
-            entityPM = new CarrierAreaPM();
+            entityPM = new AirlineAreaPM();
 
             var jsonListKeys = Object.keys(jsonList);
 
@@ -1847,24 +1681,24 @@ export class PartnersDomainService {
                 entityPM[property] = jsonList[property];
             }
 
-            var oldContactServices: CarrierAreasPortPM[] = [];
+            var oldContactServices: AirlineAreasPortPM[] = [];
             if (entityPM.OldEntityPM && !mapParent) {
-                oldContactServices = entityPM.OldEntityPM.CarrierAreasPorts;
+                oldContactServices = entityPM.OldEntityPM.AirlineAreasPorts;
             }
 
-            entityPM.CarrierAreasPorts = new Array<CarrierAreasPortPM>();
-            for (var item in jsonList.CarrierAreasPorts) {
+            entityPM.AirlineAreasPorts = new Array<AirlineAreasPortPM>();
+            for (var item in jsonList.AirlineAreasPorts) {
 
-                var jItem = jsonList.CarrierAreasPorts[item];
+                var jItem = jsonList.AirlineAreasPorts[item];
                 if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                     continue;
                 }
-                var newServicePM: CarrierAreasPortPM;
+                var newServicePM: AirlineAreasPortPM;
                 if (mapParent) {
-                    newServicePM = new CarrierAreasPortPM(entityPM);
+                    newServicePM = new AirlineAreasPortPM(entityPM);
                 }
                 else {
-                    newServicePM = new CarrierAreasPortPM(null);
+                    newServicePM = new AirlineAreasPortPM(null);
                 }
 
                 var pmKeysArray = Object.keys(jItem);
@@ -1902,17 +1736,17 @@ export class PartnersDomainService {
                 }
 
 
-                entityPM.CarrierAreasPorts.push(newServicePM);
+                entityPM.AirlineAreasPorts.push(newServicePM);
             }
 
             if (oldContactServices) {
 
                 for (var itemKey in oldContactServices) {
-                    if (entityPM.CarrierAreasPorts.filter(p => p.UniqueKey === oldContactServices[itemKey].UniqueKey).length === 0) {
+                    if (entityPM.AirlineAreasPorts.filter(p => p.UniqueKey === oldContactServices[itemKey].UniqueKey).length === 0) {
 
                         if (oldContactServices[itemKey]) {
                             oldContactServices[itemKey].ChangeSetOp = "Delete";
-                            entityPM.CarrierAreasPorts.push(oldContactServices[itemKey]);
+                            entityPM.AirlineAreasPorts.push(oldContactServices[itemKey]);
                         }
                     }
                 }
@@ -1922,9 +1756,9 @@ export class PartnersDomainService {
 
             if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-                entityPM.OldEntityPM.CarrierAreasPorts = [];
-                for (var m in entityPM.CarrierAreasPorts) {
-                    entityPM.OldEntityPM.CarrierAreasPorts.push(this.clone(entityPM.CarrierAreasPorts[m]));
+                entityPM.OldEntityPM.AirlineAreasPorts = [];
+                for (var m in entityPM.AirlineAreasPorts) {
+                    entityPM.OldEntityPM.AirlineAreasPorts.push(this.clone(entityPM.AirlineAreasPorts[m]));
                 }
             }
             else {
@@ -1935,424 +1769,21 @@ export class PartnersDomainService {
         return entityPM;
     }
 
-    RemoveAreaFromCarrier(areaId: string) {
+    RemoveAreaFromAirline(areaId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetRemoveCarrierAreaFromCarrier?areaId=' + areaId;
+        var url = this._apiUrl + '/GetRemoveAirlineAreaFromAirline?areaId=' + areaId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var done: string = response.json();
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = done;
                 return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetInUseWarehouse(code: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetInUseWarehouse?code=' + code;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetAllTariffTranslationsByCarrierId(carrierId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetAllTariffTranslationsByCarrierId?carrierId=' + carrierId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var listJason = response;
-                var listMapped: Array<TariffCarrierTranslationPM> = [];
-
-                for (var itemJeson in listJason) {
-                    var itemMapped: TariffCarrierTranslationPM = this.MapTariffTranslationPM(listJason[itemJeson]);
-                    listMapped.push(itemMapped);
-                }
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = listMapped;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    MapTariffTranslationPM(jsonList: any, mapParent: boolean = true) {
-        var entityPM: TariffCarrierTranslationPM = null;
-
-        if (jsonList) {
-            entityPM = new TariffCarrierTranslationPM();
-
-            var jsonListKeys = Object.keys(jsonList);
-
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-
-                if (property === "UIProperties" || property === "entityParentPM") {
-                    continue;
-                }
-
-                entityPM[property] = jsonList[property];
-            }
-
-            entityPM.IsDirty = false;
-
-            if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-            }
-            else {
-                entityPM.OldEntityPM = null;
-            }
-        }
-
-        return entityPM;
-    }
-
-    RemoveTranslationFromCarrier(id: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetRemoveTranslationFromCarrier?id=' + id;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = done;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetWarehouseStoragePricingForWarehouse(warehouseId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        authHeader.append('Content-Type', 'application/json');
-
-        var url = this._apiUrl + '/GetWarehouseStoragePricingForWarehouse?warehouseId=' + warehouseId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var listJason = response;
-                var listMapped: Array<WarehouseStoragePricingPM> = [];
-
-                for (var itemJeson in listJason) {
-                    var itemMapped: WarehouseStoragePricingPM = this.MapWarehouseStoragePricingPM(listJason[itemJeson]);
-                    listMapped.push(itemMapped);
-                }
-
-                var myResponse: ServiceResponse;
-                myResponse = new ServiceResponse();
-                myResponse.Result = listMapped;
-                return myResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    MapWarehouseStoragePricingPM(jsonList: any, mapParent: boolean = true) {
-        var entityPM: WarehouseStoragePricingPM = null;
-
-        if (jsonList) {
-            entityPM = new WarehouseStoragePricingPM(null);
-
-            var jsonListKeys = Object.keys(jsonList);
-
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-
-                if (property === "UIProperties" || property === "entityParentPM") {
-                    continue;
-                }
-
-                entityPM[property] = jsonList[property];
-            }
-
-            entityPM.IsDirty = false;
-
-            if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-            }
-            else {
-                entityPM.OldEntityPM = null;
-            }
-        }
-
-        return entityPM;
-    }
-
-    GetCustomerProductItemHTSCodeByCountry(productItemId: string, dischargePortCountryId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetCustomerProductItemHTSCodeByCountry?productItemId=' + productItemId + "&dischargePortCountryId=" + dischargePortCountryId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = done;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    GetSingleCustomerProductItem(productItemId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetSingleCustomerProductItem?productItemId=' + productItemId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var pm = response;
-
-                var entity: ProductItemPM;
-                if (pm) {
-                    entity = this.MapProductItemPM(pm);
-                }
-
-                var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;
-                return serviceResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    UpdateCustomerProductItem(entity: ProductItemPM) {
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-
-            var mappedEntity: ProductItemPM = this.MapProductItemPM(entity, false);
-
-            return this._http.put(this._apiUrl + "/PutCusttomerProductItem", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                var myJsonResult = res;
-
-                var mappedResult: ProductItemPM = this.MapProductItemPM(myJsonResult, true, entity);
-
-                var myResponse = new ServiceResponse();
-                myResponse.Result = mappedResult;
-                return myResponse;
-
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    MapProductItemPM(jsonPM: any, mapParent: boolean = true, entityPM: ProductItemPM = null) {
-        if (!entityPM) {
-            entityPM = new ProductItemPM(null);
-        }
-
-        var jsonPMKeys = Object.keys(jsonPM);
-
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
-
-                continue;
-            }
-
-            var property = jsonPMKeys[key];
-            entityPM[property] = jsonPM[property];
-        }
-
-        this.MapHTSCodes(entityPM, jsonPM, mapParent);
-
-        entityPM.IsDirty = false;
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-
-            entityPM.OldEntityPM.HTSCodes = [];
-            for (var item in entityPM.HTSCodes) {
-                var myHTSCodePM = entityPM.HTSCodes[item];
-                var newHTSCodePM: HTSCodePM = this.clone(myHTSCodePM);
-                entityPM.OldEntityPM.HTSCodes.push(newHTSCodePM);
-            }
-        }
-
-        else {
-            entityPM.OldEntityPM = null;
-        }
-
-        return entityPM;
-    }
-    MapHTSCodes(entityPM: ProductItemPM, jsonPM: any, mapParent: boolean = true) {
-        var oldHTSCodes: HTSCodePM[] = [];
-        if (entityPM.OldEntityPM && !mapParent) {
-            oldHTSCodes = entityPM.OldEntityPM.HTSCodes;
-        }
-
-        entityPM.HTSCodes = new Array<HTSCodePM>();
-        for (var item in jsonPM.HTSCodes) {
-            var jItem = jsonPM.HTSCodes[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-                continue;
-            }
-
-            var newHTSCodePM: HTSCodePM;
-
-            if (mapParent) {
-                newHTSCodePM = new HTSCodePM(entityPM);
-            }
-
-            else {
-                newHTSCodePM = new HTSCodePM(null);
-            }
-
-            var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-                    continue;
-                }
-
-                var pmProperty = pmKeysArray[pmKey];
-                newHTSCodePM[pmProperty] = jItem[pmProperty];
-            }
-
-            newHTSCodePM.IsDirty = false;
-
-            if (mapParent) {
-                newHTSCodePM.UniqueKey = Guid.newGuid();
-                newHTSCodePM.ChangeSetOp = "None";
-                jItem.ChangeSetOp = "None";
-                newHTSCodePM.OldEntityPM = this.clone(newHTSCodePM);
-            }
-
-            else {
-                if (newHTSCodePM.UniqueKey) {
-                    if (jItem.IsDirty) {
-                        newHTSCodePM.ChangeSetOp = "Update";
-                    }
-                }
-
-                else {
-                    newHTSCodePM.ChangeSetOp = "Insert";
-                }
-
-                newHTSCodePM.OldEntityPM = null;
-                newHTSCodePM.EntityParentPM = null;
-            }
-
-            newHTSCodePM.IsDirty = false;
-            entityPM.HTSCodes.push(newHTSCodePM);
-        }
-
-        if (oldHTSCodes) {
-            for (var itemKey in oldHTSCodes) {
-                if (entityPM.HTSCodes.filter(p => p.UniqueKey === oldHTSCodes[itemKey].UniqueKey).length === 0) {
-
-                    if (oldHTSCodes[itemKey]) {
-                        var oldItemJson = oldHTSCodes[itemKey];
-                        var deletedPM: HTSCodePM = new HTSCodePM(null);
-                        var pmKeys = Object.keys(oldItemJson);
-                        for (var key in pmKeys) {
-
-                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
-                                continue;
-                            }
-
-                            var property = pmKeys[key];
-                            deletedPM[property] = oldItemJson[property];
-                        }
-
-                        deletedPM.IsDirty = false;
-                        deletedPM.ChangeSetOp = "Delete";
-                        deletedPM.OldEntityPM = null;
-                        entityPM.HTSCodes.push(deletedPM);
-                    }
-                }
-            }
-        }
-    }
-
-    GetAllCarrierServiceLinesByCarrierId(carrierId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetAllCarrierServiceLinesByCarrierId?carrierId=' + carrierId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var listJason = response;
-                var listMapped: Array<CarrierServiceLinePM> = [];
-
-                for (var itemJeson in listJason) {
-                    var itemMapped: CarrierServiceLinePM = this.MapCarrierServiceLinePM(listJason[itemJeson]);
-                    listMapped.push(itemMapped);
-                }
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = listMapped;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    MapCarrierServiceLinePM(jsonList: any, mapParent: boolean = true) {
-        var entityPM: CarrierServiceLinePM = null;
-
-        if (jsonList) {
-            entityPM = new CarrierServiceLinePM();
-
-            var jsonListKeys = Object.keys(jsonList);
-
-            for (var key in jsonListKeys) {
-                var property = jsonListKeys[key];
-
-                if (property === "UIProperties" || property === "entityParentPM") {
-                    continue;
-                }
-
-                entityPM[property] = jsonList[property];
-            }
-
-
-            entityPM.IsDirty = false;
-
-            if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-            }
-            else {
-                entityPM.OldEntityPM = null;
-            }
-        }
-
-        return entityPM;
-    }
-    RemoveServiceLineFromCarrier(serviceLineId: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-        var url = this._apiUrl + '/GetRemoveServiceLineFromCarrier?serviceLineId=' + serviceLineId;
-
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-                var done: string = response.body;
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = done;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 }
@@ -2362,7 +1793,6 @@ export class AirlineMessagingRuleList {
     AirlineId: string;
     MessageTypeCode: string;
     RuleFieldId: string;
-    RuleFieldCode: string;
     IsMandatoryForSending: boolean;
     MaxSize: number;
     InActive: boolean;
@@ -2390,10 +1820,7 @@ export class PartnerServicePM {
     public ShippingLine: ShippingLinePM = null;
     public Trucker: TruckerPM = null;
     public AccountingPartner: AccountingPartnerPM = null;
-    public IsReactivatingContact: boolean = false;
-    public IsConnectingInactiveContact: boolean = false;
-    public InactiveContactId: string = null;
-    public ExternalId: string = null;
+
 }
 export class PartnerExternalAccountsServicePM {
     public Tenant: number;

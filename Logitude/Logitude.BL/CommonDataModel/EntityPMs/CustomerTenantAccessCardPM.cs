@@ -32,7 +32,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string StatusType { get; set; }
 
         public bool BuildBatch { get; set; }
-        public bool IsExportActivated { get; set; }
-        public bool IsCustomsActivated { get; set; }
     }
 }

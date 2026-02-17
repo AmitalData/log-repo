@@ -24,10 +24,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUQUELOCK GetSingle(string ENTNAME, string FILENO, int? tenant)
+        public CCUQUELOCK GetSingle(string ENTNAME, string FILENO)
         {
             return (from a in context.CCUQUELOCKs
-                    where a.ENTNAME == ENTNAME && a.FILE_NO == FILENO && a.TENANT == tenant
+                    where a.ENTNAME == ENTNAME && a.FILE_NO == FILENO
                     select a).FirstOrDefault();
         }
 
@@ -40,7 +40,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUQUELOCK entity)
         {
             context.CCUQUELOCKs.Add(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILE_NO, entity.TENANT.Value);
         }
 
         public void Remove(CCUQUELOCK entity)
@@ -49,7 +48,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             AttachIfNot(entity);context.SetAsModified(entity); //context.CCUQUELOCKs.Attach(entity);
             //context.AddToCCUQUELOCKs 
             context.CCUQUELOCKs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILE_NO, entity.TENANT.Value);
         }
 
         public void Update(CCUQUELOCK entity)
@@ -57,7 +55,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             AttachIfNot(entity);context.SetAsModified(entity);
 
             context.SetAsModified(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILE_NO, entity.TENANT.Value);
         }
         void AttachIfNot(CCUQUELOCK entity)
         {
@@ -90,16 +87,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CCUQUELOCK GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUQUELOCKKeys;
-            return this.GetSingle(keys.ENTNAME, keys.FILENO, keys.Tenant);
+            return this.GetSingle(keys.ENTNAME, keys.FILENO);
         }
 
 
         public CCUQUELOCK GetSingleGeneralLockNOWAIT(string ENTNAME, string FILENO)
         {
+            ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+            ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
             return (context as DbContextBase)
                 .GetListNOWAITWhere<CCUQUELOCK>(rec => rec.ENTNAME == ENTNAME &&
-                rec.FILE_NO 
-                == FILENO 
+                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                rec.FILE_NO ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                == FILENO
                 ).FirstOrDefault(); ;
         }
     }

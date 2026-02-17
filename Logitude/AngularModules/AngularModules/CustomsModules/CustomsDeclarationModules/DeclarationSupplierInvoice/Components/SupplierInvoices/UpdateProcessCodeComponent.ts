@@ -7,12 +7,10 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
 
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UpdateProcessCodeComponent.html',
 })
 
@@ -23,22 +21,12 @@ export class UpdateProcessCodeComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     IsDisplayOnly: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ProcessTypeCodeFilterItems: ApiQueryFilters;
-    public hasOcr: boolean;
-    
-
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.UIProperties.SetEnabled("FromNumber", null, false);
         this.UIProperties.SetEnabled("ToNumber", null, false);
         this.IsAddButtonEnabled = false;
-        this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
-        if (this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E") {
-            this.ProcessTypeCodeFilterItems.addAdditionalFilter("LeadDocumentTypeID", this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationTypeCode, null, null, "Equals", false, false, false, "string",false,true);
-        }
-        this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
-
     }
 
     SetWindowArgs(args: any) {
@@ -207,7 +195,6 @@ export class SelectedItem extends BaseComponent {
         super();
         this.Number = number;
         this.parent = Parent;
-       
     }
 
     number: number;

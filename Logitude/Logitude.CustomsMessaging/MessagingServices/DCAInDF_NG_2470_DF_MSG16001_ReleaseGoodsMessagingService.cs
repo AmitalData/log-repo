@@ -1,6 +1,5 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -44,13 +43,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return myGenericRequestParams;
         }
 
-        protected override DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage GetFakeCustomsResponse(GenericRequestParams requestParamsData)
-        {
-
-            var MyFake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService = new Fake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService();
-            return MyFake_DCAInDF_NG_2470_MSG16001_ReleaseGoodsMessagingService.GetFakeCustomsResponse(requestParamsData);
-
-        }
+        
         protected override DF_NG_2470_DF_MSG16001_ReleaseGoodsMessage CallWS(DCAInCustomRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
         {
             throw new NotImplementedException();

@@ -1,1 +1,0 @@
---ALTER TABLE Queries DROP CONSTRAINT  FK_QueryQuery

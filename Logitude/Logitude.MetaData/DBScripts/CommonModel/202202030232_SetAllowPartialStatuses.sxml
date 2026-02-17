@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Common">
-  <Sql Version="1">
-    <![CDATA[
-       update EntityStatus set AllowPartial = '1' where code = 'SHPK' or code = 'SDLD'  
-    ]]>
-</Sql>
-</Script>
-
-

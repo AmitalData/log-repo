@@ -10,13 +10,10 @@ import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomai
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'SystemCurrenciesComponent',
+    moduleId: module.id,
     templateUrl: './SystemCurrenciesComponent.html',
 })
 
@@ -30,13 +27,12 @@ export class SystemCurrenciesComponent extends BaseComponent {
     private ShipmentsQuotesCount: number = 0;
     private entityPMService: TenantPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsChangeCurrencyVisible: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
         this.entityPMService = new TenantPMService();
 
-        entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((res: any) => {
+        entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(res => {
             this.GetDemoMessageVisibility();
 
             this.entityPMService.get(SessionLocator.TenantPM.Id).subscribe((myResponse: ServiceResponse) => {
@@ -51,10 +47,6 @@ export class SystemCurrenciesComponent extends BaseComponent {
                             this.ShipmentsQuotesCount = myResponse2.Result;
                         }
 
-                        if (FeatureLocator.HasFeaturePermession("General", "ChangeLocalProfitCurrency")) {
-                            this.IsChangeCurrencyVisible = true;
-                        }
-
                         this.SetUIProperties();
                         this.IsResourcesReady = true;
                     });
@@ -66,7 +58,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
     GetDemoMessageVisibility() {
         var myResult = false;
 
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             myResult = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -82,7 +74,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
 
         var isFeildEnabled: boolean = true;
 
-        if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
+        if (this.TenantPM.Id == 65) {
             isFeildEnabled = false;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -137,7 +129,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
         var windowTitle = "Edit exchange rates";
         var logWindow = new LogitudeWindow();
         logWindow.Title = windowTitle;
-        this.entityResourceService.getEntityResourceByTableName("RatesTable").subscribe(response => {
+        this.entityResourceService.getEntityResourceByTableName("RatesTable").subscribe(response=> {
             logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
         });
     }
@@ -167,7 +159,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    OkButtonClicked(isChanging: boolean = false) {
+    OkButtonClicked() {
         if (!this.TenantPM.IsDirty) {
             this.CurrentSession.CloseCurrentWindow();
         }
@@ -197,10 +189,6 @@ export class SystemCurrenciesComponent extends BaseComponent {
                     if (!myResponse.HasError) {
                         InfraSettings.TenantPM = myResponse.Result;
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
-
-                        if (isChanging) {
-                            this.OpenChangeCurrencyWindow();
-                        }
                     }
 
                     else {
@@ -209,43 +197,5 @@ export class SystemCurrenciesComponent extends BaseComponent {
                 });
             }
         }
-    }
-
-    private Type: string;
-    ChangeCurrencyClicked(type: string) {
-        this.Type = type;
-
-        if (this.TenantPM.IsDirty) {
-            this.OkButtonClicked(true);
-        }
-
-        else {
-            this.OpenChangeCurrencyWindow();
-        }        
-    }
-
-    private OpenChangeCurrencyWindow() {
-        this.entityResourceService.getEntityResourceByTableName("RatesTable").subscribe(response => {
-            var confirmWindow: ConfirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Are you sure you want to change " + this.Type + " currency?");
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-
-                    var logWindow = new LogitudeWindow();
-
-                    logWindow.WindowClosed.subscribe(s => {
-                        if (s) {
-                            var messageWindow: MessageWindow = new MessageWindow();
-                            messageWindow.Show("Please logout and login again to refresh data");
-                        }
-                    });
-
-                    logWindow.IsOverWindow = true;
-                    logWindow.WindowArgs = { TenantPM: this.TenantPM, Type: this.Type };
-                    logWindow.Title = "Change " + this.Type + " Currency";
-                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/SystemCurrencies/ChangeCurrencyComponent');
-                }
-            });
-        });
     }
 }

@@ -12,7 +12,7 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.NotificationBL;
 using System.Diagnostics;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.BL.Models;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -41,17 +41,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationCargoSplitPM entityPM)
         {
-                   
-            UpdateUnifreight(entityPM);        
- 
-            var context = CustomContext.GetContext(entityPM.Tenant);
-            DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(context);
-            DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(entityPM.DeclarationId, true, false);
-            if(declarationPM != null)
+            
+            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+            if (setting.IsConnectedToUniFreight)
             {
-                entityPM.Direction = declarationPM.Direction;
-                entityPM.TransportModeId=declarationPM.TransportModeId;
+                UpdateUnifreight(entityPM);
             }
-         }
+        }
     }
 }

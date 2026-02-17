@@ -6,10 +6,10 @@ using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -23,7 +23,6 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 {
@@ -42,7 +41,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         public UnicargoExportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
-            customFieldResolver = new CustomFieldResolver(tenant);
+            customFieldResolver = new CustomFieldResolver();
             shipmentsContext = ShipmentsContext.GetContext(tenant);
             ContactRepository =new ContactRepository( CommonDataContext.GetContext(tenant));
             commonDataContext = CommonDataContext.GetContext(tenant);
@@ -60,7 +59,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         public byte[] GetData()
         {
             UnicargoExportDataProvider myDataProvider = this.LoadDataProvider();
-            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(UnicargoExportDataProvider), tenant);
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(UnicargoExportDataProvider));
+            MemoryStream memoryStream = new MemoryStream();
+            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            StreamReader streamReader = new StreamReader(memoryStream);
+            string content = streamReader.ReadToEnd();
+            byte[] bytearray = memoryStream.ToArray();
+            return bytearray;
         }
 
         private void FillShipmentcustomerContact(UnicargoExport Shipment, string customerContactId)
@@ -132,14 +140,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
             List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
             List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
-            
+            Dictionary<string, string> Vessels = commonDataContext.Vessels.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
+
+
+
             List<Country> FromAddressCountryLists = (from record in commonDataContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
             List<Address> ToPartnerAddressLists = (from a in commonDataContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
 
             LeadSources = commonDataContext.LeadSources.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
 
+
+
             shipments.ForEach(item =>
-            { 
+            {
+ 
                 UnicargoExport Shipment = new UnicargoExport();
 
                 #region  General Section
@@ -236,6 +250,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
 
                 #endregion
+
 
                 #region Partners Section
                 Shipment.Shipper = item.ShipperName;
@@ -404,6 +419,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 Shipment.DescriptionofGoods = item.DescriptionOfGoods;
                 #endregion
 
+
                 #region Routing Section
 
                 ShipmentPickUpDelivery myLastDelivery = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == item.Id && d.PickUpDeliveryTypeCode == "DELV").OrderByDescending(s => s.PickUpDeliveryNumber).FirstOrDefault();
@@ -570,7 +586,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (MasterData != null)
                 {
-
+                    
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageFromPortId))
                     {
 
@@ -604,14 +620,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                     }
 
+
                     if (!string.IsNullOrEmpty(MasterData.Transshipment3FromPortId))
                     {
+
                         PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.Transshipment3FromPortId, true);
                         if (myPort != null)
                         {
                             Shipment.MainMainCarriageLeg1ViaPort3 = myPort.Code + " " + myPort.EnglishName;
                         }
+
                     }
+
+
 
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageFinalDestinationPortId))
                     {
@@ -621,6 +642,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
                             Shipment.ToPortCountryCode = myPort.CountryCode;
                         }
+
                     }
 
                     else if (!string.IsNullOrEmpty(MasterData.MainCarriageToPartnerId) && item.TransportModeId == "I" && item.DirectionId == "D")
@@ -632,6 +654,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         }
                     }
 
+
+           
+
+
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageCarrierId))
                     {
                         Card card = cardRepository.GetSingleCardByIdAndTenant(MasterData.MainCarriageCarrierId, tenant, true);
@@ -640,6 +666,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             Shipment.MainCarriageLeg1ShippingLine = card.EnglishName;
                         }
                     }
+
+
 
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageCarrierNumber))
                     {
@@ -662,16 +690,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                     }
 
-                    if (!string.IsNullOrEmpty(MasterData.MainCarriageVesselName))
+                    if (!string.IsNullOrEmpty(MasterData.MainCarriageVesselId))
                     {
-                        Shipment.MainCarriageLeg1Vessel = MasterData.MainCarriageVesselName;
+                        string vessel = Vessels.ContainsKey(MasterData.MainCarriageVesselId) ? Vessels[MasterData.MainCarriageVesselId] != null ? Vessels[MasterData.MainCarriageVesselId] : null : null;
+
+                        Shipment.MainCarriageLeg1Vessel = vessel;
+
                     }
 
-                    Shipment.MainCarriageLeg1ETD = MasterData.MainCarriageETD != null ? MasterData.MainCarriageETD : (MasterShipment != null ? MasterShipment.MainCarriageETD : null);
-                    Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA != null ? MasterData.MainCarriageETA : (MasterShipment != null ? MasterShipment.MainCarriageETA : null);
-                    Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD != null ? MasterData.MainCarriageATD : (MasterShipment != null ? MasterShipment.MainCarriageATD : null);
-                    Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
-                    Shipment.MasterShipmentNumber = MasterData.MasterShipmentNumber;
+
+                        Shipment.MainCarriageLeg1ETD=MasterData.MainCarriageETD != null ? MasterData.MainCarriageETD : (MasterShipment != null ? MasterShipment.MainCarriageETD : null);
+
+                        Shipment.MainCarriageLeg1ETA = MasterData.MainCarriageETA != null ? MasterData.MainCarriageETA : (MasterShipment != null ? MasterShipment.MainCarriageETA : null);
+
+                        Shipment.MainCarriageLeg1ATD = MasterData.MainCarriageATD != null ? MasterData.MainCarriageATD : (MasterShipment != null ? MasterShipment.MainCarriageATD : null);
+
+                        Shipment.MainCarriageLeg1ATA = MasterData.MainCarriageATA != null ? MasterData.MainCarriageATA : (MasterShipment != null ? MasterShipment.MainCarriageATA : null);
+
+                         Shipment.MasterShipmentNumber = MasterData.MasterShipmentNumber;
+
+
+
+
+
 
                     if (!string.IsNullOrEmpty(MasterData.Transshipment1CarrierId))
                     {
@@ -693,19 +734,32 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.Transshipment1OBL = MasterData.Transshipment1AdditionalMAWBOBLBL;
                     }
 
-                    if (!string.IsNullOrEmpty(MasterData.Transshipment1VesselName))
+                    if (!string.IsNullOrEmpty(MasterData.Transshipment1VesselId))
                     {
-                        Shipment.Transshipment1Vessel = MasterData.Transshipment1VesselName;
+                        string vessel = Vessels.ContainsKey(MasterData.Transshipment1VesselId) ? Vessels[MasterData.Transshipment1VesselId] != null ? Vessels[MasterData.Transshipment1VesselId] : null : null;
+
+                        Shipment.Transshipment1Vessel = vessel;
                     }
 
                     Shipment.Transshipment1ETD = MasterData.Transshipment1ETD != null ? MasterData.Transshipment1ETD : (MasterShipment != null ? MasterShipment.Transshipment1ETD : null);
                     Shipment.Transshipment1ETA = MasterData.Transshipment1ETA != null ? MasterData.Transshipment1ETA : (MasterShipment != null ? MasterShipment.Transshipment1ETA : null);
                     Shipment.Transshipment1ATD = MasterData.Transshipment1ATD != null ? MasterData.Transshipment1ATD : (MasterShipment != null ? MasterShipment.Transshipment1ATD : null);
                     Shipment.Transshipment1ATA = MasterData.Transshipment1ATA != null ? MasterData.Transshipment1ATA : (MasterShipment != null ? MasterShipment.Transshipment1ATA : null);
-                }
 
+
+            
+
+
+                }
                 else
                 {
+
+
+                    //if (MasterData.CutoffDate != null)
+                    //{
+                    //    Shipment.MainCarriageLeg1CutoffDate = MasterData.CutoffDate;
+
+                    //}
                     if (MasterShipment != null)
                     {
                         Shipment.Transshipment1ETD = MasterShipment != null ? MasterShipment.Transshipment1ETD : null;
@@ -799,6 +853,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                 }
                             }
 
+
+
                             if (!string.IsNullOrEmpty(MasterShipment.MainCarriageCarrierNumber))
                             {
                                 Shipment.MainCarriageLeg1VoyageNo = MasterShipment.MainCarriageCarrierNumber;
@@ -814,10 +870,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                 Shipment.MainCarriageLeg1OBLDate = MasterShipment.MAWBOBLDate;
                             }
 
-                            if (!string.IsNullOrEmpty(MasterShipment.MainCarriageVesselName))
+
+                            if (!string.IsNullOrEmpty(MasterShipment.MainCarriageVesselId))
                             {
-                                Shipment.MainCarriageLeg1Vessel = MasterShipment.MainCarriageVesselName;
+                                string vessel = Vessels.ContainsKey(MasterShipment.MainCarriageVesselId) ? Vessels[MasterShipment.MainCarriageVesselId] != null ? Vessels[MasterShipment.MainCarriageVesselId] : null : null;
+
+                                Shipment.MainCarriageLeg1Vessel = vessel;
+
                             }
+
 
                             if (!string.IsNullOrEmpty(MasterShipment.Transshipment1CarrierId))
                             {
@@ -839,10 +900,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                 Shipment.Transshipment1OBL = MasterShipment.Transshipment1AdditionalMAWBOBLBL;
                             }
 
-                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment1VesselName))
+                            if (!string.IsNullOrEmpty(MasterShipment.Transshipment1VesselId))
                             {
-                                Shipment.Transshipment1Vessel = MasterShipment.Transshipment1VesselName;
+                                string vessel = Vessels.ContainsKey(MasterShipment.Transshipment1VesselId) ? Vessels[MasterShipment.Transshipment1VesselId] != null ? Vessels[MasterShipment.Transshipment1VesselId] : null : null;
+
+                                Shipment.Transshipment1Vessel = vessel;
                             }
+
+
+                          
+
                         }
                     }
                     else
@@ -871,7 +938,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                         }
 
-
+                   
 
                     }
 
@@ -881,9 +948,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 myDataProvider.Shipments.Add(Shipment);
                 #endregion
+
+
             });
 
             return myDataProvider;
         }
+
+
     }
 }

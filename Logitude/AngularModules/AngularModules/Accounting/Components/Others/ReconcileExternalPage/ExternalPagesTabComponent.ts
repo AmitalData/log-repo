@@ -23,7 +23,7 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 import { reject } from 'q';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ExternalPagesTabComponent.html'
 })
 
@@ -52,7 +52,6 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     preventSelect: boolean = false;
     public isRTL: boolean = false;
     public Title: string = "";
-    public DontShowLocal: boolean = false;
 
 
 
@@ -63,7 +62,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         this.LoadResources();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.DontShowLocal = SessionLocator.LoggedUserPM.DontShowLocal;
+
         this.SetComponentArgs(entityArgs);
 
         this.SetUIProperties();
@@ -350,7 +349,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         });
 
         this.columns.push({
-            FieldName: this.DontShowLocal ? 'StatusName' : 'StatusLocalName',
+            FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'StatusName' : 'StatusLocalName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("ReconcileExternalPage.F.StatusName"),
             Styles: { width: '140px' },
@@ -360,7 +359,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         });
 
         this.columns.push({
-            FieldName: this.DontShowLocal ? 'EntryTypeEnglishName' : 'EntryTypeLocalName',
+            FieldName: SessionLocator.LoggedUserPM.DontShowLocal ? 'EntryTypeEnglishName' : 'EntryTypeLocalName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("ReconcileExternalPage.F.EntryTypeEnglishName"),
             Styles: { width: '140px' },
@@ -404,10 +403,9 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
 
+        filters.PageSize = 50;
+        filters.PageIndex = 0;
         filters.GetCount = true;
-
-        filters.PageSize = take;
-        filters.PageIndex = skip;
 
         filters.SortBy = "PageNo"; //FromDate
         filters.SortDirection = "Descending";
@@ -467,10 +465,10 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         var externalPagePM;
-        this._ReconcileExternalPagePMService.get(externalPage.Id).subscribe((myResult:any) =>
+        this._ReconcileExternalPagePMService.get(externalPage.Id).subscribe((myResult) =>
         {
             externalPagePM = myResult.Result;
-            this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(externalPage.Id, this.ObjectTableName).subscribe((myResult:any) =>
+            this._ReconcileExternalPageExtendedPMService.CheckLastApprovedBankPageAndReconciledLine(externalPage.Id, this.ObjectTableName).subscribe((myResult) =>
             {
                 if (!myResult.HasError) {
                     if (myResult.Result == null) {
@@ -501,7 +499,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         this.EnableReconcileEditButton = false;
-        this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult:any) =>
+        this._ReconcileExternalPageExtendedPMService.GetDraftPage(this.EntityPM.Id, this.ObjectTableName).subscribe((myResult) =>
         {
             this.CurrentSession.StopBusyIndicator();
             var draftPage = myResult.Result;
@@ -526,7 +524,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
 
     CheckRestorePossibility(id: string, entityPM: any) {
 
-        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response:ServiceResponse) => {
+        this._ReconcileExternalPageExtendedPMService.CheckRestorePossibility(id).subscribe((response) => {
             this.CurrentSession.StopBusyIndicator();
 
             if (!response.HasError) {
@@ -604,7 +602,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
     {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._ExternalPageAdditionalDataPMService.get(objectTableId, entityId)
-            .subscribe((response:any) =>
+            .subscribe(response =>
             {
                 console.log("[GetAdditionalData]", response);
                 this.CurrentSession.StopBusyIndicator();
@@ -625,11 +623,11 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         if(this.ObjectTableName != 'GLAccount')
             console.error("[ExternalAdjustButtonClicked] table is not glaccount !!!!!!!");
 
-        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) =>
+        this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) =>
         {
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
-                var transaction = result;
+                var transaction = result.Result;
                 var openAmountCurrency = transaction ? transaction.OpenAmountCurrencySign : "";
                 this.showReconcileWindow(openAmountCurrency);
 
@@ -637,14 +635,7 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
             this.CurrentSession.StopBusyIndicator();
         });
     }
-    get DateFormat() { return this.EntityPM.DateFormat; }
-    set DateFormat(value: string) {
-        if (this.EntityPM.DateFormat != value) {
-            this.EntityPM.DateFormat = value;
 
-
-        }
-    }
     showReconcileWindow(currency: any)
     {
 
@@ -653,15 +644,14 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.openAmountCurrency = currency; // CurrencySign
         windowArgs.ObjectTableName = this.ObjectTableName;
+
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 900;
         logitudeWindow.Height = 800;
         logitudeWindow.IsFullScreen = true;
-        var BankName = this.DontShowLocal ? this.EntityPM.EnglishName : this.EntityPM.LocalName == null ? this.EntityPM.EnglishName : this.EntityPM.LocalName;
 
-        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile") + ' - ' + BankName;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.ExternalReconcile");
 
-        logitudeWindow.IsFullScreen = true;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) =>

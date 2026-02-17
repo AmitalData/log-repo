@@ -1,10 +1,9 @@
 ﻿using Logitude.BL.ShipmentsModel.CustomFilters;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -57,6 +56,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
                                                     where f.Tenant == tenant 
                                                     && myShipment.Tenant == tenant
+                                                    && myShipmentMasterData.Tenant == tenant
                                                     && f.Id == myPackageId
                                                     select new ContainerFollowUpList()
                                                     {
@@ -150,6 +150,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 SecurityUtility.CheckContactFeature("ContainerFollowUp", "READ", authToken.Tenant);
 
                 int tenant = authToken.Tenant;
+
+                if (filters.Tenant != null)
+                {
+                    tenant = tenant;
+                }
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -247,20 +252,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 entityPocos = genericFilter.GetFilteredQuery<ShipmentPackage>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
 
-
-
-                IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
-                string myObjectTableId = (from d in myFreightContext.ObjectTables where d.Name == "Shipment" select d.Id).FirstOrDefault();
-
-                List<string> allStatusedCodes_DEP = new List<string>();
-                allStatusedCodes_DEP.Add("SDEP");
-                allStatusedCodes_DEP.Add("SDE2");
-                allStatusedCodes_DEP.Add("SDE3");
-                allStatusedCodes_DEP.Add("SDE4");
-                allStatusedCodes_DEP.Add("ONCD");
-
-                List<string> allStatusedIds_DEP = (from d in myFreightContext.EntityStatus where d.Tenant == tenant && d.ObjectTableId == myObjectTableId && allStatusedCodes_DEP.Contains(d.Code) select d.Id).ToList();
-
                 IQueryable<ContainerFollowUpList> entityLists = (from f in entityPocos.Include("PackageType").Include("DeliveryTransportMode").Include("ECRTransportMode")
 
                                                                  join db_Shipments in MyContext.Shipments.Include("Direction").Include("TransportMode").Include("ShipmentLevel").Include("ShipmentType").Include("ShipperCard").Include("ConsigneeCard").Include("CustomerCard").Include("CustomerCard.PrimaryContact")
@@ -268,11 +259,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                                                                  from myShipment in PackagesShipments
 
                                                                  join db_MasterData in MyContext.ShipmentMasterDatas.Include("MainCarriageCarrierCard").Include("MainCarriageVessel")
-                                                                 on myShipment equals db_MasterData.Shipment into MastersShipments
+                                                                 on myShipment.MasterShipmentDataId equals db_MasterData.Id into MastersShipments
                                                                  from myShipmentMasterData in MastersShipments.DefaultIfEmpty()
 
                                                                  where f.Tenant == tenant
                                                                  && myShipment.Tenant == tenant
+                                                                 && myShipmentMasterData.Tenant == tenant
                                                                  && myShipment.IsCancelled == false
                                                                  select new ContainerFollowUpList()
                                                                  {
@@ -311,7 +303,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                                                                      DeliveryTransportModeName = f.DeliveryTransportMode == null ? null : f.DeliveryTransportMode.Name,
                                                                      ECRTransportModeCode = f.ECRTransportModeCode,
                                                                      ECRTransportModeName = f.ECRTransportMode == null ? null : f.ECRTransportMode.Name,
-
+                                                                     
                                                                      // Shipment fields
                                                                      DirectionId = myShipment.DirectionId,
                                                                      TransportModeId = myShipment.TransportModeId,
@@ -341,18 +333,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                                                                      CarrierName = myShipmentMasterData == null ? null : (myShipmentMasterData.MainCarriageCarrierCard == null ? null : myShipmentMasterData.MainCarriageCarrierCard.EnglishName),
                                                                      VesselName = myShipmentMasterData == null ? null : (myShipmentMasterData.MainCarriageVessel == null ? null : myShipmentMasterData.MainCarriageVessel.EnglishName),
                                                                      LongMaster = myShipmentMasterData == null ? null : (myShipment.TransportModeId == "A" ? (!string.IsNullOrEmpty(myShipmentMasterData.AirlinePrefix) && !string.IsNullOrEmpty(myShipmentMasterData.Master) ? myShipmentMasterData.AirlinePrefix + "-" + myShipmentMasterData.Master : "") : myShipmentMasterData.Master),
-
-                                                                     InTransit =
-                                                                     (
-                                                                     myShipment.DirectionId == "I"
-                                                                     && allStatusedIds_DEP.Contains(myShipment.StatusId) 
-                                                                     &&
-                                                                         (
-                                                                         myShipment.TransportModeId == "O" && (myShipment.ShipmentTypeId == "FCLD" || myShipment.ShipmentTypeId == "MYGO")
-                                                                         ||
-                                                                         myShipment.TransportModeId == "I" && (myShipment.ShipmentTypeId == "FTL" || myShipment.ShipmentTypeId == "MYGI")
-                                                                         )
-                                                                     ) ? true : false,
                                                                  });
 
 

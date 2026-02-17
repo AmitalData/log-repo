@@ -36,7 +36,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool TruckersInvoicesBlock { get; set; }
         public bool VendorsInvoicesBlock { get; set; }
         public bool WarehousesInvoicesBlock { get; set; }
-
-        public bool ShipmentCreationWarning { get; set; }
     }
 }

@@ -11,24 +11,20 @@ export class MessageWindow {
     public IsOverAll: boolean = false;
     LayoutDirection: string = 'ltr';
     OkButtonText: string = "Ok";
-    EventButtonText: string = "";
-
     public ZIndex: number = 0;
     @Output() WindowClosed = new EventEmitter();
-    @Output() SendEvent = new EventEmitter();
     public RTL: boolean = false;
     public ShowSuccessIcon: boolean = false;
-    public ShowEventButton: boolean = false;
     public ShowErrorIcon: boolean = false;
-    public ShowIcon: boolean = true;
     public ShowWarningIcon: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsMessageMultiLine: boolean = false;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Message");
         this.OkButtonText = TextCodeTranslator.Translate("General.B.Ok");
     }
+
+
 
     private message: string = null;
     get Message() { return this.message; }
@@ -39,16 +35,14 @@ export class MessageWindow {
         }
     }
 
+
+
+
+
     private ComponentRef: any = null;
     private InstanceComponent: MessageWindowTemplateComponent = null;
     public Show(message: string) {
         this.Message = message;
-
-        if (message.indexOf("Internet Connection Problem:") > -1) {
-            this.Width = 440;
-            this.Height = 440;
-        }
-
         if (!this.CurrentSession) {
             this.CurrentSession = SessionLocator.SelectedSession;
         }
@@ -92,30 +86,11 @@ export class MessageWindow {
 
         this.InstanceComponent = null;
     }
-    public EventClicked() {
-
-        if (this.ComponentRef != null) {
-            this.ComponentRef.destroy();
-            this.ComponentRef = null;
-
-            this.SendEvent.emit("event");
-        }
-
-        this.InstanceComponent = null;
-    }
-
-    public static showErrorMessage(msg: string): MessageWindow {
-        const msgWin: MessageWindow = new MessageWindow();
-        msgWin.ShowErrorIcon = true;
-        msgWin.Title = TextCodeTranslator.Translate('General.B.Erroroccured');
-        msgWin.Show(msg);
-        return msgWin;
-    }
 }
 
 @Component({
     selector: 'MessageWindow',
-
+    moduleId: module.id,
     templateUrl: "./MessageWindow.html",
 })
 
@@ -127,22 +102,17 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     public Title: string = null;
     public Message: string = null;
     public ShowModal: boolean = true;
-    public ShowIcon: boolean = true;
     public WindowId: string = null;
     public OkButtonId: string = null;
     public IsOverAll: boolean = false;
     OkButtonText: string = "Ok";
-    EventButtonText: string = "";
     public ZIndex: number = 0;
     LayoutDirection: string = 'ltr';
     public ShowSuccessIcon: boolean = false;
     public ShowErrorIcon: boolean = false;
     public ShowWarningIcon: boolean = false;
     public RTL: boolean = false;
-    public ShowEventButton: boolean = false;
-
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsMessageMultiLine: boolean = false;
     constructor() {
         this.LayoutDirection = Settings.LayoutDirection;
         this.Title = TextCodeTranslator.Translate("General.O.Message");
@@ -165,14 +135,11 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
         this.Message = myWindow.Message;
         this.IsOverAll = myWindow.IsOverAll;
         this.ZIndex = myWindow.ZIndex;
-        this.EventButtonText=myWindow.EventButtonText;
-        this.ShowEventButton = myWindow.ShowEventButton;
+        this.RTL = myWindow.RTL;
         this.ShowSuccessIcon = myWindow.ShowSuccessIcon;
         this.ShowErrorIcon = myWindow.ShowErrorIcon;
-        this.ShowIcon = !(myWindow.ShowIcon == false);
-        this.ShowErrorIcon = myWindow.ShowErrorIcon;
         this.ShowWarningIcon = myWindow.ShowWarningIcon;
-        this.IsMessageMultiLine = myWindow.IsMessageMultiLine;
+        
 
         if (myWindow.Width != null) {
             this.Width = myWindow.Width + "px";
@@ -267,12 +234,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     OkButtonClicked() {
         this.MessageWindow.Close();
     }
-    EventButtonClicked() {
-        this.MessageWindow.EventClicked();
-    }
-    OnCTRL_S_HotKeyPressed(){
-        this.OkButtonClicked();
-    }
+
     GetIconPath() {
         var path = "./Images/InfoIcon.png";
         if (this.ShowSuccessIcon)
@@ -281,7 +243,7 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
             path = "./Images/ErrorIcon.png";
         if (this.ShowWarningIcon)
             path = "./Images/SimplogIcons/Warning.png";
-
+        
         return path;
     }
 }

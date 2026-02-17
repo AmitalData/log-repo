@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
@@ -16,16 +16,6 @@ namespace Logitude.Server.Tools.Helpers
         {
             bool myResult = false;
 
-            if (myTransportModeId != null)
-            {
-                myTransportModeId = myTransportModeId.ToUpper();
-            }
-
-            if (myShipmentTypeId != null)
-            {
-                myShipmentTypeId = myShipmentTypeId.ToUpper();
-            }
-
             if (myTransportModeId == "A")
             {
                 myResult = true;
@@ -42,32 +32,6 @@ namespace Logitude.Server.Tools.Helpers
             }
 
             return myResult;
-        }
-        public static bool IsFCLEntity(string myTransportModeId, string myShipmentTypeId)
-        {
-            bool output = false;
-
-            if (myTransportModeId != null)
-            {
-                myTransportModeId = myTransportModeId.ToUpper();
-            }
-
-            if (myShipmentTypeId != null)
-            {
-                myShipmentTypeId = myShipmentTypeId.ToUpper();
-            }
-
-            if (myTransportModeId == "O" && (myShipmentTypeId == "FCLD" || myShipmentTypeId == "MYGO"))
-            {
-                output = true;
-            }
-
-            if (myTransportModeId == "I" && (myShipmentTypeId == "FTL" || myShipmentTypeId == "MYGI"))
-            {
-                output = true;
-            }
-
-            return output;
         }
 
         public static double Roundd(double? value, int digits)
@@ -653,127 +617,6 @@ namespace Logitude.Server.Tools.Helpers
             {
                 return 10 - (sum % 10);
             }
-        }
-        public static string Trim(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return null;
-            }
-
-            else
-            {
-                return value.Trim();
-            }
-        }
-        public static double GetValue(double? value)
-        {
-            if (value == null)
-            {
-                return 0;
-            }
-
-            else
-            {
-                return value.Value;
-            }
-        }
-
-        public static double? ComputeRatio(string directionId, string transportModeId, string shipmentTypeId, Tenant tenant)
-        {
-            double? ratio = null;
-            if (IsTenantFromUS(tenant))
-            {
-                ratio = GetRatioForUSTenant(directionId, transportModeId, shipmentTypeId);
-            }
-
-            if(ratio == null)
-            {
-                switch (transportModeId)
-                {
-                    case "A":
-                        {
-                            ratio = tenant.AirRatio;
-                            break;
-                        }
-
-                    case "O":
-                        {
-                            if (shipmentTypeId == "FCL" || shipmentTypeId == "FCLD")
-                            {
-                                ratio = tenant.FCLRatio;
-                            }
-
-                            else
-                            {
-                                ratio = tenant.LCLRatio;
-                            }
-
-                            break;
-                        }
-
-                    case "I":
-                        {
-                            if (shipmentTypeId == "FTL")
-                            {
-                                ratio = tenant.FTLRatio;
-                            }
-
-                            else
-                            {
-                                ratio = tenant.LTLRatio;
-                            }
-
-                            break;
-                        }
-                }
-            }
-
-            return ratio;
-        }
-        private static bool IsTenantFromUS(Tenant tenant)
-        {
-            bool isFromUS = false;
-            Address address = null;
-            if (!string.IsNullOrEmpty(tenant.AddressId))
-            {
-                AddressRepository addressRepository = new AddressRepository(tenant.Id);
-                address = addressRepository.GetSingleAddress(tenant.AddressId, tenant.Id);                
-            }
-
-            if(address == null)
-            {
-                isFromUS = false;
-            }
-
-            if (address.Country != null && address.Country.Code.ToUpper() == "US")
-            {
-                isFromUS = true;
-            }
-
-            return isFromUS;
-        }
-        private static double? GetRatioForUSTenant(string directionId, string transportModeId, string shipmentTypeId)
-        {
-            double? ratio = null;
-
-            if (directionId == "D")
-            {
-                if (transportModeId == "A")
-                {
-                    ratio = 7;
-                }
-
-                else if (transportModeId == "I")
-                {
-                    if (shipmentTypeId == "LTL")
-                    {
-                        ratio = 9;
-                    }
-                }
-            }
-
-            return ratio;
         }
     }
 

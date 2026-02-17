@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUCARSC in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class CCUCARSC : UNIFBASICPOCO, INotifyPropertyChanged
+    public partial class CCUCARSC : INotifyPropertyChanged
     {
 
         public CCUCARSC()
@@ -29,7 +29,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
 
         #region Properties
- 
+
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>
@@ -210,7 +210,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for FOB in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> FOB
+        public virtual global::System.Nullable<double> FOB
         {
             get
             {
@@ -225,14 +225,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _FOB;
+        private global::System.Nullable<double> _FOB;
 
 
         /// <summary>
         /// There are no comments for GENERALTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> GENERALTAX
+        public virtual global::System.Nullable<double> GENERALTAX
         {
             get
             {
@@ -247,14 +247,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _GENERALTAX;
+        private global::System.Nullable<double> _GENERALTAX;
 
 
         /// <summary>
         /// There are no comments for BUYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> BUYTAX
+        public virtual global::System.Nullable<double> BUYTAX
         {
             get
             {
@@ -269,14 +269,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _BUYTAX;
+        private global::System.Nullable<double> _BUYTAX;
 
 
         /// <summary>
         /// There are no comments for VATRESHIMON in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> VATRESHIMON
+        public virtual global::System.Nullable<double> VATRESHIMON
         {
             get
             {
@@ -291,7 +291,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _VATRESHIMON;
+        private global::System.Nullable<double> _VATRESHIMON;
 
 
         /// <summary>

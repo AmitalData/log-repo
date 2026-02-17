@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -11,7 +11,7 @@ using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -24,13 +24,8 @@ using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.Utils;
-using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.BL.Resolvers;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
+namespace WebFreight.Web.Controllers.AccountingModel 
 {
     //[RoutePrefix("api/PostDatedChequesRedemptionOp")]
     public partial class ARPaymentChequeOpController : ApiController
@@ -46,9 +41,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 PostDatedChequesRedemptionBatch postDatedChequesRedemptionBatch = new PostDatedChequesRedemptionBatch();
                 postDatedChequesRedemptionBatch.RunAllPayablePostDatedARPaymentCheques(tenant);
                 string responseText = postDatedChequesRedemptionBatch.ResponseText();
@@ -65,28 +58,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage GetCountOpenChequesByBankAccount(int tenant, string bankId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
-                var count = arPaymentChequeQueryService.GetOpenChequesByBankAccount(bankId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, count);
-            }
 
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
 
-        }
 
-       
 
+
+        //[Route("{obj:PostDatedChequesRedemptionPM}/InsertPostDatedChequesRedemption")]
         public HttpResponseMessage PostInsertPostDatedChequesRedemption(ARPaymentChequePM entityPm)
         {
             try
@@ -166,57 +143,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-        public HttpResponseMessage PostReturnChequeToCustomer([FromUri] ARPaymentChequeReturnServiceArguments serviceArguments)
-        {
-            try
-            {
-                AuthinticateTenant();
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
-                {
-                    ARPaymentChequeReturnService chequeReturnService = new ARPaymentChequeReturnService(serviceArguments);
-                    chequeReturnService.ReturnChequeToCustomer();
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-        [HttpGet]
-        public HttpResponseMessage CheckARPaymentChequeAlreadyExists(string bank, string bankBranch, string bankAccount, string chequeOrPaymentRef)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(authToken.Tenant);
-
-                ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(authToken.Tenant);
-                var error = arPaymentChequeQueryService.CheckARPaymentChequeAlreadyExists(chequeOrPaymentRef, bank, bankBranch, bankAccount, authToken.Tenant, showLocal);
-
-                return Request.CreateResponse(HttpStatusCode.OK, error);
-              
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
 
 
-        private static void AuthinticateTenant()
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-        }
+
     }
 
 

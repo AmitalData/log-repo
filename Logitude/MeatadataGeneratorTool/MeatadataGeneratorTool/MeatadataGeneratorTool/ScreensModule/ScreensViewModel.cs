@@ -115,7 +115,6 @@ namespace MeatadataGeneratorTool.ScreensModule
             }
         }
 
-
         public Visibility ButtonsVisibility { get; set; }
 
         private string errorMessages;
@@ -369,12 +368,6 @@ namespace MeatadataGeneratorTool.ScreensModule
                 }
                 if (ScreenFieldCol1ObsList.Where(a => a.ObjectFieldName == item.ObjectFieldName).FirstOrDefault() == null)
                 {
-                    while ((item.Row - 1) > ScreenFieldCol1ObsList.Count)
-                    {
-                        var Empty_Field = new ScreenFieldViewModel(viewModel, viewModel.SelectedScreen, true);
-                        Empty_Field.ObjectFieldName = "Empty_Field";
-                        ScreenFieldCol1ObsList.Add(Empty_Field);
-                    }
                     ScreenFieldCol1ObsList.Add(item);
                     FirePropertyChanged("ScreenFieldCol1ObsList");
                 } 
@@ -387,12 +380,6 @@ namespace MeatadataGeneratorTool.ScreensModule
                 }
                 if (ScreenFieldCol2ObsList.Where(a => a.ObjectFieldName == item.ObjectFieldName).FirstOrDefault() == null)
                 {
-                    while ((item.Row -1 ) > ScreenFieldCol2ObsList.Count)
-                    {
-                        var Empty_Field = new ScreenFieldViewModel(viewModel, viewModel.SelectedScreen, true);
-                        Empty_Field.ObjectFieldName = "Empty_Field";
-                        ScreenFieldCol2ObsList.Add(Empty_Field);
-                    }
                     ScreenFieldCol2ObsList.Add(item);
                     FirePropertyChanged("ScreenFieldCol2ObsList");
                 }
@@ -405,12 +392,6 @@ namespace MeatadataGeneratorTool.ScreensModule
                 }
                 if (ScreenFieldCol3ObsList.Where(a => a.ObjectFieldName == item.ObjectFieldName).FirstOrDefault() == null)
                 {
-                    while ((item.Row - 1) > ScreenFieldCol3ObsList.Count)
-                    {
-                        var Empty_Field = new ScreenFieldViewModel(viewModel, viewModel.SelectedScreen, true);
-                        Empty_Field.ObjectFieldName = "Empty_Field";
-                        ScreenFieldCol3ObsList.Add(Empty_Field);
-                    }
                     ScreenFieldCol3ObsList.Add(item);
                     FirePropertyChanged("ScreenFieldCol3ObsList");
                 }
@@ -423,12 +404,6 @@ namespace MeatadataGeneratorTool.ScreensModule
                 }
                 if (ScreenFieldCol4ObsList.Where(a => a.ObjectFieldName == item.ObjectFieldName).FirstOrDefault() == null)
                 {
-                    while ((item.Row - 1) > ScreenFieldCol4ObsList.Count)
-                    {
-                        var Empty_Field = new ScreenFieldViewModel(viewModel, viewModel.SelectedScreen, true);
-                        Empty_Field.ObjectFieldName = "Empty_Field";
-                        ScreenFieldCol4ObsList.Add(Empty_Field);
-                    }
                     ScreenFieldCol4ObsList.Add(item);
                     FirePropertyChanged("ScreenFieldCol4ObsList");
                 }
@@ -441,12 +416,6 @@ namespace MeatadataGeneratorTool.ScreensModule
                 }
                 if (ScreenFieldCol5ObsList.Where(a => a.ObjectFieldName == item.ObjectFieldName).FirstOrDefault() == null)
                 {
-                    while ((item.Row - 1) > ScreenFieldCol5ObsList.Count)
-                    {
-                        var Empty_Field = new ScreenFieldViewModel(viewModel, viewModel.SelectedScreen, true);
-                        Empty_Field.ObjectFieldName = "Empty_Field";
-                        ScreenFieldCol5ObsList.Add(Empty_Field);
-                    }
                     ScreenFieldCol5ObsList.Add(item);
                     FirePropertyChanged("ScreenFieldCol5ObsList");
                 }

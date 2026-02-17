@@ -8,10 +8,9 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAPInvoiceLineComponent.html',
 })
 
@@ -23,37 +22,18 @@ export class AddEditAPInvoiceLineComponent {
     public EnableMultiRateAPInvoices: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public GLAccountsFilterItems: ApiQueryFilters;
-
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
         if (SessionLocator.AccountingSettingPM) {
             this.EnableMultiRateAPInvoices = SessionLocator.AccountingSettingPM.EnableMultiRateAPInvoices;
         }
-        this.InitLOVFilters();
     }
-    InitLOVFilters() {
-        this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
-    }
- 
-    public ChargeTypesQueryFilters: ApiQueryFilters;
-    private BuildQueryFilters() {
-        this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
-    }
- 
-     
-    public TotalVATOnly: boolean = false;
+
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
         this.EntityPM = dataContext.invoiceLinePM;
-        this.TotalVATOnly = this.DataContext.fatherComponent.EntityPM.TotalVATOnly;
         this.Clone();
-       // this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {
@@ -67,23 +47,21 @@ export class AddEditAPInvoiceLineComponent {
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (!this.TotalVATOnly) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
-                var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
+        if (AppTool.IsNullOrEmpty(this.EntityPM.VatTypeId)) {
+            var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
+            errors.push(msg.replace("%FieldName", field));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
+            if (!this.EntityPM.VatIsMultiPercentage) {
+                var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatPercentage");
                 errors.push(msg.replace("%FieldName", field));
             }
+        }
 
-            if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
-                if (!this.EntityPM.VatIsMultiPercentage) {
-                    var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatPercentage");
-                    errors.push(msg.replace("%FieldName", field));
-                }
-            }
-
-            if (this.EntityPM.VatIsMultiPercentage) {
-                if (!SessionLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
-                    errors.push(VatTypesValidator.GetError());
-                }
+        if (this.EntityPM.VatIsMultiPercentage) {
+            if (!SessionLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
+                errors.push(VatTypesValidator.GetError());
             }
         }
 

@@ -8,7 +8,7 @@ import { EntityResourceService } from '../../Infrastructure/Services/EntityResou
 import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SharedLogisticsMoneyPermissiosComponent.html',
 })
 

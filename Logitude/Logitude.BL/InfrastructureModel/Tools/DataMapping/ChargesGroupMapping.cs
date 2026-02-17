@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.Name = entityPM.Name;
             entityPOCO.Code = entityPM.Code;
             entityPOCO.ViewOrder = entityPM.ViewOrder;
-            entityPOCO.QuoteGroupSectionID = entityPM.QuoteGroupSectionID;
         }
 
 

@@ -23,10 +23,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUTSRUFOT GetSingle(int FILENO, int LINENO, int? tenant)
+        public CCUTSRUFOT GetSingle(int FILENO, int LINENO)
         {
             return (from a in context.CCUTSRUFOTs
-                    where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == tenant
+                    where a.FILENO == FILENO && a.LINENO == LINENO
                     select a).FirstOrDefault();
         }
 
@@ -39,8 +39,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUTSRUFOT entity)
         {
             context.CCUTSRUFOTs.Add(entity);
-            if(entity.TENANT.HasValue)
-                SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUTSRUFOT entity)
@@ -54,9 +52,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             //http://forums.devart.com/viewtopic.php?t=13223
             //context.ExecuteStoreCommand 
             context.CCUTSRUFOTs.Remove(entity);
-
-            if (entity.TENANT.HasValue)
-                SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUTSRUFOT entity)
@@ -65,9 +60,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUTSRUFOTs.Attach(entity); context.SetAsModified(entity);
             }
-
-            if (entity.TENANT.HasValue)
-                SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUTSRUFOT> All()
@@ -89,20 +81,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             var keys = entityKeys as CCUFILEMKeys;
             return (from a in context.CCUTSRUFOTs
-                    where a.FILENO == keys.FILENO && a.TENANT == keys.TENANT
+                    where a.FILENO == keys.FILENO
                     select a).ToList();
         }
 
         public CCUTSRUFOT GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUTSRUFOTKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO, keys.Tenant);
+            return this.GetSingle(keys.FILENO, keys.LINENO);
         }
 
         public int FastDeleteMulti(CCUFILEMKeys parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUTSRUFOT>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
+            return context.DeleteWhere<CCUTSRUFOT>(rec => rec.FILENO == keys.FILENO);
         }
     }
 }

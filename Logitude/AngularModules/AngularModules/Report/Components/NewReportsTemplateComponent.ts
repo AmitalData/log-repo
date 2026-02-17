@@ -1,24 +1,22 @@
 declare var System: any;
 declare var window: any;
 
-import { Component, OnInit, Output } from '@angular/core';
+import {Component, OnInit, Output}  from '@angular/core';
 
-import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
+import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 
-import { DocumentTypeTemplatePMExtendedService } from '../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
-import { ReportsTemplatePM } from '../../Common/EntityPMs/ReportsTemplatePM';
-import { Guid } from '../../Infrastructure/Utilities/Guid';
-import { ReportsTemplatePMService } from '../../Common/Services/StandardPMs/ReportsTemplatePMService';
-import { ClassLevelValidator } from '../../Infrastructure/Validators/ClassLevelValidator';
-import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
-import { ReportsTemplatePMExtendedService } from '../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
-import { MessageWindow } from '../../Controls/Windows/MessageWindow';
+import {DocumentTypeTemplatePMExtendedService} from '../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
+import {ReportsTemplatePM} from '../../Common/EntityPMs/ReportsTemplatePM';
+import {Guid} from '../../Infrastructure/Utilities/Guid';
+import {ReportsTemplatePMService} from '../../Common/Services/StandardPMs/ReportsTemplatePMService';
+import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
+import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
+import {ReportsTemplatePMExtendedService} from '../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
+import {MessageWindow} from '../../Controls/Windows/MessageWindow';
 declare var querySelection, StringToBase64, resultToUnitArray: any;
-import { AppTool } from '../../Infrastructure/Tools';
-import { CopyFromTenant0ExtendedListService } from 'Accounting/Services/ExtendedLists/CopyFromTenant0ExtendedListService';
-
+import {AppTool} from '../../Infrastructure/Tools';
 @Component({
 
     moduleId: './Report/Components/',
@@ -32,26 +30,19 @@ export class NewReportsTemplateComponent implements OnInit {
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     reportsTemplatePMService: ReportsTemplatePMService;
     ReportsTemplatePM: ReportsTemplatePM = new ReportsTemplatePM();
-    reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService;
+    reportsTemplatePMExtendedService:ReportsTemplatePMExtendedService;
     ValidationErrorsList: string[] = [];
     NewReportTypeRadio: string = "NewReportTypeRadio_";
     NewReportTypeRadioChoice: string = "Blank";
     ReportTemplateFileId: string = Guid.NewRandomString();
     validator: ClassLevelValidator;
     Area: string;
-    IsFromScheduler: boolean = false;
-    UseStimul: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public _copyFromTenant0ExtendedListService: CopyFromTenant0ExtendedListService;
-    public FromTenantZero = "FromTenantZero";
-    private ReportTableName = "Report Templates";
-
     constructor() {
         this.reportsTemplatePMService = new ReportsTemplatePMService();
         this.NewReportTypeRadio += this.CurrentSession.GetNewId("RadioButton");
         this.reportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
         this._documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
-        this._copyFromTenant0ExtendedListService = new CopyFromTenant0ExtendedListService();
         this.validator = new ClassLevelValidator();
     }
     IsVisibile: boolean = false;
@@ -60,20 +51,14 @@ export class NewReportsTemplateComponent implements OnInit {
     }
     TemplateData: any;
     DataViewModel: any;
-    ReportEntityId: string;
-    ObjectTableId: string;
-
     SetWindowArgs(args: any) {
         this.DataViewModel = args.DataViewModel;
         this.TemplateType = args.TemplateType;
         this.Area = args.Area;
-        this.IsFromScheduler = args.IsFromScheduler ? true : false;
-        this.ReportEntityId = args.ReportEntityId;
-        this.ObjectTableId = args.ObjectTableId;
-        this.UseStimul = args.UseStimul ?? true;
+        
     }
 
-    NewReportTypeRadioChange(type: string) {
+    NewReportTypeRadioChange(type:string) {
         this.NewReportTypeRadioChoice = type;
     }
 
@@ -91,7 +76,7 @@ export class NewReportsTemplateComponent implements OnInit {
         if (file) {
             var fileExtension = file.name.split('.')[1];
             if (fileExtension) {
-                if (((fileExtension == "mrt" || fileExtension == "MRT") && this.TemplateType == "R") || ((fileExtension == "xml" || fileExtension == "XML") && (this.TemplateType == "M" || this.TemplateType == "E"))) {
+                if (((fileExtension == "mrt" || fileExtension == "MRT") && this.TemplateType == "R") || ((fileExtension == "xml" || fileExtension == "XML") && this.TemplateType == "M")) {
 
                     if (fileExtension.length > 10) {
                         this.ShowMessage("File extension should be less than or equal 10 characters");
@@ -112,7 +97,10 @@ export class NewReportsTemplateComponent implements OnInit {
 
 
 
-    
+
+
+
+
     ArrayBufferToBase64(file: any, viewmodel: any) {
 
         var reader: FileReader = new FileReader();
@@ -140,20 +128,7 @@ export class NewReportsTemplateComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    SaveButtonClicked() { 
-
-        if (this.NewReportTypeRadioChoice == this.FromTenantZero) {
-            this.CurrentSession.StartBusyIndicatorSaving();
-            this._copyFromTenant0ExtendedListService.copyTableFromTenant0(this.ReportTableName, this.DataViewModel.EntityPM.Code).subscribe((res: any) => {
-                var result: ServiceResponse = res;
-                if (!result.HasError) {
-                    this.CurrentSession.CloseCurrentWindowEmit("changed");
-                }
-                this.CurrentSession.StopBusyIndicator();
-            });
-            return;
-        }
-
+    SaveButtonClicked() {
         this.ValidationErrorsList = [];
         var errorsArray = this.validator.Validate("ReportsTemplate", this.ReportsTemplatePM);
         if (errorsArray.length > 0) {
@@ -166,34 +141,23 @@ export class NewReportsTemplateComponent implements OnInit {
             this.ValidationErrorsList.push("Please load template");
         }
 
-        const regex = new RegExp('^[^<+>#%&\\/\'"*?!:@=|]+$');
-        var valid: boolean = regex.test(this.ReportsTemplatePM.Description);
-        if (this.ReportsTemplatePM.Description && this.ReportsTemplatePM.Description.trim() && !valid) {
-            this.ValidationErrorsList.push(`Forbidden character in the Description: ${this.ReportsTemplatePM.Description}`);
-        }
-
         if (this.ValidationErrorsList.length == 0) {
             this.ReportsTemplatePM.TemplateData = this.TemplateData;
             this.ReportsTemplatePM.CreatedByUserId = SessionLocator.LoggedUserId;
             this.ReportsTemplatePM.UpdatedByUserId = SessionLocator.LoggedUserId;
 
             this.ReportsTemplatePM.TemplateType = this.TemplateType;
-            this.ReportsTemplatePM.UseStimul = this.UseStimul;
             this.ReportsTemplatePM.ReportId = this.DataViewModel.EntityPM.Id;
-            if (this.IsFromScheduler) {
-                this.ReportsTemplatePM.EntityId = this.ReportEntityId;
-                this.ReportsTemplatePM.ObjectTableId = this.ObjectTableId;
-            }
             if (this.NewReportTypeRadioChoice == "Blank") {
                 this.ReportsTemplatePM.TemplateData = null;
             }
 
             this.CurrentSession.StartBusyIndicatorSaving();
 
+          
+            if (this.NewReportTypeRadioChoice == "FromFile" && this.TemplateType == "M") {
 
-            if (this.NewReportTypeRadioChoice == "FromFile" && (this.TemplateType == "M")) {
-
-                this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.TemplateData).subscribe((res: any) => {
+                this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.TemplateData).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;
@@ -215,14 +179,19 @@ export class NewReportsTemplateComponent implements OnInit {
             }
 
             else this.ComplateSave();
+
+
         }
+
+
     }
+
 
     ComplateSave() {
         if (SessionLocator.Tenant == 0) {
             this.ReportsTemplatePM.IsSystem = true;
         }
-        this.ReportsTemplatePM.Tenant = SessionLocator.Tenant;
+
         this.reportsTemplatePMExtendedService.CreateReportTemplate(this.ReportsTemplatePM).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
@@ -230,94 +199,85 @@ export class NewReportsTemplateComponent implements OnInit {
                 var result = pmResponse.Result;
                 if (result) {
                     var viewModel = null;
+                  
+
                     this.ReportsTemplatePM = result;
                     if (this.DataViewModel) {
-                        if (this.Area != "GeneralSendComponent" && !this.IsFromScheduler) this.DataViewModel.IsChange = true;
-                        else if (!this.IsFromScheduler){
+                        if (this.Area != "GeneralSendComponent") this.DataViewModel.IsChange = true;
+                        else {
                             viewModel = this.DataViewModel.BuildViewModel(this.ReportsTemplatePM);
                         }
 
-                        if (this.TemplateType == "E") {
-                            this.ReportsTemplatePM.UseStimul ? this.DataViewModel.AddTemplateToExcelList(this.ReportsTemplatePM) : this.DataViewModel.AddTemplateToNoStimExcelList(this.ReportsTemplatePM);
-                            this.DataViewModel.EditExcelReportsTemplate(this.ReportsTemplatePM);
-                            this.CloseButtonClicked();
-                            return;
-                        }
                         if (this.TemplateType == "R") {
-                            this.AddTemplateToReportList();
-                            this.OpenStimulsoftDesigner();
-                            this.CloseButtonClicked();
-                            return;
-                        } if (this.TemplateType == "M" && !this.IsFromScheduler) {
-                            this.AddTemplateToMessageList(viewModel);
-                            this.Area == "GeneralSendComponent" ? this.DataViewModel.EditTemplate(viewModel, true) : this.DataViewModel.EditMessageReportsTemplate(this.ReportsTemplatePM, true);
-                            this.CloseButtonClicked();
-                            return;
+
+                            this.DataViewModel.ReportsTemplatePMLists.push(this.ReportsTemplatePM);
+                            this.DataViewModel.CurrentReportsTemplatePM = this.ReportsTemplatePM;
+                            if (this.DataViewModel.ReportsTemplatePMLists.length == 1) {
+                                this.DataViewModel.SetAsDefaultButtonClicked(this.TemplateType);
+                            }
+                        } else if (this.TemplateType == "M") {
+
+                            if (this.Area == "GeneralSendComponent") {
+
+                                this.DataViewModel.ReportTemplates.push(viewModel);
+                                this.DataViewModel.AllReportTemplates.push(viewModel);
+                                if (this.DataViewModel.ReportTemplates.length == 1) {
+                                    this.DataViewModel.SetTemplateAsDeflut(viewModel);
+                                }
+
+                                this.DataViewModel.Title = "Templates (" + this.DataViewModel.ReportTemplates.length + ")";
+                            }
+
+                            else {
+                                this.DataViewModel.MessageReportsTemplatePMLists.push(this.ReportsTemplatePM);
+                                this.DataViewModel.CurrentMessageReportsTemplatePM = this.ReportsTemplatePM;
+                                if (this.DataViewModel.MessageReportsTemplatePMLists.length == 1) {
+                                    this.DataViewModel.SetAsDefaultButtonClicked(this.TemplateType);
+                                }
+                            }  
+                            
                         }
-                        if (this.TemplateType == "M" && this.IsFromScheduler) {
-                            this.DataViewModel.AddNewMessageTemplateListFromPM(this.ReportsTemplatePM);
-                            this.CloseButtonClicked();
-                            return;
+
+                    }
+                    if (this.TemplateType == "R") {
+                        var windowArgs: any = {};
+                        windowArgs.DataViewModel = this;
+                        windowArgs.ProcessType = "SaveOnSameDocument";
+                        windowArgs.ReportTemplateId = this.ReportsTemplatePM.Id;
+                        windowArgs.Tenant = SessionLocator.Tenant;
+                        var widthwindow = window.innerWidth;
+                        var heighthwindow = window.innerHeight;
+                        var logWindow = new LogitudeWindow();
+
+                        logWindow.Width = widthwindow - 100;
+                        logWindow.Height = heighthwindow - 100;
+                        logWindow.Title = this.ReportsTemplatePM.Description;
+
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.WindowArgs = windowArgs;
+                        window.designerClosed = false;
+                        logWindow.Show("./Infrastructure/Components/StimulsoftDesigner/StimulsoftDesigner");
+                    }
+                    else if (this.TemplateType == "M") {
+                        if (this.Area == "GeneralSendComponent") {
+                            this.DataViewModel.EditTemplate(viewModel, true);
                         }
+                      else {
+                            this.DataViewModel.EditMessageReportsTemplate(this.ReportsTemplatePM, true);
+                        }  
+
+                        
                     }
 
                 }
             }
-
             this.CloseButtonClicked();
+
+
+
 
         });
 
-    }
-
-    AddTemplateToMessageList(viewModel: any) {
-        if (this.Area == "GeneralSendComponent") {
-
-            this.DataViewModel.ReportTemplates.push(viewModel);
-            this.DataViewModel.AllReportTemplates.push(viewModel);
-            if (this.DataViewModel.ReportTemplates.length == 1) {
-                this.DataViewModel.SetTemplateAsDeflut(viewModel);
-            }
-
-            this.DataViewModel.Title = "Templates (" + this.DataViewModel.ReportTemplates.length + ")";
-        }
-
-        else {
-            this.DataViewModel.MessageReportsTemplatePMLists.push(this.ReportsTemplatePM);
-            this.DataViewModel.CurrentMessageReportsTemplatePM = this.ReportsTemplatePM;
-            if (this.DataViewModel.MessageReportsTemplatePMLists.length == 1) {
-                this.DataViewModel.SetAsDefaultButtonClicked(this.TemplateType);
-            }
-        }
-    }
-
-    OpenStimulsoftDesigner() {
-        var windowArgs: any = {};
-        windowArgs.DataViewModel = this;
-        windowArgs.ProcessType = "SaveOnSameDocument";
-        windowArgs.ReportTemplateId = this.ReportsTemplatePM.Id;
-        windowArgs.Tenant = SessionLocator.Tenant;
-        windowArgs.ReportType = this.TemplateType;
-        var widthwindow = window.innerWidth;
-        var heighthwindow = window.innerHeight;
-        var logWindow = new LogitudeWindow();
-
-        logWindow.Width = widthwindow - 100;
-        logWindow.Height = heighthwindow - 100;
-        logWindow.Title = this.ReportsTemplatePM.Description;
-
-        logWindow.IsShowCloseButton = true;
-        logWindow.WindowArgs = windowArgs;
-        window.designerClosed = false;
-        logWindow.Show("./Infrastructure/Components/StimulsoftDesigner/StimulsoftDesigner");
-    }
-
-    AddTemplateToReportList() {
-        this.DataViewModel.ReportsTemplatePMLists.push(this.ReportsTemplatePM);
-        this.DataViewModel.CurrentReportsTemplatePM = this.ReportsTemplatePM;
-        if (this.DataViewModel.ReportsTemplatePMLists.length == 1) {
-            this.DataViewModel.SetAsDefaultButtonClicked(this.TemplateType);
-        }
     }
 
 }

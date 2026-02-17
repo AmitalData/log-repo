@@ -16,15 +16,13 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityKeys;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
-using Logitude.Server.Tools.Counters;
-using Logitude.Accounting.BL.CoreBL;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -40,20 +38,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
-                var journalNumber = CodeCounter.GetNumber(JournalUpdateOnCreating.GetCodeNumberJournal(), entityPM.Tenant).ToString();
-                entityPM.JournalNumber = journalNumber;
-                entityPOCO.JournalNumber = journalNumber;
-                string RegularJournal = "0";
-                if (entityPM.TypeCode == RegularJournal && entityPM.AccountingEntityReference == null) // Manual
-                {
-                    var accEntityReconciliation10 = GetAccountingEntityDetails();
-                    var bankAdjustment = "12";
-                    if (accEntityReconciliation10.Code != entityPM.AccountingEntityCode &&  entityPM.AccountingEntityCode != bankAdjustment)
-                    {
-                        entityPM.AccountingEntityReference = entityPM.JournalNumber;
-                        entityPOCO.AccountingEntityReference = entityPM.JournalNumber;
-                    }
-                }
             }
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.ExternalNo);
@@ -151,8 +135,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.CreatedByUserId != null)
             {
                 ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
-                Contact userContact = GetCreatedByUserContactPM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
-
+                ContactRepository contactRepository = new ContactRepository(entityPOCO.Tenant);
+                Contact userContact = contactRepository.GetSingleContact(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
                 contact = contact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM();
                 if (userContact != null)
                 {
@@ -175,23 +159,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         }
 
-        private AccountingEntityDetails GetAccountingEntityDetails() {
-            var myAccountingEntityDetails = new AccountingEntityDetails();
-            return myAccountingEntityDetails
-                .GetAll()
-                .FirstOrDefault(r => r.EnglishName == "Adjustment");
-        }
 
-        private Contact GetCreatedByUserContactPM(string id,int tenant)
-        {
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact userContact = contactRepository.GetSingleContactByIdAndTenant(id, tenant, true);
-            if (userContact == null)
-            {
-                userContact = contactRepository.GetSingleContactByIdAndTenant(id, 0, true);
-            }
-            return userContact;
-        }
+
         private static void BuildSearchFields(JournalPM entityPM, Journal poco, bool isNewEntity)
         {
             string result = "";

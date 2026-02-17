@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Web;
@@ -187,10 +187,10 @@ namespace Logitude.Server.Tools.Helpers
         }
 
         //<--- Yuval Chalup 14.04.2015
-        public static string Translate(string textCodeCode, int tenant, bool getLocalDefaultText, bool getTextByLanguage = false)
+        public static string Translate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {
 
-            string key = "TranslateTextsClass/Translate1," + textCodeCode + "," + tenant.ToString() + "," + getLocalDefaultText + "," + getTextByLanguage;
+            string key = "TranslateTextsClass/Translate1," + textCodeCode + "," + tenant.ToString() + "," + getLocalDefaultText;
             var val = CacheManager.GetOrInsertNewObject<string>(key, () =>
             {
                 string result = string.Empty;
@@ -213,30 +213,14 @@ namespace Logitude.Server.Tools.Helpers
                         TextCode textCode = textCodeRepository.GetTextCodeByTenantAndCode(textCodeCode, tenant);
                         if (textCode != null)
                         {
-							if (!getTextByLanguage)
-							{
-                                if (getLocalDefaultText)
-                                {
-                                    result = textCode.LocalDefaultText;
-                                }
-                                else
-                                {
-                                    result = textCode.DefaultText;
-                                }
-
+                            if (getLocalDefaultText)
+                            {
+                                result = textCode.LocalDefaultText;
                             }
-							else
-							{
-                                if (myTenant.Language== "HB")
-                                {
-                                    result = !string.IsNullOrEmpty(textCode.LocalDefaultText)? textCode.LocalDefaultText: textCode.DefaultText;
-                                }
-                                else
-                                {
-                                    result = textCode.DefaultText;
-                                }
+                            else
+                            {
+                                result = textCode.DefaultText;
                             }
-                           
                         }
                     }
                 }

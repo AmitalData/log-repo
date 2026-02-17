@@ -114,13 +114,11 @@
                             <div tabindex="0" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
                                 <label>{{'Quote.B.Partners.AddPartners' | TextCodeTranslationPipe}}</label>
                                 <img src="./Images/ToggleIcon.png" />
-                                <div class="ToggleButtonMenu" style="width: 160px">
-                                    <button id="{{ 'SHIPR' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'Quote.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'CONSI' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'Quote.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'AGENT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'Quote.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'NOTFY' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_NOTFY" (click)="AddPartner('NOTFY')">{{'Quote.B.Partners.AddNotify' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'SHPNT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_SHPNT" (click)="AddPartner('SHPNT')">{{'Quote.B.Partners.AddShipperNotExporter' | TextCodeTranslationPipe}}</button>
-                                    <button id="{{ 'CONNT' | IdGeneratorAsyncPipe | async}}" [disabled]="IsAddDisabled_CONNT" (click)="AddPartner('CONNT')">{{'Quote.S.Partners.AddConsigneeNotImporter' | TextCodeTranslationPipe}}</button>
+                                <div class="ToggleButtonMenu" style="width: 150px">
+                                    <button id="{{ 'SHIPR' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_SHIPR" (click)="AddPartner('SHIPR')">{{'Quote.B.Partners.AddShipper' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'CONSI' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_CONSI" (click)="AddPartner('CONSI')">{{'Quote.B.Partners.AddConsignee' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'AGENT' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_AGENT" (click)="AddPartner('AGENT')">{{'Quote.B.Partners.AddAgent' | TextCodeTranslationPipe}}</button>
+                                    <button id="{{ 'NOTFY' | IdGeneratorPipe}}"  [disabled]="IsAddDisabled_NOTFY" (click)="AddPartner('NOTFY')">{{'Quote.B.Partners.AddNotify' | TextCodeTranslationPipe}}</button>
                                 </div>
                             </div>
                         </td>

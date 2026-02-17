@@ -7,7 +7,7 @@ using System.Transactions;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Microsoft.WindowsAzure.Storage;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
@@ -33,7 +33,6 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using WebFreight.Web.CustomWebServices;
-using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.WebServices
 {
@@ -51,6 +50,7 @@ namespace WebFreight.Web.WebServices
         {
             StiReport report = new StiReport();
             report.ReportName = @".mrt";
+            
         }
 
         [WebMethod]
@@ -59,6 +59,7 @@ namespace WebFreight.Web.WebServices
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                 string result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId);
                 return result;
+      
         }
 
         [WebMethod]
@@ -88,17 +89,6 @@ namespace WebFreight.Web.WebServices
             ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
             return exportDocumentHelper.BuildInvoiceDocument(invoiceId, documentOutId, tenant);
         }
-
-
-
-
-        [WebMethod]
-        public void BuildDocsOut(BuildDocsOutArgs buildDocsOutArgs)
-        {
-            BuildDocsOutService buildDocsOutService = new BuildDocsOutService();
-            buildDocsOutService.BuildDocsOut(new BuildDocsOutArgs() { EntityId = buildDocsOutArgs.EntityId, DocumentTypeId = buildDocsOutArgs.DocumentTypeId, LoggedUserId = buildDocsOutArgs.LoggedUserId, ObjectTableId = buildDocsOutArgs.ObjectTableId, Tenant = buildDocsOutArgs.Tenant });
-        }
-
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -14,8 +14,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int Tenant { get; set; }
         public string LocalName { get; set; }
         public int ViewOrder { get; set; }
-        public string QuoteGroupSectionID { get; set; }
-
         //public List<IATACode> IATACodes { get; set; }
     }
 }

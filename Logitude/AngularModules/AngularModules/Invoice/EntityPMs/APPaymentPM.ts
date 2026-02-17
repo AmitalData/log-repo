@@ -9,8 +9,6 @@
 
 
 import {APPaymentInvoicePM} from './APPaymentInvoicePM';
-
-import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -254,11 +252,6 @@ export class APPaymentPM {
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
        
 	 
-    private vendorLocalName: string;
-    public get VendorLocalName() { return this.vendorLocalName; }
-    public set VendorLocalName(newValue: string) { if (this.vendorLocalName != newValue) { this.vendorLocalName = newValue; this.MarkAsDirty("VendorLocalName"); } }
-       
-	 
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
@@ -430,170 +423,11 @@ export class APPaymentPM {
     public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
        
 	 
-    private accountingCancelationDate: Date;
-    public get AccountingCancelationDate() { return this.accountingCancelationDate; }
-    public set AccountingCancelationDate(newValue: Date) { if (this.accountingCancelationDate != newValue) { this.accountingCancelationDate = newValue; this.MarkAsDirty("AccountingCancelationDate"); } }
-       
-	 
-    private dontIncludeInDeductionReport: boolean;
-    public get DontIncludeInDeductionReport() { return this.dontIncludeInDeductionReport; }
-    public set DontIncludeInDeductionReport(newValue: boolean) { if (this.dontIncludeInDeductionReport != newValue) { this.dontIncludeInDeductionReport = newValue; this.MarkAsDirty("DontIncludeInDeductionReport"); } }
-       
-	 
-    private cancelationNotes: string;
-    public get CancelationNotes() { return this.cancelationNotes; }
-    public set CancelationNotes(newValue: string) { if (this.cancelationNotes != newValue) { this.cancelationNotes = newValue; this.MarkAsDirty("CancelationNotes"); } }
-       
-	 
-    private voidedByJournalNumber: string;
-    public get VoidedByJournalNumber() { return this.voidedByJournalNumber; }
-    public set VoidedByJournalNumber(newValue: string) { if (this.voidedByJournalNumber != newValue) { this.voidedByJournalNumber = newValue; this.MarkAsDirty("VoidedByJournalNumber"); } }
-       
-	 
-    private field1: CustomFieldClass;
-    public get Field1() {if(!this.field1){ this.field1 = new CustomFieldClass(null, "Field1", "APPayment");} return this.field1; }
-    public set Field1(newValue: CustomFieldClass) {  this.field1 = newValue; this.MarkAsDirty("Field1");  }
-       
-	 
-    private field2: CustomFieldClass;
-    public get Field2() {if(!this.field2){ this.field2 = new CustomFieldClass(null, "Field2", "APPayment");} return this.field2; }
-    public set Field2(newValue: CustomFieldClass) {  this.field2 = newValue; this.MarkAsDirty("Field2");  }
-       
-	 
-    private field3: CustomFieldClass;
-    public get Field3() {if(!this.field3){ this.field3 = new CustomFieldClass(null, "Field3", "APPayment");} return this.field3; }
-    public set Field3(newValue: CustomFieldClass) {  this.field3 = newValue; this.MarkAsDirty("Field3");  }
-       
-	 
-    private field4: CustomFieldClass;
-    public get Field4() {if(!this.field4){ this.field4 = new CustomFieldClass(null, "Field4", "APPayment");} return this.field4; }
-    public set Field4(newValue: CustomFieldClass) {  this.field4 = newValue; this.MarkAsDirty("Field4");  }
-       
-	 
-    private field5: CustomFieldClass;
-    public get Field5() {if(!this.field5){ this.field5 = new CustomFieldClass(null, "Field5", "APPayment");} return this.field5; }
-    public set Field5(newValue: CustomFieldClass) {  this.field5 = newValue; this.MarkAsDirty("Field5");  }
-       
-	 
-    private field6: CustomFieldClass;
-    public get Field6() {if(!this.field6){ this.field6 = new CustomFieldClass(null, "Field6", "APPayment");} return this.field6; }
-    public set Field6(newValue: CustomFieldClass) {  this.field6 = newValue; this.MarkAsDirty("Field6");  }
-       
-	 
-    private field7: CustomFieldClass;
-    public get Field7() {if(!this.field7){ this.field7 = new CustomFieldClass(null, "Field7", "APPayment");} return this.field7; }
-    public set Field7(newValue: CustomFieldClass) {  this.field7 = newValue; this.MarkAsDirty("Field7");  }
-       
-	 
-    private field8: CustomFieldClass;
-    public get Field8() {if(!this.field8){ this.field8 = new CustomFieldClass(null, "Field8", "APPayment");} return this.field8; }
-    public set Field8(newValue: CustomFieldClass) {  this.field8 = newValue; this.MarkAsDirty("Field8");  }
-       
-	 
-    private field9: CustomFieldClass;
-    public get Field9() {if(!this.field9){ this.field9 = new CustomFieldClass(null, "Field9", "APPayment");} return this.field9; }
-    public set Field9(newValue: CustomFieldClass) {  this.field9 = newValue; this.MarkAsDirty("Field9");  }
-       
-	 
-    private field10: CustomFieldClass;
-    public get Field10() {if(!this.field10){ this.field10 = new CustomFieldClass(null, "Field10", "APPayment");} return this.field10; }
-    public set Field10(newValue: CustomFieldClass) {  this.field10 = newValue; this.MarkAsDirty("Field10");  }
-       
-	 
-    private externalPaymentAmount: number;
-    public get ExternalPaymentAmount() { return this.externalPaymentAmount; }
-    public set ExternalPaymentAmount(newValue: number) { if (this.externalPaymentAmount != newValue) { this.externalPaymentAmount = newValue; this.MarkAsDirty("ExternalPaymentAmount"); } }
-       
-	 
-    private externalPaymentDate: Date;
-    public get ExternalPaymentDate() { return this.externalPaymentDate; }
-    public set ExternalPaymentDate(newValue: Date) { if (this.externalPaymentDate != newValue) { this.externalPaymentDate = newValue; this.MarkAsDirty("ExternalPaymentDate"); } }
-       
-	 
-    private externalPaymentNotes: string;
-    public get ExternalPaymentNotes() { return this.externalPaymentNotes; }
-    public set ExternalPaymentNotes(newValue: string) { if (this.externalPaymentNotes != newValue) { this.externalPaymentNotes = newValue; this.MarkAsDirty("ExternalPaymentNotes"); } }
-       
-	 
-     
-	private reconcileInternalTrans: LedgerTransactionPM[];
-    get  ReconcileInternalTrans() {
-        if (this.reconcileInternalTrans == null) {
-            this.reconcileInternalTrans = [];
-        }
 
-        return this.reconcileInternalTrans;
-    }
-    set  ReconcileInternalTrans(newValue: LedgerTransactionPM[]) {
-        if (this.reconcileInternalTrans != newValue) {
-            this.reconcileInternalTrans = newValue;
-        }
-    }
-    //public ReconcileInternalTrans: Array<LedgerTransactionPMPM>= [];
-     private vendorCode: string;
-    public get VendorCode() { return this.vendorCode; }
-    public set VendorCode(newValue: string) { if (this.vendorCode != newValue) { this.vendorCode = newValue; this.MarkAsDirty("VendorCode"); } }
-       
-	 
-    private connectedInvoicesNumbers: string;
-    public get ConnectedInvoicesNumbers() { return this.connectedInvoicesNumbers; }
-    public set ConnectedInvoicesNumbers(newValue: string) { if (this.connectedInvoicesNumbers != newValue) { this.connectedInvoicesNumbers = newValue; this.MarkAsDirty("ConnectedInvoicesNumbers"); } }
-       
-	 
-    private isCreatedFromInvoiceSide: boolean;
-    public get IsCreatedFromInvoiceSide() { return this.isCreatedFromInvoiceSide; }
-    public set IsCreatedFromInvoiceSide(newValue: boolean) { if (this.isCreatedFromInvoiceSide != newValue) { this.isCreatedFromInvoiceSide = newValue; this.MarkAsDirty("IsCreatedFromInvoiceSide"); } }
-       
-	 
-    private createdFromInvoiceId: string;
-    public get CreatedFromInvoiceId() { return this.createdFromInvoiceId; }
-    public set CreatedFromInvoiceId(newValue: string) { if (this.createdFromInvoiceId != newValue) { this.createdFromInvoiceId = newValue; this.MarkAsDirty("CreatedFromInvoiceId"); } }
-       
-	 
-    private invoiceAmountDue: number;
-    public get InvoiceAmountDue() { return this.invoiceAmountDue; }
-    public set InvoiceAmountDue(newValue: number) { if (this.invoiceAmountDue != newValue) { this.invoiceAmountDue = newValue; this.MarkAsDirty("InvoiceAmountDue"); } }
-       
-	 
-    private invoiceRate: number;
-    public get InvoiceRate() { return this.invoiceRate; }
-    public set InvoiceRate(newValue: number) { if (this.invoiceRate != newValue) { this.invoiceRate = newValue; this.MarkAsDirty("InvoiceRate"); } }
-       
-	 
-    private invoiceCurrencyId: string;
-    public get InvoiceCurrencyId() { return this.invoiceCurrencyId; }
-    public set InvoiceCurrencyId(newValue: string) { if (this.invoiceCurrencyId != newValue) { this.invoiceCurrencyId = newValue; this.MarkAsDirty("InvoiceCurrencyId"); } }
-       
-    private dontDisplayAPInvoices: boolean;
-    public get DontDisplayAPInvoices() { return this.dontDisplayAPInvoices; }
-    public set DontDisplayAPInvoices(newValue: boolean) { if (this.dontDisplayAPInvoices != newValue) { this.dontDisplayAPInvoices = newValue; this.MarkAsDirty("dontDisplayAPInvoices"); } }
-
-    	 
-    private isFromReconcilePage: boolean;
-    public get IsFromReconcilePage() { return this.isFromReconcilePage; }
-    public set IsFromReconcilePage(newValue: boolean) { if (this.isFromReconcilePage != newValue) { this.isFromReconcilePage = newValue; this.MarkAsDirty("IsFromReconcilePage"); } }
-       
-	 	 
-    private isMultiCurrency: boolean;
-    public get IsMultiCurrency() { return this.isMultiCurrency; }
-    public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
-       
-    private vendorCountry: string;
-    public get VendorCountry() { return this.vendorCountry; }
-    public set VendorCountry(newValue: string) { if (this.vendorCountry != newValue) { this.vendorCountry = newValue; this.MarkAsDirty("VendorCountry"); } }
-    
-    private masavInterfaceId: string;
-    public get MasavInterfaceId() { return this.masavInterfaceId; }
-    public set MasavInterfaceId(newValue: string) { if (this.masavInterfaceId != newValue) { this.masavInterfaceId = newValue; this.MarkAsDirty("MasavInterfaceId"); } }
-       
-	 
     public OldEntityPM: APPaymentPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -601,7 +435,6 @@ export class APPaymentPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APPayment");
            
         }
-	 }
     }
     private MyClone: APPaymentPM;
 
@@ -613,4 +446,4 @@ export class APPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -54,7 +54,7 @@ namespace DW_Editor_Tool
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ex);
+                Debug.WriteLine(ex);
             }
 
             base.OnStartup(e);

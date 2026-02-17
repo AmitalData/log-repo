@@ -21,7 +21,7 @@ import {WarehouseReleaseListExtendedService} from '../../Services/ExtendedLists/
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'WarehouseWorkspaceComponent',
     templateUrl: './WarehouseWorkspaceComponent.html',
 
@@ -44,7 +44,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
         this.warehouseReleaseListExtendedService = new WarehouseReleaseListExtendedService();
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe(response => {
         });
     }
 
@@ -185,7 +185,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
     LoadDataSummary() {
 
         // this.CurrentSession.StartBusyIndicatorLoading();
-        this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe((res:any) => {
+        this.warehouseReleasePMExtendedService.GetCrossDockWorkspaceSummary(this.SelectedTransportFilter, this.SelectedDirectionFilter).subscribe(res => {
             var pmResponse: ServiceResponse = res;
 
             //  this.CurrentSession.StopBusyIndicator();
@@ -245,11 +245,11 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         var args: any = {};
         args.ShipmentLevelCode = "D";
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1030;
-        logWindow.Height = 620;
+        logWindow.Width = 940;
+        logWindow.Height = 570;
         logWindow.WindowArgs = args;
         logWindow.Title = "New Cross Dock Release";
-        logWindow.Show('./Warehouse/Components/NewWarehouseReleaseComponent');
+        logWindow.Show('./Warehouse/Components/NewEntity/NewFullWarehouseReleaseComponent');
 
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
@@ -292,7 +292,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             case "Created":
                 {
                     queryCode = "CreatedEntriesQuery";
-                    displayTitle = "Expected Arrival Entries";
+                    displayTitle = "Created Entries";
 
 
                     break;
@@ -333,7 +333,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         listArgs.ObjectTableName = "WarehouseEntry";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Cross Docks";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
 
@@ -390,7 +390,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
             case "Created":
                 {
                     queryCode = "CreatedReleasesQuery";
-                    displayTitle = "Expected Delivery Releases";
+                    displayTitle = "Created Releases";
                     break;
                 }
 
@@ -416,7 +416,7 @@ export class WarehouseWorkspaceComponent extends BaseComponent {
         listArgs.ObjectTableName = "WarehouseRelease";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Cross Docks";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     var filtersBar: any = null;

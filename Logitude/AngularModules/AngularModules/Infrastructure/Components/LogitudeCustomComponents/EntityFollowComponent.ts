@@ -9,7 +9,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ModulesService} from '../../../Infrastructure/Services/ModulesService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'EntityFollowComponent',
     templateUrl: './EntityFollowComponent.html',
     inputs: ['EntityId',  'ObjectTableName'],
@@ -44,8 +44,8 @@ export class EntityFollowComponent implements OnInit {
     LoadEntityFollowers() {
         this.FollowEntityLists = [];
         this.ToolTipMessage = "";
-        // this.CurrentSession.StartBusyIndicatorSaving();
-        this.myModulesService.GetUserFollowEntityLists(this.EntityId, this.ObjectTableId).subscribe((res: ServiceResponse) => {
+       // this.CurrentSession.StartBusyIndicatorSaving();
+        this.myModulesService.GetUserFollowEntityLists(this.EntityId, this.ObjectTableId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             //this.CurrentSession.StopBusyIndicator();
 
@@ -68,10 +68,10 @@ export class EntityFollowComponent implements OnInit {
 
     }
 
-    AddFollowEntity() {
+    AddFollowEntity(user: any) {
  
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.myModulesService.AddFollowEntity(this.EntityId, this.ObjectTableId, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
+        this.myModulesService.AddFollowEntity(this.EntityId, this.ObjectTableId, SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
 
@@ -84,9 +84,9 @@ export class EntityFollowComponent implements OnInit {
 
     }
  
-    DeleteFollowEntity() {
+    DeleteFollowEntity(user: any) {
         this.CurrentSession.StartBusyIndicatorSaving();
-        this.myModulesService.DeleteFollowEntity(SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
+        this.myModulesService.DeleteFollowEntity(SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
 

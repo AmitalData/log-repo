@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -27,8 +27,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.Description)
                 .IsOptional()
-                .HasMaxLength(2000)
-                .IsUnicode(true);
+                .HasMaxLength(1000)
+                .IsUnicode(false);
             this.Property(t => t.SearchFields)
                .IsOptional()
                .HasMaxLength(1000)

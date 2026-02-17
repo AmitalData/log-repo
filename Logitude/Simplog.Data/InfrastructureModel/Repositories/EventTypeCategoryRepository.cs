@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -53,11 +53,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
         public List<EventTypeCategory> All()
-        {
-            return context.EventTypeCategories.ToList();
-        }
-
-        public List<EventTypeCategory> GetAll()
         {
             return context.EventTypeCategories.ToList();
         }

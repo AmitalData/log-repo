@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -14,9 +14,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddRolesAndFeaturesClass
     {
-        //private static Dictionary<string, Feature> AddedFeatures = new Dictionary<string, Feature>();
-        //private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
-        public static Role AddRole(RoleDetails roleDetails, RoleRepository roleRepository, Dictionary<string, Role> tenantRoles,int contextTenant=0)
+
+        public static Role AddRole(RoleDetails roleDetails, RoleRepository roleRepository,Dictionary<string,Role> tenantRoles)
         {
             if (tenantRoles.Keys.Contains(roleDetails.Code))
             {
@@ -36,10 +35,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Tenant = roleDetails.Tenant,
                     Name = roleDetails.Name,
                     Code = roleDetails.Code,
-                    RoleTypeCode = roleDetails.RoleTypeCode,
+                    RoleTypeCode=roleDetails.RoleTypeCode,
                     Description = roleDetails.Description,
 
-                    Id = IdCounter.GetNumber("Role", contextTenant).ToString(),
+                    Id = IdCounter.GetNumber("Role",roleDetails.Tenant).ToString(),
                 };
 
                 roleRepository.Add(newRole);
@@ -47,146 +46,132 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static Feature AddFeature(FeatureDetails featureDetails, FeatureRepository featuresRepository, TextCodeRepository textCodeReposit, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes, int contextTenant = 0)
+        public static Feature AddFeature(FeatureDetails featureDetails, FeatureRepository featuresRepository, TextCodeRepository textCodeReposit, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes)
         {
-
-            ObjectTableRepository Repo = new ObjectTableRepository(contextTenant);
-            var table = Repo.GetSingleObjectTable(featureDetails.ObjectTableId, featureDetails.Tenant, false);
+            
+            ObjectTableRepository Repo = new ObjectTableRepository(0);
+            var table = Repo.GetSingleObjectTable(featureDetails.ObjectTableId, featureDetails.Tenant,false);
             string NewKey = "";
             if (ObjectTablesKeys.Keys.ContainsKey(table.Name))
             {
-                NewKey = ObjectTablesKeys.Keys[table.Name];
+               NewKey = ObjectTablesKeys.Keys[table.Name];
             }
             //if (table.UpdateKey != NewKey)
             //{
-            featureDetails.Code = featureDetails.Code.Trim();
-            featureDetails.FeatureUniqeCode = table.Name + "." + featureDetails.Code;
+                featureDetails.Code = featureDetails.Code.Trim();
 
-            if (featureDetails.FeatureTypeCode == "MODL")
-            {
-                featureDetails.Packagable = true;
-            }
-
-            if (featureDetails.Code == "UPDATE" || featureDetails.Code == "READ" || featureDetails.Code == "NEW")
-            {
-                featureDetails.Packagable = false;
-            }
-
-            if (tenantFearures.Keys.Contains(featureDetails.Code + featureDetails.ObjectTableId))
-            {
-                Feature updatedFeature = tenantFearures[featureDetails.Code + featureDetails.ObjectTableId];
-                updatedFeature.ObjectTableId = featureDetails.ObjectTableId;
-                updatedFeature.Tenant = featureDetails.Tenant;
-                updatedFeature.FeatureTypeCode = featureDetails.FeatureTypeCode;
-                updatedFeature.Code = featureDetails.Code;
-                updatedFeature.Packagable = featureDetails.Packagable;
-                updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
-                updatedFeature.FeatureUniqeCode = featureDetails.FeatureUniqeCode;
-
-                TextCode updatedTextCode = null;
-                if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
+                if (featureDetails.FeatureTypeCode == "MODL")
                 {
-                    updatedTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
+                    featureDetails.Packagable = true;
                 }
 
-                if (updatedTextCode == null)
+                if (featureDetails.Code == "UPDATE" || featureDetails.Code == "READ" || featureDetails.Code == "NEW")
                 {
-                    updatedTextCode = new TextCode()
-                    {
-                        Id = IdCounter.GetNumber("TextCode", contextTenant).ToString(),
-                        Tenant = featureDetails.Tenant,
-                        ObjectTableId = featureDetails.ObjectTableId,
-                        DefaultText = featureDetails.NameTextCodeDefaultText,
-                        Code = featureDetails.NameTextCodeCode,
-                        TextCodeTypeCode = "O",
-                    };
+                    featureDetails.Packagable = false;
+                }
 
-                    updatedFeature.NameTextCodeId = updatedTextCode.Id;
-                    updatedFeature.NameTextCodeCode = updatedTextCode.Code;
-                    textCodeReposit.Add(updatedTextCode);
+                if (tenantFearures.Keys.Contains(featureDetails.Code + featureDetails.ObjectTableId))
+                {
+                    Feature updatedFeature = tenantFearures[featureDetails.Code + featureDetails.ObjectTableId];
+                    updatedFeature.ObjectTableId = featureDetails.ObjectTableId;
+                    updatedFeature.Tenant = featureDetails.Tenant;
+                    updatedFeature.FeatureTypeCode = featureDetails.FeatureTypeCode;
+                    updatedFeature.Code = featureDetails.Code;
+                    updatedFeature.Packagable = featureDetails.Packagable;
+                    updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
+                    
+
+                TextCode updatedTextCode = null;
+                    if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
+                    {
+                        updatedTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
+                    }
+
+                    if (updatedTextCode == null)
+                    {
+                        updatedTextCode = new TextCode()
+                        {
+                            Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                            Tenant = featureDetails.Tenant,
+                            ObjectTableId = featureDetails.ObjectTableId,
+                            DefaultText = featureDetails.NameTextCodeDefaultText,
+                            Code = featureDetails.NameTextCodeCode,
+                            TextCodeTypeCode = "O",
+                        };
+
+                        updatedFeature.NameTextCodeId = updatedTextCode.Id;
+                        textCodeReposit.Add(updatedTextCode);
+                    }
+
+                    else
+                    {
+                        updatedTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
+                        updatedTextCode.DefaultText = featureDetails.NameTextCodeDefaultText;
+                        updatedTextCode.ObjectTableId = featureDetails.ObjectTableId;
+                        updatedTextCode.Tenant = featureDetails.Tenant;
+                        updatedTextCode.InActive = false;
+
+                    textCodeReposit.Update(updatedTextCode);//ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_919762609) הופר - מפתח אב לא נמצא
+                    featuresRepository.Update(updatedFeature);
+                        
+                    }
+                    //table.UpdateKey = NewKey;
+                    //Repo.Update(table);
+                    //Repo.SubmitChanges();
+                    return updatedFeature;
                 }
 
                 else
                 {
-                    updatedTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
-                    updatedTextCode.DefaultText = featureDetails.NameTextCodeDefaultText;
-                    updatedTextCode.ObjectTableId = featureDetails.ObjectTableId;
-                    updatedTextCode.Tenant = featureDetails.Tenant;
-                    updatedTextCode.InActive = false;
-
-                    textCodeReposit.Update(updatedTextCode);//ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_919762609) הופר - מפתח אב לא נמצא
-
-
-                }
-                featuresRepository.Update(updatedFeature);
-                //table.UpdateKey = NewKey;
-                //Repo.Update(table);
-                //Repo.SubmitChanges();
-                return updatedFeature;
-            }
-
-            else
-            {
-                //if (!AddedFeatures.ContainsKey(featureDetails.Code))
-                //{
                     TextCode newTextCode = null;
                     if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
                     {
                         newTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
                     }
 
-                if (newTextCode == null)
-                {
-                    newTextCode = new TextCode()
+                    if (newTextCode == null)
                     {
-                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, contextTenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
-                        Tenant = featureDetails.Tenant,
-                        ObjectTableId = featureDetails.ObjectTableId,
-                        DefaultText = featureDetails.NameTextCodeDefaultText,
-                        Code = featureDetails.NameTextCodeCode.Trim(),
-                        TextCodeTypeCode = "O",
-                    };
+                        newTextCode = new TextCode()
+                        {
+                            Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                            Tenant = featureDetails.Tenant,
+                            ObjectTableId = featureDetails.ObjectTableId,
+                            DefaultText = featureDetails.NameTextCodeDefaultText,
+                            Code = featureDetails.NameTextCodeCode.Trim(),
+                            TextCodeTypeCode = "O",
+                        };
 
-                            textCodeReposit.Add(newTextCode);
-                            textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
-                        //    AddedTextCodes.Add(featureDetails.NameTextCodeCode, newTextCode);
-                        //}
-                        //else
-                        //{
-                        //    newTextCode = AddedTextCodes[featureDetails.NameTextCodeCode];
-                        //}
+                        textCodeReposit.Add(newTextCode);
+                        textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
                     }
 
-                Feature newFeature = new Feature()
-                {
-                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, contextTenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
-                    Tenant = featureDetails.Tenant,
-                    ObjectTableId = featureDetails.ObjectTableId,
-                    Code = featureDetails.Code.Trim(),
-                    NameTextCodeId = newTextCode.Id,
-                    NameTextCodeCode = newTextCode.Code,
-                    FeatureTypeCode = featureDetails.FeatureTypeCode,
-                    Packagable = featureDetails.Packagable,
-                    IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
-                    IsOld = false,
-                    IsCoreFeature = featureDetails.IsCoreFeature,
-                    FeatureUniqeCode = featureDetails.FeatureUniqeCode
-                };
+                    Feature newFeature = new Feature()
+                    {
+                        Id = IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
+                        Tenant = featureDetails.Tenant,
+                        ObjectTableId = featureDetails.ObjectTableId,
+                        Code = featureDetails.Code.Trim(),
+                        NameTextCodeId = newTextCode.Id,
+                        FeatureTypeCode = featureDetails.FeatureTypeCode,
+                        Packagable = featureDetails.Packagable,
+                        IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
+                        IsOld = false,
+                        IsCoreFeature = featureDetails.IsCoreFeature,
+                    };
 
-                featuresRepository.Add(newFeature);
-                tenantFearures.Add(newFeature.Code + newFeature.ObjectTableId, newFeature);
-                //table.UpdateKey = NewKey;
-                //Repo.Update(table);
-                //Repo.SubmitChanges();
-                return newFeature;
-            }
+                    featuresRepository.Add(newFeature);
+                    //table.UpdateKey = NewKey;
+                    //Repo.Update(table);
+                    //Repo.SubmitChanges();
+                    return newFeature;
+                }
             //}
             //else
             //{
             //    Feature updatedFeature = tenantFearures[featureDetails.Code + featureDetails.ObjectTableId];
             //    return updatedFeature;
             //}
-
+           
         }
 
         //public static void AddRoleFeature(string featureId, string roleId, RoleFeatureRepository roleFeatureRepository, List<RoleFeature> roleFeatures,int tenant)
@@ -207,231 +192,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         //        };
         //        roleFeatureRepository.Add(newRoleFeature);
         //    }
-        //}
-
-
-        public static Feature AddFeature(FeatureDetails featureDetails, FeatureRepository featuresRepository, TextCodeRepository textCodeReposit, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes,ObjectTable table,int contextTenant=0)
-        {
-
-            
-            featureDetails.Code = featureDetails.Code.Trim();
-            featureDetails.FeatureUniqeCode = table.Name + "." + featureDetails.Code;
-
-            if (featureDetails.FeatureTypeCode == "MODL")
-            {
-                featureDetails.Packagable = true;
-            }
-
-            if (featureDetails.Code == "UPDATE" || featureDetails.Code == "READ" || featureDetails.Code == "NEW")
-            {
-                featureDetails.Packagable = false;
-            }
-
-            if (tenantFearures.Keys.Contains(featureDetails.Code + featureDetails.ObjectTableId))
-            {
-                Feature updatedFeature = tenantFearures[featureDetails.Code + featureDetails.ObjectTableId];
-                updatedFeature.ObjectTableId = featureDetails.ObjectTableId;
-                updatedFeature.Tenant = featureDetails.Tenant;
-                updatedFeature.FeatureTypeCode = featureDetails.FeatureTypeCode;
-                updatedFeature.Code = featureDetails.Code;
-                updatedFeature.Packagable = featureDetails.Packagable;
-                updatedFeature.IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled;
-                updatedFeature.FeatureUniqeCode = featureDetails.FeatureUniqeCode;
-                updatedFeature.ToggleCode = featureDetails.ToggleCode;
-
-                TextCode updatedTextCode = null;
-                if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
-                {
-                    updatedTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
-                }
-
-                if (updatedTextCode == null)
-                {
-                    updatedTextCode = new TextCode()
-                    {
-                        Id = IdCounter.GetNumber("TextCode", contextTenant).ToString(),
-                        Tenant = featureDetails.Tenant,
-                        ObjectTableId = featureDetails.ObjectTableId,
-                        DefaultText = featureDetails.NameTextCodeDefaultText,
-                        Code = featureDetails.NameTextCodeCode,
-                        TextCodeTypeCode = "O",
-                    };
-
-                    updatedFeature.NameTextCodeId = updatedTextCode.Id;
-                    updatedFeature.NameTextCodeCode = updatedTextCode.Code;
-                    textCodeReposit.Add(updatedTextCode);
-                }
-
-                else
-                {
-                    updatedTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
-                    updatedTextCode.DefaultText = featureDetails.NameTextCodeDefaultText;
-                    updatedTextCode.ObjectTableId = featureDetails.ObjectTableId;
-                    updatedTextCode.Tenant = featureDetails.Tenant;
-                    updatedTextCode.InActive = false;
-
-                    textCodeReposit.Update(updatedTextCode);//ORA-02291: אילוץ כלילות (AMINET_MAIN.FK_919762609) הופר - מפתח אב לא נמצא
-
-
-                }
-                featuresRepository.Update(updatedFeature);
-                //table.UpdateKey = NewKey;
-                //Repo.Update(table);
-                //Repo.SubmitChanges();
-                return updatedFeature;
-            }
-
-            else
-            {
-                TextCode newTextCode = null;
-                if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
-                {
-                    newTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
-                }
-
-                if (newTextCode == null)
-                {
-                    newTextCode = new TextCode()
-                    {
-                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, contextTenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
-                        Tenant = featureDetails.Tenant,
-                        ObjectTableId = featureDetails.ObjectTableId,
-                        DefaultText = featureDetails.NameTextCodeDefaultText,
-                        Code = featureDetails.NameTextCodeCode.Trim(),
-                        TextCodeTypeCode = "O",
-                    };
-
-                    textCodeReposit.Add(newTextCode);
-                    textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
-                }
-
-                Feature newFeature = new Feature()
-                {
-                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, contextTenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
-                    Tenant = featureDetails.Tenant,
-                    ObjectTableId = featureDetails.ObjectTableId,
-                    Code = featureDetails.Code.Trim(),
-                    NameTextCodeId = newTextCode.Id,
-                    NameTextCodeCode = newTextCode.Code,
-                    FeatureTypeCode = featureDetails.FeatureTypeCode,
-                    Packagable = featureDetails.Packagable,
-                    IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
-                    IsOld = false,
-                    IsCoreFeature = featureDetails.IsCoreFeature,
-                    FeatureUniqeCode = featureDetails.FeatureUniqeCode,
-                    ToggleCode = featureDetails.ToggleCode
-
-                };
-
-                featuresRepository.Add(newFeature);
-                tenantFearures.Add(newFeature.Code + newFeature.ObjectTableId, newFeature);
-                //table.UpdateKey = NewKey;
-                //Repo.Update(table);
-                //Repo.SubmitChanges();
-                return newFeature;
-            }
-            //}
-            //else
-            //{
-            //    Feature updatedFeature = tenantFearures[featureDetails.Code + featureDetails.ObjectTableId];
-            //    return updatedFeature;
-            //}
-
-        }
-
-        public static Feature AddFeature(FeatureDetails featureDetails, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes, ObjectTable table,
-            List<Feature> addedFeatures,List<TextCode> addedTextCodes,int contextTenant=0)
-        {
-
-            
-            //if (table.UpdateKey != NewKey)
-            //{
-            featureDetails.Code = featureDetails.Code.Trim();
-            featureDetails.FeatureUniqeCode = table.Name + "." + featureDetails.Code;
-
-            if (featureDetails.FeatureTypeCode == "MODL")
-            {
-                featureDetails.Packagable = true;
-            }
-
-            if (featureDetails.Code == "UPDATE" || featureDetails.Code == "READ" || featureDetails.Code == "NEW")
-            {
-                featureDetails.Packagable = false;
-            }
-
-            if (tenantFearures.Keys.Contains(featureDetails.Code + featureDetails.ObjectTableId))
-            {
-                Feature updatedFeature = tenantFearures[featureDetails.Code + featureDetails.ObjectTableId];
-                
-                return updatedFeature;
-            }
-
-            else
-            {
-                TextCode newTextCode = null;
-                if (textCodes.Keys.Contains(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId))
-                {
-                    newTextCode = textCodes[featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId];
-                }
-
-                if (newTextCode == null)
-                {
-                    newTextCode = new TextCode()
-                    {
-                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, contextTenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
-                        Tenant = featureDetails.Tenant,
-                        ObjectTableId = featureDetails.ObjectTableId,
-                        DefaultText = featureDetails.NameTextCodeDefaultText,
-                        Code = featureDetails.NameTextCodeCode.Trim(),
-                        TextCodeTypeCode = "O",
-                    };
-
-                    addedTextCodes.Add(newTextCode);
-                    textCodes.Add(featureDetails.NameTextCodeCode + featureDetails.Tenant + featureDetails.ObjectTableId, newTextCode);
-                }
-
-                Feature newFeature = new Feature()
-                {
-                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, contextTenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
-                    Tenant = featureDetails.Tenant,
-                    ObjectTableId = featureDetails.ObjectTableId,
-                    Code = featureDetails.Code.Trim(),
-                    NameTextCodeId = newTextCode.Id,
-                    NameTextCodeCode = newTextCode.Code,
-                    FeatureTypeCode = featureDetails.FeatureTypeCode,
-                    Packagable = featureDetails.Packagable,
-                    IsBusinessUnitEnabled = featureDetails.IsBusinessUnitEnabled,
-                    IsOld = false,
-                    IsCoreFeature = featureDetails.IsCoreFeature,
-                    FeatureUniqeCode = featureDetails.FeatureUniqeCode
-                };
-
-                addedFeatures.Add(newFeature);
-                tenantFearures.Add(newFeature.Code + newFeature.ObjectTableId, newFeature);
-                //table.UpdateKey = NewKey;
-                //Repo.Update(table);
-                //Repo.SubmitChanges();
-                return newFeature;
-            }
-            
-
-        }
-        
-        //static ObjectTableRepository objecttablesRepository;
-        //public static ObjectTable GetObjectTable(string objectTableName, Dictionary<string, ObjectTable> tenantZeroObjectTables)
-        //{
-        //    if (objecttablesRepository == null)
-        //    {
-        //        objecttablesRepository = new ObjectTableRepository(0);
-        //    }
-
-        //    ObjectTable table = tenantZeroObjectTables.ContainsKey(objectTableName) ? tenantZeroObjectTables[objectTableName] : null;
-        //    if (table == null)
-        //    {
-        //        table = objecttablesRepository.GetObjectTableByName(objectTableName, 0, true);
-        //    }
-
-        //    return table;
         //}
 
     }

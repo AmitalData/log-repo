@@ -1,6 +1,6 @@
-declare var window: any;
+﻿declare var window: any;
 declare var System: any;
-import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, Injector,  EventEmitter} from '@angular/core';
+import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, Injector,  EventEmitter} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties} from './UIProperties';
 import {EntityListService} from '../../Services/EntityListService';
@@ -19,15 +19,14 @@ import {FieldValidator} from '../../Validators/FieldValidator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { CustomEntityArgs } from './LogSearchWindowComponent';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'LogLov_Old',
     templateUrl: './LogLovComponent.html',
     providers: [EntityListService, ServiceArgs, EntityResourceService],
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath' ,
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath',
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
         "DependencyFilter2IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "AutoFocus", "IsTenantZeroSearch", "ShowInActive"],        
 })
@@ -55,7 +54,7 @@ export class LogLovComponent implements OnInit {
     public DataList: any[];
     
     private dataContext: BaseComponent;
-    uiProperty: UIProperty;
+    private uiProperty: UIProperty;
     private show: boolean;
     private LookUp1: string;
     private LookUp2: string;
@@ -92,7 +91,7 @@ export class LogLovComponent implements OnInit {
     ClosedByBlur: boolean;
     DisplayValue: string;
     MouseInArea: boolean;
-    headerColumns: any[];
+    private headerColumns: any[];
     private dataColumns: any[];
     DivLogLovId: string;
     LogLOVControlClass: string;
@@ -135,7 +134,7 @@ export class LogLovComponent implements OnInit {
     }
     //@Input() SelectedValue: any;
     constructor(public entityListService: EntityListService, private _entityResourceService: EntityResourceService) {
-         this.show = false;
+        this.show = false;
         this.isFirstTime = true;
         this.Detach = true;
 
@@ -162,7 +161,8 @@ export class LogLovComponent implements OnInit {
     }
 
     InitializeControl() {
-          this.LogLOVControlClass = "LogLOVControl";
+
+        this.LogLOVControlClass = "LogLOVControl";
         this.counterId = ControlsIdCounter.GetNextIdCounter();
         this.DivLogLovId = 'LogLov - ' + this.ObjectFieldName + '-' + this.counterId.toString();
         this.ElementId = 'Search - ' + this.ObjectFieldName + '-' + this.counterId.toString();
@@ -227,7 +227,7 @@ export class LogLovComponent implements OnInit {
         //this.ctrl = new FormControl(this.DataContext[this.ObjectFieldName]);
         //this.LogitudeForm.addControl(this.ObjectFieldName, this.ctrl);
 
-        this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe((res:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.LookUpTableName, 0).subscribe(res => {
 
             var lookupFields: any[] = window.ObjectFields.filter(d => d.DisplayOnLookUp && d.ObjectTableId == lookup.Id);
             var dropdownWidth = lookupFields.length * 120 + 20;
@@ -294,8 +294,8 @@ export class LogLovComponent implements OnInit {
                 }
                 else {
                     objectFieldAvailable = true;
-                    if (this.ObjectField.HelpTextCodeCode != null) {
-                    this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
+                    if (this.ObjectField.HelpTextCodeId != null) {
+                    this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
 
                     if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                         if (this.ObjectFieldHelp.length > 1) {
@@ -348,7 +348,7 @@ export class LogLovComponent implements OnInit {
             }
 
 
-            //this.ctrl.valueChanges.subscribe((res:any)=> {
+            //this.ctrl.valueChanges.subscribe(res=> {
             //    this.uiProperty.UIPropertyChanged.emit("valuechanges");
             //    this.ValueChanged.emit(res);
 
@@ -360,10 +360,10 @@ export class LogLovComponent implements OnInit {
             //    this.isSelectedFromList = false;
             //});
 
-          this.SearchTextValue = new FormControl();
-          this.SearchTextValue.valueChanges.pipe(
-                debounceTime(400),
-                distinctUntilChanged())
+            this.SearchTextValue = new FormControl();
+            this.SearchTextValue.valueChanges
+                .debounceTime(400)
+                .distinctUntilChanged()
                 .subscribe((search): any => {
                     if (search != undefined) {
                         this.Populate(search);

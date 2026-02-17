@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using System;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -17,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public VendorRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public VendorRepository(int tenant)
         {
@@ -36,7 +38,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Vendor GetSingleVendor(string id, int tenant)
         {
-            return (from record in context.Vendors.Include("Card").Include("Card.PaymentTerm") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Vendors.Include("Card") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public Vendor GetSingleVendorByCode(string code,int tenant)
@@ -92,13 +94,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Vendor GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-
-        public Vendor GetFirstSingleByName(string name, int tenant)
-        {
-            return (from record in context.Vendors.Include("Card")
-                    where record.Card.EnglishName == name && record.Tenant == tenant
-                    select record).FirstOrDefault();
         }
     }
 }

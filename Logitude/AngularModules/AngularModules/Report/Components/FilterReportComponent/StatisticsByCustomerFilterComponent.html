@@ -27,7 +27,7 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
                                             [DisplayMemberPath]="'EnglishName'"
-                                            [ShowInActive]="true">
+                                            [ShowInActive]="'true'">
                                     </LogLov>
                                 </td>
 
@@ -98,7 +98,7 @@
 
                                 <td style="width:20px"><div></div></td>
                                 <td style="width:90px;">
-                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">{{RunReportTitle}}</button>
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
                                 </td>
 
                                 <td>

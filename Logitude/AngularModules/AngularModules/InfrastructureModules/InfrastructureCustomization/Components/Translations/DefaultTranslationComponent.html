@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .BoxSection {
         width: 100%;
@@ -188,90 +188,76 @@
 
                                 <!-- Code -->
                                 <log-column [width]="'350'" [header]="'Code'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            {{item.Code}}
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        {{item.Code}}
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- DefaultText -->
                                 <log-column [width]="'200'" [header]="'Default Text'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
-                                                {{item.DefaultText}}
-                                            </div>
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                            {{item.DefaultText}}
+                                        </div>
 
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'DefaultText'" [Text]="item.DefaultText" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'DefaultText'" [Text]="item.DefaultText" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- DefaultTextPlural -->
                                 <log-column [width]="'200'" [header]="'Default Text Plural'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
-                                                {{item.DefaultTextPlural}}
-                                            </div>
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                            {{item.DefaultTextPlural}}
+                                        </div>
 
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'DefaultTextPlural'" [Text]="item.DefaultTextPlural" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'DefaultTextPlural'" [Text]="item.DefaultTextPlural" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- LocalDefaultText -->
                                 <log-column [width]="'200'" [header]="'Local Default Text'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
+                                    <log-cell-template template="let item" #logcelltemplate>
 
-                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
-                                                {{item.LocalDefaultText}}
-                                            </div>
+                                        <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                            {{item.LocalDefaultText}}
+                                        </div>
 
-                                            <div *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalDefaultText'" [Text]="item.LocalDefaultText" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalDefaultText'" [Text]="item.LocalDefaultText" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Checked -->
                                 <log-column [width]="'70'" [header]="'Checked'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <div style="height: 100%; width: 100%; position:relative;">
-                                                <div class="CenterCenter" style="width: 16px;">
-                                                    <CheckBox [IsChecked]="item.IsSpellChecked" (Checked)="item.IsSpellChecked = $event"></CheckBox>
-                                                </div>
+                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                        <div style="height: 100%; width: 100%; position:relative;">
+                                            <div class="CenterCenter" style="width: 16px;">
+                                                <CheckBox [IsChecked]="item.IsSpellChecked" (Checked)="item.IsSpellChecked = $event"></CheckBox>
                                             </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Spell Check Date -->
                                 <log-column [width]="'120'" [header]="'Spell Check Date'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            {{item.SpellCheckDate | DateTimeToDatePipe}}
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        {{item.SpellCheckDate | DateTimeToDatePipe}}
+                                    </log-cell-template>
                                 </log-column>
 
                                 <!-- Spell Checked By User -->
                                 <log-column [width]="'200'" [header]="'Spell Checked By User'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                            {{item.SpellCheckedByUserName}}
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        {{item.SpellCheckedByUserName}}
+                                    </log-cell-template>
                                 </log-column>
                             </logitude-edit-grid>
                         </div>

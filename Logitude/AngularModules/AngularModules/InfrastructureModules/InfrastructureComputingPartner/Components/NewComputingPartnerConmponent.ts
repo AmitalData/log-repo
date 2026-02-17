@@ -13,7 +13,7 @@ import {ComputingPartnerPMService} from '../../../Common/Services/StandardPMs/Co
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 @Component({
     selector: 'NewComputingPartnerConmponent',
-    
+    moduleId: module.id,
     templateUrl: './NewComputingPartnerConmponent.html',
 })
 

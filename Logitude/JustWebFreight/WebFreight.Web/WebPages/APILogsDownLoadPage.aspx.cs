@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
@@ -18,7 +18,7 @@ namespace WebFreight.Web.WebPages
     {
         public bool CheckAvailablityTenantsForEmail(string email, int tenant)
         {
-            UserRepository userRep = new UserRepository(tenant);
+            UserRepository userRep = new UserRepository(0);
             Simplog.Data.CommonDataModel.EntityPOCOs.User user = userRep.GetSingleUserByEmail(email, 0, false);
 
             bool available = true;

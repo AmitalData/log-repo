@@ -14,7 +14,7 @@ import {SessionLocator} from '../../../Utilities/SessionLocator';
 import {ServiceResponse} from '../../../DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddFollowupComponent.html',
 })
 
@@ -91,11 +91,6 @@ export class AddFollowupComponent extends BaseComponent {
                         break;
                     }
 
-                    case "preforwardingdeparture": {
-                        myResult = "PRFD";
-                        break;
-                    }
-
                     case "maincarriagedeparture":
                     case "transshipment1departure":
                     case "transshipment2departure":
@@ -107,11 +102,6 @@ export class AddFollowupComponent extends BaseComponent {
 
                     case "oncarriagedeparture": {
                         myResult = "ONCD";
-                        break;
-                    }
-
-                    case "onforwardingdeparture": {
-                        myResult = "ONFD";
                         break;
                     }
 
@@ -150,11 +140,6 @@ export class AddFollowupComponent extends BaseComponent {
                         break;
                     }
 
-                    case "preforwardingarrival": {
-                        myResult = "PRFA";
-                        break;
-                    }
-
                     case "maincarriagearrival":
                     case "transshipment1arrival":
                     case "transshipment2arrival":
@@ -166,11 +151,6 @@ export class AddFollowupComponent extends BaseComponent {
 
                     case "oncarriagearrival": {
                         myResult = "ONCA";
-                        break;
-                    }
-
-                    case "onforwardingarrival": {
-                        myResult = "ORFA";
                         break;
                     }
 
@@ -200,21 +180,10 @@ export class AddFollowupComponent extends BaseComponent {
                     }
                     this.Date = this.ShipmentPM.CustomsClearanceDate;
                 }
-                else if (legType.indexOf("warehouselegcutoffdate") > -1) {
-                    myResult = "WCDU";
-                    this.Date = this.ShipmentPM.WarehouseLegCutOffDate;
-                }
-                else if (legType.indexOf("warehouselegvgmcutoffdate") > -1) {
-                    myResult = "VGMU";
-                    this.Date = this.ShipmentPM.WarehouseLegVGMCutOffDate;
-                }
-                else if (legType.indexOf("amsclosingdate") > -1) {
-                    myResult = "AMSU";
-                    this.Date = this.ShipmentPM.AMSClosingDate;
-                }
+
                 else if (legType.indexOf("freightrelease") > -1) {
                     myResult = "FRRL";
-                    this.Date = this.ShipmentPM.FreightRelease;
+                    this.Date = this.ShipmentPM.FreightRelease
                 }
 
                 else if (legType.indexOf("terminalavailable") > -1) {
@@ -234,12 +203,12 @@ export class AddFollowupComponent extends BaseComponent {
 
                 else if (legType.indexOf("mawbobldate") > -1) {
                     myResult = "OBLD";
-                    this.Date = this.ShipmentPM.MAWBOBLDate;
+                    this.Date = this.ShipmentPM.MAWBOBLDate
                 }
 
                 else if (legType.indexOf("cutoffdate") > -1) {
                     myResult = "CUTO";
-                    this.Date = this.ShipmentPM.CutoffDate;
+                    this.Date = this.ShipmentPM.CutoffDate
                 }
             }    
         }
@@ -306,7 +275,7 @@ export class AddFollowupComponent extends BaseComponent {
                 myQuoteFollowUpPM.ManualActivatedFollowUp = this.EntityPM.ManualActivatedFollowUp;
                 myQuoteFollowUpPM.Date = this.Date;
                 myQuoteFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myQuoteFollowUpPM.Notes = this.Notes;
+                myQuoteFollowUpPM.Note = this.Notes;
                 myQuoteFollowUpPM.Done = this.EntityPM.Done;
                 myQuoteFollowUpPM.IsNew = this.EntityPM.IsNew;
                 myQuoteFollowUpPM.LegType = this.EntityPM.LegType;
@@ -322,7 +291,7 @@ export class AddFollowupComponent extends BaseComponent {
                 myShipmentFollowUpPM.ManualActivatedFollowUp = this.EntityPM.ManualActivatedFollowUp;
                 myShipmentFollowUpPM.Date = this.Date;
                 myShipmentFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myShipmentFollowUpPM.Notes = this.Notes;
+                myShipmentFollowUpPM.Note = this.Notes;
                 myShipmentFollowUpPM.Done = this.EntityPM.Done;
                 myShipmentFollowUpPM.IsNew = this.EntityPM.IsNew;
                 myShipmentFollowUpPM.LegType = this.EntityPM.LegType;

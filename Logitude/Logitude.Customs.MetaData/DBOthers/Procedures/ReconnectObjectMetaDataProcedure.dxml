@@ -1,8 +1,0 @@
-<Procedure DBType="Main" Name="usp_ReconnectObjectTableMetada" Schema="dbo" Module="Customs">
-  <SqlScript>
-  </SqlScript>
-  
-  <OracleScript>
- 
-  </OracleScript>
-</Procedure>

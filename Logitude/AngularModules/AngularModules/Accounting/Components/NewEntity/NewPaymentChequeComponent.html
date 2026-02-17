@@ -28,12 +28,11 @@
                                             [LookUpTableName]="'GLAccount'"
                                             (SelectedItemChanged)="Account = $event"
                                             [QueryFilterItems]="filterAgrs"
-                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
+
                                             [HideColumns]="true">
                                     </LogLov>
                                 </td>
-                                <td ><div></div></td>
+                                <td style="width:100px"><div></div></td>
                             </tr>
 
                             <!-- Pay to -->
@@ -42,7 +41,7 @@
                                     <LogLabel [ObjectFieldName]="'PayToName'" [ObjectTableName]="ObjectTableName"
                                               [DataContext]="DataContext"></LogLabel>
                                 </td>
-
+                              
                                 <td style="padding-right: 36px;" colspan="2">
                                     <LogTextBox [ObjectFieldName]="'PayToName'" [InputType]="'ntext'" [DataContext]="DataContext" [Text]="PayToName"
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
@@ -65,7 +64,6 @@
                                           [DataContext]="DataContext"
                                           [LookUpTableName]="'BankAccount'"
                                           [DisplayMemberPath]="BankName"
-                                          [QueryFilterItems]="BankAccountFilter"
                                           (SelectedItemChanged)="BankAccount = $event"
                                           [HideColumns]="true">
                                   </LogLov>
@@ -77,11 +75,11 @@
                             <!-- amount -->
                             <tr class="FormFieldRow">
                                 <td>
-
-
+                                    
+                                       
                                             <LogLabel [ObjectFieldName]="'LocalAmount'" [Text]="LocalAmountFieldLabel" [ObjectTableName]="ObjectTableName"
                                                       [DataContext]="DataContext" ></LogLabel>
-
+                                        
                                 </td>
 
                                 <td style="padding-right: 36px;">
@@ -95,7 +93,7 @@
                             <tr *ngIf="false"[style.height.px]="50" >
                                 <td colspan="2">
                                     <table>
-
+                                        
                                         <tr class="FormFieldRow">
                                             <td style="width:180px">
                                                 <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
@@ -129,10 +127,10 @@
                                             <td><div></div></td>
                                         </tr>
 
-
+                                       
                                     </table>
                                     </td>
-
+                           
                 </tr>
                 <!-- ValueDate -->
                 <tr class="FormFieldRow">

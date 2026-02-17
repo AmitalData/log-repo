@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
@@ -40,7 +40,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new LeadSource();
             this.Poco.Id = this.entityPm.Id;
 
-            LeadSourceValidating.Validate(entityPM);
             LeadSourceTracing.Trace(entityPM, Poco, isNewEntity);    
             LeadSourceMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -53,7 +52,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleLeadSource(entityPM.Id, entityPm.Tenant);
 
-            LeadSourceValidating.Validate(entityPM);
             LeadSourceTracing.Trace(entityPM, Poco, isNewEntity);            
             LeadSourceMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);

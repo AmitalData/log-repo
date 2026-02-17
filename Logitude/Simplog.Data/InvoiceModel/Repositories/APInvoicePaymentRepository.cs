@@ -3,7 +3,6 @@ using System.Linq;
 
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.InvoiceModel.Repositories
 {
@@ -39,7 +38,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<APInvoicePayment> GetAPInvoicePaymentByPaymentId(string paymentid, int tenant)
         {
-            return (from a in context.APInvoicePayments.Include("APInvoice") where a.APPaymentId == paymentid && a.Tenant == tenant select a);
+            return (from a in context.APInvoicePayments where a.APPaymentId == paymentid && a.Tenant == tenant select a);
         }
 
         public IQueryable<APPayment> GetAPInvoicePaymentTransferedByInvoiceId(string invoiceId, int tenant)
@@ -47,9 +46,13 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return (from a in context.APInvoicePayments join payment in context.APPayments on a.APPaymentId equals payment.Id where payment.TransferStatusCode == "TR" where a.APInvoiceId == invoiceId && a.Tenant == tenant select payment);
         }
 
+
+
+
+
         public IQueryable<APInvoicePayment> GetAPInvoicePaymentByInvoiceId(string invoiceId, int tenant)
         {
-            return (from a in context.APInvoicePayments.Include("APPayment") where a.APInvoiceId == invoiceId && a.Tenant == tenant select a);
+            return (from a in context.APInvoicePayments where a.APInvoiceId == invoiceId && a.Tenant == tenant select a);
         }
 
         public double? GetInvoicePaymentTotalAmountForPayment(string paymentid, int tenant)

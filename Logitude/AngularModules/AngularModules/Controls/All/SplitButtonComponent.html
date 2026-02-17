@@ -160,41 +160,33 @@
 <div class="container"
      *ngIf="_IsLoaded"
      [class.disabled]="IsDisabled || IsDisabledTimeout">
-    <span class="x-split-button">
+  <span class="x-split-button">
 
-        <!--(click)="dropdowndisplayToggle($event)"-->
-        <button *ngIf="!AsRegularButton" [disabled]="IsDisabled || IsDisabledTimeout"
-                class="x-button x-button-drop"
-                style="min-width: 10px;border-radius: 5px 0px 0px 5px;"
-                (click)="DefaultButtonClick('splitterButton',$event)">
-            &#9660;
-        </button>
+    <!--(click)="dropdowndisplayToggle($event)"-->
+    <button [disabled]="IsDisabled || IsDisabledTimeout"
+            class="x-button x-button-drop"
+            style="min-width: 10px;border-radius: 5px 0px 0px 5px;"
+            (click)="DefaultButtonClick('splitterButton',$event)"
+            >
+      &#9660;
+    </button>
 
+    <!--min-width: 80px;-->
+    <button [attr.id]="_SplitButtonComponentId"
+            [disabled]="IsDisabled || IsDisabledTimeout"
+            (click)="DefaultButtonClick('theButton',$event)"
+            class="x-button x-button-main"
+            style="min-width: 60px; border-radius: 0px 5px 5px 0px;">
+      &nbsp;{{ButtonText}}
+    </button>
+    <div [attr.id]="_SplitButtonComponentMenuId"
+         [ngStyle]="{'display': _DropdownDisplay  }"
+         style="position: fixed;z-index: 1;background-color : aquamarine;">
 
-        <!--min-width: 80px;-->
-        <button *ngIf="!AsRegularButton" [attr.id]="_SplitButtonComponentId"
-                [disabled]="IsDisabled || IsDisabledTimeout"
-                (click)="DefaultButtonClick('theButton',$event)"
-                class="x-button x-button-main"
-                style="min-width: 60px; border-radius: 0px 5px 5px 0px;">
-            &nbsp;{{ButtonText}}
-        </button>
-
-        <button *ngIf="AsRegularButton" [attr.id]="_SplitButtonComponentId"
-                [disabled]="IsDisabled || IsDisabledTimeout"
-                (click)="DefaultButtonClick('theButton',$event)"
-                class="x-button x-button-main"
-                style="min-width: 60px; border-radius: 5px 5px 5px 5px;">
-            &nbsp;{{ButtonText}}
-        </button>
-        <div [attr.id]="_SplitButtonComponentMenuId"
-             [ngStyle]="{'display': _DropdownDisplay  }"
-             style="position: fixed;z-index: 1;background-color : aquamarine;">
-
-            <ng-content select=".class-MENUSplitButton-content"></ng-content>
+      <ng-content select=".class-MENUSplitButton-content"></ng-content>
 
 
 
-        </div>
-    </span>
+    </div>
+  </span>
 </div>

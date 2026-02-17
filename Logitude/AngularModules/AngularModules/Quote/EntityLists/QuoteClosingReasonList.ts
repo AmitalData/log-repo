@@ -7,17 +7,8 @@
 //------------------------------------------------------------------------------
 
 export class QuoteClosingReasonList {
-   		Id: string;
-		Code: string;
+   		Code: string;
 		Name: string;
 		SearchFields: string;
-		Tenant: number;
-		CreateDate: Date;
-		UpdateDate: Date;
-		CreatedByUserId: string;
-		UpdatedByUserId: string;
-		CreatedByUserName: string;
-		UpdatedByUserName: string;
-		Inactive: boolean;
 	
 }

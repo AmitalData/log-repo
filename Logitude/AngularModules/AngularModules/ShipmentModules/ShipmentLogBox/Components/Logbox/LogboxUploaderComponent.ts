@@ -19,7 +19,7 @@ import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 declare var ResultAsArray: any;
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'LogBoxUploader',
     templateUrl: './LogboxUploaderComponent.html',
@@ -121,7 +121,7 @@ export class LogboxUploaderComponent extends BaseComponent implements OnInit {
         else {
             if (this.IsUploadInProgress) {
                 this.IsUploadCanceled = true;
-                this._imageLibraryService.CancelUpload(this.CurrentDocument.DocumentId, this.CurrentDocument.Tenant).subscribe((result:any) => {
+                this._imageLibraryService.CancelUpload(this.CurrentDocument.DocumentId, this.CurrentDocument.Tenant).subscribe(result => {
                     this.CurrentDocument.DocumentId = null;
                     this.CurrentDocument.HasFile = false;
                     this.CurrentDocument.Received = false;
@@ -129,7 +129,7 @@ export class LogboxUploaderComponent extends BaseComponent implements OnInit {
                     this.CurrentDocument.ReceivedByUserId = null;
                     this.CurrentDocument.FileExtension = null;
                     this.CurrentDocument.IsRequested = true;
-                    this.documentsFilingPMService.update(this.CurrentDocument).subscribe((myResult:any) => {
+                    this.documentsFilingPMService.update(this.CurrentDocument).subscribe(myResult => {
                         this.IsUploadInProgress = false;
                         this.IsUploadDone = false;
                         this.IsUploadCanceled = true;
@@ -227,7 +227,7 @@ export class LogboxUploaderComponent extends BaseComponent implements OnInit {
     SendBlockToServer(filter: ImageParameter) {
 
 
-        this._imageLibraryService.UploadPdfFile(filter).subscribe((res:any) => {
+        this._imageLibraryService.UploadPdfFile(filter).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             var result;
@@ -271,7 +271,7 @@ export class LogboxUploaderComponent extends BaseComponent implements OnInit {
                         this.CurrentDocument.IsDigitallySigned = result.isDigitallySigned;
                         this.CurrentDocument.SignersList = result.signersList;
                         this.CurrentDocument.IsSharedWithForwarder = this.ShareWithAgent;
-                        this.documentsFilingPMService.update(this.CurrentDocument).subscribe((myResult:any) => {
+                        this.documentsFilingPMService.update(this.CurrentDocument).subscribe(myResult => {
                             this.IsUploadDone = true;
                             this.IsUploadInProgress = false;
                             this.UploadedSuccessfully = true;

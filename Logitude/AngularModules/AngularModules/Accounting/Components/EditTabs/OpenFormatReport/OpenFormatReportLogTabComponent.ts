@@ -14,7 +14,7 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 
 @Component({
     selector: 'OpenFormatReportLogTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './OpenFormatReportLogTabComponent.html',
 })
 
@@ -27,16 +27,13 @@ export class OpenFormatReportLogTabComponent extends BaseComponent{
     showLocals: boolean = false;
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
     docFilingPM: any;
-    notDone: boolean = true;
-    doneStatusCode: string = "3";
-    
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.showLocals = !SessionLocator.LoggedUserPM.DontShowLocal;
         this.UIProperties.SetEnabled("ErrorMessage","OpenFormatReport",false)
-        this.notDone = this.entityPM.StatusTypeCode !==this.doneStatusCode;
     }
 
     get ErrorMessage() { return this.entityPM.ErrorMessage; }
@@ -52,7 +49,7 @@ export class OpenFormatReportLogTabComponent extends BaseComponent{
 
 
 
-        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.entityPM.Id, objectTable.Id).subscribe((myResult:any) => {
+        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.entityPM.Id, objectTable.Id).subscribe(myResult => {
             console.log("[GetLastDocumentsFilingPM]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {

@@ -29,29 +29,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 LogMessagingUtil.Instance.AppendLine("No Customs Exchange Rate details in the Response");
             }
-            if (requestParams.UpdateAllTenants)
+
+            foreach (var customsExchangeRateItem in customResponse.CurrencyRateList)
             {
-                var customsSettingQueryService = new CustomsSettingQueryService(requestParams.Tenant);
-                var allCustomsSetting = customsSettingQueryService.GetAll();
-                foreach(var customsSetting in allCustomsSetting)
-                {
-                    foreach (var customsExchangeRateItem in customResponse.CurrencyRateList)
-                    {
-                        UpdateCustomsExchangeRate(customsExchangeRateItem, customsSetting.Tenant);
-                    }
-                }
-            }
-            else
-            {
-                foreach (var customsExchangeRateItem in customResponse.CurrencyRateList)
-                {
-                    UpdateCustomsExchangeRate(customsExchangeRateItem, requestParams.Tenant);
-                }
+                UpdateCustomsExchangeRate(customsExchangeRateItem, requestParams.Tenant);
             }
 
-       
-            //Send the Table to Unifreight in order to update GRTRATE
-            SendUpdateTableToUnifreight("GRTRATE", customResponse.CurrencyRateList.ToList(), requestParams.Tenant);            
+            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            if (setting != null)
+            {
+                if (setting.IsConnectedToUniFreight)
+                {
+                    //Send the Table to Unifreight in order to update GRTRATE
+                    SendUpdateTableToUnifreight("GRTRATE", customResponse.CurrencyRateList.ToList(), requestParams.Tenant);
+                }
+            }
         }
 
         private void UpdateCustomsExchangeRate(CD_NG_8348_Web02_CurrencyRateDetailCurrencyRateList customsExchangeRateItem, int tenant)

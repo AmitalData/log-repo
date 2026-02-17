@@ -18,7 +18,7 @@
 
 <#+
 
-dynamic controlernamespace;
+
 bool UpdateClassesRegisterarNameSpaceTS;
 bool UseUpdateClassesNameSpaceTS;
 string SrcFolderts;
@@ -32,11 +32,7 @@ foreach (string file in Directory.EnumerateFiles(outputFilePath, "*.lxml"))
 {
 
     var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
-
-
-     controlernamespace =GetControllerNameSpace(destinationFolder+"/" + modelFolderName+ "/Generated/PMControllers");
 	GenerateEntityController(file,destinationFolder+"/" + modelFolderName+ "/Generated/PMControllers/"+fileNameWithoutExtension+"Controller.Generated.cs",contextName,modelProjectName);
-     controlernamespace =GetControllerNameSpace(destinationFolder+"/"+modelFolderName +"/Generated/ListControllers");
 	GenerateEntityViewController(file,destinationFolder+"/"+modelFolderName +"/Generated/ListControllers/"+fileNameWithoutExtension+"ViewsController.Generated.cs",contextName,modelProjectName);
 }
 
@@ -69,19 +65,13 @@ public void GenerateEntityController(string xmlFilePath,string outputFilePath,st
 
 		if( entity.IsClosed.GetType() == typeof(string))
       	{
-	    	if(entity.IsClosed == "true" && entity.ObjectTableName.Trim('"') != "PortTimeZone")
+	    	if(entity.IsClosed == "true")
 	    	{
 	    		return;
 	    	}
 	    } 
 
-		 if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
-      	{
-	    	if(entity.IsMetadataOnlyTable == "true")
-	    	{
-	    		return;
-	    	}
-	    } 
+		
        // if( entity.GenerateDomainService.GetType() == typeof(string))
       	//{
 	   // 	if(entity.GenerateDomainService == "false" || entity.GenerateDomainService == null)
@@ -107,13 +97,6 @@ public void GenerateEntityViewController(string xmlFilePath,string outputFilePat
 		 if( entity.NoViewController.GetType() == typeof(string))
       	{
 	    	if(entity.NoViewController == "true")
-	    	{
-	    		return;
-	    	}
-	    } 
-         if( entity.IsMetadataOnlyTable.GetType() == typeof(string))
-      	{
-	    	if(entity.IsMetadataOnlyTable == "true")
 	    	{
 	    		return;
 	    	}
@@ -146,10 +129,6 @@ public void GenerateEntityViewController(string xmlFilePath,string outputFilePat
 
 public dynamic GetControllerNameSpace(string destinationFolder)
 {
-    if(destinationFolder.Contains("WebFreight.Web"))
-    {
-        return "WebFreight.Web.App_Code.AngularJS_App_Code.Generated";
-	}
 	string spacestring = "";
 	string[] path = destinationFolder.Split('/');
 	foreach(string dir in path)
@@ -159,7 +138,8 @@ public dynamic GetControllerNameSpace(string destinationFolder)
 			spacestring += dir + ".";
         }
     }
-    spacestring = spacestring.ToString().Trim('.');
+
+	spacestring = spacestring.ToString().Replace("JustWebFreight.","").Trim('.');
 
 	return spacestring;
 }
@@ -183,8 +163,6 @@ void SaveEntityControllerOutput(string outputFileName)
 <#+
  private void WriteEntityControllerMethod(dynamic entity,string modelname,dynamic contextName)
 {
-
-
     string tableName = entity.ObjectTableName.Trim('"');
 	string fullTableName = entity.ObjectTableName.Trim('"');
 	string dBTableName = entity.DBTableName.Trim('"');
@@ -208,13 +186,9 @@ void SaveEntityControllerOutput(string outputFileName)
 	string keysName = tableName+"Keys";
 	string pocosspacestring = modelname+ ".Data.EntityPOCOs;";
 	string location="BL";
-	if(modelname.Contains("Accounting") || modelname.Contains("Customs") || modelname.Contains("CargoTracking") || modelname.Contains("ShipmentOrder")|| modelname.Contains("Shipment")){
+	if(modelname.Contains("Accounting") || modelname.Contains("Customs")){
 	location="Def";
 	}
-    if(modelname.Contains("QuoteOPM") ){
-	location="Def";
-	}
-
 	string pmsspacestring =  modelname + "."+ location +".EntityPMs;";
 	string listspacestring  = modelname + ".Data.EntityLists;";
 	string dataspacestring = modelname + ".Data;";
@@ -222,11 +196,8 @@ void SaveEntityControllerOutput(string outputFileName)
 	string queryeservicespacestring = modelname + ".BL.EntityQueryServices;";
 	string entityqueryservicespacestring = modelname + ".Data.EntityListQueryServices;";
 	string updateservicespacestring = modelname + ".BL.EntityUpdateServices;";
- 	string contextspacestring = modelname + ".Data;";
-	if( modelname.Contains("ShipmentM"))
-	{
-		contextspacestring = modelname + ".Data.Context;";
-	}
+	
+ 
 
 	string context = FirstServiceCharacterToLowerTS(contextName);
 	string queryName = FirstServiceCharacterToLowerTS(tableName)+"Query";
@@ -265,7 +236,7 @@ void SaveEntityControllerOutput(string outputFileName)
 		 {
 		  if( field.IsPrimaryKey.GetType() == typeof(string))
 			{
-				if(field.IsPrimaryKey.ToString() == "true")
+				if(field.IsPrimaryKey == "true")
 				{ 
 					 primaryKeys.Add(field.FieldName.Trim('"'),GetDataType(field));
 
@@ -302,8 +273,6 @@ void SaveEntityControllerOutput(string outputFileName)
 		 string primarykeyParam="";
 		 string primaryonlyparam = "";
 		 string primarykeyCondition = "";
-
-
 		// string keyprimarykeyCondition = "";
 		 foreach(string key in primaryKeys.Keys)
          {
@@ -332,42 +301,47 @@ void SaveEntityControllerOutput(string outputFileName)
 //     This code was generated by a logitude.
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
-// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+// </auto-generated>
 //------------------------------------------------------------------------------
-using Logitude.BL.Security;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
-using System.Web;
 using System.Web.Http;
-using System.Web.Script.Serialization;
-using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using Simplog.Server.Infrastructure.Helpers;
+using WebFreight.Web.Security;
 using System.Transactions;
-using Simplog.Server.Infrastructure;
-using <#= listspacestring #>
-using <#= updateservicespacestring #>
-using <#= entityqueryservicespacestring #>
-using <#= queryeservicespacestring #>
+using Logitude.BL.Helpers;
 using <#= pocosspacestring #>
 using <#= pmsspacestring #>
 using <#= dataspacestring #>
 using <#= blspacestring #>
-using <#= contextspacestring #>
+using <#= listspacestring #>
+using <#= updateservicespacestring #>
+using <#= entityqueryservicespacestring #>
+using <#= queryeservicespacestring #>
 
-
-
-namespace <#= controlernamespace #>
+namespace <#="WebFreight.Web.App_Code.AngularJS_App_Code.Generated" #>
 { 
 
     
@@ -614,8 +588,8 @@ if(hasTenant && enableSecurity)
 	string keysName = tableName+"Keys";
 	string pocosspacestring = modelname+ ".Data.EntityPOCOs;";
 	string location="BL";
-	if(modelname.Contains("Accounting") || modelname.Contains("Customs")|| modelname.Contains("CargoTracking") || modelname.Contains("ShipmentOrder")|| modelname.Contains("Shipment")){
-	  location="Def";
+	if(modelname.Contains("Accounting") || modelname.Contains("Customs")){
+	location="Def";
 	}
 	string pmsspacestring =  modelname + "."+ location +".EntityPMs;";
 	string listspacestring  = modelname + ".Data.EntityLists;";
@@ -624,11 +598,8 @@ if(hasTenant && enableSecurity)
 	string queryeservicespacestring = modelname + ".BL.EntityQueryServices;";
 	string entityqueryservicespacestring = modelname + ".Data.EntityListQueryServices;";
 	string updateservicespacestring = modelname + ".BL.EntityUpdateServices;";
-	string contextspacestring = dataspacestring;
-    if (modelname.Contains("ShipmentM"))
-    {
-	    contextspacestring = modelname + ".Data.Context;"; 
-    }
+	
+	
  
 
 	string context = FirstServiceCharacterToLower(contextName);
@@ -678,7 +649,7 @@ if(hasTenant && enableSecurity)
 		 {
 		  if( field.IsPrimaryKey.GetType() == typeof(string))
 			{
-				if(field.IsPrimaryKey.ToString() == "true")
+				if(field.IsPrimaryKey == "true")
 				{ 
 					 primaryKeys.Add(field.FieldName.Trim('"'),GetDataType(field));
 
@@ -698,7 +669,6 @@ if(hasTenant && enableSecurity)
 		 string tenantCondition = "";
 		 string tenantKeyCondition = "";
 		 string getalltenantCondition = "";
-
 		 if(hasTenant)
          {
 			 tenantParam = ", int tenant";
@@ -733,9 +703,9 @@ if(hasTenant && enableSecurity)
 //     This code was generated by a logitude.
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
-// </auto-generated> <#= Path.GetFileName(Host.TemplateFile) #>
+// </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -753,9 +723,10 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Interfaces;
 using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -771,11 +742,8 @@ using <#= listspacestring #>
 using <#= updateservicespacestring #>
 using <#= entityqueryservicespacestring #>
 using <#= queryeservicespacestring #>
-using <#= contextspacestring #>
 
-
-
-namespace <#= controlernamespace #>
+namespace <#="WebFreight.Web.App_Code.AngularJS_App_Code.Generated" #>
 { 
 
     
@@ -806,7 +774,7 @@ if(!isClosed && enableSecurity)
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { <#= FirstServiceCharacterToLowerTS(listName) #> }.Cast<object>().ToList());
 <#+
 }
@@ -845,7 +813,7 @@ if(!isClosed && enableSecurity)
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, result.Cast<object>().ToList());
 <#+
 }
@@ -935,7 +903,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
 
                         }
                         else
@@ -965,7 +933,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
 
                         }
                         else
@@ -976,32 +944,10 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                 }
 
                 I<#= contextName #> MyContext = <#= contextName #>.GetContext(tenant);
-<#+ 
-                if(tableName == "Activity")
-{
-#>              
-
-                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
-                {
-                  MyContext = <#= contextName #>.GetSecContext(tenant);
-                }
-<#+
-}#>
 				<#= tableName #>ListQueryService <#= queryName #> = new <#= tableName #>ListQueryService(MyContext);
 
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "<#= entity.ObjectTableName.Trim('"') #>",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
-
-
-                List<<#= listName #>> entityLists = <#= queryName #>.GetList(queryOperations, tenant , treeFilterQueryArgs);
-
+                List<<#= listName #>> entityLists = <#= queryName #>.GetList(queryOperations, tenant);
+				
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
@@ -1012,13 +958,13 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
 		 if(hasTenant)
          {
 #>
-                    int count = <#= queryName #>.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
+                    int count = <#= queryName #>.GetListCount(queryOperations, tenant);
 <#+
          }
 		 else
          {
 #>
-                    int count = <#= queryName #>.GetListCount(queryOperations , treeFilterQueryArgs);
+                    int count = <#= queryName #>.GetListCount(queryOperations);
 <#+
          }
 #>
@@ -1029,7 +975,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, entityLists.Cast<object>().ToList());
 <#+
 }

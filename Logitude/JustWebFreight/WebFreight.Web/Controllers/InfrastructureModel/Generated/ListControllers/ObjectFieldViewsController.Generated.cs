@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,14 +26,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
     {
 
 
-        public HttpResponseMessage GetSingle(string id, bool includeMetaDataFields = false)
+        public HttpResponseMessage GetSingle(string id)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
                 ObjectFieldList entityList = null;
-                ObjectField entityPoco = objectFieldRepository.GetSingleObjectFieldById(id, authToken.Tenant, includeMetaDataFields);
+                ObjectField entityPoco = objectFieldRepository.GetSingleObjectFieldById(id, authToken.Tenant);
 
                 if (entityPoco != null)
                 {
@@ -213,8 +213,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
-                var IncludeMetaDataFields = queryOperations.QueryFilterItems.Where(a => a.FieldName == "IncludeMetaDataFields").FirstOrDefault() != null;
-                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant, IncludeMetaDataFields);
+                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(objectFieldRepository);
 

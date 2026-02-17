@@ -5,7 +5,7 @@ export class ShipmentPMCustomCode {
     public static ApplyEntityChanged(propertyName: string, entityPM: ShipmentPM) {
         //if (propertyName == "IncotermId" && entityPM.IncotermId) {
         //    var incotermService = new IncotermListService();
-        //    incotermService.getSingleFromCache(entityPM.IncotermId).subscribe((response:any) => {
+        //    incotermService.getSingleFromCache(entityPM.IncotermId).subscribe(response => {
         //        if (response.Result)
         //        {
         //            var incotermList: IncotermList = response.Result;

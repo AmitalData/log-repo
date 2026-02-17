@@ -3,14 +3,17 @@ import {ReportsPreviewComponent} from '../../Components/ReportsPreviewComponent'
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ReportFliter} from '../../Components/Filters/ReportFliter';
 import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
-import {Component, OnInit}  from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {Component, OnInit, Output, ElementRef}  from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
+import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
+import {ParticipantList} from '../../EntityLists/ParticipantList';
 import {AppTool} from '../../../Infrastructure/Tools';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import {CodeNameClass} from './CodeNameClass';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'CASSReportFilterComponent',
     templateUrl: './CASSReportFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -49,52 +52,25 @@ export class CASSReportFilterComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-      
+        //if (!this.ReportsPreview.FilterConrolHeight) {
+        //    this.ReportsPreview.SetFilterCotrolHeight(80);
+        //}
+        //else {
+
+
+        //    var month = new Date().getMonth();
+        //    var Year = new Date().getFullYear();
+        //    var daysofmonth = this.daysInMonth(new Date());
+        //    this.FromDate = this.SetDate(Year, month - 1, 1);            
+        //    this.ToDate = this.SetDate(Year, month, daysofmonth);
+        //}
     }    
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                                       
-                case "FromDate":
-                    this.FromDate =new Date(queryFilterItem.FieldValue);                                         
-                    break; 
-                case "ToDate":
-                    this.ToDate =new Date(queryFilterItem.FieldValue);
-                    break;  
-                case "AirlineId":
-                    this.MainCarriageCarrierId=queryFilterItem.FieldValue;
-                    break;
-                
-              
-                
-            }
-        }
-    }
 
-    ValidateSelectedFilters() {
+
+    Validate() {
 
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.MainCarriageCarrierId)) {
@@ -113,16 +89,48 @@ export class CASSReportFilterComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push("From date must be less than to date");
         }
 
-        return this.ValidationErrorsList.length == 0;
+
     }
 
     RunReport(isloading: boolean) {
 
-        if (this.ValidateSelectedFilters()) {
 
+
+
+        this.Validate();
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "GreaterThanOrEqual";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "LessThanOrEqual";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "AirlineId";
+            this.queryFilterItem.FieldValue = this.MainCarriageCarrierId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);            
             this.reportFliter = new ReportFliter();
+
+
+
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -141,35 +149,7 @@ export class CASSReportFilterComponent extends BaseComponent implements OnInit {
         }
 
     }
-    GetQueryFilterItems(){
-        this.queryFilterItems = new Array<QueryFilterItem>();
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItem.Operator = "GreaterThanOrEqual";
-        this.queryFilterItems.push(this.queryFilterItem);
 
-
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItem.Operator = "LessThanOrEqual";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "AirlineId";
-        this.queryFilterItem.FieldValue = this.MainCarriageCarrierId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);            
-        return this.queryFilterItems;
-
-    }
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);

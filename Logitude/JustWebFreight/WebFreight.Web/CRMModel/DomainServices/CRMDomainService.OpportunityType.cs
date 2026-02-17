@@ -49,7 +49,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             return listService.GetList(tenant);
         }
 
-        public List<OpportunityTypeList> GetOpportunityTypeFilters(byte[] xmlFilters, int tenant)
+        public List<OpportunityTypeList> GetOpportunityTypesFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 

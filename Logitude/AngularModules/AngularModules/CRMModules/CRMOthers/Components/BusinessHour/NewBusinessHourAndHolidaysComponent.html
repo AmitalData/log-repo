@@ -1,4 +1,4 @@
-<style type="text/css">
+﻿<style type="text/css">
     .Box {
         width: 100%;
         height: 100%;
@@ -319,56 +319,56 @@
                                                 <td style="padding-left: 5px; padding-right: 5px;">
                                                     <table class="FixedTable">
                                                         <tr>
-                                                          <td>
-                                                            <div class="MediaFill">
-                                                              <div class="SimpleGridView">
-                                                                <div class="SimpleGridViewHeaderDark">
-                                                                  <table>
-                                                                    <tr>
-                                                                      <td style="width: 240px;min-width:240px; max-width: 240px">Name</td>
-                                                                      <td style="width: 100px;min-width:100px; max-width: 100px">Date</td>
-                                                                      <td style="width: 70px;min-width:70px; max-width: 70px">Recurring</td>
-                                                                      <td class="LastChild">
-                                                                        <div></div>
-                                                                      </td>
-                                                                    </tr>
-                                                                  </table>
+                                                            <td>
+                                                                <div class="SimpleGridView">
+                                                                    <div class="SimpleGridViewHeaderDark">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width: 240px;min-width:240px; max-width: 240px">Name</td>
+                                                                                <td style="width: 100px;min-width:100px; max-width: 100px">Date</td>
+                                                                                <td style="width: 70px;min-width:70px; max-width: 70px">Recurring</td>
+                                                                                <td class="LastChild" style="width: 25px;min-width:25px; max-width: 25px">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="SimpleGridViewBody">
+                                                                        <table>
+                                                                            <tr class="SimpleGridViewRow" *ngFor="let item of HolidaysDataList">
+
+                                                                                <td class="GridViewCell" style="width: 240px;min-width:240px; max-width: 240px;float:left;">
+                                                                                    {{item.HolidayName}}
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" style="width: 100px;min-width:100px; max-width: 100px;float:left;">
+                                                                                    {{item.HolidayDate}}
+                                                                                </td>
+
+                                                                                <td class="GridViewCell" style="width: 70px;min-width:70px; max-width: 70px">
+                                                                                    <div *ngIf="item.IsRecurring">
+                                                                                        <img style="width:15px;height:12px;" class="CenterCenter" src="./Images/GreenTick.png" />
+                                                                                    </div>
+                                                                                </td>
+
+                                                                                <td style="width: 25px;min-width:25px; max-width: 25px">
+                                                                                    <div class="LeftCenter">
+                                                                                        <span class="CellSeparator"></span>
+                                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditHoliday(item)"></IconButton>
+
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td colspan="4">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="SimpleGridViewBody">
-                                                                  <table>
-                                                                    <tr class="SimpleGridViewRow" *ngFor="let item of HolidaysDataList">
-
-                                                                      <td class="GridViewCell" style="width: 240px;min-width:240px; max-width: 240px;float:left;">
-                                                                        {{item.HolidayName}}
-                                                                      </td>
-
-                                                                      <td class="GridViewCell" style="width: 100px;min-width:100px; max-width: 100px;float:left;">
-                                                                        {{item.HolidayDate}}
-                                                                      </td>
-
-                                                                      <td class="GridViewCell" style="width: 70px;min-width:70px; max-width: 70px">
-                                                                        <div *ngIf="item.IsRecurring">
-                                                                          <img style="width:15px;height:12px;" class="CenterCenter" src="./Images/GreenTick.png" />
-                                                                        </div>
-                                                                      </td>
-
-                                                                      <td class="CellTools">
-                                                                        <span class="CellSeparator"></span>
-                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditHoliday(item)"></IconButton>
-                                                                      </td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                      <td colspan="4">
-                                                                        <div></div>
-                                                                      </td>
-                                                                    </tr>
-                                                                  </table>
-                                                                </div>
-                                                              </div>
-                                                            </div>
-                                                            
-                                                          </td>
+                                                            </td>
                                                         </tr>
                                                     </table>
                                                 </td>

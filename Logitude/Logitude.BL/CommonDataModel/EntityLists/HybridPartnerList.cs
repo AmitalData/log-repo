@@ -24,6 +24,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsExternalPartner { get; set; }
         public bool ReceiveAllStatuses { get; set; }
         public bool AllowSendingDocsToAgent { get; set; }
-        public bool InActive { get; set; }
+
     }
 }

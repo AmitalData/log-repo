@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
 {
     public class LedgerTransactionsDataProvider : BaseDataProvider
     {
+        // Filter values
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public string AccountNumber { get; set; }
@@ -17,44 +18,36 @@ namespace WebFreight.Web.DataProviders
         public string AccountCurrencyCode { get; set; }
         public string AccountReconcileMethod { get; set; }
 
+        // Others
         public string PrintedByUser { get; set; }
-        public string UserEnglishName { get; set; }
         public DateTime PrintDate { get; set; }
         public string TenantCurrencyCode { get; set; }
         public string TenantCurrencySign { get; set; }
 
+        // Data
         public decimal LocalOpenBalance { get; set; }
         public decimal LocalClosedBalance { get; set; }
-        public decimal ForeignOpenBalance { get; set; }
-        public decimal ForeignClosedBalance { get; set; }
-        public decimal LastCumulativeOpenAmount { get; set; }
 
+        // List
         public List<ReportLedgerTransaction> Transactions { get; set; }
 
-       
+        // Balance
         public List<GLAccountBalanceList> LocalOpenBalanceList { get; set; }
         public List<GLAccountBalanceList> LocalClosedBalanceList { get; set; }
-        public decimal StartTotalOpenAmount { get; set; }
-
-
     }
 
     public class ReportLedgerTransaction
     {
-        public string AccountEnglishName { get; set; }
-        public string AccountLocalName { get; set; }
-        public string AccountNumber { get; set; }
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string JournalId { get; set; }
         public int JournalLineNumber { get; set; }
-        public string JournalCreatedByUser { get; set; }
         public DateTime CreateDate { get; set; }
         public string ControlAccountId { get; set; }
         public string AccountId { get; set; }
-        public string AccountingDate { get; set; }
-        public string DocumentDate { get; set; }
-        public string DueDate { get; set; }
+        public DateTime AccountingDate { get; set; }
+        public DateTime DocumentDate { get; set; }
+        public DateTime DueDate { get; set; }
         public decimal LocalAmountDebit { get; set; }
         public decimal LocalAmountCredit { get; set; }
         public string CurrencyId { get; set; }
@@ -81,28 +74,15 @@ namespace WebFreight.Web.DataProviders
         public string ReconcileRemarks { get; set; }
         public decimal CumulativeLocalAmount { get; set; }
         public decimal CumulativeForeignAmount { get; set; }
-        public string OppositeAccountDisplayNumber { get; set; }
-        public string OppositeAccountLocalName { get; set; }
-        public string OppositeAccountEnglishName { get; set; }
-        public string PaymentNotes { get; set; }
+
+
         // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
         public string TenantCurrencySign { get; set; }
         public string Source { get; set; }
         public string JournalNumber { get; set; }
-        public decimal CumulativeOpenAmount { get; set; }
-        public decimal CalculatedForeignAmount { get; set; }
 
-        public string Category1Id { get; set; }
-        public string Category2Id { get; set; }
-        public string Category3Id { get; set; }
-        public string Category4Id { get; set; }
-        public string Category5Id { get; set; }
-        public string Collector { get; set; }
 
-        public string PaymentTerms { get; set; }
-
-        public bool IsExternalEntity { get; set; }
 
         // calculated fields
         public decimal OriginalAmount
@@ -165,26 +145,6 @@ namespace WebFreight.Web.DataProviders
                 return result;
             }
         }
-        public decimal LocalAmount
-        {
-            get
-            {
-                if (LocalAmountDebit != 0)
-                    return LocalAmountDebit;
-                else
-                    return LocalAmountCredit*-1;
-            }
-        }
-        public decimal ForeignAmount
-        {
-            get
-            {
-                if (ForeignAmountDebit != 0)
-                    return ForeignAmountDebit;
-                else
-                    return ForeignAmountCredit * -1;
-            }
-        }
     }
     public class GLAccountBalanceList
     {
@@ -201,22 +161,5 @@ namespace WebFreight.Web.DataProviders
         {
             get { return string.Format("{0:N2} {1}", BalanceForeign, ForeignCurrencySign); }
         }
-        public decimal? LocalBalanceInDue { get; set; }
-        public decimal? BalanceInForeignCurrency { get; set; }
-        public decimal? ForeignBalanceInDue { get; set; }
-        public string LocalBalanceInDueWithSign
-        {
-            get { return string.Format("{0:N2} {1}", LocalBalanceInDue, LocalCurrencySign); }
-        }
-        public string BalanceInForeignCurrencyWithSign
-        {
-            get { return string.Format("{0:N2} {1}", BalanceInForeignCurrency, ForeignCurrencySign); }
-        }
-        public string ForeignBalanceInDueWithSign
-        {
-            get { return string.Format("{0:N2} {1}", ForeignBalanceInDue, ForeignCurrencySign); }
-        }
-
-      
     }
 }

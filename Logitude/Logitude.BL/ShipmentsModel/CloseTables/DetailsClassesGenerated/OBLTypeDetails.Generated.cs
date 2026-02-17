@@ -34,41 +34,6 @@ namespace Logitude.BL.ShipmentsModel
                 SearchFields = "OBLR,OBL Required", 
                 Name = "OBL Required", 
 			});
-			 
-            all.Add(new OBLTypeDetails()
-            {    
-                Code = "SEWY", 
-                Name = "Seaway", 
-                SearchFields = "SEWY,Seaway", 
-			});
-			 
-            all.Add(new OBLTypeDetails()
-            {    
-                Code = "BLSR", 
-                Name = "BL Surrender", 
-                SearchFields = "BLSR,BL Surrender", 
-			});
-			 
-            all.Add(new OBLTypeDetails()
-            {    
-                Code = "AGOR", 
-                Name = "Against Original", 
-                SearchFields = "AGOR,Against Original", 
-			});
-			 
-            all.Add(new OBLTypeDetails()
-            {    
-                Code = "SEWA", 
-                Name = "Sea Waybill", 
-                SearchFields = "SEWA,Sea Waybill", 
-			});
-			 
-            all.Add(new OBLTypeDetails()
-            {    
-                Code = "BLEB", 
-                Name = "BL Endorsed By Bank", 
-                SearchFields = "BLEB,BL Endorsed By Bank", 
-			});
 			
             return all;
        }

@@ -118,21 +118,21 @@
                                     <div class="QueriesSection" *ngIf="IsQueryVisible_OperationalOpenGroup">
                                         <div>Operational Open</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:0px; right:0px;">
-                                            <ToggleButton id="{{'NEWSHIP' | IdGeneratorAsyncPipe | async}}" [Title]="'New'" [DropDownWidth]="100" [DropDownHeight]="75">
-                                                <ToggleButtonItem id="{{'NEWDIRECT' | IdGeneratorAsyncPipe | async}}" [Text]="'Direct'" (click)="RunNewShipmentWizard('D')" style="height:100%; width: 100%;"></ToggleButtonItem>
-                                                <ToggleButtonItem id="{{'NEWHOUSE' | IdGeneratorAsyncPipe | async}}" [Text]="'House'" (click)="RunNewShipmentWizard('H')" style="height:100%; width: 100%;"></ToggleButtonItem>
-                                                <ToggleButtonItem id="{{'NEWMASTER' | IdGeneratorAsyncPipe | async}}" [Text]="'Master'" (click)="RunNewShipmentWizard('C')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                            <ToggleButton id="{{'NEWSHIP' | IdGeneratorPipe}}" [Title]="'New'" [DropDownWidth]="100" [DropDownHeight]="75">
+                                                <ToggleButtonItem id="{{'NEWDIRECT' | IdGeneratorPipe}}" [Text]="'Direct'" (click)="RunNewShipmentWizard('D')"></ToggleButtonItem>
+                                                <ToggleButtonItem id="{{'NEWHOUSE' | IdGeneratorPipe}}" [Text]="'House'" (click)="RunNewShipmentWizard('H')"></ToggleButtonItem>
+                                                <ToggleButtonItem id="{{'NEWMASTER' | IdGeneratorPipe}}" [Text]="'Master'" (click)="RunNewShipmentWizard('C')"></ToggleButtonItem>
                                             </ToggleButton>
                                         </div>
                                         <div *ngIf="IsCloudDeployment == true">
-                                            <p class="QueryLink" id="{{'SHIPMENTS-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Shipments')">{{'Shipment.Q.Shipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" id="{{'IMPORTSHIPMENTS-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('ImportShipments')" *ngIf="IsQueryVisible_ImportShipments">{{'Shipment.Q.ImportShipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" id="{{'Masters-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Masters')" *ngIf="IsQueryVisible_Masters">{{'Shipment.Q.Masters' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'SHIPMENTS-Q' | IdGeneratorPipe}}" (click)="ViewShipmentQuery('Shipments')">{{'Shipment.Q.Shipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'IMPORTSHIPMENTS-Q' | IdGeneratorPipe}}" (click)="ViewShipmentQuery('ImportShipments')" *ngIf="IsQueryVisible_ImportShipments">{{'Shipment.Q.ImportShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'Masters-Q' | IdGeneratorPipe}}" (click)="ViewShipmentQuery('Masters')" *ngIf="IsQueryVisible_Masters">{{'Shipment.Q.Masters' | TextCodeTranslationPipe}}</p>
                                         </div>
                                         <div *ngIf="IsCloudDeployment == false">
-                                            <p class="QueryLink" id="{{'Shipments-O-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Shipments')">{{'Shipment.Q.Shipments' | TextCodeTranslationPipe}} ({{OperationalOpenCount_DH}})</p>
-                                            <p class="QueryLink" id="{{'Shipments-I-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('ImportShipments')" *ngIf="IsQueryVisible_ImportShipments">{{'Shipment.Q.ImportShipments' | TextCodeTranslationPipe}} ({{ImportShipmentsCount}})</p>
-                                            <p class="QueryLink" id="{{'SHIPMENTS-M-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Masters')" *ngIf="IsQueryVisible_Masters">{{'Shipment.Q.Masters' | TextCodeTranslationPipe}} ({{OperationalOpenCount_DC}})</p>
+                                            <p class="QueryLink" id="{{'Shipments-O-Q' | IdGeneratorPipe}}" (click)="ViewShipmentQuery('Shipments')">{{'Shipment.Q.Shipments' | TextCodeTranslationPipe}} ({{OperationalOpenCount_DH}})</p>
+                                            <p class="QueryLink" id="{{'Shipments-I-Q' | IdGeneratorPipe}}"  (click)="ViewShipmentQuery('ImportShipments')" *ngIf="IsQueryVisible_ImportShipments">{{'Shipment.Q.ImportShipments' | TextCodeTranslationPipe}} ({{ImportShipmentsCount}})</p>
+                                            <p class="QueryLink" id="{{'SHIPMENTS-M-Q' | IdGeneratorPipe}}" (click)="ViewShipmentQuery('Masters')" *ngIf="IsQueryVisible_Masters">{{'Shipment.Q.Masters' | TextCodeTranslationPipe}} ({{OperationalOpenCount_DC}})</p>
                                         </div>
                                     </div>
 
@@ -140,12 +140,12 @@
                                     <div class="QueriesSection" *ngIf="IsQueryVisible_AccountinglOpenGroup">
                                         <div>Accounting Open</div>
                                         <div *ngIf="IsCloudDeployment == true">
-                                            <p class="QueryLink" id="{{'OpenReceivables-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('Open Receivables Shipments')" *ngIf="IsQueryVisible_OpenReceivables">{{'Shipment.Q.OpenReceivablesShipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" id="{{'OpenPayables-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Open Payables Masters')" *ngIf="IsQueryVisible_OpenPayables">{{'Shipment.Q.OpenPayablesMasters' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'OpenReceivables-Q' | IdGeneratorPipe}}"  (click)="ViewShipmentQuery('Open Receivables Shipments')" *ngIf="IsQueryVisible_OpenReceivables">{{'Shipment.Q.OpenReceivablesShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'OpenPayables-Q' | IdGeneratorPipe}}" (click)="ViewShipmentQuery('Open Payables Masters')" *ngIf="IsQueryVisible_OpenPayables">{{'Shipment.Q.OpenPayablesMasters' | TextCodeTranslationPipe}}</p>
                                         </div>
                                         <div *ngIf="IsCloudDeployment == false">
-                                            <p class="QueryLink" id="{{'OpenReceivables-M-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('Open Receivables Shipments')" *ngIf="IsQueryVisible_OpenReceivables">{{'Shipment.Q.OpenReceivablesShipments' | TextCodeTranslationPipe}} ({{AccountingOpenCount_DH}})</p>
-                                            <p class="QueryLink" id="{{'OpenPayables-M-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('Open Payables Masters')" *ngIf="IsQueryVisible_OpenPayables">{{'Shipment.Q.OpenPayablesMasters' | TextCodeTranslationPipe}} ({{AccountingOpenCount_DC}})</p>
+                                            <p class="QueryLink" id="{{'OpenReceivables-M-Q' | IdGeneratorPipe}}"  (click)="ViewShipmentQuery('Open Receivables Shipments')" *ngIf="IsQueryVisible_OpenReceivables">{{'Shipment.Q.OpenReceivablesShipments' | TextCodeTranslationPipe}} ({{AccountingOpenCount_DH}})</p>
+                                            <p class="QueryLink" id="{{'OpenPayables-M-Q' | IdGeneratorPipe}}"  (click)="ViewShipmentQuery('Open Payables Masters')" *ngIf="IsQueryVisible_OpenPayables">{{'Shipment.Q.OpenPayablesMasters' | TextCodeTranslationPipe}} ({{AccountingOpenCount_DC}})</p>
                                         </div>
                                     </div>
 
@@ -154,13 +154,13 @@
                                         <div>e-AWB</div>
                                         <div style="height: 5px;"></div>
                                         <div style="height:22px; width: 45px; position: absolute; top:0px; right:0px;">
-                                            <div id="{{'NewAWB' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                            <div id="{{'NewAWB' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                 <label>New</label>
                                                 <img src="./Images/ToggleIcon.png" />
                                                 <div class="ToggleButtonMenu" style="width: 130px">
-                                                    <button id="{{'DirectAWB' | IdGeneratorAsyncPipe | async}}" (click)="RunNewAWBWizard('D')">Direct AWB Wizard</button>
-                                                    <button id="{{'HouseAWB' | IdGeneratorAsyncPipe | async}}" (click)="RunNewAWBWizard('H')">House AWB Wizard</button>
-                                                    <button   id="{{'MasterAWB' | IdGeneratorAsyncPipe | async}}" (click)="RunNewAWBWizard('C')">Master AWB Wizard</button>
+                                                    <button id="{{'DirectAWB' | IdGeneratorPipe}}" (click)="RunNewAWBWizard('D')">Direct AWB Wizard</button>
+                                                    <button id="{{'HouseAWB' | IdGeneratorPipe}}" (click)="RunNewAWBWizard('H')">House AWB Wizard</button>
+                                                    <button   id="{{'MasterAWB' | IdGeneratorPipe}}" (click)="RunNewAWBWizard('C')">Master AWB Wizard</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -212,9 +212,9 @@
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Follow Ups')" *ngIf="IsQueryVisible_AllFollowUps">{{'Shipment.Q.AllFollowUps' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('My Follow Ups')" *ngIf="IsQueryVisible_MyFollowUps">{{'Shipment.Q.MyFollowUps' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Shipments')" *ngIf="IsQueryVisible_AllShipments">{{'Shipment.Q.AllShipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>                                            
                                             <p class="QueryLink" (click)="ViewShipmentQuery('CreditLimitBlockedShipments')" *ngIf="IsQueryVisible_CreditLimitBlocked">{{'Shipment.Q.CreditLimitBlockedShipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>                          
                                         </div>
                                         <div *ngIf="IsCloudDeployment == false" >
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Follow Ups')" *ngIf="IsQueryVisible_AllFollowUps">{{'Shipment.Q.AllFollowUps' | TextCodeTranslationPipe}} ({{AllFollowUpsCount}})</p>
@@ -223,7 +223,6 @@
                                             <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('CreditLimitBlockedShipments')" *ngIf="IsQueryVisible_CreditLimitBlocked">{{'Shipment.Q.CreditLimitBlockedShipments' | TextCodeTranslationPipe}} ({{CreditLimitBlockedCount}})</p>
                                             <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>
-                                            <p class="QueryLink" (click)="ViewShipmentQuery('Pending Approval Documents')" *ngIf="IsQueryVisible_PendingApprovalDocuments">{{'Shipment.Q.PendingApprovalDocuments' | TextCodeTranslationPipe}} ({{PendingApprovalDocumentsCount}})</p>
                                         </div>
                                     </div>
 
@@ -370,7 +369,7 @@
 
                             <tr>
                                 <td>
-                                    <div class="MediaFill" *ngIf="IsDeparturesArrivalsVisible">
+                                    <div class="MediaFill">
                                         <SectionBox>
                                             <SectionHead>Departures and Arrivals</SectionHead>
                                             <SectionBody>

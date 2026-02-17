@@ -31,8 +31,8 @@ namespace WebFreight.Web.CRMModel.DomainServices
     using Logitude.CRM.BL.EntityUpdateServices;
     using Simplog.Data.InfrastructureModel.Repositories;
     using System.Web;
-    using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-    using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+    using Simplog.Data.CommonDataModel.EntityPOCOs;
+    using Simplog.Data.InfrastructureModel.EntityPOCOs;
     
     using System.Data.Entity.Core;
     using Logitude.BL.Helpers;
@@ -858,7 +858,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             EmployeeGroupQueryService listService = new EmployeeGroupQueryService(crmContext);
             List<EmployeeGroupPM> myResult = listService.GetAllEmployeeGroupsByTenant(tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("EmployeeGroup", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
@@ -1061,7 +1061,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketEscalationListQueryService listService = new TicketEscalationListQueryService(crmContext);
             List<TicketEscalationList> myResult = listService.GetTicketEscalationListByTicketId(ticketId, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("TicketEscalation", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }

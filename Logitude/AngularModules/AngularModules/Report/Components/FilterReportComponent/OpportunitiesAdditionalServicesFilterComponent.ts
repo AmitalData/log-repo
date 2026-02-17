@@ -14,7 +14,7 @@ import {ParticipantList} from '../../EntityLists/ParticipantList';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'OpportunitiesAdditionalServicesFilterComponent',
     templateUrl: './OpportunitiesAdditionalServicesFilterComponent.html',
     inputs: ['ReportsPreview']

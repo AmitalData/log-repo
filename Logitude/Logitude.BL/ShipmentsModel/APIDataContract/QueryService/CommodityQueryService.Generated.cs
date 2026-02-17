@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -70,7 +68,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentCommodityPM> CommodityDataMappingAndValidatin(List<Commodity> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<ShipmentCommodityPM> CommodityDataMappingAndValidatin(List<Commodity> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -83,14 +81,11 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentCommodity with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -103,86 +98,21 @@ using Simplog.Data.ShipmentsModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//} 
-
-						
+						//}
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.DescriptionOfGoods = item.DescriptionOfGoods;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ChargeableWeight = item.ChargeableWeight;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ChargeRate = item.ChargeRate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ChargeAmount = item.ChargeAmount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.CommodityNumber = item.CommodityNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.NumberOfPackages = item.NumberOfPackages;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.GrossWeight = item.GrossWeight;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Volume = item.Volume;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.VolumetricWeight = item.VolumetricWeight;
-
-										}  
-
-										   
+					temp.DescriptionOfGoods = item.DescriptionOfGoods;
+					temp.ChargeableWeight = item.ChargeableWeight;
+					temp.ChargeRate = item.ChargeRate;
+					temp.ChargeAmount = item.ChargeAmount;
+					temp.CommodityNumber = item.CommodityNumber;
+					temp.NumberOfPackages = item.NumberOfPackages;
+					temp.GrossWeight = item.GrossWeight;
+					temp.Volume = item.Volume;
+					temp.VolumetricWeight = item.VolumetricWeight;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -190,8 +120,6 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

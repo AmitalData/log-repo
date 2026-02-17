@@ -8,15 +8,13 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -38,7 +36,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private IWebFreightContext objectContext;
         private ObjectTableRuleRepository entityRepository;
         private RuleTypeRepository ruleTypeRepository;
-        private RuleConditionFieldRepository ruleConditionFieldRepository;
+        private RuleConditionFieldRepository  ruleConditionFieldRepository;
         private RuleConditionFieldService service;
         public ObjectTableRuleService(IWebFreightContext objectContext, int tenant)
         {
@@ -50,23 +48,23 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         public void Create(ObjectTableRulePM theEntityPm)
         {
 
-            string ruleslistName = "objecttablerulestenant" + tenant;
-            if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(ruleslistName);
-            }
+			string ruleslistName = "objecttablerulestenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(ruleslistName);
+			}
 
-            string pmslistName = "objecttablerulepmstenant" + tenant;
-            if (CacheManager.CacheWrapper.Get(pmslistName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(pmslistName);
-            }
+			string pmslistName = "objecttablerulepmstenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(pmslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(pmslistName);
+			}
 
-            this.isNewEntity = true;
+			this.isNewEntity = true;
             this.entityPM = theEntityPm;
-            //   this.entityPM.Id = IdCounter.GetNumber("ObjectTableRule", tenant).ToString();
+         //   this.entityPM.Id = IdCounter.GetNumber("ObjectTableRule", tenant).ToString();
             this.Poco = new ObjectTableRule();
-
+         
             ruleTypeRepository = new RuleTypeRepository(ObjectContext);
             ruleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
 
@@ -79,9 +77,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 this.Poco.RuleCode = this.Poco.Id;
             }
 
+			
 
-
-            ObjectTableRuleQuery objectTableRuleQuery = new ObjectTableRuleQuery(entityRepository);
+			ObjectTableRuleQuery objectTableRuleQuery = new ObjectTableRuleQuery(entityRepository);
 
             if (objectTableRuleQuery.GetObjectTableRulePMsByTenant(theEntityPm.Tenant).Where(r => r.RuleCode == this.Poco.RuleCode && r.Tenant == theEntityPm.Tenant).FirstOrDefault() == null)
             {
@@ -107,45 +105,40 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 msg = msg.Replace("%Entity", "Rule");
                 throw new Exception(msg);
             }
-
-            CreateRuleUpdateHistory(theEntityPm);
             ObjectContext.SaveChanges();
 
+			
+		}
 
-        }
-
-        public void Update(ObjectTableRulePM theEntityPm, List<RuleConditionFieldPM> ruleCondetionFiledList)
+        public void Update(ObjectTableRulePM theEntityPm , List<RuleConditionFieldPM> ruleCondetionFiledList)
         {
 
-            string ruleslistName = "objecttablerulestenant" + tenant;
-            if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(ruleslistName);
-            }
-            string pmslistName = "objecttablerulepmstenant" + tenant;
-            if (CacheManager.CacheWrapper.Get(pmslistName) != null)
-            {
-                CacheManager.CacheWrapper.Invalidate(pmslistName);
-            }
+			string ruleslistName = "objecttablerulestenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(ruleslistName);
+			}
+			string pmslistName = "objecttablerulepmstenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(pmslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(pmslistName);
+			}
 
-            this.isNewEntity = false;
+			this.isNewEntity = false;
             this.entityPM = theEntityPm;
-            this.Poco = entityRepository.GetSingleObjectTableRule(theEntityPm.Id, theEntityPm.Tenant);
+            this.Poco = entityRepository.GetSingleObjectTableRule(theEntityPm.Id , theEntityPm.Tenant);
 
-            ruleTypeRepository = new RuleTypeRepository(ObjectContext);
-            ruleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
-            service = new RuleConditionFieldService(objectContext, theEntityPm.Tenant);
-
+             ruleTypeRepository = new RuleTypeRepository(ObjectContext);
+             ruleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
+             service = new RuleConditionFieldService(objectContext, theEntityPm.Tenant);
+            
             string objectRulesListName = this.Poco.ObjectTable.Name + "DuplicationRules" + theEntityPm.Tenant;
             if (CacheManager.CacheWrapper.Get(objectRulesListName) != null)
             {
                 CacheManager.CacheWrapper.Invalidate(objectRulesListName);
             }
             ObjectTableRuleValidating.Validate(theEntityPm);
-            ObjectTableRuleTracing.Trace(theEntityPm, Poco, isNewEntity);
-
-            CreateRuleUpdateHistory(theEntityPm);
-
+            ObjectTableRuleTracing.Trace(theEntityPm, Poco, isNewEntity);           
             ObjectTableRuleMapping.MapEntity(theEntityPm, Poco, isNewEntity);
 
             bool replicated = entityRepository.GetObjectTableRules(theEntityPm.Tenant).Where(r => r.RuleCode == theEntityPm.RuleCode && r.Id != theEntityPm.Id).Any();
@@ -161,7 +154,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 throw new Exception(msg);
             }
 
-            foreach (RuleConditionFieldPM condFieldPM in ruleCondetionFiledList)
+            foreach (RuleConditionFieldPM condFieldPM in  ruleCondetionFiledList)
             {
 
                 string listName = "ruleconditionfieldstenant" + condFieldPM.Tenant;
@@ -218,81 +211,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
             }
 
-
-
             ObjectContext.SaveChanges();
 
 
         }
 
-        private void CreateRuleUpdateHistory(ObjectTableRulePM theEntityPm)
-        {
-            RuleUpdateHistoryService ruleUpdateHistoryService = new RuleUpdateHistoryService(ObjectContext, tenant);
-            RuleUpdateHistoryPM ruleUpdateHistory = CreateNewRuleHistoryPM(theEntityPm);
-            if (isNewEntity)
-            {
-                if (theEntityPm.IsCreatedFromSystemRule)
-                {
-                    ruleUpdateHistory.EventName = GetEventNameForCopiedFromSystemRule(theEntityPm, ruleUpdateHistory);
-                }
-                else
-                    ruleUpdateHistory.EventName = RuleEvents.Added;
-            }
-            else
-            {
-                if (!IsDeletedEntity)
-                {
-                    if (this.Poco.InActive != this.entityPM.InActive)
-                    {
-                        ruleUpdateHistory.EventName = (this.entityPM.InActive == true ? RuleEvents.SetAsInactive : RuleEvents.SetAsActive);
-                    }
-                    else
-                        ruleUpdateHistory.EventName = RuleEvents.Updated;
-                }
-                else
-                    ruleUpdateHistory.EventName = RuleEvents.Restored;
-            }
 
-            ruleUpdateHistoryService.Create(ruleUpdateHistory);
-        }
-
-        private string GetEventNameForCopiedFromSystemRule(ObjectTableRulePM theEntityPm, RuleUpdateHistoryPM ruleUpdateHistory)
-        {
-            string eventName = RuleEvents.Updated;
-            ObjectTableRule systemRule = entityRepository.GetSingleObjectTableRuleByCode(theEntityPm.RuleCode, 0);
-            if (systemRule != null)
-            {
-                if (systemRule.InActive != this.entityPM.InActive)
-                {
-                    eventName = (this.entityPM.InActive == true ? RuleEvents.SetAsInactive : RuleEvents.SetAsActive);
-                }
-                else
-                    eventName = RuleEvents.Updated;
-            }
-            else
-                eventName = RuleEvents.Added;
-
-            return eventName;
-        }
-
-        private RuleUpdateHistoryPM CreateNewRuleHistoryPM(ObjectTableRulePM theEntityPm)
-        {
-            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-            RuleUpdateHistoryPM ruleUpdateHistory = new RuleUpdateHistoryPM();
-            ruleUpdateHistory.Id = IdCounter.GetNumber("RuleUpdateHistory", theEntityPm.Tenant);
-            ruleUpdateHistory.Tenant = theEntityPm.Tenant;
-            ruleUpdateHistory.CreateDate = TenantServerConfigration.GetCurrentDateTime(theEntityPm.Tenant);
-            ruleUpdateHistory.CreatedByUserId = loggedContact.Id;
-            ruleUpdateHistory.UpdateDate = TenantServerConfigration.GetCurrentDateTime(theEntityPm.Tenant);
-            ruleUpdateHistory.UpdatedByUserId = loggedContact.Id;
-            ruleUpdateHistory.RuleCode = theEntityPm.RuleCode;
-            return ruleUpdateHistory;
-        }
-
-        bool IsDeletedEntity = false;
         public void Delete(string ruleId)
         {
-            IsDeletedEntity = true;
+
             string ruleslistName = "objecttablerulestenant" + tenant;
             if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
             {
@@ -312,16 +239,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
 
             this.isNewEntity = false;
-
+             
             this.Poco = entityRepository.GetSingleObjectTableRule(ruleId, tenant);
-            if (this.Poco.Tenant == 0)
+            if(this.Poco.Tenant == 0)
             {
                 throw new Exception("You can not delete a system rule!");
             }
-
-            ObjectTableRuleQuery rulesQuery = new ObjectTableRuleQuery(entityRepository);
-            this.entityPM = rulesQuery.GetSinglePM(ruleId, tenant);
-            this.CreateRuleUpdateHistory(this.entityPM);
 
             ruleTypeRepository = new RuleTypeRepository(ObjectContext);
             ruleConditionFieldRepository = new RuleConditionFieldRepository(ObjectContext);
@@ -333,7 +256,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 objectTableRuleFieldRepository.Remove(field);
             }
 
-            List<RuleConditionField> ruleConditionFieldsList = ruleConditionFieldRepository.GetRuleConditionFieldsByRuleId(ruleId, tenant).ToList();
+             List<RuleConditionField> ruleConditionFieldsList = ruleConditionFieldRepository.GetRuleConditionFieldsByRuleId(ruleId, tenant).ToList();
             foreach (var field in ruleConditionFieldsList)
             {
                 ruleConditionFieldRepository.Remove(field);
@@ -341,21 +264,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             entityRepository.Remove(this.Poco);
 
-
-
+         
+            
 
             ObjectContext.SaveChanges();
 
 
         }
-    }
-
-    internal class RuleEvents
-    {
-        public const string Updated = "Rule Updated";
-        public const string Added = "Rule Added";
-        public const string Restored = "Rule Restored";
-        public const string SetAsActive = "Rule set as Active";
-        public const string SetAsInactive = "Rule set as Inactive";
     }
 }

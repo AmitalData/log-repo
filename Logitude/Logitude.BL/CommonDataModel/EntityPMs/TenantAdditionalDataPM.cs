@@ -4,7 +4,7 @@ using System.ServiceModel.DomainServices.Server;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {

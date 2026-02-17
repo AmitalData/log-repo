@@ -26,12 +26,12 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public partial class ContainerQueryService
     {
 
-        public List<Container> ContainerCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant, string ComputingPartnerName = "")
+        public List<Container> ContainerCustomDataMapping(ShipmentPM MyPM, List<ShipmentPackagePM> MyEntityPMs, int Tenant)
         {
 
             if (MyPM.ShipmentTypeId == "FCL" || MyPM.ShipmentTypeId == "FTL" || MyPM.ShipmentTypeId == "FCLD")
             {
-                return this.ContainerDataMapping(MyEntityPMs, Tenant,ComputingPartnerName);
+                return this.ContainerDataMapping(MyEntityPMs, Tenant);
             }
             else
             {
@@ -39,22 +39,19 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             }
         }
 
-        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(House MyHouse, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(House MyHouse, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
-            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
 
-        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Direct MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Direct MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
-            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
-        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Master MyMaster, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+
+        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Customs MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
-            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
-        }
-        public List<ShipmentPackagePM> ContainerCustomDataMappingAndValidatin(Customs MyDirect, List<Container> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
-        {
-            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName, IsUpdate);
+            return this.ContainerDataMappingAndValidatin(MyEntities, Tenant, ComputingPartnerName);
         }
 
     }

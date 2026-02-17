@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PaymentTermRepository repository;
 
-
+        public PaymentTermQuery()
+        {
+            repository = new PaymentTermRepository(); 
+        }
         public PaymentTermQuery(int tenant)
         {
             repository = new PaymentTermRepository(tenant);
@@ -49,8 +52,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
                     IsManuallySet = entityPOCO.IsManuallySet,
                     ExternalId = entityPOCO.ExternalId,
-                    EndOfMonth = entityPOCO.EndOfMonth,
-                    NumberOfMonths = entityPOCO.NumberOfMonths,
+                    CurrentMonth = entityPOCO.CurrentMonth,
                     FromDateTypeCode = entityPOCO.FromDateTypeCode,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
@@ -87,8 +89,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
                     IsManuallySet = entityPOCO.IsManuallySet,
                     ExternalId = entityPOCO.ExternalId,
-                    EndOfMonth = entityPOCO.EndOfMonth,
-                    NumberOfMonths = entityPOCO.NumberOfMonths,
+                    CurrentMonth = entityPOCO.CurrentMonth,
                     FromDateTypeCode = entityPOCO.FromDateTypeCode,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
@@ -126,8 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ComputedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
                     IsManuallySet = entityPOCO.IsManuallySet,
                     ExternalId = entityPOCO.ExternalId,
-                    EndOfMonth = entityPOCO.EndOfMonth,
-                    NumberOfMonths = entityPOCO.NumberOfMonths,
+                    CurrentMonth = entityPOCO.CurrentMonth,
                     FromDateTypeCode = entityPOCO.FromDateTypeCode,
                     CalculatedEnglishName = string.IsNullOrEmpty(entityPOCO.EnglishName) ? entityPOCO.LocalName : entityPOCO.EnglishName,
                     CalculatedLocalName = string.IsNullOrEmpty(entityPOCO.LocalName) ? entityPOCO.EnglishName : entityPOCO.LocalName,
@@ -168,8 +168,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                                          IsManuallySet = a.IsManuallySet,
                                                          ExternalId = a.ExternalId,
-                                                         EndOfMonth = a.EndOfMonth,
-                                                         NumberOfMonths = a.NumberOfMonths,
+                                                         CurrentMonth = a.CurrentMonth,
                                                          FromDateTypeCode = a.FromDateTypeCode,
                                                          CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                                          CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -198,8 +197,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                                                          IsManuallySet = a.IsManuallySet,
                                                          ExternalId = a.ExternalId,
-                                                         EndOfMonth = a.EndOfMonth,
-                                                         NumberOfMonths = a.NumberOfMonths,
+                                                         CurrentMonth = a.CurrentMonth,
                                                          FromDateTypeCode = a.FromDateTypeCode,
                                                          CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                                                          CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -234,8 +232,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                              IsManuallySet = a.IsManuallySet,
                              ExternalId = a.ExternalId,
-                             EndOfMonth = a.EndOfMonth,
-                             NumberOfMonths = a.NumberOfMonths,
+                             CurrentMonth = a.CurrentMonth,
                              FromDateTypeCode = a.FromDateTypeCode,
                              CalculatedEnglishName = string.IsNullOrEmpty(a.EnglishName) ? a.LocalName : a.EnglishName,
                              CalculatedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -288,8 +285,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              SearchFields = f.SearchFields,
                              IsManuallySet = f.IsManuallySet,
                              ExternalId =  f.ExternalId,
-                             EndOfMonth = f.EndOfMonth,
-                             NumberOfMonths = f.NumberOfMonths,
+                             CurrentMonth = f.CurrentMonth,
                              FromDateTypeCode = f.FromDateTypeCode,
                              CalculatedEnglishName = string.IsNullOrEmpty(f.EnglishName) ? f.LocalName : f.EnglishName,
                              CalculatedLocalName = string.IsNullOrEmpty(f.LocalName) ? f.EnglishName : f.LocalName,

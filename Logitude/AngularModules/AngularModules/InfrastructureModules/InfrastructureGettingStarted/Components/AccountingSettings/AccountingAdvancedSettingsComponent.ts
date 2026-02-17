@@ -7,7 +7,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'AccountingAdvancedSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './AccountingAdvancedSettingsComponent.html',
 })
 
@@ -17,7 +17,6 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
     public DataContext: any;
     public IsEnableMultiCurrencyARPaymentsVisible: boolean = false;
     public IsEnableInvoiceStocksManagementVisible: boolean = false;
-    public IsEnableRegionalTaxManagementVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -28,10 +27,6 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
 
         if (FeatureLocator.HasFeaturePermession("ARInvoice", "ManageStocks")) {
             this.IsEnableInvoiceStocksManagementVisible = true;
-        }
-
-        if (FeatureLocator.HasFeaturePermession("General", "REGIONALTAX")) {
-            this.IsEnableRegionalTaxManagementVisible = true;
         }
     }
 
@@ -59,9 +54,6 @@ export class AccountingAdvancedSettingsComponent extends BaseComponent {
         this.myCloner.AddField('RegistryDateTypeCode');
         this.myCloner.AddField('EnableMultiCurrencyARPayments');
         this.myCloner.AddField('EnableNegativeOffsetARPayments');
-        this.myCloner.AddField('AllowManualARPaymentNumber');
-        this.myCloner.AddField('AllowRegionalTaxManagement');
-        this.myCloner.AddField('BlockSendInvoiceOriginalCopy');
         this.myCloner.AddEntity(this.EntityPM);
     }
 

@@ -13,7 +13,7 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Security;

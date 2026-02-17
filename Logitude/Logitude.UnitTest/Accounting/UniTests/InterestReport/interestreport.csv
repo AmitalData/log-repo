@@ -1,2 +1,0 @@
-﻿Id,Tenant,CreateDateTime,CreatedByUserId,UpdatedByUserId,GLAccountId,ReportNumber,InterestCalculationDate,TotalAmount,OpenBalance,CloseBalance,ARinvoiceId,InvoiceAmount,GLAccountInterestCreditLimit,InterestReportStatusCode,UpdateDateTime,SearchFields,CustomerId
-1-28,1071,2020-02-14 18:13:59.400,1-82241,1-80725,1-439694,1030,2020-02-14 00:00:00.000,NULL,0.00,700.00,NULL,NULL,500.00,3,2020-02-14 18:14:14.830,,1-173724

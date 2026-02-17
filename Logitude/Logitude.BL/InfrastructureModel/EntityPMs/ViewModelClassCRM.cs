@@ -258,7 +258,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int OpenQuotes { get; set; }
         public int AllShipments { get; set; }
         public int OpenShipments { get; set; }
-        public int CancelledShipments { get; set; }
     }
 
     public class CRMMoneyInformation

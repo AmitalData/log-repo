@@ -1,19 +1,14 @@
+﻿
+import {Component}  from '@angular/core';
 
-import {Component,EventEmitter,Output}  from '@angular/core';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {BankCodePM} from '../../../EntityPMs/BankCodePM';
-import {BankCodeExtendedPMService}  from '../../../Services/ExtendedPMs/BankCodeExtendedPMService';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import { ImageLibraryService } from '../../../../Common/Services/Others/ImageLibraryService';
-import { Guid } from '../../../../Infrastructure/Utilities/Guid';
-
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BankCodeGeneralTabComponent.html',
 })
 
@@ -23,9 +18,6 @@ export class BankCodeGeneralTabComponent extends BaseComponent {
     public DataContext = this;
     EntityId: string;
     ImageId: string;
-    bankCodeExtendedPMService:BankCodeExtendedPMService= new BankCodeExtendedPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
-   private imageLibraryService: ImageLibraryService= new ImageLibraryService();
     constructor(private entityArgs: EntityArgs) {
         super();
         
@@ -80,15 +72,6 @@ export class BankCodeGeneralTabComponent extends BaseComponent {
         }
     }
 
-    get DateFormat() { return this.EntityPM.DateFormat; }
-    set DateFormat(value: string) {
-        if (this.EntityPM.DateFormat != value) {
-            this.EntityPM.DateFormat = value;
-
-
-        }
-    }
-
 
     InactiveChecked(checked: boolean) {
      
@@ -105,22 +88,4 @@ export class BankCodeGeneralTabComponent extends BaseComponent {
         this.EntityPM.LogoId = code;
     }
 
- //@Output() UploadCompleted: EventEmitter<any> = new EventEmitter();
-//RetrieveDefaultClicked(){
-//  this.bankCodeExtendedPMService.GetTenant0BankCodeByCode(this.Code).subscribe((response: ServiceResponse) => {
-    //        this.CurrentSession.StopBusyIndicator();
-     //       if (!response.HasError) {
-      //        this.ImageId=response.Result;
-       //     var  ImageKey = Guid.newGuid();
-
-         //    
-         //    this.ImageUploadedCompleted( this.ImageId);
-          //  }
-          //  else {
-           //     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
-          //  }
-     //   });
-
 }
-
-

@@ -24,7 +24,7 @@ import { CustomsRequestMenuService } from '../../../../../../Customs/Services/Ot
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PaymentOrderDepositDataComponent.html',
     selector: 'PaymentOrderDepositDataComponent',
 })

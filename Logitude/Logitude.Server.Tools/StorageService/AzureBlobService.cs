@@ -1,10 +1,9 @@
 ﻿using Logitude.Server.Tools.Helpers;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,8 +13,11 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.StorageService
 {
-    public class AzureBlobService : IBlobService , IDisposable
+    public class AzureBlobService : IBlobService
     {
+
+         
+
         public byte[] Read(BlobFileInfo fileInfo)
         {
             //tenant1/docsout/1-379.pdf
@@ -47,40 +49,11 @@ namespace Logitude.Server.Tools.StorageService
             return result;
         }
 
-
-
-        public Dictionary<string, byte[]> ReadAllFilesInFolder(string containerName, string folderName)
-        {
-            Dictionary<string,byte[]> filesContent = new Dictionary<string, byte[]>();
-            CloudBlobContainer container = StorageAcountDetails.GetCurrentContainer(containerName);
-
-            BlobContinuationToken continuationToken = null;
-            do
-            {
-                var resultSegment = container.ListBlobsSegmented(folderName, true, BlobListingDetails.None, null, continuationToken, null, null);
-                continuationToken = resultSegment.ContinuationToken;
-
-                foreach (IListBlobItem item in resultSegment.Results)
-                {
-                    if (item is CloudBlockBlob blob)
-                    {
-                        byte[] fileContent = DownloadCloudBlob(blob);
-                        filesContent.Add(blob.Name, fileContent);
-                    }
-                }
-            } while (continuationToken != null);
-
-            return filesContent;
-        }
         private byte[] DownloadCloudBlob(CloudBlob blobfile)
         {
             byte[] result = null;
             if (blobfile.Exists())
             {
-                //BlobRequestOptions options = new BlobRequestOptions() // fix for issue# 62877
-                //{
-                //    DisableContentMD5Validation = true,
-                //};
                 using (MemoryStream memstream = new MemoryStream())
                 {
                     blobfile.DownloadToStream(memstream);
@@ -173,7 +146,7 @@ namespace Logitude.Server.Tools.StorageService
           
         //}
 
-        private void GetFileBlobContainerWithoutAzureFolder(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
+        private  void GetFileBlobContainerWithoutAzureFolder(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
         {
             if (fileInfo.HasExternalContainer)
             {
@@ -189,8 +162,7 @@ namespace Logitude.Server.Tools.StorageService
                 blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.ContainerName);
             }
         }
-
-        private void GetFileBlobContainerInfo(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
+        private  void GetFileBlobContainerInfo(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
         {
             if (fileInfo.HasExternalContainer)
             {
@@ -201,7 +173,7 @@ namespace Logitude.Server.Tools.StorageService
                 string extension = !string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
 
                 localPath = fileInfo.FileName + "." + extension;
-                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) &&  IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     localPath = fileInfo.ExternalContainerName + "/" + localPath;
                     blobContainer = StorageAcountDetails.GetCurrentContainer(LogitudeSettings.AzureFolderName.ToLower());
@@ -213,7 +185,7 @@ namespace Logitude.Server.Tools.StorageService
             }
             else
             {
-                string extension = !string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
+                string extension =!string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
 
                 localPath = StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + extension, fileInfo.FolderName);
                 if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
@@ -223,40 +195,9 @@ namespace Logitude.Server.Tools.StorageService
                 }
                 else
                 {
-                    if (fileInfo.FolderName == "how-to")
-                    {
-                        blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.FolderName);
-                    }
-
-                    else
-                    {
-                        blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.ContainerName);
-                    }
+                    blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.ContainerName);
                 }
             }
-        }
-
-        public void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo)
-        {
-            string cacheKey = containerSASURI.Substring(containerSASURI.Length - 30, 29);
-            CloudBlobContainer blobContainerSource = CacheManager.GetOrInsertNewObject(cacheKey, () => 
-                new CloudBlobContainer(new Uri(containerSASURI)));
-                
-            CloudBlockBlob blobSource = blobContainerSource.GetBlockBlobReference(fileNameSource);
-
-            GetFileBlobContainerInfo(destinationFileInfo, out string localPath, out CloudBlobContainer blobContainerDest);
-            CloudBlockBlob blobDestination = blobContainerDest.GetBlockBlobReference(localPath);
-
-            blobDestination.StartCopy(blobSource);
-
-            ICloudBlob destBlobRef = blobContainerDest.GetBlobReferenceFromServer(blobDestination.Name);
-            while (destBlobRef.CopyState.Status == CopyStatus.Pending)
-            {
-                Task.Delay(50).Wait();
-                destBlobRef = blobContainerDest.GetBlobReferenceFromServer(destBlobRef.Name);
-            }
-
-            blobSource.Delete();
         }
 
         public void Write(byte[] data, BlobFileInfo fileInfo)
@@ -269,29 +210,18 @@ namespace Logitude.Server.Tools.StorageService
             var blobfile = blobContainer.GetBlockBlobReference(localPath);
             using (Stream blobstream = blobfile.OpenWrite())
             {
-                if (fileInfo.FolderName != "logos")                
+                if (fileInfo.FolderName != "logos")
                 {
                     DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
                     Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
                     if ((document != null && document.IsEncrypted) || fileInfo.IsEncrypted)
                     {
-
-                        DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
-                        DocumentsFiling documentsFiling = documentsFilingRepository.GetSingleDocumentsFilingByDocumentId(fileInfo.FileName, fileInfo.Tenant);
-
-                        if (documentsFiling != null)
-                        {
-                            KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
-
-                            blobfile.Metadata.Add(metadata);
-                        }
-
                         AesFunction aesFunction = new AesFunction();
                         data = aesFunction.EncryptData(data, fileInfo.Tenant, fileInfo.AesKey);
                     }
 
                 }
-                
+
                 blobstream.Write(data, 0, (int)data.Length);
 
             }
@@ -312,21 +242,16 @@ namespace Logitude.Server.Tools.StorageService
 
             if (sentBytes < fileInfo.FileSize)
             {
-                using (MemoryStream memorystream = new MemoryStream(buffer))
-                {
-                    tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
-                }
+                MemoryStream memorystream = new MemoryStream(buffer);
+                tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
             }
             else
             {
                 var finalcloudBlockBlob = blobContainer.GetBlockBlobReference(localPath);
 
-                //finalcloudBlockBlob.Properties.ContentMD5 = "12121";
+                MemoryStream memorystream = new MemoryStream(buffer);
+                tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
 
-                using (MemoryStream memorystream = new MemoryStream(buffer))
-                {
-                    tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
-                }
                 int numberOfBlocks = blockIdsList.Length;
                 String[] blockIds = new String[numberOfBlocks];
                 for (int i = 0; i < numberOfBlocks; i++)
@@ -343,40 +268,26 @@ namespace Logitude.Server.Tools.StorageService
 
                     using (Stream blobstream = finalcloudBlockBlob.OpenWrite())
                     {
-                        bool skippfileTest = false;
+
                         if (fileInfo.FolderName != "logos")
                         {
                             DocumentRepository documentRepository = new DocumentRepository(fileInfo.Tenant);
                             Document document = documentRepository.GetSingleDocument(fileInfo.Tenant, fileInfo.FileName);
                             if ((document != null && document.IsEncrypted) || fileInfo.IsEncrypted)
                             {
-
-                                DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(fileInfo.Tenant);
-                                DocumentsFiling documentsFiling = documentsFilingRepository.GetSingleDocumentsFilingByDocumentId(fileInfo.FileName, fileInfo.Tenant);
-
-                                if(documentsFiling != null)
-                                {
-                                    KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
-
-                                    finalcloudBlockBlob.Metadata.Add(metadata);
-                                }
-
                                 AesFunction aesFunction = new AesFunction();
                                 result = aesFunction.EncryptData(result, fileInfo.Tenant);
-
-                                skippfileTest = (document != null && document.FileName == "test update failed");
                             }
                         }
 
-                        if (!skippfileTest)
-                            blobstream.Write(result, 0, (int)result.Length);
+                        blobstream.Write(result, 0, (int)result.Length);
 
                     }
 
 
                 }
 
-                // finalcloudBlockBlob.StartCopy(tempcloudBlockBlob);
+               // finalcloudBlockBlob.StartCopy(tempcloudBlockBlob);
                 tempcloudBlockBlob.DeleteIfExists();
             }
         }
@@ -476,10 +387,6 @@ namespace Logitude.Server.Tools.StorageService
             //
 
           
-
-        }
-        public void Dispose()
-        {
         }
     }
 }

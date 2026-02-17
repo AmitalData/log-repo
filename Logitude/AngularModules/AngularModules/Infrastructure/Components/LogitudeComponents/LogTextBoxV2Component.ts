@@ -1,6 +1,6 @@
 declare var window: any;
 declare var SelectingElement: any;
-import {Directive, ElementRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
+import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
@@ -9,32 +9,17 @@ import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
 import {FieldValidator} from '../../Validators/FieldValidator';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/observable/fromEvent';
 import {FormGroup} from '@angular/forms';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
-import { ObjectsLocator } from '../../Locators/ObjectsLocator';
-import { timer } from 'rxjs';
-import { take } from 'rxjs/operators';
+import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
 
-interface BeforeOnDestroy {
-    ngxBeforeOnDestroy();
-}
-
-type NgxInstance = BeforeOnDestroy & Object;
-type Descriptor = TypedPropertyDescriptor<Function>;
-type Key = string | symbol;
-
-export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
-    return {
-        value: async function (...args: any[]) {
-            await target.ngxBeforeOnDestroy();
-            return descriptor.value.apply(target, args);
-        }
-    }
-}
-
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'LogTextBoxV2',
     templateUrl: "./LogTextBoxV2Component.html",
@@ -43,7 +28,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewInit, OnDestroy {
+export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
     public AllowPercentage: boolean;
     public IsAccumulative: boolean;
     public ShowHelp: boolean = false;
@@ -103,7 +88,7 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
-    IsDisabled: boolean;
+    private IsDisabled: boolean;
     private timerToken: any;
 
     private textValue;
@@ -141,7 +126,6 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
 
     LayoutDirection: string = 'ltr';
     IdentityKey: string;
-    IsAltF10:boolean=false;
     @Output() OriginalText = new EventEmitter();
 
     @Input() DebounceTime: number;
@@ -269,7 +253,7 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
             clearTimeout(this.timerTokenComponent);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerTokenComponent = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -299,10 +283,9 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
         if (this.FocusOnMe) {// it means it is inside a grid.
             this.CopyValueSubs= this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.InputId) {
-                    //SessionLocator.SelectedSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = SessionLocator.SelectedSession.CopiedCell;
-                    this.IsAltF10=true;
-                    SessionLocator.SelectedSession.CopiedCell = null;
+                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                    this.CurrentSession.CopiedCell = null;
                 }
             });
 
@@ -319,8 +302,8 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
                 objectFieldAvailable = false;
             }
 
-            else if (this.ObjectField.HelpTextCodeCode != null) {
-                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
+            else if (this.ObjectField.HelpTextCodeId != null) {
+                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                     if (this.ObjectFieldHelp.length > 1) {
@@ -346,17 +329,34 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
         }
 
         this.uiProperty.UIPropertyChanged.subscribe((value) => {
-            this.HandleUIPropertyChanged(value);
+            if (value instanceof UIPropertyArgs) {
+                var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
+                var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
+
+                if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
+                    if (uiPropertyArgs.property == "IsEnabled") {
+                        var isEnabled = uiPropertyArgs.newValue;
+                        this.IsDisabled = !isEnabled;
+                        this.uiProperty.IsEnabled = isEnabled;
+                        if (this.IsDisabled) {
+                            this.SetDisabled();
+                        }
+                        else {
+                            this.SetEnabled();
+                        }
+                    }
+                    else if (uiPropertyArgs.property == "IsRequired" || uiPropertyArgs.property == "IsValid") {
+                        if (!this.isFirstTime) {
+                            this.ValidateField(false);
+                        }
+                        else {
+                            this.isFirstTime = false;
+                        }
+                    }
+                }
+            }
             //this.DetectChanges();
         });
-
-        if(this.DataContext.EntityPM){
-            const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
-            pmuiProperty?.UIPropertyChanged.subscribe((value) => {
-                this.HandleUIPropertyChanged(value);
-                //this.DetectChanges();
-            });
-        }
         //if there is an objectfield in the metadata:
         if (objectFieldAvailable) {
 
@@ -418,53 +418,7 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
 
     }
 
-    public ngxBeforeOnDestroy() {
-        //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
-        return new Promise((resolve) => {
-            setTimeout(() => this.WaitFunction(resolve), 100);
-        });
-    }
-
-    private WaitFunction(resolve) {
-
-        const sourcef = timer(100)
-            .pipe(take(1))
-            .subscribe(() => {
-                resolve();
-            });
-
-    }
-    private HandleUIPropertyChanged(value: any) {
-        if (value instanceof UIPropertyArgs) {
-            var uiPropertyArgs: UIPropertyArgs = value as UIPropertyArgs;
-            var uiProperty: UIProperty = uiPropertyArgs.uiProperty as UIProperty;
-
-            if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
-                if (uiPropertyArgs.property == "IsEnabled") {
-                    var isEnabled = uiPropertyArgs.newValue;
-                    this.IsDisabled = !isEnabled;
-                    this.uiProperty.IsEnabled = isEnabled;
-                    if (this.IsDisabled) {
-                        this.SetDisabled();
-                    }
-                    else {
-                        this.SetEnabled();
-                    }
-                }
-                else if (uiPropertyArgs.property == "IsRequired" || uiPropertyArgs.property == "IsValid") {
-                    if (!this.isFirstTime) {
-                        this.ValidateField(false);
-                    }
-                    else {
-                        this.isFirstTime = false;
-                    }
-                }
-            }
-        }
-    }
-   // @BeforeOnDestroy
-    async ngOnDestroy() {
-        await this.ngxBeforeOnDestroy();
+    ngOnDestroy() {
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
         if (this._debounceTimeSub) {
@@ -502,10 +456,6 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
     }
 
     onBlur() {
-        this.Detach = true;
-        this.show = false;
-        this.keydown = false;
-
         this.timerToken = setTimeout(() => {
             this.ShowErrorPopup = false;
             if (this.uiProperty.ValidValue) {
@@ -513,40 +463,28 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
             }
             this.TextValueChanges(this.TextValue);
         }, 300);
-        if(this.IsAltF10){
         this.timerToken = setTimeout(() => {
            this.TextValueChanges(this.TextValue);
-        //    this.GetValueFormatted(this.TextValue);
-        //    this.LostFocus.emit(this.TextValue);
         }, 30);
-        this.GetValueFormatted(this.TextValue);
-        this.LostFocus.emit(this.TextValue);
-    }
-    else{
-        this.TextValueChanges(this.TextValue);
-        this.GetValueFormatted(this.TextValue);
-        this.LostFocus.emit(this.TextValue);
-    }
-
-
-        
-
-        // this.DetectChanges();
-
-        // if(!this.FocusOnMe){
-
-        // }
+        this.Detach = true;
+        //this.DetectChanges();
+        this.show = false;
+        //if(!this.FocusOnMe){
+            
+        //}
         // this.TextValue = this.DataContext[this.ObjectFieldName];
-
+        this.keydown = false;
+        this.GetValueFormatted(this.TextValue);
+        this.LostFocus.emit(this.TextValue);
     }
 
     OnKeyUp(event) {
         var SHIFT = 16;
         var CTRL = 17;
         var key = event.keyCode;
-        // if (key == SHIFT) {
-        //    SessionLocator.SelectedSession.isShiftClicked = false;
-        //    SessionLocator.SelectedSession.isTabWithShiftClicked = false;
+        //if (key == SHIFT) {
+        //    this.CurrentSession.isShiftClicked = false;
+        //    this.CurrentSession.isTabWithShiftClicked = false;
         //    console.log("isTabWithShiftClicked = false;")
         //}
         if (key == SHIFT) {
@@ -645,7 +583,7 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
         }
         if (key == SHIFT) {
             this.keydown = false;
-            this.isShiftKeyDown = true;// this is used to check some keys
+            this.isShiftKeyDown = true;// this is used to check some keys 
         }
         if (key == CTRL) {
             this.isCtrlKeyDown = true;
@@ -661,6 +599,7 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
 
             switch (this.InputType.toLowerCase()) {
                 case 'double':
+                case 'unsDecimal':
                     {
                         if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == PERIOD || key == DECIMALPT || key == TAB || key == DELETE
                             || key == END || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == ADD || key == EQUAL) {
@@ -689,49 +628,6 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
                                     return null;
                                 }
                             }
-                            if (key == EQUAL) {
-                                if (this.IsAccumulative && keyChar == "+") {
-                                    return key;
-                                }
-                                else {
-                                    return null;
-                                }
-                            }
-
-                            return key;
-                        }
-                        return null;
-                    }
-                case 'unsdecimal':
-                    {
-                        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == PERIOD || key == DECIMALPT || key == TAB || key == DELETE
-                            || key == END || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == ADD || key == EQUAL) {
-
-                            if (key == 53) {
-                                if (keyChar == "%") {
-                                    if (this.AllowPercentage && !AppTool.IsNullOrEmpty(this.TextValue)) {
-                                        return key;
-                                    }
-                                    else {
-                                        return null;
-                                    }
-                                }
-                            }
-
-                            if (key >= 48 && key <= 57) {
-                                if (numChars.indexOf(keyChar) == -1) {
-                                    return null;
-                                }
-                            }
-                            if (key == ADD) {
-                                if (this.IsAccumulative) {
-                                    return key;
-                                }
-                                else {
-                                    return null;
-                                }
-                            }
-                            
                             if (key == EQUAL) {
                                 if (this.IsAccumulative && keyChar == "+") {
                                     return key;

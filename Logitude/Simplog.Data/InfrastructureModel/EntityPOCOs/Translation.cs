@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -18,7 +18,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? TranslateDate { get; set; }
         public string TranslatedByUserId { get; set; }
         public DateTime? UpdateDateGMT { get; set; }
-        public string TextCodeCode { get; set; }
 
         [ForeignKey("TranslatedByUserId")]
         public virtual User TranslatedByUser { get; set; }

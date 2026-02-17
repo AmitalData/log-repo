@@ -124,8 +124,7 @@
                                             </td>
                                             <td style="width:180px;" *ngIf="SelectedBusinessUnitFilter">
                                                 <ComboBox *ngIf="SelectedBusinessUnitFilter.Code != 'A'" [IsDisabled]="SelectedBusinessUnitFilter.Code == 'M' || SelectedBusinessUnitFilter.Code == 'A'" [ItemsSource]="UsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
-                                                <LogLov  *ngIf="SelectedBusinessUnitFilter.Code == 'A'"
-                                                        [ShowInActive]="true"
+                                                <LogLov *ngIf="SelectedBusinessUnitFilter.Code == 'A'"
                                                         [ObjectFieldName]="'ListOfValuesUserId'"
                                                         [DataContext]="DataContext"
                                                         [LookUpTableName]="'User'"
@@ -139,7 +138,7 @@
 
                                             <td style="width:90px;">
                                                 <button (click)="RunReport()" class="greenButton" style="height:22px; border:1px solid green; border-radius:3px;">
-                                                    <div style="color:black; text-align:center; vertical-align:central; font-size:12px;">{{RunReportTitle}}</div>
+                                                    <div style="color:black; text-align:center; vertical-align:central; font-size:12px;">Run Report</div>
                                                 </button>
 
                                             </td>
@@ -179,7 +178,7 @@
                                             <!-- Country -->
                                             <td style="width:85px" class="Label">Country: </td>
                                             <td style="width:180px; margin-right:-18px;">
-                                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'CountryId'"
+                                                <LogLov [ObjectFieldName]="'CountryId'"
                                                         [SelectedValue]="CountryId"
                                                         [ObjectTableName]="'Customer'"
                                                         [DataContext]="DataContext"

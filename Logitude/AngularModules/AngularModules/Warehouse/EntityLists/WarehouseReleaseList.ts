@@ -54,9 +54,6 @@ export class WarehouseReleaseList {
 	CustomerAddressId: string;
 	TotalVolumetricWeight: number;
 	Ratio: number;
-	TruckerId: string;
-	TruckerReference: string;
-	MasterShipmentNumber: string;
 	
 }
  

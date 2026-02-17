@@ -1,45 +1,44 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, ViewContainerRef, AfterViewInit } from '@angular/core';
-import { TicketPM } from '../../../../CRM/EntityPMs/TicketPM';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { TicketPMService } from '../../../../CRM/Services/StandardPMs/TicketPMService';
-import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { CRMDomainService } from '../../../../CRM/Services/CRMDomainService';
-import { ShipmentList } from '../../../../Shipment/EntityLists/ShipmentList';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
-import { UserList } from '../../../../Common/EntityLists/UserList';
-import { UserListService } from '../../../../Common/Services/StandardLists/UserListService';
-import { CardList } from '../../../../Common/EntityLists/CardList';
-import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { TicketClassificationList } from '../../../../CRM/EntityLists/TicketClassificationList';
-import { TicketClassificationListService } from '../../../../CRM/Services/StandardLists/TicketClassificationListService';
-import { TicketStageList } from '../../../../CRM/EntityLists/TicketStageList';
-import { TicketStageListService } from '../../../../CRM/Services/StandardLists/TicketStageListService';
-import { TicketSourceList } from '../../../../CRM/EntityLists/TicketSourceList';
-import { TicketSourceListService } from '../../../../CRM/Services/StandardLists/TicketSourceListService';
-import { TicketCreatedByTypeList } from '../../../../CRM/EntityLists/TicketCreatedByTypeList';
-import { TicketCreatedByTypeListService } from '../../../../CRM/Services/StandardLists/TicketCreatedByTypeListService';
-import { ContactInputTemplateArgs } from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { TicketPMInitService } from '../../../../CRM/EntityPMInitServices/TicketPMInitService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { NewTicketArgs } from '../../../../CRM/Args';
+import {Component, OnInit, ViewChild, Output, EventEmitter, ViewContainerRef} from '@angular/core';
+import {TicketPM} from '../../../../CRM/EntityPMs/TicketPM';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {TicketPMService} from '../../../../CRM/Services/StandardPMs/TicketPMService';
+import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {CRMDomainService} from '../../../../CRM/Services/CRMDomainService';
+import {ShipmentList} from '../../../../Shipment/EntityLists/ShipmentList';
+import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {UserList} from '../../../../Common/EntityLists/UserList';
+import {UserListService} from '../../../../Common/Services/StandardLists/UserListService';
+import {CardList} from '../../../../Common/EntityLists/CardList';
+import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
+import {TicketClassificationList} from '../../../../CRM/EntityLists/TicketClassificationList';
+import {TicketClassificationListService} from '../../../../CRM/Services/StandardLists/TicketClassificationListService';
+import {TicketStageList} from '../../../../CRM/EntityLists/TicketStageList';
+import {TicketStageListService} from '../../../../CRM/Services/StandardLists/TicketStageListService';
+import {TicketSourceList} from '../../../../CRM/EntityLists/TicketSourceList';
+import {TicketSourceListService} from '../../../../CRM/Services/StandardLists/TicketSourceListService';
+import {TicketCreatedByTypeList} from '../../../../CRM/EntityLists/TicketCreatedByTypeList';
+import {TicketCreatedByTypeListService} from '../../../../CRM/Services/StandardLists/TicketCreatedByTypeListService';
+import {ContactInputTemplateArgs} from '../../../../CommonModules/CommonPartners/Components/Templates/ContactInputTemplate';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {Validator} from '../../../../Infrastructure/Validators/Validator';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {TicketPMInitService} from '../../../../CRM/EntityPMInitServices/TicketPMInitService';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
+import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import {NewTicketArgs} from '../../../../CRM/Args';
 declare var window: any;
-import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
 
 
 @Component({
     selector: 'NewTicketComponent',
-
+    moduleId: module.id,
     templateUrl: './NewTicketComponent.html',
 })
 
-export class NewTicketComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class NewTicketComponent extends BaseComponent implements OnInit {
     @Output() OnCloseWindow = new EventEmitter();
     public ObjectTableName: string = "Ticket";
     public TenantPM: TenantPM;
@@ -53,7 +52,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit, AfterVi
     public EntityList: EntityClass[] = [];
     public EntityNumberTitle = "Shipment Number";
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
@@ -64,18 +63,38 @@ export class NewTicketComponent extends BaseComponent implements OnInit, AfterVi
         if (!AppTool.IsNullOrEmpty(this.CompanyId)) {
             this.Filters.addAdditionalFilter("CustomerId", this.CompanyId, null, null, "Equals", false, false, false, "string");
         }
+        // this.RunComponent();
         this.getGeneralClassification();
     }
 
     ngOnInit() {
+        //this.SetFieldsEnabled();
         this.CreateTicket();
         this.SetUIProperties();
         this.SetUIRequiredProperties();
         this.SetCustomerContactValue();
     }
 
-    ngAfterViewInit() {
-        this.LoadChildComponent();
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
 
     LoadChildComponent() {
@@ -89,7 +108,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit, AfterVi
 
     public WindowArgs: NewTicketArgs;
     SetWindowArgs(args: NewTicketArgs) {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             this.WindowArgs = args;
         });
     }
@@ -116,7 +135,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit, AfterVi
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.IsCancelled = false;
         this.EntityPM.IsClosed = false;
-        this.EntityPM.EntityType = window.ObjectTables.filter(d => d.Name === "Shipment")[0].Id;
+       this.EntityPM.EntityType = window.ObjectTables.filter(d => d.Name === "Shipment")[0].Id;
 
         if (this.WindowArgs != null) {
             this.CompanyId = this.WindowArgs.CompanyId;
@@ -721,7 +740,7 @@ export class NewTicketComponent extends BaseComponent implements OnInit, AfterVi
     AddButtonClicked() {
         var path = './Quote/ComponentsNewEntity/NewQuoteComponent';
         var windowTitle = "New Quote";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 960;
             logWindow.Height = 570;

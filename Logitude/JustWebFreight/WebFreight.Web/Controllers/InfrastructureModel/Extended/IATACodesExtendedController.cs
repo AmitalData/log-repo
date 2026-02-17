@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure.Helpers;
@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     SecurityUtility.AuthenticationOnTenant(0);
                     SecurityUtility.CheckContactFeature("IATACode", "NEW", 0);
 
-                    IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
+                    IWebFreightContext objectContext = WebFreightContext.GetContext(0);
                     IATACodeService service = new IATACodeService(objectContext, entityPM);
                     service.Create();
 
@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         CacheManager.CacheWrapper.Invalidate(entityPmName);
                     }
 
-                    IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
+                    IWebFreightContext objectContext = WebFreightContext.GetContext(0);
                     IATACodeService service = new IATACodeService(objectContext, entityPM);
                     service.Update();
 

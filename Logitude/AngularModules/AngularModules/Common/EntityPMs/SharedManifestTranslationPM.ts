@@ -1,4 +1,4 @@
-import { AgentSharedManifestPM } from './AgentSharedManifestPM';
+﻿import { AgentSharedManifestPM } from './AgentSharedManifestPM';
 import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 
 export class SharedManifestTranslationPM {
@@ -60,13 +60,10 @@ export class SharedManifestTranslationPM {
     public UniqueKey: string;
 
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty() {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
-            if (this.entityParentPM) {
-                this.entityParentPM.MarkAsDirty();
-            }
+        this.IsDirty = true;
+        if (this.entityParentPM) {
+            this.entityParentPM.MarkAsDirty();
         }
     }
 }

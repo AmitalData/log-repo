@@ -11,7 +11,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -40,9 +40,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
-
-                CustomerQueryService Service = new CustomerQueryService(tenant);
+				CustomerQueryService Service = new CustomerQueryService(tenant);
+                ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetCustomerById(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -54,93 +53,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
             }
         }
 
-        public HttpResponseMessage GetSingleCustomerByCode(string code)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
-
-                CustomerQueryService customerQueryService = new CustomerQueryService(tenant);
-                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer customer = customerQueryService.GetCustomerByCode(code, tenant);
-                customer.Contacts = customerQueryService.GetCustomerContacts(customer, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, customer);
-            }
-            catch (Exception ex)
-            {
-                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
-        }
-
-        public HttpResponseMessage GetSingleCustomerByVatNumber(string vatNumber)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
-
-                CustomerQueryService Service = new CustomerQueryService(tenant);
-                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(vatNumber, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, Result);
-            }
-            catch (Exception ex)
-            {
-                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
-        }
-
-        public HttpResponseMessage GetSingleCustomerByExternalId(string externalId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
-
-                CustomerQueryService Service = new CustomerQueryService(tenant);
-                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(externalId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, Result);
-            }
-            catch (Exception ex)
-            {
-                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
-        }
-
-        public HttpResponseMessage GetSingleCustomerByName(string name)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
-
-                CustomerQueryService Service = new CustomerQueryService(tenant);
-                Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer Result = Service.GetCustomerByCode(name, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, Result);
-            }
-            catch (Exception ex)
-            {
-                var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
-        }
-
-
         public HttpResponseMessage Post(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer entity)
         {
             if (ModelState.IsValid)
@@ -149,12 +61,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);                    
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
-
-                    Logitude.BL.Security.ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
-                    ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
+					ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                     CardRepository cardRepository = new CardRepository(MyContext);
 
                     string computingPartnerCode = "";
@@ -168,10 +78,31 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         throw new ApplicationException("Please provide the computing partner code");
                     }
 
-                    this.ValidateAddress(entity.MainAddress, "Main");
-                    this.ValidateAddress(entity.BillingAddress, "Billing");
-                    this.ValidateAddress(entity.PickupDeliveryAddress, "Pickup/Delivery");
-                    this.ValidateContacts(entity.Contacts, authToken.Tenant);
+                    if (entity.MainAddress != null)
+                    {
+                        if (entity.MainAddress.Country == null)
+                        {
+                            throw new ApplicationException("Main address country is required");
+                        }
+
+                        if (entity.MainAddress.City == null)
+                        {
+                            throw new ApplicationException("Main address city is required");
+                        }
+                    }
+
+                    if (entity.BillingAddress != null)
+                    {
+                        if (entity.BillingAddress.Country == null)
+                        {
+                            throw new ApplicationException("Billing address country is required");
+                        }
+
+                        if (entity.BillingAddress.City == null)
+                        {
+                            throw new ApplicationException("Billing address city is required");
+                        }
+                    }
 
                     if (!string.IsNullOrEmpty(entity.Code))
                     {
@@ -189,9 +120,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     CustomerPM entityPM = mappingService.CustomerCustomDataMappingAndValidating(entity, authToken.Tenant, computingPartnerCode);
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        this.ValidateSalesman(entityPM.SalesmanUserId, authToken.Tenant);
-
+                    {    
                         if(entityPM.Addresses.Count == 0)
                         {
                             throw new ApplicationException("Missing Main Address");
@@ -199,20 +128,28 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         else
                         {   
                             Tenant myTenant = MyContext.Tenants.Where(d => d.Id == authToken.Tenant).FirstOrDefault();
-                            this.ValidateAddress_TenantSettings(myTenant, entity.MainAddress, "Main", entity.IsPotential);
-                            this.ValidateAddress_TenantSettings(myTenant, entity.BillingAddress, "Billing", entity.IsPotential);
-                            this.ValidateAddress_TenantSettings(myTenant, entity.PickupDeliveryAddress, "Pickup/Delivery", entity.IsPotential);                            
-                        }
+                            if (myTenant.IsCustomerTelRequired)
+                            {
+                                if (string.IsNullOrEmpty(entity.MainAddress.PhoneNumber))
+                                {
+                                    throw new ApplicationException("Phone Number is required");
+                                }
+                            }
 
+                            if (myTenant.IsCustomerFaxRequired)
+                            {
+                                if (string.IsNullOrEmpty(entity.MainAddress.FaxNumber))
+                                {
+                                    throw new ApplicationException("Fax Number is required");
+                                }
+                            }
+                        }
                         if (!string.IsNullOrEmpty(entity.ComputingPartnerCode))
                         {
                             ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(authToken.Tenant);
                             var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(entity.ComputingPartnerCode, authToken.Tenant);
                             entityPM.CreatedByPartner = (partner != null ? partner.Name : null);
-                        }
-                        if(entity.GLAccount != null && !string.IsNullOrEmpty(entity.GLAccount.InternalNumber))
-                        {
-                            entityPM.Code = entity.GLAccount.InternalNumber;
+
                         }
                         CustomerService service = new CustomerService(MyContext, entityPM);
                         service.Create();
@@ -256,7 +193,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 else
                                 {
                                     gLAccountEntity.InternalNumber = entity.GLAccount.InternalNumber;
-                                    gLAccountEntity.DisplayNumber = entity.GLAccount.InternalNumber;
                                 }
                                 
                                 //EnglishName
@@ -389,62 +325,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 APIHelper.AddCommunicationLog("F", entity, apiExceptionResult.Exception, "Customer", null, "Customer API");
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
-        }
-        private void ValidateAddress(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address, string addressType)
-        {
-            if (address == null) return;
-
-            if (address.Country == null)
-                throw new ApplicationException(addressType + " address country is required");
-
-            if (address.City == null)
-                throw new ApplicationException(addressType + " address city is required");
-        }
-        private void ValidateAddress_TenantSettings(Tenant myTenant, Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address, string addressType, bool isPotential)
-        {
-            if (address == null) return;
-
-            if (isPotential)
-            {
-                if (myTenant.IsPotentialTelRequired && string.IsNullOrEmpty(address.PhoneNumber))
-                    throw new ApplicationException(addressType + " address phone Number is required");
-
-                if (myTenant.IsPotentialFaxRequired && string.IsNullOrEmpty(address.FaxNumber))
-                    throw new ApplicationException(addressType + " address fax Number is required");
-            }
-
-            else
-            {
-                if (myTenant.IsCustomerTelRequired && string.IsNullOrEmpty(address.PhoneNumber))
-                    throw new ApplicationException(addressType + " address phone Number is required");
-
-                if (myTenant.IsCustomerFaxRequired && string.IsNullOrEmpty(address.FaxNumber))
-                    throw new ApplicationException(addressType + " address fax Number is required");
-            }
-        }
-        private void ValidateContacts(List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Contact> contacts, int tenant)
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTI", tenant)) return;
-            if (contacts == null || contacts.Count == 0) return;
-            if(contacts.Count(d => d.IsPrimaryContact) > 1) throw new ApplicationException("Only one contact allowed to be set primary");
-
-            foreach (var contact in contacts)
-            {
-                if(string.IsNullOrEmpty(contact.Email))
-                    throw new ApplicationException("Contact email is required");
-
-                if (string.IsNullOrEmpty(contact.EnglishName))
-                    throw new ApplicationException("Contact name is required");
-            }
-        }
-        private void ValidateSalesman(string salesmanUserId, int tenant)
-        {
-            if (string.IsNullOrEmpty(salesmanUserId)) return;
-
-            UserRepository userRepository = new UserRepository(tenant);
-            Simplog.Data.CommonDataModel.EntityPOCOs.User user = userRepository.GetSingleUser(salesmanUserId, tenant);
-            if (user != null && !user.IsSalesman)
-                throw new ApplicationException("Invalid salesman user");
         }
 
         public HttpResponseMessage Put(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Customer entity)

@@ -9,10 +9,9 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 declare var UploadLogoFile, HideImage , SetImage, ArrayBufferToBase64: any;
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'UploadLogo',
     templateUrl: './UploadLogoComponent.html',
     providers: [ImageLibraryService]
@@ -27,13 +26,11 @@ export class UploadLogoComponent implements AfterViewInit {
     MobilelogoHtmlId: string = Guid.newGuid();
     logoHtmlId: string = Guid.newGuid();
     SmalllogoHtmlId: string = Guid.newGuid();
-    MiniLogoHtmlId: string = Guid.newGuid();
-
     MobileLogoFileHtmlId: string = Guid.NewRandomString();
     SharedLogisticsLogoFileHtmlId: string = Guid.NewRandomString();
 
     LogoFileHtmlId: string = Guid.NewRandomString();
-    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.O.LogoHelpText");
+    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.LogoHelpText");
     DemoMessageVisibility: boolean;
     ShowUploadSharedLogisLogo: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -55,10 +52,10 @@ export class UploadLogoComponent implements AfterViewInit {
 
 
 
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             this.DemoMessageVisibility = true;
        
-            if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com”") {
+            if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
                 this.DemoMessageVisibility = false;
              
             }
@@ -90,7 +87,7 @@ export class UploadLogoComponent implements AfterViewInit {
             this.CurrentSession.StartBusyIndicator("loading...");
 
         }
-        this._imageLibraryService.DownloadFile("logo" + SessionInfo.LoggedUserTenant, "jpg", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._imageLibraryService.DownloadFile("logo" + SessionInfo.LoggedUserTenant, "jpg", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -122,24 +119,6 @@ export class UploadLogoComponent implements AfterViewInit {
                     } else HideImage(this.SmalllogoHtmlId);
 
                 } else HideImage(this.SmalllogoHtmlId);
-                this._imageLibraryService.DownloadFile("minilogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res: any) => {
-                    var pmResponse: ServiceResponse = res;
-                    
-                    this.CurrentSession.StopBusyIndicator();
-        
-                    if (!pmResponse.HasError) {
-                        var result = pmResponse.Result;
-                        if (result) {
-                            SetImage(this.MiniLogoHtmlId, result, false);
-                        } else HideImage(this.MiniLogoHtmlId);
-    
-                    } else HideImage(this.MiniLogoHtmlId);
-                  
-                  
-                });
-                  
-               
-
 
             });
 
@@ -156,7 +135,6 @@ export class UploadLogoComponent implements AfterViewInit {
 
     UploadogoFile(event: any) {
 
-
         var file: any = UploadLogoFile(this.LogoFileHtmlId);
         if (file && (file.type == "image/jpeg" || file.type == "image/jpg")) {
         this.IsShowMessageComplate = false;
@@ -170,7 +148,7 @@ export class UploadLogoComponent implements AfterViewInit {
         if (isload) {
             this.CurrentSession.StartBusyIndicator("Loading...");
         }
-        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -196,7 +174,7 @@ export class UploadLogoComponent implements AfterViewInit {
             this.CurrentSession.StartBusyIndicator("Loading...");
            
         }
-        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -269,7 +247,6 @@ export class UploadLogoComponent implements AfterViewInit {
 
 
     SendBlockToServer(data: any, filename, widht: number, height: number, extension: string) {
-        
         var filter = new ImageParameter();
         filter.Base64String = data;
         filter.FileName = filename;
@@ -280,7 +257,7 @@ export class UploadLogoComponent implements AfterViewInit {
         filter.Height = height;
         filter.Extension = extension;
         filter.UploadMode = "CompanyLogos";
-        this._imageLibraryService.UploadFile(filter).subscribe((res:any) => {
+        this._imageLibraryService.UploadFile(filter).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             var result: any;
@@ -290,14 +267,12 @@ export class UploadLogoComponent implements AfterViewInit {
 
                     if (filename == "logo") {
                         this.SendBlockToServer(filter.Base64String, "smalllogo", 150, 150, "jpg");
-                        this.SendBlockToServer(filter.Base64String, "minilogo", 30, 15, "jpg");
-
                     }
                     else {
 
                         this.IsShowMessageComplate = true;
                         this.IsShowProgressLoading = false;
-                        if (filename == "logo" || filename == "smalllogo" ||filename=="minilogo") {
+                        if (filename == "logo" || filename == "smalllogo") {
                             this.LoadLogo(true);
                         }
                         else if (filename == "verysmalllogo" ) {

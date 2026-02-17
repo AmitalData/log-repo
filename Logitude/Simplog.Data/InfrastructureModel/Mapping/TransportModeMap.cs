@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -23,11 +23,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(10)
                 .IsUnicode(false);
 
-            this.Property(t => t.LocalName)
-               .IsRequired()
-               .HasMaxLength(10)
-               .IsUnicode(true); 
-
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)
                 .IsUnicode(true);
@@ -37,8 +32,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-            this.Property(t => t.LocalName).HasColumnName("LocalName");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
         }
     }
 }

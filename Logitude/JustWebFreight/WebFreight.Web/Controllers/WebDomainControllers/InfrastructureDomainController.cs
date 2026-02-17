@@ -17,7 +17,7 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -57,7 +57,7 @@ using System.Data.Common;
 using Simplog.Data.InfrastructureModel;
 using System.Data.SqlClient;
 using System.Data;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
@@ -75,8 +75,6 @@ using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityListQueryServices;
 using Logitude.Infrastructure.Data.EntityLists;
-using Logitude.BL.Helpers;
-using WebFreight.Web.Helpers.BIReport;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -148,10 +146,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             loggedUser = myUserRepository.GetSingleUser(loggedUserId, 0);
                         }
                     }
-                    if (loggedUser == null)
-                    {
-                        loggedUser = myUserRepository.GetSingleUserByEmail(loggedUserEmail, tenant, false);
-                    }
+
                     if (loggedUser != null)
                     {
                         CRMFilterSettingRepository myRepository = new CRMFilterSettingRepository(crmContext);
@@ -212,7 +207,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
 
                 string loggedUserId = null;
@@ -228,7 +222,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     FilterSerializer serializer = new FilterSerializer();
                     QueryOperations queryOperations = new QueryOperations();
                     queryOperations.SetFilter("FollowUpOwnerUserId", loggedUserId, true, "Equals", null, true);
-                    queryOperations.PageSize = 6;
+                    queryOperations.PageSize = 1000;
                     queryOperations.PageIndex = 0;
                     byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
 
@@ -247,11 +241,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         iQueryable = iQueryable.Where(d => d.FollowUpOwnerId == loggedUserId);
                     }
 
-                    iQueryable = iQueryable.Skip(0);
-                    iQueryable = iQueryable.Take(6);
-
                     List<QuoteList> myResult = iQueryable.ToList();
-
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
 
@@ -279,7 +269,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 List<string> allowedPackages = new List<string>();
                 string email = HttpContext.Current.User.Identity.Name;
-                Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
+                ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
                 if (inf != null)
                 {
                     allowedPackages = inf.PackagesCodes;
@@ -294,8 +284,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
                 Tenant iTenant = (from d in commonDataContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-                List<string> allTextCodesCodes = myResult.Where(d => d.NameTextCodeCode != null).Select(s => s.NameTextCodeCode).ToList();
-                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesCodes.Contains(d.Code) select d).ToList();
+                List<string> allTextCodesIds = myResult.Where(d => d.NameTextCodeId != null).Select(s => s.NameTextCodeId).ToList();
+                List<TextCode> allTextCodes = (from d in webFreightContext.TextCodes where allTextCodesIds.Contains(d.Id) select d).ToList();
                 List<Translation> allTranslations = new List<Translation>();
 
                 if (iTenant.Language != null)
@@ -306,21 +296,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         allTranslations = (from d in webFreightContext.Translations
                                            where d.TranslationHeaderCode == iTranslationHeader.Code
                                            && d.Tenant == tenant
-                                           && allTextCodesCodes.Contains(d.TextCodeCode)
+                                           && allTextCodesIds.Contains(d.TextCodeId)
                                            select d).ToList();
                     }
                 }
 
                 foreach (FeaturePM item in myResult)
                 {
-                    if (!string.IsNullOrEmpty(item.NameTextCodeCode))
+                    if (!string.IsNullOrEmpty(item.NameTextCodeId))
                     {
-                        TextCode iTextCode = allTextCodes.Where(d => d.Code == item.NameTextCodeCode).FirstOrDefault();
+                        TextCode iTextCode = allTextCodes.Where(d => d.Id == item.NameTextCodeId).FirstOrDefault();
                         if (iTextCode != null)
                         {
                             item.TranslatedName = iTextCode.DefaultText;
 
-                            Translation iTranslation = allTranslations.Where(d => d.TextCodeCode == item.NameTextCodeCode).FirstOrDefault();
+                            Translation iTranslation = allTranslations.Where(d => d.TextCodeId == item.NameTextCodeId).FirstOrDefault();
                             if (iTranslation != null)
                             {
                                 item.TranslatedName = iTranslation.TranslatedText;
@@ -374,72 +364,52 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetAllowedFeaturesForRole(string roleId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                List<string> allowedPackages = new List<string>();
-                Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(authToken.Email, tenant);
-                if (inf != null)
-                {
-                    allowedPackages = inf.PackagesCodes;
-                }
-
-                FeatureQuery featureQuery = new FeatureQuery(tenant);
-                var result = featureQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
         public HttpResponseMessage GetAllowedFeaturesForLoggedUser()
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,token - " + token);
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 string loggedUserEmail = authToken.Email;
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,authToken.Tenant- " + tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,authToken.Email- " + loggedUserEmail);
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
+
                 string loggedUserId = null;
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
                 if (contact != null)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("GetAllowedFeaturesForLoggedUser ,contact.Id - " + contact.Id);
                     loggedUserId = contact.Id;
                 }
+
                 FeatureQuery featureQuery = new FeatureQuery(tenant);
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
                 List<FeaturePM> myResult1 = loggedUserFeatures.Features;
+
                 List<FeaturePM> myResult = new List<FeaturePM>();
                 List<string> toggleCodes = myResult1.Where(d => !string.IsNullOrEmpty(d.ToggleCode)).Select(s => s.ToggleCode).ToList();
-                if (toggleCodes.Count == 0)
+
+                if(toggleCodes.Count == 0)
                 {
                     myResult = myResult1;
                 }
+
                 else
                 {
                     FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(0);
                     List<FeatureToggle> featureToggles = featureToggleRepository.GetAllByToggleCodeList(toggleCodes, 0).ToList();
+
                     foreach (FeaturePM item in myResult1)
                     {
                         if (string.IsNullOrEmpty(item.ToggleCode))
                         {
                             myResult.Add(item);
                         }
+
                         else
                         {
-                            FeatureToggle featureToggle = featureToggles.Where(d => d.ToggleCode == item.ToggleCode && (d.TenantNumber == tenant || (tenant >= d.FromTenantNumber && tenant <= d.ToTenantNumber))).FirstOrDefault();
+                            FeatureToggle featureToggle = featureToggles.Where(d => d.TenantNumber == tenant).FirstOrDefault();
                             if (featureToggle != null)
                             {
                                 myResult.Add(item);
@@ -447,8 +417,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
+
+
+                //if (tenant == 4)
+                //{
+                //    string fileContentString = "UserId:" + loggedUserId + ", UserEmail:" + loggedUserEmail;
+                //    string allowedPackagesString = LogitudeXmlSerializer.SerializeObjectToXmlString<List<string>>(loggedUserFeatures.AllowedPackagesCodes);
+                //    string allFeaturesString = LogitudeXmlSerializer.SerializeObjectToXmlString<List<FeaturePM>>(myResult);
+
+                //    fileContentString += Environment.NewLine + "Allowed Packages" + Environment.NewLine;
+                //    fileContentString += Environment.NewLine + allowedPackagesString + Environment.NewLine;
+                //    fileContentString += Environment.NewLine + "Allowed Features" + Environment.NewLine;
+                //    fileContentString += Environment.NewLine + allFeaturesString;
+
+                //    AzureLog.SaveFileToStorage("ICLFeatures" + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss") + ".txt", fileContentString, tenant);
+                //}
+
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
+
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -507,7 +494,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("", args.Tenant, tenant);
 
                     if (args != null)
                     {
@@ -565,6 +551,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     Tenant = tenant,
                                     Id = IdCounter.GetNumber("FeatureChange", tenant).ToString(),
                                     EventDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                                    Notes = myFeatureChanges,
                                     UserId = loggedUserId,
                                 };
 
@@ -598,7 +585,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
         public HttpResponseMessage GetSendEntityToAirlineTenant(string entityId, string objectTableName, string airlineCode)
         {
             try
@@ -627,7 +613,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
                     ParticipantRepository participantRepository = new ParticipantRepository(myCommonContext);
-                    PortRepository portRepository = new PortRepository(myCommonContext);
 
                     IQueryable<Participant> allParticipants = participantRepository.GetParticipants(myAirlineTenantManagement.Id);
                     Participant myParticipant = allParticipants.Where(d => d.ForwarderTenant == tenant).FirstOrDefault();
@@ -678,9 +663,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 statistics.Flight2Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD;
                                 statistics.Flight3 = shipment.Transshipment2CarrierCode + shipment.Transshipment2CarrierNumber;
                                 statistics.Flight3Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD;
-                                statistics.OnCarriageTo = this.GetPortCodeById(shipment.OnCarriageToPortId, statistics.Tenant, portRepository);
+                                statistics.OnCarriageTo = shipment.OnCarriageToPortCode;
                                 statistics.OnCarriageDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD;
-                                statistics.PreCarriageFrom = this.GetPortCodeById(shipment.PreCarriageFromPortId, statistics.Tenant, portRepository);
+                                statistics.PreCarriageFrom = shipment.PreCarriageFromPortCode;
                                 statistics.PreCarriageDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD;
                                 statistics.IsCancelled = shipment.IsCancelled;
                                 statistics.AirlinePrefix = shipment.AirlinePrefix;
@@ -736,9 +721,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 newRecord.Flight2Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD;
                                 newRecord.Flight3 = shipment.Transshipment2CarrierCode + shipment.Transshipment2CarrierNumber;
                                 newRecord.Flight3Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD;
-                                newRecord.OnCarriageTo = this.GetPortCodeById(shipment.OnCarriageToPortId, myAirlineTenantManagement.Id, portRepository);
+                                newRecord.OnCarriageTo = shipment.OnCarriageToPortCode;
                                 newRecord.OnCarriageDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD;
-                                newRecord.PreCarriageFrom = this.GetPortCodeById(shipment.PreCarriageFromPortId, myAirlineTenantManagement.Id, portRepository);
+                                newRecord.PreCarriageFrom = shipment.PreCarriageFromPortCode;
                                 newRecord.PreCarriageDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD;
                                 newRecord.IsCancelled = shipment.IsCancelled;
                                 newRecord.AirlinePrefix = shipment.AirlinePrefix;
@@ -873,23 +858,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        private string GetPortCodeById(string portId, int tenant, PortRepository portRepository)
-        {
-            string portCode = null;
-
-            if (!string.IsNullOrEmpty(portId))
-            {
-                Port myPort = portRepository.GetSinglePort(portId, tenant);
-                if (myPort != null)
-                {
-                    portCode = myPort.Code;
-                }
-            }
-
-            return portCode;
-        }
-
         private string BuildSearchFields(AirlineStatistics entity)
         {
             string mySearchFields = "";
@@ -939,7 +907,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 DateTime? filterByDate = null;
                 switch (dateFilterCode)
@@ -1010,6 +977,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                         Id = d.Id,
                                                         Tenant = d.Tenant,
                                                         Name = d.Name,
+                                                        Notes = d.Notes,
                                                         EventDateTime = d.EventDateTime,
                                                         PackageCode = d.PackageCode,
                                                         RoleId = d.RoleId,
@@ -1049,6 +1017,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                         Id = d.Id,
                                                         Tenant = d.Tenant,
                                                         Name = d.Name,
+                                                        Notes = d.Notes,
                                                         EventDateTime = d.EventDateTime,
                                                         PackageCode = d.PackageCode,
                                                         RoleId = d.RoleId,
@@ -1309,7 +1278,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                }, tenant);
+                });
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -1327,7 +1296,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(entityId);
                 QuoteRepository quoteRepository = new QuoteRepository(entityId);
@@ -1379,7 +1347,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityId);
                 CounterRepository counterRepository = new CounterRepository(webFreightContext);
@@ -1496,30 +1463,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                     #endregion
-
-                    #region Warehouse Entry
-                    Counter counter_WE = counterRepository.GetCounterByCode("WAEC", entityId);
-                    if (counter_WE != null)
-                    {
-                        List<CounterStat> counterStat_WE = counterStatRep.GetCounterCounterStats(counter_WE.Id, entityId);
-                        foreach (CounterStat item in counterStat_WE)
-                        {
-                            counterStatRep.Remove(item);
-                        }
-                    }
-                    #endregion
-
-                    #region Warehouse Release
-                    Counter counter_WR = counterRepository.GetCounterByCode("WARC", entityId);
-                    if (counter_WR != null)
-                    {
-                        List<CounterStat> counterStat_WR = counterStatRep.GetCounterCounterStats(counter_WR.Id, entityId);
-                        foreach (CounterStat item in counterStat_WR)
-                        {
-                            counterStatRep.Remove(item);
-                        }
-                    }
-                    #endregion
                 }
 
                 else if (code == "P")
@@ -1567,7 +1510,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;
@@ -1714,7 +1657,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     DbQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("ChampAnalyzer", tenant);
-                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } }, tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "AnalyzeQueueId", analyzeQueue.Id } });
                     queueservice.Complete();
                 }
 
@@ -1734,8 +1677,148 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                BIReportXMLDataService bIReportXMLDataService = new BIReportXMLDataService();
-                BIReportXMLData QueryData = bIReportXMLDataService.GetByBIReportId(new BIReportXMLDataServiceArgs { BIReportId = Id, DWQueryId = dWQueryId, Tenant = authToken.Tenant });
+
+                BIReportQueryService query = new BIReportQueryService(authToken.Tenant);
+                BIReportPM entityPM = query.GetSingle(Id, false, false);
+                BIReportXMLData QueryData = new BIReportXMLData();
+
+                DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(authToken.Tenant);
+                DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(dWQueryId, authToken.Tenant);
+                DWQueryData DWQueryData = new DWQueryData();
+                DWQueryData.PageIndex = 0;
+                DWQueryData.PageSize = 0;
+                bool isUpdated = false; 
+     
+                List<DWObjectFieldsDetails> Columns = null;
+                if (dWSubQueryPM != null)
+                {
+                    Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
+                    var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
+                    DWQueryData.SubQueryData = dWSubQueryPM;
+                    DWQueryData.Columns = Columns;
+                    DWQueryData.Filters = Filters;
+                }
+                QueryData.DWQueryData = DWQueryData;
+
+
+                if (entityPM != null)
+                {
+                    QueryData.BIReportPM = entityPM;
+                    QueryData.BIReportId = entityPM.Id;
+                    var sortingList = new List <Column> (); 
+
+                    if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
+                    {
+                        var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
+                        if(bITabularViewSettings!= null && Columns != null)
+                        {
+                            foreach(Column item in bITabularViewSettings.Columns.ToList())
+                            {
+                                if (item.SortDirction != null)
+                                {
+                                    sortingList.Add(item);
+                                }
+                                
+                                var queryColumn = Columns.Where(a => a.DisplayName.Replace("[", "").Replace("]", "") == item.Code).FirstOrDefault();
+                                if (queryColumn == null)
+                                {
+                                    isUpdated = true;
+                                    bITabularViewSettings.Columns.RemoveAll(a => a.Code == item.Code);
+                                }
+                            }
+                        }
+
+                        if(sortingList != null && sortingList.Count() > 0)
+                        {
+                            foreach (Column item in sortingList.OrderBy(o => o.SortOrder).ToList())
+                            {
+                                QueryData.DWQueryData.ColumnsSort += "["+item.Code +"]"+ " " + item.SortDirction + ",";
+                            }
+                            QueryData.DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+
+                        }
+
+                        foreach (var item in Columns)
+                        {
+                            var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.DisplayName.Replace("[", "").Replace("]", "")).FirstOrDefault();
+                            if (queryColumn == null)
+                            {
+                                isUpdated = true;
+                                bITabularViewSettings.Columns.Add(new Column
+                                {
+                                    Code = item.DisplayName.Replace("[", "").Replace("]", ""),
+                                    Name = item.Name,
+                                    IsChecked = true,
+                                    Width = 150,
+                                    DataTypeCode = item.DataTypeCode,
+                                    Index = bITabularViewSettings.Columns.Count == 0 ? 0 : bITabularViewSettings.Columns.Max(a => a.Index) + 1,
+                                });
+                            }
+                        }
+
+                        QueryData.BITabularViewSettings = bITabularViewSettings;
+                        if (isUpdated)
+                        {
+                            var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
+                            IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                            BIReportRepository repository = new BIReportRepository(objectContext);
+                            var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
+                            if (entityPM != null)
+                            {
+                                entityPOCO.AGGridOptionsXML = ColumnsXML;
+                                repository.Update(entityPOCO);
+                                repository.SubmitChanges();
+                            }
+
+                            isUpdated = false;
+                        }
+                    }
+
+                    else
+                    {
+                        var bITabularViewSettings = new BITabularViewSettings();
+                        bITabularViewSettings.Columns = new List<Column>();
+                        foreach (var item in Columns)
+                        {
+                            bITabularViewSettings.Columns.Add(new Column
+                            {
+                                Code = item.DisplayName.Replace("[", "").Replace("]", ""),
+                                Name = item.Name,
+                                IsChecked = true,
+                                Width = 150,
+                                DataTypeCode = item.DataTypeCode,
+                            });
+                        }
+                        QueryData.BITabularViewSettings = bITabularViewSettings;
+                        var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
+                        IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                        BIReportRepository repository = new BIReportRepository(objectContext);
+                        var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
+                        if (entityPM != null)
+                        {
+                            entityPOCO.AGGridOptionsXML = ColumnsXML;
+                            repository.Update(entityPOCO);
+                            repository.SubmitChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    var bITabularViewSettings = new BITabularViewSettings();
+                    bITabularViewSettings.Columns = new List<Column>();
+                    foreach (var item in Columns)
+                    {
+                        bITabularViewSettings.Columns.Add(new Column
+                        {
+                            Code = item.DisplayName.Replace("[", "").Replace("]", ""),
+                            Name = item.Name,
+                            IsChecked = true,
+                            Width = 150,
+                            DataTypeCode = item.DataTypeCode,
+                        });
+                    }
+                    QueryData.BITabularViewSettings = bITabularViewSettings;
+                }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData);
             }
             catch (Exception ex)
@@ -1779,7 +1862,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.SubQueryData = dWSubQueryPM;
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
-                        DWQueryData.FactTableName = entityPM.FactTableName;
                     }
                     var sortingList = new List<Column>();
                     foreach (Column item in bITabularViewSettings.Columns.ToList())
@@ -1796,7 +1878,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             DWQueryData.ColumnsSort += "[" + item.Code + "]" + " " + item.SortDirction + ",";
                         }
-                        DWQueryData.ColumnsSort = DWQueryData.ColumnsSort.TrimEnd(',');
+                        DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
                     }
 
                     QueryData_Updated.BIReportPM = entityPM;
@@ -1811,7 +1893,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetDeleteBIReport(string Id)
+        public HttpResponseMessage GetDeleteBIReport(string Id )
         {
             try
             {
@@ -1834,13 +1916,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     DWSubQuery DWSubQuery = dWSubQueryRepository.GetSingleDWSubQueryByDWQueryId(queryId, authToken.Tenant);
                     DWQuery DWQuery = dWQueryRepository.GetSingleDWQuery(queryId, authToken.Tenant);
-                    if (DWQuery != null)
+                    if(DWQuery != null)
                     {
                         if (DWSubQuery != null)
                         {
                             dWSubQueryRepository.Remove(DWSubQuery);
                         }
-
+                        
                         dWQueryRepository.Remove(DWQuery);
                         dWQueryRepository.SubmitChanges();
                     }
@@ -1863,10 +1945,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
                 IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
                 BIReportFolderRepository repository = new BIReportFolderRepository(objectContext);
+            
                 BIReportFolder bIReportFolder = repository.GetSingle(Id, authToken.Tenant);
                 if (bIReportFolder != null)
                 {
-                    RemovePermittedUsers(Id, authToken.Tenant, objectContext);
                     repository.Remove(bIReportFolder);
                     repository.SubmitChanges();
                 }
@@ -1877,22 +1959,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        private static void RemovePermittedUsers(string Id, int tenant, IInfrastructureContext objectContext)
-        {
-            BIReportFolderQueryService bIReportFolderQueryService = new BIReportFolderQueryService(tenant);
-            BIReportFolderPM bIReportFolderPM = bIReportFolderQueryService.GetSingle(Id, true, false);
-            BIReportFolderUpdateService service = new BIReportFolderUpdateService(objectContext, new Dictionary<string, IContext>(), tenant);
-            if (bIReportFolderPM.PermittedBIFolders.Count > 0)
-            {
-                bIReportFolderPM.PermittedBIFolders.ForEach(permission =>
-                {
-                    permission.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                });
-                bIReportFolderPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                service.Update(bIReportFolderPM, true);
-            }
-        }
+       
 
         public HttpResponseMessage GetFeatureToggles()
         {
@@ -1907,13 +1974,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
-                    IInfrastructureContext context = InfrastructureContext.GetContext(tenant);
+                    IInfrastructureContext context = InfrastructureContext.GetContext(0);
                     FeatureToggleRepository repository = new FeatureToggleRepository(context);
                     FeatureToggleListQueryService listQueryService = new FeatureToggleListQueryService(context);
 
                     IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
                     IQueryable<FeatureToggleList> myResult = listQueryService.GetIqueryableList(featureToggles);
-                    myResult = myResult.Where(d => d.Inactive == false);
+
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
@@ -1924,7 +1991,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 }
 

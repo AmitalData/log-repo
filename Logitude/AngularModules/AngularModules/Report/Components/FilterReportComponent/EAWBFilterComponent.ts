@@ -12,10 +12,9 @@ import {ReportsDomainService} from '../../Services/ReportsDomainService';
 import {CodeNameClass} from './CodeNameClass';
 
 import {AppTool} from '../../../Infrastructure/Tools';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'EAWBFilterComponent',
     templateUrl: './EAWBFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -76,77 +75,8 @@ export class EAWBFilterComponent extends BaseComponent implements OnInit {
             this.TenantsComboList.push(obj);
         });
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate=new Date(queryFilterItem.FieldValue);
-                    break;
-              
-                case "MainCarriageFromPortId":
-                    this.MainCarriageFromPortId = queryFilterItem.FieldValue;
-                    break;
-                case "MainCarriageFinalDestinationPortId":
-                    this.MainCarriageFinalDestinationPortId = queryFilterItem.FieldValue;
-                    break;
-                case "CustomerId":
-                    this.SelectedItemComboBox = queryFilterItem.FieldValue;
-                    break;   
-               
-            }
     
-           
-    
-        }
-    }
-    ValidateSelectedFilters() {
-      return true;
-    }
-
     RunReport(isloading: boolean) {
-        
-        
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-        this.reportFliter.IncludeOperationalyClosed = false;
-        this.ReportsPreview.CleanPartnersObslist();
-
-        if (!AppTool.IsNullOrEmpty(this.SelectedItemComboBox)) {
-            this.ReportsPreview.AddPartner("Participant", this.SelectedItemComboBox);
-        }
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
-    }
-    GetQueryFilterItems(){
         this.queryFilterItems = new Array<QueryFilterItem>();
 
         if (this.FromDate != null) {
@@ -193,8 +123,25 @@ export class EAWBFilterComponent extends BaseComponent implements OnInit {
             this.queryFilterItem.Operator = "CustomerId";
             this.queryFilterItems.push(this.queryFilterItem);
         }
-        return this.queryFilterItems;
+        
+        this.reportFliter = new ReportFliter();
+        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        this.reportFliter.NumberOfPage = 1;
+        this.reportFliter.ProcessType = "GenerateReport";
+        this.reportFliter.IncludeOperationalyClosed = false;
+        this.ReportsPreview.CleanPartnersObslist();
+
+        if (!AppTool.IsNullOrEmpty(this.SelectedItemComboBox)) {
+            this.ReportsPreview.AddPartner("Participant", this.SelectedItemComboBox);
+        }
+
+        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
     }
+
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);

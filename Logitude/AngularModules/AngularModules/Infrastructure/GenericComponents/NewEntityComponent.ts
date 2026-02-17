@@ -12,11 +12,9 @@ import { CachedDataManager } from '../Utilities/CachedDataManager';
 import {CommonDomainService} from '../../Common/Services/CommonDomainService';
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
-import { InterestBasesPeriodPM } from '../../Accounting/EntityPMs/InterestBasesPeriodPM';
-import { InterestBasesTypePMService } from '../../Accounting/Services/StandardPMs/InterestBasesTypePMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewEntityComponent.html',
     providers: [EntityArgs]
 })
@@ -44,7 +42,7 @@ export class NewEntityComponent {
         this.entityArgs.ObjectTableName = this.ObjectTableName;
         this.entityArgs.IsNewEntity = true;
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             this.InitEntityPM();
             this.BuildEditTabs();
             this.RunComponent();
@@ -79,7 +77,7 @@ export class NewEntityComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -97,11 +95,11 @@ export class NewEntityComponent {
         this.SaveEntityChanges();
     }
     private SaveEntityChanges() {
-
+        //if (this.EntityPM.IsDirty) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
-                res.subscribe((response:any) => {
-                 
+                res.subscribe(response => {
+
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                     var mm: EntityPMServiceResponse = response;
@@ -183,7 +181,7 @@ export class NewEntityComponent {
             var tab = allTabs[i];
 
             if (tab.ControlPath.indexOf("EventsControl") == -1 && tab.HtmlComponentName != "ReportTemplateComponent") {
-                if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+                if (FeatureLocator.IsFeatureGranted(tab.FeatureId)) {
                     myTabsSorted.push(tab);
                 }
             }
@@ -279,18 +277,6 @@ export class NewEntityComponent {
                     case "Simplog.FreightLib.Views.PartnersTabs.PartnerAddressesTab": {
                         myComponentName = "AddressesTabComponent";
                         myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AddressesTabComponent";
-                        break;
-                    }
-
-                    case "Simplog.FreightLib.Views.Areas": {
-                        myComponentName = "AreasTabComponent";
-                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/AreasTabComponent";
-                        break;
-                    }
-
-                    case "Simplog.FreightLib.Views.TariffTranslations": {
-                        myComponentName = "TariffTranslationsTabComponent";
-                        myComponentPath = "./CommonModules/CommonPartners/Components/EditTabs/TariffTranslations/TariffTranslationsTabComponent";
                         break;
                     }
 

@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -25,11 +25,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsRequired()
                 .HasMaxLength(60)
                 .IsUnicode(true);
-
-            this.Property(t => t.Code)
-              .IsRequired()
-              .HasMaxLength(3)
-              .IsUnicode(false);
 
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)

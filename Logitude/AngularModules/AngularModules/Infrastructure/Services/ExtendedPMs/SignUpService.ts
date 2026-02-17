@@ -1,45 +1,86 @@
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
-import { Injectable } from '@angular/core';
+﻿
+import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Observable';
+import {ServiceArgs} from '../../DataContracts/ServiceArgs';
+import {EntityPMServiceResponse} from '../../DataContracts/EntityPMServiceResponse';
+import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
+import {Guid} from '../../Utilities/Guid';
+import {InfraSettings} from '../../Utilities/InfraSettings';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+
+
 
 @Injectable()
 export class SignUpService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
+    private _serviceArgs: ServiceArgs;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SignUp';
+
     }
+
 
     SendMessageToQueue(signupInfo: any) {
-        var url = this._apiUrl + '/PutSendMessageToQueue';
-        return defer(() => {
-            return this._http.put(url, JSON.stringify(signupInfo), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/PutSendMessageToQueue', JSON.stringify(signupInfo), {
+                headers: authHeader,
 
-                return serviceResponse;
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+
     }
-    
+
+
+
     CreateTenant(signupInfo: any) {
-        var url = this._apiUrl + '/PostCreateTenant';
-        return defer(() => {
-            return this._http.post(url, JSON.stringify(signupInfo), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-                return serviceResponse;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + '/PostCreateTenant', JSON.stringify(signupInfo), {
+                headers: authHeader,
 
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+
+        );
+
     }
+
+
+  
+
+
+
+
+
+  
+
+
+
+
 }
+

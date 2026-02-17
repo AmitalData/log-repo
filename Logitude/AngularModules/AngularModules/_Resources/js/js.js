@@ -312,19 +312,6 @@ function RegisterCustomFroalaEditorButtom(viewModel) {
     });
 
 
-    $.FroalaEditor.DefineIcon('InsertImage',{ NAME: 'image' });
-    $.FroalaEditor.RegisterCommand('InsertImage', {
-        title: 'Insert Image',
-        icon: 'InsertImage',
-        callback: function () {
-            if (viewModel) {
-                viewModel.InsertImageClick();
-            }
-        },
-        undo: true
-    });
-
-
 }
 
 function GetHtmlFromFrame(id) {

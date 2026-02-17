@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -13,21 +12,23 @@ import { TariffVersionPM } from '../../EntityPMs/TariffVersionPM';
 @Injectable()
 
 export class TariffVersionExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tariffversionextended';
     }
 
     GetAllTariffVersionsForTariff(tariffId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         var url = this._apiUrl + '/GetAllTariffVersionsForTariff?tariffId=' + tariffId;
 
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
 
-                var listJason = response;
+                var listJason = response.json();
                 var listMapped: Array<TariffVersionPM> = [];
 
                 for (var itemJeson in listJason) {
@@ -40,7 +41,7 @@ export class TariffVersionExtendedPMService {
 
                 return serviceResponse;
 
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
     

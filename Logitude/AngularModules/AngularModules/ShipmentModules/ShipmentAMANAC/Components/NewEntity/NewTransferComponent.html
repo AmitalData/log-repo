@@ -74,7 +74,7 @@
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px;">
-                                            <CheckBox attr.data-cy="{{'CheckAll' | IdGeneratorAsyncPipe | async}}" [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
+                                            <CheckBox [IsChecked]="IsAllChecked" (Checked)="IsAllChecked = $event"></CheckBox>
                                         </div>
                                     </div>
                                 </td>
@@ -102,12 +102,12 @@
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; padding:0 !important;">
                                     <div class="MediaFill">
                                         <div class="CenterCenter" style="width: 16px; height: 16px; padding-left: 1px;">
-                                            <CheckBox attr.data-cy="{{'Check_' + item.ShipmentNumber | IdGeneratorAsyncPipe | async}}" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
                                         </div>
                                     </div>
                                 </td>
 
-                                <td attr.data-cy="{{'ShipmentNumber_' + item.ShipmentNumber | IdGeneratorAsyncPipe | async}}" class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;">
+                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;">
                                     {{item.ShipmentNumber}}
                                 </td>
 
@@ -129,7 +129,7 @@
                                 </td>
 
                                 <td class="GridViewCell" style="width: 165px; min-width: 165px; max-width: 165px;">
-                                    <button attr.data-cy="{{'Markasblocked_' + item.ShipmentNumber | IdGeneratorAsyncPipe | async}}" class="Button" (click)="MarkAsBlockedClicked(item.Id)">Mark as blocked for transfer</button>
+                                    <button class="Button" (click)="MarkAsBlockedClicked(item.Id)">Mark as blocked for transfer</button>
                                 </td>
 
                                 <td>
@@ -162,7 +162,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button attr.data-cy="{{'CloseAMANACView' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
 
                     <td style="width: 5px;">

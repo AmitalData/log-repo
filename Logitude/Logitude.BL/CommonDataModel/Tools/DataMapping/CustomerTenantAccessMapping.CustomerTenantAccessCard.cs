@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -22,9 +22,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                itemPoco.CustomerTenantAccessId = itemPM.CustomerTenantAccessId;
                itemPoco.CreateByUserId = loggedContactId;
                itemPoco.CreateDate = TenantServerConfigration.GetCurrentDateTime(loggedTenant.Id);
-               itemPoco.IsCustomsActivated = true;
-                itemPoco.IsExportActivated = false;
-            }
+              
+           }
            else
            {
                itemPoco.CreateDate = itemPM.CreateDate;
@@ -37,9 +36,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
            itemPoco.LastMappingDateTime = itemPM.LastMappingDateTime;
            itemPoco.StatusTypeCode = itemPM.StatusTypeCode;
            itemPoco.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(loggedTenant.Id);
-            itemPoco.IsCustomsActivated = itemPM.IsCustomsActivated;
-            itemPoco.IsExportActivated = itemPM.IsExportActivated;
-        }
+
+       }
 
     }
 }

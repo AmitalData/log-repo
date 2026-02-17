@@ -7,7 +7,7 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DownloadPackagesFileComponent.html',
 })
 

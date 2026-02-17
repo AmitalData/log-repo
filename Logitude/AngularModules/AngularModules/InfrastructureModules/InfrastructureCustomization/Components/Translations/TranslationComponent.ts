@@ -8,7 +8,7 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TranslationComponent.html',
 })
 
@@ -29,7 +29,7 @@ export class TranslationComponent extends BaseComponent  {
     public Count: number;
 
     private LoadTextCodeTypes() {
-        this.myService.GetTextCodeTypes().subscribe((myResult: ServiceResponse) => {
+        this.myService.GetTextCodeTypes().subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -89,7 +89,7 @@ export class TranslationComponent extends BaseComponent  {
             this.isLoading = true;
             this.CurrentSession.StartBusyIndicatorLoading();
 
-            this.myService.LoadAllFieldsTranslations(SessionLocator.TenantPM.Language, this.ObjectTableId, code).subscribe((myResult: ServiceResponse) => {
+            this.myService.LoadAllFieldsTranslations(SessionLocator.TenantPM.Language, this.ObjectTableId, code).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     this.loadedTranslations = myResponse.Result;
@@ -154,7 +154,7 @@ export class TranslationComponent extends BaseComponent  {
                 }
 
                 else {
-                    CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
+                    CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                     });

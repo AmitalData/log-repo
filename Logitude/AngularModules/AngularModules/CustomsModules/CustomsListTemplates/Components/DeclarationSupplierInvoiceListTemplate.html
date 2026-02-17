@@ -1,13 +1,10 @@
-<style>
+﻿<style>
     .red {
         color: red !important;
     }
 </style>
 
 <div>
-    <div class="TextTrimming" *ngIf="fieldName == 'ItemCode'" style="text-align: right; padding: 0px 2px;width:100px;direction: ltr;text-align:left">
-        {{ rowData[fieldName] }}
-    </div>
     <div class="TextTrimming" *ngIf="fieldName == 'ItemPrice'" style="text-align: right; padding: 0px 2px;">
         {{ rowData[fieldName] | NumbersPipe:'N2'  }}
     </div>

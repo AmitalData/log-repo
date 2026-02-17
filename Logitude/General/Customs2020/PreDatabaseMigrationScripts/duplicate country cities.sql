@@ -1,6 +1,0 @@
---delete from COUNTRYCITIES where rowid not in(
---select min(rowid)
---from   COUNTRYCITIES
---group  by code,countryid,tenant);
---/
---ALTER TABLE "COUNTRYCITIES" ADD CONSTRAINT "UQ_COUNTRYCITIES_COUNTRY_8QVTS" UNIQUE("COUNTRYID","CODE","TENANT");

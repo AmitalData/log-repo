@@ -6,7 +6,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
@@ -18,22 +18,15 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Server.Tools.Helpers;
- 
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
     public class ARPaymentQuery
     {
-        const string ActionTypeCode_Credit = "1";
-
         ARPaymentRepository repository;
         public ARPaymentQuery()
         {
-            repository = new ARPaymentRepository();
+            repository = new ARPaymentRepository(); 
         }
         public ARPaymentQuery(int tenant)
         {
@@ -43,26 +36,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             repository = arPaymentRepository;
         }
-        public ARPaymentPM GetSinglePMForInterest(InterestTransactionList interestTransactionLists)
-        {
-            ARPaymentPM payment = (from a in repository.context.ARPayments 
-                                   where a.Id == interestTransactionLists.EntityId && 
-                                         a.Tenant == interestTransactionLists.Tenant
-                                   select new ARPaymentPM()
-                                   {
-                                       Id = a.Id,
-                                       PaymentNo = a.PaymentNo,
-                                       Tenant = a.Tenant,
-                                       
-                                   }).FirstOrDefault();
-            if (payment!=null)
-            {
-                payment = SetInterestJournalFields(payment, interestTransactionLists);
-            }
 
-            return payment;
-
-        }
         public ARPaymentPM GetSinglePM(string id, int tenant)
         {
             ARPaymentPM payment = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("Status").Include("TransferStatus").Include("PaymentCurrency").Include("BillToCard").Include("TransferStatus").Include("SATTransferStatus").Include("AccountingPaymentMethod").Include("Branch")
@@ -124,7 +98,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
                                        BillToLocalName = a.BillToCard == null ? "" : a.BillToCard.LocalName,
                                        BillToPartnerTypeId = a.BillToCard == null ? "" : a.BillToCard.PartnerTypeId,
-                                       BillToCode = a.BillToCard == null ? "" : a.BillToCard.Code,
                                        LocalCurrencyCode = a.LocalCurrency != null ? a.LocalCurrency.Code : null,
                                        PaymentCurrencyCode = a.PaymentCurrency == null ? null : a.PaymentCurrency.Code,
                                        SATXML = a.SATXML,
@@ -147,77 +120,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        IsExternalEntity = a.IsExternalEntity,
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
-                                       IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
-                                       AccountingCancelationDate = a.AccountingCancelationDate,
-                                       CancelationNotes = a.CancelationNotes,
-                                       PaymentCurrencySign= a.PaymentCurrency.Sign,
-                                       PartnerId = a.PartnerId,
-                                       InvoiceNumbers = a.InvoiceNumbers,
-                                       TransferStatusCode_Original = a.TransferStatusCode,
-                                       IsTransferStarted_Original = a.IsTransferStarted,
-                                       TransferError_Original = a.TransferError,
-                                       SATAdditionalFieldsXML = a.SATAdditionalFieldsXML
                                    }).FirstOrDefault();
 
 
-            //BuildAllInvoicesNumbersField(payment);
+            BuildAllInvoicesNumbersField(payment);
 
             ARInvoicePaymentRepository entityRepository = new ARInvoicePaymentRepository(repository.context);
             ARInvoicePaymentQuery entityQuery = new ARInvoicePaymentQuery(entityRepository);
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
 
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
-            payment.ARPaymentBankTranfers = GetARPaymentBankTranfersByPaymentId(payment.Id, tenant);
-            
-            SetGLAccountFields(payment);
+            GetGLAccountFields(payment);
             payment =  SetJournalFields(payment);
-
             ARPaymentPM securedPM = new ARPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "ARPayment", tenant);
-            if (payment != null)
-                MapCustomFieldValues(securedPM);
-            if (payment.StatusCode == "VD")
-            {
-                JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(payment);
-                if (voidedByJournal != null)
-                {
-                    payment.VoidedByJournalNumber = voidedByJournal.JournalNumber;
-                    securedPM.VoidedByJournalNumber = voidedByJournal.JournalNumber;
-                }
-            }
+
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
-
-
-        private JournalPM GetApprovedJournalByAccountingEntityId(ARPaymentPM aRPaymentPM)
-        {
-            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-            return journalQuery.GetApprovedJournalByAccountingEntityId(aRPaymentPM.Id, "3", aRPaymentPM.Tenant);
-
-
-        }
-        private void MapCustomFieldValues(ARPaymentPM payment)
-        {
-            if (payment != null)
-            {
-                ARPayment entityPOC = (from s in repository.context.ARPayments
-                                       where s.Id == payment.Id
-                                       select s).FirstOrDefault();
-
-                payment.Field1 = new CustomFieldClass("Field1", "ARPayment", entityPOC.Field1);
-                payment.Field2 = new CustomFieldClass("Field2", "ARPayment", entityPOC.Field2);
-                payment.Field3 = new CustomFieldClass("Field3", "ARPayment", entityPOC.Field3);
-                payment.Field4 = new CustomFieldClass("Field4", "ARPayment", entityPOC.Field4);
-                payment.Field5 = new CustomFieldClass("Field5", "ARPayment", entityPOC.Field5);
-                payment.Field6 = new CustomFieldClass("Field6", "ARPayment", entityPOC.Field6);
-                payment.Field7 = new CustomFieldClass("Field7", "ARPayment", entityPOC.Field7);
-                payment.Field8 = new CustomFieldClass("Field8", "ARPayment", entityPOC.Field8);
-                payment.Field9 = new CustomFieldClass("Field9", "ARPayment", entityPOC.Field9);
-                payment.Field10 = new CustomFieldClass("Field10", "ARPayment", entityPOC.Field10);
-            }
-        }
-
 
         private List<ARPaymentChequeReplicaPM> GetARPaymentChequeReplicasByPaymentId(string paymentid, int tenant)
         {
@@ -225,54 +145,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return aRPaymentChequeReplicaQuery.GetARPaymentChequeReplicaPMsByPaymentId(paymentid, tenant);
         }
 
-        private List<ARPaymentBankTranferPM> GetARPaymentBankTranfersByPaymentId(string paymentid, int tenant)
+        void GetGLAccountFields(ARPaymentPM paymentPM)
         {
-            IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
-            
-            ARPaymentBankTranferRepository aRPaymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
-            List<ARPaymentBankTranfer> arPaymentBankTranfers = aRPaymentBankTranferRepository.GetARPaymentBankTranfers(paymentid, tenant).ToList();
-            var list = (from a in arPaymentBankTranfers
-                        select new ARPaymentBankTranferPM()
-                        {
-                            Id = a.Id,
-                            Tenant = a.Tenant,
-                            PaymentId = a.PaymentId,
-                            PaymentRef = a.PaymentRef,
-                            ValueDate = a.ValueDate,
-                            BankAccountId = a.BankAccountId,
-                            CurrencyId = a.CurrencyId,
-                            LineNumber = a.LineNumber,
-                            LocalAmount = a.LocalAmount,
-                            ForeignAmount = a.ForeignAmount,
-                            ExchageRate = a.ExchageRate,
-                        }).OrderBy(d => d.LineNumber).ToList();
-
-                        list.ForEach(item => {
-                            BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(item.BankAccountId, tenant);
-                            if (bankAccount != null)
-                            {
-                                item.BankAccount = new BankAccountLightPM { Id = bankAccount.Id, LocalName = bankAccount.LocalName, EnglishName = bankAccount.EnglishName, BankAccountNumber = bankAccount.AccountNumber };
-                            }
-                            item.BankAccountNumber = item.BankAccount!= null ? item.BankAccount.BankAccountNumber : null;
-                        });
-            return list;
-        }
-
-        void SetGLAccountFields(ARPaymentPM paymentPM)
-        {
-
-            if (paymentPM.IsFullAccounting)
+            GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+            if (glaccount != null)
             {
-                GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM);
-                if (glaccount != null)
-                {
-                    paymentPM.GLAccountId = glaccount.Id;
-                    paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
-                    paymentPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
-                }
-
+                paymentPM.GLAccountId = glaccount.Id;
+                paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
             }
-           
         }
         private ARPaymentPM SetJournalFields(ARPaymentPM payment)
         {
@@ -288,94 +168,33 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         private JournalPM GetJournalByPaymentId(string paymentId, int tenant)
         {
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-            JournalPM journal = journalQuery.GetJournalByAccountingEntityIdAndCode(paymentId,"3",tenant);
+            JournalPM journal = journalQuery.GetJournalIdByAccountingEntityId(paymentId, tenant);
             return journal;
 
-        }
 
-        private ARPaymentPM SetInterestJournalFields(ARPaymentPM payment, InterestTransactionList interestTransactionLists)
-        {
-            List<JournalPM> journals = GetJournalsWithLinesByPaymentId(payment.Id, payment.Tenant);
-            if (journals != null)
-            {
-                SetInterestJournalFieldsForPayment(journals, payment, interestTransactionLists);
-            }
-            return payment;
+
         }
 
 
-        private void SetInterestJournalFieldsForPayment(List<JournalPM> journals, ARPaymentPM payment, InterestTransactionList interestTransactionLists)
-        {
-            foreach (JournalPM journal in journals)
-            {
-                decimal? journalTotalLocalAmount= journal.JournalLines.Where(s=>s.ActionTypeCode == ActionTypeCode_Credit).Sum(s=>s.LocalAmount);
-                if (interestTransactionLists.LocalAmount == journalTotalLocalAmount)
-                {
-                    payment.JournalId = journal.Id;
-                    payment.JournalNumber = journal.JournalNumber;
-                    break;
-                }
 
-            }
-        }
 
-        private List<JournalPM> GetJournalsWithLinesByPaymentId(string paymentId, int tenant)
-        {
-            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-            List<JournalPM> journals = journalQuery.GetJournalsWithLinesByAccountingEntityIdAndCode(paymentId, "3", tenant);
-            return journals;
-        }
 
-        private string GetAccountIdForGLAccountCurrency(GLAccountPM gLAccount, string paymentCurrencyId)
-        {
-            GLAccountCurrencyRepository glAccountCurrencyRepository = new GLAccountCurrencyRepository(gLAccount.Tenant);
-            GLAccountCurrency gLAccountCurrency = glAccountCurrencyRepository.GetEntityByCurrencyAndGLAccountId(gLAccount.Id, paymentCurrencyId, gLAccount.Tenant);
-            if (gLAccountCurrency != null)
-            {
-                return gLAccountCurrency.GLAccountId;
-            }
-            else return gLAccount.Id;
 
-        }
-        
-        private GLAccountPM getGLAccount(string billToId, ARPaymentPM payment)
+
+        private GLAccountPM getGLAccount(string billToId, int tenant)
         {
             GLAccountPM glaAccount = null;
-            CardRepository cardRep = new CardRepository(payment.Tenant);
-            Card card = cardRep.GetSingleCard(billToId, payment.Tenant);
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(billToId, tenant);
             if (card != null)
             {
                 IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, payment.Tenant);
-                if (glaAccount != null && glaAccount.IsMultiCurrency.Value)
-                {
-                    string splitByCurrencyAccountId = GetAccountIdForGLAccountCurrency(glaAccount, payment.PaymentCurrencyId);
-                    glaAccount = glAccountQuery.GetSingleGLAccountPM(splitByCurrencyAccountId, payment.Tenant);
-                }
-                else return glaAccount;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
             }
 
             return glaAccount;
         }
 
-        public List<ARPaymentPM> GetARpaymentsForCard(string billtoId, int tenant)
-        {
-            List<ARPaymentPM> payments= (from a in repository.context.ARPayments where
-                   a.BillToId == billtoId && a.Tenant == tenant
-                   select new ARPaymentPM()
-                   {
-                       Id = a.Id,
-                       Tenant = a.Tenant,
-                   
-                   }
-                   
-                   ).ToList();
-            foreach(ARPaymentPM paymentPM in payments)
-            {
-                paymentPM.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(paymentPM.Id, paymentPM.Tenant);
-            }
-            return payments;
-        } 
 
 
         public ARPayment GetSingleARPayment(string id, int tenant)
@@ -387,11 +206,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return payment;
         }
 
-        public bool CheckARPaymentNumber(string number, string id, int tenant)
+        public bool CheckARPaymentNumber(string number,string id, int tenant)
         {
             bool exist = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("Status")
-                          where a.PaymentNo == number && a.Id != id && a.Tenant == tenant
-                          select a).Any();
+                                 where a.PaymentNo == number &&a.Id != id && a.Tenant == tenant
+                                 select a).Any();
 
             return exist;
         }
@@ -399,7 +218,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public ARPaymentPM GetSinglePaymentByPaymentNumber_00(string paymentNo, int tenant)
         {
-
+            
             AccountingPaymentMethodRepository paymentMethodRep = new AccountingPaymentMethodRepository(repository.context);
             ARPaymentStatusRepository arpaymentStatusRep = new ARPaymentStatusRepository(repository.context);
             ARPaymentPM payment = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("TransferStatus").Include("Branch")
@@ -454,7 +273,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        TransferStatusCode = a.TransferStatusCode,
                                        TransferStatusName = a.TransferStatus == null ? "" : a.TransferStatus.Name,
                                        ReadyForTransfer = a.TransferStatusCode == "RD" ? true : false,
-                                       ExternalAccountingEntityId = a.ExternalAccountingEntityId,
+                                       ExternalAccountingEntityId=a.ExternalAccountingEntityId,
                                        InvoiceNumber = a.InvoiceNumber,
                                        ShipmentNumber = a.ShipmentNumber,
                                        SATPaymentMethodCode = a.SATPaymentMethodCode,
@@ -474,10 +293,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        FechaPago = a.FechaPago,
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
-                                       IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
-                                       AccountingCancelationDate = a.AccountingCancelationDate,
-                                       CancelationNotes = a.CancelationNotes,
-                                       PartnerId = a.PartnerId,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -493,105 +308,19 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 Card billto = CardRepository.GetSingleCard(payment.BillToId, payment.Tenant, true);
                 payment.BillToName = billto != null ? billto.EnglishName : null;
-                payment.BillToCode = billto != null ? billto.Code : null;
                 payment.BillToLocalName = billto != null ? billto.LocalName : null;
 
                 AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
                 payment.AccountingPaymentMethodName = method != null ? method.Name : null;
                 payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
                 payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
-                payment.ARPaymentBankTranfers = GetARPaymentBankTranfersByPaymentId(payment.Id, tenant);
-
-                if (payment.BankAccountId != null)
-                {
-                    payment.BankAccountNumber = GetBankAccountNumberById(payment.BankAccountId, payment.Tenant);
-                }
-
-                MapCustomFieldValues(payment);
             }
-
-          
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
         }
 
-
-
-
-
-
-        public Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite GetSinglePaymentIdBranchByPaymentNumber(string paymentNo, int tenant)
-        {
-            ARPayment entityPOCO =
-                (from a in repository.context.ARPayments
-                 where a.PaymentNo == paymentNo && a.Tenant == tenant
-                 select a).FirstOrDefault();
-            if (entityPOCO == null)
-            {
-                return null;
-            }
-            else
-            {
-                return new Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite()
-                {
-                    Id = entityPOCO.Id,
-                    BranchId = entityPOCO.BranchId
-                };
-            }
-        }
-
-
-
-        public Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite GetCheckPaymentIdBranch(string paymentId, int tenant)
-        {
-            ARPayment entityPOCO =
-                (from a in repository.context.ARPayments
-                 where a.Id == paymentId && a.Tenant == tenant
-                 select a).FirstOrDefault();
-            if (entityPOCO == null)
-            {
-                return null;
-            }
-            else
-            {
-                return new Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite()
-                {
-                    Id = entityPOCO.Id,
-                    BranchId = entityPOCO.BranchId
-                };
-            }
-        }
-
-
-        private string GetBankAccountNumberById(string id, int tenant)
-        {
-            IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
-            BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(id, tenant);
-            if (bankAccount != null)
-            {
-                return bankAccount.AccountNumber;
-            }
-            else
-            {
-                return null;
-            }
-
-
-        }
-
         public IQueryable<ARPaymentList> GetIQueryableEntityList(IQueryable<ARPayment> iQueryable)
         {
-            bool isEntityFramework = !(iQueryable.Provider is System.Linq.EnumerableQuery);
-            string bankName = null;
-            if (!isEntityFramework && iQueryable.Count() == 1)
-            {
-                string bankAccountId = iQueryable.Select(a => a.BankAccountId).FirstOrDefault();
-                if (!string.IsNullOrEmpty(bankAccountId))
-                {
-                    bankName = repository.context.BankAccountView.Where(a => a.BankAccountId == bankAccountId).Select(a => a.LocalName).FirstOrDefault();
-                }
-            }
-
             IQueryable<ARPaymentList> query2 = from entity in iQueryable.Include("ARAccount").Include("AccountingPaymentMethod").Include("BillToCard").Include("CreatedByUser.Contact").Include("DebitAccount").Include("LocalCurrency").Include("PaymentCurrency").Include("Status").Include("TransferStatus").Include("SATTransferStatus").Include("Branch").Include("BankAccountLite")
                                                select new ARPaymentList()
                                                {
@@ -604,7 +333,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    BillToId = entity.BillToId,
                                                    BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                                                    BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
-                                                   BillToCode = entity.BillToCard == null ?null : entity.BillToCard.Code,                                                   
                                                    BranchId = entity.BranchId,
                                                    BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                                                    CreateByUserId = entity.CreatedByUserId,
@@ -640,7 +368,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    Account = entity.Account,
                                                    ValueDate = entity.ValueDate,
                                                    ChequeOrPaymentRef = entity.ChequeOrPaymentRef,
-                                                   Bank = entity.AccountingPaymentMethod != null && entity.AccountingPaymentMethod.Code == "BT" ? (isEntityFramework ? repository.context.BankAccountView.Where(b => b.BankAccountId == entity.BankAccountId).Select(b => b.LocalName).FirstOrDefault() : bankName) : entity.Bank,
+                                                   Bank = entity.Bank,
                                                    BankBranch = entity.BankBranch,
                                                    AmountInProfitCurrency = entity.AmountInProfitCurrency,
                                                    ProfitCurrencyExchangeRate = entity.ProfitCurrencyExchangeRate,
@@ -660,6 +388,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    SATTransferStatusCode = entity.SATTransferStatusCode,
                                                    SATTransferStatusName = entity.SATTransferStatus != null ? entity.SATTransferStatus.Name : null,
                                                    TransmissionError = entity.TransmissionError,
+
                                                    MetodoPagoCode = entity.MetodoPagoCode,
                                                    TipoCadenaPago = entity.TipoCadenaPago,
                                                    CadPago = entity.CadPago,
@@ -672,23 +401,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    IsFullAccounting = entity.IsFullAccounting,
                                                    FechaPago = entity.FechaPago,
                                                    CreatedByPartner = entity.CreatedByPartner,
-                                                   IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
-                                                   Field1 = entity.Field1,
-                                                   Field2 = entity.Field2,
-                                                   Field3 = entity.Field3,
-                                                   Field4 = entity.Field4,
-                                                   Field5 = entity.Field5,
-                                                   Field6 = entity.Field6,
-                                                   Field7 = entity.Field7,
-                                                   Field8 = entity.Field8,
-                                                   Field9 = entity.Field9,
-                                                   Field10 = entity.Field10,
-                                                   AccountingCancelationDate = entity.AccountingCancelationDate,
-                                                   CancelationNotes = entity.CancelationNotes,
-                                                   PartnerId = entity.PartnerId,
-                                                   InvoiceNumbers = entity.InvoiceNumbers,
-                                                   GLAccountId = entity.BillToCard == null ? null : entity.BillToCard.GLAccountId,
-                                                   GLAccountDisplayNumber = entity.BillToCard == null ? null : entity.BillToCard.GLAccountDisplayNumber,
                                                };
             return query2;
         }
@@ -708,7 +420,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BillToId = entity.BillToId,
                             BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                             BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
-                            BillToCode = entity.BillToCard == null ? null : entity.BillToCard.Code,
                             BranchId = entity.BranchId,
                             CreateByUserId = entity.CreatedByUserId,
                             CreatedByUserName = entity.CreatedByUser == null ? null : (entity.CreatedByUser.Contact == null ? null : entity.CreatedByUser.Contact.EnglishName),
@@ -775,22 +486,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             FechaPago = entity.FechaPago,
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreatedByPartner = entity.CreatedByPartner,
-                            IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
-                            Field1 = entity.Field1,
-                            Field2 = entity.Field2,
-                            Field3 = entity.Field3,
-                            Field4 = entity.Field4,
-                            Field5 = entity.Field5,
-                            Field6 = entity.Field6,
-                            Field7 = entity.Field7,
-                            Field8 = entity.Field8,
-                            Field9 = entity.Field9,
-                            Field10 = entity.Field10,
-                            AccountingCancelationDate = entity.AccountingCancelationDate,
-                            CancelationNotes = entity.CancelationNotes,
-                            PartnerId = entity.PartnerId,
-                            GLAccountId = entity.BillToCard == null ? null : entity.BillToCard.GLAccountId,
-                            GLAccountDisplayNumber = entity.BillToCard == null ? null : entity.BillToCard.GLAccountDisplayNumber,
                         };
 
             return query;
@@ -811,7 +506,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BillToId = entity.BillToId,
                             BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                             BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
-                            BillToCode = entity.BillToCard == null ? null : entity.BillToCard.Code,
                             BranchId = entity.BranchId,
                             CreateByUserId = entity.CreatedByUserId,
                             CreatedByUserName = entity.CreatedByUser == null ? null : (entity.CreatedByUser.Contact == null ? null : entity.CreatedByUser.Contact.EnglishName),
@@ -878,22 +572,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             FechaPago = entity.FechaPago,
                             BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                             CreatedByPartner = entity.CreatedByPartner,
-                            IsPaymentNumberManuallySet = entity.IsPaymentNumberManuallySet,
-                            Field1 = entity.Field1,
-                            Field2 = entity.Field2,
-                            Field3 = entity.Field3,
-                            Field4 = entity.Field4,
-                            Field5 = entity.Field5,
-                            Field6 = entity.Field6,
-                            Field7 = entity.Field7,
-                            Field8 = entity.Field8,
-                            Field9 = entity.Field9,
-                            Field10 = entity.Field10,
-                            AccountingCancelationDate = entity.AccountingCancelationDate,
-                            CancelationNotes = entity.CancelationNotes,
-                            PartnerId = entity.PartnerId,
-                            GLAccountId = entity.BillToCard == null ? null : entity.BillToCard.GLAccountId,
-                            GLAccountDisplayNumber = entity.BillToCard == null ? null : entity.BillToCard.GLAccountDisplayNumber,
                         };
 
             return query;
@@ -966,20 +644,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          FechaPago = a.FechaPago,
                                          BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                          CreatedByPartner = a.CreatedByPartner,
-                                         IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
-                                         Field1 = a.Field1,
-                                         Field2 = a.Field2,
-                                         Field3 = a.Field3,
-                                         Field4 = a.Field4,
-                                         Field5 = a.Field5,
-                                         Field6 = a.Field6,
-                                         Field7 = a.Field7,
-                                         Field8 = a.Field8,
-                                         Field9 = a.Field9,
-                                         Field10 = a.Field10,
-                                         AccountingCancelationDate = a.AccountingCancelationDate,
-                                         CancelationNotes = a.CancelationNotes,
-                                         PartnerId = a.PartnerId,
                                      }).FirstOrDefault();
 
             return payment;
@@ -1001,17 +665,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
         }
 
-        public string GetARPaymentNumber(string arPaymentId, int tenant)
-        {
-            ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
-            string arPaymentNo = aRPaymentRepository.GetARPaymentNumber(arPaymentId, tenant);
-            return arPaymentNo;
-        }
-
-        public User getUserByARPayment(ARPayment aRPayment)
-        {
-            User createByUser = repository.getUserByARPayment(aRPayment);
-            return createByUser;
-        }
+      
     }
 }

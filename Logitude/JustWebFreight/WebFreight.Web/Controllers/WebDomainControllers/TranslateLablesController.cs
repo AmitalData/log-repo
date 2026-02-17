@@ -1,7 +1,7 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -129,7 +129,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Record.DefaultTextPlural = item.DefaultTextPlural;
                 Record.Code = item.Code;
                 Record.TextCodeId = item.Id;
-                Record.TextCodeCode = item.Code;
                 Record.TypeCode = item.TextCodeTypeCode;
                 Record.ObjectTableID = item.ObjectTableId;
                 Record.TranslationTenent = translationTenant;
@@ -139,10 +138,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Record.TranslatedText = item.DefaultText;
                 Record.TranslatedTextPlural = item.DefaultTextPlural;
 
-                Translation translaion = list_Translation.Where(d => d.TextCodeCode == item.Code && d.Tenant == tenant).FirstOrDefault();
+                Translation translaion = list_Translation.Where(d => d.TextCodeId == item.Id && d.Tenant == tenant).FirstOrDefault();
                 if (translaion == null)
                 {
-                    list_Translation.Where(d => d.TextCodeCode == item.Code && d.Tenant == 0).FirstOrDefault();
+                    list_Translation.Where(d => d.TextCodeId == item.Id && d.Tenant == 0).FirstOrDefault();
                 }
 
                 if (translaion != null)
@@ -254,7 +253,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Record.DefaultTextPlural = item.DefaultTextPlural;
                 Record.Code = item.Code;
                 Record.TextCodeId = item.Id;
-                Record.TextCodeCode = item.Code;
                 Record.TypeCode = item.TextCodeTypeCode;
                 Record.ObjectTableID = item.ObjectTableId;
                 Record.TranslationTenent = translationTenant;
@@ -264,7 +262,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Record.TranslatedText = item.DefaultText;
                 Record.TranslatedTextPlural = item.DefaultTextPlural;
 
-                Translation translaion = list_Translation1.Where(t => t.TextCodeCode == item.Code).FirstOrDefault();
+                Translation translaion = list_Translation1.Where(t => t.TextCodeId == item.Id).FirstOrDefault();
                 if (translaion == null)
                 {
                     translaion = list_Translation0.Where(t => t.TextCode.Code == item.Code).FirstOrDefault();

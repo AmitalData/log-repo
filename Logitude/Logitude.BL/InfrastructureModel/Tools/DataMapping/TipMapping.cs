@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -11,8 +11,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             tip.ShortTextCode = tipPM.ShortTextCodeId;
             tip.Tenant = tipPM.Tenant;
             tip.VisibilityDefaultValue = tipPM.VisibilityDefaultValue;
-            tip.ObjectTableId = tipPM.ObjectTableId;
-            tip.ShortTextCodeCode = tipPM.ShortTextCodeCode;
+            tip.ObjectTableId = tipPM.ObjectTableId;  
         }
     }
 }

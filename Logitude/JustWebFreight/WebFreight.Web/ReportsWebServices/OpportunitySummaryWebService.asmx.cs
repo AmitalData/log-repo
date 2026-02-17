@@ -7,7 +7,7 @@ using Logitude.CRM.Data.EntityKeys;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -35,16 +35,13 @@ namespace WebFreight.Web.ReportsWebServices
         {
             OpportunitySummaryDataProvider opportunitySummaryDataProvider = GetOpportunitySummaryDataProvider(opportunityId, tenant, documentTypeCode);
             XmlSerializer serializer = new XmlSerializer(typeof(OpportunitySummaryDataProvider));
-
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, opportunitySummaryDataProvider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, opportunitySummaryDataProvider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         public OpportunitySummaryDataProvider GetOpportunitySummaryDataProvider(string opportunityId, int tenant, string documentTypeCode)

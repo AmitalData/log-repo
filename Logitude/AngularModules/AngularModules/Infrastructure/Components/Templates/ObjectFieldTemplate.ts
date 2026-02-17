@@ -1,105 +1,58 @@
 declare var window: any;
-import { Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {AppTool} from '../../Tools';
 import {ObjectTablePM} from '../../EntityPMs/ObjectTablePM';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
+import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
+import {FieldValueResolver} from '../../Utilities/FieldValueResolver';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import { ChildDirective } from '../../Directives/ChildDirective';
-@Component({
 
-  templateUrl: "./ObjectFieldTemplate.html",
-  selector: 'ObjectFieldTemplate',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate', 'SpotlightDataTemplate', 'EntityChangedData', 'RowIndex', 'Direction'],
+@Component({
+    moduleId: module.id,
+    templateUrl: "./ObjectFieldTemplate.html",
+    selector: 'ObjectFieldTemplate',
+    inputs: ['ObjectTable', 'ObjectField', 'FieldName', 'Entity', 'IsHeaderScreenTemplate', 'IsListColumnCellTemplate', 'IsListColumnHeaderTemplate', 'IsSpotLightTemplate','SpotlightDataTemplate'],
 })
 
 // https://github.com/angular/angular/issues/10762
 // http://stackoverflow.com/questions/39794156/angular2-dynamically-added-elements
 
-export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
-  public Entity: any = null;
-  public CustomField: any = null;
-  public ObjectTable: ObjectTablePM = null;
-  public ObjectField: ObjectFieldPM = null;
-  public FieldName: string = null;
-  public FieldValue: any = null;
-  public HasTemplate: boolean = false;
-  public DataTypeCode: string = null;
-  public DigitsAfterPoints: string = "n0";
-  public IsAutoFormat: boolean = false;
-  public IsLookUp: boolean = false;
-  public IsPickList: boolean = false;
-  public LookUpFieldValue: string = null;
-  public IsHeaderScreenTemplate: boolean = false;
-  public IsListColumnCellTemplate: boolean = false;
-  public IsListColumnHeaderTemplate: boolean = false;
-  public IsSpotLightTemplate: boolean = false;
-  public SpotlightDataTemplate: string;
-    public Direction: string;
-  public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
-  public NumberFieldTextAlign: string = "right";
-  public NumberFieldRightPadding: string = "20px";
-  public isRTL: boolean = false;
-  private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild(ChildDirective) Child: ChildDirective;
-    //public test: boolean = false;
-    public ShowChildTemplate: boolean = false;
-    public RowIndex: string;
-    public get EntityChangedData() {
-        return;// this.test;
+export class ObjectFieldTemplate implements OnInit, OnDestroy  {
+    public Entity: any = null;
+    public CustomField: any = null;
+    public ObjectTable: ObjectTablePM = null;
+    public ObjectField: ObjectFieldPM = null;
+    public FieldName: string = null;
+    public FieldValue: any = null;
+    public HasTemplate: boolean = false;
+    public DataTypeCode: string = null;
+    public DigitsAfterPoints: string = "n0";
+    public IsAutoFormat: boolean = false;    
+    public IsLookUp: boolean = false;
+    public LookUpFieldValue: string = null;
+    public IsHeaderScreenTemplate: boolean = false;
+    public IsListColumnCellTemplate: boolean = false;
+    public IsListColumnHeaderTemplate: boolean = false;
+    public IsSpotLightTemplate: boolean = false;
+    public SpotlightDataTemplate: string;
+    public Direction: string = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+    public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
+    public NumberFieldTextAlign: string = "right";
+    @ViewChild('Template', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(private CD: ChangeDetectorRef) {
     }
-    public set EntityChangedData(newValue: any) {
-        this.LoadData();
-        if (this.HasTemplate) {
-            this.LoadTemplate();
-        }
-
-        else if (this.IsSpotLightTemplate) {
-            this.LoadSpotLightTemplate();
-        }
-    }
-  constructor(private changeDetector: ChangeDetectorRef) {
-  }
 
     ngOnInit() {
-          if (AppTool.IsNullOrEmpty(this.Direction))
-        this.Direction = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-        this.TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-       if (ObjectsLocator.GlobalSetting) {
-          this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        }
-      this.LoadData();
-  }
-
-    ngAfterViewInit() {
-        if (this.HasTemplate) {
-            this.LoadTemplate();
-        }
-
-        else if (this.IsSpotLightTemplate) {
-            this.LoadSpotLightTemplate();
-        }
-    }
-
-    private LoadData() {
-
-        if (this.ObjectField && !this.IsSpotLightTemplate) {
+        if (this.ObjectField != null && this.IsSpotLightTemplate == false) {
+            //this.IsCustom = this.ObjectField.IsCustom;
             this.HasTemplate = this.ObjectField.HasTemplate;
             this.DataTypeCode = this.ObjectField.DataTypeCode;
-            this.DigitsAfterPoints = "n" + this.ObjectField.DigitsAfterPoint;
-
-            //if (this.ObjectField.DigitsAfterPoint == 0) {
-            //    switch (this.DataTypeCode) {
-            //        case "Double":
-            //        case "Decimal":
-            //            {
-            //                this.DigitsAfterPoints = "n2";
-            //                break;
-            //            }
-            //    }
-            //}
+            this.DigitsAfterPoints = "n"+this.ObjectField.DigitsAfterPoint;
 
             if (this.IsHeaderScreenTemplate) {
                 this.FieldName = this.ObjectField.PMPropertyPath;
@@ -120,28 +73,28 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                 case "Boolean":
                 case "Date":
                 case "DateTime":
-                case "DateTime2":
-                case "Integer": {
-                    if (this.HasTemplate != true) {
-                        this.IsAutoFormat = true;
+                case "Integer":
+                    {
+                        if (this.HasTemplate != true) {
+                            this.IsAutoFormat = true;
+                        }
+
+                        break;
                     }
 
-                    break;
-                }
-
-                case "LookUp": {
-                    this.IsLookUp = true;
-                    break;
-                }
-
-                case "PickList": {
-                    this.IsLookUp = true;
-                    this.IsPickList = true;
-                    break;
-                }
+                case "LookUp":
+                case "PickList":
+                    {
+                        this.IsLookUp = true;
+                        break;
+                    }
             }
 
-            if (!this.HasTemplate) {
+            if (this.HasTemplate) {
+                this.LoadTemplate();
+            }
+
+            else {
                 if (this.Entity != null) {
                     if (this.IsHeaderScreenTemplate && this.IsLookUp) {
 
@@ -157,21 +110,16 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                         }
 
                         if (!AppTool.IsNullOrEmpty(this.FieldValue)) {
-                            if (this.ObjectField.LookUpTableId || this.IsPickList) {
+                            if (this.ObjectField.LookUpTableId) {
 
                                 var ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjectField.LookUpTableId)[0];
-
-                                if (this.IsPickList) {
-                                    ObjectTable = window.ObjectTables.filter(x => x.Name === "CustomPickList")[0];
-                                }
-
                                 if (ObjectTable) {
                                     var moduleName = ObjectTable.ClientModuleName;
                                     var objectTableName = ObjectTable.Name;
                                     if (objectTableName.indexOf('Customs.') > -1) {
                                         objectTableName = objectTableName.split('.')[1];
                                     }
-                                    var servicename = objectTableName + "ListService";
+                                    var servicename = objectTableName + "ListService"; 
                                     var servicelink = './' + moduleName + '/Services/StandardLists/' + servicename;
 
                                     return new Promise((resolve, reject) => {
@@ -182,7 +130,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                                         if (!myResponse.HasError) {
                                                             if (myResponse.Result) {
 
-                                                                var myResultValue = this.IsPickList ? myResponse.Result["Value"] : myResponse.Result["Name"];
+                                                                var myResultValue = myResponse.Result["Name"];
 
                                                                 if (AppTool.IsNullOrEmpty(myResultValue)) {
                                                                     myResultValue = myResponse.Result["EnglishName"];
@@ -197,7 +145,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                                         if (!myResponse.HasError) {
                                                             if (myResponse.Result) {
 
-                                                                var myResultValue = this.IsPickList ? myResponse.Result["Value"] : myResponse.Result["Name"];
+                                                                var myResultValue = myResponse.Result["Name"];
 
                                                                 if (AppTool.IsNullOrEmpty(myResultValue)) {
                                                                     myResultValue = myResponse.Result["EnglishName"];
@@ -226,7 +174,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                     }
 
                                     else {
-                                        this.FieldValue = (this.CustomField == "True" || this.CustomField == "true") ? true : false;
+                                        this.FieldValue = (this.CustomField.ResolvedValue == true || this.CustomField.Value == "true") ? true : false;
                                     }
                                 }
 
@@ -240,91 +188,88 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                     }
                                 }
                             }
-                            else {
-                                this.FieldValue = null;
-                            }
                         }
 
                         else {
                             this.FieldValue = this.Entity[this.FieldName];
                         }
                     }
+
+                    this.DetectChanges();
                 }
             }
         }
 
-        if (this.HasTemplate || this.IsSpotLightTemplate) {
-            this.ShowChildTemplate = true;
+        if (this.IsSpotLightTemplate == true) {
+            this.LoadSpotLightTemplate();
         }
     }
 
-  LoadTemplate() {
-    if (this.HasTemplate) { 
-      if (this.Entity != null && this.ObjectTable != null && this.ObjectField != null) {
+    LoadTemplate() {
+        if (this.HasTemplate) {
+            if (this.viewContainerRef) {
+                if (this.Entity != null && this.ObjectTable != null && this.ObjectField != null) {
 
+                    var myComponentPath = null;
+                    if (this.ObjectTable.ClientModuleName == "Infrastructure") {
+                        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/InfrastructureFieldTemplateComponent";
+                    }
 
-        var myComponentPath = null;
-        if (this.ObjectTable.ClientModuleName == "Infrastructure") {
-          myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/InfrastructureFieldTemplateComponent";
-        }
+                    else {
+                        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/FieldTemplateComponent";
+                    }
 
-        else {
-          myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/FieldTemplateComponent";
-        }
-          if (this.Child) {
-              this.Child.Location.clear();
-
-              SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
-                  .then(cmpRef => {
-                      cmpRef.instance.Run({
-                          Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate,
-                          RowIndex: this.RowIndex
-                      });
-                      this.DetectChanges();
-                  });
-          }
-      }
-    }
-  }
-
-  LoadSpotLightTemplate() {
-    if (this.Entity != null && this.ObjectTable != null) {
-
-      var myComponentPath = null;
-      if (this.ObjectTable.ClientModuleName == "Infrastructure") {
-        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/InfrastructureFieldTemplateComponent";
-      }
-
-      else {
-        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/FieldTemplateComponent";
-      }
-
-      SessionLocator.DynamicLoader.Load(myComponentPath, this.Child.Location)
-        .then(cmpRef => {
-            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate, RowIndex: this.RowIndex});
-
-          this.DetectChanges();
-
-          this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "SpotLightDetectChanges") {
-              this.DetectChanges();
+                    SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate });
+                            this.DetectChanges();                           
+                        });
+                }
             }
-          });
-
-        });
+        }
     }
-  }
 
-  DetectChanges() {
-    if (this.changeDetector) {
-      var isDestroyed: boolean = this.changeDetector['destroyed'];
-      if (!isDestroyed) {
-        this.changeDetector.detectChanges();
-      }
+    LoadSpotLightTemplate() {
+            if (this.viewContainerRef) {
+                if (this.Entity != null && this.ObjectTable != null) {
+
+                    var myComponentPath = null;
+                    if (this.ObjectTable.ClientModuleName == "Infrastructure") {
+                        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/InfrastructureFieldTemplateComponent";
+                    }
+
+                    else {
+                        myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/Templates/FieldTemplateComponent";
+                    }
+
+                    SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.Run({ Entity: this.Entity, FieldName: this.FieldName, ObjectTableName: this.ObjectTable.Name, IsHeaderScreenTemplate: this.IsHeaderScreenTemplate, IsSpotLightTemplate: this.IsSpotLightTemplate, SpotlightDataTemplate: this.SpotlightDataTemplate });
+
+                            this.DetectChanges();
+
+                            this.CurrentSession.SessionEvent.subscribe(s => {
+                                if (s == "SpotLightDetectChanges") {
+                                    this.DetectChanges();
+                                }
+                            });
+
+                        });
+                }
+            }
     }
-  }
 
-  ngOnDestroy() {
-    this.changeDetector = null;
-  }
+    DetectChanges() {
+        if (this.CD) { 
+            var isDestroyed: boolean = this.CD['destroyed'];
+            if (!isDestroyed) {
+                //console.log("DetectChanges Templates") 
+                this.CD.detectChanges();
+            }
+        }
+    }
+
+    ngOnDestroy() {
+        this.CD = null;
+    }
 }

@@ -11,7 +11,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string RoleId { get; set; }
         public string FeatureId { get; set; }
         public string FeatureAccessLevelCode { get; set; }
-        public string FeatureUniqeCode { get; set; }
-
     }
 }

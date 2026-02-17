@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data;
@@ -131,7 +131,7 @@ namespace Logitude.TariffModule.Data.EntityMapping
 
             this.Property(t => t.Index).HasColumnName("Index").IsRequired();
 
-            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(500).IsUnicode(true);
 
             this.Property(t => t.IsFromAllOtherPorts).HasColumnName("IsFromAllOtherPorts");
 
@@ -158,44 +158,6 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Surcharge10MinPrice).HasColumnName("Surcharge10MinPrice").HasPrecision(18, 3);
 
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.TransitTime).HasColumnName("TransitTime").HasMaxLength(100).IsUnicode(false);
-
-            this.Property(t => t.IsDifferentCurrenciesPerCharge).HasColumnName("IsDifferentCurrenciesPerCharge");
-
-            this.Property(t => t.Surcharge1CurrencyId).HasColumnName("Surcharge1CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge2CurrencyId).HasColumnName("Surcharge2CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge3CurrencyId).HasColumnName("Surcharge3CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge4CurrencyId).HasColumnName("Surcharge4CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge5CurrencyId).HasColumnName("Surcharge5CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge6CurrencyId).HasColumnName("Surcharge6CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge7CurrencyId).HasColumnName("Surcharge7CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge8CurrencyId).HasColumnName("Surcharge8CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge9CurrencyId).HasColumnName("Surcharge9CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.Surcharge10CurrencyId).HasColumnName("Surcharge10CurrencyId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ViaPortId).HasColumnName("ViaPortId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ViaPortText).HasColumnName("ViaPortText").HasMaxLength(20).IsUnicode(false);
-
-            this.Property(t => t.FromCountryId).HasColumnName("FromCountryId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.ToCountryId).HasColumnName("ToCountryId").HasMaxLength(15).IsUnicode(false);
-
-            this.Property(t => t.IsFromAllOtherCountries).HasColumnName("IsFromAllOtherCountries");
-
-            this.Property(t => t.IsToAllOtherCountries).HasColumnName("IsToAllOtherCountries");
-
-            this.Property(t => t.UnitOfMeasurementCode).HasColumnName("UnitOfMeasurementCode").HasMaxLength(3).IsUnicode(false);
         }
     }
 }

@@ -18,31 +18,6 @@ namespace Logitude.UnitTest.Accounting.UniTests
         #region pmAcc.Inactive.GetValueOrDefault
 
         [TestMethod]
-        public void IsJournalValid0100_ActionTypeCode2DebitAccountIdACBLOCK_SuppressInactiveCheck_errListCotainsM_BlockedGLAccount()
-        {
-
-            var myJournalPM = new JournalPM()
-            {
-                 AccountingEntityCode="11",//SuppressInactiveCheck
-                JournalLines = new List<JournalLinePM>() {
-                new JournalLinePM(){
-                    ActionTypeCode="2",
-                    DebitAccountId     ="ACBLOCK"
-                }
-            }
-            };
-
-            var myNewJournalValidatorContext = GetValidationContext(myJournalPM);
-            ValidationResult validationresult = JournalValidator.IsJournalValid(myJournalPM, myNewJournalValidatorContext);
-            var errList = new List<String>(validationresult.MemberNames);
-
-
-            var mExist = errList.Exists(m => m.Contains(JournalValidator.M_BlockedGLAccount));
-            var lineCode = "if (pmAcc.IsControlAccount.GetValueOrDefault())";
-            Assert.IsFalse(mExist, "Expected Have Line But Get Error Of " + lineCode);
-        }
-
-        [TestMethod]
         public void IsJournalValid0100_ActionTypeCode2DebitAccountIdACBLOCK_errListCotainsM_BlockedGLAccount()
         {
 

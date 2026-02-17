@@ -21,8 +21,6 @@ using System.Threading.Tasks;
 using System.Timers;
 using CommunicationWorkerRole;
 using Logitude.BL.GlobalModel.EntityQueries;
-using Simplog.Server.Infrastructure.Helpers;
-using Newtonsoft.Json;
 
 namespace AmitalCustomsWindowsService
 {
@@ -31,6 +29,7 @@ namespace AmitalCustomsWindowsService
         // array of worker threads
         List<Thread> _Threads;
         List<IWorkerBaseWorkOnce> _Workers;
+        //private List<IWorkerBaseWorkOnce> _WorkersWorkOnce;
         int _workerId=0;
         private System.Timers.Timer _myTimer;
         
@@ -40,13 +39,15 @@ namespace AmitalCustomsWindowsService
         {
             InitializeComponent();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            //throw new Exception("3333"); 
   
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
-            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception("CurrentDomain_UnhandledException!!!"),JsonConvert.SerializeObject(e));
+            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + err, true);
+            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.ToString(), true);
             //System.Diagnostics.Debugger.Launch();
         }
 
@@ -96,13 +97,13 @@ namespace AmitalCustomsWindowsService
         }
         protected override void OnStop()
         {
+            
 
-
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OnStop()");
+            Logger.LogMe("OnStop()", false);
             if (false)
             {
                 SMTP.SendItDefault(Environment.CommandLine.ToString() + " ", "AmitalCustomsWindowsService:OnStop()");
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OnStop()!!!");
+                Logger.LogMe("OnStop()!!!", false);
 
             }
             for (int i = 0; i < _Workers.Count; i++)
@@ -125,15 +126,13 @@ namespace AmitalCustomsWindowsService
 
         public void StartMe()
         {
-            string queueDefinitionCode = null;
-            WorkerQueueType workerQueueType = WorkerQueueType.DB;
 
             //SMTP.SendItDefault(Environment.CommandLine.ToString() + " " , "AmitalCustomsWindowsService:OnStart()"); 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
             if (_Workers == null)
             {
                 _Workers = new List<IWorkerBaseWorkOnce>();
-                var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
+                var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
 
                 bool suppresDoOnlyCheck = true;
                 if (false)//no 10x - change to interactive in TesterForm
@@ -150,19 +149,12 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService>();
                 AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
                 AddWorkerFromAppSetting<FTPToAnalyzeQueueWR>();
-                AddWorkerFromAppSetting<RabbitMQReceiveWR>();
-                AddWorkerFromAppSetting<CustomsHSMSignWR>();
-                AddWorkerFromAppSetting<ReportExecutionLogWR>();
-				AddWorkerFromAppSetting<DocumentAzureQueueWR>();
-				AddWorkerFromAppSetting<DocumentSFTPAnalyzeWR>();
-                AddWorkerFromAppSetting<SiiStatusAzureQueueWR>(); 
-
-				bool courierFeaturePackageExist = true;
+                
+                bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
                 {
                     AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
                     AddWorkerFromAppSetting<FTPToAnalyzeQueueWR>();
-                    AddWorkerFromAppSetting<RabbitMQReceiveWR>();
                     AddWorkerFromAppSetting<CustomsAnalyzeQueueWR>();
                     
 
@@ -186,7 +178,7 @@ namespace AmitalCustomsWindowsService
                         suppresDoOnlyCheck = false;
 
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfo.MakeGenericMethod(new Type[] { worker.GetType() });
-                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
+                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
 
                     }
                 }
@@ -197,7 +189,7 @@ namespace AmitalCustomsWindowsService
                 //AddAllWR();
                 if (_Workers.Count < 1)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("unexpected setting - No Worker Loaded !!!!!!!!!!!");
+                    Logger.LogMe("unexpected setting - No Worker Loaded !!!!!!!!!!!", true);
                     return;
                 }
 
@@ -237,31 +229,19 @@ namespace AmitalCustomsWindowsService
         private void LoadWorkerFromDB()
         {
 
-            string queueDefinitionCode = null;
-            WorkerQueueType workerQueueType = WorkerQueueType.DB;
             var suppresDoOnlyCheck = false;
             var addWorkerFromAppSettingMethodInfoDB = typeof(MyWinService).GetMethod("AddWorkerFromAppSettingDB");
             if (addWorkerFromAppSettingMethodInfoDB == null)
             {
                 throw new Exception("how change code where is method >public AddWorkerFromAppSettingDB");
             }
-            var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
+            var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
+            ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
-            listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
-			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
-            listOfWorkerEntryPoint.Add(new SiiStatusAzureQueueWR());
-
-            bool testCustomsSchedularWR = false;
-            if (testCustomsSchedularWR)
-            {
-                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
-            }
-            listOfWorkerEntryPoint.Add(new CustomsSchedularWR());
             
-
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
@@ -274,7 +254,7 @@ namespace AmitalCustomsWindowsService
                     for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
                     {
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
-                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
+                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
                     }
                 }
                 
@@ -335,7 +315,7 @@ namespace AmitalCustomsWindowsService
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                Logger.LogMe("timer1_Tick:" + ex.ToString(), true);
             }
             finally
             {
@@ -354,8 +334,8 @@ namespace AmitalCustomsWindowsService
             try
             {
 
-                //if (Logger.WorkingDir == "") return;
-                //Logger.DeleteAllLogState();
+                if (Logger.WorkingDir == "") return;
+                Logger.DeleteAllLogState();
                 if (!ServiceState.CurrentDate.Equals(DateTime.Now.Date))
                 {
                     ServiceState.RaiseAnotherDay();
@@ -364,8 +344,6 @@ namespace AmitalCustomsWindowsService
                 var state=ServiceState.GetState();
                 if (DateTime.Now.Subtract(GCAt) > TimeSpan.FromMinutes(10))
                 {
-                    GCAt = DateTime.Now;
-                    CacheManager.ClearCacheItems();
                     CustomsWorkerRole.Utils.GenUtil.CollectGC();
                 }
                 
@@ -379,11 +357,11 @@ namespace AmitalCustomsWindowsService
                     CustomsWorkerRole.Utils.LogUtil.LogMe("AmitalCustomsWindowsServiceState",
                     "M", DateTime.Now, "AmitalCustomsWindowsService", state, 0, Environment.UserName, Environment.MachineName, "");
                 }
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(state);
+                Logger.LogState(state, "");
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal( ex);
+                Logger.LogMe("SaveState:" + ex.ToString(), true);
             }
         }
         
@@ -404,15 +382,15 @@ namespace AmitalCustomsWindowsService
             string workerCount = ConfigurationManager.AppSettings.Get(typeName);
             int iWorkerCount = 0;
             int.TryParse(workerCount, out  iWorkerCount);
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AddWorkerFromAppSetting " + typeName + " Value:" + iWorkerCount.ToString());
+            Logger.LogMe("AddWorkerFromAppSetting " + typeName + " Value:" + iWorkerCount.ToString(), false);
             if (iWorkerCount<1)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AddWorkerFromAppSetting " + typeName + " Value < 0");
+                Logger.LogMe("AddWorkerFromAppSetting " + typeName + " Value < 0", false);
                 return;
             }
             if (iWorkerCount>10)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError("unexpected setting (Mean while 3 worker allowed !!) AddWorkerFromAppSetting " + typeName + " Value > 3");
+                Logger.LogMe("unexpected setting (Mean while 3 worker allowed !!) AddWorkerFromAppSetting " + typeName + " Value > 3", true);
                 iWorkerCount = 10;
             }
             

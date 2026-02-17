@@ -106,9 +106,11 @@ namespace WebFreight.Web.DataProviders
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
         public string Reference4 { get; set; }
+
         public string Openedby { get; set; }
         public string OperationalClosedby { get; set; }
         public string TruckerName { get; set; }
+
         public string ShipmentField1 { get; set; }
         public string ShipmentField2 { get; set; }
         public string ShipmentField3 { get; set; }
@@ -149,55 +151,18 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
-        public string ShipmentField41 { get; set; }
-        public string ShipmentField42 { get; set; }
-        public string ShipmentField43 { get; set; }
-        public string ShipmentField44 { get; set; }
-        public string ShipmentField45 { get; set; }
-        public string ShipmentField46 { get; set; }
-        public string ShipmentField47 { get; set; }
-        public string ShipmentField48 { get; set; }
-        public string ShipmentField49 { get; set; }
-        public string ShipmentField50 { get; set; }
-        public string ShipmentField51 { get; set; }
-        public string ShipmentField52 { get; set; }
-        public string ShipmentField53 { get; set; }
-        public string ShipmentField54 { get; set; }
-        public string ShipmentField55 { get; set; }
-        public string ShipmentField56 { get; set; }
-        public string ShipmentField57 { get; set; }
-        public string ShipmentField58 { get; set; }
-        public string ShipmentField59 { get; set; }
-        public string ShipmentField60 { get; set; }
-        public string ShipmentField61 { get; set; }
-        public string ShipmentField62 { get; set; }
-        public string ShipmentField63 { get; set; }
-        public string ShipmentField64 { get; set; }
-        public string ShipmentField65 { get; set; }
-        public string ShipmentField66 { get; set; }
-        public string ShipmentField67 { get; set; }
-        public string ShipmentField68 { get; set; }
-        public string ShipmentField69 { get; set; }
-        public string ShipmentField70 { get; set; }
+
         public string CustomerExternalID { get; set; }
         public string ShipperConsigneeExternalID { get; set; }
+
         public int NumberofDeliveries { get; set; }
         public DateTime? LastPickupArrivalDate { get; set; }
         public DateTime? LastDeliveryArrivalDate { get; set; }
         public double? ChargeableWeight { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
         public string FinalPortofDestination { get; set; }
-        public string FinalCountryofDestination { get; set; }
+        public string FinalCountryofDestination{get;set;}
         public string OnCarriageTransportMode { get; set; }
-        public string OnForwardingTransportMode { get; set; }
-        public string CustomerName { get; set; }
-        public string Notify1Name { get; set; }
-        public string Notify2Name { get; set; }
-        public string Notify1ReceivablesAccountingCard { get; set; }
-        public string Notify2ReceivablesAccountingCard { get; set; }
-        public string ConsigneeNotImporterName { get; set; }
-        public string ConsigneeReceivablesAccountingCard { get; set; }
-        public string ShipperNotExporterName { get; set; }
-        public string ShipperReceivablesAccountingCard { get; set; }
+
     }
 }

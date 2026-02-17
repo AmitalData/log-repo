@@ -12,12 +12,10 @@ import { ClaimPM } from '../../../../Customs/EntityPMs/ClaimPM';
 import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPMService';
 import { ClaimWebService } from '../../../../Customs/Services/WebServices/ClaimWebService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
-import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'NewClaimComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewClaimComponent.html',
 })
 
@@ -27,11 +25,9 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Customs.Claim";
     public ValidationErrorsList: string[] = [];
     QueryNameText: string = "";
-    ShowCustomFileNo: boolean = false;
 
-    private _ClaimPMService: ClaimPMService = new ClaimPMService();    
+    private _ClaimPMService: ClaimPMService = new ClaimPMService();
     private _ClaimWebService: ClaimWebService = new ClaimWebService();
-    private _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
@@ -39,8 +35,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
 
         this.EntityPM = new ClaimPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => { });
-        this.ShowCustomFileNo = FeatureLocator.HasFeaturePermession("Customs.Claim", "CreateNewClaimWithCustomFileNo");
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => { });
     }
 
     SetWindowArgs(args: any) {
@@ -67,46 +62,22 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             this.EntityPM.CustomerId = value;
         }
     }
-
-    get CustomFileNo() { return this.EntityPM.CustomFileNo; }
-    set CustomFileNo(value: string) {
-        if (this.EntityPM.CustomFileNo != value) {
-            this.EntityPM.CustomFileNo = value;
-        }
-    }
-
     //#endregion
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
-        // if inserted custom file number, assert it is found
-        this.CustomFileNo = this.CustomFileNo?.trim();
-        if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
-            return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo).subscribe((response: ServiceResponse) => {
-                if (AppTool.IsNullOrEmpty(response.Result?.Id)) {
-                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.NotFoundCustomFileNo"));
-                }
-                else {
-                    this.CreateNewClaim();
-                }
-            });
+        if (AppTool.IsNullOrEmpty(this.CustomerId)) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ClientIsMandatory"));
         }
-        else {
-            if (AppTool.IsNullOrEmpty(this.CustomerId)) {
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ClientIsMandatory"));
-            }
-            if (AppTool.IsNullOrEmpty(this.ClaimOfficeCode)) {
-                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationOfficeCodeMandatory"));
-            }
-            if (this.ValidationErrorsList.length > 0) {
-                return;
-            }
-            this.CreateNewClaim();
+        if (AppTool.IsNullOrEmpty(this.ClaimOfficeCode)) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationOfficeCodeMandatory"));
         }
-    }
 
-    CreateNewClaim() {
+        if (this.ValidationErrorsList.length > 0) {
+            return;
+        }
+
         this._ClaimWebService.CheckIfCorporationNameExists(this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
                 this.SubmitChanges(myResponse, true);
@@ -127,22 +98,21 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             }
         }
 
-        this._ClaimPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this._ClaimPMService.insert(this.EntityPM).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;
                 this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName, BackButtonLabel: this.QueryNameText, 
-                        EntityFields: [{FieldName: "CustomFileNo", FieldValue: this.EntityPM.CustomFileNo }]});
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                        this.CancelButtonClicked();
+                    this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName, BackButtonLabel: this.QueryNameText });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.CancelButtonClicked();
+                        });
                     });
-                });
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;

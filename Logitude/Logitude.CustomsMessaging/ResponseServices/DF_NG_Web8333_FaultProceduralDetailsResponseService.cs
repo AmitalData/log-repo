@@ -23,7 +23,7 @@ using UnifreightIIG.Common.MessageLib.Storage;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.Docs;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.AmitalMessaging.Utils;

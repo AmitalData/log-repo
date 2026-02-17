@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
@@ -48,7 +48,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 LogBoxAdminUserId = a.LogBoxAdminUserId,
                                                 DocumentShareAsDefault = a.DocumentShareAsDefault,
                                                 AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
-                                                AutoArchiveOnPODExport   = a.AutoArchiveOnPODExport ,
                                                 StockTypeCode = a.StockTypeCode,
                                                          });
 
@@ -72,9 +71,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 LogBoxAdminUserId = tt.LogBoxAdminUserId,
                 DocumentShareAsDefault = tt.DocumentShareAsDefault,
                 AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
-                AutoArchiveOnPODExport = tt.AutoArchiveOnPODExport,
                 StockTypeCode = tt.StockTypeCode,
-                ShowTaxAmountWarning = tt.ShowTaxAmountWarning
             };
 
             return logBoxTenantSettingPM;
@@ -108,7 +105,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LogBoxAdminUserId = a.LogBoxAdminUserId,
                                            DocumentShareAsDefault = a.DocumentShareAsDefault,
                                            AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
-                                           AutoArchiveOnPODExport = a.AutoArchiveOnPODExport,
                                            StockTypeCode = a.StockTypeCode,
                                        }).FirstOrDefault();
 

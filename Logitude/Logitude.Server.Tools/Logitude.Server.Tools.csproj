@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
-  <Import Project="..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props" Condition="Exists('..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Server.Tools</RootNamespace>
     <AssemblyName>Logitude.Server.Tools</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -20,14 +18,12 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -35,14 +31,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,181 +46,98 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\All Projects\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
-    <OutputPath>bin\x64\None\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Amital.UpDown.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Amital.1.0.0\lib\Net40\Amital.UpDown.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Azure.Identity, Version=1.11.3.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Identity.1.11.3\lib\netstandard2.0\Azure.Identity.dll</HintPath>
-    </Reference>
-    <Reference Include="Azure.Storage.Blobs, Version=12.20.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Storage.Blobs.12.20.0\lib\netstandard2.0\Azure.Storage.Blobs.dll</HintPath>
-    </Reference>
-    <Reference Include="Azure.Storage.Common, Version=12.19.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Storage.Common.12.19.0\lib\netstandard2.0\Azure.Storage.Common.dll</HintPath>
-    </Reference>
     <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Confluent.Kafka, Version=2.4.0.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Confluent.Kafka.2.4.0\lib\net462\Confluent.Kafka.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Dropbox.Api, Version=4.0.0.0, Culture=neutral, PublicKeyToken=310f0e82fbb45d01, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dropbox.Api.4.2.6\lib\net45\Dropbox.Api.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Oracle.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="Dropbox.Api, Version=7.0.0.0, Culture=neutral, PublicKeyToken=310f0e82fbb45d01, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dropbox.Api.7.0.0\lib\netstandard2.0\Dropbox.Api.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Growl.New.1.1.0\lib\Growl.Connector.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Growl.New.1.1.0\lib\Growl.CoreLibrary.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.3\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Owin, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Owin.1.2.2\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Owin.1.0.0\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=3.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.3.0.5\lib\net461\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Bcl.TimeProvider, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.TimeProvider.8.0.0\lib\net462\Microsoft.Bcl.TimeProvider.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-	  <Reference Include="Microsoft.Data.Edm, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-		  <HintPath>..\packages\Microsoft.Data.Edm.5.8.5\lib\net40\Microsoft.Data.Edm.dll</HintPath>
-		  <Private>True</Private>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.OData.5.8.5\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Services.Client, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.5\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Identity.Client, Version=4.61.2.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Identity.Client.4.61.2\lib\net462\Microsoft.Identity.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=4.61.2.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Identity.Client.Extensions.Msal.4.61.2\lib\netstandard2.0\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.35.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.35.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.35.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.35.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.2\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.24\lib\net461\Microsoft.Rest.ClientRuntime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.Azure.3.3.19\lib\net461\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.ServiceBus.7.0.1\lib\net462\Microsoft.ServiceBus.dll</HintPath>
+      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.5\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
@@ -234,27 +147,18 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetCommonHelper.1.0.9\lib\net472\NetCommonHelper.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6800.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
     </Reference>
-    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
-    </Reference>
-    <Reference Include="nsoftware.IPWorksSSH, Version=20.0.8318.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\nsoftware.IPWorksSSH.20.0.8318\lib\net40\nsoftware.IPWorksSSH.dll</HintPath>
-    </Reference>
-    <Reference Include="nsoftware.IPWorksSSH.Design, Version=20.0.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\nsoftware.IPWorksSSH.20.0.8318\lib\net40\nsoftware.IPWorksSSH.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="nsoftware.IPWorksSSH.System, Version=20.0.8318.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\nsoftware.IPWorksSSH.20.0.8318\lib\net40\nsoftware.IPWorksSSH.System.dll</HintPath>
+    <Reference Include="nsoftware.IPWorksSSH.System, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.System.dll</HintPath>
     </Reference>
     <Reference Include="nsoftware.IPWorksSSL, Version=9.0.5050.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
       <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSL.dll</HintPath>
@@ -266,152 +170,27 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Polly, Version=8.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Polly.8.5.2\lib\net472\Polly.dll</HintPath>
-    </Reference>
-    <Reference Include="Polly.Core, Version=8.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Polly.Core.8.5.2\lib\net472\Polly.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.35.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.FileSystem.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.FileSystem.AccessControl.5.0.0\lib\net461\System.IO.FileSystem.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Hashing, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Hashing.8.0.0\lib\net462\System.IO.Hashing.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Linq.Dynamic.Core, Version=1.4.0.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.Dynamic.Core.1.4.0\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory.Data, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.Data.8.0.0\lib\net462\System.Memory.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.ProtectedData, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.ProtectedData.8.0.0\lib\net462\System.Security.Cryptography.ProtectedData.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Spatial, Version=5.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Spatial.5.8.5\lib\net40\System.Spatial.dll</HintPath>
+    <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.8.0.3\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Dataflow, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Dataflow.8.0.0\lib\net462\System.Threading.Tasks.Dataflow.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.9.0\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Cors, Version=5.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Cors.5.3.0\lib\net45\System.Web.Cors.dll</HintPath>
+    <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
@@ -420,11 +199,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+    <Reference Include="UnifreightIIG.Common">
+      <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\UnifreightIIG.1.0.0\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -436,72 +216,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyticTableServices\AnalyticTableService.cs" />
     <Compile Include="APIException.cs" />
     <Compile Include="APILogsUtility.cs" />
     <Compile Include="BlobFileInfo.cs" />
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
-    <Compile Include="Contracts\ICustomsConnectDocumentToDeclarationCourier.cs" />
-    <Compile Include="Contracts\ICustomsUpdateClosedTables.cs" />
-    <Compile Include="Contracts\ICustomsEnqueueSucceedRequestsheets.cs" />
-    <Compile Include="Contracts\IPOAExpireReminder.cs" />
-    <Compile Include="Contracts\ICustomsSendReportExel.cs" />
-    <Compile Include="Contracts\ICustomsExchangeRatesQuery.cs" />
-    <Compile Include="Contracts\ICustomsDeleteCustomRequestSheet.cs" />
-    <Compile Include="Contracts\ICustomsDeleteQueMessMoreDetails.cs" />
-    <Compile Include="Contracts\ICustomsDeleteNotToCustomCommunication.cs" />
-    <Compile Include="Contracts\IUpdateOpenDeclarationInCourierMasterService.cs" />
-    <Compile Include="ExternalServices\DcaManagerShim.cs" />
-    <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
-    <Compile Include="Helpers\MetadataUpdateUtility.cs" />
-    <Compile Include="Helpers\SqlBulkInsert.cs" />
-    <Compile Include="Helpers\TableCounter.Customs.cs" />
-    <Compile Include="CustomFields\ChildEntitiesCustomFieldService.cs" />
-    <Compile Include="CToolWorkflows\CloneObjectService.cs" />
-    <Compile Include="CToolWorkflows\Models\CToolWorkflowMessage.cs" />
-    <Compile Include="CToolWorkflows\Models\PropertyChange.cs" />
-    <Compile Include="CToolWorkflows\WorkflowEntityChanges.cs" />
-    <Compile Include="CustomFields\EntityCustomFieldService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
-    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldMultiSetter.cs" />
-    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldGetter.cs" />
-    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldSingleSetter.cs" />
-    <Compile Include="Helpers\ErrorsLogger.cs" />
-    <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
-    <Compile Include="Interfaces\IAddManualTraceEventsHelper.cs" />
-    <Compile Include="IQueryableExtensions.cs" />
-    <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">
       <DependentUpon>GenericResponse.xsd</DependentUpon>
     </Compile>
     <Compile Include="Contracts\GenericResponseObj.NetPart.cs" />
-    <Compile Include="Contracts\ICustomsSendManifestService.cs" />
-    <Compile Include="Contracts\ICustomsCloseCourierMasterService.cs" />
-    <Compile Include="Contracts\ICustomsSendDeclarationStatus.cs" />
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
     <Compile Include="Counters\CodeCounter.cs" />
     <Compile Include="Counters\IdCounter.cs" />
     <Compile Include="Counters\TenantCounter.cs" />
     <Compile Include="DeleteOldRecentActivitiesRecords.cs" />
-    <Compile Include="EntityChanges\AutomationObjectFieldService.cs" />
-    <Compile Include="EntityChanges\AutomationResultExternalServices\TaskAutomationEndDateService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationCreateTaskService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationEmailResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationFollowUpResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationQueuedTaskResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationSendDocumentResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationSendInterfaceResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationSetValueResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\AutomationSLAResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\GeneralAutomationResultService.cs" />
-    <Compile Include="EntityChanges\AutomationResult\IAutomationResultService.cs" />
-    <Compile Include="EntityChanges\GeneralEntityChangeService.cs" />
-    <Compile Include="EntityChanges\MainEntityChangeService.cs" />
-    <Compile Include="EntityChanges\ResolverAutomationObjectFieldService.cs" />
     <Compile Include="EntityPM.cs" />
     <Compile Include="EntityPMBase.cs" />
     <Compile Include="EntityQueryService.cs" />
@@ -523,11 +253,9 @@
     <Compile Include="FTP\FTPServiceExceptionThrower.cs" />
     <Compile Include="FTP\FTPServiceResponse.cs" />
     <Compile Include="FTP\SFTPService.cs" />
-    <Compile Include="Helpers\AccountingTranferViaFTPHelper.cs" />
     <Compile Include="Helpers\AesFunction.cs" />
     <Compile Include="Helpers\AmitalConvertUtil.cs" />
     <Compile Include="Helpers\AuthenticationUtil.cs" />
-    <Compile Include="Helpers\DocumentPopulateAutomaticDateUpdateService.cs" />
     <Compile Include="Helpers\DropBoxActionsHelper.cs" />
     <Compile Include="Helpers\EmailLimitationHelper.cs" />
     <Compile Include="Helpers\EntityChangeHelper.cs" />
@@ -544,7 +272,6 @@
     <Compile Include="Helpers\General.cs" />
     <Compile Include="Helpers\EncodedHtmlHelper.cs" />
     <Compile Include="Helpers\HttpContextUtil.cs" />
-    <Compile Include="Helpers\ImageDetailsHtmlRenderingService.cs" />
     <Compile Include="Helpers\InjectionUtil.cs" />
     <Compile Include="Helpers\IQueryableExtensions.cs" />
     <Compile Include="Helpers\MD5HashUtil.cs" />
@@ -554,7 +281,6 @@
     <Compile Include="Helpers\PerformanceLogger.cs" />
     <Compile Include="Helpers\QuerySortClass.cs" />
     <Compile Include="Helpers\SearchFieldsFinder.cs" />
-    <Compile Include="Helpers\StorageDataService.cs" />
     <Compile Include="Helpers\SystemLogoHelper.cs" />
     <Compile Include="Helpers\TableLastUpdateClass.cs" />
     <Compile Include="Helpers\TextCodesTranslator.cs" />
@@ -562,31 +288,20 @@
     <Compile Include="Helpers\TotangoActivityLogger.cs" />
     <Compile Include="Helpers\TraceEventResponse.cs" />
     <Compile Include="Helpers\TranslateTextsClass.cs" />
-    <Compile Include="Helpers\UpdateEventCustomFieldService.cs" />
-    <Compile Include="Helpers\UploadTool.cs" />
     <Compile Include="Interfaces\IDomainServiceUpdateClass.cs" />
     <Compile Include="EntityValidateService.cs" />
     <Compile Include="Interfaces\IIdCounterUtil.cs" />
     <Compile Include="Interfaces\ITranslateTextsClassUtil.cs" />
-    <Compile Include="KafkaConfigurations\KafkaConsumerGroups.cs" />
-    <Compile Include="KafkaConfigurations\KafkaTopics.cs" />
-    <Compile Include="KafkaConfigurations\KakaPartitions.cs" />
     <Compile Include="LogitudeExceptionExt.cs" />
     <Compile Include="LogitudeXmlSerializer.cs" />
-    <Compile Include="Messages\Consumer.cs" />
-    <Compile Include="Messages\KafkaCredentials.cs" />
-    <Compile Include="Messages\Producer.cs" />
     <Compile Include="Mocks\MockDateTimeUtil.cs" />
     <Compile Include="Mocks\MockIdCounterUtil.cs" />
     <Compile Include="Mocks\MockTranslateTextsClassUtil.cs" />
     <Compile Include="Models\AmitalRestrictOwnerModel.cs" />
-    <Compile Include="Models\NewTraceEventResult.cs" />
-    <Compile Include="Models\TraceEventsServiceArgs.cs" />
     <Compile Include="MyRegularExpressionAttribute.Shared.cs" />
     <Compile Include="QueueService\AzureQueueService.cs" />
     <Compile Include="QueueService\ConcurrentQueueService.cs" />
     <Compile Include="QueueService\CustomDbQueueService.cs" />
-    <Compile Include="QueueService\DbQueueService.Customs.CS" />
     <Compile Include="QueueService\IQueueService.cs" />
     <Compile Include="QueueService\DbQueueService.cs" />
     <Compile Include="QueueService\LogQueueMessage.cs" />
@@ -606,37 +321,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueService\QueueSendService.cs" />
     <Compile Include="QueueService\QueueServiceManager.cs" />
-    <Compile Include="QueueService\QueueThreadStateService.cs" />
     <Compile Include="QueueService\StateMachineProcess.cs" />
-    <Compile Include="QueueService\WorkerNameService.cs" />
     <Compile Include="Resolvers\DateTimeUtilResolver.cs" />
     <Compile Include="Resolvers\IdCounterUtilResolver.cs" />
     <Compile Include="Resolvers\TranslateTextsClassUtilResolver.cs" />
     <Compile Include="RestClient.cs" />
-    <Compile Include="RestRequestExecutor\ApiCommunicationLog.cs" />
-    <Compile Include="RestRequestExecutor\ApiException.cs" />
-    <Compile Include="RestRequestExecutor\ApiRequest.cs" />
-    <Compile Include="RestRequestExecutor\ApiRequestHeader.cs" />
-    <Compile Include="RestRequestExecutor\ApiResponse.cs" />
-    <Compile Include="RestRequestExecutor\ApiCommunicationConstants.cs" />
-    <Compile Include="RestRequestExecutor\RestRequestExecutor.cs" />
-    <Compile Include="RestRequestExecutor\StatusTypeCommunication.cs" />
     <Compile Include="Service References\BlobServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\FilingManagerSplitServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="SignalRHubs\LogitudeHubChannelEvent.cs" />
     <Compile Include="SignalRHubs\SignalRHubEventPublisher.cs" />
+    <Compile Include="SignalRHubs\SignalRHubMessageSender.cs" />
     <Compile Include="SQL\ExecuteStoredProcedures.cs" />
     <Compile Include="SQL\GetPrimaryKeyName.cs" />
     <Compile Include="StorageService\AzureBlobService.cs" />
-    <Compile Include="StorageService\AzureStorage.cs" />
     <Compile Include="StorageService\DatabaseBlobService.cs" />
     <Compile Include="StorageService\FileSystemBlobService.cs" />
     <Compile Include="StorageService\IBlobService.cs" />
@@ -645,44 +345,19 @@
     <Compile Include="SQL\GetForeignKeyName.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="ApiSearchFilters.cs" />
-    <Compile Include="TreeFilterQuery\Expression\OperatorExpression.cs" />
-    <Compile Include="TreeFilterQuery\Expression\PartnerEntityExpression.cs" />
-    <Compile Include="TreeFilterQuery\Expression\WhereExpression.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\CustomFieldExpression.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\IQueryTreeFilterExpression.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\DateGroupFilterExpression.cs" />
-    <Compile Include="TreeFilterQuery\Services\QueryTreeFilterFieldValueResolver.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterInterpreter.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\JavaScriptSerializerExpression.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\PartnerEntityQueryFilterExpression.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\PartnerEntityResloveFieldValueExpression.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterValidateExpresion.cs" />
-    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterResetValueExpresion.cs" />
-    <Compile Include="TreeFilterQuery\Iterator\QueryTreeFilterCollection.cs" />
-    <Compile Include="TreeFilterQuery\Iterator\QueryTreeFilterIterator.cs" />
-    <Compile Include="TreeFilterQuery\TreeFilterQueryService.cs" />
     <Compile Include="Utils\ConcurrentKiller.cs" />
     <Compile Include="Utils\DateTimeUtil.cs" />
     <Compile Include="Utils\IdCounterUtil.cs" />
-    <Compile Include="Utils\LogChangesService_custom.cs" />
     <Compile Include="Utils\LogChangesService.cs" />
     <Compile Include="Utils\Logger.cs" />
-    <Compile Include="Utils\Logger.old.cs" />
-    <Compile Include="Utils\MultiProcessLockTableUtil.cs" />
     <Compile Include="Utils\ProcessLockTableUtil.cs" />
     <Compile Include="Utils\ProxyUtil.cs" />
     <Compile Include="Utils\SMTP.cs" />
     <Compile Include="Utils\TranslateTextsClassUtil.cs" />
-    <Compile Include="WebHook\WebHookServiceExceptionThrower.cs" />
-    <Compile Include="WebHook\WebHookService.cs" />
     <Compile Include="Wildcard.cs" />
     <Compile Include="WorkerEntryPoint.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
@@ -693,16 +368,11 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="FTP\private.pem">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Nlog.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Scripts\jquery-1.9.1.min.map" />
-    <None Include="Properties\DataSources\Amital.UpDown.Common.AmitalUpDownBlobChunks.datasource" />
-    <None Include="Properties\DataSources\Amital.UpDown.Common.DownloadServiceResponseData.datasource" />
-    <None Include="Properties\DataSources\Amital.UpDown.Common.ServerUpload.ResultCreateUploadBlob.datasource" />
     <None Include="Service References\BlobServiceReference\BlobService.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -715,28 +385,6 @@
     </None>
     <None Include="Service References\BlobServiceReference\Logitude.Server.Tools.BlobServiceReference.Response.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerService.wsdl" />
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit6.xsd">
-      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -760,9 +408,9 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -778,7 +426,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BlobServiceReference\" />
-    <WCFMetadataStorage Include="Service References\FilingManagerSplitServiceReference\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\BlobServiceReference\configuration91.svcinfo" />
@@ -798,86 +445,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSE.txt" />
-    <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.4.3.js" />
-    <Content Include="Scripts\jquery.signalR-2.4.3.min.js" />
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.CreateFolderResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.CreateNewFilingResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.DeleteDocumentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetBase64StringByFolderTenantComIdResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetBase64StringByTenantComIdResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetBase64StringResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetDocumentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetPageTiffAsB64FromTarByTenantComIdPageResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetStreamResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.GetStreamVer201404Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.LikeBool.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutDocumentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutStreamByTenantComIdResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutStreamDocumentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.PutStreamResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Logitude.Server.Tools.FilingManagerSplitServiceReference.SetSecurityResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\FilingManagerSplitServiceReference\configuration.svcinfo" />
-    <None Include="Service References\FilingManagerSplitServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\FilingManagerSplitServiceReference\FilingManagerSplit.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DeploymentPackages\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
-    <Error Condition="!Exists('..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

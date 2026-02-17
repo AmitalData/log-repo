@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .BoxItemContent .Body > td {
         background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 49.79%,rgba(238, 238, 238, 1) 69.34%,rgba(226, 226, 226, 1) 83.57%,rgba(209, 209, 209, 1) 95.15%,rgba(199, 199, 199, 1) 100%);
@@ -90,7 +90,7 @@
             <td>{{'WarehouseEntry.TH.Partners' | TextCodeTranslationPipe}}</td>
 
             <td style="width: 100px">
-                <div tabindex="0" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled || IsCancelled">
+                <div tabindex="0" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
                     <label>{{'WarehouseEntry.B.Partners.AddPartners' | TextCodeTranslationPipe}}</label>
                     <img src="./Images/ToggleIcon.png" />
                     <div class="ToggleButtonMenu" style="width: 150px">
@@ -132,7 +132,7 @@
                                                                         </td>
 
                                                                         <td style="width: 18px;">
-                                                                            <IconButton [disabled]="IsCancelled" [Name]="'Edit'" [IsSmall]="true" (click)="EditPartner(item)"></IconButton>
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditPartner(item)"></IconButton>
                                                                         </td>
 
                                                                         <td style="width: 3px;" *ngIf="item.IsRemoveButtonVisible">
@@ -140,7 +140,7 @@
                                                                         </td>
 
                                                                         <td style="width: 18px;" *ngIf="item.IsRemoveButtonVisible">
-                                                                            <IconButton [disabled]="IsCancelled" [Name]="'Delete'" [IsSmall]="true" (click)="DeletePartner(item)"></IconButton>
+                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeletePartner(item)"></IconButton>
                                                                         </td>
 
                                                                         <td style="width: 5px;">

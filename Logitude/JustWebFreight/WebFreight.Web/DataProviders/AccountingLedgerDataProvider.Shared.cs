@@ -37,11 +37,7 @@ namespace WebFreight.Web.DataProviders
     {
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public string PartnerId { get; set; }
-        public string PartnerName { get; set; }
-        public string PartnerAddress { get; set; }
         public string CustomerAddress { get; set; }
-        public string CardCode { get; set; }
         public List<AccountingLedger> AccountingLedgerList { get; set; }
     }
 
@@ -51,7 +47,6 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DueDate { get; set; }
         public string ReferenceNumber { get; set; }
         public string ReferenceType { get; set; }
-        public bool IsAutoCredit { get; set; }
         public double? Debit { get; set; }
         public double? Credits { get; set; }
         public double? AccountBanalnce { get; set; }
@@ -66,18 +61,10 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ValueDate { get; set; }
         public string PaymentMethod { get; set; }
         public string CustomerId { get; set; }
-        public string PartnerId { get; set; }
         public string BillToVendor { get; set; }
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
         public string BranchId { get; set; }
         public string BranchName { get; set; }
-        public string Description { get; set; } 
-        public double? DebitInLocalCurrency { get; set; }
-        public double? CreditInLocalCurrency { get; set; }
-        public double? AccountBalanceInLocalCurrency { get; set; }
-        public string ProjectNumber { get; set; }
-        public string CustomerReference1 { get; set; }
-        public string CustomerReference2 { get; set; }
     }
 }

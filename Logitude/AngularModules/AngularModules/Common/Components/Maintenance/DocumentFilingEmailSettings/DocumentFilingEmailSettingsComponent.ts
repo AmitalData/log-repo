@@ -6,7 +6,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 
 @Component({
     selector: 'DocumentFilingEmailSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './DocumentFilingEmailSettingsComponent.html',
 })
 

@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -16,71 +16,67 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityKeys;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
-{
+{ 
 
     public partial class JournalLineListQueryService
     {
-        private IQueryable<JournalLineList> GetIqueryableList(IQueryable<JournalLine> iQueryable)
+	    private IQueryable<JournalLineList> GetIqueryableList(IQueryable<JournalLine> iQueryable)
         {
-            IQueryable<JournalLineList> query = (from a in iQueryable.Include("Journal").Include("Currency").Include("JournalActionType").Include("CreditAccount").Include("DebitAccount")
+            IQueryable<JournalLineList> query = (from a in iQueryable.Include("Journal").Include("Currency").Include("JournalActionType")
                                                  select new JournalLineList()
-                                                 {
-                                                     JournalId = a.JournalId,
-                                                     Line = a.Line,
-                                                     AccountingDate = a.AccountingDate,
-                                                     ActionCode = a.ActionCode,
-                                                     ActionTypeCode = a.JournalActionType != null ? a.JournalActionType.Code : null,
-                                                     ActionName = a.JournalActionType != null ? a.JournalActionType.EnglishName : null,
+                                                      {
+                                                          JournalId = a.JournalId,
+                                                          Line = a.Line,
+                                                          AccountingDate = a.AccountingDate,
+                                                          ActionCode = a.ActionCode,
+                                                          ActionTypeCode = a.JournalActionType != null ? a.JournalActionType.Code : null,
+                                                          ActionName = a.JournalActionType != null ? a.JournalActionType.EnglishName : null,
+                                                        
+                                                          CreditControlAccountId = a.CreditControlAccountId,
+                                                        
+                                                          CreditAccountId = a.CreditAccountId,
+                                                        
+                                                          CurrencyId = a.CurrencyId,
+                                                          CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
+                                                          CurrencyCode = a.Currency != null ? a.Currency.Code : null,
 
-                                                     CreditControlAccountId = a.CreditControlAccountId,
+                                                          DebitAccountId = a.DebitAccountId,
+                                                      
+                                                          DebitControlAccountId = a.DebitControlAccountId,
+                                                          DocumentDate = a.DocumentDate,
+                                                          DueDate = a.DueDate,
+                                                          ExchangeRate = a.ExchangeRate,
+                                                          ForeignAmount = a.ForeignAmount,
                                                      
-                                                     CreditAccountId = a.CreditAccountId,
-
-                                                     CurrencyId = a.CurrencyId,
-                                                     CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
-                                                     CurrencyCode = a.Currency != null ? a.Currency.Code : null,
-
-                                                     DebitAccountId = a.DebitAccountId,
-
-                                                     CreditAccountNumber = a.CreditAccount.DisplayNumber,
-                                                     DebitAccountNumber = a.DebitAccount.DisplayNumber,
-
-                                                     DebitControlAccountId = a.DebitControlAccountId,
-                                                     DocumentDate = a.DocumentDate,
-                                                     DueDate = a.DueDate,
-                                                     ExchangeRate = a.ExchangeRate,
-                                                     ForeignAmount = a.ForeignAmount,
-
-                                                     LocalAmount = a.LocalAmount,
-                                                     Reference1 = a.Reference1,
-                                                     Reference2 = a.Reference2,
-                                                     Reference3 = a.Reference3,
-                                                     Tenant = a.Tenant,
-                                                     ExternalOpenAmount = a.ExternalOpenAmount,
-                                                     ExcludeFromTaxReport = a.ExcludeFromTaxReport,
-                                                 });
+                                                          LocalAmount = a.LocalAmount,
+                                                          Reference1 = a.Reference1,
+                                                          Reference2 = a.Reference2,
+                                                          Reference3 = a.Reference3,
+                                                          Tenant = a.Tenant,
+                                                          ExternalOpenAmount = a.ExternalOpenAmount,
+                                                      });
             return query;
         }
 
-        private IQueryable<JournalLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<JournalLine> iQueryable,int tenant)
+		private IQueryable<JournalLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<JournalLine> iQueryable,int tenant)
         {
             return iQueryable;
-        }
+		}
 
-        private IQueryable<JournalLine> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<JournalLine> iQueryable,int tenant)
+		private IQueryable<JournalLine> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<JournalLine> iQueryable,int tenant)
         {
-            return iQueryable;
-        }
+			return iQueryable;
+		}
 
         public IQueryable<JournalLineList> GetJournalLinesForJournal(string JournalId, int tenant)
         {
             IQueryable<JournalLineList> Journallines;
-
+        
 
 
             IQueryable<JournalLine> lines =  (from a in context.JournalLines.Include("CreditAccount")
-                                             where a.JournalId == JournalId && a.Tenant == tenant
-                                             select a);
+                                                 where a.JournalId == JournalId && a.Tenant == tenant
+                                                 select a);
 
             Journallines = (from a in lines
                             select new JournalLineList()
@@ -94,7 +90,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                 CreditAccountId = a.CreditAccountId,
                                 CreditAccountName = a.CreditAccount != null ? a.CreditAccount.LocalName : null,
                                 ActionName = a.JournalActionType != null ? a.JournalActionType.LocalName : null,
-                                ExcludeFromTaxReport = a.ExcludeFromTaxReport,
                             });
 
             return Journallines;
@@ -104,3 +99,4 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 }
+	

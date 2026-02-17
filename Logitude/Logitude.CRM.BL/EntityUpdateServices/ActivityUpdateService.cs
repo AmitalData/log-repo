@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Logitude.CRM.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.Helpers;
@@ -17,7 +17,7 @@ using Logitude.CRM.BL.Helpers;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.Core;
 
 namespace Logitude.CRM.BL.EntityUpdateServices
@@ -50,10 +50,10 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 {
                     entityPM.CompleteDate = myDate;
                     entityPM.IsOpen = false;
-                    entityPM.ActivityStatusCode = "C";            
-                }
+                    entityPM.ActivityStatusCode = "C";
 
-                if(entityPM.ActivityStatusCode == "C") this.SetTheLastActivityFields(entityPM);
+                    this.SetTheLastActivityFields(entityPM);
+                }
 
                 this.InitializeData(entityPM);
                 this.SetCustomerDateFields(entityPM, null);
@@ -144,10 +144,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
                 correspondenceRepository.Add(line);
                 correspondenceRepository.SubmitChanges();
-
-                ticket.LastCorrespondence = line.Description;
-                ticketRep.Update(ticket);
-                ticketRep.SubmitChanges();
             }
         }
 
@@ -247,8 +243,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 if (activityTypeCode != null)
                 {
                     helper.SendEmailAlert(entityPM, entityPOCO, "Activity", entityPM.Tenant, "GAN" + activityTypeCode, true);
-                    if (entityPM.ActivityStatusCode == "C")
-                        helper.SendEmailAlert(entityPM, entityPOCO, "Activity", entityPM.Tenant, "GA" + activityTypeCode + "C", false);
                 }
 
                 if (entityPM.IsCopy)

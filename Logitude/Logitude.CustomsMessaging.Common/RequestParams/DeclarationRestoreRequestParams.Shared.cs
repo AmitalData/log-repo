@@ -11,8 +11,5 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CustomsFile { get; set; }
         public string DeclarationNumber { get; set; }
         public string DeclarationId { get; set; }
-        public bool IsUpdateDB { get; set; }
-        public bool ShowData { get; set; }
-
     }
 }

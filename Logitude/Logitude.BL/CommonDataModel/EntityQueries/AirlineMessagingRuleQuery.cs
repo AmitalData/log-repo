@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AirlineMessagingRuleRepository repository;
 
-
+        public AirlineMessagingRuleQuery()
+        {
+            repository = new AirlineMessagingRuleRepository(); 
+        }
 
         public AirlineMessagingRuleQuery(int tenant)
         {
@@ -38,7 +41,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  AirlineId = a.AirlineId,
                                                  MessageTypeCode = a.MessageTypeCode,
                                                  RuleFieldId = a.RuleFieldId,
-                                                 RuleFieldCode = a.RuleFieldCode,
                                                  IsMandatoryForSending = a.IsMandatoryForSending,
                                                  MaxSize = a.MaxSize,
                                                  InActive = a.InActive,
@@ -62,7 +64,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 AirlineId = a.AirlineId,
                                                 MessageTypeCode = a.MessageTypeCode,
                                                 RuleFieldId = a.RuleFieldId,
-                                                RuleFieldCode = a.RuleFieldCode,
                                                 IsMandatoryForSending = a.IsMandatoryForSending,
                                                 MaxSize = a.MaxSize,
                                                 InActive = a.InActive,
@@ -84,7 +85,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 AirlineId = a.AirlineId,
                                                 MessageTypeCode = a.MessageTypeCode,
                                                 RuleFieldId = a.RuleFieldId,
-                                                RuleFieldCode = a.RuleFieldCode,
                                                 IsMandatoryForSending = a.IsMandatoryForSending,
                                                 MaxSize = a.MaxSize,
                                                 RuleFieldName = a.RuleField == null ? null : a.RuleField.FieldName,

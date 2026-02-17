@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -8,12 +8,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
     {
         public ObjectFieldMap()
         {
-            this.HasEntitySetName("ObjectFields");
             this.HasKey(t => t.Id);
-           
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FieldName).IsRequired().HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.ShortName).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DataTypeCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.LookUpTableId).HasMaxLength(15).IsUnicode(false);
@@ -58,30 +55,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.EnableFullscreenTextBox);
             this.Property(t => t.RecordType).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.FieldCode).HasMaxLength(200).IsUnicode(false);
-            //this.Property(t => t.FieldCode).IsRequired().HasMaxLength(200).IsUnicode(false);
-            this.Property(t => t.FullNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.HelpTextCodeCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.ListTextCodeCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.ShortNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.AdditionalQuerySections).HasMaxLength(200).IsUnicode(false);
 
-            this.Property(t => t.LeftKey).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.RightKey).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.IsForeignKey);
-            this.Property(t => t.ForeignEntity).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.NavigationPropertyName).HasMaxLength(100).IsUnicode(false);
-            this.Property(t => t.DefaultAdditionalFilters).IsMaxLength().IsUnicode(true);
-            this.Property(t => t.ForMetaDataOnly);
-            this.Property(t => t.IsListFilter);
-            this.Property(t => t.ObjectFieldDataMapping).HasMaxLength(256).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ObjectFields");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.FieldName).HasColumnName("FieldName");
-            this.Property(t => t.ShortName).HasColumnName("ShortName");
             this.Property(t => t.MaxLength).HasColumnName("MaxLength");
             this.Property(t => t.IsRequiered).HasColumnName("IsRequiered");
             this.Property(t => t.IsCustom).HasColumnName("IsCustom");
@@ -153,23 +133,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.EnableFullscreenTextBox).HasColumnName("EnableFullscreenTextBox");
             this.Property(t => t.DisplayInAutomationAsEnitity).HasColumnName("DisplayInAutomationAsEnitity");
             this.Property(t => t.RecordType).HasColumnName("RecordType");
-            this.Property(t => t.FieldCode).HasColumnName("FieldCode");
-            this.Property(t => t.FullNameTextCodeCode).HasColumnName("FullNameTextCodeCode");
-            this.Property(t => t.HelpTextCodeCode).HasColumnName("HelpTextCodeCode");
-            this.Property(t => t.ListTextCodeCode).HasColumnName("ListTextCodeCode");
-            this.Property(t => t.ShortNameTextCodeCode).HasColumnName("ShortNameTextCodeCode");
-            this.Property(t => t.AdditionalQuerySections).HasColumnName("AdditionalQuerySections");
-             this.Property(t => t.DisplayInRequiredFields).HasColumnName("DisplayInRequiredFields");
 
-            this.Property(t => t.LeftKey).HasColumnName("LeftKey");
-            this.Property(t => t.RightKey).HasColumnName("RightKey");
-            this.Property(t => t.IsForeignKey).HasColumnName("IsForeignKey");
-            this.Property(t => t.ForeignEntity).HasColumnName("ForeignEntity");
-            this.Property(t => t.NavigationPropertyName).HasColumnName("NavigationPropertyName"); 
-            this.Property(t => t.DefaultAdditionalFilters).HasColumnName("DefaultAdditionalFilters");
-            this.Property(t => t.ForMetaDataOnly).HasColumnName("ForMetaDataOnly");
-            this.Property(t => t.IsListFilter).HasColumnName("IsListFilter");
-            this.Property(t=> t.ObjectFieldDataMapping).HasColumnName("ObjectFieldDataMapping");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -186,7 +150,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
             }
 
-//#endif
+            //#endif
 
         }
     }

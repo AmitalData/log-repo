@@ -5,7 +5,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {INTTRADomainService, INTTRACommunicationSettingsHelper} from '../../Services/INTTRADomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './INTTRACommunicationSettingsComponent.html',
 })
 

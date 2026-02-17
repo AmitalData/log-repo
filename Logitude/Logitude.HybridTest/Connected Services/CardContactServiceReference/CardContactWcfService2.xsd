@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9996/WcfApi/CardContactWcfService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
+  <xs:complexType name="CardContactPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CardContactAdditionalServices" nillable="true" type="tns:ArrayOfCardContactAdditionalServicePM" />
+      <xs:element minOccurs="0" name="CardContactProducts" nillable="true" type="tns:ArrayOfCardContactProductPM" />
+      <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContactId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InternetAccess" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAirExport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAirImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAll" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCustomsImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInlandDomestic" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInlandExport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInlandImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOceanExport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOceanImport" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastLoginDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardContactPM" nillable="true" type="tns:CardContactPM" />
+  <xs:complexType name="ArrayOfCardContactAdditionalServicePM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CardContactAdditionalServicePM" nillable="true" type="tns:CardContactAdditionalServicePM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCardContactAdditionalServicePM" nillable="true" type="tns:ArrayOfCardContactAdditionalServicePM" />
+  <xs:complexType name="CardContactAdditionalServicePM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalServiceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AdditionalServiceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardContactId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CardId" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q1:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="ContactId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardContactAdditionalServicePM" nillable="true" type="tns:CardContactAdditionalServicePM" />
+  <xs:complexType name="ArrayOfCardContactProductPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CardContactProductPM" nillable="true" type="tns:CardContactProductPM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCardContactProductPM" nillable="true" type="tns:ArrayOfCardContactProductPM" />
+  <xs:complexType name="CardContactProductPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CardContactId" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q2:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CardContactProductPM" nillable="true" type="tns:CardContactProductPM" />
+</xs:schema>

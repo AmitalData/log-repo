@@ -12,7 +12,7 @@ import { PickUpDeliveryPackageHarmonizePM } from '../../../../../Shipment/Entity
 import { retry } from 'rxjs/operators';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DeliveryPackagesConnectComponent.html',
 })
 

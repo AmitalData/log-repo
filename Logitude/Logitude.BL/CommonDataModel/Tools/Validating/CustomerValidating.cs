@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,11 +9,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Text.RegularExpressions;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.CustomsMessaging.Common.Gen;
-using Logitude.Server.Tools.Helpers;
-using Newtonsoft.Json;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -21,31 +16,16 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
     {
         public static void Validate(CustomerPM entityPM, bool isNewEntity, ICommonDataContext myContext)
         {
-            // ValidateVatNumber(entityPM);
-
             int tenant = entityPM.Tenant;
             TenantRepository tenantRepository = new TenantRepository(myContext);
-          
             Tenant myTenant = tenantRepository.GetSingleTenantOnly(tenant);
-        
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
-                if (entityPM.IsHybrid)
-                {
-                    var err = AddressValidating.ValidateVendorOrCustomerAddress(itemPM);
-                    if (err == "This city doesn't exist in cities table")
-                    {
-                        itemPM.City = null;
-                    }
-                }
-                else
-                {
-                    AddressValidating.Validate(itemPM);
-                }
+                AddressValidating.Validate(itemPM);
             }
 
-            if (entityPM.IsCustomer && !entityPM.IsLogBox)// to allow batches for logbox
+            if (entityPM.IsCustomer)
             {
                 ValidateVAT_Required(entityPM, myContext, myTenant);
                 ValidateVAT_Unique(entityPM, myContext, myTenant, isNewEntity);
@@ -114,142 +94,89 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 }
             }
         }
-
-
-        private static string[] GetStack(int removeLines)
-        {
-            string[] stack = Environment.StackTrace.Split(
-                new string[] { Environment.NewLine },
-                StringSplitOptions.RemoveEmptyEntries);
-
-            if (stack.Length <= removeLines)
-                return new string[0];
-
-            string[] actualResult = new string[stack.Length - removeLines];
-            for (int i = removeLines; i < stack.Length; i++)
-                // Remove 6 characters (e.g. "  at ") from the beginning of the line
-                // This might be different for other languages and platforms
-                actualResult[i - removeLines] = stack[i].Substring(6);
-
-            return actualResult;
-        }
-
         private static void ValidateVAT_Unique(CustomerPM entityPM, ICommonDataContext myContext, Tenant myTenant, bool isNewEntity)
         {
-            if (entityPM.IsCustomer && !entityPM.InActive)
+            if (entityPM.IsCustomer)
             {
                 if (!string.IsNullOrEmpty(entityPM.VatNumber))
                 {
-                    //List<Card> allMatchedCards
-                   var q  
-                        = (from a in myContext.Cards.Include("Customer")
+                    AddressRepository addressRepository = new AddressRepository(myContext);
+
+                    List<Card> allMatchedCards
+                        = (from a in myContext.Cards
                            where a.Tenant == entityPM.Tenant
-                           && a.VatNumber == entityPM.VatNumber
                            && (a.PartnerTypeId == "CS" || a.PartnerTypeId == "PO")
-                           && !a.InActive
-                           && a.Customer != null && a.Customer.CustomerStatusCode != "INA"
-                           select a);
-
-                    string[] stacklines = CustomerValidating.GetStack(0);
-                    string logtext = "CustomerValidating.ValidateVAT_Unique(), Point 1, Customer " + entityPM.Code + ", T=" + entityPM.Tenant.ToString() + ", VatNumber=" + entityPM.VatNumber;
-                    if (q != null) logtext += "\n" + q.ToString();
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
-
-
-                    List<Card> allMatchedCards = q.ToList();
+                           && a.VatNumber == entityPM.VatNumber
+                           select a).ToList();
 
                     if (allMatchedCards != null)
                     {
-                        if(myTenant.VatUniqueTypeCode != "UNT")
-                        {
-                            bool doValidation = false;
-                            if ((myTenant.VatUniquePartnerTypeCode  == "POT" && entityPM.PartnerTypeId == "PO") || myTenant.VatUniquePartnerTypeCode == "ALL")
-                            {
-                                doValidation = true;
-                            }
-
-                            else if (myTenant.VatUniquePartnerTypeCode == "CUS" && entityPM.PartnerTypeId == "CS")
-                            {
-                                allMatchedCards = allMatchedCards.Where(d => d.PartnerTypeId == "CS" && d.Customer != null && d.Customer.CustomerStatusCode == "ACT").ToList();
-                                doValidation = true;
-                            }  
-                            
-                            if(doValidation)
-                            {
-                                ValidateVAT_UniqueCountry(entityPM, allMatchedCards, myTenant, isNewEntity, myContext);
-                            }
-                        } 
-                    }
-                }
-            }
-        }
-        private static void ValidateVAT_UniqueCountry(CustomerPM entityPM, List<Card> allMatchedCards, Tenant myTenant, bool isNewEntity, ICommonDataContext myContext)
-        {
-            if (myTenant.VatUniqueTypeCode == "UFA")
-            {
-                bool isAlreadyExists = false;
-
-                if (isNewEntity)
-                {
-                    if (allMatchedCards.Count > 0)
-                    {
-                        isAlreadyExists = true;
-                    }
-                }
-
-                else
-                {
-                    if (allMatchedCards.Where(d => d.Id != entityPM.Id).Any())
-                    {
-                        isAlreadyExists = true;
-                    }
-                }
-
-                if (isAlreadyExists)
-                {
-                    string msg = "VAT Number already exists";
-                    throw new ApplicationException(msg);
-                }
-            }
-
-            else if (myTenant.VatUniqueTypeCode == "USC")
-            {
-                if (!isNewEntity)
-                {
-                    allMatchedCards = allMatchedCards.Where(d => d.Id != entityPM.Id).ToList();
-                }
-
-                if (allMatchedCards != null)
-                {
-                    int tenant = entityPM.Tenant;
-                    string entityCountryId = entityPM.CountryId;
-                    string entityCountryName = entityPM.CountryName;
-
-                    if (!string.IsNullOrEmpty(entityCountryId))
-                    {
-                        if (entityCountryId == myTenant.VatUniqueCountryId)
+                        if (myTenant.VatUniqueTypeCode == "UFA")
                         {
                             bool isAlreadyExists = false;
-                            AddressRepository addressRepository = new AddressRepository(myContext);
 
-                            foreach (Card item in allMatchedCards)
+                            if (isNewEntity)
                             {
-                                Address address = addressRepository.GetMainAddressByCardId(item.Id, tenant);
-                                if (address != null)
+                                if (allMatchedCards.Count > 0)
                                 {
-                                    if (address.CountryId == entityCountryId)
-                                    {
-                                        isAlreadyExists = true;
-                                        break;
-                                    }
+                                    isAlreadyExists = true;
+                                }
+                            }
+
+                            else
+                            {
+                                if (allMatchedCards.Where(d => d.Id != entityPM.Id).Any())
+                                {
+                                    isAlreadyExists = true;
                                 }
                             }
 
                             if (isAlreadyExists)
                             {
-                                string msg = "VAT Number already exists for " + entityCountryName;
+                                string msg = "VAT Number already exists";
                                 throw new ApplicationException(msg);
+                            }
+                        }
+
+                        else if (myTenant.VatUniqueTypeCode == "USC")
+                        {
+                            if (!isNewEntity)
+                            {
+                                allMatchedCards = allMatchedCards.Where(d => d.Id != entityPM.Id).ToList();
+                            }
+
+                            if (allMatchedCards != null)
+                            {
+                                int tenant = entityPM.Tenant;
+                                string entityCountryId = entityPM.CountryId;
+                                string entityCountryName = entityPM.CountryName;
+
+                                if (!string.IsNullOrEmpty(entityCountryId))
+                                {
+                                    if (entityCountryId == myTenant.VatUniqueCountryId)
+                                    {
+                                        bool isAlreadyExists = false;
+
+                                        foreach (Card item in allMatchedCards)
+                                        {
+                                            Address address = addressRepository.GetMainAddressByCardId(item.Id, tenant);
+                                            if (address != null)
+                                            {
+                                                if (address.CountryId == entityCountryId)
+                                                {
+                                                    isAlreadyExists = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        if (isAlreadyExists)
+                                        {
+                                            string msg = "VAT Number already exists for " + entityCountryName;
+                                            throw new ApplicationException(msg);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -381,24 +308,6 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateVatNumber(CustomerPM entityPM)
-        {
-            bool isAccountingActivated = CheckFullAccountingActivated(entityPM.Tenant);
 
-            if (isAccountingActivated && !string.IsNullOrEmpty(entityPM.VatNumber))
-            {
-                var isValid = LuhnAlgorithm.IsVatNumberValid(entityPM.VatNumber);
-                var isZeros = Int32.Parse(entityPM.VatNumber) == 0;
-                if (!isValid || isZeros)
-                    throw new ApplicationException(TranslateTextsClass.Translate("General.O.WrongVatNumber", entityPM.Tenant));
-            }
-        }
-
-        private static bool CheckFullAccountingActivated(int tenantNumber)
-        {
-            var tenant = TenantQuery.GetSingleTenantPM(tenantNumber);
-            var isAccountingActivated = tenant.AccountingActivated;
-            return isAccountingActivated;
-        }
     }
 }

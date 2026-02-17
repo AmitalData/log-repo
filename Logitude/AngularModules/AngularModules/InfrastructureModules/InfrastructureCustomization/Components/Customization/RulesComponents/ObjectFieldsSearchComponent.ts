@@ -2,7 +2,7 @@ declare var window: any;
 import {Component, ViewContainerRef, OnInit, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {LogitudeListBoxComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/LogitudeListBox/LogitudeListBoxComponent';
-
+import {Http} from '@angular/http';
 import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceArgs} from '../../../../../Infrastructure/DataContracts/ServiceArgs';
@@ -11,7 +11,7 @@ import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelp
 import {AppTool} from '../../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'ObjectFieldsSearch',
     templateUrl: './ObjectFieldsSearchComponent.html',
 })
@@ -34,7 +34,7 @@ export class ObjectFieldsSearchComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
-        this.serviceArgs.http = ServiceHelper.HttpClient;
+        this.serviceArgs.http = ServiceHelper.Http;;
         if (this.CurrentSession == null) {
             this.SearchFieldsId = "ObjectFieldSearchFields_-1_-1";
         }
@@ -128,7 +128,7 @@ export class ObjectFieldsSearchComponent {
 
 
     SaveChanges() {
-        this.CurrentSession.CurrentWindow.Close(this.FieldSelectedItem.FieldCode);
+        this.CurrentSession.CurrentWindow.Close(this.FieldSelectedItem.Id);
     }
 
     CancelButtonClicked() {

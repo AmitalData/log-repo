@@ -19,9 +19,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public ProductType ProductType { get; set; }
 
         public string RoutingRQuoteDefaultTemplateId { get; set; }
-        public string CostTariffUse { get; set; }
-
-        public string SaleTariffUse { get; set; }
-
+        
     }
 }

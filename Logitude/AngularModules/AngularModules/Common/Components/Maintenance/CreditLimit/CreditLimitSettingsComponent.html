@@ -95,11 +95,7 @@
                                                         <td class="Value">Shipment Creation</td>
 
                                                         <td>
-                                                            <div *ngIf="!IsShipmentCreationWarningHasFeatureToggle" style="width: 16px; margin: auto;">
-                                                            </div>
-
-                                                            <div *ngIf="IsShipmentCreationWarningHasFeatureToggle" style="width: 16px; margin: auto;">
-                                                                <LogCheckBox [ObjectFieldName]="'ShipmentCreationWarning'" [Checked]="ShipmentCreationWarning" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                                            <div style="width: 16px; margin: auto;">
                                                             </div>
                                                         </td>
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
@@ -11,7 +11,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [Key]
         public string Code { get; set; }
         public string Name { get; set; }
-        public string PrintAs { get; set; }
         public string SearchFields { get; set; }
 
         //public List<Shipment> Shipments { get; set; }

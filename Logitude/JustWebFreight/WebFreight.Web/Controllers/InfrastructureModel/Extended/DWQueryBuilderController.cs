@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,13 +19,13 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
@@ -54,9 +54,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-
                 string tenantWhere = ".[Parent Tenant] = ";
                 var DWSettings = new DWHSettingRepository(authToken.Tenant);
                 var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
@@ -127,7 +124,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 DWObjectTableQuery dWObjectTableQuery = new DWObjectTableQuery(authToken.Tenant);
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
@@ -189,7 +185,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
-
                 int tenant = authToken.Tenant;
                 var Tabel = filters.Filter1Name;
                 var Field = filters.Filter2Name;
@@ -236,69 +231,39 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
 
 
-
-                List<int> childTenants = new List<int>();
-                var DWSettings = new DWHSettingRepository(authToken.Tenant);
-                var isParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
-
+                if (!string.IsNullOrEmpty(SearchData))
+                {
+                    WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");
+                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() , Value = SearchData + "%" });
+                }
+                
                 if (!IsClosed)
                 {
                     string parameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString();
                     string tenantWhere = ".[Parent Tenant] = ";
-                
+                    var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                    var isParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
                     if (!isParentTenant)
                     {
-                        tenantWhere = Tabel == "DIM_Tenants" ? ".[Tenant Number] = " : ".[Source Tenant] = ";
-                    }
-                    else
-                    {
-                        if (Tabel == "DIM_Tenants")
-                        {
-                            childTenants = DWSettings.GetTenantNumbersByParentTenant(authToken.Tenant);
-                            tenantWhere = ".[Tenant Number] in (";
-                            foreach (int tenantnumber in childTenants)
-                            {
-                                string parameterTenantName = "@Tenant" + tenantnumber.ToString();
-                                tenantWhere += parameterTenantName + ",";
-                                sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterTenantName, Value = tenantnumber.ToString() });
-                            }
-                            tenantWhere += "^";
-                            tenantWhere = tenantWhere.Replace(",^", ")");
-                        }
+                        tenantWhere = ".[Source Tenant] = ";
                     }
 
-                    if ((Tabel != "DIM_Tenants" || !isParentTenant) && Tabel != "DIM_Dates")
+                    if (Tabel != "DIM_Tenants" && Tabel != "DIM_Dates")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + tenantWhere + parameterName); //authToken.Tenant
                         sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = parameterName, Value = authToken.Tenant.ToString() });
                     }
-                    else if (Tabel == "DIM_Tenants")
-                    {
-                        WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + tenantWhere);
-
-                    }
                     if (Tabel == "DIM_Dates")
                     {
                         WhereStmt = (string.IsNullOrEmpty(WhereStmt) ? " where " : WhereStmt + " and ") + (Tabel + ".[Date Key] not in (@DatesParameterName1,@DatesParameterName2,@DatesParameterName3) "); //authToken.Tenant
-                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName1", Value = "2001-01-01" });
-                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName2", Value = "2002-02-02" });
-                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName3", Value = "2003-03-03" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName1", Value = "-1" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName2", Value = "-2" });
+                        sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@DatesParameterName3", Value = "-3" });
                     }
 
 
                 }
-                bool showActive = filters.Filter3Value != "true";
-                DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(tenant);
-                bool hasActiveField = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, Tabel).Where(dwField => dwField.Name == "InActive").Any();
-                if (hasActiveField && showActive) {
-                    WhereStmt = WhereStmt + " and " + Tabel + ".[InActive] = 0"; 
-                }
 
-                if (!string.IsNullOrEmpty(SearchData))
-                {
-                    WhereStmt = WhereStmt + " and (" + (Field + " like " + "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString() + ")");
-                    sqlCommandDefinition.Parameters.Add(new SqlParameterDetails() { ParameterName = "@ValueParameter" + (sqlCommandDefinition.Parameters.Count() + 1).ToString(), Value = "%" + SearchData + "%" });
-                }
                 using (var scope = TransactionFactory.GetNewTransaction())
                 {
                     var currentDb = GlobalDbHelper.GetGlobalDBWithNoCache(0);
@@ -308,10 +273,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                     using (SqlConnection sourceConnection = new SqlConnection(connection.ConnectionString))
                     {
-                        string tenantFieldName = (Tabel != "DIM_Tenants" ? (!isParentTenant ?  "[Source Tenant]" : "[Parent Tenant]") : "[Tenant Number]" ) + " as Tenant";
                         sqlCommandDefinition.SQLString = "select DISTINCT " + Field + " ";
-                        if(!IsClosed && Tabel != "DIM_Dates")
-                            sqlCommandDefinition.SQLString += ", " + tenantFieldName + " ";
                         if (LovAdditionalFields != null)
                         {
                             int index = 0;
@@ -449,34 +411,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                     scope.Complete();
 
-
-
-                    int tenantSecurtiy = authToken.Tenant;
-                    if(authToken.Email == "ahmadb@test.com")
-                    {
-                        tenantSecurtiy = 15;
-                        if (tenantSecurtiy != null)
-                        {
-                            childTenants = childTenants.Where(d => d != authToken.Tenant).ToList();
-                            childTenants.Add(tenantSecurtiy);
-                        }
-                    }
-
-
-                    if (!IsClosed)
-                    {
-                        BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
-                        if (isParentTenant && Tabel == "DIM_Tenants")
-                        {
-                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity( dataTable , childTenants );
-                        }
-                        else
-                        {
-                            bIReportsSecurityIntegrationService.CheckBIReportDataSecurity( dataTable );
-                        }
-                    }
-
-
                     ServiceResponse response = new ServiceResponse();
                     List<FactDataTable> FactDataList = new List<FactDataTable>();
                     var TempFactDataList = (from DataRow dr in dataTable.Rows
@@ -592,19 +526,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
-                SecurityUtility.CheckContactFeature("BIReport", "BIReportRun", authToken.Tenant);
-
-                int tenantSecurtiy = authToken.Email == "ahmadb@test.com" ? 15 : authToken.Tenant;
-                DWQueryParam.UserEmail = authToken.Email;
+                
 
                 DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);
                 SqlCommandDefinition sqlCommandDefinition = QBHelper.GetQuerySQL(DWQueryParam);
                 DataTable MyData = QBHelper.GetDWQueryData(sqlCommandDefinition);
-
-                BIReportsSecurityIntegrationService bIReportsSecurityIntegrationService = new BIReportsSecurityIntegrationService(tenantSecurtiy);
-                bIReportsSecurityIntegrationService.CheckBIReportDataSecurity (MyData );
-
-
                 DWQueryDataResult myResult = new DWQueryDataResult();
                 myResult.SQLDataResult = MyData;
                 var DWSettings = new DWHSettingRepository(authToken.Tenant);
@@ -633,9 +559,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 string DateSample = "";
 
                 DataWarehouseHelper dataWarehouseHelper = new DataWarehouseHelper();
-                if (filter != null && !string.IsNullOrEmpty(filter.TextValue.ToString()))
+                if (filter != null)
                 {
-                    DateSample = dataWarehouseHelper.ResolveWarehoueDateField("", filter.OperationCode, filter.TextValue.ToString(), filter.DataTypeCode, authToken.Tenant,true);
+                    DateSample = dataWarehouseHelper.ResolveWarehoueDateField("", filter.OperationCode, filter.TextValue.ToString(), authToken.Tenant,true);
                 }
                 //DateSample = DateSample.Replace("'","");
                 //DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(authToken.Tenant);

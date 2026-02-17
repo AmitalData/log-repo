@@ -15,7 +15,7 @@
     </tr>
 
     <tr style="height: 1px;" *ngIf="ResultMessage">
-        <td attr.data-cy="{{'ResultMessage' | IdGeneratorAsyncPipe | async}}" style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
+        <td style="text-align: center; vertical-align: middle; font-size: 14px; color: #009161;">
             {{ResultMessage}}
         </td>
     </tr>
@@ -202,17 +202,6 @@
                                             </td>
                                         </tr>
 
-                                        <!-- IsINTTRAFROB -->
-                                        <tr class="FormFieldRow" *ngIf="IsINTTRAFROBVisible">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'IsINTTRAFROB'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td>
-                                                <LogCheckBox [ObjectFieldName]="'IsINTTRAFROB'" [Checked]="IsINTTRAFROB" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                            </td>
-                                        </tr>
-
                                         <tr>
                                             <td colspan="2">
                                                 <div></div>
@@ -288,7 +277,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -296,7 +285,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SendButtonClicked()" [disabled]="IsLimited">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="SendButtonClicked()" [disabled]="IsLimited">Send</button>
                     </td>
                 </tr>
             </table>

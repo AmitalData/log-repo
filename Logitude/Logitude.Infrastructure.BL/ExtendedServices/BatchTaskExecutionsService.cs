@@ -34,40 +34,25 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                 this.RunCode();
 
                 // status will change to Done and update the done date time.
-                try
-                {
-                    this.ChangeStatus("D");
-                }
-                catch (Exception ex)
-                {
-                    string errorMessage = $"Tenant {BatchTaskExecution.Tenant} - Failed to change status to DONE in BatchTaskExecutionsService: {ex.Message}";
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(errorMessage);
-                    this.ChangeStatus("D", null, errorMessage);
-                }
+                this.ChangeStatus("D");
             }
             catch (Exception ex)
             {
-                try
-                {
-                    this.ChangeStatus("F", ex);
-                }
-                catch (Exception otherEx)
-                {
-                    string errorMessage = $"Tenant {BatchTaskExecution.Tenant} - Failed to change status to FAILED in BatchTaskExecutionsService: {otherEx.Message}";
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(errorMessage);
-                    this.ChangeStatus("F", null, errorMessage);
-                }
+                //log the exception.
+                this.ChangeStatus("F",ex);
+                //throw; Removed By Rabaia and Mohammad because it causes the WR to crash.
+                    
             }
         }
 
-        public abstract void RunCode();
+        public virtual void RunCode() { }
         
 
         public virtual void ChangeStatus(string statusCode,Exception ex=null,string logStatus=null)
         {
             Logitude.Infrastructure.Data.IInfrastructureContext context = Logitude.Infrastructure.Data.InfrastructureContext.GetContext(this.BatchTaskExecution.Tenant);
             BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), this.BatchTaskExecution.Tenant);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(statusCode+",,inside chagne status");
+            Debug.WriteLine(statusCode+",,inside chagne status");
             BatchTaskExecution.StatusCode = statusCode;
             switch (statusCode)
             {
@@ -112,7 +97,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
             }
             BatchTaskExecution.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
             batchTaskExecutionUpdateService.Update(BatchTaskExecution, true);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(statusCode + ",,inside chagne status after update");
+            Debug.WriteLine(statusCode + ",,inside chagne status after update");
         }
 
         public virtual DateTime GetCurrentDateTime(int tenant)
@@ -178,18 +163,9 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", tenant.ToString() }
-                }, tenant, myTimeSpan);
+                }, myTimeSpan);
             LogMessagingUtil.Instance.AppendLine("CreateQBatchTaskExecution:taskExe.Id:" + taskExe.Id);
             return taskExe.Id;
-        }
-
-        public T GetArgs<T>()
-        {
-            string xmlParameters = BatchTaskExecution.PrametersXml;
-            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            T args = (T)serializer.Deserialize(stringReader);
-            return args;
         }
     }
 }

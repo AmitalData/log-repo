@@ -1,7 +1,6 @@
 ﻿import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -13,16 +12,16 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class CustomsDocumentsDefinitionExtendedService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsDocumentsDefinitionExtended';
     }
 
     delete(Id: string) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -32,9 +31,9 @@ export class CustomsDocumentsDefinitionExtendedService {
             serviceResponse = new ServiceResponse();
 
             var mappedEntity: CustomsDocumentsTicketPM;
-            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.delete(this._apiUrl + '/Delete/?' + 'Id=' + Id, { headers: authHeader }).map(response => {
 
-                var pm = response;
+                var pm = response.json();
                 if (pm) {
                     var mappedResult: CustomsDocumentsTicketPM;
                     serviceResponse.Result = mappedResult;
@@ -42,7 +41,7 @@ export class CustomsDocumentsDefinitionExtendedService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -52,7 +51,7 @@ export class CustomsDocumentsDefinitionExtendedService {
 
     GetCustomsDocumentsDefinitionsForDeclaration(declarationId: string) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -62,9 +61,9 @@ export class CustomsDocumentsDefinitionExtendedService {
             serviceResponse = new ServiceResponse();
 
             var mappedEntity: CustomsDocumentsDefinitionPM;
-            return this._http.get(this._apiUrl + '/GetCustomsDocumentsDefinitionsForDeclaration/?' + 'declarationId=' + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetCustomsDocumentsDefinitionsForDeclaration/?' + 'declarationId=' + declarationId, { headers: authHeader }).map(response => {
 
-                //var pmList = response;
+                //var pmList = response.json();
                 //if (pmList) {
                 //    var mappedResult: Array<CustomsDocumentsDefinitionPM>;
                 //    serviceResponse.Result = mappedResult;
@@ -72,7 +71,7 @@ export class CustomsDocumentsDefinitionExtendedService {
 
 
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<CustomsDocumentsDefinitionPM> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -90,7 +89,7 @@ export class CustomsDocumentsDefinitionExtendedService {
 
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );

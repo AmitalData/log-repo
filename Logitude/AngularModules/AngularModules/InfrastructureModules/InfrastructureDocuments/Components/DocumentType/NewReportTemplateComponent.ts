@@ -1,3 +1,4 @@
+import 'rxjs/add/operator/map';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -20,11 +21,10 @@ import {DocumentTypeTemplateViewModel} from '../DocumentComponent/DocsOut/ViewMo
 import {DocumentTypeTemplateComponent} from  './DocumentTypeTemplateComponent';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { CopyFromTenant0ExtendedListService } from 'Accounting/Services/ExtendedLists/CopyFromTenant0ExtendedListService';
 declare var querySelection, StringToBase64, resultToUnitArray: any;
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'NewReportTemplate',
     templateUrl: './NewReportTemplateComponent.html',
     providers: [DocumentTypeTemplateListExtendedService, DocumentTypeTemplatePMService, DocumentTypeTemplatePMExtendedService]
@@ -58,7 +58,6 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
     RadioButtonChoice2Id: string = Guid.newGuid();
     RadioButtonChoice3Id: string = Guid.newGuid();
     RadioButtonChoice4Id: string = Guid.newGuid();
-    RadioButtonChoice5Id: string = Guid.newGuid();
 
     RadioEditorChoice1Id: string = Guid.newGuid();
     RadioEditorChoice2Id: string = Guid.newGuid();
@@ -66,10 +65,6 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
     NameRadioButtonChoice: string = Guid.NewRandomString();
     NameRadioEditorChoice: string = Guid.NewRandomString();
     private CurrentSession = SessionLocator.SelectedSession;
-    public _copyFromTenant0ExtendedListService: CopyFromTenant0ExtendedListService;
-    public FromTenantZero = "FromTenantZero";
-    private ReportTableName = "DocumentTypesandTemplates";
-
     constructor(public _documentTypeTemplateListExtendedService: DocumentTypeTemplateListExtendedService, public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService) {
         super();
 
@@ -77,42 +72,36 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
 
         }
-        this._copyFromTenant0ExtendedListService = new CopyFromTenant0ExtendedListService();
+
+    }
+    ngOnInit(
+
+
+    ) {
+
     }
 
-    ngOnInit() {
-    }
-
-    RequestAreaName: string;
     ObjectTableId: string;
     IsLoadPage: boolean = false;
-    AutomationId: string;
-    EntityId: string;
     SetWindowArgs(args: any) {
 
 
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
 
             this.IsLoadPage = true;
             this.DocumentTypeTemplateLists = [];
             this.DocumentTypeTemplatePMLists = [];
 
-            this.ObjectTableId = !args.ObjectTableId ? null : args.ObjectTableId;
+            this.ObjectTableId = args.ObjectTableId;
             this.DataViewModel = args.DataViewModel;
             this.PageType = args.PageType;
             this.DocumentType = args.CurrentEntityPM;
             this.TypeTab = args.TypeTab;
             this.FullDocumentTypeTemplateLists = args.DocumentTypeTemplateLists;
-            this.RequestAreaName = args.RequestAreaName;
-            this.AutomationId = !args.AutomationId ? null : args.AutomationId;
-            this.EntityId = !args.EntityId ? null : args.EntityId;
-
 
             if (this.TypeTab == "Document") {
                 this.ValueEditorRadio = "StimulSoft";
-                if (this.RequestAreaName != "Automation") {
-                    this.EditorTypeVisibility = true;
-                }
+                this.EditorTypeVisibility = true;
             }
             else {
                 this.EditorTypeVisibility = false;
@@ -156,10 +145,6 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         template.DocumentTypeId = this.DocumentType.Id;
         template.IsEnabledForCustomers = true;
         template.IsCopiedAtSignup = true;
-        template.AutomationId = this.AutomationId;
-        template.EntityId = this.EntityId;
-        template.ObjectTableId = this.ObjectTableId;
-
         if (this.TypeTab == "Document") {
             template.TemplateType = "P";
             template.EditorTool = this.ValueEditorRadio == "StimulSoft" ? "S" : "R";
@@ -266,7 +251,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
 
 
-        this.documentTypeTemplatePMService.insert(newTemplatePm).subscribe((myResult:any)=> {
+        this.documentTypeTemplatePMService.insert(newTemplatePm).subscribe(myResult=> {
 
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
@@ -281,7 +266,6 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
                     var templateViewModel = new DocumentTypeTemplateViewModel(myResult.Result);
                     if (this.FullDocumentTypeTemplateLists.length == 0) {
                         if (this.TypeTab == "Document") {
-
                             this.DocumentType.DocumentTypeDefaultReportTemplateId = myResult.Result.Id;
 
                         }
@@ -291,9 +275,8 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
                     }
 
                     this.DataViewModel.DocumentTypeTemplateLists.push(templateViewModel);
-                    this.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
                     this.DataViewModel.EditDocumentTemplate(templateViewModel);
-
+                    this.CurrentSession.CurrentWindow.Close(myResult.Result.Id);
                 }
 
 
@@ -316,10 +299,10 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         this.DocumentsGridVisibility = false;
 
         switch (choose) {
-            case this.FromTenantZero:
-            case "FromFile":
             case "Blank":
                 {
+
+
                     this.ShowSaveButton = true;
                     this.CloseButtonLable = "Cancel";
                     break;
@@ -347,7 +330,18 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
                     break;
                 }
+
+            case "FromFile":
+                {
+                    this.ShowSaveButton = true;
+                    this.CloseButtonLable = "Cancel";
+                    break;
+                }
+
+
+
         }
+
     }
 
     CloseButtonClicked() {
@@ -355,6 +349,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         this.CurrentSession.CloseCurrentWindow();
 
     }
+
 
     EditorRadioButtonChoice(choose: string) {
         this.ValueEditorRadio = choose;
@@ -366,7 +361,12 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
             var editorTool = this.ValueEditorRadio == "StimulSoft" ? "S" : "R";
             this.DocumentTypeTemplateLists = this.FullDocumentTypeTemplateLists.filter(d=> d.InActive == false && d.EditorTool == editorTool);
         }
+
+
+
     }
+
+
 
     SaveButtonClicked() {
 
@@ -375,79 +375,63 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         if ((this.ValueRadioChoice == "FromLibrary" || this.ValueRadioChoice == "Duplicate") && !this.DocumentTypeTemplateViewModelSelected) {
             this.ValidationErrorsList.push("Please select at least template");
         }
-        else if (this.ValueRadioChoice == this.FromTenantZero) {
-            this.CurrentSession.StartBusyIndicatorSaving();
-            this._copyFromTenant0ExtendedListService.copyTableFromTenant0(this.ReportTableName, this.DocumentType.Code).subscribe((res: any) => {
-                var result: ServiceResponse = res;
-                if (!result.HasError) {
-                    this.CurrentSession.CloseCurrentWindowEmit("changed");
-                }
-                this.CurrentSession.StopBusyIndicator();
-            });
-        }
-        else {
-            const regex = new RegExp('^[^<+>#%&\\/\'"*?!:@=|]+$');
-            var valid: boolean = regex.test(this.Description);
-            if (this.Description && this.Description.trim() && !valid) {
-                this.ValidationErrorsList.push(`Forbidden character in the Description: ${this.Description}`);
-            } else {
-                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-                switch (this.ValueRadioChoice) {
-                    case "Blank":
-                        {
+        else { 
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+            switch (this.ValueRadioChoice) {
+                case "Blank":
+                    {
 
-                            var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM()
+                        var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM()
+                        this.InsertDocumentTypeTemplatePm(newTemplatePm);
+                        break;
+                    }
+
+                case "Duplicate":
+                    {
+                        if (this.DocumentTypeTemplateViewModelSelected) {
+                            var newTemplatePm = this.GetCopyStanceFromDocumentTypeTemplatePM(this.DocumentTypeTemplateViewModelSelected.Entity)
                             this.InsertDocumentTypeTemplatePm(newTemplatePm);
-                            break;
                         }
 
-                    case "Duplicate":
-                        {
-                            if (this.DocumentTypeTemplateViewModelSelected) {
-                                var newTemplatePm = this.GetCopyStanceFromDocumentTypeTemplatePM(this.DocumentTypeTemplateViewModelSelected.Entity)
-                                this.InsertDocumentTypeTemplatePm(newTemplatePm);
-                            }
+                        break;
+                    }
 
-                            break;
-                        }
+                case "FromFile":
+                    {
+                        var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM();
+                        if (newTemplatePm.EditorTool == "R") {
+                            this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.UploadTemplateBodyData).subscribe(res => {
+                                var pmResponse: ServiceResponse = res;
+                                if (!pmResponse.HasError) {
+                                    var myResult = pmResponse.Result;
+                                    if (myResult) {
+                                        var htmltemplate: any = myResult;
+                                        if (htmltemplate) {
 
-                    case "FromFile":
-                        {
-                            var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM();
-                            if (newTemplatePm.EditorTool == "R") {
-                                this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.UploadTemplateBodyData).subscribe((res: any) => {
-                                    var pmResponse: ServiceResponse = res;
-                                    if (!pmResponse.HasError) {
-                                        var myResult = pmResponse.Result;
-                                        if (myResult) {
-                                            var htmltemplate: any = myResult;
-                                            if (htmltemplate) {
+                                            htmltemplate.HeaderHtml = !AppTool.IsNullOrEmpty(htmltemplate.HeaderHtml) ? htmltemplate.HeaderHtml : "";
+                                            htmltemplate.FooterHtml = !AppTool.IsNullOrEmpty(htmltemplate.FooterHtml) ? htmltemplate.FooterHtml : "";
 
-                                                htmltemplate.HeaderHtml = !AppTool.IsNullOrEmpty(htmltemplate.HeaderHtml) ? htmltemplate.HeaderHtml : "";
-                                                htmltemplate.FooterHtml = !AppTool.IsNullOrEmpty(htmltemplate.FooterHtml) ? htmltemplate.FooterHtml : "";
+                                            newTemplatePm.TemplateHeaderHtml = StringToBase64(htmltemplate.HeaderHtml);
+                                            newTemplatePm.TemplateFooterHtml = StringToBase64(htmltemplate.FooterHtml);
+                                            newTemplatePm.TemplateBodyHtml = StringToBase64(htmltemplate.BodyHtml);
+                                            newTemplatePm.TemplateHeaderHeight = htmltemplate.HeaderHeight;
+                                            newTemplatePm.TemplateFooterHeight = htmltemplate.FooterHeight;
 
-                                                newTemplatePm.TemplateHeaderHtml = StringToBase64(htmltemplate.HeaderHtml);
-                                                newTemplatePm.TemplateFooterHtml = StringToBase64(htmltemplate.FooterHtml);
-                                                newTemplatePm.TemplateBodyHtml = StringToBase64(htmltemplate.BodyHtml);
-                                                newTemplatePm.TemplateHeaderHeight = htmltemplate.HeaderHeight;
-                                                newTemplatePm.TemplateFooterHeight = htmltemplate.FooterHeight;
-
-                                            }
                                         }
                                     }
-                                    this.InsertDocumentTypeTemplatePm(newTemplatePm);
-                                });
+                                }
+                                this.InsertDocumentTypeTemplatePm(newTemplatePm);
+                            });
 
 
-                            } else this.InsertDocumentTypeTemplatePm(newTemplatePm);
+                        } else this.InsertDocumentTypeTemplatePm(newTemplatePm);
+
+                 
+                        break;
+                    }
 
 
-                            break;
-                        }
 
-
-
-                } 
             }
         }
 
@@ -546,7 +530,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         }
 
         var editorTool = this.ValueEditorRadio == "StimulSoft" ? "S" : "R";
-        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibraryByDocumentTypeId(0, this.DocumentType.Id, Isfilter, this.DocumentType.Tenant).subscribe((res:any) => {
+        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibraryByDocumentTypeId(0, this.DocumentType.Id, Isfilter, this.DocumentType.Tenant).subscribe(res => {
 
 
             var pmResponse: ServiceResponse = res;
@@ -568,7 +552,7 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
 
     GetDocumentTypeTemplatePMFromLibrary(item: DocumentTypeTemplateViewModel) {
         var id = item.Id + "@0";
-        this.documentTypeTemplatePMService.get(id).subscribe((res:any) => {
+        this.documentTypeTemplatePMService.get(id).subscribe(res=> {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

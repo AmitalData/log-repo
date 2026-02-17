@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -12,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentOutCopyRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentOutCopyRepository(int tenant)
         {
@@ -30,21 +32,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.Id == id
                     select a).FirstOrDefault();
         }
-        public DocumentOutCopy GetDocumentOutCopy(DocumentOutCopyArgs args)
-        {
-            DocumentOutCopy documentOutCopy = context.DocumentOutCopies.Include("DocumentTypeCopy")
-                .Include("DocumentOut.DocumentsFiling")
-                .Where(e => e.DocumentTypeCopyId == args.DocumentTypeCopyId
-                    && e.DocumentTypeCopy.DocumentTypeId == args.DocumentTypeId
-                    && e.DocumentOut.DocumentsFiling.EntityId == args.EntityId
-                    && e.DocumentOut.DocumentsFiling.ChildEntityId == args.ChildEntityId
-                    && e.DocumentOut.DocumentsFiling.ObjectTableId == args.ObjectTableId
-                    && e.Tenant == args.Tenant
-                    && e.DocumentOut.DocumentTemplateId == args.DocumentTemplateId)
-                .FirstOrDefault();
 
-            return documentOutCopy;
-        }
 
         public DocumentOutCopy GetSingleDocumentOutCopyByTenant(string id,int tenant)
         {

@@ -33,22 +33,18 @@ declare @ComputedStatusId as varchar(15)
 
 
 select
-@Tenant = Shipments.Tenant,
-@MasterDataId = Shipments.MasterShipmentDataId,
-@ShipmentLevelCode= Shipments.ShipmentLevelCode,
-@CustomFileId = Shipments.CustomFileId,
-@ComputedStatusDate = CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusDate ELSE dbo.Shipments.StatusDate END ELSE dbo.Shipments.StatusDate END , 
+@Tenant = Tenant,
+@MasterDataId = MasterShipmentDataId,
+@ShipmentLevelCode= ShipmentLevelCode,
+@ShipmentStatusId = StatusId,
+@CustomFileId = CustomFileId,
+@ComputedStatusDate = StatusDate,
 @ShipmentDeclarationNumber =CustomsDeclarationNumber,
-@ComputedStatusId = CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Id ELSE dbo.EntityStatus.Id END ELSE dbo.EntityStatus.Id END
+@ComputedStatusId = StatusId
 from Shipments
-LEFT OUTER JOIN   dbo.ShipmentMasterDatas ON dbo.ShipmentMasterDatas.Id = Shipments.MasterShipmentDataId 
-LEFT OUTER JOIN dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id 
-LEFT OUTER JOIN dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id
+where Id = @ShipmentId
 
-
-
-where Shipments.Id = @ShipmentId
-
+ set @ShipmentStatusWeight = (select StatusWeight from EntityStatus where Id = @ShipmentStatusId AND Tenant = @Tenant)
 set  @IsConnect = 0
 
    if(@ShipmentLevelCode = 'C')

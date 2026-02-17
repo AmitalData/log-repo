@@ -1,16 +1,15 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';  
 import {ServiceArgs} from '../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import { defer, of } from 'rxjs';
-
+import {Observable} from 'rxjs/Rx';
 @Injectable()
 
 export class EntityLastActivityService {
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     private _serviceArgs: ServiceArgs;
     constructor() {
 
@@ -18,20 +17,22 @@ export class EntityLastActivityService {
 
     setServiceArgs(serviceArgs: ServiceArgs) {
         this._serviceArgs = serviceArgs;
-        this._http = ServiceHelper.HttpClient;
+        this._http = serviceArgs.http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/EntityLastActivity';
     }
 
     AddActivityLog(entityId: string, objectTableId: string, loggedContactId: string, logCode: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetActivityLog?entityId=' + entityId + '&objectTableId=' + objectTableId + '&loggedContactId=' + loggedContactId + '&logCode=' + logCode,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetActivityLog?entityId=' + entityId + '&objectTableId=' + objectTableId + '&loggedContactId=' + loggedContactId + '&logCode=' + logCode, {
+                headers: authHeader
+            }).map(response => {
 
-                var myResult = response;
+                var myResult = response.json();
 
                 return myResult;
-            }));
+            });
         });
     }
 }

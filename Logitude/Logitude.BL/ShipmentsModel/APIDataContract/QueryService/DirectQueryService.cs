@@ -1,11 +1,10 @@
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -31,34 +30,27 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
+
         public string GetShipmentIdByNumber(string shipmentNumber, int tenant)
         {
             return query.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
         }
+
         public ShipmentPM DirectCustomDataMappingAndValidatin(Direct MyEntity, int Tenant, string ComputingPartnerCode = "")
         {
             try
             {
                 TenantQuery tenantQuery = new TenantQuery(Tenant);
                 UserQuery userQuery = new UserQuery(Tenant);
-                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
-
                 TenantPM MyTenantPM = tenantQuery.GetSinglePM(Tenant);
                 UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + Tenant + ".com", Tenant, false);
 
-                ShipmentPM temp = DirectDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode);
+                ShipmentPM temp =DirectDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode);
                 temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 temp.Tenant = Tenant;
                 temp.ShipmentLevelCode = "D";
-
-                if (!IsInlandDomesticShipment(temp))
-                {
-                    temp.MainCarriageFromPortId = temp.FromPortId;
-                    temp.MainCarriageToPortId = temp.ToPortId;
-                    temp.FinalDistenationPortId = temp.ToPortId;
-                }
-
-                temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
+                temp.MainCarriageFromPortId = temp.FromPortId;
+                temp.MainCarriageToPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
                 temp.FHLStatusName = "Not Sent";
@@ -135,11 +127,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         }
                 }
 
-                if (temp.Ratio == null || temp.Ratio == 0)
-                {
-                    temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
-                }
-
+                temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
                 temp.DimFactor = this.GetDimFactorFromRatio(temp.Ratio, temp.DimensionsUnitCode, temp.ChargeableWeightUnitCode);
 
                 if (string.IsNullOrEmpty(temp.CreatedByUserId))
@@ -162,9 +150,154 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     temp.DepartmentId = MyUserPM.DepartmentId;
                 }
 
-                this.UpdatePickups(temp);
-                this.UpdateDeliveries(temp);
-                
+                //if (string.IsNullOrEmpty(temp.MainCarriageCarrierId))
+                //{
+                //    this.MainCarriageCarrierChanged(temp, null);
+
+                //    if (temp.TransportModeId == "A")
+                //    {
+                //        if (string.IsNullOrEmpty(temp.InterlineId))
+                //        {
+                //            temp.CarrierIsCheckDigit = false;
+                //            temp.CarrierIsLimitedLength = false;
+                //            temp.AirlinePrefix = null;
+                //        }
+
+                //        temp.CarrierIsChampRegistered = false;
+                //        temp.CarrierIsGLSHKRegistered = false;
+                //        MapTenantZeroAirline(temp, null);
+                //    }
+                //}
+                //else
+                //{
+                //    ICommonDataContext MyContext = CommonDataContext.GetContext(Tenant);
+                //    CardRepository cardRepository = new CardRepository(MyContext);
+                //    CardList list = null;
+                //    Card entityPoco = cardRepository.GetSingleCard(temp.MainCarriageCarrierId, Tenant);
+
+                //    if (entityPoco != null)
+                //    {
+                //        CardQuery cardQuery = new CardQuery(cardRepository);
+                //        list = cardQuery.GetSingleCardList(entityPoco);
+                //    }
+
+                //    if (list != null)
+                //    {
+                //        if (temp.TransportModeId == "A")
+                //        {
+                //            temp.MainCarriageCarrierPrefix = list.Code;
+                //        }
+
+                //        MainCarriageCarrierChanged(temp, list);
+
+                //        if (temp.TransportModeId == "A")
+                //        {
+                //            AirlineRepository airlineRepository = new AirlineRepository(MyContext);
+                //            AirlineList entityList = null;
+                //            Airline airLine = airlineRepository.GetSingleAirline(temp.MainCarriageCarrierId, Tenant);
+
+                //            if (airLine != null)
+                //            {
+                //                temp.MainCarriageCarrierCode = airLine.Card.Code;
+                //                List<Airline> singleEntityList = new List<Airline>();
+                //                singleEntityList.Add(airLine);
+
+                //                AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
+                //                IQueryable<Airline> iQueryable = singleEntityList.AsQueryable();
+                //                IQueryable<AirlineList> iQueryableEntityList = airlineQuery.GetIQueryableEntityList(iQueryable);
+                //                entityList = iQueryableEntityList.FirstOrDefault();
+                //            }
+
+                //            if (entityList != null)
+                //            {
+                //                if (string.IsNullOrEmpty(temp.InterlineId))
+                //                {
+                //                    temp.CarrierIsCheckDigit = entityList.CheckDigit;
+                //                    temp.CarrierIsLimitedLength = entityList.LimitedLength;
+
+                //                    string myPrefix = null;
+                //                    if (!string.IsNullOrEmpty(entityList.Prefix))
+                //                    {
+                //                        myPrefix = entityList.Prefix.ToString().Trim();
+                //                        myPrefix = PadLeft(myPrefix, 3, "0");
+                //                    }
+
+                //                    temp.AirlinePrefix = myPrefix;
+                //                }
+
+                //                temp.CarrierIsChampRegistered = entityList.IsChampRegistered;
+                //                temp.CarrierIsGLSHKRegistered = entityList.IsGLSHKRegistered;
+                //                AirlineQuery entityQuery = new AirlineQuery(Tenant);
+                //                AirlinePM myResult = entityQuery.GetSinglePMByCode(entityList.Code, Tenant);
+
+                //                MapTenantZeroAirline(temp, myResult);
+                //            }
+                //        }
+                //    }
+                //    else
+                //    {
+                //        throw new ApplicationException("Invalid MainCarriageCarrier Code");
+                //    }
+
+                //    string errorMaster=  ValidateMasterField(temp);
+                //    if (!string.IsNullOrEmpty(errorMaster))
+                //    {
+                //        temp.Master = null;
+                //        throw new ApplicationException(errorMaster);
+                //    }
+                //    else
+                //    {
+                //        ValidateMasterStack(temp, Tenant);
+                //    }                  
+                //}
+
+                foreach (ShipmentPickUpPM item in temp.ShipmentPickUps)
+                {
+                    item.PickUpDeliveryTypeCode = "PICK";
+
+                    if (!string.IsNullOrEmpty(item.FromPartnerCardId))
+                    {
+                        item.PickUpDeliveryFromTypeCode = "PART";
+                    }
+                    else if (!string.IsNullOrEmpty(item.FromPortId))
+                    {
+                        item.PickUpDeliveryFromTypeCode = "PORT";
+                    }
+
+                    if (!string.IsNullOrEmpty(item.ToPartnerCardId))
+                    {
+                        item.PickUpDeliveryToTypeCode = "PART";
+                    }
+                    else if (!string.IsNullOrEmpty(item.ToPortId))
+                    {
+                        item.PickUpDeliveryToTypeCode = "PORT";
+                    }
+                }
+
+                foreach (ShipmentDeliveryPM item in temp.ShipmentDeliveries)
+                {
+                    item.PickUpDeliveryTypeCode = "DELV";
+
+                    if (!string.IsNullOrEmpty(item.FromPartnerCardId))
+                    {
+                        item.PickUpDeliveryFromTypeCode = "PART";
+                    }
+                    else if (!string.IsNullOrEmpty(item.FromPortId))
+                    {
+                        item.PickUpDeliveryFromTypeCode = "PORT";
+                    }
+
+                    if (!string.IsNullOrEmpty(item.ToPartnerCardId))
+                    {
+                        item.PickUpDeliveryToTypeCode = "PART";
+                    }
+                    else if (!string.IsNullOrEmpty(item.ToPortId))
+                    {
+                        item.PickUpDeliveryToTypeCode = "PORT";
+                    }
+                }
+
+                ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(Tenant);
                 foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
                 {
                     if(string.IsNullOrEmpty(item.CurrencyId))
@@ -188,7 +321,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         }
                     }
                 }
-                
+
                 return temp;
             }
 
@@ -197,68 +330,382 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-        public void UpdatePickups(ShipmentPM shipment)
-        {
-            if (shipment == null)
-                return;
 
-            if (shipment.ShipmentPickUps == null)
-                return;
+        //private void ValidateMasterStack(ShipmentPM temp, int Tenant)
+        //{
+        //    if (temp.TransportModeId == "A")
+        //    {
+        //        if (temp != null)
+        //        {
+        //            if (!string.IsNullOrEmpty(temp.Master))
+        //            {
+        //                if (temp.Master.Length == 8 && !temp.MainCarriageIsFromStack && !temp.MAWBTakenFromStack)
+        //                {
+        //                    if (IsNumeric(temp.Master))
+        //                    {
+        //                        MAWBStackQuery entityQuery = new MAWBStackQuery(Tenant);
+        //                        MAWBStackPM myStackPM = entityQuery.GetSingleMAWBStackPMByNumber(int.Parse(temp.Master), Tenant);
+        //                        if (myStackPM != null)
+        //                        {
+        //                            string myAirlineId = temp.MainCarriageCarrierId;
+        //                            if (!string.IsNullOrEmpty(temp.InterlineId))
+        //                            {
+        //                                myAirlineId = temp.InterlineId;
+        //                            }
 
-            if (shipment.ShipmentPickUps.Count == 0)
-                return;
+        //                            if (myStackPM.AirlineId == myAirlineId)
+        //                            {
+        //                                if (!string.IsNullOrEmpty(myStackPM.AssignedToId) && myStackPM.AssignedToId != temp.ShipperId)
+        //                                {
+        //                                    temp.Master = null;
+        //                                }
 
-            this.UpdateNotDeletedShipmentPickUps(shipment);
-        }
-        public void UpdateDeliveries(ShipmentPM shipment)
-        {
-            if (shipment == null)
-                return;
+        //                                else
+        //                                {
+        //                                    temp.MAWBTakenFromStack = true;
+        //                                    temp.MAWBStackNumber = PadLeft(myStackPM.Number.ToString(), 8, "0");
+        //                                    temp.MAWBOBLDate = DateTime.UtcNow;
+        //                                    SetMAWBAirline(temp);
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
-            if (shipment.ShipmentDeliveries == null)
-                return;
+        //private void SetMAWBAirline(ShipmentPM temp)
+        //{
+        //    if (temp.MAWBStackAirlineId != temp.MainCarriageCarrierId)
+        //    {
+        //        temp.MAWBStackAirlineId = temp.MainCarriageCarrierId;
+        //    }
 
-            if (shipment.ShipmentDeliveries.Count == 0)
-                return;
+        //    if (!string.IsNullOrEmpty(temp.InterlineId))
+        //    {
+        //        if (temp.MAWBStackAirlineId != temp.InterlineId)
+        //        {
+        //            temp.MAWBStackAirlineId = temp.InterlineId;
+        //        }
+        //    }
+        //}
 
-            this.UpdateNotDeletedShipmentDeliveries(shipment);
-        }
-        private void UpdateNotDeletedShipmentPickUps(ShipmentPM shipment)
-        {
-            List<ShipmentPickUpPM> updatedShipmentPickUps = shipment.ShipmentPickUps.FindAll(pickUp => pickUp.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
-            foreach (ShipmentPickUpPM pickUp in updatedShipmentPickUps)
-            {
-                this.MapAndValidateShipmentPickUp(pickUp);
-            }
-        }
-        private void MapAndValidateShipmentPickUp(ShipmentPickUpPM pickUp)
-        {
-            pickUp.PickUpDeliveryTypeCode = "PICK";
-            this.IntializePickupDeliveryFrom(pickUp);
-            this.IntializePickupDeliveryTo(pickUp);
-            this.ValidateAndSetPickupFromSide(pickUp);
-            this.ValidateAndSetPickupToSide(pickUp);
-        }
-        private void UpdateNotDeletedShipmentDeliveries(ShipmentPM shipment)
-        {
-            List<ShipmentDeliveryPM> updatedShipmentDelivery = shipment.ShipmentDeliveries.FindAll(delivery => delivery.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
-            foreach (ShipmentDeliveryPM delivery in updatedShipmentDelivery)
-            {
-                this.MapAndValidateShipmentDelivery(delivery);
-            }
-        }
-        private void MapAndValidateShipmentDelivery(ShipmentDeliveryPM delivery)
-        {
-            delivery.PickUpDeliveryTypeCode = "DELV";
-            this.IntializePickupDeliveryFrom(delivery);
-            this.IntializePickupDeliveryTo(delivery);
-            this.ValidateAndSetDeliveryFromSide(delivery);
-            this.ValidateAndSetDeliveryToSide(delivery);
-        }
-        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
-        {
-            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
-        }
+        //private string ValidateMasterField(ShipmentPM entity)
+        //{
+        //    if (entity.TransportModeId == "A")
+        //    {              
+        //        if(!string.IsNullOrEmpty(entity.Master))
+        //        {
+        //            string myResult  = ValidateMasterField(entity.Master, entity.TransportModeId, entity.CarrierIsCheckDigit, entity.CarrierIsLimitedLength);
+        //            return myResult;                   
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
+        //public bool IsNumeric(string input)
+        //{
+        //    var myResult = true;
+
+        //    if (!string.IsNullOrEmpty(input))
+        //    {
+        //        input = input.Trim().ToUpper();
+        //        Regex regix = new Regex("^[0-9]*$", RegexOptions.IgnoreCase);
+
+        //        if (!regix.IsMatch(input))
+        //            myResult = false;
+        //    }
+
+        //    return myResult;
+        //}
+
+        //public string ValidateMasterField(string myMasterField, string myTransportModeId, bool isCheckDigit,bool isLimitedLength)
+        //{
+        //    var myResult = "";
+
+        //    if (!string.IsNullOrEmpty(myMasterField) && myTransportModeId == "A")
+        //    {
+        //        if (!IsNumeric(myMasterField))
+        //        {
+        //            myResult = "Master Field must be all digits";
+        //        }
+
+        //        else
+        //        {
+        //            if (isLimitedLength && myMasterField.Length != 8)
+        //            {
+        //                myResult = "Master Field length must be 8 digits";
+        //            }
+
+        //            else
+        //            {
+        //                if (isCheckDigit)
+        //                {
+        //                    string myPrefix  = myMasterField.Substring(0, 7);
+        //                    string myCheckDegit  = myMasterField.Substring(7, 1);
+
+        //                    int myPrefixInteger = int.Parse(myPrefix);
+
+
+        //                    int  myMod = myPrefixInteger % 7;
+
+        //                    if (myMod >= 7)
+        //                    {
+        //                        myMod = myMod % 7;
+        //                    }
+
+        //                    if (myMod.ToString() != myCheckDegit)
+        //                    {
+        //                        myResult = "Master Field invalid check digit";
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return myResult;
+        //}
+
+        //public string PadLeft(string myString,int myCount,string myChar)
+        //{
+        //    if (myCount==0)
+        //    {
+        //        myCount = 0;
+        //    }
+
+        //    if (string.IsNullOrEmpty(myChar))
+        //    {
+        //        myChar = "";
+        //    }
+
+        //    if (string.IsNullOrEmpty(myString))
+        //    {
+        //        myString = "";
+        //    }
+
+        //    while (myString.Length < myCount)
+        //    {
+        //        myString = myChar + myString;
+        //    }
+
+        //    return myString;
+        //}
+
+        //public static void MapTenantZeroAirline(ShipmentPM entityPM,AirlinePM myAirlinePM)
+        //{
+        //    if (myAirlinePM == null)
+        //    {
+        //        if (entityPM.TenantZeroAirlineId != null)
+        //        {
+        //            entityPM.TenantZeroAirlineId = null;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineTTY != null)
+        //        {
+        //            entityPM.TenantZeroAirlineTTY = null;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlinePIMA != null)
+        //        {
+        //            entityPM.TenantZeroAirlinePIMA = null;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFWB != false)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFWB = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFHL != false)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFHL = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFSU != false)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFSU = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFVRFVA != false)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFVRFVA = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFSRFSA != false)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFSRFSA = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampNeedsRegistration != false)
+        //        {
+        //            entityPM.TenantZeroAirlineChampNeedsRegistration = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFWB != false)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFWB = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFHL != false)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFHL = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFSU != false)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFSU = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFVRFVA != false)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFVRFVA = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFSRFSA != false)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFSRFSA = false;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKNeedsRegistration != false)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKNeedsRegistration = false;
+        //        }
+        //    }
+
+        //    else
+        //    {
+        //        if (entityPM.TenantZeroAirlineId != myAirlinePM.Id)
+        //        {
+        //            entityPM.TenantZeroAirlineId = myAirlinePM.Id;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineTTY != myAirlinePM.TTY)
+        //        {
+        //            entityPM.TenantZeroAirlineTTY = myAirlinePM.TTY;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlinePIMA != myAirlinePM.GLSHKPIMA)
+        //        {
+        //            entityPM.TenantZeroAirlinePIMA = myAirlinePM.GLSHKPIMA;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFWB != myAirlinePM.ChampFWB)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFWB = myAirlinePM.ChampFWB;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFHL != myAirlinePM.ChampFHL)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFHL = myAirlinePM.ChampFHL;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFSU != myAirlinePM.ChampFSU)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFSU = myAirlinePM.ChampFSU;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFVRFVA != myAirlinePM.ChampFVRFVA)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFVRFVA = myAirlinePM.ChampFVRFVA;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampFSRFSA != myAirlinePM.ChampFSRFSA)
+        //        {
+        //            entityPM.TenantZeroAirlineChampFSRFSA = myAirlinePM.ChampFSRFSA;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineChampNeedsRegistration != myAirlinePM.ChampNeedsRegistration)
+        //        {
+        //            entityPM.TenantZeroAirlineChampNeedsRegistration = myAirlinePM.ChampNeedsRegistration;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFWB != myAirlinePM.GLSHKFWB)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFWB = myAirlinePM.GLSHKFWB;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFHL != myAirlinePM.GLSHKFHL)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFHL = myAirlinePM.GLSHKFHL;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFSU != myAirlinePM.GLSHKFSU)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFSU = myAirlinePM.GLSHKFSU;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFVRFVA != myAirlinePM.GLSHKFVRFVA)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFVRFVA = myAirlinePM.GLSHKFVRFVA;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKFSRFSA != myAirlinePM.GLSHKFSRFSA)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKFSRFSA = myAirlinePM.GLSHKFSRFSA;
+        //        }
+
+        //        if (entityPM.TenantZeroAirlineGLSHKNeedsRegistration != myAirlinePM.GLSHKNeedsRegistration)
+        //        {
+        //            entityPM.TenantZeroAirlineGLSHKNeedsRegistration = myAirlinePM.GLSHKNeedsRegistration;
+        //        }
+        //    }
+        //}
+
+        //private void MainCarriageCarrierChanged(ShipmentPM entityPM, CardList list)
+        //{
+        //    string myCardCode = null;
+        //    string myCardName  = null;
+        //    string myCardPrefix = null;
+        //    string myCardWebSite = null;
+
+        //    if (list == null)
+        //    {
+        //        //if (entityPM.MainCarriageCarrierNumber != null)
+        //        //{
+        //        //    entityPM.MainCarriageCarrierNumber = null;
+        //        //}
+
+        //        //if (!string.IsNullOrEmpty(entityPM.Master))
+        //        //{
+        //        //    entityPM.Master = null;
+        //        //}
+        //    }
+
+        //    else
+        //    {
+        //        myCardCode = list.Code;
+        //        myCardName = list.EnglishName;
+        //        myCardWebSite = list.WebSite;
+
+        //        if (entityPM.TransportModeId == "A")
+        //        {
+        //            myCardPrefix = list.Code;
+        //        }
+        //    }
+
+        //    if (entityPM.MainCarriageCarrierCode != myCardCode)
+        //    {
+        //        entityPM.MainCarriageCarrierCode = myCardCode;
+        //    }
+
+        //    if (entityPM.MainCarriageCarrierName != myCardName)
+        //    {
+        //        entityPM.MainCarriageCarrierName = myCardName;
+        //    }
+
+        //    if (entityPM.MainCarriageCarrierPrefix != myCardPrefix)
+        //    {
+        //        entityPM.MainCarriageCarrierPrefix = myCardPrefix;
+        //    }
+
+        //    if (entityPM.MainCarriageCarrierWebSite != myCardWebSite)
+        //    {
+        //        entityPM.MainCarriageCarrierWebSite = myCardWebSite;
+        //    }
+        //}
+
         private double? GetRatio(string directionId, string transportModeId, string shipmentTypeId, string countryCode)
         {
             double? myResult = null;
@@ -377,262 +824,5 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
             return myResult;
         }
-
-        private void IntializePickupDeliveryFrom(dynamic item)
-        {
-            if (string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
-                return;
-
-            if (item.PickUpDeliveryFromTypeCode == "CASL")
-            {
-                item.FromPartnerCardId = null;
-                item.FromPortId = null;
-            }
-            else if (item.PickUpDeliveryFromTypeCode == "PART")
-            {
-                item.FromAddressCity = null;
-                item.FromAddressCountryId = null;
-                item.FromPortId = null;
-            }
-            else if (item.PickUpDeliveryFromTypeCode == "PORT")
-            {
-                item.FromAddressCity = null;
-                item.FromAddressCountryId = null;
-                item.FromPartnerCardId = null;
-            }    
-        }
-
-        private void IntializePickupDeliveryTo(dynamic item)
-        {
-            if (string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
-                return;
-
-            if (item.PickUpDeliveryToTypeCode == "CASL")
-            {
-                item.ToPartnerCardId = null;
-                item.ToPortId = null;
-            }
-            else if (item.PickUpDeliveryToTypeCode == "PART")
-            {
-                item.ToAddressCity = null;
-                item.ToAddressCountryId = null;
-                item.ToPortId = null;
-            }
-            else if (item.PickUpDeliveryFromTypeCode == "PORT")
-            {
-                item.ToAddressCity = null;
-                item.ToAddressCountryId = null;
-                item.ToPartnerCardId = null;
-            }
-        }
-
-        private void ValidateAndSetPickupFromSide(ShipmentPickUpPM item)
-        {
-            if (!string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
-            {
-                switch (item.PickUpDeliveryFromTypeCode)
-                {
-                    case "PART":
-                        {
-                            if (string.IsNullOrEmpty(item.FromPartnerCardId))
-                            {
-                                throw new ApplicationException("Pickup from partner is missing");
-                            }
-                            break;
-                        }
-
-                    case "PORT":
-                        {
-                            if (string.IsNullOrEmpty(item.FromPortId))
-                            {
-                                throw new ApplicationException("Pickup from port is missing");
-                            }
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            if (string.IsNullOrEmpty(item.FromAddressCity) || string.IsNullOrEmpty(item.FromAddressCountryId))
-                            {
-                                throw new ApplicationException("Pickup from city or country is missing");
-                            }
-                            break;
-                        }
-                }
-            }
-
-            else
-            {
-                if (!string.IsNullOrEmpty(item.FromPartnerCardId))
-                {
-                    item.PickUpDeliveryFromTypeCode = "PART";
-                }
-                else if (!string.IsNullOrEmpty(item.FromPortId))
-                {
-                    item.PickUpDeliveryFromTypeCode = "PORT";
-                }
-
-                else if (!string.IsNullOrEmpty(item.FromAddressCity) && !string.IsNullOrEmpty(item.FromAddressCountryId))
-                {
-                    item.PickUpDeliveryFromTypeCode = "CASL";
-                }
-            }
-        }
-        private void ValidateAndSetPickupToSide(ShipmentPickUpPM item)
-        {
-            if (!string.IsNullOrEmpty(item.PickUpDeliveryToTypeCode))
-            {
-                switch (item.PickUpDeliveryToTypeCode)
-                {
-                    case "PART":
-                        {
-                            if (string.IsNullOrEmpty(item.ToPartnerCardId))
-                            {
-                                throw new ApplicationException("Pickup to partner is missing");
-                            }
-                            break;
-                        }
-
-                    case "PORT":
-                        {
-                            if (string.IsNullOrEmpty(item.ToPortId))
-                            {
-                                throw new ApplicationException("Pickup to port is missing");
-                            }
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            if (string.IsNullOrEmpty(item.ToAddressCity) || string.IsNullOrEmpty(item.ToAddressCountryId))
-                            {
-                                throw new ApplicationException("Pickup to city or country is missing");
-                            }
-                            break;
-                        }
-                }
-            }
-
-            else
-            {
-                if (!string.IsNullOrEmpty(item.ToPartnerCardId))
-                {
-                    item.PickUpDeliveryToTypeCode = "PART";
-                }
-                else if (!string.IsNullOrEmpty(item.ToPortId))
-                {
-                    item.PickUpDeliveryToTypeCode = "PORT";
-                }
-
-                else if (!string.IsNullOrEmpty(item.ToAddressCity) && !string.IsNullOrEmpty(item.ToAddressCountryId))
-                {
-                    item.PickUpDeliveryToTypeCode = "CASL";
-                }
-            }
-        }
-        private void ValidateAndSetDeliveryFromSide(ShipmentDeliveryPM item)
-        {
-            if (!string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
-            {
-                switch (item.PickUpDeliveryFromTypeCode)
-                {
-                    case "PART":
-                        {
-                            if (string.IsNullOrEmpty(item.FromPartnerCardId))
-                            {
-                                throw new ApplicationException("Delivery from partner is missing");
-                            }
-                            break;
-                        }
-
-                    case "PORT":
-                        {
-                            if (string.IsNullOrEmpty(item.FromPortId))
-                            {
-                                throw new ApplicationException("Delivery from port is missing");
-                            }
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            if (string.IsNullOrEmpty(item.FromAddressCity) || string.IsNullOrEmpty(item.FromAddressCountryId))
-                            {
-                                throw new ApplicationException("Delivery from city or country is missing");
-                            }
-                            break;
-                        }
-                }
-            }
-
-            else
-            {
-                if (!string.IsNullOrEmpty(item.FromPartnerCardId))
-                {
-                    item.PickUpDeliveryFromTypeCode = "PART";
-                }
-                else if (!string.IsNullOrEmpty(item.FromPortId))
-                {
-                    item.PickUpDeliveryFromTypeCode = "PORT";
-                }
-
-                else if (!string.IsNullOrEmpty(item.FromAddressCity) && !string.IsNullOrEmpty(item.FromAddressCountryId))
-                {
-                    item.PickUpDeliveryFromTypeCode = "CASL";
-                }
-            }
-        }
-        private void ValidateAndSetDeliveryToSide(ShipmentDeliveryPM item)
-        {
-            if (!string.IsNullOrEmpty(item.PickUpDeliveryToTypeCode))
-            {
-                switch (item.PickUpDeliveryToTypeCode)
-                {
-                    case "PART":
-                        {
-                            if (string.IsNullOrEmpty(item.ToPartnerCardId))
-                            {
-                                throw new ApplicationException("Delivery to partner is missing");
-                            }
-                            break;
-                        }
-
-                    case "PORT":
-                        {
-                            if (string.IsNullOrEmpty(item.ToPortId))
-                            {
-                                throw new ApplicationException("Delivery to port is missing");
-                            }
-                            break;
-                        }
-
-                    case "CASL":
-                        {
-                            if (string.IsNullOrEmpty(item.ToAddressCity) || string.IsNullOrEmpty(item.ToAddressCountryId))
-                            {
-                                throw new ApplicationException("Delivery to city or country is missing");
-                            }
-                            break;
-                        }
-                }
-            }
-
-            else
-            {
-                if (!string.IsNullOrEmpty(item.ToPartnerCardId))
-                {
-                    item.PickUpDeliveryToTypeCode = "PART";
-                }
-                else if (!string.IsNullOrEmpty(item.ToPortId))
-                {
-                    item.PickUpDeliveryToTypeCode = "PORT";
-                }
-
-                else if (!string.IsNullOrEmpty(item.ToAddressCity) && !string.IsNullOrEmpty(item.ToAddressCountryId))
-                {
-                    item.PickUpDeliveryToTypeCode = "CASL";
-                }
-            }
-        }              
     }
 }

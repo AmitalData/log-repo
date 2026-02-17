@@ -8,7 +8,7 @@ import {ArtemusWizardArgs} from '../../../../Shipment/Args';
 
 @Component({
     selector: 'ArtemusWizardComponent',
-    
+    moduleId: module.id,
     templateUrl: './ArtemusWizardComponent.html',
 })
 

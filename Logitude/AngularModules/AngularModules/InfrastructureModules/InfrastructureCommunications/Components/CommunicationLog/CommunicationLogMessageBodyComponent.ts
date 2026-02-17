@@ -25,7 +25,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'CommunicationLogMessageBody',
     templateUrl: './CommunicationLogMessageBodyComponent.html',
     providers: [DocumentExtendedService, ImageLibraryService ],
@@ -70,9 +70,6 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
 
             if (this.EntityPM.To == "FTP")
                 this.Logs = this.EntityPM.Logs;
-
-
-            this.Logs = this.EntityPM.Logs;//always 
         }
 
        
@@ -85,7 +82,7 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
 
     GetMessageBodyFileName() {
 
-        this._documentExtendedService.GetDocumentById(this.EntityPM.DocumentId, this.EntityPM.Tenant).subscribe((res:any) => {
+        this._documentExtendedService.GetDocumentById(this.EntityPM.DocumentId, this.EntityPM.Tenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -103,7 +100,7 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
 
     GetResponseBodyFileName() {
 
-        this._documentExtendedService.GetDocumentById(this.EntityPM.ResponseDocumentId, this.EntityPM.Tenant).subscribe((res:any) => {
+        this._documentExtendedService.GetDocumentById(this.EntityPM.ResponseDocumentId, this.EntityPM.Tenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -122,7 +119,7 @@ export class CommunicationLogMessageBodyComponent extends BaseComponent implemen
   
     UpdateScreen(document: any , type:string) {
 
-        this._imageLibraryService.DownloadFile(document.Id, document.Extension, document.Folder, this.EntityPM.Tenant).subscribe((res:any) => {
+        this._imageLibraryService.DownloadFile(document.Id, document.Extension, document.Folder, this.EntityPM.Tenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

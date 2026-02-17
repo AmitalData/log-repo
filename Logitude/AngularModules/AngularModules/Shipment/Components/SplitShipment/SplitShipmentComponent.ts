@@ -9,7 +9,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SplitShipmentComponent.html',
 })
 
@@ -251,7 +251,6 @@ export class SplitShipmentItem {
 
                     var newPackagePM: ShipmentPackagePM = new ShipmentPackagePM(null);
                     newPackagePM.PackageTypeId = this.EntityPM.PackageTypeId;
-                    newPackagePM.LCLContainerTypeId = this.EntityPM.LCLContainerTypeId;
                     newPackagePM.PackageTypeCode = this.EntityPM.PackageTypeCode;
                     newPackagePM.CommodityId = this.EntityPM.CommodityId;
                     newPackagePM.CommodityName = this.EntityPM.CommodityName;

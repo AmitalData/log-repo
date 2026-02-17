@@ -260,7 +260,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 SearchFields = ",AI Sped,מרכז ספדים יבוא אוירי",
                 IsMultiCurrency = true,
                 CurrencyId = null,
-                RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),// "1",//הכנסות
+                RevenueExpenseType = "1",//הכנסות
 
 
                 IsControlAccount = true,
@@ -289,7 +289,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 SearchFields = ",OI Sped,מרכז ספדים יבוא ימי",
                 IsMultiCurrency = true,
                 CurrencyId = null,
-                RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),//> "1",//הכנסות
+                RevenueExpenseType = "1",//הכנסות
 
 
                 IsControlAccount = true,
@@ -318,7 +318,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 SearchFields = ",AE Control,מרכז תיקי יצוא אוירי",
                 IsMultiCurrency = true,
                 CurrencyId = null,
-                RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),//"1",//הכנסות
+                RevenueExpenseType = "1",//הכנסות
 
 
                 IsControlAccount = true,
@@ -348,10 +348,10 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     SearchFields = ",OE Control,מרכז ספדים יצוא ימי",
                     IsMultiCurrency = true,
                     CurrencyId = null,
-                    RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),// "1",//הכנסות
+                    RevenueExpenseType = "1",//הכנסות
 
 
-                    IsControlAccount = true,
+                            IsControlAccount = true,
                     Inactive = false,
                             //CurrencyCode = "Multi",
                             ReconcileMethodCode = "0",
@@ -378,9 +378,9 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                                         SearchFields = ",Files Control,מרכז תיקים",
                                         IsMultiCurrency = true,
                                         CurrencyId = null,
-                                        RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),//"1",//הכנסות
+                                        RevenueExpenseType = "1",//הכנסות
 
-                                        IsControlAccount = true,
+                            IsControlAccount = true,
                                         Inactive = false,
                             //CurrencyCode = "Multi",
                             ReconcileMethodCode = "0",
@@ -404,7 +404,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 SearchFields = "Vendors,Vendors Control,מרכז ספקים",
                 IsMultiCurrency = true,
                 CurrencyId = null,
-                RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),//"2",//expenss
+                RevenueExpenseType = "2",//expenss
                 IsControlAccount = true,
 
                 Inactive = false,
@@ -432,7 +432,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                 SearchFields = "Customers,Customers Control,מרכז לקוחות",
                 IsMultiCurrency = true,
                 CurrencyId = null,
-                RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString() ,//   "1",//הכנסות
+                RevenueExpenseType = "1",//הכנסות
                 IsControlAccount = true,
 
                 Inactive = false,
@@ -474,7 +474,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     SearchFields = ",Input VAT,מעמ תשומות",
                     IsMultiCurrency = true,
                     CurrencyId = null,
-                    RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),// "3",//OTHER
+                    RevenueExpenseType = RevenueExpenseTypeEnum.Revenue.ToIntString(),// "3",//OTHER
                     IsControlAccount = false  /*true */,
 
                     Inactive = false,
@@ -499,7 +499,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     SearchFields = ",Output VAT,מעמ עסקאות",
                     IsMultiCurrency = true,
                     CurrencyId = null,
-                    RevenueExpenseType = RevenueExpenseTypeEnum.Other.ToIntString(),
+                    RevenueExpenseType = RevenueExpenseTypeEnum.Expense.ToIntString(),
                     IsControlAccount = false,/*true*/
 
                     Inactive = false,
@@ -819,18 +819,6 @@ namespace Logitude.Accounting.BL
         WorkersIsAlsoWorkAsProject = 6,
         DebtorsAndCreditors = 7//חייבים ונושים
     }
-
-    public enum PaymentChequeStatuses
-    {
-        InCashbook = 1,
-        InBank = 2,
-        InBankAccount = 3,
-        ReturnedFromBank = 4,
-        ReturnedToCustomer = 5,
-        Redeemed = 6,
-        CashbookedReturnedFromTheBank = 7
-    }
-
     public enum GLAccountTypeEnum
     {
         Card = 1,
@@ -838,6 +826,7 @@ namespace Logitude.Accounting.BL
         Vendor = 3,
         Job = 4,
         File = 5
+
     }
     public enum RevenueExpenseTypeEnum
     {

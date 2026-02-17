@@ -5,14 +5,13 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MeatadataGeneratorTool
 {
+
     public class ObjectFieldsViewModel : PropertyChangedImplementation
     {
-        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime","DateTime2", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]", "BigInteger", "Binary", "Time", "Raw" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]" }; } }
         public List<string> DependencyFiltersList { get { return new List<string>() { "Constant", "Path", }; } }
         public List<string> TextCaseList { get { return new List<string>() { "Lower", "Upper", }; } }
         public List<string> OperatorsList { get; set; }
@@ -76,7 +75,7 @@ namespace MeatadataGeneratorTool
             {
                 OperatorsList = new List<string>() { "StartsWith", "Contains", "Equals", };
             }
-            else if (FieldDataType == "Integer" || FieldDataType == "Decimal" || FieldDataType == "Double" || FieldDataType == "DateTime" || FieldDataType == "DateTime2" || FieldDataType == "SigDouble" || FieldDataType == "UnsDecimal" || FieldDataType == "UnsInteger")
+            else if (FieldDataType == "Integer" || FieldDataType == "Decimal" || FieldDataType == "Double" || FieldDataType == "DateTime" || FieldDataType == "SigDouble" || FieldDataType == "UnsDecimal" || FieldDataType == "UnsInteger")
             {
                 OperatorsList = new List<string>() { "Equals", "LargerThan", "LessThan", "GreaterThanOrEqual", "LessThanOrEqual", "Between", };
             }
@@ -116,20 +115,6 @@ namespace MeatadataGeneratorTool
         {
             get { return oldfieldName; }
             set { oldfieldName = value; FirePropertyChanged("OldFieldName");}
-        }
-
-        string oldNames;
-        public string OldNames
-        {
-            get { return oldNames; }
-            set { oldNames = value; FirePropertyChanged("OldNames"); }
-        }
-
-        string shortName;
-        public string ShortName
-        {
-            get { return shortName; }
-            set { shortName = value; FirePropertyChanged("ShortName"); }
         }
 
         private void SetPMandList(string value)
@@ -468,13 +453,6 @@ namespace MeatadataGeneratorTool
         {
             get { return isCustomFilter; }
             set { isCustomFilter = value; FirePropertyChanged("IsCustomFilter"); }
-        }
-
-        bool isListFilter;
-        public bool IsListFilter
-        {
-            get { return isListFilter; }
-            set { isListFilter = value; FirePropertyChanged("IsListFilter"); }
         }
 
         bool isChecked;
@@ -934,13 +912,6 @@ namespace MeatadataGeneratorTool
             set { isForeignKey = value; FirePropertyChanged("IsForeignKey"); FirePropertyChanged("ForeignEntityFontWeight"); }
         }
 
-        bool dontBuildRelationOnDB;
-        public bool DontBuildRelationOnDB
-        {
-            get { return dontBuildRelationOnDB; }
-            set { dontBuildRelationOnDB = value; FirePropertyChanged("DontBuildRelationOnDB"); FirePropertyChanged("ForeignEntityFontWeight"); }
-        }
-
         string foreignEntity;
         public string ForeignEntity
         {
@@ -982,32 +953,6 @@ namespace MeatadataGeneratorTool
             }
             set { }
         }
-        public string IsPMFontWeight
-        {
-            get
-            {
-                string result = "Normal";
-                if (isPMField)
-                {
-                    result = "Bold";
-                }
-                return result;
-            }
-            set { }
-        }
-        public bool IsPMFieldEnabled
-        {
-            get
-            {
-                bool result = false;
-                if (IsPMField)
-                {
-                    result = true;
-                }
-                return result;
-            }
-            set { }
-        }
 
         bool isDBField;
         public bool IsDBField
@@ -1020,21 +965,10 @@ namespace MeatadataGeneratorTool
         public bool IsPMField
         {
             get { return isPMField; }
-            set { isPMField = value; FirePropertyChanged("IsPMField"); FirePropertyChanged("IsPMFieldEnabled"); FirePropertyChanged("IsPMFontWeight"); }
+            set { isPMField = value; FirePropertyChanged("IsPMField"); }
         }
-		string tableRelatedPM;
-		public string TableRelatedPM
-		{
-			get { return tableRelatedPM; }
-			set { tableRelatedPM = value; FirePropertyChanged("TableRelatedPM"); }
-		}
-		string fieldRelatedPM;
-		public string FieldRelatedPM
-		{
-			get { return fieldRelatedPM; }
-			set { fieldRelatedPM = value; FirePropertyChanged("FieldRelatedPM"); }
-		}
-		private bool enableAutoFill;
+
+        private bool enableAutoFill;
         public bool EnableAutoFill
         {
             get 
@@ -1136,34 +1070,8 @@ namespace MeatadataGeneratorTool
 
 
 
-        private string additionalQuerySections;
-        public string AdditionalQuerySections
-        {
-            get
-            {
-                return additionalQuerySections;
-            }
-            set
-            {
-                additionalQuerySections = value;
-                FirePropertyChanged("AdditionalQuerySections");
-            }
-        }
 
-        
-        private bool displayInRequiredFields;
-        public bool DisplayInRequiredFields
-        {
-            get
-            {
-                return displayInRequiredFields;
-            }
-            set
-            {
-                displayInRequiredFields = value;
-                FirePropertyChanged("DisplayInRequiredFields");
-            }
-        }
+
 
 
         string hTMLListComponentURL;
@@ -1319,7 +1227,7 @@ namespace MeatadataGeneratorTool
             get
             {
                 Visibility result = Visibility.Collapsed;
-                if (FieldDataType == "Date" || FieldDataType == "DateTime" || FieldDataType == "DateTime2")
+                if (FieldDataType == "Date" || FieldDataType == "DateTime")
                 {
                     result = Visibility.Visible;
                 }
@@ -1432,10 +1340,6 @@ namespace MeatadataGeneratorTool
             if (string.IsNullOrEmpty(this.DefaultText))
             {
                 str.AppendLine("Default Text is Required");
-            }
-            else if (ContainsHebrewCharacters(this.DefaultText))
-            {
-                str.AppendLine("Default Text cannot contain Hebrew characters");
             }
             if (string.IsNullOrEmpty(FieldName))
             {
@@ -1570,10 +1474,7 @@ namespace MeatadataGeneratorTool
                     str.AppendLine("Operator is Required");
                 }
             }
-            if(!string.IsNullOrEmpty(ListLableDefaultText) && ContainsHebrewCharacters(ListLableDefaultText))
-            {
-                str.AppendLine("'List Lable Default Text' cannot contain Hebrew characters");
-            }
+
             ErrorMessages = str.ToString();
             if (ErrorMessages != "")
             {
@@ -1586,10 +1487,7 @@ namespace MeatadataGeneratorTool
 
             FirePropertyChanged("ErrorMessages");
         }
-        private bool ContainsHebrewCharacters(string text)
-        {
-            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
-        }
+
         public RelayCommand AdvanceSettingsBtnCommand
         {
             get { return new RelayCommand(() => this.AdvanceSettingsMethod()); }
@@ -1601,32 +1499,12 @@ namespace MeatadataGeneratorTool
         public bool IsSpellCheckedHelpLocalDefaultText { get;  set; }
         public bool IsSpellCheckedShortLocalDefaultText { get;  set; }
         public bool IsSpellCheckedListLocalDefaultText { get; internal set; }
-
-        string objectFieldDataMapping;
-        bool objectFieldDBOnly;
-
+ 
         string modelName;
         public string ModelName
         {
             get { return modelName; }
             set { modelName = value; FirePropertyChanged("ModelName"); }
-        }
-        public string ObjectFieldDataMapping
-        {
-            get { return objectFieldDataMapping; }
-            set
-            {
-                objectFieldDataMapping = value; FirePropertyChanged("ObjectFieldDataMapping");
-            }
-        }
-        public bool ObjectFieldDBOnly
-        {
-
-            get { return objectFieldDBOnly; }
-            set
-            {
-                objectFieldDBOnly = value; FirePropertyChanged("ObjectFieldDBOnly");
-            }
         }
 
         //public Window AdvanceSettingsWindow = new Window();

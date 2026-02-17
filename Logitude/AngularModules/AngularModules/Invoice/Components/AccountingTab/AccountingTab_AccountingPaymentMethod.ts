@@ -6,7 +6,7 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {AccountingPaymentMethodPM} from '../../EntityPMs/AccountingPaymentMethodPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AccountingTab_AccountingPaymentMethod.html',
 })
 

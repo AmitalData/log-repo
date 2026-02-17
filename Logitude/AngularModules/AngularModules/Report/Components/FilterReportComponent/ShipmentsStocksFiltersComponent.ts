@@ -15,7 +15,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'ShipmentsStocksFiltersComponent',
     templateUrl: './ShipmentsStocksFiltersComponent.html',
     inputs: ['ReportsPreview']
@@ -51,9 +51,9 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.daysInMonth(new Date());
-        this.FromDate = this.FromDate??this.SetDate(Year, month - 1, 1);
-        this.ToDate =this.ToDate?? this.SetDate(Year, month, daysofmonth);
-        //this.RunReport(false);
+        this.FromDate = this.SetDate(Year, month - 1, 1);
+        this.ToDate = this.SetDate(Year, month, daysofmonth);
+        this.RunReport(false);
     }
 
     ngOnInit() {
@@ -76,47 +76,13 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
             this.includeShipmentsDetails = value;
         }
     }
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-                case "ToDate":
-                    this.ToDate =new Date(queryFilterItem.FieldValue);
-                    break;
-                case "IncludeShipmentsDetails":
-                    this.IncludeShipmentsDetails = queryFilterItem.FieldValue;
-                    break;
-                   
-               
-            }
-    
-           
-    
-        }
-    }
-    ValidateSelectedFilters() {
+
+    RunReport(isloading: boolean) {
+
+
+
+
+
         this.ValidationErrorsList = [];
 
         if (this.ToDate == null) {
@@ -145,17 +111,37 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
             if (!messageError) messageError = "to date must be greater than from date";
             this.ValidationErrorsList.push(messageError);
         }
-        return this.ValidationErrorsList.length == 0;
-    }
-    RunReport(isloading: boolean) {
 
 
-        if (this.ValidateSelectedFilters()) {
+        if (this.ValidationErrorsList.length == 0) {
+
+
+
+            this.queryFilterItems = new Array<QueryFilterItem>();
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "GreaterThanOrEqual";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItem.Operator = "LessThanOrEqual";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItems.push(new QueryFilterItem("IncludeShipmentsDetails", this.IncludeShipmentsDetails));
+
 
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
 
 
@@ -168,29 +154,7 @@ export class ShipmentsStocksFiltersComponent extends BaseComponent implements On
 
         }
     }
-    GetQueryFilterItems() {
 
-        this.queryFilterItems = new Array<QueryFilterItem>();
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItem.Operator = "GreaterThanOrEqual";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItem.Operator = "LessThanOrEqual";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItems.push(new QueryFilterItem("IncludeShipmentsDetails", this.IncludeShipmentsDetails));
-        return this.queryFilterItems;
-    }
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);

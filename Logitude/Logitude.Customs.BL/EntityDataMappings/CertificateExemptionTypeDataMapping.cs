@@ -10,7 +10,6 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
-using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -20,12 +19,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CertificateExemptionTypePM entityPM, CertificateExemptionType entityPOCO)
         {
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
-
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                entityPOCO.Code = entityPM.Code;
-            }
+            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(CertificateExemptionTypePM entityPM, CertificateExemptionType entityPOCO)

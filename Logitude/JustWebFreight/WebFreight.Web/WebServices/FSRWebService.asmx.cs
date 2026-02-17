@@ -15,10 +15,10 @@ using Logitude.XSD.FSR;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -329,7 +329,7 @@ namespace WebFreight.Web.WebServices
                         else
                         {
                             myShipment.IsFSRSent = true;
-                            myShipment.LastSentByUserId = loggedContactId;
+                            myBooking.LastSentByUserId = loggedContactId;
                             myShipment.LastFSRStatusRequestDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
                             ShipmentService service = new ShipmentService(shipmentContext, myShipment, email);
@@ -380,7 +380,7 @@ namespace WebFreight.Web.WebServices
                                 //}
 
                                 DbQueueService queueservice = new DbQueueService("champmessageoutqueue", tenant);
-                                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } });
                             }
 
                             catch (Exception ex)

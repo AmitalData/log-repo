@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,48 +15,32 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{
+{ 
 
     public partial class ModificationAndDiscountTypeListQueryService
     {
-        private IQueryable<ModificationAndDiscountTypeList> GetIqueryableList(IQueryable<ModificationAndDiscountType> iQueryable)
+	    private IQueryable<ModificationAndDiscountTypeList> GetIqueryableList(IQueryable<ModificationAndDiscountType> iQueryable)
         {
             IQueryable<ModificationAndDiscountTypeList> query = (from a in iQueryable
-                                                                 where a.Code != "67" 
+                                                                 where a.Code != "67" && a.Code != "144"
                                                                  select new ModificationAndDiscountTypeList()
-                                                                 {
-                                                                     Code = a.Code,
-                                                                     EnglishName = a.EnglishName,
-                                                                     LocalName = a.LocalName,
-                                                                     SearchFields = a.SearchFields,
-                                                                     Inactive = a.Inactive,
-                                                                     IsRelevantGoodsItem = a.IsRelevantGoodsItem,
-                                                                     IsRelevantInvoice = a.IsRelevantInvoice,
-                                                                     IsRelevantGoodsItemExport= a.IsRelevantGoodsItemExport,
-                                                                     IsRelevantInvoiceExport= a.IsRelevantInvoiceExport,
-                                                                     ExtraNumericData = 
-                                                                        (a.ExtraNumericData == "1") ? "תוספת" :
-                                                                        (a.ExtraNumericData == "2") ? "הפחתה" :
-                                                                        (a.ExtraNumericData == "3") ? "ללא השפעה" : null,
-                                                                     IsCustomsValueComponent = a.IsCustomsValueComponent,
-                                                                     IsCustomsValueComponentExport = a.IsCustomsValueComponentExport,
-                                                                     CurrencyMustBeSameAsInvoice = a.CurrencyMustBeSameAsInvoice,
-                                                                     CurrencyMustSameInvoiceExport = a.CurrencyMustSameInvoiceExport,
-                                                                     IsCustomUseExport = a.IsCustomUseExport,
+                                                 {
+                                                     Code = a.Code,
+                                                     EnglishName = a.EnglishName,
+                                                     LocalName = a.LocalName,
+                                                     SearchFields = a.SearchFields,
+                                                     Inactive = a.Inactive
 
-                                                                     ExportFOBModificationAffectID = a.ExportFOBModificationAffectID,
-                                                                     NetoValuesModificationAffectID = a.NetoValuesModificationAffectID
-
-
-                                                                 });
+                                                 });
             return query;
-        }
+		}
 
         private IQueryable<ModificationAndDiscountType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ModificationAndDiscountType> iQueryable)
         {
             return iQueryable;
         }
-    }
+	}
 
 
 }
+	

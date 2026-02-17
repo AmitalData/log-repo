@@ -1,325 +1,181 @@
-<table>
+﻿<table>
     <tr>
         <td>
             <div></div>
         </td>
+
     </tr>
+
+
+
     <tr style="height:100%;vertical-align:top">
+
         <td>
+
             <table>
+
                 <tr *ngIf="!FullComponentsVisibility" style="height:10px">
                     <td></td>
                 </tr>
+
                 <tr style="height:20px">
                     <td>
-                        <table>
-                            <tr>
-                                <td><span style="color:gray;font-size:11px;vertical-align:top;width:300px">{{MainMessage}}</span></td>
-                                <td><span><SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width:200px" [ObjectTableName]="'Document'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox></span></td>
-                            </tr>
-                        </table>
+          <table>
+              <tr>
+
+                  <td><span style="color:gray;font-size:11px;vertical-align:top;width:300px">In this screen you choose which documents can be viewed by the customer.</span></td>
+                  <td><span><SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width:200px" [ObjectTableName]="'Document'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox></span></td>
+              </tr>
+          </table>
+
                     </td>
                 </tr>
                 <tr *ngIf="!FullComponentsVisibility" style="height:3px">
                     <td></td>
                 </tr>
-                <tr *ngIf="FullComponentsVisibility && !HasAgentDocumentsPermission" style="height:15px">
+
+                <tr *ngIf="FullComponentsVisibility" style="height:15px">
                     <td></td>
                 </tr>
-                <tr>
+                <!--GridView-->
+
+
+                <tr style="height:100%">
                     <td>
-                        <div class="MediaFill"> 
-                            <div class="TabControl">
-                                <div class="TabControlHead">
-                                    <ul style="margin-left: 2px;">
-                                        <li [class.Selected]="SelectedTabCode == 'CUV'" (click)="SelectedTabChange('CUV')" style="margin-left:2px;">
-                                            <div [attr.data-cy]="'Customer View'" style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                                <span>Customer View</span>
-                                            </div>
-                                        </li>
+                        <div style="border:1px solid lightGray;height:100%">
+                            <table>
+                                <tr style="height:5px;"><td></td></tr>
+                                <tr style="height:100%">
 
-                                        <li [class.Selected]="SelectedTabCode == 'AGV'" (click)="SelectedTabChange('AGV')" *ngIf="HasAgentDocumentsPermission">
-                                            <div [attr.data-cy]="'Agent View'" style="width:100px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                                <span>Agent View</span>
-                                            </div>
-                                        </li>
+                                    <td style="margin-left:5px;margin-right:5px;">
 
-                                        <li [class.Selected]="SelectedTabCode == 'CUA'" (click)="SelectedTabChange('CUA')" *ngIf="IsDigitalPortal">
-                                            <div [attr.data-cy]="'Customer Upload'" style="width:150px;text-align:left;font-size:11px;color:black" class="InnerChild">
-                                                <span>Customer Upload</span>
-                                            </div>
-                                        </li>
+                                        <table>
+                                            <tr style="height:100%">
+                                                <td style="width:5px;"></td>
 
+                                                <td>
 
-                                    </ul>
-                                </div>
-
-                                <div class="TabControlBody">
-                                    <!--Tab 1: Customer View-->
-                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'CUV'">
-                                        <div class="MediaFillAbsolute">
-                                            <table>
-                                                <tr style="height:100%">
-                                                    <td>
-                                                        <div style="border:1px solid lightGray;height:100%">
+                                                    <div class="SimpleGridView">
+                                                        <div class="SimpleGridViewHeader">
                                                             <table>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                                <tr style="height:100%">
-                                                                    <td style="margin-left:5px;margin-right:5px;">
+                                                                <tr>
+
+                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Document Name</td>
+                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
+                                                                    <td style="width:70px; min-width:70px;text-align:center ">Choose</td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="SimpleGridViewBody">
+                                                            <table>
+                                                                <tr style="height: 1px;">
+                                                                    <td>
                                                                         <table>
-                                                                            <tr style="height:100%">
-                                                                                <td style="width:5px;"></td>
+                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentPermissiosLists">
                                                                                 <td>
-                                                                                    <div class="SimpleGridView">
-                                                                                        <div class="SimpleGridViewHeader">
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Document Name</td>
-                                                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
-                                                                                                    <td style="width:70px; min-width:70px;text-align:center ">Customer View</td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                        <div class="SimpleGridViewBody">
-                                                                                            <table>
-                                                                                                <tr style="height: 1px;">
-                                                                                                    <td>
-                                                                                                        <table>
-                                                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentPermissiosLists">
-                                                                                                                <td>
-                                                                                                                    <table>
-                                                                                                                        <tr style="height:25px;" (click)="DocumentPermissiosSelectedViewModel=item" [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
-                                                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
-                                                                                                                                {{item.DocumentTypeName}}
-                                                                                                                            </td>
-                                                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                                                <div class="CheckBox">
-                                                                                                                                    <input [disabled]="true" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerSuggestedCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerSuggestedIsChecked" />
-                                                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerSuggestedCheckedBoxId"></label>
-                                                                                                                                </div>
-                                                                                                                            </td>
-                                                                                                                            <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
-                                                                                                                                <div class="CheckBox">
-                                                                                                                                    <input [attr.data-cy]="item.DocumentTypeName" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerChooseCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerChooseIsChecked" />
-                                                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerChooseCheckedBoxId"></label>
-                                                                                                                                </div>
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                        <tr><td colspan="10"></td></tr>
-                                                                                                                    </table>
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                        </table>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <div></div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <table>
+                                                                                        <tr style="height:25px;" (click)="DocumentPermissiosSelectedViewModel=item" [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
+
+
+                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
+
+                                                                                                {{item.DocumentTypeName}}
+                                                                                            </td>
+
+
+                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
+
+                                                                                                <div class="CheckBox">
+                                                                                                    <input [disabled]="true" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerSuggestedCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerSuggestedIsChecked" />
+                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerSuggestedCheckedBoxId"></label>
+                                                                                                </div>
+
+                                                                                            </td>
+                                                                                            <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
+
+                                                                                                <div class="CheckBox">
+                                                                                                    <input class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerChooseCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerChooseIsChecked" />
+                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerChooseCheckedBoxId"></label>
+                                                                                                </div>
+
+                                                                                            </td>
+
+
+
+                                                                                        </tr>
+                                                                                        <tr><td colspan="10"></td></tr>
+                                                                                    </table>
+
+
                                                                                 </td>
-                                                                                <td style="width:5px;"></td>
                                                                             </tr>
                                                                         </table>
                                                                     </td>
                                                                 </tr>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                            </table>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!--Tab 2: Agent View-->
-                                    <div *ngIf="IsCloud" class="MediaFillRelative" [hidden]="SelectedTabCode != 'AGV'">
-                                        <div class="MediaFillAbsolute">
-                                            <table>
-                                                <tr style="height:100%">
-                                                    <td>
-                                                        <div style="border:1px solid lightGray;height:100%">
-                                                            <table>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                                <tr style="height:100%">
-                                                                    <td style="margin-left:5px;margin-right:5px;">
-                                                                        <table>
-                                                                            <tr style="height:100%">
-                                                                                <td style="width:5px;"></td>
-                                                                                <td>
-                                                                                    <div class="SimpleGridView">
-                                                                                        <div class="SimpleGridViewHeader">
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Document Name</td>
-                                                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
-                                                                                                    <td style="width:70px; min-width:70px;text-align:center ">Agent View</td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                        <div class="SimpleGridViewBody">
-                                                                                            <table>
-                                                                                                <tr style="height: 1px;">
-                                                                                                    <td>
-                                                                                                        <table>
-                                                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentPermissiosLists">
-                                                                                                                <td>
-                                                                                                                    <table>
-                                                                                                                        <tr style="height:25px;" (click)="DocumentPermissiosSelectedViewModel=item" [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
-                                                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
-                                                                                                                                {{item.DocumentTypeName}}
-                                                                                                                            </td>
-                                                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                                                <div class="CheckBox">
-                                                                                                                                    <input [disabled]="true" class="CenterCenter" style="text-align:center" [attr.id]="item.AgentSuggestedIsCheckedBoxId" type="checkbox" [(ngModel)]="item.AgentSuggestedIsChecked" />
-                                                                                                                                    <label class="CenterCenter" [attr.for]="item.AgentSuggestedIsCheckedBoxId"></label>
-                                                                                                                                </div>
-                                                                                                                            </td>
-                                                                                                                            <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
-                                                                                                                                <div class="CheckBox">
-                                                                                                                                    <input class="CenterCenter" style="text-align:center" [attr.id]="item.AgentChooseIsCheckedBoxId" type="checkbox" [(ngModel)]="item.AgentChooseIsChecked" />
-                                                                                                                                    <label class="CenterCenter" [attr.for]="item.AgentChooseIsCheckedBoxId"></label>
-                                                                                                                                </div>
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                        <tr><td colspan="10"></td></tr>
-                                                                                                                    </table>
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                        </table>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <div></div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td style="width:5px;"></td>
-                                                                            </tr>
-                                                                        </table>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <div></div>
                                                                     </td>
                                                                 </tr>
-                                                                <tr style="height:5px;"><td></td></tr>
                                                             </table>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!--Tab 3: Customer Upload-->
-                                    <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'CUA'">
-                                        <div class="MediaFillAbsolute">
-                                            <table>
-                                                <tr style="height:100%">
-                                                    <td>
-                                                        <div style="border:1px solid lightGray;height:100%;">
-                                                            <table>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                                <tr style="height:100%">
-                                                                    <td style="margin-left:5px;margin-right:5px;">
-                                                                        <table>
-                                                                            <tr style="height:100%">
-                                                                                <td style="width:5px;"></td>
-                                                                                <td>
-                                                                                    <div class="SimpleGridView">
-                                                                                        <div class="SimpleGridViewHeader">
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td style="width: 100%; min-width: 100%;text-align:left">Document Name</td>
-                                                                                                    <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
-                                                                                                    <td style="width: 70px; min-width: 100px; text-align: left ">Customer Upload</td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                        <div class="SimpleGridViewBody">
-                                                                                            <table>
-                                                                                                <tr style="height: 1px;">
-                                                                                                    <td>
-                                                                                                        <table>
-                                                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentUploadPermissiosLists">
-                                                                                                                <td>
-                                                                                                                    <table>
-                                                                                                                        <tr style="height:25px;" (click)="DocumentPermissiosSelectedViewModel=item" [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
-                                                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
-                                                                                                                                {{item.DocumentTypeName}}
-                                                                                                                            </td>
-                                                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                                                <div class="CheckBox">
-                                                                                                                                    <input [disabled]="true" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerUploadPermissionSuggestedCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerUploadPermissionSuggestedIsChecked" />
-                                                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerUploadPermissionSuggestedCheckedBoxId"></label>
-                                                                                                                                </div>
-                                                                                                                            </td>
-                                                                                                                            <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px; position: relative;">
-                                                                                                                                <div class="CheckBox">
-                                                                                                                                    <input [attr.data-cy]="item.DocumentTypeName" class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerPermissionCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerPermissionIsChecked" />
-                                                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerPermissionCheckedBoxId"></label>
-                                                                                                                                </div>
-                                                                                                                            </td>
-                                                                                                                        </tr>
-                                                                                                                        <tr><td colspan="10"></td></tr>
-                                                                                                                    </table>
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                        </table>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr>
-                                                                                                    <td>
-                                                                                                        <div></div>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td style="width:5px;"></td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr style="height:5px;"><td></td></tr>
-                                                            </table>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
+                                                    </div>
+                                                </td>
+                                                <td style="width:5px;"></td>
+                                            </tr>
+                                        </table>
 
-                                    <div [hidden]="SelectedTabCode != 'AGV' || IsCloud" class="MediaFillRelative">
-                                        <div class="LocationDirective" LocationDirective Code="AGV"> </div>
-                                    </div>
+                                    </td>
 
-                                </div>
-                            </div>
+                                </tr>
+                                <tr style="height:5px;"><td></td></tr>
+                            </table>
+
+
+
+
                         </div>
+
                     </td>
+
+
                 </tr>
+
+
+                <!--EndGridView-->
+
+
             </table>
+
         </td>
+
+
     </tr>
+
     <tr *ngIf="FullComponentsVisibility" style="height: 32px;">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
                     <td>
-                        <div></div>
+                        <div>
+
+
+                        </div>
                     </td>
+
                     <td style="width: 57px;">
                         <div>
                             <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
                         </div>
                     </td>
+
                     <td style="width: 5px;">
                         <div></div>
                     </td>
+
                     <td style="width: 57px;">
                         <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
                     </td>
@@ -327,4 +183,5 @@
             </table>
         </td>
     </tr>
+
 </table>

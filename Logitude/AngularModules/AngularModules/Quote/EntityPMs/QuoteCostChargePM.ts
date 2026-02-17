@@ -160,11 +160,6 @@ export class QuoteCostChargePM {
     public set ContainerType5MarkUpValue(newValue: number) { if (this.containerType5MarkUpValue != newValue) { this.containerType5MarkUpValue = newValue; this.MarkAsDirty("ContainerType5MarkUpValue"); } }
        
 	 
-    private markUpCurrencyId: string;
-    public get MarkUpCurrencyId() { return this.markUpCurrencyId; }
-    public set MarkUpCurrencyId(newValue: string) { if (this.markUpCurrencyId != newValue) { this.markUpCurrencyId = newValue; this.MarkAsDirty("MarkUpCurrencyId"); } }
-       
-	 
     private costMeasurementId: string;
     public get CostMeasurementId() { return this.costMeasurementId; }
     public set CostMeasurementId(newValue: string) { if (this.costMeasurementId != newValue) { this.costMeasurementId = newValue; this.MarkAsDirty("CostMeasurementId"); } }
@@ -295,19 +290,11 @@ export class QuoteCostChargePM {
     public set ContainerType5MarkUpText(newValue: string) { if (this.containerType5MarkUpText != newValue) { this.containerType5MarkUpText = newValue; this.MarkAsDirty("ContainerType5MarkUpText"); } }
        
 	 
-    private isRegionalTax: boolean;
-    public get IsRegionalTax() { return this.isRegionalTax; }
-    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
-       
-	 
 
     public OldEntityPM: QuoteCostChargePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -315,7 +302,6 @@ export class QuoteCostChargePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteCostCharge");
            
         }
-	 }
     }
     private MyClone: QuoteCostChargePM;
 

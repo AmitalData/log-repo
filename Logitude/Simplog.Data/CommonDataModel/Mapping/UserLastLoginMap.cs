@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -22,19 +22,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.WorkEnvironment)
-                .HasMaxLength(40)
-                .IsUnicode(false);
-
-
-
             // Table & Column Mappings
             this.ToTable("UserLastLogins");
             this.Property(t => t.ComputerId).HasColumnName("ComputerId");
             this.Property(t => t.LoginDateTime).HasColumnName("LoginDateTime");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.WorkEnvironment).HasColumnName("WorkEnvironment");
 
             // Relationships
             this.HasRequired(t => t.User)

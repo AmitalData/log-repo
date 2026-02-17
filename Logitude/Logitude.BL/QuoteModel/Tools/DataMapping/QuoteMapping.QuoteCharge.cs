@@ -47,9 +47,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.CostContainerType4UnitPrice = itemPM.CostContainerType4UnitPrice;
             itemPoco.CostContainerType5UnitPrice = itemPM.CostContainerType5UnitPrice;
             itemPoco.CostTotalAmount = itemPM.CostTotalAmount;
-            itemPoco.CostTotalAmountLocal = itemPM.CostTotalAmountLocal;
-            itemPoco.CostAmountInSaleCurrency = itemPM.CostAmountInSaleCurrency;
-
+            itemPoco.CostTotalAmountLocal = itemPM.CostTotalAmountLocal;                      
+            
             itemPoco.SaleCurrencyId = itemPM.SaleCurrencyId;            
             itemPoco.SaleExchangeRate = itemPM.SaleExchangeRate;
             itemPoco.SaleIsFixedRate = itemPM.SaleIsFixedRate;
@@ -64,7 +63,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.SaleTotalAmount = itemPM.SaleTotalAmount;
             itemPoco.SaleTotalAmountLocal = itemPM.SaleTotalAmountLocal;
 
-            itemPoco.MarkUpCurrencyId = itemPM.MarkUpCurrencyId;
             itemPoco.MarkUpValue = itemPM.MarkUpValue;
             itemPoco.MarkUpTypeCode = itemPM.MarkUpTypeCode;
             itemPoco.ContainerType1MarkUpValue = itemPM.ContainerType1MarkUpValue;
@@ -88,22 +86,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.SaleUnitPrice4InSaleCurrency = itemPM.SaleUnitPrice4InSaleCurrency;
             itemPoco.SaleUnitPrice5InSaleCurrency = itemPM.SaleUnitPrice5InSaleCurrency;
             itemPoco.SaleAmountInSaleCurrency = itemPM.SaleAmountInSaleCurrency;
-            itemPoco.IsCostAllIn = itemPM.IsCostAllIn;
-            itemPoco.TariffId = itemPM.TariffId;
-            itemPoco.TariffNumber = itemPM.TariffNumber;
-            itemPoco.TariffLineId = itemPM.TariffLineId;
-            itemPoco.TariffVersion = itemPM.TariffVersion;
-            itemPoco.SaleTariffId = itemPM.SaleTariffId;
-            itemPoco.SaleTariffNumber = itemPM.SaleTariffNumber;
-            itemPoco.SaleTariffLineId = itemPM.SaleTariffLineId;
-            itemPoco.SaleTariffVersion = itemPM.SaleTariffVersion;
-            itemPoco.IsRegionalTax = itemPM.IsRegionalTax;
-            itemPoco.VATAmountInLocalCurrency = itemPM.VATAmountInLocalCurrency;
-            itemPoco.VATAmountInQuoteSaleCurrency = itemPM.VATAmountInQuoteSaleCurrency;
-            itemPoco.VATAmountInLineSaleCurrency = itemPM.VATAmountInLineSaleCurrency;
-            itemPoco.SaleTotalAmountLocalIncludingVAT = itemPM.SaleTotalAmountLocalIncludingVAT;
-            itemPoco.SaleAmountInSaleCurrencyIncludingVAT = itemPM.SaleAmountInSaleCurrencyIncludingVAT;
-            itemPoco.SaleTotalAmountIncludingVAT = itemPM.SaleTotalAmountIncludingVAT;
         }
     }
 }

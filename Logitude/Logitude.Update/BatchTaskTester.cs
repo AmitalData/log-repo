@@ -1,12 +1,8 @@
-﻿using Logitude.BL.Helpers;
-using Logitude.BL.Resolvers;
+﻿using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools.Resolvers;
-using Microsoft.Practices.Unity;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,7 +35,6 @@ namespace Logitude.Update
 
 
             AccountingRegistrations.Register();
-            InfraRegistrationHelper.Register();
 
         }
 

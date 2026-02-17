@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -15,7 +15,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public CommunicationLogTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public CommunicationLogTypeRepository(int tenant)
         {

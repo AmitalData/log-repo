@@ -6,7 +6,7 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using System;
@@ -22,16 +22,14 @@ namespace CustomsWorkerRole.L2U
     abstract class ReceivedDbMessageAction
     {
         CustomDBQueueMessage _ReceivedCustomDBQueueResponse;
-        private bool _fromRabitHandler;
         protected int _Tenant = 0;
         protected string _CommunicationLogId;
         ICommonDataContext _Context;
         protected  CommunicationLog _WaitingCommLog;
 
-        public ReceivedDbMessageAction(CustomDBQueueMessage receivedCustomDBQueueResponse,bool fromRabitHandler)
+        public ReceivedDbMessageAction(CustomDBQueueMessage receivedCustomDBQueueResponse)
         {
             _ReceivedCustomDBQueueResponse = receivedCustomDBQueueResponse;
-            _fromRabitHandler = fromRabitHandler;
         }
         
 
@@ -56,20 +54,13 @@ namespace CustomsWorkerRole.L2U
             CommunicationLogRepository commLogrepository = new CommunicationLogRepository(_Context);
             LogMessagingUtil.Instance.AppendLine("ProccessReceivedMessage()")
                     .Append("CommunicationLogId:").Append(_CommunicationLogId).Append(",Tenant").Append(_Tenant);
-
-            QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), 
-                $"CommLog:{_CommunicationLogId}");
-
             _WaitingCommLog = communicationLogRep.GetSingleCommunicationLog(_CommunicationLogId, _Tenant);
             if (_WaitingCommLog == null)
             {
                 
                 var myEx =new Exception("GetSingleCommunicationLog(_CommunicationLogId:" + _CommunicationLogId + " , _Tenant:" + _Tenant.ToString() + ") == null");
                 ExceptionHandler.HandleException(myEx, DateTime.Now, _Tenant, "", "WorkerRole", "", null);
-                if (!_fromRabitHandler)
-                {
-                    _ReceivedCustomDBQueueResponse.SafeComplete(); //Stop Try !!
-                }
+                _ReceivedCustomDBQueueResponse.SafeComplete(); //Stop Try !!
                 return;
             }
             var ExceptionMessage="";
@@ -80,7 +71,7 @@ namespace CustomsWorkerRole.L2U
             }
             try
             {
-                if (_fromRabitHandler || _WaitingCommLog.Retries < 5)
+                if (_WaitingCommLog.Retries < 5)
                 {
                     var xmlfile = GetCommDataFromBlob();
                     if (string.IsNullOrWhiteSpace(xmlfile))
@@ -109,11 +100,8 @@ namespace CustomsWorkerRole.L2U
                 LogMessagingUtil.Instance.AppendLine(":" + _WaitingCommLog.CommunicationStatusTypeCode);
                 commLogrepository.Update(_WaitingCommLog);
                 commLogrepository.SubmitChanges();
-                if (!_fromRabitHandler)
-                {
-                    _ReceivedCustomDBQueueResponse.SafeComplete();
-                }
-                
+
+                _ReceivedCustomDBQueueResponse.SafeComplete();
             }
             catch (Exception exc)
             {
@@ -126,10 +114,7 @@ namespace CustomsWorkerRole.L2U
                 _WaitingCommLog.ExceptionMessage =   s.Substring(0,Math.Min(7999,s.Length));
                 commLogrepository.Update(_WaitingCommLog);
                 commLogrepository.SubmitChanges();
-                if (!_fromRabitHandler)
-                {
-                    _ReceivedCustomDBQueueResponse.SafeAbandon();
-                }
+                _ReceivedCustomDBQueueResponse.SafeAbandon();
                 //throw;
 
             }

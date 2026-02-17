@@ -1,48 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Observable, defer, of } from 'rxjs';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
-import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+// import {TaxReportLineList} from '../../EntityLists/TaxReportLineList';
 
 @Injectable()
 
 export class TaxReportLineExtendedListService {
+    private _http: Http
     private _apiUrl: string;
-    private httpClient: HttpClient;
+
     constructor() {
-        this.httpClient = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
-    DownloadPaFile(filters: ApiQueryFilters): Observable<{ filename: string; blob: Blob }> {
-        const urlparameters = '/PostDownloadPaFile?';
-        const callUrl = this._apiUrl + urlparameters + this.getUrlParamsFromFilters(filters);
-    
-        const headers = new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Token': ServiceHelper.GetLoggedUserToken()
-        });
-    
-        return this.httpClient.post(callUrl, null, {
-          headers: headers,
-          responseType: 'blob',
-          observe: 'response'
-        }).pipe(
-          map((response: HttpResponse<Blob>) => {
-            const filename = this.getFilenameFromResponseHeaders(response);
-            return { filename: filename, blob: response.body };
-          }),
-          catchError(error => {
-            ServiceHelper.HandleServiceError(error);
-            throw error;
-          })
-        );
-      }
-    getUrlParamsFromFilters(filters: ApiQueryFilters) {
-        var urlparameters = '';
+
+    getByFilters(filters: ApiQueryFilters) {
+
+        var urlparameters = '/GetLinesByFilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
         for (var i in mykeys) {
@@ -67,50 +45,42 @@ export class TaxReportLineExtendedListService {
         if (addtionalFiltersValues) {
             urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
         }
-        return urlparameters;
-    }
 
-    getByFilters(filters: ApiQueryFilters) {
-        var urlparameters = '/GetLinesByFilters?';
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
 
-        var callUrl = this._apiUrl + urlparameters + this.getUrlParamsFromFilters(filters);
 
-        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
-            map((response: ServiceResponse) => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
+
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                serviceResponse = response.json();
 
+                //console.log("serviceResponse: ", serviceResponse);
 
+                //serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
+            }).catch(ServiceHelper.HandleServiceError);
+        });
     }
 
-    private getFilenameFromResponseHeaders(response: HttpResponse<Blob>): string {
-        const contentDispositionHeader = response.headers.get('Content-Disposition');
-        if (contentDispositionHeader) {
-            const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDispositionHeader);
-            if (matches && matches[1]) {
-                return matches[1].replace(/['"]/g, '');
-            }
-        }
-        return 'PA.txt';
-    }
-    PostCreateTaxReportLinesByTextFile(fileUploadParamerter: ImageParameter) {
+    // MapJsonToEntityList(jsonList: any) {
 
-        return defer(() => {
-            return this.httpClient.post(this._apiUrl + '/PostCreateTaxReportLines', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
+    //     var entityList: TaxReportLineList;
+    //     entityList = new TaxReportLineList();
+    //     var jsonListKeys = Object.keys(jsonList);
 
-                pmresponse.Result = result;
-                return pmresponse;
+    //     for (var key in jsonListKeys) {
+    //         var property = jsonListKeys[key];
+    //         entityList[property] = jsonList[property];
+    //     }
 
-            }), catchError(ServiceHelper.HandleServiceError));
-        }
-        );
 
-    }
+    //     return entityList;
+    // }
+
+
 }

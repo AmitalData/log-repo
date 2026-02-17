@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,7 +15,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Data.CustomFilters;
 using Logitude.Customs.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data.Utils;
 
@@ -66,7 +66,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                        ClosedByCustomOfficeUserName = a.ClosedByCustomOfficeUser != null ? (!string.IsNullOrEmpty(a.ClosedByCustomOfficeUser.Contact.LocalName) ? a.ClosedByCustomOfficeUser.Contact.LocalName : a.ClosedByCustomOfficeUser.Contact.EnglishName) : null, 
                                                                        CustomerId = a.CustomerId,
                                                                        CustomerName = a.Customer != null? a.Customer.Card.LocalName : null,
-                                                                       ResponseToMessage = a.ResponseToMessage,
+
                                                                    });
 
 

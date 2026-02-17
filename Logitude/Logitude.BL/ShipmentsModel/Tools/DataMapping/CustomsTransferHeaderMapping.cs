@@ -25,14 +25,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entity.FileName = entityPM.FileName;
             entity.CreatedByUserId = entityPM.CreatedByUserId;
             entity.Notes = entityPM.Notes;
-            entity.ShipmentNumber = entityPM.ShipmentNumber;
 
             string mySearchFields = "";
             
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.TransferNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.FileName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ShipmentNumber);
-            TrimLengthTo1000(ref mySearchFields);
 
             entityPM.SearchFields = mySearchFields;
             entity.SearchFields = mySearchFields;
@@ -49,17 +46,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entity.ShipmentId = entityPM.ShipmentId;
             entity.ShipmentNumber = entityPM.ShipmentNumber;
-        }
-
-        private static void TrimLengthTo1000(ref string field)
-        {
-            if (!string.IsNullOrEmpty(field))
-            {
-                if (field.Length > 1000)
-                {
-                    field = field.Substring(0, 1000);
-                }
-            }
         }
     }
 }

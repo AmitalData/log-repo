@@ -16,10 +16,9 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ReportService, CustomersDataProvider, CustomersData} from '../../../Common/Services/ExtendedLists/ReportService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'CustomerPotentialActualFilterComponent',
     templateUrl: './CustomerPotentialActualFilterComponent.html',
 })
@@ -535,49 +534,7 @@ export class CustomerPotentialActualFilterComponent extends BaseComponent {
     private queryFilterItems: QueryFilterItem[];
     private mySelectedProductsList: string[];
     public ValidationErrorsList: string[];
-    public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "DataTypeCode":
-                    this.SelectedViewByFilter = this.ViewByComboList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
-                    break;
-               
-                case "TimeRange":
-                    this.SelectedTimeRangeFilter = this.TimeRangeComboList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
-                    break;                          
-                case "ProductsTypes":
-                    this.SelectedProdustTypeFilter = queryFilterItem.FieldValue;
-                        break; 
-                case "BusinessUnitId":
-                    this.SelectedBusinessUnitFilter = this.BusinessUnitFilterList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
-                    break;
-                case "OwnerId":
-                    this.SelectedUserFilter = this.UsersFilterList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
-                    break;
-                case "CountryId":
-                    this.CountryId = queryFilterItem.FieldValue;
-                    break;
-                case "ProductCode":
-                    this.SelectedProductFilter = this.ProductFilterList.filter(d => d.Code == queryFilterItem.FieldValue)[0];
-                    break;    
-                        
-                        
-            }
-    
-        }
-    }
-
-    ValidateSelectedFilters() {
+    RunReport() {
         this.ValidationErrorsList = [];
 
         if (this.SelectedProdustTypeFilter != "All") {
@@ -610,28 +567,79 @@ export class CustomerPotentialActualFilterComponent extends BaseComponent {
             }
         }
 
-        return this.ValidationErrorsList.length == 0;
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    RunReport() {
-      
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
 
-        if (this.ValidateSelectedFilters()) {
-           
+            var myProductTypes: string = "";
+
+            if (this.SelectedProdustTypeFilter == "All") {
+                myProductTypes = "All";
+            }
+
+            else {
+                this.ProductTypeComboList.forEach((i) => {
+                    if (i.Checked) {
+                        myProductTypes += i.Code + ",";
+                    }
+                });
+            }
+
+            var myProductsText: string = myProductTypes.trim();
+            this.mySelectedProductsList = myProductsText.split(',');
+            this.UpdateColumns();
+
+            var queryFilterItem1 = new QueryFilterItem();
+            queryFilterItem1.DisplayInList = false;
+            queryFilterItem1.FieldName = "DataTypeCode";
+            queryFilterItem1.FieldValue = this.SelectedViewByFilter.Code;
+            queryFilterItem1.Operator = "Equals";
+            this.queryFilterItems.push(queryFilterItem1);
+
+            var queryFilterItem2 = new QueryFilterItem();
+            queryFilterItem2.DisplayInList = false;
+            queryFilterItem2.FieldName = "TimeRange";
+            queryFilterItem2.FieldValue = this.SelectedTimeRangeFilter.Code;
+            queryFilterItem2.Operator = "Equals";
+            this.queryFilterItems.push(queryFilterItem2);
+
+            var queryFilterItem3 = new QueryFilterItem();
+            queryFilterItem3.DisplayInList = false;
+            queryFilterItem3.FieldName = "ProductsTypes";
+            queryFilterItem3.FieldValue = myProductTypes;
+            queryFilterItem3.Operator = "Equals";
+            this.queryFilterItems.push(queryFilterItem3);
+
+            var queryFilterItem4 = new QueryFilterItem();
+            queryFilterItem4.DisplayInList = false;
+            queryFilterItem4.FieldName = "BusinessUnitId";
+            queryFilterItem4.FieldValue = this.BusinessUnitId;
+            queryFilterItem4.Operator = "Equals";
+            this.queryFilterItems.push(queryFilterItem4);
+
+            var queryFilterItem5 = new QueryFilterItem();
+            queryFilterItem5.DisplayInList = false;
+            queryFilterItem5.FieldName = "OwnerId";
+            queryFilterItem5.FieldValue = this.OwnerId;
+            queryFilterItem5.Operator = "Equals";
+            this.queryFilterItems.push(queryFilterItem5);
+
+            var queryFilterItem6 = new QueryFilterItem();
+            queryFilterItem6.DisplayInList = false;
+            queryFilterItem6.FieldName = "CountryId";
+            queryFilterItem6.FieldValue = this.CountryId;
+            queryFilterItem6.Operator = "Equals";
+            this.queryFilterItems.push(queryFilterItem6);
+
+            var queryFilterItem7 = new QueryFilterItem();
+            queryFilterItem7.DisplayInList = false;
+            queryFilterItem7.FieldName = "ProductCode";
+            queryFilterItem7.FieldValue = this.SelectedProductFilter.Code;
+            queryFilterItem7.Operator = "Equals";
+            this.queryFilterItems.push(queryFilterItem7);
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = "CustomerPotentialActualFilterControl";
             this.reportFliter.ReportCode = "CUPA";
             this.reportFliter.NumberOfPage = 1;
@@ -640,77 +648,7 @@ export class CustomerPotentialActualFilterComponent extends BaseComponent {
             this.GenerateReport(this.reportFliter);
         }
     }
-    GetQueryFilterItems(){
-        this.queryFilterItems = new Array<QueryFilterItem>();
 
-        var myProductTypes: string = "";
-
-        if (this.SelectedProdustTypeFilter == "All") {
-            myProductTypes = "All";
-        }
-
-        else {
-            this.ProductTypeComboList.forEach((i) => {
-                if (i.Checked) {
-                    myProductTypes += i.Code + ",";
-                }
-            });
-        }
-
-        var myProductsText: string = myProductTypes.trim();
-        this.mySelectedProductsList = myProductsText.split(',');
-        this.UpdateColumns();
-
-        var queryFilterItem1 = new QueryFilterItem();
-        queryFilterItem1.DisplayInList = false;
-        queryFilterItem1.FieldName = "DataTypeCode";
-        queryFilterItem1.FieldValue = this.SelectedViewByFilter.Code;
-        queryFilterItem1.Operator = "Equals";
-        this.queryFilterItems.push(queryFilterItem1);
-
-        var queryFilterItem2 = new QueryFilterItem();
-        queryFilterItem2.DisplayInList = false;
-        queryFilterItem2.FieldName = "TimeRange";
-        queryFilterItem2.FieldValue = this.SelectedTimeRangeFilter.Code;
-        queryFilterItem2.Operator = "Equals";
-        this.queryFilterItems.push(queryFilterItem2);
-
-        var queryFilterItem3 = new QueryFilterItem();
-        queryFilterItem3.DisplayInList = false;
-        queryFilterItem3.FieldName = "ProductsTypes";
-        queryFilterItem3.FieldValue = myProductTypes;
-        queryFilterItem3.Operator = "Equals";
-        this.queryFilterItems.push(queryFilterItem3);
-
-        var queryFilterItem4 = new QueryFilterItem();
-        queryFilterItem4.DisplayInList = false;
-        queryFilterItem4.FieldName = "BusinessUnitId";
-        queryFilterItem4.FieldValue = this.BusinessUnitId;
-        queryFilterItem4.Operator = "Equals";
-        this.queryFilterItems.push(queryFilterItem4);
-
-        var queryFilterItem5 = new QueryFilterItem();
-        queryFilterItem5.DisplayInList = false;
-        queryFilterItem5.FieldName = "OwnerId";
-        queryFilterItem5.FieldValue = this.OwnerId;
-        queryFilterItem5.Operator = "Equals";
-        this.queryFilterItems.push(queryFilterItem5);
-
-        var queryFilterItem6 = new QueryFilterItem();
-        queryFilterItem6.DisplayInList = false;
-        queryFilterItem6.FieldName = "CountryId";
-        queryFilterItem6.FieldValue = this.CountryId;
-        queryFilterItem6.Operator = "Equals";
-        this.queryFilterItems.push(queryFilterItem6);
-
-        var queryFilterItem7 = new QueryFilterItem();
-        queryFilterItem7.DisplayInList = false;
-        queryFilterItem7.FieldName = "ProductCode";
-        queryFilterItem7.FieldValue = this.SelectedProductFilter.Code;
-        queryFilterItem7.Operator = "Equals";
-        this.queryFilterItems.push(queryFilterItem7);
-        return this.queryFilterItems;
-    }
     private GenerateReport(filter: ReportFliter) {
             this.CurrentSession.StartBusyIndicatorLoading();
         

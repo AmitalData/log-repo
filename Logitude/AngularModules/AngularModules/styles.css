@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import url("_Resources/css/css.css");
 @import url("_Resources/js/Charts/export.css");
+
+
 @import url("_Resources/Froala/css/font-awesome.min.css");
 @import url("_Resources/Froala/css/froala_editor.css");
 @import url("_Resources/Froala/css/froala_style.css");
@@ -17,72 +20,6 @@
 @import url("_Resources/Froala/css/plugins/quick_insert.css");
 @import url("_Resources/Froala/css/plugins/file.css");
 @import url("_Resources/Froala/css/codemirror.min.css");
+
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-/* @import '../../assets/css/default/style.min.css'; */
-@import url("_Resources/css/PrimeWebComponent.css");
-@import url("_Resources/css/logitude-workflow-styles.css");
-@import url("_Resources/css/custom-ng-zorro-antd-styles.css");
-@import "~logitude-workflow/dist/index.css"; 
-@import "~ng-zorro-antd/tree-select/style/index.min.css"; 
-@import url("_Resources/css/pretty-print-json.css");
-@import 'vanilla-cookieconsent/dist/cookieconsent.css';
-
- .p-field {
-    margin-bottom: 1rem;
-    white-space: initial !important;
-}
-
-html body .p-toast-message-text .p-toast-detail {
-    white-space: pre-line;
-    width: auto !important;
-}
-
-.p-dialog-mask {
-    z-index: 50 !important;
-}
-
-.p-dynamic-dialog {
-    z-index: 51 !important;    
-}
- #enable-toolbar-trigger {
-    display: flex;
-    flex-direction: row-reverse;
-    -ms-transform: translateY(-100%)!important;
-    transform: translateY(-100%)!important;
-    position:relative;
-    top: -12px !important;
-    right: 6px !important;
-    transition: transform 0.3s ease-in-out;
-    width: 30px;
-}
-
-html.cc--light-funky #cc-main {
-    color-scheme: light;
-    --cc-bg: #f9faff;
-    --cc-primary-color: #0071CE;
-    --cc-btn-primary-bg: #0071CE;
-    --cc-btn-primary-hover-bg: #005499;
-    --cc-btn-secondary-bg: #dfe7f9;
-    --cc-btn-secondary-color: var(--cc-primary-color);
-    --cc-cookie-category-block-bg: #ebeff9;
-    --cc-overlay-bg: rgba(219, 232, 255, .85) !important;
-    --cc-modal-border-radius: var(--cc-btn-border-radius);
-}
-
-
-#cc-main  {
- direction: ltr;
-}
-
-
-#cc-main .section__toggle:checked ~ .toggle__icon {
-    background-color: #0071CE;
-}
-
-#cc-main .toggle__icon-on svg  {
-    stroke: #0071CE;
-}
-
- 

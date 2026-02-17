@@ -5,7 +5,7 @@ import {AWBStackDomainService, StockSeriesListClass, StockSeries} from '../../..
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AssignComponent.html',
 })
 

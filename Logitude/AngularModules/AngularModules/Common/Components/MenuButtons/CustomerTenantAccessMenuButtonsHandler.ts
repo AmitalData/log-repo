@@ -69,6 +69,9 @@ export class CustomerTenantAccessMenuButtonsHandler {
     Deny() {
         var confirmWindow: ConfirmWindow = new ConfirmWindow();
         confirmWindow.Title = "Deny Request";
+        confirmWindow.Yes = true;
+        confirmWindow.No = true;
+        confirmWindow.Cancel = true;
         confirmWindow.Show("Are you sure you want to Deny this Request ?");
         confirmWindow.WindowClosed.subscribe(event => {
             if (confirmWindow.Yes) {

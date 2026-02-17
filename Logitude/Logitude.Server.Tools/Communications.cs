@@ -1,8 +1,5 @@
 ﻿using Devart.Data.Oracle;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.SQL;
@@ -12,10 +9,10 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -50,36 +47,6 @@ namespace Logitude.Server.Tools
             var myCommLog = communicationLogRep.GetSingleCommunicationLog(requestCommunicationLogId, tenant);
             return myCommLog;
         }
-        public static CommunicationLog GetCommunicationLogByCorrelationID(int tenant, string correlationID)
-        {
-            var myContext = CommonDataContext.GetContext(tenant);
-            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
-
-            var myCommLog = communicationLogRep.GetSingleCommunicationByCorrelationID( tenant, correlationID);
-            return myCommLog;
-        }
-        public static CommunicationLog GetSingleCommunicationLogInProccess(int tenant, string entityId , string to, string correlationID)
-        {
-
-            //CommunicationLog communicationLog = null;
-            var myContext = CommonDataContext.GetContext(tenant);
-            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
-
-            var myCommLog = communicationLogRep.GetSingleCommunicationLogInProccess(entityId, tenant , to , correlationID);
-            return myCommLog;
-        }
-        public static CommunicationLog GetSingleCommunicationLogInProccess(int tenant, string entityId, List<string> subjects)
-        {
-
-            //CommunicationLog communicationLog = null;
-            var myContext = CommonDataContext.GetContext(tenant);
-            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(myContext);
-
-            var myCommLog = communicationLogRep.GetSingleCommunicationLogInProccess(entityId, tenant, subjects);
-            return myCommLog;
-        }
-
-
         public static string GetData(CommunicationLog myCommLog)
         {
 
@@ -163,16 +130,8 @@ namespace Logitude.Server.Tools
             storageservice.Write(byteData, fileInfo);
 
         }
-
         public static string AddCommunicationLog(CommunicationsParams communicationParams)
         {
-            //if((communicationParams.QueueName != null && communicationParams.QueueName.StartsWith("externaltasksqueue")) || communicationParams.To == "Unifreight")
-            //{
-            //    CustomsSetting customsSettings = CustomsSettingRepository.GetSettingByTenantCache(communicationParams.Tenant);
-            //    if (customsSettings.StandAlone)
-            //        return null;
-            //}
-
             CommunicationLog commLog;
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
@@ -186,7 +145,7 @@ namespace Logitude.Server.Tools
                 if (!String.IsNullOrWhiteSpace(communicationParams.LoggingObjectTableId))
                 {
 
-                    objectTable = objecttableRep.GetSingleObjectTable(communicationParams.LoggingObjectTableId, communicationParams.Tenant, true);
+                    objectTable = objecttableRep.GetSingleObjectTable(communicationParams.LoggingObjectTableId, 0, true);
                 }
                 else
                 {
@@ -212,7 +171,7 @@ namespace Logitude.Server.Tools
                 if (loggedUser == null)
                 {
                     string systenEmail = "system@tenant" + tenant + ".com";
-                    User systemUser = userRepository.GetSingleUserByEmail(systenEmail, tenant, true);
+                    User systemUser = userRepository.GetSingleUserByEmail(systenEmail, tenant, false);
                     if (systemUser != null)
                         communicationParams.LoggingUserId = systemUser.Id;
                 }
@@ -243,10 +202,7 @@ namespace Logitude.Server.Tools
                     LastStatusDateUTC = DateTime.UtcNow,
                     QueueName = communicationParams.QueueName,
                     Priority = communicationParams.Priority,
-                    AdditionalFields = communicationParams.AdditionalFields,
-                    ExceptionMessage = communicationParams.ExceptionMessage,
-                    UniqueNumber = communicationParams.UniqueNumber,
-                    WasAnalyzed = communicationParams.WasAnalyzed,
+
                 };
                 communicationLogRepository.Add(commLog);
                 communicationLogRepository.SubmitChanges();
@@ -332,9 +288,7 @@ namespace Logitude.Server.Tools
         }
 
 
-        public static void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant, Dictionary<string, string> queueParameters = null,
-            TimeSpan? delayTime=null,
-            string InterfaceTypeCode= null
+        public static void SendCommunicationLogMessageToQueue(string queueName, string communicationLogId, int tenant, Dictionary<string, string> queueParameters = null
 
             )
         {
@@ -342,7 +296,7 @@ namespace Logitude.Server.Tools
 
             try
             {
-                if (!LogitudeSettings.IsCostomsDeploy && !SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.AmitalOracle) ) 
+                if (LogitudeSettings.DeploymentStage != "amitaloracletk1")//Islam //(LogitudeSettings.QueueServiceMode != "db")
                 {
 
                     DbQueueService queueservice = new DbQueueService(queueName, tenant);
@@ -350,11 +304,11 @@ namespace Logitude.Server.Tools
                     {
                         if (!queueParameters.Keys.Contains("CommunicationLogId"))
                             queueParameters.Add("CommunicationLogId", communicationLogId);
-                        queueservice.Send(queueParameters, tenant);
+                        queueservice.Send(queueParameters);
 
                     }  else
                     {
-                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+                        queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
                     }
                   
 
@@ -372,31 +326,17 @@ namespace Logitude.Server.Tools
                 }
                 else
                 {
-
-                    
-                    
-
-                    var UseRabbitMQ = CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && CustomDbQueueService.SupportedRabbitMQList.Contains(queueName);
-
                     var queueService = new CustomDbQueueService//();
                                                                //queueService.InitializeQueue
-                    (queueName, tenant);
+                    (queueName, 0);
                     var messageProperties = new Dictionary<string, string>();
                     messageProperties["CommunicationLogId"] = communicationLogId;
                     messageProperties["Tenant"] = tenant.ToString();
-                    var queueId = queueService.Send(messageProperties, tenant, delayTime, new QueueSendModel()
-                    {
-                        TenantPriority = 7,
-                        UseRabbitMQ = UseRabbitMQ,
-                        EntityCode = "CommunicationLog".ToLower(),
-                        EntityId = communicationLogId,
-                        InterfaceTypeCode =InterfaceTypeCode
-                    });
-                    
-                    LogMessagingUtil.Instance.AppendLine($"SendCommunicationLogMessageToQueue({queueName}, {communicationLogId})=>QID={queueId} ");
+                    var queueId = queueService.Send(messageProperties);
+
+
                     ///throw new Exception("Queue is DbMode "); 
                 }
-                
             }
             catch (Exception ex)
             {
@@ -524,7 +464,7 @@ namespace Logitude.Server.Tools
                         OracleDbType = OracleDbType.NVarChar,
                         //Size = -1,
                         ParameterName = "iv_pLog",
-                        Value = (log.ToString().Length  >2000) ?log.ToString().Substring(0,2000):log
+                        Value = log
                     };
                     cmd.Parameters.Add(pLog);
                     var pExceptionMessage = new OracleParameter()
@@ -574,7 +514,7 @@ namespace Logitude.Server.Tools
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.Int, ParamName = "@pTenant",Value = tenant },
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.VarChar, ParamSize = 4, ParamName = "@pCommunicationStatusTypeCode",Value= statusTypeCode },
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.NVarChar, ParamSize = -1, ParamName = "@pLog",Value = log },
-                            new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.NVarChar, ParamSize = -1, ParamName = "@pExceptionMessage",Value = exceptionMessage },
+                            new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.VarChar, ParamSize = -1, ParamName = "@pExceptionMessage",Value = exceptionMessage },
                             new StoredProcedureParam()   { Direction = ParameterDirection.Input, ParamDBType = SqlDbType.VarChar, ParamSize = 40, ParamName = "@pMessageLockId",Value = messageLockId }
 
                         };
@@ -583,11 +523,11 @@ namespace Logitude.Server.Tools
         }
 
 
-        public static string AddEmailCommunicationLogQueue(EmailCommunicationParams communicationParams, int tenant)
+        public static void AddEmailCommunicationLogQueue(EmailCommunicationParams communicationParams, int tenant)
         {
             if (!string.IsNullOrEmpty(communicationParams.To) && communicationParams.To.Contains("system@tenant"))
             {
-                return string.Empty;
+                return;
             }
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
@@ -657,7 +597,7 @@ namespace Logitude.Server.Tools
                 CreateDateUTC = DateTime.UtcNow,
                 LastStatusDateUTC = DateTime.UtcNow,
                 QueueName = "emailqueue",
-                SearchFields =string.Join(",",new string[] { communicationParams.To, communicationParams.From, communicationParams.BCC, communicationParams.CC, communicationParams.Subject }),
+                SearchFields = communicationParams.To + ',' + communicationParams.From + ',' + communicationParams.BCC + ',' + communicationParams.CC + ',' + communicationParams.Subject,
                IsSecured = communicationParams.IsBodySecured,
             };
 
@@ -674,9 +614,8 @@ namespace Logitude.Server.Tools
 			//queueservice.Send(message);
 
 			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", commLog.Tenant.ToString() } }, commLog.Tenant);
-            return commLog.Id;
-        }
+			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", commLog.Tenant.ToString() } });
+		}
 
     }
 
@@ -738,10 +677,7 @@ namespace Logitude.Server.Tools
         public string FileExtension { get; set; }
 
         public Dictionary<string, string> QueueParameters { get; set; }
-        public string AdditionalFields { get; set; }
-        public string ExceptionMessage { get; set; }
-        public string UniqueNumber { get; set; }
-        public bool? WasAnalyzed { get; set; }
+
     }
 
 

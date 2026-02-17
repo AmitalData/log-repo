@@ -1,7 +1,7 @@
 ﻿using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -170,37 +170,28 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
 
         public IQueryable<CardList> RunFilter(IQueryable<CardList> iQueryableData)
         {
-            var iQueryableData_NotCustomers = iQueryableData.Where(d => (d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO" )|| ( d.PartnerTypeId =="CS" && !d.IsCustomer));
+            List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
 
-            iQueryableData = iQueryableData.Where(d => (d.PartnerTypeId == "CS" && d.IsCustomer )|| d.PartnerTypeId == "PO");
-
-            if (iQueryableData.Count() > 0)
+            if (myFeatureRoles.Count > 0)
             {
-                List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
-
-                if (myFeatureRoles.Count > 0)
+                if (!myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "OR").Any())
                 {
-                    if (!myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "OR").Any())
+                    if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "US").Any())
                     {
-                        if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "US").Any())
-                        {
-                            iQueryableData = iQueryableData.Where(d => d.SalesmanUserId == loggedUser.Id);
-                        }
+                        iQueryableData = iQueryableData.Where(d => d.SalesmanUserId == loggedUser.Id);
+                    }
 
-                        else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "BU").Any())
-                        {
-                            iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId == loggedUser.BusinessUnitId);
-                        }
+                    else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "BU").Any())
+                    {
+                        iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId == loggedUser.BusinessUnitId);
+                    }
 
-                        else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "PR").Any())
-                        {
-                            iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId.StartsWith(loggedUser.BusinessUnitId));
-                        }
+                    else if (myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "PR").Any())
+                    {
+                        iQueryableData = iQueryableData.Where(d => d.SalesmanBusinessUnitId.StartsWith(loggedUser.BusinessUnitId));
                     }
                 }
             }
-
-            iQueryableData = iQueryableData.Concat(iQueryableData_NotCustomers);
 
             return iQueryableData;
         }
@@ -393,7 +384,7 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 
-            if (loggedUserEmail != "support@amital.co.il")
+            if (loggedUserEmail != "admin@fnarsoft.com")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Customer", 0, true);

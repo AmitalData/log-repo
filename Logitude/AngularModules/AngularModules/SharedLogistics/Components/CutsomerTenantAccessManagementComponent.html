@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .iwanttohover:hover {
         background: #DDE6F0;
@@ -34,18 +34,11 @@ Test:hover {
     <table>
 
 
-        <tr>
-            <td colspan="3">
-                <div style="height:25px">
-                    <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()" style="display:block; margin-top:3px"></IconButton>
-                </div>
-            </td>
-        </tr>
-
+        <tr><td colspan="3"><div style="height:25px"></div></td></tr>
         <tr style="height:100%">
             <td style="width:380px;">
                 <table>
-
+                
                     <tr style="vertical-align:top;height:50%;">
                         <td style="vertical-align:top">
 
@@ -62,18 +55,17 @@ Test:hover {
 
                                 <tr style="vertical-align:top;">
                                     <td style="vertical-align:top">
+                                  
+                                            <div >
 
-                                        <div>
+                                                <!-- Activation -->
+                                                <div class="QueriesSection">
+                                                    <div>Activation</div>
 
-                                            <!-- Activation -->
-                                            <div class="QueriesSection">
-                                                <div>Activation</div>
-
-                                                <div>
-                                                    <p class="QueryLink" (click)="SettingsLinkClick()">Settings</p>
-                                                    <p *ngIf="IsCreateLogboxTenantVisibile" class="QueryLink" (click)="CreateLogboxTenantLinkClick()">Create new tenant</p>
-                                                </div>
-                                            </div>
+                                                    <div>
+                                                        <p class="QueryLink" (click)="SettingsLinkClick()">Settings</p>
+                                                    </div>
+                                                </div>                                              
                                         </div>
                                     </td>
                                 </tr>
@@ -110,19 +102,19 @@ Test:hover {
 
                                                 <tr style="vertical-align:top;">
                                                     <td style="width:182px;background-color:white;vertical-align:top">
-
+                                                        
                                                         <div>
-                                                            <table>
-                                                                <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:orange;font-size:16px;vertical-align:central;">Waiting For Approval</td></tr>
-                                                                <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:orange;font-size:16px;vertical-align:central;">In Progress</td></tr>
-                                                                <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:green;font-size:16px;vertical-align:central;">Accepted</td></tr>
-                                                                <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:red;font-size:16px;vertical-align:central;">Inactive</td></tr>
+                                                        <table>
+                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:orange;font-size:16px;vertical-align:central;">Waiting For Approval</td></tr>
+                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:orange;font-size:16px;vertical-align:central;">In Progress</td></tr>
+                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:green;font-size:16px;vertical-align:central;">Accepted</td></tr>
+                                                            <tr style="height:41px;border-bottom:1px solid lightgray;border-style: dashed"><td style="color:red;font-size:16px;vertical-align:central;">Inactive</td></tr>
 
-                                                            </table>
-
+                                                           </table>
+                                                        
                                                         </div>
-
-
+                                                    
+                                                    
                                                     </td>
 
                                                     <td style="width:10px;vertical-align:top"><div></div></td>
@@ -131,7 +123,7 @@ Test:hover {
 
                                                         <div style="text-align:center;background: #EBEBEB;border-radius: 5px;">
                                                             <table style="text-align:center;">
-                                                                <tr style="height:41px;text-align:center;"><td style="text-align:center"><p class="CustomQueryLink" [class.HyperlinkDisabled]="!WaitingCountEnabled" style="font-size:20px;text-align:center;" (click)="StatusZoomCommand('W')">{{WaitingCount}}</p></td></tr>
+                                                                <tr style="height:41px;text-align:center;"><td style="text-align:center"><p class="CustomQueryLink" [class.HyperlinkDisabled]="!WaitingCountEnabled"  style="font-size:20px;text-align:center;" (click)="StatusZoomCommand('W')">{{WaitingCount}}</p></td></tr>
                                                                 <tr style="height:41px;text-align:center;"><td style="text-align:center"><p [class.HyperlinkDisabled]="!InProgressCountEnabled" class="CustomQueryLink" style="font-size:20px;text-align:center;" (click)="StatusZoomCommand('IP')">{{InProgressCount}}</p></td></tr>
 
 
@@ -147,7 +139,7 @@ Test:hover {
                                                     <td style="width:10px;vertical-align:top"><div></div></td>
                                                 </tr>
                                             </table>
-
+                                          
                                         </div>
                                     </td>
 
@@ -172,9 +164,9 @@ Test:hover {
                 <table>
 
                     <tr style="vertical-align:top;height:50%;">
+              
 
-
-                        <!--table-->
+                        <!--table--> 
 
 
                         <td>
@@ -199,32 +191,25 @@ Test:hover {
                                     <td>
                                         <div class="CellContent">
                                             <!--(SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow"-->
-                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)">
+                                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" >
 
                                                 <log-column [header]="'Copmany'" [binding]="'CompanyName'" [width]="'250'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>
                                                 <log-column [header]="'Vat #'" [binding]="'CompanyVat'" [width]="'120'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>
                                                 <log-column [header]="'Contact'" [binding]="'ContactName'" [width]="'150'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>
-
                                                 <log-column [width]="'120'" [header]="'Create Date'">
-                                                    <ng-template let-item>
-                                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                            <div style="height: 100%; width: 100%; position: relative;">
-                                                                {{item.RequestDateTime | DateTimePipe}}
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </ng-template>
+                                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                                        <div style="height: 100%; width: 100%; position: relative;">
+                                                            {{item.RequestDateTime | DateTimePipe}}
+                                                        </div>
+                                                    </log-cell-template>
                                                 </log-column>
-
                                                 <log-column [width]="'120'" [header]="'Is Private Label'">
-                                                    <ng-template let-item>
-                                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                            <div style="height: 100%; width: 100%; position: relative;">
-                                                                <img *ngIf="item.IsPrivateLabelCustomer" src="./Images/GreenTick.png" width="20" height="20" />
-                                                            </div>
-                                                        </log-cell-template>
-                                                    </ng-template>
+                                                    <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                                        <div style="height: 100%; width: 100%; position: relative;">
+                                                           <img *ngIf="item.IsPrivateLabelCustomer" src="./Images/GreenTick.png" width="20" height="20" />
+                                                        </div>
+                                                    </log-cell-template>
                                                 </log-column>
-
                                                 <!--<log-column [header]="'Create Date'" [binding]="'RequestDateTime'" [width]="'120'" [visibility]="'visibile'" [Alignment]="'left'"></log-column>-->
 
                                             </logitude-edit-grid>
@@ -260,6 +245,7 @@ Test:hover {
                             <table>
                                 <tr class="SectionHeader">
                                     <td>
+                                        
                                     </td>
                                 </tr>
 

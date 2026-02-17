@@ -10,9 +10,9 @@ import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs'
 declare var  StringToBase64, Base64ToString: any;
 import {ReportsTemplatePM} from '../../../../Common/EntityPMs/ReportsTemplatePM';
 import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
- 
+
 @Component({
-    
+    moduleId: module.id,
     selector: 'SaveAsTemplate',
     templateUrl: './SaveAsTemplateComponent.html',
     providers: [DocumentTypeTemplatePMService, ServiceArgs]
@@ -48,9 +48,11 @@ export class SaveAsTemplateComponent implements OnInit {
     SetDataContext(dataContext: any) {
 
         this.DataContext = dataContext;
-        if (!this.DataContext) return;
-        this.PageType = this.DataContext.PageType;
-        this.SelectedTemplate = this.DataContext.template;
+        if (this.DataContext) {
+            this.PageType = this.DataContext.PageType;
+            this.SelectedTemplate = this.DataContext.template;
+            
+        }
     }
 
 
@@ -59,7 +61,7 @@ export class SaveAsTemplateComponent implements OnInit {
 
         this.CurrentSession.CloseCurrentWindow();
     }
- 
+
 
 
     SaveButtonClicked() {
@@ -82,30 +84,26 @@ export class SaveAsTemplateComponent implements OnInit {
 
                 newTemplatePM.TemplateType = "M";
                 newTemplatePM.ReportId = this.SelectedTemplate.ReportId;
-                newTemplatePM.Tenant = SessionInfo.LoggedUserTenant;
-                newTemplatePM.ObjectTableId = this.DataContext.ObjectTableId;
-                newTemplatePM.EntityId = this.DataContext.EntityId;
-                newTemplatePM.Subject = this.DataContext.Subject;
+
 
                 var reportsTemplatePMExtendedService: ReportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
                 reportsTemplatePMExtendedService.CreateReportTemplate(newTemplatePM).subscribe((res: any) => {
 
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     var pmResponse: ServiceResponse = res;
-                    if (pmResponse.HasError) {
+
+
+                    if (!pmResponse.HasError) {
+                        var result = pmResponse.Result;
+                        if (result) {
+                            this.CurrentSession.CurrentWindow.Close(result.Id);
+                        }
+                    }
+                    else {
                         pmResponse.ErrorsArray.forEach((item) => {
                             this.ValidationErrorsList.push(item);
                         });
-                        return;
                     }
-
-                    if (!pmResponse.Result) return;
-                    var result = pmResponse.Result;
-                    if (!pmResponse.HasError && this.DataContext.IsFromScheduler) {
-                        this.DataContext.DataViewModel.EditMessageTemplateListFromPM(result);
-                    }
-                    this.CurrentSession.CurrentWindow.Close(result.Id);
-
                 });
             }
             else {
@@ -131,16 +129,12 @@ export class SaveAsTemplateComponent implements OnInit {
                 newTemplatePM.TemplateHeaderHtml = this.SelectedTemplate.TemplateHeaderHtml;
                 newTemplatePM.TemplateFooterHeight = this.SelectedTemplate.TemplateFooterHeight;
                 newTemplatePM.TemplateFooterHtml = this.SelectedTemplate.TemplateFooterHtml;
-                newTemplatePM.AutomationId = !this.DataContext.AutomationId ? null : this.DataContext.AutomationId;
-                newTemplatePM.EntityId = !this.DataContext.EntityId ? null : this.DataContext.EntityId;
-                newTemplatePM.ObjectTableId = !this.DataContext.ObjectTableId ? null : this.DataContext.ObjectTableId;
-                this.MapDefultAttachmentsDocumentFields(newTemplatePM);
-                 
+
                 if (this.DataContext) {
                     newTemplatePM.TemplateBodyHtml = StringToBase64(this.DataContext.froalaEditorSetting.froalaEditorComponent.getHtml());
                 }
 
-                this.documentTypeTemplatePMService.insert(newTemplatePM).subscribe((myResult:any) => {
+                this.documentTypeTemplatePMService.insert(newTemplatePM).subscribe(myResult => {
 
 
 
@@ -182,11 +176,4 @@ export class SaveAsTemplateComponent implements OnInit {
 
 
 
-
-    private MapDefultAttachmentsDocumentFields(newTemplatePM: any) {
-        newTemplatePM.DefultAttachmentsXML = this.SelectedTemplate.DefultAttachmentsXML;
-        newTemplatePM.DocumentDefultAttachments = this.SelectedTemplate.DocumentDefultAttachments;
-        newTemplatePM.AttachedExternalDocumentsIds = this.SelectedTemplate.AttachedExternalDocumentsIds;
-        newTemplatePM.IsDefultAttachmentsXMLChanged = true;
-    }
 }

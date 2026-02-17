@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PartnersTabComponent.html',
 })
 
@@ -69,7 +69,7 @@ export class PartnersTabComponent {
                         this.CardService = new CardPMService();
                     }
 
-                    this.CardService.update(item).subscribe((myResult:any) => {
+                    this.CardService.update(item).subscribe(myResult => {
 
                     });
                 }

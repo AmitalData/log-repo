@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Shipment">
-  <Sql Version="5">
-    <![CDATA[
-	      -- manually  
-    ]]>
-  </Sql>
-</Script>

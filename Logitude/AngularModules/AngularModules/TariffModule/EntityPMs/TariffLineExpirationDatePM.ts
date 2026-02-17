@@ -1,5 +1,6 @@
 
 export class TariffLineExpirationDatePM {
+
     private originPortId: string;
     public get OriginPortId() { return this.originPortId; }
     public set OriginPortId(newValue: string) {
@@ -16,36 +17,11 @@ export class TariffLineExpirationDatePM {
         }
     }
 
-    private viaPortId: string;
-    public get ViaPortId() { return this.viaPortId; }
-    public set ViaPortId(newValue: string) {
-        if (this.viaPortId != newValue) {
-            this.viaPortId = newValue;
-        }
-    }
-
-
     private expirationDate: Date;
     public get ExpirationDate() { return this.expirationDate; }
     public set ExpirationDate(newValue: Date) {
         if (this.expirationDate != newValue) {
             this.expirationDate = newValue;
-        }
-    }
-
-    private fromCountryId: string;
-    public get FromCountryId() { return this.fromCountryId; }
-    public set FromCountryId(newValue: string) {
-        if (this.fromCountryId != newValue) {
-            this.fromCountryId = newValue;
-        }
-    }
-
-    private toCountryId: string;
-    public get ToCountryId() { return this.toCountryId; }
-    public set ToCountryId(newValue: string) {
-        if (this.toCountryId != newValue) {
-            this.toCountryId = newValue;
         }
     }
 

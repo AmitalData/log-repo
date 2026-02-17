@@ -24,19 +24,8 @@ import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryF
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 @Component({
     selector: 'AddAttachmentResponseComponent',
-    
+    moduleId: module.id,
     templateUrl: './AddAttachmentResponseComponent.html',
-    styles: [
-        `        
-            :host ::ng-deep input{
-                color: black;
-            }
-
-            :host ::ng-deep LogLabel  label {
-                color: black !important;
-            }
-        `
-    ]
 })
 
 

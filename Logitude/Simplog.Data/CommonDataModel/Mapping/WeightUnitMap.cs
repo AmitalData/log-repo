@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -22,11 +22,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
-            this.Property(t => t.PrintAs)
-               .IsRequired()
-               .HasMaxLength(10)
-               .IsUnicode(false);
-
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)
                 .IsUnicode(true);
@@ -35,7 +30,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.ToTable("WeightUnits");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Name).HasColumnName("Name");
-            this.Property(t => t.PrintAs).HasColumnName("PrintAs");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
         }
     }

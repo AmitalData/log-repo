@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public PortRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PortRepository(int tenant)
         {
@@ -42,7 +45,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<Port> GetPorts(int tenant)
         {
-            return (from record in context.Ports.Include("Country").Include("State") where record.Tenant == tenant select record);
+            return (from record in context.Ports.Include("Country") where record.Tenant == tenant select record);
         }
 
         public Port GetSinglePort(string id, int tenant)
@@ -240,50 +243,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return null;
         }
 
-        public Port GetAirlineSinglePortByCodeCountryCode(int tenant, string code, string countryCode, bool getFromCache)
-        {
-            if (!string.IsNullOrEmpty(code))
-            {
-                string entityName = "Port" + code + tenant;
-                Port entity;
-
-                if (getFromCache)
-                {
-                    if (CacheManager.CacheWrapper != null)
-                    {
-                        if (CacheManager.CacheWrapper.Get(entityName) == null)
-                        {
-                            entity = (from a in context.Ports.Include("Country")
-                                      where a.Tenant == tenant && a.Code == code && a.Country.Code == countryCode && a.IsAir
-                                      select a).FirstOrDefault();
-
-
-                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                            {
-                                CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                            }
-
-                        }
-                        else
-                        {
-                            entity = (Port)CacheManager.CacheWrapper.Get(entityName);
-                        }
-                    }
-                    else
-                    {
-                        entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && record.IsAir && record.Tenant == tenant select record).FirstOrDefault();
-                    }
-                }
-                else
-                {
-                    entity = (from record in context.Ports.Include("Country") where record.Code == code && record.Country.Code == countryCode && record.IsAir && record.Tenant == tenant select record).FirstOrDefault();
-                }
-                return entity;
-
-            }
-            return null;
-        }
-
         public Port GetOceanPortByCode(int myTenant, string myCode, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(myCode))
@@ -329,6 +288,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return null;
         }
+
 
         public IQueryable<Port> GetSinglePortByCode(string input, bool byCode, int tenant)
         {
@@ -505,39 +465,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                           where a.CombinedCode == code && a.Tenant == tenant
                           select a).FirstOrDefault();
             return entity;
-        }
-
-        public Port GetOceanPortByCombinedCode(string code, int tenant)
-        {
-            var entity = (from a in context.Ports.Include("Country").Include("State")
-                          where a.CombinedCode == code && a.Tenant == tenant && a.IsOcean
-                          select a).FirstOrDefault();
-            return entity;
-        }
-        public Port GetOceanPortByNames(string name1, string name2, int tenant)
-        {
-            var name1HasValue = !string.IsNullOrEmpty(name1);
-            var name2HasValue = !string.IsNullOrEmpty(name2);
-            var entity = context.Ports.Where(a =>
-                ( (a.EnglishName == name1 && name1HasValue) || (a.EnglishName == name2 && name2HasValue) )
-                && a.Tenant == tenant
-                && a.IsOcean
-            ).FirstOrDefault();
-            return entity;
-        }
-
-        public IQueryable<Port> GetAirlinePortsByName(string name, int tenant)
-        {
-            return (from a in context.Ports.Include("Country")
-                    where a.Tenant == tenant && a.EnglishName == name && a.IsAir
-                    select a);
-        }
-
-        public IQueryable<Port> GetOceanPortsByName(string name, int tenant)
-        {
-            return (from a in context.Ports.Include("Country")
-                    where a.Tenant == tenant && a.EnglishName == name && a.IsOcean
-                    select a);
         }
     }
 }

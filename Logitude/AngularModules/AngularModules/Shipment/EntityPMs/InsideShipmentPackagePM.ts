@@ -8,8 +8,6 @@
 //------------------------------------------------------------------------------
 
 import {ShipmentPackagePM} from './ShipmentPackagePM';
-
-import {ShipmentPackageHarmonizePM} from './ShipmentPackageHarmonizePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -23,10 +21,10 @@ export class InsideShipmentPackagePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -245,84 +243,6 @@ export class InsideShipmentPackagePM {
     public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }
        
 	 
-    private harmonize: string;
-    public get Harmonize() { return this.harmonize; }
-    public set Harmonize(newValue: string) { if (this.harmonize != newValue) { this.harmonize = newValue; this.MarkAsDirty("Harmonize"); } }
-       
-	 
-    private isMultiHarmonize: boolean;
-    public get IsMultiHarmonize() { return this.isMultiHarmonize; }
-    public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
-       
-	 
-    private horseId: string;
-    public get HorseId() { return this.horseId; }
-    public set HorseId(newValue: string) { if (this.horseId != newValue) { this.horseId = newValue; this.MarkAsDirty("HorseId"); } }
-       
-	 
-    private horseName: string;
-    public get HorseName() { return this.horseName; }
-    public set HorseName(newValue: string) { if (this.horseName != newValue) { this.horseName = newValue; this.MarkAsDirty("HorseName"); } }
-       
-	 
-     
-	private insidePackageHarmonizes: ShipmentPackageHarmonizePM[];
-    get  InsidePackageHarmonizes() {
-        if (this.insidePackageHarmonizes == null) {
-            this.insidePackageHarmonizes = [];
-        }
-
-        return this.insidePackageHarmonizes;
-    }
-    set  InsidePackageHarmonizes(newValue: ShipmentPackageHarmonizePM[]) {
-        if (this.insidePackageHarmonizes != newValue) {
-            this.insidePackageHarmonizes = newValue;
-        }
-    }
-    public AddShipmentPackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
-        if (item != null) {
-            var index = this.InsidePackageHarmonizes.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this. InsidePackageHarmonizes.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveShipmentPackageHarmonizePM(item: ShipmentPackageHarmonizePM) {
-        if (item != null) {
-            var index = this.InsidePackageHarmonizes.indexOf(item);
-            if (index > -1) {
-                this. InsidePackageHarmonizes.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-	    //public InsidePackageHarmonizes: Array<ShipmentPackageHarmonizePMPM>= [];
- 
-    public InsidePackageHarmonizesChangeSet: Array<ShipmentPackageHarmonizePM>= [];
-		     private volumeInCBM: number;
-    public get VolumeInCBM() { return this.volumeInCBM; }
-    public set VolumeInCBM(newValue: number) { if (this.volumeInCBM != newValue) { this.volumeInCBM = newValue; this.MarkAsDirty("VolumeInCBM"); } }
-       
-	 
-    private grossWeightInKG: number;
-    public get GrossWeightInKG() { return this.grossWeightInKG; }
-    public set GrossWeightInKG(newValue: number) { if (this.grossWeightInKG != newValue) { this.grossWeightInKG = newValue; this.MarkAsDirty("GrossWeightInKG"); } }
-       
-	 
-    private grossWeightInLB: number;
-    public get GrossWeightInLB() { return this.grossWeightInLB; }
-    public set GrossWeightInLB(newValue: number) { if (this.grossWeightInLB != newValue) { this.grossWeightInLB = newValue; this.MarkAsDirty("GrossWeightInLB"); } }
-       
-	 
-    private volumeInCBF: number;
-    public get VolumeInCBF() { return this.volumeInCBF; }
-    public set VolumeInCBF(newValue: number) { if (this.volumeInCBF != newValue) { this.volumeInCBF = newValue; this.MarkAsDirty("VolumeInCBF"); } }
-       
-	 
 
     public OldEntityPM: InsideShipmentPackagePM;
 	    
@@ -333,10 +253,7 @@ export class InsideShipmentPackagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -346,7 +263,6 @@ export class InsideShipmentPackagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "InsideShipmentPackage");
            
         }
-	 }
     }
     private MyClone: InsideShipmentPackagePM;
 

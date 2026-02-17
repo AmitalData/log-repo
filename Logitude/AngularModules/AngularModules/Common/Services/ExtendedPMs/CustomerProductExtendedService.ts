@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 import {CustomerProductPM} from '../../EntityPMs/CustomerProductPM';
 
-import { defer, of } from 'rxjs';
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -12,10 +12,10 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 @Injectable()
 export class CustomerProductExtendedService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient; 
+        this._http = ServiceHelper.Http; 
 
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomerProductExtended';
     }
@@ -26,8 +26,8 @@ export class CustomerProductExtendedService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '?customerId=' + customerId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result :any = response;
+        return this._http.get(this._apiUrl + '?customerId=' + customerId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+            var result = response.json();
             var entity: CustomerProductPM;
             var customerProductPMLists: CustomerProductPM[];
             customerProductPMLists = new Array<CustomerProductPM>();
@@ -40,7 +40,7 @@ export class CustomerProductExtendedService {
 
             pmresponse.Result = customerProductPMLists;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
    

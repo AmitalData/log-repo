@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Simplog.Data.QuoteModel.EntityPOCOs;
+
+using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
+using System.Data.Entity.Core.Objects;
 using Simplog.Data.QuoteModel.Repositories;
+using Logitude.BL.Security;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BL.Resolvers;
-using Logitude.BL.QuoteModel.CustomFilters;
 
 namespace Logitude.BL.QuoteModel
 {
@@ -37,31 +46,6 @@ namespace Logitude.BL.QuoteModel
             {
                 if (item.IsCustom)
                 {
-                    if (item.FieldName == "From")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplyFromToFilter(item, queryableData);
-                    }
-
-                    if (item.FieldName == "To")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplyFromToFilter(item, queryableData, true);
-                    }
-
-                    if (item.FieldName == "DigitalPortalQuotesSearchFields")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplySearchFilter(item, queryableData);
-                    }
-
-                    if (item.FieldName == "TransportModeFilter")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplyTransportModeFilter(item, queryableData, tenant);
-                    }
-
-                    if (item.FieldName == "StatusFilter")
-                    {
-                        queryableData = DigitalPortalCustomFilter.ApplyStatusFilter(item, queryableData);
-                    }
-
                     if (item.FieldName == "IsCancelled")
                     {
                         bool value = Convert.ToBoolean(item.FieldValue);
@@ -131,7 +115,10 @@ namespace Logitude.BL.QuoteModel
 
                     if (item.FieldName == "MyQuotes")
                     {
-                        ContactPM contact = LoggedContactResolver.GetLoggedContact(tenant);
+                        string loggedUser = AuthenticationUtil.GetAuthenticatedUser();
+                        ContactRepository contactRep = new ContactRepository(tenant);
+                        Contact contact = contactRep.GetSingleContactByEmail(loggedUser, tenant);
+
                         queryableData = queryableData.Where(d => d.SalesmanUserId == contact.Id && !d.IsCancelled);
                     }
 
@@ -187,44 +174,10 @@ namespace Logitude.BL.QuoteModel
                             ToDateOBJ = TenantServerConfigration.GetCurrentDateTime(tenant);
                         }
 
-                        queryableData = queryableData.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= DbFunctions.TruncateTime(FromDateOBJ) && DbFunctions.TruncateTime(d.OpenDate) <= DbFunctions.TruncateTime(ToDateOBJ));
-                    }
 
-                    if (item.FieldName == "QuoteConversionDateFilter")
-                    {
-                        DateTime? fromDate = null;
-                        DateTime? toDate = null;
+                        queryableData = queryableData.Where(d => DbFunctions.TruncateTime(d.OpenDate) >= FromDateOBJ && DbFunctions.TruncateTime(d.OpenDate) <= ToDateOBJ);
 
-                        if (item.FieldValue != null)
-                        {
-                            fromDate = Convert.ToDateTime(item.FieldValue);
-                        }
 
-                        if (item.FieldValue2 != null)
-                        {
-                            toDate = Convert.ToDateTime(item.FieldValue2);
-                        }
-
-                        if (fromDate != null && toDate != null)
-                        {
-                            QuoteStageRepository quoteStageRepository = new QuoteStageRepository(tenant);
-                            string stage1Id = quoteStageRepository.GetQuoteStageIdByCode("QTCR", tenant);
-                            string stage2Id = quoteStageRepository.GetQuoteStageIdByCode("QTDR", tenant);
-
-                            queryableData = queryableData.Where(d => d.StageId != stage1Id && d.StageId != stage2Id && DbFunctions.TruncateTime(d.OpenDate) >= DbFunctions.TruncateTime(fromDate) && DbFunctions.TruncateTime(d.OpenDate) <= DbFunctions.TruncateTime(toDate));
-                        }
-                    }
-
-                    if (item.FieldName == "SentQuotesKPIChartFilter")
-                    {
-                        DateTime? fromDate = item.FieldValue != null && item.FieldValue.ToString() == "null" ? null : StringHelper.GetDate(item.FieldValue.ToString());
-
-                        DateTime? toDate = item.FieldValue2 != null && item.FieldValue2.ToString() == "null" ? null : StringHelper.GetDate(item.FieldValue2.ToString().Split(';')[0]);
-
-                        string category = item.FieldValue2 != null && item.FieldValue2.ToString() == "null" ? null : item.FieldValue2.ToString().Split(';')[1];
-
-                        queryableData = queryableData.Where(d => (DbFunctions.TruncateTime(d.OpenDate) >= fromDate && DbFunctions.TruncateTime(d.OpenDate) <= toDate) && d.SentDate != null && d.RequestDate != null);
-                        queryableData = this.SentQuotesKPIChartFilter_Query(queryableData, category);
                     }
 
                     if (item.FieldName == "ChartAcceptedDateFilter")
@@ -375,24 +328,14 @@ namespace Logitude.BL.QuoteModel
                         }
                     }
 
-                    if (item.FieldName == "IsShowingExpiredQuotes")
-                    {
-                        bool isShowingExpiredQuotes = false;
+                    //if (item.FieldName == "MyFollowUps")
+                    //{
+                    //    string email = SecurityUtility.GetAuthenticatedUser();
+                    //    ContactQuery contactQuery = new ContactQuery(tenant);
+                    //    ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
 
-                        if (item.FieldValue != null)
-                        {
-                            isShowingExpiredQuotes = Convert.ToBoolean(item.FieldValue);
-                        }
-
-                        if (!isShowingExpiredQuotes)
-                        {
-                            queryableData = queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now);
-                        }
-                        else
-                        {
-                            queryableData =  queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now || d.ExpirationDate < DateTime.Now);
-                        }                         
-                    } 
+                    //    queryableData = queryableData.Where(d => d.FollowUpOwnerId == loggedContact.Id);
+                    //}
                 }
             }
 
@@ -404,36 +347,6 @@ namespace Logitude.BL.QuoteModel
             {
                 queryableData = queryableData.Where(d => d.IsCancelled == false);
             }
-            return queryableData;
-        }
-
-        private IQueryable<Quote> SentQuotesKPIChartFilter_Query(IQueryable<Quote> queryableData, string category)
-        {
-            if (category == "< 1d")
-            {
-                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value < 1);
-            }
-            else if (category == "1-2 d")
-            {
-                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 1 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <=2 );
-            }
-            else if (category == "3-4 d")
-            {
-                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 3 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <= 4);
-            }
-            else if (category == "5-6 d")
-            {
-                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 5 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <= 6);
-            }
-            else if (category == "7-8 d")
-            {
-                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 7 && (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value <= 8);
-            }
-            else if (category == "9+ d")
-            {
-                queryableData = queryableData.Where(a => (System.Data.Entity.DbFunctions.DiffDays(a.RequestDate, a.SentDate)).Value >= 9);
-            }
-
             return queryableData;
         }
     }

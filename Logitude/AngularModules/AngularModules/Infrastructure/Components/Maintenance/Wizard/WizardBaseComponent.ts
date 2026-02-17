@@ -24,7 +24,7 @@ import { ObjectsLocator } from '../../../Locators/ObjectsLocator';
 import { ObjectsUpdater } from '../../../Locators/ObjectsUpdater';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WizardBaseComponent.html',
 })
 
@@ -87,7 +87,7 @@ export class WizardBaseComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

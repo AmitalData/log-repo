@@ -1,7 +1,0 @@
-﻿<Script DBType="Main">
-  <Sql Version="1">
-    <![CDATA[
-        update TariffSettings set DefaultCurrencyId = (select ProfitCurrencyId from Tenants where Id = TariffSettings.Tenant)
-    ]]>
-  </Sql>
-</Script>

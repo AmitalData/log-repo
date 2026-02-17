@@ -17,7 +17,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Reflection;
 using System.IO;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.ComponentModel.DataAnnotations;
@@ -74,9 +74,10 @@ namespace MetaDataGenerator
 				string commdir = dir + "CommonDataModel";
 				d = new DirectoryInfo(commdir);
 				string[] commFiles = d.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-                
 
-                string modelName = cmbModels.SelectionBoxItem.ToString();
+
+
+				string modelName = cmbModels.SelectionBoxItem.ToString();
 				switch (modelName)
 				{
 					case "Shipment":
@@ -124,14 +125,7 @@ namespace MetaDataGenerator
 								  select a).ToList();
 
 						break;
-                    case "None":
-                        tables = (from a in rep.context.ObjectTables
-                                  where !a.Name.Contains(".Customs")
-                                  && string.IsNullOrEmpty(a.ClientModuleName)
-                                  select a).ToList();
-
-                        break;
-                    default:
+					default:
 						tables = (from a in rep.context.ObjectTables
 								  where !a.Name.Contains(".Customs")
 								  && a.ClientModuleName == modelName
@@ -187,18 +181,11 @@ namespace MetaDataGenerator
 
 					DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
 					string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-                    if (dialog.SelectedPath.Contains("Logitude.Customs.MetaData"))
-                    {
-                        tables = (from a in rep.context.ObjectTables
-                                  where allFiles.Contains(a.Name.Replace("Customs.",""))
-                                  select a).OrderBy(t => t.Name).ToList();
-                    }
-                    else
-                    {
-                        tables = (from a in rep.context.ObjectTables
-                                  where allFiles.Contains(a.Name)
-                                  select a).OrderBy(t => t.Name).ToList();
-                    }
+
+					tables = (from a in rep.context.ObjectTables
+							  where allFiles.Contains(a.Name)
+							  select a).OrderBy(t => t.Name).ToList();
+
 					DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
 					dbToXmlGeneratorFrom.AppendExistingModelEntityLXMLs(tables, dialog.SelectedPath);
 					MessageBox.Show("Export completed successfully");
@@ -361,149 +348,7 @@ namespace MetaDataGenerator
 				MessageBox.Show(error);
 			}
 		}
-
-		private void btnFormatModelLXMLs_Click(object sender, RoutedEventArgs e)
-		{
-
-			//SetDontCreateObjectFieldAttribute();
-			//return;
-
-			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-			string solutionDirectory = solutionDir.FullName;
-
-			string dir = solutionDirectory;//+ @"\Logitude.MetaData\EntityFiles";//.Replace(@"MeatadataGeneratorTool\MeatadataGeneratorTool", @"MetaDataGenerator\GeneratedFiles\New");
-			string[] allFiles = GetAllLXMLFiles();
-			foreach (string filePath in allFiles)
-			{
-				//string filePath = directoryPath + table.Name + ".lxml";
-
-				XmlDocument doc = new XmlDocument();
-				doc.Load(filePath);
-
-
-				FileStream fileStream = new FileStream(filePath, FileMode.Truncate, FileAccess.Write);
-				XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
-				XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
-
-				doc.Save(xmlWriter);
-				xmlWriter.Close();
-				xmlWriter.Dispose();
-			}
-
-			MessageBox.Show("Formating all files completed successfully");
-
-
-
-		}
-
-		private void SetDontCreateObjectFieldAttribute()
-		{
-			//NoMetaDataField
-			//using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-			///{
-			string[] allFiles = GetAllLXMLFiles();
-
-			//if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-			//{
-			StringBuilder errorsBuilder = new StringBuilder();
-			//DirectoryInfo dirInfo = new DirectoryInfo(dialog.SelectedPath);
-			//string[] allFiles = dirInfo.GetFiles("*.lxml").Select(f => f.FullName).ToArray();//.Select(f => f.Name.Replace(f.Extension, "")).ToArray();
-			foreach (string filePath in allFiles)
-			{
-				//string filePath = directoryPath + table.Name + ".lxml";
-				try
-				{
-					XmlDocument doc = new XmlDocument();
-					doc.Load(filePath);
-
-					bool fileChanged = false;
-					XmlNodeList xnList = doc.SelectNodes("/entity/field[@FieldName='"+ "\"" +"Id" + "\"" + "']");
-					foreach (XmlNode xn in xnList)
-					{
-						if (xn.Attributes["NoMetaDataField"] == null)
-						{
-						 
-							XmlAttribute att  = doc.CreateAttribute("NoMetaDataField");
-							att.Value = "true";
-							XmlAttribute typeAttr = xn.Attributes.Append(att);
-							fileChanged = true;
-						}
-						else if(xn.Attributes["NoMetaDataField"].Value == "false")
-						{
-							xn.Attributes["NoMetaDataField"].Value = "true";
-							fileChanged = true;
-						}
-
-					}
-
-					XmlNodeList tenantxnList = doc.SelectNodes("/entity/field[@FieldName='" + "\"" + "Tenant" + "\"" + "']");
-					foreach (XmlNode xn in tenantxnList)
-					{
-						if (xn.Attributes["NoMetaDataField"] == null)
-						{
-
-							XmlAttribute att = doc.CreateAttribute("NoMetaDataField");
-							att.Value = "true";
-							XmlAttribute typeAttr = xn.Attributes.Append(att);
-							fileChanged = true;
-						}
-						else if (xn.Attributes["NoMetaDataField"].Value == "false")
-						{
-							xn.Attributes["NoMetaDataField"].Value = "true";
-							fileChanged = true;
-						}
-
-					}
-
-					if (fileChanged)
-					{
-						FileStream fileStream = new FileStream(filePath, FileMode.Truncate, FileAccess.Write);
-						XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, NewLineOnAttributes = true, OmitXmlDeclaration = false, WriteEndDocumentOnClose = false };//, WriteEndDocumentOnClose = true, OmitXmlDeclaration = true
-						XmlWriter xmlWriter = XmlWriter.Create(fileStream, settings);
-
-						doc.Save(xmlWriter);
-						xmlWriter.Close();
-						xmlWriter.Dispose();
-						fileStream.Close();
-						fileStream.Dispose();
-					}
-				}
-				catch (Exception ex)
-				{
-					errorsBuilder.AppendLine(filePath + ex.Message);
-				}
-			}
-			if (string.IsNullOrEmpty(errorsBuilder.ToString()))
-				MessageBox.Show("Formating all files completed successfully");
-			else
-				MessageBox.Show(errorsBuilder.ToString());
-
-			//}
-			//}
-		}
-
-		private static string[] GetAllLXMLFiles()
-		{
-			string projectPath = Path.GetDirectoryName(System.IO.Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-			DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-			string solutionDirectory = solutionDir.FullName;
-            string dir = solutionDirectory + @"\Logitude.Customs.MetaData\EntityFiles\"; //@"C:\LogitudeWorld\main\Logitude.MetaData\EntityFiles\";
-            DirectoryInfo d = new DirectoryInfo(dir);
-
-            string dxmlFilesPath = Path.Combine(dir);
-			string[] allFiles = Directory.GetFiles(dxmlFilesPath, "*.lxml", SearchOption.AllDirectories);
-			return allFiles;
-		}
-
-		private void button_Click_2(object sender, RoutedEventArgs e)
-		{
-			DbToXmlGenerator dbToXmlGeneratorFrom = new DbToXmlGenerator();
-			dbToXmlGeneratorFrom.UpdateTextCodesAndFeaturesForCustomsGeneralLXML();
-		}
-
-      
-    }
+	}
 }
 /*
  * 

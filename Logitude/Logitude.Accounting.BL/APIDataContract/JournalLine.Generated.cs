@@ -15,55 +15,51 @@ using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
-
+   
     public partial class JournalLine
     {
 
-
-        public string JournalNumber { get; set; }
-
-        public int Line { get; set; }
-
-        public int Tenant { get; set; }
-
-        public string DebitControlAccount { get; set; }
-
-        public string DebitAccount { get; set; }
-
-        public string CreditControlAccount { get; set; }
-
-        public string CreditAccount { get; set; }
-
-        public DateTime DocumentDate { get; set; }
-
-        public DateTime AccountingDate { get; set; }
-
-        public DateTime DueDate { get; set; }
-
-        public decimal LocalAmount { get; set; }
-
-        public Currency Currency { get; set; }
-
-        public decimal ForeignAmount { get; set; }
-
-        public decimal? ExchangeRate { get; set; }
-
-        public string Reference1 { get; set; }
-
-        public string Reference2 { get; set; }
-
-        public string Reference3 { get; set; }
-
-        public string Notes { get; set; }
-
-        public decimal? ExternalOpenAmount { get; set; }
-
-        public string ActionCode { get; set; }
-
-        public string ExternalReconcileNumber { get; set; }
-
-        public string ConfirmationNumber { get; set; }
-
-        public bool? ExcludeFromTaxReport { get; set; }
+	    
+    public string JournalNumber { get; set; }
+    
+    public int Line { get; set; }
+    
+    public int Tenant { get; set; }
+    
+    public string DebitControlAccount { get; set; }
+    
+    public string DebitAccount { get; set; }
+    
+    public string CreditControlAccount { get; set; }
+    
+    public string CreditAccount { get; set; }
+    
+    public DateTime DocumentDate { get; set; }
+    
+    public DateTime AccountingDate { get; set; }
+    
+    public DateTime DueDate { get; set; }
+    
+    public decimal LocalAmount { get; set; }
+    
+    public Currency Currency { get; set; }
+    
+    public decimal ForeignAmount { get; set; }
+    
+    public decimal? ExchangeRate { get; set; }
+    
+    public string Reference1 { get; set; }
+    
+    public string Reference2 { get; set; }
+    
+    public string Reference3 { get; set; }
+    
+    public string Notes { get; set; }
+    
+    public decimal? ExternalOpenAmount { get; set; }
+    
+    public string ActionCode { get; set; }
+    
+    public string ExternalReconcileNumber { get; set; }
     }
 } 

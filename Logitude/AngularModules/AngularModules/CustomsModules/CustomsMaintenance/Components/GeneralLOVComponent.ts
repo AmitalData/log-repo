@@ -28,7 +28,7 @@ import { DocumentTypeCustomsDataExtendPMService } from '../../../Customs/Service
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './GeneralLOVComponent.html',
 })
 
@@ -77,7 +77,7 @@ export class GeneralLOVComponent
         this.Code =this.LogitudeEntityNumber = arg.LogitudeEntityNumber;
         this.LOVText = arg.LOVText;
 
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.CurrentSession.StopBusyIndicator();
             this.EntityResource = true;
             this.Loaded = true;

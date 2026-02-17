@@ -26,7 +26,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from  '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewSLAComponent.html',
 })
 
@@ -87,7 +87,7 @@ export class NewSLAComponent extends BaseComponent {
     private FillUsers() {
         this.UsersCachedList = [];
         var listService: UserListService = new UserListService();
-        listService.getAllFromCache().subscribe((result:any) => {
+        listService.getAllFromCache().subscribe(result => {
             this.UsersCachedList = result.Result;
         });
     }

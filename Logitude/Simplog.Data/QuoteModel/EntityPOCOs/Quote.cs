@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.QuoteModel.EntityPOCOs
@@ -20,33 +20,17 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string ShipmentTypeId { get; set; }
         public string QuoteTemplateId { get; set; }
         public string ConcurrencyGUID { get; set; }
-        public DateTime? SentDate { get; set; }
+        public DateTime? SentDate {get; set;}
         public DateTime? AcceptedDate { get; set; }
         public DateTime? DeclinedDate { get; set; }
         public int LastVersionNumber { get; set; }
         public string Subject { get; set; }
         public bool IsSubjectEdited { get; set; }
         public bool TotalPerContainer { get; set; }
-
+        
         #region Partners
-        public string ConsigneeNotImporterId { get; set; }
-        public string ConsigneeNotImporterAddressId { get; set; }
-        public string ConsigneeNotImporterContactId { get; set; }
-        public string ConsigneeNotImporterReference { get; set; }
-        public virtual Address ConsigneeNotImporterAddress { get; set; }
-        public virtual Contact ConsigneeNotImporterContact { get; set; }
-        public virtual Card ConsigneeNotImporterCard { get; set; }
-
-        public string ShipperNotExporterId { get; set; }
-        public string ShipperNotExporterAddressId { get; set; }
-        public string ShipperNotExporterContactId { get; set; }
-        public string ShipperNotExporterReference { get; set; }
-        public virtual Address ShipperNotExporterAddress { get; set; }
-        public virtual Contact ShipperNotExporterContact { get; set; }
-        public virtual Card ShipperNotExporterCard { get; set; }
-
-
         public string QuoteCustomerTypeCode { get; set; }
+
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerContactId { get; set; }
@@ -80,10 +64,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string DescriptionOfGoods { get; set; }
         public double? ChargeableWeight { get; set; }
         public double? ChargeableWeightInKG { get; set; }
-
-        public double? PickupDeliveryChargeableWeight { get; set; }
         public double? VolumeInCBM { get; set; }
-        public double? GrossWeight { get; set; }
+        public double? GrossWeight { get; set; }        
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }
         public string Field1 { get; set; }
@@ -95,17 +77,15 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string Field7 { get; set; }
         public string Field8 { get; set; }
         public string Field9 { get; set; }
-        public string Field10 { get; set; }
+        public string Field10 { get; set; }           
         public string GrossWeightUnitCode { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
-        public string PickupDeliveryCWeightUnitCode { get; set; }
         public string DimensionsUnitCode { get; set; }
         public double? VolumetricWeight { get; set; }
         public double? Volume { get; set; }
         public int? NumberOfPackages { get; set; }
         public int? NumberOfContainers { get; set; }
         public double? Ratio { get; set; }
-        public double? PickupDeliveryRatio { get; set; }
         public double? DimFactor { get; set; }
         public string VolumeUnitCode { get; set; }
         public bool IsDangerous { get; set; }
@@ -124,7 +104,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public int? PackageType2Quantity { get; set; }
         public int? PackageType3Quantity { get; set; }
         public int? PackageType4Quantity { get; set; }
-        public int? PackageType5Quantity { get; set; }
+        public int? PackageType5Quantity { get; set; }        
         public bool IsByKG { get; set; }
         public bool IsByContainer { get; set; }
         public string QuoteTypeCode { get; set; }
@@ -149,8 +129,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string FromPartnerId { get; set; }
         public string ToPartnerId { get; set; }
         public string FromPartnerAddressId { get; set; }
-        public string ToPartnerAddressId { get; set; }
-        public DateTime? StageDueDate { get; set; }
+        public string ToPartnerAddressId { get; set; }        
+        public DateTime? StageDueDate { get; set; }        
         public string LastActivityTypeCode { get; set; }
         public string LastActivitySubject { get; set; }
         public DateTime? LastActivityDate { get; set; }
@@ -181,7 +161,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public double? ExchangeRate { get; set; }
         public bool IsFixedPrice { get; set; }
         public bool IsSaleCurrencySameAsCost { get; set; }
-        public bool IsMultiCurrency { get; set; }
 
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrencyId { get; set; }
@@ -199,26 +178,15 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string NotifyAddressId { get; set; }
         public string NotifyContactId { get; set; }
         public int? NumberOfFollowUps { get; set; }
-        public string NotifyReference1 { get; set; }
-        public string NotifyReference2 { get; set; }
+
+
         public string QuoteHTMLDocumentId { get; set; }
+
 
         public virtual Card NotifyCard { get; set; }
         public virtual Contact NotifyContact { get; set; }
         public virtual Address NotifyAddress { get; set; }
 
-        public string Field11 { get; set; }
-        public string Field12 { get; set; }
-        public string Field13 { get; set; }
-        public string Field14 { get; set; }
-        public string Field15 { get; set; }
-        public string Field16 { get; set; }
-        public string Field17 { get; set; }
-        public string Field18 { get; set; }
-        public string Field19 { get; set; }
-        public string Field20 { get; set; }
-
-        public string CountryForStatisticsId { get; set; }
 
         [ForeignKey("AgentId")]
         public virtual Card AgentCard { get; set; }
@@ -246,8 +214,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public virtual QuoteStage Stage { get; set; }
 
         public string QuoteClosingReasonCode { get; set; }
-        public string QuoteClosingReasonId { get; set; }
-        [ForeignKey("QuoteClosingReasonId")]
+        [ForeignKey("QuoteClosingReasonCode")]
         public virtual QuoteClosingReason QuoteClosingReason { get; set; }
 
         public int? UsageCount { get; set; }
@@ -327,7 +294,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("TransportModeId")]
         public virtual TransportMode TransportMode { get; set; }
-
+        
         [ForeignKey("DirectionId")]
         public virtual Direction Direction { get; set; }
 
@@ -336,13 +303,13 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("ShipperContactId")]
         public virtual Contact ShipperContact { get; set; }
-
+        
         [ForeignKey("ConsigneeId")]
         public virtual Card ConsigneeCard { get; set; }
 
         [ForeignKey("ConsigneeContactId")]
         public virtual Contact ConsigneeContact { get; set; }
-
+        
         [ForeignKey("SalesmanUserId")]
         public virtual User SalesmanUser { get; set; }
 
@@ -375,69 +342,10 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
 
+
         [ForeignKey("QuoteHTMLDocumentId")]
         public virtual Document QuoteHTMLDocument { get; set; }
 
-        [ForeignKey("CountryForStatisticsId")]
-        public virtual Country CountryForStatistics { get; set; }
 
-        public DateTime? RequestDate { get; set; }
-        public double? EstimatedProfitInLocal { get; set; }
-        public double? EstimatedProfitInProfit { get; set; }
-        public string ProfitCurrencyId { get; set; }
-        public double? ProfitExchangeRate { get; set; }
-        [ForeignKey("ProfitCurrencyId")]
-        public virtual Currency ProfitCurrency { get; set; }
-
-        public string ShipmentSubTypeId { get; set; }
-        public virtual ShipmentSubType ShipmentSubType { get; set; }
-        public double? PickupDeliveryVolumetricWeight { get; set; }
-        public string RegionalTaxId { get; set; }
-        [ForeignKey("RegionalTaxId")]
-        public virtual VatType RegionalTax { get; set; }
-        public double? RegionalTaxPercentage { get; set; }
-        public bool DescriptionRightToLeft { get; set; }
-        public int? PackagesQuantity { get; set; }
-
-        public string InlandDomesticFromZipCode { get; set; }
-        public string InlandDomesticToZipCode { get; set; }
-        public string InlandDomesticFromCity { get; set; }
-        public string InlandDomesticToCity { get; set; }
-        public string InlandDomesticFromCountryId { get; set; }
-        public string InlandDomesticToCountryId { get; set; }
-        public string InlandDomesticFromTypeCode { get; set; }
-        public string InlandDomesticToTypeCode { get; set; }
-        public string MainCarriageFromPortAddress { get; set; }
-        public string MainCarriageToPortAddress { get; set; }
-
-        [ForeignKey("InlandDomesticFromTypeCode")]
-        public PickUpDeliveryFromToType InlandDomesticFromType { get; set; }
-
-        [ForeignKey("InlandDomesticToTypeCode")]
-        public PickUpDeliveryFromToType InlandDomesticToType { get; set; }
-
-        [ForeignKey("InlandDomesticFromCountryId")]
-        public virtual Country InlandDomesticFromCountry { get; set; }
-
-        [ForeignKey("InlandDomesticToCountryId")]
-        public virtual Country InlandDomesticToCountry { get; set; }
-
-
-        public string SpecialServicesTypeId { get; set; }
-        public bool IncludeInsurance { get; set; }
-        public bool IsStackable { get; set; }
-        public bool IncludeImportDutyCharges { get; set; }
-        public double? InsuranceValue { get; set; }
-        [ForeignKey("SpecialServicesTypeId")]
-        public virtual SpecialServicesType SpecialServicesType { get; set; }
-
-        public string ValidByTypeCode { get; set; }
-        [ForeignKey("ValidByTypeCode")]
-        public virtual ValidByType ValidByType { get; set; }
-        public bool? ConnectedToOpportunity { get; set; }
-
-        public string QuoteClosingReasonNotes { get; set; }
-		public string ShipmentNumber { get; set; }
-
-	}
+    }
 }

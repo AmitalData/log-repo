@@ -1,11 +1,10 @@
-
-<table>
+﻿<table>
     <tr>
         <td style="width:5px;max-width:5px;min-width:5px"></td>
         <td>
             <table>
                 <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px">
-                    <td>
+                    <td >
                         <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
                     </td>
                 </tr>
@@ -13,76 +12,77 @@
                     <td>Partner</td>
                 </tr>
                 <tr style="height:80px">
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width:335px;">
-                                    <table>
-                                        <tr class="FormFieldRow">
-                                            <td style="width:75px;vertical-align:top">
-                                                <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width:260px;vertical-align:top">
-                                                <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
-                                            </td>
-                                        </tr>
+                  <td>
+                      <table>
+                          <tr>
+                              <td style="width:335px;">
+                                  <table>
+                                      <tr class="FormFieldRow">
+                                          <td style="width:75px;vertical-align:top">
+                                              <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                          </td>
+                                          <td style="width:260px;vertical-align:top">
+                                              <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                          </td>
+                                      </tr>
 
-                                        <tr class="FormFieldRow">
-                                            <td style="width:75px;vertical-align:top">
-                                                <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width:260px;vertical-align:top">
-                                                <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
+                                      <tr class="FormFieldRow">
+                                          <td style="width:75px;vertical-align:top">
+                                              <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                          </td>
+                                          <td style="width:260px;vertical-align:top">
+                                              <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                             
 
+                              <td style="width:365px" *ngIf="Session==0">
+                                  <table>
+                                      <tr>
+                                          <td style="width:10px"></td>
+                                          <td style="width:75px;vertical-align:top">
+                                              <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                                <td style="width:365px" *ngIf="Session==0">
-                                    <table>
-                                        <tr>
-                                            <td style="width:10px"></td>
-                                            <td style="width:75px;vertical-align:top">
-                                                <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                          </td>
+                                          <td style="width:280px;vertical-align:middle">
+                                              <div style="height: 100%; width: 100%;">
+                                                  <LogTextBox [ObjectFieldName]="'Remarks'" [IsMultiline]="true" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
 
-                                            </td>
-                                            <td style="width:280px;vertical-align:middle">
-                                                <div style="height: 100%; width: 100%;">
-                                                    <LogTextBox [ObjectFieldName]="'Remarks'" [IsMultiline]="true" [Text]="Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
+                              <td style="width:10px"></td>
+                              <td style="width:90px;vertical-align:top">
+                                  <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                                <td style="width:10px"></td>
-                                <td style="width:90px;vertical-align:top">
-                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
-                                </td>
-                                <td style="width:300px;vertical-align:middle">
-                                    <div style="height: 100%; width: 100%;">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
-                                    </div>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </td>
-
+                              </td>
+                              <td style="width:300px;vertical-align:middle">
+                                  <div style="height: 100%; width: 100%;">
+                                      <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                  </div>
+                              </td>
+                              <td></td>
+                          </tr>
+                      </table>
+                  </td>
+                             
                 </tr>
                 <tr style="height:10px">
                     <td></td>
                 </tr>
-                <tr style="height:20px">
-                    <td>
+                <tr   style="height:20px">
+                    <td >
                         <table>
                             <tr class="TabTitleRow">
                                 <td>
                                     Tables
                                 </td>
-                                <td></td>
+                                <td>                          
+</td>
                                 <td style="width:65px">
                                     <button class="Button" (click)="AddTable()">Add Table</button>
                                 </td>
@@ -90,105 +90,90 @@
                         </table>
                     </td>
                 </tr>
-                <tr>
-                    <td style="vertical-align:top;overflow:hidden">
+                <tr><td style="vertical-align:top;overflow:hidden">
 
                         <div class="MediaFill">
                             <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemSourceCollection">
 
                                 <log-column [width]="'100'" [header]="'Name'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="width: 100%; text-align: left;">
-                                                {{item.Name}}
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate >
+                                        <div style="width: 100%; text-align: left;" >
+                                            {{item.Name}}
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <log-column [width]="'150'" [header]="'Object Table'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="width: 100%; text-align: left;">
-                                                {{item.ObjectTableName}}
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width: 100%; text-align: left;" >
+                                            {{item.ObjectTableName}}
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
                                 <log-column [width]="'143'" [header]="'Translation Required'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="width: 100%; text-align: center;margin-top:2px">
-                                                <img *ngIf="item.TransalationRequired" src="./Images/GreenTick.png" width="20" height="20" />
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width: 100%; text-align: center;margin-top:2px">
+                                            <img *ngIf="item.TransalationRequired"  src="./Images/GreenTick.png" width="20" height="20" />
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
 
                                 <log-column [width]="'107'" [header]="'Has Partner List'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="width: 100%; text-align: center;margin-top:2px">
-                                                <img *ngIf="item.HasPartnerList" src="./Images/GreenTick.png" width="20" height="20" />
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                    <log-cell-template template="let item" #logcelltemplate >
+                                        <div style="width: 100%; text-align: center;margin-top:2px" >
+                                            <img *ngIf="item.HasPartnerList"  src="./Images/GreenTick.png" width="20" height="20" />
+                                        </div>                                     
+                                    </log-cell-template>
                                 </log-column>
 
 
                                 <log-column [width]="'141'" [header]="'Must Use Partner List'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="width: 100%; text-align: center;margin-top:2px">
-                                                <img *ngIf="item.MustUsePartnerList" src="./Images/GreenTick.png" width="20" height="20" />
-                                                <IconButton [Left]="3" [Top]="3" *ngIf="item.MustUsePartnerList" style="float:right;padding-right:1px" [Name]="'search'"></IconButton>
-                                            </div>
+                                    <log-cell-template template="let item" #logcelltemplate >
+                                        <div style="width: 100%; text-align: center;margin-top:2px" >
+                                            <img *ngIf="item.MustUsePartnerList"  src="./Images/GreenTick.png" width="20" height="20" />
+                                            <IconButton [Left]="3" [Top]="3"  *ngIf="item.MustUsePartnerList" style="float:right;padding-right:1px" [Name]="'search'"></IconButton>
+                                        </div>
 
-
-                                        </log-cell-template>
-                                    </ng-template>
+                                       
+                                    </log-cell-template>
                                 </log-column>
 
 
                                 <log-column [width]="'207'" [header]="'Tenant Level Translation Blocked'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="width: 100%; text-align: center;margin-top:2px">
-                                                <img *ngIf="item.TenantLevelTranslationBlocked" src="./Images/GreenTick.png" width="20" height="20" />
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div style="width: 100%; text-align: center;margin-top:2px">
+                                            <img *ngIf="item.TenantLevelTranslationBlocked" src="./Images/GreenTick.png" width="20" height="20" />
 
-
-                                            </div>
-                                        </log-cell-template>
-                                    </ng-template>
+                                            
+                                        </div>
+                                    </log-cell-template>
                                 </log-column>
 
 
 
                                 <log-column [width]="'28'">
 
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
-                                            <div style="width: 100%; text-align: center;margin-top:2px">
-                                                <IconButton [Name]="'Edit'" (click)="EditComputingTable(item)"></IconButton>
-                                            </div>
+                                    <log-cell-template template="let item" #logcelltemplate >
+                                        <div style="width: 100%; text-align: center;margin-top:2px" >
+                                            <IconButton [Name]="'Edit'" (click)="EditComputingTable(item)"></IconButton>
+                                        </div>
 
-
-                                        </log-cell-template>
-                                    </ng-template>
+                                    
+                                    </log-cell-template>
                                 </log-column>
 
                             </logitude-edit-grid>
                         </div>
 
 
-
+                    
                     </td>
                 </tr>
                 <tr style="height: 32px;">
@@ -208,7 +193,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                                    <button class="RedButton" (click)="OkButtonClicked()" >Ok</button>
                                 </td>
                             </tr>
                         </table>

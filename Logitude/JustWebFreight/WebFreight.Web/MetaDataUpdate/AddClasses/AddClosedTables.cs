@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -28,11 +26,6 @@ using Logitude.Accounting.BL;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.Server.Tools.Counters;
 using Logitude.Accounting.BL.CloseTables;
-using Logitude.Infrastructure.BL;
-using Logitude.Infrastructure.Data.Repsitories;
-using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs;
-
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
@@ -46,7 +39,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 WeightUnit weightUnit = weightUnitRepository.GetSingleWeightUnit(weightUnitDetails.Code);
                 weightUnit.Name = weightUnitDetails.Name;
-                weightUnit.SearchFields = (weightUnitDetails.Code + "," + weightUnitDetails.Name).ToLower();
+                weightUnit.SearchFields = (weightUnitDetails.Code +","+ weightUnitDetails.Name).ToLower();
                 weightUnitRepository.Update(weightUnit);
             }
             else
@@ -127,24 +120,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 dueTypeRepository.Add(newDueType);
             }
         }
-        public static void AddQuoteGroupSection(QuoteGroupSectionDetails quoteGroupSectionDetails, QuoteGroupSectionRepository quoteGroupSectionRepository)
-        {
-            Dictionary<string, QuoteGroupSection> tenantQuoteGroupSections = quoteGroupSectionRepository.GetQuoteGroupSections().ToDictionary(d => d.Code, a => a);
 
-            if (tenantQuoteGroupSections.Keys.Contains(quoteGroupSectionDetails.Code))
-            {
-                QuoteGroupSection quoteGroupSection = quoteGroupSectionRepository.GetSingleQuoteGroupSection(quoteGroupSectionDetails.Code, 0);
-                quoteGroupSection.Name = quoteGroupSectionDetails.Name;
-                quoteGroupSection.Code = quoteGroupSectionDetails.Code;
-                quoteGroupSection.Searchfields = quoteGroupSectionDetails.Searchfields;
-                quoteGroupSectionRepository.Update(quoteGroupSection);
-            }
-            else
-            {
-                QuoteGroupSection quoteGroupSection = new QuoteGroupSection() { Code = quoteGroupSectionDetails.Code, Name = quoteGroupSectionDetails.Name, Searchfields = quoteGroupSectionDetails.Searchfields };
-                quoteGroupSectionRepository.Add(quoteGroupSection);
-            }
-        }
         public static void AddTransportModes(TransportModeDetails transportModeDetails, TransportModeRepository transportModeRepository)
         {
             Dictionary<string, TransportMode> tenantTransportModes = transportModeRepository.GetTransportModes().ToDictionary(d => d.Id, a => a);
@@ -153,13 +129,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 TransportMode transportMode = transportModeRepository.GetSingleTransportMode(transportModeDetails.Id);
                 transportMode.Name = transportModeDetails.Name;
-                transportMode.LocalName = transportModeDetails.LocalName;
                 transportMode.SearchFields = (transportModeDetails.Id + "," + transportModeDetails.Name).ToLower();
                 transportModeRepository.Update(transportMode);
             }
             else
             {
-                TransportMode newTransportMode = new TransportMode() { Id = transportModeDetails.Id, Name = transportModeDetails.Name, LocalName=transportModeDetails.LocalName ,SearchFields = (transportModeDetails.Id + "," + transportModeDetails.Name).ToLower() };
+                TransportMode newTransportMode = new TransportMode() { Id = transportModeDetails.Id, Name = transportModeDetails.Name, SearchFields = (transportModeDetails.Id + "," + transportModeDetails.Name).ToLower() };
                 transportModeRepository.Add(newTransportMode);
             }
         }
@@ -191,7 +166,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 PrepaidCollect prepaidCollect = prepaidCollectRepository.GetSinglePrepaidCollect(prepaidCollectDetails.Id);
                 prepaidCollect.Name = prepaidCollectDetails.Name;
                 prepaidCollect.DisplayInLOV = prepaidCollectDetails.DisplayInLOV;
-                prepaidCollect.SearchFields = (prepaidCollectDetails.Name + "," + prepaidCollectDetails.Id).ToLower(); // Id = code 
+                prepaidCollect.SearchFields = (prepaidCollectDetails.Name +","+ prepaidCollectDetails.Id).ToLower(); // Id = code 
                 prepaidCollectRepository.Update(prepaidCollect);
             }
             else
@@ -205,13 +180,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         {
             IQueryable<ShipmentType> shpLIst = shipmentTypeRepository.GetShipmentTypes();
             Dictionary<string, ShipmentType> tenantShipmentTypes = shpLIst.ToDictionary(d => d.Id, a => a);//shipmentTypeRepository.GetShipmentTypes().ToDictionary(d => d.Id, a => a);
+            //Dictionary<string, ShipmentType> tenantShipmentTypes = shipmentTypeRepository.GetShipmentTypes().ToDictionary(d => d.Id, a => a);
 
             if (tenantShipmentTypes.Keys.Contains(shipmentTypeDetails.Id))
             {
                 ShipmentType shipmentType = shipmentTypeRepository.GetSingleShipmentType(shipmentTypeDetails.Id);
                 shipmentType.Name = shipmentTypeDetails.Name;
                 shipmentType.TransportModeId = shipmentTypeDetails.TransportModeId;
-                shipmentType.SearchFields = (shipmentTypeDetails.Id + "," + shipmentTypeDetails.Name).ToLower();
+                shipmentType.SearchFields = (shipmentTypeDetails.Id +","+ shipmentTypeDetails.Name).ToLower();
                 shipmentTypeRepository.Update(shipmentType);
             }
             else
@@ -350,26 +326,26 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static void AddChargesGroups(ChargesGroupDetails chargesGroupDetails, ChargesGroupRepository chargesGroupRepository)
         {
-            //var allChargesGroups0 = chargesGroupRepository.GetChargesGroups(0).ToList();
-            //Dictionary<string, ChargesGroup> tenantChargesGroups = allChargesGroups0.ToDictionary(d => d.Code, a => a);
+            var allChargesGroups0 = chargesGroupRepository.GetChargesGroups(0).ToList();
+            Dictionary<string, ChargesGroup> tenantChargesGroups = allChargesGroups0.ToDictionary(d => d.Code, a => a);
 
-            //if (tenantChargesGroups.Keys.Contains(chargesGroupDetails.Code))
-            //{
-            //    ChargesGroup chargesGroup = chargesGroupRepository.GetSingleChargesGroupByCode(chargesGroupDetails.Code, 0);
-            //    chargesGroup.Name = chargesGroupDetails.Name;
-            //    chargesGroup.ViewOrder = chargesGroupDetails.ViewOrder;
-            //    chargesGroup.SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower();
-            //    chargesGroupRepository.Update(chargesGroup);
-            //}
-            //else
-            //{
-            //    ChargesGroup newChargesGroup = new ChargesGroup() { Code = chargesGroupDetails.Code, Name = chargesGroupDetails.Name,ViewOrder = chargesGroupDetails.ViewOrder, SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower() };
-            //    newChargesGroup.Id = IdCounter.GetNumber("ChargesGroup", 0);
-            //    newChargesGroup.Tenant = 0;
-            //    chargesGroupRepository.Add(newChargesGroup);
-            //}
+            if (tenantChargesGroups.Keys.Contains(chargesGroupDetails.Code))
+            {
+                ChargesGroup chargesGroup = chargesGroupRepository.GetSingleChargesGroupByCode(chargesGroupDetails.Code, 0);
+                chargesGroup.Name = chargesGroupDetails.Name;
+                chargesGroup.ViewOrder = chargesGroupDetails.ViewOrder;
+                chargesGroup.SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower();
+                chargesGroupRepository.Update(chargesGroup);
+            }
+            else
+            {
+                ChargesGroup newChargesGroup = new ChargesGroup() { Code = chargesGroupDetails.Code, Name = chargesGroupDetails.Name,ViewOrder = chargesGroupDetails.ViewOrder, SearchFields = (chargesGroupDetails.Code + "," + chargesGroupDetails.Name).ToLower() };
+                newChargesGroup.Id = IdCounter.GetNumber("ChargesGroup", 0);
+                newChargesGroup.Tenant = 0;
+                chargesGroupRepository.Add(newChargesGroup);
+            }
         }
-
+        
         public static void AddVolumeUnits(VolumeUnitDetails volumeUnitDetails, VolumeUnitRepository volumeUnitRepository)
         {
             Dictionary<string, VolumeUnit> tenantVolumeUnits = volumeUnitRepository.GetVolumeUnits().ToDictionary(d => d.Code, a => a);
@@ -546,7 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             else
             {
-                ARInvoiceTransferStatus newEntity = new ARInvoiceTransferStatus() { Code = detailsClass.Code, Name = detailsClass.Name, SearchFields = (detailsClass.Code + "," + detailsClass.Name).ToLower() };
+                ARInvoiceTransferStatus newEntity = new ARInvoiceTransferStatus() { Code = detailsClass.Code, Name = detailsClass.Name, SearchFields =( detailsClass.Code + "," + detailsClass.Name).ToLower() };
                 repository.Add(newEntity);
             }
         }
@@ -691,7 +667,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 ShipmentCustomerType shipmentCustomerType = shipmentCustomerTypeRepository.GetSingleShipmentCustomerType(shipmentCustomerTypeDetails.Code);
                 shipmentCustomerType.Name = shipmentCustomerTypeDetails.Name;
                 shipmentCustomerType.ShowInLOV = shipmentCustomerTypeDetails.ShowInLOV;
-                shipmentCustomerType.SearchFields = (shipmentCustomerTypeDetails.Code + "," + shipmentCustomerTypeDetails.Name).ToLower();
+                shipmentCustomerType.SearchFields = (shipmentCustomerTypeDetails.Code +","+ shipmentCustomerTypeDetails.Name).ToLower();
                 shipmentCustomerTypeRepository.Update(shipmentCustomerType);
             }
             else
@@ -813,7 +789,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                ShipmentLevel newShipmentLevel = new ShipmentLevel() { Code = shipmentLevelDetails.Code, Name = shipmentLevelDetails.Name, SearchFields = (shipmentLevelDetails.Code + "," + shipmentLevelDetails.Name).ToLower() };
+                ShipmentLevel newShipmentLevel = new ShipmentLevel() { Code = shipmentLevelDetails.Code, Name = shipmentLevelDetails.Name, SearchFields = (shipmentLevelDetails.Code+","+ shipmentLevelDetails.Name).ToLower() };
                 shipmentLevelRepository.Add(newShipmentLevel);
             }
         }
@@ -824,14 +800,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             if (tenantQuoteTemplateSectionType.Keys.Contains(quoteTemplateSectionTypeDetails.Code))
             {
-                QuoteTemplateSectionType objQuoteTemplateSectionType = quoteTemplateSectionTypeRepository.GetSingleQuoteTemplateSectionType(quoteTemplateSectionTypeDetails.Code, false);
+                QuoteTemplateSectionType objQuoteTemplateSectionType = quoteTemplateSectionTypeRepository.GetSingleQuoteTemplateSectionType(quoteTemplateSectionTypeDetails.Code,  false);
                 objQuoteTemplateSectionType.Name = quoteTemplateSectionTypeDetails.Name;
-
+                
                 quoteTemplateSectionTypeRepository.Update(objQuoteTemplateSectionType);
             }
             else
             {
-                QuoteTemplateSectionType newQuoteTemplateSectionType = new QuoteTemplateSectionType() { Code = quoteTemplateSectionTypeDetails.Code, Name = quoteTemplateSectionTypeDetails.Name };
+                QuoteTemplateSectionType newQuoteTemplateSectionType = new QuoteTemplateSectionType() { Code = quoteTemplateSectionTypeDetails.Code, Name = quoteTemplateSectionTypeDetails.Name};
                 quoteTemplateSectionTypeRepository.Add(newQuoteTemplateSectionType);
             }
         }
@@ -870,7 +846,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 AccountType newaccountType = new AccountType() { Code = accountTypeDetails.Code, Name = accountTypeDetails.Name, SearchFields = (accountTypeDetails.Code + "," + accountTypeDetails.Name).ToLower() };
                 accountTypeRepository.Add(newaccountType);
-            }
+            }     
         }
 
         public static void AddAccountingTransferTypes(AccountingTransferTypeDetails detailsClass, AccountingTransferTypeRepository repository)
@@ -897,7 +873,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 repository.Add(newEntity);
             }
         }
-
+        
         public static void AddARPaymentstatus(ARPaymentStatusDetails paymentstatusDetails, ARPaymentStatusRepository paymentstatusRepository)
         {
             Dictionary<string, ARPaymentStatus> tenantPaymentstatuss = paymentstatusRepository.GetARPaymentStatus().ToDictionary(d => d.Code, a => a);
@@ -916,7 +892,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-
+      
         public static void AddAPInvoiceStatus(APInvoiceStatusDetails invoiceStatusDetails, APInvoiceStatusRepository invoiceStatusRepository)
         {
             Dictionary<string, APInvoiceStatus> tenantApInvoicetatus = invoiceStatusRepository.GetAPInvoiceStatus().ToDictionary(d => d.Code, a => a);
@@ -932,28 +908,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 APInvoiceStatus newInvoiceStatus = new APInvoiceStatus() { Code = invoiceStatusDetails.Code, Name = invoiceStatusDetails.Name, SearchFields = (invoiceStatusDetails.Code + "," + invoiceStatusDetails.Name).ToLower() };
                 invoiceStatusRepository.Add(newInvoiceStatus);
-            }
-        }
-
-        public static void AddConfirmationNumberStatus(ConfirmationNumberStatusDetails confirmationNumberStatusDetails, ConfirmationNumberStatusRepository confirmationNumberStatusRepository)
-        {
-            Dictionary<string, ConfirmationNumberStatus> tenantApConfirmationNumberStatus = confirmationNumberStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenantApConfirmationNumberStatus.Keys.Contains(confirmationNumberStatusDetails.Code))
-            {
-                ConfirmationNumberStatus confirmationNumberStatus = confirmationNumberStatusRepository.GetByCode(confirmationNumberStatusDetails.Code);
-                confirmationNumberStatus.Name = confirmationNumberStatusDetails.Name;
-                confirmationNumberStatus.SearchFields = (confirmationNumberStatusDetails.Code + "," + confirmationNumberStatusDetails.Name).ToLower();
-                confirmationNumberStatus.LocalName = confirmationNumberStatusDetails.LocalName;
-                confirmationNumberStatus.InActive = confirmationNumberStatusDetails.InActive;
-
-
-                confirmationNumberStatusRepository.Update(confirmationNumberStatus);
-            }
-            else
-            {
-                ConfirmationNumberStatus newInvoiceStatus = new ConfirmationNumberStatus() { Code = confirmationNumberStatusDetails.Code, InActive = confirmationNumberStatusDetails.InActive, LocalName = confirmationNumberStatusDetails.LocalName, Name = confirmationNumberStatusDetails.Name, SearchFields = (confirmationNumberStatusDetails.Code + "," + confirmationNumberStatusDetails.Name).ToLower() };
-                confirmationNumberStatusRepository.Add(newInvoiceStatus);
             }
         }
 
@@ -974,7 +928,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 invoiceTypeRepository.Add(newInvoiceType);
             }
         }
-
+        
         public static void AddAPPaymentstatus(APPaymentStatusDetails paymentstatusDetails, APPaymentStatusRepository paymentstatusRepository)
         {
             Dictionary<string, APPaymentStatus> tenantPaymentstatuss = paymentstatusRepository.GetAPPaymentStatus().ToDictionary(d => d.Code, a => a);
@@ -1001,7 +955,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 ShipmentPayableAmountType paymentMethod = paymentMethodRepository.GetSingleShipmentPayableAmountType(paymentMethodDetails.Code);
                 paymentMethod.Name = paymentMethodDetails.Name;
-
+               
                 paymentMethodRepository.Update(paymentMethod);
             }
             else
@@ -1119,6 +1073,23 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+        public static void AddPackages(PackageDetails packageDetails, PackageRepository packageRepository)
+        {
+            Dictionary<string, Package> tenantPackages = packageRepository.GetPackages().ToDictionary(d => d.Code, a => a);
+
+            if (tenantPackages.Keys.Contains(packageDetails.Code))
+            {
+                //Package package = packageRepository.GetSinglePackage(packageDetails.Code);
+                //package.Name = packageDetails.Name;
+                //package.SearchFields = packageDetails.Code + "," + packageDetails.Name;
+                //packageRepository.Update(package);
+            }
+            else
+            {
+                Package package = new Package() { Code = packageDetails.Code, Name = packageDetails.Name, SearchFields = packageDetails.Code + "," + packageDetails.Name , FeaturePackageTypeCode = "BS"};
+                packageRepository.Add(package);
+            }
+        }
 
         public static void AddAWBChargesCodes(AWBChargesCodeDetails awbChargesCodeDetails, AWBChargesCodeRepository awbChargeCodesRepository)
         {
@@ -1262,7 +1233,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 PaymentChannel paymentChannel = new PaymentChannel() { Code = paymentChannelDetails.Code, Name = paymentChannelDetails.Name, SearchFields = paymentChannelDetails.Code + "," + paymentChannelDetails.Name };
                 paymentChannelRepository.Add(paymentChannel);
-            }
+            }   
         }
 
         public static void AddEntityLastActivityTypes(EntityLastActivityTypeDetails EntityLastActivityTypeDetails, EntityLastActivityTypeRepository EntityLastActivityTypeRepository)
@@ -1273,12 +1244,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 EntityLastActivityType EntityLastActivityType = EntityLastActivityTypeRepository.GetSingleEntityLastActivityType(EntityLastActivityTypeDetails.Code);
                 EntityLastActivityType.Name = EntityLastActivityTypeDetails.Name;
-
+               
                 EntityLastActivityTypeRepository.Update(EntityLastActivityType);
             }
             else
             {
-                EntityLastActivityType EntityLastActivityType = new EntityLastActivityType() { Code = EntityLastActivityTypeDetails.Code, Name = EntityLastActivityTypeDetails.Name };
+                EntityLastActivityType EntityLastActivityType = new EntityLastActivityType() { Code = EntityLastActivityTypeDetails.Code, Name = EntityLastActivityTypeDetails.Name};
                 EntityLastActivityTypeRepository.Add(EntityLastActivityType);
             }
         }
@@ -1345,16 +1316,16 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 SharedLogisticsInvitationStatus sharedLogisticsInvitationStatus = new SharedLogisticsInvitationStatus() { Code = sharedLogisticsInvitationStatusDetails.Code, Name = sharedLogisticsInvitationStatusDetails.Name, SearchFields = sharedLogisticsInvitationStatusDetails.Code + "," + sharedLogisticsInvitationStatusDetails.Name };
                 sharedLogisticsInvitationStatusRepository.Add(sharedLogisticsInvitationStatus);
             }
+            
 
-
-
+            
         }
 
 
 
         public static void AddSharedManifestsStatus(SharedManifestsStatusDetails sharedManifestsStatusDetails, SharedManifestsStatusRepository sharedManifestsStatusRepository)
         {
-
+          
             Dictionary<string, SharedManifestsStatus> sharedManifestsStatuses = sharedManifestsStatusRepository.GetSharedManifestsStatuses().ToDictionary(d => d.StatusCode, a => a);
 
             if (sharedManifestsStatuses.Keys.Contains(sharedManifestsStatusDetails.StatusCode))
@@ -1385,12 +1356,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 PhysicalCheckOperation physicalCheckOperation = physicalCheckOperationRepository.GetSingle(physicalCheckOperationDetails.Code);
                 physicalCheckOperation.EnglishName = physicalCheckOperationDetails.EnglishName;
                 physicalCheckOperation.LocalName = physicalCheckOperationDetails.LocalName;
-                physicalCheckOperation.SearchFields = (physicalCheckOperationDetails.Code + ',' + physicalCheckOperation.EnglishName + ',' + physicalCheckOperationDetails.LocalName).ToLower();
+                physicalCheckOperation.SearchFields =(physicalCheckOperationDetails.Code+','+ physicalCheckOperation.EnglishName+','+ physicalCheckOperationDetails.LocalName).ToLower();
                 physicalCheckOperationRepository.Update(physicalCheckOperation);
             }
             else
             {
-                PhysicalCheckOperation newPaymentMethod = new PhysicalCheckOperation() { Code = physicalCheckOperationDetails.Code, EnglishName = physicalCheckOperationDetails.EnglishName, LocalName = physicalCheckOperationDetails.LocalName, SearchFields = (physicalCheckOperationDetails.Code + ',' + physicalCheckOperationDetails.EnglishName + ',' + physicalCheckOperationDetails.LocalName).ToLower() };
+                PhysicalCheckOperation newPaymentMethod = new PhysicalCheckOperation() { Code = physicalCheckOperationDetails.Code, EnglishName = physicalCheckOperationDetails.EnglishName, LocalName = physicalCheckOperationDetails.LocalName, SearchFields =(physicalCheckOperationDetails.Code+','+ physicalCheckOperationDetails.EnglishName + ',' + physicalCheckOperationDetails.LocalName).ToLower() };
                 physicalCheckOperationRepository.Add(newPaymentMethod);
             }
         }
@@ -1430,7 +1401,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 AWBCustomsInformation newEntity = new AWBCustomsInformation() { Code = detailsClass.Code, Name = detailsClass.Name, SearchFields = detailsClass.Code + "," + detailsClass.Name };
                 repository.Add(newEntity);
-            }
+            }            
         }
 
         public static void AddAWBInformation(AWBInformationDetails detailsClass, AWBInformationRepository repository)
@@ -1449,7 +1420,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 AWBInformation newEntity = new AWBInformation() { Code = detailsClass.Code, Name = detailsClass.Name, SearchFields = detailsClass.Code + "," + detailsClass.Name };
                 repository.Add(newEntity);
-            }
+            } 
         }
 
         public static void AddProductType(ProductTypeDetails detailsClass, ProductTypeRepository repository)
@@ -1460,7 +1431,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 ProductType entity = repository.GetSingleProductType(detailsClass.Code);
                 entity.Name = detailsClass.Name;
-
+             
                 entity.SearchFields = detailsClass.Code + "," + detailsClass.Name;
                 repository.Update(entity);
             }
@@ -1507,23 +1478,23 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        //public static void AddQuoteClosingReason(QuoteClosingReasonDetails quoteClosingReasonDetails, QuoteClosingReasonRepository quoteClosingReasonRepository)
-        //{
-        //    Dictionary<string, QuoteClosingReason> tenantQuoteClosingReason = quoteClosingReasonRepository.GetQuoteClosingReasons().ToDictionary(d => d.Code, a => a);
+        public static void AddQuoteClosingReason(QuoteClosingReasonDetails quoteClosingReasonDetails, QuoteClosingReasonRepository quoteClosingReasonRepository)
+        {
+            Dictionary<string, QuoteClosingReason> tenantQuoteClosingReason = quoteClosingReasonRepository.GetQuoteClosingReasons().ToDictionary(d => d.Code, a => a);
 
-        //    if (tenantQuoteClosingReason.Keys.Contains(quoteClosingReasonDetails.Code))
-        //    {
-        //        QuoteClosingReason quoteClosingReason = quoteClosingReasonRepository.GetSingleQuoteClosingReason(quoteClosingReasonDetails.Code);
-        //        quoteClosingReason.Name = quoteClosingReasonDetails.Name;
-        //        quoteClosingReason.SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name;
-        //        quoteClosingReasonRepository.Update(quoteClosingReason);
-        //    }
-        //    else
-        //    {
-        //        QuoteClosingReason newQuoteClosingReason = new QuoteClosingReason() { Code = quoteClosingReasonDetails.Code, Name = quoteClosingReasonDetails.Name, SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name };
-        //        quoteClosingReasonRepository.Add(newQuoteClosingReason);
-        //    }
-        //}
+            if (tenantQuoteClosingReason.Keys.Contains(quoteClosingReasonDetails.Code))
+            {
+                QuoteClosingReason quoteClosingReason = quoteClosingReasonRepository.GetSingleQuoteClosingReason(quoteClosingReasonDetails.Code);
+                quoteClosingReason.Name = quoteClosingReasonDetails.Name;
+                quoteClosingReason.SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name;
+                quoteClosingReasonRepository.Update(quoteClosingReason);
+            }
+            else
+            {
+                QuoteClosingReason newQuoteClosingReason = new QuoteClosingReason() { Code = quoteClosingReasonDetails.Code, Name = quoteClosingReasonDetails.Name, SearchFields = quoteClosingReasonDetails.Code + "," + quoteClosingReasonDetails.Name };
+                quoteClosingReasonRepository.Add(newQuoteClosingReason);
+            }
+        }
 
         public static void AddCustomerStatus(CustomerStatusDetails CustomerStatusDetails, CustomerStatusRepository CustomerStatusRepository)
         {
@@ -1960,7 +1931,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 var updatePoco = repo.GetSingle(itemDetails.Code);
                 itemDetails.MapPoco(updatePoco);
-
+                
                 repo.Update(updatePoco);
             }
             else
@@ -1968,7 +1939,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 var newPoco = new Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails();
                 itemDetails.MapPoco(newPoco);
                 repo.Add(newPoco);
-            }
+        }
         }
 
         public static void AddInterfaceManagement(Logitude.Customs.Def.ClosedTable.InterfaceManagementDetails itemDetails, InterfaceManagementRepository repo)
@@ -2026,7 +1997,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 LastReleaseFromWarehouse newLastReleaseFromWarehouse = new LastReleaseFromWarehouse() { Code = lastReleaseFromWarehouseDetails.Code, LocalName = lastReleaseFromWarehouseDetails.LocalName, EnglishName = lastReleaseFromWarehouseDetails.EnglishName, SearchFields = (lastReleaseFromWarehouseDetails.Code + "," + lastReleaseFromWarehouseDetails.EnglishName + "," + lastReleaseFromWarehouseDetails.LocalName).ToLower() };
                 lastReleaseFromWarehouseRepository.Add(newLastReleaseFromWarehouse);
             }
-        }
+            }
 
         public static void AddVehicleStatus(VehicleStatusDetails vehicleStatusDetails, VehicleStatusRepository vehicleStatusRepository)
         {
@@ -2083,7 +2054,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 CustomerIdentifyType newCustomerIdentifyType = new CustomerIdentifyType() { Code = CustomerIdentifyTypeDetails.Code, LocalName = CustomerIdentifyTypeDetails.LocalName, EnglishName = CustomerIdentifyTypeDetails.EnglishName, SearchFields = (CustomerIdentifyTypeDetails.Code + "," + CustomerIdentifyTypeDetails.EnglishName + "," + CustomerIdentifyTypeDetails.LocalName).ToLower() };
                 CustomerIdentifyTypeRepository.Add(newCustomerIdentifyType);
             }
-        }
+            }
 
         public static void AddManifestStatus(ManifestStatusDetails myDetails, ManifestStatusRepository myRepository)
         {
@@ -2191,33 +2162,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
 
 
-        public static void AddMasavInterfaceStatus(MasavInterfaceStatus myDetails, MasavInterfaceStatusRepository myRepository)
-        {
-            Dictionary<string, MasavInterfaceStatus> myDictionary = myRepository.All().ToDictionary(d => d.Code, a => a);
-
-            if (myDictionary.Keys.Contains(myDetails.Code))
-            {
-                MasavInterfaceStatus myPOCO = myRepository.GetSingleMasavInterfaceStatus(myDetails.Code);
-                myPOCO.Name = myDetails.Name;
-                myPOCO.LocalName = myDetails.LocalName;
-                myPOCO.SearchFields = myDetails.Code + "," + myDetails.Name;
-                myRepository.Update(myPOCO);
-            }
-
-            else
-            {
-                MasavInterfaceStatus myPOCO = new MasavInterfaceStatus()
-                {
-                    Code = myDetails.Code,
-                    Name = myDetails.Name,
-                    LocalName = myDetails.LocalName,
-                    SearchFields = myDetails.Code + "," + myDetails.Name
-                };
-
-                myRepository.Add(myPOCO);
-            }
-        }
-
         public static void AddSATInvoiceStatus(SATInvoiceStatusDetails myDetails, SATInvoiceStatusRepository myRepository)
         {
             Dictionary<string, SATInvoiceStatus> myDictionary = myRepository.GetSATInvoiceStatus().ToDictionary(d => d.Code, a => a);
@@ -2242,6 +2186,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 myRepository.Add(myPOCO);
             }
         }
+
 
         public static void AddUsoCFDI(UsoCFDIDetails myDetails, UsoCFDIRepository myRepository)
         {
@@ -2334,7 +2279,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 JournalStatusTypeRepository.Add(newJournalStatusType);
             }
         }
-
+        
         public static void AddJournalType(JournalTypeDetails JournalTypeDetails, JournalTypeRepository JournalTypeRepository)
         {
             Dictionary<string, JournalType> tenantJournalTypes = JournalTypeRepository.GetAll().ToDictionary(d => d.JournalTypeID, a => a);
@@ -2370,7 +2315,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                ChartOfAccountsType newChartOfAccountsType = new ChartOfAccountsType() { Code = chartOfAccountsTypeDetails.Code, LocalName = chartOfAccountsTypeDetails.LocalName, EnglishName = chartOfAccountsTypeDetails.EnglishName, Inactive = false };
+                ChartOfAccountsType newChartOfAccountsType = new ChartOfAccountsType() { Code = chartOfAccountsTypeDetails.Code, LocalName = chartOfAccountsTypeDetails.LocalName, EnglishName = chartOfAccountsTypeDetails.EnglishName,  Inactive = false };
                 chartOfAccountsTypeRepository.Add(newChartOfAccountsType);
             }
         }
@@ -2381,12 +2326,12 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             if (tenantJournalActionType.Keys.Contains(journalActionTypeDetails.Code))
             {
-                JournalActionType journalActionType = journalActionTypeRepository.GetSingle(journalActionTypeDetails.JournalActionTypeID, 0);
+                JournalActionType journalActionType = journalActionTypeRepository.GetSingle(journalActionTypeDetails.JournalActionTypeID,0);
                 journalActionType.EnglishName = journalActionTypeDetails.EnglishName;
                 journalActionType.LocalName = journalActionTypeDetails.LocalName;
                 journalActionType.Code = journalActionTypeDetails.Code;
                 journalActionType.Tenant = journalActionTypeDetails.Tenant;
-                journalActionType.SearchFields = journalActionTypeDetails.Code + "," + journalActionTypeDetails.EnglishName + "," + journalActionTypeDetails.LocalName;
+                journalActionType.SearchFields = journalActionTypeDetails.Code + "," + journalActionTypeDetails.EnglishName + "," + journalActionTypeDetails.LocalName;    
                 journalActionType.Inactive = journalActionTypeDetails.Inactive;
                 journalActionTypeRepository.Update(journalActionType);
             }
@@ -2396,7 +2341,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 journalActionTypeRepository.Add(newjournalActionType);
             }
         }
-
+        
         public static void AddAccountingEntity(AccountingEntityDetails accountingEntityDetails, AccountingEntityRepository accountingEntityRepository)
         {
             Dictionary<string, AccountingEntity> tenantAccountingEntity = accountingEntityRepository.GetAll().ToDictionary(d => d.Code, a => a);
@@ -2407,24 +2352,25 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 accountingEntity.EnglishName = accountingEntityDetails.EnglishName;
                 accountingEntity.LocalName = accountingEntityDetails.LocalName;
                 accountingEntity.Code = accountingEntityDetails.Code;
-
+               
             }
             else
             {
-                AccountingEntity newAccountingEntity = new AccountingEntity() { Code = accountingEntityDetails.Code, LocalName = accountingEntityDetails.LocalName, EnglishName = accountingEntityDetails.EnglishName };
+                AccountingEntity newAccountingEntity = new AccountingEntity() { Code = accountingEntityDetails.Code, LocalName = accountingEntityDetails.LocalName, EnglishName = accountingEntityDetails.EnglishName};
                 accountingEntityRepository.Add(newAccountingEntity);
             }
         }
-
+        
         public static void AddGLAccountType(GLAccountTypeDetails gLAccountTypeDetails, GLAccountTypeRepository gLAccountTypeRepository)
         {
-            Dictionary<string, GLAccountType> tenantGLAccountTypes = gLAccountTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
+            Dictionary<string, GLAccountType> tenantGLAccountTypes =  gLAccountTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
             if (tenantGLAccountTypes.Keys.Contains(gLAccountTypeDetails.Code))
             {
                 GLAccountType type = gLAccountTypeRepository.GetSingle(gLAccountTypeDetails.Code);
                 type.EnglishName = gLAccountTypeDetails.EnglishName;
                 type.LocalName = gLAccountTypeDetails.LocalName;
+                //type.SearchFields = gLAccountTypeDetails.JournalTypeID + "," + gLAccountTypeDetails.EnglishName + "," + gLAccountTypeDetails.LocalName;
                 type.Inactive = gLAccountTypeDetails.Inactive;
                 gLAccountTypeRepository.Update(type);
             }
@@ -2434,7 +2380,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 gLAccountTypeRepository.Add(newType);
             }
         }
-
+        
         public static void AddRevenueExpenseType(RevenueExpenseTypeDetails revenueExpenseTypeDetails, RevenueExpenseTypeRepository revenueExpenseTypeRepository)
         {
             Dictionary<string, RevenueExpenseType> tenantRevenueExpenseTypes = revenueExpenseTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
@@ -2494,7 +2440,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 periodTypeRepository.Add(newType);
             }
         }
-
+        
         public static void AddAutomaticReconcile(AutomaticReconcileDetails automaticReconcileDetails, AutomaticReconcileRepository automaticReconcileRepository)
         {
             Dictionary<string, AutomaticReconcile> tenantAutomaticReconciles = automaticReconcileRepository.GetAll().ToDictionary(d => d.Code, a => a);
@@ -2515,7 +2461,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
         // end accounting
-
+        
         public static void AddCertificatesStatus(CertificatesStatusDetails certificatesStatusDetails, CertificatesStatusRepository certificatesStatusRepository)
         {
             Dictionary<string, CertificatesStatus> tenantCertificatesStatuses = certificatesStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
@@ -2604,7 +2550,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 myRepository.Add(myPOCO);
             }
         }
-
+        
         public static void AddARInvoiceLineAction(CodeNameDetails myDetails, ARInvoiceLineActionRepository myRepository)
         {
             Dictionary<string, ARInvoiceLineAction> myDictionary = myRepository.GetARInvoiceLineActions().ToDictionary(d => d.Code, a => a);
@@ -2693,7 +2639,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                SATPaymentMethod newPaymentMethod = new SATPaymentMethod() { Code = paymentMethodDetails.Code, Name = paymentMethodDetails.Name, LocalName = paymentMethodDetails.LocalName, SearchFields = (paymentMethodDetails.Code + "," + paymentMethodDetails.Name + "," + paymentMethodDetails.LocalName).ToLower() };
+                SATPaymentMethod newPaymentMethod = new SATPaymentMethod() { Code = paymentMethodDetails.Code, Name = paymentMethodDetails.Name, LocalName  = paymentMethodDetails.LocalName,SearchFields = (paymentMethodDetails.Code + "," + paymentMethodDetails.Name + "," + paymentMethodDetails.LocalName).ToLower() };
                 sATPaymentMethodRepository.Add(newPaymentMethod);
             }
         }
@@ -2820,13 +2766,13 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 MAWBType MAWBType = MAWBTypeRepository.GetSingle(MAWBTypeDetails.Code);
                 MAWBType.Name = MAWBTypeDetails.Name;
-
+              
                 MAWBType.SearchFields = (MAWBTypeDetails.Code + "," + MAWBTypeDetails.Name).ToLower();
                 MAWBTypeRepository.Update(MAWBType);
             }
             else
             {
-                MAWBType newMAWBType = new MAWBType() { Code = MAWBTypeDetails.Code, Name = MAWBTypeDetails.Name, SearchFields = (MAWBTypeDetails.Code + "," + MAWBTypeDetails.Name).ToLower() };
+                MAWBType newMAWBType = new MAWBType() { Code = MAWBTypeDetails.Code,  Name = MAWBTypeDetails.Name, SearchFields = (MAWBTypeDetails.Code + "," + MAWBTypeDetails.Name ).ToLower() };
                 MAWBTypeRepository.Add(newMAWBType);
             }
         }
@@ -2846,7 +2792,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                CourierCustomStatus newCourierCustomStatus = new CourierCustomStatus() { Code = courierCustomStatusDetails.Code, Name = courierCustomStatusDetails.Name, SearchFields = (courierCustomStatusDetails.Code + "," + courierCustomStatusDetails.Name).ToLower() };
+                CourierCustomStatus newCourierCustomStatus  = new CourierCustomStatus() { Code = courierCustomStatusDetails.Code, Name = courierCustomStatusDetails.Name, SearchFields = (courierCustomStatusDetails.Code + "," + courierCustomStatusDetails.Name).ToLower() };
                 courierCustomStatusRepository.Add(newCourierCustomStatus);
             }
         }
@@ -2865,7 +2811,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                ManifestCargoStatus newManifestCargoStatus = new ManifestCargoStatus() { Code = manifestCargoStatusDetails.Code, Name = manifestCargoStatusDetails.Name, SearchFields = (manifestCargoStatusDetails.Code + "," + manifestCargoStatusDetails.Name).ToLower() };
+                ManifestCargoStatus newManifestCargoStatus = new ManifestCargoStatus() { Code =manifestCargoStatusDetails.Code, Name = manifestCargoStatusDetails.Name, SearchFields = (manifestCargoStatusDetails.Code + "," + manifestCargoStatusDetails.Name).ToLower() };
                 manifestCargoStatusRepository.Add(newManifestCargoStatus);
             }
         }
@@ -2980,15 +2926,15 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static void AddTaxWithholdingAssessingOfficeMode(TaxWithholdingAssessOfficeDetails details, TaxWithholdingAssessOfficeRepository repository)
         {
-
+           
             Dictionary<string, TaxWithholdingAssessOffice> dictionary = repository.GetAll(0).ToDictionary(d => d.Code, a => a);
 
             if (dictionary.Keys.Contains(details.Code))
             {
-                TaxWithholdingAssessOffice POCO = repository.GetSingleTaxWithholdingAssessOffice(details.Code, 0);
+                TaxWithholdingAssessOffice POCO = repository.GetSingleTaxWithholdingAssessOffice(details.Code,0);
                 POCO.Name = details.Name;
                 POCO.LocalName = details.LocalName;
-                POCO.SearchFields = details.Code + "," + details.Name + "," + details.LocalName;
+                POCO.SearchFields = details.Code + "," + details.Name +"," + details.LocalName;
                 repository.Update(POCO);
             }
 
@@ -3002,7 +2948,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     Id = details.Id,
                     Tenant = details.Tenant,
 
-                    SearchFields = details.Code + "," + details.Name + "," + details.LocalName,
+                    SearchFields = details.Code + "," + details.Name+ "," + details.LocalName,
                 };
 
                 repository.Add(POCO);
@@ -3017,7 +2963,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             if (dictionary.Keys.Contains(details.Code))
             {
-                AccountingCompanyType POCO = repository.GetSingleAccountingCompanyType(details.Code, 0);
+                AccountingCompanyType POCO = repository.GetSingleAccountingCompanyType(details.Code,0);
                 POCO.EnglishName = details.EnglishName;
                 POCO.LocalName = details.LocalName;
                 POCO.SearchFields = details.Code + "," + details.EnglishName + "," + details.LocalName;
@@ -3180,14 +3126,14 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             if (tenantAcceptanceStatuses.Keys.Contains(acceptanceStatusDetails.Code))
             {
                 AcceptanceStatus acceptanceStatus = acceptanceStatusRepository.GetSingle(acceptanceStatusDetails.Code);
-                acceptanceStatus.EnglishName = acceptanceStatusDetails.EnglishName;
+                acceptanceStatus.Name = acceptanceStatusDetails.Name;
 
-                acceptanceStatus.SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.EnglishName).ToLower();
+                acceptanceStatus.SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.Name).ToLower();
                 acceptanceStatusRepository.Update(acceptanceStatus);
             }
             else
             {
-                AcceptanceStatus newAcceptanceStatus = new AcceptanceStatus() { Code = acceptanceStatusDetails.Code, EnglishName = acceptanceStatusDetails.EnglishName, SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.EnglishName).ToLower() };
+                AcceptanceStatus newAcceptanceStatus = new AcceptanceStatus() { Code = acceptanceStatusDetails.Code, Name = acceptanceStatusDetails.Name, SearchFields = (acceptanceStatusDetails.Code + "," + acceptanceStatusDetails.Name).ToLower() };
                 acceptanceStatusRepository.Add(newAcceptanceStatus);
             }
         }
@@ -3225,8 +3171,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
             else
             {
-                PendingErrorPlace newPendingErrorPlace = new PendingErrorPlace()
-                {
+                PendingErrorPlace newPendingErrorPlace = new PendingErrorPlace() {
                     Code = pendingErrorPlaceDetails.Code,
                     LocalName = pendingErrorPlaceDetails.LocalName,
                     EnglishName = pendingErrorPlaceDetails.EnglishName,
@@ -3234,8 +3179,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 };
                 pendingErrorPlaceRepository.Add(newPendingErrorPlace);
             }
-		}
-		public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
+        }
+
+        public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
         {
             Dictionary<string, MamanSpecialAction> tenant = mamanSpecialActionRepository.GetAll().ToDictionary(d => d.Code, a => a);
 
@@ -3282,263 +3228,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     SearchFields = (mamanSpecialActionStatusDetails.Code + "," + mamanSpecialActionStatusDetails.LocalName).ToLower()
                 };
                 mamanSpecialActionStatusRepository.Add(newMamanSpecialActionStatus);
-            }
-        }
-
-
-        public static void AddCustomsDocumentUpload(CustomsDocumentUpload customsDocumentUploadDetails, CustomsDocumentUploadRepository customsDocumentUploadRepository)
-        {
-            Dictionary<string, CustomsDocumentUpload> tenant = customsDocumentUploadRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenant.Keys.Contains(customsDocumentUploadDetails.Code))
-            {
-                CustomsDocumentUpload customsDocumentUpload = customsDocumentUploadRepository.GetSingle(customsDocumentUploadDetails.Code);
-                customsDocumentUpload.LocalName = customsDocumentUploadDetails.LocalName;
-                customsDocumentUpload.EnglishName = customsDocumentUploadDetails.EnglishName;
-                customsDocumentUpload.SearchFields = (customsDocumentUploadDetails.Code + "," + customsDocumentUploadDetails.LocalName).ToLower();
-                customsDocumentUploadRepository.Update(customsDocumentUpload);
-            }
-            else
-            {
-                CustomsDocumentUpload customsDocumentUpload = new CustomsDocumentUpload()
-                {
-                    Code = customsDocumentUploadDetails.Code,
-                    LocalName = customsDocumentUploadDetails.LocalName,
-                    EnglishName = customsDocumentUploadDetails.EnglishName,
-                    SearchFields = (customsDocumentUploadDetails.Code + "," + customsDocumentUploadDetails.LocalName).ToLower()
-                };
-                customsDocumentUploadRepository.Add(customsDocumentUploadDetails);
-            }
-        }
-
-        public static void AddPointerLevel(PointerLevel PointerLevelDetails, PointerLevelRepository pointerLevelRepository)
-        {
-            Dictionary<string, PointerLevel> tenant = pointerLevelRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenant.Keys.Contains(PointerLevelDetails.Code))
-            {
-                PointerLevel pointerLevel = pointerLevelRepository.GetSingle(PointerLevelDetails.Code);
-                pointerLevel.LocalName = PointerLevelDetails.LocalName;
-                pointerLevel.EnglishName = PointerLevelDetails.EnglishName;
-                pointerLevel.SearchFields = (PointerLevelDetails.Code + "," + PointerLevelDetails.LocalName).ToLower();
-                pointerLevelRepository.Update(pointerLevel);
-            }
-            else
-            {
-                PointerLevel pointerLevel = new PointerLevel()
-                {
-                    Code = PointerLevelDetails.Code,
-                    LocalName = PointerLevelDetails.LocalName,
-                    EnglishName = PointerLevelDetails.EnglishName,
-                    SearchFields = (PointerLevelDetails.Code + "," + PointerLevelDetails.LocalName).ToLower()
-                };
-                pointerLevelRepository.Add(PointerLevelDetails);
-            }
-        }
-
-
-
-        public static void AddStorageStatusTable(StorageStatusTable StorageStatusTableDetails, StorageStatusTableRepository StorageStatusTableRepository)
-        {
-            Dictionary<string, StorageStatusTable> tenant = StorageStatusTableRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenant.Keys.Contains(StorageStatusTableDetails.Code))
-            {
-                StorageStatusTable storageStatusTable = StorageStatusTableRepository.GetSingle(StorageStatusTableDetails.Code);
-                storageStatusTable.Name = StorageStatusTableDetails.Name;
-                storageStatusTable.SearchFields = StorageStatusTableDetails.Code.ToLower();
-
-
-                StorageStatusTableRepository.Update(storageStatusTable);
-            }
-            else
-            {
-                StorageStatusTable storageStatusTable = new StorageStatusTable()
-                {
-                    Code = StorageStatusTableDetails.Code,
-                    Name = StorageStatusTableDetails.Name,
-                    SearchFields = StorageStatusTableDetails.Code.ToLower()
-
-                };
-                StorageStatusTableRepository.Add(StorageStatusTableDetails);
-            }
-        }
-
-
-        public static void AddPhysicalCheckCode(PhysicalCheckCode PhysicalCheckCodeDetails, PhysicalCheckCodeRepository physicalCheckCodeRepository)
-        {
-            Dictionary<string, PhysicalCheckCode> tenant = physicalCheckCodeRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenant.Keys.Contains(PhysicalCheckCodeDetails.Code))
-            {
-                PhysicalCheckCode physicalCheckCode = physicalCheckCodeRepository.GetSingle(PhysicalCheckCodeDetails.Code);
-                physicalCheckCode.Name = PhysicalCheckCodeDetails.Name;
-                physicalCheckCode.SearchFields = (PhysicalCheckCodeDetails.Code + "," + PhysicalCheckCodeDetails.Name).ToLower();
-                physicalCheckCodeRepository.Update(physicalCheckCode);
-            }
-            else
-            {
-                PhysicalCheckCode physicalCheckCode = new PhysicalCheckCode()
-                {
-                    Code = PhysicalCheckCodeDetails.Code,
-                    Name = PhysicalCheckCodeDetails.Name,
-                    SearchFields = (PhysicalCheckCodeDetails.Code + "," + PhysicalCheckCodeDetails.Name).ToLower()
-                };
-                physicalCheckCodeRepository.Add(PhysicalCheckCodeDetails);
-            }
-        }
-
-        public static void AddToggle(ToggleDetails toggleDetails, ToggleRepository toggleRepository)
-        {
-            Dictionary<string, Toggle> tenantToggle = toggleRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenantToggle.Keys.Contains(toggleDetails.Code))
-            {
-                Toggle toggle = toggleRepository.GetSingle(toggleDetails.Code);
-                toggle.Name = toggleDetails.Name;
-                toggle.SearchFields = (toggleDetails.Code + "," + toggleDetails.Name).ToLower();
-                toggle.Description = toggleDetails.Description;
-                toggleRepository.Update(toggle);
-            }
-            else
-            {
-                Toggle newToggle = new Toggle() { Code = toggleDetails.Code, Name = toggleDetails.Name, SearchFields = (toggleDetails.Code + "," + toggleDetails.Name).ToLower(), Description = toggleDetails.Description };
-                toggleRepository.Add(newToggle);
-            }
-        }
-
-
-        public static void AddFacilitationType(FacilitationType facilitationType, FacilitationTypeRepository facilitationTypeRepository)
-        {
-            Dictionary<string, FacilitationType> tenant = facilitationTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenant.Keys.Contains(facilitationType.Code))
-            {
-                FacilitationType facilitationTypes = facilitationTypeRepository.GetSingle(facilitationType.Code);
-                facilitationTypes.LocalName = facilitationType.LocalName;
-                facilitationTypes.SearchFields = (facilitationType.Code + "," + facilitationType.LocalName + "," + facilitationType.EnglishName).ToLower();
-                facilitationTypes.EnglishName = facilitationType.EnglishName;
-                facilitationTypes.Inactive = facilitationType.Inactive;
-                facilitationTypeRepository.Update(facilitationTypes);
-            }
-            else
-            {
-                FacilitationType newFacilitationType = new FacilitationType() { Code = facilitationType.Code, LocalName = facilitationType.LocalName, SearchFields = (facilitationType.Code + "," + facilitationType.LocalName + "," + facilitationType.EnglishName).ToLower(), EnglishName = facilitationType.EnglishName, Inactive = facilitationType.Inactive };
-                facilitationTypeRepository.Add(newFacilitationType);
-            }
-        }
-        public static void AddContainerizationHataraStatus(ContainerizationHataraStatus containerizationHataraStatus, ContainerizationHataraStatusRepository containerizationHataraStatusRepository)
-        {
-            Dictionary<string, ContainerizationHataraStatus> tenant = containerizationHataraStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenant.Keys.Contains(containerizationHataraStatus.Code))
-            {
-                ContainerizationHataraStatus myContainerizationHataraStatus = containerizationHataraStatusRepository.GetSingle(containerizationHataraStatus.Code);
-                myContainerizationHataraStatus.Name = containerizationHataraStatus.Name;
-                myContainerizationHataraStatus.SearchFields = (containerizationHataraStatus.Code + "," + containerizationHataraStatus.Name).ToLower();
-
-                containerizationHataraStatusRepository.Update(myContainerizationHataraStatus);
-            }
-            else
-            {
-                ContainerizationHataraStatus newContainerizationHataraStatus = new ContainerizationHataraStatus() { Code = containerizationHataraStatus.Code, Name = containerizationHataraStatus.Name, SearchFields = (containerizationHataraStatus.Code + "," + containerizationHataraStatus.Name).ToLower() };
-                containerizationHataraStatusRepository.Add(newContainerizationHataraStatus);
-            }
-        }
-
-        public static void AddOcrStatus(OcrStatus OcrStatusDetails, OcrStatusRepository OcrStatusRepository)
-        {
-            Dictionary<string, OcrStatus> tenant = OcrStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenant.Keys.Contains(OcrStatusDetails.Code))
-            {
-                OcrStatus ocrStatus = OcrStatusRepository.GetSingle(OcrStatusDetails.Code);
-                ocrStatus.EnglishName = OcrStatusDetails.EnglishName;
-                ocrStatus.LocalName = OcrStatusDetails.LocalName;
-                ocrStatus.SearchFields = (OcrStatusDetails.LocalName + "," + OcrStatusDetails.EnglishName).ToLower();
-
-
-                OcrStatusRepository.Update(ocrStatus);
-            }
-            else
-            {
-                OcrStatus newOcrStatus = new OcrStatus()
-                {
-                    Code = OcrStatusDetails.Code,
-                    LocalName = OcrStatusDetails.LocalName,
-                    EnglishName = OcrStatusDetails.EnglishName,
-                    SearchFields = (OcrStatusDetails.LocalName + "," + OcrStatusDetails.EnglishName).ToLower()
-
-                };
-                OcrStatusRepository.Add(newOcrStatus);
-            }
-        }
-        public static void AddSIIRequestStatus(SIIRequestStatus siiRequestStatusDetails, SIIRequestStatusRepository siiRequestStatusRepository)
-        {
-            Dictionary<string, SIIRequestStatus> tenantSiiRequestStatuses = siiRequestStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            if (tenantSiiRequestStatuses.Keys.Contains(siiRequestStatusDetails.Code))
-            {
-                SIIRequestStatus siiRequestStatus = siiRequestStatusRepository.GetSingle(siiRequestStatusDetails.Code);
-                siiRequestStatus.LocalName = siiRequestStatusDetails.LocalName;
-                siiRequestStatus.SearchFields = (siiRequestStatusDetails.Code + "," + siiRequestStatusDetails.LocalName).ToLower();
-                siiRequestStatusRepository.Update(siiRequestStatus);
-            }
-            else
-            {
-                SIIRequestStatus newSiiRequestStatus = new SIIRequestStatus()
-                {
-                    Code = siiRequestStatusDetails.Code,
-                    Name = siiRequestStatusDetails.LocalName,
-                    SearchFields = (siiRequestStatusDetails.Code + "," + siiRequestStatusDetails.LocalName).ToLower()
-                };
-                siiRequestStatusRepository.Add(newSiiRequestStatus);
-            }
-        }
-        public static void AddOrUpdateSIIDocumentType(SIIDocumentType documentType,SIIDocumentTypeRepository repository)
-        {
-            var existingTypesByCode = repository
-                .GetAll()
-                .ToDictionary(d => d.Code, d => d);
-
-            if (existingTypesByCode.ContainsKey(documentType.Code))
-            {
-                var existing = repository.GetSingle(documentType.Code);
-                existing.LocalName = documentType.LocalName;
-                existing.SearchFields = $"{documentType.Code},{documentType.LocalName}".ToLower();
-                repository.Update(existing);
-            }
-            else
-            {
-                var newType = new SIIDocumentType
-                {
-                    Code = documentType.Code,
-                    LocalName = documentType.LocalName,
-                    SearchFields = $"{documentType.Code},{documentType.LocalName}".ToLower()
-                };
-                repository.Add(newType);
-            }
-        }
-
-        public static void AddOrUpdateSIIRequestLineStatus(SIIRequestLineStatus status,SIIRequestLineStatusRepository repository)
-        {
-            var existing = repository.GetSingle(status.Code);
-            if (existing != null)
-            {
-                existing.LocalName = status.LocalName;
-                existing.SearchFields = string.Format("{0},{1}", status.Code, status.LocalName).ToLower();
-                repository.Update(existing);
-            }
-            else
-            {
-                var newStatus = new SIIRequestLineStatus
-                {
-                    Code = status.Code,
-                    Name = status.Name,
-                    LocalName = status.LocalName,
-                    SearchFields = string.Format("{0},{1}", status.Code, status.LocalName).ToLower()
-                };
-                repository.Add(newStatus);
             }
         }
     }

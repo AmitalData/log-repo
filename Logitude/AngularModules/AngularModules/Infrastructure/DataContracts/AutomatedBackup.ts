@@ -1,16 +1,11 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
 
 import {AutomationSetValue} from './AutomationSetValue';
 import {AutomationCondition} from './AutomationCondition';
 import {AutomationFollowUp} from './AutomationFollowUp';
 import {AutomationQueuedTask} from './AutomationQueuedTask';
-import {AutomationSendInterface} from './AutomationSendInterface';
-import {AutomationSendDocument} from './AutomationSendDocument';
-import { AutomationCreateTask } from './AutomationCreateTask';
-import { AutomationOnUpdateDocument } from './AutomationOnUpdateDocument';
-import { AutomationEvent } from './AutomationEvent';
 
-@Injectable() 
+@Injectable()
 
 export class AutomatedBackup {
 
@@ -22,32 +17,18 @@ export class AutomatedBackup {
     public ResultCode: string;
     public Description: string;
     public Delaytime: number;
-    public DelaytimeOp: string;
-    public SelectedDelaytimeFieldCode: string;
     public DelaytimeIndicator: string;
     public Type: string;
     public IsAutomationResultEmailAllActiveUsers: boolean;
-    public ReportTemplateId: string;
-    public DocumentCopyId: string;
-
     AautomationConditionLists: AutomationCondition[];
     AutomationSetValueLists: AutomationSetValue[];
     DelayAautomationConditionLists: AutomationCondition[];
     AutomationFollowUp: AutomationFollowUp;
-    AutomationEvent: AutomationEvent;
     AutomationQueuedTask: AutomationQueuedTask;
     AutomationSetSLAValue: AutomationSetSLAValue;
-    AutomationSendInterface: AutomationSendInterface;
-    AutomationSendDocument: AutomationSendDocument;
-    AutomationCreateTask: AutomationCreateTask;
-    AutomationOnUpdateDocument: AutomationOnUpdateDocument;
-
 }
 
 export class AutomationSetSLAValue {
     SLAId: string;
-    ObjectFieldCode: string;
+    ObjectFieldId: string;
 }
-
-
-

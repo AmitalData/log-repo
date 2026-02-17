@@ -15,8 +15,5 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public double? Rate { get; set; }
         public DateTime? ValueDate { get; set; }
         public DateTime? LogDateTime { get; set; }
-        public string UpdatedByUserId { get; set; }
-        public string UpdatedByUserName { get; set; }
-        public DateTime? UpdatedDate { get; set; }
     }
 }

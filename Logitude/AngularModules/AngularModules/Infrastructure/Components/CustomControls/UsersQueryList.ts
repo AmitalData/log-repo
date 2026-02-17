@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {SessionLocator} from '../../Utilities/SessionLocator';
 import {SessionInfo} from '../../Utilities/SessionInfo';
 import {ListComponentArgs} from '../../Args';
@@ -31,7 +31,6 @@ export class UsersQueryList implements OnInit {
     BackButtonTitle: string;
     filterAgrs: ApiQueryFilters;
     @Output() BackCompletedEvent = new EventEmitter();
-    @Input() WorkspaceFilters= new ApiQueryFilters();
     ReloadUserQueries: EventEmitter<any>;
     ShowNoViews: boolean = false;
     // public SearchTextValue: Control;
@@ -60,9 +59,6 @@ export class UsersQueryList implements OnInit {
 
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
-            if (this.WorkspaceFilters != null) {
-                listArgs.Filters = this.WorkspaceFilters;
-            }
             listArgs.QueryCode = myQueryCode;
             listArgs.ObjectTableName = this.ObjectTableName;
             listArgs.DisplayTitle = TextCodeTranslator.Translate(NameTextCodeCode);

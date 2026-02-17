@@ -12,9 +12,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string Address2 { get; set; }
         public string Description { get; set; }
         public string City { get; set; }
-        public string CityId { get; set; }
-        public string Responsibility { get; set; }
-        public string TruckerId { get; set; }
         public string ZipCode { get; set; }
         public string FaxNumber { get; set; }
         public string PhoneNumber { get; set; }

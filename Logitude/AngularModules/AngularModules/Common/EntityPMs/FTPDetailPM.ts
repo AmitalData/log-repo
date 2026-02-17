@@ -20,7 +20,7 @@ export class FTPDetailPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -84,18 +84,7 @@ export class FTPDetailPM {
     public get UseSFTP() { return this.useSFTP; }
     public set UseSFTP(newValue: boolean) { if (this.useSFTP != newValue) { this.useSFTP = newValue; this.MarkAsDirty("UseSFTP"); } }
        
-    private privateKey: string;
-    public get PrivateKey() { return this.privateKey; }
-    public set PrivateKey(newValue: string) { if (this.privateKey != newValue) { this.privateKey = newValue; this.MarkAsDirty("PrivateKey"); } }    
-    
-    private port: string;
-    public get Port() { return this.port; }
-    public set Port(newValue: string) { if (this.port != newValue) { this.port = newValue; this.MarkAsDirty("Port"); } }
-
-    private passiveMode: boolean;
-    public get PassiveMode() { return this.passiveMode; }
-    public set PassiveMode(newValue: boolean) { if (this.passiveMode != newValue) { this.passiveMode = newValue; this.MarkAsDirty("PassiveMode"); } }
-
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
@@ -105,10 +94,7 @@ export class FTPDetailPM {
     public OldEntityPM: FTPDetailPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -116,7 +102,6 @@ export class FTPDetailPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "FTPDetail");
            
         }
-	 }
     }
     private MyClone: FTPDetailPM;
 
@@ -128,4 +113,4 @@ export class FTPDetailPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

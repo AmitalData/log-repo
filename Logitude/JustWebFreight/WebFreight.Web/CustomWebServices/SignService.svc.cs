@@ -13,9 +13,6 @@ using System.Threading.Tasks;
 using WebFreight.Web.CustomWebServices.SignChunks.Common;
 using Logitude.Server.Tools.Utils;
 using System.Collections;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
-using Logitude.CustomsMessaging.Common.Gen;
-using Logitude.Customs.BL.EntityQueryServices;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -35,7 +32,6 @@ namespace WebFreight.Web.CustomWebServices
             out String CustomsRequestsSheetId, out string InterfaceTypeCode, out int? currTenant)
         {
 
-            currTenant = null;
             try
             {
                 if (!SignQueue.Instance.TryDequeueReqId(CurrentSignCertificate, isCompanySignOn, isPersonalSignOn, out CustomsRequestsSheetId, out InterfaceTypeCode, out currTenant))
@@ -49,7 +45,7 @@ namespace WebFreight.Web.CustomWebServices
                 var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(InterfaceTypeCode);
 
                 //anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-                var (ReceiveBytesToSign, reqParams) = anaO.PasiveSignGetBytesToSign(currTenant.GetValueOrDefault(), CustomsRequestsSheetId);
+                Byte[] ReceiveBytesToSign = anaO.PasiveSignGetBytesToSign(currTenant.GetValueOrDefault(), CustomsRequestsSheetId);
                 return ReceiveBytesToSign;
             }
             catch (Exception)
@@ -60,23 +56,6 @@ namespace WebFreight.Web.CustomWebServices
             finally
             {
                 SignQueue.Instance.RefreshDb();
-
-                try
-                {
-
-                    currTenant = currTenant ?? GetTenantBy(CurrentSignCertificate);//on premise- nice to have 
-
-                    var dbSignQueueService = new SignQueueHybridDbService();
-                    dbSignQueueService.UpsertSignStation(CurrentSignCertificate, isPersonalSignOn, isCompanySignOn, currTenant.GetValueOrDefault());
-
-
-                }
-                catch
-                {
-
-
-                }
-
             }
 
 
@@ -122,7 +101,7 @@ namespace WebFreight.Web.CustomWebServices
                     }
                 }
                 if (!toContinue) return;
-
+                    
                 var mySendSheetSignModel = new SendSheetSignModel();
                 mySendSheetSignModel.CustomsRequestsSheetId = CustomsRequestsSheetId;
                 mySendSheetSignModel.Tenant = tenant;
@@ -142,7 +121,9 @@ namespace WebFreight.Web.CustomWebServices
             }
             finally
             {
-                 try
+                //Logger.LogMe(
+                //    "CustomsRequestsSheetId=" + CustomsRequestsSheetId + ";supressCompleteResponseSignBytes=" + supressCompleteResponseSignBytes.ToString(), false, "CompleteResponseSignBytes");
+                try
                 {
                     _CustomsRequestsSheetDoneList.RemoveAll(rec => DateTime.Now.Subtract(rec.DoneAt) > TimeSpan.FromSeconds(90));
                 }
@@ -167,55 +148,28 @@ namespace WebFreight.Web.CustomWebServices
 
         public ReceiveBytesToSignResponse GetBytesToSign(ReceiveBytesToSignReq myReceiveBytesToSignReq)
         {
-
+            String CustomsRequestsSheetId = "";
+            string InterfaceTypeCode = "";
             int? currTenant = null;
-            try
+            var bytes = this.ReceiveBytesToSign(myReceiveBytesToSignReq.CurrentSignCertificate, myReceiveBytesToSignReq.isCompanySignOn, myReceiveBytesToSignReq.isPersonalSignOn,
+                out CustomsRequestsSheetId, out InterfaceTypeCode, out currTenant);
+            var myReceiveBytesToSignResponse = new ReceiveBytesToSignResponse()
             {
-
-                String CustomsRequestsSheetId = "";
-                string InterfaceTypeCode = "";
-
-                var bytes = this.ReceiveBytesToSign(myReceiveBytesToSignReq.CurrentSignCertificate, myReceiveBytesToSignReq.isCompanySignOn, myReceiveBytesToSignReq.isPersonalSignOn,
-                    out CustomsRequestsSheetId, out InterfaceTypeCode, out currTenant);
-                var myReceiveBytesToSignResponse = new ReceiveBytesToSignResponse()
-                {
-                    currTenant = currTenant.GetValueOrDefault(),
-                    InterfaceTypeCode = InterfaceTypeCode,
-                    CustomsRequestsSheetId = CustomsRequestsSheetId,
-                    ReceiveBytesToSign = bytes
-                };
-                return myReceiveBytesToSignResponse;
-            }
-            finally
-            {
-
-                try
-                {
-                    currTenant = currTenant ?? GetTenantBy(myReceiveBytesToSignReq.CurrentSignCertificate);//on premise- nice to have 
-                    var dbSignQueueService = new SignQueueHybridDbService();
-                    dbSignQueueService.UpsertSignStation(myReceiveBytesToSignReq.CurrentSignCertificate, myReceiveBytesToSignReq.isPersonalSignOn, myReceiveBytesToSignReq.isCompanySignOn, currTenant.GetValueOrDefault());
-
-
-                }
-                catch
-                {
-
-
-                }
-            }
-
+                currTenant = currTenant.GetValueOrDefault(),
+                InterfaceTypeCode = InterfaceTypeCode,
+                CustomsRequestsSheetId = CustomsRequestsSheetId,
+                ReceiveBytesToSign = bytes
+            };
+            return myReceiveBytesToSignResponse;
         }
 
-        private int GetTenantBy(string currentSignCertificate)
-        {
-            string customsAgentId = SignCertificateClass.Get(currentSignCertificate).CustomsAgentId;
-            var customsSettingQueryService = new CustomsSettingQueryService(0);
-            var pm = customsSettingQueryService.GetTenantByCustomsAgentId(customsAgentId);
-            if (pm == null)
-            {
-                return 0;
-            }
-            return pm.Tenant;
-        }
+
+
+
+
+
+
+
+
     }
 }

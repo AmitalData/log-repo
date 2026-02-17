@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using System.Threading;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -39,7 +39,7 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -182,7 +182,7 @@ namespace CommunicationWorkerRole
                                                 {
                                                     IQueueService queueservice = new DbQueueService();
                                                     queueservice.InitializeQueue("AgentsSharedDocumentQueue", tenant);
-                                                    queueservice.Send(new Dictionary<string, string>() { { "EntityId", agentSharedDocumentPM.Id }, { "Tenant", tenant.ToString() }, { "AgentTenant", agentSharedDocumentPM.Tenant.ToString() } }, tenant, null, null, null, null);
+                                                    queueservice.Send(new Dictionary<string, string>() { { "EntityId", agentSharedDocumentPM.Id }, { "Tenant", tenant.ToString() }, { "AgentTenant", agentSharedDocumentPM.Tenant.ToString() } }, null, null, null, null);
 
                                                 }
 

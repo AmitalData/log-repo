@@ -6,7 +6,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'TimeManagementWorkspaceComponent',
-    
+    moduleId: module.id,
     templateUrl: './TimeManagementWorkspaceComponent.html',
     providers: [EntityResourceService],
 })
@@ -46,7 +46,7 @@ export class TimeManagementWorkspaceComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

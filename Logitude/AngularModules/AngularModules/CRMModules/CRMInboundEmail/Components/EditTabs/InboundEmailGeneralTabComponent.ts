@@ -7,7 +7,7 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 
 @Component({
     selector: 'TicketDocsOutTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './InboundEmailGeneralTabComponent.html',
 })
 

@@ -1,54 +1,37 @@
-﻿using ICSharpCode.SharpZipLib.Checksum;
+﻿using ICSharpCode.SharpZipLib.Checksums;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
-using Microsoft.Azure.Management.Dns;
-using Microsoft.Azure.Management.Dns.Models;
 using Microsoft.Practices.Unity;
-using Microsoft.Rest.Azure.Authentication;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Helpers.BIReport;
 using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
-using Microsoft.Azure.Management.ResourceManager;
-using Simplog.Server.Infrastructure;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Logitude.SystemLogs;
-using ICSharpCode.SharpZipLib.Checksum;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Linq;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
-using System.Data.SqlClient;
-using System.Data;
-using System.Data.Common;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -61,7 +44,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(args.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(args.Tenant);
                 if (args.QueryColumnsPMs != null && args.QueryColumnsPMs.Count > 0)
                 {
@@ -98,7 +80,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(args.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(args.Tenant);
                 if (args.QueryColumnsPMs != null && args.QueryColumnsPMs.Count > 0)
                 {
@@ -193,30 +174,124 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var service = new QueryToExcelExportService();
-                var result = service.ExportQueryDataToExcel(filters);
+                string queryId = filters.queryId;
+                int tenant = (int)filters.Tenant;
+                string userid = filters.userid;
+                string ObjectTableName = filters.ObjectTableName;
 
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
+                QueryRepository queryRep = new QueryRepository(tenant);
+                QueryQuery queryQuery = new QueryQuery(queryRep);
+                QueryPM query = queryQuery.GetSingleQueryPM(queryId, tenant);
+                QueryOperations queryOperations = new QueryOperations()
+                {
+                    ObjectTableName = ObjectTableName,
+                    PageIndex = filters.PageIndex,
+                    PageSize = filters.PageSize,
+                    QuerySection = query.QuerySection,
+                    SortByColumnName = filters.SortBy,
+                    SortDirectin = filters.SortDirection,
 
-        public HttpResponseMessage GetQueryExportExecutionLogStatus(string logId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                var queryExecutionLogRepository = new QueryExportExecutionLogRepository(authToken.Tenant);
-                QueryExportExecutionLog queryExecutionLog = queryExecutionLogRepository.GetSingle(logId, authToken.Tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, queryExecutionLog);
+                };
+
+                List<ObjectField> ObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(ObjectTableName, tenant);
+                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+                for (int i = 1; i <= 10; i++)
+                {
+                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                    object filterValue2 = null;
+
+                    if (filterNameProp != null)
+                    {
+                        string filterName = filterNameProp.ToString();
+                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+                        //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
+                        //{
+                        //string[] values = filterValue1.ToString().Split(',');
+                        //if (values.Count() > 1)
+                        //{
+                        //filterValue1 = values[0];
+                        //filterValue2 = values[1];
+                        //}
+                        //}
+                        //ToDo: Get object field by name and set the remained filter properties
+                        ObjectField field = ObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                        if (field != null)
+                        {
+                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                        }
+                        else
+                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                    }
+
+
+
+                }
+
+                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+                {
+                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                    foreach (QueryFilterItem filter in filters_list)
+                    {
+                        ObjectField field = ObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                        if (field != null)
+                        {
+
+
+                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        }
+                        else
+                        {
+                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                        }
+                    }
+                }
+                FilterSerializer serializer = new FilterSerializer();
+                byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
+                var data = new ExportToExcelHelper().ExportQueryToExcel(arrayOfBytes, queryId, tenant, userid, null);
+                //Uploader uploaderService = new Uploader();
+                //string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };
+                //string result = uploaderService.UploadFile(ObjectTableName + DateTime.Now.ToShortDateString() + ".xls", data, data.Length, data.Length, blockIdlist, 0, null, tenant, "others", null);
+                if (ObjectTableName.Contains("Customs."))
+                {
+                    ObjectTableName = ObjectTableName.Replace("Customs.","");
+                }
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = ObjectTableName + DateTime.Now.ToShortDateString(),//fileparams[0],
+                    FolderName = "others",
+                    Extension = "xls",//fileparams[1],
+                    Tenant = tenant,
+                    FileSize = data.Length,
+
+                };
+                //string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileNameAndExtension.ToLower(), fileLocation);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                storageservice.Write(data, fileInfo);
+
+
+                //string result = SendBlockToServer(true, data, ObjectTableName, tenant);
+                //if (result == "Faild")
+                //{
+                //    return Request.CreateResponse(HttpStatusCode.OK, "Faild");
+                //}
+                return Request.CreateResponse(HttpStatusCode.OK, ObjectTableName + DateTime.Now.ToShortDateString());
             }
             catch (Exception ex)
             {
@@ -239,15 +314,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string ObjectTableName = "Shipment";
-                var exportBIReportService = new ExportBIReportService();
-
-                var data = exportBIReportService.Run(bIReportXMLData, tenant, true);
+                var data = new ExportToExcelHelper().ExportBIQueryToExcel(bIReportXMLData, tenant);
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = ObjectTableName + DateTime.Now.ToShortDateString(),
                     FolderName = "others",
-                    Extension = exportBIReportService.GetBIReportExtensionFile(bIReportXMLData.ExportDataType),
+                    Extension = "xlsx",
                     Tenant = tenant,
                     FileSize = data.Length,
 
@@ -261,7 +334,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             catch (Exception ex)
             {
-               
+                if (email == "maheera@logitudeworld.com" || email == "ahmada@logitudeworld.com")
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+                }
+
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -298,9 +375,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 queueservice.Send(new Dictionary<string, string>() {
                     { "BIReportExecutionLogId", bIReportExecutionLog.Id },
                     { "Tenant", bIReportExecutionLog.Tenant.ToString() }
-                }, tenant, null, null, null, null);
+                }, null, null, null, null);
 
-                bIReportXMLData.BIReportsExecutionLogId = bIReportExecutionLog.Id;
                 return Request.CreateResponse(HttpStatusCode.OK, bIReportXMLData);
             }
 
@@ -310,156 +386,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetBIReportLogStatus(string bIReportsExecutionLogId)
+        public HttpResponseMessage GetBIReportLogStatus(string reportId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                BIReportsExecutionLogQueryService bIReportsExecutionLogQueryService = new BIReportsExecutionLogQueryService(authToken.Tenant);
-                BIReportsExecutionLogList bIReportsExecutionLogList = bIReportsExecutionLogQueryService.GetBIReportsExecutionLogList(bIReportsExecutionLogId, authToken.Tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, bIReportsExecutionLogList);
+                BIReportsExecutionLogRepository reportExecutionLogRepository = new BIReportsExecutionLogRepository(authToken.Tenant);
+                BIReportsExecutionLog reportExecutionLog = reportExecutionLogRepository.GetSingleByBIReportId(reportId, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, reportExecutionLog);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-        [HttpGet]
-        public async Task<HttpResponseMessage> GetGenerateDigitalPortalDomainAsync(string customerURL, int tenant)
-        {
-            try
-            {
-                customerURL = JsonConvert.DeserializeObject<string>(customerURL);
-                await RunAddingDNSRecordAsync(customerURL, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, "Success");
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", $"Digital portal generate domain {tenant}", "", null);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-       
-        private static async Task RunAddingDNSRecordAsync(string customerURL, int tenant)
-        {
-            customerURL = customerURL.ToLower();
-
-            if (!IsValidDomain(customerURL))
-            {
-                throw new Exception("Invalid domain name");
-            }
-
-            var isSubDomainIOfTenantManagementUsed = IsSubDomainIOfTenantManagementUsed(customerURL, tenant);
-
-            if (isSubDomainIOfTenantManagementUsed.Item1)
-            {
-                throw new Exception("The domain already defined for tenant No. " + isSubDomainIOfTenantManagementUsed.Item2);
-            }
-
-            var tenantId =  "a46b1446-9af4-4079-87ad-3304ee9ed758";
-            var clientId = "23542def-2398-43e4-abc8-61469fffaa7f";
-            var secret = LogitudeSettings.AzurePrincipalSecretKey;
-            var subscriptionId = "faa01774-0b55-482b-a317-742a1f1479f8";
-            var resourceGroupName = "globallogitude";
-            var zoneName = LogitudeSettings.DNSZone; 
-            var DNSIPAddress = LogitudeSettings.DNSIPAddress;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12;
-            var serviceCreds = await ApplicationTokenProvider.LoginSilentAsync(tenantId, clientId, secret);
-            var dnsClient = new DnsManagementClient(serviceCreds)
-            {
-                SubscriptionId = subscriptionId
-            };
-
-            if (CheckOnDNS(dnsClient, resourceGroupName, zoneName, customerURL, RecordType.CNAME) 
-                 || CheckOnDNS(dnsClient, resourceGroupName, zoneName, customerURL, RecordType.A))
-            {
-                throw new Exception("The domain already exist on the dns");
-            }
-
-            try
-            {
-                // Build the service credentials and DNS management client
-                //var recordSetParams = new RecordSet
-                //{
-                //    TTL = 3600,
-                //    CnameRecord = new CnameRecord()
-                //    {
-                //       Cname = GetDomainData()
-                //    }
-                //};
-
-                //var recordSet = dnsClient.RecordSets.CreateOrUpdateAsync(resourceGroupName, zoneName, customerURL, RecordType.CNAME, recordSetParams).Result;
-                throw new Exception("Add new domain to DNS is not allowed now!!!!");
-            }
-            catch (Exception e)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
-                throw e;
-            }
-        }
-
-        private static bool CheckOnDNS(DnsManagementClient dnsClient, string resourceGroupName, string zoneName, string customerURL, RecordType recordType)
-        {
-            try
-            {
-                if (dnsClient.RecordSets.Get(resourceGroupName, zoneName, customerURL, recordType) != null)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-       
-
-        private static bool IsValidDomain(string subDomain)
-        {
-            if (string.IsNullOrWhiteSpace(subDomain))
-            {
-                return false;
-            }
-
-            if (char.IsDigit(subDomain[0]))
-            {
-                return false;
-            }
-
-            if (subDomain.Contains("."))
-            {
-                return false;
-            }
-
-            var fullDomain = $"{subDomain}.logitudeworld.com";
-
-            // Regex to check valid domain name.
-            var pattern = "^(?!-)[A-Za-z0-9-]+([\\-\\.]{1}[a-z0-9]+)*\\.[A-Za-z]{2,6}$";
-
-            var regex = new Regex(pattern);
-
-            if (regex.Match(fullDomain).Success)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private static Tuple<bool, int?> IsSubDomainIOfTenantManagementUsed(string subDomain, int tenant)
-        {
-            var fullDomain = $"{subDomain}.logitudeworld.com";
-
-            TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-            var tenantManagement = tenantManagementRepository.CheckSubDomainTenantManagement(fullDomain, tenant);
-            return tenantManagement;
         }
 
         #region SendBlockToServer
@@ -497,7 +438,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             position = Convert.ToInt32(sentBytes);
             value = (Convert.ToDouble(!isFirstTry ? sentBytes : 0) / Convert.ToDouble(fileData.Length)) * 100;
             Uploader uploaderService = new Uploader();
-            string result = uploaderService.UploadFile(ObjectTableName + DateTime.Now.ToShortDateString() + ".xls", currentData, fileData.Length, sentBytes, blockIdsArray.ToArray(), counter, null, tenant, "others", null, false, null);
+            string result = uploaderService.UploadFile(ObjectTableName + DateTime.Now.ToShortDateString() + ".xls", currentData, fileData.Length, sentBytes, blockIdsArray.ToArray(), counter, null, tenant, "others", null);
             if (fileData != null)
             {
                 if (sentBytes < fileData.Length)
@@ -505,6 +446,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     SendBlockToServer(false, fileData, ObjectTableName, tenant);
                     Res = ObjectTableName + DateTime.Now.ToShortDateString() + ".xls";
                 }
+
                 else
                 {
                     // Uploading done successfully
@@ -520,6 +462,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
             return Res;
+
         }
 
 
@@ -575,10 +518,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(Tenant);
                 var documentsFilingQuery = new DocumentsFilingQuery(Tenant);
                 var AllDocs = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(ShipmentId, null, ObjectTableId, "I", Tenant);
                 var guid = Guid.NewGuid();
@@ -694,76 +633,5 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
            
         }
 
-        public HttpResponseMessage PutReleaseSetting(ReleaseArgs releaseArgs)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-               
-                if(releaseArgs.IsDeleteRelease)
-                {
-                    this.DeleteUsersReleaseNotes(tenant);
-                }
-
-                this.UpdateReleaseSettings(releaseArgs);
-
-                return Request.CreateResponse(HttpStatusCode.OK, releaseArgs);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-            
-        }
-        private void DeleteUsersReleaseNotes(int tenant)
-        {
-            string strConnString = GetConnection(tenant);
-            using (SqlConnection cn = new SqlConnection(strConnString))
-            {
-                SqlCommand cmd = new SqlCommand("delete from UsersReleaseNotesDisplays", cn);
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandTimeout = 30;
-                cn.Open();
-                var output = cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-        private string GetConnection(int tenant)
-        {
-            GlobalDB currentDb;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
-            }
-
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
-
-            return context.Database.Connection.ConnectionString;
-        }
-        private void UpdateReleaseSettings(ReleaseArgs releaseArgs)
-        {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-
-                if (setting == null) return;
-
-                setting.ReleaseDateString = releaseArgs.ReleaseDateString;                
-                setting.ReleaseNotesURL = releaseArgs.ReleaseCode;
-                settingRepository.Update(setting);
-                settingRepository.SubmitChanges();
-                scope.Complete();
-            }
-        }
     }
 }

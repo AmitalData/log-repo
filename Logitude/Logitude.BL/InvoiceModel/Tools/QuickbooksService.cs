@@ -5,7 +5,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -25,12 +24,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         public static string GetAccessToken(string tenant, AccountingSettingPM entityPM, Setting mySetting)
         {
-            var url = QuickbooksService.GetQBOBaseURL(mySetting);
-            var environment = QuickbooksService.GetQboEnvironment(mySetting);
+
             var oauth2Client = new OAuth2Client(mySetting.QBOClientID,
                     mySetting.QBOClientSecret,
-                    $"{url}v2/OAuth2Playground/RedirectUrl",
-                    $"{environment}"); // environment is “sandbox” or “production”
+                    "https://developer.intuit.com/v2/OAuth2Playground/RedirectUrl",
+                    "production"); // environment is “sandbox” or “production”
 
             var previousRefreshToken = entityPM.RefreshToken;
             var tokenResp = oauth2Client.RefreshTokenAsync(previousRefreshToken);
@@ -47,42 +45,24 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 entityPM.RefreshToken = data.RefreshToken;
                 ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Id);
-                AccountingSetting accountingSetting = MyContext.AccountingSettings.Where(p => p.Id == entityPM.Id).FirstOrDefault();
-                if (accountingSetting != null)
-                {
-                    accountingSetting.RefreshToken = data.RefreshToken;
-                    MyContext.AccountingSettings.Attach(accountingSetting);
-                    MyContext.SetAsModified(accountingSetting);
-                    MyContext.SaveChanges();
-                }
+                AccountingSettingService accountingService = new AccountingSettingService(MyContext,int.Parse(tenant));
+                accountingService.Update(entityPM);
             }
 
             return data.AccessToken;
         }
 
+
         private static ServiceContext GetServiceContextAuth2(String tenant, AccountingSettingPM entityPM, Setting mySetting)
         {
-            var url = QuickbooksService.GetQBOBaseURL(mySetting);
             OAuth2RequestValidator oauthValidator = new OAuth2RequestValidator(QuickbooksService.GetAccessToken(tenant, entityPM, mySetting));
             ServiceContext serviceContext = new ServiceContext(entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
-            serviceContext.IppConfiguration.BaseUrl.Qbo = url;
+            serviceContext.IppConfiguration.BaseUrl.Qbo = "https://quickbooks.api.intuit.com/";
 
             return serviceContext;
+
         }
-        public static string GetQBOBaseURL(Setting mySetting)
-        {
-            var url = "https://quickbooks.api.intuit.com/";
-            if (mySetting != null && !string.IsNullOrEmpty(mySetting.QboBaseUrl))
-                url = mySetting.QboBaseUrl;
-            return url;
-        }
-        public static string GetQboEnvironment(Setting mySetting)
-        {
-            var environment = "production";
-            if (mySetting != null && !string.IsNullOrEmpty(mySetting.QboEnvironment))
-                environment = mySetting.QboEnvironment;
-            return environment;
-        }
+
 
         public static ServiceContext GetServiceContext(String tenant)
         {
@@ -99,7 +79,24 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             AccountingSettingQuery query = new AccountingSettingQuery(int.Parse(tenant));
             AccountingSettingPM entityPM = query.GetSingleAccountingSettingPMById(int.Parse(tenant));
-            return GetServiceContextAuth2(tenant, entityPM, mySetting);            
+
+            if (entityPM.QBOOAuth == 2 && mySetting.QBOOAuthDefault==2)
+            {
+                return QuickbooksService.GetServiceContextAuth2(tenant, entityPM, mySetting);
+            }
+
+            else
+            {
+                OAuthRequestValidator oauthValidator = new OAuthRequestValidator(entityPM.QBOAccessToken, entityPM.QBOAccessTokenSecret, mySetting.QBOConsumerKey, mySetting.QBOConsumerSecretKey);
+                ServiceContext context = new ServiceContext(mySetting.QBOAppToken, entityPM.QBOrealMeID, IntuitServicesType.QBO, oauthValidator);
+
+
+
+                return context;
+            }
         }
+
+
+
     }
 }

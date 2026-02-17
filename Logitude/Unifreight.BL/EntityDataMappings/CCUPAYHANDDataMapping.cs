@@ -35,9 +35,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.TOTALPAYDEPOSIT = entityPM.TOTALPAYDEPOSIT;
             entityPOCO.TOTALPAYTAX = entityPM.TOTALPAYTAX;
             entityPOCO.TRANSIMPORTERNAME = entityPM.TRANSIMPORTERNAME;
-            entityPOCO.TENANT = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
-            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(CCUPAYHANDPM entityPM, CCUPAYHAND entityPOCO)
@@ -63,10 +60,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.TOTALPAYDEPOSIT = entityPOCO.TOTALPAYDEPOSIT;
             entityPM.TOTALPAYTAX = entityPOCO.TOTALPAYTAX;
             entityPM.TRANSIMPORTERNAME = entityPOCO.TRANSIMPORTERNAME;
-            entityPM.Tenant = entityPOCO.TENANT != null ? (int)entityPOCO.TENANT : 0;
-            entityPM.IS_SYNCH = entityPOCO.IS_SYNCH != null ? (bool)entityPOCO.IS_SYNCH : false;
-            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT != null ? entityPOCO.LAST_UPDATE_DT : DateTime.Now;
-
         }
 
         public void CustomPMToPOCO(CCUPAYHANDPM entityPM, CCUPAYHAND entityPOCO)

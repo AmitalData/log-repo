@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../Common/EntityLists/CurrencyList';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 
@@ -25,7 +25,7 @@ export class FieldTemplateComponent {
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
             if (this.FieldValue != null) {
-                this.CurrencyListService.getSingleFromCache(this.FieldValue).subscribe((res:any) => {
+                this.CurrencyListService.getSingleFromCache(this.FieldValue).subscribe(res => {
                     if (!res.HasError) {
                         var Currency: CurrencyList = res.Result;
                         if (Currency) {

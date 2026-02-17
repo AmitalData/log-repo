@@ -20,7 +20,7 @@ using System.Security.Cryptography;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole
         string Token = "";
         public override async void AsyncRun()
         {
-            Token = Login("support@amital.co.il", "1");
+            Token = Login("admin@fnarsoft.com","1");
             while (IsRunning)
             {
                 if (!General.IsUpdating())
@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         LastActivity = DateTime.UtcNow;
-                        //string url = LogitudeSettings.LogitudeURL;//ConfigurationManager.AppSettings.Get("LogitudeURL");
+                        //string url = LogitudeSettings.LogitudeURL;//System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
                         //url = url + "/wcfapi/ExternalTasksQueueWcfService.svc";
                         //url = url.Replace("https", "http");
                         Envelope result;
@@ -108,9 +108,6 @@ namespace CommunicationWorkerRole
                                             Master = "45454",
                                             MainCarriageATA = ship.MainCarriageATA,//DateTime.Now,
                                             MainCarriageETA = ship.MainCarriageETA,//DateTime.Now,
-                                            MainCarriageETD = ship.MainCarriageETD,//DateTime.Now,
-                                            MainCarriageATD = ship.MainCarriageATD,//DateTime.Now,
-
                                             AccountedPayablesInLocalCurrency = 100,
                                             AccountedPayablesInProfitCurrency = 200,
                                             AccountedReceivablesInLocalCurrency = 300,
@@ -123,7 +120,7 @@ namespace CommunicationWorkerRole
 
 
                                         ShipmentWcfServiceReference.Response response = shipmentservice.Upsert(pm, false);
-                                       
+                                        //var tenants = loginService.GetUserTenants("islam@fnarsoft.com", ref res2);
                                     }
                                 }
                             }

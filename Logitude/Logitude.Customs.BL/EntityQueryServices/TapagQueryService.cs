@@ -68,71 +68,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return tapagList;
             
         }
-
-        public List<TapagList> GetDeclarationsTapags(string declarationId, int tenant)
-        {
-            ICustomContext context = MainContext as CustomContext;
-            TapagConnectionTableRepository connectionRep = new TapagConnectionTableRepository(context);
-
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
-
-            var declarationPMs = declarationQueryService.GetDeclarationAmendmentsById(tenant, declarationId);
-
-            List<string> declarationIds = new List<string>();
-            declarationPMs.ForEach(x => declarationIds.Add(x.Id));
-            declarationIds.Add(declarationId);
-
-            List<TapagConnectionTable> connections = connectionRep.GetDearationsTapagConnectionTables(declarationIds, null, tenant);
-
-            List<string> tapagIds = (from a in connections select a.TapagId).ToList();
-
-
-            List<Tapag> tapags = repository.GetTapagsByListOfIds(tapagIds);
-
-            List<TapagList> tapagLists = new List<TapagList>();
-            foreach (Tapag item in tapags)
-            {
-                TapagConnectionTable connection = (from a in connections
-                                                   where a.TapagId == item.Id
-                                                   select a).FirstOrDefault();
-
-                TapagList tapagList = new TapagList()
-                {
-                    Id = item.Id,
-                    Tenant = item.Tenant,
-                    CreateDate = item.CreateDate,
-                    CustomerId = item.CustomerId,
-                    TapagTypeCode = item.TapagTypeCode,
-                    LeadingFileNumber = item.LeadingFileNumber,
-                    ValidityDate = item.ValidityDate,
-                    IsClosed = item.IsClosed,
-                    CustomsTapagFile = connection.CustomsTapagFile,
-                    CustomsNumeral = connection.CustomsNumeral,
-                    RequestFileNumber = connection.RequestFileNumber,
-                    TapagTypeName = item.TapagType != null ? item.TapagType.LocalName : null,
-                    ImporterId = item.ImporterId,
-                    ProfessionUnitTypeCode = item.ProfessionUnitTypeCode,
-                    CustomsBranchCode = item.CustomsBranchCode,
-                    ImporterName = item.Importer != null ? item.Importer.LocalFirstName : null,
-                    CustomsBranchName = item.CustomsBranch != null ? item.CustomsBranch.LocalName : null,
-                    ProfessionUnitTypeName = item.ProfessionUnitType != null ? item.ProfessionUnitType.LocalName : null,
-                    ReferantId = item.ReferantId,
-
-                };
-
-                tapagLists.Add(tapagList);
-            }
-
-            return tapagLists;
-
-
-
-
-
-
-
-
-        }
+       
 
         public List<TapagList> GetDeclarationTapags(string declarationId, int tenant)
         {
@@ -189,6 +125,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
-       
     }
 }

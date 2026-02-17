@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
@@ -22,7 +22,7 @@ using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -65,8 +65,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         private Boolean IsSameHomeCurrency = false;
         private string AccountingSystemCode;
         private APInvoicePaymentRepository invoicePaymentRepository;
-        private Tenant loggedTenant;
-        private AccountingSystemPM accountingSystem;
 
         private void GetObjectTableData()
         {
@@ -79,11 +77,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
         public void APPaymentQuickbooksValidating(APPaymentPM entityPM, Boolean IsSetApproved, Boolean isNewEntity, APPayment payment, IInvoiceContext invoiceContext, ICommonDataContext CommonContext,bool setCancelApproved, bool SystemWorkerRole = false )
         {
-            if (entityPM.TransferStatusCode == "BL")
-            {
-                return;
-            }
-
             if (IsSetApproved && !entityPM.SetVoided &&setCancelApproved == false)
             {
                 if (entityPM.TransferStatusCode == "RD" && entityPM.PaymentMethodCode == "FS")
@@ -91,15 +84,15 @@ namespace Logitude.BL.InvoiceModel.Tools
                 else
                 {
                     commonContext = CommonContext;
-                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                    Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                     tenant = loggedTenant.Id;
                     tenantName = loggedTenant.Company;
                     AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                     AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                    AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
 
                     if (loggedTenant.AccountingSetting != null)
-                        if (IsQuickBooksAccoutingSystemTransfer(entityPM))
+                        if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsAPPaymentsTransferEnabled && AccountingSystemPM.AllowAPPaymentsTransfer)
                         {
                             entityPM.ExternalAccountingEntityId = payment.ExternalAccountingEntityId;
                             APPayment = entityPM;
@@ -237,16 +230,6 @@ namespace Logitude.BL.InvoiceModel.Tools
                 }
             }
         }
-
-        private bool IsQuickBooksAccoutingSystemTransfer(APPaymentPM aPPaymentPM)
-        {
-            if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
-            if (!(loggedTenant.AccountingSetting.IsAPPaymentsTransferEnabled)) return false;
-            if (!(accountingSystem.AllowAPPaymentsTransfer)) return false;
-            if ((loggedTenant.AccountingSetting.APPaymentTransferStartDate != null && aPPaymentPM.RegisterDate < loggedTenant.AccountingSetting.APPaymentTransferStartDate)) return false;
-            return true;
-        }
-
         public List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText(String sql, String tenant)
         {
 
@@ -503,7 +486,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "APPayment" }, { "OldTransferStatusCode", null } };
-                queueservice.Send(param, tenant);
+                queueservice.Send(param);
                 queueservice.Complete();
             }
 

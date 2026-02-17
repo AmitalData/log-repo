@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -15,7 +15,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EnglishName).IsRequired().HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.LocalName).HasMaxLength(40).IsUnicode(true);
-            this.Property(t => t.Description).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.Description).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.LocalDescription).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.ExternalId).HasMaxLength(25).IsUnicode(false);
@@ -37,8 +37,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.ExternalId).HasColumnName("ExternalId");
             this.Property(t => t.IsManuallySet).HasColumnName("IsManuallySet");
-            this.Property(t => t.EndOfMonth).HasColumnName("EndOfMonth");
-            this.Property(t => t.NumberOfMonths).HasColumnName("NumberOfMonths");
+            this.Property(t => t.CurrentMonth).HasColumnName("CurrentMonth");
             this.Property(t => t.FromDateTypeCode).HasColumnName("FromDateTypeCode");
             this.Property(t => t.Code).HasColumnName("Code");
 

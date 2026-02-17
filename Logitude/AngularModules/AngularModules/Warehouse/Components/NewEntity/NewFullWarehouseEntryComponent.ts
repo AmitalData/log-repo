@@ -26,7 +26,7 @@ import {FilterClass} from '../../../Shipment/Components/NewEntity/NewShipmentCom
 import {PortListService} from '../../../Common/Services/StandardLists/PortListService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'NewFullWarehouseEntryComponent',
     templateUrl: './NewFullWarehouseEntryComponent.html',
 
@@ -118,7 +118,7 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
 
 
     SetWindowArgs(args: any) {
-        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("WarehouseEntry").subscribe(response => {
             this.Start(args);
         });
     }
@@ -190,14 +190,10 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             this.ShipmentTypeId = null;
             this.OnFiltersChanged();
             this.BuildShipmentTypes();
-            this.SetChargeableWeightUnit();
         }
     }
 
-    SetChargeableWeightUnit() {
-        this.warehouseEntryPM.ChargeableWeightUnitCode = AppTool.GetChargeableWeightUnitCode(this.TransportModeId);
-    }
-
+    
     public ShipmentTypeName: string = null;
     get ShipmentTypeId() { return this.warehouseEntryPM.ShipmentTypeId; }
     set ShipmentTypeId(newValue: string) {
@@ -1231,8 +1227,8 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -1293,8 +1289,8 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -1337,6 +1333,14 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
         if (this.IsInlandDomestic) {
             this.warehouseEntryPM.FromPortId = null;
             this.warehouseEntryPM.ToPortId = null;
+        }
+        else {
+            this.warehouseEntryPM.FromAddressId = null;
+            this.warehouseEntryPM.ToAddressId = null;
+            this.warehouseEntryPM.FromPartnerId = null;
+            this.warehouseEntryPM.ToPartnerId = null;
+
+
         }
 
         if (!this.IsInlandDomestic) {

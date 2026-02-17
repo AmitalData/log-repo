@@ -1,8 +1,5 @@
 ﻿using Logitude.TariffModule.BL.EntityPMs;
-using Logitude.TariffModule.Data;
-using Logitude.TariffModule.Data.EntityKeys;
 using Logitude.TariffModule.Data.EntityPOCOs;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +12,6 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
     {
         public List<TariffLinePM> GetTariffLinesByTariffAndVersion(string tariffId, int version, int tenant)
         {
-            TariffLinesContainersPriceQueryService tariffLinesContainersPriceQueryService = new TariffLinesContainersPriceQueryService(context);
-
             List<TariffLine> tariffLines = (from a in context.TariffLines
                                             where a.TariffId == tariffId && a.Version == version && a.Tenant == tenant
                                             select a).ToList();
@@ -27,22 +22,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 TariffLinePM entityPM = new TariffLinePM();
                 mapping.CustomPOCOToPM(entityPM, entityPOCO);
                 mapping.POCOToPM(entityPM, entityPOCO);
-
-                TariffLineKeys tariffLineKeys = new TariffLineKeys() { Id = entityPOCO.Id, };
-                entityPM.ContainersPrices = tariffLinesContainersPriceQueryService.GetMulti(tariffLineKeys, true);
                 tariffLinePMs.Add(entityPM);
             }
             
             return tariffLinePMs;
-        }
-
-        public override void GetComposition(EntityKeyFields entityKeys, TariffLinePM entityPM)
-        {
-            ITariffModuleContext context = MainContext as ITariffModuleContext;
-            TariffLineKeys tariffLineKeys = entityKeys as TariffLineKeys;
-            
-            TariffLinesContainersPriceQueryService tariffLinesContainersPriceQueryService = new TariffLinesContainersPriceQueryService(context);            
-            entityPM.ContainersPrices = tariffLinesContainersPriceQueryService.GetMulti(tariffLineKeys, true);
         }
     }
 }

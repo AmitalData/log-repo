@@ -10,7 +10,7 @@ import {ShipmentFollowUpPM} from '../../../../Shipment/EntityPMs/ShipmentFollowU
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './OverviewTabComponent.html',
 })
 
@@ -199,14 +199,10 @@ export class OverviewTabComponent implements OnDestroy {
 
         if (this.EntityPM != null && this.EntityPM !== undefined) {
 
-        // StatusCode
             if (this.IsByLocalCurrency) {
                 this.OpenPayables = this.EntityPM.OpenPayablesInLocalCurrency;
                 this.OpenReceivables = this.EntityPM.OpenReceivablesInLocalCurrency;
-                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices.filter(f => f.StatusCode != 'DR'), "AmountInLocalCurrency");
-
-                // Bug 70465: Money Information - open Recievables
-                //this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInLocalCurrency");
+                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInLocalCurrency");
                 //this.APInvoices = ArrayTool.Sum(this.EntityPM.ShipmentAPInvoices, "GrandTotalInLocalCurrency");
                 this.APInvoices = this.EntityPM.AccountedPayablesInLocalCurrency;            
                 this.Profit = this.EntityPM.ProfitInLocalCurrency;                
@@ -216,9 +212,7 @@ export class OverviewTabComponent implements OnDestroy {
 
                 this.OpenPayables = this.EntityPM.OpenPayablesInProfitCurrency;
                 this.OpenReceivables = this.EntityPM.OpenReceivablesInProfitCurrency;
-                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices.filter(f => f.StatusCode != 'DR'), "AmountInProfitCurrency");
-
-                //this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInProfitCurrency");
+                this.ARInvoices = ArrayTool.Sum(this.EntityPM.ShipmentARInvoices, "AmountInProfitCurrency");
                 //this.APInvoices = ArrayTool.Sum(this.EntityPM.ShipmentAPInvoices, "GrandTotalInProfitCurrency");
                 this.APInvoices = this.EntityPM.AccountedPayablesInProfitCurrency;
                 this.Profit = this.EntityPM.ProfitInProfitCurrency;                
@@ -362,7 +356,7 @@ class FollowupClass {
         this.Done = entityPM.Done;
         this.Date = entityPM.Date;
         this.Name = entityPM.EventTypeFollowUpName;
-        this.Notes = entityPM.Notes;
+        this.Notes = entityPM.Note;
 
         if (this.Date) {
             if (DateTool.GetDateParts(this.Date).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {

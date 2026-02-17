@@ -6,9 +6,6 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.Repositories;
-using System;
-using Logitude.Accounting.Data.EntityLists;
-
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -38,9 +35,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencySign);
 
             this.CustomMappedPMProperties.Add(PMPropertyNames.DueDate);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.RefDate);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.AmountCredit);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.AmountDebit);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ForeignAmountCredit);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ForeignAmountDebit);
             this.CustomMappedPMProperties.Add(PMPropertyNames.Reference1);
             this.CustomMappedPMProperties.Add(PMPropertyNames.Reference2);
             this.CustomMappedPMProperties.Add(PMPropertyNames.Reference3);
@@ -64,17 +60,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
-            // This property exists only to be shown on the Reconciliation OPC
+            // This properties only to view it on Reconciliatio OPC
             if (entityPOCO.TransactionId != null)
             {
                 LedgerTransactionQueryService queryService = new LedgerTransactionQueryService(entityPOCO.Tenant);
-                LedgerTransactionList transaction = queryService.GetSingleAsLiteForReco(entityPOCO.TransactionId);
+                LedgerTransactionPM transaction = queryService.GetSingle(entityPOCO.TransactionId, false,false);
+
                 if (transaction != null)
                 {
-                    entityPM.CreateDate = transaction.CreateDate ?? DateTime.Now;
+                    entityPM.CreateDate = transaction.CreateDate;
                     entityPM.DueDate = transaction.DueDate;
-                    entityPM.AmountCredit = transaction.ForeignAmountCredit;
-                    entityPM.AmountDebit = transaction.ForeignAmountDebit;
+                    entityPM.ForeignAmountCredit = transaction.ForeignAmountCredit;
+                    entityPM.ForeignAmountDebit = transaction.ForeignAmountDebit;
                     entityPM.Reference1 = transaction.Reference1;
                     entityPM.Reference2 = transaction.Reference2;
                     entityPM.Reference3 = transaction.Reference3;
@@ -86,7 +83,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
-            // This property exists only to be shown on the Reconciliation OPC
+            // This properties only to view it on Reconciliatio OPC
             if (entityPOCO.ReconciliationId != null)
             {
                 ReconciliationRepository recoRepo = new ReconciliationRepository(entityPOCO.Tenant);

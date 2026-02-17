@@ -66,7 +66,7 @@
     <tr style="height:1px;">
         <td>
             <ul class="PagesMenu">
-                <li id="{{ item.Code | IdGeneratorAsyncPipe | async}}"  *ngFor="let item of PagesMenu" (click)="PageChanged(item)" [class.SelectedPageMenu]="item === SelectedMenu" 
+                <li id="{{ item.Code | IdGeneratorPipe}}"  *ngFor="let item of PagesMenu" (click)="PageChanged(item)" [class.SelectedPageMenu]="item === SelectedMenu" 
                     [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'"
                     [ngStyle]="LayoutDirection == 'rtl' ? {'margin-left': '10px','margin-right': '0px'} : {'margin-right': '10px','margin-left': '0px'}">{{item.Name}}</li>
             </ul>
@@ -95,7 +95,7 @@
                                         <table>
                                             <tr style="height:30px;">
                                                 <td style="vertical-align: bottom">
-                                                    <div (click)="ItemClicked(item)" id="{{'MaintenanceItem'+item.Code | IdGeneratorAsyncPipe | async}}"  class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.TranslatedName}}</div>
+                                                    <div (click)="ItemClicked(item)" id="{{'MaintenanceItem'+item.Code | IdGeneratorPipe}}"  class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.TranslatedName}}</div>
                                                 </td>
                                             </tr>
 

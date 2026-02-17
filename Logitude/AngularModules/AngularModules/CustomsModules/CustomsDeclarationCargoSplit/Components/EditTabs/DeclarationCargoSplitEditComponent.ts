@@ -19,14 +19,12 @@ import { IIGGeneralMessagesService } from '../../../../Customs/Services/WebServi
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DeclarationCargoSplitEditComponent.html',
     providers: [EntityArgs],
 })
 
 export class DeclarationCargoSplitEditComponent extends BaseComponent {
-  public right: any;
-
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: DeclarationCargoSplitPM;
     public ObjectTableName: string = "Customs.DeclarationCargoSplit";
@@ -41,7 +39,7 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
         this.BuildTabs();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
            // this._IsLoaded = true;
             /// alert("this._IsLoaded");
         });
@@ -57,9 +55,10 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
     private timerToken: any;
     BuildTabs() {
         this.TabsItemsSource = [];
-         this.TabsItemsSource.push(new TabItem("General", "Customs.DeclarationCargoSplit.TH.General"));
+        this.TabsItemsSource.push(new TabItem("General", "Customs.DeclarationCargoSplit.TH.General"));
+        
 
-         this.timerToken = setTimeout(() => {
+        this.timerToken = setTimeout(() => {
             this.SelectedTabCode = "General"; // to ensure the component was painted
         }, 100);
     }
@@ -155,7 +154,7 @@ export class DeclarationCargoSplitEditComponent extends BaseComponent {
                                 } else {
 
                                     CustomMessageProgressComponent
-                                        .ShowProgressBar(this.CurrentSession,"",
+                                        .ShowProgressBar("",
                                         " ", true)
                                         .then((res) => {
                                             console.log(res);

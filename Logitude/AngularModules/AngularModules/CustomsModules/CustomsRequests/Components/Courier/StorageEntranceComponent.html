@@ -46,8 +46,7 @@
                                             <!--DeclarationNumber -->
                                             <log-column [header]="'מספר הצהרה'"
                                                         [width]="'100'" [Alignment]="'right'" [binding]="'DeclarationNumber'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                         <span>{{item.DeclarationNumber}}</span>
                                                     </div>
@@ -59,14 +58,12 @@
 
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!--ConsignmentNumber-->
                                             <log-column [header]="'מספר משגור'"
                                                         [width]="'100'" [Alignment]="'right'" [binding]="'ConsignmentNumber'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                         <span>{{item.ConsignmentNumber}}</span>
                                                     </div>
@@ -77,14 +74,12 @@
 
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!--ManifestNumber-->
                                             <log-column [header]="'שטר מטען בלדר'"
                                                         [width]="'120'" [Alignment]="'right'" [binding]="'ManifestNumber'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                         <span>{{item.ManifestNumber}}</span>
                                                     </div>
@@ -94,14 +89,12 @@
                                                                     [Text]="item.ManifestNumber" [HideColumns]="true"></LogTextBox>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!--EntryDate-->
                                             <log-column [header]="'תאריך קליטה'"
                                                         [width]="'100'" [Alignment]="'right'" [binding]="'EntryDate'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                         <span>{{item.EntryDate | DateTimePipe:'D'}}</span>
                                                     </div>
@@ -111,14 +104,12 @@
                                                                        [HideColumns]="true"></LogDatePicker>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!--Quantity-->
                                             <log-column [header]="'כמות'"
                                                         [width]="'70'" [Alignment]="'right'" [binding]="'Quantity'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                         <span>{{item.Quantity | NumbersPipe:'n0'}}</span>
                                                     </div>
@@ -128,14 +119,12 @@
                                                                     [Text]="item.Quantity" [HideColumns]="true"></LogTextBox>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!--GrossWeight-->
                                             <log-column [header]="'משקל'"
                                                         [width]="'75'" [Alignment]="'right'" [binding]="'GrossWeight'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                         <span>{{item.GrossWeight | NumbersPipe:'N2'}}</span>
                                                     </div>
@@ -145,14 +134,12 @@
                                                                     [Text]="item.GrossWeight" [HideColumns]="true"></LogTextBox>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!--PackageTypeCode-->
                                             <log-column [header]="'סוג אריזה'"
                                                         [width]="'120'" [Alignment]="'right'" [binding]="'PackageTypeCode'">
-                                                <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                         <span>{{item.PackageTypeName}}</span>
                                                     </div>
@@ -168,17 +155,14 @@
                                                         </LogLov>
                                                     </div>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                             <!-- Delete Button-->
                                             <log-column [width]="'30'" [Alignment]="'right'" [visibility]="'visibile'">
-                                                <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true">
+                                                <log-cell-template template="let item" [IgnoreMods]="true">
                                                     <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteStorageEntranceCommand(item)"
                                                                 style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                 </log-cell-template>
-</ng-template>
                                             </log-column>
 
                                         </logitude-edit-grid>

@@ -20,7 +20,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data; 
 using Logitude.BookingLib.Data.EntityMapping;
-using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.BookingLib.Data
 {
@@ -61,7 +60,7 @@ namespace Logitude.BookingLib.Data
 
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = OracleEntityProviderConfig.Instance;
+                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
             }
@@ -141,6 +140,7 @@ namespace Logitude.BookingLib.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());

@@ -8,7 +8,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -24,7 +24,6 @@ using Microsoft.Practices.Unity;
 using Logitude.Server.Tools;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
-using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -188,10 +187,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //update cashbook
             if (cashbookPM != null)
             {
-                if (cashbookPM.CashBookTypeCode != "1")
-                {
-                    cashbookPM.TotalAmount += Math.Round(bankDeposit.ForeignAmount, 2);
-                }
+                cashbookPM.TotalAmount += Math.Round(bankDeposit.ForeignAmount, 2);
+
                 // update cashbook rows if cashbook is cheques
                 if (!bankDeposit.IsCashDeposit)
                 {
@@ -224,17 +221,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void VoidJournal(BankDepositPM bankDeposit, int tenant)
         {
+            //    - select * from journals where Journals.AccountingEntityId == BankDeposits.Id
+
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 
+            //  (a) get the journal
             JournalPM journalPM;
             JournalQueryService journalQuery = new JournalQueryService(MyContext);
             IQueryable<JournalPM> journalPMs = journalQuery.GetJournalsByAccountingEntityId(bankDeposit.Id, tenant);
             if (journalPMs != null)
             {
-                var list = journalPMs.Where(r => r.AccountingEntityCode == AccountingEntityValues.CashDeposit || r.AccountingEntityCode == AccountingEntityValues.ChequeDeposit).ToList();//why itzik need to fix that ????  6   הפקדת המחאות    Cheque Deposit
-                if (list.Count > 1)
-                    throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.CancelOrderInCashbookStatus", tenant, true));
-                journalPM = list.FirstOrDefault();
+                journalPM = journalPMs.FirstOrDefault();
             }
             else
             {
@@ -253,7 +250,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     AccountingEntityReference = journalPM.AccountingEntityReference,
                 };
                 journalPM = service.VoidJournal(journalPM.Id, tenant, StornoOverrideM);
-                AddAccountingEntityJournal(journalPM, AccountingEntityJournalActions.BankDepositCancel);
             }
             else
             {
@@ -306,12 +302,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         #endregion
 
-        public void AddAccountingEntityJournal(JournalPM journal,string actionName, string childEntityId = null)
-        {
-            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
-            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
-            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
-        }
     }
 
 

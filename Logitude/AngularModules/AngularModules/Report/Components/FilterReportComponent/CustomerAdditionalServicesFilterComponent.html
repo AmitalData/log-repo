@@ -45,7 +45,7 @@
                     <td style="width:20px"><div></div></td>
                     <td style="width:110px;">Additional Service</td>
                     <td style="width:200px;">
-                        <ComboBoxWithInCheckBox [SelectedItem]="SelectedItem" (EditedItemSource)="EditedItemSource($event)" [ItemsSource]="FilterdAdditionalService" (SelectedItemChanged)="SelectedAdditionalServiceChanged($event)" [Binding]="'lastTitle'"></ComboBoxWithInCheckBox>
+                        <ComboBoxWithInCheckBox (EditedItemSource)="EditedItemSource($event)" [ItemsSource]="FilterdAdditionalService" (SelectedItemChanged)="SelectedAdditionalServiceChanged($event)" [Binding]="'lastTitle'"></ComboBoxWithInCheckBox>
                     </td>
 
                     <td style="width:20px"><div></div></td>
@@ -60,8 +60,7 @@
                             <tr>
                                 <td>
                                     <ComboBox *ngIf="!IsListOfValuesVisible()" [ItemsSource]="UsersFilterList" [SelectedItem]="SelectedITemUsers" [IsDisabled]="CheckUsersEnabled()" [Binding]="'Name'"></ComboBox>
-                                    <LogLov  *ngIf="IsListOfValuesVisible()"
-                                            [ShowInActive]="true" 
+                                    <LogLov *ngIf="IsListOfValuesVisible()"
                                             [ObjectFieldName]="'ListOfValuesUserId'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'User'">
@@ -74,7 +73,7 @@
                     <!--run button-->
                     <td style="width:15px;"><div></div></td>
                     <td style="width:80px;">
-                        <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
                     </td>
                     <td><div></div></td>
                 </tr>

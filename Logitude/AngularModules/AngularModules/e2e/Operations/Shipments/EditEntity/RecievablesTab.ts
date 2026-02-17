@@ -1,5 +1,6 @@
 import { browser, by, element, WebDriver, protractor, ExpectedConditions } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
+import { Console } from '@angular/core/src/console';
 
 export class ReceivablesTabComponent {
     private Helper: FieldsHelper;
@@ -111,10 +112,10 @@ export class ReceivablesTabComponent {
 
     EditARInvoice(Voided: boolean, type: string) {
         this.Helper.WaitEditComponentBusyIndicator();
-       /* this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
-        this.Helper.WaitEditComponentBusyIndicator();
-        this.Helper.WaitByIdAndClick('VATApplyToAll');*/
+        /* this.Helper.WaitByIdAndFill('ARInvoice_VatTypeId', 'Zero');
+         this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'ARInvoice_VatTypeId', 'Zero');
+         this.Helper.WaitEditComponentBusyIndicator();
+         this.Helper.WaitByIdAndClick('VATApplyToAll');*/
         //this.Helper.WaitEditComponentBusyIndicator();
         //this.Helper.WaitByIdAndFill('textboxdiv_ARInvoice_PrintNotes', 'Filled by Protractor');
         this.Helper.WaitByIdAndFill('ARInvoice_VatNumber', 'TestVatNumber');

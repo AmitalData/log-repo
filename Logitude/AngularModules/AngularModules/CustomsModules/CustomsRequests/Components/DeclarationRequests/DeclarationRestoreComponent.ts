@@ -13,17 +13,15 @@ import { Validator } from                   '../../../../Infrastructure/Validato
 import { TextCodeTranslator } from          '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from           '../../../../Infrastructure/Tools';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from '../../../../CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
-import { CustomSendOptionsArgs, TestCase } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DeclarationDisplayOnlyChecks, DisplayOnlyCheckResult } from '../../../../Customs/Utilities/DeclarationDisplayOnlyChecks';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
 
 @Component({
     selector: 'DeclarationRestoreComponent',    
-    
+    moduleId: module.id,
     templateUrl: './DeclarationRestoreComponent.html',
 })
 
@@ -33,10 +31,9 @@ export class DeclarationRestoreComponent
     implements OnInit, AfterViewInit, IRequestsSheetMassagingComponent {
     public DataContext: DeclarationRestoreComponent = this;
     public ObjectTableName: string = "Customs.Declaration";
-    public CustomFileLable ="תיק עמילת / מכס";
+
     _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     _DeclarationMessagesService: DeclarationMessagesService = new DeclarationMessagesService();
-    declarationPMService: DeclarationPMService = new DeclarationPMService();
 
     _MyResponseObjectToShow: any = null;
     _UserMessagehidden: boolean = true;
@@ -66,9 +63,9 @@ export class DeclarationRestoreComponent
     SetMenuArg(MenuArg) {
         this.RequestParams = MenuArg;
         this.OnMassageDisplayMethod();
-        this.checkExistDeclarationData();
+        //this.CustomFileNo = MenuArg.CustomFileNo;
+        //this.DeclarationNumber= MenuArg.DeclarationNumber;
     }
-
     DueChangeClearChildField(sourceIsCostomFile: boolean): void {
         this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, true, "");
         this.UIProperties.SetValidity("DeclarationNumber", this.ObjectTableName, true, "");
@@ -86,6 +83,7 @@ export class DeclarationRestoreComponent
         this.ValidationErrorsList = [];
     }
     CustomFileNoTextChanged(searchtext) {
+
         if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             return;
         }
@@ -96,10 +94,7 @@ export class DeclarationRestoreComponent
                 return;
             }
         }
-        
-        if(!this.disableEditDeclarationNumber)
-            this.DueChangeClearChildField(true);
-        
+        this.DueChangeClearChildField(true);
         this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
@@ -122,10 +117,8 @@ export class DeclarationRestoreComponent
                 return;
             }
         }
+        this.DueChangeClearChildField(false);
 
-        if(!this.disableEditCustomFileNo)
-            this.DueChangeClearChildField(false);
-        
         this.CurrentSession.StartBusyIndicator("")
         this._DeclarationExtendedListService.GetSingleDeclarationByNumber(this.DeclarationNumber, SessionLocator.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
@@ -167,19 +160,7 @@ export class DeclarationRestoreComponent
         this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, false, msg);
     }
 
-    disableEditDeclarationNumber:boolean = false;
-    disableEditCustomFileNo:boolean = false;
-    originalDeclarationNumber: string = "";
-
-    checkExistDeclarationData() {
-        this.originalDeclarationNumber = this.DeclarationNumber;
-        this.disableEditDeclarationNumber = !AppTool.IsNullOrEmpty(this.DeclarationNumber) ? true : false;
-        this.disableEditCustomFileNo = !AppTool.IsNullOrEmpty(this.CustomFileNo) ? true : false;
-        this.UIProperties.SetEnabled("DeclarationNumber", this.ObjectTableName, !this.disableEditDeclarationNumber);
-        this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, !this.disableEditCustomFileNo);
-        this.UIProperties.SetValidity("CustomFileNo", this.ObjectTableName, true, "");
-        this.UIProperties.SetValidity("DeclarationNumber", this.ObjectTableName, true, "");
-    }
+    
 
     get CustomFileNo() { return this.RequestParams ? this.RequestParams.CustomsFile : null; }
     set CustomFileNo(value: string) {
@@ -252,25 +233,6 @@ export class DeclarationRestoreComponent
         }
     }
 
-    declarationPM: DeclarationPM = null;
-
-    saveDeclarationNuber() {
-        if(AppTool.IsNullOrEmpty(this.DeclarationNumber) || this.originalDeclarationNumber === this.DeclarationNumber)
-            return;
-
-        this.declarationPMService.get(this.DeclarationId).subscribe((response: ServiceResponse) => {
-            if (response.HasError || response?.Result === null)
-                return;
-            this.declarationPM = response?.Result;
-            this.declarationPM.DeclarationNumber = this.DeclarationNumber;
-
-            this.declarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
-                this.declarationPM = response?.Result;                
-                this.originalDeclarationNumber = this.DeclarationNumber;
-                this.checkExistDeclarationData();
-            });
-        });
-    }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {
 
@@ -285,35 +247,6 @@ export class DeclarationRestoreComponent
             return;
         }
 
-        if (customSendOptionsArgs.TestCase) {
-
-            let windowArgs = { "SincroScreen": "SincroSendRetrieveDeclaration" };
-
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 600;
-            logWindow.Height = 400;
-            logWindow.Title = "תרחשי הצהרה";
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = windowArgs;
-
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(res => {
-                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
-                        this.RequestParams.TestCase = new TestCase();
-                        this.RequestParams.TestCase.Code = comp._ScenarioCode;
-                        this.RequestParams.TestCase.Param1 = comp.Param1;
-                        this.RequestParams.TestCase.Param2 = comp.Param2;
-                        this.SendDeclarationRestoreRequest(customSendOptionsArgs);
-                    }
-                });
-            });
-
-            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
-            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
-
-            return;
-        }
-        
         if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             var declarationDisplayOnlyChecks: DeclarationDisplayOnlyChecks = new DeclarationDisplayOnlyChecks();
             declarationDisplayOnlyChecks.CheckIfRequestInProgress("2715", this.CustomFileNo, SessionLocator.Tenant)
@@ -368,59 +301,23 @@ export class DeclarationRestoreComponent
 
     }
 
-async FullDeclarationRestore(){
-    const res = await new Promise<boolean>((resolve, reject) => {  
-        var confirm = new ConfirmWindow();
 
-        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-        confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-        confirm.Width = 450;
-        confirm.Height = 150;
-        confirm.Title = "שיחזור מספר הצהרה";
-        confirm.Show("שים לב כל נתוני ההצהרה ישוחזרו על פי גרסת המכס , האם להמשיך ?");           
-        confirm.WindowClosed.subscribe((event: any) => {
-
-            if (confirm.Yes == true) {
-                resolve(true);
-            }
-            else{
-                resolve(false);
-            }
-            
-        });
-  })
-  return res;
-}
-    async SendDeclarationRestoreRequest(customSendOptionsArgs: CustomSendOptionsArgs) {
-        this.saveDeclarationNuber();
-
-        var IsUpdateDB=false
-        var IsDeclarationRestoreUpdate = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "DRU")[0]? true : false;
-
-        if(IsDeclarationRestoreUpdate && !AppTool.IsNullOrEmpty(this.RequestParams.DeclarationId) && this.RequestParams.LoggingEntityReference == 'E') {
-               
-                IsUpdateDB  = await this.FullDeclarationRestore()
-                if(!IsUpdateDB)
-                 return
-            }
+    SendDeclarationRestoreRequest(customSendOptionsArgs: CustomSendOptionsArgs) {
         var currRequestParams = new DeclarationRestoreRequestParams();///Force new GUID On Each Send !!
-
-         currRequestParams.TestCase = this.RequestParams.TestCase;
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
         currRequestParams.Tenant = SessionLocator.Tenant;
-        currRequestParams.LoggingEntityReference = this.RequestParams.LoggingEntityReference || this._LastFetchDeclarationList?.Direction;
+
         currRequestParams.AppicationId = this.RequestParams.DeclarationId;
         currRequestParams.DeclarationId = this.RequestParams.DeclarationId;
         currRequestParams.DeclarationNumber = this.RequestParams.DeclarationNumber;
         currRequestParams.CustomsFile = this.RequestParams.CustomsFile;
         currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
-        currRequestParams.IsUpdateDB = IsUpdateDB;
-        currRequestParams.ResponseName = "9079"
-        
+
+
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לשיחזור נתוני הצהרה", true)
             .then((res) => {
                 this.ResponseData = res;
@@ -434,8 +331,5 @@ async FullDeclarationRestore(){
         this._DeclarationMessagesService.PostDeclarationRequest(currRequestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
             });
-    }
-    OnEscHotKeyPressed() {
-        SessionLocator.SelectedSession.CloseCurrentWindow();
     }
 }

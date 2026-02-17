@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DeclarationQueryComponent.html',
 })
 
@@ -179,8 +179,6 @@ export class DeclarationQueryComponent extends BaseComponent {
 
         }
         filters.addAdditionalFilter("CustomFileNo", this.EntityPM.CustomFileNo, null, null, "NotEqual", false, false, false, "string");
-        filters.addAdditionalFilter("Direction", this.EntityPM.Direction, null, null, "Equal", false, false, false, "string");
-
         this.CurrentSession.StopBusyIndicator();
         return this.entityListService.getByFilters("Customs.Declaration",filters);
     }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -14,7 +14,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public WeightUnitRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public WeightUnitRepository(int tenant)
         {

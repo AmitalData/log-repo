@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUPAYHAND GetSingle(int FILENO, int? tenant)
+        public CCUPAYHAND GetSingle(int FILENO)
         {
             return (from a in context.CCUPAYHANDs
-                    where a.FILENO == FILENO && a.TENANT == tenant
+                    where a.FILENO == FILENO
                     select a).FirstOrDefault();
         }
 
@@ -38,7 +38,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUPAYHAND entity)
         {
             context.CCUPAYHANDs.Add(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUPAYHAND entity)
@@ -49,7 +48,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToCCUPAYHANDs 
             context.CCUPAYHANDs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUPAYHAND entity)
@@ -58,7 +56,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUPAYHANDs.Attach(entity); context.SetAsModified(entity);
             }
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUPAYHAND> All()
@@ -81,16 +78,16 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             throw new NotImplementedException();
         }
 
-        public CCUPAYHAND GetSingle(EntityKeyFields entityKeys )
+        public CCUPAYHAND GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUPAYHANDKeys;
-            return this.GetSingle(keys.FILENO , keys.Tenant);
+            return this.GetSingle(keys.FILENO);
         }
 
-        public int FastDeleteMulti(EntityKeyFields parentEntityKeys)  
+        public int FastDeleteMulti(EntityKeyFields parentEntityKeys) // moran 5.1.16 - AMI-55274
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUPAYHAND>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
+            return context.DeleteWhere<CCUPAYHAND>(rec => rec.FILENO == keys.FILENO);
         }
     }
 }

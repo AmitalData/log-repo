@@ -13,7 +13,7 @@ import {AppTool} from '../../Infrastructure/Tools';
 
 @Component({
     selector: 'ClassificationsTree',
-    
+    moduleId: module.id,
     templateUrl: './ClassificationsTree.html',
     inputs: ['Item', 'CollapseAll'],
 })

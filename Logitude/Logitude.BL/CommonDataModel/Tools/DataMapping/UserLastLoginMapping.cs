@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -14,15 +14,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
     {
         public static void MapEntity(UserLastLoginPM entityPM, UserLastLogin poco, bool isNewState)
         {
-            if (isNewState)
-            {
-                poco.Id = entityPM.Id;
-                poco.Tenant = entityPM.Tenant;
-            }
-            poco.IP = entityPM.IP;
-            poco.LoginDateTime = entityPM.LoginDateTime;
-            poco.ComputerId = entityPM.ComputerId;
-            poco.WorkEnvironment = entityPM.WorkEnvironment;
+
         }
     }
 }

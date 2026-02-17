@@ -179,7 +179,7 @@
                         </td>
 
                         <td style="float:left;width:190px;">
-                            <input id="{{'ViewNameId' | IdGeneratorAsyncPipe | async}}"  type="text" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled" />
+                            <input id="{{'ViewNameId' | IdGeneratorPipe}}"  type="text" [(ngModel)]="QueryName" [disabled]="!IsSaveButtonEnabled" />
                         </td>
 
                         <td style="width:10px;">
@@ -218,18 +218,11 @@
 
                                             </div>
                                         </li>
-                                        <li id="{{'NewTab.View.Filters ' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'FLT'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'FLT'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
+                                        <li id="{{'NewTab.View.Filters ' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'FLT'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'FLT'" style="width:109px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
                                             <div class="InnerChild">
                                                 <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Filter.png" style="margin-top:3px;" />
                                                 <span class="CenterCenter" [style.left.px]="RTL == true ? 750 : 140" [style.right.px]="RTL == true ? 120 : 175" style="top:2px;">{{'General.O.Filters' | TextCodeTranslationPipe}}</span>
 
-                                            </div>
-                                        </li>
-
-                                        <li *ngIf="IsFromCustomization" [class.Selected]="SelectedTabCode == 'ADV'" [style.float]="RTL == true ? 'right' : 'left'" (click)="SelectedTabCode = 'ADV'" style="width:150px;font-size:13px;color:#45494A;height:25px;border-radius: 7px 7px 0 0;">
-                                            <div class="InnerChild">
-                                                <img [style.float]="RTL == true ? 'right' : 'left'" src="./Images/Icons/Share.png" style="margin-top:1px;" />
-                                                <span class="CenterCenter" [style.left.px]="RTL == true ? 660 : 250" [style.right.px]="RTL == true ? 240 : 120" style="top:2px;">Advanced Settings</span>
                                             </div>
                                         </li>
 
@@ -242,8 +235,8 @@
                                     </ul>
                                 </td>
                                 <td></td>
-                                <td style="width:170px">
-                                    <table *ngIf="SpotlightFeatureEnabled">
+                                <td style="width:170px" *ngIf="SpotlightFeatureEnabled">
+                                    <table>
                                         <tr>
                                             <td>
                                                 <label> Show in Spotlight Mode</label>
@@ -308,12 +301,12 @@
                                                 </div>
                                             </td>
                                             <td style="width: 10%; vertical-align: middle;">
-                                                <button id="{{'NewButton.View.Add ' | IdGeneratorAsyncPipe | async}}" (click)="btnAdd_Click()" class="Button" [disabled]="!IsbtnAddEnabled" style="width:80px;margin: 7px;">
+                                                <button id="{{'NewButton.View.Add ' | IdGeneratorPipe}}" (click)="btnAdd_Click()" class="Button" [disabled]="!IsbtnAddEnabled" style="width:80px;margin: 7px;">
                                                     {{'General.B.Add' | TextCodeTranslationPipe}}
                                                     <img *ngIf="RTL == false" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     <img *ngIf="RTL == true" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                 </button>
-                                                <button id="{{'NewButton.View.Remove ' | IdGeneratorAsyncPipe | async}}" (click)="btnRemove_Click()" class="Button" [disabled]="!IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
+                                                <button id="{{'NewButton.View.Remove ' | IdGeneratorPipe}}" (click)="btnRemove_Click()" class="Button" [disabled]="!IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
                                                     <img *ngIf="RTL == false" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                                                     {{'General.B.Remove' | TextCodeTranslationPipe}}
@@ -493,14 +486,14 @@
                                                                                             <!-- DateTime -->
                                                                                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
                                                                                                 <div style="width:300px;">
-                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <!-- Date -->
                                                                                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                                                                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                                                                                 </div>
                                                                                             </div>
 
@@ -566,52 +559,6 @@
                             </div>
                         </div>
 
-                        <!-- Advanced Settings -->
-                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'ADV'" [style.float]="RTL == true ? 'right' : 'left'">
-                            <div class="LocationDirective" LocationDirective Code="ADV">
-                                <table style="margin: 7px 20px 7px 7px;">
-                                    <tr>
-                                        <td style="width:500px;">
-                                            <table>
-                                                <tr style="height:5px;">
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width:100px" class="Label">
-                                                                    <label> Is Default:</label>
-                                                                </td>
-                                                                <td style="width:20px">
-                                                                    <CheckBox [IsChecked]="IsDefault" (Checked)="IsDefault = $event"></CheckBox>
-                                                                </td>
-                                                                <td style="width:18px;">
-                                                                    <HelpIcon [Text]="'Using field you defining the default view that will be shown when open the ' + CurrentObjectTableName"></HelpIcon>
-                                                                </td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height:10px;">
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-
-                                        <td>
-                                            <div></div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-
                         <!-- Share -->
                         <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'SHR'" [style.float]="RTL == true ? 'right' : 'left'">
                             <div class="LocationDirective" LocationDirective Code="SHR">
@@ -649,8 +596,8 @@
                                                                     <Hyperlink [IsEnabled]="IsSaveButtonEnabled" style="margin-left:5px;" (click)="ChooseUsers()" [FontSize]="12" [Text]="'Choose'"></Hyperlink>
                                                                 </td>
                                                                 <!--<td *ngIf="IsChooseUsersVisible">
-                                                <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
-                                            </td>-->
+                                                                    <div style="margin-left:5px;color: #1E8DC4">( {{ShareWithUsersCount}} selected )</div>
+                                                                </td>-->
                                                                 <td>
                                                                     <div></div>
                                                                 </td>
@@ -658,24 +605,7 @@
                                                         </table>
                                                     </td>
                                                 </tr>
-                                                <tr class="FormFieldRow">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width:100px" class="Label">
-                                                                    <label> View Only:</label>
-                                                                </td>
-                                                                <td style="width:20px">
-                                                                    <CheckBox [IsChecked]="IsViewOnly" (Checked)="IsViewOnly = $event"></CheckBox>
-                                                                </td>
-                                                                <td style="width:18px;">
-                                                                    <HelpIcon [Text]="ViewOnlyHelpText"></HelpIcon>
-                                                                </td>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
+
                                                 <tr style="height:10px;">
                                                     <td>
                                                         <div></div>
@@ -743,9 +673,9 @@
 
         <tr style="height:22px;float:right;margin-top:7px; width:100%;">
             <td style="width:100%;" [style.float]="RTL == true ? 'left' : 'right'">
-                <button id="{{'NewButton.View.Create ' | IdGeneratorAsyncPipe | async}}" class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
+                <button id="{{'NewButton.View.Create ' | IdGeneratorPipe}}" class="RedButton" [disabled]="!IsSaveButtonEnabled" (click)="btnCreateNewQuery_Click()" [style.float]="RTL == true ? 'left' : 'right'" style="width:72px;">{{CreateBtnText}}</button>
                 <button class="Button" (click)="CancelButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                <button *ngIf="!IsNew && !IsFromCustomization" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
+                <button *ngIf="!IsNew" class="Button" [disabled]="!IsSaveButtonEnabled" (click)="DeleteButtonClicked()" [style.float]="RTL == true ? 'left' : 'right'" [style.marginRight.px]="RTL == true ? 0 : 5" [style.marginLeft.px]="RTL == true ? 5 : 0" style="width:72px;">{{'General.B.Delete' | TextCodeTranslationPipe}}</button>
             </td>
         </tr>
     </table>

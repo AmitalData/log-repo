@@ -19,13 +19,9 @@ import { DeclarationEventManager } from '../../../../../Customs/Utilities/Declar
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CustomsVendorListService } from '../../../../../Customs/Services/StandardLists/CustomsVendorListService';
-import { List } from 'Infrastructure/DataContracts/Dashboard/List';
-import { CustomsPartnersItemList } from 'Customs/EntityLists/CustomsPartnersItemList';
-import { AmitalGatewayUtil, UnifreightMessageM } from 'Infrastructure/Utilities/AmitalGatewayUtil';
-import { CustomsCountryListService } from 'Customs/Services/StandardLists/CustomsCountryListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PartnersItemsSelectionComponent.html',
 })
 
@@ -36,7 +32,6 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
     customerCode: string;
     vendorNumber: string;
     searchText: string = "";
-    declarationPM: DeclarationPM;
     ValidationErrorsList: string[] = [];
 
     originalData: any[];
@@ -46,8 +41,6 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     private customsVendorListService: CustomsVendorListService = new CustomsVendorListService();
-    customsCountryListService: CustomsCountryListService = new CustomsCountryListService();
-
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -60,22 +53,22 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
             this.invoicePM = args.invoicePM;
             this.customerCode = args.customerCode;
             this.searchText = args.searchText;
-            this.declarationPM = args.declarationPM;
 
             // Load screen data
-            this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString()).subscribe((response: ServiceResponse) => {
-                var customsSettingList = response.Result;
-                console.log("[response/customsSettingListService.getSingleFromCache]", customsSettingList);
-                if (!AppTool.IsNullOrEmpty(customsSettingList)) {                
+            this.customsSettingListService.getAll().subscribe((response: ServiceResponse) => {
+                var list = response.Result;
+                console.log("[response/customsSettingListService.getAll]", list);
+                if (!AppTool.IsNullOrEmpty(list)) {
+                    var customsSettingList = list[0];
                     var isConnectedToUniFreight: boolean = false;
                     isConnectedToUniFreight = customsSettingList.IsConnectedToUniFreight;
                     this.IsConnectedToUniFreight = isConnectedToUniFreight;
 
-                    if (isConnectedToUniFreight || this.declarationPM.Direction != 'E') {
+                    if (isConnectedToUniFreight) {
                         this.LoadGTBITEMS();
                     }
-                    else {   
-                        this.LoadCustomsPartnersItems();                      
+                    else {
+                        this.LoadCustomsPartnersItems();
                     }
 
                 }
@@ -171,127 +164,16 @@ export class PartnersItemsSelectionComponent extends BaseComponent {
     }
 
     public GetGITITEMPartnersItemList() {
-
-        if(this.IsConnectedToUniFreight)
-        {
-            this.declarationWebService.GetGITITEMPartnersItemList(this.vendorNumber, this.customerCode, this.searchText, 30, true)
-                .subscribe((response: ServiceResponse) => {
-                    var res = response.Result;
-                    if (!AppTool.IsNullOrEmpty(res)) {
-                        this.ItemsSource.Clear();
-                        this.ItemsSource.InsertCollection(res);
-                    }
-                });
-        }
-        else {
-            this.GetGITITEMPartnersItemListFromUnifreight(this.vendorNumber, this.customerCode, this.searchText, 30,'ALL', true) .then(async (response) => {
-                var res = response.getAll()
+        this.declarationWebService.GetGITITEMPartnersItemList(this.vendorNumber, this.customerCode, this.searchText, 30, true)
+            .subscribe((response: ServiceResponse) => {
+                var res = response.Result;
                 if (!AppTool.IsNullOrEmpty(res)) {
                     this.ItemsSource.Clear();
                     this.ItemsSource.InsertCollection(res);
                 }
             });
-        }
-    }
-    GetGITITEMPartnersItemListFromUnifreight(vendorId: string, customerCode: string, searchText: string, top: number, searchBy: string, searchNULLVendor: boolean): Promise<List<CustomsPartnersItemList>> {
-        return new Promise((resolve, reject) => {
-        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
-        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
-            .subscribe(
-                (message: UnifreightMessageM) => {
-                    var IsMatchUnifreightCallbackCommand = (                      
-                        message.LogitudeEntityNumber == this.declarationPM.Id &&
-                        message.LogitudeViewModel == "PartnersItemsSelectionComponent.ts-GetGITITEMS");
-                    if (IsMatchUnifreightCallbackCommand) {
-                        sub.unsubscribe();
-                        let XMLResponse = UnifreightMessageM.GetStringValue(message, "XMLResponse");
-                        const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-                        const result = this.parseXml(xmlData(XMLResponse));
-                        SessionLocator.SelectedSession.StopBusyIndicator();
-                        resolve(result); // מחזירים את התוצאה עם resolve
-                       
-                    }
-                }
-            );
-
-        var unifreightMessageM =
-            AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.declarationPM.CustomFileNo, this.declarationPM.Id, "PartnersItemsSelectionComponent.ts-GetGITITEMS", AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity());
-        unifreightMessageM.Requset.push(["XMLRequest", this.convertToXML(vendorId, customerCode, searchText, top, searchBy,searchNULLVendor)]);
-
-        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "AmitalGatewayUtil.GetGITITEMS",
-            "CFIHMAIN.LogitudeTask",
-            "GetGITITEMS",
-            unifreightMessageM,
-            "");
-        });
     }
 
-
-    parseXml(xmlString: string): List<CustomsPartnersItemList> {
-       
-        // Parse the XML string into a DOM Document
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
-
-        // Extract values from the XML
-        const RESPONSE = xmlDoc.getElementsByTagName('RESPONSE')[0];
-        const items = RESPONSE.getElementsByTagName('ITEM');
-        var customsPartnersItemLists:List<CustomsPartnersItemList> = new List<CustomsPartnersItemList>();
-        var customsPartnersItemList: CustomsPartnersItemList;
-        for (let i = 0; i < items.length; i++) {
-            const item = items[i];
-            customsPartnersItemList = new CustomsPartnersItemList();
-
-            customsPartnersItemList.Id = item.getElementsByTagName('COUNTER')[0]?.textContent || '';
-            customsPartnersItemList.Tenant = this.declarationPM.Tenant;
-            customsPartnersItemList.ItemCode = item.getElementsByTagName('ITEMNO')[0]?.textContent || '';
-            customsPartnersItemList.ClassificationCode = item.getElementsByTagName('PRATID')[0]?.textContent || '';
-            customsPartnersItemList.Name = item.getElementsByTagName('NAMEENG')[0]?.textContent || '';
-            customsPartnersItemList.SearchFields = item.getElementsByTagName('SEARCHENG')[0]?.textContent || '';
-            customsPartnersItemList.CustomerId = item.getElementsByTagName('PARTNERID')[0]?.textContent || '';
-            customsPartnersItemList.VendorId = item.getElementsByTagName('SAPAKID')[0]?.textContent || '';
-            customsPartnersItemList.CustomerName = item.getElementsByTagName('PARTNERID')[0]?.textContent || '';
-            customsPartnersItemList.VendorName = item.getElementsByTagName('VENDORNAME')[0]?.textContent || '';
-            customsPartnersItemList.OriginCountryCode = item.getElementsByTagName('ORIGINCOUNTRY')[0]?.textContent || '';
-            if(!AppTool.IsNullOrEmpty(customsPartnersItemList.OriginCountryCode)) 
-            {
-                this.customsCountryListService.getSingleFromCache(customsPartnersItemList.OriginCountryCode).subscribe(res=>{
-    
-                    if(!AppTool.IsNullOrEmpty(res?.Result?.LocalName)){
-                       customsPartnersItemList.OriginCountryName = res?.Result?.LocalName;
-                    }
-                    else{
-                        customsPartnersItemList.OriginCountryCode = null;
-                        customsPartnersItemList.OriginCountryName = null;
-                    }
-                });
-            }
-            customsPartnersItemList.InvoiceQuantityType = item.getElementsByTagName('UNITID')[0]?.textContent || '';
-
-           
-            customsPartnersItemLists.add(customsPartnersItemList);
-         
-        }               
-        return customsPartnersItemLists;
-    }
-    
-    convertToXML(vendorId: string, customerCode: string, searchText: string, top: number, searchBy: string, searchNULLVendor: boolean) {      
-        if(AppTool.IsNullOrUndefined(searchText)){
-            searchText = "";
-        }
-         return `<GITITEMS>
-         <PARTNERID>${customerCode}</PARTNERID>
-         <SAPAKID>${vendorId}</SAPAKID>
-         <SEARCH>${searchText}</SEARCH>
-         <ITEMNO></ITEMNO>
-         <SEARCHBY>${searchBy}</SEARCHBY>
-         <TOP>${top}</TOP>
-         <SEARCHNULLVENDOR>${false}</SEARCHNULLVENDOR>
-         </GITITEMS>`;   
-      
-    }
 
     public SelectedRow: any = null;
     OnRowSelected(item: any) {

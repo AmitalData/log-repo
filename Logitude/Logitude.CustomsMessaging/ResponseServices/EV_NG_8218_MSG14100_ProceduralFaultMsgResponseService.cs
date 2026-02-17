@@ -13,7 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Fault;
-using Logitude.Server.Tools;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -90,34 +89,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         proceduralFaultsConnectedEntityPM.EntityIdKey3 = conectedEntityItem.entityIdKey3;
                         proceduralFaultsConnectedEntityPM.EntityPath = conectedEntityItem.entityPath;
 
-
-
-                        DeclarationQueryService declarationUpdateService1 = new DeclarationQueryService(requestParams.Tenant);
-                        myDeclarationPM = declarationUpdateService1.GetSingleDeclarationByNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant, false);
-                        
-                            if(conectedEntityItem.entityType == 1055)
-                            { 
-                                DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                                myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant);
-                            }
-
-                        if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.Id))
+                        if (conectedEntityItem.entityType == 1055)
                         {
-                            this._MyProceduralFaultPM.DeclarationId = myDeclarationPM.Id;
-                            this._MyProceduralFaultPM.CustomFileNo = myDeclarationPM.CustomFileNo;
-                            this._MyProceduralFaultPM.DeclarationNumber = myDeclarationPM.DeclarationNumber;
-                            if (myDeclarationPM.IsAmendment==true)
+                            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                            myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(conectedEntityItem.entityIdKey1, requestParams.Tenant);
+                            if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.Id))
                             {
-                                var declarationQueryService = new DeclarationQueryService(myDeclarationPM.Tenant);
-                                var entityPMOrg = declarationQueryService.GetSingle(myDeclarationPM.AmendmentOriginalDeclartation, true, false);
-                                this._MyProceduralFaultPM.SignedByUserId= entityPMOrg.SignedByUserId;
-                            }
-                            else {
-                                this._MyProceduralFaultPM.SignedByUserId = myDeclarationPM.SignedByUserId;
-                            }
+                                this._MyProceduralFaultPM.DeclarationId = myDeclarationPM.Id;
+                                this._MyProceduralFaultPM.CustomFileNo = myDeclarationPM.CustomFileNo;
+                                this._MyProceduralFaultPM.DeclarationNumber = myDeclarationPM.DeclarationNumber;
 
-                            //Event data initialization
-                            myInsertEventContextTagModel.EventCode = "LIK";
+                                //Event data initialization
+                                myInsertEventContextTagModel.EventCode = "LIK";
                                 myInsertEventContextTagModel.EventRemarks = "New ProceduralFault";
                                 if (this._MyProceduralFaultPM.ChangeSetOp == ChangeSetOperation.Update)
                                 {
@@ -142,7 +125,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     myInsertEventContextTagModel.MyNotificationPM.Description = "תיק " + myDeclarationPM.CustomFileNo + "- עודכן ליקוי מכס";
                                 }
                             }
-                        //}
+                        }
                         this._MyProceduralFaultPM.ProceduralFaultsConnEntities.Add(proceduralFaultsConnectedEntityPM);
                     }
                 }

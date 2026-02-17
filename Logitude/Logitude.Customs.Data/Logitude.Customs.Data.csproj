@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Customs.Data</RootNamespace>
     <AssemblyName>Logitude.Customs.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -19,14 +18,12 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,14 +31,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,153 +46,41 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\All Projects\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
-    <OutputPath>bin\x64\None\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Azure.Search.Documents, Version=11.5.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Search.Documents.11.5.1\lib\netstandard2.0\Azure.Search.Documents.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Oracle.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Web.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
-    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.1\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory.Data, Version=1.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.Data.1.0.2\lib\net461\System.Memory.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
@@ -205,904 +90,158 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureSearch\Entities\CustomsItemASEntity.cs" />
-    <Compile Include="AzureSearch\Entities\RemarksCustomsBookASEntity.cs" />
-    <Compile Include="AzureSearch\Entities\RemarkWithCustomsBookASEntity.cs" />
-    <Compile Include="AzureSearch\Repo\CustomsBookAzureSearchRepo.cs" />
-    <Compile Include="AzureSearch\Repo\RemarksCustomsBookAzureSearchRepo.cs" />
-    <Compile Include="CustomContext.SharedTables.cs" />
-    <Compile Include="CustomContextExt.cs" />
     <Compile Include="CustomFilters\ClientCustomFilters.cs" />
-    <Compile Include="CustomFilters\DeclarationReferantDataCustomFilters.cs" />
-    <Compile Include="CustomFilters\FreightPaymentMethodCustomFilters.cs" />
     <Compile Include="DataContracts\CertificateConnectedItems.cs" />
     <Compile Include="CustomContext.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataContracts\CustomsRequestsSheetSummary.cs" />
-    <Compile Include="DataContracts\DeclarationCourierStatusSummary.cs" />
-    <Compile Include="DataContracts\ExportDeclarationForReport.cs" />
-    <Compile Include="DataContracts\DeclarationReferantDataSummary.cs" />
-    <Compile Include="DataContracts\DeclarationCourierPendingTabRecord.cs" />
-    <Compile Include="DataContracts\SIIRequest\CredentialsDto.cs" />
-    <Compile Include="DataContracts\SIIRequest\ProductFileCheckResponseDto.cs" />
-    <Compile Include="DataContracts\SIIRequest\ProductFileRequestDto.cs" />
-    <Compile Include="DataContracts\SIIRequest\ReleaseRequestApiDto.cs" />
-    <Compile Include="DataContracts\SIIRequest\ReleaseRequestApiResponseDto.cs" />
-    <Compile Include="DataContracts\SIIRequest\SiiStatusEnvelope.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />
-    <Compile Include="EntityKeys\AmedmentTypeKeys.cs" />
-    <Compile Include="EntityKeys\AmendCancellRequestInitiatorKeys.cs" />
-    <Compile Include="EntityKeys\AmendmentFieldStatusTypeKeys.cs" />
-    <Compile Include="EntityKeys\AmendmentStatusKeys.cs" />
-    <Compile Include="EntityKeys\AmendmentTypeKeys.cs" />
-    <Compile Include="EntityKeys\AmendRequestRejectReasonTypeKeys.cs" />
-    <Compile Include="EntityKeys\AmountTypeKeys.cs" />
-    <Compile Include="EntityKeys\ApprovedProfessionKeys.cs" />
-    <Compile Include="EntityKeys\AutonomyRegionTypeKeys.cs" />
-    <Compile Include="EntityKeys\BuyerRoleTypeKeys.cs" />
-    <Compile Include="EntityKeys\CancellationReasonRequestTypeKeys.cs" />
-    <Compile Include="EntityKeys\CancellationRequestStatusKeys.cs" />
-    <Compile Include="EntityKeys\CancelRequestRejectReasonTypeKeys.cs" />
-    <Compile Include="EntityKeys\CarEngineVolumeKeys.cs" />
-    <Compile Include="EntityKeys\CargoSealIdentifierKeys.cs" />
-    <Compile Include="EntityKeys\CargoSealKeys.cs" />
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
-    <Compile Include="EntityKeys\CargoTypeKeys.cs" />
-    <Compile Include="EntityKeys\CarWeightKeys.cs" />
-    <Compile Include="EntityKeys\CB_AdditionRulesDetailsHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_ComputationMethodDataKeys.cs" />
-    <Compile Include="EntityKeys\CB_CountriesExclusionKeys.cs" />
-    <Compile Include="EntityKeys\CB_CustomsBookAdditionKeys.cs" />
-    <Compile Include="EntityKeys\CB_CustomsBookAdditionsDetailsHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_CustomsItemComputedDataKeys.cs" />
-    <Compile Include="EntityKeys\CB_CustomsItemDetailsHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_CustomsItemExclusionKeys.cs" />
-    <Compile Include="EntityKeys\CB_CustomsItemKeys.cs" />
-    <Compile Include="EntityKeys\CB_CustomsItemLinkageKeys.cs" />
-    <Compile Include="EntityKeys\CB_LevyConditionKeys.cs" />
-    <Compile Include="EntityKeys\CB_LevyExclusionKeys.cs" />
-    <Compile Include="EntityKeys\CB_PreferenceKeys.cs" />
-    <Compile Include="EntityKeys\CB_PropertiesDetailsHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_QuotaComputedDataKeys.cs" />
-    <Compile Include="EntityKeys\CB_QuotaDetailsHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_QuotaKeys.cs" />
-    <Compile Include="EntityKeys\CB_QuotaRenewalKeys.cs" />
-    <Compile Include="EntityKeys\CB_RegularityInceptionKeys.cs" />
-    <Compile Include="EntityKeys\CB_RegularityRequiredCertificateKeys.cs" />
-    <Compile Include="EntityKeys\CB_RegularityRequirementKeys.cs" />
-    <Compile Include="EntityKeys\CB_RequirementComputedDataKeys.cs" />
-    <Compile Include="EntityKeys\CB_RuleClassificationKeys.cs" />
-    <Compile Include="EntityKeys\CB_RuleDetailsHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_RuleKeys.cs" />
-    <Compile Include="EntityKeys\CB_TariffComputedDataKeys.cs" />
-    <Compile Include="EntityKeys\CB_TariffDetailsHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_TariffKeys.cs" />
-    <Compile Include="EntityKeys\CB_TradeAgreementHistoryKeys.cs" />
-    <Compile Include="EntityKeys\CB_TradeAgreementKeys.cs" />
-    <Compile Include="EntityKeys\CB_TradeLevyKeys.cs" />
-    <Compile Include="EntityKeys\CB_VendorKeys.cs" />
-    <Compile Include="EntityKeys\CertificateOfOriginConnectionKeys.cs" />
-    <Compile Include="EntityKeys\CertificateOfOriginInvoiceKeys.cs" />
-    <Compile Include="EntityKeys\CertificateOfOriginItemKeys.cs" />
-    <Compile Include="EntityKeys\CertificateOfOriginKeys.cs" />
-    <Compile Include="EntityKeys\CertificateOfOriginMandatoryFieldsKeys.cs" />
-    <Compile Include="EntityKeys\CertificateOfOriginStatusCodeEnumKeys.cs" />
-    <Compile Include="EntityKeys\CertificateOfOriginTypeCodeEnumKeys.cs" />
-    <Compile Include="EntityKeys\ChangeTypeKeys.cs" />
-    <Compile Include="EntityKeys\ClaimReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesRefundKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesSeizureKeys.cs" />
-    <Compile Include="EntityKeys\ClassificationTypeKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseKeys.cs" />
     <Compile Include="EntityKeys\ClientDrivingLicenseTypeKeys.cs" />
-    <Compile Include="EntityKeys\ClientItemKeys.cs" />
-    <Compile Include="EntityKeys\ClientIndicationKeys.cs" />
-    <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
-    <Compile Include="EntityKeys\ClientsTapagKeys.cs" />
-    <Compile Include="EntityKeys\ComputationMethodKeys.cs" />
-    <Compile Include="EntityKeys\ConditionalExemptionTypeKeys.cs" />
-    <Compile Include="EntityKeys\ConfirmationNumberTokenLogKeys.cs" />
-    <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
-    <Compile Include="EntityKeys\ContainerizationHataraStatusKeys.cs" />
-    <Compile Include="EntityKeys\ContainerizationKeys.cs" />
-    <Compile Include="EntityKeys\ContainerizationStatusCodeKeys.cs" />
-    <Compile Include="EntityKeys\ContainerTypeKeys.cs" />
-    <Compile Include="EntityKeys\ContinuousRequestTypeKeys.cs" />
-    <Compile Include="EntityKeys\CoolingReportingMethodKeys.cs" />
-    <Compile Include="EntityKeys\CountryCurrencyKeys.cs" />
     <Compile Include="EntityKeys\CourierCustomStatusKeys.cs" />
     <Compile Include="EntityKeys\CourierDeclarationKeys.cs" />
     <Compile Include="EntityKeys\CourierDeclarationStatusKeys.cs" />
-    <Compile Include="EntityKeys\CourierHawbFromExcelKeys.cs" />
     <Compile Include="EntityKeys\CourierManifestStatusKeys.cs" />
     <Compile Include="EntityKeys\CourierMasterKeys.cs" />
     <Compile Include="EntityKeys\CourierPaymentStatusKeys.cs" />
     <Compile Include="EntityKeys\CourierPendingReasonKeys.cs" />
     <Compile Include="EntityKeys\CourierStatusKeys.cs" />
-    <Compile Include="EntityKeys\CurrencyTypeTenantKeys.cs" />
-    <Compile Include="EntityKeys\CustomDocumentTypeTenantKeys.cs" />
-    <Compile Include="EntityKeys\CustomerClassificationTypeKeys.cs" />
-    <Compile Include="EntityKeys\CustomerIdentificationTypeKeys.cs" />
-    <Compile Include="EntityKeys\CustomerIndicationTypeKeys.cs" />
     <Compile Include="EntityKeys\CustomsAirlineKeys.cs" />
-    <Compile Include="EntityKeys\CustomsAutonomyKeywordKeys.cs" />
-    <Compile Include="EntityKeys\CustomsCountryTenantKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
-    <Compile Include="EntityKeys\CustomsDocumentUploadKeys.cs" />
-    <Compile Include="EntityKeys\CustomsEntityStatusKeys.cs" />
-    <Compile Include="EntityKeys\CustomsEnvironmentSettingKeys.cs" />
-    <Compile Include="EntityKeys\CustomsGeneralKeys.cs" />
-    <Compile Include="EntityKeys\CustomsHouseTypeTenantKeys.cs" />
-    <Compile Include="EntityKeys\CustomsItemCategoryKeys.cs" />
-    <Compile Include="EntityKeys\CustomsItemGroupKeys.cs" />
-    <Compile Include="EntityKeys\CustomsItemHierarchicLocationKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
-    <Compile Include="EntityKeys\CustomsPaymentTermKeys.cs" />
-    <Compile Include="EntityKeys\CustomsShipKeys.cs" />
-    <Compile Include="EntityKeys\DBMigrationKeys.cs" />
-    <Compile Include="EntityKeys\DBMigrationLineKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitCargoIdentifierKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConsItemKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConKeys.cs" />
     <Compile Include="EntityKeys\DecCargoSplitConsPackDetKeys.cs" />
-    <Compile Include="EntityKeys\DecDangersContactsKeys.cs" />
     <Compile Include="EntityKeys\DecisionTypeKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCargoSplitKeys.cs" />
-    <Compile Include="EntityKeys\DeclarationCasualDetailsKeys.cs" />
     <Compile Include="EntityKeys\DeclarationConsAcceptanceKeys.cs" />
-    <Compile Include="EntityKeys\DeclarationCounterKeys.cs" />
     <Compile Include="EntityKeys\DeclarationCourierStatusKeys.cs" />
-    <Compile Include="EntityKeys\DeclarationExportRecipientKeys.cs" />
-    <Compile Include="EntityKeys\DeclarationFollowUpKeys.cs" />
     <Compile Include="EntityKeys\DeclarationMamanSpecialActionKeys.cs" />
-    <Compile Include="EntityKeys\DeclarationPendingKeys.cs" />
-    <Compile Include="EntityKeys\DeclarationReferantDataKeys.cs" />
-    <Compile Include="EntityKeys\DeclarationStatusKeys.cs" />
-    <Compile Include="EntityKeys\DefaultTypeKeys.cs" />
-    <Compile Include="EntityKeys\DefaultValueKeys.cs" />
-    <Compile Include="EntityKeys\DeficitDecisionKeys.cs" />
-    <Compile Include="EntityKeys\DeficitKeys.cs" />
-    <Compile Include="EntityKeys\DeliveryTypeKeys.cs" />
-    <Compile Include="EntityKeys\DiscountTypeRegulationKeys.cs" />
-    <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
-    <Compile Include="EntityKeys\EntryExitTypeKeys.cs" />
-    <Compile Include="EntityKeys\ExceptionReasonKeys.cs" />
-    <Compile Include="EntityKeys\ExportDeclarationClosingDataKeys.cs" />
-    <Compile Include="EntityKeys\ExportDeliveryDocumentMessageKeys.cs" />
-    <Compile Include="EntityKeys\ExporterRoleTypeKeys.cs" />
-    <Compile Include="EntityKeys\ExportLogisticPermitActionKeys.cs" />
-    <Compile Include="EntityKeys\ExportReferenceKeys.cs" />
-    <Compile Include="EntityKeys\ExportStorageKeys.cs" />
-    <Compile Include="EntityKeys\ExportStorgeKeys.cs" />
-    <Compile Include="EntityKeys\Extended\SupplierInvoiceItemsReqListKeys.cs" />
-    <Compile Include="EntityKeys\ExternalFieldMappingKeys.cs" />
-    <Compile Include="EntityKeys\FclLclCodeKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
-    <Compile Include="EntityKeys\FullnessCodeKeys.cs" />
-    <Compile Include="EntityKeys\GatepassRequestKeys.cs" />
-    <Compile Include="EntityKeys\GatepassReturnCodeKeys.cs" />
-    <Compile Include="EntityKeys\GovernmentProcTypeTenantKeys.cs" />
-    <Compile Include="EntityKeys\GTBFUSTATUKeys.cs" />
-    <Compile Include="EntityKeys\HandingCodeKeys.cs" />
-    <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
-    <Compile Include="EntityKeys\InceptionCodeKeys.cs" />
-    <Compile Include="EntityKeys\IncotemrsFileValidationKeys.cs" />
-    <Compile Include="EntityKeys\InterConditionsRelationshipKeys.cs" />
-    <Compile Include="EntityKeys\InternationalSiteTenantKeys.cs" />
-    <Compile Include="EntityKeys\LevyTrustKeys.cs" />
-    <Compile Include="EntityKeys\LoadingSiteTypeKeys.cs" />
-    <Compile Include="EntityKeys\LogisticActionRequestKeys.cs" />
-    <Compile Include="EntityKeys\LogisticActionRequestTypeKeys.cs" />
-    <Compile Include="EntityKeys\LogisticActionResponseReqSKeys.cs" />
-    <Compile Include="EntityKeys\LogisticPermitKeys.cs" />
-    <Compile Include="EntityKeys\LogisticsReferenceTypeKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionKeys.cs" />
     <Compile Include="EntityKeys\MamanSpecialActionStatusKeys.cs" />
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
     <Compile Include="EntityKeys\ManifestCargoStatusKeys.cs" />
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
-    <Compile Include="EntityKeys\NbcDeclarationTypeKeys.cs" />
-    <Compile Include="EntityKeys\NDMessageActionCodeKeys.cs" />
-    <Compile Include="EntityKeys\NUnicloudKeys.cs" />
-    <Compile Include="EntityKeys\OcrDocumentKeys.cs" />
-    <Compile Include="EntityKeys\OcrStatusKeys.cs" />
-    <Compile Include="EntityKeys\OriginCriterionKeys.cs" />
-    <Compile Include="EntityKeys\PartyRelationshipTypeKeys.cs" />
-    <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
-    <Compile Include="EntityKeys\PerYearFrequencyKeys.cs" />
-    <Compile Include="EntityKeys\PhysicalCheckCodeKeys.cs" />
-    <Compile Include="EntityKeys\PoaAuthorizationTypeLookupKeys.cs" />
-    <Compile Include="EntityKeys\PhysicalCheckSearchResultTypeKeys.cs" />
-    <Compile Include="EntityKeys\PoaStatusTypeLookUpKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
-    <Compile Include="EntityKeys\ProceduralFaultKeys.cs" />
-    <Compile Include="EntityKeys\QuotaComputationBasisKeys.cs" />
-    <Compile Include="EntityKeys\QuotaIncrementKeys.cs" />
-    <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
-    <Compile Include="EntityKeys\ReferantTeamKeys.cs" />
-    <Compile Include="EntityKeys\ReferenceInputTypeKeys.cs" />
-    <Compile Include="EntityKeys\ReferenceStatusKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
-    <Compile Include="EntityKeys\RegularityPublicationKeys.cs" />
-    <Compile Include="EntityKeys\RegularityRequirementWarningKeys.cs" />
-    <Compile Include="EntityKeys\RegularitySourceKeys.cs" />
-    <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
-    <Compile Include="EntityKeys\RemarksClassificationKeys.cs" />
-    <Compile Include="EntityKeys\RenewalMethodKeys.cs" />
-    <Compile Include="EntityKeys\RequestHandlingAuthorityKeys.cs" />
-    <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
-    <Compile Include="EntityKeys\RequestReasonCodeEnumKeys.cs" />
-    <Compile Include="EntityKeys\RequestTypeKeys.cs" />
-    <Compile Include="EntityKeys\SchedulerParamKeys.cs" />
-    <Compile Include="EntityKeys\SealCompletenesKeys.cs" />
-    <Compile Include="EntityKeys\SealTypeKeys.cs" />
-    <Compile Include="EntityKeys\SealUpdateReasonTypeKeys.cs" />
-    <Compile Include="EntityKeys\SecurityClearenceTypeCodeKeys.cs" />
     <Compile Include="EntityKeys\SeizureFactorTypeKeys.cs" />
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
-    <Compile Include="EntityKeys\SignStationKeys.cs" />
-    <Compile Include="EntityKeys\ServersNameKeys.cs" />
-    <Compile Include="EntityKeys\SIIDocumentTypeKeys.cs" />
-    <Compile Include="EntityKeys\SIIRequestKeys.cs" />
-    <Compile Include="EntityKeys\SIIRequestLineStatusKeys.cs" />
-    <Compile Include="EntityKeys\SIIRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
-    <Compile Include="EntityKeys\StatusCodeKeys.cs" />
-    <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
-    <Compile Include="EntityKeys\StorageStatusTableKeys.cs" />
-    <Compile Include="EntityKeys\StuffingSiteTypeKeys.cs" />
-    <Compile Include="EntityKeys\SuppInvoiceItemsAbachStatementKeys.cs" />
-    <Compile Include="EntityKeys\SupplierInvioceExportDefaultKeys.cs" />
-    <Compile Include="EntityKeys\SupplierInvioceItemCertificatDefaultKeys.cs" />
-    <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
-    <Compile Include="EntityKeys\SupplierInvoiceItemsReqListKeys.cs" />
-    <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
-    <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
-    <Compile Include="EntityKeys\SupplierPartyTypeKeys.cs" />
-    <Compile Include="EntityKeys\TarifRelatedToQuotaKeys.cs" />
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
-    <Compile Include="EntityKeys\TradeAgreementProtocolKeys.cs" />
-    <Compile Include="EntityKeys\TradeLevyStatusKeys.cs" />
-    <Compile Include="EntityKeys\TransactionNatureTypeKeys.cs" />
-    <Compile Include="EntityKeys\TransferCargoMethodTypeKeys.cs" />
-    <Compile Include="EntityKeys\TransportMeansTypeKeys.cs" />
     <Compile Include="EntityKeys\TreatmentWayKeys.cs" />
     <Compile Include="EntityKeys\UIMessageAdditionalKeys.cs" />
     <Compile Include="EntityKeys\UIMessageKeys.cs" />
-    <Compile Include="EntityKeys\UIMessageTenantKeys.cs" />
-    <Compile Include="EntityKeys\UpdateCodeKeys.cs" />
-    <Compile Include="EntityKeys\VendorCurrencyKeys.cs" />
     <Compile Include="EntityListQueryServices\AcceptanceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AgentTalkBackTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AmedmentTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AmendCancellRequestInitiatorListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AmendmentFieldStatusTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AmendmentStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AmendmentTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AmendRequestRejectReasonTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AmountTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ApprovedProfessionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\AutonomyRegionTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\BuyerRoleTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CancellationReasonRequestTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CancellationRequestStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CancelRequestRejectReasonTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CarEngineVolumeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CargoSealIdentifierListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CargoSealListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CargoTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CarWeightListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_AdditionRulesDetailsHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_ComputationMethodDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CountriesExclusionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CustomsBookAdditionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CustomsBookAdditionsDetailsHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CustomsItemComputedDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CustomsItemDetailsHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CustomsItemExclusionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CustomsItemLinkageListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_CustomsItemListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_LevyConditionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_LevyExclusionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_PreferenceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_PropertiesDetailsHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_QuotaComputedDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_QuotaDetailsHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_QuotaListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_QuotaRenewalListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_RegularityInceptionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_RegularityRequiredCertificateListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_RegularityRequirementListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_RequirementComputedDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_RuleClassificationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_RuleDetailsHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_RuleListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_TariffComputedDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_TariffDetailsHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_TariffListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_TradeAgreementHistoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_TradeAgreementListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_TradeLevyListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CB_VendorListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CertificateOfOriginConnectionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CertificateOfOriginInvoiceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CertificateOfOriginItemListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CertificateOfOriginListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CertificateOfOriginMandatoryFieldsListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CertificateOfOriginStatusCodeEnumListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CertificateOfOriginTypeCodeEnumListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ChangeTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ClaimReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesRefundListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesSeizureListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ClassificationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientDrivingLicenseTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ClientItemListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ClientIndicationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ClientsTapagListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ComputationMethodListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ConditionalExemptionTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ConfirmationNumberTokenLogListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ContainerizationHataraStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ContainerizationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ContainerizationStatusCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ContainerTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ContinuousRequestTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CoolingReportingMethodListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CountryCurrencyListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierCustomStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierDeclarationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierDeclarationStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CourierHawbFromExcelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierManifestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierMasterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierPaymentStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierPendingReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CourierStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CurrencyTypeTenantListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomDocumentTypeTenantListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomerClassificationTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomerIdentificationTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomerIndicationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsAirlineListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsAutonomyKeywordListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsCountryTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsDocumentUploadListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsEntityStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsEnvironmentSettingListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsGeneralListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsHouseTypeTenantListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsItemCategoryListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsItemGroupListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsItemHierarchicLocationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsPaymentTermListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsShipListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DBMigrationLineListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DBMigrationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitCargoIdentifierListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecCargoSplitConsPackDetListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DecDangersContactsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DecisionTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCargoSplitListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeclarationCasualDetailsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationConsAcceptanceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeclarationCounterListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationCourierStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeclarationExportRecipientListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeclarationFollowUpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationMamanSpecialActionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeclarationPendingListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeclarationReferantDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeclarationStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DefaultTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DefaultValueListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeficitDecisionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeficitListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeliveryTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DiscountTypeRegulationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\EntryExitTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExceptionReasonListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExportDeclarationClosingDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExportDeliveryDocumentMessageListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExporterRoleTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExportLogisticPermitActionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExportReferenceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExportStorageListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ExternalFieldMappingListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\FclLclCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FreightPaymentMethodListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\FullnessCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GatepassRequestListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GatepassReturnCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AcceptanceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ActionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AgentTalkBackTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AmedmentTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AmendCancellRequestInitiatorListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AmendmentFieldStatusTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AmendmentStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AmendmentTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AmendRequestRejectReasonTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AmountTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ApprovedProfessionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AutonomyRegionTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\BuyerRoleTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CancellationReasonRequestTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CancellationRequestStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CancelRequestRejectReasonTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CarEngineVolumeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CargoSealIdentifierListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CargoSealListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CargoTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CarWeightListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_AdditionRulesDetailsHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_ComputationMethodDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CountriesExclusionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CustomsBookAdditionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CustomsBookAdditionsDetailsHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemComputedDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemDetailsHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemExclusionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemLinkageListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_LevyConditionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_LevyExclusionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_PreferenceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_PropertiesDetailsHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_QuotaComputedDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_QuotaDetailsHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_QuotaListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_QuotaRenewalListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_RegularityInceptionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_RegularityRequiredCertificateListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_RegularityRequirementListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_RequirementComputedDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_RuleClassificationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_RuleDetailsHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_RuleListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_TariffComputedDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_TariffDetailsHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_TariffListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_TradeAgreementHistoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_TradeAgreementListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_TradeLevyListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CB_VendorListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginConnectionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginInvoiceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginItemListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginMandatoryFieldsListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginStatusCodeEnumListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginTypeCodeEnumListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ChangeTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ClaimReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesRefundListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesSeizureListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ClassificationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientDrivingLicenseTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ClientItemListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ClientIndicationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ClientsTapagListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ComputationMethodListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ConditionalExemptionTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ConfirmationNumberTokenLogListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ContainerizationHataraStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ContainerizationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ContainerizationStatusCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ContainerTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ContinuousRequestTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CoolingReportingMethodListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CountryCurrencyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierCustomStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierDeclarationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierDeclarationStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CourierHawbFromExcelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierManifestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierMasterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierPaymentStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierPendingReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CourierStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CurrencyTypeTenantListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomDocumentTypeTenantListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomerClassificationTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomerIdentificationTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomerIndicationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsAirlineListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsAutonomyKeywordListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsCountryTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsDocumentUploadListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsEntityStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsEnvironmentSettingListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsGeneralListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsHouseTypeTenantListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsItemCategoryListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsItemGroupListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsItemHierarchicLocationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsPaymentTermListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsShipListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DBMigrationLineListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DBMigrationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitCargoIdentifierListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecCargoSplitConsPackDetListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DecDangersContactsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DecisionTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCargoSplitListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeclarationCasualDetailsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationConsAcceptanceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeclarationCounterListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationCourierStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeclarationExportRecipientListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeclarationFollowUpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationMamanSpecialActionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeclarationPendingListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeclarationReferantDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeclarationStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DefaultTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DefaultValueListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeficitDecisionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeficitListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeliveryTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DiscountTypeRegulationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\EntryExitTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExceptionReasonListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExportDeclarationClosingDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExportDeliveryDocumentMessageListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExporterRoleTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExportLogisticPermitActionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExportReferenceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExportStorageListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ExternalFieldMappingListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\FclLclCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FreightPaymentMethodListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\FullnessCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GatepassRequestListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GatepassReturnCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GovernmentProcTypeTenantListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\HandingCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\HazardousSubstanceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InceptionCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\IncotemrsFileValidationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterConditionsRelationshipListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InternationalSiteTenantListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LevyTrustListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LoadingSiteTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LogisticActionRequestListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LogisticActionRequestTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LogisticActionResponseReqSListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LogisticPermitListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LogisticsReferenceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanSpecialActionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ManifestCargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\NbcDeclarationTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\NDMessageActionCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\NUnicloudListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\OcrDocumentListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\OcrStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\OriginCriterionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PartyRelationshipTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PerYearFrequencyListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PhysicalCheckCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PoaAuthorizationTypeLookupListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PhysicalCheckSearchResultTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PoaStatusTypeLookUpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ProceduralFaultListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\QuotaComputationBasisListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\QuotaIncrementListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ReferantTeamListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ReferenceInputTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ReferenceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RegularityPublicationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RegularityRequirementWarningListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RegularitySourceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RemarksClassificationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RenewalMethodListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RequestHandlingAuthorityListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RequestReasonCodeEnumListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SchedulerParamListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SealCompletenesListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SealTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SealUpdateReasonTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SecurityClearenceTypeCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ServersNameListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SignStationListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SIIDocumentTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SIIRequestLineStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SIIRequestListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SIIRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\StatusCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\StatusFieldTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\StorageStatusTableListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\StuffingSiteTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SuppInvoiceItemsAbachStatementListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SupplierInvioceExportDefaultListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SupplierInvioceItemCertificatDefaultListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsReqListListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SupplierPartyTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\TarifRelatedToQuotaListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\TradeAgreementProtocolListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\TradeLevyStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\TransactionNatureTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\TransferCargoMethodTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\TransportMeansTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TreatmentWayListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageAdditionalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\UIMessageListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\UIMessageTenantListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\UpdateCodeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\VendorCurrencyListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\GovernmentProcTypeTenantListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GTBFUSTATUListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\HandingCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InceptionCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\IncotemrsFileValidationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterConditionsRelationshipListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InternationalSiteTenantListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\LevyTrustListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\LoadingSiteTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\LogisticActionRequestListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\LogisticActionRequestTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\LogisticActionResponseReqSListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\LogisticPermitListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\LogisticsReferenceTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanSpecialActionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ManifestCargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\NbcDeclarationTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\NDMessageActionCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\NUnicloudListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\OcrDocumentListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\OcrStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\OriginCriterionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PartyRelationshipTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PerYearFrequencyListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PhysicalCheckCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PoaAuthorizationTypeLookupListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PhysicalCheckSearchResultTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PoaStatusTypeLookUpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\QuotaComputationBasisListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\QuotaIncrementListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ReferantExceptionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ReferantTeamListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ReferenceInputTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ReferenceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RegularityPublicationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RegularityRequirementWarningListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RegularitySourceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RemarksClassificationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RenewalMethodListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RequestHandlingAuthorityListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RequestReasonCodeEnumListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SchedulerParamListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SealCompletenesListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SealTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SealUpdateReasonTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SecurityClearenceTypeCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ServersNameListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SignStationListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SIIDocumentTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SIIRequestLineStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SIIRequestListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SIIRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\StatusCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\StatusFieldTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\StorageStatusTableListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\StuffingSiteTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SuppInvoiceItemsAbachStatementListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SupplierInvioceExportDefaultListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SupplierInvioceItemCertificatDefaultListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SupplierInvoiceItemsReqListListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SupplierPartyTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\TarifRelatedToQuotaListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\TradeAgreementProtocolListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\TradeLevyStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\TransactionNatureTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\TransferCargoMethodTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\TransportMeansTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TreatmentWayListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageAdditionalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UIMessageListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\UIMessageTenantListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
-    <Compile Include="EntityLists\Generated\CarEngineVolumeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CarWeightList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_AdditionRulesDetailsHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_ComputationMethodDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CountriesExclusionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CustomsBookAdditionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CustomsBookAdditionsDetailsHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CustomsItemComputedDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CustomsItemDetailsHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CustomsItemExclusionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CustomsItemLinkageList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_CustomsItemList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_LevyConditionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_LevyExclusionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_PreferenceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_PropertiesDetailsHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_QuotaComputedDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_QuotaDetailsHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_QuotaList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_QuotaRenewalList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_RegularityInceptionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_RegularityRequiredCertificateList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_RegularityRequirementList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_RequirementComputedDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_RuleClassificationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_RuleDetailsHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_RuleList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_TariffComputedDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_TariffDetailsHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_TariffList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_TradeAgreementHistoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_TradeAgreementList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_TradeLevyList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CB_VendorList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CertificateOfOriginConnectionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CertificateOfOriginInvoiceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CertificateOfOriginItemList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CertificateOfOriginList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CertificateOfOriginMandatoryFieldsList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CertificateOfOriginStatusCodeEnumList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CertificateOfOriginTypeCodeEnumList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ChangeTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ComputationMethodList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ConditionalExemptionTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ConfirmationNumberTokenLogList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CourierHawbFromExcelList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsCountryTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsEntityStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsHouseTypeTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsItemCategoryList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsItemGroupList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsItemHierarchicLocationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsPaymentTermList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeficitList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DiscountTypeRegulationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\EntryExitTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterConditionsRelationshipList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\NUnicloudList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PerYearFrequencyList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ProceduralFaultInSourceTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\QuotaIncrementList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RegularityPublicationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RegularityRequirementWarningList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RegularitySourceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RemarksClassificationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RenewalMethodList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LevyTrustList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RequestHandlingAuthorityList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SIIDocumentTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SIIRequestLineStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SIIRequestList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SIIRequestStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RequestReasonCodeEnumList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SupplierInvioceItemCertificatDefaultList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SupplierInvoiceItemsReqListList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\TarifRelatedToQuotaList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\TradeLevyStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\OcrStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\VendorCurrencyList.Generated.cs" />
-    <Compile Include="EntityLists\DeclarationReferantDataList.cs" />
-    <Compile Include="EntityLists\Generated\StatusCodeList.Generated.cs" />
-    <Compile Include="EntityLists\JoinCustomsItemList.cs" />
-    <Compile Include="EntityLists\CustomsPartnersItemList.cs" />
     <Compile Include="EntityLists\Generated\AcceptanceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ActionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AgentTalkBackTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AmedmentTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AmendCancellRequestInitiatorList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AmendmentFieldStatusTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AmendmentStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AmendmentTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AmendRequestRejectReasonTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AmountTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ApprovedProfessionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\AutonomyRegionTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\BuyerRoleTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CancellationReasonRequestTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CancellationRequestStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CancelRequestRejectReasonTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CargoSealIdentifierList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CargoSealList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoSplitRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CargoStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CargoTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ClaimReasonTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClaimsRelatedEntitiesRefundList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClaimsRelatedEntitiesSeizureList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ClassificationTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientDrivingLicenseTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ClientsPoaList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ClientsTapagList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ConsignmentPackDangerList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ContainerizationHataraStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ContainerizationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ContainerizationStatusCodeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ContainerTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ContinuousRequestTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CoolingReportingMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierCustomStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierDeclarationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierDeclarationStatusList.Generated.cs" />
@@ -1111,1100 +250,220 @@
     <Compile Include="EntityLists\Generated\CourierPaymentStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierPendingReasonList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CurrencyTypeTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomerClassificationTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomerIdentificationTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomerIndicationTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsAirlineList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsAutonomyKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsDocumentsDefinitionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsDocumentUploadList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsEnvironmentSettingList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsGeneralList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsPartnerFtpList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsShipList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DBMigrationLineList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DBMigrationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitCargoIdentifierList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecCargoSplitConsPackDetList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DecDangersContactsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DecisionTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCargoSplitList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeclarationCasualDetailsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationConsAcceptanceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCourierStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeclarationExportRecipientList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeclarationFollowUpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationMamanSpecialActionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeclarationPendingList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeclarationReferantDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeclarationStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeficitDecisionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeliveryTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DocumentRejectTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DocumentTypeCustomsDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExceptionReasonList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExportDeclarationClosingDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExportDeliveryDocumentMessageList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExporterRoleTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExportLogisticPermitActionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExportReferenceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExportStorageList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ExternalFieldMappingList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\FclLclCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FreightPaymentMethodList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\FullnessCodeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GatepassRequestList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GatepassReturnCodeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GTBFUSTATUList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\HandingCodeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\HazardousSubstanceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\IncotemrsFileValidationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LoadingSiteTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LogisticActionRequestList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LogisticActionRequestTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LogisticActionResponseReqSList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LogisticPermitList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LogisticsReferenceTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanSpecialActionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ManifestCargoStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MAWBTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\NbcDeclarationTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\NDMessageActionCodeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PartyRelationshipTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PendingByKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PhysicalCheckCodeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PoaAuthorizationTypeLookupList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PhysicalCheckSearchResultTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PoaStatusTypeLookUpList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ProceduralFaultList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ReferantExceptionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ReferantTeamList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ReferenceInputTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ReferenceStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ReleaseMessageTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RequestTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SchedulerParamList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SealCompletenesList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SealTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SealUpdateReasonTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SecurityClearenceTypeCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SignStationList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ServersNameList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SplitOrMergeReasonList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\StatusFieldTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\StorageStatusTableList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\StuffingSiteTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SuppInvoiceItemsAbachStatementList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SupplierInvoiceItemsPriceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SupplierInvoicePaymentList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SupplierInvoiceUCRList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SupplierPartyTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TPGFileTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\TradeAgreementProtocolList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\TransactionNatureTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\TransferCargoMethodTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\TransportMeansTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TreatmentWayList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageAdditionalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\UpdateCodeList.Generated.cs" />
     <Compile Include="EntityMapping\AcceptanceStatusMap.cs" />
     <Compile Include="EntityMapping\ActionCodeMap.cs" />
     <Compile Include="EntityMapping\AgentTalkBackTypeMap.cs" />
-    <Compile Include="EntityMapping\AmedmentTypeMap.cs" />
-    <Compile Include="EntityMapping\AmendCancellRequestInitiatorMap.cs" />
-    <Compile Include="EntityMapping\AmendmentFieldStatusTypeMap.cs" />
-    <Compile Include="EntityMapping\AmendmentStatusMap.cs" />
-    <Compile Include="EntityMapping\AmendmentTypeMap.cs" />
-    <Compile Include="EntityMapping\AmendRequestRejectReasonTypeMap.cs" />
-    <Compile Include="EntityMapping\AmountTypeMap.cs" />
-    <Compile Include="EntityMapping\ApprovedProfessionMap.cs" />
-    <Compile Include="EntityMapping\AutonomyRegionTypeMap.cs" />
-    <Compile Include="EntityMapping\BuyerRoleTypeMap.cs" />
-    <Compile Include="EntityMapping\CancellationReasonRequestTypeMap.cs" />
-    <Compile Include="EntityMapping\CancellationRequestStatusMap.cs" />
-    <Compile Include="EntityMapping\CancelRequestRejectReasonTypeMap.cs" />
-    <Compile Include="EntityMapping\CarEngineVolumeMap.cs" />
-    <Compile Include="EntityMapping\CargoSealIdentifierMap.cs" />
-    <Compile Include="EntityMapping\CargoSealMap.cs" />
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
-    <Compile Include="EntityMapping\CargoTypeMap.cs" />
-    <Compile Include="EntityMapping\CarWeightMap.cs" />
-    <Compile Include="EntityMapping\CB_AdditionRulesDetailsHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_ComputationMethodDataMap.cs" />
-    <Compile Include="EntityMapping\CB_CountriesExclusionMap.cs" />
-    <Compile Include="EntityMapping\CB_CustomsBookAdditionMap.cs" />
-    <Compile Include="EntityMapping\CB_CustomsBookAdditionsDetailsHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_CustomsItemComputedDataMap.cs" />
-    <Compile Include="EntityMapping\CB_CustomsItemDetailsHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_CustomsItemExclusionMap.cs" />
-    <Compile Include="EntityMapping\CB_CustomsItemLinkageMap.cs" />
-    <Compile Include="EntityMapping\CB_CustomsItemMap.cs" />
-    <Compile Include="EntityMapping\CB_LevyConditionMap.cs" />
-    <Compile Include="EntityMapping\CB_LevyExclusionMap.cs" />
-    <Compile Include="EntityMapping\CB_PreferenceMap.cs" />
-    <Compile Include="EntityMapping\CB_PropertiesDetailsHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_QuotaComputedDataMap.cs" />
-    <Compile Include="EntityMapping\CB_QuotaDetailsHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_QuotaMap.cs" />
-    <Compile Include="EntityMapping\CB_QuotaRenewalMap.cs" />
-    <Compile Include="EntityMapping\CB_RegularityInceptionMap.cs" />
-    <Compile Include="EntityMapping\CB_RegularityRequiredCertificateMap.cs" />
-    <Compile Include="EntityMapping\CB_RegularityRequirementMap.cs" />
-    <Compile Include="EntityMapping\CB_RequirementComputedDataMap.cs" />
-    <Compile Include="EntityMapping\CB_RuleClassificationMap.cs" />
-    <Compile Include="EntityMapping\CB_RuleDetailsHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_RuleMap.cs" />
-    <Compile Include="EntityMapping\CB_TariffComputedDataMap.cs" />
-    <Compile Include="EntityMapping\CB_TariffDetailsHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_TariffMap.cs" />
-    <Compile Include="EntityMapping\CB_TradeAgreementHistoryMap.cs" />
-    <Compile Include="EntityMapping\CB_TradeAgreementMap.cs" />
-    <Compile Include="EntityMapping\CB_TradeLevyMap.cs" />
-    <Compile Include="EntityMapping\CB_VendorMap.cs" />
-    <Compile Include="EntityMapping\CertificateOfOriginConnectionMap.cs" />
-    <Compile Include="EntityMapping\CertificateOfOriginInvoiceMap.cs" />
-    <Compile Include="EntityMapping\CertificateOfOriginItemMap.cs" />
-    <Compile Include="EntityMapping\CertificateOfOriginMandatoryFieldsMap.cs" />
-    <Compile Include="EntityMapping\CertificateOfOriginMap.cs" />
-    <Compile Include="EntityMapping\CertificateOfOriginStatusCodeEnumMap.cs" />
-    <Compile Include="EntityMapping\CertificateOfOriginTypeCodeEnumMap.cs" />
-    <Compile Include="EntityMapping\ChangeTypeMap.cs" />
-    <Compile Include="EntityMapping\ClaimReasonTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesRefundMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesSeizureMap.cs" />
-    <Compile Include="EntityMapping\ClassificationTypeMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseMap.cs" />
     <Compile Include="EntityMapping\ClientDrivingLicenseTypeMap.cs" />
-    <Compile Include="EntityMapping\ClientItemMap.cs" />
-    <Compile Include="EntityMapping\ClientIndicationMap.cs" />
-    <Compile Include="EntityMapping\ClientsPoaMap.cs" />
-    <Compile Include="EntityMapping\ClientsTapagMap.cs" />
-    <Compile Include="EntityMapping\ComputationMethodMap.cs" />
-    <Compile Include="EntityMapping\ConditionalExemptionTypeMap.cs" />
-    <Compile Include="EntityMapping\ConfirmationNumberTokenLogMap.cs" />
-    <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
-    <Compile Include="EntityMapping\ContainerizationHataraStatusMap.cs" />
-    <Compile Include="EntityMapping\ContainerizationMap.cs" />
-    <Compile Include="EntityMapping\ContainerizationStatusCodeMap.cs" />
-    <Compile Include="EntityMapping\ContainerTypeMap.cs" />
-    <Compile Include="EntityMapping\ContinuousRequestTypeMap.cs" />
-    <Compile Include="EntityMapping\CoolingReportingMethodMap.cs" />
-    <Compile Include="EntityMapping\CountryCurrencyMap.cs" />
     <Compile Include="EntityMapping\CourierCustomStatusMap.cs" />
     <Compile Include="EntityMapping\CourierDeclarationMap.cs" />
     <Compile Include="EntityMapping\CourierDeclarationStatusMap.cs" />
-    <Compile Include="EntityMapping\CourierHawbFromExcelMap.cs" />
     <Compile Include="EntityMapping\CourierManifestStatusMap.cs" />
     <Compile Include="EntityMapping\CourierMasterMap.cs" />
     <Compile Include="EntityMapping\CourierPaymentStatusMap.cs" />
     <Compile Include="EntityMapping\CourierPendingReasonMap.cs" />
     <Compile Include="EntityMapping\CourierStatusMap.cs" />
-    <Compile Include="EntityMapping\CurrencyTypeTenantMap.cs" />
-    <Compile Include="EntityMapping\CustomDocumentTypeTenantMap.cs" />
-    <Compile Include="EntityMapping\CustomerClassificationTypeMap.cs" />
-    <Compile Include="EntityMapping\CustomerIdentificationTypeMap.cs" />
-    <Compile Include="EntityMapping\CustomerIndicationTypeMap.cs" />
     <Compile Include="EntityMapping\CustomsAirlineMap.cs" />
-    <Compile Include="EntityMapping\CustomsAutonomyKeywordMap.cs" />
-    <Compile Include="EntityMapping\CustomsCountryTenantMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
-    <Compile Include="EntityMapping\CustomsDocumentUploadMap.cs" />
-    <Compile Include="EntityMapping\CustomsEntityStatusMap.cs" />
-    <Compile Include="EntityMapping\CustomsEnvironmentSettingMap.cs" />
-    <Compile Include="EntityMapping\CustomsGeneralMap.cs" />
-    <Compile Include="EntityMapping\CustomsHouseTypeTenantMap.cs" />
-    <Compile Include="EntityMapping\CustomsItemCategoryMap.cs" />
-    <Compile Include="EntityMapping\CustomsItemGroupMap.cs" />
-    <Compile Include="EntityMapping\CustomsItemHierarchicLocationMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
-    <Compile Include="EntityMapping\CustomsPaymentTermMap.cs" />
-    <Compile Include="EntityMapping\CustomsShipMap.cs" />
-    <Compile Include="EntityMapping\DBMigrationLineMap.cs" />
-    <Compile Include="EntityMapping\DBMigrationMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitCargoIdentifierMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsItemMap.cs" />
     <Compile Include="EntityMapping\DecCargoSplitConsPackDetMap.cs" />
-    <Compile Include="EntityMapping\DecDangersContactsMap.cs" />
     <Compile Include="EntityMapping\DecisionTypeMap.cs" />
     <Compile Include="EntityMapping\DeclarationCargoSplitMap.cs" />
-    <Compile Include="EntityMapping\DeclarationCasualDetailsMap.cs" />
     <Compile Include="EntityMapping\DeclarationConsAcceptanceMap.cs" />
-    <Compile Include="EntityMapping\DeclarationCounterMap.cs" />
     <Compile Include="EntityMapping\DeclarationCourierStatusMap.cs" />
-    <Compile Include="EntityMapping\DeclarationExportRecipientMap.cs" />
-    <Compile Include="EntityMapping\DeclarationFollowUpMap.cs" />
     <Compile Include="EntityMapping\DeclarationMamanSpecialActionMap.cs" />
-    <Compile Include="EntityMapping\DeclarationPendingMap.cs" />
-    <Compile Include="EntityMapping\DeclarationReferantDataMap.cs" />
-    <Compile Include="EntityMapping\DeclarationStatusMap.cs" />
-    <Compile Include="EntityMapping\DefaultTypeMap.cs" />
-    <Compile Include="EntityMapping\DefaultValueMap.cs" />
-    <Compile Include="EntityMapping\DeficitDecisionMap.cs" />
-    <Compile Include="EntityMapping\DeficitMap.cs" />
-    <Compile Include="EntityMapping\DeliveryTypeMap.cs" />
-    <Compile Include="EntityMapping\DiscountTypeRegulationMap.cs" />
-    <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
-    <Compile Include="EntityMapping\EntryExitTypeMap.cs" />
-    <Compile Include="EntityMapping\ExceptionReasonMap.cs" />
-    <Compile Include="EntityMapping\ExportDeclarationClosingDataMap.cs" />
-    <Compile Include="EntityMapping\ExportDeliveryDocumentMessageMap.cs" />
-    <Compile Include="EntityMapping\ExporterRoleTypeMap.cs" />
-    <Compile Include="EntityMapping\ExportLogisticPermitActionMap.cs" />
-    <Compile Include="EntityMapping\ExportReferenceMap.cs" />
-    <Compile Include="EntityMapping\ExportStorageMap.cs" />
-    <Compile Include="EntityMapping\ExternalFieldMappingMap.cs" />
-    <Compile Include="EntityMapping\FclLclCodeMap.cs" />
     <Compile Include="EntityMapping\FreightPaymentMethodMap.cs" />
-    <Compile Include="EntityMapping\FullnessCodeMap.cs" />
-    <Compile Include="EntityMapping\GatepassRequestMap.cs" />
-    <Compile Include="EntityMapping\GatepassReturnCodeMap.cs" />
-    <Compile Include="EntityMapping\GovernmentProcTypeTenantMap.cs" />
-    <Compile Include="EntityMapping\GTBFUSTATUMap.cs" />
-    <Compile Include="EntityMapping\HandingCodeMap.cs" />
-    <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
-    <Compile Include="EntityMapping\InceptionCodeMap.cs" />
-    <Compile Include="EntityMapping\IncotemrsFileValidationMap.cs" />
-    <Compile Include="EntityMapping\InterConditionsRelationshipMap.cs" />
-    <Compile Include="EntityMapping\InternationalSiteTenantMap.cs" />
-    <Compile Include="EntityMapping\LevyTrustMap.cs" />
-    <Compile Include="EntityMapping\LoadingSiteTypeMap.cs" />
-    <Compile Include="EntityMapping\LogisticActionRequestMap.cs" />
-    <Compile Include="EntityMapping\LogisticActionRequestTypeMap.cs" />
-    <Compile Include="EntityMapping\LogisticActionResponseReqSMap.cs" />
-    <Compile Include="EntityMapping\LogisticPermitMap.cs" />
-    <Compile Include="EntityMapping\LogisticsReferenceTypeMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionMap.cs" />
     <Compile Include="EntityMapping\MamanSpecialActionStatusMap.cs" />
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
     <Compile Include="EntityMapping\ManifestCargoStatusMap.cs" />
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
-    <Compile Include="EntityMapping\NbcDeclarationTypeMap.cs" />
-    <Compile Include="EntityMapping\NDMessageActionCodeMap.cs" />
-    <Compile Include="EntityMapping\NUnicloudMap.cs" />
-    <Compile Include="EntityMapping\OcrDocumentMap.cs" />
-    <Compile Include="EntityMapping\OcrStatusMap.cs" />
-    <Compile Include="EntityMapping\OriginCriterionMap.cs" />
-    <Compile Include="EntityMapping\PartyRelationshipTypeMap.cs" />
-    <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
-    <Compile Include="EntityMapping\PerYearFrequencyMap.cs" />
-    <Compile Include="EntityMapping\PhysicalCheckCodeMap.cs" />
-    <Compile Include="EntityMapping\PoaAuthorizationTypeLookupMap.cs" />
-    <Compile Include="EntityMapping\PhysicalCheckSearchResultTypeMap.cs" />
-    <Compile Include="EntityMapping\PoaStatusTypeLookUpMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
-    <Compile Include="EntityMapping\ProceduralFaultMap.cs" />
-    <Compile Include="EntityMapping\QuotaComputationBasisMap.cs" />
-    <Compile Include="EntityMapping\QuotaIncrementMap.cs" />
-    <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
-    <Compile Include="EntityMapping\ReferantTeamMap.cs" />
-    <Compile Include="EntityMapping\ReferenceInputTypeMap.cs" />
-    <Compile Include="EntityMapping\ReferenceStatusMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
-    <Compile Include="EntityMapping\RegularityPublicationMap.cs" />
-    <Compile Include="EntityMapping\RegularityRequirementWarningMap.cs" />
-    <Compile Include="EntityMapping\RegularitySourceMap.cs" />
-    <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
-    <Compile Include="EntityMapping\RemarksClassificationMap.cs" />
-    <Compile Include="EntityMapping\RenewalMethodMap.cs" />
-    <Compile Include="EntityMapping\RequestHandlingAuthorityMap.cs" />
-    <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
-    <Compile Include="EntityMapping\RequestReasonCodeEnumMap.cs" />
-    <Compile Include="EntityMapping\RequestTypeMap.cs" />
-    <Compile Include="EntityMapping\SchedulerParamMap.cs" />
-    <Compile Include="EntityMapping\SealCompletenesMap.cs" />
-    <Compile Include="EntityMapping\SealTypeMap.cs" />
-    <Compile Include="EntityMapping\SealUpdateReasonTypeMap.cs" />
-    <Compile Include="EntityMapping\SecurityClearenceTypeCodeMap.cs" />
     <Compile Include="EntityMapping\SeizureFactorTypeMap.cs" />
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
-    <Compile Include="EntityMapping\SignStationMap.cs" />
-    <Compile Include="EntityMapping\ServersNameMap.cs" />
-    <Compile Include="EntityMapping\SIIDocumentTypeMap.cs" />
-    <Compile Include="EntityMapping\SIIRequestLineStatusMap.cs" />
-    <Compile Include="EntityMapping\SIIRequestMap.cs" />
-    <Compile Include="EntityMapping\SIIRequestStatusMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
-    <Compile Include="EntityMapping\StatusCodeMap.cs" />
-    <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
-    <Compile Include="EntityMapping\StorageStatusTableMap.cs" />
-    <Compile Include="EntityMapping\StuffingSiteTypeMap.cs" />
-    <Compile Include="EntityMapping\SuppInvoiceItemsAbachStatementMap.cs" />
-    <Compile Include="EntityMapping\SupplierInvioceExportDefaultMap.cs" />
-    <Compile Include="EntityMapping\SupplierInvioceItemCertificatDefaultMap.cs" />
-    <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
-    <Compile Include="EntityMapping\SupplierInvoiceItemsReqListMap.cs" />
-    <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
-    <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
-    <Compile Include="EntityMapping\SupplierPartyTypeMap.cs" />
-    <Compile Include="EntityMapping\TarifRelatedToQuotaMap.cs" />
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
-    <Compile Include="EntityMapping\TradeAgreementProtocolMap.cs" />
-    <Compile Include="EntityMapping\TradeLevyStatusMap.cs" />
-    <Compile Include="EntityMapping\TransactionNatureTypeMap.cs" />
-    <Compile Include="EntityMapping\TransferCargoMethodTypeMap.cs" />
-    <Compile Include="EntityMapping\TransportMeansTypeMap.cs" />
     <Compile Include="EntityMapping\TreatmentWayMap.cs" />
     <Compile Include="EntityMapping\UIMessageAdditionalMap.cs" />
     <Compile Include="EntityMapping\UIMessageMap.cs" />
-    <Compile Include="EntityMapping\UIMessageTenantMap.cs" />
-    <Compile Include="EntityMapping\UpdateCodeMap.cs" />
-    <Compile Include="EntityMapping\VendorCurrencyMap.cs" />
     <Compile Include="EntityPOCOs\AcceptanceStatus.cs" />
     <Compile Include="EntityPOCOs\ActionCode.cs" />
     <Compile Include="EntityPOCOs\AgentTalkBackType.cs" />
-    <Compile Include="EntityPOCOs\AmedmentType.cs" />
-    <Compile Include="EntityPOCOs\AmendCancellRequestInitiator.cs" />
-    <Compile Include="EntityPOCOs\AmendmentFieldStatusType.cs" />
-    <Compile Include="EntityPOCOs\AmendmentStatus.cs" />
-    <Compile Include="EntityPOCOs\AmendmentType.cs" />
-    <Compile Include="EntityPOCOs\AmendRequestRejectReasonType.cs" />
-    <Compile Include="EntityPOCOs\AmountType.cs" />
-    <Compile Include="EntityPOCOs\ApprovedProfession.cs" />
-    <Compile Include="EntityPOCOs\AutonomyRegionType.cs" />
-    <Compile Include="EntityPOCOs\BuyerRoleType.cs" />
-    <Compile Include="EntityPOCOs\CancellationReasonRequestType.cs" />
-    <Compile Include="EntityPOCOs\CancellationRequestStatus.cs" />
-    <Compile Include="EntityPOCOs\CancelRequestRejectReasonType.cs" />
-    <Compile Include="EntityPOCOs\CarEngineVolume.cs" />
-    <Compile Include="EntityPOCOs\CargoSeal.cs" />
-    <Compile Include="EntityPOCOs\CargoSealIdentifier.cs" />
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CargoStatus.cs" />
-    <Compile Include="EntityPOCOs\CargoType.cs" />
-    <Compile Include="EntityPOCOs\CarWeight.cs" />
-    <Compile Include="EntityPOCOs\CB_AdditionRulesDetailsHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_ComputationMethodData.cs" />
-    <Compile Include="EntityPOCOs\CB_CountriesExclusion.cs" />
-    <Compile Include="EntityPOCOs\CB_CustomsBookAddition.cs" />
-    <Compile Include="EntityPOCOs\CB_CustomsBookAdditionsDetailsHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_CustomsItem.cs" />
-    <Compile Include="EntityPOCOs\CB_CustomsItemComputedData.cs" />
-    <Compile Include="EntityPOCOs\CB_CustomsItemDetailsHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_CustomsItemExclusion.cs" />
-    <Compile Include="EntityPOCOs\CB_CustomsItemLinkage.cs" />
-    <Compile Include="EntityPOCOs\CB_LevyCondition.cs" />
-    <Compile Include="EntityPOCOs\CB_LevyExclusion.cs" />
-    <Compile Include="EntityPOCOs\CB_Preference.cs" />
-    <Compile Include="EntityPOCOs\CB_PropertiesDetailsHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_Quota.cs" />
-    <Compile Include="EntityPOCOs\CB_QuotaComputedData.cs" />
-    <Compile Include="EntityPOCOs\CB_QuotaDetailsHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_QuotaRenewal.cs" />
-    <Compile Include="EntityPOCOs\CB_RegularityInception.cs" />
-    <Compile Include="EntityPOCOs\CB_RegularityRequiredCertificate.cs" />
-    <Compile Include="EntityPOCOs\CB_RegularityRequirement.cs" />
-    <Compile Include="EntityPOCOs\CB_RequirementComputedData.cs" />
-    <Compile Include="EntityPOCOs\CB_Rule.cs" />
-    <Compile Include="EntityPOCOs\CB_RuleClassification.cs" />
-    <Compile Include="EntityPOCOs\CB_RuleDetailsHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_Tariff.cs" />
-    <Compile Include="EntityPOCOs\CB_TariffComputedData.cs" />
-    <Compile Include="EntityPOCOs\CB_TariffDetailsHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_TradeAgreement.cs" />
-    <Compile Include="EntityPOCOs\CB_TradeAgreementHistory.cs" />
-    <Compile Include="EntityPOCOs\CB_TradeLevy.cs" />
-    <Compile Include="EntityPOCOs\CB_Vendor.cs" />
-    <Compile Include="EntityPOCOs\CertificateOfOrigin.cs" />
-    <Compile Include="EntityPOCOs\CertificateOfOriginConnection.cs" />
-    <Compile Include="EntityPOCOs\CertificateOfOriginInvoice.cs" />
-    <Compile Include="EntityPOCOs\CertificateOfOriginItem.cs" />
-    <Compile Include="EntityPOCOs\CertificateOfOriginMandatoryFields.cs" />
-    <Compile Include="EntityPOCOs\CertificateOfOriginStatusCodeEnum.cs" />
-    <Compile Include="EntityPOCOs\CertificateOfOriginTypeCodeEnum.cs" />
-    <Compile Include="EntityPOCOs\ChangeType.cs" />
-    <Compile Include="EntityPOCOs\ClaimReasonType.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesRefund.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesSeizure.cs" />
-    <Compile Include="EntityPOCOs\ClassificationType.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicense.cs" />
     <Compile Include="EntityPOCOs\ClientDrivingLicenseType.cs" />
-    <Compile Include="EntityPOCOs\ClientItem.cs" />
-    <Compile Include="EntityPOCOs\ClientIndication.cs" />
-    <Compile Include="EntityPOCOs\ClientsPoa.cs" />
-    <Compile Include="EntityPOCOs\ClientsTapag.cs" />
-    <Compile Include="EntityPOCOs\ComputationMethod.cs" />
-    <Compile Include="EntityPOCOs\ConditionalExemptionType.cs" />
-    <Compile Include="EntityPOCOs\ConfirmationNumberTokenLog.cs" />
-    <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
-    <Compile Include="EntityPOCOs\Containerization.cs" />
-    <Compile Include="EntityPOCOs\ContainerizationHataraStatus.cs" />
-    <Compile Include="EntityPOCOs\ContainerizationStatusCode.cs" />
-    <Compile Include="EntityPOCOs\ContainerType.cs" />
-    <Compile Include="EntityPOCOs\ContinuousRequestType.cs" />
-    <Compile Include="EntityPOCOs\CoolingReportingMethod.cs" />
-    <Compile Include="EntityPOCOs\CountryCurrency.cs" />
     <Compile Include="EntityPOCOs\CourierCustomStatus.cs" />
     <Compile Include="EntityPOCOs\CourierDeclaration.cs" />
     <Compile Include="EntityPOCOs\CourierDeclarationStatus.cs" />
-    <Compile Include="EntityPOCOs\CourierHawbFromExcel.cs" />
     <Compile Include="EntityPOCOs\CourierManifestStatus.cs" />
     <Compile Include="EntityPOCOs\CourierMaster.cs" />
     <Compile Include="EntityPOCOs\CourierPaymentStatus.cs" />
     <Compile Include="EntityPOCOs\CourierPendingReason.cs" />
     <Compile Include="EntityPOCOs\CourierStatus.cs" />
-    <Compile Include="EntityPOCOs\CurrencyTypeTenant.cs" />
-    <Compile Include="EntityPOCOs\CustomDocumentTypeTenant.cs" />
-    <Compile Include="EntityPOCOs\CustomerClassificationType.cs" />
-    <Compile Include="EntityPOCOs\CustomerIdentificationType.cs" />
-    <Compile Include="EntityPOCOs\CustomerIndicationType.cs" />
     <Compile Include="EntityPOCOs\CustomsAirline.cs" />
-    <Compile Include="EntityPOCOs\CustomsAutonomyKeyword.cs" />
-    <Compile Include="EntityPOCOs\CustomsCountryTenant.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
-    <Compile Include="EntityPOCOs\CustomsDocumentUpload.cs" />
-    <Compile Include="EntityPOCOs\CustomsEntityStatus.cs" />
-    <Compile Include="EntityPOCOs\CustomsEnvironmentSetting.cs" />
-    <Compile Include="EntityPOCOs\CustomsGeneral.cs" />
-    <Compile Include="EntityPOCOs\CustomsHouseTypeTenant.cs" />
-    <Compile Include="EntityPOCOs\CustomsItemCategory.cs" />
-    <Compile Include="EntityPOCOs\CustomsItemGroup.cs" />
-    <Compile Include="EntityPOCOs\CustomsItemHierarchicLocation.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
-    <Compile Include="EntityPOCOs\CustomsPaymentTerm.cs" />
-    <Compile Include="EntityPOCOs\CustomsShip.cs" />
-    <Compile Include="EntityPOCOs\DBMigration.cs" />
-    <Compile Include="EntityPOCOs\DBMigrationLine.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCargoIdentifier.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitCon.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsItem.cs" />
     <Compile Include="EntityPOCOs\DecCargoSplitConsPackDet.cs" />
-    <Compile Include="EntityPOCOs\DecDangersContacts.cs" />
     <Compile Include="EntityPOCOs\DecisionType.cs" />
     <Compile Include="EntityPOCOs\DeclarationCargoSplit.cs" />
-    <Compile Include="EntityPOCOs\DeclarationCasualDetails.cs" />
     <Compile Include="EntityPOCOs\DeclarationConsAcceptance.cs" />
-    <Compile Include="EntityPOCOs\DeclarationCounter.cs" />
     <Compile Include="EntityPOCOs\DeclarationCourierStatus.cs" />
-    <Compile Include="EntityPOCOs\DeclarationExportRecipient.cs" />
-    <Compile Include="EntityPOCOs\DeclarationFollowUp.cs" />
     <Compile Include="EntityPOCOs\DeclarationMamanSpecialAction.cs" />
-    <Compile Include="EntityPOCOs\DeclarationPending.cs" />
-    <Compile Include="EntityPOCOs\DeclarationReferantData.cs" />
-    <Compile Include="EntityPOCOs\DeclarationStatus.cs" />
-    <Compile Include="EntityPOCOs\DefaultType.cs" />
-    <Compile Include="EntityPOCOs\DefaultValue.cs" />
-    <Compile Include="EntityPOCOs\Deficit.cs" />
-    <Compile Include="EntityPOCOs\DeficitDecision.cs" />
-    <Compile Include="EntityPOCOs\DeliveryType.cs" />
-    <Compile Include="EntityPOCOs\DiscountTypeRegulation.cs" />
-    <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
-    <Compile Include="EntityPOCOs\EntryExitType.cs" />
-    <Compile Include="EntityPOCOs\ExceptionReason.cs" />
-    <Compile Include="EntityPOCOs\ExportDeclarationClosingData.cs" />
-    <Compile Include="EntityPOCOs\ExportDeliveryDocumentMessage.cs" />
-    <Compile Include="EntityPOCOs\ExporterRoleType.cs" />
-    <Compile Include="EntityPOCOs\ExportLogisticPermitAction.cs" />
-    <Compile Include="EntityPOCOs\ExportReference.cs" />
-    <Compile Include="EntityPOCOs\ExportStorage.cs" />
-    <Compile Include="EntityPOCOs\ExternalFieldMapping.cs" />
-    <Compile Include="EntityPOCOs\FclLclCode.cs" />
     <Compile Include="EntityPOCOs\FreightPaymentMethod.cs" />
-    <Compile Include="EntityPOCOs\FullnessCode.cs" />
-    <Compile Include="EntityPOCOs\GatepassRequest.cs" />
-    <Compile Include="EntityPOCOs\GatepassReturnCode.cs" />
-    <Compile Include="EntityPOCOs\GovernmentProcTypeTenant.cs" />
-    <Compile Include="EntityPOCOs\GTBFUSTATU.cs" />
-    <Compile Include="EntityPOCOs\HandingCode.cs" />
-    <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
-    <Compile Include="EntityPOCOs\InceptionCode.cs" />
-    <Compile Include="EntityPOCOs\IncotemrsFileValidation.cs" />
-    <Compile Include="EntityPOCOs\InterConditionsRelationship.cs" />
-    <Compile Include="EntityPOCOs\InternationalSiteTenant.cs" />
-    <Compile Include="EntityPOCOs\LevyTrust.cs" />
-    <Compile Include="EntityPOCOs\LoadingSiteType.cs" />
-    <Compile Include="EntityPOCOs\LogisticActionRequest.cs" />
-    <Compile Include="EntityPOCOs\LogisticActionRequestType.cs" />
-    <Compile Include="EntityPOCOs\LogisticActionResponseReqS.cs" />
-    <Compile Include="EntityPOCOs\LogisticPermit.cs" />
-    <Compile Include="EntityPOCOs\LogisticsReferenceType.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialAction.cs" />
     <Compile Include="EntityPOCOs\MamanSpecialActionStatus.cs" />
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
     <Compile Include="EntityPOCOs\ManifestCargoStatus.cs" />
     <Compile Include="EntityPOCOs\MAWBType.cs" />
-    <Compile Include="EntityPOCOs\NbcDeclarationType.cs" />
-    <Compile Include="EntityPOCOs\NDMessageActionCode.cs" />
-    <Compile Include="EntityPOCOs\NUnicloud.cs" />
-    <Compile Include="EntityPOCOs\OcrDocument.cs" />
-    <Compile Include="EntityPOCOs\OcrStatus.cs" />
-    <Compile Include="EntityPOCOs\OriginCriterion.cs" />
-    <Compile Include="EntityPOCOs\PartyRelationshipType.cs" />
-    <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
-    <Compile Include="EntityPOCOs\PerYearFrequency.cs" />
-    <Compile Include="EntityPOCOs\PhysicalCheckCode.cs" />
-    <Compile Include="EntityPOCOs\PoaAuthorizationTypeLookup.cs" />
-    <Compile Include="EntityPOCOs\PhysicalCheckSearchResultType.cs" />
-    <Compile Include="EntityPOCOs\PoaStatusTypeLookUp.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
-    <Compile Include="EntityPOCOs\ProceduralFault.cs" />
-    <Compile Include="EntityPOCOs\QuotaComputationBasis.cs" />
-    <Compile Include="EntityPOCOs\QuotaIncrement.cs" />
-    <Compile Include="EntityPOCOs\ReferantException.cs" />
-    <Compile Include="EntityPOCOs\ReferantTeam.cs" />
-    <Compile Include="EntityPOCOs\ReferenceInputType.cs" />
-    <Compile Include="EntityPOCOs\ReferenceStatus.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
-    <Compile Include="EntityPOCOs\RegularityPublication.cs" />
-    <Compile Include="EntityPOCOs\RegularityRequirementWarning.cs" />
-    <Compile Include="EntityPOCOs\RegularitySource.cs" />
-    <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
-    <Compile Include="EntityPOCOs\RemarksClassification.cs" />
-    <Compile Include="EntityPOCOs\RenewalMethod.cs" />
-    <Compile Include="EntityPOCOs\RequestHandlingAuthority.cs" />
-    <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
-    <Compile Include="EntityPOCOs\RequestReasonCodeEnum.cs" />
-    <Compile Include="EntityPOCOs\RequestType.cs" />
-    <Compile Include="EntityPOCOs\SchedulerParam.cs" />
-    <Compile Include="EntityPOCOs\SealCompletenes.cs" />
-    <Compile Include="EntityPOCOs\SealType.cs" />
-    <Compile Include="EntityPOCOs\SealUpdateReasonType.cs" />
-    <Compile Include="EntityPOCOs\SecurityClearenceTypeCode.cs" />
     <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
-    <Compile Include="EntityPOCOs\SignStation.cs" />
-    <Compile Include="EntityPOCOs\ServersName.cs" />
-    <Compile Include="EntityPOCOs\SIIDocumentType.cs" />
-    <Compile Include="EntityPOCOs\SIIRequest.cs" />
-    <Compile Include="EntityPOCOs\SIIRequestLineStatus.cs" />
-    <Compile Include="EntityPOCOs\SIIRequestStatus.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
-    <Compile Include="EntityPOCOs\StatusCode.cs" />
-    <Compile Include="EntityPOCOs\StatusFieldType.cs" />
-    <Compile Include="EntityPOCOs\StorageStatusTable.cs" />
-    <Compile Include="EntityPOCOs\StuffingSiteType.cs" />
-    <Compile Include="EntityPOCOs\SuppInvoiceItemsAbachStatement.cs" />
-    <Compile Include="EntityPOCOs\SupplierInvioceExportDefault.cs" />
-    <Compile Include="EntityPOCOs\SupplierInvioceItemCertificatDefault.cs" />
-    <Compile Include="EntityPOCOs\SupplierInvoiceItemsPrice.cs" />
-    <Compile Include="EntityPOCOs\SupplierInvoiceItemsReqList.cs" />
-    <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
-    <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
-    <Compile Include="EntityPOCOs\SupplierPartyType.cs" />
-    <Compile Include="EntityPOCOs\TarifRelatedToQuota.cs" />
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
-    <Compile Include="EntityPOCOs\TradeAgreementProtocol.cs" />
-    <Compile Include="EntityPOCOs\TradeLevyStatus.cs" />
-    <Compile Include="EntityPOCOs\TransactionNatureType.cs" />
-    <Compile Include="EntityPOCOs\TransferCargoMethodType.cs" />
-    <Compile Include="EntityPOCOs\TransportMeansType.cs" />
     <Compile Include="EntityPOCOs\TreatmentWay.cs" />
     <Compile Include="EntityPOCOs\UIMessage.cs" />
     <Compile Include="EntityPOCOs\UIMessageAdditional.cs" />
-    <Compile Include="EntityPOCOs\UIMessageTenant.cs" />
-    <Compile Include="EntityPOCOs\UpdateCode.cs" />
-    <Compile Include="EntityPOCOs\VendorCurrency.cs" />
     <Compile Include="Repsitories\AcceptanceStatusRepository.cs" />
     <Compile Include="Repsitories\ActionCodeRepository.cs" />
     <Compile Include="Repsitories\AgentTalkBackTypeRepository.cs" />
-    <Compile Include="Repsitories\AmedmentTypeRepository.cs" />
-    <Compile Include="Repsitories\AmendCancellRequestInitiatorRepository.cs" />
-    <Compile Include="Repsitories\AmendmentFieldStatusTypeRepository.cs" />
-    <Compile Include="Repsitories\AmendmentStatusRepository.cs" />
-    <Compile Include="Repsitories\AmendmentTypeRepository.cs" />
-    <Compile Include="Repsitories\AmendRequestRejectReasonTypeRepository.cs" />
-    <Compile Include="Repsitories\AmountTypeRepository.cs" />
-    <Compile Include="Repsitories\ApprovedProfessionRepository.cs" />
-    <Compile Include="Repsitories\AutonomyRegionTypeRepository.cs" />
-    <Compile Include="Repsitories\BuyerRoleTypeRepository.cs" />
-    <Compile Include="Repsitories\CancellationReasonRequestTypeRepository.cs" />
-    <Compile Include="Repsitories\CancellationRequestStatusRepository.cs" />
-    <Compile Include="Repsitories\CancelRequestRejectReasonTypeRepository.cs" />
-    <Compile Include="Repsitories\CarEngineVolumeRepository.cs" />
-    <Compile Include="Repsitories\CargoSealIdentifierRepository.cs" />
-    <Compile Include="Repsitories\CargoSealRepository.cs" />
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
-    <Compile Include="Repsitories\CargoTypeRepository.cs" />
-    <Compile Include="Repsitories\CarWeightRepository.cs" />
-    <Compile Include="Repsitories\CB_AdditionRulesDetailsHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_ComputationMethodDataRepository.cs" />
-    <Compile Include="Repsitories\CB_CountriesExclusionRepository.cs" />
-    <Compile Include="Repsitories\CB_CustomsBookAdditionRepository.cs" />
-    <Compile Include="Repsitories\CB_CustomsBookAdditionsDetailsHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_CustomsItemComputedDataRepository.cs" />
-    <Compile Include="Repsitories\CB_CustomsItemDetailsHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_CustomsItemExclusionRepository.cs" />
-    <Compile Include="Repsitories\CB_CustomsItemLinkageRepository.cs" />
-    <Compile Include="Repsitories\CB_CustomsItemRepository.cs" />
-    <Compile Include="Repsitories\CB_LevyConditionRepository.cs" />
-    <Compile Include="Repsitories\CB_LevyExclusionRepository.cs" />
-    <Compile Include="Repsitories\CB_PreferenceRepository.cs" />
-    <Compile Include="Repsitories\CB_PropertiesDetailsHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_QuotaComputedDataRepository.cs" />
-    <Compile Include="Repsitories\CB_QuotaDetailsHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_QuotaRenewalRepository.cs" />
-    <Compile Include="Repsitories\CB_QuotaRepository.cs" />
-    <Compile Include="Repsitories\CB_RegularityInceptionRepository.cs" />
-    <Compile Include="Repsitories\CB_RegularityRequiredCertificateRepository.cs" />
-    <Compile Include="Repsitories\CB_RegularityRequirementRepository.cs" />
-    <Compile Include="Repsitories\CB_RequirementComputedDataRepository.cs" />
-    <Compile Include="Repsitories\CB_RuleClassificationRepository.cs" />
-    <Compile Include="Repsitories\CB_RuleDetailsHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_RuleRepository.cs" />
-    <Compile Include="Repsitories\CB_TariffComputedDataRepository.cs" />
-    <Compile Include="Repsitories\CB_TariffDetailsHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_TariffRepository.cs" />
-    <Compile Include="Repsitories\CB_TradeAgreementHistoryRepository.cs" />
-    <Compile Include="Repsitories\CB_TradeAgreementRepository.cs" />
-    <Compile Include="Repsitories\CB_TradeLevyRepository.cs" />
-    <Compile Include="Repsitories\CB_VendorRepository.cs" />
-    <Compile Include="Repsitories\CertificateOfOriginConnectionRepository.cs" />
-    <Compile Include="Repsitories\CertificateOfOriginInvoiceRepository.cs" />
-    <Compile Include="Repsitories\CertificateOfOriginItemRepository.cs" />
-    <Compile Include="Repsitories\CertificateOfOriginMandatoryFieldsRepository.cs" />
-    <Compile Include="Repsitories\CertificateOfOriginRepository.cs" />
-    <Compile Include="Repsitories\CertificateOfOriginStatusCodeEnumRepository.cs" />
-    <Compile Include="Repsitories\CertificateOfOriginTypeCodeEnumRepository.cs" />
-    <Compile Include="Repsitories\ChangeTypeRepository.cs" />
-    <Compile Include="Repsitories\CheckHealthRepository.cs" />
-    <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />
-    <Compile Include="Repsitories\ClassificationTypeRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseRepository.cs" />
     <Compile Include="Repsitories\ClientDrivingLicenseTypeRepository.cs" />
-    <Compile Include="Repsitories\ClientItemRepository.cs" />
-    <Compile Include="Repsitories\ClientIndicationRepository.cs" />
-    <Compile Include="Repsitories\ClientsPoaRepository.cs" />
-    <Compile Include="Repsitories\ClientsTapagRepository.cs" />
-    <Compile Include="Repsitories\ComputationMethodRepository.cs" />
-    <Compile Include="Repsitories\ConditionalExemptionTypeRepository.cs" />
-    <Compile Include="Repsitories\ConfirmationNumberTokenLogRepository.cs" />
-    <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
-    <Compile Include="Repsitories\ContainerizationHataraStatusRepository.cs" />
-    <Compile Include="Repsitories\ContainerizationRepository.cs" />
-    <Compile Include="Repsitories\ContainerizationStatusCodeRepository.cs" />
-    <Compile Include="Repsitories\ContainerTypeRepository.cs" />
-    <Compile Include="Repsitories\ContinuousRequestTypeRepository.cs" />
-    <Compile Include="Repsitories\CoolingReportingMethodRepository.cs" />
-    <Compile Include="Repsitories\CountryCurrencyRepository.cs" />
     <Compile Include="Repsitories\CourierCustomStatusRepository.cs" />
     <Compile Include="Repsitories\CourierDeclarationRepository.cs" />
     <Compile Include="Repsitories\CourierDeclarationStatusRepository.cs" />
-    <Compile Include="Repsitories\CourierHawbFromExcelRepository.cs" />
     <Compile Include="Repsitories\CourierManifestStatusRepository.cs" />
     <Compile Include="Repsitories\CourierMasterRepository.cs" />
     <Compile Include="Repsitories\CourierPaymentStatusRepository.cs" />
     <Compile Include="Repsitories\CourierPendingReasonRepository.cs" />
     <Compile Include="Repsitories\CourierStatusRepository.cs" />
-    <Compile Include="Repsitories\CurrencyTypeTenantRepository.cs" />
-    <Compile Include="Repsitories\CustomDocumentTypeTenantRepository.cs" />
-    <Compile Include="Repsitories\CustomerClassificationTypeRepository.cs" />
-    <Compile Include="Repsitories\CustomerIdentificationTypeRepository.cs" />
-    <Compile Include="Repsitories\CustomerIndicationTypeRepository.cs" />
     <Compile Include="Repsitories\CustomsAirlineRepository.cs" />
-    <Compile Include="Repsitories\CustomsAutonomyKeywordRepository.cs" />
-    <Compile Include="Repsitories\CustomsCountryTenantRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
-    <Compile Include="Repsitories\CustomsDocumentUploadRepository.cs" />
-    <Compile Include="Repsitories\CustomsEntityStatusRepository.cs" />
-    <Compile Include="Repsitories\CustomsEnvironmentSettingRepository.cs" />
-    <Compile Include="Repsitories\CustomsGeneralRepository.cs" />
-    <Compile Include="Repsitories\CustomsHouseTypeTenantRepository.cs" />
-    <Compile Include="Repsitories\CustomsItemCategoryRepository.cs" />
-    <Compile Include="Repsitories\CustomsItemGroupRepository.cs" />
-    <Compile Include="Repsitories\CustomsItemHierarchicLocationRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
-    <Compile Include="Repsitories\CustomsPaymentTermRepository.cs" />
-    <Compile Include="Repsitories\CustomsShipRepository.cs" />
-    <Compile Include="Repsitories\DBMigrationLineRepository.cs" />
-    <Compile Include="Repsitories\DBMigrationRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitCargoIdentifierRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsItemRepository.cs" />
     <Compile Include="Repsitories\DecCargoSplitConsPackDetRepository.cs" />
-    <Compile Include="Repsitories\DecDangersContactsRepository.cs" />
     <Compile Include="Repsitories\DecisionTypeRepository.cs" />
     <Compile Include="Repsitories\DeclarationCargoSplitRepository.cs" />
-    <Compile Include="Repsitories\DeclarationCasualDetailsRepository.cs" />
     <Compile Include="Repsitories\DeclarationConsAcceptanceRepository.cs" />
-    <Compile Include="Repsitories\DeclarationCounterRepository.cs" />
     <Compile Include="Repsitories\DeclarationCourierStatusRepository.cs" />
-    <Compile Include="Repsitories\DeclarationExportRecipientRepository.cs" />
-    <Compile Include="Repsitories\DeclarationFollowUpRepository.cs" />
     <Compile Include="Repsitories\DeclarationMamanSpecialActionRepository.cs" />
-    <Compile Include="Repsitories\DeclarationPendingRepository.cs" />
-    <Compile Include="Repsitories\DeclarationReferantDataRepository.cs" />
-    <Compile Include="Repsitories\DeclarationStatusRepository.cs" />
-    <Compile Include="Repsitories\DefaultTypeRepository.cs" />
-    <Compile Include="Repsitories\DefaultValueRepository.cs" />
-    <Compile Include="Repsitories\DeficitDecisionRepository.cs" />
-    <Compile Include="Repsitories\DeliveryTypeRepository.cs" />
-    <Compile Include="Repsitories\DiscountTypeRegulationRepository.cs" />
-    <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
-    <Compile Include="Repsitories\EntryExitTypeRepository.cs" />
-    <Compile Include="Repsitories\ExceptionReasonRepository.cs" />
-    <Compile Include="Repsitories\ExportDeclarationClosingDataRepository.cs" />
-    <Compile Include="Repsitories\ExportDeliveryDocumentMessageRepository.cs" />
-    <Compile Include="Repsitories\ExporterRoleTypeRepository.cs" />
-    <Compile Include="Repsitories\ExportLogisticPermitActionRepository.cs" />
-    <Compile Include="Repsitories\ExportReferenceRepository.cs" />
-    <Compile Include="Repsitories\ExportStorageRepository.cs" />
-    <Compile Include="Repsitories\ExternalFieldMappingRepository.cs" />
-    <Compile Include="Repsitories\FclLclCodeRepository.cs" />
     <Compile Include="Repsitories\FreightPaymentMethodRepository.cs" />
-    <Compile Include="Repsitories\FullnessCodeRepository.cs" />
-    <Compile Include="Repsitories\GatepassRequestRepository.cs" />
-    <Compile Include="Repsitories\GatepassReturnCodeRepository.cs" />
     <Compile Include="Repsitories\Generated\AcceptanceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ActionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\AgentTalkBackTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AmedmentTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AmendCancellRequestInitiatorRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AmendmentFieldStatusTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AmendmentStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AmendmentTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AmendRequestRejectReasonTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AmountTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ApprovedProfessionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\AutonomyRegionTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\BuyerRoleTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CancellationReasonRequestTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CancellationRequestStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CancelRequestRejectReasonTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CarEngineVolumeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CargoSealIdentifierRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CargoSealRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CargoTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CarWeightRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_AdditionRulesDetailsHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_ComputationMethodDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CountriesExclusionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CustomsBookAdditionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CustomsBookAdditionsDetailsHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CustomsItemComputedDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CustomsItemDetailsHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CustomsItemExclusionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CustomsItemLinkageRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_CustomsItemRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_LevyConditionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_LevyExclusionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_PreferenceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_PropertiesDetailsHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_QuotaComputedDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_QuotaDetailsHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_QuotaRenewalRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_QuotaRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_RegularityInceptionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_RegularityRequiredCertificateRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_RegularityRequirementRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_RequirementComputedDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_RuleClassificationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_RuleDetailsHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_RuleRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_TariffComputedDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_TariffDetailsHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_TariffRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_TradeAgreementHistoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_TradeAgreementRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_TradeLevyRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CB_VendorRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CertificateOfOriginConnectionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CertificateOfOriginInvoiceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CertificateOfOriginItemRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CertificateOfOriginMandatoryFieldsRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CertificateOfOriginRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CertificateOfOriginStatusCodeEnumRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CertificateOfOriginTypeCodeEnumRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ChangeTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ClaimReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesRefundRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesSeizureRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ClassificationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientDrivingLicenseTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ClientItemRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ClientIndicationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ClientsTapagRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ComputationMethodRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ConditionalExemptionTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ConfirmationNumberTokenLogRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ContainerizationHataraStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ContainerizationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ContainerizationStatusCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ContainerTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ContinuousRequestTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CoolingReportingMethodRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CountryCurrencyRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierCustomStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierDeclarationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierDeclarationStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CourierHawbFromExcelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierManifestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierMasterRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierPaymentStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierPendingReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CourierStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CurrencyTypeTenantRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomDocumentTypeTenantRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomerClassificationTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomerIdentificationTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomerIndicationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsAirlineRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsAutonomyKeywordRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsCountryTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsDocumentUploadRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsEntityStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsEnvironmentSettingRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsGeneralRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsHouseTypeTenantRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsItemCategoryRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsItemGroupRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsItemHierarchicLocationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsPaymentTermRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsShipRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DBMigrationLineRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DBMigrationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitCargoIdentifierRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecCargoSplitConsPackDetRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DecDangersContactsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DecisionTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCargoSplitRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeclarationCasualDetailsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationConsAcceptanceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeclarationCounterRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationCourierStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeclarationExportRecipientRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeclarationFollowUpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationMamanSpecialActionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeclarationPendingRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeclarationReferantDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeclarationStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DefaultTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DefaultValueRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeficitDecisionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeficitRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeliveryTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DiscountTypeRegulationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\EntryExitTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExceptionReasonRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExportDeclarationClosingDataRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExportDeliveryDocumentMessageRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExporterRoleTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExportLogisticPermitActionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExportReferenceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExportStorageRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ExternalFieldMappingRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\FclLclCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FreightPaymentMethodRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\FullnessCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\GatepassRequestRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\GatepassReturnCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\GovernmentProcTypeTenantRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\HandingCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\HazardousSubstanceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\InceptionCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\IncotemrsFileValidationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\InterConditionsRelationshipRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\InternationalSiteTenantRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LevyTrustRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LoadingSiteTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LogisticActionRequestRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LogisticActionRequestTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LogisticActionResponseReqSRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LogisticPermitRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LogisticsReferenceTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanSpecialActionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ManifestCargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\NbcDeclarationTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\NDMessageActionCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\NUnicloudRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\OcrDocumentRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\OcrStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\OriginCriterionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PartyRelationshipTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PerYearFrequencyRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PhysicalCheckCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PoaAuthorizationTypeLookupRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PhysicalCheckSearchResultTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PoaStatusTypeLookUpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ProceduralFaultRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\QuotaComputationBasisRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\QuotaIncrementRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ReferantTeamRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ReferenceInputTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ReferenceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RegularityPublicationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RegularityRequirementWarningRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RegularitySourceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RemarksClassificationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RenewalMethodRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RequestHandlingAuthorityRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RequestReasonCodeEnumRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SchedulerParamRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SealCompletenesRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SealTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SealUpdateReasonTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SecurityClearenceTypeCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureFactorTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ServersNameRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SIIDocumentTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SIIRequestLineStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SIIRequestRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SIIRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\StatusCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\StatusFieldTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\StorageStatusTableRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\StuffingSiteTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SuppInvoiceItemsAbachStatementRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SupplierInvioceExportDefaultRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SupplierInvioceItemCertificatDefaultRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SupplierInvoiceItemsPriceRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SupplierInvoiceItemsReqListRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SupplierPartyTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\TarifRelatedToQuotaRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\TradeAgreementProtocolRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\TradeLevyStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\TransactionNatureTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\TransferCargoMethodTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\TransportMeansTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TreatmentWayRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageAdditionalRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\UIMessageRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\UIMessageTenantRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\UpdateCodeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\VendorCurrencyRepository.Generated.cs" />
-    <Compile Include="Repsitories\GovernmentProcTypeTenantRepository.cs" />
-    <Compile Include="Repsitories\HandingCodeRepository.cs" />
-    <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
-    <Compile Include="Repsitories\InceptionCodeRepository.cs" />
-    <Compile Include="Repsitories\IncotemrsFileValidationRepository.cs" />
-    <Compile Include="Repsitories\InterConditionsRelationshipRepository.cs" />
-    <Compile Include="Repsitories\InternationalSiteTenantRepository.cs" />
-    <Compile Include="Repsitories\LevyTrustRepository.cs" />
-    <Compile Include="Repsitories\LoadingSiteTypeRepository.cs" />
-    <Compile Include="Repsitories\LogisticActionRequestRepository.cs" />
-    <Compile Include="Repsitories\LogisticActionRequestTypeRepository.cs" />
-    <Compile Include="Repsitories\LogisticActionResponseReqSRepository.cs" />
-    <Compile Include="Repsitories\LogisticPermitRepository.cs" />
-    <Compile Include="Repsitories\LogisticsReferenceTypeRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionRepository.cs" />
     <Compile Include="Repsitories\MamanSpecialActionStatusRepository.cs" />
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
     <Compile Include="Repsitories\ManifestCargoStatusRepository.cs" />
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
-    <Compile Include="Repsitories\NbcDeclarationTypeRepository.cs" />
-    <Compile Include="Repsitories\NDMessageActionCodeRepository.cs" />
-    <Compile Include="Repsitories\NUnicloudRepository.cs" />
-    <Compile Include="Repsitories\OcrDocumentRepository.cs" />
-    <Compile Include="Repsitories\OcrStatusRepository.cs" />
-    <Compile Include="Repsitories\OriginCriterionRepository.cs" />
-    <Compile Include="Repsitories\PartyRelationshipTypeRepository.cs" />
-    <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
-    <Compile Include="Repsitories\PerYearFrequencyRepository.cs" />
-    <Compile Include="Repsitories\PhysicalCheckCodeRepository.cs" />
-    <Compile Include="Repsitories\PoaAuthorizationTypeLookupRepository.cs" />
-    <Compile Include="Repsitories\PhysicalCheckSearchResultTypeRepository.cs" />
-    <Compile Include="Repsitories\PoaStatusTypeLookUpRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
-    <Compile Include="Repsitories\QuotaComputationBasisRepository.cs" />
-    <Compile Include="Repsitories\QuotaIncrementRepository.cs" />
-    <Compile Include="Repsitories\ReferantExceptionRepository.cs" />
-    <Compile Include="Repsitories\ReferantTeamRepository.cs" />
-    <Compile Include="Repsitories\ReferenceInputTypeRepository.cs" />
-    <Compile Include="Repsitories\ReferenceStatusRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
-    <Compile Include="Repsitories\RegularityPublicationRepository.cs" />
-    <Compile Include="Repsitories\RegularityRequirementWarningRepository.cs" />
-    <Compile Include="Repsitories\RegularitySourceRepository.cs" />
-    <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
-    <Compile Include="Repsitories\RemarksClassificationRepository.cs" />
-    <Compile Include="Repsitories\RenewalMethodRepository.cs" />
-    <Compile Include="Repsitories\RequestHandlingAuthorityRepository.cs" />
-    <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />
-    <Compile Include="Repsitories\RequestReasonCodeEnumRepository.cs" />
-    <Compile Include="Repsitories\RequestTypeRepository.cs" />
-    <Compile Include="Repsitories\SchedulerParamRepository.cs" />
-    <Compile Include="Repsitories\SealCompletenesRepository.cs" />
-    <Compile Include="Repsitories\SealTypeRepository.cs" />
-    <Compile Include="Repsitories\SealUpdateReasonTypeRepository.cs" />
-    <Compile Include="Repsitories\SecurityClearenceTypeCodeRepository.cs" />
     <Compile Include="Repsitories\SeizureFactorTypeRepository.cs" />
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
-    <Compile Include="Repsitories\SignStationRepository.cs" />
-    <Compile Include="Repsitories\ServersNameRepository.cs" />
-    <Compile Include="Repsitories\SIIDocumentTypeRepository.cs" />
-    <Compile Include="Repsitories\SIIRequestLineStatusRepository.cs" />
-    <Compile Include="Repsitories\SIIRequestRepository.cs" />
-    <Compile Include="Repsitories\SIIRequestStatusRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
-    <Compile Include="Repsitories\StatusCodeRepository.cs" />
-    <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
-    <Compile Include="Repsitories\StorageStatusTableRepository.cs" />
-    <Compile Include="Repsitories\StuffingSiteTypeRepository.cs" />
-    <Compile Include="Repsitories\SuppInvoiceItemsAbachStatementRepository.cs" />
-    <Compile Include="Repsitories\SupplierInvioceExportDefaultRepository.cs" />
-    <Compile Include="Repsitories\SupplierInvioceItemCertificatDefaultRepository.cs" />
-    <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
-    <Compile Include="Repsitories\SupplierInvoiceItemsReqListRepository.cs" />
-    <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />
-    <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />
-    <Compile Include="Repsitories\SupplierPartyTypeRepository.cs" />
-    <Compile Include="Repsitories\TarifRelatedToQuotaRepository.cs" />
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />
-    <Compile Include="Repsitories\TradeAgreementProtocolRepository.cs" />
-    <Compile Include="Repsitories\TradeLevyStatusRepository.cs" />
-    <Compile Include="Repsitories\TransactionNatureTypeRepository.cs" />
-    <Compile Include="Repsitories\TransferCargoMethodTypeRepository.cs" />
-    <Compile Include="Repsitories\TransportMeansTypeRepository.cs" />
     <Compile Include="Repsitories\TreatmentWayRepository.cs" />
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />
-    <Compile Include="Repsitories\UIMessageTenantRepository.cs" />
-    <Compile Include="Repsitories\UpdateCodeRepository.cs" />
-    <Compile Include="Repsitories\VendorCurrencyRepository.cs" />
-    <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="CustomContext.Views.cs" />
     <Compile Include="CustomFilters\DeclarationCustomFilters.cs" />
     <Compile Include="CustomFilters\NotificationCustomFilters.cs" />
@@ -2302,6 +561,7 @@
     <Compile Include="EntityKeys\CustomsItemDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CustomsItemKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnersItemKeys.cs" />
+    <Compile Include="EntityKeys\CustomsPaymentTermsKeys.cs" />
     <Compile Include="EntityKeys\CustomsRequestsSheetKeys.cs" />
     <Compile Include="EntityKeys\CustomsRequestsSheetStatusKeys.cs" />
     <Compile Include="EntityKeys\CustomsRequiredFieldKeys.cs" />
@@ -2321,6 +581,7 @@
     <Compile Include="EntityKeys\DeclarationStatusTypeKeys.cs" />
     <Compile Include="EntityKeys\DeclarationTaxKeys.cs" />
     <Compile Include="EntityKeys\DeficitConnFileParagraphTypeKeys.cs" />
+    <Compile Include="EntityKeys\DeficitsKeys.cs" />
     <Compile Include="EntityKeys\DeliverySiteTypeKeys.cs" />
     <Compile Include="EntityKeys\DemanderTypeKeys.cs" />
     <Compile Include="EntityKeys\DepositConditionKeys.cs" />
@@ -2387,6 +648,7 @@
     <Compile Include="EntityKeys\ProceduralFaultInProcessTypeKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultInSourceTypeKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultsConnEntityKeys.cs" />
+    <Compile Include="EntityKeys\ProceduralFaultsKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultStatusKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultTypeKeys.cs" />
     <Compile Include="EntityKeys\ProcessingReasonKeys.cs" />
@@ -2539,6 +801,7 @@
     <Compile Include="EntityListQueryServices\CustomsItemDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnersItemListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsPaymentTermsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsRequestsSheetListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsRequestsSheetStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsRequiredFieldListQueryService.cs" />
@@ -2558,6 +821,7 @@
     <Compile Include="EntityListQueryServices\DeclarationStatusTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationTaxListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitConnFileParagraphTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeficitsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeliverySiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DemanderTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DepositConditionListQueryService.cs" />
@@ -2661,6 +925,7 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsItemDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnersItemListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsPaymentTermsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsRequestsSheetListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsRequestsSheetStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsRequiredFieldListQueryService.Generated.cs" />
@@ -2680,6 +945,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationStatusTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationTaxListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitConnFileParagraphTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeficitsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeliverySiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DemanderTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DepositConditionListQueryService.Generated.cs" />
@@ -2746,6 +1012,7 @@
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultInProcessTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultInSourceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultsConnEntityListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ProceduralFaultsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProcessingReasonListQueryService.Generated.cs" />
@@ -2865,7 +1132,7 @@
     <Compile Include="EntityListQueryServices\ProceduralFaultInProcessTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultInSourceTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultsConnEntityListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ProceduralFaultListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ProceduralFaultsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProcessingReasonListQueryService.cs" />
@@ -3023,6 +1290,7 @@
     <Compile Include="EntityLists\Generated\CustomsItemDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsPartnersItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsPaymentTermsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsRequestsSheetList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsRequestsSheetStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsRequiredFieldList.Generated.cs" />
@@ -3042,6 +1310,7 @@
     <Compile Include="EntityLists\Generated\DeclarationStatusTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationTaxList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeficitConnFileParagraphTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeficitsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeliverySiteTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DemanderTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DepositConditionList.Generated.cs" />
@@ -3106,7 +1375,9 @@
     <Compile Include="EntityLists\Generated\PhysicalCheckOperationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PhysicalCheckStatusMessageList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultInProcessTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ProceduralFaultInSourceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultsConnEntityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ProceduralFaultsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProcessingReasonList.Generated.cs" />
@@ -3259,6 +1530,7 @@
     <Compile Include="EntityMapping\CustomsItemDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CustomsItemMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnersItemMap.cs" />
+    <Compile Include="EntityMapping\CustomsPaymentTermsMap.cs" />
     <Compile Include="EntityMapping\CustomsRequestsSheetMap.cs" />
     <Compile Include="EntityMapping\CustomsRequestsSheetStatusMap.cs" />
     <Compile Include="EntityMapping\CustomsRequiredFieldMap.cs" />
@@ -3278,6 +1550,7 @@
     <Compile Include="EntityMapping\DeclarationStatusTypeMap.cs" />
     <Compile Include="EntityMapping\DeclarationTaxMap.cs" />
     <Compile Include="EntityMapping\DeficitConnFileParagraphTypeMap.cs" />
+    <Compile Include="EntityMapping\DeficitsMap.cs" />
     <Compile Include="EntityMapping\DeliverySiteTypeMap.cs" />
     <Compile Include="EntityMapping\DemanderTypeMap.cs" />
     <Compile Include="EntityMapping\DepositConditionMap.cs" />
@@ -3344,6 +1617,7 @@
     <Compile Include="EntityMapping\ProceduralFaultInProcessTypeMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultInSourceTypeMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultsConnEntityMap.cs" />
+    <Compile Include="EntityMapping\ProceduralFaultsMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultStatusMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultTypeMap.cs" />
     <Compile Include="EntityMapping\ProcessingReasonMap.cs" />
@@ -3496,6 +1770,7 @@
     <Compile Include="EntityPOCOs\CustomsItem.cs" />
     <Compile Include="EntityPOCOs\CustomsItemDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnersItem.cs" />
+    <Compile Include="EntityPOCOs\CustomsPaymentTerms.cs" />
     <Compile Include="EntityPOCOs\CustomsRequestsSheet.cs" />
     <Compile Include="EntityPOCOs\CustomsRequestsSheetStatus.cs" />
     <Compile Include="EntityPOCOs\CustomsRequiredField.cs" />
@@ -3515,6 +1790,7 @@
     <Compile Include="EntityPOCOs\DeclarationStatusType.cs" />
     <Compile Include="EntityPOCOs\DeclarationTax.cs" />
     <Compile Include="EntityPOCOs\DeficitConnFileParagraphType.cs" />
+    <Compile Include="EntityPOCOs\Deficits.cs" />
     <Compile Include="EntityPOCOs\DeliverySiteType.cs" />
     <Compile Include="EntityPOCOs\DemanderType.cs" />
     <Compile Include="EntityPOCOs\Deposit.cs" />
@@ -3581,6 +1857,7 @@
     <Compile Include="EntityPOCOs\PhysicalCheckStatusMessage.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultInProcessType.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultInSourceType.cs" />
+    <Compile Include="EntityPOCOs\ProceduralFaults.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultsConnEntity.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultDeclarationView.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultStatus.cs" />
@@ -3740,6 +2017,7 @@
     <Compile Include="Repsitories\CustomsItemDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CustomsItemRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnersItemRepository.cs" />
+    <Compile Include="Repsitories\CustomsPaymentTermsRepository.cs" />
     <Compile Include="Repsitories\CustomsRequestsSheetRepository.cs" />
     <Compile Include="Repsitories\CustomsRequestsSheetStatusRepository.cs" />
     <Compile Include="Repsitories\CustomsRequiredFieldRepository.cs" />
@@ -3759,7 +2037,7 @@
     <Compile Include="Repsitories\DeclarationStatusTypeRepository.cs" />
     <Compile Include="Repsitories\DeclarationTaxRepository.cs" />
     <Compile Include="Repsitories\DeficitConnFileParagraphTypeRepository.cs" />
-    <Compile Include="Repsitories\DeficitRepository.cs" />
+    <Compile Include="Repsitories\DeficitsRepository.cs" />
     <Compile Include="Repsitories\DeliverySiteTypeRepository.cs" />
     <Compile Include="Repsitories\DemanderTypeRepository.cs" />
     <Compile Include="Repsitories\DepositConditionRepository.cs" />
@@ -3864,6 +2142,7 @@
     <Compile Include="Repsitories\Generated\CustomsItemDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnersItemRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsPaymentTermsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsRequestsSheetRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsRequestsSheetStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsRequiredFieldRepository.Generated.cs" />
@@ -3883,6 +2162,7 @@
     <Compile Include="Repsitories\Generated\DeclarationStatusTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationTaxRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitConnFileParagraphTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeficitsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeliverySiteTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DemanderTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DepositConditionRepository.Generated.cs" />
@@ -3949,6 +2229,7 @@
     <Compile Include="Repsitories\Generated\ProceduralFaultInProcessTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultInSourceTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultsConnEntityRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ProceduralFaultsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProcessingReasonRepository.Generated.cs" />
@@ -4068,7 +2349,7 @@
     <Compile Include="Repsitories\ProceduralFaultInProcessTypeRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultInSourceTypeRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultsConnEntityRepository.cs" />
-    <Compile Include="Repsitories\ProceduralFaultRepository.cs" />
+    <Compile Include="Repsitories\ProceduralFaultsRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultStatusRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultTypeRepository.cs" />
     <Compile Include="Repsitories\ProcessingReasonRepository.cs" />
@@ -4138,8 +2419,6 @@
     <Compile Include="Repsitories\VendorStatusRepository.cs" />
     <Compile Include="Repsitories\VendorTransactionTypeRepository.cs" />
     <Compile Include="Repsitories\VendorTypeRepository.cs" />
-    <None Include="Nlog.config" />
-    <Compile Include="DataContracts\SupplieInvoiceItemsForSIIRequest.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -4159,17 +2438,13 @@
     <Content Include="StoredProcedures\updateSupplierInvoiceItemsSequence.sql" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
-      <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
-      <Name>Logitude.Infrastructure.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -4182,19 +2457,8 @@
   <ItemGroup>
     <Folder Include="CloseTables\" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.ShipmentsModel;
@@ -226,12 +226,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         [XmlArray("InvoiceLines")]
         [XmlArrayItem("InvoiceLine")]
         public List<ARInvoiceLineElement> InvoiceLines { get; set; }
-
-        [XmlArray("TaxTotalsInInvoiceCurrency")]
-        [XmlArrayItem("TaxTotalInInvoiceCurrency")]
-        public List<InvoiceTaxElement> TaxTotalsInInvoiceCurrency { get; set; }
     }
-
     public class ARInvoiceLineElement
     {
         public int LineNumber { get; set; }
@@ -244,23 +239,14 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal AmountInLocalCurrency { get; set; }
         public decimal TaxPercentage { get; set; }
         public string TaxCode { get; set; }
-        public string VATExternalId { get; set; }
-
         public string CreditAccount { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Quantity { get; set; }
         public string MeasurementCode { get; set; }
         public string PrepaidCollect { get; set; }
 
-        public bool IsMultiTAX { get; set; }
-        public bool AppliesRegionalTax { get; set; }
-
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
-
-        [XmlArray("TaxDetails")]
-        [XmlArrayItem("TaxDetail")]
-        public List<LineTaxDetailsElement> TaxDetails { get; set; }
     }
     public class ARShipmentDetailsElement
     {
@@ -429,42 +415,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public DateTime? OnCarriageATA { get; set; }
         #endregion
 
-        #region PreForwarding
-        public string PreForwardingTransportMode { get; set; }
-        public string PreForwardingFromPortCode { get; set; }
-        public string PreForwardingFromPortName { get; set; }
-        public string PreForwardingFromPortCountryCode { get; set; }
-        public string PreForwardingFromPortCountryName { get; set; }
-        public string PreForwardingToPortCode { get; set; }
-        public string PreForwardingToPortName { get; set; }
-        public string PreForwardingToPortCountryCode { get; set; }
-        public string PreForwardingToPortCountryName { get; set; }
-        public string PreForwardingCarrierName { get; set; }
-        public string PreForwardingCarrierNumber { get; set; }
-        public DateTime? PreForwardingETD { get; set; }
-        public DateTime? PreForwardingETA { get; set; }
-        public DateTime? PreForwardingATD { get; set; }
-        public DateTime? PreForwardingATA { get; set; }
-        #endregion
-
-        #region OnForwarding
-        public string OnForwardingTransportMode { get; set; }
-        public string OnForwardingFromPortCode { get; set; }
-        public string OnForwardingFromPortName { get; set; }
-        public string OnForwardingFromPortCountryCode { get; set; }
-        public string OnForwardingFromPortCountryName { get; set; }
-        public string OnForwardingToPortCode { get; set; }
-        public string OnForwardingToPortName { get; set; }
-        public string OnForwardingToPortCountryCode { get; set; }
-        public string OnForwardingToPortCountryName { get; set; }
-        public string OnForwardingCarrierName { get; set; }
-        public string OnForwardingCarrierNumber { get; set; }
-        public DateTime? OnForwardingETD { get; set; }
-        public DateTime? OnForwardingETA { get; set; }
-        public DateTime? OnForwardingATD { get; set; }
-        public DateTime? OnForwardingATA { get; set; }
-        #endregion
-
         #region MainCarriage
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
@@ -594,36 +544,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ShipmentField38Name { get; set; }
         public string ShipmentField39Name { get; set; }
         public string ShipmentField40Name { get; set; }
-        public string ShipmentField41Name { get; set; }
-        public string ShipmentField42Name { get; set; }
-        public string ShipmentField43Name { get; set; }
-        public string ShipmentField44Name { get; set; }
-        public string ShipmentField45Name { get; set; }
-        public string ShipmentField46Name { get; set; }
-        public string ShipmentField47Name { get; set; }
-        public string ShipmentField48Name { get; set; }
-        public string ShipmentField49Name { get; set; }
-        public string ShipmentField50Name { get; set; }
-        public string ShipmentField51Name { get; set; }
-        public string ShipmentField52Name { get; set; }
-        public string ShipmentField53Name { get; set; }
-        public string ShipmentField54Name { get; set; }
-        public string ShipmentField55Name { get; set; }
-        public string ShipmentField56Name { get; set; }
-        public string ShipmentField57Name { get; set; }
-        public string ShipmentField58Name { get; set; }
-        public string ShipmentField59Name { get; set; }
-        public string ShipmentField60Name { get; set; }
-        public string ShipmentField61Name { get; set; }
-        public string ShipmentField62Name { get; set; }
-        public string ShipmentField63Name { get; set; }
-        public string ShipmentField64Name { get; set; }
-        public string ShipmentField65Name { get; set; }
-        public string ShipmentField66Name { get; set; }
-        public string ShipmentField67Name { get; set; }
-        public string ShipmentField68Name { get; set; }
-        public string ShipmentField69Name { get; set; }
-        public string ShipmentField70Name { get; set; }
 
         public string ShipmentField1Value { get; set; }
         public string ShipmentField2Value { get; set; }
@@ -665,36 +585,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ShipmentField38Value { get; set; }
         public string ShipmentField39Value { get; set; }
         public string ShipmentField40Value { get; set; }
-        public string ShipmentField41Value { get; set; }
-        public string ShipmentField42Value { get; set; }
-        public string ShipmentField43Value { get; set; }
-        public string ShipmentField44Value { get; set; }
-        public string ShipmentField45Value { get; set; }
-        public string ShipmentField46Value { get; set; }
-        public string ShipmentField47Value { get; set; }
-        public string ShipmentField48Value { get; set; }
-        public string ShipmentField49Value { get; set; }
-        public string ShipmentField50Value { get; set; }
-        public string ShipmentField51Value { get; set; }
-        public string ShipmentField52Value { get; set; }
-        public string ShipmentField53Value { get; set; }
-        public string ShipmentField54Value { get; set; }
-        public string ShipmentField55Value { get; set; }
-        public string ShipmentField56Value { get; set; }
-        public string ShipmentField57Value { get; set; }
-        public string ShipmentField58Value { get; set; }
-        public string ShipmentField59Value { get; set; }
-        public string ShipmentField60Value { get; set; }
-        public string ShipmentField61Value { get; set; }
-        public string ShipmentField62Value { get; set; }
-        public string ShipmentField63Value { get; set; }
-        public string ShipmentField64Value { get; set; }
-        public string ShipmentField65Value { get; set; }
-        public string ShipmentField66Value { get; set; }
-        public string ShipmentField67Value { get; set; }
-        public string ShipmentField68Value { get; set; }
-        public string ShipmentField69Value { get; set; }
-        public string ShipmentField70Value { get; set; }
 
         #endregion
 
@@ -746,7 +636,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string ARInvoiceField10Value { get; set; }
         #endregion
     }
-    
+
     [XmlRoot("Logitude")]
     public class APInvoiceRoot
     {
@@ -774,7 +664,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public CardElement Card { get; set; }
 
         public string VATNumber { get; set; }
-
         public string PaymentTermExternalId { get; set; }
 
         [XmlElement(DataType = "date")]
@@ -802,10 +691,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         [XmlArray("InvoiceLines")]
         [XmlArrayItem("InvoiceLine")]
         public List<APInvoiceLineElement> InvoiceLines { get; set; }
-
-        [XmlArray("TaxTotalsInInvoiceCurrency")]
-        [XmlArrayItem("TaxTotalInInvoiceCurrency")]
-        public List<InvoiceTaxElement> TaxTotalsInInvoiceCurrency { get; set; }
     }
     public class APInvoiceLineElement
     {
@@ -819,21 +704,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public decimal AmountInLocalCurrency { get; set; }
         public decimal TaxPercentage { get; set; }
         public string TaxCode { get; set; }
-        public string VATExternalId { get; set; }
-        public string PayableLineId { get; set; }
         public string DebitAccount { get; set; }
         public decimal? Quantity { get; set; }
         public string MeasurementCode { get; set; }
         public string PrepaidCollect { get; set; }
-        public bool IsMultiTAX { get; set; }
-        public string ShipmentNumber { get; set; }
 
         [XmlElement(ElementName = "Advanced")]
         public LineAdvancedElement Advanced { get; set; }
-
-        [XmlArray("TaxDetails")]
-        [XmlArrayItem("TaxDetail")]
-        public List<LineTaxDetailsElement> TaxDetails { get; set; }
     }
     public class APShipmentDetailsElement
     {
@@ -1000,42 +877,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageATA { get; set; }
-        #endregion
-
-        #region PreForwarding
-        public string PreForwardingTransportMode { get; set; }
-        public string PreForwardingFromPortCode { get; set; }
-        public string PreForwardingFromPortName { get; set; }
-        public string PreForwardingFromPortCountryCode { get; set; }
-        public string PreForwardingFromPortCountryName { get; set; }
-        public string PreForwardingToPortCode { get; set; }
-        public string PreForwardingToPortName { get; set; }
-        public string PreForwardingToPortCountryCode { get; set; }
-        public string PreForwardingToPortCountryName { get; set; }
-        public string PreForwardingCarrierName { get; set; }
-        public string PreForwardingCarrierNumber { get; set; }
-        public DateTime? PreForwardingETD { get; set; }
-        public DateTime? PreForwardingETA { get; set; }
-        public DateTime? PreForwardingATD { get; set; }
-        public DateTime? PreForwardingATA { get; set; }
-        #endregion
-
-        #region OnForwarding
-        public string OnForwardingTransportMode { get; set; }
-        public string OnForwardingFromPortCode { get; set; }
-        public string OnForwardingFromPortName { get; set; }
-        public string OnForwardingFromPortCountryCode { get; set; }
-        public string OnForwardingFromPortCountryName { get; set; }
-        public string OnForwardingToPortCode { get; set; }
-        public string OnForwardingToPortName { get; set; }
-        public string OnForwardingToPortCountryCode { get; set; }
-        public string OnForwardingToPortCountryName { get; set; }
-        public string OnForwardingCarrierName { get; set; }
-        public string OnForwardingCarrierNumber { get; set; }
-        public DateTime? OnForwardingETD { get; set; }
-        public DateTime? OnForwardingETA { get; set; }
-        public DateTime? OnForwardingATD { get; set; }
-        public DateTime? OnForwardingATA { get; set; }
         #endregion
 
         #region MainCarriage
@@ -1246,7 +1087,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Country { get; set; }
-        public string CountryCode { get; set; }
         public string State { get; set; }
         public string VATNumber { get; set; }        
 
@@ -1285,17 +1125,5 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         public string GLAccount { get; set; }
         public string CostCenter { get; set; }
     }
-    public class InvoiceTaxElement
-    {
-        public string TaxCode { get; set; }
-        public decimal TaxPercentage { get; set; }
-        public decimal TaxAmount { get; set; }
-        public bool IsRegionalTax { get; set; }
-    }
-    public class LineTaxDetailsElement
-    {
-        public string TaxCode { get; set; }
-        public decimal TaxPercentage { get; set; }
-        public string VATExternalId { get; set; }
-    }
+
 }

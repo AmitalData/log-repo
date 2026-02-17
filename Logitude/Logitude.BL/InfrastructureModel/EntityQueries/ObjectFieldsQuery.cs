@@ -7,12 +7,10 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using System.Transactions;
 using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Server.Infrastructure.DataContracts;
-using System.Text.Json;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -42,7 +40,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          && a.InActive == false
                                          select new ObjectFieldPM()
                                          {
-                                             FieldCode = a.FieldCode,
                                              IsMaxLength = a.IsMaxLength,
                                              AutomaticField = a.AutomaticField,
                                              CanFilter = a.CanFilter,
@@ -63,7 +60,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayOnly = a.DisplayOnly,
                                              FullNameTextCodeId = a.FullNameTextCodeId,
                                              FieldName = a.FieldName,
-                                             ShortName = a.ShortName,
                                              ShortNameTextCodeId = a.ShortNameTextCodeId,
                                              HelpTextCodeId = a.HelpTextCodeId,
                                              Id = a.Id,
@@ -91,10 +87,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                              ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                             HelpTextCodeCode = a.HelpTextCodeCode,
-                                             ListTextCodeCode = a.ListTextCodeCode,
+                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                             ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                             HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                             ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                              ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                              ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                              HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -141,26 +137,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              CopyToDW = a.CopyToDW,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                                             RecordType = a.RecordType,
+                                             RecordType =a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                             AdditionalQuerySections = a.AdditionalQuerySections,
-                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                             LeftKey = a.LeftKey,
-                                             RightKey = a.RightKey,
-                                             IsForeignKey = a.IsForeignKey,
-                                             ForeignEntity = a.ForeignEntity,
-                                             NavigationPropertyName = a.NavigationPropertyName,
-                                             DefaultAdditionalFilters = a.DefaultAdditionalFilters,
-
-
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
-            string fieldCode = repository.GetObjectFieldCodeById(fieldId, tenant);
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
 
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
-                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
+                                           where a.ObjectFieldId == fieldId && a.Tenant == tenant
                                            select a).FirstOrDefault();
             if (mod != null)
             {
@@ -197,7 +182,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      DisplayOnly = a.DisplayOnly,
                                                      FullNameTextCodeId = a.FullNameTextCodeId,
                                                      FieldName = a.FieldName,
-                                                     ShortName = a.ShortName,
                                                      ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                      HelpTextCodeId = a.HelpTextCodeId,
                                                      Id = a.Id,
@@ -215,7 +199,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      MultiLine = a.MultiLine,
                                                      MultiTableId = a.MultiTableId,
                                                      ObjectTableId = a.ObjectTableId,
-                                                     ListTextCodeCode = a.ListTextCodeCode,
+                                                     ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                      Operator = a.Operator,
                                                      PMPropertyPath = a.PMPropertyPath,
                                                      SystemMaxLength = a.SystemMaxLength,
@@ -246,29 +230,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
                                                      EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                      RecordType = a.RecordType,
-                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                     FieldCode = a.FieldCode,
-                                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                     ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                     HelpTextCodeCode = a.HelpTextCodeCode,
-                                                     AdditionalQuerySections = a.AdditionalQuerySections,
-                                                     DisplayInRequiredFields = a.DisplayInRequiredFields,
-
-                                                     LeftKey = a.LeftKey,
-                                                     RightKey = a.RightKey,
-                                                     IsForeignKey = a.IsForeignKey,
-                                                     ForeignEntity = a.ForeignEntity,
-                                                     NavigationPropertyName = a.NavigationPropertyName,
-                                                     NumberOfDigits = a.NumberOfDigits,
-                                                     DigitsAfterPoint = a.DigitsAfterPoint,
-                                                     CustomPickListCode = a.CustomPickListCode
-                                                 };
+                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,                                                 };
             return result;
         }
 
         public List<ObjectFieldPM> GetCustomFieldsBytableID(string tableId, int tenant, int currenttenant)
         {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable").Include("DataType").Include("HelpTextCode")
+            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable")
                                                 where a.Tenant == tenant
                                                 && a.ObjectTableId == tableId
                                                 && a.IsCustom == true && a.InActive == false
@@ -279,7 +247,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ConverterName = a.ConverterName,
                                                     DataTemplateName = a.DataTemplateName,
                                                     DataTypeCode = a.DataTypeCode,
-                                                    DataTypeName = a.DataType.Name,
                                                     DependencyFilter1Type = a.DependencyFilter1Type,
                                                     DependencyFilter1Value = a.DependencyFilter1Value,
                                                     DependencyFilter2Type = a.DependencyFilter2Type,
@@ -294,7 +261,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -364,264 +330,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-                                                    HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                                                    DefaultAdditionalFilters = a.DefaultAdditionalFilters
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
-        }
-
-        public List<ObjectFieldPM> GetDigitalCustomFieldsBytableID(string tableId, int tenant)
-        {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("DataType")
-                                                where a.Tenant == tenant
-                                                && a.ObjectTableId == tableId
-                                                && a.IsCustom == true && a.InActive == false
-                                                select new ObjectFieldPM()
-                                                {
-                                                    AutomaticField = a.AutomaticField,
-                                                    CanFilter = a.CanFilter,
-                                                    ConverterName = a.ConverterName,
-                                                    DataTemplateName = a.DataTemplateName,
-                                                    DataTypeCode = a.DataTypeCode,
-                                                    DataTypeName = a.DataType.Name,
-                                                    DependencyFilter1Type = a.DependencyFilter1Type,
-                                                    DependencyFilter1Value = a.DependencyFilter1Value,
-                                                    DependencyFilter2Type = a.DependencyFilter2Type,
-                                                    DependencyFilter2Value = a.DependencyFilter2Value,
-                                                    DisplayInList = a.DisplayInList,
-                                                    DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                                    DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                                    DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                                    DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                                    DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                                    DisplayOnLookUp = a.DisplayOnLookUp,
-                                                    DisplayOnly = a.DisplayOnly,
-                                                    FullNameTextCodeId = a.FullNameTextCodeId,
-                                                    FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
-                                                    ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                                    HelpTextCodeId = a.HelpTextCodeId,
-                                                    Id = a.Id,
-                                                    IsCustom = a.IsCustom,
-                                                    IsCustomFilter = a.IsCustomFilter,
-                                                    IsMulti = a.IsMulti,
-                                                    IsRequiered = a.IsRequiered,
-                                                    IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                                    ListTextCodeId = a.ListTextCodeId,
-                                                    ListPropertyPath = a.ListPropertyPath,
-                                                    LookUpControlName = a.LookUpControlName,
-                                                    LookUpTableId = a.LookUpTableId,
-                                                    MaxLength = a.MaxLength,
-                                                    MinLength = a.MinLength,
-                                                    MultiLine = a.MultiLine,
-                                                    MultiTableId = a.MultiTableId,
-                                                    ObjectTableId = a.ObjectTableId,
-                                                    ObjectTableName = a.ObjectTable.Name,
-                                                    Operator = a.Operator,
-                                                    PMPropertyPath = a.PMPropertyPath,
-                                                    SystemMaxLength = a.SystemMaxLength,
-                                                    SystemRequired = a.SystemRequired,
-                                                    Tenant = a.Tenant,
-                                                    UniqueField = a.UniqueField,
-                                                    ValidForQuerySection2 = a.ValidForQuerySection2,
-                                                    ValidForQuerySection1 = a.ValidForQuerySection1,
-                                                    IsRestrictable = a.IsRestrictable,
-                                                    DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                                    DigitsAfterPoint = a.DigitsAfterPoint,
-                                                    TextCase = a.TextCase,
-                                                    SearchFields = a.SearchFields,
-                                                    DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                                    ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                                    TenantZeroIsRequired = a.IsRequiered,
-                                                    TenantZeroMaxLength = a.MaxLength,
-                                                    TenantZeroMinLength = a.MinLength,
-                                                    UserTenant = tenant,
-                                                    DisplayLongName = a.DisplayLongName,
-                                                    AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                                                    CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                                                    ControlField1 = a.ControlField1,
-                                                    ControlField2 = a.ControlField2,
-                                                    CustomPickListCode = a.CustomPickListCode,
-                                                    NumberOfDigits = a.NumberOfDigits,
-                                                    DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                                    DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                                    IsMaxLength = a.IsMaxLength,
-                                                    AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                                    AutomationEmailRecipient = a.AutomationEmailRecipient,
-                                                    AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                                                    CanAutomateSetValue = a.CanAutomateSetValue,
-                                                    HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                                                    HtmlListComponentUrl = a.HtmlListComponentUrl,
-                                                    HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                                                    HtmlListComponentName = a.HtmlListComponentName,
-                                                    HasTemplate = a.HasTemplate,
-                                                    AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                                                    GeneratedComponentPath = a.GeneratedComponentPath,
-                                                    DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                                    Code = a.Code,
-                                                    ControlField3 = a.ControlField3,
-                                                    DependencyFilter3Value = a.DependencyFilter3Value,
-                                                    DependencyFilter3Type = a.DependencyFilter3Type,
-                                                    DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                                    CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                                                    RecordType = a.RecordType,
-                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName
-                                                }).ToList();
-
-            return objectFields;
-        }
-
-        public List<ObjectFieldPM> GetCustomFieldsByTableIdForCTool(string tableId, int tenant)
-        {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable")
-                                                                                         .Include("FullNameTextCode")
-                                                                                         .Include("ShortNameTextCode")
-                                                                                         .Include("ListTextCode")
-                                                                                         .Include("HelpTextCode")
-                                                                                         .Include("ObjectTable")
-                                                                                         .Include("ObjectTable_MultiTable")
-
-                                                where a.Tenant == tenant
-                                                && a.ObjectTableId == tableId
-                                                && a.IsCustom == true && a.InActive == false
-                                                select new ObjectFieldPM()
-                                                {
-                                                    IsMaxLength = a.IsMaxLength,
-                                                    AutomaticField = a.AutomaticField,
-                                                    CanFilter = a.CanFilter,
-                                                    ConverterName = a.ConverterName,
-                                                    DataTemplateName = a.DataTemplateName,
-                                                    DataTypeCode = a.DataTypeCode,
-                                                    DependencyFilter1Type = a.DependencyFilter1Type,
-                                                    DependencyFilter1Value = a.DependencyFilter1Value,
-                                                    DependencyFilter2Type = a.DependencyFilter2Type,
-                                                    DependencyFilter2Value = a.DependencyFilter2Value,
-                                                    DisplayInList = a.DisplayInList,
-                                                    DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                                    DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                                    DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                                    DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                                    DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                                    DisplayOnLookUp = a.DisplayOnLookUp,
-                                                    DisplayOnly = a.DisplayOnly,
-                                                    FullNameTextCodeId = a.FullNameTextCodeId,
-                                                    FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
-                                                    ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                                    HelpTextCodeId = a.HelpTextCodeId,
-                                                    Id = a.Id,
-                                                    IsCustom = a.IsCustom,
-                                                    IsCustomFilter = a.IsCustomFilter,
-                                                    IsMulti = a.IsMulti,
-                                                    IsRequiered = a.IsRequiered,
-                                                    IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                                    ListTextCodeId = a.ListTextCodeId,
-                                                    ListPropertyPath = a.ListPropertyPath,
-                                                    LookUpControlName = a.LookUpControlName,
-                                                    LookUpTableId = a.LookUpTableId,
-                                                    MaxLength = a.MaxLength,
-                                                    MinLength = a.MinLength,
-                                                    MultiLine = a.MultiLine,
-                                                    MultiTableId = a.MultiTableId,
-                                                    ObjectTableId = a.ObjectTableId,
-                                                    ObjectTableName = a.ObjectTable.Name,
-                                                    Operator = a.Operator,
-                                                    PMPropertyPath = a.PMPropertyPath,
-                                                    SystemMaxLength = a.SystemMaxLength,
-                                                    SystemRequired = a.SystemRequired,
-                                                    Tenant = a.Tenant,
-                                                    UniqueField = a.UniqueField,
-                                                    ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                                    ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
-                                                    ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                                                    ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                                                    HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                                                    ValidForQuerySection2 = a.ValidForQuerySection2,
-                                                    ValidForQuerySection1 = a.ValidForQuerySection1,
-                                                    IsRestrictable = a.IsRestrictable,
-                                                    DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                                    DigitsAfterPoint = a.DigitsAfterPoint,
-                                                    TextCase = a.TextCase,
-                                                    SearchFields = a.SearchFields,
-                                                    DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                                    ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                                    TenantZeroIsRequired = a.IsRequiered,
-                                                    TenantZeroMaxLength = a.MaxLength,
-                                                    TenantZeroMinLength = a.MinLength,
-                                                    UserTenant = tenant,
-                                                    DisplayLongName = a.DisplayLongName,
-                                                    AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                                                    CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                                                    ControlField1 = a.ControlField1,
-                                                    ControlField2 = a.ControlField2,
-                                                    CustomPickListCode = a.CustomPickListCode,
-                                                    NumberOfDigits = a.NumberOfDigits,
-                                                    DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                                    DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                                    FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                                                    AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                                    AutomationEmailRecipient = a.AutomationEmailRecipient,
-                                                    AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                                                    CanAutomateSetValue = a.CanAutomateSetValue,
-                                                    HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                                                    HtmlListComponentUrl = a.HtmlListComponentUrl,
-                                                    HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                                                    HtmlListComponentName = a.HtmlListComponentName,
-                                                    HasTemplate = a.HasTemplate,
-                                                    AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                                                    GeneratedComponentPath = a.GeneratedComponentPath,
-                                                    DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                                    Code = a.Code,
-                                                    ControlField3 = a.ControlField3,
-                                                    DependencyFilter3Value = a.DependencyFilter3Value,
-                                                    DependencyFilter3Type = a.DependencyFilter3Type,
-                                                    DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                                    CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                                                    RecordType = a.RecordType,
-                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-                                                }).ToList();
-
-            return objectFields;
         }
 
         public ObjectFieldPM GetCustomFieldsByFieldId(string fieldId, int tenant)
@@ -652,7 +363,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayOnly = a.DisplayOnly,
                                              FullNameTextCodeId = a.FullNameTextCodeId,
                                              FieldName = a.FieldName,
-                                             ShortName = a.ShortName,
                                              ShortNameTextCodeId = a.ShortNameTextCodeId,
                                              HelpTextCodeId = a.HelpTextCodeId,
                                              Id = a.Id,
@@ -680,10 +390,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                              ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                             HelpTextCodeCode = a.HelpTextCodeCode,
-                                             ListTextCodeCode = a.ListTextCodeCode,
+                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                             ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                             HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                             ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                              ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                              ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                              HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -732,19 +442,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                             FieldCode = a.FieldCode,
-                                             AdditionalQuerySections = a.AdditionalQuerySections,
-                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                             LeftKey = a.LeftKey,
-                                             RightKey = a.RightKey,
-                                             IsForeignKey = a.IsForeignKey,
-                                             ForeignEntity = a.ForeignEntity,
-                                             NavigationPropertyName = a.NavigationPropertyName,
-
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
 
             return objectField;
         }
@@ -775,7 +476,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -803,10 +503,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -855,15 +555,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
                                                 }).OrderBy(o => o.FieldName).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -871,9 +562,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public ObjectFieldPM GetStandardFieldsByFieldId(string fieldId, int tenant)
         {
-            string fieldCode = repository.GetObjectFieldCodeById(fieldId, tenant);
             ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
-                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
+                                           where a.ObjectFieldId == fieldId && a.Tenant == tenant
                                            select a).FirstOrDefault();
 
             ObjectFieldPM objectField = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
@@ -900,7 +590,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayOnly = a.DisplayOnly,
                                              FullNameTextCodeId = a.FullNameTextCodeId,
                                              FieldName = a.FieldName,
-                                             ShortName = a.ShortName,
                                              ShortNameTextCodeId = a.ShortNameTextCodeId,
                                              HelpTextCodeId = a.HelpTextCodeId,
                                              Id = a.Id,
@@ -928,10 +617,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                              ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                             HelpTextCodeCode = a.HelpTextCodeCode,
-                                             ListTextCodeCode = a.ListTextCodeCode,
+                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                             ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                             HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                             ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                              ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                              ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                              HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -980,15 +669,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                             FieldCode = a.FieldCode,
-                                             AdditionalQuerySections = a.AdditionalQuerySections,
-                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                             LeftKey = a.LeftKey,
-                                             RightKey = a.RightKey,
-                                             IsForeignKey = a.IsForeignKey,
-                                             ForeignEntity = a.ForeignEntity,
-                                             NavigationPropertyName = a.NavigationPropertyName,
-
                                          }).FirstOrDefault();
             if (mod != null)
             {
@@ -997,7 +677,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 objectField.MinLength = mod.MinLength;
             }
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
 
 
             return objectField;
@@ -1029,7 +709,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -1057,10 +736,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1109,15 +788,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -1150,7 +820,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -1178,10 +847,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1230,15 +899,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
                                                 }).ToList();
             return objectfields;
         }
@@ -1269,7 +929,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DisplayOnly = a.DisplayOnly,
                         FullNameTextCodeId = a.FullNameTextCodeId,
                         FieldName = a.FieldName,
-                        ShortName = a.ShortName,
                         ShortNameTextCodeId = a.ShortNameTextCodeId,
                         HelpTextCodeId = a.HelpTextCodeId,
                         Id = a.Id,
@@ -1297,10 +956,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                         FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                         ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                        FullNameTextCodeCode = a.FullNameTextCodeCode,
-                        ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                        HelpTextCodeCode = a.HelpTextCodeCode,
-                        ListTextCodeCode = a.ListTextCodeCode,
+                        FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                        ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                        HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                        ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                         ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                         ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                         HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1349,15 +1008,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                         RecordType = a.RecordType,
                         DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                        FieldCode = a.FieldCode,
-                        AdditionalQuerySections = a.AdditionalQuerySections,
-                        DisplayInRequiredFields = a.DisplayInRequiredFields,
-                        LeftKey = a.LeftKey,
-                        RightKey = a.RightKey,
-                        IsForeignKey = a.IsForeignKey,
-                        ForeignEntity = a.ForeignEntity,
-                        NavigationPropertyName = a.NavigationPropertyName,
-
                     }).ToList();
         }
 
@@ -1388,7 +1038,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -1416,10 +1065,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1468,23 +1117,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
                                                 }).ToList();
             return objectfields;
         }
 
-        public List<ObjectFieldPM> GetAdvanceFilteredObjectFields(int tenant, string queryCode, int currenttenant)
+        public List<ObjectFieldPM> GetAdvanceFilteredObjectFields(int tenant, string queryId, int currenttenant)
         {
             List<ObjectFieldPM> objectFields = (from q in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("ObjectField.ObjectTable_LookUpTable").Include("ObjectField.FullNameTextCode").Include("ObjectField.ShortNameTextCode").Include("ObjectField.FullNameTextCode").Include("ObjectField.ShortNameTextCode").Include("ObjectField.HelpTextCode").Include("ObjectField.ListTextCode").Include("ObjectField.ObjectTable_MultiTable")
-                                                where q.Tenant == tenant && q.Query.UniqueCode == queryCode
+                                                where q.Tenant == tenant && q.Query.Id == queryId
                                                 select q).Select(a => new ObjectFieldPM()
                                                 {
                                                     IsMaxLength = a.ObjectField.IsMaxLength,
@@ -1507,7 +1147,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.ObjectField.DisplayOnly,
                                                     FullNameTextCodeId = a.ObjectField.FullNameTextCodeId,
                                                     FieldName = a.ObjectField.FieldName,
-                                                    ShortName = a.ObjectField.ShortName,
                                                     ShortNameTextCodeId = a.ObjectField.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.ObjectField.HelpTextCodeId,
                                                     Id = a.ObjectField.Id,
@@ -1535,10 +1174,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectField.ObjectTable_LookUpTable != null ? a.ObjectField.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.ObjectField.FullNameTextCode != null ? a.ObjectField.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ObjectField.ShortNameTextCode != null ? a.ObjectField.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.ObjectField.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ObjectField.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.ObjectField.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ObjectField.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.ObjectField.FullNameTextCode != null ? a.ObjectField.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ObjectField.ShortNameTextCode != null ? a.ObjectField.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.ObjectField.HelpTextCode != null ? a.ObjectField.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ObjectField.ListTextCode != null ? a.ObjectField.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectField.ObjectTable_MultiTable != null ? a.ObjectField.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ObjectField.ListTextCode != null ? a.ObjectField.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.ObjectField.HelpTextCode != null ? a.ObjectField.HelpTextCode.DefaultText : null,
@@ -1584,15 +1223,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnLookUpLocal = a.ObjectField.DisplayOnLookUpLocal,
                                                     RecordType = a.ObjectField.RecordType,
                                                     DisplayInAutomationAsEnitity = a.ObjectField.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.ObjectField.FieldCode,
-                                                    AdditionalQuerySections = a.ObjectField.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.ObjectField.DisplayInRequiredFields,
-
-                                                    LeftKey = a.ObjectField.LeftKey,
-                                                    RightKey = a.ObjectField.RightKey,
-                                                    IsForeignKey = a.ObjectField.IsForeignKey,
-                                                    ForeignEntity = a.ObjectField.ForeignEntity,
-                                                    NavigationPropertyName = a.ObjectField.NavigationPropertyName,
                                                 }).ToList();
 
 
@@ -1625,7 +1255,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               DisplayOnly = a.DisplayOnly,
                               FullNameTextCodeId = a.FullNameTextCodeId,
                               FieldName = a.FieldName,
-                              ShortName = a.ShortName,
                               ShortNameTextCodeId = a.ShortNameTextCodeId,
                               HelpTextCodeId = a.HelpTextCodeId,
                               Id = a.Id,
@@ -1653,10 +1282,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                               FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                               ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                              FullNameTextCodeCode = a.FullNameTextCodeCode,
-                              ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                              HelpTextCodeCode = a.HelpTextCodeCode,
-                              ListTextCodeCode = a.ListTextCodeCode,
+                              FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                              ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                              HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                              ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                               ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                               ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                               HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -1705,256 +1334,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                               EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                               RecordType = a.RecordType,
                               DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                              FieldCode = a.FieldCode,
-                              AdditionalQuerySections = a.AdditionalQuerySections,
-                              DisplayInRequiredFields = a.DisplayInRequiredFields,
-                              LeftKey = a.LeftKey,
-                              RightKey = a.RightKey,
-                              IsForeignKey = a.IsForeignKey,
-                              ForeignEntity = a.ForeignEntity,
-                              NavigationPropertyName = a.NavigationPropertyName,
-
                           });
             return result;
-        }
-
-        public IQueryable<ObjectFieldPM> GetTenantZeroObjectFieldPMs()
-        {
-            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                    where a.Tenant == 0 && a.InActive == false
-                    select new ObjectFieldPM()
-                    {
-                        IsMaxLength = a.IsMaxLength,
-                        AutomaticField = a.AutomaticField,
-                        CanFilter = a.CanFilter,
-                        ConverterName = a.ConverterName,
-                        DataTemplateName = a.DataTemplateName,
-                        DataTypeCode = a.DataTypeCode,
-                        DependencyFilter1Type = a.DependencyFilter1Type,
-                        DependencyFilter1Value = a.DependencyFilter1Value,
-                        DependencyFilter2Type = a.DependencyFilter2Type,
-                        DependencyFilter2Value = a.DependencyFilter2Value,
-                        DisplayInList = a.DisplayInList,
-                        DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                        DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                        DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                        DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                        DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                        DisplayOnLookUp = a.DisplayOnLookUp,
-                        DisplayOnly = a.DisplayOnly,
-                        FullNameTextCodeId = a.FullNameTextCodeId,
-                        FieldName = a.FieldName,
-                        ShortName = a.ShortName,
-                        ShortNameTextCodeId = a.ShortNameTextCodeId,
-                        HelpTextCodeId = a.HelpTextCodeId,
-                        Id = a.Id,
-                        IsCustom = a.IsCustom,
-                        IsCustomFilter = a.IsCustomFilter,
-                        IsMulti = a.IsMulti,
-                        IsRequiered = a.IsRequiered,
-                        IsTimeFrameFilter = a.IsTimeFrameFilter,
-                        ListTextCodeId = a.ListTextCodeId,
-                        ListPropertyPath = a.ListPropertyPath,
-                        LookUpControlName = a.LookUpControlName,
-                        LookUpTableId = a.LookUpTableId,
-                        MaxLength = a.MaxLength,
-                        MinLength = a.MinLength,
-                        MultiLine = a.MultiLine,
-                        MultiTableId = a.MultiTableId,
-                        ObjectTableId = a.ObjectTableId,
-                        ObjectTableName = a.ObjectTable.Name,
-                        Operator = a.Operator,
-                        PMPropertyPath = a.PMPropertyPath,
-                        SystemMaxLength = a.SystemMaxLength,
-                        SystemRequired = a.SystemRequired,
-                        Tenant = a.Tenant,
-                        UniqueField = a.UniqueField,
-                        ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                        ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                        FullNameTextCodeCode = a.FullNameTextCodeCode,
-                        ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                        HelpTextCodeCode = a.HelpTextCodeCode,
-                        ListTextCodeCode = a.ListTextCodeCode,
-                        ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                        ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                        HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                        ValidForQuerySection2 = a.ValidForQuerySection2,
-                        ValidForQuerySection1 = a.ValidForQuerySection1,
-                        IsRestrictable = a.IsRestrictable,
-                        DisplayInEntityVariables = a.DisplayInEntityVariables,
-                        DigitsAfterPoint = a.DigitsAfterPoint,
-                        TextCase = a.TextCase,
-                        SearchFields = a.SearchFields,
-                        DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                        ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                        TenantZeroIsRequired = a.IsRequiered,
-                        TenantZeroMaxLength = a.MaxLength,
-                        TenantZeroMinLength = a.MinLength,
-                        DisplayLongName = a.DisplayLongName,
-
-                        AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                        CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                        ControlField1 = a.ControlField1,
-                        ControlField2 = a.ControlField2,
-                        CustomPickListCode = a.CustomPickListCode,
-                        NumberOfDigits = a.NumberOfDigits,
-                        DependencyFilter1IsList = a.DependencyFilter1IsList,
-                        DependencyFilter2IsList = a.DependencyFilter2IsList,
-                        FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                        AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                        AutomationEmailRecipient = a.AutomationEmailRecipient,
-                        AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                        CanAutomateSetValue = a.CanAutomateSetValue,
-                        HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                        HtmlListComponentUrl = a.HtmlListComponentUrl,
-                        HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                        HtmlListComponentName = a.HtmlListComponentName,
-                        HasTemplate = a.HasTemplate,
-                        GeneratedComponentPath = a.GeneratedComponentPath,
-                        AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                        DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                        Code = a.Code,
-                        ControlField3 = a.ControlField3,
-                        DependencyFilter3Value = a.DependencyFilter3Value,
-                        DependencyFilter3Type = a.DependencyFilter3Type,
-                        DependencyFilter3IsList = a.DependencyFilter3IsList,
-                        CopyToDW = a.CopyToDW,
-                        DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                        EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                        RecordType = a.RecordType,
-                        DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                        FieldCode = a.FieldCode,
-                        AdditionalQuerySections = a.AdditionalQuerySections,
-                        DisplayInRequiredFields = a.DisplayInRequiredFields,
-                        LeftKey = a.LeftKey,
-                        RightKey = a.RightKey,
-                        IsForeignKey = a.IsForeignKey,
-                        ForeignEntity = a.ForeignEntity,
-                        NavigationPropertyName = a.NavigationPropertyName,
-
-                    });
-
-
-        }
-
-        public IQueryable<ObjectFieldPM> GetObjectFieldByTenant(int tenant)
-        {
-            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                    where a.Tenant == tenant && a.InActive == false
-                    select new ObjectFieldPM()
-                    {
-                        IsMaxLength = a.IsMaxLength,
-                        AutomaticField = a.AutomaticField,
-                        CanFilter = a.CanFilter,
-                        ConverterName = a.ConverterName,
-                        DataTemplateName = a.DataTemplateName,
-                        DataTypeCode = a.DataTypeCode,
-                        DependencyFilter1Type = a.DependencyFilter1Type,
-                        DependencyFilter1Value = a.DependencyFilter1Value,
-                        DependencyFilter2Type = a.DependencyFilter2Type,
-                        DependencyFilter2Value = a.DependencyFilter2Value,
-                        DisplayInList = a.DisplayInList,
-                        DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                        DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                        DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                        DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                        DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                        DisplayOnLookUp = a.DisplayOnLookUp,
-                        DisplayOnly = a.DisplayOnly,
-                        FullNameTextCodeId = a.FullNameTextCodeId,
-                        FieldName = a.FieldName,
-                        ShortName = a.ShortName,
-                        ShortNameTextCodeId = a.ShortNameTextCodeId,
-                        HelpTextCodeId = a.HelpTextCodeId,
-                        Id = a.Id,
-                        IsCustom = a.IsCustom,
-                        IsCustomFilter = a.IsCustomFilter,
-                        IsMulti = a.IsMulti,
-                        IsRequiered = a.IsRequiered,
-                        IsTimeFrameFilter = a.IsTimeFrameFilter,
-                        ListTextCodeId = a.ListTextCodeId,
-                        ListPropertyPath = a.ListPropertyPath,
-                        LookUpControlName = a.LookUpControlName,
-                        LookUpTableId = a.LookUpTableId,
-                        MaxLength = a.MaxLength,
-                        MinLength = a.MinLength,
-                        MultiLine = a.MultiLine,
-                        MultiTableId = a.MultiTableId,
-                        ObjectTableId = a.ObjectTableId,
-                        ObjectTableName = a.ObjectTable.Name,
-                        Operator = a.Operator,
-                        PMPropertyPath = a.PMPropertyPath,
-                        SystemMaxLength = a.SystemMaxLength,
-                        SystemRequired = a.SystemRequired,
-                        Tenant = a.Tenant,
-                        UniqueField = a.UniqueField,
-                        ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                        ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                        FullNameTextCodeCode = a.FullNameTextCodeCode,
-                        ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                        HelpTextCodeCode = a.HelpTextCodeCode,
-                        ListTextCodeCode = a.ListTextCodeCode,
-                        ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                        ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                        HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                        ValidForQuerySection2 = a.ValidForQuerySection2,
-                        ValidForQuerySection1 = a.ValidForQuerySection1,
-                        IsRestrictable = a.IsRestrictable,
-                        DisplayInEntityVariables = a.DisplayInEntityVariables,
-                        DigitsAfterPoint = a.DigitsAfterPoint,
-                        TextCase = a.TextCase,
-                        SearchFields = a.SearchFields,
-                        DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                        ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                        TenantZeroIsRequired = a.IsRequiered,
-                        TenantZeroMaxLength = a.MaxLength,
-                        TenantZeroMinLength = a.MinLength,
-                        DisplayLongName = a.DisplayLongName,
-
-                        AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                        CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                        ControlField1 = a.ControlField1,
-                        ControlField2 = a.ControlField2,
-                        CustomPickListCode = a.CustomPickListCode,
-                        NumberOfDigits = a.NumberOfDigits,
-                        DependencyFilter1IsList = a.DependencyFilter1IsList,
-                        DependencyFilter2IsList = a.DependencyFilter2IsList,
-                        FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                        AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                        AutomationEmailRecipient = a.AutomationEmailRecipient,
-                        AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                        CanAutomateSetValue = a.CanAutomateSetValue,
-                        HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                        HtmlListComponentUrl = a.HtmlListComponentUrl,
-                        HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                        HtmlListComponentName = a.HtmlListComponentName,
-                        HasTemplate = a.HasTemplate,
-                        GeneratedComponentPath = a.GeneratedComponentPath,
-                        AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                        DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                        Code = a.Code,
-                        ControlField3 = a.ControlField3,
-                        DependencyFilter3Value = a.DependencyFilter3Value,
-                        DependencyFilter3Type = a.DependencyFilter3Type,
-                        DependencyFilter3IsList = a.DependencyFilter3IsList,
-                        CopyToDW = a.CopyToDW,
-                        DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                        EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                        RecordType = a.RecordType,
-                        DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                        FieldCode = a.FieldCode,
-                        AdditionalQuerySections = a.AdditionalQuerySections,
-                        LeftKey = a.LeftKey,
-                        RightKey = a.RightKey,
-                        IsForeignKey = a.IsForeignKey,
-                        ForeignEntity = a.ForeignEntity,
-                        NavigationPropertyName = a.NavigationPropertyName,
-
-                    });
-
-
         }
 
         public List<ObjectFieldPM> GetObjectFieldPMsByTenant(int tenant, int currenttenant)
@@ -1983,7 +1364,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -2011,10 +1391,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -2063,31 +1443,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-                                                    DefaultAdditionalFilters = a.DefaultAdditionalFilters,
-
                                                 }).ToList();
 
-            SetDefaultAdditionalFilters(objectFields);
-            return objectFields;// Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
+            return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
         }
 
-        private void SetDefaultAdditionalFilters(List<ObjectFieldPM> objectfields)
-        {
-            foreach (ObjectFieldPM objectField in objectfields.Where(d => !string.IsNullOrEmpty(d.DefaultAdditionalFilters)))
-            {
-                objectField.DefaultAdditionalTreeFilters = GetDefaultAdditionalTreeFilters(objectField.DefaultAdditionalFilters);
-            }
-
-
-        }
         private static List<ObjectFieldPM> Get_List_Of_ObjectFields_With_Modifications_And_Validations(List<ObjectFieldPM> objectfields, int tenant)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -2100,36 +1460,34 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 objectFieldValidationsDictionary = objectFieldValidationQuery.GetObjectFieldValidationPMsByTenant(tenant).ToDictionary(objv => objv.Id, objv => objv);
 
                 Dictionary<string, ObjectFieldModification> objectFieldModificationsDictionary = new Dictionary<string, ObjectFieldModification>();
-                objectFieldModificationsDictionary = context.ObjectFieldModifications.Where(te => te.Tenant == tenant).ToDictionary(objm => objm.ObjectFieldCode, objm => objm);
+                objectFieldModificationsDictionary = context.ObjectFieldModifications.Where(te => te.Tenant == tenant).ToDictionary(objm => objm.ObjectFieldId, objm => objm);
 
                 ObjectTableRepository tableRep = new ObjectTableRepository(context);
 
                 List<TextCode> textCodes = TextCodeRepository.GetTenantTextCodesWithTenantZero(tenant);
-                //List<ObjectTable> objectTables = tableRep.GetObjectsByTenant(tenant).ToList();
-                var objectTables = tableRep.GetObjectsByTenant(tenant)
-                    .Select(r => new { r.Id, r.Name })
-                    .ToList();
+                List<ObjectTable> objectTables = tableRep.GetObjectsByTenant(tenant).ToList();
+
                 foreach (ObjectFieldPM objectField in objectfields)
                 {
-                    if (objectFieldModificationsDictionary.Count != 0 && tenant != 0)
-                    {
-                        if (objectFieldModificationsDictionary.Keys.Contains(objectField.FieldCode))
-                        {
-                            ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.FieldCode];
+					if (objectFieldModificationsDictionary.Count != 0 && tenant != 0)
+					{
+						if (objectFieldModificationsDictionary.Keys.Contains(objectField.Id))
+						{
+							ObjectFieldModification mod = objectFieldModificationsDictionary[objectField.Id];
 
-                            if (mod != null)
-                            {
-                                objectField.IsRequiered = mod.IsRequired;
-                                objectField.MaxLength = mod.MaxLength;
-                                objectField.MinLength = mod.MinLength;
-                            }
-                        }
-                    }
+							if (mod != null)
+							{
+								objectField.IsRequiered = mod.IsRequired;
+								objectField.MaxLength = mod.MaxLength;
+								objectField.MinLength = mod.MinLength;
+							}
+						}
+					}
 
                     if (objectFieldValidationsDictionary.Count != 0)
                     {
                         objectField.ObjectFieldValidations = (from d in objectFieldValidationsDictionary
-                                                              where d.Value.ObjectFieldCode == objectField.FieldCode
+                                                              where d.Value.ObjectFieldId == objectField.Id
                                                               select d.Value).ToList();
                     }
 
@@ -2143,62 +1501,57 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         objectField.ObjectTable_MultiTableName = objectTables.Where(t => t.Id == objectField.MultiTableId).FirstOrDefault().Name;//tableRep.GetSingleObjectTable(objectField.MultiTableId, objectField.Tenant, true).Name;
                     }
 
-                    if (objectField.FullNameTextCodeCode != null)
+                    if (objectField.FullNameTextCodeId != null)
                     {
-                        TextCode fullnamecode = textCodes.Where(t => t.Code == objectField.FullNameTextCodeCode).FirstOrDefault();
-                        fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.FullNameTextCodeCode,true);
+                        TextCode fullnamecode = textCodes.Where(t => t.Id == objectField.FullNameTextCodeId).FirstOrDefault();
+                        fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCode(objectField.FullNameTextCodeId);
 
                         if (fullnamecode != null)
                         {
                             objectField.FullNameTextCodeDefaultText = fullnamecode.DefaultText;
                             objectField.FullNameTextCodeLocalDefaultText = fullnamecode.LocalDefaultText;
-                            //objectField.FullNameTextCodeCode = fullnamecode.Code;
+                            objectField.FullNameTextCodeCode = fullnamecode.Code;
                         }
-
+                       
                     }
 
-                    if (objectField.ShortNameTextCodeCode != null)
+                    if (objectField.ShortNameTextCodeId != null)
                     {
-                        TextCode shortnamecode = textCodes.Where(t => t.Code == objectField.ShortNameTextCodeCode).FirstOrDefault();
-                        shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ShortNameTextCodeCode,true);
+                        TextCode shortnamecode = textCodes.Where(t => t.Id == objectField.ShortNameTextCodeId).FirstOrDefault();
+                        shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCode(objectField.ShortNameTextCodeId);
 
                         if (shortnamecode != null)
                         {
                             objectField.ShortNameTextCodeDefaultText = shortnamecode.DefaultText;
-                            //objectField.ShortNameTextCodeCode = shortnamecode.Code;
+                            objectField.ShortNameTextCodeCode = shortnamecode.Code;
                         }
-
+                       
                     }
 
-                    if (objectField.HelpTextCodeCode != null)
+                    if (objectField.HelpTextCodeId != null)
                     {
-                        TextCode helpcode = textCodes.Where(t => t.Id == objectField.HelpTextCodeCode).FirstOrDefault();
-                        helpcode = helpcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.HelpTextCodeCode, true);
+                        TextCode helpcode = textCodes.Where(t => t.Id == objectField.HelpTextCodeId).FirstOrDefault();
+                        helpcode = helpcode ?? textcodesRepository.GetSingleTextCode(objectField.HelpTextCodeId);
 
                         if (helpcode != null)
                         {
-                            //objectField.HelpTextTextCodeCode = helpcode.Code;
+                            objectField.HelpTextTextCodeCode = helpcode.Code;
                             objectField.HelpTextCodeDefaultText = helpcode.DefaultText;
                         }
-
+                       
                     }
 
-                    if (objectField.ListTextCodeCode != null)
+                    if (objectField.ListTextCodeId != null)
                     {
-                        TextCode listcode = textCodes.Where(t => t.Id == objectField.ListTextCodeCode).FirstOrDefault();
-                        listcode = listcode ?? textcodesRepository.GetSingleTextCodeByCode(objectField.ListTextCodeCode, true);
+                        TextCode listcode = textCodes.Where(t => t.Id == objectField.ListTextCodeId).FirstOrDefault();
+                        listcode = listcode ?? textcodesRepository.GetSingleTextCode(objectField.ListTextCodeId);
 
                         if (listcode != null)
                         {
-                            //objectField.ListTextCodeCode = listcode.Code;
+                            objectField.ListTextCodeCode = listcode.Code;
                             objectField.ListTextCodeDefaultText = listcode.DefaultText;
                         }
-
-                    }
-
-                    if (!string.IsNullOrEmpty(objectField.DefaultAdditionalFilters))
-                    {
-                        objectField.DefaultAdditionalTreeFilters = GetDefaultAdditionalTreeFilters(objectField.DefaultAdditionalFilters);
+                       
                     }
                 }
 
@@ -2206,25 +1559,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return objectfields;
-        }
-
-        private static QueryFilterItem GetDefaultAdditionalTreeFilters(string defaultAdditionalFilters)
-        {
-            QueryFilterItem defaultAdditionalTreeFilters = JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
-            HandleObjectFieldValue(defaultAdditionalTreeFilters);
-
-            return defaultAdditionalTreeFilters;
-        }
-
-        private static void HandleObjectFieldValue(QueryFilterItem queryFilterItem)
-        {
-            queryFilterItem.FieldValue = queryFilterItem.FieldValue != null ? queryFilterItem.FieldValue.ToString() : queryFilterItem.FieldValue;
-            if (queryFilterItem.QueryFilterItems == null) return;
-
-            queryFilterItem.QueryFilterItems.ForEach(queryFilter =>
-            {
-                HandleObjectFieldValue(queryFilter);
-            });
         }
 
         public List<ObjectFieldPM> GetObjectFieldsByTenantAndObjectTable(int tenant, string objecttableName)
@@ -2254,7 +1588,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -2282,10 +1615,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -2334,15 +1667,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -2404,7 +1728,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              DisplayOnly = a.DisplayOnly,
                                                              FullNameTextCodeId = a.FullNameTextCodeId,
                                                              FieldName = a.FieldName,
-                                                             ShortName = a.ShortName,
                                                              ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                              HelpTextCodeId = a.HelpTextCodeId,
                                                              Id = a.Id,
@@ -2472,15 +1795,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                              RecordType = a.RecordType,
                                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                             FieldCode = a.FieldCode,
-                                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                             HelpTextCodeCode = a.HelpTextCodeCode,
-                                                             ListTextCodeCode = a.ListTextCodeCode,
-                                                             AdditionalQuerySections = a.AdditionalQuerySections,
-                                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
-
-
                                                          }).ToList();
 
                             currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -2523,7 +1837,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          DisplayOnly = a.DisplayOnly,
                                                          FullNameTextCodeId = a.FullNameTextCodeId,
                                                          FieldName = a.FieldName,
-                                                         ShortName = a.ShortName,
                                                          ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                          HelpTextCodeId = a.HelpTextCodeId,
                                                          Id = a.Id,
@@ -2591,15 +1904,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                          RecordType = a.RecordType,
                                                          DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                         FieldCode = a.FieldCode,
-                                                         FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                         ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                         HelpTextCodeCode = a.HelpTextCodeCode,
-                                                         ListTextCodeCode = a.ListTextCodeCode,
-                                                         AdditionalQuerySections = a.AdditionalQuerySections,
-                                                         DisplayInRequiredFields = a.DisplayInRequiredFields,
-
-
                                                      }).ToList();
 
                         currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -2616,7 +1920,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        IWebFreightContext context = WebFreightContext.GetContext(0);
                         zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable")
                                                   where (a.Tenant == 0) && a.InActive == false
                                                   select new ObjectFieldPM()
@@ -2641,7 +1945,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       DisplayOnly = a.DisplayOnly,
                                                       FullNameTextCodeId = a.FullNameTextCodeId,
                                                       FieldName = a.FieldName,
-                                                      ShortName = a.ShortName,
                                                       ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                       HelpTextCodeId = a.HelpTextCodeId,
                                                       Id = a.Id,
@@ -2709,15 +2012,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                       RecordType = a.RecordType,
                                                       DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                      FieldCode = a.FieldCode,
-                                                      FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                      ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                      HelpTextCodeCode = a.HelpTextCodeCode,
-                                                      ListTextCodeCode = a.ListTextCodeCode,
-
-                                                      AdditionalQuerySections = a.AdditionalQuerySections,
-                                                      DisplayInRequiredFields = a.DisplayInRequiredFields,
-
                                                   }).ToList();
 
                         zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2736,7 +2030,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                    IWebFreightContext context = WebFreightContext.GetContext(0);
                     zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable")
                                               where (a.Tenant == 0) && a.InActive == false
                                               select new ObjectFieldPM()
@@ -2761,7 +2055,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DisplayOnly = a.DisplayOnly,
                                                   FullNameTextCodeId = a.FullNameTextCodeId,
                                                   FieldName = a.FieldName,
-                                                  ShortName = a.ShortName,
                                                   ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                   HelpTextCodeId = a.HelpTextCodeId,
                                                   Id = a.Id,
@@ -2829,15 +2122,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                   RecordType = a.RecordType,
                                                   DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                  FieldCode = a.FieldCode,
-                                                  FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                  ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                  HelpTextCodeCode = a.HelpTextCodeCode,
-                                                  ListTextCodeCode = a.ListTextCodeCode,
-                                                  AdditionalQuerySections = a.AdditionalQuerySections,
-                                                  DisplayInRequiredFields = a.DisplayInRequiredFields,
-
-
                                               }).ToList();
 
                     zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2878,7 +2162,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DisplayOnly = a.DisplayOnly,
                                              FullNameTextCodeId = a.FullNameTextCodeId,
                                              FieldName = a.FieldName,
-                                             ShortName = a.ShortName,
                                              ShortNameTextCodeId = a.ShortNameTextCodeId,
                                              HelpTextCodeId = a.HelpTextCodeId,
                                              Id = a.Id,
@@ -2904,10 +2187,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              Tenant = a.Tenant,
                                              UniqueField = a.UniqueField,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                             HelpTextCodeCode = a.HelpTextCodeCode,
-                                             ListTextCodeCode = a.ListTextCodeCode,
+                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
                                              ValidForQuerySection2 = a.ValidForQuerySection2,
                                              ValidForQuerySection1 = a.ValidForQuerySection1,
                                              IsRestrictable = a.IsRestrictable,
@@ -2935,15 +2215,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                              RecordType = a.RecordType,
                                              DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                             FieldCode = a.FieldCode,
-                                             AdditionalQuerySections = a.AdditionalQuerySections,
-                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
-
-                                             LeftKey = a.LeftKey,
-                                             RightKey = a.RightKey,
-                                             IsForeignKey = a.IsForeignKey,
-                                             ForeignEntity = a.ForeignEntity,
-                                             NavigationPropertyName = a.NavigationPropertyName,
                                          }).FirstOrDefault();
 
             return objectField;
@@ -2954,14 +2225,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             ObjectTablePM table = ObjectTableQuery.GetObjectTableByCode(objecttableName, tenant);
             List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode")
-                                                where a.Tenant == tenant && a.InActive == false && a.ObjectTableId == table.Id && a.IsCustom == true
+                                                where a.Tenant == tenant  && a.InActive == false && a.ObjectTableId == table.Id && a.IsCustom == true
                                                 select new ObjectFieldPM()
                                                 {
-
+                                                   
                                                     DataTypeCode = a.DataTypeCode,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -2974,25 +2244,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
                                                     DisplayLongName = a.DisplayLongName,
                                                     FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
                                                     Code = a.Code,
-                                                    FieldCode = a.FieldCode,
-                                                    CustomPickListCode = a.CustomPickListCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
+                                            CustomPickListCode =a.CustomPickListCode,
                                                 }).ToList();
 
             return objectFields;
@@ -3026,7 +2285,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DisplayOnly = a.DisplayOnly,
                                                     FullNameTextCodeId = a.FullNameTextCodeId,
                                                     FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
                                                     HelpTextCodeId = a.HelpTextCodeId,
                                                     Id = a.Id,
@@ -3054,10 +2312,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
                                                     ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
                                                     ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
                                                     ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
                                                     HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
@@ -3106,527 +2364,19 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                     RecordType = a.RecordType,
                                                     DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
                                                 }).ToList();
             return objectfields;
         }
 
-        public ObjectFieldPM GetObjectFieldByFieldCode(string fieldCode, int tenant)
-        {
-            ObjectFieldPM objectField = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                                         where (a.Tenant == tenant || a.Tenant == 0)
-                                         && a.FieldCode == fieldCode
-                                         && a.InActive == false
-                                         select new ObjectFieldPM()
-                                         {
-                                             FieldCode = a.FieldCode,
-                                             IsMaxLength = a.IsMaxLength,
-                                             AutomaticField = a.AutomaticField,
-                                             CanFilter = a.CanFilter,
-                                             ConverterName = a.ConverterName,
-                                             DataTemplateName = a.DataTemplateName,
-                                             DataTypeCode = a.DataTypeCode,
-                                             DependencyFilter1Type = a.DependencyFilter1Type,
-                                             DependencyFilter1Value = a.DependencyFilter1Value,
-                                             DependencyFilter2Type = a.DependencyFilter2Type,
-                                             DependencyFilter2Value = a.DependencyFilter2Value,
-                                             DisplayInList = a.DisplayInList,
-                                             DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                             DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                             DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                             DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                             DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                             DisplayOnLookUp = a.DisplayOnLookUp,
-                                             DisplayOnly = a.DisplayOnly,
-                                             FullNameTextCodeId = a.FullNameTextCodeId,
-                                             FieldName = a.FieldName,
-                                             ShortName = a.ShortName,
-                                             ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                             HelpTextCodeId = a.HelpTextCodeId,
-                                             Id = a.Id,
-                                             IsCustom = a.IsCustom,
-                                             IsCustomFilter = a.IsCustomFilter,
-                                             IsMulti = a.IsMulti,
-                                             IsRequiered = a.IsRequiered,
-                                             IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                             ListTextCodeId = a.ListTextCodeId,
-                                             ListPropertyPath = a.ListPropertyPath,
-                                             LookUpControlName = a.LookUpControlName,
-                                             LookUpTableId = a.LookUpTableId,
-                                             MaxLength = a.MaxLength,
-                                             MinLength = a.MinLength,
-                                             MultiLine = a.MultiLine,
-                                             MultiTableId = a.MultiTableId,
-                                             ObjectTableId = a.ObjectTableId,
-                                             ObjectTableName = a.ObjectTable.Name,
-                                             Operator = a.Operator,
-                                             PMPropertyPath = a.PMPropertyPath,
-                                             SystemMaxLength = a.SystemMaxLength,
-                                             SystemRequired = a.SystemRequired,
-                                             Tenant = a.Tenant,
-                                             UniqueField = a.UniqueField,
-                                             ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                             ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                             ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                             HelpTextCodeCode = a.HelpTextCodeCode,
-                                             ListTextCodeCode = a.ListTextCodeCode,
-                                             ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                                             ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                                             HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                                             ValidForQuerySection2 = a.ValidForQuerySection2,
-                                             ValidForQuerySection1 = a.ValidForQuerySection1,
-                                             IsRestrictable = a.IsRestrictable,
-                                             DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                             DigitsAfterPoint = a.DigitsAfterPoint,
-                                             TextCase = a.TextCase,
-                                             SearchFields = a.SearchFields,
-                                             DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                             ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                             TenantZeroIsRequired = a.IsRequiered,
-                                             TenantZeroMaxLength = a.MaxLength,
-                                             TenantZeroMinLength = a.MinLength,
-                                             UserTenant = tenant,
-                                             DisplayLongName = a.DisplayLongName,
-                                             AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                                             CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                                             ControlField1 = a.ControlField1,
-                                             ControlField2 = a.ControlField2,
-                                             CustomPickListCode = a.CustomPickListCode,
-                                             NumberOfDigits = a.NumberOfDigits,
-                                             DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                             DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                             FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                                             AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                             AutomationEmailRecipient = a.AutomationEmailRecipient,
-                                             AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                                             CanAutomateSetValue = a.CanAutomateSetValue,
-                                             HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                                             HtmlListComponentUrl = a.HtmlListComponentUrl,
-                                             HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                                             HtmlListComponentName = a.HtmlListComponentName,
-                                             HasTemplate = a.HasTemplate,
-                                             AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                                             GeneratedComponentPath = a.GeneratedComponentPath,
-                                             DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                             Code = a.Code,
-                                             ControlField3 = a.ControlField3,
-                                             DependencyFilter3Value = a.DependencyFilter3Value,
-                                             DependencyFilter3Type = a.DependencyFilter3Type,
-                                             DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                             CopyToDW = a.CopyToDW,
-                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                             EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                                             RecordType = a.RecordType,
-                                             DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-
-                                             AdditionalQuerySections = a.AdditionalQuerySections,
-                                             DisplayInRequiredFields = a.DisplayInRequiredFields,
-                                             LeftKey = a.LeftKey,
-                                             RightKey = a.RightKey,
-                                             IsForeignKey = a.IsForeignKey,
-                                             ForeignEntity = a.ForeignEntity,
-                                             NavigationPropertyName = a.NavigationPropertyName,
-
-                                         }).FirstOrDefault();
-
-            ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldCode(objectField.FieldCode, objectField.Tenant).ToList();
-
-            ObjectFieldModification mod = (from a in repository.context.ObjectFieldModifications
-                                           where a.ObjectFieldCode == fieldCode && a.Tenant == tenant
-                                           select a).FirstOrDefault();
-            if (mod != null)
-            {
-                objectField.IsRequiered = mod.IsRequired;
-                objectField.MaxLength = mod.MaxLength;
-                objectField.MinLength = mod.MinLength;
-            }
-
-            return objectField;
-        }
-
-
-
-        public List<ObjectFieldList> GetObjectFieldsForAutomations()
-        {
-            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                    where (a.AllowedinAutomationConditions == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
-                    select new ObjectFieldList()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        FieldCode = a.FieldCode,
-                    }).ToList();
-        }
 
 
 
 
 
-        public List<ObjectFieldList> GetObjectFieldsUsedInDWData(int tenant)
-        {
-            List<ObjectFieldList> objectfields = (from a in repository.context.ObjectFields
-                                                  where (a.Tenant == tenant || a.Tenant == 0) && a.CopyToDW
-
-                                                  select new ObjectFieldList()
-                                                  {
-                                                      FieldCode = a.FieldCode,
-                                                      FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                  }).ToList();
-            return objectfields;
-        }
-        public List<ObjectFieldList> GetObjectFieldByName(string objectfieldName, string querySection)
-        {
-            List<ObjectFieldList> objectfields = (from a in repository.context.ObjectFields
-                                                  where (a.Tenant == 0 && a.FieldName == objectfieldName && a.ValidForQuerySection1 == querySection)
-                                                  select new ObjectFieldList()
-                                                  {
-                                                      FieldCode = a.FieldCode,
-                                                      Id = a.Id,
-                                                  }).ToList();
-            return objectfields;
-        }
-
-        public List<ForiegnKeyDetails> GetForgienKeys(int tenant, string objecttableName)
-        {
-            var b = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable")
-                     where a.Tenant == tenant
-                     && (a.ObjectTable.Name == objecttableName || a.ObjectTable.Name == "Customs." + objecttableName)
-                     && a.ObjectTableId != null
-                     && a.DataTypeCode == "LookUp"
-
-                     select a).ToList();
-
-            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable")
-                    where a.Tenant == tenant
-                    && (a.ObjectTable.Name == objecttableName || a.ObjectTable.Name == "Customs." + objecttableName)
-                    && a.LookUpTableId != null
-                    && a.DataTypeCode == "LookUp"
-
-                    select new ForiegnKeyDetails
-                    {
-                        propName = a.FieldName,
-                        tableName = a.ObjectTable_LookUpTable.Name
-                    }).ToList();
-        }
-
-        public class ForiegnKeyDetails
-        {
-            public string tableName { get; set; }
-            public string propName { get; set; }
-        }
 
 
 
 
-        public string GetDefaultAdditionalFiltersByIdAndTenant(string Id, int tenant)
-        {
-            string defaultAdditionalFilters = (from a in repository.context.ObjectFields
-                                               where a.Tenant == tenant
-                                               && a.Id == Id
-                                               && a.InActive == false
-                                               select a.DefaultAdditionalFilters).FirstOrDefault();
 
-            return defaultAdditionalFilters;
-        }
-
-        public List<ObjectFieldPM> GetObjectFieldsByTenantAndObjectTableId(int tenant, string objecttableId)
-        {
-            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                                                where (a.Tenant == tenant || a.Tenant == 0) && a.InActive == false && a.ObjectTableId == objecttableId
-                                                select new ObjectFieldPM()
-                                                {
-                                                    IsMaxLength = a.IsMaxLength,
-                                                    AutomaticField = a.AutomaticField,
-                                                    CanFilter = a.CanFilter,
-                                                    ConverterName = a.ConverterName,
-                                                    DataTemplateName = a.DataTemplateName,
-                                                    DataTypeCode = a.DataTypeCode,
-                                                    DependencyFilter1Type = a.DependencyFilter1Type,
-                                                    DependencyFilter1Value = a.DependencyFilter1Value,
-                                                    DependencyFilter2Type = a.DependencyFilter2Type,
-                                                    DependencyFilter2Value = a.DependencyFilter2Value,
-                                                    DisplayInList = a.DisplayInList,
-                                                    DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                                    DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                                    DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                                    DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                                    DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                                    DisplayOnLookUp = a.DisplayOnLookUp,
-                                                    DisplayOnly = a.DisplayOnly,
-                                                    FullNameTextCodeId = a.FullNameTextCodeId,
-                                                    FieldName = a.FieldName,
-                                                    ShortName = a.ShortName,
-                                                    ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                                    HelpTextCodeId = a.HelpTextCodeId,
-                                                    Id = a.Id,
-                                                    IsCustom = a.IsCustom,
-                                                    IsCustomFilter = a.IsCustomFilter,
-                                                    IsMulti = a.IsMulti,
-                                                    IsRequiered = a.IsRequiered,
-                                                    IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                                    ListTextCodeId = a.ListTextCodeId,
-                                                    ListPropertyPath = a.ListPropertyPath,
-                                                    LookUpControlName = a.LookUpControlName,
-                                                    LookUpTableId = a.LookUpTableId,
-                                                    MaxLength = a.MaxLength,
-                                                    MinLength = a.MinLength,
-                                                    MultiLine = a.MultiLine,
-                                                    MultiTableId = a.MultiTableId,
-                                                    ObjectTableId = a.ObjectTableId,
-                                                    ObjectTableName = a.ObjectTable.Name,
-                                                    Operator = a.Operator,
-                                                    PMPropertyPath = a.PMPropertyPath,
-                                                    SystemMaxLength = a.SystemMaxLength,
-                                                    SystemRequired = a.SystemRequired,
-                                                    Tenant = a.Tenant,
-                                                    UniqueField = a.UniqueField,
-                                                    ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                                    ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                    HelpTextCodeCode = a.HelpTextCodeCode,
-                                                    ListTextCodeCode = a.ListTextCodeCode,
-                                                    ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                                                    ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                                                    HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                                                    ValidForQuerySection2 = a.ValidForQuerySection2,
-                                                    ValidForQuerySection1 = a.ValidForQuerySection1,
-                                                    IsRestrictable = a.IsRestrictable,
-                                                    DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                                    DigitsAfterPoint = a.DigitsAfterPoint,
-                                                    TextCase = a.TextCase,
-                                                    SearchFields = a.SearchFields,
-                                                    DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                                    ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                                    TenantZeroIsRequired = a.IsRequiered,
-                                                    TenantZeroMaxLength = a.MaxLength,
-                                                    TenantZeroMinLength = a.MinLength,
-                                                    UserTenant = tenant,
-                                                    DisplayLongName = a.DisplayLongName,
-                                                    AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                                                    CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                                                    ControlField1 = a.ControlField1,
-                                                    ControlField2 = a.ControlField2,
-                                                    CustomPickListCode = a.CustomPickListCode,
-                                                    NumberOfDigits = a.NumberOfDigits,
-                                                    DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                                    DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                                    FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                                                    AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                                    AutomationEmailRecipient = a.AutomationEmailRecipient,
-                                                    AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                                                    CanAutomateSetValue = a.CanAutomateSetValue,
-                                                    HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                                                    HtmlListComponentUrl = a.HtmlListComponentUrl,
-                                                    HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                                                    HtmlListComponentName = a.HtmlListComponentName,
-                                                    HasTemplate = a.HasTemplate,
-                                                    AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                                                    GeneratedComponentPath = a.GeneratedComponentPath,
-                                                    DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                                    Code = a.Code,
-                                                    ControlField3 = a.ControlField3,
-                                                    DependencyFilter3Value = a.DependencyFilter3Value,
-                                                    DependencyFilter3Type = a.DependencyFilter3Type,
-                                                    DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                                    CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                                                    RecordType = a.RecordType,
-                                                    DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                    FieldCode = a.FieldCode,
-                                                    AdditionalQuerySections = a.AdditionalQuerySections,
-                                                    LeftKey = a.LeftKey,
-                                                    RightKey = a.RightKey,
-                                                    IsForeignKey = a.IsForeignKey,
-                                                    ForeignEntity = a.ForeignEntity,
-                                                    NavigationPropertyName = a.NavigationPropertyName,
-
-                                                }).ToList();
-
-            return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
-        }
-
-
-
-        public IQueryable<ObjectFieldList> GetObjectFields()
-        {
-            return (from a in repository.context.ObjectFields.Include("FullNameTextCode")
-                    select new ObjectFieldList()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        FieldCode = a.FieldCode,
-                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : "",
-                        DataTypeCode = a.DataTypeCode,
-                        DisplayOnly = a.DisplayOnly,
-                        ObjectTableId = a.ObjectTableId,
-                        IsCustom = a.IsCustom,
-                        FieldName = a.FieldName,
-                        ShortName = a.ShortName,
-                        LookUpTableId = a.LookUpTableId,
-
-                    });
-        }
-
-        public IQueryable<ObjectFieldPM> GetObjectFieldPMs()
-        {
-            return (from a in repository.context.ObjectFields.Include("FullNameTextCode").Include("ObjectTable").Include("ObjectTable_LookUpTable")
-                    where !a.InActive
-                    select new ObjectFieldPM()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        FieldCode = a.FieldCode,
-                        FieldName = a.FieldName,
-                        ShortName = a.ShortName,
-                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : "",
-                        DataTypeCode = a.DataTypeCode,
-                        DisplayOnly = a.DisplayOnly,
-                        ObjectTableId = a.ObjectTableId,
-                        ObjectTableName = a.ObjectTable.Name,
-                        IsCustom = a.IsCustom,
-                        LookUpTableId = a.LookUpTableId,
-                        ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                    });
-        }
-
-        public IQueryable<ObjectFieldPM> GetAllGetObjectFieldsPMs()
-        {
-            IQueryable<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                                                      select new ObjectFieldPM()
-                                                      {
-                                                          FieldCode = a.FieldCode,
-                                                          IsMaxLength = a.IsMaxLength,
-                                                          AutomaticField = a.AutomaticField,
-                                                          CanFilter = a.CanFilter,
-                                                          ConverterName = a.ConverterName,
-                                                          DataTemplateName = a.DataTemplateName,
-                                                          DataTypeCode = a.DataTypeCode,
-                                                          DependencyFilter1Type = a.DependencyFilter1Type,
-                                                          DependencyFilter1Value = a.DependencyFilter1Value,
-                                                          DependencyFilter2Type = a.DependencyFilter2Type,
-                                                          DependencyFilter2Value = a.DependencyFilter2Value,
-                                                          DisplayInList = a.DisplayInList,
-                                                          DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                                          DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                                          DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                                          DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                                          DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                                          DisplayOnLookUp = a.DisplayOnLookUp,
-                                                          DisplayOnly = a.DisplayOnly,
-                                                          FullNameTextCodeId = a.FullNameTextCodeId,
-                                                          FieldName = a.FieldName,
-                                                          ShortName = a.ShortName,
-                                                          ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                                          HelpTextCodeId = a.HelpTextCodeId,
-                                                          Id = a.Id,
-                                                          IsCustom = a.IsCustom,
-                                                          IsCustomFilter = a.IsCustomFilter,
-                                                          IsMulti = a.IsMulti,
-                                                          IsRequiered = a.IsRequiered,
-                                                          IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                                          ListTextCodeId = a.ListTextCodeId,
-                                                          ListPropertyPath = a.ListPropertyPath,
-                                                          LookUpControlName = a.LookUpControlName,
-                                                          LookUpTableId = a.LookUpTableId,
-                                                          MaxLength = a.MaxLength,
-                                                          MinLength = a.MinLength,
-                                                          MultiLine = a.MultiLine,
-                                                          MultiTableId = a.MultiTableId,
-                                                          ObjectTableId = a.ObjectTableId,
-                                                          ObjectTableName = a.ObjectTable.Name,
-                                                          Operator = a.Operator,
-                                                          PMPropertyPath = a.PMPropertyPath,
-                                                          SystemMaxLength = a.SystemMaxLength,
-                                                          SystemRequired = a.SystemRequired,
-                                                          Tenant = a.Tenant,
-                                                          UniqueField = a.UniqueField,
-                                                          ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                                                          FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                                          ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                          FullNameTextCodeCode = a.FullNameTextCodeCode,
-                                                          ShortNameTextCodeCode = a.ShortNameTextCodeCode,
-                                                          HelpTextCodeCode = a.HelpTextCodeCode,
-                                                          ListTextCodeCode = a.ListTextCodeCode,
-                                                          ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                                                          ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                                                          HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                                                          ValidForQuerySection2 = a.ValidForQuerySection2,
-                                                          ValidForQuerySection1 = a.ValidForQuerySection1,
-                                                          IsRestrictable = a.IsRestrictable,
-                                                          DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                                          DigitsAfterPoint = a.DigitsAfterPoint,
-                                                          TextCase = a.TextCase,
-                                                          SearchFields = a.SearchFields,
-                                                          DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                                          ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                                          TenantZeroIsRequired = a.IsRequiered,
-                                                          TenantZeroMaxLength = a.MaxLength,
-                                                          TenantZeroMinLength = a.MinLength,
-                                                          DisplayLongName = a.DisplayLongName,
-                                                          AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                                                          CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                                                          ControlField1 = a.ControlField1,
-                                                          ControlField2 = a.ControlField2,
-                                                          CustomPickListCode = a.CustomPickListCode,
-                                                          NumberOfDigits = a.NumberOfDigits,
-                                                          DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                                          DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                                          FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                                                          AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                                          AutomationEmailRecipient = a.AutomationEmailRecipient,
-                                                          AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                                                          CanAutomateSetValue = a.CanAutomateSetValue,
-                                                          HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                                                          HtmlListComponentUrl = a.HtmlListComponentUrl,
-                                                          HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                                                          HtmlListComponentName = a.HtmlListComponentName,
-                                                          HasTemplate = a.HasTemplate,
-                                                          AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                                                          GeneratedComponentPath = a.GeneratedComponentPath,
-                                                          DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                                          Code = a.Code,
-                                                          ControlField3 = a.ControlField3,
-                                                          DependencyFilter3Value = a.DependencyFilter3Value,
-                                                          DependencyFilter3Type = a.DependencyFilter3Type,
-                                                          DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                                          CopyToDW = a.CopyToDW,
-                                                          DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                                          EnableFullscreenTextBox = a.EnableFullscreenTextBox,
-                                                          RecordType = a.RecordType,
-                                                          DisplayInAutomationAsEnitity = a.DisplayInAutomationAsEnitity,
-                                                          AdditionalQuerySections = a.AdditionalQuerySections,
-                                                          LeftKey = a.LeftKey,
-                                                          RightKey = a.RightKey,
-                                                          IsForeignKey = a.IsForeignKey,
-                                                          ForeignEntity = a.ForeignEntity,
-                                                          NavigationPropertyName = a.NavigationPropertyName,
-                                                          DefaultAdditionalFilters = a.DefaultAdditionalFilters,
-                                                      });
-            return objectFields;
-        }
-
-        public QueryFilterItem DeserializeQueryFilterItem(string defaultAdditionalFilters)
-        {
-            return JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
-        }
-        public string SerializeQueryFilterItem(QueryFilterItem defaultAdditionalFilters)
-        {
-            return JsonSerializer.Serialize<QueryFilterItem>(defaultAdditionalFilters);
-        }
     }
-
 }

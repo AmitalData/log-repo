@@ -1,37 +1,35 @@
 import {Injectable} from '@angular/core';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {CashBookList} from '../../EntityLists/CashBookList';
 import {CashBookStatusChart} from '../../DataContracts/CashBookStatusChart';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
- 
+
 @Injectable()
 
 export class CashBookExtendedListService {
-
+    private _http: Http
     private _apiUrl: string;
-    private httpClient: HttpClient;
     constructor() {
-  
-        this.httpClient = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CashBookViews';
     }
 
     GetCashBookStatusChartData() {
-        
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
         var url = this._apiUrl + '/GetCashBookStatusChartData';
 
-        return this.httpClient.get(url,  ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-           
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 var _mappedListsArray: Array<CashBookStatusChart> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -45,22 +43,23 @@ export class CashBookExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
+            }).catch(ServiceHelper.HandleServiceError);
+        });
     }
 
     GetCashBookSummary() {
-        
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-        
-        return this.httpClient.get(this._apiUrl + '/GetCashBookSummary?',  ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-                var allLists = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCashBookSummary?', {
+                headers: authHeader
+            }).map(response => {
+
+                var allLists = response.json();
                 return allLists;
-            }),
-            catchError(ServiceHelper.HandleServiceError)); 
-
+            });
+        });
     }
 
     MapJsonToEntityList(jsonList: any) {

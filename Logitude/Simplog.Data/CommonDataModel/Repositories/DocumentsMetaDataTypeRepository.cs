@@ -1,6 +1,5 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentsMetaDataTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentsMetaDataTypeRepository(int tenant)
         {
@@ -39,46 +41,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
-        public DocumentsMetaDataType GetSingleDocumentsMetaDataTypeByCode(string code, int tenant, bool fromCache = false)
+        public DocumentsMetaDataType GetSingleDocumentsMetaDataTypeByCode(string code, int tenant)
         {
-
-            if (fromCache)
-            {
-
-                string entityKeyString = $"GetSingleDocumentsMetaDataTypeByCode({code},{tenant})";
-                DocumentsMetaDataType myres = CacheManager.GetOrInsertNewObject<DocumentsMetaDataType>(entityKeyString, () =>
-                {
-
-
-                    return (from a in context.DocumentsMetaDataTypes
-                            where a.Code == code && a.Tenant == tenant
-                            select a).FirstOrDefault();
-
-                }
-                );
-                return myres;
-            }
-
             DocumentsMetaDataType d = (from a in context.DocumentsMetaDataTypes
                                        where a.Code == code && a.Tenant == tenant
                                        select a).FirstOrDefault();
             return d;
         }
 
-        public DocumentsMetaDataType GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode(string code, int tenant)
-        {
-
-            string entityKeyString = $"GetSingleDocumentsMetaDataTypeByCustomsMetaDataCode({code},{tenant})";
-            var res = CacheManager.GetOrInsertNewObject<DocumentsMetaDataType>(entityKeyString, () =>
-            {
-                DocumentsMetaDataType d = (from a in context.DocumentsMetaDataTypes
-                                           where a.CustomsMetaDataCode == code && a.Tenant == tenant
-                                           select a).FirstOrDefault();
-                return d;
-            });
-            return res;
-           
-        }
 
         public void Add(DocumentsMetaDataType entity)
         {

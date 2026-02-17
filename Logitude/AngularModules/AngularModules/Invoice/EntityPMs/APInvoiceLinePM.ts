@@ -21,10 +21,10 @@ export class APInvoiceLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -248,39 +248,10 @@ export class APInvoiceLinePM {
     public set ContainerTypeId(newValue: string) { if (this.containerTypeId != newValue) { this.containerTypeId = newValue; this.MarkAsDirty("ContainerTypeId"); } }
        
 	 
-    private containerTypeCode: string;
-    public get ContainerTypeCode() { return this.containerTypeCode; }
-    public set ContainerTypeCode(newValue: string) { if (this.containerTypeCode != newValue) { this.containerTypeCode = newValue; this.MarkAsDirty("ContainerTypeCode"); } }
-       
-	 
     private quantity: number;
     public get Quantity() { return this.quantity; }
     public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
        
-	 
-    private foriegnAmountWithRecognizedVat: number;
-    public get ForiegnAmountWithRecognizedVat() { return this.foriegnAmountWithRecognizedVat; }
-    public set ForiegnAmountWithRecognizedVat(newValue: number) { if (this.foriegnAmountWithRecognizedVat != newValue) { this.foriegnAmountWithRecognizedVat = newValue; this.MarkAsDirty("ForiegnAmountWithRecognizedVat"); } }
-       
-	 
-    private localAmountWithVatRecognized: number;
-    public get LocalAmountWithVatRecognized() { return this.localAmountWithVatRecognized; }
-    public set LocalAmountWithVatRecognized(newValue: number) { if (this.localAmountWithVatRecognized != newValue) { this.localAmountWithVatRecognized = newValue; this.MarkAsDirty("LocalAmountWithVatRecognized"); } }
-       
-	 
-    private payableDebitGLAcountName: string;
-    public get PayableDebitGLAcountName() { return this.payableDebitGLAcountName; }
-    public set PayableDebitGLAcountName(newValue: string) { if (this.payableDebitGLAcountName != newValue) { this.payableDebitGLAcountName = newValue; this.MarkAsDirty("PayableDebitGLAcountName"); } }
-       
-	 
-    private payableDebitGLAcountId: string;
-    public get PayableDebitGLAcountId() { return this.payableDebitGLAcountId; }
-    public set PayableDebitGLAcountId(newValue: string) { if (this.payableDebitGLAcountId != newValue) { this.payableDebitGLAcountId = newValue; this.MarkAsDirty("PayableDebitGLAcountId"); } }
-       
-
-    private isPrepaidExpenses: boolean;
-    public get IsPrepaidExpenses() { return this.isPrepaidExpenses; }
-    public set IsPrepaidExpenses(newValue: boolean) { if (this.isPrepaidExpenses != newValue) { this.isPrepaidExpenses = newValue; this.MarkAsDirty("IsPrepaidExpenses"); } }
 	 
 
     public OldEntityPM: APInvoiceLinePM;
@@ -292,10 +263,7 @@ export class APInvoiceLinePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -305,7 +273,6 @@ export class APInvoiceLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "APInvoiceLine");
            
         }
-	 }
     }
     private MyClone: APInvoiceLinePM;
 
@@ -317,4 +284,4 @@ export class APInvoiceLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

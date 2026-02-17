@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'AccountingTransferComponent',
-    
+    moduleId: module.id,
     templateUrl: './AccountingTransferComponent.html',
 })
 

@@ -5,7 +5,7 @@ import {InfrastructureDomainService} from '../../../../Infrastructure/Services/I
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './RoleFeaturesEventsComponent.html',
 })
 

@@ -27,9 +27,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsSaleAsCostCurrency { get; set; }
         public bool CopyExchangeRates { get; set; }
         public int AutomaticallyCloseDays { get; set; }
-        public bool IsMultiCurrency { get; set; }
-        public int? QuoteExpirationDays { get; set; }
-        public bool CostChargesMust { get; set; }
-
     }
 }

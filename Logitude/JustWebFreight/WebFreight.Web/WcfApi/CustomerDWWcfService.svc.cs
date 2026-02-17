@@ -21,7 +21,7 @@ namespace WebFreight.Web.WcfApi
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "CustomerDWWcfService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select CustomerDWWcfService.svc or CustomerDWWcfService.svc.cs at the Solution Explorer and start debugging.
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+  [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class CustomerDWWcfService : ICustomerDWWcfService
     {
 
@@ -34,8 +34,6 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<CustomerDW>();
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
@@ -70,12 +68,11 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
                 return customerQuery.GetCustomersDWCount(tenant);
+
 
             }
             catch (Exception ex)
@@ -105,12 +102,11 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<CustomerDW>();
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);//UPDATE//READ
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
                 return customerQuery.GetCustomersDWByListsUpdateDate(tenant, updateDate, skip, take);
+
 
             }
             catch (Exception ex)
@@ -141,12 +137,11 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
-                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
-
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
                 CustomerQuery customerQuery = new CustomerQuery(tenant);
                 return customerQuery.GetCustomersDWCountByUpdateDate(tenant, updateDate);
+
 
             }
             catch (Exception ex)

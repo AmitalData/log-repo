@@ -54,7 +54,5 @@ export class CommunicationLogList {
 		IsBodySecured: boolean;
 		EmailDeliveryError: string;
 		ResponseDocumentId: string;
-		UniqueNumber: string;
-		WasAnalyzed: boolean;
 	
 }

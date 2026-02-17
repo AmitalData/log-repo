@@ -12,10 +12,11 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
+//import { ClaimRelatedEntReasonExpLineComponent } from './ClaimRelatedEntityReasonsTabComponent';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClaimRelatedEntityCustomAnswerTabComponent.html',
 })
 
@@ -25,6 +26,7 @@ export class ClaimRelatedEntityCustomAnswerTabComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.ClaimsRelatedEntity";
 
     public ClaimRelatedEntityCustomAnswerlist: ObservableCollection;
+    //FooterMethods: any;
 
     public CurrentEditComponentId: string;
     private isControlEnabled: boolean = true;
@@ -77,8 +79,8 @@ export class ClaimRelatedEntityCustomAnswerTabComponent extends BaseComponent {
         this.EntityPM = entityPM;
         this.isControlEnabled = isEnable;
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
                 this.BuildCustomAnswerList();
                         this.Listen();
             });

@@ -2,7 +2,7 @@ import { TextCodeTranslator } from './../../../Infrastructure/Utilities/TextCode
 import { GLAccountPM } from './../../../Accounting/EntityPMs/GLAccountPM';
 import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
 import { GLAccountPMService } from './../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import {Component, OnDestroy, ViewContainerRef, ViewChild, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnDestroy, ViewContainerRef, ViewChild, OnInit} from '@angular/core';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,19 +12,14 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {NewGLAccountArgs} from '../../Args';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners';
-import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventManager';
-import { EventParams } from 'Accounting/Utilities/ReconcileEventManager';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './AccountingTab_Full.html',
 })
 
-
-export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit,AfterViewInit {
-    @ViewChild("TabPlaceholder", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-
+export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnInit {
+    @ViewChild("TabPlaceholder", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public EntityPM: any = null;
     public ObjectTableName: string;
     public DataContext = this;
@@ -39,10 +34,10 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
 
 
     public get ShowConnectToCardButton() : boolean {
-        //if(this.CardList)
-        //    return this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'VD' || this.CardList.PartnerTypeId == 'AC';
+        if(this.CardList)
+            return this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'VD' || this.CardList.PartnerTypeId == 'AC';
 
-        return true;
+        return false;
     }
 
     constructor(private entityArgs: EntityArgs) {
@@ -51,10 +46,8 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.myCardListService = new CardListService();
-        this.Listen();
-    }
-    ngAfterViewInit(): void {
         this.LoadCardList();
+        this.Listen();
     }
 
     private SaveCompletedEvent: any = null;
@@ -93,7 +86,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
             // 1- Get the GLAccount
             this.CurrentSession.StartBusyIndicatorLoading();
 
-            this._GLAccountPMService.get(this.GLAccountId).subscribe((myResult:any) => {
+            this._GLAccountPMService.get(this.GLAccountId).subscribe(myResult => {
 
                 var response: ServiceResponse = myResult;
                 if (!response.HasError) {
@@ -102,7 +95,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
                     var myComponentPath = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent";
                     SessionLocator.DynamicLoader.Load(myComponentPath, this.viewContainerRef)
                         .then(cmpRef => {
-                            cmpRef.instance.EntityPM = entity;
+                            cmpRef.instance.AccountPM = entity;
                             cmpRef.instance.LoadAllData();
                         });
                 }
@@ -160,11 +153,10 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
             args.AccountType = "2";
             args.ChartOfAccountType = "3";
         }
-        else if (this.CardList.PartnerTypeId == AccountingPartners.AccountingPartner
-            || this.CardList.PartnerTypeId == AccountingPartners.Agent) {
-            args.AccountType = null;
-            args.ChartOfAccountType = null;
-
+    
+        else if(this.CardList.PartnerTypeId == "AC") {
+           args.AccountType = null;
+           args.ChartOfAccountType = null;
         }
         else {
             args.AccountType = "3";
@@ -174,17 +166,14 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         args.CardId = this.CardList.Id;
         args.DisplayNo = this.CardList.Code;
         args.LocalName = this.CardList.LocalName;
-
         args.EnglishName = this.CardList.EnglishName;
-        args.PartnerType = this.CardList.PartnerTypeId;
+        args.PartnerType = "AC";
         logWindow.WindowArgs = args;
-
         logWindow.Show('./Accounting/Components/NewEntity/NewGLAccountComponent');
 
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                AccountingEventManager.CustomerChangedEvent.emit(new EventParams());
             }
         });
     }
@@ -210,15 +199,11 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
 
         var chartOfAccountTypeCode
 
-        const isAccountingPartner = this.CardList.PartnerTypeId == AccountingPartners.AccountingPartner;
-        const isAgent = this.CardList.PartnerTypeId == AccountingPartners.Agent;
-
-        if (this.CardList.PartnerTypeId == 'CS' || this.CardList.PartnerTypeId == 'CC' || this.CardList.PartnerTypeId == 'CG' || this.CardList.PartnerTypeId == 'CH' )
-            chartOfAccountTypeCode = '3';
-        else if ((!isAccountingPartner && !isAgent) || this.CardList.PartnerTypeId == AccountingPartners.Coloader) {
+        if (this.CardList.PartnerTypeId == 'VD')
             chartOfAccountTypeCode = '4';
-          }
-        args.PartnerId = this.CardList.PartnerTypeId;
+        else if (this.CardList.PartnerTypeId == 'CS')
+            chartOfAccountTypeCode = '3';
+
         args.AccountTypeCode = chartOfAccountTypeCode;
         args.CardId = this.CardList.Id;
 
@@ -238,7 +223,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         return new Promise(resolve =>
             {
                 this.CurrentSession.StartBusyIndicatorLoading();
-                this._GLAccountPMService.get(this.GLAccountId).subscribe((myResult:any) => {
+                this._GLAccountPMService.get(this.GLAccountId).subscribe(myResult => {
 
                     var response: ServiceResponse = myResult;
                     if (!response.HasError) {

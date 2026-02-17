@@ -17,15 +17,5 @@ namespace WebFreight.Web.Helpers
         public bool IsAgentShared { get; set; }
         public bool IsShipperShared { get; set; }
         public bool IsConsigneeShared { get; set; }
-        public bool DisplayDocumentsAndEvents { get; set; }
-        public bool IsQuotesRequestsMenuEnabled { get; set; }
-        public string ContactId { get; set; }
-        public string DigitalPortalLanguage { get; set; }
-        public bool IsReportsMenuEnabled { get; set; }
-        public string ImageFileData  { get; set; }
-
-        public bool ShowMultiUnitsOfMeasurements { get; set; }
-        
-        public bool IsDigitalPortalRequiredDocumentsEnabled { get; set; }
     }
 }

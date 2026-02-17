@@ -21,7 +21,7 @@ export class PortPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -206,29 +206,11 @@ export class PortPM {
     public set CountryIsNorthAmerica(newValue: boolean) { if (this.countryIsNorthAmerica != newValue) { this.countryIsNorthAmerica = newValue; this.MarkAsDirty("CountryIsNorthAmerica"); } }
        
 	 
-    private countryIsGreaterChinese: boolean;
-    public get CountryIsGreaterChinese() { return this.countryIsGreaterChinese; }
-    public set CountryIsGreaterChinese(newValue: boolean) { if (this.countryIsGreaterChinese != newValue) { this.countryIsGreaterChinese = newValue; this.MarkAsDirty("CountryIsGreaterChinese"); } }
-       
-	 
-    private portTimeZoneCode: string;
-    public get PortTimeZoneCode() { return this.portTimeZoneCode; }
-    public set PortTimeZoneCode(newValue: string) { if (this.portTimeZoneCode != newValue) { this.portTimeZoneCode = newValue; this.MarkAsDirty("PortTimeZoneCode"); } }
-       
-	 
-    private portGroupId: string;
-    public get PortGroupId() { return this.portGroupId; }
-    public set PortGroupId(newValue: string) { if (this.portGroupId != newValue) { this.portGroupId = newValue; this.MarkAsDirty("PortGroupId"); } }
-       
-	 
 
     public OldEntityPM: PortPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -237,7 +219,6 @@ export class PortPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Port");
            
         }
-	 }
     }
     private MyClone: PortPM;
 

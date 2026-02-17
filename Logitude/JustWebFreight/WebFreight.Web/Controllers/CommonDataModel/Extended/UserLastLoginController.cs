@@ -10,13 +10,11 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -32,15 +30,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
     public class UserLastLoginsController : ApiController
     {
-        public HttpResponseMessage GetUserLastLogin(string userId)
+        public HttpResponseMessage GetUserLastLogin(string userId, int tenant)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
-
                 UserLastLoginQuery userLastLoginQuery = new UserLastLoginQuery(tenant);
                 var myResult = userLastLoginQuery.GetSinglePM(userId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -63,8 +56,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("UserLastLogin", entityPM.Tenant, authToken.Tenant);
-
 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         UserLastLoginRepository repository = new UserLastLoginRepository(MyContext);
@@ -84,8 +75,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         if (!isDSVMobileCall)
                         {
                             UserLastLogin entity = repository.GetSingleUserLastLogin(entityPM.Id, entityPM.Tenant, false);
-                            entity.ComputerId = entityPM.ComputerId; 
-                            entity.WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
+                            entity.ComputerId = entityPM.ComputerId;
                             repository.Update(entity);
                             repository.SubmitChanges();
                         }
@@ -105,8 +95,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-
-        
     }
 
 }

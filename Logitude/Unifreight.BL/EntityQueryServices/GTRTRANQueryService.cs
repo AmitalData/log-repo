@@ -25,28 +25,11 @@ namespace Unifreight.BL.EntityQueryServices
 
         public List<GTRTRANPM> GetMulti(string PARTNERID, string TABLEID)
         {
-            string key = $"GTRTRAN.GetMulti({PARTNERID}, {TABLEID})";
-            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<List<GTRTRANPM>>(key, () =>
-            {
-                return GetMultiReal(PARTNERID, TABLEID);
-            });
-        }
-        List<GTRTRANPM> GetMultiReal(string PARTNERID, string TABLEID)
-        {
             var keys = new GTRTRANParentKeys() { PARTNERID = PARTNERID, TABLEID = TABLEID};
             return base.GetMulti(keys, false);
         }
 
         public GTRTRANPM GetSingle(string PARTNERID, string TABLEID, string PARTNERCODE, string LOCALCODE, bool getComposition)
-        {
-            string key = $"GTRTRAN.GetSingle({PARTNERID}, {TABLEID}, {PARTNERCODE}, {LOCALCODE}, {getComposition})";
-            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<GTRTRANPM>(key, () =>
-            {
-                return GetSingleReal(PARTNERID, TABLEID, PARTNERCODE, LOCALCODE, getComposition);
-            });
-
-        }
-        GTRTRANPM GetSingleReal(string PARTNERID, string TABLEID, string PARTNERCODE, string LOCALCODE, bool getComposition)
         {
             var keys = new GTRTRANKeys() { PARTNERID = PARTNERID, TABLEID = TABLEID, PARTNERCODE = PARTNERCODE, LOCALCODE = LOCALCODE };
             return base.GetSingle(keys, getComposition, false);

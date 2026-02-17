@@ -1,5 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
-//using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -76,20 +76,6 @@ namespace MeatadataGeneratorTool.QueryModule
             {
                 predefinedValue2 = value;
                 FirePropertyChanged("PredefinedValue2");
-            }
-        }
-
-        private bool customPredefined = false;
-        public bool CustomPredefined
-        {
-            get
-            {
-                return customPredefined;
-            }
-            set
-            {
-                customPredefined = value;
-                FirePropertyChanged("CustomPredefined");
             }
         }
 

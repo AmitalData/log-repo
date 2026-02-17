@@ -22,6 +22,5 @@ export class CountryList {
 		SearchFields: string;
 		HasCitiesList: boolean;
 		IsNorthAmerica: boolean;
-		IsGreaterChina: boolean;
 	
 }

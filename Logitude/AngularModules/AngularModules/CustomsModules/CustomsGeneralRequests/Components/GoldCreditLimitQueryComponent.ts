@@ -25,7 +25,7 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 
 @Component({
     selector: 'GoldCreditLimitQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './GoldCreditLimitQueryComponent.html',
 })
 
@@ -212,13 +212,10 @@ export class GoldCreditLimitQueryComponent
         currRequestParams.ExtertnalID = this.ImporterCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לנתוני העברת זהב", true)
             .then((res) => {
                 this.ResponseData = res;
-                if(this.ResponseData  && !this.ResponseData.ContinueProcessInBackground)
-                    this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
-
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {

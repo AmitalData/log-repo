@@ -12,8 +12,6 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,10 +29,7 @@ namespace CommunicationWorkerRole
         DbQueueService queueservice;
         private List<Thread> TasksThreads = new List<Thread>();
         int Tenant;
-		bool IsUpdating = false;
-        bool IsStartedFromUI = false;
-
-		public SchedularWorkerRole()
+        public SchedularWorkerRole()
         {
             IGlobalContext objectContext = GlobalContext.GetContext();
         }
@@ -43,7 +38,7 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "SchedularWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-            //CheckandRescheduleMissingTasks();
+            CheckandRescheduleMissingTasks();
             StartThreadAliveTesterThread();
             ConnectClient();
             return base.OnStart();
@@ -67,38 +62,28 @@ namespace CommunicationWorkerRole
 
         private void CheckandRescheduleDeadThreads()
         {
-            var objectContext = WebFreightContext.GetContext((int)Tenant);
+            var objectContext = WebFreightContext.GetContext(0);
             TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
             TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
             List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();
             foreach (var Task in InprogressTasks)
             {
-                RescheduleTask(Task);
-            }
-        }
+                //var x = Process.GetCurrentProcess().Threads;
+                var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                if (TaskThread == null || !TaskThread.IsAlive)
+                {
+                    //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
+                    Task.Status = null;
+                    Task.Version = Task.Version + 1;
+                    SchedulerHelper SchedulerHelper = new SchedulerHelper();
+                    SchedulerHelper.AddSchedulerQueue(Task);
+                    var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+                    LogInfoToDB(Msg, Task);
+                    //service.Update(Task);
+                }
 
-        private void RescheduleTask(TasksSchedulerPM Task)
-        {
-            if (IsStartedFromUI)
-                return;
-            string taskExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
-            if(Task.ExecutedByServerName != taskExecutedByServerName)
-            {
-                return;
             }
-
-            var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
-            if (TaskThread != null && TaskThread.IsAlive)
-            {
-                return;
-            }
-
-            Task.Status = null;
-            Task.Version = Task.Version + 1;
-            SchedulerHelper SchedulerHelper = new SchedulerHelper();
-            SchedulerHelper.AddSchedulerQueue(Task);
-            var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
-            LogInfoToDB(Msg, Task);
+            //Thread.Sleep(new TimeSpan(0, 1, 0));
         }
 
         public void LogInfoToDB(string Message, TasksSchedulerPM Task)
@@ -158,13 +143,14 @@ namespace CommunicationWorkerRole
             {
                 Task.Status = null;
                 Task.Version = Task.Version + 1;
-				SchedulerHelper SchedulerHelper = new SchedulerHelper();
-				SchedulerHelper.AddSchedulerQueue(Task);
-				var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+                SchedulerHelper SchedulerHelper = new SchedulerHelper();
+                SchedulerHelper.AddSchedulerQueue(Task);
+                var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
                 LogInfoToDB(Msg, Task);
 
             }
         }
+
         public override void Run()
         {
             while (IsRunning)
@@ -172,280 +158,245 @@ namespace CommunicationWorkerRole
 
                 if (!General.IsUpdating())
                 {
-                    ReceiveOnce();
-                    if(!IsUpdating)
-                      TasksSchedulerToQueue();
-				}
+                    try
+                    {
+                        Tenant = 0;
+                        queueservice = new DbQueueService();
+                        queueservice.InitializeQueue("SchedularQueue", Tenant);
+                        var message = queueservice.Receive();
+                        LastActivity = DateTime.UtcNow;
+                        if (message != null && message.MessageValues != null)
+                        {
+
+                            try
+                            {
+                                string Id = message.MessageValues["TaskId"].ToString();
+                                Tenant = int.Parse(message.MessageValues["Tenant"]);
+                                int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
+                                int Retries = int.Parse(message.MessageValues.ContainsKey("Retries") ? message.MessageValues["Retries"].ToString() : "0");
+                                if (!string.IsNullOrEmpty(Id))
+                                {
+                                    var objectContext = WebFreightContext.GetContext(Tenant);
+                                    TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
+                                    TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
+                                    TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
+                                    TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
+                                    Task.Retries = Retries;
+                                    Task.LastRunStartTime = TenantServerConfigration.GetCurrentDateTime(Task.Tenant);
+                                    Task.LastRunStartTimeUTC = DateTime.UtcNow;
+                                    if (Task != null)
+                                    {
+                                        if (Task.InActive)
+                                        {
+                                            queueservice.Complete();
+                                        }
+                                        else
+                                        {
+                                            if (Version >= Task.Version)
+                                            {
+                                                List<object> args = new List<object>();
+                                                if (!string.IsNullOrEmpty(Task.Id))
+                                                {
+                                                    args.Add(Task.Id);
+                                                }
+                                                args.Add(Task.Tenant);
+
+
+                                                object[] ArrArgs = args.ToArray();
+                                                var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
+                                                Task.Status = "In progress";
+                                                WRItem.Task = Task;
+                                                WRItem.queueservice = queueservice;
+                                                WRItem.RetryNumber = message.RetryNumber;
+                                                WRItem.MessageId = message.MessageId;
+                                                Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
+                                                //Task.Status = "In progress";
+                                                service.Update(Task);
+                                                var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                                                if (CurThread != null)
+                                                {
+                                                    TasksThreads.Remove(CurThread);
+                                                }
+                                                thread.Start();
+                                                TasksThreads.Add(thread);
+                                                //queueservice.Complete();
+                                                //AddSchedulerQueue(Task);// need to be Moved
+                                            }
+
+                                            queueservice.Complete();
+                                        }
+                                      
+
+
+                                    }
+
+
+                                    //queueservice.Complete();
+
+                                    // Add New Queue for the executed WR
+                                }
+
+                                //queueservice.Complete();
+                                LogDoneItemInMemory();
+                            }
+                            catch (Exception ex)
+                            {
+
+                                ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
+                                queueservice.CompleteAsFailed();
+                            }
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular worker role start", null, null);
+                        Thread.Sleep(10000);
+                    }
+
+                }
                 else
                 {
                     Thread.Sleep(60000);
                 }
             }
         }
+        //private void AddSchedulerQueue(TasksSchedulerPM task)
+        //{
+        //    var queueservice = new DbQueueService();
+        //    bool RunTaskImmediately = false;
+        //    if (task.NextRunTime < DateTime.Now)
+        //    {
+        //        RunTaskImmediately = true;
+        //        var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
+        //        var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+        //        task.NextRunTime = NewNextRunTime;
+        //        task.NextRunTimeUTC = NewNextRunTimeUTC;
+        //        //task.NextRunTime = DateTime.Now.Date;
+        //        //task.NextRunTimeUTC = DateTime.UtcNow;
+        //    }
+        //    switch (task.TriggerType)
+        //    {
+        //        case "D":
+        //            {
+        //                if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
+        //                {
+        //                    task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+        //                    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+        //                }
+        //                else
+        //                {
+        //                    task.NextRunTime = task.NextRunTime.Value.AddDays(1);
+        //                    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
+        //                }
+        //                break;
+        //            }
+        //        case "W":
+        //            {
+        //                DateTime NextRunTime;
+        //                var ToDay = DateTime.Now.DayOfWeek;
+        //                var ToDayString = DateTime.Now.DayOfWeek.ToString();
+        //                NextRunTime = Next(DateTime.Now, ToDay);
+        //                task.NextRunTime = NextRunTime;
+        //                if (task.Sunday)
+        //                {
+        //                    NextRunTime = Next(DateTime.Now, DayOfWeek.Sunday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Monday)
+        //                {
+        //                    NextRunTime = Next(DateTime.Now, DayOfWeek.Monday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Tuesday)
+        //                {
+        //                    NextRunTime = Next(DateTime.Now, DayOfWeek.Tuesday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Wednesday)
+        //                {
+        //                    NextRunTime = Next(DateTime.Now, DayOfWeek.Wednesday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Thursday)
+        //                {
+        //                    NextRunTime = Next(DateTime.Now, DayOfWeek.Thursday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Friday)
+        //                {
+        //                    NextRunTime = Next(DateTime.Now, DayOfWeek.Friday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                if (task.Satarday)
+        //                {
+        //                    NextRunTime = Next(DateTime.Now, DayOfWeek.Saturday);
+        //                    if (NextRunTime < task.NextRunTime)
+        //                    {
+        //                        task.NextRunTime = NextRunTime;
+        //                    }
+        //                }
+        //                //queueservice.InitializeQueue("SchedularQueue", 0);
+        //                //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+        //                break;
+        //            }
+        //        case "M":
+        //            {
+        //                DateTime NextRunTime;
+        //                task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
+        //                //queueservice.InitializeQueue("SchedularQueue", 0);
+        //                //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+        //                break;
+        //            }
+        //        default: // Once
+        //            {
+        //                break;
+        //            }
 
-        public void ReceiveOnce()
-        {
-            try
-            {
-                Tenant = 0;
-                queueservice = new DbQueueService();
-                queueservice.InitializeQueue("SchedularQueue", Tenant);
-                var message = queueservice.Receive();
-                LastActivity = DateTime.UtcNow;
-                if (message != null && message.MessageValues != null)
-                {
+        //    }
+        //    if (task.TriggerType.ToUpper() != "O")
+        //    {
+        //        queueservice.InitializeQueue("SchedularQueue", 0);
+        //        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, DateTime.Now);
+        //        //queueservice.InitializeQueue("SchedularQueue", 0);
+        //        //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTimeUTC);
 
-                    try
-                    {
-                        string Id = message.MessageValues["TaskId"].ToString();
-                        Tenant = int.Parse(message.MessageValues["Tenant"]);
-                        int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
-                        int Retries = int.Parse(message.MessageValues.ContainsKey("Retries") ? message.MessageValues["Retries"].ToString() : "0");
-                        IsStartedFromUI = message.MessageValues.ContainsKey("IsStartedFromUI") && bool.Parse(message.MessageValues["IsStartedFromUI"].ToString());
-                        if (!string.IsNullOrEmpty(Id))
-                        {
-                            var objectContext = WebFreightContext.GetContext(Tenant);
-                            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
-                            TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
-                            TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
-                            TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
-                            Task.Retries = Retries;
-                            Task.LastRunStartTime = TenantServerConfigration.GetCurrentDateTime(Task.Tenant);
-                            Task.LastRunStartTimeUTC = DateTime.UtcNow;
-                            if (Task != null)
-                            {
-                                if (Task.InActive || Task.Status == "In progress")
-                                {
-                                    queueservice.Complete();
-                                }
-                                else
-                                {
-                                    if (Version >= Task.Version)
-                                    {
-                                        List<object> args = new List<object>();
-                                        if (!string.IsNullOrEmpty(Task.Id))
-                                        {
-                                            args.Add(Task.Id);
-                                        }
-                                        args.Add(Task.Tenant);
+        //    }
 
+        //    var objectContext = WebFreightContext.GetContext(task.Tenant);
+        //    TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
+        //    service.Update(task);
 
-                                        object[] ArrArgs = args.ToArray();
-                                        var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
-                                        Task.Status = "In progress";
-                                        Task.ExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
-                                        WRItem.Task = Task;
-                                        WRItem.queueservice = queueservice;
-                                        WRItem.RetryNumber = message.RetryNumber;
-                                        WRItem.MessageId = message.MessageId;
-                                        WRItem.IsStartedFromUI = IsStartedFromUI;
-                                        Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
-                                        //Task.Status = "In progress";
-                                        service.Update(Task);
-                                        var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
-                                        if (CurThread != null)
-                                        {
-                                            TasksThreads.Remove(CurThread);
-                                        }
-                                        thread.Start();
-                                        TasksThreads.Add(thread);
-                                        bool testOnCurrentThread = false;
-                                        if (testOnCurrentThread)// tester !!
-                                        {
-                                            thread.Join();
-                                        }
-
-                                        //queueservice.Complete();
-                                        //AddSchedulerQueue(Task);// need to be Moved
-                                    }
-
-                                    queueservice.Complete();
-                                }
-
-
-
-                            }
-
-
-                            //queueservice.Complete();
-
-                            // Add New Queue for the executed WR
-                        }
-
-                        //queueservice.Complete();
-                        LogDoneItemInMemory();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        ExceptionHandler.HandleException(ex, DateTime.Now, Tenant, "", "WorkerRole", "", null);
-                        queueservice.CompleteAsFailed();
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular worker role start", null, null);
-                Thread.Sleep(10000);
-            }
-        }
-		private void TasksSchedulerToQueue()
-		{
-			IsUpdating = true;
-			var objectContext = WebFreightContext.GetContext(SettingUtil.GetTenantDBFromConfig());
-			TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
-			TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
-			List<TasksSchedulerPM> NextRunTimePastTasks = TasksSchedulerQuery.GetAllTasksSchedulerNextRunTimePastPMs();
-			foreach (var Task in NextRunTimePastTasks)
-			{
-
-                if (FeatureToggleHelper.HasFeatureToggle("STQ", Task.Tenant))
-                {
-					Task.Status = "In Queue";
-					SchedulerHelper SchedulerHelper = new SchedulerHelper();
-					SchedulerHelper.AddSchedulerQueueAndUpdateTask(Task);
-				}
-            }
-			IsUpdating = false;
-		}
-
-		//private void AddSchedulerQueue(TasksSchedulerPM task)
-		//{
-		//    var queueservice = new DbQueueService();
-		//    bool RunTaskImmediately = false;
-		//    if (task.NextRunTime < DateTime.Now)
-		//    {
-		//        RunTaskImmediately = true;
-		//        var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
-		//        var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
-		//        task.NextRunTime = NewNextRunTime;
-		//        task.NextRunTimeUTC = NewNextRunTimeUTC;
-		//        //task.NextRunTime = DateTime.Now.Date;
-		//        //task.NextRunTimeUTC = DateTime.UtcNow;
-		//    }
-		//    switch (task.TriggerType)
-		//    {
-		//        case "D":
-		//            {
-		//                if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
-		//                {
-		//                    task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-		//                    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-		//                }
-		//                else
-		//                {
-		//                    task.NextRunTime = task.NextRunTime.Value.AddDays(1);
-		//                    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
-		//                }
-		//                break;
-		//            }
-		//        case "W":
-		//            {
-		//                DateTime NextRunTime;
-		//                var ToDay = DateTime.Now.DayOfWeek;
-		//                var ToDayString = DateTime.Now.DayOfWeek.ToString();
-		//                NextRunTime = Next(DateTime.Now, ToDay);
-		//                task.NextRunTime = NextRunTime;
-		//                if (task.Sunday)
-		//                {
-		//                    NextRunTime = Next(DateTime.Now, DayOfWeek.Sunday);
-		//                    if (NextRunTime < task.NextRunTime)
-		//                    {
-		//                        task.NextRunTime = NextRunTime;
-		//                    }
-		//                }
-		//                if (task.Monday)
-		//                {
-		//                    NextRunTime = Next(DateTime.Now, DayOfWeek.Monday);
-		//                    if (NextRunTime < task.NextRunTime)
-		//                    {
-		//                        task.NextRunTime = NextRunTime;
-		//                    }
-		//                }
-		//                if (task.Tuesday)
-		//                {
-		//                    NextRunTime = Next(DateTime.Now, DayOfWeek.Tuesday);
-		//                    if (NextRunTime < task.NextRunTime)
-		//                    {
-		//                        task.NextRunTime = NextRunTime;
-		//                    }
-		//                }
-		//                if (task.Wednesday)
-		//                {
-		//                    NextRunTime = Next(DateTime.Now, DayOfWeek.Wednesday);
-		//                    if (NextRunTime < task.NextRunTime)
-		//                    {
-		//                        task.NextRunTime = NextRunTime;
-		//                    }
-		//                }
-		//                if (task.Thursday)
-		//                {
-		//                    NextRunTime = Next(DateTime.Now, DayOfWeek.Thursday);
-		//                    if (NextRunTime < task.NextRunTime)
-		//                    {
-		//                        task.NextRunTime = NextRunTime;
-		//                    }
-		//                }
-		//                if (task.Friday)
-		//                {
-		//                    NextRunTime = Next(DateTime.Now, DayOfWeek.Friday);
-		//                    if (NextRunTime < task.NextRunTime)
-		//                    {
-		//                        task.NextRunTime = NextRunTime;
-		//                    }
-		//                }
-		//                if (task.Satarday)
-		//                {
-		//                    NextRunTime = Next(DateTime.Now, DayOfWeek.Saturday);
-		//                    if (NextRunTime < task.NextRunTime)
-		//                    {
-		//                        task.NextRunTime = NextRunTime;
-		//                    }
-		//                }
-		//                //queueservice.InitializeQueue("SchedularQueue", 0);
-		//                //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
-		//                break;
-		//            }
-		//        case "M":
-		//            {
-		//                DateTime NextRunTime;
-		//                task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
-		//                //queueservice.InitializeQueue("SchedularQueue", 0);
-		//                //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
-		//                break;
-		//            }
-		//        default: // Once
-		//            {
-		//                break;
-		//            }
-
-		//    }
-		//    if (task.TriggerType.ToUpper() != "O")
-		//    {
-		//        queueservice.InitializeQueue("SchedularQueue", 0);
-		//        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, DateTime.Now);
-		//        //queueservice.InitializeQueue("SchedularQueue", 0);
-		//        //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTimeUTC);
-
-		//    }
-
-		//    var objectContext = WebFreightContext.GetContext(task.Tenant);
-		//    TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
-		//    service.Update(task);
-
-		//    //queueservice.Complete();
-		//}
-		//private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
-		//{
-		//    int start = (int)from.DayOfWeek;
-		//    int target = (int)dayOfWeek;
-		//    if (target <= start)
-		//        target += 7;
-		//    return from.AddDays(target - start);
-		//}
-		private void ConnectClient()
+        //    //queueservice.Complete();
+        //}
+        //private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
+        //{
+        //    int start = (int)from.DayOfWeek;
+        //    int target = (int)dayOfWeek;
+        //    if (target <= start)
+        //        target += 7;
+        //    return from.AddDays(target - start);
+        //}
+        private void ConnectClient()
         {
             try
             {
@@ -457,39 +408,6 @@ namespace CommunicationWorkerRole
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Schedular Worker Role start", null, null);
             }
-        }
-    }
-
-
-
-    /// <summary>
-    /// Insert into BATCHSERVICESDEFINITIONS (CODE,CLASSNAME) values ('CustomsSchedularWR','CustomsSchedularWR');
-    //  Insert into BATCHSERVICESDEFINITIONMODS(CODE, INACTIVE, NUMBEROFTHREADS) values('CustomsSchedularWR',0,1);
-    /// </summary>
-    public class CustomsSchedularWR
-    : Logitude.Server.Tools.WorkerEntryPointDoneLog
-    {
-        SchedularWorkerRole _SchedularWorkerRole;
-        public CustomsSchedularWR()
-        {
-            _SchedularWorkerRole = new SchedularWorkerRole();
-        }
-        public override void StartMe()
-        {
-            
-        }
-
-        bool _Start = false;
-        public override void WorkOnce()
-        {
-            if (!_Start)
-            {
-                _SchedularWorkerRole.OnStart();
-                _Start = true;
-            }
-            _SchedularWorkerRole.ReceiveOnce();
-
-
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -69,8 +69,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        [HttpDelete]
-        public HttpResponseMessage DeleteCourierPendingReasonUnifreightStatus(string id)
+
+        public HttpResponseMessage DeleteCourierPendingReasonUnifreightStatus(string courierPendingReasonCode)
         {
             try
             {
@@ -83,9 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(customContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingle(id, false, false);
-
-                //CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingle(courierPendingReasonCode, false,false);
                 courierPendingReasonPM.ChangeSetOp = ChangeSetOperation.Update;
                 courierPendingReasonPM.UnifreightStatusCode = null;
 
@@ -99,49 +97,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-
-
-        public HttpResponseMessage GetSingleCourierPendingReasonByCode(string code)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                
-                CourierPendingReasonQueryService courierPendingReasonQuery = new CourierPendingReasonQueryService(MyContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingle(code,false,false);
-
-                ServiceResponse response = new ServiceResponse();
-                response.Result = courierPendingReasonPM;
-                return Request.CreateResponse(HttpStatusCode.OK, response);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetSingleByCode(string code)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-
-                CourierPendingReasonListQueryService courierPendingReasonQuery = new CourierPendingReasonListQueryService(MyContext);
-                CourierPendingReasonList courierPendingReasonList = courierPendingReasonQuery.GetSingleByCode(code, authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, courierPendingReasonList);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
         }
     }
 }

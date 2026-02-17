@@ -20,8 +20,6 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string Name  { get; set; }
        [DataMember]
        public string SearchFields  { get; set; }
-       [DataMember]
-       public string Description  { get; set; }
    }
 
 }

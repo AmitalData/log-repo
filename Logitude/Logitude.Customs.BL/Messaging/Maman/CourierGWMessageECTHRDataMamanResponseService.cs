@@ -8,7 +8,6 @@ using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue;
 using Logitude.Customs.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -17,10 +16,8 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -34,7 +31,7 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.BL.Messaging.Maman
 {
     public class CourierGWMessageECTHRDataMamanResponseService 
-        //: IWebAPIMessage2MamanAnalyzer
+        : IWebAPIMessage2MamanAnalyzer
     //: WebAPIMessage2MamanBase///using  by SendWEBAPIMessage2MamanWRWR
     {
 
@@ -173,7 +170,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
 
             }
             catch (Exception ex)
@@ -185,67 +182,57 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
 #endif
         //public void AnalyzeResponse(Courier2MamanCommSettings settings, GWMessageECTHRData  responeGWMessageECTHRData)
-        public void AnalyzeQResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
+        public void AnalyzeResponse(Courier2MamanCommSettings settings, string webAPIResultString)
         
         {
             
-            var responeGWMessageECTHRData = JsonConvert.DeserializeObject< GWMessageECTHRData>(webAPIResultString,new IsoDateTimeConverter { DateTimeFormat="dd/MM/yyyy HH:mm" });
+            var responeGWMessageECTHRData = ProxyUtil.JsonConvertDeserializeTyped<GWMessageECTHRData>(webAPIResultString);
             if (responeGWMessageECTHRData == null)
             {
                 throw new Exception("(responeGWMessageECTHRData == null)");
             }
             LogMessagingUtil.Instance.AppendLine($"AnalyzeResponse(ResponseStatusCode={responeGWMessageECTHRData.ResponseStatusCode},{responeGWMessageECTHRData.ResponseStatusMsg})");
             var context = CustomContext.GetContext(settings.Tenant);
-            var myDeclarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            var declarationCourierStatusQueryServicePM = myDeclarationCourierStatusQueryService.GetSingle(settings.DeclarationId, true, false);
-            declarationCourierStatusQueryServicePM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            var myDeclarationQueryService = new DeclarationQueryService(context);
+            var myCourierMasterQueryService = new CourierMasterQueryService(context);
+            var declarationPM = myDeclarationQueryService.GetSingle(settings.DeclarationId, false, false);
+            declarationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+
 
             switch (responeGWMessageECTHRData.ResponseStatusCode)
             {
                 case 1://45997
                     {
-                        //declarationPM.MamanStatusCode = "1";
-                        declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "1";
+                        declarationPM.MamanStatusCode = "1";
                     }
                     break;
+/*                case 0:
+                    {
+                        declarationPM.MamanStatusCode = "1";
+                    }
+                    break;
+                case 1:
+                    {
+                        declarationPM.MamanStatusCode = "2";
+                    }
+                    break;
+                    */
                 default:
-                    //declarationPM.MamanStatusCode = "2";//45997
-                    declarationCourierStatusQueryServicePM.StorageSiteStatusCode = "2";
+                    declarationPM.MamanStatusCode = "2";//45997
                     //declarationPM.MamanStatusCode = responeGWMessageECTHRData.ResponseStatusCode.ToString();//???        //45997
                     break;
             }
 
 
-            declarationCourierStatusQueryServicePM.StorageSiteErrorText = responeGWMessageECTHRData.ResponseStatusCode.ToString() + "," + responeGWMessageECTHRData.ResponseStatusMsg??"";
+            declarationPM.MamanErrorXml = responeGWMessageECTHRData.ResponseStatusCode.ToString() + "," + responeGWMessageECTHRData.ResponseStatusMsg??"";
 
             using (var scope = TransactionFactory.GetNewTransaction())
             {
-                var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
-                myDeclarationCourierStatusUpdateService.Update(declarationCourierStatusQueryServicePM, true);
+                var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>() ,settings.Tenant);
+                myDeclarationUpdateService.Update(declarationPM, true);
                 scope.Complete();
             }
-        }
-
-
-        public void AnalyzeResponse(CourierWEBAPICommSettings settings, string webAPIResultString)
-        {
-            throw new Exception("use  SetInAnalyzeQResponseService by @intrface.ResponseCode");
-            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            var def = customsPartnerFtpDetails.GetAllInterfaceDetails().First(r => r.Code == CustomsPartnerFtpDetails.InterfaceName_ECMMNTHR_RESPONE);
-            var commSetting = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
-            var analyzeQueueUtil = new AnalyzeQueueUtil();
-            var new_analyze = analyzeQueueUtil
-               .SaveMessageToAnalyzeQueue("", Encoding.UTF8.GetBytes(webAPIResultString), settings.Tenant,
-               commSetting, def,
-               new AnalyzeResultModel()
-               {
-                   EntityID = settings.DeclarationId,
-                   ObjectTableID = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-
-               });
-
-            LogMessagingUtil.Instance.AppendLine($"new_analyze  CommunicationLogId = {new_analyze.CommunicationLogId}");
-
         }
 
     }

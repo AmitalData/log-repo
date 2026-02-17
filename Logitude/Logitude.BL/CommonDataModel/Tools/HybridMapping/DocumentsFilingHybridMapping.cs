@@ -7,27 +7,24 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
-using Logitude.ShipmentOrderModule.Data.EntityPOCOs;
-using Logitude.ShipmentOrderModule.Data.Repositories;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 {
     public class DocumentsFilingHybridMapping
     {
-        public static DocumentsFilingPM MapEntityToHybrid(DocumentsFilingPM originalPM, CustomsDocumentPM currentCustomsDoc = null)
+        public static DocumentsFilingPM MapEntityToHybrid(DocumentsFilingPM originalPM)
         {
             byte[] serializedEntity = LogitudeXmlSerializer.SerializeObject(originalPM);
             DocumentsFilingPM documentsFilingPM = LogitudeXmlSerializer.DeserializeObject<DocumentsFilingPM>(serializedEntity);
@@ -162,17 +159,8 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 			if (LogitudeSettings.IsCostomsDeploy)
 			{
 				ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-                CustomsDocumentPM customsDocument = customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false, documentsFilingPM.Tenant);
-                CustomsDocumentPM customsDoc = currentCustomsDoc ?? customsDocument;
-			
-
-				if (customsDoc == null)
-                    LogMessagingUtil.Instance.AppendLine("customsDoc is null inside MapEntityToHybrid.");
-
-				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DocumentsFilingId: " + customsDoc?.DocumentsFilingId);
-				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currentCustomsDoc: " + currentCustomsDoc?.IsPartOfDeclaration + "customsDocument:" + customsDocument?.IsPartOfDeclaration);
-				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("StackTrace" + Environment.StackTrace);
-
+				//CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+				CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false, documentsFilingPM.Tenant);
 				if (customsDoc != null &&
 					!String.IsNullOrEmpty(customsDoc.CustomsDocId))
 				{
@@ -193,7 +181,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 						DocumentsMetaDataTypeId = "DREL",
 						Tenant = documentsFilingPM.Tenant,
 						DocumentsFilingId = documentsFilingPM.Id,
-						MetaDataValue = customsDoc.IsPartOfDeclaration == true || customsDocument.IsPartOfDeclaration ==  true ? "true": "false",
+						MetaDataValue = customsDoc.IsPartOfDeclaration.ToString(),
 					});
 				}
 			}
@@ -214,7 +202,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
             BranchRepository branchRepository = new BranchRepository(commonContext);
             Response response = new Response();
 
-
+         
             if (!string.IsNullOrEmpty(documentsFilingPM.ObjectTableId))
             {
                 ObjectTable table = objectTableRepository.GetObjectTableByName(documentsFilingPM.ObjectTableId, 0, true);
@@ -227,7 +215,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                     response.ValidationErrors.Add("ObjectTableId field doesn't exist in the database,Upsert this entity before using it.");
                 }
             }
-
+            
             if (!string.IsNullOrEmpty(documentsFilingPM.ChildObjectTableId))
             {
                 ObjectTable table = objectTableRepository.GetObjectTableByName(documentsFilingPM.ChildObjectTableId, 0, true);
@@ -243,7 +231,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 
             if (!string.IsNullOrEmpty(documentsFilingPM.DocumentTypeId))
             {
-                DocumentType documentType = documentTypeRepository.GetDocumentTypes(documentsFilingPM.Tenant).Where(d => d.Code == documentsFilingPM.DocumentTypeId).FirstOrDefault();
+                DocumentType documentType = documentTypeRepository.GetSingleDocumentTypeByCode(documentsFilingPM.DocumentTypeId, documentsFilingPM.Tenant);
                 if (documentType != null)
                 {
                     documentsFilingPM.DocumentTypeId = documentType.Id;
@@ -253,8 +241,6 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                     response.ValidationErrors.Add("DocumentTypeId field doesn't exist in the database,Upsert this entity before using it.");
                 }
             }
-
-            ValidateUpdatedByUser(documentsFilingPM, userRepository, response);
 
             if (!documentsFilingPM.IsAttachment)
             {
@@ -287,10 +273,6 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                 if (!string.IsNullOrEmpty(documentsFilingPM.ReceivedByUserId))
                 {
                     User user = userRepository.GetSingleUserByCodeOrEmailForTenant(documentsFilingPM.ReceivedByUserId, documentsFilingPM.OwnerId, documentsFilingPM.Tenant, true);
-                    if (user == null)
-                    {
-                        user = userRepository.GetSingleUser(documentsFilingPM.ReceivedByUserId, documentsFilingPM.Tenant);
-                    }
                     if (user != null)
                     {
                         documentsFilingPM.ReceivedByUserId = user.Id;
@@ -300,6 +282,20 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                         response.ValidationErrors.Add("ReceivedByUserId field doesn't exist in the database,Upsert this entity before using it.");
                     }
                 }
+
+                if (!string.IsNullOrEmpty(documentsFilingPM.UpdatedByUserId))
+                {
+                    User user = userRepository.GetSingleUserByCode(documentsFilingPM.UpdatedByUserId, documentsFilingPM.Tenant, true);
+                    if (user != null)
+                    {
+                        documentsFilingPM.UpdatedByUserId = user.Id;
+                    }
+                    else
+                    {
+                        response.ValidationErrors.Add("UpdatedByUserId field doesn't exist in the database,Upsert this entity before using it.");
+                    }
+                }
+
 
                 if (!string.IsNullOrEmpty(documentsFilingPM.DeletedByUserId))
                 {
@@ -386,11 +382,6 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                             documentsFilingPM.EntityId = card.Id;
                         }
                         break;
-                    case "shipmentorder":
-                        ShipmentOrderRepository shipmentOrderRepository = new ShipmentOrderRepository(documentsFilingPM.Tenant);
-                        ShipmentOrder shipmentOrder = shipmentOrderRepository.GetSingleByOrderNumber(documentsFilingPM.EntityNumber, documentsFilingPM.Tenant);
-                        documentsFilingPM.EntityId = shipmentOrder?.Id;
-                        break;
                 }
             }
 
@@ -407,8 +398,6 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 
                     if (type != null)
                     {
-                        metadatavalue.DocumentsMetaDataTypeCode= metadatavalue.DocumentsMetaDataTypeId;
-
                         metadatavalue.DocumentsMetaDataTypeId = type.Id;
                     }
                     else
@@ -418,7 +407,7 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                     }
                 }
                 else
-                {
+                {                    
                     response.ValidationErrors.Add("DocumentsMetaDataTypeId field is required.");
                 }
             }
@@ -428,28 +417,9 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                 response.ErrorMessage += error + Environment.NewLine;
             }
 
-            response.HasError = response.ValidationErrors.Count() > 0;
+            response.HasError = response.ValidationErrors.Count() > 0; 
 
             return response;
-        }
-
-        private static void ValidateUpdatedByUser(DocumentsFilingPM documentsFilingPM, UserRepository userRepository, Response response)
-        {
-            if (string.IsNullOrEmpty(documentsFilingPM.UpdatedByUserId))
-            {
-                response.ValidationErrors.Add("UpdatedByUserId field is required.");
-                return;
-            }
-            User user = userRepository.GetSingleUserByCode(documentsFilingPM.UpdatedByUserId, documentsFilingPM.Tenant, true);
-            if (user != null)
-            {
-                documentsFilingPM.UpdatedByUserId = user.Id;
-            }
-            else
-            {
-                response.ValidationErrors.Add("UpdatedByUserId field doesn't exist in the database,Upsert this entity before using it.");
-            }
-
         }
     }
 }

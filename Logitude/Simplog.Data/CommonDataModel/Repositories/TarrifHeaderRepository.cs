@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -9,7 +9,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public TarrifHeaderRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public TarrifHeaderRepository(ICommonDataContext context)
         {

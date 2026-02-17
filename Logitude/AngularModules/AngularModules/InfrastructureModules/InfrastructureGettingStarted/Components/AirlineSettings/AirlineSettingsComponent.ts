@@ -7,7 +7,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 
 @Component({
     selector: 'AirlineSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './AirlineSettingsComponent.html',
 })
 

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.QuoteModel.EntityPMs
 {
@@ -117,13 +116,11 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public double? ChargeableWeight { get; set; }
         public double? ChargeableWeightInKG { get; set; }
-        public double? PickupDeliveryChargeableWeight { get; set; }
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
-        public double? VolumeInCBM { get; set; } 
-        public bool IsRefreshQuoteFollowUps { get; set; } 
-        public bool IsRefreshFollowUp { get; set; }
+        public double? VolumeInCBM { get; set; }
+
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }
         public bool IsFixedPrice { get; set; }
@@ -152,16 +149,12 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public string GrossWeightUnitCode { get; set; }
         public string ChargeableWeightUnitCode { get; set; }
-        public string PickupDeliveryCWeightUnitCode { get; set; }
-
         public string DimensionsUnitCode { get; set; }
         public double? VolumetricWeight { get; set; }
         public double? Volume { get; set; }
         public int? NumberOfPackages { get; set; }
         public int? NumberOfContainers { get; set; }
         public double? Ratio { get; set; }
-        public double? PickupDeliveryRatio { get; set; }
-
         public double? DimFactor { get; set; }
         public string VolumeUnitCode { get; set; }
         public bool IsDangerous { get; set; }
@@ -214,8 +207,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public string ActionType { get; set; }
         public string EventNote { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string QuoteClosingReasonNotes { get; set; }
 
         public string SaleCurrencyId { get; set; }
         public double? ExchangeRate { get; set; }
@@ -244,7 +235,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public DateTime? LastUsageDate { get; set; }
 
         public string QuoteClosingReasonCode { get; set; }
-        public string QuoteClosingReasonId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string StageId { get; set; }
@@ -313,25 +303,20 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string ToPartnerName { get; set; }
         public string FromLocation { get; set; }
         public string ToLocation { get; set; }
-        public string FromLocationIncludeCountry { get; set; }
-        public string ToLocationIncludeCountry { get; set; }
         public bool IsPotentialShipper { get; set; }
         public bool IsPotentialConsignee { get; set; }
         public string IncotermCode { get; set; }
         public string IncotermName { get; set; }
-        public string Routing { get; set; }
         public string FromCountryCode { get; set; }
         public string FromCountryName { get; set; }
         public string ToCountryCode { get; set; }
         public string ToCountryName { get; set; }
         public bool ConvertToFCL { get; set; }
         public bool ConvertToLCL { get; set; }
-        public bool ConvertTransportMode { get; set; }
 
         public bool IsQuoteDataExternal { get; set; }
         public bool IsQuoteDocumentExternal { get; set; }
 
-        public string ExternalEntityNumber { get; set; }
         public string TransitTime { get; set; }
         public string DepartureFrequency { get; set; }
         public DateTime? ETD { get; set; }
@@ -378,43 +363,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         #endregion
 
         public bool IsSaleCurrencySameAsCost { get; set; }
-        public bool IsMultiCurrency { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipperNotExporterId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipperNotExporterAddressId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipperNotExporterContactId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipperNotExporterName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipperNotExporterNote { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipperNotExporterReference { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeNotImporterId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeNotImporterAddressId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeNotImporterContactId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeNotImporterName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeNotImporterNote { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ConsigneeNotImporterReference { get; set; }
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string NotifyId { get; set; }
@@ -430,10 +378,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string NotifyNote { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string NotifyReference1 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string NotifyReference2 { get; set; }
 
         public string NotifyAddress1 { get; set; }
         public string NotifyAddress2 { get; set; }
@@ -454,30 +398,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field11 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field12 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field13 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field14 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field15 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field16 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field17 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field18 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field19 { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public CustomFieldClass Field20 { get; set; }
-
-        public string CountryForStatisticsId { get; set; }
 
         private List<QuoteChargePM> quoteCharges;
         [Include]
@@ -713,119 +633,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
                 if (value != null)
                 {
                     totalVATs = value;
-                }
-            }
-        }
-
-
-        public DateTime? RequestDate { get; set; }
-
-        public bool IsCreatedFromTicket { get; set; }
-        public DateTime? TicketCreateDate { get; set; }
-        public double? EstimatedProfitInLocal { get; set; }
-        public double? EstimatedProfitInProfit { get; set; }
-        public string ProfitCurrencyId { get; set; }
-        public double? ProfitExchangeRate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ShipmentSubTypeId { get; set; }
-        public string ShipmentSubTypeName { get; set; }
-        public string PickupCity { get; set; }
-        public string PickupCountryId { get; set; }
-        public string PickupZipCode { get; set; }
-        public string DeliveryCity { get; set; }
-        public string DeliveryCountryId { get; set; }
-        public string DeliveryZipCode { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? PickupDeliveryVolumetricWeight { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string RegionalTaxId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? RegionalTaxPercentage { get; set; }
-        public bool DescriptionRightToLeft { get; set; }
-        public int? PackagesQuantity { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromZipCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToZipCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromCity { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToCity { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromCountryId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToCountryId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticFromTypeCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InlandDomesticToTypeCode { get; set; }
-        public string MainCarriageFromPortAddress { get; set; }
-        public string MainCarriageToPortAddress { get; set; }
-        public string FromCity { get; set; }
-        public string ToCity { get; set; }
-        public string RoutingFrom { get; set; }
-        public string RoutingTo { get; set; }
-        public string FromZipCode { get; set; }
-        public string ToZipCode { get; set; }
-        public string TicketId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string SpecialServicesTypeId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IncludeInsurance { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsStackable { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IncludeImportDutyCharges { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? InsuranceValue { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ValidByTypeCode { get; set; }
-        public bool? ConnectedToOpportunity { get; set; }
-        public string SummaryMarkup { get; set; }
-        public string ShipmentType { get; set; }
-        public string MoveTypeName { get; set; }
-        public string MoveTypeCode { get; set; }
-        public string ShipperCountryCode { get; set; }
-        public string ShipperCountryName { get; set; }
-        public string ConsigneeCountryName { get; set; }
-        public string ConsigneeCountryCode { get; set; }
-        public bool IsExpired { get; set; }
-        public string SalesmanEmail { get; set; }
-        public string CommunicationLogId { get; set; }
-
-        public double? TotalVATInSalesCurrency { get; set; }
-        public List<CustomChildEntity> CustomChildEntities { get; set; }
-
-
-        private List<QuoteSalesAmountWithVATDetailsPM> quoteSalesAmountWithVATDetails;
-        public List<QuoteSalesAmountWithVATDetailsPM> QuoteSalesAmountWithVATDetails
-        {
-            get
-            {
-                if (quoteSalesAmountWithVATDetails == null)
-                {
-                    quoteSalesAmountWithVATDetails = new List<QuoteSalesAmountWithVATDetailsPM>();
-                }
-
-                return quoteSalesAmountWithVATDetails;
-            }
-
-            set
-            {
-                if (value != null)
-                {
-                    quoteSalesAmountWithVATDetails = value;
                 }
             }
         }

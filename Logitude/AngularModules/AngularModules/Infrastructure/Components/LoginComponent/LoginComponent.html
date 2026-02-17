@@ -1,3 +1,4 @@
+﻿
 <style type="text/css">
     label {
         font-size: 13px;
@@ -11,127 +12,54 @@
         font-size: 13px;
         font-family: tahoma, arial, sans-serif;
         background: #dbdbdb;
-        background: -moz-linear-gradient(
-            top,
-            #dbdbdb 0%,
-            #f2f2f2 28%,
-            #ffffff 41%,
-            #ffffff 100%
-        ); /* FF3.6+ */
-        background: -webkit-gradient(
-            linear,
-            left top,
-            left bottom,
-            color-stop(0%, #dbdbdb),
-            color-stop(28%, #f2f2f2),
-            color-stop(41%, #ffffff),
-            color-stop(100%, #ffffff)
-        ); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(
-            top,
-            #dbdbdb 0%,
-            #f2f2f2 28%,
-            #ffffff 41%,
-            #ffffff 100%
-        ); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(
-            top,
-            #dbdbdb 0%,
-            #f2f2f2 28%,
-            #ffffff 41%,
-            #ffffff 100%
-        ); /* Opera 11.10+ */
-        background: linear-gradient(
-            to bottom,
-            #dbdbdb 0%,
-            #f2f2f2 28%,
-            #ffffff 41%,
-            #ffffff 100%
-        ); /* W3C */
+        background: -moz-linear-gradient(top, #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
+        background: linear-gradient(to bottom, #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
     }
 
     #myBar {
         width: 1%;
         height: 10px;
         background: red;
-        background: -webkit-linear-gradient(
-            left,
-            red,
-            orange,
-            yellow,
-            green,
-            blue,
-            indigo
-        );
-        background: -o-linear-gradient(
-            left,
-            red,
-            orange,
-            yellow,
-            green,
-            blue,
-            indigo
-        );
-        background: -moz-linear-gradient(
-            left,
-            red,
-            orange,
-            yellow,
-            green,
-            blue,
-            indig
-        );
-        background: linear-gradient(
-            to right,
-            red,
-            orange,
-            yellow,
-            green,
-            blue,
-            indigo
-        );
+        background: -webkit-linear-gradient(left,red,orange,yellow,green,blue,indigo);
+        background: -o-linear-gradient(left,red,orange,yellow,green,blue,indigo);
+        background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indig);
+        background: linear-gradient(to right, red,orange,yellow,green,blue,indigo);
     }
 </style>
 
-<table class="PreventSelect" style="min-width: 1024px; min-height: 600px">
+<table class="PreventSelect" style="min-width: 1024px; min-height: 600px;">
     <tr>
         <td>
             <div></div>
         </td>
 
-        <td style="width: 1024px">
+        <td style="width: 1024px;">
             <table>
-                <tr style="height: 50px">
+                <tr style="height: 50px;">
                     <td>
                         <div></div>
                     </td>
                 </tr>
-                <tr style="height: 114px">
-                    <td style="text-align: center">
+
+                <tr style="height: 114px;">
+                    <td style="text-align: center;">
                         <a>
-                            <img
-                                *ngIf="IsProduction"
-                                [src]="LogoURL"
-                                id="loginlogo"
-                                style="width: 290px; height: 114px"
-                            />
-                            <img
-                                *ngIf="!IsProduction"
-                                [src]="SampleLogoURL"
-                                id="loginlogo"
-                                style="width: 337px; height: 79px"
-                            />
+                            <img *ngIf="IsProduction" [src]="LogoURL" id="loginlogo" style="width:290px; height:114px;" />
+                            <img *ngIf="!IsProduction" [src]="SampleLogoURL" id="loginlogo" style="width:337px; height:79px;" />
                         </a>
                     </td>
                 </tr>
 
-                <tr style="height: 20px">
+                <tr style="height: 20px;">
                     <td>
                         <div></div>
                     </td>
                 </tr>
 
-                <tr style="height: 466px">
+                <tr style="height: 466px;">
                     <td>
                         <table>
                             <tr>
@@ -139,14 +67,7 @@
                                     <div></div>
                                 </td>
 
-                                <td
-                                    style="
-                                        width: 980px;
-                                        background: url('./Images/LoginScreen/map.png')
-                                            center center no-repeat;
-                                        background-size: 100% 100%;
-                                    "
-                                >
+                                <td style="width: 980px; background: url('./Images/LoginScreen/map.png') center center no-repeat; background-size: 100% 100%;">
                                     <table>
                                         <tr>
                                             <td>
@@ -154,309 +75,147 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height: 16px">
-                                            <td
-                                                style="
-                                                    opacity: 0.7;
-                                                    background-image: url('./Images/LoginScreen/shadow1.png');
-                                                    background-repeat: no-repeat;
-                                                "
-                                            >
+                                        <tr style="height: 16px;">
+                                            <td style="opacity: 0.7; background-image: url('./Images/LoginScreen/shadow1.png'); background-repeat: no-repeat;">
                                                 <div></div>
                                             </td>
                                         </tr>
 
-                                        <tr
-                                            style="
-                                                height: 260px;
-                                                min-height: 260px;
-                                                background: white;
-                                            "
-                                        >
+                                        <tr style="height: 260px; min-height: 260px; background: white;">
                                             <td>
-                                                <table
-                                                    [hidden]="ShowLoginBusyIndicator || ShowTwoFactorAuthenScreen"
-                                                >
-                                                    <tr *ngIf="IsShowLoginForm">
-                                                        <td
-                                                            style="width: 300px"
-                                                        >
-                                                            <table
-                                                                *ngIf="!ShowTenantList"
-                                                            >
-                                                                <tr
-                                                                    style="
-                                                                        height: 25px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 60px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <label
-                                                                            >E-mail</label
-                                                                        >
-                                                                        <div>
-                                                                            <input
-                                                                                id="Email"
-                                                                                autocomplete="on"
-                                                                                size="10"
-                                                                                class="auto-style1"
-                                                                                [(ngModel)]="Email"
-                                                                                ngControl="emailF"
-                                                                                required
-                                                                                type="email"
-                                                                            />
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 60px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <label
-                                                                            >password</label
-                                                                        >
-                                                                        <div>
-                                                                            <input
-                                                                                id="Password"
-                                                                                class="auto-style1"
-                                                                                [(ngModel)]="Password"
-                                                                                required
-                                                                                type="password"
-                                                                            />
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
+                                                    <table [hidden]="ShowLoginBusyIndicator || ShowTwoFactorAuthenScreen">
+                                                        <tr *ngIf="IsShowLoginForm">
+                                                            <td style="width: 300px;">
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <div
-                                                                            style="
-                                                                                visibility: collapse;
-                                                                            "
-                                                                        >
-                                                                            <input
-                                                                                size="10"
-                                                                                class="auto-style1"
-                                                                                [(ngModel)]="DefultText"
-                                                                                required
-                                                                                type="text"
-                                                                            />
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
+                                                                <table *ngIf="!ShowTenantList">
+                                                                    <tr style="height: 25px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 30px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td
-                                                                                    style="
-                                                                                        width: 1px;
-                                                                                    "
-                                                                                >
-                                                                                    <button
-                                                                                        id="cmdLogin"
-                                                                                        class="LoginButton"
-                                                                                        style="
-                                                                                            height: 25px;
-                                                                                            width: 120px;
-                                                                                        "
-                                                                                        (click)="LoginClicked()"
-                                                                                    >
-                                                                                        Login
-                                                                                        >
-                                                                                    </button>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr style="height: 60px;">
+                                                                        <td>
+                                                                            <label>E-mail</label>
+                                                                            <div>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr
-                                                                    style="
-                                                                        height: 50px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <div
-                                                                            *ngIf="HidePendingLoading"
-                                                                        ></div>
-                                                                        <div
-                                                                            *ngIf="!HidePendingLoading"
-                                                                            style="
-                                                                                width: 50px;
-                                                                                height: 50px;
-                                                                                margin: auto;
-                                                                                background: url(./Images/LoginScreen/indicator.gif)
-                                                                                    center
-                                                                                    center
-                                                                                    no-repeat;
-                                                                                background-size: 50px
-                                                                                    50px;
-                                                                            "
-                                                                        ></div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-
-                                                            <table
-                                                                *ngIf="ShowTenantList"
-                                                                style="
-                                                                    margin-right: 20px;
-                                                                "
-                                                            >
-                                                                <tr
-                                                                    style="
-                                                                        height: 25px;
-                                                                    "
-                                                                >
-                                                                    <td
-                                                                        style="
-                                                                            text-align: left;
-                                                                            width: 300px;
-                                                                            font-family: Myriad
-                                                                                Pro;
-                                                                            font-size: 14px;
-                                                                            color: teal;
-                                                                        "
-                                                                    >
-                                                                        You have
-                                                                        more
-                                                                        than one
-                                                                        account,
-                                                                        please
-                                                                        choose
-                                                                        which
-                                                                        one you
-                                                                        want to
-                                                                        log in.
-                                                                    </td>
-                                                                </tr>
-                                                                <tr
-                                                                    style="
-                                                                        height: 35px;
-                                                                    "
-                                                                >
-                                                                    <td
-                                                                        class="column1"
-                                                                    >
-                                                                        <div
-                                                                            style="
-                                                                                margin-top: 5px;
-                                                                            "
-                                                                        >
-                                                                            <div
-                                                                                class="col-sm-6 col-md-6"
-                                                                            >
-                                                                                <select
-                                                                                    (change)="TenantListChangeSelected($event.target.value)"
-                                                                                    style="
-                                                                                        width: 150px;
-                                                                                        border: 1px
-                                                                                            solid
-                                                                                            gray;
-                                                                                        border-radius: 3px;
-                                                                                    "
-                                                                                >
-                                                                                    <option
-                                                                                        *ngFor="let item of TenantList"
-                                                                                        [value]="item.Id"
-                                                                                    >
-                                                                                        {{item.CompanyName}}
-                                                                                    </option>
-                                                                                </select>
+                                                                                <input id="Email"  autocomplete="on" size="10" class="auto-style1" [(ngModel)]="Email" ngControl="emailF" required type="email" />
                                                                             </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
-                                                                    <td></td>
-                                                                </tr>
+                                                                        </td>
+                                                                    </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 50px;
-                                                                    "
-                                                                >
-                                                                    <td
-                                                                        class="column1"
-                                                                    >
-                                                                        <button
-                                                                            id="Cont"
-                                                                            [disabled]="!SelectedCompany"
-                                                                            style="
-                                                                                width: 120px;
-                                                                                height: 35px;
-                                                                                background-color: green;
-                                                                                color: white;
-                                                                            "
-                                                                            (click)="ContinueClicked()"
-                                                                        >
-                                                                            Continue
-                                                                            >
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
+                                                                    <tr style="height: 60px;">
+                                                                        <td>
+                                                                            <label>password</label>
+                                                                            <div>
+                                                                                <input id="Password"  class="auto-style1" [(ngModel)]="Password" required type="password" />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
 
-                                                                <tr>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </table>
+                                                                    <tr style="height: 10px;">
+                                                                        <td>
+                                                                            <div style="visibility:collapse">
+                                                                                <input size="10" class="auto-style1" [(ngModel)]="DefultText"  required type="text" />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
 
-                                                            <!--<form [hidden]="HideLoginForm" #LoginForm="ngForm" name="LoginForm" id="LoginForm" (ngSubmit)="Login(LoginForm, LoginForm.value)" novalidate>
+                                                                    <tr style="height: 30px">
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td style="width: 1px;">
+                                                                                        <button id="cmdLogin"  class="LoginButton" style="height:25px;width:120px" (click)="LoginClicked()">Login ></button>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 50px;">
+                                                                        <td>
+                                                                            <div *ngIf="HidePendingLoading"></div>
+                                                                            <div *ngIf="!HidePendingLoading" style="width: 50px; height: 50px; margin: auto; background: url(./Images/LoginScreen/indicator.gif) center center no-repeat; background-size: 50px 50px;"></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height: 10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+
+
+
+
+
+                                                                <table *ngIf="ShowTenantList" style="margin-right:20px">
+                                                                    <tr style="height:25px">
+                                                                        <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:teal;">
+                                                                            You have more than one account, please choose which one you want to log in.
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:35px">
+                                                                        <td class="column1">
+                                                                            <div style="margin-top:5px">
+                                                                                <div class="col-sm-6 col-md-6">
+
+                                                                                    <select (change)="TenantListChangeSelected($event.target.value)" style="width:150px;border:1px solid gray;border-radius:3px">
+
+                                                                                        <option *ngFor="let item of TenantList" [value]="item.Id">{{item.CompanyName}}</option>
+                                                                                    </select>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:10px">
+                                                                        <td></td>
+                                                                    </tr>
+
+                                                                    <tr style="height:50px">
+                                                                        <td class="column1">
+
+
+                                                                            <button id="Cont"  [disabled]="!SelectedCompany" style="width:120px;height:35px;background-color:green;color:white" (click)="ContinueClicked()">Continue ></button>
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                </table>
+
+
+
+
+
+
+
+
+                                                                <!--<form [hidden]="HideLoginForm" #LoginForm="ngForm" name="LoginForm" id="LoginForm" (ngSubmit)="Login(LoginForm, LoginForm.value)" novalidate>
                     <table>
                         <tr style="height: 25px;">
                             <td>
@@ -521,7 +280,7 @@
 
                     </table>
                 </form>-->
-                                                            <!--<form [hidden]="HideTenantForm" #TenantForm="ngForm" name="TenantForm" (ngSubmit)="ChooseTenant(TenantForm, TenantForm.value)" novalidate>
+                                                                <!--<form [hidden]="HideTenantForm" #TenantForm="ngForm" name="TenantForm" (ngSubmit)="ChooseTenant(TenantForm, TenantForm.value)" novalidate>
                     <table id="comboForm" style="margin-right:20px">
                         <tr>
                             <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:teal;">
@@ -563,82 +322,40 @@
                         </tr>
                     </table>
                 </form>-->
+                                                            </td>
+
+                                                            <td style="background:url(./Images/LoginScreen/Layer.png) center center no-repeat; background-size: 100% 100%;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                          
+
+                                                <table [hidden]="!ShowLoginBusyIndicator || ShowTwoFactorAuthenScreen" style="background:url(./Images/LoginScreen/Layer.png) center center no-repeat; background-size: 100% 100%;">
+                                                    <tr style="height: 10px;">
+                                                        <td style="height: 10px;" colspan="2">
+                                                            <div id="myBar"></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="text-align: right">
+                                                            <span style="color: #717171; font-size: 70px;">{{LoadingCounter}} %</span>
                                                         </td>
 
-                                                        <td
-                                                            id="versionContainer"
-                                                            style="
-                                                                background: url(./Images/LoginScreen/Layer.png)
-                                                                    center
-                                                                    center
-                                                                    no-repeat;
-                                                                background-size: 100%
-                                                                    100%;
-                                                                position: relative;
-                                                            "
-                                                        >
+                                                        <td style="width: 50px;">
                                                             <div></div>
                                                         </td>
                                                     </tr>
                                                 </table>
 
-                                                <table
-                                                    [hidden]="!ShowLoginBusyIndicator || ShowTwoFactorAuthenScreen"
-                                                    style="
-                                                        background: url(./Images/LoginScreen/Layer.png)
-                                                            center center
-                                                            no-repeat;
-                                                        background-size: 100%
-                                                            100%;
-                                                    "
-                                                >
-                                                    <tr style="height: 10px">
-                                                        <td
-                                                            style="height: 10px"
-                                                            colspan="2"
-                                                        >
-                                                            <div
-                                                                id="myBar"
-                                                            ></div>
-                                                        </td>
-                                                    </tr>
-
+                                                
+                                                <table [hidden]="!ShowTwoFactorAuthenScreen">
                                                     <tr>
-                                                        <td
-                                                            style="
-                                                                text-align: right;
-                                                            "
-                                                        >
-                                                            <span
-                                                                id="LoadingCounter"
-                                                                style="
-                                                                    color: #717171;
-                                                                    font-size: 70px;
-                                                                "
-                                                                >{{LoadingCounter}}
-                                                                %</span
-                                                            >
-                                                        </td>
+                                                        <td style="width: 300px;">
 
-                                                        <td style="width: 50px">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                                <table
-                                                    [hidden]="!ShowTwoFactorAuthenScreen"
-                                                >
-                                                    <tr>
-                                                        <td
-                                                            style="width: 300px"
-                                                        >
                                                             <table>
-                                                                <tr
-                                                                    style="
-                                                                        height: 25px;
-                                                                    "
-                                                                >
+                                                                <tr style="height: 25px;">
                                                                     <td>
                                                                         <div></div>
                                                                     </td>
@@ -650,182 +367,65 @@
                                                                     </td>
                                                                  </tr>-->
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
+                                                                <tr style="height: 10px;">
                                                                     <td>
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 25px;
-                                                                    "
-                                                                >
-                                                                    <td
-                                                                        style="
-                                                                            text-align: left;
-                                                                            width: 300px;
-                                                                            font-family: Myriad
-                                                                                Pro;
-                                                                            font-size: 18px;
-                                                                            color: teal;
-                                                                        "
-                                                                        *ngIf="UserMobileNumber"
-                                                                    >
-                                                                        A
-                                                                        verification
-                                                                        code has
-                                                                        been
-                                                                        sent to
-                                                                        the
-                                                                        following
-                                                                        number
-                                                                        {{UserMobileNumber}}
-                                                                        <br />the
-                                                                        verification
-                                                                        code
-                                                                        expires
-                                                                        in : 10
-                                                                        minutes
+                                                                <tr style="height:25px">
+                                                                    <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:18px;color:teal;" *ngIf="UserMobileNumber">
+                                                                        A verification code has been sent to the following number {{UserMobileNumber}}
+                                                                        <br />the verification code expires in : 10 minutes
                                                                     </td>
-                                                                    <td
-                                                                        style="
-                                                                            text-align: left;
-                                                                            width: 300px;
-                                                                            font-family: Myriad
-                                                                                Pro;
-                                                                            font-size: 18px;
-                                                                            color: teal;
-                                                                        "
-                                                                        *ngIf="!UserMobileNumber"
-                                                                    >
-                                                                        A
-                                                                        verification
-                                                                        code is
-                                                                        needed
-                                                                        in order
-                                                                        to
-                                                                        complete
-                                                                        the
-                                                                        login
-                                                                        <br />Please
-                                                                        contact
-                                                                        your
-                                                                        system
-                                                                        administrator
-                                                                        to fill
-                                                                        your
-                                                                        mobile
-                                                                        number
-                                                                        in order
-                                                                        to get
-                                                                        the
-                                                                        verification
-                                                                        code
+                                                                    <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:18px;color:teal;" *ngIf="!UserMobileNumber">
+                                                                        A verification code is needed in order to complete the login
+                                                                        <br />Please contact your system administrator to fill your mobile number in order to get the verification code
                                                                     </td>
+
                                                                 </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 60px;
-                                                                    "
-                                                                >
-                                                                    <td
-                                                                        colspan="2"
-                                                                    >
+                                                                
+                                                                <tr style="height: 60px;">
+                                                                    <td colspan="2">
                                                                         <table>
                                                                             <tr>
-                                                                                <td
-                                                                                    style="
-                                                                                        width: 110px;
-                                                                                    "
-                                                                                >
-                                                                                    <label
-                                                                                        >Enter
-                                                                                        you
-                                                                                        verification
-                                                                                        code:</label
-                                                                                    >
+                                                                                <td style="width:110px">
+                                                                                    <label>Enter you verification code:</label>
                                                                                     <div>
-                                                                                        <input
-                                                                                            class="auto-style1"
-                                                                                            [(ngModel)]="VerficationCode"
-                                                                                            required
-                                                                                        />
+                                                                                        <input class="auto-style1" [(ngModel)]="VerficationCode" required />
                                                                                     </div>
+
                                                                                 </td>
 
-                                                                                <td
-                                                                                    style="
-                                                                                        vertical-align: middle;
-                                                                                        margin-top: 5px;
-                                                                                    "
-                                                                                >
-                                                                                    <div
-                                                                                        style="
-                                                                                            height: 15px;
-                                                                                        "
-                                                                                    ></div>
+                                                                                <td style="vertical-align:middle;margin-top:5px;">
+                                                                                 <div style="height:15px"></div>
                                                                                     <div>
-                                                                                        <Hyperlink
-                                                                                            style="
-                                                                                                margin-left: 5px;
-                                                                                                margin-top: 5px;
-                                                                                                padding-top: 5px;
-                                                                                            "
-                                                                                            (click)="ResendVerificationCodeClicked()"
-                                                                                            [FontSize]="12"
-                                                                                            [Text]="'Resend'"
-                                                                                        ></Hyperlink>
+                                                                                        <Hyperlink style="margin-left:5px;margin-top:5px;padding-top:5px" (click)="ResendVerificationCodeClicked()" [FontSize]="12" [Text]="'Resend'"></Hyperlink>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
                                                                     </td>
+                                                                   
+
                                                                 </tr>
                                                                 <!--<button style="width:50px;height:35px;background-color:green;color:white" (click)="ResendVerificationCodeClicked()">Resend</button>-->
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
+                                                                <tr style="height: 10px;">
                                                                     <td>
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 30px;
-                                                                    "
-                                                                >
+                                                                <tr style="height: 30px">
                                                                     <td>
                                                                         <table>
                                                                             <tr>
-                                                                                <td
-                                                                                    style="
-                                                                                        width: 1px;
-                                                                                    "
-                                                                                >
-                                                                                    <button
-                                                                                        style="
-                                                                                            width: 80px;
-                                                                                            height: 35px;
-                                                                                            background-color: green;
-                                                                                            color: white;
-                                                                                        "
-                                                                                        (click)="VerifyClicked()"
-                                                                                    >
-                                                                                        Submit
-                                                                                        >
-                                                                                    </button>
+                                                                                <td style="width: 1px;">
+                                                                                    <button style="width:80px;height:35px;background-color:green;color:white" (click)="VerifyClicked()">Submit ></button>
                                                                                     <!--<button class="LoginButton" (click)="VerifyClicked()">Submit ></button>-->
                                                                                 </td>
-
+                                                                                 
                                                                                 <td>
                                                                                     <div></div>
                                                                                 </td>
@@ -834,44 +434,14 @@
                                                                     </td>
                                                                 </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 25px;
-                                                                    "
-                                                                    *ngIf="InvalidVerificationCode"
-                                                                >
-                                                                    <td
-                                                                        style="
-                                                                            text-align: left;
-                                                                            width: 300px;
-                                                                            font-family: Myriad
-                                                                                Pro;
-                                                                            font-size: 14px;
-                                                                            color: red;
-                                                                        "
-                                                                    >
-                                                                        The code
-                                                                        you
-                                                                        entered
-                                                                        is
-                                                                        incorrect
-                                                                        or
-                                                                        expired.
-                                                                        Please
-                                                                        try
-                                                                        having
-                                                                        the code
-                                                                        sent to
-                                                                        you
-                                                                        again.
+                                                                <tr style="height:25px" *ngIf="InvalidVerificationCode" >
+                                                                    <td style="text-align:left;width:300px;font-family:Myriad Pro;font-size:14px;color:red;">
+                                                                        The code you entered is incorrect or expired. Please try having the code sent to you again.
                                                                     </td>
-                                                                </tr>
+                                                                 </tr>
+                                                                
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 25px;
-                                                                    "
-                                                                >
+                                                                <tr style="height: 25px">
                                                                     <!--<td>
                                                                         <table>
                                                                             <tr>
@@ -884,43 +454,21 @@
                                                                             </tr>
                                                                         </table>
                                                                     </td>-->
+                                                                   
                                                                 </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 50px;
-                                                                    "
-                                                                >
+                                                                <tr style="height: 50px;">
                                                                     <td>
-                                                                        <div
-                                                                            *ngIf="HidePendingLoading"
-                                                                        ></div>
-                                                                        <div
-                                                                            *ngIf="!HidePendingLoading"
-                                                                            style="
-                                                                                width: 50px;
-                                                                                height: 50px;
-                                                                                float: left;
-                                                                                margin: auto;
-                                                                                background: url(./Images/LoginScreen/indicator.gif)
-                                                                                    center
-                                                                                    center
-                                                                                    no-repeat;
-                                                                                background-size: 50px
-                                                                                    50px;
-                                                                            "
-                                                                        ></div>
+                                                                        <div *ngIf="HidePendingLoading"></div>
+                                                                        <div *ngIf="!HidePendingLoading" style="width: 50px; height: 50px;float:left; margin: auto; background: url(./Images/LoginScreen/indicator.gif) center center no-repeat; background-size: 50px 50px;"></div>
                                                                     </td>
                                                                     <td>
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>
+                                                                
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
+                                                                <tr style="height: 10px;">
                                                                     <td>
                                                                         <div></div>
                                                                     </td>
@@ -932,43 +480,30 @@
                                                                     </td>
                                                                 </tr>
 
-                                                                <tr
-                                                                    style="
-                                                                        height: 10px;
-                                                                    "
-                                                                >
+                                                               
+
+                                                                <tr style="height: 10px;">
                                                                     <td>
                                                                         <div></div>
                                                                     </td>
                                                                 </tr>
+
                                                             </table>
+
                                                         </td>
 
-                                                        <td
-                                                            style="
-                                                                background: url(./Images/LoginScreen/Layer.png)
-                                                                    center
-                                                                    center
-                                                                    no-repeat;
-                                                                background-size: 100%
-                                                                    100%;
-                                                            "
-                                                        >
+                                                        <td style="background:url(./Images/LoginScreen/Layer.png) center center no-repeat; background-size: 100% 100%;">
                                                             <div></div>
                                                         </td>
                                                     </tr>
                                                 </table>
+
+
                                             </td>
                                         </tr>
 
-                                        <tr style="height: 16px">
-                                            <td
-                                                style="
-                                                    opacity: 0.7;
-                                                    background-image: url('./Images/LoginScreen/shadow2.png');
-                                                    background-repeat: no-repeat;
-                                                "
-                                            >
+                                        <tr style="height: 16px;">
+                                            <td style="opacity: 0.7; background-image: url('./Images/LoginScreen/shadow2.png'); background-repeat: no-repeat;">
                                                 <div></div>
                                             </td>
                                         </tr>

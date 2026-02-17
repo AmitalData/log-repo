@@ -1,5 +1,5 @@
 ﻿using Logitude.AmitalMessaging.Customs.CustomFile;
-//using Logitude.BL.Security;
+using Logitude.BL.Security;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
@@ -22,17 +22,6 @@ using System.Web.Http;
 using WebFreight.Web.CustomModel;
 using WebFreight.Web.CustomWebServices;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.DataContracts;
-using System.Linq.Expressions;
-using System.Text;
-using WebFreight.Web.Security;
-using Logitude.Server.Tools.Helpers;
-using System.Web;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityListQueryServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -44,110 +33,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
 
         }
-        public HttpResponseMessage GetClearCacheItems()
-        
-        {
-            try
-            {
 
-                
-                    string logKey = PerformanceLogger.LogCurrentTime();
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", authToken.Tenant);
-
-                    CacheManager.ClearCacheItems();
-
-
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, new { clearCache="OK" });
-
-
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-
-
-        }
-
-        public HttpResponseMessage PostUnifreightGatewayMessages(UnifreightGatewayParams requestParams)
-        {
-            try
-            {
-
-                //CUSTOM19 - TOKEN
-                //3d75bc21-2e20-4e3a-8792-1ba057a4408f
-                //24fd2056-23b1-4921-8804-1ae02e70fcb3
-                try
-                {
-                    string logKey = PerformanceLogger.LogCurrentTime();
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", authToken.Tenant);
-
-                }
-                catch (Exception E)
-                {
-
-
-                    
-                    requestParams.SUCCESS = "false";
-                    bool hidesecurtityparams = true;
-                    if (hidesecurtityparams)
-                    {
-                        requestParams.MessageOut = $"authentication failed";
-                    }
-                    else
-                    {
-                        requestParams.MessageOut = E.ToString();
-                    }
-                    
-
-                    return Request.CreateResponse(HttpStatusCode.OK, requestParams);
-                }
-
-
-                // use messageing service
-                string DataOut1 = "";
-                string DataOut2 = "";
-                string SUCCESS = "";
-                string MoreParams = requestParams.MoreParams;
-                string MessageOut = "";
-
-                var service = new UnifreightGatewayService();
-                service.ProccessRequest(requestParams.AssemblyQualifiedName, requestParams.DataIn1, requestParams.DataIn2,
-                    out DataOut1,
-                    out DataOut2,
-                    out SUCCESS,
-                    ref MoreParams,
-                    out MessageOut
-                    );
-
-                requestParams.DataOut1 = DataOut1;
-                requestParams.DataOut2 = DataOut2;
-                requestParams.SUCCESS = SUCCESS;
-                requestParams.MoreParams = MoreParams;
-                requestParams.MessageOut = MessageOut;
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, requestParams);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-            
-
-        }
 
         public HttpResponseMessage PostMorningMessages(MorningMessageRequestParams requestParams)
         {
@@ -246,7 +132,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             var responseData = new ResultClientProgressBar();
             try
             {
-
+                
                 if (BasicResponse)
                 {
                     responseData.responseDataXml = ClientProgressBarIndicatorService.GetClientProgressBarIndicatorCurrentStage(CustomsRequestsSheetId);
@@ -308,28 +194,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-
-        public HttpResponseMessage PostCustomsItemDetailsQuery(CD_NG_8314_Web01_CustomsItemDetailsRequestParams requestParams)
-        {
-            try
-            {
-
-
-
-                // use messageing service
-
-                var service = new DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService();
-                var responseData = service.Send(requestParams);
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, responseData);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
         public HttpResponseMessage PostCustomItemLegalDemandsQuery(CustomItemLegalDemandsRequestParams requestParams)
         {
             try
@@ -550,10 +414,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         responseData.PaymentDateTime = null;
                         responseData.BankCode = creditResponseData.CustomFileCredit[0].BankCode;
                         responseData.PaymentDate = creditResponseData.CustomFileCredit[0].PaymentDate;
-                        if (!String.IsNullOrWhiteSpace(responseData.PaymentTime) && creditResponseData.CustomFileCredit[0].PaymentTime.Length >= 12)
-                        {
-                            responseData.PaymentTime = creditResponseData.CustomFileCredit[0].PaymentTime != null ? creditResponseData.CustomFileCredit[0].PaymentTime.Substring(8, 4) : null;
-                        }
+                        responseData.PaymentTime = creditResponseData.CustomFileCredit[0].PaymentTime != null ? creditResponseData.CustomFileCredit[0].PaymentTime.Substring(8, 4) : null;
                         if (!String.IsNullOrWhiteSpace(responseData.PaymentDate))
                         {
                             responseData.PaymentDateTime = GetUnifreightFormatedDate(responseData.PaymentDate, responseData.PaymentTime, "").GetValueOrDefault();
@@ -597,10 +458,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             DateTime date;
             if (string.IsNullOrWhiteSpace(txt)) return null;
 
-            //if (!string.IsNullOrWhiteSpace(time))
-            //{
-            //    txt = string.Concat(txt, time);
-            //}
+            if (!string.IsNullOrWhiteSpace(time))
+            {
+                txt = string.Concat(txt, time);
+            }
             if (DateTime.TryParseExact(txt, "yyyyMMddHHmm", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
             {
                 return date;
@@ -629,9 +490,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 if (!string.IsNullOrWhiteSpace(customerCode))
                 {
-                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
 
-                    bank = defaultValueQueryService.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", customerCode, tenant);
+
+                    var declarationQS = new DeclarationQueryService(tenant);
+                    bank = declarationQS.GetDefault("ISRAEL", "CIM_AGENT_BANK", "NON", customerCode, tenant);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, bank);
@@ -711,9 +573,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 var responseData = service.Send(requestParams);
 
 
-
-
-
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
 
@@ -724,35 +583,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
-
-
-
-        public HttpResponseMessage PostMessageWaitingRequestParams
-           (MessageWaitingRequestParams requestParams)
-        {
-
-            try
-            {
-
-                var service = new NG_9100_MSG_OutgoingMessageRequestMessagingService();
-                var responseData = service.Send(requestParams);
-
-
-
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, responseData);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-
-        }
-
-
         public HttpResponseMessage PostBlockListInWarehouseRequestParams
            (BlockListInWarehouseRequestParams requestParams)
         {
@@ -888,119 +718,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
 
         }
-        public HttpResponseMessage PostVirtualDeclarationCourierStatus
-                   (AmitalLazyLoadEvent amitalLazyLoadEvent)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                var authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                int tenant = authToken.Tenant;
-
-                ICustomContext MyContext = CustomContext.GetContext(tenant);
-                DeclarationCourierStatusListQueryService declarationCourierStatusQuery = new DeclarationCourierStatusListQueryService(MyContext);
-                var q = declarationCourierStatusQuery.GetVirtual(tenant);
-                //var myLazyLoadEvent = amitalLazyLoadEvent.MyLazyLoadEvent as LazyLoadEvent;
-                q = q.LazyFilters(amitalLazyLoadEvent,
-                    () => { return declarationCourierStatusQuery.GetVirtual(tenant); }
-                    );
-
-                ServiceResponse response = new ServiceResponse();
-                if (amitalLazyLoadEvent.GetCount)
-                {
-                    int count = q.Count();
-                    response.Count = count;
-                }
-                if (String.IsNullOrWhiteSpace(amitalLazyLoadEvent.sortField))
-                {
-                    amitalLazyLoadEvent.sortField = "DeclarationId";
-                }
-
-                q = q.LazyOrderBy(amitalLazyLoadEvent);
-
-                q = q.LazySkipTake(amitalLazyLoadEvent);
-
-                response.Result = q.ToList(); ;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return reponseMessage;
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-
-        static Car[] _Cars = null;
-        public HttpResponseMessage GetVirtualCar
-           (bool GetCount, int first, int rows, string sortField/*: "CreatAt"*/, int sortOrder/*: 1*/)
-        {
-            int max = 105;
-
-            try
-            {
-                if (_Cars == null)
-                {
-
-                    var carService = new CarService();
-                    var cars = new List<Car>();
-                    ///if (first + i < 500)
-
-                    for (int i = 0; i < max; i++)
-                    {
-
-
-                        cars.Add(carService.generateCar(first + i));
-
-                    }
-                    _Cars = cars.ToArray();
-
-
-                }
-
-
-                ServiceResponse response = new ServiceResponse();
-                if (GetCount)
-                {
-                    int count = max;
-                    response.Count = count;
-                }
-                var lazyLoadEvent = new AmitalLazyLoadEvent()
-                {
-                    first = first,
-                    rows = rows,
-                    sortField = sortField,
-                    sortOrder = sortOrder
-                };
-                var q = _Cars.ToList().AsQueryable<Car>();
-                if (!string.IsNullOrWhiteSpace(sortField) && sortField != "undefined")
-                {
-                    //sortField
-                    q = q.LazyOrderBy(lazyLoadEvent);
-
-
-                }
-                q = q.LazySkipTake(lazyLoadEvent);
-                response.Result = q.ToArray();
-
-                return Request.CreateResponse(HttpStatusCode.OK, response);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-
-        }
-
-
     }
     class ResultClientProgressBar
     {
@@ -1008,86 +725,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public bool continueInBackground { get; set; }
         public string responseDataXml { get; set; }
         public int ProgressStage { get; set; }
-    }
-
-    public class UnifreightGatewayParams
-    {
-        public string Token { get; set; }
-        public string AssemblyQualifiedName { get; set; }
-        public string DataIn1 { get; set; }
-        public string DataIn2 { get; set; }
-        public string DataOut1 { get; set; }
-        public string DataOut2 { get; set; }
-        public string SUCCESS { get; set; }
-        public string MoreParams { get; set; }
-        public string MessageOut { get; set; }
-    }
-
-
-    class CarService
-    {
-        static string[] brands = { "Vapid", "Carson", "Kitano", "Dabver", "Ibex", "Morello", "Akira", "Titan", "Dover", "Norma" };
-        static string[] colors = { "Black", "White", "Red", "Blue", "Silver", "Green", "Yellow" };
-
-        public Car generateCar(int id)
-        {
-            return new Car()
-            {
-                vin = id.ToString(), //this.generateVin(),
-                brand = this.generateBrand(id),
-                color = this.generateColor(id),
-                CreatAt = this.generateYear(id)
-            };
-        }
-
-
-        string generateVin()
-        {
-
-
-            return RandomString(5);
-        }
-        private static Random random = new Random();
-        public static string RandomString(int length)
-        {
-            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";//"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";//"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
-        }
-        string generateBrand(int id)
-        {
-            return brands[id % 10];
-            return brands[random.Next(10)];
-        }
-
-        string generateColor(int id)
-        {
-            return colors[id % 5];
-            //return colors[random.Next(7)];
-        }
-
-        DateTime generateYear(int id)
-        {
-            return (DateTime.Now.Date.AddDays(-1 * id));
-            //return 2000 + random.Next(21);
-        }
-    }
-
-    public class Car
-    {
-        public string vin { get; set; }
-        public DateTime CreatAt { get; set; }
-        public string brand { get; set; }
-
-        public string color { get; set; }
-
-        public int price { get; set; }
-
-        public int saleDate { get; set; }
 
     }
-
-
- 
 
 }

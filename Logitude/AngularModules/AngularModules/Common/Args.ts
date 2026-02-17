@@ -5,7 +5,6 @@ import {Injectable} from '@angular/core';
 export class CitySelectionArgs {
     public IsCitySelected: boolean = false;
     public CityName: string = null;
-    public CityId: string = null;
     public CityLocalName: string = null;
     public CountryId: string = null;
     public StateId: string = null;

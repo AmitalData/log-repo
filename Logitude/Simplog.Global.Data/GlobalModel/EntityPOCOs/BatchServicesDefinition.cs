@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,13 +18,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string Parameter1 { get; set; }
         public string Parameter2 { get; set; }
         public string QueueDefinitionCode { get; set; }
-        public string QueueBase { get; set; }
 
-        public BatchServicesDefinitionMods BatchServicesDefinitionMods { get; set; }
-
-        [Column("UseRabbitMQ")]
-        public bool UseRabbitMQ { get; set; }
-
+        public BatchServicesDefinitionMods BatchServicesDefinitionMods { get; set; } 
 
     }
 }

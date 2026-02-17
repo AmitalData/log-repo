@@ -11,151 +11,90 @@ import {CustomerPM} from './CustomerPM';
 
 import {CustomerProductLocationActualDataPM} from './CustomerProductLocationActualDataPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-
-
 export class CustomerProductActualDataPM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
+      constructor(_entityParentPM: CustomerPM) {
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties; 
           this.IsDirty = false;
-       }
+      }
 
-	 
+    private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }            
     
     private customerId: string;
     public get CustomerId() { return this.customerId; }
-    public set CustomerId(newValue: string) { if (this.customerId != newValue) { this.customerId = newValue; this.MarkAsDirty("CustomerId"); } }
+    public set CustomerId(newValue: string) { this.customerId = newValue; this.MarkAsDirty(); }
        
 	 
     private productTypeCode: string;
     public get ProductTypeCode() { return this.productTypeCode; }
-    public set ProductTypeCode(newValue: string) { if (this.productTypeCode != newValue) { this.productTypeCode = newValue; this.MarkAsDirty("ProductTypeCode"); } }
+    public set ProductTypeCode(newValue: string) { this.productTypeCode = newValue; this.MarkAsDirty(); }
        
 	 
     private month: number;
     public get Month() { return this.month; }
-    public set Month(newValue: number) { if (this.month != newValue) { this.month = newValue; this.MarkAsDirty("Month"); } }
+    public set Month(newValue: number) { this.month = newValue; this.MarkAsDirty(); }
        
 	 
     private year: number;
     public get Year() { return this.year; }
-    public set Year(newValue: number) { if (this.year != newValue) { this.year = newValue; this.MarkAsDirty("Year"); } }
+    public set Year(newValue: number) { this.year = newValue; this.MarkAsDirty(); }
        
 	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+    public set Tenant(newValue: number) { this.tenant = newValue; this.MarkAsDirty(); }
        
 	 
     private tEU: number;
     public get TEU() { return this.tEU; }
-    public set TEU(newValue: number) { if (this.tEU != newValue) { this.tEU = newValue; this.MarkAsDirty("TEU"); } }
+    public set TEU(newValue: number) { this.tEU = newValue; this.MarkAsDirty(); }
        
 	 
     private numberOfShipments: number;
     public get NumberOfShipments() { return this.numberOfShipments; }
-    public set NumberOfShipments(newValue: number) { if (this.numberOfShipments != newValue) { this.numberOfShipments = newValue; this.MarkAsDirty("NumberOfShipments"); } }
+    public set NumberOfShipments(newValue: number) { this.numberOfShipments = newValue; this.MarkAsDirty(); }
        
 	 
     private chargeableWeight: number;
     public get ChargeableWeight() { return this.chargeableWeight; }
-    public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
+    public set ChargeableWeight(newValue: number) { this.chargeableWeight = newValue; this.MarkAsDirty(); }
        
 	 
     private revenue: number;
     public get Revenue() { return this.revenue; }
-    public set Revenue(newValue: number) { if (this.revenue != newValue) { this.revenue = newValue; this.MarkAsDirty("Revenue"); } }
+    public set Revenue(newValue: number) { this.revenue = newValue; this.MarkAsDirty(); }
        
 	 
     private monthCode: string;
     public get MonthCode() { return this.monthCode; }
-    public set MonthCode(newValue: string) { if (this.monthCode != newValue) { this.monthCode = newValue; this.MarkAsDirty("MonthCode"); } }
+    public set MonthCode(newValue: string) { this.monthCode = newValue; this.MarkAsDirty(); }
        
 	 
-     
-	private productLocations: CustomerProductLocationActualDataPM[];
-    get  ProductLocations() {
-        if (this.productLocations == null) {
-            this.productLocations = [];
-        }
-
-        return this.productLocations;
-    }
-    set  ProductLocations(newValue: CustomerProductLocationActualDataPM[]) {
-        if (this.productLocations != newValue) {
-            this.productLocations = newValue;
-        }
-    }
-    public AddCustomerProductLocationActualDataPM(item: CustomerProductLocationActualDataPM) {
-        if (item != null) {
-            var index = this.ProductLocations.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this. ProductLocations.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveCustomerProductLocationActualDataPM(item: CustomerProductLocationActualDataPM) {
-        if (item != null) {
-            var index = this.ProductLocations.indexOf(item);
-            if (index > -1) {
-                this. ProductLocations.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-	    //public ProductLocations: Array<CustomerProductLocationActualDataPMPM>= [];
-     private changeSetOp: string;
+    public ProductLocations: Array<CustomerProductLocationActualDataPM>;
+       
+	 
+    private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue; this.MarkAsDirty(); }
+       
+	 
+    public LocationsChangeSet: Array<CustomerProductLocationActualDataPM>;
        
 	 
 
-    public LocationsChangeSet: Array<CustomerProductLocationActualDataPM>= [];
-		 
     public OldEntityPM: CustomerProductActualDataPM;
-	    
-	private entityParentPM: any;
-    public get EntityParentPM() { return this.entityParentPM; }
-    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
-
+	
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
+    MarkAsDirty() {
         this.IsDirty = true;
-		  if (this.EntityParentPM) {
-            this.EntityParentPM.MarkAsDirty();
+		  if (this.entityParentPM) {
+            this.entityParentPM.MarkAsDirty();
         }	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomerProductActualData");
-           
-        }
-	 }
     }
-    private MyClone: CustomerProductActualDataPM;
-
-    public CloneMe() {
-        ServiceHelper.CloneEntityPM(this);
-    }
-
-    public RejectChanges() {
-        ServiceHelper.RejectEntityPMChanges(this);
-    }
-
 }

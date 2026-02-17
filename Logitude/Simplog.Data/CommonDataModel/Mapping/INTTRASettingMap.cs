@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -15,7 +15,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.OutSettingsId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.InSettingsId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.InSettingsId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.INTTRASettingModeCode).IsRequired().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.INTTRAId).HasMaxLength(35).IsUnicode(false);
             this.Property(t => t.INTTRAAlias).HasMaxLength(35).IsUnicode(false);
@@ -30,7 +30,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.INTTRAAlias).HasColumnName("INTTRAAlias");
 
             this.HasOptional(t => t.OutFTPDetail).WithMany().HasForeignKey(d => d.OutSettingsId);
-            this.HasOptional(t => t.InFTPDetail).WithMany().HasForeignKey(d => d.InSettingsId);
+            this.HasRequired(t => t.InFTPDetail).WithMany().HasForeignKey(d => d.InSettingsId);
             this.HasRequired(t => t.INTTRASettingMode).WithMany().HasForeignKey(d => d.INTTRASettingModeCode);
         }
     }

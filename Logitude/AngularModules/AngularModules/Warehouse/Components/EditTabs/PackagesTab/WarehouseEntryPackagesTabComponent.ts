@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {AppTool} from '../../../../Infrastructure/Tools';
 @Component({
     selector: 'WarehouseEntryPackagesTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './WarehouseEntryPackagesTabComponent.html',
 
 })
@@ -110,7 +110,7 @@ export class WarehouseEntryPackagesTabComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

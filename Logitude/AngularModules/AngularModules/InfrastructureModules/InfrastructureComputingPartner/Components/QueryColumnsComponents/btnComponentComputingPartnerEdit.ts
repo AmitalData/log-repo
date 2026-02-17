@@ -6,7 +6,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'btnComponentComputingPartnerEdit',
     templateUrl: './btnComponentComputingPartnerEdit.html',
 })

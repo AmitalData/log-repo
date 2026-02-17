@@ -55,7 +55,6 @@ namespace Logitude.CRM.Data
 		 IDbSet<SLAHeader> SLAHeaders { get; }
 		 IDbSet<SLALine> SLALines { get; }
 		 IDbSet<Stage> Stages { get; }
-		 IDbSet<SupportMailbox> SupportMailboxes { get; }
 		 IDbSet<Ticket> Tickets { get; }
 		 IDbSet<TicketClassification> TicketClassifications { get; }
 		 IDbSet<TicketCreatedByType> TicketCreatedByTypes { get; }
@@ -65,7 +64,7 @@ namespace Logitude.CRM.Data
 		 IDbSet<TicketStage> TicketStages { get; }
 		 IDbSet<TicketType> TicketTypes { get; }
 		 IDbSet<TimeUnit> TimeUnits { get; }
-	     IDbSet<OpportunityAnalytic> OpportunityAnalytics { get; }
+	 
          void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();

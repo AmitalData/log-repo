@@ -26,7 +26,7 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'QuoteTemplateTotalPerContainerSetting',
-    
+    moduleId: module.id,
     templateUrl: 'QuoteTemplateTotalPerContainerSetting.html',
 })
 
@@ -52,8 +52,6 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     IsSaveQuoteTemplateTableDesignRuning: boolean = false;
     IsSaveQuoteTemplateTextCodeRuning: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsUsingVirtuallization: boolean = false;
-
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -70,7 +68,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     }
 
     SetWindowArgs(args: any) {
-        this.SetIsUsingVirtuallization();
+
         if (args) {
             this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
 
@@ -89,12 +87,6 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     }
 
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
-    }
 
     //ShowTotalSplitToMultipleCurrencies
     get TotalPerContainersCurrencyType() {
@@ -171,7 +163,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     LoadTableDesign() {
 
-        this.quoteTemplateTableDesignPMService.get(this.QuoteTemplateSettingPM.TotalPerContainersTableDesignId).subscribe((res:any) => {
+        this.quoteTemplateTableDesignPMService.get(this.QuoteTemplateSettingPM.TotalPerContainersTableDesignId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.TableDesignPM = pmResponse.Result;
@@ -193,7 +185,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
             ids += ("," + this.TableDesignPM.LinesDesignId);
         }
 
-        this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe((res:any) => {
+        this.quoteTemplateTextDesignExtendedPMService.GetQuoteTemplateTextDesignPMListByIds(ids, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -251,7 +243,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
-                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
+                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
                     this.SaveOthers(textDesignPmLists, textCodeDataLists);
                 });
@@ -292,7 +284,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
         items.forEach((item) => { item.IsDirty = false; });
 
 
-        this.quoteTemplateTextDesignExtendedPMService.updateQuoteTemplateTextDesignPMs(items).subscribe((res:any) => {
+        this.quoteTemplateTextDesignExtendedPMService.updateQuoteTemplateTextDesignPMs(items).subscribe(res => {
             this.IsSaveQuoteTemplateTextDesignRuning = false;
             this.SaveCompleted();
 
@@ -302,7 +294,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     SaveQuoteTemplateTableDesign() {
 
-        this.quoteTemplateTableDesignPMService.update(this.TableDesignPM).subscribe((res:any) => {
+        this.quoteTemplateTableDesignPMService.update(this.TableDesignPM).subscribe(res => {
             this.IsSaveQuoteTemplateTableDesignRuning = false;
             this.SaveCompleted();
 
@@ -311,7 +303,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     SaveQuoteTemplateSetting() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
-        this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
+        this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
             this.QuoteTemplateSettingPM.IsDirty = false;
             this.SaveCompleted();
 
@@ -330,7 +322,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
         });
 
 
-        this.quoteTemplateTextCodeExtendedPMService.updateTextCodes(quoteTemplateTextCodePMLists).subscribe((res:any) => {
+        this.quoteTemplateTextCodeExtendedPMService.updateTextCodes(quoteTemplateTextCodePMLists).subscribe(res => {
             this.IsSaveQuoteTemplateTextCodeRuning = false;
             this.SaveCompleted();
 

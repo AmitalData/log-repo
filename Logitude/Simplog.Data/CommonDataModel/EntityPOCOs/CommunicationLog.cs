@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
@@ -65,7 +65,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsSecured { get; set; }
 
         public string EmailDeliveryError { get; set; }
-        public string AdditionalFields { get; set; }
 
         [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
@@ -94,8 +93,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("ResponseDocumentId")]
         public virtual Document ResponseDocument { get; set; }
+        
 
-        public string UniqueNumber { get; set; }
-        public bool? WasAnalyzed { get; set; }
+
     }
 }

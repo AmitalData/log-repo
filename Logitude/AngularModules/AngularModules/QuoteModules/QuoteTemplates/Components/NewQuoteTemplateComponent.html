@@ -1,4 +1,4 @@
-<table *ngIf="IsReady">
+﻿<table *ngIf="IsReady">
 
 
     <tr>
@@ -99,7 +99,6 @@
                                                 <tr>
 
                                                     <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.Name' | TextCodeTranslationPipe}} </td>
-                                                    <td *ngIf="VisibilityRadioFromTenant && AddType == 'FromAllTenant'" style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.TenantName' | TextCodeTranslationPipe}} </td>
                                                     <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.CreateDate' | TextCodeTranslationPipe}} </td>
                                                     <td style="width: 150px; min-width: 150px;max-width: 150px">{{'QuoteTemplate.F.UpdateDate' | TextCodeTranslationPipe}}  </td>
                                                     <td style="width: 60px; min-width: 60px;max-width: 60px">{{'QuoteTemplate.F.IsDefault' | TextCodeTranslationPipe}} </td>
@@ -130,10 +129,6 @@
 
                                                                             </td>
 
-                                                                            <td *ngIf="VisibilityRadioFromTenant && AddType == 'FromAllTenant'" class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
-
-                                                                                {{item.TenantName}} ({{item.Tenant}})
-                                                                            </td>
 
                                                                             <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
 

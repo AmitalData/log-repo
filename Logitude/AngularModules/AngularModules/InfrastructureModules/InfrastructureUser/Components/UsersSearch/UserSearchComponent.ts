@@ -15,7 +15,7 @@ import {ParameterComponentArgs} from '../../../../Infrastructure/DataContracts/P
 import {UserExtendedPMService} from '../../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UserSearchComponent.html',
 })
 
@@ -74,7 +74,7 @@ export class UserSearchComponent {
     }
 
     Run() {
-        this.userExtendedPMService.GetUsersTwoFactorAuthenticationEnabled(SessionLocator.Tenant).subscribe((resp:any) => {
+        this.userExtendedPMService.GetUsersTwoFactorAuthenticationEnabled(SessionLocator.Tenant).subscribe(resp => {
 
             //this.PartnersObslist.push(new EntityPartner("All", "", false));
            
@@ -82,7 +82,7 @@ export class UserSearchComponent {
             this.filterAgrs = new ApiQueryFilters();
             this.filterAgrs.SortBy = "IsTwoFactorAuthenticationEnabled";
             this.filterAgrs.SortDirection = "Descending";
-            this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
+            this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
 
             ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendTo", this));
 
@@ -121,7 +121,7 @@ export class UserSearchComponent {
 
 
         console.log(this.myPartnerId);
-        this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
+        this.onQueryChangeEvent.emit({ QueryId: "", Filters: this.filterAgrs });
 
 
     }
@@ -308,7 +308,7 @@ export class UserSearchComponent {
         this.ValidationErrorsList = [];
         //this.OnCloseSendToContactsEvent.emit(this);
         if (!AppTool.IsNullOrEmpty(window.ToEmailLists) && window.ToEmailLists.length > 0) {
-            this.userExtendedPMService.PostUpdateTwoFactorAuthenticationEnabled(SessionLocator.Tenant, window.ToEmailLists).subscribe((res:any) => {
+            this.userExtendedPMService.PostUpdateTwoFactorAuthenticationEnabled(SessionLocator.Tenant, window.ToEmailLists).subscribe(res => {
 
                 this.CloseButtonClicked();
             });

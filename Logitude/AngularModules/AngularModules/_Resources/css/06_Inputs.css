@@ -1,12 +1,10 @@
-input:hover:not(:disabled):not(:read-only), input:focus:not(:disabled):not(:read-only) {
+﻿input:hover:not(:disabled):not(:read-only), input:focus:not(:disabled):not(:read-only) {
     border: 1px solid #3BB3E2;
 }
 
 input:disabled {
     opacity: 0.5;
-    /*pointer-events: none;*/
-    pointer-events: auto; /*enable copy paste*/
-
+    pointer-events: none;
 }
 
 input {
@@ -95,4 +93,3 @@ select {
     border: 1px solid #AAAAAA !important;
     border-radius: 3px !important;
 }
-

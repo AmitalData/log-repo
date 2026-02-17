@@ -23,7 +23,7 @@ namespace Unifreight.BL.EntityPMs
         
         public string HASHAVUTCODE { get; set; }
         
-        public decimal? PAYAMOUNT { get; set; }
+        public double? PAYAMOUNT { get; set; }
         
         public DateTime? PAYDATE { get; set; }
 
@@ -40,11 +40,5 @@ namespace Unifreight.BL.EntityPMs
         public short? TYPE { get; set; }
         
         public string VATBANK { get; set; }
-
-        public int Tenant { get; set; }
-
-        public bool IS_SYNCH { get; set; }
-
-        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

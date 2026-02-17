@@ -23,7 +23,7 @@ import { CustomsBookList } from '../../../Customs/EntityLists/CustomsBookList';
 
 @Component({
     selector: 'CustomsBookQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomsBookQueryComponent.html',
 })
 
@@ -178,7 +178,7 @@ export class CustomsBookQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "עדכון ספר סיווג", true)
+            .ShowProgressBar(currRequestParams.PBId, "עדכון ספר סיווג", true)
             .then((res) => {
                 //this.ResponseData = res;
                 

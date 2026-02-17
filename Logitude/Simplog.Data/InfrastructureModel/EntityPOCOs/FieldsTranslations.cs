@@ -24,7 +24,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? TranslateDate { get; set; }
         public string TranslatedByUserId { get; set; }
         public bool IsTranslated { get; set; }
-        public string TextCodeCode { get; set; }
 
         public string ObjectTableTypeCode { get; set; }
 

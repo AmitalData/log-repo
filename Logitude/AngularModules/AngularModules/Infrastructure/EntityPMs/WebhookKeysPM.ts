@@ -20,7 +20,7 @@ export class WebhookKeysPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -75,19 +75,11 @@ export class WebhookKeysPM {
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
        
 	 
-    private searchFields: string;
-    public get SearchFields() { return this.searchFields; }
-    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-       
-	 
 
     public OldEntityPM: WebhookKeysPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -95,7 +87,6 @@ export class WebhookKeysPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WebhookKeys");
            
         }
-	 }
     }
     private MyClone: WebhookKeysPM;
 

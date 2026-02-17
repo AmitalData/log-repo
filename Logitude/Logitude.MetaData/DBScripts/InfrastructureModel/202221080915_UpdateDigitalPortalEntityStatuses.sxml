@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
-		<![CDATA[
-		update EntityStatus 
-		set IsDigitalPortal = '1'
-		where code in ('PODR', 'DELD', 'SDLY', 'SHOR', 'SDEP', 'SDL2', 'SHP2', 'PSDL', 'SHPK', 'SARR') and ObjectTableId = (select id from objecttables where name = 'shipment')
-    ]]>
-	</Sql> 
-</Script>

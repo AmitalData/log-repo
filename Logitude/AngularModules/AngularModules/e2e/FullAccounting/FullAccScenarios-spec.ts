@@ -5,7 +5,7 @@ import { FieldsHelper } from '../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../Helpers/GeneralFunctions';
 //import { FullAccProcess } from './FullAccProcess'
 import { NewCustomer } from '../FullAccounting/GLAccounts/NewCustomerGLaccount';
-import { NewARInvoice } from './ARInvoice/NewARInvoice';
+import { NewARInvoice } from './ARInvoice/New/NewARInvoice';
 import { NewARPayment } from "./ARPayment/NewARPayment";
 import { LoginComp } from "../login/Login.po";
 import { FullAccountingScenarios } from "./FullAccScenarios";

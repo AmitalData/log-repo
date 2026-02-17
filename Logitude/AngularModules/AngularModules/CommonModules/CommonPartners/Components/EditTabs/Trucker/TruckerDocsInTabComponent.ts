@@ -4,7 +4,7 @@ import { TruckerPM } from '../../../../../Common/EntityPMs/TruckerPM';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TruckerDocsInTabComponent.html',
 })
 

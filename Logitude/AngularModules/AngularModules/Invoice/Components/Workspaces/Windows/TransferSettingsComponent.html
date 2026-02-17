@@ -1,4 +1,29 @@
 
+<style type="text/css">
+    .Box {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .BoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
 <table *ngIf="IsResourcesReady">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -24,7 +49,6 @@
                 <div class="ScrollViewer">
                     <div class="ScrollContent">
                         <table>
-                            <!--AccountingSystemCode-->
                             <tr class="FormFieldRow">
                                 <td>
                                     <table>
@@ -78,7 +102,7 @@
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
-
+                                                                     
 
                                                                     </td>
 
@@ -99,11 +123,11 @@
                                 </td>
                             </tr>
 
-                            <tr *ngIf="AccountingSystemCode != 'NO'">
+                            <tr *ngIf="!IsAccountingSystemNone">
                                 <td>
                                     <table>
                                         <!-- ARInvoiceTransferStartDate -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI || IsAccountingSystem_QB_QBO">
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
                                             <td style="width:185px;">
                                                 <LogLabel [ObjectFieldName]="'ARInvoiceTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -117,14 +141,12 @@
                                             </td>
 
                                             <td>
-                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
-                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'Only AR Invoices with an invoice date greater than or equal to this date will be transferred to Quickbooks.'"></HelpIcon>
-                                                </div>
+                                                <div></div>
                                             </td>
                                         </tr>
 
                                         <!-- APInvoiceTransferStartDate -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI || IsAccountingSystem_QB_QBO">
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
                                             <td style="width:185px;">
                                                 <LogLabel [ObjectFieldName]="'APInvoiceTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
@@ -138,129 +160,7 @@
                                             </td>
 
                                             <td>
-                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
-                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'Only AP Invoices with a payment date greater than or equal to this date will be transferred to Quickbooks.'"></HelpIcon>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- ARPaymentTransferStartDate -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO">
-                                            <td style="width:185px;">
-                                                <LogLabel [ObjectFieldName]="'ARPaymentTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="width:200px;">
-                                                <LogDatePicker [ObjectFieldName]="'ARPaymentTransferStartDate'" [SelectedDateValue]="ARPaymentTransferStartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </td>
-
-                                            <td style="padding-left: 5px; width:20px;">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditTransferStartDateClicked('ARPayment')"></IconButton>
-                                            </td>
-
-                                            <td>
-                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
-                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'Only AR Payments with an invoice date greater than or equal to this date will be transferred to Quickbooks.'"></HelpIcon>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- APPaymentTransferStartDate -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO">
-                                            <td style="width:185px;">
-                                                <LogLabel [ObjectFieldName]="'APPaymentTransferStartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="width:200px;">
-                                                <LogDatePicker [ObjectFieldName]="'APPaymentTransferStartDate'" [SelectedDateValue]="APPaymentTransferStartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </td>
-
-                                            <td style="padding-left: 5px; width:20px;">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditTransferStartDateClicked('APPayment')"></IconButton>
-                                            </td>
-
-                                            <td>
-                                                <div style="float:left;padding-left:3px;" *ngIf="IsAccountingSystem_QB_QBO">
-                                                    <HelpIcon [Header]="'QBO Start Date'" [Text]="'Only AP Payments with a payment date greater than or equal to this date will be transferred to Quickbooks.'"></HelpIcon>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!--Transfer Enabled for-->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
-                                            <td style="width:185px;">
-                                                <LogLabel [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Text]="'Transfer Enabled for'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td colspan="3">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:85px;">
-                                                            <LogCheckBox [Text]="'AR Invoices'" [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Checked]="IsARInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                                        </td>
-
-                                                        <td style="width:10px;">
-                                                            <div>
-                                                            </div>
-                                                        </td>
-
-                                                        <td style="width:85px;">
-                                                            <LogCheckBox [Text]="'AP Invoices'" [ObjectFieldName]="'IsAPInvoicesTransferEnabled'" [Checked]="IsAPInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                                        </td>
-
-                                                        <td style="width:10px;">
-                                                            <div>
-                                                            </div>
-                                                        </td>
-
-                                                        <td style="width:85px;">
-                                                            <LogCheckBox [Text]="'AR Payments'" [ObjectFieldName]="'IsARPaymentsTransferEnabled'" [Checked]="IsARPaymentsTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                                        </td>
-
-                                                        <td style="width:10px;">
-                                                            <div>
-                                                            </div>
-                                                        </td>
-
-                                                        <td style="width:85px;">
-                                                            <LogCheckBox [Text]="'AP Payments'" [ObjectFieldName]="'IsAPPaymentsTransferEnabled'" [Checked]="IsAPPaymentsTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
-                                                        </td>
-
-                                                        <td>
-                                                            <div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-
-                                        <!-- External Transmission -->
-                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_AI_GI">
-                                            <td style="width:185px;">
-                                                <LogLabel [NoObjectField]="true" [Text]="'External Transmission'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="width:200px;">
-                                                <ComboBox [ItemsSource]="ExternalTransmissionList" [Binding]="'Name'" [SelectedItem]="SelectedExternalTransmission" (SelectedItemChanged)="SelectedExternalTransmission = $event"></ComboBox>
-                                            </td>
-
-                                            <td colspan="2">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:10px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width:100px;" *ngIf="SelectedExternalTransmission != null && SelectedExternalTransmission.Code != 'NON'">
-                                                            <span (click)="ExternalTransmissionSettingsClicked()" style="font-size:12px;" class="hyperlink">Settings</span>
-                                                        </td>
-
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                <div></div>
                                             </td>
                                         </tr>
 
@@ -347,6 +247,169 @@
 
                                             <td style="width:200px;">
                                                 <LogTextBox [ObjectFieldName]="'PayableVATCard'" [Text]="PayableVATCard" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                            </td>
+
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Dropbox -->
+                                        <tr class="FormFieldRow" *ngIf="CanTransferToDropbox && IsAccountingSystem_AI_GI">
+                                            <td colspan="4">
+                                                <table>
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width:10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            Connect To Dropbox account to enable transfer via dropbox folder
+                                                            <span (click)="ConnectDropBox()" style="font-size:12px;" class="hyperlink">Dropbox Connection</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="FormFieldRow">
+                                                        <td style="width:10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <LogCheckBox [ObjectFieldName]="'TransferToDropboxActivated'" (ValueChanged)="SendDropBoxChecked($event)" [Text]="'Enable Transfer via Dropbox folders'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="TransferToDropboxActivated">
+                                                        <td style="width:10px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="Box" style="width:450px;">
+                                                                <table>
+                                                                    <tr class="BoxHeader">
+                                                                        <td colspan="3">
+                                                                            <span style="font-size:12px;color:#1B90CB;">Folders</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:95px;"> AR Invoices </td>
+                                                                        <td style="width:280px;">
+                                                                            <div style="border:1px solid gray;border-radius:3px;padding:2px;">
+                                                                                FromLogitude\ARInvoices
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:95px;"> AP Invoices </td>
+                                                                        <td style="width:280px;">
+                                                                            <div style="border:1px solid gray;border-radius:3px;padding:2px;">
+                                                                                FromLogitude\APInvoices
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:95px;"> AR Payments </td>
+                                                                        <td style="width:280px;">
+                                                                            <div style="border:1px solid gray;border-radius:3px;padding:2px;">
+                                                                                FromLogitude\ARPayments
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <!-- AR Invoice Transfering Enabled -->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
+                                            <td style="width:185px;">
+                                                <LogLabel [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Text]="'AR Invoice transfer enabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogCheckBox [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Checked]="IsARInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                            </td>
+
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- AP Invoice Transfering Enabled -->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_HV_RH || IsAccountingSystem_AI_GI">
+                                            <td style="width:185px;">
+                                                <LogLabel [ObjectFieldName]="'IsAPInvoicesTransferEnabled'" [Text]="'AP Invoice transfer enabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogCheckBox [ObjectFieldName]="'IsAPInvoicesTransferEnabled'" [Checked]="IsAPInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                            </td>
+
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- AR Payment Transfering Enabled -->
+                                        <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_AI_GI">
+                                            <td style="width:185px;">
+                                                <LogLabel [ObjectFieldName]="'IsARPaymentsTransferEnabled'" [Text]="'AR Payment transfer enabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:200px;">
+                                                <LogCheckBox [ObjectFieldName]="'IsARPaymentsTransferEnabled'" [Checked]="IsARPaymentsTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                            </td>
+
+                                            <td colspan="2">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+
+                            <!-- AP Payment Transfering Enabled -->
+                            <tr class="FormFieldRow" *ngIf="IsAccountingSystem_QB_QBO || IsAccountingSystem_AI_GI">
+                                <td style="width:185px;">
+                                    <LogLabel [ObjectFieldName]="'IsAPPaymentsTransferEnabled'" [Text]="'AP Payment transfer enabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                            <td style="width:200px;">
+                                                <LogCheckBox [ObjectFieldName]="'IsAPPaymentsTransferEnabled'" [Checked]="IsAPPaymentsTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
                                             </td>
 
                                             <td colspan="2">

@@ -2,8 +2,7 @@ import {AppTool, DateTool, ArrayTool} from '../Infrastructure/Tools';
 import {Validator} from '../Infrastructure/Validators/Validator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from '../Infrastructure/Utilities/TextCodeTranslator';
-import { PackageAmountCalculator } from '../Infrastructure/Utilities/PackageAmountCalculator';
+import {TextCodeTranslator} from '../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPM} from './EntityPMs/ShipmentPM';
 import {ShipmentPayablePM} from './EntityPMs/ShipmentPayablePM';
 import {ShipmentReceivablePM} from './EntityPMs/ShipmentReceivablePM';
@@ -27,15 +26,8 @@ import {LastRate} from '../Common/Services/CurrencyRatesService';
 import {ServiceResponse} from '../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentPickUpPM} from './EntityPMs/ShipmentPickUpPM';
 import {ShipmentDeliveryPM} from './EntityPMs/ShipmentDeliveryPM';
-import { ShipmentStoragePricingPM } from './EntityPMs/ShipmentStoragePricingPM';
-import { CardListService } from '../Common/Services/StandardLists/CardListService';
-import { CommonDomainService } from '../Common/Services/CommonDomainService';
-import { VatTypeListService } from '../Common/Services/StandardLists/VatTypeListService';
-import { VatTypeList } from '../Common/EntityLists/VatTypeList';
-import { VatTypePercentagePM } from '../Common/EntityPMs/VatTypePercentagePM';
-import { ShipmentPickUpDeliveryPackagePM } from './EntityPMs/ShipmentPickUpDeliveryPackagePM';
-import { ShipmentPackageHarmonizePM } from './EntityPMs/ShipmentPackageHarmonizePM';
-import { ShipmentProductItemPM } from './EntityPMs/ShipmentProductItemPM';
+import {VatTypeList} from '../Common/EntityLists/VatTypeList';
+import { retry } from 'rxjs/operators';
 
 export class ShipmentTool {
     private static CurrentSession = SessionLocator.SelectedSession;
@@ -309,12 +301,10 @@ export class ShipmentTool {
         shipmentPM.SalesmanUserId = oldShipment.SalesmanUserId;
         shipmentPM.AWBCurrencyId = oldShipment.AWBCurrencyId;
         shipmentPM.QuoteId = oldShipment.QuoteId;
-        shipmentPM.QuoteNumber = oldShipment.QuoteNumber;
         shipmentPM.IncotermId = oldShipment.IncotermId;
         shipmentPM.FreightPrepaidCollectId = oldShipment.FreightPrepaidCollectId;
         shipmentPM.OtherPrepaidCollectId = oldShipment.OtherPrepaidCollectId;
         shipmentPM.MoveTypeId = oldShipment.MoveTypeId;
-        shipmentPM.ShipmentSubTypeId = oldShipment.ShipmentSubTypeId;
 
         // FWB CCS Dummy fields
         shipmentPM.TenantZeroAirlineId = oldShipment.TenantZeroAirlineId;
@@ -455,17 +445,6 @@ export class ShipmentTool {
         shipmentPM.MainCarriageFinalDestinationPortId = oldShipment.MainCarriageFinalDestinationPortId;
         shipmentPM.ValueOfGoods = oldShipment.ValueOfGoods;
         shipmentPM.ValueOfGoodsCurrencyId = oldShipment.ValueOfGoodsCurrencyId;
-
-        shipmentPM.InlandDomesticFromZipCode = oldShipment.InlandDomesticFromZipCode;
-        shipmentPM.InlandDomesticToZipCode = oldShipment.InlandDomesticToZipCode;
-        shipmentPM.InlandDomesticFromCity = oldShipment.InlandDomesticFromCity;
-        shipmentPM.InlandDomesticToCity = oldShipment.InlandDomesticToCity;
-        shipmentPM.InlandDomesticFromCountryId = oldShipment.InlandDomesticFromCountryId;
-        shipmentPM.InlandDomesticToCountryId = oldShipment.InlandDomesticToCountryId;
-        shipmentPM.InlandDomesticFromTypeCode = oldShipment.InlandDomesticFromTypeCode;
-        shipmentPM.InlandDomesticToTypeCode = oldShipment.InlandDomesticToTypeCode;
-        shipmentPM.MainCarriageFromPortAddress = oldShipment.MainCarriageFromPortAddress;
-        shipmentPM.MainCarriageToPortAddress = oldShipment.MainCarriageToPortAddress;
     }
     public static CopyShipmentPackages(shipmentPM: ShipmentPM, oldShipment: ShipmentPM, copyOtherProperties: boolean) {
         if (copyOtherProperties) {
@@ -482,7 +461,6 @@ export class ShipmentTool {
             shipmentPM.GrossWeight = oldShipment.GrossWeight;
             shipmentPM.GrossWeightInKG = oldShipment.GrossWeightInKG;
             shipmentPM.GrossWeightPerTon = oldShipment.GrossWeightPerTon;
-            shipmentPM.GrossWeightPerStorageDays = oldShipment.GrossWeightPerStorageDays;
             shipmentPM.Volume = oldShipment.Volume;
             shipmentPM.VolumeInCBM = oldShipment.VolumeInCBM;
             shipmentPM.ChargeableWeight = oldShipment.ChargeableWeight;
@@ -585,8 +563,8 @@ export class ShipmentTool {
                 newItem.PackageTypeName = item.PackageTypeName;
                 newItem.PackagingGroup = item.PackagingGroup;
                 newItem.Quantity = item.Quantity;
-                //newItem.ShipperSeal = item.ShipperSeal;
-                //newItem.CarrierSeal = item.CarrierSeal;
+                newItem.ShipperSeal = item.ShipperSeal;
+                newItem.CarrierSeal = item.CarrierSeal;
                 newItem.SOC = item.SOC;
                 newItem.Tare = item.Tare;
                 newItem.Temperature = item.Temperature;
@@ -596,9 +574,6 @@ export class ShipmentTool {
                 newItem.VolumetricWeight = item.VolumetricWeight;
                 newItem.Weight = item.Weight;
                 newItem.Width = item.Width;
-                newItem.LCLContainerTypeId = item.LCLContainerTypeId;
-                newItem.HorseId = item.HorseId;
-                newItem.HorseName = item.HorseName;
                 shipmentPM.ShipmentPackages.push(newItem);
 
                 item.InsideShipmentPackages.forEach(inside => {
@@ -613,8 +588,6 @@ export class ShipmentTool {
                     newItemInside.Volume = inside.Volume;
                     newItemInside.Weight = inside.Weight;
                     newItemInside.Width = inside.Width;
-                    newItemInside.HorseId = inside.HorseId;
-                    newItemInside.HorseName = inside.HorseName;
                     newItem.InsideShipmentPackages.push(newItemInside);
                 });
             });
@@ -806,7 +779,7 @@ export class ShipmentTool {
             newItem.MaterialDescription = item.MaterialDescription;
             newItem.IsDangerous = item.IsDangerous;
             newItem.CommodityId = item.CommodityId;
-            newItem.LCLContainerTypeId = item.LCLContainerTypeId;
+
             shipmentPM.ShipmentPackages.push(newItem);
         });
     }
@@ -1023,52 +996,21 @@ export class ShipmentTool {
             entityPM.AWBChargesCodeCode = "PC";
         }
     }
-    public static ComputeAWBFrieghtAmountCollectAndPrepaid(entityPM: ShipmentPM) {
-        var computedAmount = entityPM.AWBChargeAmount;
-        var totaAmount = entityPM.AWBFreightAmountPrepaid + entityPM.AWBFreightAmountCollect;
-
-        var recompute = true;
-        var isPrepaidHasAmount = (entityPM.AWBFreightAmountPrepaid != 0 && entityPM.AWBFreightAmountPrepaid != null);
-        var isCollectHasAmount = (entityPM.AWBFreightAmountCollect != 0 && entityPM.AWBFreightAmountCollect != null);
-
-        if (!AppTool.IsNullOrEmpty(entityPM.FreightPrepaidCollectId)) {
-            if (isPrepaidHasAmount && isCollectHasAmount && (computedAmount == totaAmount)) {
-                recompute = false;
-            }
-        }
-
-        if (recompute) {
-            if (entityPM.FreightPrepaidCollectId == "P") {
-                entityPM.AWBFreightAmountCollect = 0;
-                entityPM.AWBFreightAmountPrepaid = computedAmount == null ? 0 : computedAmount;
-            }
-
-            else if (entityPM.FreightPrepaidCollectId == "C") {
-                entityPM.AWBFreightAmountPrepaid = 0;
-                entityPM.AWBFreightAmountCollect = computedAmount == null ? 0 : computedAmount;
-            }
-        }
-    }
-
-    public static ComputeAWBChargeAmount(entityPm: any, isShipmentCommodity = false) {
+    public static ComputeAWBChargeAmount(myRateClassCode: string, myChargeRate: number, myChargeableWeight: number) {
         var myResult: number = null;
-        var myRateClassCode = entityPm.RateClassCode;
-        var myChargeRate = isShipmentCommodity ? entityPm.ChargeRate : entityPm.AWBChargeRate;
-        var chargeAmount = entityPm.ChargeableWeight;
-        if (myRateClassCode== "K") {
-            chargeAmount = entityPm.ChargeableWeightInKG;
-        }
-        var myChargeableWeight = chargeAmount;
+
         var groupCode = this.GetRateClassGroupCode(myRateClassCode);
+
         if (groupCode == "M") {
             myResult = myChargeRate;
         }
+
         else if (groupCode == "R") {
             myResult = myChargeRate * myChargeableWeight;
         }
+
         return myResult;
     }
-
     public static ValidateAddedPackagesCount(entityPM: ShipmentPM): string {
         var myResult = "";
 
@@ -1717,12 +1659,12 @@ export class ShipmentTool {
                 shipmentPM.ShipmentPackages.forEach((item) => {
 
                     item.InsideShipmentPackages.forEach((insideItem) => {
-                        insideItem.Volume = PackageAmountCalculator.ComputeVolume(insideItem.Volume, insideItem.Quantity, insideItem.Width, insideItem.Height, insideItem.Length, insideItem.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
-                        insideItem.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(insideItem.VolumetricWeight, insideItem.Volume, insideItem.Weight, shipmentPM.Ratio, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
+                        insideItem.Volume = AppTool.ComputePackageVolume(insideItem.Quantity, insideItem.Width, insideItem.Height, insideItem.Length, insideItem.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
+                        insideItem.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(insideItem.Quantity, insideItem.Width, insideItem.Height, insideItem.Length, insideItem.Volume, insideItem.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
                     })
 
-                    item.Volume = PackageAmountCalculator.ComputeVolume(item.Volume, item.Quantity, item.Width, item.Height, item.Length, item.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
-                    item.VolumetricWeight = PackageAmountCalculator.ComputeVolumetricWeight(item.VolumetricWeight, item.Volume, item.Weight, shipmentPM.Ratio, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
+                    item.Volume = AppTool.ComputePackageVolume(item.Quantity, item.Width, item.Height, item.Length, item.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode);
+                    item.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(item.Quantity, item.Width, item.Height, item.Length, item.Volume, item.Weight, shipmentPM.Ratio, shipmentPM.DimensionsUnitCode, shipmentPM.VolumeUnitCode, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode);
 
                     if (item.Quantity != null) {
                         myQuantity += item.Quantity;
@@ -1819,7 +1761,7 @@ export class ShipmentTool {
                 shipmentPM.OrderChargeableWeight = AppTool.CalculateChargeableWeight(shipmentPM.OrderGrossWeight, shipmentPM.OrderVolumetricWeight, shipmentPM.GrossWeightUnitCode, shipmentPM.ChargeableWeightUnitCode, shipmentPM.DirectionId, shipmentPM.TransportModeId);
             }
 
-            else {
+            else {                
                 if (shipmentPM.BookingVolume) {
                     var orderVolumetricWeight = AppTool.GetWeightFromVolume(shipmentPM.VolumeUnitCode, shipmentPM.ChargeableWeightUnitCode, shipmentPM.BookingVolume, shipmentPM.Ratio);
 
@@ -1859,566 +1801,85 @@ export class ShipmentTool {
     }
     public static OnShipmentQuantitiesChanged(entityPM: ShipmentPM) {
         if (entityPM) {
-            entityPM.ShipmentPayables.forEach(itemPayable => {
-                if (AppTool.IsNullOrEmpty(itemPayable.UnitPrice)) {
-                    if (AppTool.IsNullOrEmpty(itemPayable.ShipmentPayableParentId)) {
-                        if (itemPayable.ShipmentPayableAmountTypeCode != "NEXP" && itemPayable.ShipmentPayableLineStatusCode != "ACCT" && itemPayable.ShipmentPayableLineStatusCode != "PACC") {
+            var isLCL = this.IsLCL(entityPM);
+            if (isLCL) {
 
-                            var myQuantity: number = null;
-                            switch (itemPayable.MeasurementCode) {
-                                case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
-                                case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
-                                case "VOLU": { myQuantity = entityPM.Volume; break; }
-                                case "BTEU": { myQuantity = entityPM.TEU; break; }
-                                case "FIXD": { myQuantity = 1; break; }
-                                case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
-                                case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
-                                case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
-                                case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
-                                case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
-                                case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
-                                case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
-                                case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                case "PFCL": {
-                                    myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"), 3);
-                                    break;
+                entityPM.ShipmentPayables.forEach(itemPayable => {
+                    if (AppTool.IsNullOrEmpty(itemPayable.UnitPrice)) {
+                        if (AppTool.IsNullOrEmpty(itemPayable.ShipmentPayableParentId)) {
+                            if (itemPayable.ShipmentPayableAmountTypeCode != "NEXP" && itemPayable.ShipmentPayableLineStatusCode != "ACCT" && itemPayable.ShipmentPayableLineStatusCode != "PACC") {
+
+                                var myQuantity: number = null;
+                                switch (itemPayable.MeasurementCode) {
+                                    case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
+                                    case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
+                                    case "VOLU": { myQuantity = entityPM.Volume; break; }
+                                    case "BTEU": { myQuantity = entityPM.TEU; break; }
+                                    case "FIXD": { myQuantity = 1; break; }
+                                    case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
+                                    case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
+                                    case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
+                                    case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
+                                    case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
+                                    default: { break; }
                                 }
-                                default: { break; }
-                            }
 
-                            if (itemPayable.Quantity != myQuantity) {
-                                itemPayable.Quantity = AppTool.Round(myQuantity, 3);
+                                if (itemPayable.Quantity != myQuantity) {
+                                    itemPayable.Quantity = AppTool.Round(myQuantity, 3);
 
-                                if (itemPayable.IsChargeBySteps) {
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            entityPM.ShipmentReceivables.forEach(itemReceivable => {
-                if (AppTool.IsNullOrEmpty(itemReceivable.UnitPrice)) {
-                    if (AppTool.IsNullOrEmpty(itemReceivable.ShipmentReceivableParentId)) {
-                        if (AppTool.IsNullOrEmpty(itemReceivable.ARInvoiceId)) {
-
-                            var myQuantity: number = null;
-                            switch (itemReceivable.MeasurementCode) {
-                                case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
-                                case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
-                                case "VOLU": { myQuantity = entityPM.Volume; break; }
-                                case "BTEU": { myQuantity = entityPM.TEU; break; }
-                                case "FIXD": { myQuantity = 1; break; }
-                                case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
-                                case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
-                                case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
-                                case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
-                                case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
-                                case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
-                                case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
-                                case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                case "PFCL": {
-                                    myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"), 3);
-                                    break;
-                                }
-                                default: { break; }
-                            }
-
-                            if (itemReceivable.Quantity != myQuantity) {
-                                itemReceivable.Quantity = AppTool.Round(myQuantity, 3);
-
-                                if (itemReceivable.IsChargeBySteps) {
-                                    //this.SetReceivableUnitPriceBySteps(itemReceivable, this.fatherComponent.BaseQuote);
+                                    if (itemPayable.IsChargeBySteps) {
+                                        //this.SetPayableUnitPriceBySteps(itemPayable, this.fatherComponent.BaseQuote);
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            });
-        }
-    }
+                });
 
-    public static OnWarehouseStorageFreeDaysChanged(entityPM: ShipmentPM) {
-        if (entityPM) {
-            entityPM.ShipmentPayables.forEach(itemPayable => {
-                if (AppTool.IsNullOrEmpty(itemPayable.UnitPrice)) {
-                    if (AppTool.IsNullOrEmpty(itemPayable.ShipmentPayableParentId)) {
-                        if (itemPayable.ShipmentPayableAmountTypeCode != "NEXP" && itemPayable.ShipmentPayableLineStatusCode != "ACCT" && itemPayable.ShipmentPayableLineStatusCode != "PACC") {
+                entityPM.ShipmentReceivables.forEach(itemReceivable => {
+                    if (AppTool.IsNullOrEmpty(itemReceivable.UnitPrice)) {
+                        if (AppTool.IsNullOrEmpty(itemReceivable.ShipmentReceivableParentId)) {
+                            if (AppTool.IsNullOrEmpty(itemReceivable.ARInvoiceId)) {
 
-                            var myQuantity: number = null;
-                            switch (itemPayable.MeasurementCode) {
-                                case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
-                                case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
-                                case "VOLU": { myQuantity = entityPM.Volume; break; }
-                                case "BTEU": { myQuantity = entityPM.TEU; break; }
-                                case "FIXD": { myQuantity = 1; break; }
-                                case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
-                                case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
-                                case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
-                                case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
-                                case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
-                                case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
-                                case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
-                                case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                case "PFCL": {
-                                    myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"),3);
-                                    break;
+                                var myQuantity: number = null;
+                                switch (itemReceivable.MeasurementCode) {
+                                    case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
+                                    case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
+                                    case "VOLU": { myQuantity = entityPM.Volume; break; }
+                                    case "BTEU": { myQuantity = entityPM.TEU; break; }
+                                    case "FIXD": { myQuantity = 1; break; }
+                                    case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
+                                    case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
+                                    case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
+                                    case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
+                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
+                                    case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
+                                    default: { break; }
                                 }
-                                default: { break; }
-                            }
 
-                            if (itemPayable.Quantity != myQuantity) {
-                                itemPayable.Quantity = AppTool.Round(myQuantity, 3);
+                                if (itemReceivable.Quantity != myQuantity) {
+                                    itemReceivable.Quantity = AppTool.Round(myQuantity, 3);
 
-                                if (itemPayable.IsChargeBySteps) {
+                                    if (itemReceivable.IsChargeBySteps) {
+                                        //this.SetReceivableUnitPriceBySteps(itemReceivable, this.fatherComponent.BaseQuote);
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            });
-
-            entityPM.ShipmentReceivables.forEach(itemReceivable => {
-                if (AppTool.IsNullOrEmpty(itemReceivable.UnitPrice)) {
-                    if (AppTool.IsNullOrEmpty(itemReceivable.ShipmentReceivableParentId)) {
-                        if (AppTool.IsNullOrEmpty(itemReceivable.ARInvoiceId)) {
-
-                            var myQuantity: number = null;
-                            switch (itemReceivable.MeasurementCode) {
-                                case "GRWT": { myQuantity = entityPM.GrossWeight; break; }
-                                case "CHWT": { myQuantity = entityPM.ChargeableWeight; break; }
-                                case "VOLU": { myQuantity = entityPM.Volume; break; }
-                                case "BTEU": { myQuantity = entityPM.TEU; break; }
-                                case "FIXD": { myQuantity = 1; break; }
-                                case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
-                                case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
-                                case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
-                                case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
-                                case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
-                                case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
-                                case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
-                                case "SCGW": { myQuantity = entityPM.GrossWeightPerStorageDays; break; }
-                                case "PFCL": {
-                                    myQuantity = AppTool.Round(ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"),3);
-                                    break;
-                                }
-                                default: { break; }
-                            }
-
-                            if (itemReceivable.Quantity != myQuantity) {
-                                itemReceivable.Quantity = AppTool.Round(myQuantity, 3);
-
-                                if (itemReceivable.IsChargeBySteps) {
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    public static ComputeImportStorageReceivableAmount(storageDays: number, entityPM: ShipmentPM): number {
-        var amount: number = 0;
-        var weight: number = 0;
-        var allChargeableDays: number = storageDays - entityPM.WarehouseStorageFreeDays;
-        var weight: number = this.ComputeStorageWeight(entityPM);
-
-        var myPricigs: CalculatedPricingItem[] = [];
-        if (!AppTool.IsNullOrZero(weight)) {
-
-            entityPM.ShipmentStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                var newItem: CalculatedPricingItem = new CalculatedPricingItem();
-                newItem.LineNumber = item.LineNumber;
-                newItem.Price = item.SalePrice;
-
-                newItem.ChargeableDays = allChargeableDays - ArrayTool.Sum(myPricigs, "ChargeableDays");
-
-                if (!AppTool.IsNullOrZero(item.Days)) {
-                    if (newItem.ChargeableDays > item.Days) {
-                        newItem.ChargeableDays = item.Days
-                    }
-                }
-
-                newItem.Amount = AppTool.Round((item.SalePrice * weight * newItem.ChargeableDays), 2);
-                myPricigs.push(newItem);
-            });
-
-            this.UpdateShipmentStoragePricingLine(myPricigs, entityPM);
-            amount = ArrayTool.Sum(myPricigs, "Amount");
-        }
-
-        var myResult: number = amount;
-        var invoiceStorageReceivable: ShipmentReceivablePM = entityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-        if (invoiceStorageReceivable) {
-            myResult = amount - invoiceStorageReceivable.TotalAmount;
-        }
-
-        return myResult;
-    } 
-    public static ComputeStorageWeight(entityPM: ShipmentPM): number {
-        var weightRounded: number = 0;
-        var weight: number = 0;
-        var rounding: number = 0;
-
-        if (entityPM.WeightMeasurementCode == "GRWT") {
-            weight = entityPM.GrossWeight;
-        }
-
-        else {
-            weight = entityPM.ChargeableWeight;
-        }
-
-        if (entityPM.WeightRoundingCode == "HAF") {
-            rounding = 0.5;
-        }
-
-        else if (entityPM.WeightRoundingCode == "ONE") {
-            rounding = 1;
-        }
-
-        if (!AppTool.IsNullOrZero(weight) && !AppTool.IsNullOrZero(rounding)) {
-            var toString: string = weight.toString();
-            var r: string[] = toString.split('.');
-
-            if (r.length > 1) {
-                var strDigits: string = "0." + r[1];
-                var digits: number = +strDigits;
-                var integer: number = +r[0];
-
-                if (rounding == 0.5) {
-                    if (digits <= 0.5) {
-                        weightRounded = integer + 0.5;
-                    }
-
-                    else {
-                        weightRounded = integer + 1;
-                    }
-                }
-
-                else {
-                    weightRounded = integer + 1;
-                }
+                });
             }
 
             else {
-                weightRounded = weight;
-            }
-        }
 
-        else {
-            weightRounded = weight;
-        }
-
-        return weightRounded;
-    }
-    private static UpdateShipmentStoragePricingLine(myPricigs: CalculatedPricingItem[], entityPM: ShipmentPM) {
-        myPricigs.forEach(item => {
-            var shipmentPricing: ShipmentStoragePricingPM = entityPM.ShipmentStoragePricings.filter(d => d.LineNumber == item.LineNumber)[0];
-            if (shipmentPricing) {
-                shipmentPricing.Amount = item.Amount;
-                shipmentPricing.ChargeableDays = item.ChargeableDays;
             }
-        });
+
+        }
     }
 
-    public static IsValidatingShipmentMasterFieldExistance(entityPM: ShipmentPM) {
-        var output: boolean = false;
-
-        if (entityPM.Tenant != 343 && entityPM.Tenant != 528) {
-            if (entityPM.DirectionId == "E" && entityPM.TransportModeId == "A") {
-                if (entityPM.ShipmentLevelCode == "C" || entityPM.ShipmentLevelCode == "D") {
-                    if (!AppTool.IsNullOrEmpty(entityPM.Master) && !AppTool.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled) {
-                        output = true;
-                    }
-                }
-            }
-        }
-
-        return output;
-    }
-    public static CalculateShipmentOperationalDate(entityPM: ShipmentPM): Date {
-        var output: Date = null;
-
-        if (entityPM.ShipmentLevelCode == "H") {
-            output = this.CalculateHouseShipmentOperationalDate(entityPM);
-        }
-
-        else {
-            if (entityPM.DirectionId == "I") {
-                output = this.CalculateArrivalShipmentOperationalDate(entityPM);
-
-            }
-
-            else {
-                output = this.CalculateDepartureShipmentOperationalDate(entityPM);
-            }
-        }
-
-        return output;
-    }
-    private static CalculateHouseShipmentOperationalDate(entityPM: ShipmentPM): Date {
-        var output: Date = null;
-
-        if (entityPM.MasterShipmentDataId) {
-            output = entityPM.OperationalDate;
-        }
-
-        if (!output) {
-            output = entityPM.CreateDateTime;
-        }
-
-        return output;
-    }
-    private static CalculateArrivalShipmentOperationalDate(entityPM: ShipmentPM): Date {
-        var output: Date = null;
-
-        if (entityPM.Transshipment3ATA) {
-            output = entityPM.Transshipment3ATA;
-        }
-
-        else if (entityPM.Transshipment2ATA) {
-            output = entityPM.Transshipment2ATA;
-        }
-
-        else if (entityPM.Transshipment1ATA) {
-            output = entityPM.Transshipment1ATA;
-        }
-
-        else if (entityPM.MainCarriageATA) {
-            output = entityPM.MainCarriageATA;
-        }
-
-        else if (entityPM.Transshipment3ETA) {
-            output = entityPM.Transshipment3ETA;
-        }
-
-        else if (entityPM.Transshipment2ETA) {
-            output = entityPM.Transshipment2ETA;
-        }
-
-        else if (entityPM.Transshipment1ETA) {
-            output = entityPM.Transshipment1ETA;
-        }
-
-        else if (entityPM.MainCarriageETA) {
-            output = entityPM.MainCarriageETA;
-        }
-
-        else {
-            output = entityPM.CreateDateTime;
-        }
-
-        return output;
-    }
-    private static CalculateDepartureShipmentOperationalDate(entityPM: ShipmentPM): Date {
-        var output: Date = null;
-
-        if (entityPM.MainCarriageATD) {
-            output = entityPM.MainCarriageATD;
-        }
-
-        else if (entityPM.Transshipment1ATD) {
-            output = entityPM.Transshipment1ATD;
-        }
-
-        else if (entityPM.Transshipment2ATD) {
-            output = entityPM.Transshipment2ATD;
-        }
-
-        else if (entityPM.Transshipment3ATD) {
-            output = entityPM.Transshipment3ATD;
-        }
-
-        else if (entityPM.MainCarriageETD) {
-            output = entityPM.MainCarriageETD;
-        }
-
-        else if (entityPM.Transshipment1ETD) {
-            output = entityPM.Transshipment1ETD;
-        }
-
-        else if (entityPM.Transshipment2ETD) {
-            output = entityPM.Transshipment2ETD;
-        }
-
-        else if (entityPM.Transshipment3ETD) {
-            output = entityPM.Transshipment3ETD;
-        }
-
-        else {
-            output = entityPM.CreateDateTime;
-        }
-
-        return output;
-    }
-
-    public static BuildStansaloneShipment(delivery: ShipmentDeliveryPM, pickup: ShipmentPickUpPM, shipment: ShipmentPM) {
-        var shipmentPM: ShipmentPM = new ShipmentPM();
-        var isLCLShipment = this.IsLCL(shipment);
-
-        shipmentPM.IsStandalonePickupDelivery = true;
-        shipmentPM.Tenant = SessionLocator.Tenant;
-        shipmentPM.TransportModeId = "I";
-        shipmentPM.DirectionId = "D";
-        shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
-        shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-        shipmentPM.FreightPrepaidCollectId = SessionLocator.TenantPM.ExportFreightPrepaidCollectId;
-        shipmentPM.OtherPrepaidCollectId = SessionLocator.TenantPM.ExportOtherPrepaidCollectId;
-        shipmentPM.ShipmentLevelCode = "D";
-        shipmentPM.ShipmentTypeId = isLCLShipment ? "LTL" : "FTL";
-        shipmentPM.FHLStatusCode = "NSEN";
-        shipmentPM.FWBStatusCode = "NSEN";
-        shipmentPM.FHLStatusName = "Not Sent";
-        shipmentPM.FWBStatusName = "Not Sent";
-        shipmentPM.ManifestStatusCode = "NSEN";
-        shipmentPM.LocalCustomsTransmissionsStatusCode = "NSEN";
-        shipmentPM.IsOperationalClosed = false;
-        shipmentPM.CreateDateTime = DateTool.GetCurrentDateTimeAsUtc();
-        shipmentPM.LastUpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-        shipmentPM.StatusDate = DateTool.GetCurrentDateTimeAsUtc();
-        shipmentPM.Tenant = SessionLocator.Tenant;
-        shipmentPM.AWBCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-        shipmentPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
-        shipmentPM.VolumeUnitCode = SessionLocator.TenantPM.VolumeUnitCode;
-        shipmentPM.DimensionsUnitCode = SessionLocator.TenantPM.DimensionsUnitCode;
-        shipmentPM.GrossWeightUnitCode = SessionLocator.TenantPM.GrossWeightUnitCode;
-        shipmentPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        shipmentPM.NewConcurrencyGUID = AppTool.GetNewGuid();
-        shipmentPM.ValueOfGoodsCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-        shipmentPM.OnCarriageAdditionalTransportModeCode = "BYTR";
-        shipmentPM.OnForwardingAdditionalTransportModeCode = "BYTR";
-        shipmentPM.ShipmentNumber = shipment.ShipmentNumber;
-        shipmentPM.DepartmentId = shipment.DepartmentId;
-        shipmentPM.BranchId = shipment.BranchId;
-        shipmentPM.IncotermId = shipment.IncotermId;
-        shipmentPM.ForwarderStandaloneShipmentId = shipment.Id;
-        shipmentPM.ParentShipmentDirectionId = shipment.DirectionId;
-        shipmentPM.ParentShipmentNumber = shipment.ShipmentNumber;
-        shipmentPM.ParentShipmentType = shipment.ShipmentType;         
-
-        if (delivery) {
-            shipmentPM.StandalonePickupDeliveryId = delivery.Id;
-            shipmentPM.StandalonePickupDeliveryNumber = delivery.PickUpDeliveryNumber;
-            shipmentPM.MainCarriageFromPartnerId = delivery.FromPartnerCardId;
-            shipmentPM.MainCarriageFromAddressId = delivery.FromAddressId;
-            shipmentPM.MainCarriageToPartnerId = delivery.ToPartnerCardId;
-            shipmentPM.MainCarriageToAddressId = delivery.ToAddressId;
-            shipmentPM.MainCarriageCarrierId = delivery.CarrierId;
-            shipmentPM.MainCarriageCarrierNumber = delivery.CarrierNumber;
-            shipmentPM.Driver = delivery.Driver;
-            shipmentPM.TruckNumber = delivery.TruckNumber;
-            shipmentPM.TrailerNumber = delivery.TrailerNumber;
-            shipmentPM.MainCarriageETD = delivery.ETD;
-            shipmentPM.MainCarriageETA = delivery.ETA;
-            shipmentPM.MainCarriageATD = delivery.ATD;
-            shipmentPM.MainCarriageATA = delivery.ATA;
-            shipmentPM.ConsigneeId = shipment.ConsigneeId;
-            shipmentPM.ConsigneeAddressId = shipment.ConsigneeAddressId;
-            shipmentPM.CustomerId = shipment.ConsigneeId;
-            shipmentPM.ShipmentCustomerTypeCode = "CON";
-            shipmentPM.InlandDomesticFromTypeCode = delivery.PickUpDeliveryFromTypeCode;
-            shipmentPM.InlandDomesticToTypeCode = delivery.PickUpDeliveryToTypeCode;
-            shipmentPM.MainCarriageFromPortId = delivery.FromPortId;
-            shipmentPM.MainCarriageToPortId = delivery.ToPortId;
-            shipmentPM.InlandDomesticFromCity = delivery.FromAddressCity;
-            shipmentPM.InlandDomesticToCity = delivery.ToAddressCity;
-            shipmentPM.InlandDomesticFromCountryId = delivery.FromAddressCountryId;
-            shipmentPM.InlandDomesticToCountryId = delivery.ToAddressCountryId;
-            shipmentPM.InlandDomesticFromZipCode = delivery.FromAddressZipCode;
-            shipmentPM.InlandDomesticToZipCode = delivery.ToAddressZipCode;
-            shipmentPM.MainCarriageFromPortAddress = delivery.FromAddress;
-            shipmentPM.MainCarriageToPortAddress = delivery.ToAddress;
-        }
-
-        else if (pickup) {
-            shipmentPM.StandalonePickupDeliveryId = pickup.Id;
-            shipmentPM.StandalonePickupDeliveryNumber = pickup.PickUpDeliveryNumber;
-            shipmentPM.MainCarriageFromPartnerId = pickup.FromPartnerCardId;
-            shipmentPM.MainCarriageFromAddressId = pickup.FromAddressId;
-            shipmentPM.MainCarriageToPartnerId = pickup.ToPartnerCardId;
-            shipmentPM.MainCarriageToAddressId = pickup.ToAddressId;
-            shipmentPM.MainCarriageCarrierId = pickup.CarrierId;
-            shipmentPM.MainCarriageCarrierNumber = pickup.CarrierNumber;
-            shipmentPM.Driver = pickup.Driver;
-            shipmentPM.TruckNumber = pickup.TruckNumber;
-            shipmentPM.TrailerNumber = pickup.TrailerNumber;
-            shipmentPM.ShipperId = shipment.ShipperId;
-            shipmentPM.ShipperAddressId = shipment.ShipperAddressId;
-            shipmentPM.CustomerId = shipment.ShipperId;
-            shipmentPM.ShipmentCustomerTypeCode = "SHI";
-            shipmentPM.MainCarriageETD = pickup.ETD;
-            shipmentPM.MainCarriageETA = pickup.ETA;
-            shipmentPM.MainCarriageATD = pickup.ATD;
-            shipmentPM.MainCarriageATA = pickup.ATA;
-            shipmentPM.InlandDomesticFromTypeCode = pickup.PickUpDeliveryFromTypeCode;
-            shipmentPM.InlandDomesticToTypeCode = pickup.PickUpDeliveryToTypeCode;
-            shipmentPM.MainCarriageFromPortId = pickup.FromPortId;
-            shipmentPM.MainCarriageToPortId = pickup.ToPortId;
-            shipmentPM.InlandDomesticFromCity = pickup.FromAddressCity;
-            shipmentPM.InlandDomesticToCity = pickup.ToAddressCity;
-            shipmentPM.InlandDomesticFromCountryId = pickup.FromAddressCountryId;
-            shipmentPM.InlandDomesticToCountryId = pickup.ToAddressCountryId;
-            shipmentPM.InlandDomesticFromZipCode = pickup.FromAddressZipCode;
-            shipmentPM.InlandDomesticToZipCode = pickup.ToAddressZipCode;
-            shipmentPM.MainCarriageFromPortAddress = pickup.FromAddress;
-            shipmentPM.MainCarriageToPortAddress = pickup.ToAddress;
-        }
-
-        else {
-            shipmentPM.InlandDomesticFromTypeCode = "PART";
-            shipmentPM.InlandDomesticToTypeCode = "PART";
-        }
-
-        return shipmentPM;
-    }
-
-    public static IsShipmentProductItemsEmpty(productItems: ShipmentProductItemPM[]): boolean {
-        productItems.forEach((item) => {
-            if (!AppTool.IsNullOrEmpty(item.ProductItemId)) {
-                item.IsEmptyLine = false;
-            }
-
-            else if (!AppTool.IsNullOrEmpty(item.SKU)) {
-                item.IsEmptyLine = false;
-            }
-
-            else if (!AppTool.IsNullOrEmpty(item.Brand)) {
-                item.IsEmptyLine = false;
-            }
-
-            else if (!AppTool.IsNullOrEmpty(item.ASIN)) {
-                item.IsEmptyLine = false;
-            }
-
-            else if (!AppTool.IsNullOrEmpty(item.UPC)) {
-                item.IsEmptyLine = false;
-            }
-
-            else if (!AppTool.IsNullOrEmpty(item.OriginCountryId)) {
-                item.IsEmptyLine = false;
-            }
-
-            else if (!AppTool.IsNullOrEmpty(item.Description)) {
-                item.IsEmptyLine = false;
-            }
-
-            else if (!AppTool.IsNullOrEmpty(item.HTSCode)) {
-                item.IsEmptyLine = false;
-            }
-
-            else {
-                item.IsEmptyLine = true;
-            }
-        });
-
-        var isEmpty: boolean = false;
-        if (productItems.filter(d => d.IsEmptyLine).length == productItems.length) {
-            isEmpty = true;
-        }
-
-        return isEmpty;
-    }
 }
 export class ByPckageType {
     public Quantity: number;
@@ -2438,11 +1899,6 @@ export class ShipmentGenerator {
     private BCNTGrouped: ByPckageType[] = [];
     private myCurrencyListService: CurrencyListService;
     private myChargesTypeListService: ChargesTypeListService;
-    private cardListService: CardListService;
-    private commonDomainService: CommonDomainService;
-    private AllVatTypes: VatTypeList[] = [];
-    private VatTypePercentages: VatTypePercentagePM[] = [];
-    private shipmentCustomer: CardList;
     constructor(entityPM: ShipmentPM, allRates: LastRate[]) {
         this.EntityPM = entityPM;
         this.AllRates = allRates;
@@ -2450,43 +1906,9 @@ export class ShipmentGenerator {
         this.myCurrencyListService = new CurrencyListService();
         this.myChargesTypeListService = new ChargesTypeListService();
         this.BCNTGrouped = ShipmentTool.GetByPckageTypeGrouped(this.EntityPM);
-        this.cardListService = new CardListService();
-        this.commonDomainService = new CommonDomainService();
+
         if (this.AllRates == null) {
             this.AllRates = [];
-        }
-
-        this.GetAllVatTypes();
-        this.GetAllVatTypePercentagesByDate();
-        this.GetShipmentCustomer();
-    }
-
-    GetAllVatTypes() {
-        var myVatTypeListService = new VatTypeListService();
-        myVatTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllVatTypes = myResponse.Result;
-            }
-        });
-    }
-
-    GetAllVatTypePercentagesByDate() {
-        var todayDate = DateTool.GetCurrentDateAsUtc();
-        var myCommonDomainService = new CommonDomainService();
-        myCommonDomainService.GetVatTypePercentagePMByDate(todayDate).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.VatTypePercentages = myResponse.Result;
-            }
-        });
-    }
-
-    GetShipmentCustomer() {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.CustomerId)) {
-            this.cardListService.getSingle(this.EntityPM.CustomerId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    this.shipmentCustomer = myResponse.Result;                    
-                }
-            });
         }
     }
 
@@ -2581,8 +2003,6 @@ export class ShipmentGenerator {
                                     newRecord.ShipmentPayableAmountTypeName = "Accrual";
                                     newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
                                     newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
-                                    newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                                    newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                                     newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
                                     newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
                                     newRecord.ChargesTypeId = myChargeType.Id;
@@ -2664,8 +2084,6 @@ export class ShipmentGenerator {
         newRecord.ShipmentPayableAmountTypeName = "Accrual";
         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
-        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.ChargesTypeId = myChargeType.Id;
@@ -2691,7 +2109,7 @@ export class ShipmentGenerator {
         if (this.EntityPM && this.BaseQuote) {
 
             this.IsAdhoc = this.BaseQuote.QuoteTypeCode == "A" ? true : false;
-            this.IsRoutingRate = !this.IsAdhoc;
+            this.IsRoutingRate = !this.IsAdhoc;            
 
             var rate: number = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
             var quoteProfitInLocalCurrency: number = null;
@@ -2710,7 +2128,7 @@ export class ShipmentGenerator {
 
             else {
                 this.GeneratePayablesFromQuote_FCL();
-            }
+            }            
         }
     }
     public GeneratePayablesFromOriginShipment(originShipment: ShipmentPM) {
@@ -2734,11 +2152,9 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
-                        case "CWKG":
+                        case "CWKG": 
                         case "GWKG":
                         case "VCBM":
-                        case "SCGW":
-                        case "PFCL":
                         case "QTY":
                             {
                                 this.CreateNewPayableFromOriginShipment(item);
@@ -2761,7 +2177,7 @@ export class ShipmentGenerator {
                         }
                     }
                 });
-            }
+            }            
         }
     }
     private GeneratePayablesFromQuote_LCL() {
@@ -2792,7 +2208,7 @@ export class ShipmentGenerator {
             else if (!AppTool.IsNullOrEmpty(item.CostUnitPrice)) {
                 var newPayablePM: ShipmentPayablePM = this.CreateNewPayableFromQuoteCharge(item);
                 newPayablePM.UnitPrice = item.CostUnitPrice;
-                newPayablePM.QuoteChargeId = item.Id;
+
                 switch (item.CostMeasurementCode) {
                     case "BCNT":
                     case "GRWT":
@@ -2803,11 +2219,9 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
-                    case "CWKG":
+                    case "CWKG": 
                     case "GWKG":
                     case "VCBM":
-                    case "SCGW":
-                    case "PFCL":
                     case "QTY":
                         {
                             break;
@@ -2847,15 +2261,11 @@ export class ShipmentGenerator {
                         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
                         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
                         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
-                        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                         newRecord.Quantity = itemGrouped.Quantity;
                         newRecord.MeasurementId = itemGrouped.MeasurementId;
                         newRecord.MeasurementCode = itemGrouped.MeasurementCode;
                         newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
-                        newRecord.QuoteChargeId = item.Id;
-                        newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-
+ 
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -2881,6 +2291,7 @@ export class ShipmentGenerator {
                                     }
 
                                     this.GetCurrencyCode(newRecord);
+                                    //newRecord.ProfitCurrencyExchangeRate
                                     newRecord.Rate = this.GetCurrencyRate(newRecord.CurrencyId);
                                 }
                             }
@@ -2907,9 +2318,7 @@ export class ShipmentGenerator {
                 case "GWTN":
                 case "CWKG":
                 case "VCBM":
-                case "GWKG":
-                case "SCGW":
-                case "PFCL":
+                case "GWKG": 
                 case "QTY":
                     {
                         var itemCharge: QuoteChargePM = this.BaseQuote.QuoteCharges.filter(f => f.Id == item.QuoteChargeId)[0];
@@ -2928,7 +2337,7 @@ export class ShipmentGenerator {
                         break;
                     }
             }
-        });
+        }); 
     }
     private ComputePayableQuoteAmounts_LCL(myRecordPM: ShipmentPayablePM, item: QuoteChargePM) {
 
@@ -2947,11 +2356,6 @@ export class ShipmentGenerator {
             case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
-            case "SCGW": { myQuantity = this.EntityPM.GrossWeightPerStorageDays; break; }
-            case "PFCL": {
-                myQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"),3);
-                break;
-            }
             default: { break; }
         }
         myRecordPM.Quantity = AppTool.Round(myQuantity, 2);
@@ -2981,8 +2385,7 @@ export class ShipmentGenerator {
         if (!AppTool.IsNullOrEmpty(myQuantity) && !AppTool.IsNullOrEmpty(myUnitPrice)) {
             switch (myRecordPM.MeasurementCode) {
                 case "PRVL":
-                case "PRFR":
-                case "PFCL":{
+                case "PRFR": {
                     myComputedAmount = myQuantity * myUnitPrice / 100;
                     break;
                 }
@@ -3029,11 +2432,6 @@ export class ShipmentGenerator {
         myRecordPM.AccountedAmountInLocalCurrency = 0;
         myRecordPM.AccountedAmountInProfitCurrency = 0;
         myRecordPM.ShipmentPayableLineStatusCode = (myQuantity != null && myUnitPrice != null) ? "OAMT" : "EMPT";
-        this.CalculatePayableVatAmount(myRecordPM);
-
-        if (myRecordPM.MeasurementCode == "PFCL") {
-            myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal");
-        }
     }
     private ComputePayableQuoteAmounts_FCL(itemPM: ShipmentPayablePM, quantity: number) {
         if (itemPM.ProfitCurrencyExchangeRate == 0) {
@@ -3057,8 +2455,6 @@ export class ShipmentGenerator {
         itemPM.AccountedAmountInLocalCurrency = 0;
         itemPM.AccountedAmountInProfitCurrency = 0;
         itemPM.ShipmentPayableLineStatusCode = (itemPM.Quantity != null && itemPM.UnitPrice != null) ? "OAMT" : "EMPT";
-
-        this.CalculatePayableVatAmount(itemPM);
     }
     private CreateNewPayableFromQuoteCharge(item: QuoteChargePM) {
         var myRecordPM = new ShipmentPayablePM(null);
@@ -3069,8 +2465,6 @@ export class ShipmentGenerator {
         myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
         myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
-        myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-        myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         myRecordPM.IsFromQuote = true;
         myRecordPM.ShipmentPayableLineStatusCode = "EMPT";
         myRecordPM.ShipmentPayableAmountTypeCode = "ACCU";
@@ -3144,8 +2538,6 @@ export class ShipmentGenerator {
                 myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
                 myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
                 myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
-                myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                 myRecordPM.ShipmentPayableAmountTypeCode = "ACCU";
                 myRecordPM.ShipmentPayableAmountTypeName = "Accrual";
                 myRecordPM.ShipmentPayableLineStatusCode = "EMPT";
@@ -3183,8 +2575,7 @@ export class ShipmentGenerator {
                 myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
                 myRecordPM.QuoteCostMinAmount = OriginItemPM.QuoteCostMinAmount;
                 myRecordPM.QuoteCostMaxAmount = OriginItemPM.QuoteCostMaxAmount;
-                myRecordPM.VatAmountLocal = OriginItemPM.VatAmountLocal;
-                myRecordPM.VatAmountProfit = OriginItemPM.VatAmountProfit;
+
                 //if (OriginItemPM.IsFromQuote) {
                 //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
                 //}
@@ -3203,8 +2594,6 @@ export class ShipmentGenerator {
         newRecord.ShipmentPayableAmountTypeName = "Accrual";
         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
-        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.ChargesTypeId = item.Id;
@@ -3235,7 +2624,6 @@ export class ShipmentGenerator {
             case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; break; }
             case "VCBM": { newRecord.Quantity = this.EntityPM.VolumeInCBM; break; }
-            case "SCGW": { newRecord.Quantity = this.EntityPM.GrossWeightPerStorageDays; break; }
             default: { break; }
         }
 
@@ -3336,7 +2724,7 @@ export class ShipmentGenerator {
 
                             this.EntityPM.ShipmentReceivables.filter(f => f.MeasurementCode == "PRFR").forEach(item => {
                                 item.Quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
-
+                               
                             });
                         }
 
@@ -3351,8 +2739,6 @@ export class ShipmentGenerator {
                                         newReceivable.ShipmentReceivableLineStatusCode = "EMPT";
                                         newReceivable.CreatedByUserId = SessionLocator.LoggedUserId;
                                         newReceivable.UpdateByUserId = SessionLocator.LoggedUserId;
-                                        newReceivable.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                                        newReceivable.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
                                         newReceivable.CreateDate = DateTool.GetCurrentDateAsUtc();
                                         newReceivable.UpdateDate = DateTool.GetCurrentDateAsUtc();
                                         newReceivable.ChargesTypeId = myChargeType.Id;
@@ -3385,7 +2771,7 @@ export class ShipmentGenerator {
                                             }
                                         }
 
-
+                                        
                                         this.GetCurrencyCode(newReceivable);
                                         newReceivable.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
                                         newReceivable.Rate = this.GetCurrencyRate(newReceivable.CurrencyId);
@@ -3436,7 +2822,7 @@ export class ShipmentGenerator {
         if (this.EntityPM && this.BaseQuote) {
 
             this.IsAdhoc = this.BaseQuote.QuoteTypeCode == "A" ? true : false;
-            this.IsRoutingRate = !this.IsAdhoc;
+            this.IsRoutingRate = !this.IsAdhoc; 
 
             var rate: number = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
             var quoteProfitInLocalCurrency: number = null;
@@ -3456,7 +2842,7 @@ export class ShipmentGenerator {
             else {
                 this.GenerateReceivablesFromQuote_FCL();
             }
-        }
+        }        
     }
     public GenerateReceivablesFromOriginShipment(originShipment: ShipmentPM) {
         this.OriginShipment = originShipment;
@@ -3479,11 +2865,9 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
-                        case "CWKG":
+                        case "CWKG": 
                         case "GWKG":
-                        case "VCBM":
-                        case "SCGW":
-                        case "PFCL":
+                        case "VCBM":    
                         case "QTY":
                             {
                                 this.CreateNewReceivableFromOriginShipment(item);
@@ -3549,11 +2933,9 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
-                    case "CWKG":
+                    case "CWKG": 
                     case "GWKG":
-                    case "VCBM":
-                    case "SCGW":
-                    case "PFCL": 
+                    case "VCBM":   
                     case "QTY":
                         {
                             break;
@@ -3594,10 +2976,7 @@ export class ShipmentGenerator {
                         newRecord.MeasurementId = itemGrouped.MeasurementId;
                         newRecord.MeasurementCode = itemGrouped.MeasurementCode;
                         newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
-                        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                        newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-                        newRecord.QuoteChargeId = item.Id;
+
                         this.myChargesTypeListService.getSingleFromCache(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 var chargesType: ChargesTypeList = myResponse.Result;
@@ -3645,11 +3024,9 @@ export class ShipmentGenerator {
                 case "FIXD":
                 case "PRVL":
                 case "GWTN":
-                case "CWKG":
+                case "CWKG": 
                 case "GWKG":
-                case "VCBM":
-                case "SCGW":
-                case "PFCL": 
+                case "VCBM":   
                 case "QTY":
                     {
                         var itemCharge: QuoteChargePM = this.BaseQuote.QuoteCharges.filter(f => f.Id == item.QuoteChargeId)[0];
@@ -3687,11 +3064,6 @@ export class ShipmentGenerator {
             case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
-            case "SCGW": { myQuantity = this.EntityPM.GrossWeightPerStorageDays; break; }
-            case "PFCL": {
-                myQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal"),3);
-                break;
-            }
             default: { break; }
         }
         myRecordPM.Quantity = AppTool.Round(myQuantity, 2);
@@ -3721,8 +3093,7 @@ export class ShipmentGenerator {
         if (!AppTool.IsNullOrEmpty(myQuantity) && !AppTool.IsNullOrEmpty(myUnitPrice)) {
             switch (myRecordPM.MeasurementCode) {
                 case "PRVL":
-                case "PRFR":
-                case "PFCL":{
+                case "PRFR": {
                     myComputedAmount = myQuantity * myUnitPrice / 100;
                     break;
                 }
@@ -3769,9 +3140,8 @@ export class ShipmentGenerator {
                 }
             }
         }
-
+        
         myRecordPM.ShipmentReceivableLineStatusCode = (myQuantity != null && myUnitPrice != null) ? "OAMT" : "EMPT";
-        this.CalculateReceivableVatAmount(myRecordPM);
     }
     private ComputeReceivableQuoteAmounts_FCL(itemPM: ShipmentReceivablePM, quantity: number) {
         if (itemPM.ProfitCurrencyExchangeRate == 0) {
@@ -3787,8 +3157,7 @@ export class ShipmentGenerator {
         itemPM.TotalAmount = AppTool.Round(amount, 2);
         itemPM.TotalAmountLocal = AppTool.Round(amountInLocal, 2);
         itemPM.AmountInProfitCurrency = AppTool.Round(amountInProfit, 2);
-        itemPM.ShipmentReceivableLineStatusCode = (itemPM.Quantity != null && itemPM.UnitPrice != null) ? "OAMT" : "EMPT";
-        this.CalculateReceivableVatAmount(itemPM);
+        itemPM.ShipmentReceivableLineStatusCode = (itemPM.Quantity != null && itemPM.UnitPrice != null) ? "OAMT" : "EMPT";  
     }
     private CreateNewReceivableFromQuoteCharge(QuoteCharge: QuoteChargePM) {
         var myRecordPM = new ShipmentReceivablePM(null);
@@ -3799,8 +3168,6 @@ export class ShipmentGenerator {
         myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
         myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
         myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
-        myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-        myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         myRecordPM.IsFromQuote = true;
         myRecordPM.IsFixedPrice = this.BaseQuote.IsFixedPrice;
         myRecordPM.ChargesTypeId = QuoteCharge.ChargesTypeId;
@@ -3838,7 +3205,7 @@ export class ShipmentGenerator {
                     myRecordPM.DueTypeCode = chargesType.DueTypeCode;
                     myRecordPM.DueTypeName = chargesType.DueTypeName;
                     myRecordPM.IATACodeId = chargesType.IATACodeId;
-                    myRecordPM.PrepaidCollectId = chargesType.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;
+                    myRecordPM.PrepaidCollectId = chargesType.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;                    
                     myRecordPM.ViewOrder = chargesType.ViewOrder;
                     myRecordPM.IsExpense = chargesType.IsExpense;
 
@@ -3877,8 +3244,6 @@ export class ShipmentGenerator {
             myRecordPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
             myRecordPM.CreatedByUserId = SessionLocator.LoggedUserId;
             myRecordPM.UpdateByUserId = SessionLocator.LoggedUserId;
-            myRecordPM.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-            myRecordPM.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
             myRecordPM.ShipmentReceivableLineStatusCode = "EMPT";
             myRecordPM.ShipmentReceivableLineStatusName = "Empty";
             myRecordPM.AWBPrint = OriginItemPM.AWBPrint;
@@ -3914,8 +3279,7 @@ export class ShipmentGenerator {
             myRecordPM.IsChargeBySteps = OriginItemPM.IsChargeBySteps;
             myRecordPM.QuoteSaleMinAmount = OriginItemPM.QuoteSaleMinAmount;
             myRecordPM.QuoteSaleMaxAmount = OriginItemPM.QuoteSaleMaxAmount;
-            myRecordPM.VatAmountProfit = OriginItemPM.VatAmountProfit;
-            myRecordPM.VatAmountLocal = OriginItemPM.VatAmountLocal;
+
             //if (OriginItemPM.IsFromQuote) {
             //    myRecordPM.VatTypeId = OriginItemPM.VatTypeId;
             //}
@@ -3960,8 +3324,6 @@ export class ShipmentGenerator {
         newRecord.ShipmentReceivableLineStatusCode = "EMPT";
         newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
         newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
-        newRecord.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-        newRecord.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
         newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
         newRecord.ChargesTypeId = item.Id;
@@ -3980,7 +3342,7 @@ export class ShipmentGenerator {
         newRecord.IsExpense = item.IsExpense;
         newRecord.IsBackToBack = item.IsBackToBack;
 
-
+       
         switch (item.MeasurementCode) {
             case "GRWT": { newRecord.Quantity = this.EntityPM.GrossWeight; break; }
             case "CHWT": { newRecord.Quantity = this.EntityPM.ChargeableWeight; break; }
@@ -3993,7 +3355,6 @@ export class ShipmentGenerator {
             case "CWKG": { newRecord.Quantity = this.EntityPM.ChargeableWeightInKG; break; }
             case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
             case "VCBM": { newRecord.Quantity = this.EntityPM.VolumeInCBM; break; }
-            case "SCGW": { newRecord.Quantity = this.EntityPM.GrossWeightPerStorageDays; break; }
             default: { break; }
         }
 
@@ -4017,150 +3378,7 @@ export class ShipmentGenerator {
 
         return newRecord;
     }
-
-    // Receivable/Payables VAT Amounts
-    public CalculateReceivableVatAmount(shipmentReceivable: ShipmentReceivablePM) {
-        shipmentReceivable.VatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
-        shipmentReceivable.VatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
-        if (this.shipmentCustomer) {
-            this.CalculateVatAmountFromCustomer(shipmentReceivable);
-        }
-        else {
-            this.CalculateVatAmountFromReceivableLineVatType(shipmentReceivable, shipmentReceivable.VatTypeId); 
-        }
-    }
-    public CalculatePayableVatAmount(shipmentPayable: ShipmentPayablePM) {
-        shipmentPayable.VatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
-        shipmentPayable.VatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
-        if (!AppTool.IsNullOrEmpty(shipmentPayable.VendorId)) {
-            this.CalculateVatAmountFromVendor(shipmentPayable);
-        }
-        else {
-            this.CalculateVatAmountFromPayableLineVatType(shipmentPayable, shipmentPayable.VatTypeId);
-        }
-    }
-    private CalculateVatAmountFromVendor(shipmentPayable: ShipmentPayablePM) {
-        var payableVatTypeId = null;
-        var vendorId = shipmentPayable.VendorId;
-        this.cardListService.getSingle(vendorId).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                payableVatTypeId = myResponse.Result.VatTypeId;
-                if (AppTool.IsNullOrEmpty(payableVatTypeId)) {
-                    payableVatTypeId = shipmentPayable.VatTypeId;
-                }
-                if (!AppTool.IsNullOrEmpty(payableVatTypeId)) {
-                    this.CalculateVatAmountFromPayableLineVatType(shipmentPayable, payableVatTypeId);
-                }
-            }
-        });
-    }
-    private CalculateVatAmountFromPayableLineVatType(shipmentPayable: ShipmentPayablePM, vatTypeId: string) {
-        var payableVatTypeId = vatTypeId;
-        var vatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
-        var vatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
-        if (!AppTool.IsNullOrEmpty(payableVatTypeId)) {
-            var percentage: number = null;
-            var loadingDate = shipmentPayable.CreateDate;
-            if (loadingDate == null) {
-                loadingDate = DateTool.GetCurrentDateAsUtc();
-            }
-            this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var lineVatType = this.AllVatTypes.filter(d => d.Id == payableVatTypeId)[0];
-                    if (!lineVatType.IsMultiPercentage) {
-                        var vatTypePercentagesList = myResponse.Result;
-                        var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == payableVatTypeId)[0];
-                        if (vatTypePercentagePM != null) {
-                            percentage = vatTypePercentagePM.Percentage;
-                            shipmentPayable.VatAmountLocal = vatAmountLocal + AppTool.Round((shipmentPayable.ExpectedAmountLocal * percentage / 100), 2);
-                            shipmentPayable.VatAmountProfit = vatAmountProfit + AppTool.Round((shipmentPayable.ExpectedAmountInProfitCurrency * percentage / 100), 2);
-                        }
-                    }
-                    else {
-                        this.CalculatePayablesVatAmountInMultiVat_OpenLine(payableVatTypeId, shipmentPayable);
-                    }
-                }
-            });
-        }
-    }
-    private CalculateVatAmountFromCustomer(shipmentReceivable: ShipmentReceivablePM) {
-        var receivableVatTypeId = this.shipmentCustomer.VatTypeId;
-
-        if (AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-            receivableVatTypeId = shipmentReceivable.VatTypeId;
-        }
-
-        if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-            this.CalculateVatAmountFromReceivableLineVatType(shipmentReceivable, receivableVatTypeId);
-        }
-    }
-    private CalculateVatAmountFromReceivableLineVatType(shipmentReceivable: ShipmentReceivablePM, vatTypeId: string) {
-        var receivableVatTypeId = vatTypeId;
-        var vatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
-        var vatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
-        if (!AppTool.IsNullOrEmpty(receivableVatTypeId)) {
-            var percentage: number = null;
-            var loadingDate = shipmentReceivable.CreateDate;
-            if (loadingDate == null) {
-                loadingDate = DateTool.GetCurrentDateAsUtc();
-            }
-            this.commonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var lineVatType = this.AllVatTypes.filter(d => d.Id == receivableVatTypeId)[0];
-                    if (!lineVatType.IsMultiPercentage) {
-                        var vatTypePercentagesList = myResponse.Result;
-                        var vatTypePercentagePM = vatTypePercentagesList.filter(d => d.VatTypeId == receivableVatTypeId)[0];
-                        if (vatTypePercentagePM != null) {
-                            percentage = vatTypePercentagePM.Percentage;
-                            shipmentReceivable.VatAmountLocal = vatAmountLocal + AppTool.Round((shipmentReceivable.TotalAmountLocal * percentage / 100), 2);
-                            shipmentReceivable.VatAmountProfit = vatAmountProfit + AppTool.Round((shipmentReceivable.AmountInProfitCurrency * percentage / 100), 2);
-                        }
-                    }
-                    else {
-                        this.CalculateReceivableVatAmountInMultiVat_OpenLine(receivableVatTypeId, shipmentReceivable);
-                    }
-                }
-            });
-        }
-    }
-    // Multi Vat
-    private CalculatePayablesVatAmountInMultiVat_OpenLine(vatTypeId: string, shipmentPayable: ShipmentPayablePM) {
-        var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == vatTypeId);
-        var vatAmountLocal = AppTool.Round(shipmentPayable.ExpectedAmountLocal, 2);
-        var vatAmountProfit = AppTool.Round(shipmentPayable.ExpectedAmountInProfitCurrency, 2);
-        var vatAmountLocal_Total = vatAmountLocal;
-        var vatAmountProfit_Total = vatAmountProfit;
-        myVatGroups.forEach(itemGroup => {
-            var myPercentagePM = this.VatTypePercentages.filter(d => d.VatTypeId == itemGroup.SingleVATTypeId)[0];
-            if (myPercentagePM != null) {
-                var vatTypePercentage = myPercentagePM.Percentage;
-                vatAmountLocal_Total = vatAmountLocal_Total + (vatAmountLocal * vatTypePercentage / 100);
-                vatAmountProfit_Total = vatAmountProfit_Total + (vatAmountProfit * vatTypePercentage / 100);
-            }
-        });
-
-        shipmentPayable.VatAmountLocal = AppTool.Round(vatAmountLocal_Total, 2);
-        shipmentPayable.VatAmountProfit = AppTool.Round(vatAmountProfit_Total, 2);
-    }
-    private CalculateReceivableVatAmountInMultiVat_OpenLine(vatTypeId: string, shipmentReceivable: ShipmentReceivablePM) {
-        var myVatGroups = SessionLocator.AllVatTypesGroups.filter(f => f.GroupVATTypeId == vatTypeId);
-        var vatAmountLocal = AppTool.Round(shipmentReceivable.TotalAmountLocal, 2);
-        var vatAmountProfit = AppTool.Round(shipmentReceivable.AmountInProfitCurrency, 2);
-        var vatAmountLocal_Total = vatAmountLocal;
-        var vatAmountProfit_Total = vatAmountProfit;
-        myVatGroups.forEach(itemGroup => {
-            var myPercentagePM = this.VatTypePercentages.filter(d => d.VatTypeId == itemGroup.SingleVATTypeId)[0];
-            if (myPercentagePM != null) {
-                var vatTypePercentage = myPercentagePM.Percentage;
-                vatAmountLocal_Total = vatAmountLocal_Total + (vatAmountLocal * vatTypePercentage / 100);
-                vatAmountProfit_Total = vatAmountProfit_Total  + (vatAmountProfit * vatTypePercentage / 100);
-            }
-        });
-        shipmentReceivable.VatAmountLocal = AppTool.Round(vatAmountLocal_Total, 2);
-        shipmentReceivable.VatAmountProfit = AppTool.Round(vatAmountProfit_Total, 2);
-    }
 }
-
 export class AWBHelper {
     public static ValidateAWBCCS(shipmentPM: ShipmentPM) {
         var myResult = new AWBCCSValidator();
@@ -4437,24 +3655,12 @@ export class RoutingHelper {
             ShipmentTool.BuildAWBPlaceField(entityPM);
 
             // Previous.To == this.From
-            if (entityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
-                if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortId)) {
-                    entityPM.PreForwardingToPortId = myPortId;
-                    entityPM.PreForwardingToPortCode = myPortCode;
-                    entityPM.PreForwardingToPortName = myPortName;
-                    entityPM.PreForwardingToPortCountryCode = myPortCountryCode;
-                    entityPM.PreForwardingToPortCountryName = myPortCountryName;
-                }
-            }
-
-            else {
-                if (!AppTool.IsNullOrEmpty(entityPM.PreCarriageFromPortId)) {
-                    entityPM.PreCarriageToPortId = myPortId;
-                    entityPM.PreCarriageToPortCode = myPortCode;
-                    entityPM.PreCarriageToPortName = myPortName;
-                    entityPM.PreCarriageToPortCountryCode = myPortCountryCode;
-                    entityPM.PreCarriageToPortCountryName = myPortCountryName;
-                }
+            if (!AppTool.IsNullOrEmpty(entityPM.PreCarriageFromPortId)) {
+                entityPM.PreCarriageToPortId = myPortId;
+                entityPM.PreCarriageToPortCode = myPortCode;
+                entityPM.PreCarriageToPortName = myPortName;
+                entityPM.PreCarriageToPortCountryCode = myPortCountryCode;
+                entityPM.PreCarriageToPortCountryName = myPortCountryName;
             }
         }
     }
@@ -4466,7 +3672,6 @@ export class RoutingHelper {
             var myPortCountryId: string = null;
             var myPortCountryCode: string = null;
             var myPortCountryName: string = null;
-            var myPortCountryEC: boolean = false;
             if (list != null) {
                 myPortId = list.Id;
                 myPortCode = list.Code;
@@ -4474,7 +3679,6 @@ export class RoutingHelper {
                 myPortCountryId = list.CountryId;
                 myPortCountryCode = list.CountryCode;
                 myPortCountryName = list.CountryName;
-                myPortCountryEC = list.CountryEC;
             }
 
             // this
@@ -4491,7 +3695,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.Transshipment1FromPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.Transshipment1FromPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.Transshipment1FromPortCountryName;
-                entityPM.ToCountryIsEC = myPortCountryEC;
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment2FromPortId)) {
@@ -4500,7 +3703,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.Transshipment2FromPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.Transshipment2FromPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.Transshipment2FromPortCountryName;
-                entityPM.ToCountryIsEC = myPortCountryEC;
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment3FromPortId)) {
@@ -4509,7 +3711,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.Transshipment3FromPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.Transshipment3FromPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.Transshipment3FromPortCountryName;
-                entityPM.ToCountryIsEC = myPortCountryEC;
             }
 
             else {
@@ -4518,7 +3719,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.MainCarriageFinalDestinationPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                entityPM.ToCountryIsEC = myPortCountryEC;
             }
 
             // this.To == thisDeleted OR next.From
@@ -4528,7 +3728,6 @@ export class RoutingHelper {
                 entityPM.Transshipment1ToPortName = null;
                 entityPM.Transshipment1ToPortCountryCode = null;
                 entityPM.Transshipment1ToPortCountryName = null;
-                entityPM.Transshipment1ToCountryIsEC = false;
             }
 
             else {
@@ -4538,7 +3737,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = entityPM.Transshipment2FromPortName;
                     entityPM.Transshipment1ToPortCountryCode = entityPM.Transshipment2FromPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = entityPM.Transshipment2FromPortCountryName;
-                    entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
                 }
 
                 else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment3FromPortId)) {
@@ -4547,7 +3745,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = entityPM.Transshipment3FromPortName;
                     entityPM.Transshipment1ToPortCountryCode = entityPM.Transshipment3FromPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = entityPM.Transshipment3FromPortCountryName;
-                    entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
                 }
 
                 else {
@@ -4556,7 +3753,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.Transshipment1ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
                 }
             }
         }
@@ -4595,7 +3791,6 @@ export class RoutingHelper {
                     entityPM.Transshipment2ToPortName = entityPM.Transshipment3FromPortName;
                     entityPM.Transshipment2ToPortCountryCode = entityPM.Transshipment3FromPortCountryCode;
                     entityPM.Transshipment2ToPortCountryName = entityPM.Transshipment3FromPortCountryName;
-                    entityPM.Transshipment2ToCountryIsEC = myPortCountryEC;
                 }
 
                 else {
@@ -4604,7 +3799,6 @@ export class RoutingHelper {
                     entityPM.Transshipment2ToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.Transshipment2ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.Transshipment2ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    entityPM.Transshipment2ToCountryIsEC = myPortCountryEC;
                 }
             }
 
@@ -4614,7 +3808,6 @@ export class RoutingHelper {
                 entityPM.Transshipment2ToPortName = null;
                 entityPM.Transshipment2ToPortCountryCode = null;
                 entityPM.Transshipment2ToPortCountryName = null;
-                entityPM.Transshipment2ToCountryIsEC = false;
             }
 
             // Previous.From
@@ -4625,7 +3818,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = myPortName;
                     entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
                 }
 
                 else {
@@ -4634,7 +3826,6 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = myPortName;
                     entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                    entityPM.ToCountryIsEC = myPortCountryEC;
                 }
             }
 
@@ -4644,7 +3835,7 @@ export class RoutingHelper {
                 myPortName = entityPM.MainCarriageFinalDestinationPortName;
                 myPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                 myPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                //myPortCountryEC = false;
+                myPortCountryEC = false;
 
                 if (!AppTool.IsNullOrEmpty(entityPM.Transshipment3FromPortId)) {
                     myPortId = entityPM.Transshipment3FromPortId;
@@ -4660,7 +3851,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = myPortName;
                     entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
                 }
 
                 else {
@@ -4669,7 +3859,6 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = myPortName;
                     entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                    entityPM.ToCountryIsEC = myPortCountryEC;
                 }
             }
         }
@@ -4709,7 +3898,6 @@ export class RoutingHelper {
                     entityPM.Transshipment2ToPortName = myPortName;
                     entityPM.Transshipment2ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment2ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment2ToCountryIsEC = myPortCountryEC;
                 }
 
                 else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment1FromPortId)) {
@@ -4718,7 +3906,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = myPortName;
                     entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
                 }
 
                 else {
@@ -4727,7 +3914,6 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = myPortName;
                     entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                    entityPM.ToCountryIsEC = myPortCountryEC;
                 }
 
                 // Next
@@ -4736,7 +3922,6 @@ export class RoutingHelper {
                 entityPM.Transshipment3ToPortName = entityPM.MainCarriageFinalDestinationPortName;
                 entityPM.Transshipment3ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                 entityPM.Transshipment3ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                entityPM.Transshipment3ToCountryIsEC = myPortCountryEC;
             }
 
             else {
@@ -4745,7 +3930,6 @@ export class RoutingHelper {
                 entityPM.Transshipment3ToPortName = null;
                 entityPM.Transshipment3ToPortCountryCode = null;
                 entityPM.Transshipment3ToPortCountryName = null;
-                entityPM.Transshipment3ToCountryIsEC = false;
 
                 // Previous
                 if (!AppTool.IsNullOrEmpty(entityPM.Transshipment2FromPortId)) {
@@ -4754,7 +3938,6 @@ export class RoutingHelper {
                     entityPM.Transshipment2ToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.Transshipment2ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.Transshipment2ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    entityPM.Transshipment2ToCountryIsEC = myPortCountryEC;
                 }
 
                 else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment1FromPortId)) {
@@ -4763,7 +3946,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.Transshipment1ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
                 }
 
                 else {
@@ -4772,7 +3954,6 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.MainCarriageToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    entityPM.ToCountryIsEC = myPortCountryEC;
                 }
             }
         }
@@ -4815,7 +3996,6 @@ export class RoutingHelper {
                 entityPM.Transshipment3ToPortName = myPortName;
                 entityPM.Transshipment3ToPortCountryCode = myPortCountryCode;
                 entityPM.Transshipment3ToPortCountryName = myPortCountryName;
-                entityPM.Transshipment3ToCountryIsEC = myPortCountryEC;
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment2FromPortId)) {
@@ -4824,7 +4004,6 @@ export class RoutingHelper {
                 entityPM.Transshipment2ToPortName = myPortName;
                 entityPM.Transshipment2ToPortCountryCode = myPortCountryCode;
                 entityPM.Transshipment2ToPortCountryName = myPortCountryName;
-                entityPM.Transshipment2ToCountryIsEC = myPortCountryEC;
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment1FromPortId)) {
@@ -4833,7 +4012,6 @@ export class RoutingHelper {
                 entityPM.Transshipment1ToPortName = myPortName;
                 entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                 entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                entityPM.Transshipment1ToCountryIsEC = myPortCountryEC;
             }
 
             else {
@@ -4842,7 +4020,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = myPortName;
                 entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                entityPM.ToCountryIsEC = myPortCountryEC;
             }
 
             // next.From = this.To
@@ -4853,17 +4030,8 @@ export class RoutingHelper {
                 entityPM.OnCarriageFromPortCountryCode = myPortCountryCode;
                 entityPM.OnCarriageFromPortCountryName = myPortCountryName;
             }
-
-            else if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortId)) {
-                entityPM.OnForwardingFromPortId = myPortId;
-                entityPM.OnForwardingFromPortCode = myPortCode;
-                entityPM.OnForwardingFromPortName = myPortName;
-                entityPM.OnForwardingFromPortCountryCode = myPortCountryCode;
-                entityPM.OnForwardingFromPortCountryName = myPortCountryName;
-            }
         }
     }
-
     public static PreCarriageToPortChanged(entityPM: ShipmentPM, list: PortList) {
         if (entityPM != null) {
             var myPortId: string = null;
@@ -4967,91 +4135,6 @@ export class RoutingHelper {
             entityPM.MainCarriageFinalDestinationPortName = myPortName;
             entityPM.MainCarriageFinalDestinationPortCountryCode = myPortCountryCode;
             entityPM.MainCarriageFinalDestinationPortCountryName = myPortCountryName;
-        }
-    }
-    public static PreForwardingToPortChanged(entityPM: ShipmentPM, list: PortList) {
-        if (entityPM != null) {
-            var myPortId: string = null;
-            var myPortCode: string = null;
-            var myPortName: string = null;
-            var myPortCountryId: string = null;
-            var myPortCountryCode: string = null;
-            var myPortCountryName: string = null;
-            var myPortCountryEC: boolean = false;
-            if (list != null) {
-                myPortId = list.Id;
-                myPortCode = list.Code;
-                myPortName = list.EnglishName;
-                myPortCountryId = list.CountryId;
-                myPortCountryCode = list.CountryCode;
-                myPortCountryName = list.CountryName;
-                myPortCountryEC = list.CountryEC;
-            }
-
-            // this
-            entityPM.PreForwardingToPortId = myPortId;
-            entityPM.PreForwardingToPortCode = myPortCode;
-            entityPM.PreForwardingToPortName = myPortName
-            entityPM.PreForwardingToPortCountryCode = myPortCountryCode;
-            entityPM.PreForwardingToPortCountryName = myPortCountryName;
-
-            // next.From == this.To
-            if (AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
-                entityPM.FromCountryId = myPortCountryId;
-                entityPM.FromCountryIsEC = myPortCountryEC;
-                entityPM.MainCarriageFromPortId = myPortId;
-                entityPM.MainCarriageFromPortCode = myPortCode;
-                entityPM.MainCarriageFromPortName = myPortName;
-                entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
-                entityPM.MainCarriageFromPortCountryName = myPortCountryName;
-                entityPM.FromPortId = myPortId;
-            }
-           
-            ShipmentTool.ComputeSCI(entityPM);
-            ShipmentTool.BuildAWBPlaceField(entityPM);
-        }
-    }
-    public static OnForwardingFromPortChanged(entityPM: ShipmentPM, list: PortList) {
-        if (entityPM != null) {
-            var myPortId: string = null;
-            var myPortCode: string = null;
-            var myPortName: string = null;
-            var myPortCountryId: string = null;
-            var myPortCountryCode: string = null;
-            var myPortCountryName: string = null;
-            if (list != null) {
-                myPortId = list.Id;
-                myPortCode = list.Code;
-                myPortName = list.EnglishName;
-                myPortCountryId = list.CountryId;
-                myPortCountryCode = list.CountryCode;
-                myPortCountryName = list.CountryName;
-            }
-
-            // this
-            entityPM.OnForwardingFromPortId = myPortId;
-            entityPM.OnForwardingFromPortCode = myPortCode;
-            entityPM.OnForwardingFromPortName = myPortName
-            entityPM.OnForwardingFromPortCountryCode = myPortCountryCode;
-            entityPM.OnForwardingFromPortCountryName = myPortCountryName;
-
-            // Previous.To == this.From
-            if (AppTool.IsNullOrEmpty(entityPM.MasterShipmentDataId)) {
-                entityPM.MainCarriageToPortId = myPortId;
-                entityPM.MainCarriageToPortCode = myPortCode;
-                entityPM.MainCarriageToPortName = myPortName;
-                entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
-                entityPM.MainCarriageToPortCountryName = myPortCountryName;          
-
-                entityPM.ToCountryId = myPortCountryId;
-                entityPM.FinalDistenationPortId = myPortId;
-                entityPM.MainCarriageFinalDestinationPortId = myPortId;
-                entityPM.MainCarriageFinalDestinationPortCode = myPortCode;
-                entityPM.MainCarriageFinalDestinationPortName = myPortName;
-                entityPM.MainCarriageFinalDestinationPortCountryCode = myPortCountryCode;
-                entityPM.MainCarriageFinalDestinationPortCountryName = myPortCountryName;
-                entityPM.ToPortId = myPortId;
-            }
         }
     }
 
@@ -5253,12 +4336,11 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("PreCarriage") > -1);
 
         if (followups.length > 0) {
-            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveOnCarriageLeg(entityPM: ShipmentPM) {
@@ -5428,13 +4510,11 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("Transshipment1") > -1);
 
         if (followups.length > 0) {
-            var CurrentSession = SessionLocator.SelectedSession;
-
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment2Leg(entityPM: ShipmentPM) {
@@ -5521,12 +4601,11 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("Transshipment2") > -1);
 
         if (followups.length > 0) {
-            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment3Leg(entityPM: ShipmentPM) {
@@ -5613,179 +4692,11 @@ export class RoutingHelper {
         followups = followups.filter(f => f.LegType.indexOf("Transshipment3") > -1);
 
         if (followups.length > 0) {
-            var CurrentSession = SessionLocator.SelectedSession;
             followups.forEach(item => {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            CurrentSession.FireEvent("FollowupsChanged");
-        }
-    }
-    public static RemovePreForwardingLeg(entityPM: ShipmentPM) {
-        if (entityPM.HasPreForwarding == true) {
-            entityPM.HasPreForwarding = false;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingTransportModeId)) {
-            entityPM.PreForwardingTransportModeId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierId)) {
-            entityPM.PreForwardingCarrierId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierCode)) {
-            entityPM.PreForwardingCarrierCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierName)) {
-            entityPM.PreForwardingCarrierName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierWebSite)) {
-            entityPM.PreForwardingCarrierWebSite = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingCarrierNumber)) {
-            entityPM.PreForwardingCarrierNumber = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingVesselId)) {
-            entityPM.PreForwardingVesselId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingVesselName)) {
-            entityPM.PreForwardingVesselName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortId)) {
-            entityPM.PreForwardingFromPortId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortCode)) {
-            entityPM.PreForwardingFromPortCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortName)) {
-            entityPM.PreForwardingFromPortName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortCountryCode)) {
-            entityPM.PreForwardingFromPortCountryCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingFromPortCountryName)) {
-            entityPM.PreForwardingFromPortCountryName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortId)) {
-            entityPM.PreForwardingToPortId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortCode)) {
-            entityPM.PreForwardingToPortCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortName)) {
-            entityPM.PreForwardingToPortName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortCountryCode)) {
-            entityPM.PreForwardingToPortCountryCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingToPortCountryName)) {
-            entityPM.PreForwardingToPortCountryName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingETD)) {
-            entityPM.PreForwardingETD = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingETA)) {
-            entityPM.PreForwardingETA = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingATD)) {
-            entityPM.PreForwardingATD = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.PreForwardingATA)) {
-            entityPM.PreForwardingATA = null;
-        }
-
-        var followups = entityPM.FollowUps.filter(f => f.LegType != null);
-        followups = followups.filter(f => f.LegType.indexOf("PreForwarding") > -1);
-
-        if (followups.length > 0) {
-            var CurrentSession = SessionLocator.SelectedSession;
-            followups.forEach(item => {
-                entityPM.RemoveShipmentFollowUp(item);
-            });
-
-            CurrentSession.FireEvent("FollowupsChanged");
-        }
-    }
-    public static RemoveOnForwardingLeg(entityPM: ShipmentPM) {
-        if (entityPM.HasOnForwarding == true) {
-            entityPM.HasOnForwarding = false;
-        }
-
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingTransportModeId)) {
-            entityPM.OnForwardingTransportModeId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierId)) {
-            entityPM.OnForwardingCarrierId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierCode)) {
-            entityPM.OnForwardingCarrierCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierName)) {
-            entityPM.OnForwardingCarrierName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierWebSite)) {
-            entityPM.OnForwardingCarrierWebSite = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingCarrierNumber)) {
-            entityPM.OnForwardingCarrierNumber = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingVesselId)) {
-            entityPM.OnForwardingVesselId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingVesselName)) {
-            entityPM.OnForwardingVesselName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortId)) {
-            entityPM.OnForwardingFromPortId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortCode)) {
-            entityPM.OnForwardingFromPortCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortName)) {
-            entityPM.OnForwardingFromPortName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortCountryCode)) {
-            entityPM.OnForwardingFromPortCountryCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingFromPortCountryName)) {
-            entityPM.OnForwardingFromPortCountryName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortId)) {
-            entityPM.OnForwardingToPortId = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortCode)) {
-            entityPM.OnForwardingToPortCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortName)) {
-            entityPM.OnForwardingToPortName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortCountryCode)) {
-            entityPM.OnForwardingToPortCountryCode = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingToPortCountryName)) {
-            entityPM.OnForwardingToPortCountryName = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingETD)) {
-            entityPM.OnForwardingETD = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingETA)) {
-            entityPM.OnForwardingETA = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingATD)) {
-            entityPM.OnForwardingATD = null;
-        }
-        if (!AppTool.IsNullOrEmpty(entityPM.OnForwardingATA)) {
-            entityPM.OnForwardingATA = null;
-        }
-
-        var followups = entityPM.FollowUps.filter(f => f.LegType != null);
-        followups = followups.filter(f => f.LegType.indexOf("OnForwarding") > -1);
-
-        if (followups.length > 0) {
-            var CurrentSession = SessionLocator.SelectedSession;
-            followups.forEach(item => {
-                entityPM.RemoveShipmentFollowUp(item);
-            });
-
-            CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 
@@ -5815,14 +4726,6 @@ export class RoutingHelper {
                 }
                 if (!DateTool.IsActualDateValid(entityPM.PreCarriageATA)) {
                     errors.push(message.replace("Field", "Pre Carriage ATA"));
-                }
-
-                // PreForwarding
-                if (!DateTool.IsActualDateValid(entityPM.PreForwardingATD)) {
-                    errors.push(message.replace("Field", "Pre Forwarding ATD"));
-                }
-                if (!DateTool.IsActualDateValid(entityPM.PreForwardingATA)) {
-                    errors.push(message.replace("Field", "Pre Forwarding ATA"));
                 }
 
                 // Main
@@ -5881,14 +4784,6 @@ export class RoutingHelper {
                     errors.push(message.replace("Field", "On Carriage ATA"));
                 }
 
-                // OnForwarding
-                if (!DateTool.IsActualDateValid(entityPM.OnForwardingATD)) {
-                    errors.push(message.replace("Field", "On Forwarding ATD"));
-                }
-                if (!DateTool.IsActualDateValid(entityPM.OnForwardingATA)) {
-                    errors.push(message.replace("Field", "On Forwarding ATA"));
-                }
-
                 // Warehouse
                 if (!DateTool.IsActualDateValid(entityPM.WarehouseLegActualReleaseDate)) {
                     errors.push(message.replace("Field", "Warehouse Release Date"));
@@ -5896,12 +4791,7 @@ export class RoutingHelper {
                 if (!DateTool.IsActualDateValid(entityPM.WarehouseLegActualEntryDate)) {
                     errors.push(message.replace("Field", "Warehouse Entry Date"));
                 }
-                if (!DateTool.IsActualDateValid(entityPM.WarehouseLeg2ActualReleaseDate)) {
-                    errors.push(message.replace("Field", "Warehouse Release Date"));
-                }
-                if (!DateTool.IsActualDateValid(entityPM.WarehouseLeg2ActualEntryDate)) {
-                    errors.push(message.replace("Field", "Warehouse Entry Date"));
-                }
+
                 // Deliveries
                 entityPM.ShipmentDeliveries.forEach(itemDelivery => {
                     if (!DateTool.IsActualDateValid(itemDelivery.ATD)) {
@@ -5927,13 +4817,6 @@ export class RoutingHelper {
             var PreCarriageETA: number = isPreCarriageExists ? DateTool.GetDateParts(entityPM.PreCarriageETA).DateTicks : 0;
             var PreCarriageATD: number = isPreCarriageExists ? DateTool.GetDateParts(entityPM.PreCarriageATD).DateTicks : 0;
             var PreCarriageATA: number = isPreCarriageExists ? DateTool.GetDateParts(entityPM.PreCarriageATA).DateTicks : 0;
-
-            var PreForwardingErrors: string[] = [];
-            var isPreForwardingExists: boolean = (entityPM.PreForwardingFromPortId != null && entityPM.PreForwardingToPortId != null) ? true : false;
-            var PreForwardingETD: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingETD).DateTicks : 0;
-            var PreForwardingETA: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingETA).DateTicks : 0;
-            var PreForwardingATD: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingATD).DateTicks : 0;
-            var PreForwardingATA: number = isPreForwardingExists ? DateTool.GetDateParts(entityPM.PreForwardingATA).DateTicks : 0;
 
             var MainCarriageErrors: string[] = [];
             var isMainCarriageExists: boolean = true;
@@ -5967,13 +4850,6 @@ export class RoutingHelper {
             var OnCarriageATD: number = isOnCarriageExists ? DateTool.GetDateParts(entityPM.OnCarriageATD).DateTicks : 0;
             var OnCarriageATA: number = isOnCarriageExists ? DateTool.GetDateParts(entityPM.OnCarriageATA).DateTicks : 0;
 
-            var OnForwardingErrors: string[] = [];
-            var isOnForwardingExists: boolean = (entityPM.OnForwardingFromPortId != null && entityPM.OnForwardingToPortId != null) ? true : false;
-            var OnForwardingETD: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingETD).DateTicks : 0;
-            var OnForwardingETA: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingETA).DateTicks : 0;
-            var OnForwardingATD: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingATD).DateTicks : 0;
-            var OnForwardingATA: number = isOnForwardingExists ? DateTool.GetDateParts(entityPM.OnForwardingATA).DateTicks : 0;
-
             var WarehouseLegErrors: string[] = [];
             var isWarehouseLegExists: boolean = (entityPM.WarehouseLegWarehouseId != null) ? true : false;
             var isWarehousePickupsLegExists = isWarehouseLegExists == true && entityPM.DirectionId != "I" ? true : false;
@@ -5983,37 +4859,12 @@ export class RoutingHelper {
             var WarehouseLegAED: number = isWarehouseLegExists ? DateTool.GetDateParts(entityPM.WarehouseLegActualEntryDate).DateTicks : 0;
             var WarehouseLegARD: number = isWarehouseLegExists ? DateTool.GetDateParts(entityPM.WarehouseLegActualReleaseDate).DateTicks : 0;
 
-            var isWarehouseLeg2Exists: boolean = (entityPM.WarehouseLeg2WarehouseId != null) ? true : false;
-            var isWarehouse2DeliveriesLegExists = isWarehouseLeg2Exists == true && entityPM.DirectionId == "R" ? true : false;
-            var WarehouseLeg2EED: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ExpectedEntryDate).DateTicks : 0;
-            var WarehouseLeg2ERD: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ExpectedReleaseDate).DateTicks : 0;
-            var WarehouseLeg2AED: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ActualEntryDate).DateTicks : 0;
-            var WarehouseLeg2ARD: number = isWarehouseLeg2Exists ? DateTool.GetDateParts(entityPM.WarehouseLeg2ActualReleaseDate).DateTicks : 0;
-
             // Pickups
             var allPickupsETA: number = 0;
             var allPickupsATA: number = 0;
             var allPickupsErrors: string[] = [];
             var isPickupsExists: boolean = entityPM.ShipmentPickUps.length > 0 ? true : false;
             if (isPickupsExists) {
-                if (isWarehousePickupsLegExists) {
-
-                    var firsPickup = this.GetFirstPickup(entityPM.ShipmentPickUps);
-                    if (firsPickup) {
-
-                        var firstPickupsETA: number = DateTool.GetDateParts(firsPickup.ETA).DateTicks;
-                        var firstPickupsATA: number = DateTool.GetDateParts(firsPickup.ATA).DateTicks;
-
-                        if (this.IsDateSeriesBiggerNotEqual(firstPickupsETA, WarehouseLegEED)) {
-                            allPickupsErrors.push("Pick up expected arrival must be equal or less than Warehouse expected entry");
-                        }
-
-                        if (this.IsDateSeriesBiggerNotEqual(firstPickupsATA, WarehouseLegAED)) {
-                            allPickupsErrors.push("Pick up actual arrival must be equal or less than Warehouse actual entry");
-                        }
-                    }
-                }
-
                 entityPM.ShipmentPickUps.forEach(itemPickup => {
                     var ETD: number = DateTool.GetDateParts(itemPickup.ETD).DateTicks;
                     var ETA: number = DateTool.GetDateParts(itemPickup.ETA).DateTicks;
@@ -6037,14 +4888,22 @@ export class RoutingHelper {
                         allPickupsErrors.push("Pick up actual departure must be less than pick up actual arrival");
                     }
 
+                    //if (this.CompairDateSeries(ETD, ETA, ">")) {
+                    //    allPickupsErrors.push("Pick up expected departure must be less than pick up expected arrival");
+                    //}
+
+                    //if (this.CompairDateSeries(ATD, ATA, ">")) {
+                    //    allPickupsErrors.push("Pick up actual departure must be less than pick up actual arrival");
+                    //}
+
                     // Next
-                    if (isPreForwardingExists) {
-                        if (this.IsDateSeriesBigger(ETA, PreForwardingETD)) {
-                            allPickupsErrors.push("Pick up expected arrival must be less than pre Forwarding expected departure");
+                    if (isWarehousePickupsLegExists) {
+                        if (this.IsDateSeriesBiggerNotEqual(ETA, WarehouseLegEED)) {
+                            allPickupsErrors.push("Pick up expected arrival must be equal or less than Warehouse expected entry");
                         }
 
-                        if (this.IsDateSeriesBigger(ATA, PreForwardingATD)) {
-                            allPickupsErrors.push("Pick up actual arrival must be less than pre Forwarding actual departure");
+                        if (this.IsDateSeriesBiggerNotEqual(ATA, WarehouseLegAED)) {
+                            allPickupsErrors.push("Pick up actual arrival must be equal or less than Warehouse actual entry");
                         }
                     }
 
@@ -6111,18 +4970,22 @@ export class RoutingHelper {
                         allDeliveriesErrors.push("Delivery actual departure must be less than Delivery actual arrival");
                     }
 
+                    //if (this.CompairDateSeries(ETD, ETA, ">")) {
+                    //    allDeliveriesErrors.push("Delivery expected departure must be less than Delivery expected arrival");
+                    //}
+
+                    //if (this.CompairDateSeries(ATD, ATA, ">")) {
+                    //    allDeliveriesErrors.push("Delivery actual departure must be less than Delivery actual arrival");
+                    //}
+
                     // Previous
                     if (isWarehouseDeliveriesLegExists) {
-
-                    }
-
-                    else if (isOnForwardingExists) {
-                        if (this.IsDateSeriesSmaller(ETD, OnForwardingETA)) {
-                            allDeliveriesErrors.push("Delivery expected departure must be bigger than On-Forwarding expected arrival");
+                        if (this.IsDateSeriesSmaller(ETD, WarehouseLegERD)) {
+                            allDeliveriesErrors.push("Delivery expected departure must be bigger than Warehouse expected release");
                         }
 
-                        if (this.IsDateSeriesSmaller(ATD, OnForwardingATA)) {
-                            allDeliveriesErrors.push("Delivery actual departure must be bigger than On-Forwarding actual arrival");
+                        if (this.IsDateSeriesSmaller(ATD, WarehouseLegARD)) {
+                            allDeliveriesErrors.push("Delivery actual departure must be bigger than Warehouse actual release");
                         }
                     }
 
@@ -6190,6 +5053,14 @@ export class RoutingHelper {
                     PreCarriageErrors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
                 }
 
+                //if (this.CompairDateSeries(PreCarriageETD, PreCarriageETA, ">")) {
+                //    PreCarriageErrors.push("Pre-Carriage expected departure must be less than Pre-Carriage expected arrival");
+                //}
+
+                //if (this.CompairDateSeries(PreCarriageATD, PreCarriageATA, ">")) {
+                //    PreCarriageErrors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
+                //}
+
                 // Next
                 if (isMainCarriageExists) {
                     if (this.IsDateSeriesBigger(PreCarriageETA, MainCarriageETD)) {
@@ -6202,17 +5073,7 @@ export class RoutingHelper {
                 }
 
                 // Previous
-                if (isPreForwardingExists) {
-                    if (this.IsDateSeriesSmaller(PreCarriageETD, PreForwardingETA)) {
-                        OnCarriageErrors.push("Pre-Carriage expected departure must be bigger than Pre-Forwarding expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(PreCarriageATD, PreForwardingATA)) {
-                        OnCarriageErrors.push("Pre-Carriage actual departure must be bigger than Pre-Forwarding actual arrival");
-                    }
-                }
-
-                else if (isWarehousePickupsLegExists) {
+                if (isWarehousePickupsLegExists) {
                     if (this.IsDateSeriesSmaller(PreCarriageETD, WarehouseLegERD)) {
                         PreCarriageErrors.push("Pre-Carriage expected departure must be bigger than Warehouse expected release");
                     }
@@ -6220,7 +5081,7 @@ export class RoutingHelper {
                     if (this.IsDateSeriesSmaller(PreCarriageATD, WarehouseLegARD)) {
                         PreCarriageErrors.push("Pre-Carriage actual departure must be bigger than Warehouse actual release");
                     }
-                }                
+                }
 
                 else if (isPickupsExists) {
                     if (this.IsDateSeriesSmaller(PreCarriageETD, allPickupsETA)) {
@@ -6229,61 +5090,6 @@ export class RoutingHelper {
 
                     if (this.IsDateSeriesSmaller(PreCarriageATD, allPickupsATA)) {
                         PreCarriageErrors.push("Pre-Carriage actual departure must be bigger than all pick ups actual arrival");
-                    }
-                }
-            }
-
-            //Pre Forwarding
-            if (isPreForwardingExists) {
-
-                // Self
-                if (!this.IsRoutingLegDatesValid(PreForwardingETD, PreForwardingETA)) {
-                    PreForwardingErrors.push("Pre-Forwarding expected departure must be less than Pre-Forwarding expected arrival");
-                }
-
-                if (!this.IsRoutingLegDatesValid(PreForwardingATD, PreForwardingATA)) {
-                    PreForwardingErrors.push("Pre-Forwarding actual departure must be less than Pre-Forwarding actual arrival");
-                }
-
-                // Next
-                if (isPreCarriageExists) {
-                    if (this.IsDateSeriesBigger(PreForwardingETA, PreCarriageETD)) {
-                        PreForwardingErrors.push("Pre-Forwarding expected arrival must be less than Master Pre-Carriage expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(PreForwardingATA, PreCarriageATD)) {
-                        PreForwardingErrors.push("Pre-Forwarding actual arrival must be less than Master Pre-Carriage actual departure");
-                    }
-                }
-
-                else if (isMainCarriageExists) {
-                    if (this.IsDateSeriesBigger(PreForwardingETA, MainCarriageETD)) {
-                        PreForwardingErrors.push("Pre-Forwarding expected arrival must be less than Main-Forwarding expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(PreForwardingATA, MainCarriageATD)) {
-                        PreForwardingErrors.push("Pre-Forwarding actual arrival must be less than Main-Forwarding actual departure");
-                    }
-                }                
-
-                // Previous
-                if (isWarehousePickupsLegExists) {
-                    if (this.IsDateSeriesSmaller(PreForwardingETD, WarehouseLegERD)) {
-                        PreForwardingErrors.push("Pre-Forwarding expected departure must be bigger than Warehouse expected release");
-                    }
-
-                    if (this.IsDateSeriesSmaller(PreForwardingATD, WarehouseLegARD)) {
-                        PreForwardingErrors.push("Pre-Forwarding actual departure must be bigger than Warehouse actual release");
-                    }
-                }
-
-                else if (isPickupsExists) {
-                    if (this.IsDateSeriesSmaller(PreForwardingETD, allPickupsETA)) {
-                        PreForwardingErrors.push("Pre-Forwarding expected departure must be bigger than all pick ups expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(PreForwardingATD, allPickupsATA)) {
-                        PreForwardingErrors.push("Pre-Forwarding actual departure must be bigger than all pick ups actual arrival");
                     }
                 }
             }
@@ -6299,6 +5105,14 @@ export class RoutingHelper {
                 if (!this.IsRoutingLegDatesValid(OnCarriageATD, OnCarriageATA)) {
                     OnCarriageErrors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
                 }
+
+                //if (this.CompairDateSeries(OnCarriageETD, OnCarriageETA, ">")) {
+                //    OnCarriageErrors.push("On-Carriage expected departure must be less than On-Carriage expected arrival");
+                //}
+
+                //if (this.CompairDateSeries(OnCarriageATD, OnCarriageATA, ">")) {
+                //    OnCarriageErrors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
+                //}
 
                 // Previous
                 if (isTransshipment3Exists) {
@@ -6342,17 +5156,7 @@ export class RoutingHelper {
                 }
 
                 // Next
-                if (isOnForwardingExists) {
-                    if (this.IsDateSeriesBigger(OnCarriageETA, OnForwardingETD)) {
-                        OnCarriageErrors.push("On-Carriage expected arrival must be less than On-Forwarding expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(OnCarriageATA, OnForwardingATD)) {
-                        OnCarriageErrors.push("On-Carriage actual arrival must be less than On-Forwarding actual departure");
-                    }
-                }
-
-                else if (isWarehouseDeliveriesLegExists) {
+                if (isWarehouseDeliveriesLegExists) {
                     if (this.IsDateSeriesBigger(OnCarriageETA, WarehouseLegEED)) {
                         OnCarriageErrors.push("On-Carriage expected arrival must be less than Warehouse expected entry");
                     }
@@ -6361,15 +5165,7 @@ export class RoutingHelper {
                         OnCarriageErrors.push("On-Carriage actual arrival must be less than Warehouse actual entry");
                     }
                 }
-                else if (isWarehouse2DeliveriesLegExists) {
-                    if (this.IsDateSeriesBigger(OnCarriageETA, WarehouseLeg2EED)) {
-                        OnCarriageErrors.push("On-Carriage expected arrival must be less than Destination Warehouse expected entry");
-                    }
 
-                    if (this.IsDateSeriesBigger(OnCarriageATA, WarehouseLeg2AED)) {
-                        OnCarriageErrors.push("On-Carriage actual arrival must be less than Destination Warehouse actual entry");
-                    }
-                }
                 else if (isDeliveriesExists) {
                     if (this.IsDateSeriesBigger(OnCarriageETA, allDeliveriesETD)) {
                         OnCarriageErrors.push("On-Carriage expected arrival must be less than all deliveries expected departure");
@@ -6377,101 +5173,6 @@ export class RoutingHelper {
 
                     if (this.IsDateSeriesBigger(OnCarriageATA, allDeliveriesATD)) {
                         OnCarriageErrors.push("On-Carriage actual arrival must be less than all deliveries actual departure");
-                    }
-                }
-            }
-
-            // On Forwarding
-            if (isOnForwardingExists) {
-
-                // Self
-                if (!this.IsRoutingLegDatesValid(OnForwardingETD, OnForwardingETA)) {
-                    OnForwardingErrors.push("On-Forwarding expected departure must be less than On-Forwarding expected arrival");
-                }
-
-                if (!this.IsRoutingLegDatesValid(OnForwardingATD, OnForwardingATA)) {
-                    OnForwardingErrors.push("On-Forwarding actual departure must be less than On-Forwarding actual arrival");
-                }
-
-                // Previous
-                if (isOnCarriageExists) {
-                    if (this.IsDateSeriesSmaller(OnForwardingETD, OnCarriageETA)) {
-                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than On-Carriage expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(OnForwardingATD, OnCarriageATA)) {
-                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than On-Carriage actual arrival");
-                    }
-                }
-
-                else if (isTransshipment3Exists) {
-                    if (this.IsDateSeriesSmaller(OnForwardingETD, Transshipment3ETA)) {
-                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Transshipment3 expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(OnForwardingATD, Transshipment3ATA)) {
-                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Transshipment3 actual arrival");
-                    }
-                }
-
-                else if (isTransshipment2Exists) {
-                    if (this.IsDateSeriesSmaller(OnForwardingETD, Transshipment2ETA)) {
-                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Transshipment2 expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(OnForwardingATD, Transshipment2ATA)) {
-                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Transshipment2 actual arrival");
-                    }
-                }
-
-                else if (isTransshipment1Exists) {
-                    if (this.IsDateSeriesSmaller(OnForwardingETD, Transshipment1ETA)) {
-                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Transshipment1 expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(OnForwardingATD, Transshipment1ATA)) {
-                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Transshipment1 actual arrival");
-                    }
-                }
-
-                else {
-                    if (this.IsDateSeriesSmaller(OnForwardingETD, MainCarriageETA)) {
-                        OnForwardingErrors.push("On-Forwarding expected departure must be bigger than Main-Carriage expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(OnForwardingATD, MainCarriageATA)) {
-                        OnForwardingErrors.push("On-Forwarding actual departure must be bigger than Main-Carriage actual arrival");
-                    }
-                }
-
-                // Next
-                if (isWarehouseDeliveriesLegExists) {
-                    if (this.IsDateSeriesBigger(OnForwardingETA, WarehouseLegEED)) {
-                        OnForwardingErrors.push("On-Forwarding expected arrival must be less than Warehouse expected entry");
-                    }
-
-                    if (this.IsDateSeriesBigger(OnForwardingATA, WarehouseLegAED)) {
-                        OnForwardingErrors.push("On-Forwarding actual arrival must be less than Warehouse actual entry");
-                    }
-                }
-
-                if (isWarehouse2DeliveriesLegExists) {
-                    if (this.IsDateSeriesBigger(OnForwardingETA, WarehouseLeg2EED)) {
-                        OnForwardingErrors.push("On-Forwarding expected arrival must be less than Destination Warehouse expected entry");
-                    }
-
-                    if (this.IsDateSeriesBigger(OnForwardingATA, WarehouseLeg2AED)) {
-                        OnForwardingErrors.push("On-Forwarding actual arrival must be less than Destination Warehouse actual entry");
-                    }
-                }
-
-                else if (isDeliveriesExists) {
-                    if (this.IsDateSeriesBigger(OnForwardingETA, allDeliveriesETD)) {
-                        OnForwardingErrors.push("On-Forwarding expected arrival must be less than all deliveries expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(OnForwardingATA, allDeliveriesATD)) {
-                        OnForwardingErrors.push("On-Forwarding actual arrival must be less than all deliveries actual departure");
                     }
                 }
             }
@@ -6488,6 +5189,14 @@ export class RoutingHelper {
                     MainCarriageErrors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
                 }
 
+                //if (this.CompairDateSeries(MainCarriageETD, MainCarriageETA, ">")) {
+                //    MainCarriageErrors.push("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
+                //}
+
+                //if (this.CompairDateSeries(MainCarriageATD, MainCarriageATA, ">")) {
+                //    MainCarriageErrors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
+                //}
+
                 // Previous
                 if (isPreCarriageExists) {
                     if (this.IsDateSeriesSmaller(MainCarriageETD, PreCarriageETA)) {
@@ -6496,16 +5205,6 @@ export class RoutingHelper {
 
                     if (this.IsDateSeriesSmaller(MainCarriageATD, PreCarriageATA)) {
                         MainCarriageErrors.push("Main-Carriage actual departure must be bigger than Pre-Carriage actual arrival");
-                    }
-                }
-
-                else if (isPreForwardingExists) {
-                    if (this.IsDateSeriesSmaller(MainCarriageETD, PreForwardingETA)) {
-                        MainCarriageErrors.push("Main-Carriage expected departure must be bigger than Pre-Forwarding expected arrival");
-                    }
-
-                    if (this.IsDateSeriesSmaller(MainCarriageATD, PreForwardingATA)) {
-                        MainCarriageErrors.push("Main-Carriage actual departure must be bigger than Pre-Forwarding actual arrival");
                     }
                 }
 
@@ -6570,16 +5269,6 @@ export class RoutingHelper {
                     }
                 }
 
-                else if (isOnForwardingExists) {
-                    if (this.IsDateSeriesBigger(MainCarriageETA, OnForwardingETD)) {
-                        MainCarriageErrors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(MainCarriageATA, OnForwardingATD)) {
-                        MainCarriageErrors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
-                    }
-                }
-
                 else if (isWarehouseDeliveriesLegExists) {
                     if (this.IsDateSeriesBigger(MainCarriageETA, WarehouseLegEED)) {
                         MainCarriageErrors.push("Main-Carriage expected arrival must be less than Warehouse expected entry");
@@ -6589,15 +5278,7 @@ export class RoutingHelper {
                         MainCarriageErrors.push("Main-Carriage actual arrival must be less than Warehouse actual entry");
                     }
                 }
-                else if (isWarehouse2DeliveriesLegExists) {
-                    if (this.IsDateSeriesBigger(MainCarriageETA, WarehouseLeg2EED)) {
-                        MainCarriageErrors.push("Main-Carriage expected arrival must be less than Destination Warehouse expected entry");
-                    }
 
-                    if (this.IsDateSeriesBigger(MainCarriageATA, WarehouseLegAED)) {
-                        MainCarriageErrors.push("Main-Carriage actual arrival must be less than Warehouse actual entry");
-                    }
-                }
                 else if (isDeliveriesExists) {
                     if (this.IsDateSeriesBigger(MainCarriageETA, allDeliveriesETD)) {
                         MainCarriageErrors.push("Main-Carriage expected arrival must be less than all deliveries expected departure");
@@ -6620,6 +5301,14 @@ export class RoutingHelper {
                 if (!this.IsRoutingLegDatesValid(Transshipment1ATD, Transshipment1ATA)) {
                     MainCarriageErrors.push("Via1 actual departure must be less than Via1 actual arrival");
                 }
+
+                //if (this.CompairDateSeries(Transshipment1ETD, Transshipment1ETA, ">")) {
+                //    MainCarriageErrors.push("Via1 expected departure must be less than Via1 expected arrival");
+                //}
+
+                //if (this.CompairDateSeries(Transshipment1ATD, Transshipment1ATA, ">")) {
+                //    MainCarriageErrors.push("Via1 actual departure must be less than Via1 actual arrival");
+                //}
 
                 // Next
                 if (isTransshipment2Exists) {
@@ -6652,16 +5341,6 @@ export class RoutingHelper {
                     }
                 }
 
-                else if (isOnForwardingExists) {
-                    if (this.IsDateSeriesBigger(Transshipment1ETA, OnForwardingETD)) {
-                        MainCarriageErrors.push("Via1 expected arrival must be less than On-Forwarding expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(Transshipment1ATA, OnForwardingATD)) {
-                        MainCarriageErrors.push("Via1 actual arrival must be less than On-Forwarding actual departure");
-                    }
-                }
-
                 else if (isWarehouseDeliveriesLegExists) {
                     if (this.IsDateSeriesBigger(Transshipment1ETA, WarehouseLegEED)) {
                         MainCarriageErrors.push("Via1 expected arrival must be less than Warehouse expected entry");
@@ -6669,15 +5348,6 @@ export class RoutingHelper {
 
                     if (this.IsDateSeriesBigger(Transshipment1ATA, WarehouseLegAED)) {
                         MainCarriageErrors.push("Via1 actual arrival must be less than Warehouse actual entry");
-                    }
-                }
-                else if (isWarehouse2DeliveriesLegExists) {
-                    if (this.IsDateSeriesBigger(Transshipment1ETA, WarehouseLeg2EED)) {
-                        MainCarriageErrors.push("Via1 expected arrival must be less than Destination Warehouse expected entry");
-                    }
-
-                    if (this.IsDateSeriesBigger(Transshipment1ATA, WarehouseLeg2AED)) {
-                        MainCarriageErrors.push("Via1 actual arrival must be less than Destination Warehouse actual entry");
                     }
                 }
 
@@ -6704,6 +5374,14 @@ export class RoutingHelper {
                     MainCarriageErrors.push("Via2 actual departure must be less than Via2 actual arrival");
                 }
 
+                //if (this.CompairDateSeries(Transshipment2ETD, Transshipment2ETA, ">")) {
+                //    MainCarriageErrors.push("Via2 expected departure must be less than Via2 expected arrival");
+                //}
+
+                //if (this.CompairDateSeries(Transshipment2ATD, Transshipment2ATA, ">")) {
+                //    MainCarriageErrors.push("Via2 actual departure must be less than Via2 actual arrival");
+                //}
+
                 // Next
                 if (isTransshipment3Exists) {
                     if (this.IsDateSeriesBigger(Transshipment2ETA, Transshipment3ETD)) {
@@ -6725,16 +5403,6 @@ export class RoutingHelper {
                     }
                 }
 
-                else if (isOnForwardingExists) {
-                    if (this.IsDateSeriesBigger(Transshipment2ETA, OnForwardingETD)) {
-                        MainCarriageErrors.push("Via2 expected arrival must be less than On-Forwarding expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(Transshipment2ATA, OnForwardingATD)) {
-                        MainCarriageErrors.push("Via2 actual arrival must be less than On-Forwarding actual departure");
-                    }
-                }
-
                 else if (isWarehouseDeliveriesLegExists) {
                     if (this.IsDateSeriesBigger(Transshipment2ETA, WarehouseLegEED)) {
                         MainCarriageErrors.push("Via2 expected arrival must be less than Warehouse expected entry");
@@ -6744,15 +5412,7 @@ export class RoutingHelper {
                         MainCarriageErrors.push("Via2 actual arrival must be less than Warehouse actual entry");
                     }
                 }
-                else if (isWarehouse2DeliveriesLegExists) {
-                    if (this.IsDateSeriesBigger(Transshipment2ETA, WarehouseLeg2EED)) {
-                        MainCarriageErrors.push("Via2 expected arrival must be less than Destination Warehouse expected entry");
-                    }
 
-                    if (this.IsDateSeriesBigger(Transshipment2ATA, WarehouseLeg2AED)) {
-                        MainCarriageErrors.push("Via2 actual arrival must be less than Destination Warehouse actual entry");
-                    }
-                }
                 else if (isDeliveriesExists) {
                     if (this.IsDateSeriesBigger(Transshipment2ETA, allDeliveriesETD)) {
                         MainCarriageErrors.push("Via2 expected arrival must be less than all deliveries expected departure");
@@ -6776,6 +5436,14 @@ export class RoutingHelper {
                     MainCarriageErrors.push("Via3 actual departure must be less than Via3 actual arrival");
                 }
 
+                //if (this.CompairDateSeries(Transshipment3ETD, Transshipment3ETA, ">")) {
+                //    MainCarriageErrors.push("Via3 expected departure must be less than Via3 expected arrival");
+                //}
+
+                //if (this.CompairDateSeries(Transshipment3ATD, Transshipment3ATA, ">")) {
+                //    MainCarriageErrors.push("Via3 actual departure must be less than Via3 actual arrival");
+                //}
+
                 // Next
                 if (isOnCarriageExists) {
                     if (this.IsDateSeriesBigger(Transshipment3ETA, OnCarriageETD)) {
@@ -6787,16 +5455,6 @@ export class RoutingHelper {
                     }
                 }
 
-                else if (isOnForwardingExists) {
-                    if (this.IsDateSeriesBigger(Transshipment3ETA, OnForwardingETD)) {
-                        MainCarriageErrors.push("Via3 expected arrival must be less than On-Forwarding expected departure");
-                    }
-
-                    if (this.IsDateSeriesBigger(Transshipment3ATA, OnForwardingATD)) {
-                        MainCarriageErrors.push("Via3 actual arrival must be less than On-Forwarding actual departure");
-                    }
-                }
-
                 else if (isWarehouseDeliveriesLegExists) {
                     if (this.IsDateSeriesBigger(Transshipment3ETA, WarehouseLegEED)) {
                         MainCarriageErrors.push("Via3 expected arrival must be less than Warehouse expected entry");
@@ -6804,15 +5462,6 @@ export class RoutingHelper {
 
                     if (this.IsDateSeriesBigger(Transshipment3ATA, WarehouseLegAED)) {
                         MainCarriageErrors.push("Via3 actual arrival must be less than Warehouse actual entry");
-                    }
-                }
-                else if (isWarehouse2DeliveriesLegExists) {
-                    if (this.IsDateSeriesBigger(Transshipment3ETA, WarehouseLeg2EED)) {
-                        MainCarriageErrors.push("Via3 expected arrival must be less than Destination Warehouse expected entry");
-                    }
-
-                    if (this.IsDateSeriesBigger(Transshipment3ATA, WarehouseLeg2AED)) {
-                        MainCarriageErrors.push("Via3 actual arrival must be less than Destination Warehouse actual entry");
                     }
                 }
 
@@ -6839,20 +5488,18 @@ export class RoutingHelper {
                     WarehouseLegErrors.push("Warehouse actual entry must be less than Warehouse actual release");
                 }
 
+                //if (this.CompairDateSeries(WarehouseLegEED, WarehouseLegERD, ">")) {
+                //    WarehouseLegErrors.push("Warehouse expected entry must be less than Warehouse expected release");
+                //}
+
+                //if (this.CompairDateSeries(WarehouseLegAED, WarehouseLegARD, ">")) {
+                //    WarehouseLegErrors.push("Warehouse actual entry must be less than Warehouse actual release");
+                //}
+
                 if (entityPM.DirectionId == "I") {
 
                     // Previous
-                    if (isOnForwardingExists) {
-                        if (this.IsDateSeriesSmaller(WarehouseLegEED, OnForwardingETA)) {
-                            WarehouseLegErrors.push("Warehouse expected entry must be bigger than On-Forwarding expected arrival");
-                        }
-
-                        if (this.IsDateSeriesSmaller(WarehouseLegAED, OnForwardingATA)) {
-                            WarehouseLegErrors.push("Warehouse actual entry must be bigger than On-Forwarding actual arrival");
-                        }
-                    }
-
-                    else if (isOnCarriageExists) {
+                    if (isOnCarriageExists) {
                         if (this.IsDateSeriesSmaller(WarehouseLegEED, OnCarriageETA)) {
                             WarehouseLegErrors.push("Warehouse expected entry must be bigger than On-Carriage expected arrival");
                         }
@@ -6904,7 +5551,13 @@ export class RoutingHelper {
 
                     // Next
                     if (isDeliveriesExists) {
-                        
+                        if (this.IsDateSeriesBigger(WarehouseLegERD, allDeliveriesETD)) {
+                            WarehouseLegErrors.push("Warehouse expected release must be less than all deliveries expected departure");
+                        }
+
+                        if (this.IsDateSeriesBigger(WarehouseLegARD, allDeliveriesATD)) {
+                            WarehouseLegErrors.push("Warehouse actual release must be less than all deliveries actual departure");
+                        }
                     }
                 }
 
@@ -6912,35 +5565,17 @@ export class RoutingHelper {
 
                     // Previous
                     if (isPickupsExists) {
+                        if (this.IsDateSeriesSmallerNotEqual(WarehouseLegEED, allPickupsETA)) {
+                            WarehouseLegErrors.push("Warehouse expected entry must be equal or bigger than all pick ups expected arrival");
+                        }
 
-                        var firsPickup = this.GetFirstPickup(entityPM.ShipmentPickUps);
-                        if (firsPickup) {
-
-                            var firstPickupsETA: number = DateTool.GetDateParts(firsPickup.ETA).DateTicks;
-                            var firstPickupsATA: number = DateTool.GetDateParts(firsPickup.ATA).DateTicks;
-
-                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLegEED, firstPickupsETA)) {
-                                WarehouseLegErrors.push("Warehouse expected entry must be equal or bigger than first pick up expected arrival");
-                            }
-
-                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLegAED, firstPickupsATA)) {
-                                WarehouseLegErrors.push("Warehouse actual entry must be equal or bigger than first pick up actual arrival");
-                            }
+                        if (this.IsDateSeriesSmallerNotEqual(WarehouseLegAED, allPickupsATA)) {
+                            WarehouseLegErrors.push("Warehouse actual entry must be equal or bigger than all pick ups actual arrival");
                         }
                     }
 
                     // Next
-                    if (isPreForwardingExists) {
-                        if (this.IsDateSeriesBigger(WarehouseLegERD, PreForwardingETD)) {
-                            WarehouseLegErrors.push("Warehouse expected release must be less than pre Forwarding expected departure");
-                        }
-
-                        if (this.IsDateSeriesBigger(WarehouseLegARD, PreForwardingATD)) {
-                            WarehouseLegErrors.push("Warehouse actual release must be less than pre Forwarding actual departure");
-                        }
-                    }
-
-                    else if (isPreCarriageExists) {
+                    if (isPreCarriageExists) {
                         if (this.IsDateSeriesBigger(WarehouseLegERD, PreCarriageETD)) {
                             WarehouseLegErrors.push("Warehouse expected release must be less than pre carriage expected departure");
                         }
@@ -6962,145 +5597,9 @@ export class RoutingHelper {
                 }
             }
 
-            if (isWarehouseLeg2Exists) {
-
-                // Self
-                if (!this.IsRoutingLegDatesValid(WarehouseLeg2EED, WarehouseLeg2ERD)) {
-                    WarehouseLegErrors.push("Destination Warehouse expected entry must be less than Warehouse expected release");
-                }
-
-                if (!this.IsRoutingLegDatesValid(WarehouseLeg2AED, WarehouseLeg2ARD)) {
-                    WarehouseLegErrors.push("Destination Warehouse actual entry must be less than Warehouse actual release");
-                }
-
-                if (entityPM.DirectionId == "R") {
-
-                    // Previous
-                    if (isOnForwardingExists) {
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, OnForwardingETA)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than On-Forwarding expected arrival");
-                        }
-
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, OnForwardingATA)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than On-Forwarding actual arrival");
-                        }
-                    }
-
-                    else if (isOnCarriageExists) {
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, OnCarriageETA)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than On-Carriage expected arrival");
-                        }
-
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, OnCarriageATA)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than On-Carriage actual arrival");
-                        }
-                    }
-
-                    else if (isTransshipment3Exists) {
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, Transshipment3ETA)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Transshipment3 expected arrival");
-                        }
-
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, Transshipment3ATA)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Transshipment3 actual arrival");
-                        }
-                    }
-
-                    else if (isTransshipment2Exists) {
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, Transshipment2ETA)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Transshipment2 expected arrival");
-                        }
-
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, Transshipment2ATA)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Transshipment2 actual arrival");
-                        }
-                    }
-
-                    else if (isTransshipment1Exists) {
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, Transshipment1ETA)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Transshipment1 expected arrival");
-                        }
-
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, Transshipment1ATA)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Transshipment1 actual arrival");
-                        }
-                    }
-
-                    else {
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2EED, MainCarriageETA)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected entry must be bigger than Main-Carriage expected arrival");
-                        }
-
-                        if (this.IsDateSeriesSmaller(WarehouseLeg2AED, MainCarriageATA)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual entry must be bigger than Main-Carriage actual arrival");
-                        }
-                    }
-                }
-
-                else {
-
-                    // Previous
-                    if (isPickupsExists) {
-
-                        var firsPickup = this.GetFirstPickup(entityPM.ShipmentPickUps);
-                        if (firsPickup) {
-
-                            var firstPickupsETA: number = DateTool.GetDateParts(firsPickup.ETA).DateTicks;
-                            var firstPickupsATA: number = DateTool.GetDateParts(firsPickup.ATA).DateTicks;
-
-                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLeg2EED, firstPickupsETA)) {
-                                WarehouseLegErrors.push("Destination Warehouse expected entry must be equal or bigger than first pick up expected arrival");
-                            }
-
-                            if (this.IsDateSeriesSmallerNotEqual(WarehouseLeg2AED, firstPickupsATA)) {
-                                WarehouseLegErrors.push("Destination Warehouse actual entry must be equal or bigger than first pick up actual arrival");
-                            }
-                        }
-                    }
-
-                    // Next
-                    if (isPreForwardingExists) {
-                        if (this.IsDateSeriesBigger(WarehouseLeg2ERD, PreForwardingETD)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected release must be less than pre Forwarding expected departure");
-                        }
-
-                        if (this.IsDateSeriesBigger(WarehouseLeg2ARD, PreForwardingATD)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual release must be less than pre Forwarding actual departure");
-                        }
-                    }
-
-                    else if (isPreCarriageExists) {
-                        if (this.IsDateSeriesBigger(WarehouseLeg2ERD, PreCarriageETD)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected release must be less than pre carriage expected departure");
-                        }
-
-                        if (this.IsDateSeriesBigger(WarehouseLeg2ARD, PreCarriageATD)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual release must be less than pre carriage actual departure");
-                        }
-                    }
-
-                    else if (isMainCarriageExists) {
-                        if (this.IsDateSeriesBigger(WarehouseLeg2ERD, MainCarriageETD)) {
-                            WarehouseLegErrors.push("Destination Warehouse expected release must be less than main carriage expected departure");
-                        }
-
-                        if (this.IsDateSeriesBigger(WarehouseLeg2ARD, MainCarriageATD)) {
-                            WarehouseLegErrors.push("Destination Warehouse actual release must be less than main carriage actual departure");
-                        }
-                    }
-                }
-            }
-
             switch (legCode) {
                 case "PreCarriage": {
                     PreCarriageErrors.forEach(item => {
-                        errors.push(item);
-                    });
-                    break;
-                }
-
-                case "PreForwarding": {
-                    PreForwardingErrors.forEach(item => {
                         errors.push(item);
                     });
                     break;
@@ -7120,14 +5619,6 @@ export class RoutingHelper {
                     break;
                 }
 
-                case "OnForwarding": {
-                    OnForwardingErrors.forEach(item => {
-                        errors.push(item);
-                    });
-                    break;
-                }
-
-                case "WarehouseLeg2":
                 case "WarehouseLeg":
                 case "WarehouseLeg_Pickups":
                     {
@@ -7147,19 +5638,11 @@ export class RoutingHelper {
                         errors.push(item);
                     });
 
-                    PreForwardingErrors.forEach(item => {
-                        errors.push(item);
-                    });
-
                     MainCarriageErrors.forEach(item => {
                         errors.push(item);
                     });
 
                     OnCarriageErrors.forEach(item => {
-                        errors.push(item);
-                    });
-
-                    OnForwardingErrors.forEach(item => {
                         errors.push(item);
                     });
 
@@ -7176,7 +5659,6 @@ export class RoutingHelper {
             }
         }
     }
-
     public static ValidateRoutingsSeriesDates_PackageFollowup(entityPM: ShipmentPM, myPackagePM: ShipmentPackagePM, errors: string[], legCode: string) {
         if (entityPM != null && myPackagePM != null) {
 
@@ -7408,524 +5890,492 @@ export class RoutingHelper {
 
         return myResult;
     }
-    //public static ValidateLegDates(shipmentPM: ShipmentPM, pickUpPM: ShipmentPickUpPM, deliveryPM: ShipmentDeliveryPM, errors: string[], legCode: string)
-    //{
-    //    if (!AppTool.IsNullOrEmpty(legCode)) {
-    //    switch (legCode) {
-    //        case "Pick Up":
-    //            {
-    //                if (pickUpPM != null) {
-    //                    /* with it self */
-    //                    if (pickUpPM.ETD > pickUpPM.ETA) {
-    //                        errors.push("Pick up expected departure must be less than pick up expected arrival");
-    //                    }
+    public static ValidateLegDates(shipmentPM: ShipmentPM, pickUpPM: ShipmentPickUpPM, deliveryPM: ShipmentDeliveryPM, errors: string[], legCode: string)
+    {
+        if (!AppTool.IsNullOrEmpty(legCode)) {
+        switch (legCode) {
+            case "Pick Up":
+                {
+                    if (pickUpPM != null) {
+                        /* with it self */
+                        if (pickUpPM.ETD > pickUpPM.ETA) {
+                            errors.push("Pick up expected departure must be less than pick up expected arrival");
+                        }
 
-    //                    if (pickUpPM.ATD > pickUpPM.ATA) {
-    //                        errors.push("Pick up actual departure must be less than pick up actual arrival");
-    //                    }
+                        if (pickUpPM.ATD > pickUpPM.ATA) {
+                            errors.push("Pick up actual departure must be less than pick up actual arrival");
+                        }
 
-    //                    /* flow up */
-    //                    if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
-    //                        if (pickUpPM.ETA >= shipmentPM.PreCarriageETD) {
-    //                            errors.push("Pick up expected arrival must be less than pre carriage expected departure");
-    //                        }
+                        /* flow up */
+                        if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
+                            if (pickUpPM.ETA >= shipmentPM.PreCarriageETD) {
+                                errors.push("Pick up expected arrival must be less than pre carriage expected departure");
+                            }
 
-    //                        if (pickUpPM.ATA >= shipmentPM.PreCarriageATD) {
-    //                            errors.push("Pick up actual arrival must be less than pre carriage actual departure");
-    //                        }
-    //                    }
+                            if (pickUpPM.ATA >= shipmentPM.PreCarriageATD) {
+                                errors.push("Pick up actual arrival must be less than pre carriage actual departure");
+                            }
+                        }
 
-    //                    else {
-    //                        if (pickUpPM.ETA >= shipmentPM.MainCarriageETD) {
-    //                            errors.push("Pick up expected arrival must be less than main carriage expected departure");
-    //                        }
+                        else {
+                            if (pickUpPM.ETA >= shipmentPM.MainCarriageETD) {
+                                errors.push("Pick up expected arrival must be less than main carriage expected departure");
+                            }
 
-    //                        if (pickUpPM.ATA >= shipmentPM.MainCarriageATD) {
-    //                            errors.push("Pick up actual arrival must be less than main carriage actual departure");
-    //                        }
-    //                    }
-    //                }
+                            if (pickUpPM.ATA >= shipmentPM.MainCarriageATD) {
+                                errors.push("Pick up actual arrival must be less than main carriage actual departure");
+                            }
+                        }
+                    }
 
-    //                break;
-    //            }
+                    break;
+                }
 
-    //        case "Delivery":
-    //            {
-    //                if (deliveryPM != null) {
-    //                    /* with it self */
-    //                    if (deliveryPM.ETD > deliveryPM.ETA) {
-    //                        errors.push("Delivery expected departure must be less than Delivery expected arrival");
-    //                    }
+            case "Delivery":
+                {
+                    if (deliveryPM != null) {
+                        /* with it self */
+                        if (deliveryPM.ETD > deliveryPM.ETA) {
+                            errors.push("Delivery expected departure must be less than Delivery expected arrival");
+                        }
 
-    //                    if (deliveryPM.ATD > deliveryPM.ATA) {
-    //                        errors.push("Delivery actual departure must be less than Delivery actual arrival");
-    //                    }
+                        if (deliveryPM.ATD > deliveryPM.ATA) {
+                            errors.push("Delivery actual departure must be less than Delivery actual arrival");
+                        }
 
-    //                    /* flow down */
-    //                    if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-    //                        if (deliveryPM.ETD <= shipmentPM.OnCarriageETA) {
-    //                            errors.push("Delivery expected departure must be bigger than On-Carriage expected arrival");
-    //                        }
+                        /* flow down */
+                        if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+                            if (deliveryPM.ETD <= shipmentPM.OnCarriageETA) {
+                                errors.push("Delivery expected departure must be bigger than On-Carriage expected arrival");
+                            }
 
-    //                        if (deliveryPM.ATD <= shipmentPM.OnCarriageATA) {
-    //                            errors.push("Delivery actual departure must be bigger than On-Carriage actual arrival");
-    //                        }
-    //                    }
+                            if (deliveryPM.ATD <= shipmentPM.OnCarriageATA) {
+                                errors.push("Delivery actual departure must be bigger than On-Carriage actual arrival");
+                            }
+                        }
 
-    //                    else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-    //                        if (deliveryPM.ETD <= shipmentPM.Transshipment3ETA) {
-    //                            errors.push("Delivery expected departure must be bigger than Transshipment3 expected arrival");
-    //                        }
+                        else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+                            if (deliveryPM.ETD <= shipmentPM.Transshipment3ETA) {
+                                errors.push("Delivery expected departure must be bigger than Transshipment3 expected arrival");
+                            }
 
-    //                        if (deliveryPM.ATD <= shipmentPM.Transshipment3ATA) {
-    //                            errors.push("Delivery actual departure must be bigger than Transshipment3 actual arrival");
-    //                        }
-    //                    }
+                            if (deliveryPM.ATD <= shipmentPM.Transshipment3ATA) {
+                                errors.push("Delivery actual departure must be bigger than Transshipment3 actual arrival");
+                            }
+                        }
 
-    //                    else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-    //                        if (deliveryPM.ETD <= shipmentPM.Transshipment2ETA) {
-    //                            errors.push("Delivery expected departure must be bigger than Transshipment2 expected arrival");
-    //                        }
+                        else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+                            if (deliveryPM.ETD <= shipmentPM.Transshipment2ETA) {
+                                errors.push("Delivery expected departure must be bigger than Transshipment2 expected arrival");
+                            }
 
-    //                        if (deliveryPM.ATD <= shipmentPM.Transshipment2ATA) {
-    //                            errors.push("Delivery actual departure must be bigger than Transshipment2 actual arrival");
-    //                        }
-    //                    }
+                            if (deliveryPM.ATD <= shipmentPM.Transshipment2ATA) {
+                                errors.push("Delivery actual departure must be bigger than Transshipment2 actual arrival");
+                            }
+                        }
 
-    //                    else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-    //                        if (deliveryPM.ETD <= shipmentPM.Transshipment1ETA) {
-    //                            errors.push("Delivery expected departure must be bigger than Transshipment1 expected arrival");
-    //                        }
+                        else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+                            if (deliveryPM.ETD <= shipmentPM.Transshipment1ETA) {
+                                errors.push("Delivery expected departure must be bigger than Transshipment1 expected arrival");
+                            }
 
-    //                        if (deliveryPM.ATD <= shipmentPM.Transshipment1ATA) {
-    //                            errors.push("Delivery actual departure must be bigger than Transshipment1 actual arrival");
-    //                        }
-    //                    }
+                            if (deliveryPM.ATD <= shipmentPM.Transshipment1ATA) {
+                                errors.push("Delivery actual departure must be bigger than Transshipment1 actual arrival");
+                            }
+                        }
 
-    //                    else {
-    //                        if (deliveryPM.ETD <= shipmentPM.MainCarriageETA) {
-    //                            errors.push("Delivery expected departure must be bigger than Main-Carriage expected arrival");
-    //                        }
+                        else {
+                            if (deliveryPM.ETD <= shipmentPM.MainCarriageETA) {
+                                errors.push("Delivery expected departure must be bigger than Main-Carriage expected arrival");
+                            }
 
-    //                        if (deliveryPM.ATD <= shipmentPM.MainCarriageATA) {
-    //                            errors.push("Delivery actual departure must be bigger than Main-Carriage actual arrival");
-    //                        }
-    //                    }
-    //                }
+                            if (deliveryPM.ATD <= shipmentPM.MainCarriageATA) {
+                                errors.push("Delivery actual departure must be bigger than Main-Carriage actual arrival");
+                            }
+                        }
+                    }
 
-    //                break;
-    //            }
+                    break;
+                }
 
-    //        case "Pre Carriage":
-    //            {
-    //                if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
-    //                    /* with it self */
-    //                    if (shipmentPM.PreCarriageETD > shipmentPM.PreCarriageETA) {
-    //                        errors.push("Pre-Carriage expected departure must be less than Pre-Carriage expected arrival");
-    //                    }
+            case "Pre Carriage":
+                {
+                    if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
+                        /* with it self */
+                        if (shipmentPM.PreCarriageETD > shipmentPM.PreCarriageETA) {
+                            errors.push("Pre-Carriage expected departure must be less than Pre-Carriage expected arrival");
+                        }
 
-    //                    if (shipmentPM.PreCarriageATD > shipmentPM.PreCarriageATA) {
-    //                        errors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
-    //                    }
+                        if (shipmentPM.PreCarriageATD > shipmentPM.PreCarriageATA) {
+                            errors.push("Pre-Carriage actual departure must be less than Pre-Carriage actual arrival");
+                        }
 
-    //                    /* flow up */
-    //                    if (shipmentPM.PreCarriageETA >= shipmentPM.MainCarriageETD) {
-    //                        errors.push("Pre-Carriage expected arrival must be less than Main-Carriage expected departure");
-    //                    }
+                        /* flow up */
+                        if (shipmentPM.PreCarriageETA >= shipmentPM.MainCarriageETD) {
+                            errors.push("Pre-Carriage expected arrival must be less than Main-Carriage expected departure");
+                        }
 
-    //                    if (shipmentPM.PreCarriageATA >= shipmentPM.MainCarriageATD) {
-    //                        errors.push("Pre-Carriage actual arrival must be less than Main-Carriage actual departure");
-    //                    }
+                        if (shipmentPM.PreCarriageATA >= shipmentPM.MainCarriageATD) {
+                            errors.push("Pre-Carriage actual arrival must be less than Main-Carriage actual departure");
+                        }
 
-    //                    /* flow down */
-    //                    //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
+                        /* flow down */
+                        //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
 
-    //                    //if (shipmentPickups.Count > 0) {
-    //                    //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
-    //                    //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
+                        //if (shipmentPickups.Count > 0) {
+                        //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
+                        //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
 
-    //                    //    if (shipmentPM.PreCarriageETD <= shipmentPicksETA) {
-    //                    //        errors.push("Pre-Carriage expected departure must be bigger than all pick ups expected arrival");
-    //                    //    }
+                        //    if (shipmentPM.PreCarriageETD <= shipmentPicksETA) {
+                        //        errors.push("Pre-Carriage expected departure must be bigger than all pick ups expected arrival");
+                        //    }
 
-    //                    //    if (shipmentPM.PreCarriageATD <= shipmentPicksATA) {
-    //                    //        errors.push("Pre-Carriage actual departure must be bigger than all pick ups actual arrival");
-    //                    //    }
-    //                    //}
-    //                }
+                        //    if (shipmentPM.PreCarriageATD <= shipmentPicksATA) {
+                        //        errors.push("Pre-Carriage actual departure must be bigger than all pick ups actual arrival");
+                        //    }
+                        //}
+                    }
 
-    //                break;
-    //            }
+                    break;
+                }
 
-    //        case "On Carriage":
-    //            {
+            case "On Carriage":
+                {
                     
-    //                if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-    //                    /* with it self */
-    //                    if (shipmentPM.OnCarriageETD > shipmentPM.OnCarriageETA) {
-    //                        errors.push("On-Carriage expected departure must be less than On-Carriage expected arrival");
-    //                    }
-
-    //                    if (shipmentPM.OnCarriageATD > shipmentPM.OnCarriageATA) {
-    //                        errors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
-    //                    }
-
-    //                    /* flow down */
-    //                    if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment3ETA) {
-    //                            errors.push("On-Carriage expected departure must be bigger than Transshipment3 expected arrival");
-    //                        }
-
-    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment3ATA) {
-    //                            errors.push("On-Carriage actual departure must be bigger than Transshipment3 actual arrival");
-    //                        }
-    //                    }
-
-    //                    else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment2ETA) {
-    //                            errors.push("On-Carriage expected departure must be bigger than Transshipment2 expected arrival");
-    //                        }
-
-    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment2ATA) {
-    //                            errors.push("On-Carriage actual departure must be bigger than Transshipment2 actual arrival");
-    //                        }
-    //                    }
-
-    //                    else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment1ETA) {
-    //                            errors.push("On-Carriage expected departure must be bigger than Transshipment1 expected arrival");
-    //                        }
-
-    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment1ATA) {
-    //                            errors.push("On-Carriage actual departure must be bigger than Transshipment1 actual arrival");
-    //                        }
-    //                    }
-
-    //                    else {
-    //                        if (shipmentPM.OnCarriageETD <= shipmentPM.MainCarriageETA) {
-    //                            errors.push("On-Carriage expected departure must be bigger than Main-Carriage expected arrival");
-    //                        }
-
-    //                        if (shipmentPM.OnCarriageATD <= shipmentPM.MainCarriageATA) {
-    //                            errors.push("On-Carriage actual departure must be bigger than Main-Carriage actual arrival");
-    //                        }
-    //                    }
-
-    //                    /* flow up */
-    //                    //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-    //                    //if (shipmentDeliveries.Count > 0) {
-    //                    //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-    //                    //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-    //                    //    if (shipmentPM.OnCarriageETA >= shipmentDeliveriesETD) {
-    //                    //        errors.push("On-Carriage expected arrival must be less than all deliveries expected departure");
-    //                    //    }
-
-    //                    //    if (shipmentPM.OnCarriageATA >= shipmentDeliveriesATD) {
-    //                    //        errors.push("On-Carriage actual departure must be less than all deliveries actual arrival");
-    //                    //    }
-    //                    //}
-    //                }
-
-    //                break;
-    //            }
-
-    //        case "Main Carriage":
-    //            {
-    //                /* with it self */
-    //                if (shipmentPM.MainCarriageETD > shipmentPM.MainCarriageETA) {
-    //                    errors.push("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
-    //                }
-
-    //                if (shipmentPM.MainCarriageATD > shipmentPM.MainCarriageATA) {
-    //                    errors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
-    //                }
-
-    //                /* flow down */
-    //                if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
-    //                    if (shipmentPM.MainCarriageETD <= shipmentPM.PreCarriageETA) {
-    //                        errors.push("Main-Carriage expected departure must be bigger than Pre-Carriage expected arrival");
-    //                    }
-
-    //                    if (shipmentPM.MainCarriageATD <= shipmentPM.PreCarriageATA) {
-    //                        errors.push("Main-Carriage actual departure must be bigger than Pre-Carriage actual arrival");
-    //                    }
-    //                }
-
-    //                else {
-    //                    //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
-
-    //                    //if (shipmentPickups.Count > 0) {
-    //                    //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
-    //                    //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
-
-    //                    //    if (shipmentPM.MainCarriageETD <= shipmentPicksETA) {
-    //                    //        errors.push("Main-Carriage expected departure must be bigger than all pick ups expected arrival");
-    //                    //    }
-
-    //                    //    if (shipmentPM.MainCarriageATD <= shipmentPicksATA) {
-    //                    //        errors.push("Main-Carriage actual departure must be bigger than all pick ups actual arrival");
-    //                    //    }
-    //                    //}
-    //                }
-
-    //                /* flow up */
-    //                if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment1ETD) {
-    //                        errors.push("Main-Carriage expected arrival must be less than Via1 expected departure");
-    //                    }
-
-    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment1ATD) {
-    //                        errors.push("Main-Carriage actual arrival must be less than Via1 actual departure");
-    //                    }
-    //                }
-
-    //                else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment2ETD) {
-    //                        errors.push("Main-Carriage expected arrival must be less than Via2 expected departure");
-    //                    }
-
-    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment2ATD) {
-    //                        errors.push("Main-Carriage actual arrival must be less than Via2 actual departure");
-    //                    }
-    //                }
-
-    //                else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment3ETD) {
-    //                        errors.push("Main-Carriage expected arrival must be less than Via3 expected departure");
-    //                    }
-
-    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment3ATD) {
-    //                        errors.push("Main-Carriage actual arrival must be less than Via3 actual departure");
-    //                    }
-    //                }
-
-    //                else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-    //                    if (shipmentPM.MainCarriageETA >= shipmentPM.OnCarriageETD) {
-    //                        errors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
-    //                    }
-
-    //                    if (shipmentPM.MainCarriageATA >= shipmentPM.OnCarriageATD) {
-    //                        errors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
-    //                    }
-    //                }
-
-    //                else {
-    //                    //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-    //                    //if (shipmentDeliveries.Count > 0) {
-    //                    //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-    //                    //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-    //                    //    if (shipmentPM.MainCarriageETA >= shipmentDeliveriesETD) {
-    //                    //        errors.push("Main-Carriage expected arrival must be less than all deliveries expected departure");
-    //                    //    }
-
-    //                    //    if (shipmentPM.MainCarriageATA >= shipmentDeliveriesATD) {
-    //                    //        errors.push("Main-Carriage actual departure must be less than all deliveries actual arrival");
-    //                    //    }
-    //                    //}
-    //                }
-
-    //                break;
-    //            }
-
-    //        case "Transshipment1":
-    //            {
-    //                if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
-    //                    /* with it self */
-    //                    if (shipmentPM.Transshipment1ETD > shipmentPM.Transshipment1ETA) {
-    //                        errors.push("Via1 expected departure must be less than Via1 expected arrival");
-    //                    }
-
-    //                    if (shipmentPM.Transshipment1ATD > shipmentPM.Transshipment1ATA) {
-    //                        errors.push("Via1 actual departure must be less than Via1 actual arrival");
-    //                    }
-
-    //                    /* flow up */
-    //                    if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-    //                        if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment2ETD) {
-    //                            errors.push("Via1 expected arrival must be less than Via2 expected departure");
-    //                        }
-
-    //                        if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment2ATD) {
-    //                            errors.push("Via1 actual arrival must be less than Via2 actual departure");
-    //                        }
-    //                    }
-
-    //                    else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-    //                        if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment3ETD) {
-    //                            errors.push("Via1 expected arrival must be less than Via3 expected departure");
-    //                        }
-
-    //                        if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment3ATD) {
-    //                            errors.push("Via1 actual arrival must be less than Via3 actual departure");
-    //                        }
-    //                    }
-
-    //                    else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-    //                        if (shipmentPM.Transshipment1ETA >= shipmentPM.OnCarriageETD) {
-    //                            errors.push("Via1 expected arrival must be less than On-Carriage expected departure");
-    //                        }
-
-    //                        if (shipmentPM.Transshipment1ATA >= shipmentPM.OnCarriageATD) {
-    //                            errors.push("Via1 actual arrival must be less than On-Carriage actual departure");
-    //                        }
-    //                    }
-
-    //                    else {
-    //                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-    //                        //if (shipmentDeliveries.Count > 0) {
-    //                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-    //                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-    //                        //    if (shipmentPM.Transshipment1ETA >= shipmentDeliveriesETD) {
-    //                        //        errors.push("Via1 expected arrival must be less than all deliveries expected departure");
-    //                        //    }
-
-    //                        //    if (shipmentPM.Transshipment1ATA >= shipmentDeliveriesATD) {
-    //                        //        errors.push("Via1 actual departure must be less than all deliveries actual arrival");
-    //                        //    }
-    //                        //}
-    //                    }
-    //                }
-
-    //                break;
-    //            }
-
-    //        case "Transshipment2":
-    //            {
-    //                if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
-    //                    /* with it self */
-    //                    if (shipmentPM.Transshipment2ETD > shipmentPM.Transshipment2ETA) {
-    //                        errors.push("Via2 expected departure must be less than Via2 expected arrival");
-    //                    }
-
-    //                    if (shipmentPM.Transshipment2ATD > shipmentPM.Transshipment2ATA) {
-    //                        errors.push("Via2 actual departure must be less than Via2 actual arrival");
-    //                    }
-
-    //                    /* flow up */
-    //                    if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-    //                        if (shipmentPM.Transshipment2ETA >= shipmentPM.Transshipment3ETD) {
-    //                            errors.push("Via2 expected arrival must be less than Via3 expected departure");
-    //                        }
-
-    //                        if (shipmentPM.Transshipment2ATA >= shipmentPM.Transshipment3ATD) {
-    //                            errors.push("Via2 actual arrival must be less than Via3 actual departure");
-    //                        }
-    //                    }
-
-    //                    else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-    //                        if (shipmentPM.Transshipment2ETA >= shipmentPM.OnCarriageETD) {
-    //                            errors.push("Via2 expected arrival must be less than On-Carriage expected departure");
-    //                        }
-
-    //                        if (shipmentPM.Transshipment2ATA >= shipmentPM.OnCarriageATD) {
-    //                            errors.push("Via2 actual arrival must be less than On-Carriage actual departure");
-    //                        }
-    //                    }
-
-    //                    else {
-    //                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-    //                        //if (shipmentDeliveries.Count > 0) {
-    //                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-    //                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-    //                        //    if (shipmentPM.Transshipment2ETA >= shipmentDeliveriesETD) {
-    //                        //        errors.push("Via2 expected arrival must be less than all deliveries expected departure");
-    //                        //    }
-
-    //                        //    if (shipmentPM.Transshipment2ATA >= shipmentDeliveriesATD) {
-    //                        //        errors.push("Via2 actual departure must be less than all deliveries actual arrival");
-    //                        //    }
-    //                        //}
-    //                    }
-    //                }
-
-    //                break;
-    //            }
-
-    //        case "Transshipment3":
-    //            {
-    //                if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
-    //                    /* with it self */
-    //                    if (shipmentPM.Transshipment3ETD > shipmentPM.Transshipment3ETA) {
-    //                        errors.push("Via3 expected departure must be less than Via3 expected arrival");
-    //                    }
-
-    //                    if (shipmentPM.Transshipment3ATD > shipmentPM.Transshipment3ATA) {
-    //                        errors.push("Via3 actual departure must be less than Via3 actual arrival");
-    //                    }
-
-    //                    /* flow up */
-    //                    if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
-    //                        if (shipmentPM.Transshipment3ETA >= shipmentPM.OnCarriageETD) {
-    //                            errors.push("Via3 expected arrival must be less than On-Carriage expected departure");
-    //                        }
-
-    //                        if (shipmentPM.Transshipment3ATA >= shipmentPM.OnCarriageATD) {
-    //                            errors.push("Via3 actual arrival must be less than On-Carriage actual departure");
-    //                        }
-    //                    }
-
-    //                    else {
-    //                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
-
-    //                        //if (shipmentDeliveries.Count > 0) {
-    //                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
-    //                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
-
-    //                        //    if (shipmentPM.Transshipment3ETA >= shipmentDeliveriesETD) {
-    //                        //        errors.push("Via3 expected arrival must be less than all deliveries expected departure");
-    //                        //    }
-
-    //                        //    if (shipmentPM.Transshipment3ATA >= shipmentDeliveriesATD) {
-    //                        //        errors.push("Via3 actual departure must be less than all deliveries actual arrival");
-    //                        //    }
-    //                        //}
-    //                    }
-    //                }
-
-    //                break;
-    //            }
-    //        default: { break; }
-    //    }
-    //}
-    //}
-    public static GetFirstPickup(ShipmentPickUps: ShipmentPickUpPM[]) {
-
-        var output: ShipmentPickUpPM = null;
-
-        if (ShipmentPickUps) {
-
-            var index: number = null;
-
-            ShipmentPickUps.forEach((item: ShipmentPickUpPM) => {
-                var itemIndex = +item.PickUpDeliveryNumber.split('/')[1];
-
-                if (index == null) {
-                    output = item;
+                    if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+                        /* with it self */
+                        if (shipmentPM.OnCarriageETD > shipmentPM.OnCarriageETA) {
+                            errors.push("On-Carriage expected departure must be less than On-Carriage expected arrival");
+                        }
+
+                        if (shipmentPM.OnCarriageATD > shipmentPM.OnCarriageATA) {
+                            errors.push("On-Carriage actual departure must be less than On-Carriage actual arrival");
+                        }
+
+                        /* flow down */
+                        if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+                            if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment3ETA) {
+                                errors.push("On-Carriage expected departure must be bigger than Transshipment3 expected arrival");
+                            }
+
+                            if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment3ATA) {
+                                errors.push("On-Carriage actual departure must be bigger than Transshipment3 actual arrival");
+                            }
+                        }
+
+                        else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+                            if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment2ETA) {
+                                errors.push("On-Carriage expected departure must be bigger than Transshipment2 expected arrival");
+                            }
+
+                            if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment2ATA) {
+                                errors.push("On-Carriage actual departure must be bigger than Transshipment2 actual arrival");
+                            }
+                        }
+
+                        else if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+                            if (shipmentPM.OnCarriageETD <= shipmentPM.Transshipment1ETA) {
+                                errors.push("On-Carriage expected departure must be bigger than Transshipment1 expected arrival");
+                            }
+
+                            if (shipmentPM.OnCarriageATD <= shipmentPM.Transshipment1ATA) {
+                                errors.push("On-Carriage actual departure must be bigger than Transshipment1 actual arrival");
+                            }
+                        }
+
+                        else {
+                            if (shipmentPM.OnCarriageETD <= shipmentPM.MainCarriageETA) {
+                                errors.push("On-Carriage expected departure must be bigger than Main-Carriage expected arrival");
+                            }
+
+                            if (shipmentPM.OnCarriageATD <= shipmentPM.MainCarriageATA) {
+                                errors.push("On-Carriage actual departure must be bigger than Main-Carriage actual arrival");
+                            }
+                        }
+
+                        /* flow up */
+                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+                        //if (shipmentDeliveries.Count > 0) {
+                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+                        //    if (shipmentPM.OnCarriageETA >= shipmentDeliveriesETD) {
+                        //        errors.push("On-Carriage expected arrival must be less than all deliveries expected departure");
+                        //    }
+
+                        //    if (shipmentPM.OnCarriageATA >= shipmentDeliveriesATD) {
+                        //        errors.push("On-Carriage actual departure must be less than all deliveries actual arrival");
+                        //    }
+                        //}
+                    }
+
+                    break;
                 }
 
-                else if (itemIndex < index) {
-                    output = item;
+            case "Main Carriage":
+                {
+                    /* with it self */
+                    if (shipmentPM.MainCarriageETD > shipmentPM.MainCarriageETA) {
+                        errors.push("Main-Carriage expected departure must be less than Main-Carriage expected arrival");
+                    }
+
+                    if (shipmentPM.MainCarriageATD > shipmentPM.MainCarriageATA) {
+                        errors.push("Main-Carriage actual departure must be less than Main-Carriage actual arrival");
+                    }
+
+                    /* flow down */
+                    if (shipmentPM.PreCarriageFromPortId != null && shipmentPM.PreCarriageToPortId != null) {
+                        if (shipmentPM.MainCarriageETD <= shipmentPM.PreCarriageETA) {
+                            errors.push("Main-Carriage expected departure must be bigger than Pre-Carriage expected arrival");
+                        }
+
+                        if (shipmentPM.MainCarriageATD <= shipmentPM.PreCarriageATA) {
+                            errors.push("Main-Carriage actual departure must be bigger than Pre-Carriage actual arrival");
+                        }
+                    }
+
+                    else {
+                        //List < ShipmentPickUpPM > shipmentPickups = shipmentPM.ShipmentPickUps.ToList();
+
+                        //if (shipmentPickups.Count > 0) {
+                        //    DateTime ? shipmentPicksETA = shipmentPickups.Max(m => m.ETA);
+                        //    DateTime ? shipmentPicksATA = shipmentPickups.Max(m => m.ATA);
+
+                        //    if (shipmentPM.MainCarriageETD <= shipmentPicksETA) {
+                        //        errors.push("Main-Carriage expected departure must be bigger than all pick ups expected arrival");
+                        //    }
+
+                        //    if (shipmentPM.MainCarriageATD <= shipmentPicksATA) {
+                        //        errors.push("Main-Carriage actual departure must be bigger than all pick ups actual arrival");
+                        //    }
+                        //}
+                    }
+
+                    /* flow up */
+                    if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+                        if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment1ETD) {
+                            errors.push("Main-Carriage expected arrival must be less than Via1 expected departure");
+                        }
+
+                        if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment1ATD) {
+                            errors.push("Main-Carriage actual arrival must be less than Via1 actual departure");
+                        }
+                    }
+
+                    else if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+                        if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment2ETD) {
+                            errors.push("Main-Carriage expected arrival must be less than Via2 expected departure");
+                        }
+
+                        if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment2ATD) {
+                            errors.push("Main-Carriage actual arrival must be less than Via2 actual departure");
+                        }
+                    }
+
+                    else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+                        if (shipmentPM.MainCarriageETA >= shipmentPM.Transshipment3ETD) {
+                            errors.push("Main-Carriage expected arrival must be less than Via3 expected departure");
+                        }
+
+                        if (shipmentPM.MainCarriageATA >= shipmentPM.Transshipment3ATD) {
+                            errors.push("Main-Carriage actual arrival must be less than Via3 actual departure");
+                        }
+                    }
+
+                    else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+                        if (shipmentPM.MainCarriageETA >= shipmentPM.OnCarriageETD) {
+                            errors.push("Main-Carriage expected arrival must be less than On-Carriage expected departure");
+                        }
+
+                        if (shipmentPM.MainCarriageATA >= shipmentPM.OnCarriageATD) {
+                            errors.push("Main-Carriage actual arrival must be less than On-Carriage actual departure");
+                        }
+                    }
+
+                    else {
+                        //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+                        //if (shipmentDeliveries.Count > 0) {
+                        //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+                        //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+                        //    if (shipmentPM.MainCarriageETA >= shipmentDeliveriesETD) {
+                        //        errors.push("Main-Carriage expected arrival must be less than all deliveries expected departure");
+                        //    }
+
+                        //    if (shipmentPM.MainCarriageATA >= shipmentDeliveriesATD) {
+                        //        errors.push("Main-Carriage actual departure must be less than all deliveries actual arrival");
+                        //    }
+                        //}
+                    }
+
+                    break;
                 }
 
-                index = itemIndex;
-            });
-        }            
+            case "Transshipment1":
+                {
+                    if (shipmentPM.Transshipment1FromPortId != null && shipmentPM.Transshipment1ToPortId != null) {
+                        /* with it self */
+                        if (shipmentPM.Transshipment1ETD > shipmentPM.Transshipment1ETA) {
+                            errors.push("Via1 expected departure must be less than Via1 expected arrival");
+                        }
 
-        return output;
+                        if (shipmentPM.Transshipment1ATD > shipmentPM.Transshipment1ATA) {
+                            errors.push("Via1 actual departure must be less than Via1 actual arrival");
+                        }
+
+                        /* flow up */
+                        if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+                            if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment2ETD) {
+                                errors.push("Via1 expected arrival must be less than Via2 expected departure");
+                            }
+
+                            if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment2ATD) {
+                                errors.push("Via1 actual arrival must be less than Via2 actual departure");
+                            }
+                        }
+
+                        else if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+                            if (shipmentPM.Transshipment1ETA >= shipmentPM.Transshipment3ETD) {
+                                errors.push("Via1 expected arrival must be less than Via3 expected departure");
+                            }
+
+                            if (shipmentPM.Transshipment1ATA >= shipmentPM.Transshipment3ATD) {
+                                errors.push("Via1 actual arrival must be less than Via3 actual departure");
+                            }
+                        }
+
+                        else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+                            if (shipmentPM.Transshipment1ETA >= shipmentPM.OnCarriageETD) {
+                                errors.push("Via1 expected arrival must be less than On-Carriage expected departure");
+                            }
+
+                            if (shipmentPM.Transshipment1ATA >= shipmentPM.OnCarriageATD) {
+                                errors.push("Via1 actual arrival must be less than On-Carriage actual departure");
+                            }
+                        }
+
+                        else {
+                            //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+                            //if (shipmentDeliveries.Count > 0) {
+                            //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+                            //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+                            //    if (shipmentPM.Transshipment1ETA >= shipmentDeliveriesETD) {
+                            //        errors.push("Via1 expected arrival must be less than all deliveries expected departure");
+                            //    }
+
+                            //    if (shipmentPM.Transshipment1ATA >= shipmentDeliveriesATD) {
+                            //        errors.push("Via1 actual departure must be less than all deliveries actual arrival");
+                            //    }
+                            //}
+                        }
+                    }
+
+                    break;
+                }
+
+            case "Transshipment2":
+                {
+                    if (shipmentPM.Transshipment2FromPortId != null && shipmentPM.Transshipment2ToPortId != null) {
+                        /* with it self */
+                        if (shipmentPM.Transshipment2ETD > shipmentPM.Transshipment2ETA) {
+                            errors.push("Via2 expected departure must be less than Via2 expected arrival");
+                        }
+
+                        if (shipmentPM.Transshipment2ATD > shipmentPM.Transshipment2ATA) {
+                            errors.push("Via2 actual departure must be less than Via2 actual arrival");
+                        }
+
+                        /* flow up */
+                        if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+                            if (shipmentPM.Transshipment2ETA >= shipmentPM.Transshipment3ETD) {
+                                errors.push("Via2 expected arrival must be less than Via3 expected departure");
+                            }
+
+                            if (shipmentPM.Transshipment2ATA >= shipmentPM.Transshipment3ATD) {
+                                errors.push("Via2 actual arrival must be less than Via3 actual departure");
+                            }
+                        }
+
+                        else if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+                            if (shipmentPM.Transshipment2ETA >= shipmentPM.OnCarriageETD) {
+                                errors.push("Via2 expected arrival must be less than On-Carriage expected departure");
+                            }
+
+                            if (shipmentPM.Transshipment2ATA >= shipmentPM.OnCarriageATD) {
+                                errors.push("Via2 actual arrival must be less than On-Carriage actual departure");
+                            }
+                        }
+
+                        else {
+                            //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+                            //if (shipmentDeliveries.Count > 0) {
+                            //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+                            //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+                            //    if (shipmentPM.Transshipment2ETA >= shipmentDeliveriesETD) {
+                            //        errors.push("Via2 expected arrival must be less than all deliveries expected departure");
+                            //    }
+
+                            //    if (shipmentPM.Transshipment2ATA >= shipmentDeliveriesATD) {
+                            //        errors.push("Via2 actual departure must be less than all deliveries actual arrival");
+                            //    }
+                            //}
+                        }
+                    }
+
+                    break;
+                }
+
+            case "Transshipment3":
+                {
+                    if (shipmentPM.Transshipment3FromPortId != null && shipmentPM.Transshipment3ToPortId != null) {
+                        /* with it self */
+                        if (shipmentPM.Transshipment3ETD > shipmentPM.Transshipment3ETA) {
+                            errors.push("Via3 expected departure must be less than Via3 expected arrival");
+                        }
+
+                        if (shipmentPM.Transshipment3ATD > shipmentPM.Transshipment3ATA) {
+                            errors.push("Via3 actual departure must be less than Via3 actual arrival");
+                        }
+
+                        /* flow up */
+                        if (shipmentPM.OnCarriageFromPortId != null && shipmentPM.OnCarriageToPortId != null) {
+                            if (shipmentPM.Transshipment3ETA >= shipmentPM.OnCarriageETD) {
+                                errors.push("Via3 expected arrival must be less than On-Carriage expected departure");
+                            }
+
+                            if (shipmentPM.Transshipment3ATA >= shipmentPM.OnCarriageATD) {
+                                errors.push("Via3 actual arrival must be less than On-Carriage actual departure");
+                            }
+                        }
+
+                        else {
+                            //List < ShipmentDeliveryPM > shipmentDeliveries = shipmentPM.ShipmentDeliveries.ToList();
+
+                            //if (shipmentDeliveries.Count > 0) {
+                            //    DateTime ? shipmentDeliveriesETD = shipmentDeliveries.Min(m => m.ETD);
+                            //    DateTime ? shipmentDeliveriesATD = shipmentDeliveries.Min(m => m.ATD);
+
+                            //    if (shipmentPM.Transshipment3ETA >= shipmentDeliveriesETD) {
+                            //        errors.push("Via3 expected arrival must be less than all deliveries expected departure");
+                            //    }
+
+                            //    if (shipmentPM.Transshipment3ATA >= shipmentDeliveriesATD) {
+                            //        errors.push("Via3 actual departure must be less than all deliveries actual arrival");
+                            //    }
+                            //}
+                        }
+                    }
+
+                    break;
+                }
+            default: { break; }
+        }
     }
-}
-export class CalculatedPricingItem {
-    public LineNumber: number;
-    public To: number;
-    public Price: number;
-    public Amount: number;
-    public ChargeableDays: number;
+    }     
 }

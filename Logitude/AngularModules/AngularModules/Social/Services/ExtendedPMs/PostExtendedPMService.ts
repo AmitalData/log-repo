@@ -1,8 +1,7 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -20,27 +19,28 @@ import {PostLikePM} from '../../EntityPMs/PostLikePM';
 @Injectable()
 
 export class PostExtendedPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PostExtended';
     }
 
 
     GetSocialContact(id: string, tenant: number) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetSocialContact/?' + 'id=' + id +'&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetSocialContact/?' + 'id=' + id +'&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
+            var result = response.json();
             
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
          
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
@@ -48,40 +48,46 @@ export class PostExtendedPMService {
 
     GetPostSummaryData(userId: string, loggedUserId: string, tenant: number) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetPostSummaryData/?' + 'userId=' + userId + '&loggedUserId=' + loggedUserId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetPostSummaryData/?' + 'userId=' + userId + '&loggedUserId=' + loggedUserId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
+            var result = response.json();
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
 
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
 
     DeletePostLike( postId:string ,userId: string, tenant: number) {
 
-        return this._http.get(this._apiUrl + '/GetDeletePostLike/?' + 'postId=' + postId + '&userId=' + userId+  '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetDeletePostLike/?' + 'postId=' + postId + '&userId=' + userId+  '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-            var result = response;
+            var result = response.json();
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = result;
 
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
     InsertPostLike(postLike: PostLikePM) {
-        return defer(() => {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+            return this._http.post(this._apiUrl + '/PostInsertPostLike', JSON.stringify(postLike),
+                { headers: authHeader }).map((response) => {
 
-            return this._http.post(this._apiUrl + '/PostInsertPostLike', JSON.stringify(postLike), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-
-                    var result:any = response;
+                    var result = response.json();
                     var entity: PostLikePM;
                     entity = result;
                     if (result) {
@@ -94,7 +100,7 @@ export class PostExtendedPMService {
                     pmresponse.Result = entity;
                     return pmresponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
         );
 
@@ -107,10 +113,11 @@ export class PostExtendedPMService {
     
     GetSinglePostComment(id: string, tenant: number) {
 
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + '/GetSinglePostComment/?' + 'id=' + id + '&tenant=' + tenant, { headers: authHeader }).map(response => {
 
-        return this._http.get(this._apiUrl + '/GetSinglePostComment/?' + 'id=' + id + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result:any = response;
+            var result = response.json();
             var entity: PostPM;
             var PostPMLists: PostPM[];
             PostPMLists = new Array<PostPM>();
@@ -123,17 +130,22 @@ export class PostExtendedPMService {
 
             pmresponse.Result = PostPMLists;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 
     PostFilteredPosts(postFilter: any) {
-        return defer(() => {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
 
-            return this._http.post(this._apiUrl + '/PostFilteredPosts', JSON.stringify(postFilter), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
 
-                    var result:any = response;
+            return this._http.post(this._apiUrl + '/PostFilteredPosts', JSON.stringify(postFilter),
+                { headers: authHeader }).map((response) => {
+
+                    var result = response.json();
                     var entity: PostPM;
                     var postPMLists: PostPM[];
                     postPMLists = new Array<PostPM>();
@@ -147,7 +159,7 @@ export class PostExtendedPMService {
                     pmresponse.Result = postPMLists;
                     return pmresponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
         );
 
@@ -155,12 +167,15 @@ export class PostExtendedPMService {
 
 
     GetCountPostPMsByFilter(postFilter: any) {
-        return defer(() => {
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
 
+            return this._http.post(this._apiUrl + '/PostGetCountPostPMsByFilter', JSON.stringify(postFilter),
+                { headers: authHeader }).map((response) => {
 
-            return this._http.post(this._apiUrl + '/PostGetCountPostPMsByFilter', JSON.stringify(postFilter), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
-
-                    var result = response;
+                    var result = response.json();
             
                     var pmresponse: ServiceResponse;
                     pmresponse = new ServiceResponse();
@@ -168,7 +183,7 @@ export class PostExtendedPMService {
                     pmresponse.Result = result;
                     return pmresponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
         );
 

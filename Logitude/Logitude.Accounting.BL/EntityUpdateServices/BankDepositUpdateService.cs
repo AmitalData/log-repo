@@ -5,7 +5,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using System.Transactions;
@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnCreating(BankDepositPM entityPM, EntityPM entityParentPM)
         {
 
-            BankDepositOnCreatingService bankDepositOnCreatingService = new BankDepositOnCreatingService(currentContext, entityPM.Tenant);
+            BankDepositOnCreatingService bankDepositOnCreatingService = new BankDepositOnCreatingService(currentContext);
             bankDepositOnCreatingService.OnCreating(entityPM);
 
 
@@ -450,10 +450,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //update cashbook
                 if (cashbookPM != null)
                 {
-                    if (cashbookPM.CashBookTypeCode != "1")
-                    {
-                        cashbookPM.TotalAmount += Math.Round(bankDeposit.ForeignAmount, 2);
-                    }
+                    cashbookPM.TotalAmount += Math.Round(bankDeposit.ForeignAmount, 2);
+
                     // update cashbook rows if cashbook is cheques
                     if (!bankDeposit.IsCashDeposit)
                     {
@@ -537,7 +535,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
         #endregion
-
 
     }
 }

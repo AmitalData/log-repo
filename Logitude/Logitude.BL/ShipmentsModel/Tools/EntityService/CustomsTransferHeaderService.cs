@@ -7,7 +7,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -117,7 +117,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.InitializeComponent();
             this.UpdateTransferLines();
-            this.FillShipmentNumberField();
 
             CustomsTransferHeaderTracing.Trace(entityPM, entityPoco, isNewEntity);
             CustomsTransferHeaderMapping.MapEntity(entityPM, entityPoco, isNewEntity);
@@ -142,30 +141,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
             this.InitializeComponent();
             this.UpdateTransferLines();
-            this.FillShipmentNumberField();
+
             CustomsTransferHeaderMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
             entityRepository.Update(entityPoco);
             entityRepository.SubmitChanges();
-        }
-
-        private void FillShipmentNumberField()
-        {
-            StringBuilder shipmentNumberStr = new StringBuilder();
-            if (entityPM.CustomsTransferLines != null)
-            {
-                foreach (CustomsTransferLinePM itemPM in entityPM.CustomsTransferLines)
-                {
-                    if (itemPM.ChangeSetOp != ChangeSetOperation.Delete)
-                        shipmentNumberStr.Append(itemPM.ShipmentNumber + ", ");
-                }
-                shipmentNumberStr.Remove(shipmentNumberStr.Length - 2, 1);
-                entityPM.ShipmentNumber = shipmentNumberStr.ToString();
-            }
-            else
-            {
-                entityPM.ShipmentNumber = "";
-            }
         }
 
         private void InitializeComponent()
@@ -197,13 +177,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     case "AMAS":
                         {
-                            entityPM.FileName = "AirShipments" + entityPM.TransferNumber + ".xlsx";
+                            entityPM.FileName = "Air Shipments" + entityPM.TransferNumber + ".xls";
                             break;
                         }
 
                     case "AMOS":
                         {
-                            entityPM.FileName = "OceanShipments" + entityPM.TransferNumber + ".xlsx";
+                            entityPM.FileName = "Ocean Shipments" + entityPM.TransferNumber + ".xls";
                             break;
                         }
                 }

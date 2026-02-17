@@ -1,19 +1,18 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
+﻿import {Component, OnInit, ViewChild, ViewContainerRef}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
 
 @Component({
-  template:
+    template:
     `
         <table>
             <tr>
                 <td>
                     <div class="MediaFill">
-                        <div ChildDirective></div>
+                        <div #Child></div>
                     </div>
                 </td>
             </tr>
@@ -21,44 +20,40 @@ import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirec
     `,
 })
 
-export class APInvoiceDetailsTabComponent implements AfterViewInit {
-  public EntityPM: APInvoicePM = null;
-  public ObjectTableName = "APInvoice";
+export class APInvoiceDetailsTabComponent implements OnInit {
+    public EntityPM: APInvoicePM = null;
+    public ObjectTableName = "APInvoice";
+    @ViewChild("Child", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    public isRTL: boolean = false;
 
-  @ViewChild(ChildDirective) Child: ChildDirective;
+    constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");      
+        this.EntityPM = entityArgs.EntityPM;
+    }
 
-  public isRTL: boolean = false;
+    ngOnInit() {
+        this.entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((res: any) => {
+            this.entityResourceService.getEntityResourceByTableName("APInvoiceLine").subscribe((res: any) => {
 
-  constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
-    if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-    this.EntityPM = entityArgs.EntityPM;
-  }
-
-  ngAfterViewInit() {
-    this.entityResourceService.getEntityResourceByTableName("APInvoice").subscribe((res1: any) => {
-      this.entityResourceService.getEntityResourceByTableName("APInvoiceLine").subscribe((res2: any) => {
-          this.entityResourceService.getEntityResourceByTableName("APInvoiceTotalVAT").subscribe((res3: any) => {
-              if (this.EntityPM.IsMultipleEntities) {
-                  SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceMultipleDetailsTabComponent", this.Child.Location)
-                      .then(cmpRef => {
-                          //cmpRef.instance 66
-                          var d = 9;
-                      });
-              }
-              else if (this.EntityPM.IsGeneralInvoice) {
-                  SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabGeneral", this.Child.Location)
-                      .then(cmpRef => {
-                          //cmpRef.instance
-                      });
-              }
-              else {
-                  SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabNormal", this.Child.Location)
-                      .then(cmpRef => {
-                          //cmpRef.instance
-                      });
-              }
-          });
-      });
-    });
-  }
+                if (this.EntityPM.IsMultipleEntities) {
+                    SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceMultipleDetailsTabComponent", this.viewContainerRef)
+                        .then(cmpRef => {
+                            //cmpRef.instance
+                        });
+                }
+                else if (this.EntityPM.IsGeneralInvoice) {
+                    SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabGeneral", this.viewContainerRef)
+                        .then(cmpRef => {
+                            //cmpRef.instance
+                        });
+                }
+                else {
+                    SessionLocator.DynamicLoader.Load("./InvoiceModules/APInvoice/Components/EditTabs/APInvoiceDetailsTabNormal", this.viewContainerRef)
+                        .then(cmpRef => {
+                            //cmpRef.instance
+                        });
+                }
+            });
+        });
+    }
 }

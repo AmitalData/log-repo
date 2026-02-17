@@ -19,7 +19,7 @@ describe('BankAccount Module', function () {
 
       console.log('Khawlaaa check ')
     browser.ignoreSynchronization = true;
-    gn1.GoToMainMenu2('General.MH.FullAccounting');
+    gn1.GoToMainMenu('General.MH.FullAccounting');
     h.WaitByIdAndClick('FAGLAccouts');
     var GlaccountNumber = gn1.RandomNum();
       var Gl = 'Bank'+GlaccountNumber;

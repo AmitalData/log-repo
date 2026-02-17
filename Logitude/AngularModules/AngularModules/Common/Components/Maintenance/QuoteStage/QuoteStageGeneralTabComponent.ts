@@ -9,7 +9,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {EntityArgs} from  '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './QuoteStageGeneralTabComponent.html',
 })
 

@@ -25,10 +25,9 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {VATTypesGroupPM} from '../../../../Common/EntityPMs/VATTypesGroupPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditMultipleShipmentComponent.html',
 })
 
@@ -48,8 +47,6 @@ export class EditMultipleShipmentComponent extends BaseComponent {
     public APInvoiceId: string = null;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsUsingVirtuallization: boolean = false;
-
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -77,7 +74,6 @@ export class EditMultipleShipmentComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        this.SetIsUsingVirtuallization();
         this.APInvoicePM = args['APInvoicePM'];
         this.EntityShipmentPM = args['EntityShipmentPM'];
         this.IsEditingEnabled = args['IsEditingEnabled'];
@@ -86,13 +82,6 @@ export class EditMultipleShipmentComponent extends BaseComponent {
         this.InvoiceCurrencyCode = this.APInvoicePM.InvoiceCurrencyCode;
         this.SetUIProperties();
         this.LoadEntity();
-    }
-
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
     }
 
     public VatTypeFilterIsEnabled: boolean = false;
@@ -403,10 +392,6 @@ export class EditMultipleShipmentComponent extends BaseComponent {
         else {
             this.EntityPM.InvoiceLines.forEach(item => {
                 Validator.TryValidateObject(item, "APInvoiceLine", errors);
-
-                if (AppTool.IsNullOrEmpty(item.VatTypeId)) {
-                    errors.push("VAT Type Field is Required");
-                }
             });            
         }
 
@@ -612,22 +597,14 @@ export class APInvoiceLineShortItem extends BaseComponent {
             this.isChecked = value;
 
             if (value) {
-                if (this.EntityPM.AmountTypeCode != "NEXP") {
-                    if (AppTool.IsNullOrZero(this.ForiegnCurrencyAmount) && !AppTool.IsNullOrZero(this.OpenAmount)) {
-                        this.ForiegnCurrencyAmount = this.OpenAmount;
-                    }
-                }
-
                 this.fatherComponent.EntityPM.AddInvoiceLinePM(this.EntityPM);
             }
 
             else {
-                this.InvoiceCurrencyAmount = null;
                 this.fatherComponent.EntityPM.RemoveInvoiceLinePM(this.EntityPM);
             }
 
             this.SetCellColor();
-            this.SetUIProperties();
             this.fatherComponent.ComputeTotals();
             this.fatherComponent.CheckIsAllChecked();
         }
@@ -772,7 +749,6 @@ export class APInvoiceLineShortItem extends BaseComponent {
         var isUpdateVisible = false;
         var isMultiIconVisible = false;
         this.VatTypesGroups = [];
-        var pipe = new NumbersPipe();
 
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
 
@@ -784,7 +760,7 @@ export class APInvoiceLineShortItem extends BaseComponent {
             }
 
             else if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + pipe.transform(this.VatPercentage, "N3") + "%)";
+                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
                 myColor = FontTool.Black;
             }
 

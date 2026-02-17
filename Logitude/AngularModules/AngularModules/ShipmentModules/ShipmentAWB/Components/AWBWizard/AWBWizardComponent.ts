@@ -1,8 +1,8 @@
 declare var window: any;
-import { Component, AfterViewInit, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChildren, QueryList, Output, EventEmitter} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {AppTool, ArrayTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
+import {AppTool, DateTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, AWBHelper, AWBCCSValidator} from '../../../../Shipment/Tools';
 import {AWBWizardArgs, SendAWBArgs} from '../../../../Shipment/Args';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -47,18 +47,15 @@ import { DueTypeListService } from '../../../../Common/Services/StandardLists/Du
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { MeasurementListService } from '../../../../Common/Services/StandardLists/MeasurementListService';
 import { ShipmentAWBPrintOnlyPM } from '../../../../Shipment/EntityPMs/ShipmentAWBPrintOnlyPM';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
-import { ShipmentPayablePM } from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
-import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     selector: 'AWBWizardComponent',
     templateUrl: './AWBWizardComponent.html',
     providers: [EntityArgs, DocumentTypeListExtendedService, DocumentOutPMService, DocumentTypePMExtendedService]
 })
 
-export class AWBWizardComponent implements AfterViewInit{
+export class AWBWizardComponent {
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter < boolean>();
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     public TenantPM: TenantPM;
@@ -74,11 +71,9 @@ export class AWBWizardComponent implements AfterViewInit{
     public ValidationErrorsList: string[] = [];
     public ValidationWarningsList: string[] = [];
     public IsValidationSingleLine: boolean = false;
-    public isEntityChange: boolean = false;
     public IsImportWizard: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsUpdateQuantitiesVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, public _documentTypeListExtendedService: DocumentTypeListExtendedService, public _documentOutPMService: DocumentOutPMService, public _documentTypePMService: DocumentTypePMExtendedService) {
         this.TenantPM = SessionLocator.TenantPM;
         this.myPartnersDomainService = new PartnersDomainService();
@@ -90,13 +85,40 @@ export class AWBWizardComponent implements AfterViewInit{
     SetWindowArgs(windowArgs: AWBWizardArgs) {
         this.WindowArgs = windowArgs;
         this.InitializeWizard();
-        this.Clone();
+        this.RunComponent();
     }
 
     private isViewInited = false;
-    ngAfterViewInit() {
-        this.isViewInited = true;
-        this.InitializeComponent();
+    RunComponent() {
+        if (this.AllLocations) {
+
+            if (this.AllLocations.toArray().length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.isViewInited = true;
+                this.InitializeComponent();
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
 
     public YellowIconHelpMessage: string;
@@ -689,7 +711,6 @@ export class AWBWizardComponent implements AfterViewInit{
                                         .then(cmpRef => {
                                             this.PageChild_OVE = cmpRef.instance;
                                             this.PageChild_OVE.InitTab(this.EntityPM, this);
-                                            this.PageChild_OVE.PackagesResourcesReady = true;
                                         });
                                 });
                             }
@@ -761,13 +782,11 @@ export class AWBWizardComponent implements AfterViewInit{
                         }
                         case "PAC": {
                             if (this.PageChild_PAC == null) {
-                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response => {
-                                    this._entityResourceService.getEntityResourceByTableName("ShipmentCommodity").subscribe(response2 => {
-                                        SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
-                                            .then(cmpRef => {
-                                                this.PageChild_PAC = cmpRef.instance;
-                                                this.PageChild_PAC.InitTab(this);
-                                            });
+                                this._entityResourceService.getEntityResourceByTableName("ShipmentPackage").subscribe(response=> {
+                                    SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/Packages/AWBPackagesTabComponent', myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.PageChild_PAC = cmpRef.instance;
+                                        this.PageChild_PAC.InitTab(this);
                                     });
                                 });
                             }
@@ -842,7 +861,7 @@ export class AWBWizardComponent implements AfterViewInit{
                         }
                         case "OCI": {
                             if (this.PageChild_OCI == null) {
-                                this._entityResourceService.getEntityResourceByTableName("AWBOCI", 0).subscribe((response:any) => {
+                                this._entityResourceService.getEntityResourceByTableName("AWBOCI", 0).subscribe(response => {
                                     SessionLocator.DynamicLoader.Load('./ShipmentModules/ShipmentAWB/Components/AWBWizard/OCI/OCITabComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
                                             this.PageChild_OCI = cmpRef.instance;
@@ -1028,7 +1047,7 @@ export class AWBWizardComponent implements AfterViewInit{
             });
         }
     }
-    public RefreshTab(tabCode: string) {
+    private RefreshTab(tabCode: string) {
         switch (tabCode) {
 
             case "OVE": {
@@ -1205,7 +1224,6 @@ export class AWBWizardComponent implements AfterViewInit{
         this.ValidateScreen_GEN();
         this.ValidateScreen_OCI();
         this.ValidateScreen_OTP();
-        this.ValidateScreen_OTC_Quantities();
     }
     public ValidateScreen_PAR() {
         var screenErrors: string[] = [];
@@ -1450,7 +1468,7 @@ export class AWBWizardComponent implements AfterViewInit{
                         screenWarnings.push(fieldName + " wrong format: must be 4 numeric digits max");
                     }
                 }
-                
+
                 if (AppTool.IsNullOrEmpty(this.EntityPM.IssuingCarrierAddressId)) {
                     screenWarnings.push(this.ValidationText.replace("%FieldName", "Issuing Carrier Agent Address"));
                 }
@@ -1577,12 +1595,12 @@ export class AWBWizardComponent implements AfterViewInit{
         }
 
         else {
-            if (this.EntityPM.HasPreForwarding && AppTool.IsNullOrEmpty(this.EntityPM.PreForwardingFromPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreForwardingFromPortId")));
+            if (this.EntityPM.HasPreCarriage && AppTool.IsNullOrEmpty(this.EntityPM.PreCarriageFromPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.PreCarriageFromPortId")));
             }
 
-            if (this.EntityPM.HasOnForwarding && AppTool.IsNullOrEmpty(this.EntityPM.OnForwardingToPortId)) {
-                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnForwardingToPortId")));
+            if (this.EntityPM.HasOnCarriage && AppTool.IsNullOrEmpty(this.EntityPM.OnCarriageToPortId)) {
+                screenErrors.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.OnCarriageToPortId")));
             }
             if (!this.IsImportWizard) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.House)) {
@@ -1613,13 +1631,6 @@ export class AWBWizardComponent implements AfterViewInit{
                 var msgField = TextCodeTranslator.Translate(this.ObjectTableName + ".F.GrossWeight");
                 msgField = msgField.replace("%GrossWeightCode", this.EntityPM.GrossWeightUnitCode);
                 screenWarnings.push(this.ValidationText.replace("%FieldName", msgField));
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.SLAC)) {
-            if (!FormatTool.Validate_SLAC(this.EntityPM.SLAC)) {
-                var fieldName: string = TextCodeTranslator.Translate(this.ObjectTableName + ".F." + "SLAC");
-                screenErrors.push(fieldName + " wrong format: must be 5 numeric digits max");
             }
         }
 
@@ -1678,10 +1689,10 @@ export class AWBWizardComponent implements AfterViewInit{
                                 if (AppTool.IsNullOrZero(item.ChargeRate)) {
                                     screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeRate")));
                                 }
+                            }
 
-                                if (AppTool.IsNullOrZero(item.ChargeAmount)) {
-                                    screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.ChargeAmount")));
-                                }
+                            if (AppTool.IsNullOrZero(item.ChargeAmount)) {
+                                screenWarnings.push(this.ValidationText.replace("%FieldName", TextCodeTranslator.Translate("ShipmentCommodity.F.AWBChargeAmount")));
                             }
                         }
                     });
@@ -1798,13 +1809,7 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.TabErrors_OTC = screenErrors;
         this.TabWarnings_OTC = screenWarnings;
-
-        var warningLength: number = screenWarnings.length;
-        if (this.IsUpdateQuantitiesVisible) {
-            warningLength += 1;
-        }
-
-        this.ApplyStyle(screenErrors.length > 0, warningLength > 0, "OTC");
+        this.ApplyStyle(screenErrors.length > 0, screenWarnings.length > 0, "OTC");
     }
     public ValidateScreen_RAD() {
         var screenErrors: string[] = [];
@@ -1880,19 +1885,6 @@ export class AWBWizardComponent implements AfterViewInit{
                         screenWarnings.push(fieldName + " must be 6-18 AlphaNumeric");
                     }
                 }
-            }
-
-            if ((this.IsFWB || this.IsFHL) && AppTool.IsNullOrEmpty(this.EntityPM.MainHarmonize)) {
-                var isValid = true;
-
-                if (this.EntityPM.ToCountryIsEC
-                    || this.EntityPM.Transshipment1ToCountryIsEC
-                    || this.EntityPM.Transshipment2ToCountryIsEC
-                    || this.EntityPM.Transshipment3ToCountryIsEC)
-                    isValid = false;
-
-                if (!isValid) 
-                    screenWarnings.push("Main Harmonize is Required for EC Countries");
             }
         }
     }
@@ -2178,266 +2170,6 @@ export class AWBWizardComponent implements AfterViewInit{
         }
     }
 
-    public ValidateScreen_OTC_Quantities() {
-        var validateReceivables: boolean = this.ValidateReceivablesQuantites();
-        var validatePayables: boolean = this.ValidatePayablesQuantites();
-
-        if (validateReceivables || validatePayables) {
-            this.IsUpdateQuantitiesVisible = true;
-            this.ValidateScreen_OTC();
-        }
-    }
-    private ValidateReceivablesQuantites(): boolean {
-        var activeLines: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables;
-        activeLines = activeLines.filter(d => d.ShipmentReceivableParentId == null);
-        activeLines = activeLines.filter(d => d.ARInvoiceId == null);
-        activeLines = activeLines.filter(d => d.UnitPrice != null);
-
-        if (activeLines.length > 0) {
-            var isDifferent: boolean = false;
-
-            activeLines.forEach(item => {
-                switch (item.MeasurementCode) {
-                    case "PFCL": {
-                        var quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "TotalAmountLocal");
-                        if (item.Quantity != quantity) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "SCGW": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "CWKG": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-                    case "GWKG": {
-                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "VCBM": {
-                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "GRWT": {
-                        if (item.Quantity != this.EntityPM.GrossWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "GWTN": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerTon) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "QTY": {
-                        if (item.Quantity != this.EntityPM.NumberOfPackages) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "CHWT": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "VOLU": {
-                        if (item.Quantity != this.EntityPM.Volume) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "BTEU": {
-                        if (item.Quantity != this.EntityPM.TEU) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRVL": {
-                        if (item.Quantity != this.EntityPM.ValueOfGoods) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRFR": {
-                        if (this.EntityPM.ShipmentReceivables.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
-                            var FRT_Quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
-
-                            if (item.Quantity != FRT_Quantity) {
-                                isDifferent = true;
-                            }
-
-                            if (this.EntityPM.ShipmentReceivables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
-                                isDifferent = true;
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            });
-        }
-
-        return isDifferent;
-    }
-    private ValidatePayablesQuantites(): boolean {
-        var activeLines: ShipmentPayablePM[] = this.EntityPM.ShipmentPayables;
-        activeLines = activeLines.filter(d => d.ShipmentPayableParentId == null);
-        activeLines = activeLines.filter(d => d.ShipmentPayableAmountTypeCode != "NEXP");
-        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "ACCT");
-        activeLines = activeLines.filter(d => d.ShipmentPayableLineStatusCode != "PACC");
-        activeLines = activeLines.filter(d => d.UnitPrice != null);
-
-        if (activeLines.length > 0) {
-            var isDifferent: boolean = false;
-
-            activeLines.forEach(item => {
-                switch (item.MeasurementCode) {
-                    case "PFCL": {
-                        var quantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.CurrencyId != SessionLocator.LocalCurrencyId && d.MeasurementCode != "PFCL"), "ExpectedAmountLocal"), 3);
-                        if (item.Quantity != quantity) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "SCGW": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerStorageDays) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-                    case "CWKG": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-                    case "GWKG": {
-                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
-                            isDifferent = true;
-                        }
-                        break;
-                    }
-
-                    case "GRWT": {
-                        if (item.Quantity != this.EntityPM.GrossWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "GWTN": {
-                        if (item.Quantity != this.EntityPM.GrossWeightPerTon) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "QTY": {
-                        if (item.Quantity != this.EntityPM.NumberOfPackages) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "CHWT": {
-                        if (item.Quantity != this.EntityPM.ChargeableWeight) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "VOLU": {
-                        if (item.Quantity != this.EntityPM.Volume) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "BTEU": {
-
-                        if (item.Quantity != this.EntityPM.TEU) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRVL": {
-                        if (item.Quantity != this.EntityPM.ValueOfGoods) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-
-                    case "PRFR": {
-                        if (this.EntityPM.ShipmentPayables.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
-                            var FRT_Quantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount");
-
-                            if (item.Quantity != FRT_Quantity) {
-                                isDifferent = true;
-                            }
-
-                            if (this.EntityPM.ShipmentPayables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
-                                isDifferent = true;
-                            }
-                        }
-
-                        break;
-                    }
-
-                    case "VCBM": {
-                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
-                            isDifferent = true;
-                        }
-
-                        break;
-                    }
-                }
-            });
-        }
-
-        return isDifferent;
-    }
-
     ValidateAirlineRule(myFieldName: string, myFieldValue: any, validationList: string[]) {
         if (this.AirlineRulesList != null) {
             var myRule = this.AirlineRulesList.filter(d => d.RuleFieldName == myFieldName)[0];
@@ -2671,23 +2403,14 @@ export class AWBWizardComponent implements AfterViewInit{
     CancelShipmentClicked() {
         var confirmMsg: string;
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Master)) {
-            var messageWindow: MessageWindow = new MessageWindow();
-            messageWindow.Title = "Cancelling Shipment";
-            messageWindow.Show("Can't cancel shipments that have a MAWB number, please remove it");
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
+            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
         }
 
-        else if (!AppTool.IsNullOrEmpty(this.EntityPM.BookingId)) {
-            confirmMsg = "Cancelling this shipment will disconnect it from the Booking , are you sure you want to cancel?";
-            this.ConfirmCanceling(confirmMsg);
-        }
-        
         else {
             confirmMsg = "Are you sure you want to cancel this Shipment?";
-            this.ConfirmCanceling(confirmMsg);
         }
-    }
-    ConfirmCanceling(confirmMsg: string) {
+
         var confirmWindow = new ConfirmWindow();
 
         confirmWindow.Show(confirmMsg);
@@ -2717,7 +2440,6 @@ export class AWBWizardComponent implements AfterViewInit{
             }
         });
     }
-
     ReactivateShipmentClicked() {
         this.InitFlags();
         this.isReactivateShipmentButtonClicked = true;
@@ -2965,9 +2687,6 @@ export class AWBWizardComponent implements AfterViewInit{
         });
     }
     private OnSaveCompletedSuccessfully() {
-        this.isEntityChange = true;
-        this.CurrentSession.FireEvent("RefreshShipmentsTabFromAWBWizard");
-
         if (this.isReloadingOnSave) {
             this.isReloadingOnSave = false;
             this.isExecutingMethod = true;
@@ -3039,7 +2758,7 @@ export class AWBWizardComponent implements AfterViewInit{
                 if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
                     var isDemoTenant = false;
 
-                    if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString()) || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+                    if (this.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
                         isDemoTenant = true;
                     }
 
@@ -3147,7 +2866,6 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     StartPrint() {
         if (this.documentTypePM != null) {
-
             if (this.documentTypePM.DocumentTypeDefaultReportTemplateId) {
                 this.LoadPrintControl();
             }
@@ -3204,7 +2922,7 @@ export class AWBWizardComponent implements AfterViewInit{
     documentTypePM: DocumentTypePM;
     documentTypeList: DocumentTypeList;
     GetDocstOut() {
-        this._documentTypeListExtendedService.getDocumentTypeListByCode(this.documentTypeCode, this.TenantPM.Id).subscribe((res:any) => {
+        this._documentTypeListExtendedService.getDocumentTypeListByCode(this.documentTypeCode, this.TenantPM.Id).subscribe(res => {
 
 
 
@@ -3216,7 +2934,7 @@ export class AWBWizardComponent implements AfterViewInit{
 
                     this.documentTypeId = this.documentTypeList.Id;
                     this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-                    this._documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityPM.Id, this.TenantPM.Id, "", this.documentTypeId).subscribe((res:any) => {
+                    this._documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityPM.Id, this.TenantPM.Id, "", this.documentTypeId).subscribe(res => {
                
                         this.StopBusyIndicator();
 
@@ -3228,7 +2946,7 @@ export class AWBWizardComponent implements AfterViewInit{
 
                             if (!this.documentOutPM) {
 
-                                this._documentOutPMService.getCreateDocumentOut(this.documentTypeId, this.EntityPM.Id, null, null, this.targetObjectTableId, this.EntityPM.Tenant).subscribe((res:any) => {
+                                this._documentOutPMService.getCreateDocumentOut(this.documentTypeId, this.EntityPM.Id, null, null, this.targetObjectTableId, this.EntityPM.Tenant).subscribe(res => {
                                         var pmResponse: ServiceResponse = res;
                                         if (!pmResponse.HasError) {
                                             var myResult = pmResponse.Result;
@@ -3272,7 +2990,7 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     LoadCreatedDocMethod() {
 
-        this._documentOutPMService.getSingleDocumentOutPM(this.documentOutPM.Id, this.TenantPM.Id).subscribe((res:any) => {
+        this._documentOutPMService.getSingleDocumentOutPM(this.documentOutPM.Id, this.TenantPM.Id).subscribe(res => {
      
 
 
@@ -3293,7 +3011,7 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     LoadDocumentTypeMethod() {
 
-        this._documentTypePMService.getSingleDocumentType(this.documentTypeId, this.documentOutPM.Id, this.TenantPM.Id).subscribe((res:any) => {
+        this._documentTypePMService.getSingleDocumentType(this.documentTypeId, this.documentOutPM.Id, this.TenantPM.Id).subscribe(res => {
 
 
             var pmResponse: ServiceResponse = res;
@@ -3329,7 +3047,6 @@ export class AWBWizardComponent implements AfterViewInit{
 
 
         this.StopBusyIndicator();
-
 
         if (this.documentTypePM.DocumentTypeDefaultReportTemplateId) {
             this.LoadPreviewControl();
@@ -3422,6 +3139,19 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.GetDocstOut();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private ExecuteSend() {
 
@@ -3621,7 +3351,6 @@ export class AWBWizardComponent implements AfterViewInit{
     }
 
     private CloseWizardWindow() {
-        this.RejectChanges();
         this.CloseWindow();
     }
     private CloseWindow() {
@@ -3723,16 +3452,6 @@ export class AWBWizardComponent implements AfterViewInit{
                 this.CurrentSession.StopBusyIndicator();
             }
         });
-    }
-
-    private myCloner: Cloner;
-    private Clone() {
-        this.myCloner = new Cloner(this.EntityPM);
-        this.myCloner.AddField('IsMultipleCommodities');
-        this.myCloner.AddEntity(this.EntityPM);
-    }
-    private RejectChanges() {
-        this.myCloner.RejectChanges();
     }
 }
 

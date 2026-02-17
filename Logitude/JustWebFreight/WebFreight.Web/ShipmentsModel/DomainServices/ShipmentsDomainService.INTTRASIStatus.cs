@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;

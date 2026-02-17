@@ -7,7 +7,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
@@ -36,6 +36,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
 
                 entity.BranchId = entityPM.BranchId;
+                entity.PaymentMethodId = entityPM.AccountingPaymentMethodId;
                 entity.AccountingPaymentMethodId = entityPM.AccountingPaymentMethodId;
                 entity.VendorAddressId = entityPM.VendorAddressId;
                 entity.VendorId = entityPM.VendorId;
@@ -72,7 +73,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.VendorBankAccountNumber = entityPM.VendorBankAccountNumber;
             entity.VendorIBANNumber = entityPM.VendorIBANNumber;
             entity.VendorSwift = entityPM.VendorSwift;
-            entity.MasavInterfaceId = entityPM.MasavInterfaceId;
+            
             if (entityPM.SetApproved)
             {
                 entityPM.ApprovedByUserId = loggedContact.Id;
@@ -81,10 +82,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.ApprovedDateTime = entityPM.ApprovedDateTime;
             entity.BankAccountId = entityPM.BankAccountId;
+            entity.PaymentMethodId = entityPM.AccountingPaymentMethodId;
             entity.AutomaticPaymentCheque = entityPM.AutomaticPaymentCheque;
-            entity.AccountingCancelationDate = entityPM.AccountingCancelationDate;
-            entity.DontIncludeInDeductionReport = entityPM.DontIncludeInDeductionReport;
-            entity.CancelationNotes = entityPM.CancelationNotes;
             if (entityPM.StatusCode == "AD" && entityPM.OpenAmount == 0)
             {
                 entity.IsClosed = true;
@@ -109,21 +108,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
 
-            entity.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
-            entity.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;
-            entity.Field3 = entityPM.Field3 != null ? entityPM.Field3.Value : null;
-            entity.Field4 = entityPM.Field4 != null ? entityPM.Field4.Value : null;
-            entity.Field5 = entityPM.Field5 != null ? entityPM.Field5.Value : null;
-            entity.Field6 = entityPM.Field6 != null ? entityPM.Field6.Value : null;
-            entity.Field7 = entityPM.Field7 != null ? entityPM.Field7.Value : null;
-            entity.Field8 = entityPM.Field8 != null ? entityPM.Field8.Value : null;
-            entity.Field9 = entityPM.Field9 != null ? entityPM.Field9.Value : null;
-            entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
-            entity.ExternalPaymentAmount = entityPM.ExternalPaymentAmount;
-            entity.ExternalPaymentDate = entityPM.ExternalPaymentDate;
-            entity.ExternalPaymentNotes = entityPM.ExternalPaymentNotes;
-            entity.ConnectedInvoicesNumbers = entityPM.ConnectedInvoicesNumbers;
-
             entityPM.SetVoided = false;
             entityPM.SetApproved = false;
             entityPM.SetCancelApproval = false;
@@ -146,7 +130,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
         private static JournalEntity GetJournalOfAPPayment(APPaymentPM entityPM)
         {
             JournalRepository rep = new JournalRepository(entityPM.Tenant);
-            JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"5", entityPM.Tenant);
+            JournalEntity journal = rep.GetJournalByAccountingEntityId(entityPM.Id, entityPM.Tenant);
             return journal;
         }
 

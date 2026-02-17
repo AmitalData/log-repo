@@ -25,24 +25,7 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
-        public List<ReconciliationLine> GetReconciliationLinesByLedgerTransactionsIds(List<string> ledgerTransactionsIds)
-        {
-
-            return (from rl in context.ReconciliationLines
-                    join r in context.Reconciliations on rl.ReconciliationId equals r.Id
-                    where ledgerTransactionsIds.Contains(rl.TransactionId) && !r.IsCancelled
-                    select rl).ToList();
-        }
-
-        public List<JournalReconcile> GetJournalReconcilesForJournalsWithoutLedgers(List<string> ledgerTransactionsIds, int tenant)
-        {
-
-            return (from jr in context.JournalReconciles
-                    join j in context.Journals on jr.JournalId equals j.Id
-                    where j.Tenant == tenant && (j.StatusCode == "2" || j.StatusCode == "6") && j.IsLedgerCreated == false &&  ledgerTransactionsIds.Contains(jr.LedgerTransactionId)
-                    select jr).ToList();
-        }
-    }
+   }
 
 }
    

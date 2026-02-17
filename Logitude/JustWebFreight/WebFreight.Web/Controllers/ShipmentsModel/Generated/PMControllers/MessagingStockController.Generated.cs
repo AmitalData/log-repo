@@ -2,7 +2,7 @@
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Server.Infrastructure.Helpers;
@@ -25,9 +25,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         {
             try
             {
-                int tenant = SecurityUtility.GetTenant();
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("MessagingStock", "READ", tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.CheckContactFeature("MessagingStock", "READ", 0);
 
                 MessagingStockQuery entityQuery = new MessagingStockQuery(tenant);
                 MessagingStockPM myResult = entityQuery.GetSinglePM(id, tenant);
@@ -46,16 +49,14 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         {
             try
             {
-                
-
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
 
-                    SecurityUtility.AuthenticationOnTenant(entityPM.TenantNumber);
-                    SecurityUtility.CheckContactFeature("MessagingStock", "NEW", entityPM.TenantNumber);
+                    SecurityUtility.AuthenticationOnTenant(0);
+                    SecurityUtility.CheckContactFeature("MessagingStock", "NEW", 0);
 
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.TenantNumber);
                     MessagingStockService service = new MessagingStockService(objectContext, entityPM);
@@ -80,10 +81,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    int tenant = SecurityUtility.GetTenant();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
 
-                    SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.CheckContactFeature("MessagingStock", "UPDATE", tenant);
+                    SecurityUtility.AuthenticationOnTenant(0);
+                    SecurityUtility.CheckContactFeature("MessagingStock", "UPDATE", 0);
 
                     IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.TenantNumber);
                     MessagingStockService service = new MessagingStockService(objectContext, entityPM);

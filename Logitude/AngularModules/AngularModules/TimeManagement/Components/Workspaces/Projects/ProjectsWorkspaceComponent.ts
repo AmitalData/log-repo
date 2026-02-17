@@ -16,7 +16,7 @@ import {ImageParameter} from '../../../../Infrastructure/DataContracts/ImagePara
 declare var UploadLogoFile, ArrayBufferToBase64;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ProjectsWorkspaceComponent.html',
 })
 
@@ -41,7 +41,7 @@ export class ProjectsWorkspaceComponent {
     public MyProjectsQueriesVisibility: boolean = false;
     LoadQueriesCounts() {
         var myService: TimeManagementDomainService = new TimeManagementDomainService();
-        myService.GetProjectsCounts(SessionLocator.LoggedUserId).subscribe((myResult:any) => {
+        myService.GetProjectsCounts(SessionLocator.LoggedUserId).subscribe(myResult => {
             if (myResult != null) {
                 this.MyProjectsCount = myResult.MyProjectsCount > 1000 ? "1000+" : myResult.MyProjectsCount.toString();
                 this.AllProjectsCount = myResult.AllProjectsCount > 1000 ? "1000+" : myResult.AllProjectsCount.toString();
@@ -103,7 +103,7 @@ export class ProjectsWorkspaceComponent {
         var service: ExcelExportService = new ExcelExportService();
         var file: ImageParameter = new ImageParameter();
         file.Base64String = data;
-        service.ImportClockTimeData(file).subscribe((res:any) => {
+        service.ImportClockTimeData(file).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
             var wind = new MessageWindow();
             wind.Show("Import completed successfully");
@@ -121,7 +121,7 @@ export class ProjectsWorkspaceComponent {
 
     }
     NewProject() {
-        this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("TMProject", 0).subscribe(response => {
             var logWindow = new LogitudeWindow();
             logWindow.Title = "New Project";
             logWindow.Show('./TimeManagement/Components/NewEntity/NewProjectComponent');
@@ -153,7 +153,7 @@ export class ProjectsWorkspaceComponent {
         listArgs.ObjectTableName = "TMProject";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Projects";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;

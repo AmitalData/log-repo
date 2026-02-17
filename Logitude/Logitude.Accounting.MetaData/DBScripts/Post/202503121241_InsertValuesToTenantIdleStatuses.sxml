@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting">
-  <Sql Version="1">
-    <![CDATA[
-  insert into TenantIdleStatuses
-  select Id,Tenant,GETDATE(),GETDATE(),SearchFields,0,'ARInvoice' from TenantIdleStatuses
-
-     ]]>
-  </Sql>
-</Script>

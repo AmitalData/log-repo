@@ -24,10 +24,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
         }
         static XLSExportService()
         {
-            ContainerAccessor.Container.RegisterType<IExcelExport, CreditGoldExport>
-                ((new CreditGoldExport()).MainInterfaceCode);
-
-
+          
             ContainerAccessor.Container.RegisterType<IExcelExport, ExchangeRateExport>
                 ((new ExchangeRateExport()).MainInterfaceCode);
 
@@ -39,16 +36,6 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             ContainerAccessor.Container.RegisterType<IExcelExport, MasavPaymentsToAgentExport>
                 ((new MasavPaymentsToAgentExport()).MainInterfaceCode);
 
-            ContainerAccessor.Container.RegisterType<IExcelExport, BlockListInWarehouseDetailExport>
-    ((new BlockListInWarehouseDetailExport()).MainInterfaceCode);
-
-            
-            ContainerAccessor.Container.RegisterType<IExcelExport, ImporterDeclarationExport>
-   ((new ImporterDeclarationExport()).MainInterfaceCode);
-
-                        ContainerAccessor.Container.RegisterType<IExcelExport, PaymentQueryExport>
-   ((new PaymentQueryExport()).MainInterfaceCode);
-
         }
 
         public static IExcelExport GetExcelFormator(string mainInterfaceCode, string correlationId = "")
@@ -58,8 +45,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             if (!ContainerAccessor.Container.IsRegistered<IExcelExport>(mainInterfaceCode))
             {
                 var inst = new InterfaceManagementDetails();
-                var all = inst.GetAll();
-                var row = all.FirstOrDefault(r => r.ResponseInterfaceCode == mainInterfaceCode);
+                var row = inst.GetAll().FirstOrDefault(r => r.ResponseInterfaceCode == mainInterfaceCode);
                 if (row == null)
                 {
                     throw new System.Exception("ResolveAndExecute(" + mainInterfaceCode + " , " + correlationId + ") But if (!ContainerAccessor.Container.IsRegistered<IExcelFormator>(mainInterfaceCode)), No ResponseInterfaceCode");

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 
@@ -11,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DWHSettingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DWHSettingRepository(ICommonDataContext context)
         {
@@ -72,13 +75,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in this.context.DWHSettings
                     where a.Tenant == tenant
                     select a.IsParentTenant).FirstOrDefault();
-        }
-
-        public List<int> GetTenantNumbersByParentTenant(int tenant)
-        {
-            return (from a in this.context.DWHSettings
-                    where a.ParentTenant == tenant
-                    select a.Tenant).ToList();
         }
 
 

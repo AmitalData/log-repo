@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -89,10 +89,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<BankDepositList> GetLastActivityBankDeposits(int tenant, string userId, string objectTableId)
         {
             List<BankDepositList> entityList = new List<BankDepositList>();
-            if (string.IsNullOrEmpty(userId))
-            {
-                return entityList;
-            }
 
             EntityLastActivityRepository entityLastActivityRepository = new EntityLastActivityRepository(tenant);
             List<EntityLastActivity> lastActivities = entityLastActivityRepository.GetTopEntityLastActivities(tenant, userId, objectTableId).ToList();

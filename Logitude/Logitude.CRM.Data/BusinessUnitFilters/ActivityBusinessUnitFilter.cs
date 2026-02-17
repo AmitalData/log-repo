@@ -1,8 +1,8 @@
 ﻿using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ namespace Logitude.CRM.Data.BusinessUnitFilters
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 
-            if (loggedUserEmail != "support@amital.co.il")
+            if (loggedUserEmail != "admin@fnarsoft.com")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Activity", 0, true);

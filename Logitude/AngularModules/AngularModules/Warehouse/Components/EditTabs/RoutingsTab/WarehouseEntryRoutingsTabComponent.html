@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
 
     <table *ngIf="!IsInlandDomestic">
@@ -229,20 +229,14 @@
                         </td>
                         <td></td>
                     </tr>
-                    <tr style="height:5px;">
-                        <td style="height:5px;"></td>
-                    </tr>
+
                     <!-- TruckNumber -->
                     <tr class="FormFieldRow">
                         <td style="width: 115px;" class="FormFieldRow">
-                            <div style="height: 65px;">
-                                <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </div>
+                            <LogLabel [ObjectFieldName]="'TruckerReference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 240px;">
-                            <div style="height: 65px;">
-                                <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                            </div>
+                            <LogTextBox [ObjectFieldName]="'TruckerReference'" [Text]="TruckerReference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                         </td>
                         <td></td>
                     </tr>

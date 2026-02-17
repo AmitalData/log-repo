@@ -12,7 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -34,10 +34,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
         public void CustomPOCOToPM(CustomsRequiredFieldPM entityPM, CustomsRequiredField entityPOCO)
         {
             CustomMappedPMProperties.Add(PMPropertyNames.ObjectFieldName);
-            if (entityPOCO.ObjectfieldCode != null)
+            if (entityPOCO.ObjectfieldId != null)
             {
                 ObjectFieldRepository objectFieldsRep = new ObjectFieldRepository(entityPM.Tenant);
-                ObjectField objectField = objectFieldsRep.GetSingleObjectFieldByObjectFieldCode(entityPOCO.ObjectfieldCode);
+                ObjectField objectField = objectFieldsRep.GetSingleObjectField(entityPOCO.ObjectfieldId);
                 if( objectField != null)
                 entityPM.ObjectFieldName = objectField.FieldName;
             }

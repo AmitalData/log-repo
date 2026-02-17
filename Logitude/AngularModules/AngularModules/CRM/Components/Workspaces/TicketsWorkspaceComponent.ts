@@ -1,4 +1,4 @@
-import { Component, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
+import {Component, ViewChildren, QueryList, OnInit} from '@angular/core';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -7,32 +7,59 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 
 @Component({
     selector: 'CRMComponent',
-    
+    moduleId: module.id,
     templateUrl: './TicketsWorkspaceComponent.html',
     providers: [EntityResourceService],
 })
 
-export class TicketsWorkspaceComponent implements AfterViewInit {
+export class TicketsWorkspaceComponent implements OnInit{
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public IsMenuVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
-
-        this.selectedItem = "TIW";
+        this.RunComponent();
     }
 
     public IsTicketDashboardVisible: boolean = false;
-    ngAfterViewInit() {
+    ngOnInit() {
         if (FeatureLocator.HasFeaturePermession("Ticket", "TicketDashboard.Menu")) {
             this.IsTicketDashboardVisible = true;
             this.IsMenuVisible = true;
-           
         }
-
-        this.SelectionChanged();
     }
 
-  
+    private isLoaderReady: boolean = false;
+    RunComponent() {
+        if (this.AllLocations) {
+            if (this.AllLocations.length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.isLoaderReady = true;
+                this.SelectedItem = "TIW";
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
     private selectedItem: string;
     get SelectedItem() { return this.selectedItem; }
     set SelectedItem(newValue: string) {
@@ -45,50 +72,50 @@ export class TicketsWorkspaceComponent implements AfterViewInit {
     private Page_TW: any = null;
     private Page_DW: any = null;
     SelectionChanged() {
+        if (this.isLoaderReady) {
+            if (this.SelectedItem != null) {
 
-        if (this.SelectedItem != null) {
+                let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedItem)[0];
+                if (myLocation != null) {
 
-            let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == this.SelectedItem)[0];
-            if (myLocation != null) {
+                    switch (this.SelectedItem) {
 
-                switch (this.SelectedItem) {
+                        case "TIW": {
+                            if (this.Page_TW == null) {
+                                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe(response => {
+                                    this._entityResourceService.getEntityResourceByTableName("Opportunity", 0).subscribe(response2 => {
+                                        SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketsComponent', myLocation.viewContainerRef)
+                                            .then(cmpRef => {
+                                                this.Page_TW = cmpRef.instance;
+                                            });
+                                    });
+                                });
+                            }
 
-                    case "TIW": {
-                        if (this.Page_TW == null) {
-                            this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe((response: any) => {
-                                this._entityResourceService.getEntityResourceByTableName("Opportunity", 0).subscribe(response2 => {
-                                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketsComponent', myLocation.viewContainerRef)
+                            else {
+                                this.Page_TW.LoadAllScreenData();
+                            }
+
+                            break;
+                        }
+
+                        case "DBW": {
+                            if (this.Page_DW == null) {
+                                this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe(response => {
+                                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketDashboardComponent', myLocation.viewContainerRef)
                                         .then(cmpRef => {
-                                            this.Page_TW = cmpRef.instance;
+                                            this.Page_DW = cmpRef.instance;
                                         });
                                 });
-                            });
-                        }
+                            }
 
-                        else {
-                            this.Page_TW.LoadAllScreenData();
+                            break;
                         }
-
-                        break;
                     }
-
-                    case "DBW": {
-                        if (this.Page_DW == null) {
-                            this._entityResourceService.getEntityResourceByTableName("Ticket", 0).subscribe((response: any) => {
-                                SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketDashboardComponent', myLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.Page_DW = cmpRef.instance;
-                                    });
-                            });
-                        }
-
-                        break;
-                    }
+                    this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.Ticket") + "\\" + this.GetPageName() });
                 }
-                this.CurrentSession.ChangeSessionHeader({ Text: TextCodeTranslator.Translate("General.MH.Ticket")});
             }
         }
-
     }
 
     GetPageName() {

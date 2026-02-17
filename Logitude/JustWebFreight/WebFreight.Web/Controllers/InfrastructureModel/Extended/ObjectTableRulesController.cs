@@ -1,10 +1,10 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -54,10 +54,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("ObjectTableRule", entityPM.Tenant, authToken.Tenant);
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, authToken.Tenant);
+                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 
                         ClearRulesCache(entityPM);
@@ -91,11 +90,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        SecurityUtility.AuthenticationOnEntityTenant("ObjectTableRule", entityPM.Tenant, authToken.Tenant);
-
+                    
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, authToken.Tenant);
+                        ObjectTableRuleService service = new ObjectTableRuleService(MyContext, entityPM.Tenant);
                         service.Update(entityPM, entityPM.RuleConditionFields);
 
                         ClearRulesCache(entityPM);
@@ -161,14 +159,13 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
-        public HttpResponseMessage GetObjectTableRulePMsByTenant()
+        public HttpResponseMessage GetObjectTableRulePMsByTenant(int tenant)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                int tenant = authToken.Tenant;
 
                 ObjectTableRuleQuery objectTableRuleQuery = new ObjectTableRuleQuery(tenant);
                 List<ObjectTableRulePM> result = objectTableRuleQuery.GetObjectTableRulePMsByTenant(tenant);

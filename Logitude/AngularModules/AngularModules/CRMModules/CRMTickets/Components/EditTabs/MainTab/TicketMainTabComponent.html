@@ -183,7 +183,7 @@
                                                     <table>
                                                         <tr>
                                                             <td style="width:1px;">
-                                                                <span id="{{'Reply' | IdGeneratorAsyncPipe | async}}" class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('Ex')" style="font-size:16px" [ngStyle]="{color:LinkColor}"> Reply </span>
+                                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('Ex')" style="font-size:16px" [ngStyle]="{color:LinkColor}"> Reply </span>
                                                             </td>
                                                             <td style="width:5px;">
                                                                 <div></div>
@@ -195,7 +195,7 @@
                                                                 <div></div>
                                                             </td>
                                                             <td style="width:1px;">
-                                                                <span id="{{'AddInternalNote' | IdGeneratorAsyncPipe | async}}" class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('In')" style="font-size:16px;" [ngStyle]="{color:LinkColor}">Add Internal Note</span>
+                                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('In')" style="font-size:16px;" [ngStyle]="{color:LinkColor}">Add Internal Note</span>
                                                             </td>
                                                             <td>
                                                                 <div></div>
@@ -218,31 +218,18 @@
                                                                                     <table>
                                                                                         <tr>
 
-                                                                                            <td style="width:80px;max-width:80px;min-width:80px;">
+                                                                                            <td style="width:65px;max-width:65px;min-width:65px;">
                                                                                                 <table>
                                                                                                     <tr style="height:50px;vertical-align:top;">
                                                                                                         <td style="width:18px;">
+                                                                                                            <!--<img [title]="item.CorrespondenceCommunicationToolTip" style="width:12px;min-width:12px;height:12px;vertical-align:top;" [attr.src]="item.SourceText" />-->
                                                                                                             <div *ngIf="item.SourceText != null" class="MediaFill" style="vertical-align:top;float:left;">
                                                                                                                 <HelpIcon [IconSize]='12' [Header]="'Email Delivery Status'" [Text]="item.CorrespondenceCommunicationToolTip" [IconPath]="item.SourceText"></HelpIcon>
                                                                                                             </div>
                                                                                                         </td>
-
-                                                                                                        <td style="width:5px;">
-                                                                                                            <div></div>
+                                                                                                        <td style="width: 50px;min-width:50px;max-width:50px; vertical-align:top;float:left;">
+                                                                                                            <img style="width:50px;min-width:50px;min-height:50px; height:50px;" src="./Images/graycustomer.png" />
                                                                                                         </td>
-
-                                                                                                        <td style="width:50px;vertical-align:top">
-                                                                                                            <div *ngIf="item.UserImageDetailId" style="height:45px;width:45px;margin: auto;vertical-align:top">
-                                                                                                                <ImageComponent style="vertical-align:top" [DisplayOnly]="true" [HideBorder]="true" [ImageId]="item.UserImageDetailId" (UploadCompleted)="item.ImageUploadedCompleted($event)"> </ImageComponent>
-                                                                                                            </div>
-                                                                                                            <div [style.background-color]="item.UserImagebackground" *ngIf="!item.UserImageDetailId" style="height:45px;width:45px;border-color:#6B8499;border-radius:2px;vertical-align:central;text-align:center">
-                                                                                                                <div style="height:8px"></div>
-                                                                                                                <div style="font-size:22px;text-align:center;color:white">{{item.UserNameImage}}</div>
-                                                                                                                <div style="height:8px"></div>
-                                                                                                            </div>
-
-                                                                                                        </td>
-
                                                                                                         <td>
                                                                                                             <div></div>
                                                                                                         </td>
@@ -376,10 +363,10 @@
                                                                                                             <div></div>
                                                                                                         </td>
 
-                                                                                                        <td style="width: 16px;height: 14px;">
-                                                                                                            <div class="ToolsButton" [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="item.AlignLeftClicked()">
+                                                                                                        <td style="width: 20px;height: 25px;">
+                                                                                                            <div class="ToolsButton" [title]="'RTL'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignRightClicked()">
                                                                                                                 <!--<i class="fa fa-long-arrow-left"></i>-->
-                                                                                                                <img src="./Images/LTR.png" style="width: 16px;height: 14px;"/>
+                                                                                                                <img src="./Images/LTR.png" style="width: 16px;height: 22px;"/>
                                                                                                             </div>
                                                                                                         </td>
 
@@ -387,10 +374,10 @@
                                                                                                             <div></div>
                                                                                                         </td>
 
-                                                                                                        <td style="width: 16px;height: 14px;" >
-                                                                                                            <div class="ToolsButton" [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="item.AlignRightClicked()">
+                                                                                                        <td style="width: 20px;">
+                                                                                                            <div class="ToolsButton" [title]="'LTR'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="item.AlignLeftClicked()">
                                                                                                                 <!--<i class="fa fa-long-arrow-right"></i>-->
-                                                                                                                <img src="./Images/RTL.png" style="width: 16px;height: 14px;"/>
+                                                                                                                <img src="./Images/RTL.png" style="width: 16px;height: 22px;"/>
                                                                                                             </div>
                                                                                                         </td>
                                                                                                     </tr>

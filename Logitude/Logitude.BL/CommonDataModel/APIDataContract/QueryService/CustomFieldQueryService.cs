@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using System.Reflection;
@@ -37,7 +37,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         public List<CustomField> CustomFieldCustomDataMapping(object entityPM, int tenant)
         {
             List<CustomField> customFields = new List<CustomField>();
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
 
             foreach (ObjectField field in this.TableCustomFields)
             {

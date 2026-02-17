@@ -1,12 +1,10 @@
 ﻿using System;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Logitude.BL.Helpers;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.Tools.DataMapping
 {
@@ -21,11 +19,22 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
                 entityPoco.OpenDate = entityPM.OpenDate;
                 entityPoco.Tenant = entityPM.Tenant;
                 entityPoco.DirectionId = entityPM.DirectionId;
-                entityPoco.ProductCode = entityPM.ProductCode;
+                entityPoco.TransportModeId = entityPM.TransportModeId;
+                entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
+
+                if (entityPoco.DirectionId == "C")
+                {
+                    entityPM.ProductCode = "CI";
+                    entityPoco.ProductCode = "CI";
+                }
+
+                else
+                {
+                    entityPM.ProductCode = entityPoco.TransportModeId + entityPoco.DirectionId;
+                    entityPoco.ProductCode = entityPoco.TransportModeId + entityPoco.DirectionId;
+                }
             }
 
-            entityPoco.TransportModeId = entityPM.TransportModeId;
-            entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
             entityPoco.TotalPerContainer = entityPM.TotalPerContainer;  
             entityPoco.UpdateDate = entityPM.UpdateDate;
             entityPoco.UpdatedByUserId = entityPM.UpdatedByUserId;
@@ -60,7 +69,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.DimensionsUnitCode = entityPM.DimensionsUnitCode;
             entityPoco.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
             entityPoco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
-            entityPoco.PickupDeliveryCWeightUnitCode = entityPM.PickupDeliveryCWeightUnitCode;
             entityPoco.Volume = entityPM.Volume;
             entityPoco.VolumetricWeight = entityPM.VolumetricWeight;
             entityPoco.VolumeInCBM = GetVolumeInCBM(entityPM.VolumeUnitCode, entityPM.Volume);
@@ -69,9 +77,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
             entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetChargeableWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeight);
-            entityPoco.PickupDeliveryChargeableWeight = entityPM.PickupDeliveryChargeableWeight;
             entityPoco.Ratio = entityPM.Ratio;
-            entityPoco.PickupDeliveryRatio = entityPM.PickupDeliveryRatio;
             entityPoco.DimFactor = entityPM.DimFactor;
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
             entityPoco.NumberOfContainers = entityPM.NumberOfContainers;
@@ -133,7 +139,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.UsageCount = entityPM.UsageCount;
             entityPoco.LastUsageDate = entityPM.LastUsageDate;
             entityPoco.QuoteClosingReasonCode = entityPM.QuoteClosingReasonCode;
-            entityPoco.QuoteClosingReasonId = entityPM.QuoteClosingReasonId;
             entityPoco.SentDate = entityPM.SentDate;
             entityPoco.AcceptedDate = entityPM.AcceptedDate;
             entityPoco.DeclinedDate = entityPM.DeclinedDate;
@@ -169,85 +174,21 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ValueOfGoodsCurrencyId = entityPM.ValueOfGoodsCurrencyId;
             entityPoco.IsChargesByVAT = entityPM.IsChargesByVAT;
             entityPoco.IsQuoteDataExternal = entityPM.IsQuoteDataExternal;
+            //entityPoco.IsQuoteDocumentExternal = entityPM.IsQuoteDocumentExternal;
             entityPoco.LastStageDate = entityPM.LastStageDate;
             entityPoco.QuotationSections = entityPM.QuotationSections;
             entityPoco.NotifyId = entityPM.NotifyId;
-            entityPoco.NotifyReference1 = entityPM.NotifyReference1;
-            entityPoco.NotifyReference2 = entityPM.NotifyReference2;
             entityPoco.NotifyAddressId = entityPM.NotifyAddressId;
             entityPoco.NotifyContactId = entityPM.NotifyContactId;
-            entityPoco.ShipperNotExporterReference = entityPM.ShipperNotExporterReference;
-            entityPoco.ShipperNotExporterId = entityPM.ShipperNotExporterId;
-            entityPoco.ShipperNotExporterAddressId = entityPM.ShipperNotExporterAddressId;
-            entityPoco.ShipperNotExporterContactId = entityPM.ShipperNotExporterContactId;
-            entityPoco.ConsigneeNotImporterId = entityPM.ConsigneeNotImporterId;
-            entityPoco.ConsigneeNotImporterReference = entityPM.ConsigneeNotImporterReference;
-            entityPoco.ConsigneeNotImporterAddressId = entityPM.ConsigneeNotImporterAddressId;
-            entityPoco.ConsigneeNotImporterContactId = entityPM.ConsigneeNotImporterContactId;
             entityPoco.NumberOfFollowUps = entityPM.NumberOfFollowUps;
             entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
             entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
             entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
             entityPoco.QuoteHTMLDocumentId = entityPM.QuoteHTMLDocumentId;
-            entityPoco.Field11 = entityPM.Field11 != null ? entityPM.Field11.Value : null;
-            entityPoco.Field12 = entityPM.Field12 != null ? entityPM.Field12.Value : null;
-            entityPoco.Field13 = entityPM.Field13 != null ? entityPM.Field13.Value : null;
-            entityPoco.Field14 = entityPM.Field14 != null ? entityPM.Field14.Value : null;
-            entityPoco.Field15 = entityPM.Field15 != null ? entityPM.Field15.Value : null;
-            entityPoco.Field16 = entityPM.Field16 != null ? entityPM.Field16.Value : null;
-            entityPoco.Field17 = entityPM.Field17 != null ? entityPM.Field17.Value : null;
-            entityPoco.Field18 = entityPM.Field18 != null ? entityPM.Field18.Value : null;
-            entityPoco.Field19 = entityPM.Field19 != null ? entityPM.Field19.Value : null;
-            entityPoco.Field20 = entityPM.Field20 != null ? entityPM.Field20.Value : null;
-            entityPoco.CountryForStatisticsId = entityPM.CountryForStatisticsId;
-            entityPoco.RequestDate = entityPM.RequestDate;
-            entityPoco.EstimatedProfitInLocal = entityPM.EstimatedProfitInLocal;
-            entityPoco.EstimatedProfitInProfit = entityPM.EstimatedProfitInProfit;
-            entityPoco.ProfitCurrencyId = entityPM.ProfitCurrencyId;
-            entityPoco.ProfitExchangeRate = entityPM.ProfitExchangeRate;
-            entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
-            entityPoco.ShipmentSubTypeId = entityPM.ShipmentSubTypeId;
-            entityPoco.PickupDeliveryVolumetricWeight = entityPM.PickupDeliveryVolumetricWeight;
-            entityPoco.RegionalTaxId = entityPM.RegionalTaxId;
-            entityPoco.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
-            entityPoco.DescriptionRightToLeft = entityPM.DescriptionRightToLeft;
-            entityPoco.IsMultiCurrency = entityPM.IsMultiCurrency;
-            entityPoco.InlandDomesticFromZipCode = entityPM.InlandDomesticFromZipCode;
-            entityPoco.InlandDomesticToZipCode = entityPM.InlandDomesticToZipCode;
-            entityPoco.InlandDomesticFromCity = entityPM.InlandDomesticFromCity;
-            entityPoco.InlandDomesticToCity = entityPM.InlandDomesticToCity;
-            entityPoco.InlandDomesticFromCountryId = entityPM.InlandDomesticFromCountryId;
-            entityPoco.InlandDomesticToCountryId = entityPM.InlandDomesticToCountryId;
-            entityPoco.InlandDomesticFromTypeCode = entityPM.InlandDomesticFromTypeCode;
-            entityPoco.InlandDomesticToTypeCode = entityPM.InlandDomesticToTypeCode;
-            entityPoco.MainCarriageFromPortAddress = entityPM.MainCarriageFromPortAddress;
-            entityPoco.MainCarriageToPortAddress = entityPM.MainCarriageToPortAddress;
-            entityPoco.SpecialServicesTypeId = entityPM.SpecialServicesTypeId;
-            entityPoco.IncludeInsurance = entityPM.IncludeInsurance;
-            entityPoco.IsStackable = entityPM.IsStackable;
-            entityPoco.IncludeImportDutyCharges = entityPM.IncludeImportDutyCharges;
-            entityPoco.InsuranceValue = entityPM.InsuranceValue;
-            entityPoco.ValidByTypeCode = entityPM.ValidByTypeCode;
-            entityPoco.ConnectedToOpportunity = entityPM.ConnectedToOpportunity;
-            entityPoco.QuoteClosingReasonNotes = entityPM.QuoteClosingReasonNotes;
-
-            if (MethodHelper.IsLCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId))
-            {
-                entityPM.PackagesQuantity = entityPM.NumberOfPackages;
-            }
-
-            else
-            {
-                entityPM.PackagesQuantity = entityPM.NumberOfContainers;
-            }
-
-            entityPoco.PackagesQuantity = entityPM.PackagesQuantity;
-
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;
             entityPM.ConvertToFCL = false;
-            entityPM.ConvertTransportMode = false;
         }
 
         private static void BuildSearchField(QuotePM entityPM, Quote entityPoco)
@@ -259,7 +200,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.QuoteNumber);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Subject);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Notes);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.QuoteClosingReasonNotes);
 
             #region Ports
             QueryHelper.AddPortToSearchFields(ref mySearchFields, tenant, entityPM.FromPortId);
@@ -267,23 +207,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             #endregion
 
             #region Partners
-            if (!string.IsNullOrEmpty(entityPM.ShipperNotExporterId))
-            {
-                Card myCard = CardRepository.GetSingleCard(entityPM.ShipperNotExporterId, tenant, true);
-                if (myCard != null)
-                {
-                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
-                }
-            }
-            if (!string.IsNullOrEmpty(entityPM.ConsigneeNotImporterId))
-            {
-                Card myCard = CardRepository.GetSingleCard(entityPM.ConsigneeNotImporterId, tenant, true);
-                if (myCard != null)
-                {
-                    MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
-                    MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ConsigneeNotImporterReference);
-                }
-            }
+
             if (!string.IsNullOrEmpty(entityPM.ShipperId))
             {
                 Card myCard = CardRepository.GetSingleCard(entityPM.ShipperId, tenant, true);

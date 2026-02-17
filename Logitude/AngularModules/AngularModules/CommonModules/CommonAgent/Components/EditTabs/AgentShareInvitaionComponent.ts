@@ -10,7 +10,7 @@ import { AppTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools'
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AgentShareInvitaionComponent.html',
     providers: [AgentSharedLogisticsKeyPMService],
 })
@@ -44,7 +44,7 @@ export class AgentShareInvitaionComponent extends BaseComponent {
          if (!AppTool.IsNullOrEmpty(this.Email)) {
              this.CurrentSession.StartBusyIndicator("Sending...");
 
-             this._agentSharedLogisticsKeyPMService.SendAgentInvitaion(this.EntityPM.Id, this.Email, SessionLocator.Tenant).subscribe((response:any) => {
+             this._agentSharedLogisticsKeyPMService.SendAgentInvitaion(this.EntityPM.Id, this.Email, SessionLocator.Tenant).subscribe(response => {
 
                  this.CurrentSession.StopBusyIndicator();
                  if (!response.HasError) {

@@ -9,7 +9,7 @@ import {TimeManagementDomainService} from '../../Services/TimeManagementDomainSe
 
 @Component({
     selector: 'ConnectToParentComponent',
-    
+    moduleId: module.id,
     templateUrl: './ConnectToParentComponent.html',
 })
 

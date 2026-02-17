@@ -4,7 +4,7 @@ using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityKeys;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -18,7 +18,7 @@ using Logitude.CRM.Data.BusinessUnitFilters;
 using Logitude.Server.Tools.Helpers;
 using System.Globalization;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.CRM.BL.WorkRoles;
 
 namespace Logitude.CRM.BL.EntityQueryServices

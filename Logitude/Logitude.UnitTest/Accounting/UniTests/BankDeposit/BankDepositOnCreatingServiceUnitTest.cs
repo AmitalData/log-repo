@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using FakeItEasy;
 using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -15,7 +14,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Logitude.UnitTest.Accounting.UniTests
 {
     [TestClass]
-    public class BankDepositOnCreatingServiceUnitTest: TestBase
+    public class BankDepositOnCreatingServiceUnitTest
     {
 
         [TestMethod]
@@ -35,16 +34,11 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
 
 
-            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.Implements<IBankDepositOnCreatingService>());
+            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
             A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             A.CallTo(() => bankAccountOnCreatingService.CodeCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedCodeCounter);
-            A.CallTo(() => bankAccountOnCreatingService.GetCashbookById(A.Dummy<int>(), A.Dummy<string>())).Returns(A.Dummy<CashBookPM>());
-            A.CallTo(() => bankAccountOnCreatingService.CreateJournalForBankDeposit(A.Dummy<BankDepositPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.DepositChequesForBankDeposit(A.Dummy<BankDepositPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.SubmitCashbook(A.Dummy<int>(), A.Dummy<CashBookPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.LogActivity(A.Dummy<BankDepositPM>())).DoesNothing();
 
             // Act
             bankAccountOnCreatingService.OnCreating(entityPM);
@@ -69,21 +63,14 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = 1,
                 ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
             };
-            //var wrapped = new BankDepositOnCreatingService(A.Dummy<IAccountingContext>(), A.Dummy<int>());
-            //var bankAccountOnCreatingService= A.Fake<IBankDepositOnCreatingService>(x => x.Wrapping(wrapped));
-            //var foo = A.Fake<IFoo>(x => x.Wrapping(wrapped));
-            //var foo = A.Fake<FooClass>(x => x.WithArgumentsForConstructor(() => new FooClass("foo", "bar")));
-            // var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.WithArgumentsForConstructor(new object[] { A.Dummy<IAccountingContext>(), A.Dummy<int>() }));
-            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.Implements<IBankDepositOnCreatingService>());
+
+
+            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
             A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             A.CallTo(() => bankAccountOnCreatingService.CodeCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedCodeCounter);
-            A.CallTo(() => bankAccountOnCreatingService.GetCashbookById(A.Dummy<int>(),A.Dummy<string>())).Returns(A.Dummy<CashBookPM>());
-            A.CallTo(() => bankAccountOnCreatingService.CreateJournalForBankDeposit(A.Dummy<BankDepositPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.DepositChequesForBankDeposit(A.Dummy<BankDepositPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.SubmitCashbook(A.Dummy<int>(),A.Dummy<CashBookPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.LogActivity(A.Dummy<BankDepositPM>())).DoesNothing();
+
             // Act
             bankAccountOnCreatingService.OnCreating(entityPM);
 
@@ -109,17 +96,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 BankDepositLines = new List<BankDepositLinePM> { new BankDepositLinePM() },
             };
 
-            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.Implements<IBankDepositOnCreatingService>());
+            var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
             A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
             A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedParentIdCounter);
             A.CallTo(() => bankAccountOnCreatingService.CodeCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedCodeCounter);
             A.CallTo(() => bankAccountOnCreatingService.LogActivity(entityPM)).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.GetCashbookById(A.Dummy<int>(), A.Dummy<string>())).Returns(A.Dummy<CashBookPM>());
-            A.CallTo(() => bankAccountOnCreatingService.CreateJournalForBankDeposit(A.Dummy<BankDepositPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.DepositChequesForBankDeposit(A.Dummy<BankDepositPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.SubmitCashbook(A.Dummy<int>(), A.Dummy<CashBookPM>())).DoesNothing();
-            A.CallTo(() => bankAccountOnCreatingService.LogActivity(A.Dummy<BankDepositPM>())).DoesNothing();
 
             // Act
             bankAccountOnCreatingService.OnCreating(entityPM);
@@ -129,7 +111,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             Assert.AreEqual(expectedParentIdCounter, actualLineDepositId, "Deposit line does not take parent Id #DP03");
 
         }
-#if i_send_email_to_Adullah
+
         [DataTestMethod]
         [DataRow(true)]
         [DataRow(false)]
@@ -155,6 +137,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 DepositNumber = 1000,
                 IsCashDeposit = isCashDeposit,
             };
+
+            JournalPM newJournal = new JournalPM() { };
 
             JournalPM expectedJournal = new JournalPM()
             {
@@ -183,15 +167,12 @@ namespace Logitude.UnitTest.Accounting.UniTests
             A.CallTo(() => bankDepositOnCreatingService.LogActivity(entityPM)).DoesNothing();
 
             // Act
-            JournalPM newJournal = bankDepositOnCreatingService.InitJournal(entityPM);
+            bankDepositOnCreatingService.InitJournal(entityPM, newJournal);
 
             // Assert
             AssertHelper.HasEqualFieldValues(expectedJournal, newJournal, Environment.NewLine + "[TEST ERROR] Initiated Jounal does not match expected #DP04");
 
         }
-
-
-#endif
 
 
         private ContactPM GetLoggedContactInstance()

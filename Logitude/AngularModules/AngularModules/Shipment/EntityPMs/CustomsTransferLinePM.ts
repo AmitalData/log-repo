@@ -21,10 +21,10 @@ export class CustomsTransferLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -83,16 +83,6 @@ export class CustomsTransferLinePM {
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
        
 	 
-    private hasError: boolean;
-    public get HasError() { return this.hasError; }
-    public set HasError(newValue: boolean) { if (this.hasError != newValue) { this.hasError = newValue; this.MarkAsDirty("HasError"); } }
-       
-	 
-    private errorText: string;
-    public get ErrorText() { return this.errorText; }
-    public set ErrorText(newValue: string) { if (this.errorText != newValue) { this.errorText = newValue; this.MarkAsDirty("ErrorText"); } }
-       
-	 
 
     public OldEntityPM: CustomsTransferLinePM;
 	    
@@ -103,10 +93,7 @@ export class CustomsTransferLinePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -116,7 +103,6 @@ export class CustomsTransferLinePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomsTransferLine");
            
         }
-	 }
     }
     private MyClone: CustomsTransferLinePM;
 

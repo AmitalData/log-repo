@@ -1,26 +1,19 @@
 
-// Directives
-import { ChildDirective } from './Directives/ChildDirective';
-
 // Pipes
 import {CountryFlagPipe} from './Pipes/CountryFlagPipe';
 import {DateTimeToDatePipe} from  './Pipes/DateTimeToDatePipe';
 import {DateTimePipe} from './Pipes/DateTimePipe';
 import {TextCodeTranslationPipe} from './Pipes/TextCodeTranslationPipe';
 import {IdGeneratorPipe} from './Pipes/IdGeneratorPipe';
-import {IdGeneratorAsyncPipe} from './Pipes/IdGeneratorAsyncPipe';
-
 import { DateToMonthPipe } from './Pipes/DateToMonthPipe';
 import { MinutesToTimePipe } from './Pipes/MinutesToTimePipe';
-import {ObjectFieldTextCodeTranslationPipe} from './Pipes/ObjectFieldTextCodeTranslationPipe';
- 
+
 // All
 import {AccessLevelButton} from './All/AccessLevelButton';
 import {CheckBox} from './All/CheckBox';
 import {RadioButton} from './All/RadioButton';
 import {BackButton} from './All/BackButton';
 import {BusyIndicator} from './All/BusyIndicator';
-import {RunReportToggleComponent} from './All/RunReportToggle';
 import {Hyperlink} from './All/Hyperlink';
 import {HyperlinkQuery} from './All/HyperlinkQuery';
 import {ScrollViewer} from './All/ScrollViewer';
@@ -61,7 +54,7 @@ import {DatesFilter} from './DatesFilter';
 import {ConfirmWindowTemplateComponent} from './Windows/ConfirmWindow';
 import {MessageWindowTemplateComponent} from './Windows/MessageWindow';
 import {LogitudeWindowTemplateComponent} from './Windows/LogitudeWindow';
-import {ShipmentArchiveFilter} from './ShipmentArchiveFilter';
+import {ShipmentArchiveFilter} from './ShipmentArchiveFilter'; 
 import {CurrencyFilter} from './CurrencyFilter';
 import {KeyControl} from './KeyControl';
 import {ComboBoxWithInCheckBox} from './ComboBoxWithInCheckBox';
@@ -73,15 +66,8 @@ import {UserFilter} from './UserFilter';
 import {ConnectToFilter} from './ConnectToFilter';
 import { ParticipatedFilter } from './ParticipatedFilter';
 import { InvitedFilter } from './InvitedFilter';
-import { LogitudeHotKeysComponent } from './LogitudeHotkeysComponent/LogitudeHotKeysComponent';
-import {  NumberInputComponent } from './All/NumberInput';
-import {  LogChipsComponent } from './All/LogChips';
-import { ProcessMenuComponent } from 'Report/Components/ProcessMenuComponent';
 
-export const Directives =
-    [
-        ChildDirective,
-    ];
+
 
 export const Pipes =
     [
@@ -90,10 +76,9 @@ export const Pipes =
         DateTimePipe,
         TextCodeTranslationPipe,
         IdGeneratorPipe,
-        IdGeneratorAsyncPipe,
         DateToMonthPipe,
         MinutesToTimePipe,
-        ObjectFieldTextCodeTranslationPipe,
+        
     ];
 
 export const Components =
@@ -105,7 +90,6 @@ export const Components =
         BackButton,
         MettingSummary,
         BusyIndicator,
-        RunReportToggleComponent,
         CellTooltip,
         Hyperlink,
         HyperlinkQuery,
@@ -125,15 +109,13 @@ export const Components =
         AddressTemplate,
         GoogleMapsButton,
        // TimeInput,
-        NumberInputComponent,
-        LogChipsComponent,
 
         ComboBox,
         HelpIcon,
         //SearchBox,
         IconButton,
         SearchTextBox,
-
+        
         ContactDatePicker,
         DirectionsFilter,
         TransportsFilter,
@@ -159,9 +141,7 @@ export const Components =
         UserFilter,
         ConnectToFilter,
         ParticipatedFilter,
-        InvitedFilter,
-        LogitudeHotKeysComponent ,
-        ProcessMenuComponent
+        InvitedFilter
     ];
 
 export class ModuleDeclarations {
@@ -176,5 +156,5 @@ export class ModuleDeclarations {
         }
 
         return myResult;
-    }
+    } 
 }

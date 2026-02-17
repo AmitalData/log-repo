@@ -73,14 +73,6 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return listService.GetList(queryOperations, tenant);
         }
-        public int GetCashBookFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            accountingContext = AccountingContext.GetContext(tenant);
-            CashBookListQueryService queryService = new CashBookListQueryService(accountingContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
-        }
 
         public List<BankDepositList> GetBankDepositFilters(byte[] xmlFilters, int tenant)
         {
@@ -91,14 +83,6 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return listService.GetList(queryOperations, tenant);
         }
-        public int GetBankDepositFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            accountingContext = AccountingContext.GetContext(tenant);
-            BankDepositListQueryService queryService = new BankDepositListQueryService(accountingContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
-        }
 
         public int GetJournalFiltersCount(byte[] xmlFilters, int tenant)
         {
@@ -108,25 +92,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             JournalListQueryService queryService = new JournalListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return queryService.GetListCount(queryOperations, tenant);
-        }
 
-        public List<RevaluationList> GetRevaluationFilters(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-
-            accountingContext = AccountingContext.GetContext(tenant);
-            RevaluationListQueryService listService = new RevaluationListQueryService(accountingContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return listService.GetList(queryOperations, tenant);
-        }
-
-        public int GetRevaluationFiltersCount(byte[] xmlFilters, int tenant)
-        {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            accountingContext = AccountingContext.GetContext(tenant);
-            RevaluationListQueryService queryService = new RevaluationListQueryService(accountingContext);
-            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            return queryService.GetListCount(queryOperations, tenant);
         }
 
         public void InsertJournal(JournalPM entityPm)

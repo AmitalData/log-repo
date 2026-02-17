@@ -1,4 +1,4 @@
-
+﻿
 <table *ngIf="Entity">
     <tr>
         <td>
@@ -7,20 +7,8 @@
                     <img class="CenterCenter" [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity['TransportModeName']" />
                 </div>
 
-                <div *ngIf="ObjectTableName == 'TenantManagement' && FieldName == 'PrivateLabelId'" class="TemplateTrimming">
-                    {{FieldValue}}
-                </div>
-
                 <div *ngIf="ObjectTableName == 'CommunicationLog' && (FieldName == 'CreateDate' || FieldName == 'CreateDateUTC')" class="TemplateTrimming">
                     {{FieldValue | DateTimePipe:'DTL12'}}
-                </div>
-
-                <div *ngIf="ObjectTableName == 'BIReport' && FieldName == 'LastRunDate'" class="TemplateTrimming">
-                    {{FieldValue | DateTimePipe:'DT'}}
-                </div>
-
-                <div *ngIf="ObjectTableName == 'BIReport' && FieldName == 'AvailableForScheduling'" class="MediaFillRelative">
-                    <img class="CenterCenter" *ngIf="FieldValue" title="Available For Scheduling" src="./Images/CheckBoxIcon.png" />
                 </div>
 
                 <div *ngIf="ObjectTableName == 'APILogs' && FieldName == 'Direction'">
@@ -52,54 +40,9 @@
                     <div *ngIf="FieldName == 'CreateDate'||FieldName == 'StartDateTime'||FieldName == 'DoneDateTime'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'">{{FieldValue | DateTimePipe:'DT'}}</div>
                     </div>
-
+                
                 </div>
-
-                <!-- FeatureToggle -->
-                <div *ngIf="ObjectTableName == 'FeatureToggle'">
-                    <div *ngIf="FieldName == 'TenantNumber'">
-                        <div *ngIf="!Entity.IsMultiTenant">{{ FieldValue }}</div>
-                        <div *ngIf="Entity.IsMultiTenant">{{ Entity.FromTenantNumber }} - {{Entity.ToTenantNumber}}</div>
-                    </div>
-                </div>
-
-                <!-- DeploymentPackage -->
-                <div *ngIf="ObjectTableName == 'DeploymentPackage'">
-                    <div *ngIf="FieldName == 'InActive'">
-                        <img *ngIf="Entity[FieldName] == true" src="./Images/CheckBoxIcon.png" style="width:13px;height:13px;margin-top:-6px;" />
-                    </div>
-
-                    <div *ngIf="FieldName == 'DirectionId'">
-                        <img class="CenterCenter" [attr.src]="'./Images/Directions/' + Entity[FieldName] + '.png'" />
-                    </div>
-
-                    <div *ngIf="FieldName == 'CreateDate'||FieldName == 'UpdateDate'">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'">{{FieldValue | DateTimePipe:'D'}}</div>
-                    </div>
-
-                </div>
-
-                <!-- Custom Objects -->
-                <div *ngIf="IsCustomObjectTable">
-
-                    <div *ngIf="FieldName == 'CreateDate'||FieldName == 'UpdateDate'">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'">{{FieldValue | DateTimePipe:'D'}}</div>
-                    </div>
-
-                </div>
-
-                 <div *ngIf="ObjectTableName == 'DefaultAndConfiguration'">
-                    <div *ngIf="FieldName == 'Value1' || FieldName == 'Value2'">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'">
-                            {{ 
-                                ((FieldName == 'Value1' && Entity['SetValueType1'] === 'System.DateTime') || (FieldName == 'Value2' && Entity['SetValueType2'] === 'System.DateTime')) ? 
-                                    (FieldValue | DateTimePipe:'D') : 
-                                    FieldValue.replace(';', ',')
-                            }}
-                        </div>                      
-                    </div>
-                </div>
-             </div>
+            </div>
         </td>
     </tr>
 </table>

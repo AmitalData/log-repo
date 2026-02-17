@@ -1,24 +1,24 @@
-
+﻿
 import {Injectable} from '@angular/core';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Rx';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ShipmentList} from '../../EntityLists/ShipmentList';
 import {ViewResponse} from '../../../Infrastructure/DataContracts/ViewResponse';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class ShipmentFollowUpListService {
 
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     private _serviceArgs: ServiceArgs;
     constructor() {
         console.log("constructing ShipmentFollowUpsListService");
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/FollowUpsViews';
     }
 
@@ -36,11 +36,15 @@ export class ShipmentFollowUpListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '?tenant=' + SessionLocator.Tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                return response;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '?tenant=' + SessionLocator.Tenant.toString(), {
+                headers: authHeader
+            }).map(response => {
+                return response.json();
+            });
+        }
+
+        );
     }
 
     getSingle(id: string) {
@@ -48,26 +52,32 @@ export class ShipmentFollowUpListService {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var list = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var list = response.json();
 
                 var entity: ShipmentList;
                 entity = this.MapJsonToEntityList(list);
 
                 return list;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+            });
+        }
+
+        );
     }
 
     getAll() {
         console.log('--------------------------------------> calling getAllEntityListsFromServer:');
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getall', {
+                headers: authHeader
+            }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<ShipmentList> = [];
 
                 for (var key in allLists) {
@@ -79,8 +89,10 @@ export class ShipmentFollowUpListService {
                 }
 
                 return _mappedListsArray;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+            });
+        }
+
+        );
     }
 
     getByFilters(filters: ApiQueryFilters) {
@@ -114,10 +126,12 @@ export class ShipmentFollowUpListService {
         var callUrl = this._apiUrl.concat(urlparameters);
         //console.log("Calling Url:" + callUrl);
         //console.log("abol 3abed");
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
                 //console.log("i'm the response yo ", response);
-                var viewResponse: any = response;
+                var viewResponse: ViewResponse = response.json();
                 //viewResponse = response.json();
                 //var allLists = response.json();
                 var _mappedListsArray: Array<ShipmentList> = [];
@@ -130,8 +144,9 @@ export class ShipmentFollowUpListService {
                 viewResponse.Data = _mappedListsArray;
                 //console.log(_mappedListsArray);
                 return viewResponse;//{Data: _mappedListsArray,DataCount:response.headers };
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
+            });
+        }
+        );
     }
     
     MapJsonToEntityList(jsonList: any) {

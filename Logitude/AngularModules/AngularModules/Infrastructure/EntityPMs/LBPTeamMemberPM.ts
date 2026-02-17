@@ -17,13 +17,13 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class LBPTeamMemberPM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		                        this.EntityParentPM = _entityParentPM;
-                this.UIProperties = new UIProperties(this);
-                this.IsDirty = false;
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
       }
 
 	 
@@ -111,10 +111,7 @@ export class LBPTeamMemberPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -124,7 +121,6 @@ export class LBPTeamMemberPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "LBPTeamMember");
            
         }
-       }
     }
 
     private MyClone: LBPTeamMemberPM;

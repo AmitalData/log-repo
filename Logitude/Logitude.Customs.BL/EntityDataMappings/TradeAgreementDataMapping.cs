@@ -19,13 +19,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(TradeAgreementPM entityPM, TradeAgreement entityPOCO)
         {
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
-            {
-                entityPOCO.Code = entityPM.Code;
-            }            
-
-
-
+            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(TradeAgreementPM entityPM, TradeAgreement entityPOCO)

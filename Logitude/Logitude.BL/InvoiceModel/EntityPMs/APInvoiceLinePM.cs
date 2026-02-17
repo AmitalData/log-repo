@@ -90,11 +90,5 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ContainerTypeId { get; set; }
         public string ContainerTypeCode { get; set; }
         public int? Quantity { get; set; }
-        public double? ForiegnAmountWithRecognizedVat { get; set; }
-        public double? LocalAmountWithVatRecognized { get;  set; }
-      public string PayableDebitGLAcountName { get; set; }
-        public string PayableDebitGLAcountId { get; set; }
-        public bool? ExcludeFromTaxReport { get; set; }
-        public bool? IsPrepaidExpenses { get; set; }
     }
 }

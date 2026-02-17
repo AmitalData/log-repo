@@ -17,11 +17,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string RecipientType { get; set; }
         public string RecipientValue{ get; set; }
 
-        public string PartnerObjectFieldCode { get; set; }
-        public bool IsNotifyBack { get; set; }
-
-
-
         [ForeignKey("AutomationsId")]
         public virtual Automation Automation { get; set; }
     }

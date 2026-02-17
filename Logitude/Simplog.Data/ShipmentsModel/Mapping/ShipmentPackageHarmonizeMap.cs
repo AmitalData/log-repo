@@ -16,17 +16,14 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PackageId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Harmonize).IsRequired().HasMaxLength(60).IsUnicode(false);
-            this.Property(t => t.InsidePackageId).HasMaxLength(15).IsUnicode(false);
 
             this.ToTable("ShipmentPackageHarmonize");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.PackageId).HasColumnName("PackageId");
             this.Property(t => t.Harmonize).HasColumnName("Harmonize");
-            this.Property(t => t.InsidePackageId).HasColumnName("InsidePackageId");
 
             this.HasRequired(t => t.Package).WithMany().HasForeignKey(d => d.PackageId);
-            this.HasOptional(t => t.InsidePackage).WithMany().HasForeignKey(d => d.InsidePackageId);
         }
     }
 }

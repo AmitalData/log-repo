@@ -9,34 +9,6 @@
         padding-top: 10px;
         padding-bottom: 2px;
     }
- 
-    .P-button-drop-menu {
-        text-align: center;
-        font-size: 15px;
-        list-style: none;
-    }
-
-        .P-button-drop-menu li span {
-            text-align: right;
-            display: block;
-            clear: both;
-            font-family: arial;
-            color: #444;
-            text-decoration: none;
-            height: 22px;
-            line-height: 23px; /*make text center*/
-            padding-right: 10px;
-            padding-left: 5px;
-            /*
-                margin: 5px;
-                text-align: center;
-            */
-        }
-
-            .P-button-drop-menu li span:hover {
-                background: #D3D3D3;
-                cursor: pointer;
-            }
 </style>
 <table>
 
@@ -49,11 +21,11 @@
                     <tr>
                         <td colspan="2" style="width: 700px;">
                             <table style="table-layout: fixed;">
-                                <tr  >
-                                    <!-- FromCreateDate -->
+                                <tr class="FormFieldRow">
+                                    <!-- FromCreateDate -->    
                                     <td style="width: 100px; text-align:right !important;">
                                         <div style="color: #555555;">
-                                            {{'Customs.General.O.CreateDateFrom' |TextCodeTranslationPipe}}
+                                            {{'General.O.CreateDateFrom' |TextCodeTranslationPipe}}
                                         </div>
                                     </td>
                                     <td style="width: 130px;">
@@ -66,7 +38,7 @@
                                     <!-- ToCreateDate -->
                                     <td style="width: 100px; text-align:right !important;">
                                         <div style="color: #555555;">
-                                            {{'Customs.General.O.CreateDateTo' |TextCodeTranslationPipe}}
+                                            {{'General.O.CreateDateTo' |TextCodeTranslationPipe}}
                                         </div>
                                     </td>
                                     <td style="width: 130px; text-align:right !important;">
@@ -74,36 +46,7 @@
                                                        [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ToCreateDate"></LogDatePicker>
                                     </td>
 
-                                    <td ></td>
-                                    <td style="width: 100px; text-align: right !important;" *ngIf="declarationPM.Direction=='E'">
-                                        <div style="color: #555555;">
-                                            לקוח:
-                                        </div>
-                                    </td>
-                                    <td style="width: 160px;" *ngIf="declarationPM.Direction=='E'"  >
-
-                                        <MultiSelectLOV [DataContext]="DataContext"
-                                                        [PlaceHolder]="'לקוח'"
-                                                        [LayoutDirection]="'rtl'"
-                                                        (ChosenListItemsChanged)="SelectedValueChangedEmit()"
-                                                        [LOVListComponentPropName]="'CustomersList'"
-                                                        [ChosenListHeader]="'לקוחות שנבחרו'"
-                                                        [ButtonAddLabel]="'בחר'">
-                                            <span class="class-MultiSelectLOV-content">
-                                                <LogLov [ObjectFieldName]="'ExternalEntityReference'"
-                                                        [ObjectTableName]="'DocumentsFiling'"
-                                                        [DataContext]="DataContext"
-                                                        [HideColumns]="true"
-                                                        [LookUpTableName]="'Card'"
-                                                        [DisplayMemberPath]="'LocalName'"
-                                                        [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
-                                                </LogLov>
-                                            </span>
-
-                                            <!--(ChosenListItemsChanged)="SelectedValueChangedEmit()"-->
-                                            <!--[QueryFilterItems]="LoadingContactFilterItems"-->
-                                        </MultiSelectLOV>
-                                    </td>
+                                    <td colspan="3"></td>
                                 </tr>
                                 <tr class="FormFieldRow">
                                     <!-- DocumentTypeId -->
@@ -141,13 +84,13 @@
 
                                     <!-- search text box -->
                                     <td style="width:100px; text-align:center !important;">
-                                        <div style="color: #555555; text-align: right;">
-                                            {{searchOrExportFile}}
+                                        <div style="color: #555555; text-align: left;">
+                                            שדות חיפוש:
                                         </div>
                                     </td>
                                     <td style="width:130px;">
 
-                                        <SearchTextBox [PlaceHolder]="'שם יישות/תאור'" [ObjectTableName]="'DocumentsFiling'" [SearchText]="SearchText"(SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                        <SearchTextBox [PlaceHolder]="'שם יישות/תאור'" [ObjectTableName]="'DocumentsFiling'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                     </td>
 
                                 </tr>
@@ -164,7 +107,7 @@
 
                             <div style="height: 100%;">
 
-                                <table style="height: 100%;" *ngIf="isLoad">
+                                <table style="height: 100%;">
                                     <tr>
                                         <td>
                                             <!-- Grid -->

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
@@ -31,9 +31,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CommodityNumber { get; set; }
         public string CommodityName { get; set; }
 
-        public string Harmonize { get; set; }
-        public bool IsMultiHarmonize { get; set; }
-
         //[Include]
         //[Association("ShipmentPackageInsideShipmentPackage","ShipmentPackageId","Id",IsForeignKey=true)]
         [ForeignKey("ShipmentPackageId")]
@@ -58,9 +55,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CountryId { get; set; }
         [ForeignKey("CountryId")]
         public virtual Country Country { get; set; }
-
-        public string HorseId { get; set; }
-        public virtual Horse Horse { get; set; }
 
 
     }

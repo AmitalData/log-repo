@@ -20,7 +20,7 @@ using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.WebServices;
 using WebFreight.Web.DataContracts;
 using Newtonsoft.Json;

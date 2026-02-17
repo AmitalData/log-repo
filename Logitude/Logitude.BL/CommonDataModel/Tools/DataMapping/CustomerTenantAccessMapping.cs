@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -54,15 +54,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ContactName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CompanyVat);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerTenant.ToString());
-            foreach (var item in entityPM.CustomerTenantAccessCards)
-            {
-                if (!string.IsNullOrEmpty(item.CustomerCode))
-                {
-                    MethodHelper.AddToSearchFields(ref mySearchFields, item.CustomerCode); 
-                }
-                MethodHelper.AddToSearchFields(ref mySearchFields, item.Tenant.ToString()); 
 
-            }
             if (mySearchFields.Length > 1000)
             {
                 mySearchFields = mySearchFields.Substring(0, 1000);

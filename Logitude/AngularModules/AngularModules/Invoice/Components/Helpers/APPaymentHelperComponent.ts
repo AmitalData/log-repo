@@ -5,7 +5,7 @@ import {APPaymentPM} from '../../EntityPMs/APPaymentPM';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./APPaymentHelperComponent.html",
 })
 

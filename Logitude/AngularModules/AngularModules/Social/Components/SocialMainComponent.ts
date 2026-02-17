@@ -10,7 +10,7 @@ import {ConversationHeaderExtendedPMService} from '../Services/ExtendedPMs/Conve
 
 import {AppTool} from '../../Infrastructure/Tools';
 @Component({
-    
+    moduleId: module.id,
     selector: 'SocialMainComponent',
     templateUrl: './SocialMainComponent.html',
 
@@ -101,7 +101,7 @@ export class SocialMainComponent implements OnInit {
 
 
     LoadLoggedContactMessageInfo() {
-        this.conversationHeaderExtendedPMService.GetLoggedContactMessageInfo(SessionLocator.LoggedUserPM.Id, SessionLocator.LoggedUserPM.Tenant).subscribe((res:any) => {
+        this.conversationHeaderExtendedPMService.GetLoggedContactMessageInfo(SessionLocator.LoggedUserPM.Id, SessionLocator.LoggedUserPM.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 if (!AppTool.IsNullOrEmpty(pmResponse.Result)) {
@@ -148,7 +148,7 @@ export class SocialMainComponent implements OnInit {
     GetCountUnReadMassage() {
 
         if (this.PostsArgs) {
-            this.conversationHeaderExtendedPMService.GetCountUnReadConversationHeaderPMs(this.PostsArgs.UserId, this.PostsArgs.EntityId, this.PostsArgs.ObjectTableId, this.PostsArgs.AreaMessage).subscribe((res:any) => {
+            this.conversationHeaderExtendedPMService.GetCountUnReadConversationHeaderPMs(this.PostsArgs.UserId, this.PostsArgs.EntityId, this.PostsArgs.ObjectTableId, this.PostsArgs.AreaMessage).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
 
                 if (!pmResponse.HasError && (pmResponse.Result || pmResponse.Result == 0)) {
@@ -169,7 +169,7 @@ export class SocialMainComponent implements OnInit {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

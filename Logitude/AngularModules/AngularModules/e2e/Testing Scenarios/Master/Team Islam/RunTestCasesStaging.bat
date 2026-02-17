@@ -13,29 +13,37 @@ FOR /L %%A IN (1,1,1) DO (
 
 
 --ShipmentView-- 
- cmd /c call  npm run do-e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,ShipmentView
+ cmd /c call  npm run e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,ShipmentView>D:\E2ETeamIslamReport\Report.log
 CALL :CheckError "ShipmentView"
    
 --CompanyAddressSetting
-   cmd /c call npm run do-e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,CompanyAddressSetting
+   cmd /c call npm run e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,CompanyAddressSetting>D:\E2ETeamIslamReport\Report.log
    CALL :CheckError "CompanyAddressSetting"
   
 --NewAgent
-   cmd /c call npm run do-e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,NewAgent
+   cmd /c call npm run e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,NewAgent>D:\E2ETeamIslamReport\Report.log
    CALL :CheckError "NewAgent"
    
 --NewUser--
-  cmd /c call npm run do-e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,NewUser
+  cmd /c call npm run e2e -- --params.Env="testEnvStaging" --params.Team="islam" --suite=login,NewUser>D:\E2ETeamIslamReport\Report.log
   CALL :CheckError "NewUser"
+ 
+
+ 
+ 
 )
+
 cd /
 cd C:\Automation e2e\TeamIslam\Test
 >test.txt echo Errors in : %TotalErrors%
 >>test.txt echo Total Errors :%NumberErrors% 
 
+
+
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
+Pause
 
 SETLOCAL
 :CheckError

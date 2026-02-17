@@ -21,8 +21,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Customs.Data.Repsitories;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 {
@@ -52,8 +50,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
               ref string MoreParams,
               out string MessageOut)
         {
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
-
             MessageOut = "";
             _Stopwatch = Stopwatch.StartNew();  
             MyCommunicationsParams.Subject = "DeclarationDocumentsService ";
@@ -65,9 +61,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             AppendLogLine("CheckIntegrity:Took:" + _Stopwatch.Elapsed.ToString());_Stopwatch.Restart(); 
             MyGenericResponseObj.Stage = "GetContext";
             _context = CustomContext.GetContext(ResolvedTenant());
-            AppendLogLine($"ResolvedTenant()={ResolvedTenant()}");
             var myQueryService = new DeclarationQueryService(_context);
-            CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
+
             MyGenericResponseObj.Stage = "GetSingle";
             this._MyDeclarationPM = myQueryService.GetSingle(this._LogitudeDocs.Id, true, false);
             if (this._MyDeclarationPM == null)
@@ -76,13 +71,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
-
-            if (this._MyDeclarationPM.Direction != "E" && this._MyDeclarationPM.PaymentDate.HasValue)
-            {
-                throw new BusinessErrorException("Declaration has already been payed");
-            }
-            
-
             MyGenericResponseObj.Stage = "Add Ticket for file " + this._MyDeclarationPM.CustomFileNo;
 
             if (!String.IsNullOrWhiteSpace(this._LogitudeDocs.COM_ID))
@@ -90,121 +78,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(dbContext);
                 var myCustomsDocumentPointerUpdateService = new CustomsDocumentPointerUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                 var myCustomsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                
+
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(_MyDeclarationPM.Tenant);
                 DocumentsFilingPM documentIn = documentsFilingQuery.GetSinglePM(this._LogitudeDocs.COM_ID, _MyDeclarationPM.Tenant);
-                var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                var ParentEntityCodeList = new string[] { "Declaration", "ExportDeclarationClosingData" };
-
-				if (documentIn != null)
+                if (documentIn != null)
                 {
-                    if (this._LogitudeDocs.DOC_ID == null)
-                    {
-                        throw new BusinessErrorException("DOC_ID is missing");
-                    }
-
                     string pointerLevel = null;
                     var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
-                    DocumentTypeCustomsDataPM myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
-                    if (myDocumentTypeCustomsData == null || String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
-                    {
-                        throw new BusinessErrorException("DOC_ID " + this._LogitudeDocs.DOC_ID + " but not found");
-                    }
+                    var myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
                     
-                    if (myDocumentTypeCustomsData != null && !String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
-                    {
-                        
-                        var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(dbContext);
-                        var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, _MyDeclarationPM.Tenant);
-                        if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
-                        {
-                            pointerLevel = myCustomDocumentType.PointerLevel;
-                        }
-                    }
-
-                    CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(_MyDeclarationPM.Tenant);
-                    List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketsByDocumentsFilingId(this._LogitudeDocs.COM_ID, _MyDeclarationPM.Tenant);
-                    if(myCustomsDocumentsTicketPMList != null && myCustomsDocumentsTicketPMList.Count() > 0)
-                    {
-                        List<string> ticketdIds = myCustomsDocumentsTicketPMList.Select(r => r.Id).ToList();
-                        if(ticketdIds != null && ticketdIds.Count() > 0)
-                        {
-                            CustomsDocumentPointerQueryService myCustomsDocumentPointerQueryService = new CustomsDocumentPointerQueryService(_MyDeclarationPM.Tenant);
-                            List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMList = myCustomsDocumentPointerQueryService.GetPointersForMultipleTickets(ticketdIds, _MyDeclarationPM.Tenant);
-                            if (myCustomsDocumentPointerPMList != null && myCustomsDocumentPointerPMList.Count() > 0)
-                            {
-                                List<CustomsDocumentPointerPM> myCustomsDocumentPointerPMListforDec = new List<CustomsDocumentPointerPM>();
-                               if(pointerLevel.ToUpper() == "C")
-                                {
-                                    myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(o => ParentEntityCodeList.Contains(o.ParentEntityCode) && o.ParentEntityId == _MyDeclarationPM.Id).ToList();
-
-                                    // myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(x => x.ParentEntityCode == "ExportDeclarationClosingData").ToList();
-                                }
-                                else
-                                {
-                                    myCustomsDocumentPointerPMListforDec = myCustomsDocumentPointerPMList.Where(x => x.ParentEntityCode == "Declaration").ToList();
-
-                                }
-                                if (myCustomsDocumentPointerPMListforDec != null && myCustomsDocumentPointerPMListforDec.Count() > 0)
-                                {
-                                    
-                                    if (this._MyDeclarationPM.IsCourierDeclaration || this._MyDeclarationPM.UNFCourier)
-                                    {
-                                        var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
-                                        updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
-                                    }
-                                  customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, false, false);
-
-                                    if (customsDocumentPM!= null && String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId) && customsDocumentPM.DocumentStatusCode!="7")
-                                    {
-                                        customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        customsDocumentPM.IsSendToQueue = false;
-                                        myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
-                                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
-
-
-
-                                        customsDocumentPM.IsSendToQueue = true;
-                                        myCustomsDocumentUpdateService.IgnoreSendFailure = true;
-                                        AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
-                                        if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
-                                        throw new BusinessErrorException("Ticket already Exist for this Document" + "-- Send To Mehes");
-
-                                    }
-
-
-                                    string log = "";
-                                    if (customsDocumentPM == null)
-                                    {
-                                        log = "customsDocumentPM is null";
-                                    }
-                                    else
-                                    {
-                                        if (!String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
-                                            log = "customsDocumentPM.CustomsDocId:" + customsDocumentPM.CustomsDocId;
-
-                                        if (!String.IsNullOrWhiteSpace(customsDocumentPM.DocumentStatusCode))
-                                            log = "customsDocumentPM.DocumentStatusCode:" + customsDocumentPM.DocumentStatusCode;
-
-
-
-                                    }
-                                    throw new BusinessErrorException("Ticket already Exist for this Document");
-                                }
-                            }
-                        }
-                    }
-                    //List<CustomsDocumentsTicketPM> myCustomsDocumentsTicketPMList2 = myCustomsDocumentsTicketQueryService.
-                    
-
-                    //string pointerLevel = null;
-                    //var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
-                    //DocumentTypeCustomsDataPM myDocumentTypeCustomsData = myDocumentTypeCustomsDataQueryService.GetSingle(this._LogitudeDocs.DOC_ID, true, true);
-                    //if (myDocumentTypeCustomsData == null || String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
-                    //{
-                    //    throw new BusinessErrorException("DOC_ID " + this._LogitudeDocs.DOC_ID + " but not found");
-                    //}
                     CustomsDocumentsTicketPM customsDocumentsTicketPM = new CustomsDocumentsTicketPM();
                     customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Insert;
                     customsDocumentsTicketPM.Tenant = _MyDeclarationPM.Tenant;
@@ -212,17 +94,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     if (myDocumentTypeCustomsData != null && !String.IsNullOrWhiteSpace(myDocumentTypeCustomsData.CustomsDoucumentTypeCode))
                     {
                         customsDocumentsTicketPM.DocumentTypeCode = myDocumentTypeCustomsData.CustomsDoucumentTypeCode;
-                        //var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(dbContext);
-                        //var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, _MyDeclarationPM.Tenant);
-                        //if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
-                        //{
-                         //   pointerLevel = myCustomDocumentType.PointMETADATAerLevel;
-                       // }
+                        var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(dbContext);
+                        var myCustomDocumentType = myCustomDocumentTypeQueryService.GetSingle(myDocumentTypeCustomsData.CustomsDoucumentTypeCode, true, true);
+                        if (myCustomDocumentType != null && !String.IsNullOrWhiteSpace(myCustomDocumentType.PointerLevel))
+                        {
+                            pointerLevel = myCustomDocumentType.PointerLevel;
+                        }
                     }
-                    AppendLogLine("Update Ticket before pointer");
                     myCustomsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
 
-
+                    
 
                     CustomsDocumentPointerPM customsDocumentPointerPM = new CustomsDocumentPointerPM();
                     customsDocumentPointerPM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -235,158 +116,48 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     if (pointerLevel == "I")
                     {
                         customsDocumentPointerPM.Child1EntityCode = "SupplierInvoice";
-                        if (_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _MyDeclarationPM.Direction == "E")
-                        {
-                            customsDocumentPointerPM.Child1EntityId = _MyDeclarationPM.SupplierInvoices?.FirstOrDefault(x => x.InvoiceNumber == documentIn?.DocumentsFilingMetaDataValues.FirstOrDefault(y=>y.DocumentsMetaDataTypeCode== "39").MetaDataValue)?.SequenceNumeric?.ToString();
-                        }
-                        else
-                        {
-                            customsDocumentPointerPM.Child1EntityId = "1";
-
-                        }
+                        customsDocumentPointerPM.Child1EntityId = "1"; 
                     }
                     if (pointerLevel == "P")
                     {
 
                         customsDocumentPointerPM.Child2EntityCode = "SupplierInvoiceItem";
-                        customsDocumentPointerPM.Child2EntityId = "1";
+                        customsDocumentPointerPM.Child2EntityId = "1"; 
                     }
-					if (pointerLevel == "C" && !_MyDeclarationPM.AutoSending)
-					{
-						customsDocumentPointerPM.ParentEntityCode = "ExportDeclarationClosingData";						
-					}
 
-					customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
-                    AppendLogLine("Update pointer, connected entity: " + customsDocumentPointerPM.ParentEntityId);
+                    customsDocumentPointerPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                     myCustomsDocumentPointerUpdateService.Update(customsDocumentPointerPM, true);
 
                     var myDocumentId = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
-                    // var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
-                    
-                    CustomsDocumentMetaDataValueQueryService customsDocumentMetaDataValueQuery = new CustomsDocumentMetaDataValueQueryService(_context);
-
-                    
-
-                    List<CustomsDocumentMetaDataValuePM> CustomsDocumentMetaDataValues = customsDocumentMetaDataValueQuery.GetCustomsDocumentMetaDataValuesByConnectedEntity(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
-                    CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues.Where(r => r.MetaDataTypeCode == customsDocumentsTicketPM.DocumentTypeCode).ToList();
-                    
-
-                    if(_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _MyDeclarationPM.Direction=="E" && CustomsDocumentMetaDataValues!= null && CustomsDocumentMetaDataValues.Count()==0)
-                    {
-                        DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(_MyDeclarationPM.Tenant);
-
-
-                        foreach (DocumentsFilingMetaDataValuePM itemPM in documentIn?.DocumentsFilingMetaDataValues)
-                          {
-
-                            CustomsDocumentMetaDataValuePM customsDocumentMetaDataValue = new CustomsDocumentMetaDataValuePM();
-                            customsDocumentMetaDataValue.MetaDataTypeCode = itemPM.DocumentsMetaDataTypeCode;
-                            customsDocumentMetaDataValue.CustomsDocumentId = itemPM.DocumentsFilingId;
-                            customsDocumentMetaDataValue.Tenant = itemPM.Tenant;
-                            customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
-                            CustomsDocumentMetaDataValues.Add(customsDocumentMetaDataValue);
-
-
-                        }
-                                                         
-                    }
-                    //if(CustomsDocumentMetaDataValues.Where(r => r.MetaDataValue == "1" && r.MetaDataTypeCode == "380").FirstOrDefault() == null)
-                    //{
-                    //    CustomsDocumentMetaDataValues.Add(new CustomsDocumentMetaDataValuePM { CustomsDocumentId = this._LogitudeDocs.COM_ID, MetaDataTypeCode = "380", MetaDataValue = "1", Tenant = _MyDeclarationPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert });
-
-                    //}
                     if (myDocumentId == null)
                     {
-                        customsDocumentPM = new CustomsDocumentPM();
+                        var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(dbContext, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                        CustomsDocumentPM customsDocumentPM = new CustomsDocumentPM();
                         customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                        //customsDocumentPM.IsSendToQueue = true;
                         customsDocumentPM.DocumentsFilingId = this._LogitudeDocs.COM_ID;
                         customsDocumentPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
                         customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
                         customsDocumentPM.Tenant = _MyDeclarationPM.Tenant;
-                        customsDocumentPM.CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues;
-                        foreach (CustomsDocumentMetaDataValuePM value in customsDocumentPM.CustomsDocumentMetaDataValues)
-                        {
-                            value.ChangeSetOp = ChangeSetOperation.Insert;
-                        }
-                    }
-                    else
-                    {
-                        customsDocumentPM = myDocumentId;
-                        customsDocumentPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        //customsDocumentPM.IsSendToQueue = true;
-                        if (customsDocumentPM.DocumentsFilingId != this._LogitudeDocs.COM_ID) customsDocumentPM.DocumentsFilingId = this._LogitudeDocs.COM_ID;
-                        if (customsDocumentPM.DocumentTypeCode != customsDocumentsTicketPM.DocumentTypeCode) customsDocumentPM.DocumentTypeCode = customsDocumentsTicketPM.DocumentTypeCode;
-                        if (customsDocumentPM.CurrentCustomsDocumentsTicketId != customsDocumentsTicketPM.Id) customsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
-                    }
-                    if (CustomsDocumentMetaDataValues != null && CustomsDocumentMetaDataValues.Count() > 0 && (customsDocumentPM.CustomsDocumentMetaDataValues == null || customsDocumentPM.CustomsDocumentMetaDataValues.Count() < CustomsDocumentMetaDataValues.Count()))
-                    {
-                        customsDocumentPM.CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues;
                         foreach (CustomsDocumentMetaDataValuePM value in customsDocumentPM.CustomsDocumentMetaDataValues)
                         {
                             value.ChangeSetOp = ChangeSetOperation.Insert;
                         }
 
-                    }
-
-                    
-                    customsDocumentPM.IsSendToQueue = false;
-                    AppendLogLine("AddPerfectCustomsDocumentMetaDataValues");
-                    myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
-                    AppendLogLine("myCustomsDocumentUpdateService.Update");
-                    myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
-
-                    customsDocumentPM = myCustomsDocumentQueryService.GetSingle(this._LogitudeDocs.COM_ID, true, false);
-                    if (customsDocumentPM.DeclarationId != _MyDeclarationPM.Id)
-                    {
-                        customsDocumentPM.DeclarationId = _MyDeclarationPM.Id;
-                        customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                    }
-                    if (customsDocumentPM.ChangeSetOp == ChangeSetOperation.Update || String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
-                    {
-                        if (String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
-                        {
-                            customsDocumentPM.IsSendToQueue = true;
-                            customsDocumentPM.IsCustomSendTime = true;
-                            myCustomsDocumentUpdateService.IgnoreSendFailure = true;
-                            AppendLogLine("myCustomsDocumentUpdateService.Update:IsSendToQueue = true");
-                            if (customsDocumentPM.ChangeSetOp != ChangeSetOperation.Update) customsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                        }
                         myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     }
-                
-
-                    AppendLogLine("after Update Document");
                 }
                 else
                 {
                     throw new BusinessErrorException("Document with Id " + this._LogitudeDocs.COM_ID + " not found");
                 }
             }
-            else
-            {
-                AppendLogLine($"this._LogitudeDocs.COM_ID is null nothing done ");
-            }
-            if (this._MyDeclarationPM.IsCourierDeclaration || this._MyDeclarationPM.UNFCourier)
-            {
-                var updateDocumentStatuscodeService = new UpdateDocumentStatuscodeService();
-                updateDocumentStatuscodeService.UpdateDocumentStatuscode(this._MyDeclarationPM, DateTime.MinValue, false);
-
-            }
-
-            DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
-            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-            this._MyDeclarationPM.MarkAsChanged = true;
-            DeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
             MyGenericResponseObj.Stage = "Add Ticket Done ";
             AppendLogLine("Add Ticket:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-            AppendLogLine(Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
             MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
             //MyGenericResponseObj.ResponseXml ;
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
             MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
-            MessageOut = GetLog();
         }
 
         private void DeserilazeObject(string xmlLOGIDOCS)
@@ -482,66 +253,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
         {
             throw new NotImplementedException();
         }
-
     
-    }
-
-    
-    public class UpdateDocumentStatuscodeService
-    {
-        public bool ConnectedAfterSend_Need2UpdateDocumentStatuscode(DeclarationPM declarationPM, DocumentsFilingPM _DocumentsFilingPM)
-        {
-            if (_DocumentsFilingPM==null)
-            {
-                return false;
-            }
-            var customsDocumentRepository = new CustomsDocumentRepository(declarationPM.Tenant);
-            var customsDocument = customsDocumentRepository.GetSingle(_DocumentsFilingPM.Id, declarationPM.Tenant);
-            if (string.IsNullOrWhiteSpace(customsDocument?.CustomsDocId))
-            {
-                return false;
-            }
-            var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(declarationPM.Tenant);
-            var declarationCourierStatus = declarationCourierStatusRepository.GetSingle(declarationPM.Id, declarationPM.Tenant);
-            return declarationCourierStatus.DocumentStatusCode != "V";
-
-        }
-
-        public void UpdateDocumentStatuscode(DeclarationPM connectedDeclarationPM, DateTime stopLogAt, bool newTrans)
-        {
-
-            ICustomContext context = CustomContext.GetContext(connectedDeclarationPM.Tenant);
-            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(connectedDeclarationPM.Id, true, false);
-            if (currentDeclarationCourierStatusPM != null)
-            {
-                var calculateDeclarationCourierStatus = new BL.CalculateDeclarationCourierStatus(connectedDeclarationPM, connectedDeclarationPM.Id, connectedDeclarationPM.Tenant);
-                //LogMessagingUtil.Instance.AppendLine("currentDeclarationCourierStatusPM.DocumentStatusCode: " + currentDeclarationCourierStatusPM.DocumentStatusCode);
-                currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
-                calculateDeclarationCourierStatus.CalcDocumentStatusCode(currentDeclarationCourierStatusPM);//// will change if wrong !!!
-                if (currentDeclarationCourierStatusPM.DocumentStatusCode == "V")
-                {
-                    LogMessagingUtil.Instance.AppendLine($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V");
-                    LogitudeSettings.HandleLogMe($"currentDeclarationCourierStatusPM.DocumentStatusCode: {currentDeclarationCourierStatusPM.DocumentStatusCode}  change 2 V", false, "CreateUD2LTService", stopLogAt);
-                    using (var trans =
-                        newTrans ? TransactionFactory.GetNewTransaction() : TransactionFactory.GetTransaction()
-                        )
-                    {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), connectedDeclarationPM.Tenant);
-                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        ///currentDeclarationCourierStatusPM.DocumentStatusCode = "V";
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                        trans.Complete();
-                    }
-                }
-                else
-                {
-                    LogMessagingUtil.Instance.AppendLine($"calculateDeclarationCourierStatus.CalcDocumentStatusCode return <> V");
-                    LogitudeSettings.HandleLogMe("calculateDeclarationCourierStatus.CalcDocumentStatusCode return <> V", false, "CreateUD2LTService", stopLogAt);
-                }
-            }
-        }
- 
     }
 }
 

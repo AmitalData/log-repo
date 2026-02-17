@@ -11,9 +11,6 @@ using System.Linq;
 using System;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
-using System.Diagnostics;
-using Logitude.Server.Tools.Helpers;
-
 namespace Logitude.Server.Tools.Counters
 {
     public class IdCounter //: IIdCounter
@@ -23,60 +20,54 @@ namespace Logitude.Server.Tools.Counters
 
         public static string GetNumber(string connectionString, string tableName)
         {
-            if (FakeOverrideIIdCounter != null)
+            if (FakeOverrideIIdCounter!=null)
             {
                 return FakeOverrideIIdCounter.GetNumber(connectionString, tableName);
             }
             string number = null;
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                //  throw new Exception("itzik+elisheva= not in GetNewReadCommittedTransaction !!!!!! ");
-
-                // ALL IdCounter MUST BE IN TRANSACTION 
-                // ALTHOGH THIS FUNCTION CALL FRM UNITEST 
-                using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                
+                using (OracleConnection cn = new OracleConnection(connectionString))
                 {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandText = 
+                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "usp_GetNextTableIdValue";
+                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN ,
+                    cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    /*
+                      v_pLastNumber OUT VARCHAR2,
+--                    v_pTableName IN VARCHAR2 
+                     * */
 
-                    using (OracleConnection cn = new OracleConnection(connectionString))
+                    OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.VarChar, 100);
+                    OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
+
+                    lastNumberPar.Direction = ParameterDirection.Output;
+                    tableNamePar.Direction = ParameterDirection.Input;
+
+                    tableNamePar.Value = tableName;
+
+                    cmd.Parameters.Add(lastNumberPar);
+                    cmd.Parameters.Add(tableNamePar);
+                    try
                     {
-                        OracleCommand cmd = new OracleCommand();
-                        cmd.Connection = cn;
-                        cmd.CommandText =
-                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN,
-                        cmd.Connection.ConnectionString);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        /*
-                          v_pLastNumber OUT VARCHAR2,
-    --                    v_pTableName IN VARCHAR2 
-                         * */
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        number = (string)cmd.Parameters["v_pLastNumber"].Value;
 
-                        OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.VarChar, 100);
-                        OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
-
-                        lastNumberPar.Direction = ParameterDirection.Output;
-                        tableNamePar.Direction = ParameterDirection.Input;
-
-                        tableNamePar.Value = tableName;
-
-                        cmd.Parameters.Add(lastNumberPar);
-                        cmd.Parameters.Add(tableNamePar);
-                        try
-                        {
-                            cn.Open();
-                            cmd.ExecuteNonQuery();
-                            number = (string)cmd.Parameters["v_pLastNumber"].Value;
-
-                        }
-                        catch (Exception ex)
-                        {
-                            System.Console.WriteLine("Exception: {0}", ex.ToString());
-                            throw;
-                        }
-
-                        cn.Close();
                     }
-                    scope.Complete();
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+
+                    cn.Close();
                 }
+
                 return number;
             }
 
@@ -84,192 +75,107 @@ namespace Logitude.Server.Tools.Counters
             {
 
                 string strConnString = connectionString;
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
 
 
-                    SqlParameter lastNumberPar = new SqlParameter("@v_pLastNumber", SqlDbType.VarChar, 100);
-                    SqlParameter tableNamePar = new SqlParameter("@v_pTableName", SqlDbType.VarChar);
+                SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.VarChar, 100);
+                SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
 
-                    lastNumberPar.Direction = ParameterDirection.Output;
-                    tableNamePar.Direction = ParameterDirection.Input;
+                lastNumberPar.Direction = ParameterDirection.Output;
+                tableNamePar.Direction = ParameterDirection.Input;
 
-                    tableNamePar.Value = tableName;
+                tableNamePar.Value = tableName;
 
-                    SqlCommand cmd = new SqlCommand("usp_GetNextTableIdValue", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("usp_GetNextTableIdValue", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
 
 
-                    cmd.Parameters.Add(lastNumberPar);
-                    cmd.Parameters.Add(tableNamePar);
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    cn.Close();
-                    number = (string)cmd.Parameters["@v_pLastNumber"].Value;
+                cmd.Parameters.Add(lastNumberPar);
+                cmd.Parameters.Add(tableNamePar);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+                number = (string)cmd.Parameters["@pLastNumber"].Value;
 
-                }
-                // scope.Complete();
-                //}
-                return number;
+            }
+            // scope.Complete();
+            //}
+            return number;
 
             }
         }
 
-        private static Dictionary<string, Queue<string>> TablesIdsRange = new Dictionary<string, Queue<string>>();
+        private static Dictionary<string, Queue<string>> TablesKeyDic = new Dictionary<string, Queue<string>>();
         private static Queue<string> IdStoreQueue = new Queue<string>();
 
         private static SqlCommand cmd;
-        //private static Queue<string> tableIdsQueue = new Queue<string>();
+        private static Queue<string> tableIdsQueue = new Queue<string>();
 
-        // private static Dictionary<string, Queue<string>> TablesIdsRange = new Dictionary<string, Queue<string>>();
-        public static string GetIdWithIdsRange(string tableName, int numberOfIds, int tenant)
+        private static string GetIdsRangeFromDataBase(string tableName, string strConnString, int tenant)
         {
-            if (TablesIdsRange.ContainsKey(tableName) && TablesIdsRange[tableName].Count > 0)
-            {
-                string id = TablesIdsRange[tableName].Dequeue();
-                return id;
-            }
-            else
-            {
-                string strConnString = GetConnection(tenant);
-                int startNumber;
-                int endNumber;
-                string dbString;
 
-                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            int startNumber;
+            int endNumber;
+            string dbString;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                using (SqlConnection cn = new SqlConnection(strConnString))
                 {
 
-                    lock (thisLock)
-                        using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                        using (OracleConnection cn = new OracleConnection(strConnString))
-                        {
-                            OracleCommand cmd = new OracleCommand();
+                    SqlCommand cmd = new SqlCommand("usp_GetNextTableIdsRange", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                            // NOWAIT ///cmd.CommandTimeout = 4;//The time in seconds to wait for the command to execute. The default is 30 seconds.
-
-
-
-                            cmd.Connection = cn;
-                            cmd.CommandText =
-                            //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
-                            DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdsRange", LogitudeDBSchema.LOGITUDE_MAIN,
-                            cmd.Connection.ConnectionString);
-                            cmd.CommandType = CommandType.StoredProcedure;
-
-                            OracleParameter startNumberPar = new OracleParameter("v_pStartNumber", OracleDbType.Integer);
-                            OracleParameter endNumberPar = new OracleParameter("v_pEndNumber", OracleDbType.Integer);
-                            OracleParameter dbStringNumber = new OracleParameter("v_DBStringNumber", OracleDbType.VarChar, 50);
-                            OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
-                            OracleParameter numberOfIdsPar = new OracleParameter("v_pNumberOfIds", OracleDbType.Integer);
+                    SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
+                    SqlParameter endNumberPar = new SqlParameter("@pEndNumber", SqlDbType.Int);
+                    SqlParameter dbStringNumber = new SqlParameter("@DBStringNumber", SqlDbType.VarChar, 50);
+                    SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
+                    SqlParameter numberOfIds = new SqlParameter("@pNumberOfIds", SqlDbType.VarChar);
 
 
-                            startNumberPar.Direction = ParameterDirection.Output;
-                            endNumberPar.Direction = ParameterDirection.Output;
-                            dbStringNumber.Direction = ParameterDirection.Output;
-                            tableNamePar.Direction = ParameterDirection.Input;
-                            numberOfIdsPar.Direction = ParameterDirection.Input;
+                    startNumberPar.Direction = ParameterDirection.Output;
+                    endNumberPar.Direction = ParameterDirection.Output;
+                    dbStringNumber.Direction = ParameterDirection.Output;
+                    tableNamePar.Direction = ParameterDirection.Input;
+                    numberOfIds.Direction = ParameterDirection.Input;
 
-                            tableNamePar.Value = tableName;
-                            numberOfIdsPar.Value = numberOfIds;
-
-
-                            cmd.Parameters.Add(startNumberPar);
-                            cmd.Parameters.Add(numberOfIdsPar);
-                            cmd.Parameters.Add(endNumberPar);
-                            cmd.Parameters.Add(tableNamePar);
-                            cmd.Parameters.Add(dbStringNumber);
-
-                            try
-                            {
-                                cn.Open();
-                                cmd.ExecuteNonQuery();
-
-                                startNumber = (int)cmd.Parameters["v_pStartNumber"].Value;
-                                endNumber = (int)cmd.Parameters["v_pEndNumber"].Value;
-                                dbString = (string)cmd.Parameters["v_DBStringNumber"].Value;
+                    tableNamePar.Value = tableName;
+                    numberOfIds.Value = 20;
 
 
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Console.WriteLine("Exception: {0}", ex.ToString());
-                                throw;
-                            }
-                            scope.Complete();
-                            cn.Close();
-                        }
+                    cmd.Parameters.Add(startNumberPar);
+                    cmd.Parameters.Add(numberOfIds);
+                    cmd.Parameters.Add(endNumberPar);
+                    cmd.Parameters.Add(tableNamePar);
+                    cmd.Parameters.Add(dbStringNumber);
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
 
+                    startNumber = (int)cmd.Parameters["@pStartNumber"].Value;
+                    endNumber = (int)cmd.Parameters["@pEndNumber"].Value;
+                    dbString = (string)cmd.Parameters["@DBStringNumber"].Value;
 
-                }
-                else
-                {
-
-                    lock (thisLock)
+                    tableIdsQueue = new Queue<string>();
+                    for (int i = startNumber; i <= endNumber; i++)
                     {
-                        using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                        {
-                            using (SqlConnection cn = new SqlConnection(strConnString))
-                            {
-
-                                SqlCommand cmd = new SqlCommand("usp_GetNextTableIdsRange", cn);
-                                cmd.CommandType = CommandType.StoredProcedure;
-
-                                SqlParameter startNumberPar = new SqlParameter("@pStartNumber", SqlDbType.Int);
-                                SqlParameter endNumberPar = new SqlParameter("@pEndNumber", SqlDbType.Int);
-                                SqlParameter dbStringNumber = new SqlParameter("@DBStringNumber", SqlDbType.VarChar, 50);
-                                SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
-                                SqlParameter numberOfIdsPar = new SqlParameter("@pNumberOfIds", SqlDbType.Int);
-
-
-                                startNumberPar.Direction = ParameterDirection.Output;
-                                endNumberPar.Direction = ParameterDirection.Output;
-                                dbStringNumber.Direction = ParameterDirection.Output;
-                                tableNamePar.Direction = ParameterDirection.Input;
-                                numberOfIdsPar.Direction = ParameterDirection.Input;
-
-                                tableNamePar.Value = tableName;
-                                numberOfIdsPar.Value = numberOfIds;
-
-
-                                cmd.Parameters.Add(startNumberPar);
-                                cmd.Parameters.Add(numberOfIdsPar);
-                                cmd.Parameters.Add(endNumberPar);
-                                cmd.Parameters.Add(tableNamePar);
-                                cmd.Parameters.Add(dbStringNumber);
-                                cn.Open();
-                                cmd.ExecuteNonQuery();
-                                cn.Close();
-
-                                startNumber = (int)cmd.Parameters["@pStartNumber"].Value;
-                                endNumber = (int)cmd.Parameters["@pEndNumber"].Value;
-                                dbString = (string)cmd.Parameters["@DBStringNumber"].Value;
-
-                                scope.Complete();
-                            }
-                        }
+                        tableIdsQueue.Enqueue(dbString + "-" + i);
                     }
+
+
+                    string id = tableIdsQueue.Dequeue();
+
+                    if (TablesKeyDic.Keys.Contains(tableName))
+                    {
+                        TablesKeyDic[tableName] = tableIdsQueue;
+                    }
+                    else
+                    {
+                        TablesKeyDic.Add(tableName, tableIdsQueue);
+                    }
+
+                    return id;
                 }
-
-
-                Queue<string> tableIdsQueue = new Queue<string>();
-                for (int i = startNumber; i <= endNumber; i++)
-                {
-                    tableIdsQueue.Enqueue(dbString + "-" + i);
-                }
-
-
-                string id = tableIdsQueue.Dequeue();
-
-                if (TablesIdsRange.Keys.Contains(tableName))
-                {
-                    TablesIdsRange[tableName] = tableIdsQueue;
-                }
-                else
-                {
-                    TablesIdsRange.Add(tableName, tableIdsQueue);
-                }
-
-                return id;
             }
         }
         private static Object thisLock = new Object();
@@ -283,141 +189,99 @@ namespace Logitude.Server.Tools.Counters
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-
-                var sw = Stopwatch.StartNew();
                 lock (thisLock)
                     using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                using (OracleConnection cn = new OracleConnection(strConnString))
+                {
+                    OracleCommand cmd = new OracleCommand();
+                    cmd.Connection = cn;
+                    cmd.CommandText = 
+                        //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
+                    DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN,
+                    cmd.Connection.ConnectionString);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    /*
+                      v_pLastNumber OUT VARCHAR2,
+           --                    v_pTableName IN VARCHAR2 
+                     * */
+
+                    OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.VarChar, 100);
+                    OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
+
+                    lastNumberPar.Direction = ParameterDirection.Output;
+                    tableNamePar.Direction = ParameterDirection.Input;
+
+                    tableNamePar.Value = tableName;
+
+                    cmd.Parameters.Add(lastNumberPar);
+                    cmd.Parameters.Add(tableNamePar);
+                    try
                     {
-                        using (OracleConnection cn = new OracleConnection(strConnString))
-                        {
-                            OracleCommand cmd = new OracleCommand();
-                            cmd.Connection = cn;
-                            cmd.CommandText =
-                            //LogitudeDBSchema.LOGITUDE_MAIN.ToString() + "." +   "usp_GetNextTableIdValue";
-                            DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableIdValue", LogitudeDBSchema.LOGITUDE_MAIN,
-                            cmd.Connection.ConnectionString);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            /*
-                              v_pLastNumber OUT VARCHAR2,
-                   --                    v_pTableName IN VARCHAR2 
-                             * */
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        number = (string)cmd.Parameters["v_pLastNumber"].Value;
 
-                            OracleParameter lastNumberPar = new OracleParameter("v_pLastNumber", OracleDbType.VarChar, 100);
-                            OracleParameter tableNamePar = new OracleParameter("v_pTableName", OracleDbType.VarChar);
-
-                            lastNumberPar.Direction = ParameterDirection.Output;
-                            tableNamePar.Direction = ParameterDirection.Input;
-
-                            tableNamePar.Value = tableName;
-
-                            cmd.Parameters.Add(lastNumberPar);
-                            cmd.Parameters.Add(tableNamePar);
-                            try
-                            {
-                                cn.Open();
-                                cmd.ExecuteNonQuery();
-                                number = (string)cmd.Parameters["v_pLastNumber"].Value;
-
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Console.WriteLine("Exception: {0}", ex.ToString());
-                               // scope.Dispose();
-                                //cn.Close();
-
-                                throw;
-                            }
-                            scope.Complete();
-                            cn.Close();
-                        }
                     }
+                    catch (Exception ex)
+            {
+                        System.Console.WriteLine("Exception: {0}", ex.ToString());
+                        throw;
+                    }
+                    scope.Complete();
+                    cn.Close();
+                }
 
-                LogMessagingUtil.Instance.AppendLine($"GetNumber({tableName}):took:{sw.Elapsed}");
                 return number;
             }
 
             else
             {
-                TransactionScope scope = null;
-                try
-                { 
-                    using (scope = TransactionFactory.GetNewReadCommittedTransaction(TimeSpan.FromSeconds(3)))
-                    {
-                        using (SqlConnection cn = new SqlConnection(strConnString))
-                        {
-                            SqlParameter lastNumberPar = null;
-                            SqlParameter tableNamePar = null;
-
-
-                            //if (LogitudeSettings.IsCostomsDeploy)
-                            //{
-                            //    lastNumberPar = new SqlParameter("@v_pLastNumber", SqlDbType.VarChar, 100);
-                            //    tableNamePar = new SqlParameter("@v_pTableName", SqlDbType.VarChar);
-
-                            //}
-                            //else
-                            //{
-                                lastNumberPar = new SqlParameter("@V_PLASTNUMBER", SqlDbType.VarChar, 100);
-                                tableNamePar = new SqlParameter("@v_pTableName", SqlDbType.VarChar);
-
-                            //}
-
-                            lastNumberPar.Direction = ParameterDirection.Output;
-                            tableNamePar.Direction = ParameterDirection.Input;
-
-                            tableNamePar.Value = tableName;
-
-                            SqlCommand cmd = new SqlCommand("usp_GetNextTableIdValue", cn);
-                            cmd.CommandType = CommandType.StoredProcedure;
-
-
-                            cmd.Parameters.Add(lastNumberPar);
-                            cmd.Parameters.Add(tableNamePar);
-                            //cmd.CommandTimeout = 3;
-                            cn.Open();
-                            cmd.ExecuteNonQuery();
-                            cn.Close();
-                            //if (LogitudeSettings.IsCostomsDeploy)
-                            //{
-                                number = (string)cmd.Parameters["@v_pLastNumber"].Value;
-
-                            //}
-                            //else
-                            //{
-                            //    number = (string)cmd.Parameters["@pLastNumber"].Value;
-
-                            //}
-                            
-
-                        }
-
-                        scope.Complete();
-
-
-                        return number;
-                    }
-                }
-                catch (Exception ex)
+                lock (thisLock)
                 {
-                    //if (scope != null)
-                    //{
-                    //    scope.Dispose();
-                    //}
-                     throw ex;
+                    using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                {
+                    using (SqlConnection cn = new SqlConnection(strConnString))
+                    {
+
+
+                        SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.VarChar, 100);
+                        SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.VarChar);
+
+                        lastNumberPar.Direction = ParameterDirection.Output;
+                        tableNamePar.Direction = ParameterDirection.Input;
+
+                        tableNamePar.Value = tableName;
+
+                        SqlCommand cmd = new SqlCommand("usp_GetNextTableIdValue", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+
+                        cmd.Parameters.Add(lastNumberPar);
+                        cmd.Parameters.Add(tableNamePar);
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        cn.Close();
+                        number = (string)cmd.Parameters["@pLastNumber"].Value;
+
+                    }
+
+                    scope.Complete();
+
+
+                    return number;
                 }
-                
+            }
 
-
+            
             }
         }
 
-        //************************************************************************************************************************************
+//************************************************************************************************************************************
         //public
         static string GetConnection(int tenant)
         {
             GlobalDBRepository globalDbRep;
             GlobalDB currentDb;
-
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 //GlobalDBRep = new GlobalDBRepository();
@@ -428,7 +292,7 @@ namespace Logitude.Server.Tools.Counters
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
@@ -452,7 +316,7 @@ namespace Logitude.Server.Tools.Counters
 
         public string GetNumber(string connectionString, string tableName)
         {
-            return IdCounter.GetNumber(connectionString, tableName);
+            return IdCounter.GetNumber(connectionString ,tableName);
         }
     }
     public class FakeIdCounter : IIdCounter
@@ -472,4 +336,4 @@ namespace Logitude.Server.Tools.Counters
 }
 
 
-
+    

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -22,8 +22,6 @@ using System.Web;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 { 
@@ -42,20 +40,17 @@ namespace WebFreight.Web.ReportsWebServices
         {
             APPaymentDataProvider apPaymentDataProvider = GetAPPaymentDataProvider(paymentId, tenant, documentTypeId);
             XmlSerializer serializer = new XmlSerializer(typeof(APPaymentDataProvider));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, apPaymentDataProvider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, apPaymentDataProvider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         public APPaymentDataProvider GetAPPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             APPaymentDataProvider apPaymentDataProvider = new APPaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             APPaymentRepository paymentRep = new APPaymentRepository(invoiceCotnext);
@@ -64,43 +59,37 @@ namespace WebFreight.Web.ReportsWebServices
             IWebFreightContext webFreighContext = WebFreightContext.GetContext(tenant);
             APPayment currentPayment = paymentRep.GetSingleAPPayment(paymentId, tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-			GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
-			GLAccountRepository GLAccountRepository = new GLAccountRepository(tenant);
-
-			Contact loggedContact = GetLoggedContact(tenant);
+            Contact loggedContact = GetLoggedContact(tenant);
             BankAccount bankAccount = GetBankAccountById(currentPayment.BankAccountId, currentPayment.Tenant);
             if (currentPayment != null)
             {
                 Tenant tenantSettings = (from a in commonContext.Tenants
-                                         where a.Id == currentPayment.Tenant
-                                         select a).FirstOrDefault();
+                                 where a.Id == currentPayment.Tenant
+                                 select a).FirstOrDefault();
 
                 ObjectTable currentObjectTable = (from obj in webFreighContext.ObjectTables
-                                                  where obj.Name == "APPayment"
-                                                  select obj).FirstOrDefault();
+                                      where obj.Name == "APPayment" 
+                                      select obj).FirstOrDefault();
                 apPaymentDataProvider.CreateDate = currentPayment.CreateDate;
                 apPaymentDataProvider.VendorBankName = currentPayment.VendorBankName;
                 apPaymentDataProvider.VendorBankAddress = currentPayment.VendorBankAddress;
                 apPaymentDataProvider.VendorSwift = currentPayment.VendorSwift;
                 apPaymentDataProvider.VendorBankAccountNumber = currentPayment.VendorBankAccountNumber;
                 apPaymentDataProvider.VendorIBANNo = currentPayment.VendorIBANNumber;
-                
 
                 if (bankAccount != null)
                 {
-                    apPaymentDataProvider.BankAccountEnglishName = bankAccount.EnglishName;
                     if (loggedContact.DontShowLocalLabels)
                     {
-                        apPaymentDataProvider.BankAccountName = bankAccount.EnglishName;
+                        apPaymentDataProvider.BankAccountName  = bankAccount.EnglishName;
                     }
                     else
                     {
                         apPaymentDataProvider.BankAccountName = bankAccount.LocalName;
                     }
 
-                    apPaymentDataProvider.APPaymentBankAddress = bankAccount.BranchAddress;
                 }
-
+             
                 // tenant data
                 if (tenantSettings != null)
                 {
@@ -139,25 +128,31 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.TenantData = tenantSettings.Company != null ? tenantSettings.Company : "";
                     }
                 }
-
+                
                 DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
                                                      where copy.DocumentTypeId == documentTypeId
                                                      select copy).FirstOrDefault();
 
                 if (currentObjectTable != null)
                 {
+                    //payment number
                     apPaymentDataProvider.APPaymentNo = currentPayment.PaymentNo != null ? currentPayment.PaymentNo : "";
-                    
+
                     //paid to = bill to name + address
                     Card paidToCard = (from a in commonContext.Cards.Include("Airline")
                                        where a.Id == currentPayment.VendorId && a.Tenant == currentPayment.Tenant
                                        select a).FirstOrDefault();
-
+                     
                     if (paidToCard != null)
                     {
                         apPaymentDataProvider.PaidToVatNo = paidToCard.VatNumber != null ? paidToCard.VatNumber : "";
                         apPaymentDataProvider.IRSPlace = paidToCard.IRSPlace;
                         apPaymentDataProvider.IRSNumber = paidToCard.IRSNumber;
+                        //apPaymentDataProvider.VendorBankName = paidToCard.BankName;
+                        //apPaymentDataProvider.VendorBankAddress = paidToCard.BankAddress;
+                        //apPaymentDataProvider.VendorSwift = paidToCard.Swift;
+                        //apPaymentDataProvider.VendorBankAccountNumber = paidToCard.AccountNumber;
+                        //apPaymentDataProvider.VendorIBANNo = paidToCard.IBANNumber;
                         apPaymentDataProvider.ClientNumber = paidToCard.Code; //client number
                         apPaymentDataProvider.PaidToName = paidToCard.EnglishName;
                         apPaymentDataProvider.BankAddress = paidToCard.BankAddress;
@@ -167,24 +162,8 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.Swift = paidToCard.Swift;
                         apPaymentDataProvider.AccountNumber = GetPartnerAccountNumber(paidToCard);
                         apPaymentDataProvider.PaidToCode = paidToCard.Code;
-                        apPaymentDataProvider.VendorWebsite = paidToCard.Website;
-
-
-                        if (!string.IsNullOrEmpty(paidToCard.GLAccountId)) 
-                        {
-
-                            var CurrentGLAccount = paidToCard.GLAccountId;
-							GLAccountCurrencyPM gLAccountCurrencyPM = accountcurrencyQueryService.GetEntityByCurrencyAndGLAccountId(paidToCard.GLAccountId, currentPayment.PaymentCurrencyId, tenant);
-                            if (gLAccountCurrencyPM != null)
-                            {
-								CurrentGLAccount = gLAccountCurrencyPM.GLAccountId.ToString();
-
-							}
-                          var GLAccount = GLAccountRepository.GetSingle(CurrentGLAccount, tenant);
-
-							apPaymentDataProvider.GLAccountDisplayNumber = GLAccount.DisplayNumber;
-						}
-						Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
+                     
+                        Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
                         if (address != null)
                         {
                             apPaymentDataProvider.PaidToAddress = DataProviders.General.GetAddress(address);
@@ -214,7 +193,7 @@ namespace WebFreight.Web.ReportsWebServices
                             CustomerPM customer = customerQuery.GetSinglePM(paidToCard.Id, tenant);
                             if (customer != null)
                             {
-                              
+                                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, apPaymentDataProvider);
                             }
                         }
@@ -227,8 +206,8 @@ namespace WebFreight.Web.ReportsWebServices
                     apPaymentDataProvider.PrintDate = DateTime.Now.Date;
 
                     // payment method
-                    AccountingPaymentMethod paymentMethod = (from a in invoiceCotnext.AccountingPaymentMethods
-                                                     where a.Id == currentPayment.AccountingPaymentMethodId
+                    APPaymentMethod paymentMethod = (from a in invoiceCotnext.APPaymentMethods
+                                                     where a.Id == currentPayment.PaymentMethodId
                                                      select a).FirstOrDefault();
 
                     if (paymentMethod != null)
@@ -251,19 +230,19 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (documentTypePM != null)
                     {
-                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.EntityId == currentPayment.Id && fc.Tenant == tenant).ToList();
+                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
 
-                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.Tenant == tenant).ToList();
+                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
 
                         FormCustomField paidByCustomField = (from a in customfieldsList
-                                                             where a.FieldCode == "PaidBy"
+                                                             where a.FieldCode == "PaidBy" && a.EntityId == currentPayment.Id
                                                              select a).FirstOrDefault();
 
                         DocumentTypeCustomField paidByDocumentCustom = (from a in documentCustomfieldsList
                                                                         where a.FieldCode == "PaidBy"
                                                                         select a).FirstOrDefault();
                         //paid by   
-                        apPaymentDataProvider.PaidBy = paidByCustomField != null ? paidByCustomField.Value : (paidByDocumentCustom != null ? paidByDocumentCustom.DefaultValue : "");
+                        apPaymentDataProvider.PaidBy = paidByCustomField != null ? paidByCustomField.Value : (paidByDocumentCustom != null ? paidByDocumentCustom.DefaultValue : ""); 
                     }
 
                     // payment currency
@@ -277,8 +256,6 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.PaymentCurrencyName = paymentCurrency.LocalName;
                     }
 
-                    this.PrintAmountInWord(currentPayment, apPaymentDataProvider);
-                   
                     //print notes
                     apPaymentDataProvider.PrintNotes = currentPayment.PrintNotes != null ? currentPayment.PrintNotes : "";
 
@@ -293,7 +270,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             if (loggedContact.DontShowLocalLabels)
                             {
-                                apPaymentDataProvider.IssuedByUserName = contact.EnglishName != null ? contact.EnglishName :null;
+                                apPaymentDataProvider.IssuedByUserName = contact.EnglishName != null ? contact.EnglishName : "";
                             }
                             else
                             {
@@ -302,11 +279,11 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
+                 
 
-
-                    if (currentPayment.AccountingPaymentMethod != null)
+                    if (currentPayment.PaymentMethod != null)
                     {
-                        if (currentPayment.AccountingPaymentMethod.Name == "Cash")
+                        if (currentPayment.PaymentMethod.Name == "Cash")
                         {
                             apPaymentDataProvider.ChequeOrPaymentRef = "Cash";
                             apPaymentDataProvider.Bank = "Cash";
@@ -325,7 +302,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         apPaymentDataProvider = SetDataProviderbankFields(currentPayment, apPaymentDataProvider);
                     }
-
+                    
                     apPaymentDataProvider.ValueDate = currentPayment.ValueDate;
 
                     if (!string.IsNullOrEmpty(currentPayment.BranchId))
@@ -359,7 +336,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         a.APInvoice.InvoiceNumber,
                                         a.APInvoice.MainEntityReference,
                                         a.ForeignAmount,
-                                        a.APInvoice.AmountDue,
+                                        a.APInvoice.AmountDue,                                        
                                         a.APInvoice.AmountInInvoiceCurrency,
                                         a.APInvoice.InvoiceDate,
                                     } into gr
@@ -396,49 +373,12 @@ namespace WebFreight.Web.ReportsWebServices
                     apPaymentDataProvider.TotalAmount = totalAmount;
                     apPaymentDataProvider.OutstandingBalance = currentPayment.AmountInPaymentCurrency - totalAmount;
                     apPaymentDataProvider.Logo = DataProviders.General.GetLogo(tenantSettings.Id);
-
-
-                    apPaymentDataProvider.DeductionPercentage = currentPayment.TaxDeductionPercentage;
-                    if (currentPayment.TaxDeductionLocalAmount != null)
-                    {
-                        apPaymentDataProvider.DeductionAmount = (double?)currentPayment.TaxDeductionLocalAmount;
-                    }
-                    if (apPaymentDataProvider.TotalPayment != null)
-                    {
-                        apPaymentDataProvider.TotalPaymentAfterDeduction = (double?)apPaymentDataProvider.TotalPayment;
-                    }
-                    if (apPaymentDataProvider.DeductionAmount != null)
-                    {
-                        if (apPaymentDataProvider.TotalPaymentAfterDeduction != null)
-                        {
-                            if (currentPayment.PaymentCurrencyId == tenantSettings.CurrencyId)
-                            {
-                                apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)apPaymentDataProvider.DeductionAmount;
-                            }
-                            else if (currentPayment.PaymentCurrencyExchangeRate != 0)
-                            {
-                                double? deductionAmount = (double?)apPaymentDataProvider.DeductionAmount / (double?)currentPayment.PaymentCurrencyExchangeRate;
-                                apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)deductionAmount;
-                            }
-                            else // must no get there 
-                            {
-                                apPaymentDataProvider.TotalPaymentAfterDeduction -= (double?)apPaymentDataProvider.DeductionAmount;
-                            }
-                        }
-                        else {
-                            apPaymentDataProvider.TotalPaymentAfterDeduction = (double?)apPaymentDataProvider.DeductionAmount;
-                        }
-                        
-                    }
-                    
                 }
             }
 
-            customFieldResolver = new CustomFieldResolver(tenant);
-            customFieldResolver.SetDataProviderCustomFieldsValues("APPayment", tenant, currentPayment, apPaymentDataProvider);
-
-            return apPaymentDataProvider;
+         return apPaymentDataProvider;
         }
+     
 
         private APPaymentDataProvider SetDataProviderbankFields(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
         {
@@ -479,6 +419,8 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
+    
+
         private string GetPartnerAccountNumber(Card card)
         {
           
@@ -492,27 +434,8 @@ namespace WebFreight.Web.ReportsWebServices
             else return null;
 
         }
+    }
 
-        private void PrintAmountInWord(APPayment payment, APPaymentDataProvider apPaymentDataProvider)
-        {
-            var result = (decimal)payment.AmountInPaymentCurrency - Math.Truncate((decimal)payment.AmountInPaymentCurrency);
-            var Firstdigits = (int)(Math.Round(result, 2) * 100);
-           
-            var FrenchFractions = "";
-            if (Firstdigits > 0)
-            {
-                FrenchFractions = Firstdigits + " Cts";
-            }
 
-            NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
-            apPaymentDataProvider.TotalPaymentInWordFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)payment.AmountInPaymentCurrency) + " ") + apPaymentDataProvider.PaymentCurrencyName + " " + FrenchFractions;
-
-        }
-        public static string FirstCharToUpper(string input)
-        {
-            if (String.IsNullOrEmpty(input))
-                return "";
-            return input.First().ToString().ToUpper() + input.Substring(1);
-        }
-    }    
+    
 }

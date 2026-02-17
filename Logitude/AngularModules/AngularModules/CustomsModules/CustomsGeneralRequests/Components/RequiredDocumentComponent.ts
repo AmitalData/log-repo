@@ -20,7 +20,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 
 @Component({
     selector: 'RequiredDocumentComponent',
-    
+    moduleId: module.id,
     templateUrl: './RequiredDocumentComponent.html',
 })
 
@@ -44,8 +44,8 @@ implements AfterViewInit, IRequestsSheetMassagingComponent {
         this.ValidationErrors = [];
         this.DocumentConnectedEntitiesList = new ObservableCollection([]);
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrder").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.PaymentOrderLine").subscribe(response => {
             });
         });
     }

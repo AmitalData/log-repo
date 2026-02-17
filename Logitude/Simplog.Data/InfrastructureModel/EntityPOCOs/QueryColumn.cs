@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -11,12 +11,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Id { get; set; }
         public int Tenant { get; set; }
         public string QueryId { get; set; }
-        public string QueryCode { get; set; }
         public string ObjectFieldId { get; set; }
         public int IndexOrder { get; set; }
         public double ColumnWidth { get; set; }
         public string UserId { get; set; }
-        public string ObjectFieldCode { get; set; }
+
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 

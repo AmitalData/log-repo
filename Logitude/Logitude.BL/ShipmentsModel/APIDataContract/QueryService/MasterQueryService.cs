@@ -1,11 +1,14 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
@@ -26,8 +29,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.ShipmentLevelCode = "C";
                 temp.MainCarriageFromPortId = temp.FromPortId;
                 temp.MainCarriageToPortId = temp.ToPortId;
-                temp.FinalDistenationPortId = temp.ToPortId;
-                temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
                 temp.FHLStatusName = "Not Sent";
@@ -41,11 +42,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.ProfitCurrencyId = MyTenantPM.ProfitCurrencyId;
                 temp.ValueOfGoodsCurrencyId = MyTenantPM.FreightCurrencyId;
                 temp.OnCarriageAdditionalTransportModeCode = "BYTR";
-
-                if (string.IsNullOrEmpty(temp.FromPortId))
-                    temp.FromPortId = GetPortsFromMainCarriageLegs(MyEntity, true, Tenant);
-                if (string.IsNullOrEmpty(temp.ToPortId))
-                    temp.ToPortId = GetPortsFromMainCarriageLegs(MyEntity, false, Tenant);
 
                 if (string.IsNullOrEmpty(temp.VolumeUnitCode))
                 {
@@ -104,11 +100,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                         }
                 }
 
-                if (temp.Ratio == null || temp.Ratio == 0)
-                {
-                    temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
-                }
-
+                temp.Ratio = this.GetRatio(temp.DirectionId, temp.TransportModeId, temp.ShipmentTypeId, MyTenantPM.CountryCode);
                 temp.DimFactor = this.GetDimFactorFromRatio(temp.Ratio, temp.DimensionsUnitCode, temp.ChargeableWeightUnitCode);
 
                 if (string.IsNullOrEmpty(temp.CreatedByUserId))
@@ -209,54 +201,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             {
                 throw ex;
             }
-        }
-
-        public string GetPortsFromMainCarriageLegs(Master master, bool isFromPort, int tenant)
-        {
-            var fromPort = "";
-            var toPort = "";
-            if (master != null && master.MainCarriageLegs != null && master.MainCarriageLegs.Count() > 0)
-            {
-                foreach (MainCarriageLeg item in master.MainCarriageLegs.OrderBy(d => d.LegIndex))
-                {
-                    switch (item.LegIndex)
-                    {
-                        case 1:
-                            {
-                                fromPort = item.FromPort != null ? item.FromPort.Code : null;
-                                toPort = item.ToPort != null ? item.ToPort.Code : null;
-                                break;
-                            }
-
-                        case 2:
-                            {
-                                toPort = item.ToPort != null ? item.ToPort.Code : null;
-                                break;
-                            }
-
-                        case 3:
-                            {
-                                toPort = item.ToPort != null ? item.ToPort.Code : null;
-                                break;
-                            }
-
-                        case 4:
-                            {
-                                toPort = item.ToPort != null ? item.ToPort.Code : null;
-                                break;
-                            }
-                    }
-                }
-            }
-
-            return isFromPort ? GetPortId(fromPort, tenant) : GetPortId(toPort, tenant);
-        }
-
-        private string GetPortId(string portCombinedCode, int tenant)
-        {
-            PortQuery query = new PortQuery(tenant);
-            var port = query.GetSinglePMByCombinedCode(portCombinedCode, tenant);
-            return port != null ? port.Id : null;
         }
 
         private double? GetRatio(string directionId, string transportModeId, string shipmentTypeId, string countryCode)

@@ -1,13 +1,13 @@
 
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
+import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
 
 
 
 @Component({
     selector: "CheckBox",
-    inputs: ['IsChecked', 'IsEnabled', 'Text', 'Top', 'ZIndex', 'DataCy'],
+    inputs: ['IsChecked', 'IsEnabled', 'Text', 'Top', 'ZIndex'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -21,10 +21,8 @@ import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 
         <tr>
             <td style="width: 16px; min-width: 16px; padding:0 !important;">
-
-                <div [attr.data-cy]="DataCy" class="LogitudeCheckBox" [style.zIndex]="ZIndex">
-                    <input [attr.data-cy]="DataCy+'_input'" [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" 
-                    (click)="OnClick()" (blur)="OnLostFocus()" (change)="OnChecked($event)" />
+                <div class="LogitudeCheckBox" [style.zIndex]="ZIndex">
+                    <input [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" />
                     <label [attr.id]="ControlId2" [attr.for]="ControlId"></label>
                 </div>
             </td>
@@ -91,19 +89,15 @@ import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 export class CheckBox{
     public ControlId: string = null;
     public ControlId2: string = null;
-    public DataCy: string = null;
 
     public Top: number = null;
     public ZIndex: number = 0;
-    @Output() NotChecked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() Checked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        var pipe: IdGeneratorPipe = new IdGeneratorPipe();
-        this.ControlId = pipe.transform("CheckBox_" + this.CurrentSession.GetNewId("CheckBox"));
+        this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
         this.ControlId2 = this.ControlId + "_LBL";
-        console.log('checkbox create')
     }
 
     private isChecked: boolean = false;
@@ -130,16 +124,12 @@ export class CheckBox{
         }
     }
 
-    OnClick() {       
+    OnClick() {
         this.IsChecked = !this.IsChecked;
         this.Checked.emit(this.IsChecked);
     }
 
     OnLostFocus() {
         this.LostFocus.emit(true);
-    }
-   
-    OnChecked(event) {
-          this.NotChecked.emit(event);
     }
 }

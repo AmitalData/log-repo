@@ -1,4 +1,4 @@
-
+﻿
 <style>
     .BlueTitle{
         font-size:20px;
@@ -287,7 +287,7 @@
     </tr>
     <tr style="height:22px;">
         <td>
-            <div [class.Disable]="DimApproveButton || DimDenyButton" style="float:right;margin-right: 5px;direction: rtl;">
+            <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" style="float:right;margin-right: 5px;direction: rtl;">
                 <LogCheckBox [Checked]="IsAccepted" (ValueChanged)="IsAcceptedChanged($event)" [ObjectFieldName]="'IsAccepted'" [DataContext]="DataContext" style="float:right;margin-top:2px;"></LogCheckBox>
                 <label style="margin-right:-10px;font-size:12px;font-family:sans-serif;" class="TextTrimming">הנני מצהיר כי בדקתי את פרטי המשלוח והמסמכים וכולם תקינים</label><br />
             </div>
@@ -312,10 +312,10 @@
         <td>
            
             <div style="float:left;margin-left:10px;">
-                <button class="Button" [class.Disable]="DimApproveButton || DimDenyButton" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Deny Declaration">דחה הצהרה</button>
+                <button class="Button" [class.Disable]="DimApproveButton == true || DimDenyButton == true" (click)="DenyButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Deny Declaration">דחה הצהרה</button>
             </div>
             <div style="float:left;margin-left:10px;">
-                <button class="GreenButton" [class.Disable]="DimApproveButton || IsAccepted || DimDenyButton" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Approve Declaration">אשר הצהרה</button>
+                <button class="GreenButton" [class.Disable]="DimApproveButton == true || IsAccepted == false || DimDenyButton == true" (click)="ApproveButtonClicked()" style="float: right;margin-left: 7px;margin-right: 7px;height:30px;" title="Approve Declaration">אשר הצהרה</button>
             </div>
          
             <!--<div style="float:left;margin-left:10px;">

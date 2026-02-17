@@ -24,7 +24,7 @@ export class TenantManagementPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -603,39 +603,6 @@ export class TenantManagementPM {
     public get EnableBranding() { return this.enableBranding; }
     public set EnableBranding(newValue: boolean) { if (this.enableBranding != newValue) { this.enableBranding = newValue; this.MarkAsDirty("EnableBranding"); } }
        
-    private tranzilaPaymentWithBit: boolean;
-    public get TranzilaPaymentWithBit() { return this.tranzilaPaymentWithBit; }
-    public set TranzilaPaymentWithBit(newValue: boolean) { if (this.tranzilaPaymentWithBit != newValue) { this.tranzilaPaymentWithBit = newValue; this.MarkAsDirty("TranzilaPaymentWithBit"); } }
-       
-    private enableExportToExcel: boolean;
-    public get EnableExportToExcel() { return this.enableExportToExcel; }
-    public set EnableExportToExcel(newValue: boolean) { if (this.enableExportToExcel != newValue) { this.enableExportToExcel = newValue; this.MarkAsDirty("EnableExportToExcel"); } }
-       
-	 
-    private activatedforDeclarationApprove: boolean;
-    public get ActivatedforDeclarationApprove() { return this.activatedforDeclarationApprove; }
-    public set ActivatedforDeclarationApprove(newValue: boolean) { if (this.activatedforDeclarationApprove != newValue) { this.activatedforDeclarationApprove = newValue; this.MarkAsDirty("ActivatedforDeclarationApprove"); } }
-       
-	 
-    private showMoneyOrder: boolean;
-    public get ShowMoneyOrder() { return this.showMoneyOrder; }
-    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
-       
-	 
-    private cargoTrackingPublicShowEvents: boolean;
-    public get CargoTrackingPublicShowEvents() { return this.cargoTrackingPublicShowEvents; }
-    public set CargoTrackingPublicShowEvents(newValue: boolean) { if (this.cargoTrackingPublicShowEvents != newValue) { this.cargoTrackingPublicShowEvents = newValue; this.MarkAsDirty("CargoTrackingPublicShowEvents"); } }
-       
-	 
-    private cargoTrackingPrivateShowEvents: boolean;
-    public get CargoTrackingPrivateShowEvents() { return this.cargoTrackingPrivateShowEvents; }
-    public set CargoTrackingPrivateShowEvents(newValue: boolean) { if (this.cargoTrackingPrivateShowEvents != newValue) { this.cargoTrackingPrivateShowEvents = newValue; this.MarkAsDirty("CargoTrackingPrivateShowEvents"); } }
-       
-	 
-    private declarationMessage: string;
-    public get DeclarationMessage() { return this.declarationMessage; }
-    public set DeclarationMessage(newValue: string) { if (this.declarationMessage != newValue) { this.declarationMessage = newValue; this.MarkAsDirty("DeclarationMessage"); } }
-       
 	 
     private customerURL: string;
     public get CustomerURL() { return this.customerURL; }
@@ -687,11 +654,6 @@ export class TenantManagementPM {
     public set ChangeHeaderColor(newValue: boolean) { if (this.changeHeaderColor != newValue) { this.changeHeaderColor = newValue; this.MarkAsDirty("ChangeHeaderColor"); } }
        
 	 
-    private headerColor: string;
-    public get HeaderColor() { return this.headerColor; }
-    public set HeaderColor(newValue: string) { if (this.headerColor != newValue) { this.headerColor = newValue; this.MarkAsDirty("HeaderColor"); } }
-       
-	 
     private documentShareAsDefault: boolean;
     public get DocumentShareAsDefault() { return this.documentShareAsDefault; }
     public set DocumentShareAsDefault(newValue: boolean) { if (this.documentShareAsDefault != newValue) { this.documentShareAsDefault = newValue; this.MarkAsDirty("DocumentShareAsDefault"); } }
@@ -717,59 +679,9 @@ export class TenantManagementPM {
     public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
        
 	 
-    private autoArchiveOnPODExport: boolean;
-    public get AutoArchiveOnPODExport() { return this.autoArchiveOnPODExport; }
-    public set AutoArchiveOnPODExport(newValue: boolean) { if (this.autoArchiveOnPODExport != newValue) { this.autoArchiveOnPODExport = newValue; this.MarkAsDirty("AutoArchiveOnPODExport"); } }
-       
-	 
     private packageCodeSearchField: string;
     public get PackageCodeSearchField() { return this.packageCodeSearchField; }
     public set PackageCodeSearchField(newValue: string) { if (this.packageCodeSearchField != newValue) { this.packageCodeSearchField = newValue; this.MarkAsDirty("PackageCodeSearchField"); } }
-       
-	 
-    private mainColor: string;
-    public get MainColor() { return this.mainColor; }
-    public set MainColor(newValue: string) { if (this.mainColor != newValue) { this.mainColor = newValue; this.MarkAsDirty("MainColor"); } }
-       
-	 
-    private secondaryColor: string;
-    public get SecondaryColor() { return this.secondaryColor; }
-    public set SecondaryColor(newValue: string) { if (this.secondaryColor != newValue) { this.secondaryColor = newValue; this.MarkAsDirty("SecondaryColor"); } }
-       
-	 
-    private tertiaryColor: string;
-    public get TertiaryColor() { return this.tertiaryColor; }
-    public set TertiaryColor(newValue: string) { if (this.tertiaryColor != newValue) { this.tertiaryColor = newValue; this.MarkAsDirty("TertiaryColor"); } }
-       
-	 
-    private backgroundId: string;
-    public get BackgroundId() { return this.backgroundId; }
-    public set BackgroundId(newValue: string) { if (this.backgroundId != newValue) { this.backgroundId = newValue; this.MarkAsDirty("BackgroundId"); } }
-       
-	 
-    private mobileBackgroundId: string;
-    public get MobileBackgroundId() { return this.mobileBackgroundId; }
-    public set MobileBackgroundId(newValue: string) { if (this.mobileBackgroundId != newValue) { this.mobileBackgroundId = newValue; this.MarkAsDirty("MobileBackgroundId"); } }
-       
-	 
-    private comapnylogoId: string;
-    public get ComapnylogoId() { return this.comapnylogoId; }
-    public set ComapnylogoId(newValue: string) { if (this.comapnylogoId != newValue) { this.comapnylogoId = newValue; this.MarkAsDirty("ComapnylogoId"); } }
-       
-	 
-    private invertedLogoId: string;
-    public get InvertedLogoId() { return this.invertedLogoId; }
-    public set InvertedLogoId(newValue: string) { if (this.invertedLogoId != newValue) { this.invertedLogoId = newValue; this.MarkAsDirty("InvertedLogoId"); } }
-       
-	 
-    private browserIconId: string;
-    public get BrowserIconId() { return this.browserIconId; }
-    public set BrowserIconId(newValue: string) { if (this.browserIconId != newValue) { this.browserIconId = newValue; this.MarkAsDirty("BrowserIconId"); } }
-       
-	 
-    private shipmentHeaderImageId: string;
-    public get ShipmentHeaderImageId() { return this.shipmentHeaderImageId; }
-    public set ShipmentHeaderImageId(newValue: string) { if (this.shipmentHeaderImageId != newValue) { this.shipmentHeaderImageId = newValue; this.MarkAsDirty("ShipmentHeaderImageId"); } }
        
 	 
     private privateLabelId: string;
@@ -873,231 +785,11 @@ export class TenantManagementPM {
     public set TotalPrice(newValue: number) { if (this.totalPrice != newValue) { this.totalPrice = newValue; this.MarkAsDirty("TotalPrice"); } }
        
 	 
-    private mainColorOpacity: string;
-    public get MainColorOpacity() { return this.mainColorOpacity; }
-    public set MainColorOpacity(newValue: string) { if (this.mainColorOpacity != newValue) { this.mainColorOpacity = newValue; this.MarkAsDirty("MainColorOpacity"); } }
-       
-	 
-    private supportDomain: string;
-    public get SupportDomain() { return this.supportDomain; }
-    public set SupportDomain(newValue: string) { if (this.supportDomain != newValue) { this.supportDomain = newValue; this.MarkAsDirty("SupportDomain"); } }
-       
-	 
-    private secondaryColorOpacity: string;
-    public get SecondaryColorOpacity() { return this.secondaryColorOpacity; }
-    public set SecondaryColorOpacity(newValue: string) { if (this.secondaryColorOpacity != newValue) { this.secondaryColorOpacity = newValue; this.MarkAsDirty("SecondaryColorOpacity"); } }
-       
-	 
-    private tertiaryColorOpacity: string;
-    public get TertiaryColorOpacity() { return this.tertiaryColorOpacity; }
-    public set TertiaryColorOpacity(newValue: string) { if (this.tertiaryColorOpacity != newValue) { this.tertiaryColorOpacity = newValue; this.MarkAsDirty("TertiaryColorOpacity"); } }
-       
-	 
-    private totalNumberOfUsers: number;
-    public get TotalNumberOfUsers() { return this.totalNumberOfUsers; }
-    public set TotalNumberOfUsers(newValue: number) { if (this.totalNumberOfUsers != newValue) { this.totalNumberOfUsers = newValue; this.MarkAsDirty("TotalNumberOfUsers"); } }
-       
-	 
-    private totalFreeUsers: number;
-    public get TotalFreeUsers() { return this.totalFreeUsers; }
-    public set TotalFreeUsers(newValue: number) { if (this.totalFreeUsers != newValue) { this.totalFreeUsers = newValue; this.MarkAsDirty("TotalFreeUsers"); } }
-       
-	 
-    private averagePrice: number;
-    public get AveragePrice() { return this.averagePrice; }
-    public set AveragePrice(newValue: number) { if (this.averagePrice != newValue) { this.averagePrice = newValue; this.MarkAsDirty("AveragePrice"); } }
-       
-	 
-    private totalPaymentamount: number;
-    public get TotalPaymentamount() { return this.totalPaymentamount; }
-    public set TotalPaymentamount(newValue: number) { if (this.totalPaymentamount != newValue) { this.totalPaymentamount = newValue; this.MarkAsDirty("TotalPaymentamount"); } }
-       
-	 
-    private noPaymentForChildTenants: boolean;
-    public get NoPaymentForChildTenants() { return this.noPaymentForChildTenants; }
-    public set NoPaymentForChildTenants(newValue: boolean) { if (this.noPaymentForChildTenants != newValue) { this.noPaymentForChildTenants = newValue; this.MarkAsDirty("NoPaymentForChildTenants"); } }
-       
-	 
-    private lastEbookingSentDate: Date;
-    public get LastEbookingSentDate() { return this.lastEbookingSentDate; }
-    public set LastEbookingSentDate(newValue: Date) { if (this.lastEbookingSentDate != newValue) { this.lastEbookingSentDate = newValue; this.MarkAsDirty("LastEbookingSentDate"); } }
-       
-	 
-    private lastSISentDate: Date;
-    public get LastSISentDate() { return this.lastSISentDate; }
-    public set LastSISentDate(newValue: Date) { if (this.lastSISentDate != newValue) { this.lastSISentDate = newValue; this.MarkAsDirty("LastSISentDate"); } }
-       
-	 
-    private numberOfBookingSentLastWeek: number;
-    public get NumberOfBookingSentLastWeek() { return this.numberOfBookingSentLastWeek; }
-    public set NumberOfBookingSentLastWeek(newValue: number) { if (this.numberOfBookingSentLastWeek != newValue) { this.numberOfBookingSentLastWeek = newValue; this.MarkAsDirty("NumberOfBookingSentLastWeek"); } }
-       
-	 
-    private numberOfSISentLastWeek: number;
-    public get NumberOfSISentLastWeek() { return this.numberOfSISentLastWeek; }
-    public set NumberOfSISentLastWeek(newValue: number) { if (this.numberOfSISentLastWeek != newValue) { this.numberOfSISentLastWeek = newValue; this.MarkAsDirty("NumberOfSISentLastWeek"); } }
-       
-	 
-    private lastContainerStatusReceived: Date;
-    public get LastContainerStatusReceived() { return this.lastContainerStatusReceived; }
-    public set LastContainerStatusReceived(newValue: Date) { if (this.lastContainerStatusReceived != newValue) { this.lastContainerStatusReceived = newValue; this.MarkAsDirty("LastContainerStatusReceived"); } }
-       
-	 
-    private lastTariffUpdateDate: Date;
-    public get LastTariffUpdateDate() { return this.lastTariffUpdateDate; }
-    public set LastTariffUpdateDate(newValue: Date) { if (this.lastTariffUpdateDate != newValue) { this.lastTariffUpdateDate = newValue; this.MarkAsDirty("LastTariffUpdateDate"); } }
-       
-	 
-    private lastTariffUsageDate: Date;
-    public get LastTariffUsageDate() { return this.lastTariffUsageDate; }
-    public set LastTariffUsageDate(newValue: Date) { if (this.lastTariffUsageDate != newValue) { this.lastTariffUsageDate = newValue; this.MarkAsDirty("LastTariffUsageDate"); } }
-       
-	 
-    private lastWeekCreatedTariffs: number;
-    public get LastWeekCreatedTariffs() { return this.lastWeekCreatedTariffs; }
-    public set LastWeekCreatedTariffs(newValue: number) { if (this.lastWeekCreatedTariffs != newValue) { this.lastWeekCreatedTariffs = newValue; this.MarkAsDirty("LastWeekCreatedTariffs"); } }
-       
-	 
-    private lastMonthCreatedTariffs: number;
-    public get LastMonthCreatedTariffs() { return this.lastMonthCreatedTariffs; }
-    public set LastMonthCreatedTariffs(newValue: number) { if (this.lastMonthCreatedTariffs != newValue) { this.lastMonthCreatedTariffs = newValue; this.MarkAsDirty("LastMonthCreatedTariffs"); } }
-       
-	 
-    private permissionBuildMonths: number;
-    public get PermissionBuildMonths() { return this.permissionBuildMonths; }
-    public set PermissionBuildMonths(newValue: number) { if (this.permissionBuildMonths != newValue) { this.permissionBuildMonths = newValue; this.MarkAsDirty("PermissionBuildMonths"); } }
-       
-	 
-    private scheduledTasksLimitPerReport: number;
-    public get ScheduledTasksLimitPerReport() { return this.scheduledTasksLimitPerReport; }
-    public set ScheduledTasksLimitPerReport(newValue: number) { if (this.scheduledTasksLimitPerReport != newValue) { this.scheduledTasksLimitPerReport = newValue; this.MarkAsDirty("ScheduledTasksLimitPerReport"); } }
-       
-	 
-    private isHybrid: boolean;
-    public get IsHybrid() { return this.isHybrid; }
-    public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
- 	 
-    private whatsAppMessagingPhoneNumber: string;
-    public get WhatsAppMessagingPhoneNumber() { return this.whatsAppMessagingPhoneNumber; }
-    public set WhatsAppMessagingPhoneNumber(newValue: string) { if (this.whatsAppMessagingPhoneNumber != newValue) { this.whatsAppMessagingPhoneNumber = newValue; this.MarkAsDirty("WhatsAppMessagingPhoneNumber"); } }
-       
-	 
-    private cargoTokenTimeout: number;
-    public get CargoTokenTimeout() { return this.cargoTokenTimeout; }
-    public set CargoTokenTimeout(newValue: number) { if (this.cargoTokenTimeout != newValue) { this.cargoTokenTimeout = newValue; this.MarkAsDirty("CargoTokenTimeout"); } }
-       
-	 
-    private activatePrivateSite: boolean;
-    public get ActivatePrivateSite() { return this.activatePrivateSite; }
-    public set ActivatePrivateSite(newValue: boolean) { if (this.activatePrivateSite != newValue) { this.activatePrivateSite = newValue; this.MarkAsDirty("ActivatePrivateSite"); } }
-       
-	 
-    private isContainerTrackingPrepaid: boolean;
-    public get IsContainerTrackingPrepaid() { return this.isContainerTrackingPrepaid; }
-    public set IsContainerTrackingPrepaid(newValue: boolean) { if (this.isContainerTrackingPrepaid != newValue) { this.isContainerTrackingPrepaid = newValue; this.MarkAsDirty("IsContainerTrackingPrepaid"); } }
-       
-	 
-    private digitalPortalLastDate: Date;
-    public get DigitalPortalLastDate() { return this.digitalPortalLastDate; }
-    public set DigitalPortalLastDate(newValue: Date) { if (this.digitalPortalLastDate != newValue) { this.digitalPortalLastDate = newValue; this.MarkAsDirty("DigitalPortalLastDate"); } }
-       
-	 
-    private digitalPortalTotalLastWeek: number;
-    public get DigitalPortalTotalLastWeek() { return this.digitalPortalTotalLastWeek; }
-    public set DigitalPortalTotalLastWeek(newValue: number) { if (this.digitalPortalTotalLastWeek != newValue) { this.digitalPortalTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalTotalLastWeek"); } }
-       
-	 
-    private digitalPortalTotalLastMonth: number;
-    public get DigitalPortalTotalLastMonth() { return this.digitalPortalTotalLastMonth; }
-    public set DigitalPortalTotalLastMonth(newValue: number) { if (this.digitalPortalTotalLastMonth != newValue) { this.digitalPortalTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalTotalLastMonth"); } }
-       
-	 
-    private digitalPortalMobileLastDate: Date;
-    public get DigitalPortalMobileLastDate() { return this.digitalPortalMobileLastDate; }
-    public set DigitalPortalMobileLastDate(newValue: Date) { if (this.digitalPortalMobileLastDate != newValue) { this.digitalPortalMobileLastDate = newValue; this.MarkAsDirty("DigitalPortalMobileLastDate"); } }
-       
-	 
-    private digitalPortalMobTotalLastWeek: number;
-    public get DigitalPortalMobTotalLastWeek() { return this.digitalPortalMobTotalLastWeek; }
-    public set DigitalPortalMobTotalLastWeek(newValue: number) { if (this.digitalPortalMobTotalLastWeek != newValue) { this.digitalPortalMobTotalLastWeek = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastWeek"); } }
-       
-	 
-    private digitalPortalMobTotalLastMonth: number;
-    public get DigitalPortalMobTotalLastMonth() { return this.digitalPortalMobTotalLastMonth; }
-    public set DigitalPortalMobTotalLastMonth(newValue: number) { if (this.digitalPortalMobTotalLastMonth != newValue) { this.digitalPortalMobTotalLastMonth = newValue; this.MarkAsDirty("DigitalPortalMobTotalLastMonth"); } }
-       
-	 
-    private dPArchiveShipmentCreateFilter: number;
-    public get DPArchiveShipmentCreateFilter() { return this.dPArchiveShipmentCreateFilter; }
-    public set DPArchiveShipmentCreateFilter(newValue: number) { if (this.dPArchiveShipmentCreateFilter != newValue) { this.dPArchiveShipmentCreateFilter = newValue; this.MarkAsDirty("DPArchiveShipmentCreateFilter"); } }
-       
-	 
-    private dPArchiveShipmentArrivalFilter: number;
-    public get DPArchiveShipmentArrivalFilter() { return this.dPArchiveShipmentArrivalFilter; }
-    public set DPArchiveShipmentArrivalFilter(newValue: number) { if (this.dPArchiveShipmentArrivalFilter != newValue) { this.dPArchiveShipmentArrivalFilter = newValue; this.MarkAsDirty("DPArchiveShipmentArrivalFilter"); } }
-       
-	 
-    private dPArchiveShipmentDepartFilter: number;
-    public get DPArchiveShipmentDepartFilter() { return this.dPArchiveShipmentDepartFilter; }
-    public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
-       
-	 
-    private logoURL: string;
-    public get LogoURL() { return this.logoURL; }
-    public set LogoURL(newValue: string) { if (this.logoURL != newValue) { this.logoURL = newValue; this.MarkAsDirty("LogoURL"); } }
-       
-	 
-    private serviceAgreementURL: string;
-    public get ServiceAgreementURL() { return this.serviceAgreementURL; }
-    public set ServiceAgreementURL(newValue: string) { if (this.serviceAgreementURL != newValue) { this.serviceAgreementURL = newValue; this.MarkAsDirty("ServiceAgreementURL"); } }
-       
-	 
-    private ecommerceSupportEmail: string;
-    public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
-    public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
-        
-	 
-    private ecommerceTenant: boolean;
-    public get EcommerceTenant() { return this.ecommerceTenant; }
-    public set EcommerceTenant(newValue: boolean) { if (this.ecommerceTenant != newValue) { this.ecommerceTenant = newValue; this.MarkAsDirty("EcommerceTenant"); } }
-       
-	 
-    private exportLoginCredintial: string;
-    public get ExportLoginCredintial() { return this.exportLoginCredintial; }
-    public set ExportLoginCredintial(newValue: string) { if (this.exportLoginCredintial != newValue) { this.exportLoginCredintial = newValue; this.MarkAsDirty("ExportLoginCredintial"); } }
-       
-	 
-    private exportTenant: number;
-    public get ExportTenant() { return this.exportTenant; }
-    public set ExportTenant(newValue: number) { if (this.exportTenant != newValue) { this.exportTenant = newValue; this.MarkAsDirty("ExportTenant"); } }
-       
-    private searchAbsoluteValuePublic: boolean;
-    public get SearchAbsoluteValuePublic() { return this.searchAbsoluteValuePublic; }
-    public set SearchAbsoluteValuePublic(newValue: boolean) { if (this.searchAbsoluteValuePublic != newValue) { this.searchAbsoluteValuePublic = newValue; this.MarkAsDirty("SearchAbsoluteValuePublic"); } }
-       
-  	 
-    private amitalApiAddress: string;
-    public get AmitalApiAddress() { return this.amitalApiAddress; }
-    public set AmitalApiAddress(newValue: string) { if (this.amitalApiAddress != newValue) { this.amitalApiAddress = newValue; this.MarkAsDirty("AmitalApiAddress"); } }
-       
-	 
-    private amitalApiToken: string;
-    public get AmitalApiToken() { return this.amitalApiToken; }
-    public set AmitalApiToken(newValue: string) { if (this.amitalApiToken != newValue) { this.amitalApiToken = newValue; this.MarkAsDirty("AmitalApiToken"); } }
-       
-
-    private minutsTimeOutSession: number;
-    public get MinutsTimeOutSession() { return this.minutsTimeOutSession; }
-    public set MinutsTimeOutSession(newValue: number) { if (this.minutsTimeOutSession != newValue) { this.minutsTimeOutSession = newValue; this.MarkAsDirty("MinutsTimeOutSession"); } }
-     
 
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -1105,7 +797,6 @@ export class TenantManagementPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TenantManagement");
            
         }
-	 }
     }
     private MyClone: TenantManagementPM;
 
@@ -1117,4 +808,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -35,16 +35,16 @@ describe('NewShipper', () => {
         ShipperScenario.CreateNewShipper();
     });
 
-  it('SearchShipper', function () {
+    it('SearchShipper', function () {
 
 
         ShipperScenario.SearchShipper();
     });
 
-   /* it('EditOnShipper', function () {
+    it('EditOnShipper', function () {
         ShipperScenario.EditOnShipper();
 
-    });*/
+    });
 
 
 });

@@ -10,7 +10,7 @@ import {CustomerCustomsAgentByProductPM} from '../../../../../Common/EntityPMs/C
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerCustomsAgentByProductSplitComponent.html',
 })
 
@@ -20,7 +20,6 @@ export class CustomerCustomsAgentByProductSplitComponent extends BaseComponent {
     public ProductTypes: ProductTypeList[] = [];
     public ItemsSource: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsDisabled: boolean = false;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -29,7 +28,6 @@ export class CustomerCustomsAgentByProductSplitComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ProductTypes = args['ProductTypes'];
-        this.IsDisabled = args['IsDisabled'] ?? false;
         this.Clone();
 
         this.ProductTypes.forEach(item => {

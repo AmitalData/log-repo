@@ -44,7 +44,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
 
                     case "DateTime":
                     case "Date":
-                    case "DateTime2":
                         {
 
                             DateTime date = Convert.ToDateTime(value);
@@ -120,54 +119,6 @@ namespace Simplog.Server.Infrastructure.DataContracts
             return null;
 
         }
-
-        public object GetFieldValue(string dataType, object value)
-        {
-            if (string.IsNullOrEmpty(dataType) || value == null || String.IsNullOrEmpty(value.ToString())) return null;
-            switch (dataType.ToLower())
-            {
-                case "text":
-                case "ntext":
-                case "lookup":
-                case "picklist":{  return value.ToString(); }
-                case "datetime":
-                case "datetime2":
-                case "date": { return Convert.ToDateTime(value); }
-                case "decimal":
-                case "unsdecimal":
-                    {
-                        decimal decimalValue = 0;
-                        decimal.TryParse(value.ToString(), out decimalValue);
-                        return decimalValue;
-                    }
-                case "integer":
-                case "unsinteger":
-                    {
-                        int intValue = 0;
-                        int.TryParse(value.ToString(), out intValue);
-                        return intValue;
-                    }
-               
-                case "double":
-                case "sigdouble":
-                    {
-                        double doubleValue = 0;
-                        double.TryParse(value.ToString(), out doubleValue);
-                        return doubleValue;
-                    }
-                case "boolean":
-                    {
-                        bool booleanValue = false;
-                        bool.TryParse(value.ToString(), out booleanValue);
-                        return booleanValue;
-                    }
-                default: { return (value != null ? value.ToString() : null); }
-            }
-        }
-
-
-
-
 
         public string ConvertToString(DateTime date)
         {

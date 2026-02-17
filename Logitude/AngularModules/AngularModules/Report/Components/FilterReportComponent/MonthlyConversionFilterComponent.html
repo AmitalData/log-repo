@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
@@ -17,72 +17,67 @@
                     <td>
                         <table>
                             <tr>
-                                <td>
-                                    <table>
-                                      <tr>
-                                        <td style="width:100px;">Create Date:</td>
-                                        <td style="width:50px">From:</td>
-                                        <td style="width:120px">
-                                          <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
-                                        </td>
+                                <td style="width:100px">
+                                    <div class="RadioButton" style="width:100px">
+                                        <input type="radio" [attr.id]="IsCreateDateId" [attr.name]="ShipmentTypeRadio" (click)="IsCreateDateClicked()" [checked]="IsCreateDate == true" style="width:15px" />
+                                        <label [attr.for]="IsCreateDateId" style="font-size: 12px">
+                                            Create Date
+                                        </label>
+                                    </div>
+                                </td>
 
-                                        <td style="width:15px"></td>
-                                        <td style="width:90px">To:</td>
-                                        <td style="width:120px">
-                                          <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
-                                        </td>
+                                <td style="width:5px;"></td>
+                                <td style="width:80px">
+                                    <div class="RadioButton" style="width:80px">
+                                        <input type="radio" [attr.id]="IsStageDateId" [attr.name]="ShipmentTypeRadio" (click)="IsStageDateClicked() " [checked]="IsStageDate==true" style="width:15px" />
+                                        <label [attr.for]="IsStageDateId" style="font-size: 12px">
+                                            Stage Date
+                                        </label>
+                                    </div>
+                                </td>
 
-                                        <td style="width:15px"></td>
-                                        <td style="width:120px;">Opportunities Type:</td>
-                                        <td style="width:200px;">
-                                          <LogLov [ShowInActive]="true" [ObjectFieldName]="'OpportunityTypeId'"
-                                                  [ObjectTableName]="'Opportunity'"
-                                                  [DataContext]="DataContext"
-                                                  [LookUpTableName]="'OpportunityType'"
-                                                  [HideAddLink]="true"
-                                                  [HideAdd]="true"
-                                                  [HideEdit]="true"
-                                                  [HideMaintenanceIcon]="true">
-                                          </LogLov>
-                                        </td>
+                                <td style="width:15px"></td>
+                                <td style="width:80px">From Date:</td>
+                                <td style="width:130px">
+                                    <LogDatePicker style="width:120px" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
 
-                                        <td style="width:15px"></td>
-                                        <td style="width:90px">Business Unit: </td>
-                                        <td style="width:200px">
-                                          <LogLov [ShowInActive]="true" [ObjectFieldName]="'BusinessUnitId'"
-                                                  [ObjectTableName]="'Opportunity'"
-                                                  [DataContext]="DataContext"
-                                                  [LookUpTableName]="'BusinessUnit'"
-                                                  [HideMaintenanceIcon]="true">
-                                          </LogLov>
-                                        </td>
+                                <td style="width:15px"></td>
+                                <td style="width:80px">To Date:</td>
+                                <td style="width:120px">
+                                    <LogDatePicker [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
 
-                                        <td style="width:15px"></td>
-                                        <td style="width:100px;">
-                                          <label>Stage Count:</label>
-                                        </td>
+                                <td style="width:15px"></td>
+                                <td style="width:120px;">Opportunities type:</td>
+                                <td style="width:200px;">
+                                    <LogLov [ObjectFieldName]="'OpportunityTypeId'"
+                                            [ObjectTableName]="'Opportunity'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'OpportunityType'"
+                                            [HideAddLink]="true"
+                                            [HideAdd]="true"
+                                            [HideEdit]="true"
+                                            [HideMaintenanceIcon]="true">
+                                    </LogLov>
+                                </td>
 
-                                        <td style="width:80px">
-                                          <RadioButton [Name]="'StageCountRadioFilter'" [IsChecked]="StageCountRadio == 'Actual'" (Checked)="SetStageCountRadio('Actual')" [Text]="'Actual Data'"></RadioButton>
-                                        </td>
+                                <td style="width:15px"></td>
+                                <td style="width:100px">Business Unit: </td>
+                                <td style="width:200px">
+                                    <LogLov [ObjectFieldName]="'BusinessUnitId'"
+                                            [ObjectTableName]="'Opportunity'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'BusinessUnit'"
+                                            [HideMaintenanceIcon]="true">
+                                    </LogLov>
+                                </td>
 
-                                        <td style="width:5px;">
-                                          <div></div>
-                                        </td>
+                                <td style="width:90px;">
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                </td>
 
-                                        <td style="width:70px">
-                                          <RadioButton [Name]="'StageCountRadioFilter'" [IsChecked]="StageCountRadio == 'Adjusted'" (Checked)="SetStageCountRadio('Adjusted')" [Text]="'Adjusted'"></RadioButton>
-                                        </td>
-
-                                        <td style="width:15px"></td>
-                                        <td style="width:90px;">
-                                          <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">{{RunReportTitle}}</button>
-                                        </td>
-
-                                        <td></td>
-                                      </tr>
-                                    </table>
-                                </td>                               
+                                <td></td>
                             </tr>
                         </table>
                     </td>
@@ -92,68 +87,48 @@
                     <td>
                         <table>
                             <tr>
-                                <td>
+                                <td style="width:185px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:225px;">
+                                    <table *ngIf="IsCRMTenant">
+                                        <tr>
+                                            <td style="width:15px"></td>
+                                            <td style="width:80px;">Reseller:</td>
+                                            <td style="width:130px;">
+                                                <LogLov [ObjectFieldName]="'ResellerId'"
+                                                        [DataContext]="DataContext"
+                                                        [ObjectTableName]="'Opportunity'"
+                                                        [LookUpTableName]="'Card'"
+                                                        [HideAddLink]="true"
+                                                        [HideAdd]="true"
+                                                        [HideEdit]="true"
+                                                        [HideMaintenanceIcon]="true"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </td>                                           
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:80px">Lead Sources: </td>
+                                <td style="width:120px">
+                                    <ComboBoxWithInCheckBox [SelectionType]="'Lead Sources'" [SelectedItem]="SelectedProdustsItem" (EditedItemSource)="EditedItemSource($event)" [ItemsSource]="FilterdAdditionalService" (SelectedItemChanged)="SelectedItemChanged($event)" [Binding]="'lastTitle'"></ComboBoxWithInCheckBox>
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:120px">Country: </td>
+                                <td style="width:200px">
                                     <table>
                                         <tr>
-                                            <td style="width:270px;">
-                                                <table *ngIf="IsCRMTenant">
-                                                    <tr>
-                                                        <td style="width:100px;">Reseller:</td>
-                                                        <td style="width:170px;">
-                                                            <LogLov [ShowInActive]="true" [ObjectFieldName]="'ResellerId'"
-                                                                    [DataContext]="DataContext"
-                                                                    [ObjectTableName]="'Opportunity'"
-                                                                    [LookUpTableName]="'Card'"
-                                                                    [HideAddLink]="true"
-                                                                    [HideAdd]="true"
-                                                                    [HideEdit]="true"
-                                                                    [HideMaintenanceIcon]="true"
-                                                                    [HideColumns]="true">
-                                                            </LogLov>
-                                                        </td>
-                                                        <td><div></div></td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-
-                                            <td style="width:15px"></td>
-                                            <td style="width:90px">Lead Sources: </td>
-                                            <td style="width:120px">
-                                                <ComboBoxWithInCheckBox [SelectionType]="'Lead Sources'" [SelectedItem]="SelectedItem" (EditedItemSource)="EditedItemSource($event)" [ItemsSource]="FilterdAdditionalService" (SelectedItemChanged)="SelectedItemChanged($event)" [Binding]="'lastTitle'" ></ComboBoxWithInCheckBox>
-                                            </td>
-
-                                            <td style="width:15px"></td>
-                                            <td style="width:120px">Country: </td>
-                                            <td style="width:200px">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:166px;">
-                                                            <LogLov [ShowInActive]="true" [ObjectFieldName]="'CountryId'"
-                                                                    [ObjectTableName]="'Country'"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Country'"
-                                                                    [HideColumns]="true"
-                                                                    [HideAddLink]="true"
-                                                                    [HideAdd]="true"
-                                                                    [HideEdit]="true"
-                                                                    [HideMaintenanceIcon]="true">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-
-                                            <td style="width:15px"></td>
-                                            <td style="width:90px;">Salesman: </td>
-                                            <td style="width:200px;">
-                                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'OwnerId'"
-                                                        [ObjectTableName]="'Opportunity'"
+                                            <td style="width:166px;">
+                                                <LogLov [ObjectFieldName]="'CountryId'"
+                                                        [ObjectTableName]="'Country'"
                                                         [DataContext]="DataContext"
-                                                        [LookUpTableName]="'User'"
+                                                        [LookUpTableName]="'Country'"
+                                                        [HideColumns]="true"
                                                         [HideAddLink]="true"
                                                         [HideAdd]="true"
                                                         [HideEdit]="true"
@@ -161,20 +136,30 @@
                                                 </LogLov>
                                             </td>
 
-
-                                            <td style="width:15px"></td>
-                                            <td style="width:150px">Include Cancelled Opportunities</td>
-                                            <td style="width:50px;"><div></div></td>
-                                            <td style="width:22px">
-                                                <LogCheckBox [ObjectFieldName]="'IncludeCancelled'" [DataContext]="DataContext"></LogCheckBox>
-                                            </td>
-                                                                       
                                             <td>
                                                 <div></div>
                                             </td>
                                         </tr>
                                     </table>
-                                </td>                                
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:100px;">Salesman: </td>
+                                <td style="width:200px;">
+                                    <LogLov [ObjectFieldName]="'OwnerId'"
+                                            [ObjectTableName]="'Opportunity'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'User'"
+                                            [HideAddLink]="true"
+                                            [HideAdd]="true"
+                                            [HideEdit]="true"
+                                            [HideMaintenanceIcon]="true">
+                                    </LogLov>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
                         </table>
                     </td>

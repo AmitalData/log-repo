@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -38,15 +38,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             .IsUnicode(false);
 
             // Table & Column Mappings
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.ToTable("SharedLogsContactLastLogins");
-            }
-            else
-            {
-                this.ToTable("SharedLogisticsContactLastLogins");
-            }
+            this.ToTable("SharedLogisticsContactLastLogins");
             this.Property(t => t.CardId).HasColumnName("CardId");
             this.Property(t => t.LoginDateTime).HasColumnName("LoginDateTime");
             this.Property(t => t.Tenant).HasColumnName("Tenant");

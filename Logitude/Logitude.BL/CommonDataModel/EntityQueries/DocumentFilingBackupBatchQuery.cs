@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentFilingBackupBatchRepository repository;
 
-
+        public DocumentFilingBackupBatchQuery()
+        {
+            repository = new DocumentFilingBackupBatchRepository();
+        }
 
         public DocumentFilingBackupBatchQuery(int tenant)
         {

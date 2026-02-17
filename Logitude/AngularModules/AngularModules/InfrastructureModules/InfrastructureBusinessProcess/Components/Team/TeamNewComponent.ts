@@ -11,7 +11,7 @@ import {TeamPMInitService} from '../../../../Infrastructure/EntityPMInitServices
 
 @Component({
     selector: 'TeamNewComponent',
-    
+    moduleId: module.id,
     templateUrl: './TeamNewComponent.html',
 })
 

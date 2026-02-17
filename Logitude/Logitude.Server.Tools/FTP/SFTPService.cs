@@ -1,8 +1,6 @@
-﻿using Logitude.Server.Tools.Utils;
-using nsoftware.IPWorksSSH;
+﻿using nsoftware.IPWorksSSH;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,22 +10,16 @@ using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.FTP
 {
-    public class SFTPService:IDisposable    
+    public class SFTPService
     {
         private nsoftware.IPWorksSSH.Sftp sftp;
         private int _currIdxFile;
         private string _start_path = "";
         private string _pattern = "";
         private List<FileParam> _files;
-        private readonly SFTPDeleteTempFilesService _SFTPDeleteTempFiles;
-
-        ~SFTPService()
+       
+        public SFTPService()
         {
-            Dispose();
-        }
-        public SFTPService(SFTPDeleteTempFilesService sFTPDeleteTempFilesService=null)
-        {
-            _SFTPDeleteTempFiles = sFTPDeleteTempFilesService;
             Initialize();
         }
         private void Initialize()
@@ -37,7 +29,6 @@ namespace Logitude.Server.Tools.FTP
         }
         public void Logon(string p_host, string p_user, string p_password, string p_port, string p_directory, out string p_status, out string p_message)
         {
-       
             MyStart();
             if (string.IsNullOrEmpty(p_port))
                 p_port = "22";
@@ -76,19 +67,19 @@ namespace Logitude.Server.Tools.FTP
                 sftp.SSHPassword = p_password;
                 sftp.RemotePath = p_directory;
                 sftp.SSHAuthMode = SftpSSHAuthModes.amPublicKey;
-                sftp.RuntimeLicense = "31484E4641414E58524642534B433132323200000000000000000000000000000000000000000000555934314D424A35000031504B364D4B4B4E434A475A0000";
-				//string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-				//DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
-				//string solutionDirectory = solutionDir.FullName;
-				//string cerfFilePath = solutionDirectory + @"\Logitude.Server.Tools\FTP\private.pem";
+                sftp.RuntimeLicense = "31484E42414431535542323031393130323552413153554241544A353234353800000000000000003135554732304250000058415852315432434D5233410000";
+                //string projectPath = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+                //DirectoryInfo solutionDir = System.IO.Directory.GetParent(projectPath);
+                //string solutionDirectory = solutionDir.FullName;
+                //string cerfFilePath = solutionDirectory + @"\Logitude.Server.Tools\FTP\private.pem";
 
-				// string cerfFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"FTP\private.pem");
-				//sftp.SSHCert = new Certificate(CertStoreTypes.cstPEMKeyFile, cerfFilePath, "test", "*");//@"C:\temp\private.pem"
+               // string cerfFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"FTP\private.pem");
+                //sftp.SSHCert = new Certificate(CertStoreTypes.cstPEMKeyFile, cerfFilePath, "test", "*");//@"C:\temp\private.pem"
+                
 
 
-
-				//sftp.Connected = true;
-				sftp.SSHLogon(p_host, v_sshport);
+                //sftp.Connected = true;
+                sftp.SSHLogon(p_host, v_sshport);
                 //sftp.SSHLogoff();
                 p_message = "Successfully connected to Host:'" + p_host + "' ,User:'" + p_user;
                 p_message += "', directory:'" + sftp.RemotePath + "'";
@@ -244,7 +235,7 @@ namespace Logitude.Server.Tools.FTP
             }
         }
 
-        public void DeleteFile(string p_filename, out string p_status, out string p_message, bool toDir = true)
+        public void DeleteFile(string p_filename, out string p_status, out string p_message)
         {
             MyStart();
             p_status = "";
@@ -264,7 +255,7 @@ namespace Logitude.Server.Tools.FTP
                 }
                 sftp.RemoteFile = p_filename;
                 //if (!sftp.FileExists)
-                if (toDir && !IsRemoteFileExist(p_filename))
+                if (!IsRemoteFileExist(p_filename))
                 {
                     p_message = "File '" + p_filename + "' not exist";
                     if (sftp.RemotePath != "") p_message += " in directory '" + sftp.RemotePath + "'";
@@ -293,7 +284,7 @@ namespace Logitude.Server.Tools.FTP
 
             p_message = FTPLogBuilder.BuildLogLine(p_message);
         }
-   
+
         private bool IsRemoteFileExist(string p_filename)
         {
 
@@ -330,73 +321,13 @@ namespace Logitude.Server.Tools.FTP
                 }
             }
         }
-		public void IsFileExist(string p_filename, out string p_status, out string p_message)
-		{
-			p_status = "";
-			p_message = "";
-
-			try
-			{
-				sftp.ListDirectory();
-
-				DirEntryList _dirList = sftp.DirList;
-				foreach (DirEntry dirEntry in _dirList)
-				{
-					if (!string.IsNullOrEmpty(dirEntry.FileName))
-					{
-						if (string.Equals(dirEntry.FileName, p_filename, StringComparison.OrdinalIgnoreCase))
-						{
-							p_status = "IN_PROGRESS";
-							p_message = "File Exists";
-							break;
-						}
-					}
-				}
-                if (string.IsNullOrEmpty(p_status))
-                {
-                    p_status = "SENT";
-                    p_message = "File Not Exists";
-				}
-			}
-			catch (Exception ex)
-			{
-				p_status = "FAILD";
-				p_message = "IsFileExist Exeception" + ex.Message.ToString();
-			}
-			
-		}
-
-		private void CreateFoldersIfNotExist(nsoftware.IPWorksSSH.Sftp sftp)
-        {
-            if (string.IsNullOrEmpty(sftp.RemotePath)) return;
-            var folders = sftp.RemotePath.Split('/');
-            string folderPath = string.Empty;
-            int folderscount = 0;
-            while (folderscount < folders.Length)
-            {
-                folderPath = CreateFolderIfNotExist(folders[folderscount], folderPath, sftp);
-                folderscount += 1;
-            }
-        }
-
-        private string CreateFolderIfNotExist(string folderName, string folderPath, nsoftware.IPWorksSSH.Sftp sftp)
-        {
-            if (string.IsNullOrEmpty(folderName)) return folderPath;
-
-            try
-            {
-                sftp.MakeDirectory((folderPath + "/" + folderName));
-            }
-            catch (Exception exception) { }
-
-            return (folderPath + "/" + folderName);
-        }
 
         public void Upload(string p_filename, byte[] filedata, bool deleteIfExist, bool uploadAsTemp, out string p_status, out string p_message)
         {
             MyStart();
             p_status = "";
             p_message = "";
+
             //if (!string.IsNullOrEmpty(p_folderName) && sftp.RemotePath == @"/")
             //    sftp.RemotePath = p_folderName;
             string v_filename = Path.GetFileName(p_filename);
@@ -417,9 +348,6 @@ namespace Logitude.Server.Tools.FTP
                     p_status = "-1";
                     return;
                 }
-
-                CreateFoldersIfNotExist(sftp);
-
 
                 if (deleteIfExist)
                     sftp.Overwrite = true;
@@ -480,47 +408,13 @@ namespace Logitude.Server.Tools.FTP
             {
                 if (File.Exists(v_temp_filename_full))
                     File.Delete(v_temp_filename_full);
-
-                try
-                {
-                    if (_SFTPDeleteTempFiles?.DeleteIfNeeded(uploadAsTemp, (Action)(this.DeleteTempFiles)) == true)
-                    {
-                        p_message += Environment.NewLine + $" SFTPDeleteTempFilesService - delete temp file  ";
-                    }
-                    
-                }
-                catch (Exception e)
-                {
-
-                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "SFTP");
-                }
-
                 MyFinally();
             }
 
             
         }
 
-        private void DeleteTempFiles()
-        {
 
-            string p_status_1;
-            string p_message_1;
-
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DirList('tmp_ *.tmp') ..");
-            var directoryFiles = DirList("tmp_*.tmp", true, false, out p_status_1, out p_message_1).ToList();
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Temp file {directoryFiles.Count()}");
-
-
-            foreach (var fileName in directoryFiles)
-            {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"delete Temp file {fileName}");
-                DeleteFile(fileName, out p_status_1, out p_message_1);
-            }
-
-        }
-
-        
 
         public void Rename(string p_curr_name, string p_new_name, string p_del_new_name, ref string p_more, out string p_status, out string p_message)
         {
@@ -700,9 +594,9 @@ namespace Logitude.Server.Tools.FTP
 
             return filesList;
         }
-      
 
-        public byte[] DownloadFile(string p_filename, out string p_status, out string p_message,bool toDir=true)
+
+        public byte[] DownloadFile(string p_filename, out string p_status, out string p_message)
         {
             MemoryStream downloadStream = new MemoryStream();
             //p_continue = false;
@@ -718,7 +612,7 @@ namespace Logitude.Server.Tools.FTP
                 //sftp.LocalFile = p_localpath + @"\" + p_filename;
                 sftp.Overwrite = true;
                 //if (!sftp.FileExists)
-                if (toDir &&  !IsRemoteFileExist(p_filename))
+                if (!IsRemoteFileExist(p_filename))
                 {
                     // p_continue = true;
                     p_status = "-2";
@@ -846,111 +740,11 @@ namespace Logitude.Server.Tools.FTP
                 Directory.SetCurrentDirectory(_start_path);
 
         }
+        # endregion
 
-        public void Dispose()
-        {
-            try
-            {
-                //throw new NotImplementedException();
-                if (sftp != null)
-                {
-                    if (sftp.Connected)
-                    {
-                        sftp.SSHLogoff();
-                    }
-                    sftp.Dispose();
-                    sftp = null;
-                }
-            }
-            catch (Exception ex)
-            {
-               
-            }
-        }
-		#endregion
-		public void LogonWithKey(string p_host, string p_user, string p_privateKeyPath, string p_port, string p_directory,out string p_status, out string p_message, string p_password = null)
-		{
-			MyStart();
-			if (string.IsNullOrEmpty(p_port))
-				p_port = "22";
-			p_status = "";
-			p_message = "";
-			int v_port = 80;
-			int v_sshport = 0;
-			int.TryParse(p_port, out v_sshport);
-			Initialize();
-			try
-			{
-				if (string.IsNullOrEmpty(p_port)) p_port = "80";
-				int.TryParse(p_port, out v_port);
-				if (string.IsNullOrWhiteSpace(p_host))
-				{
-					p_message = "Parameter 'Server Host' is missing";
-					p_status = "-1";
-					return;
-				}
-				if (string.IsNullOrWhiteSpace(p_user))
-				{
-					p_message = "Parameter 'User Name' is missing";
-					p_status = "-1";
-					return;
-				}
-				if (string.IsNullOrWhiteSpace(p_privateKeyPath))
-				{
-					p_message = "Parameter 'Private Key Path' is missing";
-					p_status = "-1";
-					return;
-				}
-				sftp = new nsoftware.IPWorksSSH.Sftp()
-				{
-					Firewall = { Port = v_port },
-					SSHHost = p_host,
-					SSHUser = p_user,
-					RemotePath = p_directory,
-					RuntimeLicense = "31484E4641414E58524642534B433132323200000000000000000000000000000000000000000000555934314D424A35000031504B364D4B4B4E434A475A0000"
-				};
 
-				if (!string.IsNullOrWhiteSpace(p_password) && !string.IsNullOrWhiteSpace(p_privateKeyPath))
-				{
-					sftp.SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amKeyboardInteractive; // או amMultiFactor אם עובד אצלך
-					sftp.SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*");
-					sftp.SSHPassword = p_password;
-				}
-				else if (!string.IsNullOrWhiteSpace(p_password))
-				{
-					sftp.SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPassword;
-					sftp.SSHPassword = p_password;
-				}
-				else
-				{
-					sftp.SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPublicKey;
-					sftp.SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*");
-				}
 
-				sftp.OnSSHServerAuthentication += new nsoftware.IPWorksSSH.Sftp.OnSSHServerAuthenticationHandler(sftp_OnSSHServerAuthentication);
-				sftp.OnSSHStatus += new nsoftware.IPWorksSSH.Sftp.OnSSHStatusHandler(sftp_OnSSHStatus);
-
-				sftp.SSHLogon(p_host, v_sshport);
-				p_message = "Successfully connected to Host:'" + p_host + "' ,User:'" + p_user;
-				p_message += "', directory:'" + sftp.RemotePath + "'";
-
-				p_message = FTPLogBuilder.BuildLogLine(p_message);
-				p_status = "0";
-			}
-			catch (Exception ex)
-			{
-				p_status = "-1";
-				p_message = $"Failed to perform 'Logon' to Host: '{p_host}', User: '{p_user}', Directory: '{sftp.RemotePath}'";
-				p_message += Environment.NewLine + ex.Message;
-				if (ex.InnerException != null)
-					p_message += Environment.NewLine + p_message;
-			}
-			finally
-			{
-				MyFinally();
-			}
-		}
-	}
+    }
     public class FileParam
     {
         public string Filename;

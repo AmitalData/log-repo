@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityInputArgs, InviteeArgs} from '../../../../CRM/Args'
@@ -33,11 +33,11 @@ import {ObjectFieldPM} from '../../../../Infrastructure/EntityPMs/ObjectFieldPM'
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ActivityInputTemplate.html',
 })
 
-export class ActivityInputTemplate extends BaseComponent implements AfterViewInit {
+export class ActivityInputTemplate extends BaseComponent implements OnInit {
     public entityPM: ActivityPM;
     public ObjectTableName = "Activity";
     public DataContext: ActivityInputTemplate = this;
@@ -45,17 +45,12 @@ export class ActivityInputTemplate extends BaseComponent implements AfterViewIni
     public Durations: ActivtyDuration[];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor() {
         super();
         this.entityPM = new ActivityPM();
         //ActivityPMInitService.InitValues(this.entityPM, true);
         this.CallTypesList = [];
-    }
-
-    ngAfterViewInit() {
-        this.FillCallTypeList();
-        this.LoadChildComponent();
     }
 
     public TypeCode = "";
@@ -266,7 +261,10 @@ export class ActivityInputTemplate extends BaseComponent implements AfterViewIni
     }
 
     // Additional Feilds
-    
+    ngOnInit() {
+        this.RunComponent();
+        this.FillCallTypeList();
+    }
     FillCallTypeList() {
         var myService: CallTypeListService = new CallTypeListService();
         myService.getAllFromCache().subscribe((resp: any) => {
@@ -280,26 +278,44 @@ export class ActivityInputTemplate extends BaseComponent implements AfterViewIni
             }
         });
     }
-    
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+    private Retries: number = 0;
+    private timerToken: any;
     private GeneratedComponent: any;
 
-    LoadChildComponent() {
+    private RunComponentTimer() {
+        this.Retries++;
 
-        if (this.viewContainerRef) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-                .then(cmpRef => {
-                    this.GeneratedComponent = cmpRef.instance;
-                    cmpRef.instance.LoadCompleted.subscribe(s => {
-                        this.SetUIProperties_GeneratedComponent();
-                    });
-                    if (this.TypeCode == "AP") {
-                        cmpRef.instance.LabelWidth = 120;
-                    } else {
-                        cmpRef.instance.LabelWidth = 110;
-                    }
-                    cmpRef.instance.Run(this.entityPM, this.ObjectTableName, "Activity.AdditionalFields");
-                });
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
         }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+    LoadChildComponent() {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                this.GeneratedComponent = cmpRef.instance;
+                cmpRef.instance.LoadCompleted.subscribe(s => {
+                    this.SetUIProperties_GeneratedComponent();
+                });
+                if (this.TypeCode == "AP") {
+                    cmpRef.instance.LabelWidth = 120;
+                } else {
+                    cmpRef.instance.LabelWidth = 110;
+                }
+                cmpRef.instance.Run(this.entityPM, this.ObjectTableName, "Activity.AdditionalFields");
+            });
     }   
     SetUIProperties_GeneratedComponent() {
         if (this.GeneratedComponent) {
@@ -563,7 +579,7 @@ export class ActivityInputTemplate extends BaseComponent implements AfterViewIni
             }
             else {
                 var listService: UserListService = new UserListService();
-                listService.getSingleFromCache(value).subscribe((result:any) => {
+                listService.getSingleFromCache(value).subscribe(result => {
                     var list: UserList = result.Result;
                     if (list != null)
                         this.entityPM.BusinessUnitId = list.BusinessUnitId;
@@ -639,7 +655,7 @@ export class ActivityInputTemplate extends BaseComponent implements AfterViewIni
         var myContactId: string = null;
         if (!AppTool.IsNullOrEmpty(value)) {
             var cardService: CardListService = new CardListService();
-            cardService.getSingle(value).subscribe((result:any) => {
+            cardService.getSingle(value).subscribe(result => {
                 var card: CardList = result.Result;
                 if (card != null) {
                     this.CustomerName = card.EnglishName;
@@ -1154,7 +1170,7 @@ export class ActivityInputTemplate extends BaseComponent implements AfterViewIni
         });
     }
     AddCustomerClicked() {
-        this._entityResourceService.getEntityResourceByTableName("Customer").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Customer").subscribe(response => {
             var str = TextCodeTranslator.Translate("General.O.NewEntity");
             str = "New Potential Customer";
             var logWindow = new LogitudeWindow();

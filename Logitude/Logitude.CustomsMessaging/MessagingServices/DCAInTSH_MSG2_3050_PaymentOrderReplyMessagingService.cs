@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.AgentPaymentRequestServiceReference;
-using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
+using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {

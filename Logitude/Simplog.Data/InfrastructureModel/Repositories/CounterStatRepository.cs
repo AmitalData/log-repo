@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
@@ -91,25 +91,5 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public List<CounterStat> GetCounterStatsByCounterIdAndPrefix(string counterId, string prefix, int tenant)
-        {
-            if (!String.IsNullOrEmpty(prefix))
-            {
-                return context.CounterStats.Where(d => d.Tenant == tenant && d.CounterId == counterId && d.Prefix == prefix).ToList();
-            }
-            else
-            {
-                return context.CounterStats.Where(d => d.Tenant == tenant && d.CounterId == counterId).ToList();
-            }
-        }
-
-
-        public CounterStat GetSingleCounter(int id, int tenant)
-        {
-            return context.CounterStats.Where(d => d.Tenant == tenant && d.Id == id).FirstOrDefault();
-        }
-
-        
     }
 }

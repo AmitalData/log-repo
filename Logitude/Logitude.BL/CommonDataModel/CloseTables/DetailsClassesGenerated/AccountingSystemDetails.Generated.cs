@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs; 
 using Simplog.Data.CommonDataModel;
 
@@ -115,6 +115,30 @@ namespace Logitude.BL.CommonDataModel
                 AllowARPaymentsTransfer = false, 
                 CanTransferToDropbox = false, 
                 Name = "None", 
+			});
+			 
+            all.Add(new AccountingSystemDetails()
+            {    
+                Code = "QB", 
+                SearchFields = "QB,Quick Books", 
+                IsExternalCodesFromTable = true, 
+                IsExternalCodesSyncEnabled = true, 
+                IsSingleTaxPerInvoice = true, 
+                IsSingleCurrencyAccount = true, 
+                AllowManuallyDueDate = false, 
+                IsJournalMode = false, 
+                IsTaxItemManaged = true, 
+                AllowMinusInvoiceLines = false, 
+                ShowDownloadScreen = false, 
+                AllowARInvoicesTransfer = true, 
+                AllowAPInvoicesTransfer = true, 
+                AllowPositiveAmountsInTheCreditNote = false, 
+                InActive = false, 
+                AllowAPPaymentsTransfer = false, 
+                IsExternalCodesFromAPI = false, 
+                AllowARPaymentsTransfer = false, 
+                CanTransferToDropbox = false, 
+                Name = "Quick Books", 
 			});
 			 
             all.Add(new AccountingSystemDetails()

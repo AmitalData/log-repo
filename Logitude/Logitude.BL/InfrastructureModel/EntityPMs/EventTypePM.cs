@@ -1,8 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using System.ServiceModel.DomainServices.Server;
 
 namespace Logitude.BL.InfrastructureModel.EntityPMs
 {
@@ -108,40 +105,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 
         [DataMember]
         public bool AllowedInAutomation { get; set; }
-
-
-        [DataMember]
-        public string CustomField { get; set; }
-
-        [DataMember]
-        public bool IsStatusNotModified { get; set; }
-
-        public string PartnerCode { get; set; }
-        [DataMember]
-        public string EventTrigger { get; set; }
-
-        private List<EventRemarkPM> eventRemarks;
-        [Composition]
-        [Include]
-        [Association("EventTypePMEventRemarkPM", "Id", "EventTypeId")]
-        [DataMember]
-        public virtual List<EventRemarkPM> EventRemarks
-        {
-            get
-            {
-                if (eventRemarks == null)
-                {
-                    eventRemarks = new List<EventRemarkPM>();
-                }
-                return eventRemarks;
-            }
-            set { eventRemarks = value; }
-        }
-
-        public bool IsFromWorkerRole { get; set; }
-        public string EntityStatusCode { get; set; }
-        [DataMember]
-        public int? Weight { get; set; }
-
     }
 }

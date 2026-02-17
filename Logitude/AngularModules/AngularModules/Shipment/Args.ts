@@ -16,17 +16,6 @@ export class NewShipmentComponentArgs {
     public IsCreatedFromMasterHouses: boolean = false;
     public IsCreatedFromCustomerOverview: boolean = false;
     public IsMasterCreatedFromHouse: boolean = false;
-    public IsStandalone: boolean = false;
-    public IsNewStandAlonePickupDelivery: boolean = false;
-    public ForwarderStandaloneShipmentId: string = null;
-    public ForwarderShipmentPickUpDeliveryTypeCode: string = null;
-    public ParentShipmentDirectionId: string = null;
-    public ParentShipmentNumber: string = null;
-    public ParentShipmentType: string = null;
-    public ParentShipmentCustomerId: string = null;
-    public ParentShipmentCustomerType: string = null;
-    public ParentShipmentCustomerAddressId: string = null;
-
 }
 export class FSRWizardArgs {
     EntityPM: any;

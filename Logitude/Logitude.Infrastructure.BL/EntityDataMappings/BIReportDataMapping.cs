@@ -12,8 +12,6 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Infrastructure.BL.EntityQueryServices;
-using Logitude.Infrastructure.Data.ExtendedServices;
 
 namespace Logitude.Infrastructure.BL.EntityDataMappings
 {
@@ -31,38 +29,14 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
-            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-            {
-                Logitude.BL.CommonDataModel.EntityQueries.UserQuery userQuery = new Logitude.BL.CommonDataModel.EntityQueries.UserQuery(entityPM.Tenant);
-                string systemUserId = userQuery.GetSystemUserIdIfItIsCustomerCare(entityPM.Tenant);
-                if (!string.IsNullOrEmpty(systemUserId)) entityPM.UpdatedByUserId = systemUserId;
-            }
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO);
-
-            if (entityPM.BIReportFolderId != entityPOCO.BIReportFolderId)
-            {
-                CheckIfUserHasPermissionOnBIFolder(entityPM.BIReportFolderId, entityPOCO.Tenant);
-            }
-        }
-
-        private void CheckIfUserHasPermissionOnBIFolder(string biReportFolderId, int tenant)
-        {
-            BIReportFolderQueryService bIReportFolderQuery = new BIReportFolderQueryService(tenant);
-            bool isPermittedUser = bIReportFolderQuery.CheckIfUserHasFolderPermission(tenant, biReportFolderId);
-            if (!isPermittedUser) throw new Exception("Sorry! you have no permission to do this operation.");
         }
 
         public void CustomPOCOToPM(BIReportPM entityPM, BIReport entityPOCO)
         {
-            MapAvailableForScheduling(entityPM);
-        }
-
-        private void MapAvailableForScheduling(BIReportPM entityPM)
-        {
-            AvailableForSchedulingBIReportService availableForSchedulingBIReportService = new AvailableForSchedulingBIReportService();
-            entityPM.AvailableForScheduling = availableForSchedulingBIReportService.IsAvailableForScheduling(entityPM.FactTableName, entityPM.Tenant);
+            //throw new NotImplementedException();
         }
 
         private void BuildSearchFields(BIReportPM entityPM, BIReport entityPOCO)

@@ -110,7 +110,7 @@ export class UserMenuButtonsHandler {
 
     ResetPassword() {
         var myService: PasswordChangeService = new PasswordChangeService();
-        myService.ResetUserPassword(this.EntityPM.Id, this.EntityPM.Tenant).subscribe((res:any) => {
+        myService.ResetUserPassword(this.EntityPM.Id, this.EntityPM.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var result = pmResponse.Result;
@@ -135,7 +135,7 @@ export class UserMenuButtonsHandler {
             if (confirmWindow.Yes) {
 
                 var service: UserExtendedPMService = new UserExtendedPMService();
-                service.Anonymization(this.EntityPM.Id).subscribe((res:any) => {
+                service.Anonymization(this.EntityPM.Id).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

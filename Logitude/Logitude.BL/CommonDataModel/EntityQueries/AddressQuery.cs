@@ -7,7 +7,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Text.RegularExpressions;
@@ -18,7 +17,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AddressRepository repository;
 
-
+        public AddressQuery()
+        {
+            repository = new AddressRepository();
+        }
 
         public AddressQuery(int tenant)
         {
@@ -141,51 +143,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-        public AddressPM GetAddressByCardId(string cardId, int tenant)
-        {
-            return (from a in repository.context.Addresses.Include("Country").Include("State")
-                    where a.Tenant == tenant
-                    && a.CardId == cardId && (a.AddressTypeId == "B" || a.AddressTypeId == "M" || a.AddressTypeId == "O")
-                    select new AddressPM()
-                    {
-                        Address1 = a.Address1,
-                        Address2 = a.Address2,
-                        AddressTypeId = a.AddressTypeId,
-                        ATTN = a.ATTN,
-                        CardId = a.CardId,
-                        SearchFields = a.SearchFields,
-                        City = a.City,
-                        CountryId = a.CountryId,
-                        Description = a.Description,
-                        FaxNumber = a.FaxNumber,
-                        Id = a.Id,
-                        Name = a.Name,
-                        PhoneNumber = a.PhoneNumber,
-                        StateId = a.StateId,
-                        Tenant = a.Tenant,
-                        ZipCode = a.ZipCode,
-                        InActive = a.InActive,
-                        IsLocalLanguage = a.IsLocalLanguage,
-                        CountryCode = a.Country != null ? a.Country.Code : null,
-                        CountryEnglishName = a.Country != null ? a.Country.EnglishName : null,
-                        CountryName = a.Country != null ? (a.IsLocalLanguage ? a.Country.LocalName : a.Country.EnglishName) : null,
-                        StateCode = a.State != null ? a.State.Code : null,
-                        StateEnglishName = a.State != null ? a.State.EnglishName : null,
-                        HasStates = a.Country == null ? false : a.Country.HasStates,
-                        IsStateRequired = a.Country == null ? false : a.Country.IsStateRequired,
-                    }).FirstOrDefault();
-
-        }
-
         public AddressPM GetSingleAddressPM(string id, int tenant)
-        {
-            string key = $"GetSingleAddressPM({id}, {tenant})";
-            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<AddressPM>(key, () =>
-            {
-                return GetSingleAddressPMReal(id, tenant);
-            });
-        }
-        AddressPM GetSingleAddressPMReal(string id, int tenant)
         {
             AddressPM instance = null;
 
@@ -356,23 +314,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return addressLists;
         }
 
-        public List<AddressList> GetAddressesByCardIds(List<string> cardIds, int tenant)
+        public List<AddressList> GetAddressesByCardIds(List<string> cardIds,  int tenant)
         {
             List<AddressList> addressLists = (from a in repository.context.Addresses
                                               where a.Tenant == tenant
                                               && cardIds.Contains(a.CardId)
-
+                                            
                                               select new AddressList()
                                               {
                                                   CardId = a.CardId,
                                                   ZipCode = a.ZipCode,
                                                   City = a.City,
                                                   CountryCode = a.Country != null ? a.Country.Code : null,
-                                                  CountryName = a.Country != null ? a.IsLocalLanguage ? a.Country.LocalName : a.Country.EnglishName : null,
+                                                  CountryName = a.Country != null? a.Country.LocalName:null,
                                                   AddressTypeId = a.AddressTypeId,
                                                   Id = a.Id,
                                                   Address1 = a.Address1,
-                                                  Address2 = a.Address2,
+                                                  Address2= a.Address2,
                                                   PhoneNumber = a.PhoneNumber,
                                               }).ToList();
 
@@ -388,7 +346,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   where a.Tenant == tenant
                                     && a.CardId == cardId
                                   && a.AddressTypeId.ToUpper() == typeId.ToUpper()
-                                  && !a.InActive
                                   select a).FirstOrDefault();
 
             if (entityPOCO != null)
@@ -402,9 +359,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CardId = entityPOCO.CardId,
                     SearchFields = entityPOCO.SearchFields,
                     City = entityPOCO.City,
-                    CityId = entityPOCO.CityId,
-                    TruckerId = entityPOCO.TruckerId,
-                    Responsibility = entityPOCO.Responsibility,
                     Description = entityPOCO.Description,
                     FaxNumber = entityPOCO.FaxNumber,
                     Id = entityPOCO.Id,
@@ -532,10 +486,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   StateEnglishName = a.State != null ? a.State.EnglishName : null,
                                                   HasStates = a.Country == null ? false : a.Country.HasStates,
                                                   IsStateRequired = a.Country == null ? false : a.Country.IsStateRequired,
-                                                  CityId = a.CityId,
-                                                  TransportationInstructions = a.TransportationInstructions,
-                                                  TruckerId = a.TruckerId,
-                                                  Responsibility = a.Responsibility,
                                               };
             return addresses;
         }
@@ -550,7 +500,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Address1 = entity.Address1,
                                                  Address2 = entity.Address2,
                                                  City = entity.City,
-                                                 CityId = entity.CityId,
                                                  Description = entity.Description,
                                                  FaxNumber = entity.FaxNumber,
                                                  Name = entity.Name,

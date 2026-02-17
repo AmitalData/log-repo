@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -56,13 +56,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                        UserRepository userRepository = new UserRepository(authToken.Tenant);
                         var us = new CustomDocumentTypeUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), authToken.Tenant);
-                        if (authToken != null)
-                        {
-                            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, authToken.Email, authToken.Tenant, true);
-                            us.userId = loggedUser.Id;
-                        }
+
                         entityPM.ChangeSetOp = ChangeSetOperation.Update;
                         us.Update(entityPM, true);
 

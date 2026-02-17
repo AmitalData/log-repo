@@ -1,46 +1,53 @@
 import {Injectable} from '@angular/core';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
+
 import { AccountingIntegrityCheckPM } from '../../EntityPMs/AccountingIntegrityCheckPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 
 @Injectable()
 
 export class AccountingEntegrityCheckExtendedPMService {
-
+    private _http: Http;
     private _apiUrl: string;
-    private httpClient: HttpClient;
     constructor() {
-        this.httpClient = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck';
     }
 
 
     PostFixEntegrityCheckErrorInBatch(accountingEntegrityCheck: AccountingIntegrityCheckPM) {
-        var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
 
-        var mappedEntity: AccountingIntegrityCheckPM;
-        mappedEntity = this.MapJsonToEntityPM(accountingEntegrityCheck, false);
+        return Observable.defer(() => {
 
-        return this.httpClient.post(this._apiUrl + "/PostFixEntegrityCheckErrorInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
-            map(res => {
-                var result = res;
-                serviceResponse.Result = result;
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
-                return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-      }
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity: AccountingIntegrityCheckPM;
+            mappedEntity = this.MapJsonToEntityPM(accountingEntegrityCheck, false);
+
+            return this._http.post(this._apiUrl + "/PostFixEntegrityCheckErrorInBatch", JSON.stringify(mappedEntity), { headers: authHeader })
+                .map((res) => {
+
+                    var result = res.json();
+                    serviceResponse.Result = result;
+
+                    return serviceResponse;
+
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: AccountingIntegrityCheckPM = null) {
@@ -110,22 +117,5 @@ export class AccountingEntegrityCheckExtendedPMService {
         }
         return entityPM;
     }
-
-    getAccountingIntegrityResultByIdAndTenant(id: string, tenant: number) {
-		var callTime = new Date();
-		return defer(() => {
-			return this.httpClient.get(ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck' + '/getAccountingIntegrityResultByIdAndTenant?' + 'id=' + id + '&tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = pm;
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingIntegrityCheck", "getAccountingIntegrityResultByIdAndTenant", 'id=' + id + ' tenant=' + tenant);
-						return serviceResponse;
-					}),
-					catchError(ServiceHelper.HandleServiceError));
-		});
-	}
 
 }

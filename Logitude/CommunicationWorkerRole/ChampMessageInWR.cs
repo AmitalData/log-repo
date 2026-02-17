@@ -7,9 +7,9 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using System.IO;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using WebFreight.Web.CommonDataModel;
 using WebFreight.Web.DataContracts;
@@ -85,7 +85,7 @@ namespace CommunicationWorkerRole
                             {
                                 BrokeredMessage message = new BrokeredMessage();
                                 message.Properties["MessageData"] = messageData;
-                                TopicClient client = Microsoft.ServiceBus.Messaging.TopicClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(), "champmessageintopic");
+                                TopicClient client = Microsoft.ServiceBus.Messaging.TopicClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), "champmessageintopic");
 
                                 client.Send(message);
                                 LogDoneItemInMemory();
@@ -185,7 +185,17 @@ namespace CommunicationWorkerRole
 
                 string subscribtionName = "ChampSubScription";
                 SubscriptionDescription myAgentSubscription;
-               
+                //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+
+                //if (LogitudeSettings.DeploymentStage == "Dev")
+                //{
+                //    subscribtionName = Environment.MachineName + "_" + roleId[roleId.Length - 1];
+                //}
+
+                //else
+                //{
+                //    subscribtionName = roleId[roleId.Length - 1];
+                //}
 
                 if (!StorageAcountDetails.NameSpaceManager.SubscriptionExists(champMessageInTopic.Path, subscribtionName))
                 {

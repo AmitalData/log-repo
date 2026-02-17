@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -16,7 +16,7 @@ using Simplog.Data.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -75,29 +75,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             SaveAutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
             SaveAutomationHistory();
 
-            ConnectDocumentTypeTemplateToAuomation();
-
             List<string> eventCodeLists = new List<string>(new string[] { "AUCR" });
             AddTraceEvent(eventCodeLists);
 
      
-        }
-
-        private void ConnectDocumentTypeTemplateToAuomation()
-        {
-            if(this.entityPm.DocumentTypeTemplateIds!=null && this.entityPm.DocumentTypeTemplateIds.Count > 0)
-            {
-                DocumentTypeTemplateRepository documentTypeTemplateRepository = new DocumentTypeTemplateRepository(this.entityPm.Tenant);
-                List<DocumentTypeTemplate>   documentTypeTemplates =  documentTypeTemplateRepository.GetDocumentTypeTemplatesBydocumentTypeTemplateIds(this.entityPm.DocumentTypeTemplateIds, this.entityPm.Tenant).ToList();
-                foreach(DocumentTypeTemplate documentTypeTemplate in documentTypeTemplates)
-                {
-                    documentTypeTemplate.AutomationId = this.entityPm.Id;
-                    documentTypeTemplateRepository.Update(documentTypeTemplate);
-                }
-
-                documentTypeTemplateRepository.SubmitChanges();
-            }
-
         }
 
         private void SaveAutomationResultEmailRecipientLists()
@@ -142,8 +123,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPOCO.AutomationsId = entityPM.AutomationsId;
             entityPOCO.RecipientType = entityPM.RecipientType;
             entityPOCO.RecipientValue = entityPM.RecipientValue;
-            entityPOCO.PartnerObjectFieldCode = entityPM.PartnerObjectFieldCode;
-            entityPOCO.IsNotifyBack = entityPM.IsNotifyBack;
+
         }
 
         private void SaveAutomationHistory()

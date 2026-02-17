@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .PackagesListArea {
         border-radius: 8px;
@@ -28,7 +28,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="IsValidationSingleLine"></ValidationSummary>
         </td>
     </tr>
 
@@ -133,13 +133,13 @@
                                                         <table>
                                                             <tr style="height: 28px;">
                                                                 <td>
-                                                                    <button class="Button" attr.data-cy="{{'Split_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" (click)="item.SplitClicked()" [disabled]="item.IsPartialSplitParent">Split</button>
+                                                                    <button class="Button" (click)="item.SplitClicked()" [disabled]="item.IsPartialSplitParent">Split</button>
                                                                 </td>
                                                             </tr>
 
                                                             <tr style="height: 28px;">
                                                                 <td>
-                                                                    <button class="Button" id="{{'PartialSplit' | IdGeneratorAsyncPipe | async}}" (click)="item.PartialSplitClicked()" [disabled]="item.Quantity <= 1">Partial Split</button>
+                                                                    <button class="Button" (click)="item.PartialSplitClicked()" [disabled]="item.Quantity <= 1">Partial Split</button>
                                                                 </td>
                                                             </tr>
 

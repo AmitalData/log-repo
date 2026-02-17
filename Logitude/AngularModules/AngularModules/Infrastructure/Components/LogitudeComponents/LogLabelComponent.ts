@@ -6,7 +6,6 @@ import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {AppTool} from '../../Tools';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import { EntityResourceService } from '../../Services/EntityResourceService';
 
 @Component({
     selector: 'LogLabel',
@@ -23,11 +22,8 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
         "NoValidation",
         "IsSmallLabel",
         "Replace",
-            "ReplaceWith",
-         "LayoutDirection",
-         "ShowTitle",
-        "Title",
-     ],
+        "ReplaceWith",
+    ],
 
     template:
     `
@@ -41,11 +37,11 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
                 </div>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel" title="{{ ShowTitle ? (Title ? Title : LabelText) : '' }}">
+            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel">
                 <label class="Label" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel" title="{{ ShowTitle ? (Title ? Title : LabelText) : '' }}">
+            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel">
                 <label class="SmallLabel" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
         </tr>
@@ -56,14 +52,7 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
 export class LogLabelComponent implements OnInit {
     public DataContext: any;
     public ObjectFieldName: string;
-    private _ObjectTableName: string;  
-    public get ObjectTableName(): string {
-        return this._ObjectTableName;
-    }
-    public set ObjectTableName(value: string) {
-        this._ObjectTableName = value;
-   
-    }
+    public ObjectTableName: string;  
     public LabelText: string;
     public HideColumns: boolean = false;
     public IsSmallLabel: boolean = false;
@@ -71,18 +60,13 @@ export class LogLabelComponent implements OnInit {
     public LabelOpacity: number = 1;
     public ShowWarning: boolean = false;
     public NoValidation: boolean = false;
-    public ShowTitle: boolean = false;
-    public Title: string;
     objectfield: any;
     uiProperty: UIProperty;   
     @Input() NoObjectField: boolean = false; 
-    LayoutDirection: string;// = 'ltr';
+    LayoutDirection: string = 'ltr';
 
-    constructor(private _entityResourceService: EntityResourceService) {
-        if (AppTool.IsNullOrEmpty(this.LayoutDirection)) this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
-         this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((response: any) => {
-        
-            });
+    constructor() {
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
     }
 
     private isFieldValid: boolean = true;
@@ -189,7 +173,7 @@ export class LogLabelComponent implements OnInit {
     }
 
     SetLabel() {
-         if (this.DataContext != null) {
+        if (this.DataContext != null) {
             var labelText = "";
 
             if (this.Text != null) {
@@ -283,7 +267,7 @@ export class LogLabelComponent implements OnInit {
                                             fieldValueLength = this.DataContext[this.ObjectFieldName].length;
                                         }
 
-                                        if (this.objectfield.MaxLength != 0 && fieldValueLength > this.objectfield.MaxLength) {
+                                        if (fieldValueLength > this.objectfield.MaxLength) {
                                             isValid = false;
                                         }
 

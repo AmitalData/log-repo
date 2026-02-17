@@ -1,121 +1,31 @@
-using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Transactions;
-using System.Web;
-
 
 namespace Simplog.Server.Infrastructure.Helpers
 {
     public class GenericSort
     {
-
-        int tenant = 0;
-        public GenericSort(int tenant)
-        {
-            this.tenant = tenant;
-        }
-
-        public GenericSort()
+        public IQueryable<T> GetSorterQuery<T,N>(QueryOperations queryOperations, IQueryable<T> querableData)
         {
 
-            if(HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
-            {
-                this.tenant = (int)HttpContext.Current.Items["Tenant"];
-            }
-        }
+            var param = Expression.Parameter(typeof(T), "item");
+            
+            var sortExpression = Expression.Lambda<Func<T,N>>
+                (Expression.Convert(Expression.Property(param, queryOperations.SortByColumnName), typeof(N)), param);
 
-        public IQueryable<T> GetSorterQuery<T, N>(QueryOperations queryOperations, IQueryable<T> querableData)
-        {
-            string keyName = null;
-            if (!string.IsNullOrEmpty(queryOperations.ObjectTableName))
+            switch (queryOperations.SortDirectin.ToLower())
             {
-                keyName = GetObjectTableKeyName(queryOperations);
-            }
-            SortParams<T, N> sortParams = new SortParams<T, N>();
-            sortParams.QuerableData = querableData;
-            sortParams.SortDirection = queryOperations.SortDirectin;
-            sortParams.FirstSortExpression = GetSortExpression<T, N>(queryOperations.SortByColumnName);
-            if (!String.IsNullOrWhiteSpace(keyName) && //LogitudeSettings.DatabaseManagementSystem == "oracle" &&
-                typeof(T).GetProperty(keyName).PropertyType == typeof(Guid)
-                && LogitudeSettings.IsCostomsDeploy // crush on sql server on branch amital - fast respone 
-                )
-            {
-                return GetSortedQuery<T, N>(sortParams);
-            }
-            if (!string.IsNullOrEmpty(keyName))
-            {
-                sortParams.SecondarySortByField = keyName;
-                sortParams.SecondSortExpression = GetSortExpression<T, string>(keyName);
-                return GetSortedQueryWithSecondarySort<T, N>(sortParams);
-            }
-            else
-            {
-                return GetSortedQuery<T, N>(sortParams);
-            }
+                case "ascending":
+                    return querableData.AsQueryable<T>().OrderBy<T, N>(sortExpression);
+                default:
+                    return querableData.AsQueryable<T>().OrderByDescending<T, N>(sortExpression);
+            } 
 
-        }
-        private IQueryable<T> GetSortedQuery<T, N>(SortParams<T, N> sortParams)
-        {
-            if (sortParams.SortDirection.ToLower() == "ascending")
-            {
-                return sortParams.QuerableData.AsQueryable<T>().OrderBy<T, N>(sortParams.FirstSortExpression);
-            }
-            else
-            {
-                return sortParams.QuerableData.AsQueryable<T>().OrderByDescending<T, N>(sortParams.FirstSortExpression);
-            }
-        }
-        private IQueryable<T> GetSortedQueryWithSecondarySort<T,N>(SortParams<T,N> sortParams)
-        {
-            if(sortParams.SortDirection.ToLower()== "ascending")
-            {
-                return sortParams.QuerableData.AsQueryable<T>().OrderBy<T, N>(sortParams.FirstSortExpression).ThenBy<T,string>(sortParams.SecondSortExpression);
-            }
-            else
-            {
-                return sortParams.QuerableData.AsQueryable<T>().OrderByDescending<T, N>(sortParams.FirstSortExpression).ThenByDescending(sortParams.SecondSortExpression);
-            }
-        }
-
-		private Expression<Func<T, N>> GetSortExpression<T, N>(string sortByFieldName)
-		{
-			var param = Expression.Parameter(typeof(T), "item");
-			var sortExpression = Expression.Lambda<Func<T, N>>
-			   (Expression.Convert(Expression.Property(param, sortByFieldName), typeof(N)), param);
-			return sortExpression;
-		}
-		private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = -100)
-        {
-
-            if (tenant == -100)
-            {
-                tenant = this.tenant;
-            }
-
-            string keyName = null;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                IObjectTablePropertyGetter objectTablePropertyGetter = InjectionContainer.Container.Resolve(typeof(IObjectTablePropertyGetter), "ObjectTablePropertyGetter", new ParameterOverride("", 1)) as IObjectTablePropertyGetter;
-                keyName = objectTablePropertyGetter.GetKeyPropertyPath(queryOperations.ObjectTableName, tenant);
-                scope.Complete();
-            }
-            return keyName;
+            
         }
 
         
-    }
-
-    public class SortParams<T,N>
-    {
-        public string SecondarySortByField { get; set; }
-        public Expression<Func<T,N>> FirstSortExpression { get; set; }
-        public Expression<Func<T, string>> SecondSortExpression { get; set; }
-        public IQueryable<T> QuerableData { get; set; }
-        public string SortDirection { get; set; }
     }
 }

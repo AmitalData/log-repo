@@ -8,7 +8,7 @@ import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {Cloner} from '../../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AdvancedCommentsComponent.html',
 })
 

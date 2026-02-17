@@ -21,15 +21,9 @@ namespace Logitude.Accounting.BL.Validators
         List<String> GetGLAccountCurrencyList(string CustomerGLAccountId, int tenant);
         string CheckExternalNoAndSystemReturnJournalNumber(string externalNo, string externalSystem, int tenant);
     }
-    public interface IJournalValidatorRateDataProvider
-    {
-        bool ExistRate(string TenantCurrency, string foreignCurrencyId, DateTime? date, int tenent);
-    }
+
     public interface IExternalReconcileDataProvider 
     {
-
-        BankAccountPM GetBankAccountByGLAccountId(string dAccountId, int tenant);
-
         BankAccountPM GetBankAccountFromTransferAccount(string myLedgerTransactionTransferInCreditAccountId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT
         BankAccountPM GetBankAccountFromReconcileExternalPageLineId(string reconcileExternalPageLineId, int tenant);
 
@@ -53,7 +47,6 @@ namespace Logitude.Accounting.BL.Validators
 
         //GLAccountPM GetGLAccount(string GLAccountId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT
         List<LedgerTransactionPM> GetLedgerTransactionPMsByIdList(List<string> transactionIdList, int tenant);
-        List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<string> transactionIdList, int tenant);
         List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<string> transactionIdList, int tenant);
         
     }

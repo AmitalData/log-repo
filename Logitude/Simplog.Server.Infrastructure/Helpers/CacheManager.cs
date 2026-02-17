@@ -47,21 +47,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
             return clearItem;
         }
-
-        public static List<string> GetAllCacheKeys()
-        {
-            var cacheKeys = new List<string>();
-            var enumerator = CacheWrapper.GetEnumerator();
-
-            while (enumerator.MoveNext())
-            {
-                cacheKeys.Add(enumerator.Key.ToString());
-            }
-
-            return cacheKeys;
-        }
-
-        public static TEntity GetOrInsertNewObject<TEntity>(string entityKeyString, Func<TEntity> GetNewObject, bool fromCache = true, bool donotCacheNull = false, bool supressForceInsert = true, int absoluteExpiration = 30) //Itzik Test
+        public static TEntity GetOrInsertNewObject<TEntity>(string entityKeyString, Func<TEntity> GetNewObject, bool fromCache = true, bool donotCacheNull = false, bool supressForceInsert = true) //Itzik Test
             where TEntity : class ///,new()
             
         {
@@ -89,30 +75,18 @@ namespace Simplog.Server.Infrastructure.Helpers
                 EntityPM = GetNewObject();
                 if (EntityPM != null)
                 {
-                    CacheManager.CacheWrapper.Insert(entityKeyString, EntityPM,
-                        null, System.DateTime.UtcNow.AddMinutes(absoluteExpiration), TimeSpan.Zero);
-
+                    CacheManager.CacheWrapper.Insert(entityKeyString, EntityPM);
                 }
                 else
                 {
                     if (!donotCacheNull)
                     {
-                    CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache(),
-                        null, System.DateTime.UtcNow.AddMinutes(absoluteExpiration), TimeSpan.Zero);
-                    }
+                    CacheManager.CacheWrapper.Insert(entityKeyString, new NullCache());
+                }
             }
             }
             return EntityPM;
         }
-
-    }
-    /// <summary>
-    /// Dummy Entity for Cache Use
-    /// </summary>
-    public class MyDummyClass
-    {
-        public int MyInt { get; set; }
-        public bool MyBool { get; set; }
 
     }
 }

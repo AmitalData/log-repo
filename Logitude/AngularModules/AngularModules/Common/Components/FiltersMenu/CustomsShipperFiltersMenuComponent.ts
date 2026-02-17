@@ -4,7 +4,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsShipperFiltersMenuComponent.html',
 
 })

@@ -81,29 +81,7 @@ namespace WebFreight.Web.DataProviders
         public double? TotalPayable { get; set; }
         public double? TotalFreight { get; set; }
         public double? TotalOtherCharges { get; set; }
-        public string APInvoiceField1 { get; set; }
-        public string APInvoiceField2 { get; set; }
-        public string APInvoiceField3 { get; set; }
-        public string APInvoiceField4 { get; set; }
-        public string APInvoiceField5 { get; set; }
-        public string APInvoiceField6 { get; set; }
-        public string APInvoiceField7 { get; set; }
-        public string APInvoiceField8 { get; set; }
-        public string APInvoiceField9 { get; set; }
-        public string APInvoiceField10 { get; set; }
 
-        public DateTime? FirstPickupETD { get; set; }
-        public DateTime? FirstPickupETA { get; set; }
-        public DateTime? LastDeliveryETD { get; set; }
-        public DateTime? LastDeliveryETA { get; set; }
-        public string ShipperPhoneNumber { get; set; }
-        public string ConsigneePhoneNumber { get; set; }
-        public string FirstPickupTrucker{ get; set; }
-        public string LastDeliveryTrucker{ get; set; }
-        public string PackageTypes { get; set; }
-
-        public string PickUpAddress_New { get; set; }
-        public string DeliveryAddress_New { get; set; }
         public List<APReportInvoiceLine> APInvoiceLinesList { get; set; }
         public List<APTotalVat> APTotalVatList { get; set; }
         public List<APInvoiceMultipleEntity> APInvoiceMultipleEntityList { get; set; }
@@ -153,9 +131,6 @@ namespace WebFreight.Web.DataProviders
         public double? FreightAccounted { get; set; }
         public double? OtherChargesAccounted { get; set; }
         public double? PayablesAccounted { get; set; }
-        public double? GrossweightinKG { get; set; }
-        public double? VolumeinCBM { get; set; }
-        public double? TotalAmountinLocalCurrency { get; set; }
 
 
 

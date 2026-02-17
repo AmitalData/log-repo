@@ -2,17 +2,11 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
-using Logitude.Accounting.Def.EntityQueryServicesExt;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.BL.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -37,8 +31,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.AWBPrintDescription = entityPM.AWBPrintDescription;
             poco.ChargesGroupCode = entityPM.ChargesGroupCode;
             poco.ChargesGroupId = entityPM.ChargesGroupId;
-            poco.QuoteChargesGroupCode = entityPM.QuoteChargesGroupCode;
-            poco.QuoteChargesGroupId = entityPM.QuoteChargesGroupId;
             poco.IATACodeId = entityPM.IATACodeId;
             poco.Description = entityPM.Description;
             poco.IsAir = entityPM.IsAir;
@@ -71,19 +63,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsDrop = entityPM.IsDrop;
             poco.IsImport = entityPM.IsImport;
             poco.IsExport = entityPM.IsExport;
-            poco.PayDebitGLAcountLocalName = entityPM.PayDebitGLAcountLocalName;
-            poco.RecCreditGLAcountLocalName = entityPM.RecCreditGLAcountLocalName;
+
             poco.ReceivablesDefaultCurrencyId = entityPM.ReceivablesDefaultCurrencyId;
             poco.PayablesDefaultCurrencyId = entityPM.PayablesDefaultCurrencyId;
-            poco.ApplyRegionalTax = entityPM.ApplyRegionalTax;
-            poco.HasPickup = entityPM.HasPickup;
-            poco.HasDelivery = entityPM.HasDelivery;
-            poco.IsDirectionRestricted = entityPM.IsDirectionRestricted;
-            poco.IsActiveInExport = entityPM.IsActiveInExport;
-            poco.IsActiveInImport = entityPM.IsActiveInImport;
-            poco.IsActiveInDomestic = entityPM.IsActiveInDomestic;
-            poco.IsActiveInDrop = entityPM.IsActiveInDrop;
-            poco.QuoteGroupSectionID = entityPM.QuoteGroupSectionID;
+
             BuildSearchField(entityPM, poco);
         }
 
@@ -110,55 +93,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Code);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.EnglishName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.LocalName);
-            entityPM = SetChargesTypetGLAccountFields(entityPM);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ReceivableCreditGLAcountLocalName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ReceivableCreditGLAcountNumber);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayableDebitGLAcountLocalName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayableDebitGLAcountNumber);
-            mySearchFields = AddCustomFieldsToSearchFields(entityPM, mySearchFields); 
+
             entityPM.SearchFields = mySearchFields;
             entityPoco.SearchFields = mySearchFields;
-            entityPoco.RecCreditGLAcountLocalName = entityPM.RecCreditGLAcountLocalName;
-            entityPoco.PayDebitGLAcountLocalName = entityPM.PayDebitGLAcountLocalName;
-        }
-
-        private static string AddCustomFieldsToSearchFields(ChargesTypePM entityPM, string mySearchFields)
-        {
-            #region Custom Fields
-            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("ChargesType", entityPM.Tenant).Where(o => o.DataTypeCode != "Decimal").ToList();
-
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
-            foreach (ObjectField field in customFields)
-            {
-                object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);
-                if (value != null)
-                {
-                    MethodHelper.AddToSearchFields(ref mySearchFields, value.ToString());
-                }
-            }
-            #endregion
-            return mySearchFields;
-        }
-
-        private static ChargesTypePM SetChargesTypetGLAccountFields(ChargesTypePM chargesType)
-        {
-            IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            if (chargesType.ReceivableCreditGLAccountId != null) {
-                string fieldsValues = glAccountQuery.GetGLAccountDisplayNoAndLocalName(chargesType.ReceivableCreditGLAccountId, chargesType.Tenant);
-                string[] displayNoAndName = fieldsValues.Split(',');
-                chargesType.ReceivableCreditGLAcountLocalName = displayNoAndName[1];
-                chargesType.RecCreditGLAcountLocalName = displayNoAndName[1];
-                chargesType.ReceivableCreditGLAcountNumber = displayNoAndName[0];
-            }
-            if (chargesType.PayableDebitGLAcountId != null)
-            {
-                string fieldsValues = glAccountQuery.GetGLAccountDisplayNoAndLocalName(chargesType.PayableDebitGLAcountId, chargesType.Tenant);
-                string[] displayNoAndName = fieldsValues.Split(',');
-                chargesType.PayableDebitGLAcountLocalName = displayNoAndName[1];
-                chargesType.PayDebitGLAcountLocalName = displayNoAndName[1];
-                chargesType.PayableDebitGLAcountNumber = displayNoAndName[0];
-            }
-            return chargesType;
         }
     }
 }

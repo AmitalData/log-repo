@@ -28,7 +28,6 @@ using Logitude.Accounting.BL.APIDataContract.ApiV1;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.BL.EntityQueryServiceExt;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
@@ -225,9 +224,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                         temp.CustomerGLAccount.Id = myCustomerGLAccountPM.Id;
                         temp.CustomerGLAccount.LocalName = myCustomerGLAccountPM.LocalName;
                         temp.CustomerGLAccount.EnglishName = myCustomerGLAccountPM.EnglishName;
-                        temp.CustomerGLAccount.Tenant = myCustomerGLAccountPM.Tenant;
-                        temp.CustomerGLAccount.InternalNumber = myCustomerGLAccountPM.InternalNumber;
-                        temp.CustomerGLAccount.DisplayNumber = myCustomerGLAccountPM.DisplayNumber;
                     }
 
                 }
@@ -238,7 +234,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                 temp.BalanceInLocalCurrency = MyEntity.BalanceInLocalCurrency;
                 temp.RevaluationEnabled = MyEntity.RevaluationEnabled;
                 GLAccountQueryService ParentAccountGLAccountService = new GLAccountQueryService(Tenant);
-                if (!string.IsNullOrEmpty( MyEntity.ParentAccountId ))
+                if (MyEntity.ParentAccountId != null)
                 {
                     var myParentAccountPM = ParentAccountGLAccountService.GetGLAccountById(MyEntity.ParentAccountId, Tenant );
                     if (myParentAccountPM != null)
@@ -452,7 +448,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
             if (entityPM == null)
             {
-                throw new ApplicationException("GLAccount with internal number " + entity.InternalNumber + " does not exist");
+                throw new Exception("GLAccount with internal number " + entity.InternalNumber + " does not exist");
             }
 
             return entityPM;
@@ -467,7 +463,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
                 if (parentGLAccount.IsMultiCurrency == false)
                 {
-                    throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.MustBeMultiCurrency", MyEntity.Tenant));
+                    throw new Exception(TextCodesTranslator.TranslateText("GLAccounts.O.MustBeMultiCurrency", MyEntity.Tenant));
                 }
 
                 else
@@ -479,7 +475,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     Currency currency = currencyQueryService.GetCurrencyById(MyEntity.CurrencyId, parentGLAccount.Tenant);
                     if (gLAccountCurrencyPM != null)
                     {
-                        throw new ApplicationException("The parent GLAccount(" + parentGLAccount.DisplayNumber + ") already has split GLAccount with currency (" + currency.Code + ")");
+                        throw new Exception("The parent GLAccount(" + parentGLAccount.DisplayNumber + ") already has split GLAccount with currency (" + currency.Code + ")");
                     }
                     else
                     {
@@ -526,7 +522,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
             if (gLAccountPM == null)
             {
-                throw new ApplicationException("GLAccount with internal number " + number + " does not exist");
+                throw new Exception("GLAccount with internal number " + gLAccountPM.InternalNumber + " does not exist");
             }
             return GLAccountDataMappingAndValidatin(gLAccountPM, tenant);
 
@@ -566,42 +562,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
         }
 
-        public GLAccountPM GLAccountDataMappingAndValidatinForExternalAPI(GLAccount glaccount, int tenant)
-        {
-            CheckIfTheCustomerGLaccountIsSplitGLAccount(glaccount, tenant);
-
-            return GLAccountDataMappingAndValidatin(glaccount, tenant);
-
-        }
-
-        private void CheckIfTheCustomerGLaccountIsSplitGLAccount(GLAccount glaccount, int tenant)
-        {
-            List<Data.EntityPOCOs.GLAccountCurrency> gLAccountCurrencies = GetRelatedGLAccountCurrencies(glaccount, tenant);
-            string customerGLAccountId = GetCustomerGLAccountIdByDisplayNumber(glaccount, tenant);
-
-            if (customerGLAccountId != null && glaccount.IsMultiCurrency == true && gLAccountCurrencies.Any(c => c.GLAccountId == customerGLAccountId))
-            {
-                throw new ApplicationException("The customer GLaccount you are sending is already defined as a split by currency Account");
-
-            }
-        }
-
-        private string GetCustomerGLAccountIdByDisplayNumber(GLAccount glaccount, int tenant)
-        {
-            string CustomerGLAccountNumber = glaccount.CustomerGLAccountNumber != null ? glaccount.CustomerGLAccountNumber: glaccount.CustomerGLAccount.DisplayNumber;
-            if(CustomerGLAccountNumber != null)
-                return GetGLAccountByDisplayNumber(CustomerGLAccountNumber, tenant).Id;
-
-            return null;
-        }
-
-        private List<Data.EntityPOCOs.GLAccountCurrency> GetRelatedGLAccountCurrencies(GLAccount glaccount, int tenant)
-        {
-            var gLAccountCurrencyRepository = new GLAccountCurrencyRepository(this.context);
-            var gLAccountCurrencies = gLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccountAll(tenant, glaccount.Id);
-            return gLAccountCurrencies;
-        }
-
     }
+
 
 }

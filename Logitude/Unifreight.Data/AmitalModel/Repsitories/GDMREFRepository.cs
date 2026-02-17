@@ -89,13 +89,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var keys = entityKeys as GDMREFKeys;
             return this.GetSingle(keys.COMID, keys.REFID, keys.REFERENCE);
         }
-
-        public IQueryable<GDMREF> GetByRef(string REFID, string REFERENCE)
-        {
-            return context.GDMREFs
-                        .Where(r => r.REFID == REFID).Where(r => r.REFERENCE == REFERENCE);
-                        //.Select(r => r.COMID)
-        }
     }
 }
 

@@ -102,8 +102,8 @@ namespace CustomsWorkerRole.Test
                             DateTime.Now.AddDays(-1*i));
                         
                     }
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+                    Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+                    Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
 
                 }
                 );
@@ -119,8 +119,8 @@ namespace CustomsWorkerRole.Test
                     SendExchangeRate(MethodEnum.ByDca, DateTime.Now.AddDays(-7));
                     //Thread.Sleep(TimeSpan.FromMinutes());
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
 
 
             }
@@ -197,7 +197,7 @@ namespace CustomsWorkerRole.Test
                 catch (Exception eee)
                 {
 
-                   NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee); ;
+                    Debug.WriteLine(eee.ToString()); ;
                     Thread.Sleep(5000);
                 }
                 
@@ -254,14 +254,14 @@ namespace CustomsWorkerRole.Test
                     catch (Exception eee)
                     {
 
-                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee); ;
+                        Debug.WriteLine(eee.ToString()); ;
                         Thread.Sleep(5000);
                     }
 
                     Thread.Sleep(1000);
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
             });
         }
 
@@ -364,19 +364,19 @@ namespace CustomsWorkerRole.Test
                     catch (Exception eee)
                     {
 
-                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee); ;
+                        Debug.WriteLine(eee.ToString()); ;
                         Thread.Sleep(5000);
                     }
 
                     Thread.Sleep(1000);
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ByDca:"+_ByDca.ToString()); ;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ByWebRole:" + _ByWebRole.ToString()); ;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ByWorkerRole:" + _ByWorkerRole.ToString()); ;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CustomsDocument:" + _CustomsDocument.ToString()); ;
+                Debug.WriteLine("ByDca:"+_ByDca.ToString()); ;
+                Debug.WriteLine("ByWebRole:" + _ByWebRole.ToString()); ;
+                Debug.WriteLine("ByWorkerRole:" + _ByWorkerRole.ToString()); ;
+                Debug.WriteLine("CustomsDocument:" + _CustomsDocument.ToString()); ;
             });
         }
 
@@ -552,8 +552,8 @@ namespace CustomsWorkerRole.Test
                 {
                     try
                     {
-                        var messService = new Logitude.CustomsMessaging.MessagingServices.DF_NG_2751_MSG10000_ExportDeclarationMessagingService();
-                        var responseData = messService.Send(requestParams);
+                        var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
+                        var responseData = messService.SendSheet(requestParams);
                         scope.Complete();
                         _DoOneDeclartionAt = DateTime.Now;
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("Queue:SendSheet(requestParams)" + item.Id.ToString() + ":" + requestParams.RequestVIA.ToString());
@@ -591,7 +591,7 @@ namespace CustomsWorkerRole.Test
 
         private MethodEnum GetMethodEnum(string customFileNo)
         {
-            return MethodEnum.ByWorkerRole;
+
             if (!String.IsNullOrWhiteSpace(_MyUserId))
             {
                 if (_My1stDeclarationPM != null && _My1stDeclarationPM.CustomFileNo == customFileNo)

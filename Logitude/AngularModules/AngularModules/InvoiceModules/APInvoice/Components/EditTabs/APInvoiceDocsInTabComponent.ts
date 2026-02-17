@@ -5,7 +5,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APInvoicePM} from '../../../../Invoice/EntityPMs/APInvoicePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './APInvoiceDocsInTabComponent.html',
 })
 

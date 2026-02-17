@@ -7,7 +7,6 @@ namespace Logitude.Global.OracleMigration.Migrations
     {
         public override void Up()
         {
-            return;
             CreateTable(
                 "dbo.CaptchaKeys",
                 c => new

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Simplog.Data.InfrastructureModel;
+using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -17,15 +19,12 @@ namespace WarehouseDataService.Helper
         string destinationConnectionString = string.Empty;
 
         WarehouseServiceHelper warehouseServiceHelper;
-        MainDataWarehouseService mainDataWarehouseService;
-        MainDataWarehouseService privateMainDataWarehouseService;
+        WarehouseHelper warehouseHelper;
 
         public WarehouseService()
         {
 
-            mainDataWarehouseService = new MainDataWarehouseService("Service", ApplicationInfo.Mode);
-            privateMainDataWarehouseService = new MainDataWarehouseService("Service", ApplicationInfo.Mode);
-
+            warehouseHelper = new WarehouseHelper("Service", ApplicationInfo.Mode);
             warehouseServiceHelper = new WarehouseServiceHelper();
             BuildConnectionString();
         }
@@ -88,7 +87,8 @@ namespace WarehouseDataService.Helper
                     {
                         isBuildStart = true;
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", true, sourceConnectionString);
-                        RuningBuildDataWarehouseByTasks();
+                        warehouseHelper.BuildDataBase(sourceConnectionString, destinationConnectionString);
+                        warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
                         warehouseServiceHelper.UpdateDWHBuildStatus("IsFullBuildDWRunning", false, sourceConnectionString);
                         warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                     }
@@ -96,22 +96,6 @@ namespace WarehouseDataService.Helper
                 }
                 else Thread.Sleep(new TimeSpan(0, 5, 0));
             }
-        }
-
-        private void RuningBuildDataWarehouseByTasks()
-        {
-            Task dataWarehouseBuildTask = new Task(() => mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString));
-            Task privateDataWarehouseBuildTask = new Task(() => BuildPrivateDataWarehouse());
-            dataWarehouseBuildTask.Start();
-            privateDataWarehouseBuildTask.Start();
-            Task.WhenAll(dataWarehouseBuildTask, privateDataWarehouseBuildTask).Wait();
-
-        }
-
-        private void BuildPrivateDataWarehouse()
-        {
-            Thread.Sleep(new TimeSpan(0, 130, 0));
-            privateMainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Build");
         }
 
 
@@ -132,9 +116,9 @@ namespace WarehouseDataService.Helper
                             bool isFullBuildDWRunning = warehouseServiceHelper.GetFieldValueFromDBByTableNameAndFieldName("IsFullBuildDWRunning", "DWHBuildStatus", sourceConnectionString);
                             if (!isFullBuildDWRunning)
                             {
-
                                 warehouseServiceHelper.UpdateDWHBuildStatus("IsIncrementalDWRunning", true, sourceConnectionString);
-                                RuningUpdateDataWarehouseByTasks();
+                                warehouseHelper.UpdateWarehouseData(sourceConnectionString, destinationConnectionString);
+                                warehouseHelper.BuildOrUpdatePrivateDBData(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update");
                                 warehouseServiceHelper.UpdateDWHBuildStatus("IsIncrementalDWRunning", false, sourceConnectionString);
                                 warehouseServiceHelper.UpdateLastIncrementalDWUpdateDate(sourceConnectionString);
                                 Thread.Sleep(ApplicationInfo.UpdateWarehouseSleepTime);
@@ -153,17 +137,7 @@ namespace WarehouseDataService.Helper
             }
         }
 
-
-        private void RuningUpdateDataWarehouseByTasks()
-        {
-            Task dataWarehouseUpdateTask = new Task(() => mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString));
-            Task privateDataWarehouseUpdateTask = new Task(() => privateMainDataWarehouseService.BuildOrUpdatePrivateDataWarehouse(ApplicationInfo.SourceConnection, ApplicationInfo.DestinationConnection, "Update"));
-            dataWarehouseUpdateTask.Start();
-            privateDataWarehouseUpdateTask.Start();
-            Task.WhenAll(dataWarehouseUpdateTask, privateDataWarehouseUpdateTask).Wait();
-        }
-
-
+        
         #endregion
 
 

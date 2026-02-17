@@ -68,7 +68,7 @@
                                                                     <tr style="height:1px;">
                                                                         <td style="width: 155px;">
                                                                             <div style="margin-top:5px;margin-left:5px;">
-                                                                                <Label style="width: 155px;font-family:Arial; font-size:11px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> {{'Tenant.H.PrepaidCollectHelpText' | TextCodeTranslationPipe}}</Label>
+                                                                                <Label style="width: 155px;font-family:Arial; font-size:11px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> {{'Tenant.PrepaidCollectHelpText' | TextCodeTranslationPipe}}</Label>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -244,10 +244,8 @@
                                             </td>
                                         </tr>
 
-                                        <tr style="height:10px">
-                                            <td>
-                                                <div></div>
-                                            </td>
+                                        <tr style="margin-top:10px">
+                                            <td colspan="2"> </td>
                                         </tr>
 
                                         <!-- VAT-->
@@ -255,7 +253,7 @@
                                             <td>
                                                 <table>
                                                     <tr>
-                                                        <td>
+                                                        <td style="height: 100%">
                                                             <div class="SystemDefaultsBox">
                                                                 <table>
                                                                     <tr class="SystemDefaultsBoxHeader">
@@ -375,14 +373,11 @@
 
                                                     </tr>
                                                 </table>
+
                                             </td>
+
                                         </tr>
 
-                                        <tr>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
                                     </table>
                                 </td>
 
@@ -410,7 +405,7 @@
                                                                     <tr style="height:1px;">
                                                                         <td style="width: 155px;">
                                                                             <div style="margin-top:5px;margin-left:5px;">
-                                                                                <Label style="width: 155px; font-family:Arial; font-size:11px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> {{'Tenant.H.DefaultUnitsHelpText' | TextCodeTranslationPipe}}</Label>
+                                                                                <Label style="width: 155px; font-family:Arial; font-size:11px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> {{'Tenant.DefaultUnitsHelpText' | TextCodeTranslationPipe}}</Label>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -523,27 +518,6 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr style="height:10px">
-                                                                                    <td colspan="2">
-                                                                                        <div></div>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <!-- Default Ratios Settings -->
-                                                                                <tr style="height: 1px;" *ngIf="HasDefaultRatiosFeature">
-                                                                                    <td colspan="2">
-                                                                                        <div style="padding-left: 10px;">
-                                                                                            <Hyperlink (click)="ViewRatioSettingsClicked()" [Text]="'Default Ratios Settings'"></Hyperlink>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                </tr>
-
-                                                                                <tr style="height:5px">
-                                                                                    <td colspan="2">
-                                                                                        <div></div>
-                                                                                    </td>
-                                                                                </tr>
-
                                                                                 <tr>
                                                                                     <td colspan="2">
                                                                                         <div></div>
@@ -552,6 +526,7 @@
 
                                                                             </table>
                                                                         </td>
+
                                                                     </tr>
 
                                                                 </table>
@@ -687,31 +662,31 @@
 
                                                                                 <!-- CustomerId -->
                                                                                 <!--<tr class="FormFieldRow" *ngIf="CustomerIdVisibility">
-                                                                                    <td style="width: 200px;">
-                                                                                        <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
+        <td style="width: 200px;">
+            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'CustomerId'"
-                                                                                                [ObjectTableName]="'Tenant'"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'Card'"
-                                                                                                [DependencyFilter1Value]="'CS'"
-                                                                                                [SelectedValue]="CustomerId">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>-->
-                                                                                <!-- CustomerTenantShareCustomsFile -->
+        <td>
+            <LogLov [ObjectFieldName]="'CustomerId'"
+                    [ObjectTableName]="'Tenant'"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Card'"
+                    [DependencyFilter1Value]="'CS'"
+                    [SelectedValue]="CustomerId">
+            </LogLov>
+        </td>
+    </tr>-->
+                                                                                <!-- IsCustomerTenantShare -->
                                                                                 <tr class="FormFieldRow" *ngIf="IsCustomerTenantShareVisible">
                                                                                     <td colspan="2">
                                                                                         <table>
                                                                                             <tr>
                                                                                                 <td style="width: 280px;">
-                                                                                                    <LogLabel [ObjectFieldName]="'CustomerTenantShareCustomsFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                    <LogLabel [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                                 </td>
 
                                                                                                 <td>
-                                                                                                    <LogCheckBox [ObjectFieldName]="'CustomerTenantShareCustomsFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'IsCustomerTenantShare'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
@@ -860,7 +835,7 @@
                                                                                                 </td>
 
                                                                                                 <td>
-                                                                                                    <LogCheckBox [ObjectFieldName]="'RegulatedAgentRegimeActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                    <CheckBox [IsChecked]="RegulatedAgentRegimeActivated" (Checked)="RegulatedAgentRegimeActivated = $event"></CheckBox>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>

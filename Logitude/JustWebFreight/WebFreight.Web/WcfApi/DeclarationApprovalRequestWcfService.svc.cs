@@ -1,12 +1,11 @@
 ﻿
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -76,7 +75,7 @@ namespace WebFreight.Web.WcfApi
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("DeclarationApprovalRequestQueue", 0);
             
-            queueservice.Send(new Dictionary<string, string>() { { "Id", shipmentAdditionalDataId }, { "Tenant", tenant.ToString() }, { "ImporterTenant", importerTenant.ToString() } }, tenant);
+            queueservice.Send(new Dictionary<string, string>() { { "Id", shipmentAdditionalDataId }, { "Tenant", tenant.ToString() }, { "ImporterTenant", importerTenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
         }
 
         private string UpdateShipmentAdditionalDataFromIncomingApprovalRequest(DeclarationApprovalRequestPM declarationApprovalRequestPM,int tenant)
@@ -90,7 +89,6 @@ namespace WebFreight.Web.WcfApi
                 shipmentPM.IsShipmentAdditionalCloudDataChange = true;
                 shipmentPM.DeclarationXMLData = declarationApprovalRequestPM.DeclarationXmlData;
                 shipmentPM.IsImporterApprovalRequired = true;
-                shipmentPM.IsDeclarationApprovalRequest = true;
                 shipmentId = shipmentPM.Id;
                 string email =Logitude.BL.Security.SecurityUtility.GetAuthenticatedUser(tenant);
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);

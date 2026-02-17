@@ -3,16 +3,13 @@ using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
 using Logitude.AmitalMessaging.Utils;
-using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Transactions;
 using System.Xml.Linq;
 using Unifreight.BL.EntityPMs;
@@ -23,7 +20,7 @@ using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
-    public class UnifreightFUStatusTaskService
+    internal class UnifreightFUStatusTaskService
     {
         private AmitalContext _AmitalContext;
         private string _UnifreightUserId;
@@ -32,68 +29,39 @@ namespace Logitude.Customs.BL.TraceEvents
         {
         }
 
-        public void DeleteINAFUStatus(int Tenant, string CustomFileNo)
+        public void DeleteINAFUStatus(int Tenant ,string CustomFileNo)
         {
-            //
-          
-                
-           
-            
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(Tenant);
-            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "GGG_DEL_INA", "NON", "NON", Tenant);
-
-            if (defValue == "Y")
-                {
-
-                    ContactRepository contactRepository = new ContactRepository(Tenant);
-                    var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
-                    string loggedContactId = "";
-                    if (loggedContact != null)
-                    {
-                        loggedContactId = loggedContact.Id;
-                    }
-
-
-                    UpsertFUStatusLE2U(Tenant, loggedContactId, new UnifreightFUStatusParam()
-                    {
-                        Entname = "CFIFILEM",
-                        PrimaryNum = CustomFileNo,
-                        Mode = UnifreightEventMode.del,
-                        StatusCode = "INA",
-                        StatusRemarks = "",
-
-                    });
-                    //SendINVAD(Tenant, CustomFileNo, loggedContactId);
-                }
-           
-
-        }
-
-        private static void SendINVAD(int Tenant, string CustomFileNo, string loggedContactId)
-        {
-            string unifrieghtEvent = "INAD";
-            string eventRemarks = "";
-            var MyUnifreightEventParam = new UnifreightEventParam()
+            var myGDFDATAQueryService = new Unifreight.BL.EntityQueryServices.GDFDATAQueryService(AmitalContext.GetContext(Tenant));
+            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "GGG_DEL_INA", "NON", "NON", false, true);
+            def = def ?? new GDFDATAPM();
+            if (def.DEFDATA == "Y")
             {
-                Code = unifrieghtEvent,
-                Mode = UnifreightEventMode.@new,
-                EventDateTime = DateTime.Now,
-                Entname = "CFIFILEM",
-                PrimaryNum = CustomFileNo,
-                EventRemarks = eventRemarks,
-            };
 
-            var myOpenUnifreighTask = new UnifreightEventTaskService();
-            myOpenUnifreighTask.UpsertEventLE2U(
-                Tenant,
-                loggedContactId,
-                MyUnifreightEventParam);
+                ContactRepository contactRepository = new ContactRepository(Tenant);
+                var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(Tenant), Tenant);
+                string loggedContactId = "";
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+
+                
+                UpsertFUStatusLE2U(Tenant, loggedContactId, new UnifreightFUStatusParam()
+                {
+                    Entname = "CFIFILEM",
+                    PrimaryNum = CustomFileNo,
+                    Mode = UnifreightEventMode.del,
+                    StatusCode = "INA",
+                    StatusRemarks = "",
+
+                });
+            }
+
         }
 
         public void UpsertFUStatusLE2U(int tenant, string logitudeUserId, UnifreightFUStatusParam myUnifreightFUStatusParam)
         {
-           
-             var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
+            
 
             if (!myUnifreightFUStatusParam.IsValid())
             {
@@ -102,22 +70,29 @@ namespace Logitude.Customs.BL.TraceEvents
             _UnifreightUserId = GetUnifreightUserId(tenant, logitudeUserId);
             try
             {
-                if (myUnifreightFUStatusParam.Entname == "CFIFILEM")
+
+                using (_AmitalContext = AmitalContext.GetContext(tenant))
                 {
-                    string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, myUnifreightFUStatusParam.EventDateTime ?? DateTime.Now);
-
-
-                    _AmitalContext = AmitalContext.GetContext(tenant);
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
 
-                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightFUStatusParam,tenant);
+
+
+                    EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightFUStatusParam);
+
+
                     
-                     InsertGGGQ4Entity(myUnifreightFUStatusParam.Entname, myUnifreightFUStatusParam.PrimaryNum, myGGGQUpdateService, isConnectedToUniFreight, tenant);
-                    
-                    InsertEventTask4Entity(myUnifreightFUStatusParam, _UnifreightUserId, tenant, requestData);
+                    string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, DateTime.Now);
+
+
+                    //string requestData = GetEventRequestDATA(myUnifreightFUStatusParam, unifreightUserId, true);
+                    InsertEventTask4Entity(myUnifreightFUStatusParam, _UnifreightUserId, myYCULTASKUpdateService, requestData);
+
+                    InsertGGGQ4Entity(myUnifreightFUStatusParam.Entname, myUnifreightFUStatusParam.PrimaryNum, myGGGQUpdateService);
                 }
+
 
             }
             finally
@@ -129,7 +104,7 @@ namespace Logitude.Customs.BL.TraceEvents
             }
         }
 
-        private void InsertGGGQ4Entity(string ENTNAME, string ENTITYNUM, GGGQUpdateService myGGGQUpdateService, bool isConnectedToUniFreight, int tenant)
+        private void InsertGGGQ4Entity(string ENTNAME, string ENTITYNUM, GGGQUpdateService myGGGQUpdateService)
         {
             var myGGGQPM_Packs = new GGGQPM()
             {
@@ -137,26 +112,22 @@ namespace Logitude.Customs.BL.TraceEvents
                 ORIGINQUE = "LGT", //LugitudeRequest
                 STATUS = "1",
                 EXPTASKTIME = 5,
-                EXECDATE = DateTime.Now,
+                EXECDATE = (new DualQueryService(_AmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
                 TRY = 9,
                 PRIORITY = 8,
                 ENTNAME = ENTNAME,
                 PRIMARYNUM = ENTITYNUM,
                 FORMID = "LGT_UPDATE_FCI",
                 DEBUG = "F",
-                DONEOPERATION = "D",
+                DONEOPERATION = "A",
 
             };
-            
-            myGGGQPM_Packs.Tenant = tenant;
-            
             myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with 
             myGGGQUpdateService.Update(myGGGQPM_Packs, true);
         }
 
-        private static void InsertEventTask4Entity(UnifreightFUStatusParam myUnifreightEventParam, string unfreightUserId, int tenant, string requestData)
+        private static void InsertEventTask4Entity(UnifreightFUStatusParam myUnifreightEventParam, string unfreightUserId, YCULTASKUpdateService myYCULTASKUpdateService, string requestData)
         {
-
 
 
             var myYCULTASKPM_Packs = new YCULTASKPM()
@@ -173,17 +144,9 @@ namespace Logitude.Customs.BL.TraceEvents
                 ARCHIVE = "F",
 
             };
-            
-            myYCULTASKPM_Packs.Tenant = tenant;
-            
 
-            AmitalContext _AmitalContext = AmitalContext.GetContext(tenant);
-            var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
             myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
             myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
-            
-            LogMessagingUtil.Instance.AppendLine("TASKID=" + myYCULTASKPM_Packs.TASKID);
-
         }
 
         public string GetMyFUStatusXML(
@@ -219,17 +182,14 @@ namespace Logitude.Customs.BL.TraceEvents
                 status_DateTime = statusDateTime,
                 //status_save = "no_fail",
                 comments = comments,
-                OwnerUnifreightUserCode = myUnifreightFUStatusParam.OwnerUnifreightUserCode
             };
 
             var myAmitalStatusTracerModel = new AmitalEventTracerModel();
             myAmitalStatusTracerModel.Tenant = tenant;
             myAmitalStatusTracerModel.UserId = loggingUserId;
             myAmitalStatusTracerModel.MyFUStatus = myFUStatus;
-
             var myGFUSTS = AmitalEventTracer.GetFUStatus(myAmitalStatusTracerModel);
             var xml = XmlGenericUtil<GFUSTS>.SerializeObject(myGFUSTS, true);
-            
             return xml;
         }
 
@@ -259,9 +219,9 @@ namespace Logitude.Customs.BL.TraceEvents
             return unfreightUserId;
         }
 
-        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightFUStatusParam myUnifreightEventParam,int tenant)
+        private static void EnsureLockExist4Entity(CCUQUELOCKQueryService myCCUQUELOCKQueryService, CCUQUELOCKUpdateService myCCUQUELOCKUpdateService, UnifreightFUStatusParam myUnifreightEventParam)
         {
-            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum,tenant,  false);
+            CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, false);
             if (myCCUQUELOCK == null)
             {
                 var myCCUQUELOCKPM = new CCUQUELOCKPM()
@@ -294,7 +254,6 @@ namespace Logitude.Customs.BL.TraceEvents
         public string Entname { get; set; }
         public string PrimaryNum { get; set; }
 
-        public string OwnerUnifreightUserCode { get; set; }//= "MEHES" / "MAMAN" / "SWISS"  / "OVERSEAS" ;
         internal bool IsValid()
         {
             if (string.IsNullOrWhiteSpace(StatusCode))
@@ -313,13 +272,5 @@ namespace Logitude.Customs.BL.TraceEvents
             return true;
 
         }
-    }
-    public sealed class FUOwnerUnifreightUserCode
-    {
-        public const string MEHES = "MEHES";
-        //public const string MAMAN = "MAMAN";
-        //public const string SWISS = "SWISS";
-        //public const string OVERSEAS = "OVERSEAS";
-
     }
 }

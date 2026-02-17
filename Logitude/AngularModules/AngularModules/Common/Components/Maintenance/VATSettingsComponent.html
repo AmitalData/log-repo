@@ -61,7 +61,7 @@
                                                                                     <table>
                                                                                         <tr>
                                                                                             <td>
-                                                                                                <RadioButton [Name]="'ApplyVATRadio'" [IsChecked]="ApplyVATForCustomers" (Checked)="SetApplyVAT('C')" [Text]="'Customers'"></RadioButton>
+                                                                                                <RadioButton [Name]="'ApplyVATRadio'" [IsChecked]="ApplyVATForCustomers" (Checked)="SetApplyVAT('C')" [Text]="'Customers'" ></RadioButton>
                                                                                             </td>
 
                                                                                             <td style="width: 5px; min-width: 5px;">
@@ -217,7 +217,7 @@
                                                                                             </td>
 
                                                                                             <td>
-                                                                                                <LogCheckBox [ObjectFieldName]="'VatMandatoryForPotentialCustomers'" [Checked]="VatMandatoryForPotentialCustomers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsDisabled]="!VatMandatoryForPotentialCustomers"></LogCheckBox>
+                                                                                                <LogCheckBox [ObjectFieldName]="'VatMandatoryForPotentialCustomers'" [Checked]="VatMandatoryForPotentialCustomers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsDisabled]="!IsVatMandatoryForPotentialCustomers"></LogCheckBox>
                                                                                             </td>
                                                                                             <td><div></div></td>
                                                                                         </tr>
@@ -257,42 +257,6 @@
 
                                                                                 </td>
                                                                                 <td><div></div></td>
-                                                                            </tr>
-
-                                                                            <tr class="FormFieldRow">
-                                                                                <td>
-                                                                                    <LogLabel [ObjectFieldName]="'VatUniquePartnerTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                </td>
-
-                                                                                <td colspan="2">
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width:105px;">
-                                                                                                <RadioButton [Name]="'VatUniquePartnerRadio'" [IsChecked]="VatUniquePartnerTypeCode == 'ALL'" (Checked)="VatUniquePartnerTypeCode = 'ALL'" [Text]="'All Customers'" [IsEnabled]="VatUniquePartnerRadioEnabled"></RadioButton>
-                                                                                            </td>
-
-                                                                                            <td style="width: 5px; min-width: 5px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="width:145px;">
-                                                                                                <RadioButton [Name]="'VatUniquePartnerRadio'" [IsChecked]="VatUniquePartnerTypeCode == 'CUS'" (Checked)="VatUniquePartnerTypeCode = 'CUS'" [Text]="'Active Customers Only'" [IsEnabled]="VatUniquePartnerRadioEnabled"></RadioButton>
-                                                                                            </td>
-
-                                                                                            <td style="width: 5px; min-width: 5px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="width:155px;">
-                                                                                                <RadioButton [Name]="'VatUniquePartnerRadio'" [IsChecked]="VatUniquePartnerTypeCode == 'POT'" (Checked)="VatUniquePartnerTypeCode = 'POT'" [Text]="'Potential Customers Only'" [IsEnabled]="VatUniquePartnerRadioEnabled"></RadioButton>
-                                                                                            </td>
-
-                                                                                            <td>
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
                                                                             </tr>
 
                                                                             <tr><td colspan="3"><div></div></td></tr>

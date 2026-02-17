@@ -41,16 +41,14 @@
             <td>{{'Shipment.TH.Routings' | TextCodeTranslationPipe}}</td>
 
             <td style="width: 85px;">
-                <div tabindex="0" id="{{ 'RoutingToggle' | IdGeneratorAsyncPipe | async}}" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
+                <div tabindex="0"  id="{{ 'RoutingToggle' | IdGeneratorPipe}}" class="ToggleButton" [class.ToggleButtonDisabled]="!IsEditingEnabled">
                     <label>{{'Shipment.B.Routings.AddRoute' | TextCodeTranslationPipe}}</label>
                     <img src="./Images/ToggleIcon.png" />
                     <div class="ToggleButtonMenu" style="width: 100px">
-                        <button id="{{ 'Pick Up' | IdGeneratorAsyncPipe | async}}" (click)="AddLeg('Pick Up')">{{'Shipment.O.Routings.Pickup' | TextCodeTranslationPipe}}</button>
-                        <button *ngIf="IsAddingPreOnCarriageVisible" id="{{ 'Pre Carriage' | IdGeneratorAsyncPipe | async}}" (click)="AddLeg('Pre Carriage')" [disabled]="IsAddPreCarriageDisabled">{{'Shipment.O.Routings.PreCarriage' | TextCodeTranslationPipe}}</button>
-                        <button *ngIf="EntityPM.ShipmentLevelCode == 'H'" id="{{ 'Pre Forwarding' | IdGeneratorAsyncPipe | async}}" (click)="AddLeg('Pre Forwarding')" [disabled]="IsAddPreForwardingDisabled">{{'Shipment.O.Routings.PreForwarding' | TextCodeTranslationPipe}}</button>
-                        <button *ngIf="IsAddingPreOnCarriageVisible" id="{{ 'On Carriage' | IdGeneratorAsyncPipe | async}}" (click)="AddLeg('On Carriage')" [disabled]="IsAddOnCarriageDisabled">{{'Shipment.O.Routings.OnCarriage' | TextCodeTranslationPipe}}</button>
-                        <button *ngIf="EntityPM.ShipmentLevelCode == 'H'" id="{{ 'On Forwarding' | IdGeneratorAsyncPipe | async}}" (click)="AddLeg('On Forwarding')" [disabled]="IsAddOnForwardingDisabled">{{'Shipment.O.Routings.OnForwarding' | TextCodeTranslationPipe}}</button>
-                        <button id="{{ 'Delivery' | IdGeneratorAsyncPipe | async}}" (click)="AddLeg('Delivery')">{{'Shipment.O.Routings.Delivery' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'Pick Up' | IdGeneratorPipe}}" (click)="AddLeg('Pick Up')">{{'Shipment.O.Routings.Pickup' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'Pre Carriage' | IdGeneratorPipe}}" (click)="AddLeg('Pre Carriage')" [disabled]="IsAddPreCarriageDisabled">{{'Shipment.O.Routings.PreCarriage' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'On Carriage' | IdGeneratorPipe}}" (click)="AddLeg('On Carriage')" [disabled]="IsAddOnCarriageDisabled">{{'Shipment.O.Routings.OnCarriage' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'Delivery' | IdGeneratorPipe}}" (click)="AddLeg('Delivery')">{{'Shipment.O.Routings.Delivery' | TextCodeTranslationPipe}}</button>
                     </div>
                 </div>
             </td>
@@ -61,7 +59,7 @@
                 <div class="MediaFill">
                     <ScrollViewer>
                         <ul>
-                            <li class="BoxItem" *ngFor="let item of ItemsSource" attr.data-cy="{{'Routing_' + item.LegName | IdGeneratorAsyncPipe | async}}">
+                            <li class="BoxItem" *ngFor="let item of ItemsSource">
                                 <table [style.height.px]="item.LegHeight">
                                     <tr style="height: 5px;">
                                         <td colspan="3">
@@ -87,34 +85,21 @@
                                                                 </td>
 
                                                                 <td style="width:18px; vertical-align:middle;" *ngIf="item.IsAddButtonVisible">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Pick Up'" (click)="AddLeg('Pick Up')"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Delivery'" (click)="AddLeg('Delivery')"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="AddLeg('WarehouseLeg_Pickups')"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg'" (click)="AddLeg('WarehouseLeg')"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg2'" (click)="AddLeg('WarehouseLeg2')"></IconButton>
-                                                                </td>
-
-                                                                <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible && IsChildFeatureExists">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Consequent Pickup'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildPickUpVisible" (click)="AddChildLeg('Pick Up', item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Title]="'Add Consequent Delivery'" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.IsAddChildDeliveryVisible" (click)="AddChildLeg('Delivery', item)"></IconButton>
-                                                                </td>
-
-                                                                <td style="width: 3px;" *ngIf="item.IsEditButtonVisible && IsChildFeatureExists">
-                                                                    <div></div>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Pick Up'" (click)="AddLeg('Pick Up')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'Delivery'" (click)="AddLeg('Delivery')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="AddLeg('WarehouseLeg_Pickups')"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" *ngIf="item.LegType == 'WarehouseLeg'" (click)="AddLeg('WarehouseLeg')"></IconButton>
                                                                 </td>
 
                                                                 <td style="width:18px; vertical-align:middle;" *ngIf="item.IsEditButtonVisible">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pick Up'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pre Carriage'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pre Forwarding'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.IsMainLeg" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Carriage'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Forwarding'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg2'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Delivery'" (click)="EditLeg(item)"></IconButton>
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'EmptyCR'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pick Up'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg_Pickups'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Pre Carriage'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.IsMainLeg" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'On Carriage'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'WarehouseLeg'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'Delivery'" (click)="EditLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Edit'" [IsSmall]="true" *ngIf="item.LegType == 'EmptyCR'" (click)="EditLeg(item)"></IconButton>
                                                                 </td>
 
                                                                 <td style="width: 3px;">
@@ -122,7 +107,7 @@
                                                                 </td>
 
                                                                 <td style="width: 1px; vertical-align: middle;" *ngIf="item.IsDeleteButtonVisible">
-                                                                    <IconButton [ExternalId]="'-'+item.LegType" [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="item.IsDeleteButtonEnabled" (click)="DeleteLeg(item)"></IconButton>
+                                                                    <IconButton [ExternalId]="'-'+item.LegType"  [Name]="'Delete'" [IsSmall]="true" [IsEnabled]="IsEditingEnabled" (click)="DeleteLeg(item)"></IconButton>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -136,7 +121,7 @@
                                                         <table *ngIf="item.IsLegExists">
                                                             <tr>
                                                                 <td>
-                                                                    <div class="MediaFill" *ngIf="!item.IsWarehouseLeg && !item.IsWarehouseLeg2">
+                                                                    <div class="MediaFill" *ngIf="!item.IsWarehouseLeg">
                                                                         <table>
                                                                             <tr style="height: 5px;">
                                                                                 <td>
@@ -167,7 +152,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 75px;">
-                                                                                                            <button id="{{ 'ActualDeparture' | IdGeneratorAsyncPipe | async}}" (click)="item.SetActualDepartureClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualDepartureVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                            <button id="{{ 'ActualDeparture' | IdGeneratorPipe}}" (click)="item.SetActualDepartureClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualDepartureVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
                                                                                                         </td>
 
                                                                                                         <td style="width: 15px;">
@@ -191,7 +176,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 75px;">
-                                                                                                            <button id="{{ 'ActualArrival' | IdGeneratorAsyncPipe | async}}" (click)="item.SetActualArrivalClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualArrivalVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                                                                                            <button id="{{ 'ActualArrival' | IdGeneratorPipe}}" (click)="item.SetActualArrivalClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualArrivalVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
                                                                                                         </td>
 
                                                                                                         <td style="width: 15px;">
@@ -232,7 +217,7 @@
                                                                                     </div>
 
                                                                                     <div style="float: left;">
-                                                                                        <span class="Label" style="float: left;">{{item.CarrierLabel}}:</span>
+                                                                                        <span class="Label" style="float: left;">{{'Shipment.O.Routings.Carrier' | TextCodeTranslationPipe}}:</span>
                                                                                         <span *ngIf="item.IsCarrierTextVisible" class="Value" style="float: left; margin-left: 3px;">{{item.CarrierText}}</span>
                                                                                         <span *ngIf="item.IsCarrierSiteVisible" style="float: left; margin-left: 3px;"><a [attr.href]="item.CarrierSite" target="_blank">{{item.CarrierText}}</a></span>
                                                                                     </div>
@@ -273,7 +258,7 @@
                                                                                                     <tr style="height:22px;">
                                                                                                         <td style="width: 40px;" class="Label">Terminal:</td>
                                                                                                         <td style="width: 180px;">
-                                                                                                            <div style="float: left;width: 180px; margin-left: 3px;" class="Value TextTrimming"> {{WarehouseLegTerminalName}}</div>
+                                                                                                            <div  style="float: left;width: 180px; margin-left: 3px;" class="Value TextTrimming"> {{WarehouseLegTerminalName}}</div>
                                                                                                         </td>
                                                                                                         <td>
                                                                                                             <div></div>
@@ -410,137 +395,6 @@
                                                                             </tr>
                                                                         </table>
                                                                     </div>
-
-                                                                    <div class="MediaFill" *ngIf="item.IsWarehouseLeg2">
-                                                                        <table>
-                                                                            <tr style="height: 5px;">
-                                                                                <td>
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td style="width: 220px;">
-                                                                                                <table>
-                                                                                                    <tr style="height:22px;">
-                                                                                                        <td style="width: 40px;" class="Label">Terminal:</td>
-                                                                                                        <td style="width: 180px;">
-                                                                                                            <div style="float: left;width: 180px; margin-left: 3px;" class="Value TextTrimming"> {{WarehouseLeg2TerminalName}}</div>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                    <tr>
-                                                                                                        <td colspan="3">
-                                                                                                            <AddressTemplate [Border]="'0px'" [Address]="Warehouse2AddressList" [Right]="36"></AddressTemplate>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </td>
-
-                                                                                            <td style="width: 5px;">
-                                                                                                <div></div>
-                                                                                            </td>
-
-                                                                                            <td style="float:left;">
-                                                                                                <table style="table-layout: fixed;">
-                                                                                                    <tr class="FieldRow">
-                                                                                                        <td style="width: 130px;" class="Label">{{'Shipment.O.Routings.WarehouseLegReference' | TextCodeTranslationPipe}}:</td>
-                                                                                                        <td>
-                                                                                                            <div style="float: left;" class="Value"> {{item.WarehouseLeg2Reference}}</div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                    <tr class="FieldRow">
-                                                                                                        <td class="Label">{{'Shipment.O.Routings.WarehouseLegTerminalCode' | TextCodeTranslationPipe}}:</td>
-                                                                                                        <td>
-                                                                                                            <div style="float: left;" class="Value TextTrimming">{{item.WarehouseLeg2TerminalCode}}</div>
-                                                                                                        </td>
-                                                                                                    </tr>
-
-                                                                                                    <!-- TerminalAvailable -->
-                                                                                                    <tr class="FieldRow" *ngIf="item.LegType == 'WarehouseLeg2'">
-                                                                                                        <td class="Label">{{'Shipment.O.Routings.TerminalAvailable' |TextCodeTranslationPipe}}:</td>
-                                                                                                        <td>
-                                                                                                            <div style="float: left;" class="Value">{{item.Terminal2Available | DateTimePipe:'SHWH'}}</div>
-                                                                                                        </td>
-                                                                                                    </tr>
-
-                                                                                                    <tr>
-                                                                                                        <td colspan="2">
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </td>
-
-                                                                                            <td style="width: 268px;">
-                                                                                                <table style="table-layout: fixed;">
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <table>
-                                                                                                                <tr style="height:22px;">
-                                                                                                                    <td style="width: 75px;">
-                                                                                                                        <button (click)="item.SetActualDepartureClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualDepartureVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
-                                                                                                                    </td>
-
-                                                                                                                    <td style="width: 15px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-
-                                                                                                                    <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Entry' | TextCodeTranslationPipe}}:</td>
-                                                                                                                    <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToDatePipe}}</td>
-                                                                                                                    <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.DepartureColor}">{{item.DepartureDate | DateTimeToTimePipe}}</td>
-
-                                                                                                                    <td style="width: 18px;">
-                                                                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeDeparture"></FollowupButton>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                                <tr style="height:22px;">
-                                                                                                                    <td style="width: 75px;">
-                                                                                                                        <button (click)="item.SetActualArrivalClicked()" class="Button DateButton" [disabled]="!IsEditingEnabled" *ngIf="item.IsSetActualArrivalVisible" style="height: 18px; font-size: 10px;">Set as Actual</button>
-                                                                                                                    </td>
-
-                                                                                                                    <td style="width: 15px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                    <td style="width: 65px;" class="Label">{{'Shipment.O.Routings.Release' | TextCodeTranslationPipe}}:</td>
-                                                                                                                    <td style="width: 65px; font-size: 10px;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToDatePipe}}</td>
-                                                                                                                    <td style="width: 30px; font-size: 10px; text-align: right;" [ngStyle]="{color: item.ArrivalColor}">{{item.ArrivalDate | DateTimeToTimePipe}}</td>
-
-                                                                                                                    <td style="width: 18px;">
-                                                                                                                        <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [PickUpPM]="item.Pickup" [DeliveryPM]="item.Delivery" [LegType]="item.FollowupLegTypeArrival"></FollowupButton>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td colspan="2">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </td>
-
-                                                                                            <td style="width: 5px;">
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr style="height: 5px;">
-                                                                                <td>
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </table>
@@ -575,189 +429,77 @@
             <td>{{'Shipment.TH.Routings' | TextCodeTranslationPipe}}</td>
         </tr>
 
-        <tr style="height: 192px;">
+        <tr style="height: 170px;">
             <td>
                 <table>
                     <tr>
                         <td style="width: 400px;">
-                            <fieldset class="MediaFill GroupBox">
-                                <legend>
-                                    <span>From</span>
-                                </legend>
+                            <SectionBox [HeaderHeight]="22" [Border]="'1px solid #BABABA'">
+                                <SectionHead [Left]="5" [IsLight]="true">
+                                    <span style="font-size: 12px; color: #1B90CB;">From Partner</span>
+                                </SectionHead>
 
-                                <div style="height: 192px; width: 100%; margin-top: -5px;">
+                                <SectionBody>
                                     <table>
-                                        <tr style="height: 25px;">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 105px;">
+                                                <LogLabel [ObjectFieldName]="'MainCarriageFromPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 240px;">
+                                                <LogLov [ObjectFieldName]="'MainCarriageFromPartnerId'"
+                                                        [SelectedValue]="MainCarriageFromPartnerId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="CardLOVDependencyProperty1">
+                                                </LogLov>
+                                            </td>
+
                                             <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <RadioButton [IsEnabled]="IsEditingEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PART'" (Checked)="InlandDomesticFromTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
-                                                        </td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
 
-                                                        <td>
-                                                            <RadioButton [IsEnabled]="IsEditingEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PORT'" (Checked)="InlandDomesticFromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
-                                                        </td>
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MainCarriageFromAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.Partners.Address'"></LogLabel>
+                                            </td>
 
-                                                        <td>
-                                                            <RadioButton [IsEnabled]="IsEditingEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'CASL'" (Checked)="InlandDomesticFromTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'MainCarriageFromAddressId'"
+                                                        [SelectedValue]="MainCarriageFromAddressId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Address'"
+                                                        [DependencyFilter1Value]="MainCarriageFromPartnerId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div style="float: right; padding-right: 5px;">
+                                                    <IconButton [ExternalId]="'-F'"  [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('F')" [IsEnabled]="MainCarriageFromAddressId && IsEditingEnabled"></IconButton>
+                                                    <IconButton [ExternalId]="'-F'"  [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('F')" [IsEnabled]="IsEditingEnabled && MainCarriageFromAddressId"></IconButton>
+                                                </div>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td>
-                                                <!-- PART -->
-                                                <table *ngIf="InlandDomesticFromTypeCode == 'PART'">
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width: 90px;">
-                                                            <LogLabel [ObjectFieldName]="'MainCarriageFromPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
-                                                        </td>
+                                                <div></div>
+                                            </td>
 
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'MainCarriageFromPartnerId'"
-                                                                    [SelectedValue]="MainCarriageFromPartnerId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Card'"
-                                                                    [DependencyFilter1Value]="CardLOVDependencyProperty1"
-                                                                    [DependencyFilter1IsList]="CardLOVDependencyProperty1IsList">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
+                                            <td style="vertical-align: top; padding-top: 5px;">
+                                                <AddressTemplate [Address]="FromAddressList" [Right]="36"></AddressTemplate>
+                                            </td>
 
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'MainCarriageFromAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.Partners.Address'"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'MainCarriageFromAddressId'"
-                                                                    [SelectedValue]="MainCarriageFromAddressId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Address'"
-                                                                    [DependencyFilter1Value]="MainCarriageFromPartnerId">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="vertical-align: top; padding-top: 5px;">
-                                                            <AddressTemplate [Address]="MainCarriageFromAddressList" [Right]="36"></AddressTemplate>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                                <!-- PORT -->
-                                                <table *ngIf="InlandDomesticFromTypeCode == 'PORT'">
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width: 90px;">
-                                                            <LogLabel [ObjectFieldName]="'MainCarriageFromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'From Port'"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
-                                                                    [SelectedValue]="MainCarriageFromPortId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Port'"
-                                                                    [DependencyFilter1Value]="TransportModeId">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr style="height: 75px;">
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="height: 75px; vertical-align: top;">
-                                                            <div style="height: 100%;">
-                                                                <LogTextBox [ObjectFieldName]="'MainCarriageFromPortAddress'" [Text]="MainCarriageFromPortAddress" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                                <!-- CASL -->
-                                                <table *ngIf="InlandDomesticFromTypeCode == 'CASL'">
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width: 90px;">
-                                                            <LogLabel [ObjectFieldName]="'InlandDomesticFromZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogTextBox [ObjectFieldName]="'InlandDomesticFromZipCode'" [Text]="InlandDomesticFromZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'InlandDomesticFromCity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <LogTextBox [ObjectFieldName]="'InlandDomesticFromCity'" [Text]="InlandDomesticFromCity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                    </td>
-
-                                                                    <td style="padding-left: 5px;">
-                                                                        <Hyperlink (click)="SelectCityCommand('F')">Select</Hyperlink>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'InlandDomesticFromCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'InlandDomesticFromCountryId'"
-                                                                    [SelectedValue]="InlandDomesticFromCountryId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Country'">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <div style="float:right;">
-                                                                <Hyperlink (click)="InlandDomesticAddressMoreDetailsClick('From')" [Text]="'More Details'"></Hyperlink>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                            <td>
+                                                <div></div>
                                             </td>
                                         </tr>
                                     </table>
-                                </div>
-                            </fieldset>
+                                </SectionBody>
+                            </SectionBox>
                         </td>
 
                         <td style="width: 10px;">
@@ -765,184 +507,72 @@
                         </td>
 
                         <td style="width: 400px;">
-                            <fieldset class="MediaFill GroupBox">
-                                <legend>
-                                    <span>To</span>
-                                </legend>
+                            <SectionBox [HeaderHeight]="22" [Border]="'1px solid #BABABA'">
+                                <SectionHead [Left]="5" [IsLight]="true">
+                                    <span style="font-size: 12px; color: #1B90CB;">To Partner</span>
+                                </SectionHead>
 
-                                <div style="height: 192px; width: 100%; margin-top: -5px;">
+                                <SectionBody>
                                     <table>
-                                        <tr style="height: 25px;">
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 105px;">
+                                                <LogLabel [ObjectFieldName]="'MainCarriageToPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 240px;">
+                                                <LogLov [ObjectFieldName]="'MainCarriageToPartnerId'"
+                                                        [SelectedValue]="MainCarriageToPartnerId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="CardLOVDependencyProperty1">
+                                                </LogLov>
+                                            </td>
+
                                             <td>
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <RadioButton [IsEnabled]="IsEditingEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PART'" (Checked)="InlandDomesticToTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
-                                                        </td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
 
-                                                        <td>
-                                                            <RadioButton [IsEnabled]="IsEditingEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PORT'" (Checked)="InlandDomesticToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
-                                                        </td>
+                                        <tr class="FormFieldRow">
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'MainCarriageToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.Partners.Address'"></LogLabel>
+                                            </td>
 
-                                                        <td>
-                                                            <RadioButton [IsEnabled]="IsEditingEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'CASL'" (Checked)="InlandDomesticToTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'MainCarriageToAddressId'"
+                                                        [SelectedValue]="MainCarriageToAddressId"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [LookUpTableName]="'Address'"
+                                                        [DependencyFilter1Value]="MainCarriageToPartnerId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td>
+                                                <div style="float: right; padding-right: 5px;">
+                                                    <IconButton [ExternalId]="'-T'"  [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('T')" [IsEnabled]="MainCarriageToAddressId && IsEditingEnabled"></IconButton>
+                                                    <IconButton [ExternalId]="'-T'" [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('T')" [IsEnabled]="IsEditingEnabled && MainCarriageToPartnerId"></IconButton>
+                                                </div>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td>
-                                                <!-- PART -->
-                                                <table *ngIf="InlandDomesticToTypeCode == 'PART'">
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width: 90px;">
-                                                            <LogLabel [ObjectFieldName]="'MainCarriageToPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.NewShipment.Name'"></LogLabel>
-                                                        </td>
+                                                <div></div>
+                                            </td>
 
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'MainCarriageToPartnerId'"
-                                                                    [SelectedValue]="MainCarriageToPartnerId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Card'"
-                                                                    [DependencyFilter1Value]="CardLOVDependencyProperty1"
-                                                                    [DependencyFilter1IsList]="CardLOVDependencyProperty1IsList">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
+                                            <td style="vertical-align: top; padding-top: 5px;">
+                                                <AddressTemplate [Address]="ToAddressList" [Right]="36"></AddressTemplate>
+                                            </td>
 
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'MainCarriageToAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.S.Partners.Address'"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'MainCarriageToAddressId'"
-                                                                    [SelectedValue]="MainCarriageToAddressId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Address'"
-                                                                    [DependencyFilter1Value]="MainCarriageToPartnerId">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="vertical-align: top; padding-top: 5px;">
-                                                            <AddressTemplate [Address]="MainCarriageToAddressList" [Right]="36"></AddressTemplate>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                                <!-- PORT -->
-                                                <table *ngIf="InlandDomesticToTypeCode == 'PORT'">
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width: 90px;">
-                                                            <LogLabel [ObjectFieldName]="'MainCarriageToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'To Port'"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'MainCarriageToPortId'"
-                                                                    [SelectedValue]="MainCarriageToPortId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Port'"
-                                                                    [DependencyFilter1Value]="TransportModeId">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr style="height: 75px;">
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="height: 75px; vertical-align: top;">
-                                                            <div style="height: 100%;">
-                                                                <LogTextBox [ObjectFieldName]="'MainCarriageToPortAddress'" [Text]="MainCarriageToPortAddress" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                                <!-- CASL -->
-                                                <table *ngIf="InlandDomesticToTypeCode == 'CASL'">
-                                                    <tr class="FormFieldRow">
-                                                        <td style="width: 90px;">
-                                                            <LogLabel [ObjectFieldName]="'InlandDomesticToZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogTextBox [ObjectFieldName]="'InlandDomesticToZipCode'" [Text]="InlandDomesticToZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'InlandDomesticToCity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <LogTextBox [ObjectFieldName]="'InlandDomesticToCity'" [Text]="InlandDomesticToCity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                    </td>
-
-                                                                    <td style="padding-left: 5px;">
-                                                                        <Hyperlink (click)="SelectCityCommand('T')">Select</Hyperlink>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'InlandDomesticToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
-
-                                                        <td>
-                                                            <LogLov [ObjectFieldName]="'InlandDomesticToCountryId'"
-                                                                    [SelectedValue]="InlandDomesticToCountryId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Country'">
-                                                            </LogLov>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <div style="float:right;">
-                                                                <Hyperlink (click)="InlandDomesticAddressMoreDetailsClick('To')" [Text]="'More Details'"></Hyperlink>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                            <td>
+                                                <div></div>
                                             </td>
                                         </tr>
                                     </table>
-                                </div>
-                            </fieldset>
+                                </SectionBody>
+                            </SectionBox>
                         </td>
 
                         <td>

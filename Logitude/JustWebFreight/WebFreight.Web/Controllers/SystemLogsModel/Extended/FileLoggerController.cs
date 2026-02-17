@@ -3,7 +3,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;

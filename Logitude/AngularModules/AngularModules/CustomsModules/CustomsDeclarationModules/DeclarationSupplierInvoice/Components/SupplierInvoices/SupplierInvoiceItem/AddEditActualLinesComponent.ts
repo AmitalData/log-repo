@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../../../../Infrastructure/Utilities/Session
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditActualLinesComponent.html',
 })
 

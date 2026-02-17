@@ -14,7 +14,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {CRMDomainService} from '../../Services/CRMDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "TicketHelperComponent.html",
 })
 

@@ -12,7 +12,7 @@ import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
 
 @Component({
     selector: 'NewCurrencyComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewCurrencyComponent.html',
 })
 
@@ -23,12 +23,9 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
     public ControlColumnWidth: number = 230;
     public TenantPM: TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
-    IsAccountingActivated: boolean = false;
-
     constructor() {
         super();
         this.TenantPM = InfraSettings.TenantPM;
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.LoadCurrencyListMethod();
         this.SetUIProperties();
     }
@@ -41,11 +38,6 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
         this.UIProperties.SetRequired("CurrencyId", null, AppTool.IsNullOrEmpty(this.CurrencyId));
         this.UIProperties.SetRequired("RateDate", null, AppTool.IsNullOrEmpty(this.RateDate));
         this.UIProperties.SetRequired("CurrencyRate", null, AppTool.IsNullOrEmpty(this.CurrencyRate));
-
-        if(this.IsAccountingActivated) {
-            this.UIProperties.SetRequired("Unit", null, AppTool.IsNullOrEmpty(this.Unit));
-        }
-       
     }
 
     public CurrencyList: CurrencyList[] = [];
@@ -73,15 +65,6 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
     set CurrencyRate(newValue: number) {
         if (this.currencyRate != newValue) {
             this.currencyRate = newValue;
-            this.SetUIProperties();
-        }
-    }
-
-    private unit: number = 1;
-    get Unit() { return this.unit; }
-    set Unit(newValue: number) {
-        if (this.unit != newValue) {
-            this.unit = newValue;
             this.SetUIProperties();
         }
     }
@@ -124,14 +107,6 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
             errors.push("Exchange Rate Field is Required");
         }
 
-        if(this.IsAccountingActivated) {
-
-            if (this.Unit == null || this.Unit <= 0) {
-                errors.push("Unit Field is Required");
-            }
-        }
-       
-
         var ratedate = DateTool.GetDateParts(this.RateDate).DateObject;
         ratedate = DateTool.TruncateTime(ratedate);
         var today = DateTool.GetCurrentDateAsUtc();
@@ -166,7 +141,7 @@ export class NewCurrencyComponent extends BaseComponent implements AfterViewInit
 
         var myDate = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + sec + "." + millsec;
 
-        myService.CopyCurrencyToTenant(this.CurrencyId, this.CurrencyRate, myDate,this.Unit).subscribe((myResponse: ServiceResponse) => {
+        myService.CopyCurrencyToTenant(this.CurrencyId, this.CurrencyRate, myDate).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var newCreatedCurrency: CurrencyList = myResponse.Result;
                 this.CurrentSession.CloseCurrentWindowEmit(newCreatedCurrency.Id);

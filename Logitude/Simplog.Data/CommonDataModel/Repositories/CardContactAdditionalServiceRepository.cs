@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -23,19 +23,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
+        public CardContactAdditionalServiceRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CardContactAdditionalService> GetCardContactAdditionalServices(int tenant)
         {
             return (from record in context.CardContactAdditionalServices
                     where record.Tenant == tenant
                     select record);
-        }
-
-        public List<CardContactAdditionalService> GetCardContactServicesByServicesList(List<string> myList, int tenant)
-        {
-            return (from record in context.CardContactAdditionalServices.Include("CardContact")
-                    where record.Tenant == tenant && myList.Contains(record.AdditionalServiceId)
-                    select record).ToList();
         }
 
         public IQueryable<CardContactAdditionalService> GetAdditionalServicesByCardContactIdd(string cardContactId, int tenant)

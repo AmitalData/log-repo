@@ -17,7 +17,6 @@ using Logitude.Server.Tools.ExternalServices;
 using System.Xml.Linq;
 using Simplog.Data.Helpers;
 using Logitude.CustomsMessaging.Helpers;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -27,9 +26,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         
         
 
-        public (byte[], RequestParamsBase) PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId)
+        public byte[] PasiveSignGetBytesToSign(int tenant, string CustomsRequestsSheetId)
         {
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("PasiveSignGetBytesToSign");
 
             TRequestParams defaultRequestParamsFromCustomsResponse = null;
             defaultRequestParamsFromCustomsResponse = new TRequestParams();
@@ -41,20 +39,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 //throw "Not in the right step";
             }
-            var dRequestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>() as RequestParamsBase;
             var xmlSerilazeObject = _CustomsRequestsSheetService.GetCustomsRequestXml();
             var bytesSerilazeObject = UTF8Encoding.UTF8.GetBytes(xmlSerilazeObject);
-            return (bytesSerilazeObject, dRequestParams);
+            return bytesSerilazeObject;
         }
 
         
         private bool CustomsCommandSign(TCustomsRequest customsRequest)
         {
-            LogMessagingUtil.Instance.AppendLine("CustomsCommandSign");
-
             var toContinueNextCommand = true;
             var requestParams = _CustomsRequestsSheetService.GetRequestParams<TRequestParams>();
-            RequestParams = requestParams;
 
             switch (_CustomsRequestsSheetService.CalcSignByFromStep(null))
             {
@@ -77,7 +71,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             byte[] customRequestSignedByteArry = null;
             if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum > CustomsStepEnum.CustomRequestSign)
             {
-                LogMessagingUtil.Instance.AppendLine("if (_CustomsRequestsSheetService.StartCustomsRequestStepEnum > CustomsStepEnum.CustomRequestSign):" + _CustomsRequestsSheetService.StartCustomsRequestStepEnum);
 
                 customRequestSignedByteArry = _CustomsRequestsSheetService.GetCustomsRequestSign();
                 if (customRequestSignedByteArry == null)
@@ -92,7 +85,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     SetRequestSheetContextCurrentX509Certificate(customRequestSignedByteArry);
                     //_CustomRequestSignedByteArry = customRequestSignedByteArry;
-                    
                     return toContinueNextCommand;
                 }
             }
@@ -105,70 +97,27 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
             string personId = ""; SignQueueByType  SignatureBy =  SignQueueByType.None;
-
-            DateTime startAt = TenantServerConfigration.GetCurrentDateTime(requestParams.Tenant);//DateTime.Now;20150909
+                          
+            
             if (_SignRecievedModel == null)
             {
- 
-                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-.AppendLine("if (_SignRecievedModel == null)");
+                
+                if (SignQueue.Instance.IsPasiveSignMode())
+                {
 
-                if (SignQueue.Instance.IsPasiveSignMode() && !IsInteractiveHSM())
-                 {
-
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-    .AppendLine("if (SignQueue.Instance.IsPasiveSignMode() && !IsIneractiveHSM())");
-                    availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText, requestParams?.HsmStationContext);
-
+                    availableSignServer = _CustomsRequestsSheetService.GetAvailableSignServer(out personId, out SignatureBy, out noAvailableSignServerErrorText);
+                    
                     if (!string.IsNullOrWhiteSpace(availableSignServer))
                     {
 
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-        .AppendLine(" if (!string.IsNullOrWhiteSpace(availableSignServer))");
                         Nullable<CustomsCommandEnum> curComm = null;
                         if (_CustomsStateMachineProcess != null)
                         {
-                            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-        .AppendLine("if (_CustomsStateMachineProcess != null)");
                             curComm = _CustomsStateMachineProcess.CurrentCommand;
                         }
                         _CustomsRequestsSheetService.StartStep(CustomsStepEnum.CustomRequestSign, curComm);
-
-                        var pmCustomsSetting = Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
                         
-                        if (string.IsNullOrEmpty(requestParams.SignMethodByQueue))
-                        {
-                            throw new Exception("RequestParams.SignType is must !!");
-                        }
-                        SignMethodByQueueEnum signMethodBy = SignMethodByQueueEnum.None;
-                        if (!Enum.TryParse<SignMethodByQueueEnum>(requestParams.SignMethodByQueue, out signMethodBy))
-                        {
-                            throw new Exception("RequestParams.SignType is must !!");
-                        }
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-     .AppendLine("isignMethodBy :" + signMethodBy);
-                        switch (signMethodBy)
-                        {
-                          
-                            case SignMethodByQueueEnum.HybridDbSignQueue:
- 
-                                var signQueueHybridExportDBService = new CreateSignQueueHybridExportDBService();
-                                signQueueHybridExportDBService.CreateQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
-
-                                break;
-                            case SignMethodByQueueEnum.HSMSignQueue:
-                                var signQueueHSMDBService = new CreateSignQueueHSMDBService();
-                                signQueueHSMDBService.CreateQueue(requestParams, personId, SignatureBy, pmCustomsSetting.CustomsAgentId);
-                                break;
-
-                            case SignMethodByQueueEnum.None:
-                            case SignMethodByQueueEnum.MemorySignQueue:
-                            default:
-                                {
-                                    SignQueue.Instance.Add(requestParams.Tenant, personId, requestParams.CustomsRequestsSheetId, requestParams.InterfaceTypeCode, SignatureBy);
-                                }
-                                break;
-                        }                                             
+                        SignQueue.Instance.Add(requestParams.Tenant, personId, requestParams.CustomsRequestsSheetId, requestParams.InterfaceTypeCode, SignatureBy);
                         var businessErrorException = new BusinessErrorException("Add SignQueue ");
 
                         businessErrorException.CurrentContextTag = new TResponseData()
@@ -186,16 +135,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }
                 }
             }
-            else if (_SignRecievedModel != null)
+
+            DateTime startAt = TenantServerConfigration.GetCurrentDateTime(requestParams.Tenant);//DateTime.Now;20150909
+            if (_SignRecievedModel != null)
             {
-
- 
-                 Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance
-     .AppendLine("else if (_SignRecievedModel != null):" + _SignRecievedModel.CustomsRequestsSheetId);
-
- 
-
-                 DateTime startAtD = DateTime.MinValue;
+                DateTime startAtD = DateTime.MinValue;
                 SignQueue.Instance.GetStartAt(requestParams.Tenant, requestParams.CustomsRequestsSheetId, out startAtD);
                 if (startAtD != DateTime.MinValue)
                 {
@@ -204,22 +148,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 if (this._CustomsRequestsSheetService.GetCurrentStepStartAt().HasValue)
                 {
                     startAt = this._CustomsRequestsSheetService.GetCurrentStepStartAt().GetValueOrDefault();
-                }
-            ;
-                if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))
-                {
-                    LogMessagingUtil.Instance.AppendLine("if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))");
-
-                    var queueservice = new Server.Tools.QueueService.DbQueueService("How Care ", requestParams.Tenant);
-                    if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskMarkAsFailedMessage))
-                    {
-                        queueservice.CompleteAsFailedParam(_SignRecievedModel.ExportTaskQueueId);
-                    }
-                    else
-                    {
-                        queueservice.Complete(_SignRecievedModel.ExportTaskQueueId);
-                    }
-                    
                 }
 
 
@@ -234,10 +162,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             //object ContextObjectTag = null;
             toContinueNextCommand = DoStep(stepRequest, () =>
             {
-                if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskMarkAsFailedMessage))
-                {
-                    throw new Exception(_SignRecievedModel.ExportTaskMarkAsFailedMessage);
-                }
+
                 if (throwNoAvailableSignServer)
                 {
                     throw new Exception(noAvailableSignServerErrorText);
@@ -250,30 +175,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             null,null);
             ///customsRequest = ContextObjectTag as TCustomsRequest;
             ;
-            if (!string.IsNullOrWhiteSpace(_SignRecievedModel?.ExportTaskQueueId))
-            {
-                toContinueNextCommand = false;//use batch - not IIS !!!
-            }
-                
             return toContinueNextCommand;
-
-        }
-
-        private bool IsInteractiveHSM()
-        {
-            //if (this.MyOverrideControllerModel?.IsCustomsMessagingSheetWR == true)
-            //{
-            //    return true;
-            //}
-            if (RequestParams.SignMethodByQueue != SignMethodByQueueEnum.HSMSignQueue.ToString())
-            {
-                return false;
-            }
-            if (RequestParams.RequestVIA != SendRequestVIA.WebServiceInteractive)
-            {
-                return false;
-            }
-            return true;
 
         }
 
@@ -286,14 +188,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 File.WriteAllText(@"C:\Users\itzik\Desktop\zevel\tst_utf8.xml", xml);
                 var xDoc1 = XDocument.Parse(xml);
             }
-            
-            //var xDoc = XDocument.Parse(Encoding.UTF8.GetString(customRequestSignedByteArry));
-            string xml1 = Encoding.UTF8.GetString(customRequestSignedByteArry) ?? "";
-            if (xml1[0] != '<')//why START AT 2022/8/29 == bom ?? 
-            {
-                xml1 = xml1.Substring(1);
-            }
-            var xDoc = XDocument.Parse(xml1);
+            var xDoc = XDocument.Parse(Encoding.UTF8.GetString(customRequestSignedByteArry));
             var eleX509SubjectName = xDoc.Descendants().FirstOrDefault(ele => ele.Name.LocalName.Contains("X509SubjectName"));
             if (eleX509SubjectName != null)
             {
@@ -321,33 +216,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
                         {
-                            LogMessagingUtil.Instance.AppendLine("if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)");
-
                             SignQueue.Instance.Remove(requestParams.Tenant, requestParams.CustomsRequestsSheetId);
                         }
                     };
                 }
                 else
                 {
-                    LogMessagingUtil.Instance.AppendLine("Transaction.Current == null ??? can not remove  SignQueue.Instance.Remove !!!");
-
                     throw new Exception("Transaction.Current == null ??? can not remove  SignQueue.Instance.Remove !!!");
                 }
             }
             else
             {
-
-                if (IsInteractiveHSM())
-                {
-                    customRequestSignedByteArry = TaskSignItHSM(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
-                }
-                else
-                {
-                    LogMessagingUtil.Instance.AppendLine("TaskSignIt");
-
-                    customRequestSignedByteArry = TaskSignIt(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
-                }
-                
+                customRequestSignedByteArry = TaskSignIt(requestParams.Tenant, customsRequest); //no catch exeption -rethrow
             }
             SetRequestSheetContextCurrentX509Certificate(customRequestSignedByteArry);
             var memSign = new MemoryStream(customRequestSignedByteArry);

@@ -9,13 +9,11 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './MiscPageComponent.html',
 })
 
 export class MiscPageComponent implements AfterViewInit {
-  public AllBankDepositsVisibility: boolean = false;
-  public ViewDepositQuery(arg: any) { }
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     @Output() ReloadUserQueries = new EventEmitter();
@@ -30,7 +28,6 @@ export class MiscPageComponent implements AfterViewInit {
         this._entityResourceService.getEntityResourceByTableName("OpenFormatReport").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => {
-                    this._entityResourceService.getEntityResourceByTableName("MasavInterface").subscribe((response: any) => {
 
                     var yearTransFeature = FeatureLocator.HasFeaturePermession("GLAccount", "YEARTRANSFERMENU");
                     console.log("YEARTRANSFERMENU Feature:" + yearTransFeature);
@@ -50,7 +47,6 @@ export class MiscPageComponent implements AfterViewInit {
 
          this.isScreenLoaded = true;
          this.CurrentSession.StopBusyIndicator();
-        })
                 });
             });
         });
@@ -85,7 +81,6 @@ export class MiscPageComponent implements AfterViewInit {
             var filters = new ApiQueryFilters();
 
             var tableName = "";
-            var NewButtonLabel = null;
             var listArgs = new ListComponentArgs();
 
             switch (myQueryCode) {
@@ -107,13 +102,12 @@ export class MiscPageComponent implements AfterViewInit {
 
                     displayTitle = TextCodeTranslator.Translate("TaxDeductionReport");
                     tableName = "TaxDeductionReport";
-                    NewButtonLabel = TextCodeTranslator.Translate("General.O.NewReport");
                     break;
 
                 }
 
                 case "ACPD": {
-                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 750;
                         logitudeWindow.Height = 500;
@@ -128,19 +122,12 @@ export class MiscPageComponent implements AfterViewInit {
                         this.YearTransferMethod(true);
                         break;
                     }
-             case "ACYT":{
+           case "ACYT":{
 
                     this.YearTransferMethod(false);
                        break;
 
                        }
-              case "AllMasavInterfaces":{
-                    displayTitle = TextCodeTranslator.Translate("MasavInterface");
-                    tableName = "MasavInterface";                  
-                    break;
-                }
-    
-                           
                 default: { break; }
             }
 
@@ -150,9 +137,7 @@ export class MiscPageComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
             listArgs.IgnoreSelectedPerspective = true;
-            listArgs.NewButtonLabel = NewButtonLabel;
-
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
@@ -164,7 +149,7 @@ export class MiscPageComponent implements AfterViewInit {
         }
     }
     YearTransferMethod(cancelYearTransfer: boolean) {
-        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -180,7 +165,7 @@ export class MiscPageComponent implements AfterViewInit {
     Generate1000() {
 
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
@@ -191,7 +176,7 @@ export class MiscPageComponent implements AfterViewInit {
     }
 
     Receiving1000() {
-        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 650;
             logitudeWindow.Height = 350;
@@ -223,7 +208,7 @@ export class MiscPageComponent implements AfterViewInit {
         //windowArgs.IsNewEntity = true;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 400;
         logWindow.Height = 200;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
@@ -241,7 +226,7 @@ export class MiscPageComponent implements AfterViewInit {
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 400;
-        logWindow.Height = 280;
+        logWindow.Height = 200;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());

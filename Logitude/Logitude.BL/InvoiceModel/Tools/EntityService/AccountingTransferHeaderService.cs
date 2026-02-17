@@ -8,10 +8,10 @@ using Logitude.BL.InvoiceModel.Tools.DataMapping;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -401,7 +401,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 invoice.TransferStatusCode = "TR";
                 invoice.TransferError = null;
                 aRInvoiceRepository.Update(invoice);
-
             }
         }
         private void UpdateAPInvoice(string myEntityId)

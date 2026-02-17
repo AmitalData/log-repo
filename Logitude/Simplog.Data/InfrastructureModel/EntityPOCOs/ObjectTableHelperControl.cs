@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -14,9 +14,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Code { get; set; }
         public string ObjectTableId { get; set; }
         public string FeatureId { get; set; }
-        public string FeatureUniqeCode { get; set; }
-
-        //[ForeignKey("FeatureId")]
+        [ForeignKey("FeatureId")]
         public Feature Feature { get; set; }
       
 

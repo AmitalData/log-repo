@@ -1,3 +1,4 @@
+﻿
 <table>
     <tr>
         <td>
@@ -17,24 +18,17 @@
                                             <!-- VendorId -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'VendorId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'VendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogLov [ObjectFieldName]="'VendorId'" [SelectedValue]="VendorId"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Card'"
-                                                        [DependencyFilter1Value]="VendorDependencyProperty1"
-                                                        [DependencyFilter1IsList]="true"
-                                                        [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                                        [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                        [ForceShowLocalAndEnglishColumns]="forceShowLocalAndEnglishColumns"
-                                                        [CustomizedWidth]="VendorLovSizeForFullAccounting"
-                                                        [ColumnsWidths]="ColumnsWidths" [StartSearchFromChar]="3"
-                                                        [StartSearchFromNumber]="5"
-                                                        [QueryFilterItems]="GLAccountsFilterItems">
+                                                    <LogLov [ObjectFieldName]="'VendorId'"
+                                                            [SelectedValue]="VendorId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [DependencyFilter1Value]="VendorDependencyProperty1"
+                                                            [DependencyFilter1IsList]="true">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -42,17 +36,16 @@
                                             <!-- PaymentTermId -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'PaymentTermId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'PaymentTermId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'PaymentTermId'"
-                                                        [SelectedValue]="PaymentTermId"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [LookUpTableName]="'PaymentTerm'"
-                                                        [DependencyFilter1Value]="PaymentTermDisplayInLOV">
+                                                            [SelectedValue]="PaymentTermId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'PaymentTerm'"
+                                                            [DependencyFilter1Value]="PaymentTermDisplayInLOV">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -60,63 +53,22 @@
                                             <!-- DueDate -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'DueDate'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'DueDate'"
-                                                        [SelectedDateValue]="DueDate"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogDatePicker>
+                                                    <LogDatePicker [ObjectFieldName]="'DueDate'" [SelectedDateValue]="DueDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
 
                                             <!-- AmountInInvoiceCurrency -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'AmountInInvoiceCurrency'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'AmountInInvoiceCurrency'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'AmountInInvoiceCurrency'"
-                                                        [Text]="AmountInInvoiceCurrency" [InputType]="'sigdouble'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogTextBox>
-                                                </td>
-                                            </tr>
-                                            <tr *ngIf="accountingActivated" class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'IsEquipment'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-                                                <td>
-                                                    <CheckBox [IsChecked]="IsEquipment"
-                                                        (Checked)="IsEquipment = $event"></CheckBox>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Branch -->
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'BranchId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'BranchId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [SelectedValue]="BranchId" [LookUpTableName]="'Branch'">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td>
-                                                    <div></div>
+                                                    <LogTextBox [ObjectFieldName]="'AmountInInvoiceCurrency'" [Text]="AmountInInvoiceCurrency" [InputType]="'sigdouble'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                             </tr>
 
@@ -132,9 +84,7 @@
                                             <!-- InvoiceCurrencyId -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'InvoiceCurrencyId'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'InvoiceCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
@@ -142,10 +92,11 @@
                                                         <tr>
                                                             <td>
                                                                 <LogLov [ObjectFieldName]="'InvoiceCurrencyId'"
-                                                                    [SelectedValue]="InvoiceCurrencyId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Currency'" [HideColumns]="true">
+                                                                        [SelectedValue]="InvoiceCurrencyId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'Currency'"
+                                                                        [HideColumns]="true">
                                                                 </LogLov>
                                                             </td>
 
@@ -153,27 +104,15 @@
                                                                 <div></div>
                                                             </td>
 
-                                                            <td style="width: 35px;" class="Label">
-                                                                {{'APInvoice.S.Details.Rate' |
-                                                                TextCodeTranslationPipe}}:</td>
+                                                            <td style="width: 35px;" class="Label">{{'APInvoice.S.Details.Rate' | TextCodeTranslationPipe}}:</td>
 
                                                             <td style="width: 65px;">
-                                                                <LogTextBox
-                                                                    [ObjectFieldName]="'InvoiceCurrencyExchangeRate'"
-                                                                    [DigitsAfterPoint]="5"
-                                                                    [Text]="InvoiceCurrencyExchangeRate"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext" [HideColumns]="true">
-                                                                </LogTextBox>
+                                                                <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [DigitsAfterPoint]="5" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                             </td>
 
                                                             <td style="width: 36px;">
-                                                                <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                    style="display: block;"
-                                                                    *ngIf="IsEditExchangeRateVisible && IsFullAccounting ? false:true">
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                                        (click)="UpdateCurrencyRateClicked()"
-                                                                        [IsEnabled]="RateIsEnabled"></IconButton>
+                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [IsEnabled]="RateIsEnabled"></IconButton>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -184,116 +123,36 @@
                                             <!-- InvoiceNumber -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'InvoiceNumber'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [InputType]="'text'"
-                                                        [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [InputType]="'text'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                             </tr>
 
                                             <!-- VATNumber -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'VATNumber'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'VATNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'VATNumber'" [Text]="VATNumber"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'VATNumber'" [Text]="VATNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                             </tr>
 
                                             <!-- InvoiceDate -->
                                             <tr class="FormFieldRow">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'InvoiceDate'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'InvoiceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
-                                                    <LogDatePicker [ObjectFieldName]="'InvoiceDate'"
-                                                        [SelectedDateValue]="InvoiceDate"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogDatePicker>
-                                                </td>
-                                            </tr>
-                                            <!-- AccountingDate -->
-                                            <tr *ngIf="accountingActivated" class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'AccountingDate'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogDatePicker [ObjectFieldName]="'AccountingDate'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [SelectedDateValue]="AccountingDate" [InputType]="'date'"
-                                                        [DataContext]="DataContext"></LogDatePicker>
+                                                    <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
 
-                                        </table>
-                                    </td>
-
-                                    <td style="width: 70px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 375px;">
-                                        <table>
-                                            <tr class="FormFieldRow">
-                                                <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'IsPrepaidExpenses'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <div style="display: flex; gap: 20px;">
-
-                                                       <CheckBox [IsChecked]="IsPrepaidExpenses"
-                                                           (Checked)="IsPrepaidExpenses = $event"
-                                                           [IsEnabled]="IsScreenEnabled"></CheckBox>
-                                                          
-                                                       <button  style="width:100px"  
-                                                          class="Button" 
-                                                         [disabled]="!IsScreenEnabled || !IsPrepaidExpenses"
-                                                         (click)="showRecurringScheduleSettings()">{{'APInvoice.F.IsPrepaidExpenses' | TextCodeTranslationPipe}}</button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                            <!-- ConfirmationNumber -->
-                                            <tr class="FormFieldRow">
-                                                <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'ConfirmationNumber'"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogTextBox [ObjectFieldName]="'ConfirmationNumber'"
-                                                        [InputType]="'text'" [Text]="ConfirmationNumber"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                                                    </LogTextBox>
-                                                </td>
-                                            </tr>
-
-                                            <td>
-                                                <div></div>
-                                            </td>
                                         </table>
                                     </td>
 
@@ -304,17 +163,21 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                            <tr *ngIf="IsFullAccounting ? false:true" class="FormFieldRow">
-                                                <td [style.text-align]="isRTL ? 'right' : 'left'"
-                                                    style="font-size:10px; color:#1B90CB;">
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 5px;">
+                                                    <div></div>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
                                                     {{RelativeRateDate}}
                                                 </td>
+                                            </tr>
+
                                             <tr>
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
-
                                         </table>
                                     </td>
 
@@ -325,7 +188,6 @@
                     </tr>
 
                     <tr style="height: 15px;">
-
                         <td>
                             <div></div>
                         </td>
@@ -336,32 +198,30 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td float-start style="width: 57px; float: right;">
-                                        <IconButton id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}"
-                                            [disabled]="!IsScreenEnabled" [Name]="'Add'" (click)="AddButtonClicked()">
-                                        </IconButton>
+                                    <td style="width: 1px;">
+                                        <button id="{{'AddInvoiceLine' | IdGeneratorPipe}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td>
                                         <div></div>
                                     </td>
 
-                                    <td *ngIf="AllowVatTypes" [style.float]="isRTL ? 'left' : 'right'"
-                                        style="width:285px;">
+                                    <td [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
                                         <table>
                                             <tr>
-                                                <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' |
-                                                    TextCodeTranslationPipe}}:</td>
+                                                <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
 
                                                 <td style="width: 5px;">
                                                     <div></div>
                                                 </td>
 
                                                 <td style="width: 150px">
-                                                    <LogLov [ObjectFieldName]="'VatTypeId'" [SelectedValue]="VatTypeId"
-                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                        [LookUpTableName]="'VatType'" [HideColumns]="true"
-                                                        [DependencyFilter2Value]="false">
+                                                    <LogLov [ObjectFieldName]="'VatTypeId'"
+                                                            [SelectedValue]="VatTypeId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'VatType'"
+                                                            [HideColumns]="true">
                                                     </LogLov>
                                                 </td>
 
@@ -370,16 +230,11 @@
                                                 </td>
 
                                                 <td style="width: 80px;">
-                                                    <button id="{{'VATApplyToAll' | IdGeneratorAsyncPipe | async}}"
-                                                        class="Button" [disabled]="!VatTypeFilterButtonIsEnabled"
-                                                        (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' |
-                                                        TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'VATApplyToAll' | IdGeneratorPipe}}" class="Button" [disabled]="!VatTypeFilterButtonIsEnabled" (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                             </tr>
                                         </table>
                                     </td>
-
-
                                 </tr>
                             </table>
                         </td>
@@ -394,429 +249,179 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
-                                    [UseVirtuallization]="IsUsingVirtuallization">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
 
                                     <!-- Exists -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div class="MediaFill"
-                                                    style="padding:0 !important; text-indent: 0 !important;">
-                                                    <div style="width: 16px; height: 16px;" class="CenterCenter"
-                                                        *ngIf="item.CheckBoxVisibility">
-                                                        <CheckBox [IsChecked]="item.Exists"
-                                                            (Checked)="item.Exists = $event"
-                                                            [IsEnabled]="item.IsScreenEnabled"></CheckBox>
-                                                    </div>
-
-                                                    <div style="height: 18px; width: 18px;" class="CenterCenter"
-                                                        *ngIf="item.NotMatchedVisibility">
-                                                        <img src="./Images/Buttons/NotMatched.png"
-                                                            style="display: block; vertical-align: middle;" />
-                                                    </div>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <div class="MediaFill" style="padding:0 !important; text-indent: 0 !important;">
+                                                <div style="width: 16px; height: 16px;" class="CenterCenter" *ngIf="item.CheckBoxVisibility">
+                                                    <CheckBox [IsChecked]="item.Exists" (Checked)="item.Exists = $event" [IsEnabled]="item.IsScreenEnabled"></CheckBox>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+
+                                                <div style="height: 18px; width: 18px;" class="CenterCenter" *ngIf="item.NotMatchedVisibility">
+                                                    <img src="./Images/Buttons/NotMatched.png" style="display: block; vertical-align: middle;" />
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Code -->
-                                    <log-column [width]="'50'"
-                                        [header]="'APInvoiceLine.CH.Code' | TextCodeTranslationPipe"
-                                        [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [Alignment]="'center'"
-                                                [CellColor]="item.CellBackgroundColor">
-                                                <div style="width: 100%;"
-                                                    [ngStyle]="{color: item.CellReadOnlyForeground}">
-                                                    {{item.ChargesTypeCode}}
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'50'" [header]="'APInvoiceLine.CH.Code' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [Alignment]="'center'" [CellColor]="item.CellBackgroundColor">
+                                            <div style="width: 100%;" [ngStyle]="{color: item.CellReadOnlyForeground}">
+                                                {{item.ChargesTypeCode}}
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
-                                    <log-column [width]="'160'" [header]="InvoiceLineHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.CellBackgroundColor">
-                                                <div style="width: 100%;"
-                                                    [ngStyle]="{color: item.CellReadOnlyForeground}">
-                                                    {{accountingActivated? (item.LocalDescription||item.Description):
-                                                    item.ChargesTypeName}}
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <!-- Name -->
+                                    <log-column [width]="'160'" [header]="'APInvoiceLine.CH.Name' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
+                                            <div style="width: 100%;" [ngStyle]="{color: item.CellReadOnlyForeground}">
+                                                {{item.ChargesTypeName}}
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Vendor -->
-                                    <log-column [width]="'130'"
-                                        [header]="'APInvoiceLine.O.Vendor' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.CellBackgroundColor">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <div style="position: absolute; left:0; top: 2px; height: 21px; line-height: 21px; padding-left: 5px; padding-right: 5px; text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;"
-                                                        [ngStyle]="{color: item.CellReadOnlyForeground, background: item.VendorCellBackground}">
-                                                        {{item.VendorName}}
-                                                    </div>
+                                    <log-column [width]="'130'" [header]="'APInvoiceLine.CH.Vendor' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <div style="position: absolute; left:0; top: 2px; height: 21px; line-height: 21px; padding-left: 5px; padding-right: 5px; text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{color: item.CellReadOnlyForeground, background: item.VendorCellBackground}">
+                                                    {{item.VendorName}}
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- VAT -->
-                                    <log-column [width]="'120'"
-                                        [header]="'APInvoiceLine.CH.VatTypeNameListLable' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.CellBackgroundColor">
-                                                <div class="MediaFill">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="MediaFill TextTrimming"
-                                                                    [ngStyle]="{color: item.VatTypeCellColor}"
-                                                                    style="line-height: 25px; padding-left: 4px;">
-                                                                    {{item.VatTypeCell}}
-                                                                </div>
-                                                            </td>
+                                    <log-column [width]="'120'" [header]="'APInvoiceLine.CH.VatTypeNameListLable' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
+                                            <div class="MediaFill">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="MediaFill TextTrimming" [ngStyle]="{color: item.VatTypeCellColor}" style="line-height: 25px; padding-left: 4px;">
+                                                                {{item.VatTypeCell}}
+                                                            </div>
+                                                        </td>
 
-                                                            <td style="width: 20px; padding-left: 2px;"
-                                                                *ngIf="item.VatTypeUpdateIsVisible">
-                                                                <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                                    (click)="item.UpdateVatPercentageClicked()">
-                                                                </IconButton>
-                                                            </td>
+                                                        <td style="width: 20px; padding-left: 2px;" *ngIf="item.VatTypeUpdateIsVisible">
+                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="item.UpdateVatPercentageClicked()"></IconButton>
+                                                        </td>
 
-                                                            <td style="width: 20px; padding-left: 2px;"
-                                                                *ngIf="item.VatTypeMultiIconVisible">
-                                                                <CellTooltip
-                                                                    [IconPath]="'./Images/CellIcons/Info_Gray.png'"
-                                                                    [Head]="item.VatTypeCell">
-                                                                    <table>
-                                                                        <tr style="height: 20px; border-bottom: 1px solid #D1D1D1;"
-                                                                            *ngFor="let itemGroup of item.VatTypesGroups">
-                                                                            <td>
-                                                                                <div
-                                                                                    class="MediaFill TextTrimming Label">
-                                                                                    {{itemGroup.SingleVATTypeName}}
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
+                                                        <td style="width: 20px; padding-left: 2px;" *ngIf="item.VatTypeMultiIconVisible">
+                                                            <CellTooltip [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="item.VatTypeCell">
+                                                                <table>
+                                                                    <tr style="height: 20px; border-bottom: 1px solid #D1D1D1;" *ngFor="let itemGroup of item.VatTypesGroups">
+                                                                        <td>
+                                                                            <div class="MediaFill TextTrimming Label">
+                                                                                {{itemGroup.SingleVATTypeName}}
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
 
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </CellTooltip>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </CellTooltip>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!--  Expected Amount -->
-                                    <log-column [width]="'120'"
-                                        [header]="'APInvoiceLine.O.ExpectedAmount' | TextCodeTranslationPipe"
-                                        [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.CellBackgroundColor">
-                                                <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%;">
-                                                    <span
-                                                        [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ExpectedAmount
-                                                        | NumbersPipe:'N2'}}</span>
-                                                    <span
-                                                        [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'120'" [header]="'APInvoiceLine.CH.ExpectedAmount' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
+                                            <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%;">
+                                                <span [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ExpectedAmount | NumbersPipe:'N2'}}</span>
+                                                <span [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Other Invoices Amounts -->
-                                    <log-column [width]="'110'"
-                                        [header]="'APInvoiceLine.O.OtherInvoices' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.CellBackgroundColor">
-                                                <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%;">
-                                                    <span
-                                                        [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.OtherInvoicesAmounts
-                                                        | NumbersPipe:'N2'}}</span>
-                                                    <span
-                                                        [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'110'" [header]="'APInvoiceLine.CH.OtherInvoices' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
+                                            <div [style.text-align]="isRTL ? 'left' : 'right'" style="width: 100%;">
+                                                <span [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.OtherInvoicesAmounts | NumbersPipe:'N2'}}</span>
+                                                <span [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Foreign Amount -->
-                                    <log-column [width]="'120'"
-                                        [header]="'APInvoiceLine.CH.ForiegnCurrencyAmountListLable' | TextCodeTranslationPipe"
-                                        [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.AmountCellBackground">
-                                                <div style="width: 100%;">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <LogTextBox [ObjectFieldName]="'ForiegnCurrencyAmount'"
-                                                                    [HideColumns]="true"
-                                                                    [ObjectTableName]="item.ObjectTableName"
-                                                                    [Text]="item.ForiegnCurrencyAmount"
-                                                                    [InputType]="'sigdouble'"
-                                                                    [DataContext]="item.DataContext"></LogTextBox>
-                                                            </td>
+                                    <log-column [width]="'120'" [header]="'APInvoiceLine.CH.ForiegnCurrencyAmountListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.AmountCellBackground">
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'ForiegnCurrencyAmount'" [HideColumns]="true" [ObjectTableName]="item.ObjectTableName" [Text]="item.ForiegnCurrencyAmount" [InputType]="'sigdouble'" [DataContext]="item.DataContext"></LogTextBox>
+                                                        </td>
 
-                                                            <td style="width: 2px;">
-                                                                <div></div>
-                                                            </td>
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
 
-                                                            <td style="width:30px;">
-                                                                <span
-                                                                    [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                        <td style="width:30px;">
+                                                            <span [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Invoice Amount -->
-                                    <log-column [width]="'120'"
-                                        [header]="'APInvoiceLine.CH.InvoiceCurrencyAmountListLable' | TextCodeTranslationPipe"
-                                        [Alignment]="'center'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.AmountCellBackground">
-                                                <div style="width: 100%;">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <LogTextBox [ObjectFieldName]="'InvoiceCurrencyAmount'"
-                                                                    [HideColumns]="true"
-                                                                    [ObjectTableName]="item.ObjectTableName"
-                                                                    [Text]="item.InvoiceCurrencyAmount"
-                                                                    [InputType]="'sigdouble'"
-                                                                    [DataContext]="item.DataContext"></LogTextBox>
-                                                            </td>
+                                    <log-column [width]="'120'" [header]="'APInvoiceLine.CH.InvoiceCurrencyAmountListLable' | TextCodeTranslationPipe" [Alignment]="'center'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.AmountCellBackground">
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <LogTextBox [ObjectFieldName]="'InvoiceCurrencyAmount'" [HideColumns]="true" [ObjectTableName]="item.ObjectTableName" [Text]="item.InvoiceCurrencyAmount" [InputType]="'sigdouble'" [DataContext]="item.DataContext"></LogTextBox>
+                                                        </td>
 
-                                                            <td style="width: 2px;">
-                                                                <div></div>
-                                                            </td>
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
 
-                                                            <td style="width:30px;">
-                                                                <span
-                                                                    [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.InvoiceCurrencyCode}}</span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                                        <td style="width:30px;">
+                                                            <span [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.InvoiceCurrencyCode}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Open Amount -->
                                     <log-column [width]="'140'">
-                                        <ng-template let-item>
-                                            <log-header-template>
-                                                <div style="width: 100%;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 3px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="width: 1px;">
-                                                                {{'APInvoiceLine.O.OpenAmount' |
-                                                                TextCodeTranslationPipe}}
-                                                            </td>
-
-                                                            <td style="width: 3px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td style="width: 14px;border-style: hidden;">
-                                                                <HelpIcon [IconSize]="14" [Header]="'Open Amount'"
-                                                                    [Text]="'Remaining not accounted amount'">
-                                                                </HelpIcon>
-                                                            </td>
-
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-header-template>
-                                        </ng-template>
-
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                                [CellColor]="item.AmountCellBackground">
-                                                <div style="width: 100%;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 110px;">
-                                                                <LogTextBox [ObjectFieldName]="'OpenAmount'"
-                                                                    [HideColumns]="true" [NoObjectField]="true"
-                                                                    [ObjectTableName]="item.ObjectTableName"
-                                                                    [Text]="item.OpenAmount" [InputType]="'sigdouble'"
-                                                                    [DataContext]="item.DataContext"></LogTextBox>
-                                                            </td>
-
-                                                            <td style="width:3px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td>
-                                                                <CellTooltip *ngIf="item.CorrectionIconVisibility"
-                                                                    [Height]="110" [Width]="260"
-                                                                    [IconPath]="'./Images/CellIcons/Info_Gray.png'"
-                                                                    [Head]="'Correction'">
-                                                                    <table>
-                                                                        <tr style="height:10px;">
-                                                                            <td colspan="2">
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr style="height: 1px; line-height: 12px;">
-                                                                            <td class="Label" style="width: 1px;">
-                                                                                Amount:</td>
-                                                                            <td [style.text-align]="isRTL ? 'right' : 'left'"
-                                                                                class="Value"
-                                                                                style="width: 1px; padding-left: 5px;  font-size: 12px;"
-                                                                                [ngStyle]="{color: item.CorrectionForeground}">
-                                                                                {{item.CorrectionAmount |
-                                                                                NumbersPipe:'N2'}}</td>
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-
-                                                                        <tr style="height:10px;">
-                                                                            <td colspan="2">
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr style="height: 1px; line-height: 12px;">
-                                                                            <td class="Label" style="width: 1px;">By
-                                                                                User:</td>
-                                                                            <td [style.text-align]="isRTL ? 'right' : 'left'"
-                                                                                class="Value"
-                                                                                style="width: 1px; padding-left: 5px; font-size: 12px;color:#282E30;">
-                                                                                {{item.CorrectionByUserName}}</td>
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr style="height:10px;">
-                                                                            <td colspan="2">
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr style="height: 1px; line-height: 12px;">
-                                                                            <td class="Label" style="width: 1px;">Date:
-                                                                            </td>
-                                                                            <td [style.text-align]="isRTL ? 'right' : 'left'"
-                                                                                class="Value"
-                                                                                style="width: 1px; padding-left: 5px; font-size: 12px;color:#282E30;">
-                                                                                {{item.CorrectionDate |
-                                                                                DateTimeToDatePipe}}</td>
-                                                                            <td>
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td colspan="2">
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </CellTooltip>
-                                                            </td>
-
-                                                            <td [style.text-align]="isRTL ? 'left' : 'right'"
-                                                                style="width:30px;">
-                                                                <span
-                                                                    [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-                                   <!-- PayableDebitGLAcountId -->
-                                   <log-column [width]="'130'" 
-                                      [header]="'APInvoiceLine.F.PayableDebitGLAcountId' | TextCodeTranslationPipe" 
-                                      [Alignment]="'center'">
-                                      <ng-template let-item>
-                                         <log-cell-template #logcelltemplate [TabIndex]="-1"
-                                           [CellColor]="item.CellBackgroundColor">
-                                            <div style="width: 100%; height: 100%; position: relative;">
-                                               <div style="position: absolute; left:0; top: 2px; height: 21px; line-height: 21px; padding-left: 5px; padding-right: 5px; text-align:center; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;"
-                                                   [ngStyle]="{color: item.CellReadOnlyForeground, background: item.VendorCellBackground}">
-                                                   {{item.PayableDebitGLAcountName}}
-                                               </div>
-                                            </div>
-                                       </log-cell-template>
-                                   </ng-template>
-                                  </log-column>
-                                  <log-column [width]="'100'" [header]="'APInvoiceLine.F.IsPrepaidExpenses' | TextCodeTranslationPipe" 
-                                  [Alignment]="'center'">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                            <div class="MediaFill"
-                                                style="padding:0 !important; text-indent: 0 !important;">
-                                                <div style="width: 16px; height: 16px;" class="CenterCenter">
-                                                    <CheckBox [IsChecked]="item.IsPrepaidExpenses"
-                                                        (Checked)="item.IsPrepaidExpenses = $event"
-                                                        [IsEnabled]="item.IsScreenEnabled && IsPrepaidExpenses"></CheckBox>
-                                                </div>                                                
-                                            </div>
-                                       </log-cell-template>
-                                   </ng-template>
-                                  </log-column>
-
-                                    <!-- Tool -->
-                                    <log-column [width]="'55'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                        <log-header-template template="let item">
+                                            <div style="width: 100%;">
                                                 <table>
                                                     <tr>
-                                                        <td float-start>
-                                                            <span class="CellSeparator"></span>
-                                                        </td>
-
-                                                        <td style="width:5px;">
+                                                        <td style="width: 3px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:16px;">
-                                                            <img *ngIf="!item.Notes"
-                                                                style="vertical-align: middle; display: block;"
-                                                                src="./Images/Notes_notexists.png" />
-                                                            <CellTooltip *ngIf="item.Notes"
-                                                                [IconPath]="'./Images/Notes_exists.png'"
-                                                                [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe"
-                                                                [Body]="item.Notes"></CellTooltip>
+                                                        <td style="width: 1px;">
+                                                            {{'APInvoiceLine.CH.OpenAmount' | TextCodeTranslationPipe}}
                                                         </td>
 
-                                                        <td style="width:5px;">
+                                                        <td style="width: 3px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:20px;height:20px;padding-left:1px;">
-                                                            <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                                [IsEnabled]="item.EditControlIsEnabled" [Left]="3"
-                                                                (click)="EditLineClicked(item)"></IconButton>
+                                                        <td style="width: 14px;border-style: hidden;">
+                                                            <HelpIcon [IconSize]="14" [Header]="'Open Amount'" [Text]="'Remaining not accounted amount'"></HelpIcon>
                                                         </td>
 
                                                         <td>
@@ -824,10 +429,113 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-header-template>
+
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [CellColor]="item.AmountCellBackground">
+                                            <div style="width: 100%;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 110px;">
+                                                            <LogTextBox [ObjectFieldName]="'OpenAmount'" [HideColumns]="true" [NoObjectField]="true" [ObjectTableName]="item.ObjectTableName" [Text]="item.OpenAmount" [InputType]="'sigdouble'" [DataContext]="item.DataContext"></LogTextBox>
+                                                        </td>
+
+                                                        <td style="width:3px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td>
+                                                            <CellTooltip *ngIf="item.CorrectionIconVisibility" [Height]="110" [Width]="260" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Correction'">
+                                                                <table>
+                                                                    <tr style="height:10px;">
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height: 1px; line-height: 12px;">
+                                                                        <td class="Label" style="width: 1px;">Amount:</td>
+                                                                        <td [style.text-align]="isRTL ? 'right' : 'left'" class="Value" style="width: 1px; padding-left: 5px;  font-size: 12px;" [ngStyle]="{color: item.CorrectionForeground}">{{item.CorrectionAmount | NumbersPipe:'N2'}}</td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr style="height:10px;">
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height: 1px; line-height: 12px;">
+                                                                        <td class="Label" style="width: 1px;">By User:</td>
+                                                                        <td [style.text-align]="isRTL ? 'right' : 'left'" class="Value" style="width: 1px; padding-left: 5px; font-size: 12px;color:#282E30;">{{item.CorrectionByUserName}}</td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height:10px;">
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="height: 1px; line-height: 12px;">
+                                                                        <td class="Label" style="width: 1px;">Date:</td>
+                                                                        <td [style.text-align]="isRTL ? 'right' : 'left'" class="Value" style="width: 1px; padding-left: 5px; font-size: 12px;color:#282E30;">{{item.CorrectionDate |  DateTimeToDatePipe}}</td>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="2">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </CellTooltip>
+                                                        </td>
+
+                                                        <td [style.text-align]="isRTL ? 'left' : 'right'" style="width:30px;">
+                                                            <span [ngStyle]="{color: item.CellReadOnlyForeground}">{{item.ForiegnCurrencyCode}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
-                                    
+
+                                    <!-- Tool -->
+                                    <log-column [width]="'55'">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <table>
+                                                <tr>
+                                                    <td float-start >
+                                                        <span class="CellSeparator"></span>
+                                                    </td>
+
+                                                    <td style="width:5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width:16px;">
+                                                        <img *ngIf="!item.Notes" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
+                                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'APInvoiceLine.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
+                                                    </td>
+
+                                                    <td style="width:5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width:20px;height:20px;padding-left:1px;">
+                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="item.EditControlIsEnabled" [Left]="3" (click)="EditLineClicked(item)"></IconButton>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </log-cell-template>
+                                    </log-column>
+
                                 </logitude-edit-grid>
                             </div>
                         </td>
@@ -855,10 +563,8 @@
                                     <td>
                                         <table>
                                             <tr>
-                                                <td *ngFor="let item of SummaryItems"
-                                                    style="text-indent: 10px; width: 1px;">
-                                                    <div [style.text-align]="isRTL ? 'right' : 'left'"
-                                                        class="TabSummaryValue">{{item.Value}}</div>
+                                                <td *ngFor="let item of SummaryItems" style="text-indent: 10px; width: 1px;">
+                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TabSummaryValue">{{item.Value}}</div>
                                                     <div class="TabSummaryLabel">{{item.Label}}</div>
                                                 </td>
 
@@ -874,42 +580,15 @@
 
                         <td *ngIf="SummaryCurrencyButtonsVisibility" style="width: 66px; vertical-align: top;">
                             <ul class="FiltersMenu">
-                                <li (click)="IsTotalInLocalCurrency = false"
-                                    [class.SelectedFilter]="!IsTotalInLocalCurrency" style="width:33px;">
+                                <li (click)="IsTotalInLocalCurrency = false" [class.SelectedFilter]="!IsTotalInLocalCurrency" style="width:33px;">
                                     {{InvoiceCurrencyCode}}
                                 </li>
-                                <li (click)="IsTotalInLocalCurrency = true"
-                                    [class.SelectedFilter]="IsTotalInLocalCurrency" style="width:33px;">
+                                <li (click)="IsTotalInLocalCurrency = true" [class.SelectedFilter]="IsTotalInLocalCurrency" style="width:33px;">
                                     {{LocalCurrencyCode}}
                                 </li>
                             </ul>
                         </td>
-                        <td style="width: 20px;" *ngIf="IsFullAccounting">
-                            <div class="VerticalLine"></div>
-                        </td>
 
-                        <td style="width: 250px; min-width: 250px;" *ngIf="IsFullAccounting">
-                            <div class="MediaFill">
-                                <table>
-
-                                    <tr style="height: 1px;">
-                                        <td class="TabSummaryTitle">
-                                            {{'APInvoice.F.Notes' | TextCodeTranslationPipe}}
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="MediaFill">
-                                                <LogTextBox [ObjectFieldName]="'InternalNotes'" [Text]="InternalNotes"
-                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                    [IsMultiline]="true"></LogTextBox>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
                     </tr>
                 </table>
             </TabSummary>

@@ -1,9 +1,4 @@
-﻿<style>
-.InvalidRate {
-    border: 1px solid red; 
-}
-
-</style>
+﻿
 <table>
     <tr *ngIf="!IsEditingEnabled" style="height:1px;">
         <td>
@@ -24,176 +19,128 @@
             <WarningSummary [ItemsSource]="WarningsList"></WarningSummary>
         </td>
     </tr>
+
     <tr>
         <td>
-            <div class="MediaFill" style="overflow-x: auto;" >
-                <div >
-                    <div>
-                        <table class="FixedTable">
-                            <tr style="height:1px;">
-                                <td>
-                                    <table>
-                                        <tr style="height:22px;">
-                                            <td style="width:50px;">
-                                                <LogLabel [ObjectFieldName]="'Code'" [DataContext]="DataContext" [TextCode]="'RatesTable.O.Code'"></LogLabel>
-                                            </td>
-            
-                                            <td style="width:150px;">
-                                                {{EntityPM.ForeignCurrencyCode}}
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-            
-                                        <tr style="height:22px;">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'Name'" [DataContext]="DataContext" [TextCode]="'RatesTable.O.Name'"></LogLabel>
-                                            </td>
-            
-                                            <td>
-                                                {{EntityPM.ForeignCurrencyName}}
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-            
-                                        <tr *ngIf="IsAccountingActivated" style="height:22px;">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'Unit'" [DataContext]="DataContext" [TextCode]="'RatesTable.O.Unit'"></LogLabel>
-                                            </td>
-            
-                                            <td>
-                                                {{EntityPM.Unit}}
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-            
-                            <tr style="height:1px;">
-                                <td>
-                                    <table>
-            
-                                        <tr class="FormFieldRow">
-                                            <td style="width:70px;">
-                                                <div></div>
-                                            </td>
-            
-                                            <td style="width:120px;">
-                                                <div></div>
-                                            </td>
-            
-                                            <td style="width:75px;font-size: 12px;text-align:center;margin-left:10px;">
-                                                {{'RatesTable.O.OldValues'|TextCodeTranslationPipe}}
-                                            </td>
-            
-                                            <td style="width:1px;">
-                                                <div></div>
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-            
-                                        <tr class="FormFieldRow">
-                                            <td style="width:70px;">
-                                                <LogLabel [ObjectFieldName]="'ValueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-            
-                                            <td style="width:120px;">
-                                                <LogDatePicker [ObjectFieldName]="'ValueDate'" [SelectedDateValue]="ValueDate" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
-                                            </td>
-            
-                                            <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;padding-left:10px;">
-                                                {{DataContext.CurrentValueDate| DateTimeToDatePipe}}
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-            
-                                        <tr class="FormFieldRow">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'Rate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-            
-                                            <td >
-                                                <input [ngClass]="{'InvalidRate': RateFieldIsInValid}" type="text" [(ngModel)]="Rate" (blur)="OnRateBlur($event)" /> 
+            <table class="FixedTable">
 
-                                            </td>
-            
-                                            <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;">
-                                                {{DataContext.CurrentRate| RatesNumbersPipe:'N5'}} 
-                                            </td>
-            
-                                            <td style="width:1px;">
-                                                <div></div>
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-            
-                                        <tr class="FormFieldRow" *ngFor="let item of AdditionalCurrencyRateTypes">
-                                            <td>
-                                                <LogLabel [ShowTitle]="true" [Text]="item.Name" [ObjectFieldName]="'RateCoefficient'" [ObjectTableName]="'AdditionalCurrencyRate'" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-            
-                                            <td>
-                                                <input   [ngClass]="{'InvalidRate': InvalidRates[item.Id]}" type="text" [ngModel]="CurrencyRates[item.Id].Rate" (blur)="SetAdditionalRate(item.Id, $event)"  />
-                                            </td>
-            
-                                            <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;">
-                                                {{ CurrencyRates[item.Id].OldRate | RatesNumbersPipe:'N5' }} 
-                                            </td>
-            
-                                            <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;">
-                                                <span dir="ltr" *ngIf="CurrencyRates[item.Id].RatePercent">({{ CurrencyRates[item.Id].RatePercent }})</span>
-                                            </td>
-            
-                                            <td>
-                                                <div></div>
-                                            </td>
-                                        </tr>
-            
-                                    </table>
+                <tr style="height:1px;">
+                    <td>
+                        <table>
+                            <tr style="height:22px;">
+                                <td style="width:50px;">
+                                    <LogLabel [ObjectFieldName]="'Code'" [DataContext]="DataContext" [TextCode]="'RatesTable.O.Code'"></LogLabel>
                                 </td>
-                            </tr>
-            
-                            <tr>
+
+                                <td style="width:150px;">
+                                    {{EntityPM.ForeignCurrencyCode}}
+                                </td>
+
                                 <td>
                                     <div></div>
                                 </td>
                             </tr>
-            
+
+                            <tr style="height:22px;">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Name'" [DataContext]="DataContext" [TextCode]="'RatesTable.O.Name'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    {{EntityPM.ForeignCurrencyName}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
                         </table>
-                    </div>
+                    </td>
+                </tr>
 
-                
+                <tr style="height:1px;">
+                    <td>
+                        <table>
 
-                </div>
-            </div>
+                            <tr class="FormFieldRow">
+                                <td style="width:70px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:120px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:75px;font-size: 12px;text-align:center;margin-left:10px;">
+                                    {{'RatesTable.O.OldValues'|TextCodeTranslationPipe}}
+                                </td>
+
+                                <td style="width:1px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:70px;">
+                                    <LogLabel [ObjectFieldName]="'ValueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width:120px;">
+                                    <LogDatePicker [ObjectFieldName]="'ValueDate'" [SelectedDateValue]="ValueDate" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;padding-left:10px;">
+                                    {{DataContext.CurrentValueDate| DateTimeToDatePipe}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Rate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Rate'" [Text]="Rate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
+                                </td>
+
+                                <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;">
+                                    {{DataContext.CurrentRate| RatesNumbersPipe:'N5'}} 
+                                </td>
+
+                                <td style="width:1px;">
+                                    <button [disabled]="!IsEditingEnabled" class="Button" (click)="SetAsToday()">{{'RatesTable.B.SetAsToday' | TextCodeTranslationPipe}}</button>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+            </table>
         </td>
     </tr>
-
-
-    
-  
 
     <tr style="height: 32px;">
         <td style="vertical-align: bottom">

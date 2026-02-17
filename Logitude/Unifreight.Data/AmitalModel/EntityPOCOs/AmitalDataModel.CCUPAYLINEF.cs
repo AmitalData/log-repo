@@ -21,14 +21,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUPAYLINEF in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUPAYLINEF : UNIFBASICPOCO, INotifyPropertyChanged    {
+    public partial class CCUPAYLINEF : INotifyPropertyChanged    {
 
         public CCUPAYLINEF()
         {
         }
 
         #region Properties
-
+    
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>
@@ -165,7 +165,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for PAYAMOUNT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> PAYAMOUNT
+        public virtual global::System.Nullable<double> PAYAMOUNT
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _PAYAMOUNT;
+        private global::System.Nullable<double> _PAYAMOUNT;
 
     
         /// <summary>

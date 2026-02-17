@@ -2,13 +2,14 @@
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 
 
 
 import {AppTool} from '../../../../Infrastructure/Tools';
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'CreateTenantValidationScreenComponent',
     templateUrl: './CreateTenantValidationScreenComponent.html',

@@ -25,7 +25,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
       
         
 
-       public virtual Contact Contact { get; set; }
+        public virtual Contact Contact { get; set; }
        
     }
 }

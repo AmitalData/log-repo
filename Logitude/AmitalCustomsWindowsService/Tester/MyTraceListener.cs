@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace AmitalCustomsWindowsService.Tester
 {
-    public class TODELETE_MyTraceListener : TraceListener
+    public class MyTraceListener : TraceListener
     {
         private TextBoxBase output;
 
-        public TODELETE_MyTraceListener(TextBoxBase output)
+        public MyTraceListener(TextBoxBase output)
         {
             this.Name = "Trace";
             this.output = output;

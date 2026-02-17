@@ -7,16 +7,15 @@ import { UpdateTariffArgs } from '../../../Args';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PortList } from '../../../../Common/EntityLists/PortList';
-import { CarrierAreaList } from '../../../../Common/EntityLists/CarrierAreaList';
+import { AirlineAreaList } from '../../../../Common/EntityLists/AirlineAreaList';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffDomainService, UpdateSurchargeArgs } from '../../../Services/TariffDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { CountryList } from '../../../../Common/EntityLists/CountryList';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UpdateSurchargesComponent.html',
 })
 
@@ -28,16 +27,12 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public Logs: ObservableCollection;
     public ValidationErrorsList: string[] = [];
     public TariffChargesObsList: TariffCharge[];
-    public FromCarrierAreas: CarrierAreaClass[];
-    public ToCarrierAreas: CarrierAreaClass[];
+    public FromAirlineAreas: AirlineAreaClass[];
+    public ToAirlineAreas: AirlineAreaClass[];
     public FromTariffAreaDropButton: string = "FromTariffAreaDropButton";
     public ToTariffAreaDropButton: string = "ToTariffAreaDropButton";
     public FromSearchAreaId: string = "FromSearchAreaId";
     public ToSearchAreaId: string = "ToSearchAreaId";
-    public TypeCode: string;
-    public FatherComponent: any;
-    public ContainerPricesItemsSource: ContainerPriceClass[];
-    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.FromTariffAreaDropButton += this.CurrentSession.GetNewId("FromTariffAreaDropButton_1");
@@ -48,22 +43,10 @@ export class UpdateSurchargesComponent extends BaseComponent {
     }
     
     SetWindowArgs(arg: UpdateTariffArgs) {
-        this.SetIsUsingVirtuallization();
         this.EntityPM = arg.Version;
-        this.TypeCode = arg.TypeCode;
-        this.FatherComponent = arg.FatherComponent;
-
         this.FillLogs();
         this.FillTariffCharges(arg.TariffCharges);
-        this.FillTariffContainerPrices(arg.TariffCharges);
-        this.LoadCarrierAreas(arg.CarrierId);
-    }
-
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
+        this.LoadAirlineAreas(arg.AirlineId);
     }
 
     SetUIProperties() {
@@ -74,14 +57,14 @@ export class UpdateSurchargesComponent extends BaseComponent {
         this.UIProperties.SetRequired("StartDate", null, isStartDateRequired);
     }
 
-    private AreasList: CarrierAreaList[] =[];
-    private LoadCarrierAreas(carrierId: string) {
+    private AreasList: AirlineAreaList[] =[];
+    private LoadAirlineAreas(airlineId: string) {
         var service: CommonDomainService = new CommonDomainService();
-        service.GetCarrierAreas(carrierId).subscribe((myResponse: ServiceResponse) => {
+        service.GetAirlineAreas(airlineId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AreasList = myResponse.Result;
-                this.FillCarrierAreas("From");
-                this.FillCarrierAreas("To");
+                this.FillAirlineAreas("From");
+                this.FillAirlineAreas("To");
             }
         });
     }
@@ -103,9 +86,9 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
         });
     }
-    FillCarrierAreas(type: string) {
+    FillAirlineAreas(type: string) {
         if (type == "From") {
-            var data: CarrierAreaList[] = [];
+            var data: AirlineAreaList[] = [];
             if (this.FromSearchText == null || this.FromSearchText == "") {
                 data = this.AreasList;
             }
@@ -115,16 +98,16 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
             }
 
-            this.FromCarrierAreas = [];
+            this.FromAirlineAreas = [];
 
             data.forEach((i) => {
-                var itemTogleButton: CarrierAreaClass = new CarrierAreaClass(i, this);
-                this.FromCarrierAreas.push(itemTogleButton);
+                var itemTogleButton: AirlineAreaClass = new AirlineAreaClass(i, this);
+                this.FromAirlineAreas.push(itemTogleButton);
             });
         }
 
         else if (type == "To") {
-            var data: CarrierAreaList[] = [];
+            var data: AirlineAreaList[] = [];
             if (this.ToSearchText == null || this.ToSearchText == "") {
                 data = this.AreasList;
             }
@@ -134,26 +117,12 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
             }
 
-            this.ToCarrierAreas = [];
+            this.ToAirlineAreas = [];
 
             data.forEach((i) => {
-                var itemTogleButton: CarrierAreaClass = new CarrierAreaClass(i, this);
-                this.ToCarrierAreas.push(itemTogleButton);
+                var itemTogleButton: AirlineAreaClass = new AirlineAreaClass(i, this);
+                this.ToAirlineAreas.push(itemTogleButton);
             });
-        }
-    }
-
-    FillTariffContainerPrices(myList: CodeNameClass[]) {
-        this.ContainerPricesItemsSource = [];
-
-        if (this.TypeCode == "OFS") {
-            for (var i = 1; i <= 10; i++) {
-                var charge: CodeNameClass = myList.filter(d => d.Code == this.FatherComponent.EntityPM['Surcharge' + i + 'Id'])[0];
-
-                if (charge != null) {
-                    this.ContainerPricesItemsSource.push(new ContainerPriceClass(charge, this.FatherComponent));
-                }
-            }
         }
     }
 
@@ -263,17 +232,17 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public get FromSearchText() { return this.fromSearchText; }
     public set FromSearchText(newValue: string) {
         this.fromSearchText = newValue;
-        this.FillCarrierAreas("From");
+        this.FillAirlineAreas("From");
     }
 
     public toSearchText: string = null;
     public get ToSearchText() { return this.toSearchText; }
     public set ToSearchText(newValue: string) {
         this.toSearchText = newValue;
-        this.FillCarrierAreas("To");
+        this.FillAirlineAreas("To");
     }
 
-    AddArea(item: CarrierAreaClass, i, type: string) {
+    AddArea(item: AirlineAreaClass, i, type: string) {
         if (item.IsChecked) {
             if (type == "From") {
                 if (this.FromObsList.filter(d => d.Id == item.Id && d.Indication == "Area").length == 0) {
@@ -321,18 +290,6 @@ export class UpdateSurchargesComponent extends BaseComponent {
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/ChoosePortComponent');
     }
 
-    AddCountry(type: string) {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 320;
-        logWindow.Height = 170;
-
-        var itemComponent = new DestinationClass(this, type, null, null);
-        logWindow.DataContext = itemComponent;
-
-        logWindow.Title = "Add " + type + " Country";
-        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/ChooseCountryComponent');
-    }
-
     DeleteDestination(item: DestinationClass, type: string) {
         if (type == "From") {
             var index = this.FromObsList.indexOf(item);
@@ -341,7 +298,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
 
             if (item.Indication == "Area") {
-                this.FillCarrierAreas("From");
+                this.FillAirlineAreas("From");
             }
         }
 
@@ -352,7 +309,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             }
 
             if (item.Indication == "Area") {
-                this.FillCarrierAreas("To");
+                this.FillAirlineAreas("To");
             }
         }
     }
@@ -362,41 +319,24 @@ export class UpdateSurchargesComponent extends BaseComponent {
         var errors: string[] = [];
 
         if (this.FromObsList.length == 0) {
-            errors.push("You have to choose from ports/areas/countries");
+            errors.push("You have to choose from ports/areas");
         }
 
         if (this.ToObsList.length == 0) {
-            errors.push("You have to choose to ports/areas/countries");
+            errors.push("You have to choose to ports/areas");
         }
 
         if (this.StartDate == null || this.StartDate == undefined) {
             errors.push("Start date is required");
         }
 
-        if (this.TypeCode == "OFS") {
-            if (this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked).length == 0) {
-                errors.push("No surcharges updated");
-            }
-
-            else {
-                if (this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked &&
-                    AppTool.IsNullOrEmpty(d.Price1) && AppTool.IsNullOrEmpty(d.Price2) && AppTool.IsNullOrEmpty(d.Price3) && AppTool.IsNullOrEmpty(d.Price4) && AppTool.IsNullOrEmpty(d.Price5)
-                    && AppTool.IsNullOrEmpty(d.CostPrice)
-                ).length > 0) {
-                    errors.push("No surcharges updated");
-                }
-            }
+        if (this.TariffChargesObsList.filter(d => d.IsChargeChecked).length == 0) {
+            errors.push("No surcharges updated");
         }
 
         else {
-            if (this.TariffChargesObsList.filter(d => d.IsChargeChecked).length == 0) {
+            if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrZero(d.NewPrice)).length > 0) {
                 errors.push("No surcharges updated");
-            }
-
-            else {
-                if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrEmpty(d.NewPrice)).length > 0) {
-                    errors.push("No surcharges updated");
-                }
             }
         }
 
@@ -411,24 +351,16 @@ export class UpdateSurchargesComponent extends BaseComponent {
             args.StartDate = this.StartDate;
 
             this.FromObsList.forEach(item => {
-                args.From.push(item.Indication + "," + item.Id + "," + item.Code + "," + item.CombinedCode);
+                args.From.push(item.Indication + "," + item.Id + "," + item.Code);
             });
 
             this.ToObsList.forEach(item => {
-                args.To.push(item.Indication + "," + item.Id + "," + item.Code + "," + item.CombinedCode);
+                args.To.push(item.Indication + "," + item.Id + "," + item.Code);
             });
 
-            if (this.TypeCode == "OFS") {
-                this.ContainerPricesItemsSource.filter(d => d.IsChargeChecked).forEach(item => {
-                    args.Surcharge.push(item.ChargeId + "," + item.ChargeCode + "," + item.Price1 + "," + item.Price2 + "," + item.Price3 + "," + item.Price4 + "," + item.Price5 + "," + item.CostPrice);
-                });
-            }
-
-            else {
-                this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
-                    args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index + "," + item.ChargeCode);
-                });
-            }
+            this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
+                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.NewMinPrice + "," + item.Index + "," + item.ChargeCode);
+            });
 
             var myService: TariffDomainService = new TariffDomainService();
             myService.PostUpdateSurcharge(args).subscribe((response: ServiceResponse) => {
@@ -480,7 +412,7 @@ export class TariffCharge extends BaseComponent{
     SetUIProperties() {
         var isPriceRequired: boolean = false;
         if (this.IsChargeChecked) {
-            if (AppTool.IsNullOrEmpty(this.NewPrice)) {
+            if (AppTool.IsNullOrZero(this.NewPrice)) {
                 isPriceRequired = true;
             }
         }
@@ -489,18 +421,6 @@ export class TariffCharge extends BaseComponent{
         this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);        
 
         this.SetUIProperties_MinPrice();
-
-        if (this.IsChargeChecked) {
-            this.minPricePlaceHolder = "";
-            this.newPricePlaceHolder = "";
-        }
-        if (!this.IsChargeChecked ) {
-          
-            this.newPricePlaceHolder = "No Update";
-        }
-        if (this.MeasurementCode != "FIXD" && !this.IsChargeChecked) {
-            this.minPricePlaceHolder = "No Update";
-        }
     }
 
     private SetUIProperties_MinPrice() {
@@ -509,10 +429,9 @@ export class TariffCharge extends BaseComponent{
         if (this.IsChargeChecked) {
             if (this.MeasurementCode != "FIXD") {
                 isMinPriceEnabled = true
-                this.minPricePlaceHolder = "No Update";
             }
         }
-        this.minPricePlaceHolder = "";
+
         this.UIProperties.SetEnabled("NewMinPrice", null, isMinPriceEnabled);
     }
 
@@ -564,26 +483,15 @@ export class TariffCharge extends BaseComponent{
             this.minPricePlaceHolder = value;            
         }
     }
-
-    private newPricePlaceHolder: string = "No Update";
-    get NewPricePlaceHolder() {
-        return this.newPricePlaceHolder;
-    }
-    set NewPricePlaceHolder(value: string) {
-        if (this.newPricePlaceHolder != value) {
-            this.newPricePlaceHolder = value;
-        }
-    }
 }
 
 export class DestinationClass extends BaseComponent{
     public Indication: string;
     public DisplayText: string;
     public Code: string;
-    public CombinedCode: string;
     public Id: string;
     public Type: string;
-    constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList, carrierArea: CarrierAreaList) {
+    constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList, airlineArea: AirlineAreaList) {
         super();
 
         this.Type = type;
@@ -592,34 +500,26 @@ export class DestinationClass extends BaseComponent{
             this.Indication = "Port";
             this.DisplayText = Port.EnglishName;
             this.Code = Port.Code;
-            this.CombinedCode = Port.CombinedCode;
             this.Id = Port.Id;
         }
 
-        //if (Country != null) {
-        //    this.Indication = "Country";
-        //    this.DisplayText = Country.EnglishName;
-        //    this.Code = Country.Code;
-        //    this.Id = Country.Id;
-        //}
-
-        if (carrierArea != null) {
+        if (airlineArea != null) {
             this.Indication = "Area";
-            this.DisplayText = carrierArea.Name;
-            this.Id = carrierArea.Id;
+            this.DisplayText = airlineArea.Name;
+            this.Id = airlineArea.Id;
         }
     }
 }
 
-export class CarrierAreaClass {
-    public entityList: CarrierAreaList;
+export class AirlineAreaClass {
+    public entityList: AirlineAreaList;
     public get Name() { return this.entityList.Name; }
 
     public get Foreground() { return this.IsChecked ? "#FF6E7172" : "#FF282E30"; }
 
     public get Id() { return this.entityList.Id; }
 
-    constructor(itemList: CarrierAreaList, private Parent: UpdateSurchargesComponent) {
+    constructor(itemList: AirlineAreaList, private Parent: UpdateSurchargesComponent) {
         this.entityList = itemList;
         this.isChecked = Parent.FromObsList.filter(d => d.Id == this.entityList.Id && d.Indication == "Area")[0] != null;
     }
@@ -648,206 +548,4 @@ export class TariffSurchargesUpdateItem {
     public get Surcharges() { return this.EntityPM.Surcharges; }
     public get UpdateMethodCode() { return this.EntityPM.UpdateMethodCode; }
     public get UpdateMethodName() { return this.EntityPM.UpdateMethodName; }
-}
-
-export class ContainerPriceClass extends BaseComponent {
-    public ChargeLabel: string;
-    public ChargeId: string;
-    public ChargeCode: string;
-    public DataContext: ContainerPriceClass = this;
-    private measurementCode: string;
-    private isEnabled: boolean;
-    public numbersUsedInNaming = ['One', 'Two', 'Three', 'Four', 'Five'];
-
-    constructor(charge: CodeNameClass, public mainComponent: any) {
-        super();
-        this.ChargeLabel = charge.DisplyText;
-        this.ChargeId = charge.Code;
-        this.ChargeCode = charge.Name;
-        this.measurementCode = charge.AdditionalField;
-        this.SetUIProperties();    
-    }
-
-    SetUIProperties() {
-        if (this.measurementCode == "FIXD" || this.measurementCode == "BTEU") {
-            this.isEnabled = false;
-            this.SetUIProperties_TariffLinesContainersPrice();
-            this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked && true);
-            this.priceOnePlaceholder = "";
-            this.priceTwoPlaceholder = "";
-            this.priceThreePlaceholder = "";
-            this.priceFourPlaceholder = "";
-            this.priceFivePlaceholder = "";
-
-        }
-        else if (this.measurementCode == "BCNT") {
-            this.isEnabled = true;
-            this.SetUIProperties_TariffLinesContainersPrice();
-            this.costPricePlaceholder = "";
-            this.UIProperties.SetEnabled("CostPrice", null, false);
-        }
-    }
-
-
-    SetUIProperties_TariffLinesContainersPrice() {
-        for (var counter = 1; counter <= 6; ++counter) {
-            this.SetUIProperties_Price(counter);
-        }      
-    }
-
-    private SetUIProperties_Price(index: number) {        
-        this.UIProperties.SetEnabled(("Price" + index), null, this.IsChargeChecked && this.isEnabled);
-
-        if (index != 6) {
-            this['price' + this.numbersUsedInNaming[index - 1] + 'Placeholder'] = this.IsChargeChecked ? "" : "No Update";
-        }
-        else{
-            this.costPricePlaceholder = this.IsChargeChecked ? "" : "No Update";
-        }
-    }
-    
-    private isChargeChecked: boolean;
-    get IsChargeChecked() {
-        return this.isChargeChecked;
-    }
-    set IsChargeChecked(value: boolean) {
-        if (this.isChargeChecked != value) {
-            this.isChargeChecked = value;
-
-            this.SetUIProperties();
-        }
-    }
-
-    private costPrice: number;
-    get CostPrice() {
-        return this.costPrice;
-    }
-    set CostPrice(value: number) {
-        if (this.costPrice != value) {
-            this.costPrice = value;
-            this.UIProperties.SetEnabled("CostPrice", null, this.IsChargeChecked);
-            this.SetUIProperties_Price(6);
-        }
-    }
-
-    private price1: number;
-    get Price1() {
-        return this.price1;
-    }
-    set Price1(value: number) {
-        if (this.price1 != value) {
-            this.price1 = value;
-
-            this.SetUIProperties_Price(1);
-        }
-    }
-
-    private price2: number;
-    get Price2() {
-        return this.price2;
-    }
-    set Price2(value: number) {
-        if (this.price2 != value) {
-            this.price2 = value;
-
-            this.SetUIProperties_Price(2);
-        }
-    }
-
-    private price3: number;
-    get Price3() {
-        return this.price3;
-    }
-    set Price3(value: number) {
-        if (this.price3 != value) {
-            this.price3 = value;
-
-            this.SetUIProperties_Price(3);
-        }
-    }
-
-    private price4: number;
-    get Price4() {
-        return this.price4;
-    }
-    set Price4(value: number) {
-        if (this.price4 != value) {
-            this.price4 = value;
-
-            this.SetUIProperties_Price(4);
-        }
-    }
-
-    private price5: number;
-    get Price5() {
-        return this.price5;
-    }
-    set Price5(value: number) {
-        if (this.price5 != value) {
-            this.price5 = value;
-
-            this.SetUIProperties_Price(5);
-        }
-    }
-
-    private priceOnePlaceholder: string = "No Update";
-    get PriceOnePlaceholder() {
-        return this.priceOnePlaceholder;
-    }
-    set PriceOnePlaceholder(value: string) {
-        if (this.priceOnePlaceholder != value) {
-            this.priceOnePlaceholder = value;
-        }
-    }
-
-    private priceTwoPlaceholder: string = "No Update";
-    get PriceTwoPlaceholder() {
-        return this.priceTwoPlaceholder;
-    }
-    set PriceTwoPlaceholder(value: string) {
-        if (this.priceTwoPlaceholder != value) {
-            this.priceTwoPlaceholder = value;
-        }
-    }
-
-    private priceThreePlaceholder: string = "No Update";
-    get PriceThreePlaceholder() {
-        return this.priceThreePlaceholder;
-    }
-    set PriceThreePlaceholder(value: string) {
-        if (this.priceThreePlaceholder != value) {
-            this.priceThreePlaceholder = value;
-        }
-    }
-
-    private priceFourPlaceholder: string = "No Update";
-    get PriceFourPlaceholder() {
-        return this.priceFourPlaceholder;
-    }
-    set PriceFourPlaceholder(value: string) {
-        if (this.priceFourPlaceholder != value) {
-            this.priceFourPlaceholder = value;
-        }
-    }
-
-    private priceFivePlaceholder: string = "No Update";
-    get PriceFivePlaceholder() {
-        return this.priceFivePlaceholder;
-    }
-    set PriceFivePlaceholder(value: string) {
-        if (this.priceFivePlaceholder != value) {
-            this.priceFivePlaceholder = value;
-        }
-    }
-
-    private costPricePlaceholder: string = "No Update";
-    get CostPricePlaceholder() {
-        return this.CostPricePlaceholder;
-    }
-    set CostPricePlaceholder(value: string) {
-        if (this.costPricePlaceholder != value) {
-            this.costPricePlaceholder = value;
-        }
-    }
-
 }

@@ -1,28 +1,27 @@
 declare var System: any;
 declare var window: any;
-import { Component, OnDestroy, ElementRef, OnInit, AfterViewInit, AfterContentInit, OnChanges, Output, EventEmitter, ContentChildren, ContentChild, ViewChildren, QueryList, ChangeDetectorRef, TemplateRef, DoCheck, IterableDiffers } from '@angular/core';
+import {Component, OnDestroy, ElementRef, Renderer, OnInit, AfterViewInit, AfterContentInit, OnChanges, Output, EventEmitter, RenderComponentType, ContentChildren, ContentChild, ViewChildren, QueryList, ChangeDetectorRef, TemplateRef, DoCheck, IterableDiffers} from '@angular/core';
 //import {CORE_DIRECTIVES} from '@angular/common';
-import { LogColumnComponent } from './LogColumnComponent';
-import { LogRowDetailsComponent } from './LogRowDetailsComponent';
-import { LogCellTemplateComponent } from './LogCellTemplateComponent';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import {LogColumnComponent} from './LogColumnComponent';
+import {LogRowDetailsComponent} from './LogRowDetailsComponent';
+import {LogCellTemplateComponent} from './LogCellTemplateComponent';
+import {AppTool} from '../../../../Infrastructure/Tools';
 //import {VirtualRowController} from './VirtualRowController'; 
-import { EditGridVirtualRowController } from './EditGridVirtualRowController';
+import {EditGridVirtualRowController} from './EditGridVirtualRowController';
 //import {ListHeaderTemplateComponent} from './app/ListHeaderTemplateComponent';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
+import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 declare var styleDisplay, EditgriditemStyling;
 
 @Component({
-
+    moduleId: module.id,
 
     selector: 'logitude-edit-grid',
     templateUrl: './EditableLogGridComponent.html',
     //directives: [CORE_DIRECTIVES, EditableListTemplateComponent],
-     inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll', 'LastDefaultSpace','ColumnName','Condition', 'ShowNoDataFoundText'],
-
+    inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll','LastDefaultSpace'],
 })
 
 export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterContentInit {
@@ -34,16 +33,13 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     HorizantalScrollStatus: string = 'auto';
     differ: any;
     ShowFooter: boolean = false;
-    LastDefaultSpace: number = 22;
+    LastDefaultSpace:number =22;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     UseVirtuallization: boolean = false;
     ItemSourceLoaded: EventEmitter<any>;
     MyTimer = null
     EnableExpandCollapseAll = false;
-    ShowNoDataFoundText = false;
     ShowCollapseAllIcon = false;
-    Condition:string=""
-    ColumnName:string=""
     public get ItemSource() { return this.itemSource; }
     public set ItemSource(newValue: ObservableCollection) {
         this.itemSource = newValue;
@@ -51,22 +47,15 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             this.CurrentSession.LogitudeGridHelper.ResetRowIndex(this.LogGridId);
             this.CurrentSession.LogitudeGridHelper.ResetNextRowIndex(this.LogGridId);
             var OldCount = this.group.length;
-            this.sortingCol = null;
-
-            this.resetHeaderCellBackGround();
             if (this.groupby) {
                 this.group = new GroupByPipe().ShapeGrouping(this.ItemSource.Collection, this.groupby);
                 this.rowCount = this.group.length;
                 this.updateDisplayListGrouping(true);
             }
             else {
-                if (evt.Items && this.ItemSource.Collection.length != evt.Items.length) {
-                    this.ItemSource.Collection = evt.Items;
-                }
-
                 this.group = new GroupByPipe().ShapeList(this.ItemSource.Collection);
-
                 this.rowCount = this.group.length;
+                //this.updateDisplayListGrouping(true);
                 this.updateDisplayList(true);
             }
             this.canvasHeight = {
@@ -252,7 +241,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     WindowResizeSub: any;
     EndOfRowReachedSub: any;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private _elementRef: ElementRef, private cd: ChangeDetectorRef, differs: IterableDiffers) {
+    constructor(private _elementRef: ElementRef, private _renderer: Renderer, private cd: ChangeDetectorRef, differs: IterableDiffers) {
         this.differ = differs.find([]).create(null);
         if (this.CurrentSession == null) {
             this.LogGridId = "LogGrid_-1_-1";
@@ -286,8 +275,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         //        d.style.display = "none"; 
         //    }
         //};
-
-
     }
 
     isResizing: boolean = false;
@@ -769,7 +756,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 var Bodytop = this.HeaderHeight;
                 if (this.groupby) {
                     this.rows.forEach((value, key) => {
-
                         if (value.IsGroupOpened) {
                             value.styles = {
                                 'top': top + "px",
@@ -1110,7 +1096,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             };
             this.BodyTop = this.HeaderHeight;
         });
-
     }
     SelectedIndex: number = -1;
     FinishLoading: EventEmitter<any> = new EventEmitter<any>();
@@ -1197,7 +1182,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 }
             }
         });
-
+       
 
     }
 
@@ -1216,7 +1201,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 }
             }
         });
-
+        
     }
 
     init() {
@@ -1282,7 +1267,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         //        this.HeaderHeight = cHeight;
         //    }
         //});
-
     };
 
     //renderRows(res: any[]) {
@@ -1609,7 +1593,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         });
         //console.log(this.DisableRowByFieldValue);
         //console.log(this.DisableRowByFieldName);
-
     }
 
     ngAfterViewInit() {
@@ -1626,7 +1609,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.rowCount = this.ItemSource.Length;
         //if (this.dataSource) {
         this.init();
-
         //}
     }
     handleonclick(evt, rownum) {
@@ -1748,48 +1730,15 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     }
     OrigionalSortingData: any[];
     ServerSortTimer: any;
-    ServerSort(colDef, i) {
+    ServerSort(colDef, i, LogGridId) {
         if (this.ServerSortTimer) {
             clearTimeout(this.ServerSortTimer);
         }
-        this.ServerSortTimer = setTimeout(() => this.DoServerSort(colDef, i), 200);
+        this.ServerSortTimer = setTimeout(() => this.DoServerSort(colDef, i, LogGridId), 200);
+       
     }
 
-    CompareAscending(a, b) {
-        if (a == undefined) {
-            a = -1;
-        }
-        if (b == undefined) {
-            b = -1;
-        }
-        if (a > b) {
-            return 1;
-        }
-        if (a < b) {
-            return -1;
-        }
-        return 0;
-    }
-
-    CompareDecending(a, b) {
-        if (a == undefined) {
-            a = -1;
-        }
-        if (b == undefined) {
-            b = -1;
-        }
-        if (a > b) {
-            return -1;
-        }
-        if (a < b) {
-            return 1;
-        }
-        return 0;
-    }
-
-    SortByColumn: any;
-    DoServerSort(colDef, i) {
-        this.SortByColumn = colDef;
+    DoServerSort(colDef, i, LogGridId) {
         if (colDef.SortFieldName) {
             this.OrigionalSortingData = this.ItemSource.Collection;
             if (colDef.SortFieldName != this.sortingCol) {
@@ -1804,7 +1753,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     {
                         //this.dataSource.sortingDir = "Descending";
                         this.sortingDir = "Descending";
-                        var temp = this.ItemSource.Collection.sort((a, b) => this.CompareAscending(a[colDef.SortFieldName], b[colDef.SortFieldName]));//(a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? -1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? 1 : 0));
+                        var temp = this.ItemSource.Collection.sort((a, b) => (a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? -1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? 1 : 0));
                         this.ItemSource = new ObservableCollection(temp);
                         break;
                     }
@@ -1812,7 +1761,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     {
                         //this.dataSource.sortingDir = "Ascending";
                         this.sortingDir = "Ascending";
-                        var temp = this.ItemSource.Collection.sort((a, b) => this.CompareDecending(a[colDef.SortFieldName], b[colDef.SortFieldName]));//(a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? 1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? -1 : 0));
+                        var temp = this.ItemSource.Collection.sort((a, b) => (a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? 1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? -1 : 0));
                         this.ItemSource = new ObservableCollection(temp);
                         break;
                     }
@@ -1869,17 +1818,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         }
     }
 
-    resetHeaderCellBackGround() {
-        var ColumnsElements = document.getElementsByClassName("ag-header-cell");
-        for (var j = 0; j < ColumnsElements.length; j++) {
-            if (ColumnsElements[j].attributes['LogGridId']?.value == this.LogGridId) {
-                //if ((<HTMLElement>ColumnsElements[j]).style.background == '#cfcbcb') { 
-                (<HTMLElement>ColumnsElements[j]).style.background = 'transparent';
-                //}
-            }
-        }
-    }
-
     cellClicked(field, value, rowIndex, colIndex) {
     }
     rowClicked(rowIndex, row) {
@@ -1917,7 +1855,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     this.ViewPortRowCount = this.rowCount;
                 }
                 else {
-                    this.ViewPortRowCount = (this.viewportSize - this.HeaderHeight) > 0 ? (this.viewportSize - Math.ceil(this.HeaderHeight / this.rowHeight) ): 30; // + this.extraRows;
+                    this.ViewPortRowCount = (this.viewportSize - this.HeaderHeight) > 0 ? (this.viewportSize - this.HeaderHeight) : 30; // + this.extraRows;
                 }
                 var top = 0;
                 var Bodytop = this.HeaderHeight;
@@ -1966,7 +1904,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                         }
                     }
                     else {
-
                         var row: IRow = { rowIndex: this.group[i].Index, rowData: this.group[i].Data, DetailsIcon: (this.group[i].Type == "Head" ? "./Images/CellIcons/Arrowup.png" : "./Images/CustomTreeIcon.png"), IsDetailesOpened: (this.group[i].Type == "Head" ? true : false), Type: this.group[i].Type, IsGroupOpened: true, ChildrenFirstIndex: this.group[i].ChildrenFirstIndex, IsExpandable: false, SetExpandaple(isExpandable: boolean) { this.IsExpandable = isExpandable; }, ChildrensCount: this.group[i].Count, IsSelected: false };
                         row.rowData.rowIndex = (row.rowIndex);
                         row.styles = {
@@ -2443,12 +2380,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.FinishLoadingGroupsSub = null;
         // Removes the event listener
         //  this.func();
-
     }
     private countIsHere = true;
     private oldSearchFields: string;
     private oldQueryId: string;
-    private oldQueryCode: string;
 
     editingCell: any = [];
     focusCell($event, rowIndex, colIndex) {

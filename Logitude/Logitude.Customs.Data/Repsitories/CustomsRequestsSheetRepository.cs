@@ -1,13 +1,15 @@
-
+ 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using System.Data.Entity;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -29,16 +31,6 @@ namespace Logitude.Customs.Data.Repsitories
                     orderby a.RequestCreateDate descending
                     select a).First();
         }
-        public CustomsRequestsSheet GetLastCRSByCustomfileStatusInterfaceFirstOrDefault(string customFileNumber, string requestStatusCode, string interfaceTypeCode, int tenant)
-        {
-
-            return (from a in context.CustomsRequestsSheets
-                    where a.CustomFileNo == customFileNumber && a.Tenant == tenant
-                    where a.RequestStatusCode == requestStatusCode
-                    where a.InterfaceTypeCode == interfaceTypeCode
-                    orderby a.RequestCreateDate descending
-                    select a).FirstOrDefault();
-        }
 
         public List<CustomsRequestsSheet> GetCustomsRequestsSheetByCustomFileNumber(string customFileNumber, int tenant)
         {
@@ -47,23 +39,6 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CustomFileNo == customFileNumber && a.Tenant == tenant
                     select a).ToList();
         }
-        public bool HasBlockingRequests(string customFileNumber, int tenant, string interfaceTypeCode)
-        {
-            const string AnalyzedStatusCode = "30";
-            const string CanceledStatusCode = "99";
-
-            return context.CustomsRequestsSheets
-                .Where(a =>
-                    a.CustomFileNo == customFileNumber &&
-                    a.Tenant == tenant &&
-                    a.InterfaceTypeCode == interfaceTypeCode &&
-                    a.RequestStatusCode != AnalyzedStatusCode &&
-                    a.RequestStatusCode != CanceledStatusCode
-                )
-                .AsNoTracking()
-                .Any();
-        }
-
 
         public List<CustomsRequestsSheet> GetEntityRequestsSheets(string objectTableId, string entityId, int tenant)
         {
@@ -134,34 +109,8 @@ namespace Logitude.Customs.Data.Repsitories
                 }
             }
         }
-        public string GetRequestDescription(string id)
-        {
-            return (from a in context.CustomsRequestsSheets
-                    where a.Id == id 
-                    select a.RequestDescription).FirstOrDefault();
-        }
-
-        public CustomsRequestsSheet GetTenantPriorityByEntityID(string EntityID, int tenant)
-        {
-     
-
-            var query = (from a in context.CustomsRequestsSheets
-                         where a.Tenant == tenant && a.Id == EntityID
-                         select a).FirstOrDefault();
-
-            return query;
-         
-        }
-        public int? GetTenantPriorityByEntityIDAndTeant(string EntityID, int tenant)
-        {
 
 
-            return (from a in context.CustomsRequestsSheets
-                         where a.Tenant == tenant && a.Id == EntityID
-                         select a.TenantPriority).FirstOrDefault();
-
-
-        }
     }
 
 }

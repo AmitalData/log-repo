@@ -3,7 +3,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.XSD.Analyzers.INTTRAAnalyzer;
 using Logitude.XSD.INTTRA.BL;
 using Logitude.XSD.INTTRA_Booking;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -258,7 +258,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
                     List<ShipmentContainerStatusList> myResult = new List<ShipmentContainerStatusList>();
 
-                    myResult = (from d in myContext.ShipmentContainerStatuses.Include("INTTRAStatus").DefaultIfEmpty().Include("LocationPort").DefaultIfEmpty().Include("ContainerStatus").DefaultIfEmpty().Include("ContainerStatusSource").DefaultIfEmpty()
+                    myResult = (from d in myContext.ShipmentContainerStatuses.Include("INTTRAStatus").Include("LocationPort")
                                 where d.Tenant == tenant
                                 && d.ShipmentId == ShipmentId
                                 && d.ContainerId == ContainerId
@@ -282,18 +282,13 @@ namespace WebFreight.Web.Controllers.WebServices
                                     StatusCode = d.StatusCode,
                                     TimeOfArrivalInfo = d.TimeOfArrivalInfo,
                                     TimeOfDepartureInfo = d.TimeOfDepartureInfo,
-                                    Location = d.Location,
-                                    StatusSource = d.StatusSource,
-                                    StatusSourceName = d.ContainerStatusSource == null ? "" : d.ContainerStatusSource.Name,
-                                    StatusName = d.INTTRAStatus == null ? (d.ContainerStatus == null ? null : d.ContainerStatus.Name) : d.INTTRAStatus.Name,
+                                    StatusName = d.INTTRAStatus == null ? null : d.INTTRAStatus.Name,
                                     LocationCode = d.LocationPort == null ? "" : d.LocationPort.CombinedCode,
                                     LocationName = d.LocationPort == null ? "" : d.LocationPort.EnglishName,
+                                    Location = d.Location,
                                 }).ToList();
 
-                    //myResult = myResult
-                    //          .GroupBy(p => new { p.StatusName, p.EventDate,  p.StatusSource, p.VesselName, p.ArrivalDate, p.DepartureDate })
-                    //          .Select(g => g.FirstOrDefault())
-                    //          .ToList();
+
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult.OrderByDescending(o => o.EventDate));
                 }
@@ -304,7 +299,6 @@ namespace WebFreight.Web.Controllers.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
         public HttpResponseMessage GetSendEBooking(string myShipmentId)
         {
             try

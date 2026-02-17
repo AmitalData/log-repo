@@ -10,7 +10,6 @@ import {ServiceResponse} from '../Infrastructure/DataContracts/ServiceResponse';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
-import { InvoiceDomainService } from '../Invoice/Services/InvoiceDomainService';
 
 export class InvoiceTool {
     public static IsEditingARInvoiceEnabled(entityPM: ARInvoicePM) {
@@ -27,9 +26,6 @@ export class InvoiceTool {
 
             else if (entityPM.StatusCode == "DR") {
                 myResult = true;
-            }
-            else if (entityPM.StatusCode == "PR") {
-                myResult = false;
             }
 
             else if (entityPM.IsConstituentInvoice) {
@@ -66,7 +62,7 @@ export class InvoiceTool {
         if (entityPM != null) {
             if (AppTool.IsNullOrEmpty(entityPM.StatusCode) || entityPM.StatusCode == "DR") {
                 myResult = true;
-            }
+            }            
         }
 
         return myResult;
@@ -159,12 +155,6 @@ export class InvoiceTool {
             invoicePartners.push(new InvoicePartnerType("SL", "SL", "Shipping line"));
             invoicePartners.push(new InvoicePartnerType("TR", "TR", "Trucker"));
             invoicePartners.push(new InvoicePartnerType("VD", "VD", "Vendor"));
-            invoicePartners.push(new InvoicePartnerType("WH", "WH", "Warehouse"));
-
-            if (SessionLocator.TenantPM.AccountingActivated) {
-                invoicePartners.push(new InvoicePartnerType("AC", "AC", "Accounting Partner"));
-            }
-
         }
 
         return invoicePartners;
@@ -174,10 +164,6 @@ export class InvoiceTool {
     }
     public static GetVendorPartnerTypes() {
         return "AG,AL,CG,SG,SL,TR,VD,WH";
-    }
-
-    public static GetGeneralAPInvoiceVendorPartnerTypes() {
-        return "AG,AL,CG,SG,SL,TR,VD,WH,AC";
     }
     public static GetOperationalDate(shipmentPM: ShipmentPM) {
         var myResult: Date = null;
@@ -222,6 +208,33 @@ export class InvoiceTool {
                                 entityPM.DueDate = null;
                             }
 
+                            else if (AppTool.IsNullOrZero(list.Days)) {
+
+                                var myComparativeDate: Date = null;
+
+                                if (entityPM.IsConsolidationInvoice) {
+                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                }
+
+                                else {
+                                    if (list.FromDateTypeCode == "SHI") {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
+
+                                        if (myComparativeDate == null) {
+                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                        }
+                                    }
+
+                                    else {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                    }
+                                }
+
+                                if (entityPM.DueDate != myComparativeDate) {
+                                    entityPM.DueDate = myComparativeDate;
+                                }
+                            }
+
                             else {
                                 var myComparativeDate: Date = null;
 
@@ -244,30 +257,27 @@ export class InvoiceTool {
                                 }
 
                                 if (myComparativeDate != null) {
-                                    var myDate = new Date();
-
                                     var dateYear = myComparativeDate.getUTCFullYear();
-                                    var dateMonth = myComparativeDate.getUTCMonth(); 
+                                    var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
-                                    
-                                    if (list.EndOfMonth) {
-                                        myDate = new Date(Date.UTC(dateYear, dateMonth + 1, 0)); 
-                                    } else {
-                                        myDate = new Date(Date.UTC(dateYear, dateMonth, dateDay));
-                                    }
-                                    
-                                    myDate.setUTCMonth(myDate.getUTCMonth() + list.NumberOfMonths);
-                                    
-                                    myDate.setUTCDate(myDate.getUTCDate() + list.Days);
-                                    
 
+                                    if (list.CurrentMonth) {
+                                        dateMonth += 1;
+                                        dateDay = 1;
+                                    }
+
+                                    var myDate = new Date();
+                                    myDate.setUTCFullYear(dateYear);
+                                    myDate.setUTCMonth(dateMonth - 1);
+                                    myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
                                     myDate.setUTCSeconds(0);
                                     myDate.setUTCMilliseconds(0);
 
                                     myComparativeDate = myDate;
-                                   
+                                    myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
+
                                     if (entityPM.DueDate != myComparativeDate) {
                                         entityPM.DueDate = myComparativeDate;
                                     }
@@ -295,6 +305,33 @@ export class InvoiceTool {
                                 entityPM.DueDate = null;
                             }
 
+                            else if (AppTool.IsNullOrZero(list.Days)) {
+
+                                var myComparativeDate: Date = null;
+
+                                if (entityPM.IsMultipleEntities) {
+                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                }
+
+                                else {
+                                    if (list.FromDateTypeCode == "SHI") {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
+
+                                        if (myComparativeDate == null) {
+                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                        }
+                                    }
+
+                                    else {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                    }
+                                }
+
+                                if (entityPM.DueDate != myComparativeDate) {
+                                    entityPM.DueDate = myComparativeDate;
+                                }
+                            }
+
                             else {
                                 var myComparativeDate: Date = null;
 
@@ -317,30 +354,26 @@ export class InvoiceTool {
                                 }
 
                                 if (myComparativeDate != null) {
-                                    var myDate = new Date();
-
                                     var dateYear = myComparativeDate.getUTCFullYear();
-                                    var dateMonth = myComparativeDate.getUTCMonth(); 
+                                    var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
-                                    
-                                    if (list.EndOfMonth) {
-                                        myDate = new Date(Date.UTC(dateYear, dateMonth + 1, 0)); 
-                                    } else {
-                                        myDate = new Date(Date.UTC(dateYear, dateMonth, dateDay));
+
+                                    if (list.CurrentMonth) {
+                                        dateMonth += 1;
+                                        dateDay = 1;
                                     }
-                                    
-                                    myDate.setUTCMonth(myDate.getUTCMonth() + list.NumberOfMonths);
-                                    
-                                    myDate.setUTCDate(myDate.getUTCDate() + list.Days);
-                                    
+
+                                    var myDate = new Date();
+                                    myDate.setUTCFullYear(dateYear);
+                                    myDate.setUTCMonth(dateMonth - 1);
+                                    myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
                                     myDate.setUTCSeconds(0);
                                     myDate.setUTCMilliseconds(0);
-                                    
+
                                     myComparativeDate = myDate;
-                                    
-                                   
+                                    myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
 
                                     if (entityPM.DueDate != myComparativeDate) {
                                         entityPM.DueDate = myComparativeDate;
@@ -395,14 +428,12 @@ export class InvoiceTool {
                                     var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
 
-                                    if (list.EndOfMonth) {
+                                    if (list.CurrentMonth) {
                                         dateMonth += 1;
                                         dateDay = 1;
                                     }
 
                                     var myDate = new Date();
-                                    myDate.setUTCMonth(0);
-                                    myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
                                     myDate.setUTCMonth(dateMonth - 1);
                                     myDate.setUTCDate(dateDay);
@@ -433,25 +464,25 @@ export class InvoiceTool {
                 var days = DateTool.GetDaysBetweenDates(entityPM.DueDate, entityPM.InvoiceDate);
 
                 var myService = new PaymentTermListService();
-                myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+                myService.getAll().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        var allPaymentTerms: PaymentTermList[] = myResponse.Result;
-                        var suitablePaymentTerm = allPaymentTerms.filter(f => f.Days == days)[0];
+                        var all: PaymentTermList[] = myResponse.Result;
+                        var list = all.filter(f => f.Days == days)[0];
 
-                        if (suitablePaymentTerm != null && !suitablePaymentTerm.EndOfMonth) {
-                            myPaymentTermId = suitablePaymentTerm.Id;
+                        if (list != null) {
+                            myPaymentTermId = list.Id;
                         }
 
                         else {
-                            var manuallySetPaymentTerm = allPaymentTerms.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
-                            if (manuallySetPaymentTerm != null) {
-                                myPaymentTermId = manuallySetPaymentTerm.Id;
+                            var list = all.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
+                            if (list != null) {
+                                myPaymentTermId = list.Id;
                             }
                         }
 
                         entityPM.PaymentTermId = myPaymentTermId;
                     }
-                });
+                });                
             }
         }
     }
@@ -463,19 +494,19 @@ export class InvoiceTool {
                 var days = DateTool.GetDaysBetweenDates(entityPM.DueDate, entityPM.InvoiceDate);
 
                 var myService = new PaymentTermListService();
-                myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+                myService.getAll().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        var allPaymentTerms: PaymentTermList[] = myResponse.Result;
-                        var suitablePaymentTerm = allPaymentTerms.filter(f => f.Days == days)[0];
+                        var all: PaymentTermList[] = myResponse.Result;
+                        var list = all.filter(f => f.Days == days)[0];
 
-                        if (suitablePaymentTerm != null && !suitablePaymentTerm.EndOfMonth) {
-                            myPaymentTermId = suitablePaymentTerm.Id;
+                        if (list != null) {
+                            myPaymentTermId = list.Id;
                         }
 
                         else {
-                            var manuallySetPaymentTerm = allPaymentTerms.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
-                            if (manuallySetPaymentTerm != null) {
-                                myPaymentTermId = manuallySetPaymentTerm.Id;
+                            var list = all.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
+                            if (list != null) {
+                                myPaymentTermId = list.Id;
                             }
                         }
 
@@ -488,15 +519,6 @@ export class InvoiceTool {
 
     public static GetBillToNotAllowConsolidation() {
         return "Bill to is not allowed for consolidation invoices";
-    }
-
-    public static GetGenericCreditAccount(cardId: string, currencyId: string, isPayable: boolean) {
-        var myResult = null;
-        var invoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(cardId, currencyId, isPayable).subscribe((myResult: ServiceResponse) => {
-           return myResult = myResult.Result;
-        });
-        return myResult;
     }
 }
 export class CreditLimitHelper {
@@ -563,7 +585,7 @@ export class CreditLimitHelper {
             if (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning) {
 
                 var RemainingLimit = FormatTool.FormatNumber(LimitAmount - ActualBalance);
-                var PercentageWarning: string = "The remaining credit limit for this customer is " + RemainingLimit;
+                var PercentageWarning: string = "The remaining credit limit for this customer is (" + RemainingLimit + ")";
                 this.Warnings.push(PercentageWarning);
             }
         }

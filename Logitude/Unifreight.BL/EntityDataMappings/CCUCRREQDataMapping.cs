@@ -35,9 +35,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.SUPPLIERCOUNTRY = entityPM.SUPPLIERCOUNTRY;
             entityPOCO.SUPPLIERID = entityPM.SUPPLIERID;
             entityPOCO.REQUESTNO = entityPM.REQUESTNO;
-            entityPOCO.TENANT = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
-            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(CCUCRREQPM entityPM, CCUCRREQ entityPOCO)
@@ -61,9 +58,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.SUPPLIERCOUNTRY = entityPOCO.SUPPLIERCOUNTRY;
             entityPM.SUPPLIERID = entityPOCO.SUPPLIERID;
             entityPM.REQUESTNO = entityPOCO.REQUESTNO;
-            entityPM.Tenant = entityPOCO.TENANT != null ? (int)entityPOCO.TENANT : 0;
-            entityPM.IS_SYNCH = entityPOCO.IS_SYNCH != null ? (bool)entityPOCO.IS_SYNCH : false;
-            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT != null ? entityPOCO.LAST_UPDATE_DT : DateTime.Now;
         }
 
         public void CustomPMToPOCO(CCUCRREQPM entityPM, CCUCRREQ entityPOCO)

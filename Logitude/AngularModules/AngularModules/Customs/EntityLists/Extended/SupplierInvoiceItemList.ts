@@ -1,4 +1,4 @@
-export class SupplierInvoiceItemList {
+﻿export class SupplierInvoiceItemList {
 
     DeclarationId: string;
 
@@ -90,7 +90,4 @@ export class SupplierInvoiceItemList {
     ItemAdditionalStatus: boolean;
 
     IsParent: boolean;
-    ItemFOBAmountForeign: number;
-    ItemFOBAmountNIS: number;
-    InvoiceNumber: string;
 }

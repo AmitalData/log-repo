@@ -122,24 +122,6 @@
         opacity: 0.5;
         pointer-events: none;
     }
-
-    .ShortName {
-        width:133px;
-    }
-
-    .LongName {
-        width: 150px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    .AgentNameText {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        display: block;
-    }
-
 </style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -175,11 +157,11 @@
                                         <tr>
                                             <td>
                                                 <div *ngIf="EntityPm.HasFile == true">
-                                                    <div style="float:left;" title="{{ShipmentList.StatusName == 'In Progress' ? 'You are not allowed to share documents with agents while the shipment status is in progress' : ''}}">
-                                                        <button class="Button" [ngClass] = "AgentLabelClass" title="Share With {{AgentLable}}" style="margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled || ShipmentList.StatusName == 'In Progress'" [class.Disable]="EntityPm.SignRequestByUserEmail">
+                                                    <div style="float:left;">
+                                                        <button class="Button" style="width: 133px;margin-right: 15px;font-size: 12px;height:24px;color:gray;float:left;" (click)="ShareWithAgent()" [class.DisableSharedWithAgentButton]="!IssharedWithAgentButtonEnabled" [class.Disable]="EntityPm.SignRequestByUserEmail">
                                                             <!--<img src="./Images/ShareWithAgentGray.png" /> Share With Agent-->
-                                                            <div class="AgentNameText" *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
-                                                            <div class="AgentNameText" *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
+                                                            <div *ngIf="!EntityPm.IsSharedWithForwarder"><img src="./Images/ShareWithAgentGray.png" style="margin-top: -3px;margin-right: 3px;" />Share With {{AgentLable}}</div>
+                                                            <div *ngIf="EntityPm.IsSharedWithForwarder"><img src="./Images/SharedWithAgentB.png" style="margin-top: -3px;margin-right: 3px;" />Shared With {{AgentLable}}</div>
                                                         </button>
                                                         <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" (mouseout)="HideNoteClicked()" (mouseover)="ShowNoteClicked()" />
                                                     </div>
@@ -225,7 +207,7 @@
                                                 </td>
                                                 <td>
                                                     <ul class="FiltersMenu" style="float: left;width:235px;" *ngIf="TypeSelected == false">
-                                                        <li id="{{'DocumentTypeCode' | IdGeneratorAsyncPipe | async}}" *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
+                                                        <li id="{{'DocumentTypeCode' | IdGeneratorPipe}}" *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
                                                             {{item.OrderedDisplayName}}
                                                         </li>
                                                         <li (click)="itemClicked('O','')" (mouseover)="itemMouseOver('O')" style="width:55px;" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'">
@@ -384,8 +366,8 @@
                                 <td><div style="margin-top: 7px;"></div></td>
                                 <td>
                                     <div style="margin-top: 7px;">
-                                        <button id="{{'OK' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
-                                        <button id="{{'Cancel' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'OK' | IdGeneratorPipe}}" class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
+                                        <button id="{{'Cancel' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
                                     </div>
                                 </td>
                             </tr>

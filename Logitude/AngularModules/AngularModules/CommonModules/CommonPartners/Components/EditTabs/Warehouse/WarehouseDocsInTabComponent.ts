@@ -4,7 +4,7 @@ import { WarehousePM } from '../../../../../Common/EntityPMs/WarehousePM';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WarehouseDocsInTabComponent.html',
 })
 

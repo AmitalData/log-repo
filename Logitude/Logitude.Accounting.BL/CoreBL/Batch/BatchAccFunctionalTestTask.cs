@@ -15,7 +15,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -148,24 +148,22 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         }
 
         public string CheckTrailReport(List<GLAccountPM> expectedGLAccount, BatchFunctionalTestTaskArg parameterArgs)
-
+        
         {
             ///{"Tenant":1148,"FromDate":"2016-06-10T00:00:00","ToDate":"2019-06-10T00:00:00+03:00","TrailReportLevelOption":"ChartofaccountType=1,Chartofaccount=2,GLAccount=3","MyTrailReportLevel":3,"CurrenciesDetailed":0,"Category1":"","Category5":"","DetailedControlClients":false,"DetailedControlVendors":false,"DetailedControlJob":false,"DetailedControlFile":false,"Suppress_DoNotShowCardWithoutActivity":0}
 
-            //using (
-            var trailReportService = TrailReportFactory.CreateNew(new TrailReportParam()
+            using (var trailReportService = TrailReportFactory.CreateNew(new TrailReportParam()
             {
                 Tenant = parameterArgs.Tenant,
                 MyTrailReportLevel = ReportLevel.GLAccount,
                 FromDate = new DateTime(2015, 1, 1),
                 ToDate = DateTime.Now.Date,
-                DetailedControlClients = true,
+                DetailedControlClients=true,
                 DetailedControlVendors = true,
-                DetailedControlJob = true,
+                DetailedControlJob= true,
                 DetailedControlFile = true,
-
-            });//)
-            try
+                
+            }))
             {
 
                 var res = trailReportService.Execute();
@@ -205,10 +203,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         ).ToList();
 
                 var sb = new StringBuilder().AppendLine().AppendLine("-------------CheckTrailReport-------------");
-                myList.ForEach(r =>
-                {
+                myList.ForEach(r => {
                     sb.Append("DisplayNumber:").Append(r.DisplayNumber);
-                    if (r.LocalCloseBalance == r.ExpectedLocalCloseBalance)
+                    if (r.LocalCloseBalance== r.ExpectedLocalCloseBalance)
                     {
                         sb.Append(">>OK Equal:").AppendLine(r.ExpectedLocalCloseBalance.GetValueOrDefault().ToString());
                     }
@@ -219,10 +216,6 @@ $">>BAD Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real:{r.Loca
                     }
                 });
                 return sb.ToString();
-            }
-            finally
-            {
-                //trailReportService.Dispose();
             }
         }
 
@@ -276,7 +269,7 @@ $">>BAD Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real:{r.Loca
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", args.Tenant.ToString() }
-                }, args.Tenant, myTimeSpan);
+                }, myTimeSpan);
             }
             else
             {

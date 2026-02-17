@@ -7,12 +7,11 @@ import { BIReportList } from '../../../Infrastructure/EntityLists/BIReportList';
 import { BIReportListService } from '../../../Infrastructure/Services/StandardLists/BIReportListService';
 import { InfrastructureDomainService } from '../../../Infrastructure/Services/InfrastructureDomainService';
 import { BIReportFolderList } from '../../../Infrastructure/EntityLists/BIReportFolderList';
-import { BIReportFolderExtendedListService } from '../../../Infrastructure/Services/ExtendedLists/BIReportFolderExtendedListService';
+import { BIReportFolderListService } from '../../../Infrastructure/Services/StandardLists/BIReportFolderListService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow'; 
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator'; 
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -21,55 +20,21 @@ import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator
 
 export class BIFolderReportComponent {
     public ItemsSource: BIFolderClass[] = [];
-    private folderListService: BIReportFolderExtendedListService;
+    private folderListService: BIReportFolderListService;
     private reportListService: BIReportListService;
     public _InfrastructureDomainService: InfrastructureDomainService;
-    public IsNewBIReportButtonDisabled: boolean = false;
-    public IsNewBIReportFolderButtonDisabled: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ObjectTableName: string = "BIReport";
-    // Tips
-    public IsTipsOpened: boolean = true;
-    public IsFirstTipLoad: boolean = true;
-
-    IsShowAddReportFromLibraryLink: boolean = false; 
     constructor() {
-        this.folderListService = new BIReportFolderExtendedListService();
+        this.folderListService = new BIReportFolderListService();
         this.reportListService = new BIReportListService();
         this._InfrastructureDomainService = new InfrastructureDomainService();
-        if (!FeatureLocator.HasEntityPermessions("BIReport", "NEW", false)) {
-            this.IsNewBIReportButtonDisabled = true;
-        }
-        if (!FeatureLocator.HasEntityPermessions("BIReportFolder", "NEW", false)) {
-            this.IsNewBIReportFolderButtonDisabled = true;
-        }
-        if (FeatureLocator.HasFeaturePermession("BIReport", "BIReportCopyFromLibrary")) {
-            if (SessionLocator.Tenant != 0) {
-                this.IsShowAddReportFromLibraryLink = true;
-            }
-        }
-
-  
-
         this.LoadData();
         this.Listen();
     }
 
-
-    TipVisibilityChanged(event) {
-
-        if (event == "true") this.IsTipsOpened = true;
-        else this.IsTipsOpened = false;
-        this.IsFirstTipLoad = false;
-    }
-    TipsButtonClicked() {
-        this.IsTipsOpened = !this.IsTipsOpened;
-    }
-     
-
     private Listen() {
         this.CurrentSession.SessionEvent.subscribe(s => {
-            if (s == "ReloadAllList") {
+            if (s == "BIRefresh") {
                 this.LoadData();
             }
         });
@@ -79,11 +44,10 @@ export class BIFolderReportComponent {
 
     }
 
-
     private folderList: BIReportFolderList[];
     private reportList: BIReportList[];
-    LoadData() {
-        this.folderListService.GetPermittedFolders(SessionLocator.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
+    LoadData() {        
+        this.folderListService.getAll().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.folderList = myResponse.Result;
                 
@@ -117,14 +81,9 @@ export class BIFolderReportComponent {
         }); 
     }
 
-
-
     NewFolderButtonClicked() {
         var logWindow = new LogitudeWindow();        
         logWindow.Title = "New Folder";
-        var windowArgs: any = {};
-        windowArgs.IsNew = true;
-        logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReportFolderComponent');
         logWindow.WindowClosed.subscribe(d => {
             if (d) {
@@ -141,22 +100,6 @@ export class BIFolderReportComponent {
             if (d) {
                 //this.LoadData();
             }
-        });
-    }
-
-    LinkAddReportFromLibraryClick() {
-        let windowTitle = "Add Report From Library";
-        let logWindow = new LogitudeWindow();
-        logWindow.Width = 750;
-        logWindow.Height = 600;
-        logWindow.Title = windowTitle;
-        let windowArgs: any = {};
-        windowArgs.IsCopyFromLibrary = true;
-       // windowArgs.FolderId = this.listArgs.BIReportFolderId;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
-        logWindow.ComponentLoaded.subscribe(s => {
-            //
         });
     }
 
@@ -178,7 +121,7 @@ export class BIFolderReportComponent {
                 confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
                         // save
-                        this._InfrastructureDomainService.DeleteFolder(item.FolderId).subscribe((myResult: ServiceResponse) => {
+                        this._InfrastructureDomainService.DeleteFolder(item.FolderId).subscribe(myResult => {
                             if (!myResult.HasError) {
                                 this.LoadData();
                             }

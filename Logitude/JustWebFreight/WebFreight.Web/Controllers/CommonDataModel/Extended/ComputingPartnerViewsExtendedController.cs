@@ -1,4 +1,5 @@
 ﻿using CWXSD;
+using Intuit.Ipp.LinqExtender.Ast;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -7,9 +8,9 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -41,11 +42,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                if (filters.Tenant != null)
-                {
-                    SecurityUtility.AuthenticationOnTenant(filters.Tenant.Value);
-                }
-
                 String SearchFields = null;
                 int Tenant = authToken.Tenant;
                 SecurityUtility.CheckContactFeature("ComputingPartnerTranslation", "READ", 0);
@@ -54,33 +50,32 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 var ClientModuleName = filters.ClinetName;
                 Object TableController;
                 Type magicType;
-                if (!string.IsNullOrWhiteSpace(filters.objectTableName)) filters.objectTableName = filters.objectTableName.Replace("Customs.", "");
 
-                TableController = GetInstance("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName) + "QueryService," + "Logitude." + ClientModuleName + ".BL", Tenant);
-                if (TableController == null)
+                TableController = GetInstance("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + filters.objectTableName + "QueryService," + "Logitude." + ClientModuleName + ".BL", Tenant);
+                if (TableController==null)
                 {
-                    TableController = GetInstance("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName) + "Query,Logitude.BL", Tenant);
+                    TableController = GetInstance("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + filters.objectTableName + "Query,Logitude.BL", Tenant);
 
                 }
 
                 if (TableController == null)
                 {
-                    TableController = GetInstance("Logitude.BL." + ClientModuleName + "Model.EntityQueries." + (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName) + "Query,Logitude.BL", Tenant);
+                    TableController = GetInstance("Logitude.BL." + ClientModuleName + "Model.EntityQueries." + filters.objectTableName + "Query,Logitude.BL", Tenant);
 
                 }
 
-                magicType = Type.GetType("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName) + "QueryService," + "Logitude." + ClientModuleName + ".BL");
+                magicType= Type.GetType("Logitude." + ClientModuleName + ".BL.EntityQueryServices." + filters.objectTableName + "QueryService," + "Logitude." + ClientModuleName + ".BL");
                 if (magicType == null)
                 {
-                    magicType = Type.GetType("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName) + "Query,Logitude.BL");
+                    magicType = Type.GetType("Logitude.BL." + ClientModuleName + "DataModel.EntityQueries." + filters.objectTableName + "Query,Logitude.BL");
                 }
 
                 if (magicType == null)
                 {
-                    magicType = Type.GetType("Logitude.BL." + ClientModuleName + "Model.EntityQueries." + (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName) + "Query,Logitude.BL");
+                    magicType = Type.GetType("Logitude.BL." + ClientModuleName + "Model.EntityQueries." + filters.objectTableName + "Query,Logitude.BL");
                 }
 
-
+         
 
                 MethodInfo magicMethod;
                 var myTableDataList = new List<object>();
@@ -106,10 +101,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     DefaultTranslations = new List<ComputingPartnerTranslationList>();
 
                 List<TranslateItemClass> Obslist = new List<TranslateItemClass>();
-
+            
                 ObjectTableQuery query = new ObjectTableQuery(Tenant);
-                string objectTableName = (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName);
-                ObjectTablePM objectTablePM = query.GetObjectTableByName(objectTableName, Tenant);
+                ObjectTablePM objectTablePM = query.GetObjectTableByName(filters.objectTableName, Tenant);
                 if (myTableDataList.Count > 0)
                 {
                     string prop = "Code";
@@ -119,18 +113,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     {
                         prop = objectTablePM.CodeField;
                         propName = objectTablePM.NameField;
+                       // prop = "Code";
+                        //propName = "Name";
+
                     }
                     Type type = myTableDataList.First().GetType();
                     PropertyInfo property = type.GetProperty(prop);
                     PropertyInfo property2 = propName != null ? type.GetProperty(propName) : null;
-                    if (property2 == null)
-                    {
-                        property2 = type.GetProperty("LocalName");
-                        if (property2 == null)
-                        {
-                            property2 = type.GetProperty("EnglishName");
-                        }
-                    }
                     PropertyInfo Active = type.GetProperty("InActive");
 
                     if (property != null)
@@ -166,8 +155,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                                             OurCode = itemCodeString,
                                             ComputingPartnerId = filters.computingPartnerId,
                                             ComputingPartnerName = filters.ComputingPartnerName,
-                                            ObjectTableId = (!string.IsNullOrEmpty(filters.ParentObjectTableId) ? filters.ParentObjectTableId : filters.objectTableId),
-                                            ObjectTableName = (!string.IsNullOrEmpty(filters.ParentObjectTableName) ? filters.ParentObjectTableName : filters.objectTableName),
+                                            ObjectTableId = filters.objectTableId,
+                                            ObjectTableName = filters.objectTableName,
                                             CreateDate = todayDateTime,
                                             UpdateDate = todayDateTime,
                                             CreatedByUserId = filters.LoggedContactId,
@@ -230,18 +219,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 ServiceResponse response = new ServiceResponse();
                 Obslist.Sort(new Comparison<TranslateItemClass>((x, y) => String.Compare(y.PartnerCode, x.PartnerCode)));
-                if (filters.SearchingFields != null && filters.SearchingFields != "null" && filters.SearchingFields != "undefined")
-
-                    Obslist = Obslist.Where(fl => (fl.OurCode.ToLower().StartsWith(filters.SearchingFields.ToLower())) || (fl.PartnerCode != null && fl.PartnerCode.ToLower().StartsWith(filters.SearchingFields.ToLower()))).ToList();
-
-                response.Result = Obslist;
-                response.Count = Obslist.Count;
-
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return reponseMessage;
-
+                if (filters.SearchingFields != null && filters.SearchingFields != "null" && filters.SearchingFields != "undefined"  )
+                    
+                    Obslist = Obslist.Where(fl => (fl.OurCode.ToLower().StartsWith(filters.SearchingFields.ToLower()))|| (fl.PartnerCode != null && fl.PartnerCode.ToLower().StartsWith(filters.SearchingFields.ToLower()))).ToList();
+               
+                    response.Result = Obslist;
+                    response.Count = Obslist.Count;
+              
+                    HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                
+                    return reponseMessage;
+                
 
             }
 
@@ -257,7 +246,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             try
             {
                 string computingPartnerId = filters.computingPartnerId;
-                string objectTableId = (!string.IsNullOrEmpty(filters.ParentObjectTableId) ? filters.ParentObjectTableId : filters.objectTableId);
+                string objectTableId = filters.objectTableId;
 
 
                 QueryOperations queryOperations = new QueryOperations()
@@ -563,8 +552,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
 
         public bool GetAll { get; set; }
-        public string ParentObjectTableName { get; set; }
-        public string ParentObjectTableId { get; set; }
     }
 
     public class TranslateItemClass

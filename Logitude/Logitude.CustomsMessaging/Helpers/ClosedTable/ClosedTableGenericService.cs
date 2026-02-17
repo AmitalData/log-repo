@@ -8,7 +8,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -66,7 +66,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         }
         public void UpdateSingleClosedTable()
         {
-            //_CustomContext = CustomContext.GetContext(tenant);
+            //_CustomContext = CustomContext.GetContext(0);
             if (false)
             {
                 CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(_CustomContext);

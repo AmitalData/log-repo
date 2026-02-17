@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ComputingPartnerTranslationRepository repository;
 
-
+        public ComputingPartnerTranslationQuery()
+        {
+            repository = new ComputingPartnerTranslationRepository();
+        }
 
         public ComputingPartnerTranslationQuery(int tenant)
         {
@@ -47,8 +50,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      ComputingPartnerId = a.ComputingPartnerId,
                      ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                      ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
                  }).FirstOrDefault();
 
             return entityPM;
@@ -73,8 +76,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      ComputingPartnerId = a.ComputingPartnerId,
                      ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                      ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
                  });
 
             return myResult;
@@ -100,8 +103,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      ComputingPartnerId = a.ComputingPartnerId,
                      ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                      ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
                  });
 
             return myResult;
@@ -120,8 +123,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             CreatedByUserId = a.CreatedByUserId,
                                                             UpdatedByUserId = a.UpdatedByUserId,
                                                             ComputingPartnerName = a.ComputingPartner != null ? a.ComputingPartner.Name : null,
-                                                            CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                                                            UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
+                                                            CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                                                            UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
                                                             Tenant = tenant,
                                                             ComputingPartnerId=a.ComputingPartnerId,
                                                             ObjectTableId=a.ObjectTableId,
@@ -154,14 +157,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             string LogitudeCode = (from a in repository.Context.ComputingPartnerTranslations
                                   where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == tenant
-                                  && a.PartnerCode.ToUpper() == PartnerCode.ToUpper()
-								   select a.OurCode).FirstOrDefault();
+                                  && a.PartnerCode == PartnerCode
+                                  select a.OurCode).FirstOrDefault();
             if (LogitudeCode == null)
             {
                 LogitudeCode = (from a in repository.Context.ComputingPartnerTranslations
                                where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == 0
-                               && a.PartnerCode.ToUpper() == PartnerCode.ToUpper()
-								select a.OurCode).FirstOrDefault();
+                               && a.PartnerCode == PartnerCode
+                               select a.OurCode).FirstOrDefault();
             }
 
             return LogitudeCode;
@@ -186,8 +189,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                      ComputingPartnerId = a.ComputingPartnerId,
                      ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
                      ComputingPartnerName = a.ComputingPartner == null ? "" : a.ComputingPartner.Name,
-                     CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
-                     UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
+                     UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
                  }).ToList();
 
             return entityPMs;

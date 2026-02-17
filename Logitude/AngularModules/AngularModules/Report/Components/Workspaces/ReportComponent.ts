@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, Output, EventEmitter}  from '@angular/core';
+import {Component, OnInit, ElementRef}  from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -10,7 +10,6 @@ import {ReportGroupService} from '../../../Common/Services/ExtendedLists/ReportG
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReportsTemplateListExtendedService} from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
     moduleId: './Report/Components/Workspaces/',
@@ -20,13 +19,11 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 export class ReportComponent {
     public ItemsSource: ReportsGrpupClass[] = [];
     public ItemsSourceTemp: ReportsGrpupClass[] = [];
-    public IsAvailableForScheduling: boolean = false;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsViewReport: boolean = false;
     showLocal: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
-        this.IsAvailableForScheduling = FeatureLocator.HasFeaturePermession("Report", "ReportsScheduler");
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         this.LoadData();
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
@@ -35,6 +32,7 @@ export class ReportComponent {
     InitComponent() {
 
     }
+
     private groupList: ReportGroupList[];
     public reportList: ReportList[];
     LoadData() {
@@ -44,13 +42,13 @@ export class ReportComponent {
         var groupService = new ReportGroupService();
         var reportService = new ReportService();
 
-        groupService.getReportGroupLists().subscribe((myResponse: ServiceResponse) => {
+        groupService.getReportGroupLists(0).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.groupList = myResponse.Result;
                 this.groupList = this.groupList.sort((a, b) => { return a.OrderNumber - b.OrderNumber });
 
                 this.groupList.forEach(item => {
-                    reportService.GetReportListsByGroupId(item.Id).subscribe((myResponse: ServiceResponse) => {
+                    reportService.GetReportListsByGroupId(item.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var myResult: ReportList[] = myResponse.Result;
                             
@@ -80,7 +78,7 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "UNER") {
-                                    var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "URT")[0];
+                                    var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "URT" && d.TenantNumber == SessionLocator.Tenant)[0];
                                     if (FeatureToggle) {
                                         this.reportList.push(item);
                                     }
@@ -97,40 +95,7 @@ export class ReportComponent {
                                         }
                                     }
                                 }
-                                else if (item.Code == "SHRR") {
-                                    if (SessionLocator.Tenant == 2095 || SessionLocator.Tenant == 2052 || SessionLocator.TenantManagementJS.PackageCode == "DVMT") {
-                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                                            this.reportList.push(item);
-                                        }
-                                    }
-                                }
-
-                                else if (item.Code == "FLBM") {
-                                    if (SessionLocator.Tenant == 2095 || SessionLocator.Tenant == 2052 || FeatureLocator.IsPackage_DVMT()) {
-                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                                            this.reportList.push(item);
-                                        }
-                                    }
-                                }
-
-
-                                else if (item.Code == "RCRF") {
-                                    if (SessionLocator.Tenant == 1326 || FeatureLocator.IsPackage_DVMT()) {
-                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
-                                            this.reportList.push(item);
-                                        }
-                                    }
-                                }
-                                else if (item.Code == "COO") {
-                                    if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Customs.Declaration", "Declaration.Tab.DigitalCertificateOfOrigin")) {
-                                        this.reportList.push(item);
-                                    }
-                                }
                                 else {
-                                    if (item.Code == "COOC" && SessionLocator.Tenant != 0) {
-                                        return;
-                                    }
-
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                         this.reportList.push(item);
                                     }
@@ -163,11 +128,6 @@ export class ReportComponent {
     }
 
     ViewReportClicked(GroupList: ReportGroupList, ReportList: ReportList) {
-        if (ReportList.Code == "LRBE") {
-            this.onReportSchedulerClick(GroupList, ReportList,true)
-            return;
-        }
-
         ServiceLocator.SendTotangoUserActivity("Reports", "Report View");
         
         var isLoadingResources = false;
@@ -210,17 +170,13 @@ export class ReportComponent {
     ReportTemplates: any[] = [];
     LoadReportTemplate(groupList: ReportGroupList, reportList: ReportList) {
      
-        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id).subscribe((myResponse: ServiceResponse) => {
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id,"R").subscribe((myResponse: ServiceResponse) => {
             
             if (!myResponse.HasError) {
                 this.ReportTemplates = myResponse.Result;
              
             }
-            
             this.IsLoadReportsTemplateListRuning = false;
-            reportList.DefaultExcelTemplateId = this.ReportTemplates.filter(d => d.TemplateType == "E" && d.IsDefault && d.UseStimul)[0]?.Id ?? "";
-            reportList.DefaultExcelNoStimId = this.ReportTemplates.filter(d => d.TemplateType == "E" && d.IsDefault && !d.UseStimul)[0]?.Id ?? "";
-            reportList.DefaultTemplateId = this.ReportTemplates.filter(d => d.TemplateType == "R" && d.IsDefault)[0]?.Id ?? "";
             this.LoadComplete(groupList, reportList);
 
         });
@@ -230,7 +186,7 @@ export class ReportComponent {
     //LoadReportsRunUsingWR(groupList: ReportGroupList, reportList: ReportList) {
        
     //    var myService = new ReportService();
-    //      myService.GetCheckIfReportsRunUsingWR().subscribe((res:any) => {
+    //      myService.GetCheckIfReportsRunUsingWR().subscribe(res => {
     //        var pmResponse: ServiceResponse = res;
     //        if (!pmResponse.HasError) {
     //            this.ReportsRunUsingWR = pmResponse.Result;
@@ -242,17 +198,14 @@ export class ReportComponent {
     //}
     
     LoadComplete(groupList: ReportGroupList, reportList: ReportList) {
-        if (!this.IsLoadReportsTemplateListRuning) {
-            if (true) {
-                SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
-                    });
-            }
-            else {
 
-            }
+        if (!this.IsLoadReportsTemplateListRuning) {
+            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates);
+                });
+
             this.IsViewReport = false;
         }
     }
@@ -261,24 +214,6 @@ export class ReportComponent {
     SearchTextChanged(text: string) {         
         this.mySearchText = text;
         this.FillTempItemsSource();
-    }
-
-    onReportSchedulerClick(groupList: ReportGroupList, reportList: ReportList,isQueryReport: boolean = false) {
-        this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response:any) => {
-
-            var windowArgs: any = {};
-            windowArgs.ReportGroupList = groupList;
-            windowArgs.ReportList = reportList;
-            windowArgs.IsQueryReport = isQueryReport;
-
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1200;
-            logWindow.Height = 1000;
-
-            logWindow.Title = reportList.Name + " Scheduler";
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./Report/Components/Scheduler/MainReportSchedulerComponent');
-        });
     }
 }
 export class ReportsGrpupClass {

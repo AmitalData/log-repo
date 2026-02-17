@@ -14,15 +14,13 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
 using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
@@ -42,7 +40,6 @@ using System.Net.Http;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
-using System.Xml;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -56,26 +53,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class InvoiceDomainController : ApiController
     {
-        public HttpResponseMessage GetCardCurrenciesAccountingByCurrencyAndId(string cardId, string currencyId, bool isPayable)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                var myResult = accountingSystemHelper.GetGenericCreditAccount(cardId, currencyId, tenant, isPayable);
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         public HttpResponseMessage GetAccountingReceivablesSummary()
         {
             try
@@ -177,17 +154,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetDebrotExposure(int currencyIndex)
+        public HttpResponseMessage GetDebrotExposure(int tenant, int currency)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
-                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorExposure(tenant, currencyIndex);
+                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorExposure(tenant, currency);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -218,7 +196,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetDebrotExposureForGridControl(int currencyIndex, bool isBranchRestricted)
+        public HttpResponseMessage GetDebrotExposureForGridControl(int index)
         {
             try
             {
@@ -230,7 +208,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
-                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorsExposureForGridControl(tenant, currencyIndex, isBranchRestricted);
+                List<DebtorsClass> myResult = arInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -267,17 +245,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCreditorExposure(int currencyIndex, bool isBranchRestricted)
+        public HttpResponseMessage GetCreditorExposure(int index)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 APInvoiceQuery apInvoiceQuery = new APInvoiceQuery(tenant);
-                List<CreditorsClass> myResult = apInvoiceQuery.GetDebtorsExposureForGridControl(tenant, currencyIndex, isBranchRestricted);
+                List<CreditorsClass> myResult = apInvoiceQuery.GetDebtorsExposureForGridControl(tenant, index);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -349,21 +329,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 DateTime? registergdate = DateHelper.GetDate(registergDateString);
                 CashBookPM cashBook = cashQuery.GetByPaymentAndCurrency(currency, methodType, tenant);
-
-                FullAccountingARPaymentValidatorArguments arpaymentValidatorArgs = new FullAccountingARPaymentValidatorArguments()
-                {
-                    ChequeReplicas = null,
-                    Tenant = tenant,
-                    BillToId = billTo,
-                    PaymentCurrencyId = currency,
-                    CashBook = cashBook,
-                    PaymentMethodCode = code,
-                    RegisterDate = registergdate,
-                    BankAccountId = bankAccountId,
-                    IsOut = true,
-                    IsNewEntity = true
-                };
-                ARPaymentValidator.ValidateFullAccounting(arpaymentValidatorArgs);
+                ARPaymentValidator.ValidateFullAccounting(null,tenant, billTo, currency, cashBook, code, registergdate, bankAccountId, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
@@ -391,8 +357,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 DateTime? accountingDate = DateHelper.GetDate(accountingDateString);
-                ARInvoicePM invoice = new ARInvoicePM() { Tenant = tenant, BillToId = billTo, InvoiceCurrencyId = currency, InvoiceDate = accountingDate };
-                ARInvoiceValidator.ValidateFullAccounting(invoice, true);
+                ARInvoiceValidator.ValidateFullAccounting(tenant, billTo, currency, accountingDate, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
@@ -420,7 +385,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 DateTime? accountingDate = DateHelper.GetDate(accountingDateString);
-                //APInvoiceValidator.ValidateFullAccounting(tenant, vendor, currency, accountingDate);
+                APInvoiceValidator.ValidateFullAccounting(tenant, vendor, currency, accountingDate);
                 return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
@@ -449,48 +414,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 DateTime? invoiceDate = DateHelper.GetDate(invoiceDateString);
 
-                string warningMessage = APInvoiceValidator.ValidateFullAccountingInvoiceDate(invoiceDate, tenant, loggedUserEmail);
+                string warningMessage= APInvoiceValidator.ValidateFullAccountingInvoiceDate(invoiceDate, tenant, loggedUserEmail);
                 return Request.CreateResponse(HttpStatusCode.OK, warningMessage);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        public HttpResponseMessage GetValidateConfirmationNumber(string localVATAmount, string invoiceDateString)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-                int tenant = authToken.Tenant;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                DateTime? invoiceDate = DateHelper.GetDate(invoiceDateString);
-                decimal result = decimal.Parse(localVATAmount.Replace(",", ""));
-                string warningMessage = APInvoiceValidator.ValidateConfirmationNumber(invoiceDate, result, tenant, loggedUserEmail);
-                return Request.CreateResponse(HttpStatusCode.OK, warningMessage);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage GetValidateInvoiceNumber(string invoiceNumber)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string loggedUserEmail = authToken.Email;
-                int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                APInvoiceValidator.CheckInvoiceNumberFormat(invoiceNumber, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
             catch (Exception ex)
@@ -568,7 +493,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string vendorId = args.VendorId;
                 string entityId = args.EntityId;
-                string invoiceNumber = MethodHelper.Trim(args.InvoiceNumber);
+                string invoiceNumber = args.InvoiceNumber;
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -581,15 +506,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(tenant);
 
                 IQueryable<APInvoice> iQueryable = aPInvoiceRepository.GetIQueryableInvoices(tenant);
-               
+
                 if (string.IsNullOrEmpty(entityId))
                 {
-                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber && d.StatusCode!= "VD").Any();
+                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber).Any();
                 }
 
                 else
                 {
-                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber && d.Id != entityId && d.StatusCode != "VD").Any();
+                    isDuplicated = iQueryable.Where(d => d.VendorId == vendorId && d.InvoiceNumber == invoiceNumber && d.Id != entityId).Any();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, isDuplicated);
@@ -638,7 +563,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCustomerCreditLimitActualAmount(string myCustomerId, string invoiceId)
+        public HttpResponseMessage GetCustomerCreditLimitActualAmount(string myCustomerId)
         {
             try
             {
@@ -648,11 +573,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                invoiceId = CheckNullValue(invoiceId);
-
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
 
-                double? myResult = entityQuery.GetCustomerCreditLimitActualAmount(myCustomerId, tenant, invoiceId);
+                double? myResult = entityQuery.GetCustomerCreditLimitActualAmount(myCustomerId, tenant);
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -698,7 +621,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticationOnTenant(tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("",entityPM.Tenant,tenant);
                         SecurityUtility.CheckContactFeature("APInvoice", "UPDATE", entityPM.Tenant);
 
                         IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
@@ -818,7 +740,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     IQueryable<ARInvoice> iQueryable_Data = aRInvoiceRepository.GetIQueryableInvoices(tenant);
 
-                    iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
+                    iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
                     iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
                     iQueryable_Data = iQueryable_Data.Where(d => d.TransferStatusCode == "NR");
 
@@ -1085,14 +1007,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     accountingSettingRepository.SubmitChanges();
                                     break;
                                 }
-
-                            case "APPayment":
-                                {
-                                    entityPOCO.APPaymentTransferStartDate = myStartDate;
-                                    accountingSettingRepository.Update(entityPOCO);
-                                    accountingSettingRepository.SubmitChanges();
-                                    break;
-                                }
                         }
 
                         scope.Complete();
@@ -1140,7 +1054,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                 IQueryable<ARInvoice> iQueryable_Data = entityRepository.GetIQueryableInvoices(tenant);
 
-                                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode !="PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
+                                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
                                 iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
                                 iQueryable_Data = iQueryable_Data.Where(d => d.TransferStatusCode == "RD" || d.TransferStatusCode == "NR");
 
@@ -1214,7 +1128,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 ChargeTypeAccountingList result = commonDomain.GetSingleChargeTypeAccountingList(chargesTypeId, vatTypeId, tenant);
@@ -1233,7 +1146,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 Random rnd = new Random();
                 string randomInt = String.Format("{0:yyyyMMddhhmm}", DateTime.Now) + rnd.Next(999);
@@ -1314,7 +1226,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
+
 
                         ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
                         ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
@@ -1540,7 +1452,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 ARPaymentChequeQueryService entityQuery = new ARPaymentChequeQueryService(tenant);
                 ARPaymentChequePM arpaymentCheque = entityQuery.GetSingleByPaymentId(paymentId, tenant);
                 string status = "";
@@ -1575,7 +1486,111 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return newValue;
         }
 
-        public HttpResponseMessage GetARPaymentSATCancellationStatus(string paymentId)
+		public HttpResponseMessage GetARPaymentSATCancellationStatus(string paymentId)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					using (TransactionScope scope = TransactionFactory.GetTransaction())
+					{
+						string token = HttpContext.Current.Request.Headers["Token"];
+						AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+						string loggedUserEmail = authToken.Email;
+						int tenant = authToken.Tenant;
+
+
+						ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
+						ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(tenant);
+						ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
+
+						ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
+						ARPayment payment = aRPaymentRepository.GetSingleARPayment(paymentId, tenant);
+
+
+						Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, payment.SATXML);
+						if (resultadoConsultaEstatusSAT.EstadoComprobante == "Cancelado")
+						{
+							payment.SATXML = null;
+							payment.SATTransferStatusCode = "TD";
+							aRPaymentRepository.Update(payment);
+							aRPaymentRepository.SubmitChanges();
+
+							Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(payment.SATXML);
+							SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
+							sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arInvoiceRepository, aRPaymentRepository);
+						}
+						/*
+						 * Catalog EstadoCancelacion
+						   EnProceso  
+						   SinRespuesta
+						   CanceladoSinAceptacion
+						   CanceladoConAceptacion
+						   PlazoVencido
+
+						 * */
+						scope.Complete();
+						return Request.CreateResponse(HttpStatusCode.OK, "");
+					}
+				}
+
+				catch (Exception ex)
+				{
+					return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+				}
+			}
+
+			else
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+			}
+		}
+
+		public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					using (TransactionScope scope = TransactionFactory.GetTransaction())
+					{
+						string token = HttpContext.Current.Request.Headers["Token"];
+						AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+						string loggedUserEmail = authToken.Email;
+						int tenant = authToken.Tenant;
+
+
+						ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(tenant);
+						ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
+						ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
+						ARInvoice entity = arInvoiceRepository.GetSingleInvoice(invoiceId);
+
+						Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = SATInterfaceHelper.GetSATStatus(tenant, entity.SATXML);
+						if (resultadoConsultaEstatusSAT.EstadoComprobante == "Cancelado")
+						{
+							entity.SATTransferStatusCode = "TD";
+							arInvoiceRepository.Update(entity);
+							arInvoiceRepository.SubmitChanges();
+						}
+
+						scope.Complete();
+						return Request.CreateResponse(HttpStatusCode.OK, "");
+					}
+				}
+
+				catch (Exception ex)
+				{
+					return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+				}
+			}
+
+			else
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+			}
+		}
+
+		public HttpResponseMessage getConnectedARPayments(string invoiceId)
         {
             if (ModelState.IsValid)
             {
@@ -1587,77 +1602,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-
-                        ARPaymentService.UpdateCanceledARPaymentStatus(paymentId, tenant);
-
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, "");
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-
-        public HttpResponseMessage GetARInvoiceSATCancellationStatus(string invoiceId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-
-                        ARInvoiceService.UpdateCanceledARInvoiceStatus(invoiceId, tenant);
-
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, "");
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-
-        public HttpResponseMessage getConnectedARPayments(string invoiceId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        string loggedUserEmail = authToken.Email;
-                        int tenant = authToken.Tenant; 
-                        SecurityUtility.AuthenticationOnTenant(tenant);
                         ARInvoicePaymentRepository aRInvoicePaymentRepository = new ARInvoicePaymentRepository(tenant);
 
                         List<ARPayment> aRPayments = aRInvoicePaymentRepository.GetARInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
-                        bool ExistPayments = aRPayments.Count > 0 ? true : false;
-
+                        bool ExistPayments = aRPayments.Count>0?true:false;
+                       
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, ExistPayments);
                     }
@@ -1687,7 +1636,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
                         APInvoicePaymentRepository aRInvoicePaymentRepository = new APInvoicePaymentRepository(tenant);
 
                         List<APPayment> aRPayments = aRInvoicePaymentRepository.GetAPInvoicePaymentTransferedByInvoiceId(invoiceId, tenant).ToList();
@@ -1722,19 +1670,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
                         ARInvoiceStockLineQuery aRInvoiceStockLineQuery = new ARInvoiceStockLineQuery(tenant);
 
                         List<ARInvoiceStockPM> aRInvoiceStocks = aRInvoiceStockQuery.GetARInvoiceStockPMsByTenant(tenant).ToList();
-                        if (aRInvoiceStocks != null)
+                        if(aRInvoiceStocks != null)
                         {
                             aRInvoiceStocks = aRInvoiceStocks.Where(a => a.StatusCode != "E" && a.StatusCode != "U" && a.StatusCode != "C" && (a.StartDate == null || a.StartDate <= TenantServerConfigration.GetCurrentDateTime(a.Tenant))).ToList();
                         }
                         foreach (var item in aRInvoiceStocks)
                         {
-                            item.ARInvoiceStockLines = aRInvoiceStockLineQuery.GetARInvoiceStockLinePMsByStockId(item.Id, item.Tenant).Where(a => !a.IsUsed).ToList();
+                            item.ARInvoiceStockLines = aRInvoiceStockLineQuery.GetARInvoiceStockLinePMsByStockId(item.Id, item.Tenant).Where(a=>!a.IsUsed).ToList();
                             item.LinesCount = item.ARInvoiceStockLines != null ? item.ARInvoiceStockLines.Count() != 0 ? item.ARInvoiceStockLines.Count() + "" : "" : "";
                         }
                         scope.Complete();
@@ -1774,7 +1721,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             if (aRInvoice != null)
                             {
                                 aRInvoice.TransferStatusCode = "BL";
-                                aRInvoiceRepository.Update(aRInvoice);
+                                aRInvoiceRepository.Update(aRInvoice);                                
                             }
                             break;
                         }
@@ -1816,7 +1763,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                 }
 
-                invoiceContext.SaveChanges();
+                invoiceContext.SaveChanges();               
 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
@@ -1824,74 +1771,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetConnectedAPInvoicestoPayments(string paymentId)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        string loggedUserEmail = authToken.Email;
-                        int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-                        APInvoicePaymentRepository repository = new APInvoicePaymentRepository(tenant);
-
-                        List<APInvoicePayment> connectedInvoicesList = repository.GetAPInvoicePaymentByPaymentId(paymentId, tenant).ToList();
-                        bool connectedInvoices = connectedInvoicesList.Count > 0 ? true : false;
-
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, connectedInvoices);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
-            }
-        }
-
-        public HttpResponseMessage PutARInvoiceSATValidation(ARInvoicePM aRInvoicePM)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        int tenant = authToken.Tenant;
-                        SecurityUtility.AuthenticationOnTenant(tenant);
-
-                        SATInvoiceSenderService sATInvoiceSenderService = new SATInvoiceSenderService();
-                        InvoiceComprobanteBuilderResultArgs invoiceComprobanteValidationResult = sATInvoiceSenderService.ValidateApprovalSendToSAT(aRInvoicePM);
-
-                        scope.Complete();
-                        return Request.CreateResponse(HttpStatusCode.OK, invoiceComprobanteValidationResult);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-                }
-            }
-
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
     }

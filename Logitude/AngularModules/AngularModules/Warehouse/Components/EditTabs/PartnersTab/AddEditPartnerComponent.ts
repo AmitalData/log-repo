@@ -9,7 +9,7 @@ import {NewEntityArgs} from '../../../../Infrastructure/Args';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AddEditPartnerComponent',
     templateUrl: './AddEditPartnerComponent.html',
 })

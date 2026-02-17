@@ -5,7 +5,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
@@ -36,7 +36,6 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
         private string ShipmentId;
         private string ShipmentNumber;
         private bool IsAccepted;
-        private bool isBookingControl = false;
         //private string HeaderDocumentIdentifier;
         private ShipmentPM shipmentPM;
         private AnalyzeQueue myAnalyzeQueue;
@@ -427,9 +426,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                     if (Parts[0] == "B")
                                     {
                                         is_CONTRL_Tenant = Int32.TryParse(Parts[2], out CONTRL_Tenant);
-                                        this.isBookingControl = true;
                                     }
-
                                     else
                                     {
                                         is_CONTRL_Tenant = Int32.TryParse(Parts[1], out CONTRL_Tenant);
@@ -921,7 +918,7 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),
                 From = from,
                 InOut = "I",
-                Subject = this.Subject == "Booking" ? "e-Booking" : this.Subject,
+                Subject = this.Subject,
                 Tenant = this.Tenant,
                 CommunicationLogTypeCode = "T",
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant),

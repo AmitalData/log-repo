@@ -12,7 +12,7 @@ declare var UploadLogoFile, ArrayBufferToBase64;
 
 @Component({
     selector: 'SettingsWorkspaceComponent',
-    
+    moduleId: module.id,
     templateUrl: './SettingsWorkspaceComponent.html',
     providers: [EntityResourceService],
 })
@@ -67,7 +67,7 @@ export class SettingsWorkspaceComponent {
         var service: ExcelExportService = new ExcelExportService();
         var file: ImageParameter = new ImageParameter();
         file.Base64String = data;
-        service.ImportClockTimeData(file).subscribe((res:any) => {
+        service.ImportClockTimeData(file).subscribe(res => {
             this.CurrentSession.StopBusyIndicator();
             var wind = new MessageWindow();
             wind.Show("Import completed successfully");
@@ -82,7 +82,7 @@ export class SettingsWorkspaceComponent {
         listArgs.ObjectTableName = "TMProjectCategory";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -100,7 +100,7 @@ export class SettingsWorkspaceComponent {
         listArgs.ObjectTableName = "TMProject";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -118,7 +118,7 @@ export class SettingsWorkspaceComponent {
         listArgs.ObjectTableName = "Sprint";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -136,7 +136,7 @@ export class SettingsWorkspaceComponent {
         listArgs.ObjectTableName = "TMBudget";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;

@@ -1,5 +1,5 @@
-
-<ToggleButton [IsEnabled]="IsEnabled" [DropDownHeight]="170" [DropDownWidth]="400" [Position]="'Left'" [IconPath]="'./Images/CalenderBlue.png'" [IsOpened]="IsOpened" (Opened)="IsOpened = $event">
+﻿
+<ToggleButton [DropDownHeight]="170" [DropDownWidth]="400" [Position]="'Left'" [IconPath]="'./Images/CalenderBlue.png'" [IsOpened]="IsOpened" (Opened)="IsOpened = $event">
     <div class="MediaFillRelative">
         <div class="MediaFixedPadding5">
             <table>
@@ -90,7 +90,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="Button CustomButton" id="{{ 'OnCarriageDateCancelBtn' | IdGeneratorAsyncPipe | async}}"  (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                                    <button class="Button CustomButton" id="{{ 'OnCarriageDateCancelBtn' | IdGeneratorPipe}}"  (click)="CancelButtonClicked()">Cancel</button>
                                 </td>
 
                                 <td style="width: 5px;">
@@ -98,7 +98,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorAsyncPipe | async}}"  [disabled]="!IsEnabled" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorPipe}}"  (click)="OkButtonClicked()">Ok</button>
                                 </td>
                             </tr>
                         </table>

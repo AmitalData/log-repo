@@ -38,7 +38,7 @@ declare var window: any;
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'EditDocumentComponent',
     templateUrl: './EditDocumentView.html',
     providers: [HtmlEditorService, DocumentTypeTemplatePMService, DocumentTypeTemplateListExtendedService, DocumentTypeTemplatePMExtendedService, ExportDocumentService, DocumentTypePMExtendedService, DocumentOutPMService]
@@ -241,7 +241,6 @@ export class EditDocumentComponent implements OnInit {
                     this.froalaEditorSetting.Height = this.WindowHeight - 210;
                     this.IsEditHtml = true;
                     this.froalaEditorSetting.IsDisableEdit = false;
-                    //this.froalaEditorSetting.RemovePageBreak = true;
                 }
                 else if (this.PageType == "ManageTemplate") {
                     this.froalaEditorSetting.IsDisableEdit = true;
@@ -265,7 +264,7 @@ export class EditDocumentComponent implements OnInit {
             if (this.IsManageHtml || this.IsEditHtml) {
                 if (this.XamlDocumentId) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-                    this._exportDocumentService.DownloadFileFromServer(this.XamlDocumentId, this.Tenant).subscribe((res:any) => {
+                    this._exportDocumentService.DownloadFileFromServer(this.XamlDocumentId, this.Tenant).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         if (!pmResponse.HasError) {
                             var myResult = pmResponse.Result;
@@ -354,7 +353,7 @@ export class EditDocumentComponent implements OnInit {
             
             var docoutId = this.CurrentDocumentOutId;
             if (templateId) docoutId = "";
-            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, templateId, "", mode).subscribe((res:any) => {
+            this._htmlEditorService.getEditorHtmlData(docoutId, this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, templateId, "", mode).subscribe(res => {
                 var htmlresult = "";
 
                 var pmResponse: ServiceResponse = res;
@@ -484,7 +483,7 @@ export class EditDocumentComponent implements OnInit {
             exportDocumentArgs.AccountingCurrencyId = SessionLocator.TenantPM.CurrencyId;
 
 
-            this._exportDocumentService.PostReportStimulsoftViewer(exportDocumentArgs).subscribe((res:any) => {
+            this._exportDocumentService.PostReportStimulsoftViewer(exportDocumentArgs).subscribe(res => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
@@ -567,7 +566,7 @@ export class EditDocumentComponent implements OnInit {
     LoadDocumentTypeTemplates(selectId: string) {
         this.ReportTemplates = new Array<DocumentTypeTemplateViewModel>();
         this.DocumenttypetemplateLists = new Array<DocumentTypeTemplateViewModel>();
-        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.DocumentTypeId, this.Tenant).subscribe((res:any) => {
+        this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.DocumentTypeId, this.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -668,7 +667,7 @@ export class EditDocumentComponent implements OnInit {
 
     HtmlDocumentTemplateSelectedChange(selectedItem: any) {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        this._htmlEditorService.getEditorHtmlData("", this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, selectedItem.Id, "").subscribe((res:any) => {
+        this._htmlEditorService.getEditorHtmlData("", this.EntityId, this.ObjectTableId, this.ChildEntityId, this.ChildObjectTableId, SessionInfo.LoggedUserTenant, SessionInfo.LoggedUserId, false, selectedItem.Id, "").subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -699,7 +698,7 @@ export class EditDocumentComponent implements OnInit {
                 if (confirmWindow.Yes) {
                     this.CurrentDocument.EditableFields = null;
                     this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-                    this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe((res:any) => {
+                    this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.ReportTemplates.filter(d => d.IsLoad == true).forEach((item) => { item.IsLoad = false; });
                         this.LoadDocumentTemplateStimulSoftData(selectedItem);
@@ -740,7 +739,7 @@ export class EditDocumentComponent implements OnInit {
         exportDocumentArgs.LoggedContactName = SessionLocator.LoggedUserPM.EnglishName;
         exportDocumentArgs.AccountingCurrencyId = SessionLocator.TenantPM.CurrencyId;
 
-        this._exportDocumentService.PostReportStimulsoftViewer(exportDocumentArgs).subscribe((res:any) => {
+        this._exportDocumentService.PostReportStimulsoftViewer(exportDocumentArgs).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -772,7 +771,7 @@ export class EditDocumentComponent implements OnInit {
 
 
     public ValidationErrorsList: string[];
-     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
      SaveButtonClicked() {
          var m = this.viewContainerRef;
         var item = null;
@@ -818,7 +817,7 @@ export class EditDocumentComponent implements OnInit {
             this.DataViewModel.IsRefreshPrintConrol = true;
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe((res:any) => {
+            this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CloseButtonClicked();
             });
@@ -837,7 +836,7 @@ export class EditDocumentComponent implements OnInit {
                 
 
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-                this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe((res:any) => {
+                this._documentOutPMService.putDocumentOut(this.CurrentDocument).subscribe(res => {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     if (this.stimulsoftArg.StimulsoftViewerComponent.CheckIfChangeShift()) {
                         this.stimulsoftArg.StimulsoftViewerComponent.ApplayShift(true);
@@ -872,7 +871,7 @@ export class EditDocumentComponent implements OnInit {
 
 
        if (this.DocumentTypePM.IsDirty) {
-         this._documentTypePMService.putDocumentType(this.DocumentTypePM).subscribe((res:any) => {
+         this._documentTypePMService.putDocumentType(this.DocumentTypePM).subscribe(res => {
            var pmResponse: ServiceResponse = res;
            if (!pmResponse.HasError) {
              this.DocumentTypePM.IsDirty = false;
@@ -891,7 +890,7 @@ export class EditDocumentComponent implements OnInit {
         if (this.stimulsoftArg.IsReset) {
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            this._exportDocumentService.GetResetEditableFields(this.CurrentDocumentOutId).subscribe((res:any) => {
+            this._exportDocumentService.GetResetEditableFields(this.CurrentDocumentOutId).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!pmResponse.HasError) {
@@ -914,7 +913,7 @@ export class EditDocumentComponent implements OnInit {
 
       
     }
- 
+
     SaveStimualField() {
         var filter = new DocumentTypeTemplateFilter();
         filter.Tenant = this.Tenant;
@@ -928,7 +927,7 @@ export class EditDocumentComponent implements OnInit {
 
             this.stimulsoftArg.StimulsoftViewerComponent.EditableField.filter(d => d.Status == "Change").forEach((field) => {
 
-                if (this.stimulsoftArg.StimulsoftViewerComponent.IsEditableFieldChanged(field)) {
+                if (field.FieldValue != field.NewValue) {
                     filter.EditableFieldLists.push(field);
                     // filter.Body += Field.FieldName + "^" + Field.NewValue + "*" + Field.PageFieldIndex;
                 }
@@ -939,7 +938,7 @@ export class EditDocumentComponent implements OnInit {
 
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe((res:any) => {
+                this._documentTypeTemplatePMExtendedService.SaveDocumentTemplate(filter).subscribe(res => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -1099,7 +1098,6 @@ export class EditDocumentComponent implements OnInit {
 
                     if (this.TemplateFormatCode == "P") {
 
-
                         this.DocumentTypePM.DocumentTypeDefaultReportTemplateId = selectitem.Id;
                         this.DocumentTypePM.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
                     }
@@ -1170,7 +1168,7 @@ export class EditDocumentComponent implements OnInit {
 
                 else {
 
-                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe((res:any) => {
+                    this.documentTypeTemplatePMService.get(selectitem.Id).subscribe(res=> {
 
                         var pmResponse: ServiceResponse = res;
 
@@ -1225,8 +1223,8 @@ export class EditDocumentComponent implements OnInit {
             // logWindow.DataContext = this;
             logWindow.Title = "Insert Data Field";
 
-            this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
-                this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
+            this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentObjectFieldsComponent');
                     logWindow.WindowClosed.subscribe(($event: any) => {
@@ -1251,7 +1249,7 @@ export class EditDocumentComponent implements OnInit {
 
     UpdateDocumentTypeTemplate(item: any) {
 
-        this.documentTypeTemplatePMService.update(item).subscribe((myResult:any)=> {
+        this.documentTypeTemplatePMService.update(item).subscribe(myResult=> {
 
         });
     }
@@ -1268,7 +1266,6 @@ export class EditDocumentComponent implements OnInit {
         var IsDefualt = false;
 
         if (selectitem.TemplateType == "P") {
-
             if (selectitem.Id == this.DocumentTypePM.DocumentTypeDefaultReportTemplateId) {
                 IsDefualt = true;
             }
@@ -1383,7 +1380,7 @@ export class EditDocumentComponent implements OnInit {
 
     AddTemplateFromLibrary() {
 
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
          this.IsDisableAddTemplateFromLibrary = true;
         var logWindow = new LogitudeWindow();
         var windowArgs: any = {};
@@ -1452,7 +1449,7 @@ export class EditDocumentComponent implements OnInit {
 
             if (viewmodel) {
 
-                viewmodel._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(window.btoa(binary)).subscribe((res:any) => {
+                viewmodel._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(window.btoa(binary)).subscribe(res => {
 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -1527,7 +1524,7 @@ export class EditDocumentComponent implements OnInit {
                         filter.EntityId = this.EntityId;
                         filter.ChildEntityId = this.ChildEntityId;
                         filter.DocumentTypeId = this.DocumentTypePM ? this.DocumentTypePM.Id : "";
-                        this._htmlEditorService.saveEditedReportToServer(filter).subscribe((res:any) => {
+                        this._htmlEditorService.saveEditedReportToServer(filter).subscribe(res => {
                             this.CurrentSession.StopBusyIndicator();
 
                             this.IsOpenHeaderAndFooter = false;

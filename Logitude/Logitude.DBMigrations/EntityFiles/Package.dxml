@@ -1,0 +1,19 @@
+﻿<Table Name="MyPackages" OldName="Packages">
+
+  <Column Name="Id" Type="varchar" Size="20">
+    <Constraints PrimaryKey="true" Nullable="false"/>
+  </Column>
+
+  <Column Name="YourName" OldNames="Name,MyName" Type="nvarchar" Size="60">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Type" Type="varchar" Size="25">
+    <Constraints Nullable="false"/>
+  </Column>
+
+  <Column Name="Description" Type="nvarchar" Size="200">
+    <Constraints Nullable="true"/>
+  </Column>
+
+</Table>

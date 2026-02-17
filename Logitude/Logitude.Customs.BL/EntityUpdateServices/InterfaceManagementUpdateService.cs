@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 ICustomContext context = MainContext as CustomContext;
                 InterfaceTenantDefinitionRepository definitionRep = new InterfaceTenantDefinitionRepository(context);
-                InterfaceTenantDefinition definition = definitionRep.GetSingleDefinitionByCode(entityPM.Code, entityPM.Tenant, getFromCache:false);
+                InterfaceTenantDefinition definition = definitionRep.GetSingleDefinitionByCode(entityPM.Code, entityPM.Tenant);
                 if (definition != null)
                 {
                     MapInterface2TenantDef(entityPM, definition);
@@ -38,8 +38,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     definition.Id = IdCounter.GetNumber("Customs.InterfaceTenantDefinition", entityPM.Tenant);
                     definition.Code = entityPM.Code;
                     definition.Tenant = entityPM.Tenant;
-                    
-
                     definitionRep.Add(definition);
 
                 }
@@ -51,10 +49,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             definition.TenantSendOptionsCode = entityPM.TenantSendOptionsCode;
             definition.TenantPriority = entityPM.TenantPriority;
-            definition.SendTime = entityPM.SendTime;
             definition.DcaRenameFileEnable = entityPM.DcaRenameFileEnable;
             definition.DcaRenameFilePrefix = entityPM.DcaRenameFilePrefix;
-            definition.Active = entityPM.Active;//on the way fix bug ???(or make one ??)
         }
     }
 }

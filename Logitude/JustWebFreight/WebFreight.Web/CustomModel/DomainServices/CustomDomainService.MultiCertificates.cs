@@ -99,9 +99,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
             List<CertificateTicket> tickets = new List<CertificateTicket>();
 
             //First, Check whether the client has permission (Check Default "CIM_CERTSELFRES"- Required certifications self responsibility)
-            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
-
-            string isRequiredCertificate = defaultValueQueryService.GetDefault("ISRAEL", "CIM_CERTSELFRES", "NON", customerCode, tenant);
+            string isRequiredCertificate = GetDefault("ISRAEL", "CIM_CERTSELFRES", "NON", customerCode, tenant);
             if (isRequiredCertificate == "Y")
             {
                 return;

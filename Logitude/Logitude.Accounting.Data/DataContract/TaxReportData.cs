@@ -27,19 +27,5 @@ namespace Logitude.Accounting.Data.DataContract
         public string OppositGLAccount { get; set; }
         public string AccountingEntityId { get; set; }
         public decimal? TaxReportTotalAmount { get; set; }
-        public int JournalLineNumber { get; set; }
-        public string AccountId { get;  set; }
-        public string TransmitStatusCode { get; set; }
-        public int Tenant { get; set; }
-    }
-
-    public class CustomTaxReportData : TaxReportData
-    {
-        public bool? IsVoided { get; set; }
-        public string TaxReportId { get; set; }
-        public string OriginalJournalId { get; set; }
-        public bool IsLedgerReconciled { get; set; }
-        public string LedgerTransactionId { get; set; }
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -28,7 +28,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.AuthenticationOnEntityTenant("DepositionRequest", depositionRequestAM.Tenant, authToken.Tenant);
 
                     DepositionRequestHelper depositionRequestHelper = new DepositionRequestHelper();
                     string logId = depositionRequestHelper.AddAPILogs(depositionRequestAM, depositionRequestAM.CustomerTenant);

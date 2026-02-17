@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -28,33 +28,33 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             quoteClosingReasonRepository = new QuoteClosingReasonRepository(tenant);
-            return quoteClosingReasonRepository.GetQuoteClosingReasons(tenant);
+            return quoteClosingReasonRepository.GetQuoteClosingReasons();
         }
 
-        public QuoteClosingReason GetSingleQuoteClosingReason(string id, int tenant)
+        public QuoteClosingReason GetSingleQuoteClosingReason(string code, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             quoteClosingReasonRepository = new QuoteClosingReasonRepository(tenant);
-            return quoteClosingReasonRepository.GetSingleQuoteClosingReason(id, tenant);
+            return quoteClosingReasonRepository.GetSingleQuoteClosingReason(code);
         }
 
-        public QuoteClosingReasonPM GetSingleQuoteClosingReasonPM(string id, int tenant)
+        public QuoteClosingReasonPM GetSingleQuoteClosingReasonPM(string code, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             quoteClosingReasonQuery = new QuoteClosingReasonQuery(tenant);
-            return quoteClosingReasonQuery.GetSinglePM(id, tenant);
+            return quoteClosingReasonQuery.GetSingleQuoteClosingReasonPM(code);
         }
         
-        public QuoteClosingReasonList GetSingleQuoteClosingReasonList(string id, int tenant)
+        public QuoteClosingReasonList GetSingleQuoteClosingReasonList(string code, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             quoteClosingReasonRepository = new QuoteClosingReasonRepository(tenant);
             quoteClosingReasonQuery = new QuoteClosingReasonQuery(tenant);
             QuoteClosingReasonList quoteClosingReasonList = null;
-            QuoteClosingReason quoteClosingReason = quoteClosingReasonRepository.GetSingleQuoteClosingReason(id, tenant);
+            QuoteClosingReason quoteClosingReason = quoteClosingReasonRepository.GetSingleQuoteClosingReason(code);
 
             if (quoteClosingReason != null)
             {
@@ -74,7 +74,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
 
             quoteClosingReasonRepository = new QuoteClosingReasonRepository(tenant);
             quoteClosingReasonQuery = new QuoteClosingReasonQuery(tenant);
-            IQueryable<QuoteClosingReason> iQueryable = quoteClosingReasonRepository.GetQuoteClosingReasons(tenant);
+            IQueryable<QuoteClosingReason> iQueryable = quoteClosingReasonRepository.GetQuoteClosingReasons();
             IQueryable<QuoteClosingReasonList> query2 = quoteClosingReasonQuery.GetIQueryableEntityList(iQueryable);
             return query2;
         }
@@ -92,7 +92,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<QuoteClosingReason> iQueryable = quoteClosingReasonRepository.GetQuoteClosingReasons(tenant);
+            IQueryable<QuoteClosingReason> iQueryable = quoteClosingReasonRepository.GetQuoteClosingReasons();
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
@@ -174,7 +174,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<QuoteClosingReason> iQueryable = quoteClosingReasonRepository.GetQuoteClosingReasons(tenant);
+            IQueryable<QuoteClosingReason> iQueryable = quoteClosingReasonRepository.GetQuoteClosingReasons();
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();

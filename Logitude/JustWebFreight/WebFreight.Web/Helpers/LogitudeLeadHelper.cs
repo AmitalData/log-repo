@@ -4,7 +4,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
@@ -22,9 +22,6 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
 using System.Web;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Server.Tools;
 
 namespace WebFreight.Web.Helpers
 {
@@ -72,107 +69,71 @@ namespace WebFreight.Web.Helpers
 
         public string CreateLogitudeLead(LogitudeLeadPM leadPM)
         {
-            if (leadPM != null)
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            if (globalContext == null) globalContext = GlobalContext.GetContext();
+            LogitudeLeadService logitudeLeadService = new LogitudeLeadService(globalContext);
+
+            if (string.IsNullOrEmpty(leadPM.Id))
             {
-                if ((!string.IsNullOrEmpty(leadPM.CompanyName) && leadPM.CompanyName.ToLower().Contains("https")) || (!string.IsNullOrEmpty(leadPM.ContactName) && leadPM.ContactName.ToLower().Contains("https"))) return null;
-                IGlobalContext globalContext = GlobalContext.GetContext();
-                if (globalContext == null) globalContext = GlobalContext.GetContext();
-                LogitudeLeadService logitudeLeadService = new LogitudeLeadService(globalContext);
-                if (string.IsNullOrEmpty(leadPM.Id))
+                if (string.IsNullOrEmpty(leadPM.Country))
                 {
-                    if (string.IsNullOrEmpty(leadPM.Country))
-                    {
-                        leadPM.Country = "Unassigned";
-                    }
-                    if (string.IsNullOrEmpty(leadPM.CompanyName))
-                    {
-                        leadPM.CompanyName = "Unassigned";
-                    }
-                    if (string.IsNullOrEmpty(leadPM.ContactName))
-                    {
-                        leadPM.ContactName = "Unassigned";
-                    }
-                    if (string.IsNullOrEmpty(leadPM.RequestType))
-                    {
-                        leadPM.RequestType = "DemoTenant";
-                    }
-
-                    LogitudeLeadPM LogitudeLeadpm = new LogitudeLeadPM()
-                    {
-                        Email = leadPM.Email,
-                        ContactName = TruncateLongString(leadPM.ContactName, 40),
-                        PhoneNumber = TruncateLongString(leadPM.PhoneNumber, 40),
-                        CompanyName = TruncateLongString(leadPM.CompanyName, 100),
-                        Comments = TruncateLongString(leadPM.Comments, 500),
-                        Country = TruncateLongString(leadPM.Country, 120),
-                        ZipCode = TruncateLongString(leadPM.ZipCode, 15),
-                        RequestType = TruncateLongString(leadPM.RequestType, 20),
-                        PackageCode = TruncateLongString(leadPM.PackageCode, 4),
-                        City = TruncateLongString(leadPM.City, 25),
-                        State = TruncateLongString(leadPM.State, 40),
-                        Street = TruncateLongString(leadPM.Street, 65),
-                        NumberOfBranches = leadPM.NumberOfBranches,
-                        NumberOfUsers = leadPM.NumberOfUsers,
-                        IsEmailVerified = false,
-                        IsSentToCustomer = false,
-                        TenantNumber = 1,
-                        LastUpdateDate = DateTime.Now,
-                        CreateDate = DateTime.Now,
-                        StatusCode = "InProgress",
-                        IATACode = leadPM.IATACode,
-                        CASSCode = leadPM.CASSCode,
-                        LeadSource = leadPM.LeadSource,
-                        VatNumber = leadPM.VatNumber,
-                        ClientId = leadPM.ClientId,
-                        LeadOrigin = leadPM.LeadOrigin,
-                        Campaign = leadPM.Campaign,
-                    };
-
-                    logitudeLeadService.Create(LogitudeLeadpm);
-                    AddCommunicationLog(LogitudeLeadpm , "Logitude Lead");
+                    leadPM.Country = "Unassigned";
                 }
-            }
-            return null;
-        }
-
-        public void AddCommunicationLog(LogitudeLeadPM leadPM , string subject)
-        {
-            byte[] documentXML = LogitudeXmlSerializer.SerializeObject(leadPM);
-
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-                CommunicationsParams logParams = new CommunicationsParams()
+                if (string.IsNullOrEmpty(leadPM.CompanyName))
                 {
-                    From = leadPM.CompanyName,
-                    Tenant =0,
-                    CommunicationLogTypeCode = "Lead",
-                    QueueName = "LogitudeLeadQueue",
-                    Priority = 1,
-                    InOut = "O",
-                    Status = "W",
-                    Subject = subject,
-                    FolderName = "LogitudeLeadQueue",
-                    ByteData = documentXML,
+                    leadPM.CompanyName = "Unassigned";
+                }
+                if (string.IsNullOrEmpty(leadPM.ContactName))
+                {
+                    leadPM.ContactName = "Unassigned";
+                }
+                if (string.IsNullOrEmpty(leadPM.RequestType))
+                {
+                    leadPM.RequestType = "DemoTenant";
+                }
+
+                LogitudeLeadPM LogitudeLeadpm = new LogitudeLeadPM()
+                {
+                    Email = leadPM.Email,
+                    ContactName = TruncateLongString(leadPM.ContactName, 40),
+                    PhoneNumber = TruncateLongString(leadPM.PhoneNumber, 40),
+                    CompanyName = TruncateLongString(leadPM.CompanyName, 100),
+                    Comments = TruncateLongString(leadPM.Comments, 500),
+                    Country = TruncateLongString(leadPM.Country, 120),
+                    ZipCode = TruncateLongString(leadPM.ZipCode, 15),
+                    RequestType = TruncateLongString(leadPM.RequestType, 20),
+                    PackageCode = TruncateLongString(leadPM.PackageCode, 4),
+                    City = TruncateLongString(leadPM.City, 25),
+                    State = TruncateLongString(leadPM.State, 40),
+                    Street = TruncateLongString(leadPM.Street, 65),
+                    NumberOfBranches = leadPM.NumberOfBranches,
+                    NumberOfUsers = leadPM.NumberOfUsers,
+                    IsEmailVerified = false,
+                    IsSentToCustomer = false,
+                    TenantNumber = 1,
+                    LastUpdateDate = DateTime.Now,
+                    CreateDate = DateTime.Now,
+                    StatusCode = "InProgress",
+                    IATACode = leadPM.IATACode,
+                    CASSCode = leadPM.CASSCode,
+                    LeadSource = leadPM.LeadSource,
+                    VatNumber = leadPM.VatNumber,
 
                 };
-                Communications.AddCommunicationLog(logParams);
 
-                scope.Complete();
+                logitudeLeadService.Create(LogitudeLeadpm);
+
             }
+
+            return null;
         }
-
-
-
-
-
-
 
 
         public string VerifiyLogitudeLead(LogitudeLeadPM leadPM)
         {
             LogitudeLeadQuery logitudeLeadQuery = new LogitudeLeadQuery();
             LogitudeLeadPM entityPM = logitudeLeadQuery.GetSinglePM(leadPM.Id);
-            if (entityPM != null )
+            if (entityPM != null)
             {
                 entityPM.LastUpdateDate = DateTime.Now;
                 entityPM.Email = leadPM.Email;
@@ -275,7 +236,7 @@ namespace WebFreight.Web.Helpers
                     opportunityRepository.SubmitChanges();
                 }
 
-                AddCommunicationLog(entityPM, "Verifiy Logitude Lead");
+
             }
 
 

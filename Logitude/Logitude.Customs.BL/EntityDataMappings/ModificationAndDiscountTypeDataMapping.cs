@@ -19,11 +19,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountType entityPOCO)
         {
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                entityPOCO.Code = entityPM.Code;
-            }
+            //throw new NotImplementedException();
         }
 
         public void CustomPOCOToPM(ModificationAndDiscountTypePM entityPM, ModificationAndDiscountType entityPOCO)

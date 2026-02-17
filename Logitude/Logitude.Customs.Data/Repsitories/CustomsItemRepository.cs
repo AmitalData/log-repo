@@ -28,13 +28,6 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
-        public List<CustomsItem> GetAllCustomsItemByClassificationCode(string classificationCode)
-        {
-            return (from a in context.CustomsItems
-                    where a.FullClassification == classificationCode
-                    select a).ToList();
-        }
-
     }
 
 }

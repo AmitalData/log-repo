@@ -7,7 +7,7 @@
                 <!-- A/R Invoices -->
                 <tr style="height: 1px;" *ngIf="IsVisible_ARInvoice">
                     <td>
-                        <div class="QueriesSection" id="{{'ARInvoicesTransfersection' | IdGeneratorAsyncPipe | async}}">
+                        <div class="QueriesSection">
                             <div>{{'General.O.ARInvoices' | TextCodeTranslationPipe}}</div>
                             <div>
                                 <HyperlinkQuery *ngIf="IsVisible_NewTransfer" [IsEnabled]="IsARInvoicesEnabled" (click)="NewTransferClicked('ARInvoice')">{{'General.O.NewTransfer' | TextCodeTranslationPipe}}</HyperlinkQuery>

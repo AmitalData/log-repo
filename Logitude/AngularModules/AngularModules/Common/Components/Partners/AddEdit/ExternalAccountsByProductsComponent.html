@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .AreaBox {
         height: 100%;
@@ -82,44 +82,53 @@
 
                                         <!-- ProductTypeName [width]="'110'" -->
                                         <log-column [width]="'400'" [header]="'CardExternalAccountsByProduct.F.ProductTypeCode' | TextCodeTranslationPipe">
-                                            <ng-template let-item>
-                                                <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                    {{item.ProductTypeName}}
-                                                </log-cell-template>
-                                            </ng-template>
+                                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                                {{item.ProductTypeName}}
+                                            </log-cell-template>
                                         </log-column>
 
                                         <!-- GLAccount -->
                                         <log-column [width]="'130'" [header]="'CardExternalAccountsByProduct.F.GLAccount' | TextCodeTranslationPipe">
-                                            <ng-template let-item>
-                                                <log-cell-template #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
 
-                                                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
-                                                        {{item.GLAccount}}
-                                                    </div>
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                                    {{item.GLAccount}}
+                                                </div>
 
-                                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GLAccount'" [Text]="item.GLAccount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                    </div>
-                                                </log-cell-template>
-                                            </ng-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'GLAccount'" [Text]="item.GLAccount" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
                                         </log-column>
 
                                         <!-- CostCenter -->
                                         <log-column [width]="'130'" [header]="'CardExternalAccountsByProduct.F.CostCenter' | TextCodeTranslationPipe">
-                                            <ng-template let-item>
-                                                <log-cell-template #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
 
-                                                    <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
-                                                        {{item.CostCenter}}
-                                                    </div>
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%;">
+                                                    {{item.CostCenter}}
+                                                </div>
 
-                                                    <div *ngIf="logcelltemplate.IsEditMode">
-                                                        <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostCenter'" [Text]="item.CostCenter" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                    </div>
-                                                </log-cell-template>
-                                            </ng-template>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'CostCenter'" [Text]="item.CostCenter" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
                                         </log-column>
+
+
+
+                                        <!-- UpdateDate -->
+                                        <!--<log-column [width]="'110'" [header]="'CardExternalAccountsByProduct.F.UpdateDate' | TextCodeTranslationPipe">
+                                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                                {{item.UpdateDate | DateTimePipe:'DT'}}
+                                            </log-cell-template>
+                                        </log-column>-->
+                                        <!-- UpdatedByUserName -->
+                                        <!--<log-column [width]="'200'" [header]="'CardExternalAccountsByProduct.F.UpdatedByUserId' | TextCodeTranslationPipe">
+                                            <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                                {{item.UpdatedByUserName}}
+                                            </log-cell-template>
+                                        </log-column>-->
                                     </logitude-edit-grid>
                                 </div>
                             </td>

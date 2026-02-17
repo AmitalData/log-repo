@@ -15,11 +15,9 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { APPaymentPM } from '../../../../Invoice/EntityPMs/APPaymentPM';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './APInvoicePaymentsTabComponent.html',
 })
 
@@ -61,9 +59,8 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
             this.ConnectFeatureTitle = "You have no permission to connect invoices";
         }
 
-        entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe((response:any) => {
+        entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe(response => {
             this.IsResourcesReady = true;
-            this.SetUIProperties();
             this.Listen();
             this.LoadInvoicePayments();
         });
@@ -71,32 +68,19 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
-    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s == "NewAPPaymentInvoiceTabCreated") {
-                    this.entityArgs.EditComponent.ReloadEntityPM();
-                }
-            });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.SetUIProperties();
                     this.LoadInvoicePayments();
-
-                    if (this.isNewPaymentClicked) {
-                        this.isNewPaymentClicked = false;
-                        this.RunNewPayment();
-                    }
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.SetUIProperties();
                     this.LoadInvoicePayments();
                 }
             });
@@ -105,31 +89,12 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.SessionEvent);
     }
+
 
     public IsEditingEnabled: boolean = false;
     public AddPaymentButtonIsEnabled: boolean = false;
-    SetUIProperties() {
-        var isEditingEnabled = true;
-        var isAddButtonEnabled = true;
-
-        if (this.EntityPM.StatusCode == "PD" || this.EntityPM.StatusCode == "VD") {
-            isEditingEnabled = false;
-        }
-
-        if (!isEditingEnabled) {
-            isAddButtonEnabled = false;
-        }
-
-        else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
-            isAddButtonEnabled = false;
-        }
-
-        this.IsEditingEnabled = isEditingEnabled;
-        this.AddPaymentButtonIsEnabled = isAddButtonEnabled && !this.CantConnectMessageVisibility;
-    }
-
+    
     get CantConnectMessageVisibility() {
         var result = false;
         if (this.EntityPM.AmountInInvoiceCurrency < 0) {
@@ -150,12 +115,9 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
     private myService: APPaymentListService;
     public IsNoPermissionVisible: boolean = false;
     LoadInvoicePayments() {
-
         var isLoading = true;
         this.ItemsSource1 = [];
         this.ItemsSource2 = [];
-
-        this.LoadConnectedPayments();
 
         if (!FeatureLocator.HasFeaturePermession("APPayment", "READ")) {
             isLoading = false;
@@ -166,111 +128,91 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
             isLoading = false;
         }
 
-        if (this.EntityPM.IsClosed) {
-            isLoading = false;
-        }
+        else {
+            if (isLoading) {
 
-        if (isLoading) {
+                this.CurrentSession.StartBusyIndicatorLoading();
+                if (this.myService == null) {
+                    this.myService = new APPaymentListService();
+                }
 
-            this.CurrentSession.StartBusyIndicatorLoading();
+                var filters = new ApiQueryFilters();
+                filters.PageIndex = 0;
+                filters.PageSize = 200;
 
-            if (this.myService == null) {
-                this.myService = new APPaymentListService();
-            }
+                filters.Filter1Name = "VendorId";
+                filters.Filter1Value = this.EntityPM.VendorId;
+                filters.Filter1Operator = "Equals";
 
-            var filters = new ApiQueryFilters();
-            filters.PageIndex = 0;
-            filters.PageSize = 500;
+                filters.Filter2Name = "StatusCode";
+                filters.Filter2Value = "DR,AD,CL,PR";
+                filters.Filter2Operator = "InList";
 
-            filters.Filter1Name = "VendorId";
-            filters.Filter1Value = this.EntityPM.VendorId;
-            filters.Filter1Operator = "Equals";
+                this.myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
 
-            filters.Filter2Name = "StatusCode";
-            filters.Filter2Value = "DR,AD,CL,PR";
-            filters.Filter2Operator = "InList";
+                        var list: APPaymentList[] = myResponse.Result;
+                        var connectedList: APPaymentList[] = [];
+                        var unConnectedMatchedList: APPaymentList[] = [];
+                        var unConnectedListNotMatched: APPaymentList[] = [];
 
-            filters.Filter3Name = "IsClosed";
-            filters.Filter3Value = false;
-            filters.Filter3Operator = "Equals";
+                        list = list.sort(function (a, b) { return a.PaymentNo.toLowerCase() == b.PaymentNo.toLowerCase() ? 0 : a.PaymentNo.toLowerCase() < b.PaymentNo.toLowerCase() ? -1 : 1; });
 
-            this.myService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
+                        list.forEach(item => {
 
-                    var list: APPaymentList[] = myResponse.Result;
-                    var unConnectedMatchedList: APPaymentList[] = [];
-                    var unConnectedListNotMatched: APPaymentList[] = [];
-
-                    list = list.sort(function (a, b) { return a.PaymentNo.toLowerCase() == b.PaymentNo.toLowerCase() ? 0 : a.PaymentNo.toLowerCase() < b.PaymentNo.toLowerCase() ? -1 : 1; });
-
-                    list.forEach(item => {
-
-                        if (this.EntityPM.InvoicePayments.filter(f => f.APPaymentId == item.Id).length == 0) {
-                            if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
-                                unConnectedListNotMatched.push(item);
+                            if (this.EntityPM.StatusCode == "PD") {
+                                if (this.EntityPM.InvoicePayments.filter(f => f.APPaymentId == item.Id).length > 0) {
+                                    connectedList.push(item);
+                                }
                             }
 
                             else {
-                                unConnectedMatchedList.push(item);
+                                if (this.EntityPM.InvoicePayments.filter(f => f.APPaymentId == item.Id).length > 0) {
+                                    connectedList.push(item);
+                                }
+
+                                else {
+                                    if (!item.IsClosed) {
+                                        if (item.PaymentCurrencyId != this.EntityPM.InvoiceCurrencyId || item.OpenAmount <= 0) {
+                                            unConnectedListNotMatched.push(item);
+                                        }
+
+                                        else {
+                                            unConnectedMatchedList.push(item);
+                                        }
+                                    }
+                                }
                             }
+                        });
+
+                        connectedList.forEach(item => {
+                            this.ItemsSource1.push(new APInvoicePaymentItem(item, this));
+                        });
+
+                        if (!this.EntityPM.IsClosed) {
+                            unConnectedMatchedList.forEach(item => {
+                                this.ItemsSource2.push(new APInvoicePaymentItem(item, this));
+                            });
+
+                            unConnectedListNotMatched.forEach(item => {
+                                this.ItemsSource2.push(new APInvoicePaymentItem(item, this));
+                            });
                         }
-                    });
 
-                    unConnectedMatchedList.forEach(item => {
-                        this.ItemsSource2.push(new APInvoicePaymentItem(item, this));
-                    });
+                        this.SetGridColumnsWidth();
+                    }
 
-                    unConnectedListNotMatched.forEach(item => {
-                        this.ItemsSource2.push(new APInvoicePaymentItem(item, this));
-                    });
-
-                    this.SetGridColumnsWidth();
-                }
-
-                this.CurrentSession.StopBusyIndicator();
-            });
+                    this.CurrentSession.StopBusyIndicator();
+                });
+            }
         }
     }
 
-    LoadConnectedPayments() {
-
-        var ids: string = null;
-
-        this.EntityPM.InvoicePayments.forEach(item => {
-            if (ids) {
-                ids += "," + item.APPaymentId;
-            }
-
-            else {
-                ids = item.APPaymentId;
-            }
-        });
-
-        if (ids) {
-
-            var filters = new ApiQueryFilters();
-            filters.PageIndex = 0;
-            filters.PageSize = 500;
-
-            filters.Filter1Name = "Id";
-            filters.Filter1Value = ids;
-            filters.Filter1Operator = "InList";
-
-            var service = new APPaymentListService();
-
-            service.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-
-                    var list: APPaymentList[] = myResponse.Result;
-
-                    list = list.sort(function (a, b) { return a.PaymentNo.toLowerCase() == b.PaymentNo.toLowerCase() ? 0 : a.PaymentNo.toLowerCase() < b.PaymentNo.toLowerCase() ? -1 : 1; });
-
-                    list.forEach(item => {
-                        this.ItemsSource1.push(new APInvoicePaymentItem(item, this));
-                    });
-                }
-            });
-        }
+    RunReachedBoundsMessage() {
+        var messageText = TextCodeTranslator.Translate("APInvoice.M.AmountPaidBiggerThanInvoiceAmount");
+        var window = new MessageWindow();
+        window.Width = 400;
+        window.Show(messageText);
     }
 
     public NoColumnWidth: number = 50;
@@ -290,65 +232,6 @@ export class APInvoicePaymentsTabComponent implements OnDestroy {
             noColumnWidth = 100;
         }
         this.NoColumnWidth = noColumnWidth;
-    }
-
-    RunReachedBoundsMessage() {
-        var window = new MessageWindow();
-        window.Width = 400;
-        window.Show("Amount paid equals or bigger than invoice amount");
-    }
-
-    private isNewPaymentClicked: boolean = false;
-    AddPaymentClicked() {
-        if (!FeatureLocator.HasEntityPermessions("APPayment", "NEW", true)) {
-            return;
-        }
-
-        if (this.EntityPM.StatusCode == "DR") {
-            var window = new MessageWindow();
-            window.Width = 300;
-            window.Show("Cant add payment for Draft invoice");
-        }
-
-        else if (this.EntityPM.AmountDue <= 0) {
-            this.RunReachedBoundsMessage();
-        }
-
-        else {
-            this.isNewPaymentClicked = true;
-            this.entityArgs.EditComponent.SaveChanges();
-        }
-    }
-
-    private RunNewPayment() {
-        var vendorAddressId: string;
-        var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetAddressByCardAndType(this.EntityPM.VendorId, "B").subscribe((resp: any) => {
-            var billingAddress = resp;
-            if (billingAddress != null) {
-                vendorAddressId = billingAddress.Id;
-                this.OpenNewPaymentWindow(vendorAddressId);
-            }
-
-            else {
-                myService.GetAddressByCardAndType(this.EntityPM.VendorId, "M").subscribe((resp: any) => {
-                    var mainAddress = resp;
-                    if (mainAddress != null) {
-                        vendorAddressId = mainAddress.Id;
-                        this.OpenNewPaymentWindow(vendorAddressId);
-                    }
-                });
-            }
-        });
-    }
-    private OpenNewPaymentWindow(vendorAddressId: string) {
-        var str = TextCodeTranslator.Translate("General.O.NewEntity");
-        str = str.replace("%Entity", TextCodeTranslator.TranslateTable("APPayment"));
-
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { APInvoice: this.EntityPM, VendorAddressId: vendorAddressId };
-        logWindow.Title = str;
-        logWindow.Show("./InvoiceModules/APPayment/Components/NewEntity/NewAPPaymentComponent");
     }
 }
 
@@ -395,6 +278,7 @@ export class APInvoicePaymentItem {
 
     public IsNotMatchedVisibile: boolean = false;
     public IsConnectButtonVisibile: boolean = false;
+    //public ConnectButtonIsEnabled: boolean = false;
 
     get ConnectButtonIsEnabled() {
         var result = true;

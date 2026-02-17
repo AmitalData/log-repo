@@ -3,8 +3,6 @@
 import {NewWarehouseEntryComponent} from './Components/NewWarehouseEntryComponent';
 import {NewWarehouseReleaseComponent} from './Components/NewWarehouseReleaseComponent';
 import {AddEditWarehouseEntryPackagesAndContainers} from './Components/AddEditWarehouseEntryPackagesAndContainers';
-import {SelectionAddChooseWarehouseEntryComponent} from './Components/SelectionAddChooseWarehouseEntryComponent';
-import {ChooseWarehouseEntryComponent} from './Components/ChooseWarehouseEntryComponent';
 
 import {WarehouseReleaseChoosePackagesComponent} from './Components/WarehouseReleaseChoosePackagesComponent';
 
@@ -36,11 +34,7 @@ import {WarehouseReleasePackagesDetailsComponent} from './Components/WarehouseRe
 
 
 import {WarehouseReleaseRoutingsTabComponent} from './Components/EditTabs/RoutingsTab/WarehouseReleaseRoutingsTabComponent'; 
-import {ChoosePackagesFromWarehousePackageReleasesComponent} from './Components/ChoosePackagesFromWarehousePackageReleasesComponent';
 
-import { WarehouseEntryHelperComponent } from './Components/Helpers/WarehouseEntryHelperComponent';
-import { WarehouseReleaseAuditTabComponent } from './Components/EditTabs/Audit/WarehouseReleaseAuditTabComponent';
-import { WarehouseEntryAuditTabComponent } from './Components/EditTabs/Audit/WarehouseEntryAuditTabComponent';
 
 
 
@@ -71,12 +65,6 @@ export const Components =
         WarehouseReleasePackagesDetailsComponent,
         NewFullWarehouseReleaseComponent,
         WarehouseReleaseRoutingsTabComponent,
-        ChoosePackagesFromWarehousePackageReleasesComponent,
-        WarehouseEntryHelperComponent,
-        SelectionAddChooseWarehouseEntryComponent,
-        ChooseWarehouseEntryComponent,
-        WarehouseReleaseAuditTabComponent,
-        WarehouseEntryAuditTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -111,12 +99,9 @@ export class ModuleDeclarations {
             case "WarehouseReleasePackagesDetailsComponent": { myResult = WarehouseReleasePackagesDetailsComponent; break; } 
             case "NewFullWarehouseReleaseComponent": { myResult = NewFullWarehouseReleaseComponent; break; }
             case "WarehouseReleaseRoutingsTabComponent": { myResult = WarehouseReleaseRoutingsTabComponent; break; }
-            case "ChoosePackagesFromWarehousePackageReleasesComponent": { myResult = ChoosePackagesFromWarehousePackageReleasesComponent; break; }
-            case "WarehouseEntryHelperComponent": { myResult = WarehouseEntryHelperComponent; break; }
-            case "SelectionAddChooseWarehouseEntryComponent": { myResult = SelectionAddChooseWarehouseEntryComponent; break; }
-            case "ChooseWarehouseEntryComponent": { myResult = ChooseWarehouseEntryComponent; break; }
-            case "WarehouseReleaseAuditTabComponent": { myResult = WarehouseReleaseAuditTabComponent; break; }
-            case "WarehouseEntryAuditTabComponent": { myResult = WarehouseEntryAuditTabComponent; break; }
+
+                
+      
         }
 
 

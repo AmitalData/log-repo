@@ -11,7 +11,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 declare var makeAMLineChartMultiple: any;
 @Component({
     selector: 'TicketOverviewTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './TicketOverviewTabComponent.html',
 })
 
@@ -131,7 +131,7 @@ export class TicketOverviewTabComponent {
         ];
 
         if (this.PerformanceChartIdExistance)
-        makeAMLineChartMultiple(this.PerformanceChartId, lineData, null, graphs,true,this.LegendDiv, "Hours");
+        makeAMLineChartMultiple(this.PerformanceChartId, lineData, null, graphs,true,this.LegendDiv);
 
     }
 
@@ -287,7 +287,7 @@ export class TicketOverviewTabComponent {
                     listArgs.QueryCode = "All Ticket Escalations";
                     listArgs.ObjectTableName = "TicketEscalation";
                     listArgs.BackButtonTitle = "Tickets";
-                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
@@ -305,7 +305,7 @@ export class TicketOverviewTabComponent {
                     listArgs.QueryCode = "All Activities";
                     listArgs.ObjectTableName = "Activity";
                     listArgs.BackButtonTitle = "Tickets";
-                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;

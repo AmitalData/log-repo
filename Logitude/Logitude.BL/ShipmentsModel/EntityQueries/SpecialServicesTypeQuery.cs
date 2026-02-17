@@ -113,31 +113,5 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     });
             return result;
         }
-
-        public SpecialServicesTypePM GetSinglePMByCode(string code, int tenant)
-        {
-            SpecialServicesTypePM result = null;
-
-            SpecialServicesType entityPoco = repository.GetSingleSpecialServicesTypeByCode(code, tenant);
-
-            if (entityPoco != null)
-            {
-                result = new SpecialServicesTypePM()
-                {
-                    Id = entityPoco.Id,
-                    Tenant = entityPoco.Tenant,
-                    LocalName = entityPoco.LocalName,
-                    EnglishName = entityPoco.EnglishName,
-                    Code = entityPoco.Code,
-                    SearchFields = entityPoco.SearchFields,
-                    InActive = entityPoco.InActive,
-                };
-            }
-
-            SpecialServicesTypePM securedPm = new SpecialServicesTypePM();
-            SecuredMapping.GetMappedPM(result, securedPm, "SpecialServicesType", tenant);
-
-            return securedPm;
-        }
     }
 }

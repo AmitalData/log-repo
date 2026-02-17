@@ -1,7 +1,9 @@
+import { EntityResourceService } from './../../Services/EntityResourceService';
+
 import { LogitudeWindow } from './../../../Controls/Windows/LogitudeWindow';
 declare var window: any;
 declare var SelectingElement: any;
-import { Input, Output, Component, OnInit, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+import { Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild } from '@angular/core';
 import { BaseComponent } from './BaseComponent';
 import { UIProperty, UIProperties, UIPropertyArgs } from './UIProperties';
 import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
@@ -10,11 +12,17 @@ import { AppTool } from '../../Tools';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { ControlsIdCounter } from '../../Utilities/ControlsIdCounter';
 import { FieldValidator } from '../../Validators/FieldValidator';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/observable/fromEvent';
 import { FormGroup } from '@angular/forms';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
-import { fromEvent, timer } from 'rxjs';
-import { debounceTime, take } from 'rxjs/operators';
+import { timer } from 'rxjs/observable/timer';
+//import { timer } from 'rxjs';
+import { timeInterval, pluck, take } from 'rxjs/operators';
+import { Dictionary } from '../../GenericTypes/Dictionary';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithSeparators, numberWithCommas: any;
 
 interface BeforeOnDestroy {
@@ -35,6 +43,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
 }
 
 @Component({
+    moduleId: module.id,
     selector: 'LogTextBoxV3',
     templateUrl: "./LogTextBoxComponentV3.html",
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext',
@@ -72,7 +81,7 @@ export class LogTextBoxComponentV3 implements BeforeOnDestroy, OnInit, AfterView
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
-    IsDisabled: boolean;
+    private IsDisabled: boolean;
     private timerToken: any;
     private textValue;
     public get TextValue() {
@@ -213,7 +222,7 @@ export class LogTextBoxComponentV3 implements BeforeOnDestroy, OnInit, AfterView
     ngOnInit() {
 
         if (this.IsRatioBox == true) {
-            this.DigitsAfterPoint = 3;
+            this.DigitsAfterPoint = 1;
             this.InputDivStyle = {};
         }
 
@@ -260,8 +269,8 @@ export class LogTextBoxComponentV3 implements BeforeOnDestroy, OnInit, AfterView
                 objectFieldAvailable = false;
             }
 
-            else if (this.ObjectField.HelpTextCodeCode != null) {
-                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextCodeCode);
+            else if (this.ObjectField.HelpTextCodeId != null) {
+                this.ObjectFieldHelp = TextCodeTranslator.Translate(this.ObjectField.HelpTextTextCodeCode);
 
                 if (!AppTool.IsNullOrEmpty(this.ObjectFieldHelp)) {
                     if (this.ObjectFieldHelp.length > 1) {
@@ -412,9 +421,9 @@ export class LogTextBoxComponentV3 implements BeforeOnDestroy, OnInit, AfterView
         }
         this.ngzone.runOutsideAngular(() => {
             var input = document.getElementById(this.InputId);
-          this._debounceTimeSub =
-            fromEvent(input, 'keydown').pipe(
-                    debounceTime(this.DebounceTime))
+            this._debounceTimeSub =
+                Observable.fromEvent(input, 'keydown')
+                    .debounceTime(this.DebounceTime)
                     .subscribe(keyboardEvent => {
                         var which = keyBoardWhich(keyboardEvent);
                         var key = keyBoardKey(keyboardEvent);

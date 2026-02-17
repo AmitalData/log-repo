@@ -62,8 +62,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public bool IsCustomerView { get; set; }
         [DataMember]
-        public bool IsCustomerUploadPermission { get; set; }
-        [DataMember]
         public bool IsAgentView { get; set; }
         [DataMember]
         public bool IsReadOnly { get; set; }
@@ -77,7 +75,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public bool IsCopiedAtSignup { get; set; }
         public bool IsEnabledForCustomers { get; set; }
-        [DataMember]
+
         public string DocumentTypeCategoryCode { get; set; }
         public string DocumentTypeCategoryName { get; set; }
         public string FileName { get; set; }
@@ -86,16 +84,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsAgentSharedInDirect { get; set; }
         public bool IsAgentSharedInHouse { get; set; }
         public string SharedDocumentTypeCopyId { get; set; }
-
-
-        public string OnSendPopulateDateFieldName { get; set; }
-        public string OnUploadPopulateDateFieldName { get; set; }
-        public string OnPrintPopulateDateFieldName { get; set; }
-
-
-       
-
-
 
 
         [DataMember]
@@ -108,13 +96,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsSystemAdditionalPrintingFields { get; set; }
         [DataMember]
         public string PrintingFieldsScreenCode { get; set; }
-
-
-        [DataMember]
-        public bool AddedManually { get; set; }
-
-
-
-
     }
 }

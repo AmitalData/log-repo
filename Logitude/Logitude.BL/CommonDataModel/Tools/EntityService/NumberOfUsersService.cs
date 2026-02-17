@@ -5,7 +5,7 @@ using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -109,7 +109,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     mainAdditionalPackageApplied = tenantManagement.MainAdditionalPackageApplied;
                     isManageLicencesPerUser = tenantManagement.ManageLicencesPerUser;
 
-                    totalTenantManagementUsers = tenantManagement.NumberOfUsers == null ? 0 : tenantManagement.NumberOfUsers;
+                    totalTenantManagementUsers = tenantManagement.NumberOfUsers;
                     if (tenantManagement.FreeUsers != null)
                     {
                         totalTenantManagementUsers += tenantManagement.FreeUsers;
@@ -423,7 +423,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
-                    Tenant = this.tenant,
+                    Tenant = 0,
                     EventTypeCode = "UPMG",
                     UserId = this.loggedContactId,
                     EntityId = tenant.ToString(),

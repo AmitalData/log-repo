@@ -2,7 +2,7 @@
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.SQL;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -36,6 +36,27 @@ namespace CommunicationWorkerRole.Tasks
                 int numberOfExecuteRows = 1000;
                 int numberOfRecords = 0;
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        //Delete from SchedulerLogs where HistoryId in (Select Id from[dbo].[TaskSchedulerHistory] where TaskId = @TaskId and[StartDateTime] < DATEADD(month,-3, GETDATE()))
+                        //delete from[dbo].[TaskSchedulerHistory] where[TaskId] = @TaskId and[StartDateTime] < DATEADD(month,-3, GETDATE())
+                        string sql = "delete from SchedulerLogs where HistoryId in (Select Id from TaskSchedulerHistory where TaskId = '" + Task.Id + "' and StartDateTime < GETDATE() - 90 )";
+                        //if (dbms == "oracle")
+                        //{
+                        //    sql = "DELETE SchedulerLogs WHERE ROWID IN  (SELECT ROWID FROM TaskSchedulerHistory where TaskId = " + Task.Id + " and StartDateTime < (SELECT SYSDATE FROM DUAL) - 90 and rownum<= 1000);";
+                        //}
+
+                        SqlCommand cmd = new SqlCommand(sql, cn);
+                        cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        //numberOfRecords += numberOfExecuteRows;
+                        cn.Close();
+                        scope.Complete();
+                    }
+                }
                 while (numberOfExecuteRows == 1000)
                 {
                     using (SqlConnection cn = new SqlConnection(strConnString))

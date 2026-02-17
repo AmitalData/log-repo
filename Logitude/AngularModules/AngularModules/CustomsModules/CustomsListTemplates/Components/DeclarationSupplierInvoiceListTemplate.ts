@@ -4,7 +4,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DeclarationSupplierInvoiceListTemplate.html',
 })
 

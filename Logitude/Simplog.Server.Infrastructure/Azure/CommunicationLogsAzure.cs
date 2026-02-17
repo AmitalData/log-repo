@@ -1,4 +1,5 @@
 using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.WindowsAzure.Storage.Table.DataServices;
 using System;
 
 namespace Simplog.Server.Infrastructure.Azure

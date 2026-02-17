@@ -1,19 +1,18 @@
-import { ObjectTableRulePM } from '../EntityPMs/ObjectTableRulePM';
-import { RuleConditionFieldPM } from '../EntityPMs/RuleConditionFieldPM';
-import { ObjectTableRuleFieldPM } from '../EntityPMs/ObjectTableRuleFieldPM';
-import { Settings } from '../Settings';
-import { SessionInfo } from '../Utilities/SessionInfo';
-import { ObjectFieldPM } from '../EntityPMs/ObjectFieldPM';
-import { TextCodeTranslator } from '../Utilities/TextCodeTranslator';
-import { AppTool } from '../Tools';
-import { FieldValueResolver } from '../Utilities/FieldValueResolver';
-import { ObjectTablePM } from '../EntityPMs/ObjectTablePM';
-import { UIProperty, UIProperties, UIPropertyArgs } from '../Components/LogitudeComponents/UIProperties';
-import { CustomFieldClass } from '../DataContracts/CustomFieldClass';
-import { EntityListService } from '../Services/EntityListService';
-import { ApiQueryFilters, FilterItem } from '../DataContracts/ApiQueryFilters';
-import { DateTool } from '../Tools';
-import { SessionLocator } from '../Utilities/SessionLocator';
+import {ObjectTableRulePM} from '../EntityPMs/ObjectTableRulePM';
+import {RuleConditionFieldPM} from '../EntityPMs/RuleConditionFieldPM';
+import {ObjectTableRuleFieldPM} from '../EntityPMs/ObjectTableRuleFieldPM';
+import {Settings} from '../Settings';
+import {SessionInfo} from '../Utilities/SessionInfo';
+import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
+import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
+import {AppTool} from '../Tools';
+import {FieldValueResolver} from '../Utilities/FieldValueResolver';
+import {ObjectTablePM} from '../EntityPMs/ObjectTablePM';
+import {UIProperty, UIProperties, UIPropertyArgs} from '../Components/LogitudeComponents/UIProperties';
+import {CustomFieldClass} from '../DataContracts/CustomFieldClass';
+import {EntityListService} from '../Services/EntityListService';
+import {ApiQueryFilters, FilterItem} from '../DataContracts/ApiQueryFilters';
+import {DateTool} from '../Tools';
 
 
 declare var window: any;
@@ -37,10 +36,7 @@ export class RulesValidator {
         this.Initizialize();
     }
 
-    public Initizialize(entity:any = null) {
-
-        this.SetIsNewEntity(entity);
-
+    public Initizialize() {
         if (window.ObjectTableRules != null && window.ObjectTableRules != undefined) {
 
             this._tenantRules = window.ObjectTableRules;
@@ -90,7 +86,7 @@ export class RulesValidator {
                     r.RuleTypeCode == "SETV" && r.TriggerTypeCode == "FLDC" && r.InActive == false && r.InActive == false && (r.ActiveForUpdate)
                 );
             }
-
+           
 
             this.entityListService = new EntityListService();
 
@@ -101,10 +97,8 @@ export class RulesValidator {
     }
     public ValidateAllTableRules(entity: any, objectTableId: string, errorsArray: Array<string>) {
 
-        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
-            this.ValidateAllRequiredFieldRules(entity, objectTableId, errorsArray);
-            this.ValidateEntityRules(entity, objectTableId, errorsArray);
-        }
+        this.ValidateAllRequiredFieldRules(entity, objectTableId, errorsArray);
+        this.ValidateEntityRules(entity, objectTableId, errorsArray);
         //this.val
         return errorsArray;
 
@@ -114,8 +108,10 @@ export class RulesValidator {
         //if (this.CurrentSession && this.CurrentSession.CurrentEditComponent) {
         //    this.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detach();
         //}
-         
-        this.Initizialize(entity);
+        if (entity) {
+            this.IsNewEntity = (entity.OldEntityPM === null || entity.OldEntityPM === undefined);
+        }
+        this.Initizialize();
         this.ApplyRequiredFieldRules(propertyName, entity, objectTableName);
         this.ApplyConditionalBlockFieldRules(propertyName, entity, objectTableName, true);
 
@@ -124,12 +120,6 @@ export class RulesValidator {
         //if (this.CurrentSession && this.CurrentSession.CurrentEditComponent) {
         //    this.CurrentSession.CurrentEditComponent.ChangeDetectorRef.detectChanges();
         //}
-    }
-
-    private SetIsNewEntity(entity: any) {
-        if (entity) {
-            this.IsNewEntity = (entity.OldEntityPM === null || entity.OldEntityPM === undefined) && (entity.Id === null || entity.Id === undefined);
-        }
     }
 
     //***********************************************************************************************
@@ -150,7 +140,7 @@ export class RulesValidator {
         for (var k in entityTableRules) {
             var rule: ObjectTableRulePM = entityTableRules[k];
 
-            var field: ObjectFieldPM = this._tenantObjectFields.filter(x => x.FieldCode === rule.TriggerFieldCode)[0];
+            var field: ObjectFieldPM = this._tenantObjectFields.filter(x => x.Id === rule.TriggerFieldId)[0];
 
             if (field && field.FieldName == propertyName && entity.OldEntityPM) {
 
@@ -182,7 +172,7 @@ export class RulesValidator {
                     }
                     else {
 
-                        this.SetInsideEntityFieldValue(entity, entity, fieldName, ruleField, table, table);
+                        this.SetInsideEntityFieldValue(entity, entity, fieldName, ruleField, table);
 
                     }
 
@@ -204,7 +194,7 @@ export class RulesValidator {
 
 
 
-    private SetInsideEntityFieldValue(parentEntity: Object, entity: Object, fieldName: string, ruleField: ObjectTableRuleFieldPM, mainTable: ObjectTablePM, insideTable: ObjectTablePM) {
+    private SetInsideEntityFieldValue(parentEntity: Object, entity: Object, fieldName: string, ruleField: ObjectTableRuleFieldPM, table: ObjectTablePM) {
 
         var apiFilters: ApiQueryFilters = new ApiQueryFilters();
 
@@ -214,15 +204,15 @@ export class RulesValidator {
         var i: number = 0;
         var f1: string = fieldsAray[0];//"IncotermId.PerpaidCollect.Id"
         var currentValue: string = currentEntity[fieldsAray[i]];
-        var objectField: ObjectFieldPM = this._tenantObjectFields.filter(x => x.FieldName === fieldsAray[i] && x.ObjectTableId === insideTable.Id)[0];
-        if (objectField && objectField.DataTypeCode == "DateTime") {
+        var objectField: ObjectFieldPM = this._tenantObjectFields.filter(x => x.FieldName === fieldsAray[i] && x.ObjectTableId === table.Id)[0];
+      if (objectField && objectField.DataTypeCode == "DateTime") {
             if (fieldsAray[i + 1] == "Date") {
                 var datetimevalue: Date = currentEntity[fieldsAray[i]];
-                var datevalue = DateTool.TruncateTime(datetimevalue);
-                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, datevalue, mainTable.Id);
+                var datevalue = DateTool.TruncateTime(datetimevalue); 
+                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, datevalue, table.Id);
             }
             else
-                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, currentValue, mainTable.Id);
+                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, currentValue, table.Id);
         }
         if (objectField && currentValue && objectField.DataTypeCode == "LookUp") {
             var insideEntityName: string = objectField.ObjectTable_LookUpTableName;
@@ -232,7 +222,7 @@ export class RulesValidator {
 
             if (insideTable.CacheOnClient) {
                 this.entityListService.getSingleFromCache(currentValue, insideEntityName, apiFilters).then((res: any) => {
-                    res.subscribe((response: any) => {
+                    res.subscribe(response => {
                         var insideEntity = response.Result;
                         if (insideEntity) {
                             if ((i + 1) < fieldsAray.length) {
@@ -243,12 +233,12 @@ export class RulesValidator {
                                     var insideTable2: ObjectTablePM = this._objectTables.filter(t => t.Name == insideEntityName2 && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
 
                                     var insideFields = fieldName.replace(fieldsAray[i] + ".", "");
-                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, mainTable, insideTable);
+                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, insideTable);
 
 
                                 }
                                 else {
-                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, mainTable.Id);
+                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, table.Id);
                                 }
                             }
                             else {
@@ -264,7 +254,7 @@ export class RulesValidator {
             }
             else {
                 this.entityListService.getSingle(currentValue, insideEntityName).then((res: any) => {
-                    res.subscribe((response: any) => {
+                    res.subscribe(response => {
                         var insideEntity = response.Result;
                         if (insideEntity) {
                             if ((i + 1) < fieldsAray.length) {
@@ -275,12 +265,12 @@ export class RulesValidator {
                                     var insideTable2: ObjectTablePM = this._objectTables.filter(t => t.Name == insideEntityName2 && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
 
                                     var insideFields = fieldName.replace(fieldsAray[i] + ".", "");
-                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, mainTable, insideTable);
+                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, insideTable);
 
 
                                 }
                                 else {
-                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, mainTable.Id);
+                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, table.Id);
                                 }
                             }
                             else {
@@ -309,27 +299,21 @@ export class RulesValidator {
         var table: ObjectTablePM = this._objectTables.filter(t => t.Id == objectTableId && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
         var field: ObjectFieldPM = this._tenantObjectFields.filter(a => a.FieldName == propertyName && a.ObjectTableId == objectTableId)[0];
         var resultValue: Object = " ";
-        if (value != undefined && value != null && (value instanceof CustomFieldClass)) {
-            value = value.ResolvedValue;
-        }
-        if (field) {
-            const textValue = value + '';
-            if (value && field.MaxLength < textValue.length &&
-                (field.DataTypeCode === "Text" || field.DataTypeCode === "nText")
-            ) {
-                value = textValue.substring(0, field.MaxLength);
-            }
+      if (value != undefined && value != null && (value instanceof CustomFieldClass)) {
+        value = value.ResolvedValue;
+      }
+        if (field != null) {
             if (field.IsCustom) {
-                const classvalue: CustomFieldClass = entity[propertyName];
+                var classvalue: CustomFieldClass = entity[propertyName];
                 if (classvalue != null) {
                     if (classvalue.Value != value) {
-                        const customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
+                        var customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
                         entity[propertyName] = customFieldClass;
                     }
                 }
                 else {
 
-                    const customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(value, propertyName, table.Name);
                     entity[propertyName] = customFieldClass;
                 }
             }
@@ -362,22 +346,22 @@ export class RulesValidator {
         if (table == null || table == undefined) {
             return;
         }
-
+         
         var advancedConditionalTableSetValueRules: Array<ObjectTableRulePM> = this._conditionalSetFieldValueRules.filter(r => (r.Condition != null) && r.AdvancedCondition == true && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
         var conditionalTableSetValueRules: Array<ObjectTableRulePM> = this._conditionalSetFieldValueRules.filter(r => r.AdvancedCondition == false && r.RuleConditionFields.length > 0 && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
         for (var k in conditionalTableSetValueRules) {
             var rule = conditionalTableSetValueRules[k];
             var ruleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectTableRuleId == rule.Id);
+            
+                var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
+           
+                if (validcondition) {
+                    this.ExecuteSetFieldsRule(rule, entity, objectTableName);
+                }
 
-            var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
-
-            if (validcondition) {
-                this.ExecuteSetFieldsRule(rule, entity, objectTableName);
-            }
-
-
+            
         };
-
+        
     }
 
     public ApplyStaticUnConditionalSetFieldRules(entity: any, objectTableName: string): void {
@@ -514,7 +498,7 @@ export class RulesValidator {
 
             for (var k in requiredFields) {
                 var field = requiredFields[k];
-                var obField = this._tenantObjectFields.filter(x => x.FieldCode === field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+                var obField = this._tenantObjectFields.filter(x => x.Id === field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
                 var requiredError = TextCodeTranslator.Translate("General.M.FieldIsRequired");
                 var fieldTrans = TextCodeTranslator.Translate(obField.FullNameTextCodeCode);
                 requiredError = requiredError.replace("%FieldName", fieldTrans);
@@ -630,7 +614,7 @@ export class RulesValidator {
         var targetRuleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectFieldName == propertyName && rf.ObjectTableRuleTypeCode == "REQ");
         for (var k in targetRuleFields) {
             var field = targetRuleFields[k];
-            var currField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == field.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
+            var currField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == field.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(field.ObjectFieldId);
             if (currField != null) {
                 if (table.Id == currField.ObjectTableId) {
                     var rule: ObjectTableRulePM = this._requiredFieldRules.filter(r => r.Id == field.ObjectTableRuleId)[0];
@@ -686,7 +670,7 @@ export class RulesValidator {
         var propertyValue: Object = null;
         for (var k in ruleFields) {
             var ruleField = ruleFields[k];
-            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == ruleField.ObjectFieldCode)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
+            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == ruleField.ObjectFieldId)[0];//ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
             if (objectField != null) {
                 if (this.HasProperty(entity, objectField.FieldName)) {
                     if (required && entity.UIProperties) {
@@ -726,28 +710,6 @@ export class RulesValidator {
         }
     }
 
-    public ApplyAllConditionalBlockFieldRules(entity: any, objectTableName: string): void {
-        
-        this.Initizialize(entity);
-        var propertyValue: Object = null;
-        var table: ObjectTablePM = this._objectTables.filter(t => t.Name == objectTableName && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
-        if (table == null || table == undefined) {
-            return;
-        }
-         
-        var advancedConditionalTableBlockRules: Array<ObjectTableRulePM> = this._blockRules.filter(r => (r.Condition != null) && r.AdvancedCondition == true && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
-        var conditionalTableBlockRules: Array<ObjectTableRulePM> = this._blockRules.filter(r => r.AdvancedCondition == false && r.RuleConditionFields.length > 0 && r.TriggerTypeCode == "COND" && r.ObjectTableId == table.Id);
-        for (var k in conditionalTableBlockRules) {
-            var rule = conditionalTableBlockRules[k];
-            var ruleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectTableRuleId == rule.Id);
-            var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
-            
-            this.SetFieldsAccessibility(ruleFields, validcondition, objectTableName, entity, null);
-        };
-        
-       
-    }
-
     public ApplyConditionalBlockFieldRules(propertyName: string, entity: any, objectTableName: string, onPropertyChange: boolean, uiPoperty: UIProperty = null): void {
         //if (TenantContext.Current.CurrentSession == null) {
         //    return
@@ -766,17 +728,17 @@ export class RulesValidator {
             var rule = conditionalTableBlockRules[k];
             var ruleFields: Array<ObjectTableRuleFieldPM> = this._objectTableRuleFields.filter(rf => rf.ObjectTableRuleId == rule.Id);
             if (rule.RuleConditionFields.some(f => f.ObjectFieldName == propertyName) || ruleFields.some(f => f.ObjectFieldName == propertyName)) {
-            //var canRun: boolean = CanRunRule(rule, table.Id, entity);
-            //if (canRun) {
-            var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
-            if (rule.RuleConditionFields.some(f => f.ObjectFieldName == propertyName)) {
-                this.SetFieldsAccessibility(ruleFields, validcondition, objectTableName, entity, uiPoperty);
+                //var canRun: boolean = CanRunRule(rule, table.Id, entity);
+                //if (canRun) {
+                var validcondition: boolean = this.ValidateConditionFieldsRule(entity, rule.RuleConditionFields);
+                if (rule.RuleConditionFields.some(f => f.ObjectFieldName == propertyName)) {
+                    this.SetFieldsAccessibility(ruleFields, validcondition, objectTableName, entity, uiPoperty);
+                }
+                else {
+                    this.SetFieldsAccessibility(ruleFields, validcondition, objectTableName, entity, uiPoperty);
+                }
+                //}
             }
-            else {
-                this.SetFieldsAccessibility(ruleFields, validcondition, objectTableName, entity, uiPoperty);
-            }
-            //}
-        }
         };
         //type1 = entity.GetType();
         //propertyInf = _type1.GetProperty(propertyName);
@@ -815,7 +777,7 @@ export class RulesValidator {
     }
 
     public ApplyUnConditionalBlockFieldRules(propertyName: string, entity: any, objectTableName: string, onPropertyChange: boolean, uiPoperty: UIProperty = null): void {
-
+       
         var propertyValue: Object = null;
         var table: ObjectTablePM = this._objectTables.filter(t => t.Name == objectTableName && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
         if (table == null || table == undefined) {
@@ -833,7 +795,7 @@ export class RulesValidator {
         };
 
 
-
+         
     }
     private SetFieldsAccessibility(ruleFields: Array<ObjectTableRuleFieldPM>, validcondition: boolean, objectTableName: string, entity: any, uiPoperty: UIProperty): void {
 
@@ -857,7 +819,7 @@ export class RulesValidator {
         else {
             for (var k in ruleFields) {
                 var ruleField = ruleFields[k];
-                var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == ruleField.ObjectFieldCode)[0];
+                var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == ruleField.ObjectFieldId)[0];
                 if (objectField != null && objectField.AutomaticField == false) {
                     if (entity != null) {
 
@@ -902,40 +864,30 @@ export class RulesValidator {
         var validcondition: boolean = true;
         // var type1: Type = entity.GetType();
         // var propertyInf: PropertyInfo = null;
-        let fieldCurrentValue = null;
-        let conditionValue = null;
         for (var k in ruleConditionFields) {
             var condfield = ruleConditionFields[k];
-            var fieldPM: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == condfield.ObjectFieldCode)[0];
-            fieldCurrentValue = entity[condfield.ObjectFieldName];
+            var fieldPM: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == condfield.ObjectFieldId)[0];
+            var value: string = entity[condfield.ObjectFieldName];
+            var valueString = FieldValueResolver.GetFieldStringValue(fieldPM, value);
+            var fieldValue = condfield.Value;
+            if (valueString)
+                valueString = valueString.toLowerCase();
+
+            if (fieldValue)
+                fieldValue = fieldValue.toLowerCase();
 
 
-            if (fieldPM && (fieldPM.DataTypeCode === "Integer" ||
-                fieldPM.DataTypeCode === "Double" ||
-                fieldPM.DataTypeCode === "Decimal" ||
-                fieldPM.DataTypeCode === "DateTime" || fieldPM.DataTypeCode === "Date"
-            )) {
-                conditionValue = FieldValueResolver.GetFieldDataValue(fieldPM, condfield.Value);
-                fieldCurrentValue = entity[condfield.ObjectFieldName];
-                if (!(fieldCurrentValue instanceof Date) && fieldCurrentValue) {
-                    fieldCurrentValue = new Date(fieldCurrentValue);
-                }
+            switch (condfield.Operator) {
+                case "Equals":
+                    validcondition = (fieldValue == valueString);
+                    break;
+                case "NotEqual":
+                    validcondition = (fieldValue != valueString);
+                    break;
+                default:
+                    validcondition = (fieldValue == valueString);
+                    break;
             }
-            else {
-                fieldCurrentValue = FieldValueResolver.GetFieldStringValue(fieldPM, fieldCurrentValue);
-                conditionValue = condfield.Value;
-                if (fieldCurrentValue) {
-
-                    if (typeof fieldCurrentValue == "boolean") fieldCurrentValue = fieldCurrentValue.toString();
-                    fieldCurrentValue = fieldCurrentValue.toLowerCase();
-                }
-
-                if (conditionValue) {
-                    conditionValue = conditionValue.toLowerCase();
-                }
-            }
-
-            validcondition = this.IsValidCondition(condfield, validcondition, fieldCurrentValue, conditionValue);
 
             if (validcondition === false)
                 break;
@@ -945,36 +897,6 @@ export class RulesValidator {
     }
 
 
-    private IsValidCondition(condfield: RuleConditionFieldPM, validcondition: boolean, fieldCurrentValue: any, conditionValue: any) {
-        switch (condfield.Operator) {
-            case "Equals":
-                validcondition = (fieldCurrentValue == conditionValue);
-                break;
-            case "NotEqual":
-                validcondition = (fieldCurrentValue != conditionValue);
-                break;
-            case "LargerThan":
-                validcondition = (fieldCurrentValue > conditionValue);
-                break;
-            case "GreaterThanOrEqual":
-                validcondition = (fieldCurrentValue >= conditionValue);
-                break;
-            case "LessThan":
-                validcondition = (fieldCurrentValue < conditionValue);
-                break;
-            case "LessThanOrEqual":
-                validcondition = (fieldCurrentValue <= conditionValue);
-                break;
-            case "StartsWith":
-                validcondition = (fieldCurrentValue?.startsWith(conditionValue));
-                break;
-            default:
-                validcondition = (fieldCurrentValue == conditionValue);
-                break;
-        }
-        return validcondition;
-    }
-
     private GenerateRuleErrors(ruleFields: Array<ObjectTableRuleFieldPM>, entity: Object, requiredFields: Array<ObjectTableRuleFieldPM>): void {
         //var type1: Type = entity.GetType();
         // var propertyInf: PropertyInfo = null;
@@ -982,7 +904,7 @@ export class RulesValidator {
         for (var k in ruleFields) {
             var ruleField = ruleFields[k];
             //var objectField: ObjectFieldPM = ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
-            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.FieldCode == ruleField.ObjectFieldCode)[0];
+            var objectField: ObjectFieldPM = this._tenantObjectFields.filter(f => f.Id == ruleField.ObjectFieldId)[0];
             if (objectField != null) {// ObjectFieldsCachedDataProvider.GetObjectFieldById(ruleField.ObjectFieldId);
                 if (ruleField.RuleNotificationTypeCode == "ERR") {
                     //propertyInf = type1.GetProperty(objectField.FieldName);

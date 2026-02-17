@@ -8,10 +8,10 @@ using System.ServiceModel.DomainServices.Hosting;
 using System.ServiceModel.DomainServices.Server;
 using System.Transactions;
 using System.Xml.Serialization;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -50,10 +50,6 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using System.Data.Entity.Core;
-using Logitude.CRM.BL.EntityQueryServices;
-using Logitude.CRM.BL.EntityPMs;
-using Logitude.CRM.BL.EntityUpdateServices;
-using Logitude.CRM.Data;
 
 namespace WebFreight.Web.QuoteModel.DomainServices
 {
@@ -67,7 +63,6 @@ namespace WebFreight.Web.QuoteModel.DomainServices
         private QuoteQuery quoteQuery;
         private QuoteTypeQuery quoteTypeQuery;
         private MarkUpTypeQuery markUpTypeQuery;
-        private ValidByTypeQuery validByTypeQuery;
         private QuoteCustomerTypeQuery quoteCustomerTypeQuery;
         private QuoteClosingReasonQuery quoteClosingReasonQuery;
 
@@ -298,7 +293,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
                 List<RestrictionPM> restrictions = restrictionQuery.GetResitrictionsByObjectTableAndContact(contactTenant.Id, objectTable.Id, tenant).ToList();
 
                 var query = from restriction in restrictions
-                            group restriction by restriction.ObjectFieldCode into objectTableGroup
+                            group restriction by restriction.ObjectFieldId into objectTableGroup
                             select new
                             {
                                 key = objectTableGroup.Key,
@@ -375,7 +370,6 @@ namespace WebFreight.Web.QuoteModel.DomainServices
                     ShipperReference1 = f.ShipperReference1,
                     LastModified = f.LastModified,
                     CreatedByUser = f.CreatedByUser.Contact.EnglishName,
-                    UpdatedByUser = f.UpdatedByUser.Contact.EnglishName,
                     QuoteTypeCode = f.QuoteTypeCode,
                     ShipmentType = f.ShipmentType == null ? null : f.ShipmentType.Name,
                     DirectionId = f.DirectionId,
@@ -476,8 +470,8 @@ namespace WebFreight.Web.QuoteModel.DomainServices
                     Subject = f.Subject,
                     IsSubjectEdited = f.IsSubjectEdited,
                     SalesmanUserId = f.SalesmanUserId,
-                    Salesman = f.SalesmanUser == null ? null : (f.SalesmanUser.Contact == null ? null : f.SalesmanUser.Contact.EnglishName),
-                    SalesmanName = f.SalesmanUser == null ? null : (f.SalesmanUser.Contact == null ? null : f.SalesmanUser.Contact.EnglishName),
+                    Salesman = f.SalesmanUser == null ? "" : (f.SalesmanUser.Contact == null ? "" : f.SalesmanUser.Contact.EnglishName),
+                    SalesmanName = f.SalesmanUser == null ? "" : (f.SalesmanUser.Contact == null ? "" : f.SalesmanUser.Contact.EnglishName),
                     TransitTime = f.TransitTime,
                     DepartureFrequency = f.DepartureFrequency,
                     ETD = f.ETD,
@@ -495,7 +489,7 @@ namespace WebFreight.Web.QuoteModel.DomainServices
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 foreach (ObjectField field in customFields)
                 {
                     PropertyInfo propInfo = typeof(QuoteList).GetProperty(field.FieldName);
@@ -784,13 +778,13 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             query2 = query2.Take(queryOperations.PageSize);
 
             List<QuoteList> listQuery = query2.ToList();
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Quote", tenant, listQuery.Cast<object>().ToList());
 
             //List<QuoteList> listQuery = query2.ToList();
             //List<ObjectField> customFields = ObjectFieldsRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
 
-            //CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            //CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             //foreach (ObjectField field in customFields)
             //{
             //    foreach (QuoteList quoteList in listQuery)
@@ -1350,54 +1344,30 @@ namespace WebFreight.Web.QuoteModel.DomainServices
             QuoteRepository myQuoteRepository = new QuoteRepository(tenant);
             IQueryable<Quote> myQuotes = myQuoteRepository.GetQuotes(tenant).Where(d => quotesIds.Contains(d.Id));
 
-            ICRMContext cRMContext = CRMContext.GetContext(tenant);
-            OpportunityUpdateService service = new OpportunityUpdateService(cRMContext, new Dictionary<string, IContext>(), tenant);
-            OpportunityQueryService opportunityQuery = new OpportunityQueryService(cRMContext);
-            var opportunity = opportunityQuery.GetSingle(opportunityId, false, false);
+            string email = HttpContext.Current.User.Identity.Name;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            string loggedContactId = contactRepository.GetSingleContactByEmail(email, tenant).Id;
 
-            if (opportunity != null)
+            string myEventNotes = "Connected:";
+
+            foreach (Quote item in myQuotes)
             {
-                string email = HttpContext.Current.User.Identity.Name;
-                ContactRepository contactRepository = new ContactRepository(tenant);
-                string loggedContactId = contactRepository.GetSingleContactByEmail(email, tenant).Id;
+                item.OpportunityId = opportunityId;
 
-                string myEventNotes = "Connected:";
-
-                foreach (Quote item in myQuotes)
-                {
-                    item.OpportunityId = opportunityId;
-                    item.ConnectedToOpportunity = true;
-                    myEventNotes += "\n" + item.QuoteNumber;
-                    this.UpdateOpportunity(opportunity);
-                }
-
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = tenant,
-                    EventTypeCode = "QTOP",
-                    UserId = loggedContactId,
-                    EntityId = opportunityId,
-                    ObjectTableName = "Opportunity",
-                    Notes = myEventNotes,
-                });
-
-                myQuoteRepository.SubmitChanges();
-                service.InitializeEntityPM(opportunity);
-                opportunity.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                service.Update(opportunity, true);
+                myEventNotes += "\n" + item.QuoteNumber;
             }
-        }
-        private void UpdateOpportunity(OpportunityPM opportunity)
-        {
-            if (opportunity.NumberOfConnectedQuotes == null)
+            
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
-                opportunity.NumberOfConnectedQuotes = 1;
-            }
+                Tenant = tenant,
+                EventTypeCode = "QTOP",
+                UserId = loggedContactId,
+                EntityId = opportunityId,
+                ObjectTableName = "Opportunity",
+                Notes = myEventNotes,
+            });
 
-            else
-            {
-                opportunity.NumberOfConnectedQuotes += 1;
-            }
+            myQuoteRepository.SubmitChanges();
         }
 
         public List<ChartingDataClass> GetStageFunnelData(string ownerId, string businessUnitId, int tenant)

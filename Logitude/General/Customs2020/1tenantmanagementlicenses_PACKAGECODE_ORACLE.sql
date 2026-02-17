@@ -1,2 +1,0 @@
---alter table tenantmanagementlicenses drop column PACKAGECODE;
---ALTER TABLE tenantmanagementlicenses ADD PACKAGECODE VARCHAR2(5) NULL;

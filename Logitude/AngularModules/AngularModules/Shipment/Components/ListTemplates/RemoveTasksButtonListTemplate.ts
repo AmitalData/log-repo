@@ -9,7 +9,6 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 import { ShipmentAdditionalCloudDataService } from '../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 
 @Component({
@@ -68,7 +67,7 @@ export class RemoveTasksButtonListTemplate {
         //if (SessionLocator.PrivateLableSettings) {
         //    this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
         //    if (SessionLocator.PrivateLableSettings) {
-        //        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
+        //        this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
         //            if (res.Result == false) {
         //                this.HasSharedDocs = false;
         //            }
@@ -78,7 +77,7 @@ export class RemoveTasksButtonListTemplate {
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -93,12 +92,12 @@ export class RemoveTasksButtonListTemplate {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Loading ..")
-                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe((myResult:any) => {
+                this._ShipmentPMService.RemoveShipmentTasks(this.rowData.Id).subscribe(myResult => {
                     if (!myResult.HasError) {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                         this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
-                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Remove Task" });
+                        
                     }
                 });
             }
@@ -113,7 +112,7 @@ export class RemoveTasksButtonListTemplate {
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var newWindow = new LogitudeWindow();
@@ -177,9 +176,9 @@ export class RemoveTasksButtonListTemplate {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         //this.CurrentSession.SessionEvent.emit("DisableBusyIndicator");
         //this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe((AdditionalResult:any) => {
+                this._ShipmentAdditionalCloudDataService.get(this.rowData.Id).subscribe(AdditionalResult => {
                     //this.CurrentSession.StopBusyIndicator();
                     this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response1 => {
                         var newWindow = new LogitudeWindow();

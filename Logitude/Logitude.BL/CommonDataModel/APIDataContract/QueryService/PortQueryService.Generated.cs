@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -42,40 +40,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Port GetPortById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public Port GetPortById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Port with Id " + Id + " doesn't exist");
 
-				return PortDataMapping(temp,Tenant,ComputingPartnerName);
+				return PortDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
 		
-		public Port GetPortByCombinedCode(string CombinedCode,int Tenant,  string ComputingPartnerName = "")
+		public Port GetPortByCombinedCode(string CombinedCode,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePMByCombinedCode(CombinedCode, Tenant);				
+				var temp = query.GetSinglePMByCombinedCode(CombinedCode,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Port with CombinedCode " + CombinedCode + " doesn't exist");
 
-				return PortDataMapping(temp,Tenant,ComputingPartnerName);
+				return PortDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -91,25 +89,7 @@ using Simplog.Data.CommonDataModel;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   ComputingPartnerTranslationHelper helper = new ComputingPartnerTranslationHelper(Tenant); 
-				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.CombinedCode,ComputingPartnerName,"Port");   
-
-			  
-				   if(MyEntityPM.CountryId != null)
-				   {
-					   CountryQueryService CountryService0 = new CountryQueryService(Tenant);
-					   					   temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				    
-
-			  
-				   if(MyEntityPM.StateId != null)
-				   {
-					   StateQueryService StateService1 = new StateQueryService(Tenant);
-					   					   temp.State = StateService1.GetStateById(MyEntityPM.StateId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   					
+				   temp.PartnerCode = helper.GetComputingPartnerCodeTranslation(MyEntityPM.CombinedCode,ComputingPartnerName,"Port");  					
 				   return temp;
 			}
             catch (Exception ex)
@@ -119,7 +99,7 @@ using Simplog.Data.CommonDataModel;
             }
         } 
 
-		public PortPM PortDataMappingAndValidatin(Port MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public PortPM PortDataMappingAndValidatin(Port MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -131,7 +111,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, Tenant  );
+						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, Tenant);
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -143,18 +123,16 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("Port with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCombinedCode(MyCode, Tenant );
+						temp = query.GetSinglePMByCombinedCode(MyCode, Tenant);
 						
 						
 					}
 					
-					
-			  	   if(temp == null)
+					   					   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("Port with Code " + MyEntity.Code + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -167,85 +145,13 @@ using Simplog.Data.CommonDataModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//} 
-
-						
+						//}
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.CombinedCode = MyEntity.Code;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalName = MyEntity.LocalName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.EnglishName = MyEntity.EnglishName;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.CombinedCode = MyEntity.PartnerCode;
-
-										}  
-
-					
-					CountryQueryService CountryCountryService = new CountryQueryService(Tenant);
-					if(MyEntity.Country != null)
-					{
-						var myCountryPM = CountryCountryService.CountryDataMappingAndValidatin(MyEntity.Country,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myCountryPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.CountryId = myCountryPM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-					
-					StateQueryService StateStateService = new StateQueryService(Tenant);
-					if(MyEntity.State != null)
-					{
-						var myStatePM = StateStateService.StateDataMappingAndValidatin(MyEntity.State,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myStatePM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.StateId = myStatePM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-										   
-					return temp;
+					temp.CombinedCode = MyEntity.Code;
+					temp.LocalName = MyEntity.LocalName;
+					temp.EnglishName = MyEntity.EnglishName;
+					temp.CombinedCode = MyEntity.PartnerCode;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -253,8 +159,6 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

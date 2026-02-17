@@ -1,69 +1,65 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+
+
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
+
 
 @Injectable()
-
 export class DocumentTypeMetaDataExtendedService {
 
-  private _http: HttpClient;
-  private _apiUrl: string;
-  constructor() {
-    this._http = ServiceHelper.HttpClient;
-    this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DocumentTypeMetaData';
-  }
+    private _http: Http;
+    private _apiUrl: string;
+    constructor() {
+        this._http = ServiceHelper.Http;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DocumentTypeMetaData';
+    }
 
-  GetDocumentTypeMetaDataByDocumentTypeId(documentTypeId: string, tenant: number) {
-    return this._http.get(this._apiUrl + '?DocumentTypeId=' + documentTypeId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-      var pmresponse: ServiceResponse;
-      pmresponse = new ServiceResponse();
 
-      pmresponse.Result = response;
-      return pmresponse;
-    }), catchError(ServiceHelper.HandleServiceError));
-  }
+ 
+    GetDocumentTypeMetaDataByDocumentTypeId(documentTypeId: string,  tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-  GetDocumentMetaDataValuesByDocument(tenant: number, documentId: string) {
-    return this._http.get(this._apiUrl + '?tenant=' + tenant + '&DocumentId=' + documentId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-      var pmresponse: ServiceResponse;
-      pmresponse = new ServiceResponse();
+        return this._http.get(this._apiUrl + '?DocumentTypeId=' + documentTypeId + '&tenant=' + tenant, { headers: authHeader}).map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
 
-      pmresponse.Result = response;
-      return pmresponse;
-    }), catchError(ServiceHelper.HandleServiceError));
-  }
+            pmresponse.Result = response.json();
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
 
-  GetDocumentsFilingMetaDataValueByFilingIdAndCode(documentsFilingId: string, code: string) {
-    return this._http.get(this._apiUrl + '?documentsFilingId=' + documentsFilingId + '&code=' + code, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-      var pmresponse: ServiceResponse;
-      pmresponse = new ServiceResponse();
+    GetDocumentMetaDataValuesByDocument(tenant: number,documentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-      pmresponse.Result = response;
-      return pmresponse;
-    }), catchError(ServiceHelper.HandleServiceError));
-  }
+        return this._http.get(this._apiUrl + '?tenant=' + tenant + '&DocumentId=' + documentId, { headers: authHeader }).map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
 
-  GetDocumentsMetaDataTypeByCode(Code: string) {
-    return this._http.get(this._apiUrl + '?Code=' + Code, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-      var pmresponse: ServiceResponse;
-      pmresponse = new ServiceResponse();
+            pmresponse.Result = response.json();
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
 
-      pmresponse.Result = response;
-      return pmresponse;
-    }), catchError(ServiceHelper.HandleServiceError));
-  }
+    GetDocumentsMetaDataTypeByCode(Code: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-  Delete(id: string, tenant: number) {
-    return this._http.delete(this._apiUrl, {
-      params: { id, tenant: tenant.toString() },
-      headers: ServiceHelper.GetHttpHeaders().headers
-    }).pipe(map(response => {
-      const pmresponse: ServiceResponse = new ServiceResponse();
-      pmresponse.Result = response;
-      return pmresponse;
-    }), catchError(ServiceHelper.HandleServiceError));
-  }
+        return this._http.get(this._apiUrl + '?Code=' + Code, { headers: authHeader }).map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response.json();
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+    }
+    
+
 }
 

@@ -4,7 +4,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 
 @Component({
     selector: 'NewAppointmentComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewAppointmentComponent.html',
 })
 

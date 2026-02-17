@@ -124,7 +124,7 @@
                                 </td>
 
                                 <td style="width:250px;">
-                                    <LogCheckBox id="{{ 'IncludePickUp' | IdGeneratorAsyncPipe | async}}" [ObjectFieldName]="'IncludePickUp'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IncludePickUp"></LogCheckBox>
+                                    <LogCheckBox id="{{ 'IncludePickUp' | IdGeneratorPipe}}" [ObjectFieldName]="'IncludePickUp'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IncludePickUp"></LogCheckBox>
                                 </td>
 
                                 <td>
@@ -381,7 +381,7 @@
                                 </td>
 
                                 <td style="width:250px;">
-                                    <LogCheckBox id="{{ 'IncludeDelivery' | IdGeneratorAsyncPipe | async}}" [ObjectFieldName]="'IncludeDelivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IncludeDelivery"></LogCheckBox>
+                                    <LogCheckBox id="{{ 'IncludeDelivery' | IdGeneratorPipe}}" [ObjectFieldName]="'IncludeDelivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="IncludeDelivery"></LogCheckBox>
                                 </td>
 
                                 <td>

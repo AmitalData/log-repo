@@ -20,7 +20,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'WarehouseBlockBalanceComponent',
-    
+    moduleId: module.id,
     templateUrl: './WarehouseBlockBalanceComponent.html',
 })
 
@@ -61,7 +61,7 @@ export class WarehouseBlockBalanceComponent
     }
 
     OnMassageDisplayMethod() {
-        if (this.RequestParams == null) { 
+        if (this.RequestParams == null) {
             this.RequestParams = new WarehouseBlockBalanceRequestParams();
             this.SetIsByDeclarationNumber(true);
             this.UIProperties.SetRequired("DeclarationNumber", this.ObjectTableName, true);
@@ -167,7 +167,7 @@ export class WarehouseBlockBalanceComponent
     }
 
     get StorageSiteNumber() { return this.RequestParams ? this.RequestParams.StorageSiteNumber : null; }
-    set StorageSiteNumber(value: string) {  
+    set StorageSiteNumber(value: string) {
         if (this.RequestParams.StorageSiteNumber != value) {
             this.RequestParams.StorageSiteNumber = value;
         }
@@ -251,49 +251,6 @@ export class WarehouseBlockBalanceComponent
     set ImporterTitle(value: string) {
         if (this.ResponseData.ImporterTitle != value) {
             this.ResponseData.ImporterTitle = value;
-        }
-    }
-
-    
-    get StorageEntryPortChargeBalance() { return this.ResponseData ? this.ResponseData.StorageEntryPortChargeBalance : null; }
-    set StorageEntryPortChargeBalance(value: string) {
-        if (this.ResponseData.StorageEntryPortChargeBalance != value) {
-            this.ResponseData.StorageEntryPortChargeBalance = value;
-        }
-    }
-
-    get StorageEntryPortChargeCurrencyType() { return this.ResponseData ? this.ResponseData.StorageEntryPortChargeCurrencyType : null; }
-    set StorageEntryPortChargeCurrencyType(value: string) {
-        if (this.ResponseData.StorageEntryPortChargeCurrencyType != value) {
-            this.ResponseData.StorageEntryPortChargeCurrencyType = value;
-        }
-    }
-
-    get StorageEntryTransportBalance() { return this.ResponseData ? this.ResponseData.StorageEntryTransportBalance : null; }
-    set StorageEntryTransportBalance(value: string) {
-        if (this.ResponseData.StorageEntryTransportBalance != value) {
-            this.ResponseData.StorageEntryTransportBalance = value;
-        }
-    }
-
-    get StorageEntryTransportCurrencyType() { return this.ResponseData ? this.ResponseData.StorageEntryTransportCurrencyType : null; }
-    set StorageEntryTransportCurrencyType(value: string) {
-        if (this.ResponseData.StorageEntryTransportCurrencyType != value) {
-            this.ResponseData.StorageEntryTransportCurrencyType = value;
-        }
-    }
-
-    get StorageEntryInsuranceBalance() { return this.ResponseData ? this.ResponseData.StorageEntryInsuranceBalance : null; } 
-    set StorageEntryInsuranceBalance(value: string) {
-        if (this.ResponseData.StorageEntryInsuranceBalance != value) {
-            this.ResponseData.StorageEntryInsuranceBalance = value;
-        }
-    }
-
-    get StorageEntryInsuranceCurrencyType() { return this.ResponseData ? this.ResponseData.StorageEntryInsuranceCurrencyType : null; }
-    set StorageEntryInsuranceCurrencyType(value: string) {
-        if (this.ResponseData.StorageEntryInsuranceCurrencyType != value) {
-            this.ResponseData.StorageEntryInsuranceCurrencyType = value;
         }
     }
     //#endregion Response Properties
@@ -421,12 +378,9 @@ export class WarehouseBlockBalanceComponent
         currRequestParams.StorageSiteRadio = this.IsByStorageSite;
         currRequestParams.DeclarationNumber = this.DeclarationNumber;
         currRequestParams.CustomFileNo = this.CustomFileNo;
-        currRequestParams.StorageSiteNumber = this.StorageSiteNumber;
-        currRequestParams.WarehouseBlockNumber = this.WarehouseBlockNumber;
-        currRequestParams.DisplayGoodsItemByInvoice = this.DisplayGoodsItemByInvoice;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא ליתרת מלאי בגוש", true)
             .then((res) => {
                 this.ResponseData = res;

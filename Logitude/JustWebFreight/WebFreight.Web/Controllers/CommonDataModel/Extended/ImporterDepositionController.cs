@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ using Logitude.BL.CommonDataModel.CodePropertiesMapping;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.QueueService;
@@ -94,9 +94,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             {
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.AuthenticationOnTenant(Data.Tenant);
                     ICommonDataContext commonContext = CommonDataContext.GetContext(Data.Tenant);
                     CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
@@ -207,7 +204,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
        
             }
             catch (Exception ex)

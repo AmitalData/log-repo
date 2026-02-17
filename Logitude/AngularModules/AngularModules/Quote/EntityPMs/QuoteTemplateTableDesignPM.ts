@@ -69,10 +69,7 @@ export class QuoteTemplateTableDesignPM {
     public OldEntityPM: QuoteTemplateTableDesignPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -80,7 +77,6 @@ export class QuoteTemplateTableDesignPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteTemplateTableDesign");
            
         }
-	 }
     }
     private MyClone: QuoteTemplateTableDesignPM;
 

@@ -14,7 +14,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'NewMoveHBProjectsComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewMoveHBProjectsComponent.html',
 })
 

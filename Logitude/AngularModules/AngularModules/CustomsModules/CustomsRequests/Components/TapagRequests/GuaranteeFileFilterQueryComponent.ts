@@ -18,7 +18,7 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 @Component({
     selector: 'GuaranteeFileFilterQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './GuaranteeFileFilterQueryComponent.html',
 })
 
@@ -306,7 +306,7 @@ export class GuaranteeFileFilterQueryComponent
 
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לערבויות", true)
             .then((res) => {
                 this.ResponseData = res;

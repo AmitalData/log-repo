@@ -6,7 +6,7 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -27,12 +27,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using System.Data.Entity.Validation;
-using System.Configuration;
-using System.Globalization;
-using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -80,16 +76,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var paymentOrderConnectionTableUpdateService = new PaymentOrderConnectionTableUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var clientQueryService = new ClientQueryService(dbContext);
             var depositQueryService = new DepositQueryService(dbContext);
-            var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
             List<string> declarationIdList = null;
             string fUStatusRemarks = "";
             string DeclarationConvertionText = "";
 
             var id = paymentOrderQueryService.GetIdByPaymentNumber(customResponse.PaymentOrderReply.PaymentDetails.paymentID.ToString(), requestParams.Tenant); // requestParams.PaymentNumber
             if (!String.IsNullOrWhiteSpace(id))
-            {           
+            {
                 this._PaymentOrderPM = paymentOrderQueryService.GetSingle(id, true, false); //Retrieval of existing payment data
-                LogPayment("1");
                 if (_PaymentOrderPM.IsClosed)
                 {
                     this.MyRequestSheetParam = new RequestSheetParam();
@@ -124,7 +118,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return; // If the payment is close dont update
                 }
 
-                LogPayment("2");
                 if (customResponse.PaymentOrderReply.paymentStatus == 5)
                 {
                     _PaymentOrderPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -153,7 +146,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
                     _ReturnMessage = "עודכנה הוראה " + customResponse.PaymentOrderReply.PaymentDetails.paymentID;
                 }
-                LogPayment("3");
             }
 
             if (_PaymentOrderPM == null)
@@ -175,7 +167,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
                 _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
                 _ReturnMessage = "נוצרה הוראה " + customResponse.PaymentOrderReply.PaymentDetails.paymentID;
-                LogPayment("4");
             }
 
             // Delete old Payment Order Lines
@@ -197,7 +188,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var importerId = clientQueryService.GetIdByCode(externalID, requestParams.Tenant, true);
                 _PaymentOrderPM.ImporterId = importerId;
             }
-            LogPayment("5");
             _PaymentOrderPM.CustomerActivityTypeCode = customResponse.PaymentOrderReply.PaymentDetails.CustomerActivityType.ToString();
             _PaymentOrderPM.PaymentOrderTypeCode = customResponse.PaymentOrderReply.paymentOrderType.ToString();
             _PaymentOrderPM.PaymentProcessCode = customResponse.PaymentOrderReply.paymentProcess.ToString();
@@ -221,7 +211,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 _PaymentOrderPM.IsClosed = false;
             }
 
-            string firstDeclaratioNumber = null;
             //Search for connented entity
             if (customResponse.PaymentOrderReply.ConnectedEntity.entityType == 1055 || customResponse.PaymentOrderReply.ConnectedEntity.entityType == 11118 || customResponse.PaymentOrderReply.ConnectedEntity.entityType == 11121) //Import Declaration
             {
@@ -231,7 +220,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationPM myDeclarationPM = declarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.PaymentOrderReply.ConnectedEntity.entityIdKey1.Split('/')[0], requestParams.Tenant); // moran 19.10.16 - Task 23013 - update handle for retrieving Declaration Number
                 if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.Id))
                 {
-                    firstDeclaratioNumber = myDeclarationPM.DeclarationNumber;
                     declarationIdList.Add(myDeclarationPM.Id);
                     if (myDeclarationPM.IsConvertedDeclaration)
                     {
@@ -253,211 +241,126 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationIdList.Add(tapagConnectionTableItem.DeclarationId);
                     }
-                    if (tapagConnectionTable != null && tapagConnectionTable.Count > 0 && tapagConnectionTable[0].DeclarationId != null)
-                    {
-                        DeclarationPM myDeclarationPM = myDeclarationQueryService.GetAcceptDeclarationAmendment(tapagConnectionTable[0].DeclarationId, requestParams.Tenant);
-                        if (myDeclarationPM != null && !string.IsNullOrWhiteSpace(myDeclarationPM.DeclarationNumber))
-                        {
-                            firstDeclaratioNumber = myDeclarationPM.DeclarationNumber;
-                        }
-                    }
-
                 }
             }
-            IDisposable disposableToken = null;
-            try
+
+            //Connect payment to declaration
+            if (declarationIdList != null && declarationIdList.Count > 0)
             {
-                if (firstDeclaratioNumber != null)
+                _PaymentOrderPM.CustomsRequestsDeclarationId = new List<string>();
+                var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+                foreach (var declarationId in declarationIdList)
                 {
-                    string key = ProcessLockTableUtil.Instance.GetKey4Declaration(firstDeclaratioNumber, requestParams.Tenant);
-                    disposableToken =
-                           ///ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "2470ResponseService.Update");
-                           ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, true, key, "2470ResponseService.Update");
-                }
-                LogPayment("6");
-                //Connect payment to declaration
-                if (declarationIdList != null && declarationIdList.Count > 0)
-                {
-                    _PaymentOrderPM.CustomsRequestsDeclarationId = new List<string>();
-                    foreach (var declarationId in declarationIdList)
+                    _DeclarationPM = myDeclarationQueryService.GetSingle(declarationId, false, false);
+                    if (_DeclarationPM != null)
                     {
-                        _DeclarationPM = myDeclarationQueryService.GetAcceptDeclarationAmendment(declarationId, requestParams.Tenant);
-                        if (_DeclarationPM != null)
+                        _PaymentOrderPM.CustomerId = _DeclarationPM.CustomerId;
+                        List<string> connectedDeclarationList = CheckPaymentOrderConnectionTables(paymentOrderConnectionTableUpdateService, "D");
+                        if (connectedDeclarationList.Count() == 0 || (connectedDeclarationList.Count() == 1 & connectedDeclarationList.Contains(declarationId)))
                         {
-                            _PaymentOrderPM.CustomerId = _DeclarationPM.CustomerId;
-                            List<string> connectedDeclarationList = CheckPaymentOrderConnectionTables(paymentOrderConnectionTableUpdateService, "D");
-                            if (connectedDeclarationList.Count() == 0 || (connectedDeclarationList.Count() == 1 & connectedDeclarationList.Contains(declarationId)))
-                            {
-                                _PaymentOrderPM.AccountingCustomFile = _DeclarationPM.CustomFileNo; // In case the payment order is connected only to one delcartion
-                                _PaymentOrderPM.PaymentOrderSelectedLabel = "AccountingCustomFile"; // moran 18.7.16 - Task 21934
-                            }
-                            else
-                            {
-                                _PaymentOrderPM.AccountingCustomFile = null;
-                                _PaymentOrderPM.PaymentOrderSelectedLabel = null; // moran 18.7.16 - Task 21934
-                            }
-
-                            //Create a new record in PaymentOrderConnectionTables (connented entity)
-                            if (!connectedDeclarationList.Contains(declarationId))
-                            {
-                                PaymentOrderConnectionTablePM _paymentOrderConnectionTablePM = new PaymentOrderConnectionTablePM();
-                                _paymentOrderConnectionTablePM.ChangeSetOp = ChangeSetOperation.Insert;
-                                _paymentOrderConnectionTablePM.Tenant = requestParams.Tenant;
-                                _paymentOrderConnectionTablePM.ConnectedEntityId = declarationId;
-                                _paymentOrderConnectionTablePM.ConnectedEntityCode = "D";
-                                _PaymentOrderPM.PaymentOrderConnectionTables.Add(_paymentOrderConnectionTablePM);
-                            }
-
-                            _ReturnMessage = string.Concat(_ReturnMessage, ", ההוראה קושרה לתיק ", _DeclarationPM.CustomFileNo, DeclarationConvertionText);
-                            _PaymentOrderPM.CustomsRequestsDeclarationId.Add(_DeclarationPM.CustomFileNo);
+                            _PaymentOrderPM.AccountingCustomFile = _DeclarationPM.CustomFileNo; // In case the payment order is connected only to one delcartion
+                            _PaymentOrderPM.PaymentOrderSelectedLabel = "AccountingCustomFile"; // moran 18.7.16 - Task 21934
                         }
+                        else
+                        {
+                            _PaymentOrderPM.AccountingCustomFile = null;
+                            _PaymentOrderPM.PaymentOrderSelectedLabel = null; // moran 18.7.16 - Task 21934
+                        }
+
+                        //Create a new record in PaymentOrderConnectionTables (connented entity)
+                        if (!connectedDeclarationList.Contains(declarationId))
+                        {
+                            PaymentOrderConnectionTablePM _paymentOrderConnectionTablePM = new PaymentOrderConnectionTablePM();
+                            _paymentOrderConnectionTablePM.ChangeSetOp = ChangeSetOperation.Insert;
+                            _paymentOrderConnectionTablePM.Tenant = requestParams.Tenant;
+                            _paymentOrderConnectionTablePM.ConnectedEntityId = declarationId;
+                            _paymentOrderConnectionTablePM.ConnectedEntityCode = "D";
+                            _PaymentOrderPM.PaymentOrderConnectionTables.Add(_paymentOrderConnectionTablePM);
+                        }
+
+                        _ReturnMessage = string.Concat(_ReturnMessage, ", ההוראה קושרה לתיק ", _DeclarationPM.CustomFileNo, DeclarationConvertionText);
+                        _PaymentOrderPM.CustomsRequestsDeclarationId.Add(_DeclarationPM.CustomFileNo);
                     }
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(externalID))
+                {
+                    // Get customerId by VatNumber (cards table)
+                    var cardRepository = new CardRepository(_CommonContext);
+                    Card card = cardRepository.GetSingleCardByVatNumber(externalID, requestParams.Tenant);
+                    if (card != null)
+                    {
+                        _PaymentOrderPM.CustomerId = card.Id;
+                    }
+                }
+            }
+            //<--- Yuval Chalup 28.09.2016 TASK-23005 (If NO Declaration is connected - do not send status)
+            if (_DeclarationPM == null)
+            {
+                _PaymentOrderPM.CurrentContextTag = null;
+            }
+            //Yuval Chalup 28.09.2016 --->
+            if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration) // moran 16.11.17 - AMI-61878
+            {
+                if (_PaymentOrderPM.PaymentProcessCode == "1" && _PaymentOrderPM.PaymentStatusCode == "3")// && HighLowValue != "L")//Eitan H 12/12/18 task 46063 remove != "L"
+                {
+                    var myInsertEventContextTagModel = _PaymentOrderPM.CurrentContextTag as EventContextTagModel;
+                    myInsertEventContextTagModel.UnifreighTaskCode = "LP2UB";
+                    _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
+                    LogMessagingUtil.Instance.AppendLine("Added LP2UB " + _PaymentOrderPM.CustomFiles);
+                    var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                    _DeclarationPM.PaymentStatusCode = _PaymentOrderPM.PaymentStatusCode;
+                    _DeclarationPM.PaymentOrderNumber = _PaymentOrderPM.PaymentNumber;
+                    myDeclarationUpdateService.Update(_DeclarationPM, true);
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(externalID))
-                    {
-                        // Get customerId by VatNumber (cards table)
-                        var cardRepository = new CardRepository(_CommonContext);
-                        Card card = cardRepository.GetSingleCardByVatNumber(externalID, requestParams.Tenant);
-                        if (card != null)
-                        {
-                            _PaymentOrderPM.CustomerId = card.Id;
-                        }
-                    }
+                    LogMessagingUtil.Instance.AppendLine("NO LP2UB! " + "_PaymentOrderPM.PaymentProcessCode= "+ _PaymentOrderPM.PaymentProcessCode+ " _PaymentOrderPM.PaymentStatusCode= "+ _PaymentOrderPM.PaymentStatusCode);
                 }
-
-                LogPayment("7");
-                //<--- Yuval Chalup 28.09.2016 TASK-23005 (If NO Declaration is connected - do not send status)
-                if (_DeclarationPM == null)
-                {
-                    _PaymentOrderPM.CurrentContextTag = null;
-                }
-                //Yuval Chalup 28.09.2016 --->
-                if (_DeclarationPM != null && _DeclarationPM.IsCourierDeclaration) // moran 16.11.17 - AMI-61878
-                {
-                    LogMessagingUtil.Instance.AppendLine("_PaymentOrderPM.PaymentProcessCode= " + _PaymentOrderPM.PaymentProcessCode + " _PaymentOrderPM.PaymentStatusCode= " + _PaymentOrderPM.PaymentStatusCode);
-                    if (_PaymentOrderPM.PaymentProcessCode == "1" && _PaymentOrderPM.PaymentStatusCode == "3")// && HighLowValue != "L")//Eitan H 12/12/18 task 46063 remove != "L"
-                    {
-                        var myInsertEventContextTagModel = _PaymentOrderPM.CurrentContextTag as EventContextTagModel;
-                        myInsertEventContextTagModel.UnifreighTaskCode = "LP2UB";
-                        _PaymentOrderPM.CurrentContextTag = myInsertEventContextTagModel;
-                        LogMessagingUtil.Instance.AppendLine("Added LP2UB " + _PaymentOrderPM.CustomFiles);
-                        var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                        _DeclarationPM.PaymentStatusCode = _PaymentOrderPM.PaymentStatusCode;
-                        _DeclarationPM.PaymentOrderNumber = _PaymentOrderPM.PaymentNumber;
-
-                        LogPayment("8");
-
-                        _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                        if (_DeclarationPM.PaymentDate == null && customResponse.ResponseContentHeader.TransmitionDateTime != null)
-                        {
-                            _DeclarationPM.PaymentDate = customResponse.ResponseContentHeader.TransmitionDateTime;
-                        }
-                        LogMessagingUtil.Instance.AppendLine("Before DeclarationUpdateService: _DeclarationPM.PaymentStatusCode= " + _DeclarationPM.PaymentStatusCode + " _DeclarationPM.PaymentOrderNumber= " + _DeclarationPM.PaymentOrderNumber);
-                        try
-                        {
-                            myDeclarationUpdateService.Update(_DeclarationPM, true);
-                        }
-                        catch (DbEntityValidationException ex)
-                        {
-                            var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                            LogMessagingUtil.Instance.AppendLine("Declaration Update Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
-                            LogMessagingUtil.Instance.AppendLine("Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                            LogPayment("9");
-                            return;
-                        }
-                        catch (System.Exception e)
-                        {
-                            LogMessagingUtil.Instance.AppendLine("Declaration Update Error " + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(2000));
-                            LogMessagingUtil.Instance.AppendLine("Exception " + e.ToString() + Environment.NewLine + "---------------------------------------------");
-                            LogPayment("10");
-                            return;
-                        }
-
-                        LogPayment("11");
-
-
-                    }
-                    else
-                    {
-                        LogMessagingUtil.Instance.AppendLine("NO LP2UB! " + "_PaymentOrderPM.PaymentProcessCode= " + _PaymentOrderPM.PaymentProcessCode + " _PaymentOrderPM.PaymentStatusCode= " + _PaymentOrderPM.PaymentStatusCode);
-                    }
-
-
-
-                }
-                _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
-                paymentOrderUpdateService.Update(_PaymentOrderPM, true);
-
-                LogPayment("12");
-
-                bool useTheAnalyzePaymentDocumentManager = false;//due not tested 4 now 
-                if (useTheAnalyzePaymentDocumentManager)
-                {
-                    var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(_CommonContext, _PaymentOrderPM, _DeclarationPM);
-                    myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm.content, requestParams);
-                }
-                else
-                {
-                    // Add Document- Printed Payment Form
-                    AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm, requestParams);
-                }
-                //this.MyResponseData = new INF_MSG_GenericResponseData()
-                this.MyResponseData = new PaymentOrderReplyResponseData()
-                {
-                    Succeeded = true,
-                    ApplicationID = _PaymentOrderPM.Id,
-                    HasException = false,
-                    UserMessage = _ReturnMessage,
-                };
-                if (requestParams.RequestParamsVersion > 0)
-                {
-                    BuildPaymentOrderReply(requestParams.Tenant, customResponse);
-                }
-
-                LogPayment("13");
-
-                this.MyRequestSheetParam = new RequestSheetParam();
-                this.MyRequestSheetParam.RequestDescription = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber + DeclarationConvertionText;
-                if (requestParams.RequestParamsVersion == 0)
-                {
-                    this.MyRequestSheetParam.RequestDescription = "אחזור הוראת תשלום " + requestParams.PaymentNumber + DeclarationConvertionText;
-                }
-                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-                this.MyRequestSheetParam.EntityId1 = _PaymentOrderPM.Id;
-                this.MyRequestSheetParam.EntityReference = _PaymentOrderPM.PaymentNumber;
-                if (_DeclarationPM != null)
-                {
-                    this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                    this.MyRequestSheetParam.EntityId2 = _DeclarationPM.Id;
-                }
-
-                LogPayment("14");
             }
-            catch (ProcessLockException processLockException)
+            _PaymentOrderPM.CustomsRequestsSheetId = requestParams.CustomsRequestsSheetId;
+            paymentOrderUpdateService.Update(_PaymentOrderPM, true);
+
+            bool useTheAnalyzePaymentDocumentManager = false;//due not tested 4 now 
+            if (useTheAnalyzePaymentDocumentManager)
             {
-                LogMessagingUtil.Instance.AppendLine("processLockException wait a minute!! ,the worker Role is proccesing anther response of the same Declaration  ");
-                throw;
+                var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(_CommonContext , _PaymentOrderPM, _DeclarationPM);
+                myAnalyzePaymentDocumentManager.AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm.content, requestParams);
             }
-            finally
+            else
             {
-                if (disposableToken != null)
-                {
-                    disposableToken.Dispose();
-                }
+                // Add Document- Printed Payment Form
+                AnalyzePaymentDocument(customResponse.PaymentOrderReply.PrintedPaymentForm, requestParams);
             }
-        }
+            //this.MyResponseData = new INF_MSG_GenericResponseData()
+            this.MyResponseData = new PaymentOrderReplyResponseData()
+            {
+                Succeeded = true,
+                ApplicationID = _PaymentOrderPM.Id,
+                HasException = false,
+                UserMessage = _ReturnMessage,
+            };
+            if (requestParams.RequestParamsVersion > 0)
+            {
+                BuildPaymentOrderReply(requestParams.Tenant, customResponse);
+            }
 
-        private void LogPayment(string msg)
-        {
-            DateTime stopLogAt = DateTime.MinValue;
-            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
-            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
-                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-
-            msg += $" TSH_MSG2_3050_PaymentOrderReplyResponseService.Update = _PaymentOrderPM.Id: {_PaymentOrderPM?.Id}, _PaymentOrderPM.PaymentNumber: {_PaymentOrderPM?.PaymentNumber} IsClosed: {_PaymentOrderPM?.IsClosed}, PaymentOrderLeftAmount: {_PaymentOrderPM?.PaymentOrderLeftAmount}, TotalSumToPay: {_PaymentOrderPM?.TotalSumToPay}";
-            LogitudeSettings.HandleLogMe(msg, false, "CreateUD2LTService", stopLogAt);
+            this.MyRequestSheetParam = new RequestSheetParam();
+            this.MyRequestSheetParam.RequestDescription = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber + DeclarationConvertionText;
+            if (requestParams.RequestParamsVersion == 0)
+            {
+                this.MyRequestSheetParam.RequestDescription = "אחזור הוראת תשלום " + requestParams.PaymentNumber + DeclarationConvertionText;
+            }
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+            this.MyRequestSheetParam.EntityId1 = _PaymentOrderPM.Id;
+            this.MyRequestSheetParam.EntityReference = _PaymentOrderPM.PaymentNumber;
+            if (_DeclarationPM != null)
+            {
+                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId2 = _DeclarationPM.Id;
+            }
         }
 
         private void BuildPaymentOrderReply(int tenant, TSH_MSG2_PaymentOrderReply customResponse)
@@ -698,7 +601,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void AnalyzePaymentDocument(Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -712,13 +615,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string objectTableId = "";
             string entityId = "";
             string childEntityId = "";
-            string dir = "I";
             if (_DeclarationPM != null) // If the Payment order is connected to Declaration
             {
                 objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 entityId = _DeclarationPM.Id;
                 childEntityId = _PaymentOrderPM.Id;
-                dir = _DeclarationPM.Direction;
             }
             else
             {
@@ -753,7 +654,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -773,7 +674,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void CreatePaymentDocument(Attachment attachment, NewPaymentRequestParams requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053" , IsCourier= IsCourier(requestParams.Tenant) });
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -802,13 +703,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 documentsFilingPM.EntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-                
-                
-                //HD#330080 - moti will connect id to ref 
-                documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
-                documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-
-
             }
 
             documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;
@@ -818,18 +712,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.DirectionCode = "I";
             documentsFilingPM.Description = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber;
-            documentsFilingPM.ExternalEntityName = _DeclarationPM?.Direction=="E" ? "EFIFILEM": "CFIFILEM";
+            documentsFilingPM.ExternalEntityName = "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
             documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
             _ReturnMessage = string.Concat(_ReturnMessage, " ונוצר מסמך ", documentsFilingPM.Code);
-        }
-
-        private bool IsCourier(int tenant)
-        {
-            var pm=CustomsSettingQueryService.GetSettingByTenant(tenant);
-            return pm?.CompanyType == "B";//Courier
         }
 
         private List<PaymentOrderLinePM> GetPaymentOrderLines(string paymentOrderNumber, int tenant, TaxParagraph[] taxParagraph)
@@ -859,7 +747,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 myPaymentOrderLineUpdateService.Update(item, false);
             }
         }
-      
+
+        private void DeletedPaymentOrderConnectionTables(PaymentOrderConnectionTableUpdateService paymentOrderConnectionTableUpdateService, string connectedEntityCode)
+        {
+            foreach (var paymentItem in _PaymentOrderPM.PaymentOrderConnectionTables)
+            {
+                // Delete old connection if it from the same type 
+                if (paymentItem.ConnectedEntityCode == connectedEntityCode)
+                {
+                    paymentItem.ChangeSetOp = ChangeSetOperation.Delete;
+                    paymentOrderConnectionTableUpdateService.Update(paymentItem, false);
+                }
+            }
+        }
     }
 
     public class AnalyzePaymentDocumentManager
@@ -897,7 +797,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public DocumentsFilingPM GetDocumentsFiling(RequestParamsBase requestParams)
         {
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -908,13 +808,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string objectTableId = "";
             string entityId = "";
             string childEntityId = "";
-            string dir = "I";
             if (_DeclarationPM != null) // If the Payment order is connected to Declaration
             {
                 objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 entityId = _DeclarationPM.Id;
                 childEntityId = _PaymentOrderPM.Id;
-                dir = _DeclarationPM.Direction;
             }
             else
             {
@@ -942,7 +840,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, /*Attachment attachment*/byte[] content, RequestParamsBase requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -958,15 +856,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
             _ReturnMessage = string.Concat(_ReturnMessage, " ועודכן מסמך ", documentsFilingPM.Code);
         }
-        private bool IsCourier(int tenant)
-        {
-            var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
-            return pm?.CompanyType == "B";//Courier
-        }
+
         public void CreatePaymentDocument(/*Attachment attachment*/byte[] content, RequestParamsBase requestParams)
         {
             //ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "3053", IsCourier = IsCourier(requestParams.Tenant) });
+            var documentsFilingService = new UnifreightDocumentsFilingService(_CommonContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
@@ -984,7 +878,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.DocumentTypeId = documentType.Id;
             if (_DeclarationPM != null)
             {
-                documentsFilingPM.EntityId = _DeclarationPM.IsAmendment == true ? _DeclarationPM.AmendmentOriginalDeclartation : _DeclarationPM.Id;
+                documentsFilingPM.EntityId = _DeclarationPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
@@ -995,11 +889,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 documentsFilingPM.EntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-
-                //HD#330080 - moti will connect id to ref 
-                documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
-                documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-
             }
 
             documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;

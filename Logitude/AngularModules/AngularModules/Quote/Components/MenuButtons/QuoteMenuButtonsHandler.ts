@@ -13,7 +13,7 @@ import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {AppTool, ArrayTool} from '../../../Infrastructure/Tools';
+import {AppTool} from '../../../Infrastructure/Tools';
 import {PartnersDomainService} from '../../../Common/Services/PartnersDomainService';
 import {CustomerPM} from '../../../Common/EntityPMs/CustomerPM';
 import {CustomerActivationArgs} from '../../../Common/Args';
@@ -22,26 +22,23 @@ import {NewShipmentComponentArgs} from '../../../Shipment/Args';
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
-    private isLCL: boolean = false;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
         this.myQuoteStageListService = new QuoteStageListService();
         this.myPartnersDomainService = new PartnersDomainService();
         this.entityResourceService = new EntityResourceService();
+
         this.Listen();
     }
-
-    private allMenuButtons: MenuButtonPM[] = [];
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
-        this.allMenuButtons = menuButtons;
-
         if (this.EntityPM != null) {
             this.allStages = [];
             this.myQuoteStageListService.getAllFromCache().subscribe((resp: any) => {
@@ -99,7 +96,7 @@ export class QuoteMenuButtonsHandler {
                         }
 
                         else {
-                            button.IsDisabled = false;                            
+                            button.IsDisabled = false;
                         }
                     }
 
@@ -187,8 +184,13 @@ export class QuoteMenuButtonsHandler {
                     if (button.EventCode == "Quotation") {
                         button.Width = 70;
 
-                        var isShowRoutingRatesQuotation: boolean = true;
-                       
+
+                        var isShowRoutingRatesQuotation: boolean = false;
+                        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QRR" && d.TenantNumber == SessionLocator.Tenant)[0];
+                        if (featureToggle) {
+                            isShowRoutingRatesQuotation = true;
+                        }
+
 
                         if ((this.EntityPM.QuoteTypeCode == "P" && isShowRoutingRatesQuotation) || this.EntityPM.QuoteTypeCode == "A") {
                             button.IsDisabled = false;
@@ -246,35 +248,9 @@ export class QuoteMenuButtonsHandler {
                         else {
                             button.IsHidden = true;
                         }  
-                    }
-
-                    if (button.EventCode == "ConvertQuoteTransportMode") {
-                        if (buttonEnabled) {
-                            var myDraftStage: QuoteStageList = this.allStages.filter(d => d.Code == "QTDR")[0];
-                            var myCreatedStage: QuoteStageList = this.allStages.filter(d => d.Code == "QTCR")[0];
-
-                            if (myDraftStage != null) {
-                                myDraftStageId = myDraftStage.Id;
-                            }
-
-                            if (myCreatedStage != null) {
-                                myCreatedStageId = myCreatedStage.Id;
-                            }
-
-                            if (this.EntityPM.StageId == myDraftStageId || this.EntityPM.StageId == myCreatedStageId) {
-                                button.IsHidden = false;
-                                button.IsDisabled = false;
-                            }
-                            else {
-                                button.IsHidden = true;
-                                button.IsDisabled = true;
-                            }
-                        }
-                        else {
-                            button.IsHidden = true;
-                        }
-                    }
+                    } 
                 }
+
                 return menuButtons;
             }
         }
@@ -352,11 +328,6 @@ export class QuoteMenuButtonsHandler {
                         break;
                     }
 
-                case "ConvertQuoteTransportMode": {
-                    this.ConvertQuoteTransportModeClicked();
-                    break;
-                }
-
                 default: {
                     this.isButtonClicked = false;
                     break;
@@ -367,7 +338,6 @@ export class QuoteMenuButtonsHandler {
 
     private IsConvertToLCLClicked: boolean = false;
     private IsConvertToFCLClicked: boolean = false;
-    private IsConvertQuoteTransportModeClicked: boolean = false;
     private ConvertQuoteToLCLClicked() {
         var errors: string[] = [];
         this.Validate();
@@ -404,11 +374,6 @@ export class QuoteMenuButtonsHandler {
             case "ToFCL":
                 {
                     windowTitle = "Convert Quote From LCL To FCL";
-                    break;
-                }
-            case "Transport":
-                {
-                    windowTitle = "Convert Quote Transport Mode";
                     break;
                 }
         }
@@ -450,32 +415,6 @@ export class QuoteMenuButtonsHandler {
         });
     }
 
-    private ConvertQuoteTransportModeClicked() {
-        this.Validate();
-        if (this.isValid) {
-            this.IsConvertQuoteTransportModeClicked = true;
-            this.entityArgs.EditComponent.SaveChanges();
-        }
-    }
-
-    private DoConvertQuoteTransportMode() {
-        var args = new NewQuoteComponentArgs();
-        args.Quote = this.EntityPM;
-        args.ConvertTransportMode = true;
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.WindowArgs = args;
-        logWindow.Title = "Convert Quote Transport Mode";
-        logWindow.Show('./Quote/Components/NewEntity/NewQuoteComponent');
-        logWindow.WindowClosed.subscribe(s => {
-            if (s) {
-                this.StopFlags();
-                this.entityArgs.EditComponent.ReloadEntityPM();
-            }
-        });
-    }
-
     private myQuoteStageListService: QuoteStageListService;
     private myPartnersDomainService: PartnersDomainService;
     private entityResourceService: EntityResourceService;
@@ -493,7 +432,6 @@ export class QuoteMenuButtonsHandler {
         this.IsConvertToLCLClicked = false;
         this.IsConvertToFCLClicked = false;
         this.IsSetAsSentQuote = false;
-        this.IsConvertQuoteTransportModeClicked = false;
     }
     Validate() {
         var validator = new QuoteValidator();
@@ -534,13 +472,10 @@ export class QuoteMenuButtonsHandler {
                         this.DoConvertQuoteType("ToFCL");
                     }
 
-                    if (this.IsConvertQuoteTransportModeClicked) {
-                        this.DoConvertQuoteTransportMode();
-                    }
-
                     if (this.IsSetAsSentQuote) {
                         this.StartSetAsSentToCustomer();
                     }
+
                     
                     if (this.Reload) {
                         this.entityArgs.EditComponent.ReloadEntityPM();
@@ -558,25 +493,6 @@ export class QuoteMenuButtonsHandler {
                 this.StopFlags();
             });
         }
-
-        this.CurrentSession.SessionEvent.subscribe((res) => {
-            if (res == "QuantitiesUpdated") {
-                //this.CheckButtonState(this.allMenuButtons);
-            }
-
-            if (res == "ReloadNewQuote") {
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-        });
-
-        this.EntityPM.PropertyChanged.subscribe(s => {
-            if (s) {
-                if (s.PropertyName == "GrossWeight" || s.PropertyName == "ChargeableWeight" || s.PropertyName == "Volume" || s.PropertyName == "TEU"
-                    || s.PropertyName == "NumberOfPackages" || s.PropertyName == "ValueOfGoods") {
-                    this.CheckButtonState(this.allMenuButtons);
-                }
-            }
-        });
     }   
 
     private isBuildingShipment: boolean = false;
@@ -625,13 +541,13 @@ export class QuoteMenuButtonsHandler {
     }
     private StartBuildingShipment() {
         if (this.EntityPM.IsPotentialShipper) {
-            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
                 this.ConvertShipper();
             });
         }
 
         else if (this.EntityPM.IsPotentialConsignee) {
-            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
                 this.ConvertConsignee();
             });
         }
@@ -641,7 +557,7 @@ export class QuoteMenuButtonsHandler {
         }
     }
     private ConvertShipper() {
-        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ShipperId).subscribe((myResult:any) => {
+        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ShipperId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var shipper: CustomerPM = myResponse.Result;
@@ -675,7 +591,7 @@ export class QuoteMenuButtonsHandler {
         });
     }
     private ConvertConsignee() {
-        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ConsigneeId).subscribe((myResult:any) => {
+        this.myPartnersDomainService.GetCustomerById(this.EntityPM.ConsigneeId).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var consignee: CustomerPM = myResponse.Result;
@@ -704,7 +620,7 @@ export class QuoteMenuButtonsHandler {
         });
     }
     private OpenNewShipmentComponent() {
-        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(response => {
             var shipmentPM: ShipmentPM = QuoteUtilities.BuildShipment(this.EntityPM);
 
             var args = new NewShipmentComponentArgs();
@@ -757,29 +673,16 @@ export class QuoteMenuButtonsHandler {
         });
     }
 
+
+
+
+
     IsSetAsSentQuote: boolean = false;
-    private SetAsSentToCustomer() { 
-        this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-        this.CheckUpdateQuantities();
-
-        if (this.IsUpdateQuantitiesVisible) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.Title = "Message";
-            messageWindow.ShowErrorIcon = true;
-            messageWindow.Show(this.UpdateQuantitiesMessage);
-            messageWindow.WindowClosed.subscribe(s => {
-                this.isButtonClicked = false;
-            });
-        }
-
-        else {
-            this.Validate();
-            if (this.isValid) {
-                this.IsSetAsSentQuote = true;
-                this.entityArgs.EditComponent.SaveChanges();
-            }
+    private SetAsSentToCustomer() {
+        this.Validate();
+        if (this.isValid) {
+            this.IsSetAsSentQuote = true;
+            this.entityArgs.EditComponent.SaveChanges();
         }
     }
     StartSetAsSentToCustomer() {
@@ -803,10 +706,13 @@ export class QuoteMenuButtonsHandler {
                 this.isButtonClicked = false;
             }
         });
+
     }
 
+
     private CancelQuote() {
-        this.Validate(); 
+        this.Validate();
+
         if (this.isValid) {
             var myService: ShipmentDomainService = new ShipmentDomainService();
             myService.GetShipmentsCountByQuoteId(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
@@ -814,7 +720,7 @@ export class QuoteMenuButtonsHandler {
                     if (!myResult.HasError) {
                         var count = myResult.Result;
 
-                        if (count != null && count != 0) {
+                        if (count != 0) {
                             var window = new MessageWindow();
                             window.Width = 450;
                             window.Height = 180;
@@ -881,7 +787,7 @@ export class QuoteMenuButtonsHandler {
 
         if (this.isValid) {
             var quoteDomainService: QuoteDomainService = new QuoteDomainService();
-            quoteDomainService.GetIsQuoteConnectedToShipment(this.EntityPM.Id).subscribe((resp:any) => {
+            quoteDomainService.GetIsQuoteConnectedToShipment(this.EntityPM.Id).subscribe(resp => {
                 if (!resp.HasError) {
                     var result: boolean = resp.Result;
              
@@ -927,7 +833,6 @@ export class QuoteMenuButtonsHandler {
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
-            args.ShowClosingReasonNotes = true;
             logWindow.Width = 450;
             logWindow.Height = 300;
             logWindow.Title = TextCodeTranslator.Translate("Quote.B.Accept");
@@ -952,7 +857,7 @@ export class QuoteMenuButtonsHandler {
             args.EntityPM = this.EntityPM;
             args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
             args.ShowClosingReason = true;
-            args.ShowClosingReasonNotes = true;
+
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
             logWindow.Width = 450;
@@ -973,25 +878,7 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
-        var isAmitalCloudEnvironment = this.CheckAmitalCloudEnviroment();
-        if (isAmitalCloudEnvironment) {
-            this.RunQuotationScreenCloud();
-        }
-        else {
-            this.RunQuotationScreenLogitude();
-        }
-    }
 
-    CheckAmitalCloudEnviroment() {
-        var amitalEnvironment = "amitalstorage";
-        var isAmitalCloudEnvironment = false;
-        if (ObjectsLocator.GlobalSetting?.DeploymentStage == amitalEnvironment) {
-            isAmitalCloudEnvironment = true;
-        }
-        return isAmitalCloudEnvironment;
-    }
-
-    RunQuotationScreenLogitude() {
         if (this.EntityPM && this.EntityPM.IsDirty) {
             this.Validate();
             if (this.isValid) {
@@ -1001,272 +888,30 @@ export class QuoteMenuButtonsHandler {
         } else {
             this.OpenQuotationWindow();
         }
-    }
-    RunQuotationScreenCloud() {
-        if (this.EntityPM.QuoteTypeCode == "A") {
-            this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
-            this.CheckUpdateQuantities();
-        }
 
-        if (this.IsUpdateQuantitiesVisible) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 150;
-            messageWindow.Title = "Message";
-            messageWindow.ShowErrorIcon = true;
-            messageWindow.Show(this.UpdateQuantitiesMessage);
-            messageWindow.WindowClosed.subscribe(s => {
-                this.isButtonClicked = false;
-            });
-        }
-
-        else {
-        if (this.EntityPM && this.EntityPM.IsDirty) {
-            this.Validate();
-            if (this.isValid) {
-                this.IsRunQuotation = true;
-                this.entityArgs.EditComponent.SaveChanges();
-            }
-        } else {
-            this.OpenQuotationWindow();
-        }
-    }
-    }
-    public UpdateQuantitiesMessage: string;
-    public IsUpdateQuantitiesVisible: boolean = false;
-    CheckUpdateQuantities() {
-        var updateMessage = null;
-        this.IsUpdateQuantitiesVisible = false;
-
-        var isAdhoc = this.EntityPM.QuoteTypeCode == "A" ? true : false;
-
-        if (isAdhoc) {
-            if (this.isLCL) {
-                if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
-
-                    var list: any[] = [];
-                    var entityQuantity: number = null;
-                    var displayUpdateMessage: boolean = false;
-
-                    //"GRWT"
-                    entityQuantity = this.EntityPM.GrossWeight;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GRWT" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GRWT" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"GWTN"
-                    entityQuantity = this.EntityPM.GrossWeightPerTon;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWTN" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWTN" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"CHWT"
-                    entityQuantity = this.EntityPM.ChargeableWeight;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CHWT" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CHWT" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //CWKG
-                    entityQuantity = this.EntityPM.ChargeableWeightInKG;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CWKG" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CWKG" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //GWKG
-                    entityQuantity = this.EntityPM.GrossWeightInKG;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWKG" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWKG" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"VOLU"
-                    entityQuantity = this.EntityPM.Volume;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VOLU" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VOLU" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"VCBM"
-                    entityQuantity = this.EntityPM.VolumeInCBM;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VCBM" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VCBM" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"BTEU"
-                    entityQuantity = this.EntityPM.TEU;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"QTY"
-                    entityQuantity = this.EntityPM.NumberOfPackages;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"PRVL"
-                    entityQuantity = this.EntityPM.ValueOfGoods;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity == null && f.CostQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity == null && f.SaleQuantity != entityQuantity).length > 0) {
-                        displayUpdateMessage = true;
-                    }
-
-                    //"PRFR"
-                    if (this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
-                        if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" || f.SaleMeasurementCode == "PRFR").length > 0) {
-
-                            var FRT_CostQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"), 3);
-                            var FRT_SaleQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"), 3);
-
-                            //var FRT_CostQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
-                            //var FRT_SaleQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
-
-                            if (AppTool.IsNullOrZero(FRT_CostQuantity)) {
-                                FRT_CostQuantity = 0;
-                            }
-
-                            if (AppTool.IsNullOrZero(FRT_SaleQuantity)) {
-                                FRT_SaleQuantity = 0;
-                            }
-
-                            if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != FRT_CostQuantity).length > 0) {
-                                displayUpdateMessage = true;
-                            }
-
-                            if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRFR" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != FRT_SaleQuantity).length > 0) {
-                                displayUpdateMessage = true;
-                            }
-                        }
-                    }
-
-                    if (displayUpdateMessage) {
-                        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                    }
-                }
-
-                this.UpdateQuantitiesMessage = updateMessage;
-                this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
-            }
-
-            else {
-                var updateMessage = null;
-                var entityQuantity: number = null;
-
-
-                entityQuantity = this.EntityPM.TEU;
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "BTEU" && f.CostQuantity != entityQuantity).length > 0) {
-                    displayUpdateMessage = true;
-                }
-                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "BTEU" && f.SaleQuantity != entityQuantity).length > 0) {
-                    displayUpdateMessage = true;
-                }
-
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "QTY" && f.CostQuantity != this.EntityPM.NumberOfContainers).length > 0) {
-                    displayUpdateMessage = true;
-                }
-                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "QTY" && f.SaleQuantity != this.EntityPM.NumberOfContainers).length > 0) {
-                    displayUpdateMessage = true;
-                }
-
-                var PFCL_CostQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.CostCurrencyId != SessionLocator.LocalCurrencyId && d.CostMeasurementCode != "PFCL"), "CostTotalAmountLocal");
-                var PFCL_SaleQuantity = ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.SaleCurrencyId != SessionLocator.LocalCurrencyId && d.SaleMeasurementCode != "PFCL"), "SaleTotalAmountLocal");;
-
-                if (AppTool.IsNullOrZero(PFCL_CostQuantity)) {
-                    PFCL_CostQuantity = 0;
-                }
-
-                if (AppTool.IsNullOrZero(PFCL_SaleQuantity)) {
-                    PFCL_SaleQuantity = 0;
-                }
-
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PFCL" && f.CostQuantity != null && f.CostQuantity != 0 && f.CostQuantity != PFCL_CostQuantity).length > 0) {
-                    displayUpdateMessage = true;
-                }
-
-                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PFCL" && f.SaleQuantity != null && f.SaleQuantity != 0 && f.SaleQuantity != PFCL_SaleQuantity).length > 0) {
-                    displayUpdateMessage = true;
-                }
-
-                //if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
-                //    if (this.EntityPM.QuoteCharges.filter(d => d.CostQuantity == null && (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
-                //        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                //    }
-
-                //    else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
-                //        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                //    }
-                //}
-
-                if (displayUpdateMessage && AppTool.IsNullOrEmpty(updateMessage)) {
-                    updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                }
-
-                this.UpdateQuantitiesMessage = updateMessage;
-                this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
-            }
-        }
     }
 
     private OpenQuotationWindow() {
-        var quoteCharges = this.EntityPM.QuoteCharges.filter(a => (!AppTool.IsNullOrZero(a.SaleAmountInSaleCurrency) || !AppTool.IsNullOrZero(a.CostAmountInSaleCurrency))
-            && ((a.HasPickup && this.EntityPM.IncludePickUp == false) || (a.HasDelivery && this.EntityPM.IncludeDelivery == false)));
-
-        if (quoteCharges != null && quoteCharges.length > 0) {
-            var msg = "Can't have charges marked for pickup/delivery without having pickup/delivery defined in the quote";
-            var msgwindow = new MessageWindow();
-            msgwindow.Width = 400;
-            msgwindow.Height = 150;
-            msgwindow.ShowErrorIcon = true;
+        var windowArgs: any = {};
+        windowArgs.QuotePM = this.EntityPM;
+       
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = window.innerWidth - 150;
+        logWindow.Height = window.innerHeight - 150;
+        logWindow.IsShowCloseButton = true;
+        windowArgs.QuotationWindow = logWindow;
+        logWindow.Title = TextCodeTranslator.Translate("Quote.B.Quotation");
+        logWindow.Show('./QuoteModules/QuoteOthers/Components/Quotation/QuotationComponent');
+ 
+        logWindow.WindowClosed.subscribe(s => {
             this.isButtonClicked = false;
-            msgwindow.Show(msg);
-        }
-        else {
-            var windowArgs: any = {};
-            windowArgs.QuotePM = this.EntityPM;
-            var logWindow = new LogitudeWindow();
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Width = window.innerWidth - 150;
-            logWindow.Height = window.innerHeight - 150;
-            logWindow.IsShowCloseButton = true;
-            windowArgs.QuotationWindow = logWindow;
-            logWindow.Title = TextCodeTranslator.Translate("Quote.B.Quotation");
-            logWindow.Show('./QuoteModules/QuoteOthers/Components/Quotation/QuotationComponent');
-
-            logWindow.WindowClosed.subscribe(s => {
-                this.isButtonClicked = false;
-            });
-        }
+        });
     }
 
     private OnNotesWindowClosed(actionType: string) {
-        this.isButtonClicked = false; 
+        this.isButtonClicked = false;
+
         if (actionType == "sent") {
             this.EntityPM.IsClosed = false;
             this.EntityPM.ActionType = "SetAsSentToCustomer";

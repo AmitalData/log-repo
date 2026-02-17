@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
@@ -39,7 +38,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         //[StringLength(250, ErrorMessage = "The maximum length of the remarks is 250!")]
         public string Notes { get; set; }
         public string SearchFields { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
         ////[Include]
         ////[Association("ShipmentIncoterm", "Id", "IncotermId")]
         //public List<Shipment> Shipments { get; set; }

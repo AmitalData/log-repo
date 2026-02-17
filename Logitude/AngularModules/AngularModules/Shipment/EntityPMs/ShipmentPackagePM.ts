@@ -18,35 +18,33 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';
 
 
-export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
+export class ShipmentPackagePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
       constructor(_entityParentPM: any) {
-          super("ShipmentPackage");
           this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this);
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
-
-
+ 	 
+    
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-
-
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-
-
+       
+	 
     private isContainer: boolean;
     public get IsContainer() { return this.isContainer; }
     public set IsContainer(newValue: boolean) { if (this.isContainer != newValue) { this.isContainer = newValue; this.MarkAsDirty("IsContainer"); } }
-
+       
     private isContainerRefrigerated: boolean;
     public get IsContainerRefrigerated() { return this.isContainerRefrigerated; }
     public set IsContainerRefrigerated(newValue: boolean) { if (this.isContainerRefrigerated != newValue) { this.isContainerRefrigerated = newValue; this.MarkAsDirty("IsContainerRefrigerated"); } }
@@ -54,323 +52,323 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
     private packageTypeId: string;
     public get PackageTypeId() { return this.packageTypeId; }
     public set PackageTypeId(newValue: string) { if (this.packageTypeId != newValue) { this.packageTypeId = newValue; this.MarkAsDirty("PackageTypeId"); } }
-
-
+       
+	 
     private packageTypeCode: string;
     public get PackageTypeCode() { return this.packageTypeCode; }
     public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
-
-
+       
+	 
     private packageTypeName: string;
     public get PackageTypeName() { return this.packageTypeName; }
     public set PackageTypeName(newValue: string) { if (this.packageTypeName != newValue) { this.packageTypeName = newValue; this.MarkAsDirty("PackageTypeName"); } }
-
-
+       
+	 
     private printAs: string;
     public get PrintAs() { return this.printAs; }
     public set PrintAs(newValue: string) { if (this.printAs != newValue) { this.printAs = newValue; this.MarkAsDirty("PrintAs"); } }
-
-
+       
+	 
     private containerSize: number;
     public get ContainerSize() { return this.containerSize; }
     public set ContainerSize(newValue: number) { if (this.containerSize != newValue) { this.containerSize = newValue; this.MarkAsDirty("ContainerSize"); } }
-
-
+       
+	 
     private tEU: number;
     public get TEU() { return this.tEU; }
     public set TEU(newValue: number) { if (this.tEU != newValue) { this.tEU = newValue; this.MarkAsDirty("TEU"); } }
-
-
+       
+	 
     private packageTypeIsAir: boolean;
     public get PackageTypeIsAir() { return this.packageTypeIsAir; }
     public set PackageTypeIsAir(newValue: boolean) { if (this.packageTypeIsAir != newValue) { this.packageTypeIsAir = newValue; this.MarkAsDirty("PackageTypeIsAir"); } }
-
-
+       
+	 
     private packageTypeIsOcean: boolean;
     public get PackageTypeIsOcean() { return this.packageTypeIsOcean; }
     public set PackageTypeIsOcean(newValue: boolean) { if (this.packageTypeIsOcean != newValue) { this.packageTypeIsOcean = newValue; this.MarkAsDirty("PackageTypeIsOcean"); } }
-
-
+       
+	 
     private packageTypeIsInland: boolean;
     public get PackageTypeIsInland() { return this.packageTypeIsInland; }
     public set PackageTypeIsInland(newValue: boolean) { if (this.packageTypeIsInland != newValue) { this.packageTypeIsInland = newValue; this.MarkAsDirty("PackageTypeIsInland"); } }
-
-
+       
+	 
     private packageTypeNote: string;
     public get PackageTypeNote() { return this.packageTypeNote; }
     public set PackageTypeNote(newValue: string) { if (this.packageTypeNote != newValue) { this.packageTypeNote = newValue; this.MarkAsDirty("PackageTypeNote"); } }
-
-
+       
+	 
     private packageTypeLocalName: string;
     public get PackageTypeLocalName() { return this.packageTypeLocalName; }
     public set PackageTypeLocalName(newValue: string) { if (this.packageTypeLocalName != newValue) { this.packageTypeLocalName = newValue; this.MarkAsDirty("PackageTypeLocalName"); } }
-
-
+       
+	 
     private packageTypeVolume: number;
     public get PackageTypeVolume() { return this.packageTypeVolume; }
     public set PackageTypeVolume(newValue: number) { if (this.packageTypeVolume != newValue) { this.packageTypeVolume = newValue; this.MarkAsDirty("PackageTypeVolume"); } }
-
-
+       
+	 
     private isPackageAddedManually: boolean;
     public get IsPackageAddedManually() { return this.isPackageAddedManually; }
     public set IsPackageAddedManually(newValue: boolean) { if (this.isPackageAddedManually != newValue) { this.isPackageAddedManually = newValue; this.MarkAsDirty("IsPackageAddedManually"); } }
-
-
+       
+	 
     private containerNumber: string;
     public get ContainerNumber() { return this.containerNumber; }
     public set ContainerNumber(newValue: string) { if (this.containerNumber != newValue) { this.containerNumber = newValue; this.MarkAsDirty("ContainerNumber"); } }
-
-
+       
+	 
     private materialDescription: string;
     public get MaterialDescription() { return this.materialDescription; }
     public set MaterialDescription(newValue: string) { if (this.materialDescription != newValue) { this.materialDescription = newValue; this.MarkAsDirty("MaterialDescription"); } }
-
-
+       
+	 
     private shipperSeal: string;
     public get ShipperSeal() { return this.shipperSeal; }
     public set ShipperSeal(newValue: string) { if (this.shipperSeal != newValue) { this.shipperSeal = newValue; this.MarkAsDirty("ShipperSeal"); } }
-
-
+       
+	 
     private tare: number;
     public get Tare() { return this.tare; }
     public set Tare(newValue: number) { if (this.tare != newValue) { this.tare = newValue; this.MarkAsDirty("Tare"); } }
-
-
+       
+	 
     private quantity: number;
     public get Quantity() { return this.quantity; }
     public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
-
-
+       
+	 
     private weight: number;
     public get Weight() { return this.weight; }
     public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
-
-
+       
+	 
     private volume: number;
     public get Volume() { return this.volume; }
     public set Volume(newValue: number) { if (this.volume != newValue) { this.volume = newValue; this.MarkAsDirty("Volume"); } }
-
-
+       
+	 
     private volumetricWeight: number;
     public get VolumetricWeight() { return this.volumetricWeight; }
     public set VolumetricWeight(newValue: number) { if (this.volumetricWeight != newValue) { this.volumetricWeight = newValue; this.MarkAsDirty("VolumetricWeight"); } }
-
-
+       
+	 
     private height: number;
     public get Height() { return this.height; }
     public set Height(newValue: number) { if (this.height != newValue) { this.height = newValue; this.MarkAsDirty("Height"); } }
-
-
+       
+	 
     private width: number;
     public get Width() { return this.width; }
     public set Width(newValue: number) { if (this.width != newValue) { this.width = newValue; this.MarkAsDirty("Width"); } }
-
-
+       
+	 
     private length: number;
     public get Length() { return this.length; }
     public set Length(newValue: number) { if (this.length != newValue) { this.length = newValue; this.MarkAsDirty("Length"); } }
-
-
+       
+	 
     private unNumber: string;
     public get UnNumber() { return this.unNumber; }
     public set UnNumber(newValue: string) { if (this.unNumber != newValue) { this.unNumber = newValue; this.MarkAsDirty("UnNumber"); } }
-
-
+       
+	 
     private classNumber: string;
     public get ClassNumber() { return this.classNumber; }
     public set ClassNumber(newValue: string) { if (this.classNumber != newValue) { this.classNumber = newValue; this.MarkAsDirty("ClassNumber"); } }
-
-
+       
+	 
     private temperature: string;
     public get Temperature() { return this.temperature; }
     public set Temperature(newValue: string) { if (this.temperature != newValue) { this.temperature = newValue; this.MarkAsDirty("Temperature"); } }
-
-
+       
+	 
     private ventilation: number;
     public get Ventilation() { return this.ventilation; }
     public set Ventilation(newValue: number) { if (this.ventilation != newValue) { this.ventilation = newValue; this.MarkAsDirty("Ventilation"); } }
-
-
+       
+	 
     private carrierSeal: string;
     public get CarrierSeal() { return this.carrierSeal; }
     public set CarrierSeal(newValue: string) { if (this.carrierSeal != newValue) { this.carrierSeal = newValue; this.MarkAsDirty("CarrierSeal"); } }
-
-
+       
+	 
     private sOC: number;
     public get SOC() { return this.sOC; }
     public set SOC(newValue: number) { if (this.sOC != newValue) { this.sOC = newValue; this.MarkAsDirty("SOC"); } }
-
-
+       
+	 
     private packagingGroup: string;
     public get PackagingGroup() { return this.packagingGroup; }
     public set PackagingGroup(newValue: string) { if (this.packagingGroup != newValue) { this.packagingGroup = newValue; this.MarkAsDirty("PackagingGroup"); } }
-
-
+       
+	 
     private iMDGCode: string;
     public get IMDGCode() { return this.iMDGCode; }
     public set IMDGCode(newValue: string) { if (this.iMDGCode != newValue) { this.iMDGCode = newValue; this.MarkAsDirty("IMDGCode"); } }
-
-
+       
+	 
     private flashPoint: string;
     public get FlashPoint() { return this.flashPoint; }
     public set FlashPoint(newValue: string) { if (this.flashPoint != newValue) { this.flashPoint = newValue; this.MarkAsDirty("FlashPoint"); } }
-
-
+       
+	 
     private harmonize: string;
     public get Harmonize() { return this.harmonize; }
     public set Harmonize(newValue: string) { if (this.harmonize != newValue) { this.harmonize = newValue; this.MarkAsDirty("Harmonize"); } }
-
-
+       
+	 
     private marksAndNumbers: string;
     public get MarksAndNumbers() { return this.marksAndNumbers; }
     public set MarksAndNumbers(newValue: string) { if (this.marksAndNumbers != newValue) { this.marksAndNumbers = newValue; this.MarkAsDirty("MarksAndNumbers"); } }
-
-
+       
+	 
     private description: string;
     public get Description() { return this.description; }
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
-
-
+       
+	 
     private shipmentNumber: string;
     public get ShipmentNumber() { return this.shipmentNumber; }
     public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
-
-
+       
+	 
     private shipmentId: string;
     public get ShipmentId() { return this.shipmentId; }
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-
-
+       
+	 
     private shipmentPMId: string;
     public get ShipmentPMId() { return this.shipmentPMId; }
     public set ShipmentPMId(newValue: string) { if (this.shipmentPMId != newValue) { this.shipmentPMId = newValue; this.MarkAsDirty("ShipmentPMId"); } }
-
-
+       
+	 
     private isDangerous: boolean;
     public get IsDangerous() { return this.isDangerous; }
     public set IsDangerous(newValue: boolean) { if (this.isDangerous != newValue) { this.isDangerous = newValue; this.MarkAsDirty("IsDangerous"); } }
-
-
+       
+	 
     private originalShipmentPackageId: string;
     public get OriginalShipmentPackageId() { return this.originalShipmentPackageId; }
     public set OriginalShipmentPackageId(newValue: string) { if (this.originalShipmentPackageId != newValue) { this.originalShipmentPackageId = newValue; this.MarkAsDirty("OriginalShipmentPackageId"); } }
-
-
+       
+	 
     private commodityId: string;
     public get CommodityId() { return this.commodityId; }
     public set CommodityId(newValue: string) { if (this.commodityId != newValue) { this.commodityId = newValue; this.MarkAsDirty("CommodityId"); } }
-
-
+       
+	 
     private numberOfInsidePackages: number;
     public get NumberOfInsidePackages() { return this.numberOfInsidePackages; }
     public set NumberOfInsidePackages(newValue: number) { if (this.numberOfInsidePackages != newValue) { this.numberOfInsidePackages = newValue; this.MarkAsDirty("NumberOfInsidePackages"); } }
-
-
+       
+	 
     private numberOfInsidePackagesDetails: string;
     public get NumberOfInsidePackagesDetails() { return this.numberOfInsidePackagesDetails; }
     public set NumberOfInsidePackagesDetails(newValue: string) { if (this.numberOfInsidePackagesDetails != newValue) { this.numberOfInsidePackagesDetails = newValue; this.MarkAsDirty("NumberOfInsidePackagesDetails"); } }
-
-
+       
+	 
     private vGM: number;
     public get VGM() { return this.vGM; }
     public set VGM(newValue: number) { if (this.vGM != newValue) { this.vGM = newValue; this.MarkAsDirty("VGM"); } }
-
-
+       
+	 
     private methodUsed: string;
     public get MethodUsed() { return this.methodUsed; }
     public set MethodUsed(newValue: string) { if (this.methodUsed != newValue) { this.methodUsed = newValue; this.MarkAsDirty("MethodUsed"); } }
-
-
+       
+	 
     private isDeliveryFU: boolean;
     public get IsDeliveryFU() { return this.isDeliveryFU; }
     public set IsDeliveryFU(newValue: boolean) { if (this.isDeliveryFU != newValue) { this.isDeliveryFU = newValue; this.MarkAsDirty("IsDeliveryFU"); } }
-
-
+       
+	 
     private deliveryId: string;
     public get DeliveryId() { return this.deliveryId; }
     public set DeliveryId(newValue: string) { if (this.deliveryId != newValue) { this.deliveryId = newValue; this.MarkAsDirty("DeliveryId"); } }
-
-
+       
+	 
     private deliveryETD: Date;
     public get DeliveryETD() { return this.deliveryETD; }
     public set DeliveryETD(newValue: Date) { if (this.deliveryETD != newValue) { this.deliveryETD = newValue; this.MarkAsDirty("DeliveryETD"); } }
-
-
+       
+	 
     private deliveryATD: Date;
     public get DeliveryATD() { return this.deliveryATD; }
     public set DeliveryATD(newValue: Date) { if (this.deliveryATD != newValue) { this.deliveryATD = newValue; this.MarkAsDirty("DeliveryATD"); } }
-
-
+       
+	 
     private deliveryETA: Date;
     public get DeliveryETA() { return this.deliveryETA; }
     public set DeliveryETA(newValue: Date) { if (this.deliveryETA != newValue) { this.deliveryETA = newValue; this.MarkAsDirty("DeliveryETA"); } }
-
-
+       
+	 
     private deliveryATA: Date;
     public get DeliveryATA() { return this.deliveryATA; }
     public set DeliveryATA(newValue: Date) { if (this.deliveryATA != newValue) { this.deliveryATA = newValue; this.MarkAsDirty("DeliveryATA"); } }
-
-
+       
+	 
     private deliveryTo: string;
     public get DeliveryTo() { return this.deliveryTo; }
     public set DeliveryTo(newValue: string) { if (this.deliveryTo != newValue) { this.deliveryTo = newValue; this.MarkAsDirty("DeliveryTo"); } }
-
-
+       
+	 
     private deliveryFrom: string;
     public get DeliveryFrom() { return this.deliveryFrom; }
     public set DeliveryFrom(newValue: string) { if (this.deliveryFrom != newValue) { this.deliveryFrom = newValue; this.MarkAsDirty("DeliveryFrom"); } }
-
-
+       
+	 
     private isEmptyContainerReturnFU: boolean;
     public get IsEmptyContainerReturnFU() { return this.isEmptyContainerReturnFU; }
     public set IsEmptyContainerReturnFU(newValue: boolean) { if (this.isEmptyContainerReturnFU != newValue) { this.isEmptyContainerReturnFU = newValue; this.MarkAsDirty("IsEmptyContainerReturnFU"); } }
-
-
+       
+	 
     private emptyContainerReturnId: string;
     public get EmptyContainerReturnId() { return this.emptyContainerReturnId; }
     public set EmptyContainerReturnId(newValue: string) { if (this.emptyContainerReturnId != newValue) { this.emptyContainerReturnId = newValue; this.MarkAsDirty("EmptyContainerReturnId"); } }
-
-
+       
+	 
     private emptyContainerReturnETD: Date;
     public get EmptyContainerReturnETD() { return this.emptyContainerReturnETD; }
     public set EmptyContainerReturnETD(newValue: Date) { if (this.emptyContainerReturnETD != newValue) { this.emptyContainerReturnETD = newValue; this.MarkAsDirty("EmptyContainerReturnETD"); } }
-
-
+       
+	 
     private emptyContainerReturnATD: Date;
     public get EmptyContainerReturnATD() { return this.emptyContainerReturnATD; }
     public set EmptyContainerReturnATD(newValue: Date) { if (this.emptyContainerReturnATD != newValue) { this.emptyContainerReturnATD = newValue; this.MarkAsDirty("EmptyContainerReturnATD"); } }
-
-
+       
+	 
     private emptyContainerReturnETA: Date;
     public get EmptyContainerReturnETA() { return this.emptyContainerReturnETA; }
     public set EmptyContainerReturnETA(newValue: Date) { if (this.emptyContainerReturnETA != newValue) { this.emptyContainerReturnETA = newValue; this.MarkAsDirty("EmptyContainerReturnETA"); } }
-
-
+       
+	 
     private emptyContainerReturnATA: Date;
     public get EmptyContainerReturnATA() { return this.emptyContainerReturnATA; }
     public set EmptyContainerReturnATA(newValue: Date) { if (this.emptyContainerReturnATA != newValue) { this.emptyContainerReturnATA = newValue; this.MarkAsDirty("EmptyContainerReturnATA"); } }
-
-
+       
+	 
     private emptyContainerReturnTo: string;
     public get EmptyContainerReturnTo() { return this.emptyContainerReturnTo; }
     public set EmptyContainerReturnTo(newValue: string) { if (this.emptyContainerReturnTo != newValue) { this.emptyContainerReturnTo = newValue; this.MarkAsDirty("EmptyContainerReturnTo"); } }
-
-
+       
+	 
     private emptyContainerReturnFrom: string;
     public get EmptyContainerReturnFrom() { return this.emptyContainerReturnFrom; }
     public set EmptyContainerReturnFrom(newValue: string) { if (this.emptyContainerReturnFrom != newValue) { this.emptyContainerReturnFrom = newValue; this.MarkAsDirty("EmptyContainerReturnFrom"); } }
-
-
+       
+	 
     private isAWBWizardDefault: boolean;
     public get IsAWBWizardDefault() { return this.isAWBWizardDefault; }
     public set IsAWBWizardDefault(newValue: boolean) { if (this.isAWBWizardDefault != newValue) { this.isAWBWizardDefault = newValue; this.MarkAsDirty("IsAWBWizardDefault"); } }
-
-
+       
+	 
     private dummyIdGuid: string;
     public get DummyIdGuid() { return this.dummyIdGuid; }
     public set DummyIdGuid(newValue: string) { if (this.dummyIdGuid != newValue) { this.dummyIdGuid = newValue; this.MarkAsDirty("DummyIdGuid"); } }
-
-
+       
+	 
     private shipmentPM: string;
     public get ShipmentPM() { return this.shipmentPM; }
     public set ShipmentPM(newValue: string) { if (this.shipmentPM != newValue) { this.shipmentPM = newValue; this.MarkAsDirty("ShipmentPM"); } }
@@ -407,7 +405,7 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
     public get Notes() { return this.notes; }
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
 
-
+     
     private nonActiveContainer: boolean;
     public get NonActiveContainer() { return this.nonActiveContainer; }
     public set NonActiveContainer(newValue: boolean) { if (this.nonActiveContainer != newValue) { this.nonActiveContainer = newValue; this.MarkAsDirty("NonActiveContainer"); } }
@@ -435,10 +433,6 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
     private isMultiHarmonize: boolean;
     public get IsMultiHarmonize() { return this.isMultiHarmonize; }
     public set IsMultiHarmonize(newValue: boolean) { if (this.isMultiHarmonize != newValue) { this.isMultiHarmonize = newValue; this.MarkAsDirty("IsMultiHarmonize"); } }
-
-    private inUse: number;
-    public get InUse() { return this.inUse; }
-    public set InUse(newValue: number) { if (this.inUse != newValue) { this.inUse = newValue; this.MarkAsDirty("InUse"); } }
 
     private eTD: Date;
     public get ETD() { return this.eTD; }
@@ -485,10 +479,6 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
         }
     }
 
-    private containerStrippedDate: Date;
-    public get ContainerStrippedDate() { return this.containerStrippedDate; }
-    public set ContainerStrippedDate(newValue: Date) { if (this.containerStrippedDate != newValue) { this.containerStrippedDate = newValue; this.MarkAsDirty("ContainerStrippedDate"); } }
-
 	private insideShipmentPackages: InsideShipmentPackagePM[];
     get  InsideShipmentPackages() {
         if (this.insideShipmentPackages == null) {
@@ -502,7 +492,6 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
             this.insideShipmentPackages = newValue;
         }
     }
-
     public AddInsideShipmentPackagePM(item: InsideShipmentPackagePM) {
         if (item != null) {
             var index = this.InsideShipmentPackages.indexOf(item);
@@ -525,7 +514,7 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
         }
     }
 	    //public InsideShipmentPackages: Array<InsideShipmentPackagePMPM>= [];
-
+      
 	private shipmentPackageItems: ShipmentPackageItemPM[];
     get  ShipmentPackageItems() {
         if (this.shipmentPackageItems == null) {
@@ -599,20 +588,20 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
-    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+    public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }        
 
-    public InsideShipmentPackagesChangeSet: Array<InsideShipmentPackagePM>= [];
+    public InsideShipmentPackagesChangeSet: Array<InsideShipmentPackagePM>= [];	 
     public ShipmentPackageItemsChangeSet: Array<ShipmentPackageItemPM> = [];
     public ShipmentPackageHarmonizesChangeSet: Array<ShipmentPackageHarmonizePM> = [];
 
 	private reference1: string;
     public get Reference1() { return this.reference1; }
     public set Reference1(newValue: string) { if (this.reference1 != newValue) { this.reference1 = newValue; this.MarkAsDirty("Reference1"); } }
-
+    
     private reference2: string;
     public get Reference2() { return this.reference2; }
     public set Reference2(newValue: string) { if (this.reference2 != newValue) { this.reference2 = newValue; this.MarkAsDirty("Reference2"); } }
-
+      
     private reference3: string;
     public get Reference3() { return this.reference3; }
     public set Reference3(newValue: string) { if (this.reference3 != newValue) { this.reference3 = newValue; this.MarkAsDirty("Reference3"); } }
@@ -620,98 +609,63 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
     private reference4: string;
     public get Reference4() { return this.reference4; }
     public set Reference4(newValue: string) { if (this.reference4 != newValue) { this.reference4 = newValue; this.MarkAsDirty("Reference4"); } }
-
+     
     private commodityNumber: string;
     public get CommodityNumber() { return this.commodityNumber; }
-    public set CommodityNumber(newValue: string) { if (this.commodityNumber != newValue) { this.commodityNumber = newValue; this.MarkAsDirty("CommodityNumber"); } }
+    public set CommodityNumber(newValue: string) { if (this.commodityNumber != newValue) { this.commodityNumber = newValue; this.MarkAsDirty("CommodityNumber"); } }        
 
     private commodityName: string;
     public get CommodityName() { return this.commodityName; }
-    public set CommodityName(newValue: string) { if (this.commodityName != newValue) { this.commodityName = newValue; this.MarkAsDirty("CommodityName"); } }
+    public set CommodityName(newValue: string) { if (this.commodityName != newValue) { this.commodityName = newValue; this.MarkAsDirty("CommodityName"); } } 
 
     private onCarriageETD: Date;
     public get OnCarriageETD() { return this.onCarriageETD; }
-    public set OnCarriageETD(newValue: Date) { if (this.onCarriageETD != newValue) { this.onCarriageETD = newValue; this.MarkAsDirty("OnCarriageETD"); } }
+    public set OnCarriageETD(newValue: Date) { if (this.onCarriageETD != newValue) { this.onCarriageETD = newValue; this.MarkAsDirty("OnCarriageETD"); } }        
 
     private onCarriageATD: Date;
     public get OnCarriageATD() { return this.onCarriageATD; }
-    public set OnCarriageATD(newValue: Date) { if (this.onCarriageATD != newValue) { this.onCarriageATD = newValue; this.MarkAsDirty("OnCarriageATD"); } }
+    public set OnCarriageATD(newValue: Date) { if (this.onCarriageATD != newValue) { this.onCarriageATD = newValue; this.MarkAsDirty("OnCarriageATD"); } }        
 
     private onCarriageETA: Date;
     public get OnCarriageETA() { return this.onCarriageETA; }
-    public set OnCarriageETA(newValue: Date) { if (this.onCarriageETA != newValue) { this.onCarriageETA = newValue; this.MarkAsDirty("OnCarriageETA"); } }
+    public set OnCarriageETA(newValue: Date) { if (this.onCarriageETA != newValue) { this.onCarriageETA = newValue; this.MarkAsDirty("OnCarriageETA"); } }        
 
     private onCarriageATA: Date;
     public get OnCarriageATA() { return this.onCarriageATA; }
-    public set OnCarriageATA(newValue: Date) { if (this.onCarriageATA != newValue) { this.onCarriageATA = newValue; this.MarkAsDirty("OnCarriageATA"); } }
+    public set OnCarriageATA(newValue: Date) { if (this.onCarriageATA != newValue) { this.onCarriageATA = newValue; this.MarkAsDirty("OnCarriageATA"); } }        
 
 
     private make: string;
     public get Make() { return this.make ; }
-    public set Make(newValue: string) { if (this.make != newValue) { this.make = newValue; this.MarkAsDirty("Make"); } }
+    public set Make(newValue: string) { if (this.make != newValue) { this.make = newValue; this.MarkAsDirty("Make"); } }        
 
     private model: string;
     public get Model() { return this.model; }
-    public set Model(newValue: string) { if (this.model != newValue) { this.model = newValue; this.MarkAsDirty("Model"); } }
+    public set Model(newValue: string) { if (this.model != newValue) { this.model = newValue; this.MarkAsDirty("Model"); } }        
 
     private year: string;
     public get Year() { return this.year; }
-    public set Year(newValue: string) { if (this.year != newValue) { this.year = newValue; this.MarkAsDirty("Year"); } }
+    public set Year(newValue: string) { if (this.year != newValue) { this.year = newValue; this.MarkAsDirty("Year"); } }        
 
 
     private color: string;
     public get Color() { return this.color; }
-    public set Color(newValue: string) { if (this.color != newValue) { this.color = newValue; this.MarkAsDirty("Color"); } }
+    public set Color(newValue: string) { if (this.color != newValue) { this.color = newValue; this.MarkAsDirty("Color"); } }        
 
 
     private chassisNumber: string;
     public get ChassisNumber() { return this.chassisNumber; }
-    public set ChassisNumber(newValue: string) { if (this.chassisNumber != newValue) { this.chassisNumber = newValue; this.MarkAsDirty("ChassisNumber"); } }
+    public set ChassisNumber(newValue: string) { if (this.chassisNumber != newValue) { this.chassisNumber = newValue; this.MarkAsDirty("ChassisNumber"); } }        
 
 
     private registrationNumber : string;
     public get RegistrationNumber() { return this.registrationNumber; }
-    public set RegistrationNumber(newValue: string) { if (this.registrationNumber != newValue) { this.registrationNumber = newValue; this.MarkAsDirty("RegistrationNumber"); } }
+    public set RegistrationNumber(newValue: string) { if (this.registrationNumber != newValue) { this.registrationNumber = newValue; this.MarkAsDirty("RegistrationNumber"); } }        
 
     private countryId: string;
     public get CountryId() { return this.countryId; }
-    public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
+    public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }        
 
-    private warehouseReleaseNumber: string;
-    public get WarehouseReleaseNumber() { return this.warehouseReleaseNumber; }
-    public set WarehouseReleaseNumber(newValue: string) { if (this.warehouseReleaseNumber != newValue) { this.warehouseReleaseNumber = newValue; this.MarkAsDirty("WarehouseReleaseNumber"); } }
-
-    private warehouseReleaseId: string;
-    public get WarehouseReleaseId() { return this.warehouseReleaseId; }
-    public set WarehouseReleaseId(newValue: string) { if (this.warehouseReleaseId != newValue) { this.warehouseReleaseId = newValue; this.MarkAsDirty("WarehouseReleaseId"); } }
-
-    private horseId: string;
-    public get HorseId() { return this.horseId; }
-    public set HorseId(newValue: string) { if (this.horseId != newValue) { this.horseId = newValue; this.MarkAsDirty("HorseId"); } }
-
-    private horseName: string;
-    public get HorseName() { return this.horseName; }
-    public set HorseName(newValue: string) { if (this.horseName != newValue) { this.horseName = newValue; this.MarkAsDirty("HorseName"); } }
-
-    private lCLContainerTypeId: string;
-    public get LCLContainerTypeId() { return this.lCLContainerTypeId; }
-    public set LCLContainerTypeId(newValue: string) { if (this.lCLContainerTypeId != newValue) { this.lCLContainerTypeId = newValue; this.MarkAsDirty("LCLContainerTypeId"); } }
-
-    private containerEntityId: string;
-    public get ContainerEntityId() { return this.containerEntityId; }
-    public set ContainerEntityId(newValue: string) { if (this.containerEntityId != newValue) { this.containerEntityId = newValue; this.MarkAsDirty("ContainerEntityId"); } }
-
-    private isPackageCheckedInLeg: boolean;
-    public get IsPackageCheckedInLeg() { return this.isPackageCheckedInLeg; }
-    public set IsPackageCheckedInLeg(newValue: boolean) { if (this.isPackageCheckedInLeg != newValue) { this.isPackageCheckedInLeg = newValue; this.MarkAsDirty("IsPackageCheckedInLeg"); } }
-
-    private containerStatusName: string;
-    public get ContainerStatusName() { return this.containerStatusName; }
-    public set ContainerStatusName(newValue: string) { if (this.containerStatusName != newValue) { this.containerStatusName = newValue; this.MarkAsDirty("ContainerStatusName"); } }
-
-    private containerStatusSourceCode: string;
-    public get ContainerStatusSourceCode() { return this.containerStatusSourceCode; }
-    public set ContainerStatusSourceCode(newValue: string) { if (this.containerStatusSourceCode != newValue) { this.containerStatusSourceCode = newValue; this.MarkAsDirty("ContainerStatusSourceCode"); } }
 
     public OldEntityPM: ShipmentPackagePM;
 
@@ -722,23 +676,20 @@ export class ShipmentPackagePM extends ChildEntitiesCustomFieldPM {
     public UniqueKey: string;
 
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName: string = null) {
-        if (!this.DisableMarkAsDirty) {
-            this.IsDirty = true;
+    MarkAsDirty(propertyName:string = null) {
+        this.IsDirty = true;
 
-            if (this.EntityParentPM) {
-                this.EntityParentPM.MarkAsDirty();
-            }
+        if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
 
-            if (propertyName != null) {
-                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
-                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentPackage");
-
-            }
+        if (propertyName != null) {
+            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentPackage");
+           
         }
     }
-    // private MyClone: ShipmentPackagePM;
+    private MyClone: ShipmentPackagePM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

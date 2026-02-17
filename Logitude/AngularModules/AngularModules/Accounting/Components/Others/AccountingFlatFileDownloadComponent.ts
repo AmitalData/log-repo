@@ -21,7 +21,7 @@ declare var window;
 
 @Component({
     selector: 'AccountingFlatFileDownloadComponent',
-
+    moduleId: module.id,
     templateUrl: './AccountingFlatFileDownloadComponent.html',
 })
 export class AccountingFlatFileDownloadComponent extends BaseComponent implements OnDestroy {
@@ -105,25 +105,17 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             case "TaxReport":
                 {
                     if (byButton || this.reportPM.NeedsRebulid) {
-                        this._TaxReportExtendedPMService.DownloadPNC874FileInBatch(this.reportPM).subscribe((myResult:ServiceResponse) => {
+                        this._TaxReportExtendedPMService.DownloadPNC874FileInBatch(this.reportPM).subscribe(myResult => {
                             var mm: ServiceResponse = myResult;
-                            if (!myResult.HasError) {
-                                var entity = mm.Result;
-                                this.btePM = entity;
+                            var entity = mm.Result;
+                            this.btePM = entity;
 
-                                this.ChangeStatus("inprogress");
+                            this.ChangeStatus("inprogress");
 
-                                this.timer = setInterval(() => {
-                                    this.GetBTE();
-                                }, this.timerInterval);
-                            }
-                            else {
-                                this.Loading = false;
-                                this.Success = false;
-                                this.Failed = true;
-                               this.ShowError(myResult.ErrorsArray);
-                                // this.CurrentSession.CloseCurrentWindow();
-                            }
+                            this.timer = setInterval(() => {
+                                this.GetBTE();
+                            }, this.timerInterval);
+
                         });
                     } else
                     {
@@ -169,7 +161,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         }
     }
     GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult:any) => {
+        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe(myResult => {
             console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -211,7 +203,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         if (this.ObjectTableName == "TaxReport") {
 
 
-            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.reportPM.Id, objectTable.Id).subscribe((myResult:any) => {
+            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.reportPM.Id, objectTable.Id).subscribe(myResult => {
                 console.log("[GetLastDocumentsFilingPM]", myResult);
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
@@ -229,7 +221,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             });
         }
         else if (this.ObjectTableName == "TaxDeductionReport") {
-            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.taxDeductionPM.Id, objectTable.Id).subscribe((myResult:any) => {
+            this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.taxDeductionPM.Id, objectTable.Id).subscribe(myResult => {
                 console.log("[GetLastDocumentsFilingPM]", myResult);
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
@@ -257,23 +249,13 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     DownloadButtonClicked() {
         DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
     }
-
-    Errors: string[] = [];
-    ShowError(error:string[]=null) {
-
-        if(error){
-            this.Errors.push(...error);
-        }else{
-            var msg = this.bteList.ErrorLog;
-            this.Errors.push(msg);
-        }
-
-
-        // var msgbox = new MessageWindow();
+    ShowError() {
+        var msg = this.bteList.ErrorLog;
+        var msgbox = new MessageWindow();
         // msgbox.Width = 500;
-        // // msgbox.Height = 400;
-        // msgbox.RTL = this.isRTL;
-        // msgbox.Show(msg);
+        // msgbox.Height = 400;
+        msgbox.RTL = this.isRTL;
+        msgbox.Show(msg);
     }
     //#endregion
 
@@ -337,10 +319,6 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
         }
     }
 
-
-    CloseWindow(){
-        this.CurrentSession.CloseCurrentWindow();
-    }
 
 
 

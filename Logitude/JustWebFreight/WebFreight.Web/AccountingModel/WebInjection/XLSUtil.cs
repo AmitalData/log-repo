@@ -96,7 +96,7 @@ namespace WebFreight.Web.AccountingModel.WebInjection
 
         private string GetDebitAccountId(string v1, string v2)
         {
-            if (ToMyJournalActionTypeEnum(v1) == JournalActionTypeEnum.Credit)
+            if (ToMyJournalActionTypeEnum(v1) == MyJournalActionTypeEnum.Credit)
             {
                 return null;
             }
@@ -111,7 +111,7 @@ namespace WebFreight.Web.AccountingModel.WebInjection
 
         private string GetCreditAccountId(string v1, string v2)
         {
-            if (ToMyJournalActionTypeEnum(v1) == JournalActionTypeEnum.Debit)
+            if (ToMyJournalActionTypeEnum(v1) == MyJournalActionTypeEnum.Debit)
             {
                 return null;
             }
@@ -136,12 +136,12 @@ namespace WebFreight.Web.AccountingModel.WebInjection
 
         }
 
-        private JournalActionTypeEnum ToMyJournalActionTypeEnum(string v)
+        private MyJournalActionTypeEnum ToMyJournalActionTypeEnum(string v)
         {
             switch (v)
             {
-                case "C": { return JournalActionTypeEnum.Credit; } break;
-                case "D": { return JournalActionTypeEnum.Debit; } break;
+                case "C": { return MyJournalActionTypeEnum.Credit; } break;
+                case "D": { return MyJournalActionTypeEnum.Debit; } break;
                 default:
                     throw new Exception("Debit/Credit must be D/C");
                     break;

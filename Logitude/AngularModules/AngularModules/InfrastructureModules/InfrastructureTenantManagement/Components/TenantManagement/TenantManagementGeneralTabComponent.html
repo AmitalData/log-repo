@@ -138,16 +138,6 @@
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
-                                                                            <LogLabel [ObjectFieldName]="'IsContainerTrackingPrepaid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsContainerTrackingPrepaid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
                                                                             <LogLabel [ObjectFieldName]="'ManageLicencesPerUser'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
 
@@ -238,46 +228,34 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <!--<tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'Technology'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
 
-        <td>
-            <ComboBox [ItemsSource]="TechnologiesList" [Binding]="'Name'" [SelectedItem]="SelectedTechnology" (SelectedItemChanged)="SelectedTechnology = $event"></ComboBox>
-        </td>
-    </tr>-->
-                                                                    <!-- <tr class="FormFieldRow">
-        <td>
-            <LogLabel [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                                                                        <td>
+                                                                            <ComboBox [ItemsSource]="TechnologiesList" [Binding]="'Name'" [SelectedItem]="SelectedTechnology" (SelectedItemChanged)="SelectedTechnology = $event"></ComboBox>
+                                                                        </td>
+                                                                    </tr>
 
-        <td>
-            <LogDatePicker [HideColumns]="true" style="height:100%;width:100%" [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-        </td>
-    </tr> -->
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogDatePicker [HideColumns]="true" style="height:100%;width:100%" [ObjectFieldName]="'SilverlightEndDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+                                                                    </tr>
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-                                                                        <td>
 
-                                                                            <table>
-                                                                                <tr class="FormFieldRow">
-                                                                                    <td style="width: 20px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                    </td>
-            
-                                                                                    <td>
-                                                                                        <input [disabled]="!ChangeHeaderColor" type="color" [(ngModel)]="HeaderColor" class="colorPicker" id="color" value="" >
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                            
-                                                                            
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'ChangeHeaderColor'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                         </td>
-                                                                       
                                                                     </tr>
 
 
@@ -291,92 +269,16 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr *ngIf="tenantLoginPolicyPM && IsLogBoxTenant" class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [Text]="'Keep User Logged In'" [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="'TenantLoginPolicy'" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'KeepUserLoggedIn'" [ObjectTableName]="'TenantLoginPolicy'" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-
-                                                                    <tr *ngIf="IsLogBoxTenant" class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsHybrid'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <!-- ScheduledTasksLimitPerReport -->
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'ScheduledTasksLimitPerReport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'ScheduledTasksLimitPerReport'" [Text]="ScheduledTasksLimitPerReport" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <!-- WhatsApp Messaging Phone Number -->
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [Text]="WhatsAppMessagingPhoneNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                     <!-- MinutsTimeOutSession -->
-                                                                     <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'MinutsTimeOutSession'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-                                                                    
-                                                                        <td>
-                                                                            <LogTextBox  [InputType]="'integer'" [ObjectFieldName]="'MinutsTimeOutSession'" [Text]="MinutsTimeOutSession" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-                                                                    
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    
-                                                                        <td>
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
 
                                                                     <!--<tr class="FormFieldRow">
-        <td>
-            <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
-        </td>
+                                                                        <td>
+                                                                            <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
+                                                                        </td>
 
-        <td>
-            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-        </td>
-    </tr>-->
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>-->
                                                                 </table>
                                                             </td>
 
@@ -540,16 +442,6 @@
                                                                             <ComboBox [MaxHeight]="95" [ItemsSource]="ParentTenantsList" [Binding]="'DisplyText'" [SelectedItem]="SelectedParentTenant" (SelectedItemChanged)="SelectedParentTenant = $event" [IsDisabled]="!ParentComboEnabled"></ComboBox>
                                                                         </td>
                                                                     </tr>
-
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'NoPaymentForChildTenants'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'NoPaymentForChildTenants'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                        </td>
-                                                                    </tr>
                                                                 </table>
                                                             </td>
 
@@ -644,11 +536,11 @@
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
-                                                                            </td>
+                                                                            </td>                                                                           
                                                                         </tr>
 
                                                                         <!-- Fields -->
-                                                                        <tr style="height: 35px;" *ngIf="IsSingleMultiPackage">
+                                                                        <tr style="height: 35px;">
                                                                             <td>
                                                                                 <table>
                                                                                     <tr>
@@ -805,9 +697,9 @@
 
                                                                                                                                 <div class="SimpleGridViewBody">
                                                                                                                                     <table>
-                                                                                                                                        <tr [ngStyle]="{background: item.Background}" class="SimpleGridViewRow" *ngFor="let item of PackagesList">
+                                                                                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of PackagesList">
                                                                                                                                             <td class="GridViewCell" style="width: 210px; min-width: 210px; max-width: 210px;">
-                                                                                                                                                {{item.PackageNameDisplay}}
+                                                                                                                                                {{item.PackageName}}
                                                                                                                                             </td>
 
                                                                                                                                             <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
@@ -829,8 +721,8 @@
                                                                                                                                             <!-- [disabled]="!IsEditable" -->
                                                                                                                                             <td class="CellTools">
                                                                                                                                                 <span class="CellSeparator"></span>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage || item.IsMainPackage" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
-                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage && !item.IsMainPackage" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
+                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage" [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackage(item)"></IconButton>
+                                                                                                                                                <IconButton [IsEnabled]="IsMultiPackage" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackage(item)"></IconButton>
                                                                                                                                             </td>
                                                                                                                                         </tr>
 
@@ -866,10 +758,10 @@
                                                                                                 <table>
                                                                                                     <tr>
                                                                                                         <td style="width: 210px; padding-left: 4px;">Totals</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalNumberOfUsers}}</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalFreeUsers}}</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{AveragePrice}} (Average)</td>
-                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{TotalPaymentamount}}</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalNumberOfUsers}}</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalFreeUsers}}</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalPrice}}</td>
+                                                                                                        <td style="width: 120px; padding-right: 4px; text-align: right;">{{PackagesTotalTotalPrice}}</td>
                                                                                                         <td>
                                                                                                             <div></div>
                                                                                                         </td>

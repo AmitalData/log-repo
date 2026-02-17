@@ -32,19 +32,9 @@ using Logitude.Customs.BL.Validators;
 using System.Data.Entity.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.LogitudeClient.DeclarationErrorPointer;
-using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.BL.Security;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Customs.Data.CustomFilters;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.Server.Tools.Helpers;
-using General = Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationCorrection.General;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -59,36 +49,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             DeclarationTaxQueryService declarationTaxService = new DeclarationTaxQueryService(context);
             DeclarationConstraintQueryService declarationConstraintQueryService = new EntityQueryServices.DeclarationConstraintQueryService(context);
             DeclarationConsAcceptanceQueryService declarationConsAcceptanceQueryService = new DeclarationConsAcceptanceQueryService(context);
-            DecDangersContactQueryService decDangersContactQueryService = new DecDangersContactQueryService(context);
-            DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(context);
-
             //DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
 
             entityPM.InvoiceHasFreight = supplierInvoiceService.DoesAnyInvoiceHasFreight(entityPM.Id, entityPM.Tenant);
+
             //******getting all compositionTables for response service purposes only *****///
             entityPM.Consignments = consignmentService.GetMulti(declarationKeys, true);
-            entityPM.DeclarationPayments = declarationPaymentQueryService.GetMulti(declarationKeys, true,true);
-
             // if (LoadSupplierInvoices)
-            var DeclarationExportRecipientQueryService = new DeclarationExportRecipientQueryService(context);
-            entityPM.DeclarationExportRecipients = DeclarationExportRecipientQueryService
-                .GetMulti(declarationKeys, false);
 
+           
             {
                 if (loadSupplierInvoicesItemsParentsOnly == true)
                 {
                     supplierInvoiceService.OnlyParentItem = true;
                 }
-                //FeatureQuery featureQuery = new FeatureQuery();
-                //var features = featureQuery.GetAllowedFeaturesForLoggedUser(Logitude.Server.Tools.Helpers.AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
-                //var featureOcr = features.Features.FirstOrDefault(x => x.Code == "OCR");
-                //if (featureOcr != null)
-                //{
-                //    LoadSupplierInvoicesWithItems = true;
-                //}
-                //var flag = SecurityUtility.CheckContactFeature();
-                entityPM.SupplierInvoices = supplierInvoiceService.GetSupplierInvoicesForDeclaration(declarationKeys.Id, entityPM.Tenant,
-
+                entityPM.SupplierInvoices = supplierInvoiceService.GetSupplierInvoicesForDeclaration(declarationKeys.Id, entityPM.Tenant, 
+                    
                     LoadSupplierInvoicesWithItems || entityPM.IsCourierDeclaration // courier small entity - for Classification !!//Task 40622: מסך סיווג מתוך מסך עבודה - חלק מרכזי
 
                     );
@@ -96,9 +72,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             entityPM.DeclarationTaxes = declarationTaxService.GetMulti(declarationKeys, true);
             entityPM.DeclarationConstraints = declarationConstraintQueryService.GetMulti(declarationKeys, true);
             entityPM.DeclarationConsAcceptances = declarationConsAcceptanceQueryService.GetMulti(declarationKeys, true);
-            entityPM.DecDangersContacts = decDangersContactQueryService.GetMulti(declarationKeys, true);
+            
             //entityPM.DclarationCourierStatus = declarationCourierStatusQueryService.GetMulti(declarationKeys, true);
-
+            
 
             //Stopwatch stopWatch = new Stopwatch();
             //stopWatch.Start();
@@ -279,256 +255,17 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //    base.GetComposition(entityKeys);
         }
 
-        public Declaration GetSingleByCustomFileNoFromCache(string customFileNo, int tenant)
-        {
-            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
-            string entityKeyString = $"GetSingleByCustomFileNoFromCache{customFileNo}";
-            var res = CacheManager.GetOrInsertNewObject(entityKeyString, () =>
-            {
-                return repository.GetDeclarationByCustomFileNo(customFileNo, tenant);
-            });
-            return res;
-        }
-
-
-        public DeclarationPM GetSingleByCustomFileNo(string customFileNo, int tenant)
-        {
-            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            var declaration = repository.GetDeclarationByCustomFileNo(customFileNo, tenant);
-
-            if (declaration == null) return null;
-
-
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-            return declarationPM;
-
-
-
-        }
-        public DeclarationPM GetSingleByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant,string ExternalEntityName)
-        {
-            if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            var declaration = repository.GetDeclarationByCustomFileNoOrExportFile(ExternalEntityReference, tenant, ExternalEntityName);
-
-            if (declaration == null) return null;
-
-
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-            return declarationPM;
-
-
-
-        }
-
-
-        public DeclarationPM GetSingleByDecNoAndVersion(string decNo, string version, int tenant)
-        {
-            if (String.IsNullOrWhiteSpace(decNo)) return null;
-            if (String.IsNullOrWhiteSpace(version)) return null;
-
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            var declaration = repository.GetDeclarationByDecNoAndVersion(decNo, version, tenant);
-
-            if (declaration == null) return null;
-
-
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-            return declarationPM;
-
-
-
-        }
-
-
-        public List<DeclarationPendingPM> GetDeclarationPendingListPMByDeclarationId(string declarationId, int tenant)
-        {
-            if (string.IsNullOrWhiteSpace(declarationId))
-            {
-                return null;
-            }
-
-            var myDeclarationPendingQueryService = new DeclarationPendingQueryService(context);
-            List<DeclarationPendingPM> MyDeclarationPendingPMList = myDeclarationPendingQueryService.GetDeclarationPendingsByDeclarationId(declarationId, tenant);
-            if (MyDeclarationPendingPMList == null)
-            {
-                return null;
-            }
-            return MyDeclarationPendingPMList;
-        }
-
-
-
-        public int GetDeclarationMaxCancelRequestNumber(int tenant, string id)
-        {
-            DeclarationRepository declarationRepository = new DeclarationRepository(context);
-            return declarationRepository.GetDeclarationMaxCancelRequestNumber(tenant);
-        }
-        public int GetDeclarationMaxAmendmentAndCancelRequestNumber(int tenant, string id)
-        {
-            DeclarationRepository declarationRepository = new DeclarationRepository(context);
-            return declarationRepository.GetDeclarationMaxAmendmentAndCancelRequestNumber(tenant);
-        }
-
-
         public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
             return repository.GetIdByDeclarationNumber(declarationNumber, tenant);
         }
 
-        public string GetCustomFileNoByDeclarationNumber(string declarationNumber, int tenant)
-        {
-            if (String.IsNullOrWhiteSpace(declarationNumber)) return "";
-            return repository.GetCustomFileNoByDeclarationNumber(declarationNumber, tenant);
-        }
-        public (string id, string direction, string declarationTypeCode) GetMinDeclarationByDeclarationNumber(string declarationNumber, int tenant)
-        {
-
-            return repository.GetMinDeclarationByDeclarationNumber(declarationNumber, tenant);
-        }
-
-        public DeclarationPM GetDeclarationByfunctionalReferenceID( string functionalReferenceID, string agentFileReferenceID, int tenant, bool isExportClose = false)
-        {
-            if (String.IsNullOrWhiteSpace(functionalReferenceID)) return null;
-
-            var declaration = repository.GetDeclarationByFunctionalReferenceIDagentFileReferenceID(functionalReferenceID, agentFileReferenceID, tenant, isExportClose);
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            if (declaration == null)
-            {
-                var declarations = repository.GetDeclarationByFunctionalReferenceID(functionalReferenceID, tenant, isExportClose);
-                if (declarations!=null && declarations.Count() == 1)
-                    declaration = declarations[0];
-                else
-                    return null;
-            }
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-
-            return declarationPM;
-        }
-
-
-        public DeclarationPM GetDeclarationNotAmendmentDontDisplayInList(string id, string amendmentOriginalDeclartation, int tenant)
-        {
-
-            var declaration = repository.GetDeclarationNotAmendmentDontDisplayInList(id, amendmentOriginalDeclartation, tenant);
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            if (declaration == null) return null;
-
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-
-            return declarationPM;
-        }
-
-        public string GetDeclarationNumberByDecId(string id, int tenant)
-        {
-            return repository.GetDeclarationNumberByDecId(id, tenant);
-        }
-
-        public DeclarationPM GetAcceptDeclarationAmendment(string id, int tenant)
-        {
-
-            var declaration = repository.GetAcceptDeclarationAmendment(id, tenant);
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            if (declaration == null) return null;
-
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-
-            return declarationPM;
-
-        }
-        public DeclarationPM GetAcceptDeclarationAmendmentWithComp(string id, int tenant)
-        {
-
-            var Decid = repository.GetAcceptDeclarationIdAmendment(id, tenant);
-            DeclarationPM declarationPM = this.GetSingle(Decid, true, false);
-            return declarationPM;
-
-        }
-
-
-
-        public DeclarationPM GetWaitingDeclarationAmendmentByCustomsFile(string customFile, int tenant)
-        {
-
-            var declaration = repository.GetWaitingDeclarationAmendmentByCustomsFile(customFile, tenant);
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            if (declaration == null) return null;
-
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-
-            return declarationPM;
-
-        }
-
-        public DeclarationPM GetAcceptDeclarationAmendmentByCustomsFile(string customFile, int tenant)
-        {
-
-            var declaration = repository.GetAcceptDeclarationAmendmentByCustomsFile(customFile, tenant);
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            if (declaration == null) return null;
-
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-
-
-
-            return declarationPM;
-
-        }
-
-
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
             if (String.IsNullOrWhiteSpace(customFileNo)) return "";
             return repository.GetIdByCustomFileNo(customFileNo, tenant);
         }
-        public string GetIdByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
-        {
-            if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return "";
-            return repository.GetIdByCustomFileNoOrExportFile(ExternalEntityReference, tenant);
-        }
-
-        public string GetIdByCustomFileNoAndAmendmentDontDisplayInList(string customFileNo, int tenant , bool AmendmentDontDisplayInList)
-        {
-            if (String.IsNullOrWhiteSpace(customFileNo)) return "";
-            return repository.GetIdByCustomFileNoAndAmendmentDontDisplayInList(customFileNo, tenant, AmendmentDontDisplayInList);
-        }
-
-
-
-
-
 
         public string GetIdByExternalDeclarationNumber(string externalDeclarationNumber, int tenant)
         {
@@ -537,12 +274,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
         public List<string> GetListByCourierHAWB(string CourierHAWB, int tenant)
         {
-
+            
             return repository.GetListByCourierHAWB(CourierHAWB, tenant);
-
+            
         }
 
-        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration", bool IsAmendmentErrors = false, bool IsExportCloseErrors = false)
+        public List<DeclarationErrorView> GetDeclarationErrors(string declarationId, int tenant, string listVersionId, string courierFilter = "Declaration")
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
@@ -591,7 +328,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
                                 if (uIMessagePM != null)
                                 {
-                                    if (uIMessagePM.Sort == null)
+                                    if(uIMessagePM.Sort == null)
                                     {
                                         uIMessagePM.Sort = 99999999;
                                     }
@@ -701,181 +438,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             {
                                 errorview.EntityName = "Declaration";
                             }
-                            if (errorview.EntityName == "SupplierInvioceItemsCertificate")
-                            {
-                                errorview.EntityName = "SupplierInvioceItemCertificat";
-                            }
-                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
-                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
-                            declarationErrors.Add(errorview);
-                        }
-                    }
-                }
-
-            }
-            else if (IsAmendmentErrors || IsExportCloseErrors)
-            {
-                if (!string.IsNullOrEmpty(declaration.AmendmentErrorXml) || !string.IsNullOrEmpty(declaration.ExportClosedErrorXML))
-                {
-                    byte[] errorsByte;
-                    if (IsExportCloseErrors)
-                    {
-                        errorsByte = Encoding.UTF8.GetBytes(declaration.ExportClosedErrorXML);
-                    }
-                    else
-                    {
-                        errorsByte = Encoding.UTF8.GetBytes(declaration.AmendmentErrorXml);
-                    }
-                    MemoryStream memorystream = new MemoryStream(errorsByte);
-                    XmlSerializer serializer = new XmlSerializer(typeof(DeclarationError));
-                    DeclarationError declarationError = (DeclarationError)serializer.Deserialize(memorystream);
-
-
-
-                    foreach (Entity entity in declarationError.Entitites)
-                    {
-
-                        List<error> errors = new List<error>();
-                        if (listVersionId != null)
-                        {
-                            errors = entity.EntityErrors.Where(a => a.ListVersionID == listVersionId).ToList();
-                        }
-
-                        else
-                        {
-                            errors = entity.EntityErrors;
-                        }
-
-                        foreach (error error in errors)
-                        {
-                            DeclarationErrorView errorview = new DeclarationErrorView() { Id = Guid.NewGuid().ToString() };
-                            errorview.ConstraintId = error.ConstraintID;
-                            if (!string.IsNullOrEmpty(errorview.ConstraintId))
-                            {
-                                errorview.ConstraintIndication = constraints.Where(d => d.ConstraintNumber == errorview.ConstraintId).Any();
-                            }
-                            errorview.Description = error.MessageError.Replace(',', ';');
-                            errorview.ErrorType = error.Code;
-                            if (!string.IsNullOrEmpty(error.Code))
-                            {
-                                UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
-                                if (uIMessagePM != null)
-                                {
-                                    if (uIMessagePM.Sort == null)
-                                    {
-                                        uIMessagePM.Sort = 99999999;
-                                    }
-                                    errorview.Sort = uIMessagePM.Sort;
-                                }
-                            }
-                            errorview.DeclarationId = declaration.Id;
-                            errorview.ListVersionId = error.ListVersionID;
-                            if (!string.IsNullOrEmpty(entity.Child3Type))
-                            {
-
-                                errorview.EntityName = entity.Child3Type;
-                                errorview.Line = int.Parse(entity.Child3Sequence);
-                                errorview.ParentEntityName = entity.Child2Type;
-                                errorview.ParentLine = int.Parse(entity.Child2Sequence);
-                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence + "," + entity.Child3Sequence;
-                            }
-                            else if (!string.IsNullOrEmpty(entity.Child2Type))
-                            {
-                                errorview.EntityName = entity.Child2Type;
-                                errorview.Line = int.Parse(entity.Child2Sequence);
-                                errorview.ParentEntityName = entity.Child1Type;
-                                errorview.ParentLine = int.Parse(entity.Child1Sequence);
-                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence;
-
-                            }
-                            else if (!string.IsNullOrEmpty(entity.Child1Type))
-                            {
-                                errorview.EntityName = entity.Child1Type;
-                                errorview.Line = int.Parse(entity.Child1Sequence);
-                                errorview.ParentEntityName = "Declaration";
-                                errorview.LineNumber = entity.Child1Sequence;
-
-                            }
-                            else
-                            {
-                                errorview.EntityName = "Declaration";
-                            }
-                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
-                            declarationErrors.Add(errorview);
-                        }
-
-
-                        List<field> fields = new List<field>();
-                        if (listVersionId != null)
-                        {
-                            fields = entity.FieldErrors.Where(a => a.ListVersionID == listVersionId).ToList();
-                        }
-
-                        else
-                        {
-                            fields = entity.FieldErrors;
-                        }
-
-                        foreach (field error in fields)
-                        {
-                            DeclarationErrorView errorview = new DeclarationErrorView() { Id = Guid.NewGuid().ToString() }; ;
-                            errorview.ConstraintId = error.ConstraintID;
-                            if (!string.IsNullOrEmpty(errorview.ConstraintId))
-                            {
-                                errorview.ConstraintIndication = constraints.Where(d => d.ConstraintNumber == errorview.ConstraintId).Any();
-                            }
-                            errorview.Description = error.MessageError.Replace(',', ';');
-                            errorview.ErrorType = error.Code;
-                            if (!string.IsNullOrEmpty(error.Code))
-                            {
-                                UIMessagePM uIMessagePM = uIMessageQueryService.GetUIMessageWithAdditional(error.Code, tenant);
-                                if (uIMessagePM != null)
-                                {
-                                    if (uIMessagePM.Sort == null)
-                                    {
-                                        uIMessagePM.Sort = 99999999;
-                                    }
-                                    errorview.Sort = uIMessagePM.Sort;
-                                }
-                            }
-                            errorview.Field = error.Fieldcode;
-                            errorview.DeclarationId = declaration.Id;
-                            errorview.ListVersionId = error.ListVersionID;
-                            if (!string.IsNullOrEmpty(entity.Child3Type))
-                            {
-                                errorview.EntityName = entity.Child3Type;
-                                errorview.Line = int.Parse(entity.Child3Sequence);
-                                errorview.ParentEntityName = entity.Child2Type;
-                                errorview.ParentLine = int.Parse(entity.Child2Sequence);
-                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence + "," + entity.Child3Sequence;
-
-                            }
-                            else if (!string.IsNullOrEmpty(entity.Child2Type))
-                            {
-                                errorview.EntityName = entity.Child2Type;
-                                errorview.Line = int.Parse(entity.Child2Sequence);
-                                errorview.ParentEntityName = entity.Child1Type;
-                                errorview.ParentLine = int.Parse(entity.Child1Sequence);
-                                errorview.LineNumber = entity.Child1Sequence + "," + entity.Child2Sequence;
-
-                            }
-                            else if (!string.IsNullOrEmpty(entity.Child1Type))
-                            {
-                                errorview.EntityName = entity.Child1Type;
-                                errorview.Line = int.Parse(entity.Child1Sequence);
-                                errorview.ParentEntityName = "Declaration";
-                                errorview.LineNumber = entity.Child1Sequence;
-
-                            }
-                            else
-                            {
-                                errorview.EntityName = "Declaration";
-                            }
-                            if (errorview.EntityName == "SupplierInvioceItemsCertificate")
-                            {
-                                errorview.EntityName = "SupplierInvioceItemCertificat";
-                            }
-                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
+                            errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
                             errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                             declarationErrors.Add(errorview);
                         }
@@ -1084,14 +647,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             errorview.EntityName = "Declaration";
                         }
-                        if (declaration.Direction == "E" && errorview.EntityName == "Declaration")
-                        {
-                            errorview.TableNameTextCode = "Customs.Declaration.O.Export";
-                            //  errorview.EntityName = "Customs.Declaration.O.Export";
-
-                        }
-                        else
-                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
+                        errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
                     }
 
@@ -1162,35 +718,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         {
                             errorview.EntityName = "Declaration";
                         }
-                        if (errorview.EntityName == "SupplierInvioceItemsCertificate")
-                        {
-                            errorview.EntityName = "SupplierInvioceItemCertificat";
-                            if (errorview.Field == "ClassificationCode")
-                            {
-                                errorview.EntityName = "SupplierInvoiceItem";
-
-                            }
-                        }
-
-                        if (errorview.Field == "CargoTypeCode" && declaration.Direction == "E")
-                        {
-                            errorview.FieldNameTextCode = "Customs.Declaration.O.CargoTypeCode";
-
-                        }
-                        else
-                        {
-                            errorview.FieldNameTextCode = errorview.Field != null ? "Customs." + errorview.EntityName + ".F." + errorview.Field : "Customs." + errorview.EntityName;
-
-                        }
-
-                        if (declaration.Direction == "E" && errorview.EntityName == "Declaration")
-                        {
-                            errorview.TableNameTextCode = "Customs.Declaration.O.Export";
-                            errorview.FieldNameTextCode = "Customs.Declaration.O.Export";
-
-                        }
-                        else
-                            errorview.TableNameTextCode = "Customs." + errorview.EntityName;
+                        errorview.FieldNameTextCode = "Customs." + errorview.EntityName + ".F." + errorview.Field;
+                        errorview.TableNameTextCode = "Customs." + errorview.EntityName;
                         declarationErrors.Add(errorview);
                     }
                 }
@@ -1326,16 +855,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (String.IsNullOrWhiteSpace(declarationId)) return "";
             return repository.GetCustomFileNoByDeclarationId(declarationId, tenant);
         }
-        
-        public (string CustomFileNo, string DeclarationNumber) GetCustomFileNoAndDecNoByDeclarationId(string declarationId, int tenant)
-        {
-            if (String.IsNullOrWhiteSpace(declarationId)) return ("","");
-            return repository.GetCustomFileNoAndDecNoByDeclarationId(declarationId, tenant);
-        }
-        public Declaration GetDeclarationByConsignment(int tenant, string cargoTypeCode, string manifestNumber, string secondCargoID, string thirdCargoID)
-        {
-            return repository.GetDeclarationByConsignment(tenant, cargoTypeCode, manifestNumber, secondCargoID, thirdCargoID);
-        }
+
 
         public List<DeclarationPM> GetMultiByKeys(int tenant, List<string> keys)
         {
@@ -1354,8 +874,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 .Where(rec =>
                    ///rec.Tenant == tenant &&
                    //rec.CreateDateTime.Value > lst30 &&
-                   rec.UpdateDateTime.Value > lst30
-                   );
+                   rec.UpdateDateTime.Value > lst30 &&
+                    rec.UserNotes == "LoadTest");
             if (keys != null)
             {
                 q = q.Where(rec => keys.Contains(rec.Id));
@@ -1367,19 +887,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pmList;
         }
 
-        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant,bool isExportClose)
+        public DeclarationCorrectionView GetDeclarationCorrection(string declarationId, int tenant)
         {
             ICustomContext context = MainContext as CustomContext;
             Declaration declaration = Repository.GetSingle(new DeclarationKeys() { Id = declarationId });
-            string CorrectionXML;
-            if (isExportClose)
-            {
-                 CorrectionXML = declaration.ClosingXml;
-            }
-            else
-            {
-                 CorrectionXML = declaration.CorrectionsXml;
-            }
+            string CorrectionXML = declaration.CorrectionsXml;
+
 
             List<DeclarationStatementTypeList> statementTypes = new List<DeclarationStatementTypeList>();
             DeclarationStatementTypeListQueryService declarationStatementTypeQueryService = new DeclarationStatementTypeListQueryService(context);
@@ -1406,7 +919,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     generalData.CorrectionDate = item.IssueDateTime;
                     generalData.Version = item.VersionId;
                     generalData.SystemMessageViews = new List<error>();
-                    generalData.ReferenceViews = new List<ReferenceView>();
 
                     foreach (Additional additional in item.AdditionalInformation)
                     {
@@ -1418,43 +930,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             information.StatmentName = statement.LocalName;
                         }
 
-                        if (additional.StatementTypeCode != "27")
-                            generalData.AdditionalInformation.Add(information);
+                        generalData.AdditionalInformation.Add(information);
 
-
-                    }
-
-
-                    foreach (Reference reference in item.References)
-                    {
-                        ReferenceView referenceView = new ReferenceView();
-                        referenceView.Remarks = reference.Remarks;
-                        referenceView.RefernceID = reference.RefernceID;
-
-                        LogisticsReferenceTypeQueryService logisticsReferenceTypeQueryService = new LogisticsReferenceTypeQueryService(tenant);
-                        LogisticsReferenceTypePM logisticsReferenceType = logisticsReferenceTypeQueryService.GetSingle(reference.ReferenceType, false, false);
-                        if (logisticsReferenceType != null)
-                        {
-                            referenceView.ReferenceTypeName = logisticsReferenceType.LocalName;
-                        }
-
-                        ReferenceStatusQueryService referenceStatusQueryService = new ReferenceStatusQueryService(tenant);
-                        ReferenceStatusPM referenceStatus = referenceStatusQueryService.GetSingle(reference.RefernceStatus, false, false);
-                        if (referenceStatus != null)
-                        {
-                            referenceView.RefernceStatusName = referenceStatus.LocalName;
-                        }
-
-
-
-                        ReferenceInputTypeQueryService referenceInputTypeQueryService = new ReferenceInputTypeQueryService(tenant);
-                        ReferenceInputTypePM referenceInputType = referenceInputTypeQueryService.GetSingle(reference.RefernceInputType, false, false);
-                        if (referenceInputType != null)
-                        {
-                            referenceView.RefernceInputTypeName = referenceInputType.LocalName;
-                        }
-
-                        generalData.ReferenceViews.Add(referenceView);
 
                     }
 
@@ -1530,24 +1007,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
-                            AmendmentFieldStatusTypeQueryService amendmentFieldStatusTypeQueryService = new AmendmentFieldStatusTypeQueryService(tenant);
-                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(field.AmendmentFieldStatus, false, true);
-                            if (amendmentFieldStatusTypePM != null)
-                            {
-                                amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
 
-                            }
-
-
-                            AmendCancellRequestInitiatorQueryService amendCancellRequestInitiatorQueryService = new AmendCancellRequestInitiatorQueryService(tenant);
-                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(field.AmendmentRequestInitiatorType, false, true);
-                            if (amendCancellRequestInitiatorPM != null)
-                            {
-                                amendment.AmendmentRequestInitiatorType = amendCancellRequestInitiatorPM.LocalName;
-
-                            }
-
-                            amendment.FieldAmendmentRejectReasonRemarks = amendment.FieldAmendmentRejectReasonRemarks;
                             generalData.AmendmentViews.Add(amendment);
 
                         }
@@ -1623,23 +1083,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             }
                             amendment.FieldNameTextCode = "Customs." + amendment.EntityName + ".F." + amendment.Field;
                             amendment.TableNameTextCode = "Customs." + amendment.EntityName;
-                            AmendmentFieldStatusTypeQueryService amendmentFieldStatusTypeQueryService = new AmendmentFieldStatusTypeQueryService(tenant);
-                            AmendmentFieldStatusTypePM amendmentFieldStatusTypePM = amendmentFieldStatusTypeQueryService.GetSingle(error.AmendmentFieldStatus, false, true);
-                            if (amendmentFieldStatusTypePM != null)
-                            {
-                                amendment.AmendmentFieldStatus = amendmentFieldStatusTypePM.LocalName;
-
-                            }
-
-                            AmendCancellRequestInitiatorQueryService amendCancellRequestInitiatorQueryService = new AmendCancellRequestInitiatorQueryService(tenant);
-                            AmendCancellRequestInitiatorPM amendCancellRequestInitiatorPM = amendCancellRequestInitiatorQueryService.GetSingle(error.AmendmentRequestInitiatorType, false, true);
-                            if (amendCancellRequestInitiatorPM != null)
-                            {
-                                amendment.AmendmentRequestInitiatorType = amendCancellRequestInitiatorPM.LocalName;
-
-                            }
-
-                            amendment.FieldAmendmentRejectReasonRemarks = error.FieldAmendmentRejectReasonRemarks;
 
                             generalData.AmendmentViews.Add(amendment);
 
@@ -1855,13 +1298,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
         //<--- Yuval Chalup 19.11.2015 TASK-17450
-        public DeclarationPM GetSingleDeclarationByNumber(string number, int tenant, bool getComposition = false)
+        public DeclarationPM GetSingleDeclarationByNumber(string number, int tenant)
         {
             if (String.IsNullOrWhiteSpace(number)) return null;
             var q = repository.GetSingleDeclarationPMByNumber(number, tenant);
 
             var pocos = q.ToList();
-            return pocos.Select(poco => this.GetEntityPM(poco, getComposition, new DeclarationKeys() { Id = pocos.FirstOrDefault().Id })).FirstOrDefault();
+            return pocos.Select(poco => this.GetEntityPM(poco, false, null)).FirstOrDefault();
         }
         //Yuval Chalup 19.11.2015 TASK-17450 --->
 
@@ -1912,31 +1355,35 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationPMs;
         }
 
-        public List<DeclarationPM> GetByConsigmentExportContainerizationID(string containerizationId, int tenant)
-        {
-            var query = repository.GetByConsigmentExportContainerizationID(containerizationId, tenant);
-            List<Declaration> declarations = query.ToList();
-            DeclarationDataMapping mappings = new DeclarationDataMapping();
-            List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
-            foreach (Declaration declaration in declarations)
-            {
-                DeclarationPM declarationPM = new DeclarationPM();
-                mappings.CustomPOCOToPM(declarationPM, declaration);
-                mappings.POCOToPM(declarationPM, declaration);
-                GetComposition(new DeclarationKeys() { Id = declaration.Id, }, declarationPM);
-                declarationPMs.Add(declarationPM);
-            }
-            return declarationPMs;
-        }
-
-
         public int GetInvoiceItemsWithTradeAgreementCount(string declarationId, int tenant)
         {
             return repository.GetInvoiceItemsWithTradeAgreementCount(declarationId, tenant);
         }
 
 
- 
+        public string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant) // moran 3.1.17 - AMI-58876
+        {
+            var setting = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant);
+            if (setting.IsConnectedToUniFreight)
+            {
+                var cntxt = AmitalContext.GetContext(tenant);
+                var myGDFDATAQueryService = new GDFDATAQueryService(cntxt);
+
+                if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+                {
+                    return ("");
+                }
+
+                GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+                if (myGDFDATAPM == null)
+                {
+                    return ("");
+                }
+                return (myGDFDATAPM.DEFDATA);
+            }
+            return ("");
+        }
+
         public override void InitializeSettings() // mohammad 1-3-2017 to initialize properties and other settings from a generated controller.
         {
             this.LoadSupplierInvoicesWithItems = false;
@@ -1994,195 +1441,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public bool IsValidTickets(DeclarationPM declarationPM)
-        {
-            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
-            bool ticketValidStatus = true;
-
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
-            if (customsDocumentsTicketPMList != null && customsDocumentsTicketPMList.Count() > 0)
-            {
-
-                var DocumentsFilingIdList = new List<string>();
-                foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
-                {
-                    if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
-                    {
-                        DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
-                    }
-                }
-                var customsDocumentPMList = new List<CustomsDocumentPM>();
-                if (DocumentsFilingIdList != null)
-                {
-                    var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
-                    customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
-                }
-                if (customsDocumentPMList != null && customsDocumentPMList.Count() > 0)
-
-                {
-                    foreach (var customsDocumentPM in customsDocumentPMList)
-                    {
-                        if (customsDocumentPM.DocumentStatusCode != "1")
-                        {
-                            ticketValidStatus = false;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (IsDocumentMissing(declarationPM))
-            {
-                ticketValidStatus = false;
-
-            }
-
-
-            return ticketValidStatus;
-        }
-
-        public bool CheckDiamondsDeclarationReadyForSending(DeclarationPM declarationPM)
-        {
-            bool declarationReadyForSending;
-
-            // get all documents CONNECTED to the declaration
-            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
-            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
-            var DocumentsFilingIdList = new List<string>();
-            foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
-            {
-                if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
-                {
-                    DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
-                }
-            }
-
-            // if the declaration has no connected document, it can not been sent to the mehes
-            if (DocumentsFilingIdList.Count() == 0)
-            {
-                declarationReadyForSending = false;
-            }
-            else
-            {
-                // get all declaration Customs Document
-                var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
-
-                var customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
-
-
-                //// determine how many supplier invoices documents had been successfully sent to the mekhes
-                //int sentSupplierInvoices = customsDocumentPMList.Where(document => (document.DocumentTypeCode == "380" || document.DocumentTypeCode == "325") && document.DocumentStatusCode == "1").Count();
-
-                //// get all supplier invoices count of the declaration
-                //SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(context);
-                //QueryOperations queryOperations = new QueryOperations();
-                //queryOperations.SetFilter("DeclarationId", declarationPM.Id, false, "Equals", null, false, false, "string");
-                //int declarationSupplierInvoiceCount = supplierInvoiceQuery.GetListCount(queryOperations, declarationPM.Tenant);
-
-                //// the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
-                //declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
-                declarationReadyForSending = myCustomsDocumentQueryService.checkIfExistTicketsForAllSupplierInvoice(declarationPM);
-
-                if (declarationReadyForSending)
-                {
-                    if (declarationPM.ProcedureCurrentCode == "1000041")
-                    {
-                        bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
-                        .All(code => customsDocumentPMList.Any(document => document.DocumentTypeCode.Contains(code)));
-
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"contains code: {containsAllCodes}");
-                        return containsAllCodes;
-                    }
-                    else
-                    {
-                        int shtarMitanDocumentCount = customsDocumentsTicketPMList.Where(document => document.DocumentTypeCode == "419" && !string.IsNullOrEmpty(document.CustomsDocId)).Count();
-                        if (shtarMitanDocumentCount == 0)
-                        {
-                            List<CustomsDocumentsTicketPM> customsDocumentsTicketsWithDeclClosingData = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "ExportDeclarationClosingData").ToList();
-                            shtarMitanDocumentCount = customsDocumentsTicketsWithDeclClosingData.Where(document => document.DocumentTypeCode == "419" && !string.IsNullOrEmpty(document.CustomsDocId)).Count();
-                            if (shtarMitanDocumentCount == 0)
-                            {
-                                Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("shatr mitan with simukhin not found");
-                                declarationReadyForSending = false;
-                            }
-                        }
-                    }                   
-                    //else
-                    //{
-                    //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
-                    //}
-                    /* if need to check for every invoice, the relation between document and invoice is
-                     * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
-                }
-            } 
-            return declarationReadyForSending;
-        }
-
-        public DiamondsDeclarationSummary GetDiamondsDeclarationsCounts(int tenant, List<string> requestedCounts)
-        {
-            var mycontext = CustomContext.GetContext(tenant);
-            IQueryable<Declaration> declaration =
-                 from dc in mycontext.Declarations
-                 where dc.Tenant == tenant
-                     // DiamondsDeclarations query
-                     && dc.Direction == "E" && dc.IsCancelled == false
-                     && dc.AmendmentDontDisplayInList == false && dc.IsDiamondDeclaration == true
-                     && dc.IsExportClosed == false && dc.IsClose == false
-                 select dc;
-
-            DeclarationCustomFilters declarationCustomFilters = new DeclarationCustomFilters();
-            DiamondsDeclarationSummary diamondsDeclarationSummary = new DiamondsDeclarationSummary()
-            {
-                Counts = new Dictionary<string, int>()
-            };
-
-            int total = 0;
-            foreach (var requestedCount in requestedCounts) {
-                var query = declarationCustomFilters.AddDiamondsDeclarationFilter(declaration, requestedCount);
-                if (query != null)
-                {
-                    int count = query.Count();
-                    diamondsDeclarationSummary.Counts[requestedCount] = count;
-                    total += count;
-                }
-            }
-
-            diamondsDeclarationSummary.TotalCount = total;
-            return diamondsDeclarationSummary;
-        }
-
-        public bool IsDocumentMissing(DeclarationPM myDeclarationPM)
-        {
-            var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
-            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(customContext);
-            CustomDocumentTypeQueryService docTypeQuery = new CustomDocumentTypeQueryService(customContext);
-
-            List<CustomDocumentTypePM> documentTypePMs = docTypeQuery.GetMandatoryCustomDocumentTypes(myDeclarationPM.Tenant);
-
-            foreach (var doc in documentTypePMs)
-            {
-                List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(myDeclarationPM.Id, "", "", "", myDeclarationPM.Tenant, "Declaration").Where(r => r.DocumentTypeCode == doc.Code && r.DocumentsFilingId != null).ToList();
-                if (customsDocumentsTicketPMList == null || customsDocumentsTicketPMList.Count() < 1)
-                    return true;
-            }
-
-            return false;
-
-        }
-
-
-        public bool IsMissingMandatoryFields(DeclarationPM declarationPM)
-        {
-            bool isMissingMandatoryFields = false;
-            CustomsRequiredFieldErrors errorsForDeclaration = CustomsRequiredFieldsValidator.GetRequiredFieldErrorsForDeclaration(declarationPM.Id, declarationPM.Tenant, declarationPM);
-            if (errorsForDeclaration != null && errorsForDeclaration.RequiredFields != null && errorsForDeclaration.RequiredFields.Count() > 0)
-            {
-                isMissingMandatoryFields = true;
-            }
-            return isMissingMandatoryFields;
-        }
-
-
         public List<CustomsDocumentsTicketPM> GetDeclarationMandatoryTicket(string declarationId, int tenant)
         {
 
@@ -2225,7 +1483,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var mandatoryTicketWithDocumentNotSend =
                 (from t in listDeclarationTicket.Where(t => t.IsSendMandatory)
                  join d in listDeclarationCustomDocument.Where(d => string.IsNullOrWhiteSpace(d.CustomsDocId))
-                 on t.DocumentsFilingId equals d.DocumentsFilingId
+                 on t.DocumentsFilingId equals d.DocumentsFilingId 
                  select t
                  ).ToList();
             if (mandatoryTicketWithDocumentNotSend.Count > 0)
@@ -2267,7 +1525,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 CargoTypeCode = myDeclaration.Consignments[0].CargoTypeCode;
             }
             var myCustomsDocumentsDefinitionQueryService = new CustomsDocumentsDefinitionQueryService(tenant);
-            var listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, myDeclaration.DeclarationTypeCode, tenant);
+            var listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, tenant);
 
             var ticketDocumentTypeCodeInDB = listDeclarationTicket.Select(r => r.DocumentTypeCode).Distinct().ToList();
             var notInDbTicketActiveMandatory =
@@ -2291,7 +1549,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var supplierInvoiceQueryService = new SupplierInvoiceQueryService(this.context);
 
             List<SupplierInvoicePM> supplierInvoiceList = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationId, tenant, true);
-            if (supplierInvoiceList != null)
+            if(supplierInvoiceList != null)
             {
                 foreach (SupplierInvoicePM item in supplierInvoiceList)
                 {
@@ -2304,465 +1562,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                     }
                 }
             }
+
             return isFreight;
         }
-
-        //public List<DeclarationList> GetDeclarationAmendmentsByIdCache(int Tenant, string id, bool orderById = false)
-        //{
-
-        //    string entityKeyString = $"GetDeclarationAmendmentsByIdCache({id},{Tenant},{orderById})";
-        //    var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(entityKeyString, () =>
-        //    {
-        //        return this.GetDeclarationAmendmentsById(Tenant, id, orderById);
-        //    });
-        //    return res;
-        //}
-        public DeclarationPM GetDeclarationAmendmentByIdAndAmendmentNo(int tenant, string id, string requestNumber)
-        {
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-
-            DeclarationPM decPm = new DeclarationPM();
-            var decs = repository.GetDeclarationAmendmentsById(tenant, id);
-
-            var dec = decs.FirstOrDefault(x => x.AmendmentRequestNumber == requestNumber);
-
-            mapping.CustomPOCOToPM(decPm, dec);
-            mapping.POCOToPM(decPm, dec);
-
-
-            return decPm;
-        }
-        public DeclarationPM GetDeclarationAmendmentByAmendmentRequestNumber(int tenant, string requestNumber)
-        {
-            Declaration declaration = repository.GetDeclarationAmendmentByAmendmentRequestNumber(tenant, requestNumber);
-            DeclarationPM declarationPM = new DeclarationPM();
-            DeclarationDataMapping mapping = new DeclarationDataMapping();
-            if (declaration == null) return null;
-            mapping.CustomPOCOToPM(declarationPM, declaration);
-            mapping.POCOToPM(declarationPM, declaration);
-            return declarationPM;
-        }
-
-        public Declaration GetDataForSIIRequest(string declarationId, int tenant)
-        {
-            Declaration declaration = repository.GetDataForSIIRequest(declarationId, tenant);
-            return declaration;
-        }
-
-        public List<Declaration> GetDeclarationById(int tenant, string id)
-        {
-            List<Declaration> declarations = repository.GetDeclarationById(tenant, id);
-            return declarations;
-        }
-
-        public List<DeclarationList> GetDeclarationAmendmentsById_Cache(int tenant, string id, bool orderById = false)
-        {
-            string key = $"GetDeclarationAmendmentsById({tenant}, {id}, {orderById})";
-            var res = CacheManager.GetOrInsertNewObject<List<DeclarationList>>(key,
-                () =>
-                {
-                    return this.GetDeclarationAmendmentsById(tenant, id, orderById);
-                });
-            return res;
-        }
-
-      
-
-        
-        public List<DeclarationList> GetAllDeclarationPOCOs(int tenant, string customFileNo, string direction)
-        {
-            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-            if (direction != "E")
-            {
-                return
-                  (
-                  from rec in this.context.Declarations
-
-                  join right in this.context.AmendmentStatuses on rec.AmendmentStatus equals right.Code into joined
-                  from j in joined.DefaultIfEmpty()
-
-                  where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
-                  select
-                      new DeclarationList()
-                      {
-                          Id = rec.Id,
-                          Tenant = rec.Tenant,
-                          AmendmentRequestNumber = rec.AmendmentRequestNumber,
-                          DeclarationVersionId = rec.VersionId,
-                          AmendmentStatus = rec.AmendmentStatus,
-                          AmendmentOriginalDeclartation = rec.AmendmentOriginalDeclartation,
-                          AmendmentissueDate = rec.AmendmentissueDate,
-                          IsAmendment = rec.IsAmendment,
-                          AmedmentType = rec.AmedmentType,
-                          AmendmentStatusName = j.Name
-                      }
-                  ).ToList();
-            }
-            else
-            {
-                return
-                (
-                from rec in this.context.Declarations
-
-                join right in this.context.AmendmentRequestStatuses on rec.AmendmentStatus equals right.Code into joined
-                from j in joined.DefaultIfEmpty()
-
-                where rec.CustomFileNo == customFileNo && rec.Tenant == tenant
-                select
-                    new DeclarationList()
-                    {
-                        Id = rec.Id,
-                        Tenant = rec.Tenant,
-                        AmendmentRequestNumber = rec.AmendmentRequestNumber,
-                        DeclarationVersionId = rec.VersionId,
-                        AmendmentStatus = rec.AmendmentStatus,
-                        AmendmentOriginalDeclartation = rec.AmendmentOriginalDeclartation,
-                        AmendmentissueDate = rec.AmendmentissueDate,
-                        IsAmendment = rec.IsAmendment,
-                        AmedmentType = rec.AmedmentType,
-                        AmendmentStatusName = j == null ? null : j.LocalName
-                    }
-                ).ToList();
-            }
-
-        }
-
-        public List<DeclarationList> GetDeclarationAmendmentsById(int tenant, string id, bool orderById = false)
-        {
-
-            List<Declaration> declarations = repository.GetDeclarationAmendmentsById(tenant, id);
-            List<AmendmentStatusPM> amendmentStatusPMs = new List<AmendmentStatusPM>();
-            AmedmentTypeRepository amendmentTypesRepository = new AmedmentTypeRepository(context);
-            List<DeclarationList> declarationLists = new List<DeclarationList>();
-            UserRepository userRepository = new UserRepository(tenant);
-            var amendmentTypes = amendmentTypesRepository.GetAll();
-            var users = userRepository.GetAll();
-            var i = 1;
-            foreach (Declaration item in declarations)
-            {
-
-                DeclarationList declarationList = new DeclarationList()
-                {
-
-                    Id = item.Id,
-                    Tenant = item.Tenant,
-                    AmendmentRequestNumber = item.AmendmentRequestNumber,
-                    DeclarationVersionId = item.VersionId,
-                    AmendmentStatus = item.AmendmentStatus,
-                    AmendmentOriginalDeclartation = item.AmendmentOriginalDeclartation,
-                    AmendmentissueDate = item.AmendmentissueDate,
-                    IsAmendment=item.IsAmendment,
-                    AmedmentType = item.AmedmentType,
-                    ExportCloseAmendRequestNumber = item.ExportCloseAmendRequestNumber,
-                };
-                if (item.AmendmentCorrectedByUserId != null) declarationList.AmendmentCorrectedByUserName = users.FirstOrDefault(x => x.Id == item.AmendmentCorrectedByUserId).Code;
-                if (item.Direction == "E")
-                {
-                    AmendmentRequestStatusRepository amendmentRequestStatusRepository = new AmendmentRequestStatusRepository(context);
-                    var amendmentRequestStatus = amendmentRequestStatusRepository.GetAll();
-                    if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentRequestStatus.FirstOrDefault(x => x.Code == item.AmendmentStatus)?.LocalName;
-                }
-                else
-                {
-                    AmendmentStatusRepository amendmentStatusRepository = new AmendmentStatusRepository(context);
-                    var amendmentStatuses = amendmentStatusRepository.GetAll();
-                    if (item.AmendmentStatus != null) declarationList.AmendmentStatusName = amendmentStatuses.FirstOrDefault(x => x.Code == item.AmendmentStatus).Name;
-                }
-                if (item.AmedmentType != null) declarationList.AmendmentTypeName = amendmentTypes.FirstOrDefault(x => x.Code == item.AmedmentType).Name;
-
-                declarationLists.Add(declarationList);
-            }
-            if (orderById)
-            {
-                declarationLists = declarationLists.OrderBy(x => x.Id).ToList();
-                declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
-
-                return declarationLists.ToList();
-
-
-            }
-            declarationLists = declarationLists.OrderByDescending(x => x.AmendmentissueDate).ToList();
-
-            declarationLists.ForEach(x => { x.AmendmentNumber = i; i++; });
-
-            return declarationLists.ToList();
-
-        }
-
-
-        public ExportStorageConnectToDeclaration GetExportStorageConnectToDeclaration(string declarationId, int tenant) =>
-            new DeclarationRepository(Tenant).GetExportStorageConnectToDeclaration(declarationId, tenant);
-
-
-
-        public DateTime? GetHatraDateForDecId(string decId, int tenant)
-        {
-            return repository.GetHatraDateForDecId(decId, tenant);
-        }
-
-        public List<ContainerizationUniqueConsignment> GetContainerizationUniqueConsignment(List<string> declarationList)
-        {
-            return this.repository.GetContainerizationUniqueConsignment(declarationList);
-        }
-        public Declaration GetDeclarationByDeclarationNum(string decNumber, int tenant)
-        {
-            return repository.GetDeclarationByDeclarationNum(decNumber, tenant);
-        }
-
-        public List<ExportReport1> GetReportDeclarationForExportReport1(DateTime? ExportFrom, DateTime? ExportTo)
-        {
-
-            var ExportReportData = this.repository.GetReportDeclarationForExportReport1(ExportFrom, ExportTo);
-            return ExportReportData;
-        }
-        public List<ExportReport2> GetReportDeclarationForExportReport2(DateTime? ExportFrom, DateTime? ExportTo)
-        {
-
-            var ExportReportData = this.repository.GetReportDeclarationForExportReport2(ExportFrom, ExportTo);
-            return ExportReportData;
-        }
-        public string GetDeclarationByConsignment()
-        {
-            return "";
-        }
-
-        public List<string> CheckDeclarationsInDisplayOnly(string[] declarationIdsList, string[] allWithoutdeclarationIdsList, bool checkboxAll, QueryOperations filter, int tenant)
-        {
-            if (checkboxAll)
-                declarationIdsList = new DeclarationCourierStatusListQueryService(context).GetDeclarationCourierStatusListPendingBulk(filter, tenant).Select(x => x.DeclarationId).ToArray();
-
-            if (checkboxAll && allWithoutdeclarationIdsList != null)
-                declarationIdsList = declarationIdsList.Where(x => !allWithoutdeclarationIdsList.Contains(x)).ToArray();
-
-            string[] sheetStatusInProcessId = Enum.GetNames(typeof(SheetStatusInProcessEnum));
-
-            List<string> res = repository.GetDisplayOnly(declarationIdsList, tenant, sheetStatusInProcessId);
-
-            return res;
-        }
-   
-        public string GetDeclaratNumberByCustomFileNo(int tenant, string customFileNo, string direction)
-        {
-            return this.repository.GetDeclaratNumberByCustomFileNo(tenant, customFileNo, direction);
-        }
-        public Boolean CheckIfDeclarationHasError12195(string declarationID, int tenant)
-        {
-            var errors= this.GetDeclarationErrors(declarationID, tenant, null);
-            if(errors != null && errors.Find(x=>x.ErrorType == "12195") != null)
-            {
-                return true;
-            }
-            return false;
-        }
-		public string GetSignedByUserIdByCustomFileNo(int tenant, string customFileNo)
-		{
-			return this.repository.GetSignedByUserIdByCustomFileNo(tenant, customFileNo);
-		}
-        public DeclarationPM GetDeclarationByExportFile(int tenant, string customFileNo)
-        {
-            Declaration declaration =this.repository.GetDeclarationsByExportFile(tenant, customFileNo);
-            DeclarationDataMapping mappings = new DeclarationDataMapping();
-            DeclarationPM declarationPM = new DeclarationPM();
-            if (declaration != null)
-            {
-                mappings.CustomPOCOToPM(declarationPM, declaration);
-                mappings.POCOToPM(declarationPM, declaration);
-            }
-            return declarationPM;
-        }
-        public List<DeclarationPM> GetDeclarationsByExportFile(int tenant, string exportFile)
-		{
-			List<Declaration> declarations = repository.GetDeclarationsByExportFileNotClose(tenant, exportFile);
-			DeclarationDataMapping mappings = new DeclarationDataMapping();
-			List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
-			foreach (Declaration declaration in declarations)
-			{
-				DeclarationPM declarationPM = new DeclarationPM();
-				mappings.CustomPOCOToPM(declarationPM, declaration);
-				mappings.POCOToPM(declarationPM, declaration);
-				declarationPMs.Add(declarationPM);
-			}
-			return declarationPMs;
-		}
-		public DeclarationPM GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
-		{
-			Declaration declaration = this.repository.GetDeclarationsByHawbAndIntegratore(tenant, hawb, IntegratorCode);
-			DeclarationDataMapping mappings = new DeclarationDataMapping();
-			DeclarationPM declarationPM = new DeclarationPM();
-			if (declaration != null)
-			{
-				mappings.CustomPOCOToPM(declarationPM, declaration);
-				mappings.POCOToPM(declarationPM, declaration);
-			}
-			return declarationPM;
-		}
-        public AmendmentMessageResponse GetAmendmentMessageResponse(string declarationId, int tenant)
-        {
-            var current = this.GetSingle(declarationId, false, false);
-
-            var res = new AmendmentMessageResponse();
-
-            if (current == null)
-            {
-                return res;
-            }
-
-            string tIsAmendment = null;
-            string tExistsAmendments = null;
-            string tExistsClosingAmendments = null;
-            string tClosingProcessStatus = null;
-
-            Func<string> TIsAmendment = () =>
-            {
-                if (tIsAmendment == null)
-                    tIsAmendment = TranslateTextsClass.Translate("Customs.Declaration.O.IsAmendment", tenant, true);
-                return tIsAmendment;
-            };
-
-            Func<string> TExistsAmendments = () =>
-            {
-                if (tExistsAmendments == null)
-                    tExistsAmendments = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", tenant, true);
-                return tExistsAmendments;
-            };
-
-            Func<string> TExistsClosingAmendments = () =>
-            {
-                if (tExistsClosingAmendments == null)
-                    tExistsClosingAmendments = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", tenant, true);
-                return tExistsClosingAmendments;
-            };
-
-            Func<string> TClosingProcessStatus = () =>
-            {
-                if (tClosingProcessStatus == null)
-                    tClosingProcessStatus = TranslateTextsClass.Translate("Customs.General.O.ClosingProcessStatus", tenant, true);
-                return tClosingProcessStatus;
-            };
-
-            if (current.IsAmendment == true && current.AmendmentStatus != "2" && current.AmendmentStatus != null)
-            {
-                if (current.AmedmentType == "2")
-                {
-                    res.AmendmentMessage = "לתצוגה בלבד - " + TIsAmendment() + " מסוג סגירה " + current.AmendmentStatusName;
-                }
-                else
-                {
-                    res.AmendmentMessage = "לתצוגה בלבד - " + TIsAmendment() + " " + current.AmendmentStatusName;
-                }
-                res.IsAmendmentDisplayOnly = true;
-            }
-            else if (current.IsAmendment == true && current.AmendmentStatus == "2")
-            {
-                if (current.AmedmentType == "2")
-                {
-                    res.AmendmentMessage = TIsAmendment() + " מסוג סגירה " + current.AmendmentStatusName;
-                }
-                else
-                {
-                    res.AmendmentMessage = TIsAmendment() + " " + current.AmendmentStatusName;
-                }
-            }
-            else if (current.IsAmendment != true)
-            {
-                var declarations = this.GetAllDeclarationPOCOs(tenant, current.CustomFileNo, current.Direction)
-                                   ?? new List<DeclarationList>();
-
-                DeclarationList declaration = null;
-
-                foreach (var x in declarations)
-                {
-                    if (x == null) continue;
-                    if (x.Id == current.Id) continue;
-
-                    if (x.AmendmentStatus == "1" || x.AmendmentStatus == "3" || x.AmendmentStatus == "6")
-                    {
-                        declaration = x;
-                        break;
-                    }
-                }
-
-                if (declaration != null)
-                {
-                    if (declaration.AmedmentType == "2")
-                    {
-                        res.AmendmentMessage = TExistsClosingAmendments() + " " + declaration.AmendmentStatusName;
-                    }
-                    else
-                    {
-                        res.AmendmentMessage = TExistsAmendments() + " " + declaration.AmendmentStatusName;
-                    }
-                    res.IsAmendmentDisplayOnly = true;
-                }
-                else
-                {
-                    foreach (var x in declarations)
-                    {
-                        if (x == null) continue;
-                        if (x.Id == current.Id) continue;
-
-                        if (x.AmendmentStatus == "2" || x.AmendmentStatus == "4")
-                        {
-                            declaration = x;
-                            break;
-                        }
-                    }
-
-                    if (declaration != null)
-                    {
-                        bool isShowTheMessage = true;
-
-                        if (current.DeclarationNumber != null &&
-                            declaration.AmendmentStatus == "4" &&
-                            ((current.Direction != "E" && current.PaymentDate == null) ||
-                             (current.Direction == "E" && current.IsSubmitDeclaration == false)))
-                        {
-                            isShowTheMessage = false;
-                        }
-
-                        if (isShowTheMessage)
-                        {
-                            if (declaration.AmedmentType == "2")
-                            {
-                                res.AmendmentMessage = TExistsClosingAmendments() + " " + declaration.AmendmentStatusName;
-                            }
-                            else
-                            {
-                                res.AmendmentMessage = TExistsAmendments() + " " + declaration.AmendmentStatusName;
-                            }
-                            res.IsAmendmentDisplayOnly = true;
-                        }
-                    }
-                }
-            }
-
-            if (current.ExportCloseAmendmentStatus == "6" ||
-                current.ExportCloseAmendmentStatus == "7" ||
-                current.ExportCloseAmendmentStatus == "8" ||
-                current.ExportCloseAmendmentStatus == "10" ||
-                current.ExportCloseAmendmentStatus == "11")
-            {
-                if (!string.IsNullOrEmpty(res.AmendmentMessage))
-                    res.AmendmentMessage += ", ";
-
-                res.AmendmentMessage += TClosingProcessStatus() + " " + current.ExportCloseAmendStatusName;
-                res.IsAmendmentDisplayOnly = true;
-            }
-
-            return res;
-        }
-
-    }
-
-    public class DiamondsDeclarationSummary
-    {
-        public Dictionary<string, int> Counts { get; set; }
-        public int TotalCount { get; set; }
-    }
-    public class AmendmentMessageResponse
-    {
-        public string AmendmentMessage { get; set; }
-        public bool IsAmendmentDisplayOnly { get; set; }
     }
 }

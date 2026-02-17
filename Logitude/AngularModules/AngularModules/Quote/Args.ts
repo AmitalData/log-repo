@@ -5,9 +5,6 @@ export class NewQuoteComponentArgs {
     public IsCopyFromQuote: boolean = false; 
     public DefaultCustomerId: string = null;
     public OpportunityId: string = null;
-    public IsCreatedFromTicket: boolean = false;
-    public TicketCreateDate: Date;
-    public ConvertTransportMode: boolean = false;  
 }
 
 export class QuoteEventNotesArgs {
@@ -15,5 +12,4 @@ export class QuoteEventNotesArgs {
     public NotesHeader: string = "Notes";
     public ShowClosingReason: boolean = false;
     public IsConvertQuoteType: boolean = false;
-    public ShowClosingReasonNotes: boolean = false;
 }

@@ -1,48 +1,46 @@
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { ARInvoicePM } from '../../../../Invoice/EntityPMs/ARInvoicePM';
-import { ARInvoiceLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { InvoiceTotalsClass, SummaryItem } from '../../../../Invoice/Args';
-import { InvoiceTool, InvoicePartnerType } from '../../../../Invoice/Tools';
-import { CardList } from '../../../../Common/EntityLists/CardList';
-import { AddressList } from '../../../../Common/EntityLists/AddressList';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { PaymentTermList } from '../../../../Common/EntityLists/PaymentTermList';
-import { VatTypeList } from '../../../../Common/EntityLists/VatTypeList';
-import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
-import { PaymentTermListService } from '../../../../Common/Services/StandardLists/PaymentTermListService';
-import { VatTypeListService } from '../../../../Common/Services/StandardLists/VatTypeListService';
-import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
-import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { UpdateCurrencyRateComponent } from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
-import { VatTypePercentagePM } from '../../../../Common/EntityPMs/VatTypePercentagePM';
-import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
-import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
-import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
-import { CustomerPM } from '../../../../Common/EntityPMs/CustomerPM';
-import { GlobalDomainService } from '../../../../Common/Services/GlobalDomainService';
-import { JournalExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
-import { JournalPM } from '../../../../Accounting/EntityPMs/JournalPM';
-import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { GLAccountPMService } from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
-import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { ARInvoicePMService } from 'Invoice/Services/StandardPMs/ARInvoicePMService';
-declare var window: any;
+import {Component, OnDestroy}  from '@angular/core';
+import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
+import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
+import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {DateTool, AppTool} from '../../../../Infrastructure/Tools';
+import {CurrencyRatesService, LastRate} from '../../../../Common/Services/CurrencyRatesService';
+import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import {InvoiceTotalsClass, SummaryItem} from '../../../../Invoice/Args';
+import {InvoiceTool, InvoicePartnerType} from '../../../../Invoice/Tools';
+import {CardList} from '../../../../Common/EntityLists/CardList';
+import {AddressList} from '../../../../Common/EntityLists/AddressList';
+import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
+import {PaymentTermList} from '../../../../Common/EntityLists/PaymentTermList';
+import {VatTypeList} from '../../../../Common/EntityLists/VatTypeList';
+import {ChargesTypeList} from '../../../../Common/EntityLists/ChargesTypeList';
+import {CardListService} from '../../../../Common/Services/StandardLists/CardListService';
+import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
+import {PaymentTermListService} from '../../../../Common/Services/StandardLists/PaymentTermListService';
+import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatTypeListService';
+import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
+import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
+import {NumbersPipe} from '../../../../Infrastructure/Pipes/NumbersPipe';
+import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
+import {ShipmentReceivablePM} from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
+import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
+import {GlobalDomainService} from '../../../../Common/Services/GlobalDomainService';
+import {JournalExtendedPMService} from '../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
+import {JournalPM} from '../../../../Accounting/EntityPMs/JournalPM';
+import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
+import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
+import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './ARInvoiceDetailsTabGeneral.html',
 })
 
@@ -56,42 +54,18 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsManifest: boolean = false;
     public IsCustomsInvoice: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
-    public IsDatesFieldEnabledWhileCrediting: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ShowLocal: boolean = false;
-    DisplayFieldsFromList: string;
-    DisplayLocalFieldsFromList: string;
-    BillToLovSizeForFullAccounting: number;
-    IsAccountingActivated: boolean = false;
-    public AllowVatTypes: boolean = true;
-    public IsUsingVirtuallization: boolean = false;
-    public InvoicePartners: InvoicePartnerType[] = [];
+    constructor(private entityArgs: EntityArgs) {
+        super();
+       // this.CurrentSession.StartBusyIndicatorLoading();
 
-    public BillToFilter: ApiQueryFilters;
-    public PartnerTypeComboBoxIsDisabled: boolean = true;
- public GLAccountsFilterItems: ApiQueryFilters;
-    public ShowReferenceDate: boolean = false;
-
-    constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
-   
-
-
-      super();
-        // this.CurrentSession.StartBusyIndicatorLoading();
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
-        this.InitLOVFilters();
-        this.BuildPartnersTypes();
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
         this.ObservableItems = new ObservableCollection([]);
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-        this.ShowLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-
-        this.CheckFeatures();
-        this.InitializeBillToLov();
         this.InitializeServices();
         this.InitializeComponent();
         this.SetUIProperties();
@@ -103,86 +77,18 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    get CheckIsFullAccounting() {
-        return SessionLocator.TenantPM.AccountingActivated;
-    }
-    InitLOVFilters() {
-        this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
-    }
-    BuildPartnersTypes() {
-        this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
-        this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
-    }
-
-
-    InitLOVBillToFilters() {
-        this.BillToFilter = new ApiQueryFilters();
-        this.BillToFilter.addAdditionalFilter("ActiveGLAccount", true, null, null, "Equals", true, false, false, "Boolean");
-    }
-
-    public SelectedPartnerType: InvoicePartnerType = null;
-    public BillToDependencyValue1: string;
-    public BillToDependencyValue2: boolean;
-
-    PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
-        if (this.SelectedPartnerType != selected) {
-            this.SelectedPartnerType = selected;
-            
-            if (selected) {
-                this.EntityPM.BillToPartnerTypeId = selected.PartnerTypeId;
-                this.BillToDependencyValue1 = selected.PartnerTypeId;
-                this.BillToDependencyValue2 = selected.IsCustomer;
-            }
-
-            this.SetUIProperties();
-        }
-    }
-
-    get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
-    set BillToPartnerTypeId(newValue: string) {
-        if (this.billToPartnerTypeId != newValue) {
-            this.billToPartnerTypeId = newValue;
-        }
-    }
-
-    private billToPartnerTypeId: string;
-
-
-    SetIsUsingVirtuallization() {
-        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
-        if (hasGridVirtuallizationToggleFeature) {
-            this.IsUsingVirtuallization = true;
-        }
-    }
-
-    private InitializeBillToLov() {
-        this.InitLOVBillToFilters();
-        if (this.IsAccountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
-            this.BillToLovSizeForFullAccounting = 550;
-        }
-    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
-    private SessionEvent: any = null;
-    myEntityPMService: ARInvoicePMService = new ARInvoicePMService();
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
-
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
-                        Object.assign(this.EntityPM, res.Result);
-                        this.SetUIProperties();
-                        this.BuildScreenData();
-                    })
-
-
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
+                    this.BuildScreenData();
                 }
-            });           
+            });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
@@ -191,32 +97,20 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     this.BuildScreenData();
                 }
             });
-            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-                if (s == "IsSignedChanged") {
-                    this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
-                        this.CurrentSession.CurrentEditComponent.EntityPM = res.Result;
-                        this.EntityPM = res.Result;
-                        this.IsSigned = this.EntityPM.IsSigned;
-                    })
-                }
-            });
-
-
         }
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.SessionEvent);
     }
 
     private myCardListService: CardListService;
-    public myCurrencyListService: CurrencyListService;
+    private myCurrencyListService: CurrencyListService;
     private myPaymentTermListService: PaymentTermListService;
     public myVatTypeListService: VatTypeListService;
     public myChargesTypeListService: ChargesTypeListService;
     private myCommonDomainService: CommonDomainService;
-    public myGLAccountPMService: GLAccountPMService;
+    private myGLAccountPMService: GLAccountPMService;
     InitializeServices() {
         this.myCardListService = new CardListService();
         this.myCurrencyListService = new CurrencyListService();
@@ -232,33 +126,20 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.BillToDependencyProperty1 = InvoiceTool.GetBillToPartnerTypes();
     }
 
-
-    CheckFeatures() {
-
-        var table = window.ObjectTables.filter(d => d.Name === 'ARInvoice')[0];
-        var hideVatTypesFeature = FeatureLocator.Features.filter(f => (f.Code == "HideVatTypes") && f.ObjectTableId == table.Id)[0];
-        if (hideVatTypesFeature) {
-            this.AllowVatTypes = false;
-        }
-
-        const invoiceReferenceDate = FeatureLocator.Features.filter(f => (f.Code == "InvoiceReferenceDate") && f.ObjectTableId == table.Id);
-        this.ShowReferenceDate = (invoiceReferenceDate?.length > 0 && this.EntityPM?.ARInvoiceTypeCode != "IT");
-    }
-
     public LocalAmountHeader: string = null;
     public InvoiceAmountHeader: string = null;
     public IsInvoiceAmountHeaderVisible: boolean = false;
     public VATColumnWidth: number = 100;
     public RateColumnWidth: number = 100;
     SetGridColumns() {
-        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmountListLable").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
+        this.LocalAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.LocalCurrencyAmount").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
 
         var invoiceAmountHeader = null;
         var isInvoiceAmountHeaderVisible = false;
         if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
             if (this.InvoiceCurrencyId != SessionLocator.LocalCurrencyId) {
                 isInvoiceAmountHeaderVisible = true;
-                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountListLable").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
+                invoiceAmountHeader = TextCodeTranslator.Translate("ARInvoiceLine.CH.AmountInvoice").replace("%InvoiceCurrencyCode", this.InvoiceCurrencyCode);
             }
         }
 
@@ -309,11 +190,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public AllowManualInvoiceNumber: boolean = false;
     public PaymentTermDisplayInLOV: boolean = true;
     SetUIProperties() {
-
-        this.IsDatesFieldEnabledWhileCrediting
-            = FeatureLocator.HasFeaturePermession("ARInvoice", "DatesFieldEnabledWhileCrediting")
-            && this.EntityPM.IsAutoCredit && this.EntityPM.StatusCode == 'AC' && !this.EntityPM.ApprovedDate;
-
         var isEditingEnabled = InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
 
         if (!AppTool.IsNullOrEmpty(this.BillToAddressId)) {
@@ -322,15 +198,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
         this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ConfirmationNumberStatusName", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
-        this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
+        this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, isEditingEnabled);
-        this.PartnerTypeComboBoxIsDisabled = !isEditingEnabled;
 
         // Generated General Tab
         if (this.EntityPM != null) {
@@ -340,9 +211,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.UIProperties.SetEnabled("HouseNumber", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("MasterNumber", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("CustomerRef", this.ObjectTableName, isEditingEnabled);
+            this.EntityPM.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("SATPaymentMethodCode", this.ObjectTableName, isEditingEnabled);
-            this.EntityPM.UIProperties.SetEnabled("ConfirmationNumberStatusName", this.ObjectTableName, false);
-
         }
 
         this.IsEditingEnabled = isEditingEnabled;
@@ -377,14 +247,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, isFieldRequired);
-        }
-        if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
-            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
-
-        }
-        else{
-            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
-
         }
     }
     SetUIProperties_ExchangeRate() {
@@ -471,7 +333,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             AllowManuallyDueDate = false;
         }
 
-        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || AllowManuallyDueDate);
+        this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
     }
 
     // Bill To
@@ -492,13 +354,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.BillToAddressId = null;
                 this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
                 this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
-                this.glaccount = null;
             }
 
             else {
                 this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        this.cardList = myResponse.Result;
+                        this.cardList= myResponse.Result;
                         if (this.cardList != null) {
                             this.VatNumber = this.cardList.VatNumber;
                             this.BillToName = this.cardList.EnglishName;
@@ -509,24 +370,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                 this.myGLAccountPMService.get(this.cardList.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                                     if (!myResponse.HasError) {
                                         this.glaccount = myResponse.Result;
-                                        if (AppTool.IsNullOrEmpty(this.cardList.InvoiceCurrencyId)) {
-                                            this.SetCurrencyRateData()
-                                        }
                                     }
                                 });
                             }
-                            if(this.VatNumber === SessionLocator.AccountingSettingPM.VatNumber  && InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
-                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
 
-                            }
-                            if(this.VatNumber !== SessionLocator.AccountingSettingPM.VatNumber || !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM)){
-                                this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
-                                
-                            }
                             if (!AppTool.IsNullOrEmpty(this.cardList.InvoiceCurrencyId)) {
                                 this.InvoiceCurrencyId = this.cardList.InvoiceCurrencyId;
                             }
-                           
+
                             if (!AppTool.IsNullOrEmpty(this.cardList.PaymentTermId)) {
                                 this.PaymentTermId = this.cardList.PaymentTermId;
                             }
@@ -556,12 +407,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    get BranchId() { return this.EntityPM.BranchId; }
-    set BranchId(value: string) {
-        if (this.EntityPM.BranchId != value) {
-            this.EntityPM.BranchId = value;
-        }
-    }
 
     get BillToLocalName() { return this.EntityPM.BillToLocalName; }
     set BillToLocalName(newValue: string) {
@@ -626,10 +471,11 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    get IsSigned() { return this.EntityPM.IsSigned; }
-    set IsSigned(value: string) {
-        if (this.EntityPM.IsSigned != value) {
-            this.EntityPM.IsSigned = value;
+    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
+    set ExchangeRateDate(value: Date) {
+        if (this.EntityPM.ExchangeRateDate != value) {
+            this.EntityPM.ExchangeRateDate = value;
+            this.ComputeRelativeRateDate();
         }
     }
 
@@ -640,15 +486,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.myRelativeRateDate = value;
         }
     }
-    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
-    set ExchangeRateDate(value: Date) {
-        if (this.EntityPM.ExchangeRateDate != value) {
-            this.EntityPM.ExchangeRateDate = value;
-            this.ComputeRelativeRateDate();
-        }
-    }
-
-
     ComputeRelativeRateDate() {
         this.RelativeRateDate = DateTool.GetRelativeRateDate(this.InvoiceDate, this.ExchangeRateDate, "old");
     }
@@ -693,26 +530,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
-    get ConfirmationNumber() { return this.EntityPM.ConfirmationNumber; }
-    set ConfirmationNumber(newValue: string) {
-        if (this.EntityPM.ConfirmationNumber != newValue) {
-            this.EntityPM.ConfirmationNumber = newValue;
-        }
-    }
-    get ConfirmationNumberStatusName() { return this.EntityPM.ConfirmationNumberStatusName; }
-    set ConfirmationNumberStatusName(newValue: string) {
-        if (this.EntityPM.ConfirmationNumberStatusName != newValue) {
-            this.EntityPM.ConfirmationNumberStatusName = newValue;
-        }
-    }
-
-    get ReferenceDate() { return this.EntityPM.ReferenceDate; }
-    set ReferenceDate(newValue: Date) {
-        if (this.ShowReferenceDate && this.EntityPM.ReferenceDate != newValue) {
-            this.EntityPM.ReferenceDate = newValue;
-        }
-    }
-
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
         if (this.EntityPM.PaymentTermId != newValue) {
@@ -752,10 +569,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             InvoiceTool.ComputeARInvoiceDueDate(this.EntityPM);
             this.ComputeRelativeRateDate();
             this.UpdateData();
-
-            if (!this.ReferenceDate) {
-                this.ReferenceDate = this.EntityPM.InvoiceDate;
-            }
         }
     }
 
@@ -988,16 +801,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 myRate = 1;
             }
 
-
             else {
-                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.InvoiceCurrencyId);
-                if (lastRate) {
-                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId  : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.InvoiceCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
-                    const customRate = exchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : null;
-
-                    myRate = customRate ?? lastRate.Rate;
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.InvoiceCurrencyId)[0];
+                if (lastRate != null) {
+                    myRate = lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
             }
@@ -1015,14 +822,9 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             else {
-                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
-                const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
-                if (lastRate) {
-                    const customRate = exchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : null;
-
-                        myResult = customRate ?? lastRate.Rate;
+                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
+                if (lastRate != null) {
+                    myResult = lastRate.Rate;
                 }
             }
         }
@@ -1043,7 +845,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     myResult = lastRate.ValueDate;
                 }
             }
-            
         }
 
         return myResult;
@@ -1083,7 +884,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     BuildScreenData() {
-        this.SetIsUsingVirtuallization();
         if (this.IsEditingEnabled) {
             this.LoadData();
         }
@@ -1123,7 +923,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 }
 
                 if (tempList.indexOf(line) == -1) {
-                    this.ItemsSource.push(new ARInvoiceLineItem(line, this, false));
+                    this.ItemsSource.push(new ARInvoiceLineItem(line, this,false));
                 }
             });
 
@@ -1486,12 +1286,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         var line: ARInvoiceLinePM = new ARInvoiceLinePM(null);
         line.Tenant = SessionLocator.TenantPM.Id;
         line.ARInvoiceId = this.EntityPM.Id;
-        line.ForiegnCurrencyId = "";
-        line.ForiegnCurrencyCode = "";
+        line.ForiegnCurrencyId = this.InvoiceCurrencyId;
+        line.ForiegnCurrencyCode = this.InvoiceCurrencyCode;
         line.ForiegnExchangeRate = this.InvoiceCurrencyExchangeRate;
-
-        line.InvoiceCurrencyCode = this.InvoiceCurrencyCode;
-        line.InvoiceCurrencyId = this.InvoiceCurrencyId;
+        line.LineActionCode = "1";
         var logWindow = new LogitudeWindow();
         logWindow.Title = TextCodeTranslator.Translate("ARInvoiceLine.O.EditInvoiceLine");
         var addEditViewModel: ARInvoiceLineItem = new ARInvoiceLineItem(line, this, true);
@@ -1527,8 +1325,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;
     public ObjectTableName = "ARInvoiceLine";
     public DataContext = this;
-
-    constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabGeneral, public AddNewLineMode) {
+    constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabGeneral, public AddNewLineMode ) {
         super();
         this.EntityPM = entityPM;
         this.ReadIsMatched();
@@ -1536,19 +1333,12 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.ReadVatTypeData();
         this.ComputeRelativeRateDate();
         this.SetUIProperties();
-
-        if (this.EntityPM.ForiegnCurrencyCode != null) {
-            this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.EntityPM.ForiegnCurrencyCode);
-        } else {
-            this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", "");
-        }
     }
 
     public IsEditingEnabled: boolean = false;
     public IsRateEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
-
         this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
 
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
@@ -1574,14 +1364,7 @@ export class ARInvoiceLineItem extends BaseComponent {
 
 
         this.SetUIProperties_Rate();
-        this.SetUIProperties_ReceivableCreditGLAccountId();
     }
-
-    SetUIProperties_ReceivableCreditGLAccountId() {
-        this.UIProperties.SetRequired("ReceivableCreditGLAccountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.ReceivableCreditGLAccountId));
-        this.UIProperties.SetEnabled("ReceivableCreditGLAccountId", this.ObjectTableName, this.IsEditingEnabled && AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId));
-    }
-
     SetUIProperties_Rate() {
         var isFieldEnabled = false;
 
@@ -1658,22 +1441,12 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.EntityReference = newValue;
         }
     }
-    public AmountForiegnLabel: string;
+
     get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyId != newValue) {
             this.EntityPM.ForiegnCurrencyId = newValue;
             this.SetCurrencyRateData();
-            this.fatherComponent.myCurrencyListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var list: CurrencyList = myResponse.Result;
-                    if (list != null) {
-                        this.ForiegnCurrencyCode = list.Code;
-
-                        this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.ForiegnCurrencyCode);
-                    }
-                }
-            });
         }
     }
 
@@ -1689,14 +1462,9 @@ export class ARInvoiceLineItem extends BaseComponent {
             else {
                 var lastRate: LastRate = this.fatherComponent.LastRatesList.filter(d => d.ForeignCurrencyId == this.ForiegnCurrencyId)[0];
                 if (lastRate != null) {
-                    const exchangeRateId = !this.fatherComponent.glaccount?.IsMultiCurrency ? this.fatherComponent.glaccount?.ExchangeRateId  : this.fatherComponent.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.ForiegnCurrencyId)?.ExchangeRateId ?? this.fatherComponent.glaccount?.ExchangeRateId;
-                    const customRate = exchangeRateId 
-                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
-                        : null;
-                    myRate = customRate ?? lastRate.Rate;
+                    myRate = lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
-               
             }
         }
 
@@ -1708,28 +1476,6 @@ export class ARInvoiceLineItem extends BaseComponent {
     set ForiegnCurrencyCode(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyCode != newValue) {
             this.EntityPM.ForiegnCurrencyCode = newValue;
-
-        }
-    }
-
-    get ReceivableCreditGLAccountId() { return this.EntityPM.ReceivableCreditGLAccountId; }
-    set ReceivableCreditGLAccountId(value: string) {
-        if (this.EntityPM.ReceivableCreditGLAccountId != value) {
-            this.EntityPM.ReceivableCreditGLAccountId = value;
-            if(!AppTool.IsNullOrEmpty(value) && AppTool.IsNullOrEmpty(this.chargesTypeList?.ReceivableCreditGLAccountId))    {}
-            this.fatherComponent.myGLAccountPMService.get(this.ReceivableCreditGLAccountId).subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                     this.ReceivableCreditGLAccountName = this.fatherComponent.isRTL ? myResponse?.Result?.LocalName : myResponse?.Result?.EnglishName;
-                 
-                }
-            });
-            this.SetUIProperties_ReceivableCreditGLAccountId();
-        }
-     }
-     get ReceivableCreditGLAccountName() { return this.EntityPM.ReceivableCreditGLAccountName }
-     set ReceivableCreditGLAccountName(value: string) {
-      if (this.EntityPM.ReceivableCreditGLAccountName != value) {
-            this.EntityPM.ReceivableCreditGLAccountName = value;
         }
     }
 
@@ -1744,12 +1490,6 @@ export class ARInvoiceLineItem extends BaseComponent {
     set InvoiceCurrencyCode(newValue: string) {
         if (this.EntityPM.InvoiceCurrencyCode != newValue) {
             this.EntityPM.InvoiceCurrencyCode = newValue;
-        }
-    }
-    get InvoiceCurrencyId() { return this.EntityPM.InvoiceCurrencyId; }
-    set InvoiceCurrencyId(newValue: string) {
-        if (this.EntityPM.InvoiceCurrencyId != newValue) {
-            this.EntityPM.InvoiceCurrencyId = newValue;
         }
     }
 
@@ -1784,10 +1524,8 @@ export class ARInvoiceLineItem extends BaseComponent {
                 this.Description = null;
                 this.LocalDescription = null;
                 this.VatTypeId = null;
-                this.LineActionCode = null;
-                this.chargesTypeList = null;
-                this.ReceivableCreditGLAccountId = null;
             }
+
             else {
                 this.fatherComponent.myChargesTypeListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
@@ -1796,16 +1534,6 @@ export class ARInvoiceLineItem extends BaseComponent {
                             this.Description = this.chargesTypeList.EnglishName;
                             this.LocalDescription = this.chargesTypeList.LocalName;
                             this.VatTypeId = this.chargesTypeList.VatTypeId;
-                            this.LineActionCode = this.chargesTypeList.IsExpense ? '2' : '1';
-                            this.ReceivableCreditGLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
-
-                            if (!AppTool.IsNullOrEmpty(this.chargesTypeList.ReceivableCreditGLAccountId)) {
-                                this.fatherComponent.myGLAccountPMService.get(this.chargesTypeList.ReceivableCreditGLAccountId).subscribe((myResponse: ServiceResponse) => {
-                                    if (!myResponse.HasError) {
-                                        this.ReceivableCreditGLAccountName = myResponse?.Result?.LocalName;
-                                    }
-                                });
-                            }
                         }
                     }
                 });
@@ -1817,38 +1545,6 @@ export class ARInvoiceLineItem extends BaseComponent {
     set Description(newValue: string) {
         if (this.EntityPM.Description != newValue) {
             this.EntityPM.Description = newValue;
-        }
-    }
-    get ValueDate() { return this.EntityPM.ValueDate; }
-    set ValueDate(newValue: Date) {
-        if (this.EntityPM.ValueDate != newValue) {
-            this.EntityPM.ValueDate = newValue;
-        }
-    }
-    get LineActionCode() { return this.EntityPM.LineActionCode; }
-    set LineActionCode(newValue: string) {
-        if (this.EntityPM.LineActionCode != newValue) {
-            this.EntityPM.LineActionCode = newValue;
-        }
-    }
-    get ReportedinTaxReport() { return this.EntityPM.ReportedinTaxReport; }
-    set ReportedinTaxReport(newValue: string) {
-        if (this.EntityPM.ReportedinTaxReport != newValue) {
-            this.EntityPM.ReportedinTaxReport = newValue;
-        }
-    }
-
-    get GLAccountLocalName() { return this.EntityPM.GLAccountLocalName; }
-    set GLAccountLocalName(newValue: string) {
-        if (this.EntityPM.GLAccountLocalName != newValue) {
-            this.EntityPM.GLAccountLocalName = newValue;
-        }
-    }
-
-    get GLAccountDisplayNumber() { return this.EntityPM.GLAccountDisplayNumber; }
-    set GLAccountDisplayNumber(newValue: string) {
-        if (this.EntityPM.GLAccountDisplayNumber != newValue) {
-            this.EntityPM.GLAccountDisplayNumber = newValue;
         }
     }
 
@@ -1947,7 +1643,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     get VatPercentage() { return this.EntityPM.VatPercentage; }
     set VatPercentage(newValue: number) {
         if (this.EntityPM.VatPercentage != newValue) {
-            this.EntityPM.VatPercentage = AppTool.Round(newValue, 3);
+            this.EntityPM.VatPercentage = AppTool.Round(newValue, 2);
             this.ReadVatTypeData();
             this.ReCalculateTotals();
         }
@@ -1961,11 +1657,9 @@ export class ARInvoiceLineItem extends BaseComponent {
         var myColor: string = "#282E30";
         var isUpdateVisible = false;
 
-        var pipe: NumbersPipe = new NumbersPipe();
-
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
             if (this.VatPercentage != null) {
-                myValue = this.VatTypeName + " (" + pipe.transform(this.VatPercentage, "N3") + "%)";
+                myValue = this.VatTypeName + " (" + this.VatPercentage + "%)";
                 myColor = "#282E30";
                 isUpdateVisible = false;
             }
@@ -2086,9 +1780,6 @@ export class ARInvoiceLineItem extends BaseComponent {
         }
     }
 
-
-
-
     ReCalculateTotals() {
         if (this.Exists) {
             this.fatherComponent.ComputeTotals();
@@ -2157,20 +1848,18 @@ export class ARInvoiceLineItem extends BaseComponent {
         this.fatherComponent.ComputeTotals();
     }
     OnInvoiceExchangeRateChanged() {
-        if (this.fatherComponent.IsEditingEnabled) {
-            if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
-                this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
-            }
-
-            else {
-                this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
-            }
-
-            this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
-
-            this.ComputeRelativeRateDate();
-            this.CalculateInvoiceCurrencyAmount();
+        if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {
+            this.ForiegnExchangeRate = this.fatherComponent.InvoiceCurrencyExchangeRate;
         }
+
+        else {
+            this.ForiegnExchangeRate = this.fatherComponent.GetCurrencyRate(this.ForiegnCurrencyId);
+        }
+
+        this.ExchangeRateDate = this.fatherComponent.GetCurrencyRateDate(this.ForiegnCurrencyId);
+
+        this.ComputeRelativeRateDate();
+        this.CalculateInvoiceCurrencyAmount();
     }
     CalculateInvoiceCurrencyAmount() {
         if (this.ForiegnCurrencyId == this.fatherComponent.InvoiceCurrencyId) {

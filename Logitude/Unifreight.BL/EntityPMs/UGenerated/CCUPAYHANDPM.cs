@@ -26,17 +26,17 @@ namespace Unifreight.BL.EntityPMs
         [DataMember]
         public DateTime? HANDDATE { get; set; }
         [DataMember]
-        public int? HANDTYPE { get; set; }
+        public bool? HANDTYPE { get; set; }
         [DataMember]
         public string IMPORTERNAME { get; set; }
         [DataMember]
         public string OBJECTIONEXPLAIN { get; set; }
         [DataMember]
-        public decimal? PAYTAX { get; set; }
+        public double? PAYTAX { get; set; }
         [DataMember]
         public string PROCESSWANT { get; set; }
         [DataMember]
-        public decimal? REJECTTAX { get; set; }
+        public double? REJECTTAX { get; set; }
         [DataMember]
         public int? REQUESTCODE { get; set; }
         [DataMember]
@@ -48,16 +48,10 @@ namespace Unifreight.BL.EntityPMs
         [DataMember]
         public DateTime? TIME7 { get; set; }
         [DataMember]
-        public decimal? TOTALPAYDEPOSIT { get; set; }
+        public double? TOTALPAYDEPOSIT { get; set; }
         [DataMember]
-        public decimal? TOTALPAYTAX { get; set; }
+        public double? TOTALPAYTAX { get; set; }
         [DataMember]
         public string TRANSIMPORTERNAME { get; set; }
-
-        public int Tenant { get; set; }
-
-        public bool IS_SYNCH { get; set; }
-
-        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

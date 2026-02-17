@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
@@ -37,7 +37,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsBackToBack { get; set; }
         public bool IsExpense { get; set; }
         public string PrepaidCollectId { get; set; }
-        public DateTime? AutomaticLastUpdateDate { get; set; }
 
         [ForeignKey("LineActionCode")]
         public virtual ARInvoiceLineAction ARInvoiceLineAction { get; set; }
@@ -65,9 +64,5 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         [ForeignKey("PrepaidCollectId")]
         public virtual PrepaidCollect PrepaidCollect { get; set; }
-        public double? InvoiceCurrencyExchangeRate { get; set; }
-
-        public bool IsRegionalTax { get; set; }
-        public string ReceivableCreditGLAccountId { get; set; }
     }
 }

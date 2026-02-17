@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -24,21 +24,21 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 
             this.Property(t => t.CreatedBy)
                 .IsRequired()
-                .HasMaxLength(40)
+                .HasMaxLength(15)
                 .IsUnicode(false);
 
             this.Property(t => t.UpdatedBy)
                 .IsRequired()
-                .HasMaxLength(40)
+                .HasMaxLength(15)
                 .IsUnicode(false);
 
             this.Property(t => t.Name)
                 .HasMaxLength(100)
-                .IsUnicode(true);
+                .IsUnicode(false);
 
             this.Property(t => t.Description)
                 .HasMaxLength(200)
-                .IsUnicode(true);
+                .IsUnicode(false);
 
             this.Property(t => t.LastRunResult)
                 .HasMaxLength(150)
@@ -65,26 +65,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
               .HasMaxLength(25)
               .IsUnicode(false);
             this.Property(t => t.AverageRunTime);
-
-            this.Property(t => t.EntityId)
-                .HasMaxLength(15)
-                .IsUnicode(false);
-
-            this.Property(t => t.ResultType)
-               .HasMaxLength(10)
-               .IsUnicode(false);
-
-            this.Property(t => t.Format)
-                .HasMaxLength(20)
-                .IsUnicode(true);
-
-            this.Property(t => t.AdvancedFormat)
-               .HasMaxLength(20)
-               .IsUnicode(true);
-
-            this.Property(t => t.ExecutedByServerName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("TasksScheduler");
@@ -129,11 +109,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.LastRunEndTimeUTC).HasColumnName("LastRunEndTimeUTC"); 
             this.Property(t => t.LastRunEndTime).HasColumnName("LastRunEndTime");
             this.Property(t => t.AverageRunTime).HasColumnName("AverageRunTime");
-            this.Property(t => t.EntityId).HasColumnName("EntityId");
-            this.Property(t => t.ResultType).HasColumnName("ResultType");
-            this.Property(t => t.Format).HasColumnName("Format");
-            this.Property(t => t.AdvancedFormat).HasColumnName("AdvancedFormat");
-            this.Property(t => t.ExecutedByServerName).HasColumnName("ExecutedByServerName");
 
 
         }

@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -51,8 +51,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             };
 
             this.InitializeComponent();
-            
-            MessagingStockTracing.Trace(entityPM, entityPoco, entityPM.CreatedByUserId, isNewEntity);
+
+            MessagingStockTracing.Trace(entityPM, entityPoco, loggedContact.Id, isNewEntity);
             ShipmentMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
             entityRepository.Add(entityPoco);
@@ -77,8 +77,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (isNewEntity)
             {
-                entityPM.CreatedByUserId = entityPM.CreatedByUserId != null ? entityPM.CreatedByUserId: loggedContact.Id;
-                entityPM.UpdatedByUserId = entityPM.UpdatedByUserId != null ? entityPM.UpdatedByUserId : loggedContact.Id;
+                entityPM.CreatedByUserId = loggedContact.Id;
+                entityPM.UpdatedByUserId = loggedContact.Id;
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.UpdateDate = entityPM.CreateDate;
                 entityPM.Remaining = entityPM.Amount;

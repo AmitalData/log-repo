@@ -18,12 +18,12 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using System.Reflection;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -90,7 +90,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentReceivablePM> GetMasterReceivables(string masterId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentReceivablePM> result = new List<ShipmentReceivablePM>();
             
@@ -119,7 +119,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentReceivablePM> GetAllMasterHousesReceivables(List<string> housesIds, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentReceivablePM> myResult = new List<ShipmentReceivablePM>();
             ShipmentReceivableQuery receivablesQuery = new ShipmentReceivableQuery(tenant);
@@ -140,7 +140,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentPayablePM> GetAllMasterHousesPayables(List<string> housesIds, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-          //  SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentPayablePM> myResult = new List<ShipmentPayablePM>();
             ShipmentPayableQuery query = new ShipmentPayableQuery(tenant);
@@ -161,7 +161,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentReceivablePM> GetMasterReceivablesForProfit(string masterId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-          //  SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentReceivablePM> result = new List<ShipmentReceivablePM>();
             shipmentQuery = new ShipmentQuery(tenant);
@@ -189,7 +189,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public List<ShipmentPayablePM> GetMasterPayablesForProfit(string masterId, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             List<ShipmentPayablePM> result = new List<ShipmentPayablePM>();
             shipmentQuery = new ShipmentQuery(tenant);
@@ -213,7 +213,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         public IQueryable<ShipmentList> GetMasterFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             shipmentRepository = new ShipmentRepository(tenant);
            
@@ -258,7 +258,8 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                              MainCarriageATD = f.MainCarriageATD,
                              CreateDateTime = f.CreateDateTime,
                              ShipmentNumber = f.ShipmentNumber,
-                             ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,                             
+                             ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
+                             Routing = (f.PreCarriageFromPortCode != null ? f.PreCarriageFromPortCode + " > " : "") + (f.MasterShipmentDataId != null ? (f.MainCarriageFromPortCode != null ? f.MainCarriageFromPortCode + " > " : "") + (f.MainCarriageFinalDestinationPortCode != null ? (f.OnCarriageToPortCode != null ? f.MainCarriageFinalDestinationPortCode + " > " + f.OnCarriageToPortCode : f.MainCarriageFinalDestinationPortCode) : "") : ((f.FromPortCode != null ? f.FromPortCode + " > " : "") + (f.ToPortCode != null ? (f.OnCarriageToPortCode != null ? f.ToPortCode + " > " + f.OnCarriageToPortCode : f.ToPortCode) : ""))),
                              AgentName = f.AgentName,
                              CustomerReference1 = f.CustomerReference1,
                              CustomerReference2 = f.CustomerReference2,
@@ -393,17 +394,26 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             query2 = query2.Take(queryOperations.PageSize);
 
             List<ShipmentList> listQuery = query2.ToList();
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-            customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            foreach (ObjectField field in customFields)
+            {
+                foreach (ShipmentList shipmentList in listQuery)
+                {
+                    PropertyInfo propInfo = typeof(ShipmentList).GetProperty(field.FieldName);
+                    object newValue = customFieldResolver.GetFieldValue(shipmentList, field, tenant);
 
+                    propInfo.SetValue(shipmentList, newValue, null);
+                }
+            }
             return listQuery.AsQueryable();
         }
 
         public int GetMasterFiltersCount(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
             shipmentRepository = new ShipmentRepository(tenant);
             
@@ -562,7 +572,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
         {
             shipmentQuery = new ShipmentQuery(tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
-            //SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+            SecurityUtility.CheckContactFeature("Master", "READ", tenant);
             return shipmentQuery.GetShipmentPMsByMasterIdAndTenant(masterId, tenant);
         }
 

@@ -24,7 +24,7 @@ import {BookingWizardArgs} from '../../../../Booking/Args';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FlightsSchedulesComponent.html',
 })
 
@@ -70,7 +70,7 @@ export class FlightsSchedulesComponent extends BaseComponent {
     SetWindowArgs(args: FlightsSchedulesArgs) {
         this.args = args; 
 
-        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("FlightsSchedulesRequest").subscribe(response => {
             this.IsResourcesReady = true;
 
             if (args.BookingPM != null) {

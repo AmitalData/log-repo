@@ -1,9 +1,0 @@
-﻿<Script DBType="Main" Module="Common" AOT="true" TargetTableName="Contacts">
-  <Sql Version="1">
-    <![CDATA[
-    Update Contacts  
-      set  DigitalPortalLanguage = 'EN'
-      where $LastCounterWhere$
-    ]]>
-  </Sql>
-</Script>

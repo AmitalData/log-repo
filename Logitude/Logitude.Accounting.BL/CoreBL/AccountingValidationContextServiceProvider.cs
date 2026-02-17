@@ -13,9 +13,6 @@ using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -52,25 +49,16 @@ namespace Logitude.Accounting.BL.CoreBL
             var newExternalReconcileDataProvider = new ExternalReconcileDataProvider(_AccountingContext);
             var myFullAccountingSettingPM = FullAccountingSettingQueryService.Get(journalPM.Tenant);
             var myAccountingSettingResolver = new AccountingSettingResolver();
-            var newIJournalValidatorRateDataProvider = new JournalValidatorRateDataProvider(journalPM.Tenant);
-            string tenantCurrencyId = GetTenantCurrencyId(journalPM.Tenant);
+
+
             return NewJournalValidatorContext(journalPM, accountingPeriodsByTypeRegular, 
                 newJournalValidatorDataProvider,
                 newExternalReconcileDataProvider,
                 myAccountingSettingResolver,
                 myFullAccountingSettingPM,
-                SuppressCheckGLAccountIsMultiCurrencyWI40640,
-                newIJournalValidatorRateDataProvider,
-                tenantCurrencyId
-
+                SuppressCheckGLAccountIsMultiCurrencyWI40640
+                
                 );
-        }
-
-        private static string GetTenantCurrencyId(int tenant)
-        {
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            var tenantPM = tenantQuery.GetSinglePM(tenant);
-            return tenantPM.CurrencyId;
         }
 
         public static ValidationContext NewJournalValidatorContext(
@@ -81,7 +69,7 @@ namespace Logitude.Accounting.BL.CoreBL
             IAccountingSettingResolver newAccountingSettingResolver,
             FullAccountingSettingPM myFullAccountingSettingPM,
             bool SuppressCheckGLAccountIsMultiCurrencyWI40640,
-            IJournalValidatorRateDataProvider journalValidatorRateDataProvider,string tenantCurrencyId,
+            
             DateTime? DateTimeUtcNow = null
             )
         {
@@ -90,15 +78,13 @@ namespace Logitude.Accounting.BL.CoreBL
             contextServiceProvider.AddService<IJournalValidatorContextDataProvider>(newJournalValidatorDataProvider);
             contextServiceProvider.AddService<IAccountingSettingResolver>(newAccountingSettingResolver);
             contextServiceProvider.AddService<IExternalReconcileDataProvider>(newExternalReconcileDataProvider);
-            contextServiceProvider.AddService<IJournalValidatorRateDataProvider>(journalValidatorRateDataProvider);
-
+            
 
             //var myFullAccountingSettingPM = FullAccountingSettingQueryService.Get(journalPM.Tenant);
 
             var contextItems = new Dictionary<object, object>
             {
                 { JournalValidator.K_AccountingPeriodsByTypeRegular, accountingPeriodsByTypeRegular },
-                { JournalValidator.K_TenantCurrencyId, tenantCurrencyId },
                 { JournalValidator.K_FullAccountingSettingPM, myFullAccountingSettingPM },
                 {
                     JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640 //טיפול בסרביס לפקודת יומן - במקרה של כרטיס מפוצל לרשום על הפיצול
@@ -160,13 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return a.GetLedgerTransactionPMsByIdList(transactionIdList, tenant);
         }
 
-        public List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<string> transactionIdList, int tenant)
-        {
-            var a = new LedgerTransactionQueryService(_AccountingContext);
-            return a.GetLedgerTransactionJournalLineLTsByIdList(transactionIdList, tenant);
-        }
-
-
+        
     }
     public class JournalValidatorDataProvider : IJournalValidatorContextDataProvider
     {
@@ -181,22 +161,15 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public GLAccountPM GetGLAccount(string GLAccountId, int tenant)
         {
-            bool fromCache = true;//ohad said :NOT USUAL SCENARIO
             var a = new GLAccountQueryService(_AccountingContext);
-            return a.GetSingle(GLAccountId, false, fromCache);
+            return a.GetSingle(GLAccountId, false, true);
         }
 
 
         public Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM GetCurrency(string CurrencyId, int tenant)
         {
-
-
-            string key = $"GetCurrency_P({tenant})";
-            return CacheManager.GetOrInsertNewObject<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM>(key, () =>
-            {
-                var a = new CurrencyQuery(tenant);
-                return a.GetSinglePM(CurrencyId, tenant);
-            });
+            var a = new CurrencyQuery(tenant);
+            return a.GetSinglePM(CurrencyId, tenant);
         }
 
 
@@ -226,44 +199,5 @@ namespace Logitude.Accounting.BL.CoreBL
         }
     }
 
-
-
-
-
-
-
-
-
-
-    public class JournalValidatorRateDataProvider : IJournalValidatorRateDataProvider
-    {
-        
-
-        public JournalValidatorRateDataProvider(int tenant)
-        {
-            this.Tenant = tenant;
-
-
-        }
-
-        public int Tenant { get; }
-
-        public bool ExistRate(string TenantCurrency, string foreignCurrencyId, DateTime? date, int tenent)
-        {
-            var webFreightContext = WebFreightContext.GetContext(this.Tenant);
-            var ratesTableRepository = new RatesTableRepository(webFreightContext);
-
-            var entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(TenantCurrency, foreignCurrencyId, date, tenent);
-            if (entityPoco == null)
-            {
-                return false;
-            }
-            return true; 
-
-        }
-
-
-
-    }
-
+ 
 }

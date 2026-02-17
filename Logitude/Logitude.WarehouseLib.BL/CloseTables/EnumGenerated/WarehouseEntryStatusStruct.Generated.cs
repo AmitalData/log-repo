@@ -12,7 +12,6 @@ namespace Logitude.WarehouseLib.BLs
     {   
        public const string Created = "CREA";  
        public const string Entered = "ENTE";  
-       public const string Cancelled = "CAEA";  
     }
 }
 

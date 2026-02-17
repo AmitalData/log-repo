@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Logitude.Accounting.BL.Validators;
-using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
@@ -58,15 +57,13 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
 
 
-            GLAccountRepository gLAccountMoreDataRepository = new GLAccountRepository(_JournalLine.Tenant);
 
             //GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(_JournalLine.Tenant);
-            var parentAccount = gLAccountMoreDataRepository.GetSingle(_JournalLine.CreditAccountId, _JournalLine.Tenant);
-            //GLAccountPM parentAccount  ///gLAccountQueryService.GetSingle(_JournalLine.CreditAccountId, false, false);
-            //= GetGLAccountPM(_JournalLine.CreditAccountId, _JournalLine.Tenant);
+            GLAccountPM parentAccount  ///gLAccountQueryService.GetSingle(_JournalLine.CreditAccountId, false, false);
+            = GetGLAccountPM(_JournalLine.CreditAccountId, _JournalLine.Tenant);
             if (parentAccount == null)
             {
-                throw new ApplicationException("CreditAccountId is not valid");
+                throw new Exception("CreditAccountId is not valid");
             }
             if ((!string.IsNullOrWhiteSpace(parentAccount.AccountTypeCode)) &&
                 (parentAccount.AccountTypeCode != ((int)GLAccountTypePM.GLAccountTypeEnum.Card).ToString())
@@ -76,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
                 if (parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)
                 {
-                    throw new ApplicationException("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
+                    throw new Exception("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
                 }
                 MyLedgerTransaction.ControlAccountId = _JournalLine.CreditControlAccountId;
                 //if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
@@ -85,11 +82,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 //}
                 if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
                 {
-                    throw new ApplicationException("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
+                    throw new Exception("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
                 }
                 //if (MyLedgerTransaction.ControlAccountId != _JournalLine.CreditControlAccountId)
                 //{
-                //    throw new ApplicationException("(MyLedgerTransaction.ControlAccountId != _JournalLine.CreditControlAccountId)");
+                //    throw new Exception("(MyLedgerTransaction.ControlAccountId != _JournalLine.CreditControlAccountId)");
                 //}
             }
             else

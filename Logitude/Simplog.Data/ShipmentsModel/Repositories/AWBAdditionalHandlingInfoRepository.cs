@@ -26,9 +26,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             myContext = context;
         }
 
-        public AWBAdditionalHandlingInfo GetSingleAWBAdditionalHandlingInfo(string id, int tenant)
+        public AWBAdditionalHandlingInfo GetSingleAWBAdditionalHandlingInfo(string id)
         {
-            return (from a in Context.AWBAdditionalHandlingInfos where a.Id == id && a.Tenant == tenant select a).FirstOrDefault();
+            return (from a in Context.AWBAdditionalHandlingInfos where a.Id == id select a).FirstOrDefault();
         }
 
         public AWBAdditionalHandlingInfo GetSingleAWBAdditionalHandlingInfoByCode(string code, int tenant)

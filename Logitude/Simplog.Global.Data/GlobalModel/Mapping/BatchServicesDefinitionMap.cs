@@ -14,7 +14,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
         public BatchServicesDefinitionMap()
         {
             this.HasKey(t => t.Code);
-            this.Property(t => t.Code).IsRequired().HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.Code).IsRequired().HasMaxLength(40).IsUnicode(false);
             //this.Property(t => t.InActive);
             //this.Property(t => t.NumberOfThreads);
             this.Property(t => t.ClassName).IsRequired().HasMaxLength(100).IsUnicode(false);

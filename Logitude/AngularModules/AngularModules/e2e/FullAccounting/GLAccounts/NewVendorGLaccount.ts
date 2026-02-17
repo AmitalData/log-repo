@@ -13,23 +13,15 @@ export class NewVendor {
 
     public CreateNewVendorGLAccount(Name: string) {
 
-        this.Helper.WaitByIdAndClick('General.MH.Maintenance');
-        //this.Helper.ItemsPresent('null_Search');
-        //this.Helper.ItemsVisibility('null_Search');
-        this.Helper.WaitByIdAndFill('null_Search', 'Vendor');
-
-        this.Generator.GoToMainMenu2('MaintenanceItemMTVD');
-        this.Helper.ItemsVisibility('NewButton_Vendor');
-        this.Helper.ItemsPresent('NewButton_Vendor');
-
-
-        //this.Helper.WaitByIdAndClick('MaintenanceItemMTVD');
-        this.Helper.WaitByIdAndClick('NewButton_Vendor');
-        this.Helper.ItemsVisibility('Address_Name');
-        //this.Helper.ItemsPresent('Address_Name');
-        this.Helper.WaitByIdAndFill('Address_Name', Name);
-        this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
-        this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Address_CountryId', 'ps')
+      this.Helper.WaitByIdAndClick('General.MH.Maintenance');
+      this.Generator.GoToMainMenu('MaintenanceItemMTVD');
+    //this.Helper.WaitByIdAndClick('MaintenanceItemMTVD');
+      this.Helper.WaitByIdAndClick('NewButton_Vendor');
+      this.Helper.ItemsVisibility('Address_Name');
+      //this.Helper.ItemsPresent('Address_Name');
+    this.Helper.WaitByIdAndFill('Address_Name', Name);
+      this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');
+      this.Helper.WaitByCssAndClick_FromTagInsideListWithCheck('.DropDownListItem', 0, 'Address_CountryId', 'ps')
 
         //    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitBusyIndicator();
@@ -39,7 +31,7 @@ export class NewVendor {
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitWindowClosed();
         this.Helper.WaitByIdAndFill('SearchFieldsId_0_0', Name);
-        this.Helper.WaitElementToBeDisplayedInTheList('.TextTrimming', Name);
+        this.Helper.ItemsPresent('ListDataLoaded');
         this.Helper.WaitByIdAndClick('row0col1');
 
     }
@@ -72,3 +64,7 @@ export class NewVendor {
         // this.Helper.WaitBusyIndicator();
     }
 }
+
+//}
+
+

@@ -5,7 +5,7 @@ using Logitude.Social.Data;
 using Logitude.Social.Data.EntityKeys;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -84,7 +84,6 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
                 ConversationHeaderParticipantUpdateService service = new ConversationHeaderParticipantUpdateService(socialContext, new Dictionary<string, IContext>(), authToken.Tenant);
                 foreach (ConversationHeaderParticipantPM entityPm in conversationHeaderParticipantPMLists)
                 {
-                    SecurityUtility.AuthenticationOnEntityTenant("ConversationHeaderParticipant", entityPm.Tenant, authToken.Tenant);
                     entityPm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                     service.Update(entityPm, true);
 

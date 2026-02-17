@@ -6,19 +6,18 @@
 <head runat="server">
     <title>Help & Training Resources</title>
 
-    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
-
     <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
     <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css" />
     <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css" />
+    <link href="../HtmlHelpers/CSS/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css" />
     <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css" />
+
+    <script src="../HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/JS/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
@@ -158,7 +157,6 @@
     <form style="visibility: collapse;">
         <input id="SavedFilterId" />
         <input id="SavedSearchText" />
-        <input id="TokenForResources" hidden="hidden" runat="server" />
     </form>
 
     <form id="form1" runat="server">
@@ -272,7 +270,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -294,7 +292,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -330,7 +328,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -352,7 +350,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -393,7 +391,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -415,7 +413,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -451,7 +449,7 @@
                                                     <tr>
                                                         <td style="width: 5px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -473,7 +471,7 @@
 
                                                         <td style="width: 100px;"></td>
 
-                                                        <td style="vertical-align: top; min-height: 100px; width: 550px; min-width:550px;">
+                                                        <td style="vertical-align: top; min-height: 100px; width: 550px;">
                                                             <table>
                                                                 <tr style="height: 25px;">
                                                                     <td>
@@ -558,6 +556,7 @@
     <script type="text/javascript">
 
         function OpenDoc(myCode) {
+
             if ($.DataResult != null) {
 
                 for (var i = 0; i < $.DataResult.length; i++) {
@@ -572,25 +571,8 @@
                         }
 
                         else {
-                            var url = "../WebPages/HowToDownloadPage.aspx?id="+myCode;
-                            var mapForm = document.createElement("form");
-                            var iToken = $("#TokenForResources").val();
-                            mapForm.target = "_blank";
-                            mapForm.method = "POST"; // or "post" if appropriate
-                            mapForm.action = url;
-                            var mapInput = document.createElement("input");
-                            mapInput.type = "hidden";
-                            mapInput.name = "Token";
-                            mapInput.setAttribute("value", iToken);
-                            mapForm.appendChild(mapInput);
-                            var mapInput2 = document.createElement("input");
-                            mapInput2.type = "hidden";
-                            mapInput2.name = "Code";
-                            mapInput2.setAttribute("value", myCode);
-                            mapForm.appendChild(mapInput2);
-                            document.body.appendChild(mapForm);
-                            mapForm.submit();
-                            document.body.removeChild(mapForm);
+
+                            window.open("../WebPages/HowToDownloadPage.aspx?id=" + myCode, '_blank');
                         }
 
                         break;

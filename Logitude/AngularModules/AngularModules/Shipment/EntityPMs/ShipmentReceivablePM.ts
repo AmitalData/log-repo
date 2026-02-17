@@ -14,14 +14,13 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
- import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';
 
-export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
+
+export class ShipmentReceivablePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	        		  super("ShipmentReceivable");
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
@@ -64,11 +63,6 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
     public set ChargesGroupCode(newValue: string) { if (this.chargesGroupCode != newValue) { this.chargesGroupCode = newValue; this.MarkAsDirty("ChargesGroupCode"); } }
        
 	 
-    private isExpenseCharge: boolean;
-    public get IsExpenseCharge() { return this.isExpenseCharge; }
-    public set IsExpenseCharge(newValue: boolean) { if (this.isExpenseCharge != newValue) { this.isExpenseCharge = newValue; this.MarkAsDirty("IsExpenseCharge"); } }
-       
-	 
     private shipmentReceivableLineStatusCode: string;
     public get ShipmentReceivableLineStatusCode() { return this.shipmentReceivableLineStatusCode; }
     public set ShipmentReceivableLineStatusCode(newValue: string) { if (this.shipmentReceivableLineStatusCode != newValue) { this.shipmentReceivableLineStatusCode = newValue; this.MarkAsDirty("ShipmentReceivableLineStatusCode"); } }
@@ -102,11 +96,6 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
     private currencyCode: string;
     public get CurrencyCode() { return this.currencyCode; }
     public set CurrencyCode(newValue: string) { if (this.currencyCode != newValue) { this.currencyCode = newValue; this.MarkAsDirty("CurrencyCode"); } }
-       
-	 
-    private currencyName: string;
-    public get CurrencyName() { return this.currencyName; }
-    public set CurrencyName(newValue: string) { if (this.currencyName != newValue) { this.currencyName = newValue; this.MarkAsDirty("CurrencyName"); } }
        
 	 
     private quantity: number;
@@ -152,11 +141,6 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
     private updateByUserId: string;
     public get UpdateByUserId() { return this.updateByUserId; }
     public set UpdateByUserId(newValue: string) { if (this.updateByUserId != newValue) { this.updateByUserId = newValue; this.MarkAsDirty("UpdateByUserId"); } }
-       
-	 
-    private updateByUserName: string;
-    public get UpdateByUserName() { return this.updateByUserName; }
-    public set UpdateByUserName(newValue: string) { if (this.updateByUserName != newValue) { this.updateByUserName = newValue; this.MarkAsDirty("UpdateByUserName"); } }
        
 	 
     private updateDate: Date;
@@ -227,11 +211,6 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
     private createdByUserId: string;
     public get CreatedByUserId() { return this.createdByUserId; }
     public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
-       
-	 
-    private createdByUserName: string;
-    public get CreatedByUserName() { return this.createdByUserName; }
-    public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
        
 	 
     private iATACodeId: string;
@@ -337,27 +316,7 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
 	 
 
     public ChildShipmentReceivablesChangeSet: Array<ShipmentReceivablePM>= [];
-		     private vatAmountLocal: number;
-    public get VatAmountLocal() { return this.vatAmountLocal; }
-    public set VatAmountLocal(newValue: number) { if (this.vatAmountLocal != newValue) { this.vatAmountLocal = newValue; this.MarkAsDirty("VatAmountLocal"); } }
-       
-	 
-    private vatAmountProfit: number;
-    public get VatAmountProfit() { return this.vatAmountProfit; }
-    public set VatAmountProfit(newValue: number) { if (this.vatAmountProfit != newValue) { this.vatAmountProfit = newValue; this.MarkAsDirty("VatAmountProfit"); } }
-       
-	 
-    private changeSet: string;
-    public get ChangeSet() { return this.changeSet; }
-    public set ChangeSet(newValue: string) { if (this.changeSet != newValue) { this.changeSet = newValue; this.MarkAsDirty("ChangeSet"); } }
-       
-	 
-    private payableVendorId: string;
-    public get PayableVendorId() { return this.payableVendorId; }
-    public set PayableVendorId(newValue: string) { if (this.payableVendorId != newValue) { this.payableVendorId = newValue; this.MarkAsDirty("PayableVendorId"); } }
-       
-	 
-
+		 
     public OldEntityPM: ShipmentReceivablePM;
 	    
 	private entityParentPM: any;
@@ -367,10 +326,7 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -380,7 +336,6 @@ export class ShipmentReceivablePM extends ChildEntitiesCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentReceivable");
            
         }
-	 }
     }
     private MyClone: ShipmentReceivablePM;
 

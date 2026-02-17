@@ -1,11 +1,25 @@
-declare var window: any;
-import { Directive, ChangeDetectorRef, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
+﻿declare var window: any;
+import { Directive, ChangeDetectorRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
+
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LogTab } from '../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { AppTool, ArrayTool } from '../../../../Infrastructure/Tools';
+import { CommunicationLogStepDataViewModel } from '../CommunicationLog/ViewModel/CommunicationLogStepDataViewModel';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+
+import { CommunicationLogStepListService } from '../../../../Common/Services/ExtendedLists/CommunicationLogStepListService';
+
+
+
 
 @Component({
-  selector: 'communication-LogField',
+    moduleId: module.id,
+
+    selector: 'communication-LogField',
     templateUrl: './LogFieldComponent.html',
 })
 
@@ -22,7 +36,6 @@ export class LogFieldComponent
 
     _CommunicationLogStepDataViewModel: any; //CommunicationLogStepDataViewModel
     _Log: string;
-    public UseTextarea: boolean=false;
     
 
 
@@ -44,7 +57,6 @@ export class LogFieldComponent
         this.Tab = args.Tab;
         this.IsDisplayOnly = args.Disabled;
         this._inputLogId = "_inputLogId";
-        
 
         
     }
@@ -69,14 +81,8 @@ export class LogFieldComponent
 
     //}
 
-    SetWindowArgs(args: string | any) {
-        if (typeof args === 'string' || args instanceof String){
-                this._Log = args.toString();
-        }else{
-            this._Log =args["Log"];
-            this.UseTextarea =args["UseTextarea"];
-        }
-
+    SetWindowArgs(ShowLog: string) {
+        this._Log = ShowLog;
 
         //this.Tab = args.Tab;
         //this.IsDisplayOnly = args.Disabled;

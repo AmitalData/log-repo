@@ -1,12 +1,12 @@
 
- declare @MaxAutomaticLastUpdateDate as datetime
+ declare @AutomaticLastUpdateDate as datetime
  declare @LastUpdateDate as datetime
 
  set @LastUpdateDate = (select top(1) LastUpdateDate from dw_WaterMarks  where TableName = 'Port' )
- set @MaxAutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Ports )
+ set @AutomaticLastUpdateDate = (select  MAX( AutomaticLastUpdateDate) AutomaticLastUpdateDate from dw_Ports )
 
  
- if(@MaxAutomaticLastUpdateDate > @LastUpdateDate)
+ if(@AutomaticLastUpdateDate > @LastUpdateDate)
 
  begin
    declare @Key as varchar(15)
@@ -20,32 +20,30 @@
    declare @State varchar(40) 
    declare @SourceTenant int
    declare @ParentTenant int
-   declare @AutomaticLastUpdateDate as datetime
-   declare @InActive as bit
 
 	DECLARE PortsCursor CURSOR READ_ONLY
 	FOR
-	SELECT dw_Ports.Id, dw_Ports.EnglishName, dw_Ports.Code , dw_Ports.LocalName , dw_Ports.CombinedCode ,dw_Countries.EnglishName, dw_States.EnglishName, dw_Ports.Tenant, dw_DWHSettings.ParentTenant, dw_Ports.AutomaticLastUpdateDate, dw_Ports.InActive
+	SELECT dw_Ports.Id, dw_Ports.EnglishName, dw_Ports.Code , dw_Ports.LocalName , dw_Ports.CombinedCode ,dw_Countries.EnglishName, dw_States.EnglishName, dw_Ports.Tenant, dw_DWHSettings.ParentTenant 
 	From dw_Ports
 	INNER JOIN dw_States ON dw_Ports.StateId = dw_States.Id
 	INNER JOIN dw_Countries ON dw_Ports.CountryId = dw_Countries.Id
 	INNER JOIN dw_DWHSettings ON dw_Ports.Tenant = dw_DWHSettings.Tenant
 	where dw_Ports.AutomaticLastUpdateDate > @LastUpdateDate	
-	OPEN PortsCursor FETCH NEXT FROM PortsCursor INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
+	OPEN PortsCursor FETCH NEXT FROM PortsCursor INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 
 	set @Key = (select Id from Dim_Ports where Id = @Id)
-	if(@Key is  null) begin  insert into Dim_Ports (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant],[Automatic Last Update Date],[InActive])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive); end
-	else begin update   Dim_Ports set Name =@Name,  [Local Name] =@LocalName ,  [UN Loc Code] = @CombinedCode ,Country = @Country, [State Name] = @State,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant, [Automatic Last Update Date] = @AutomaticLastUpdateDate, [InActive] = @InActive  Where Id = @Id; end
+	if(@Key is  null) begin  insert into Dim_Ports (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant); end
+	else begin update   Dim_Ports set Name =@Name,  [Local Name] =@LocalName ,  [UN Loc Code] = @CombinedCode ,Country = @Country, [State Name] = @State,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  Where Id = @Id; end
 	
 
-	FETCH NEXT FROM PortsCursor  INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant, @AutomaticLastUpdateDate, @InActive
+	FETCH NEXT FROM PortsCursor  INTO @Id , @Name, @Code , @LocalName  , @CombinedCode, @Country , @State , @SourceTenant , @ParentTenant 
 		End
 	CLOSE PortsCursor
 	DEALLOCATE PortsCursor
 	
 
-		update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Port'
+		update dw_WaterMarks set LastUpdateDate = @AutomaticLastUpdateDate where TableName = 'Port'
 End
 

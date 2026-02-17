@@ -47,9 +47,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                     InvoiceCounterKey = a.InvoiceCounterKey,
                                                                                     LineNumber = a.LineNumber,
                                                                                     Tenant = a.Tenant,
-                                                                                    IdentifierID = a.IdentifierID,
                                                                                     ExcludeFromInterface = a.ExcludeFromInterface,
-                                                                                    VehicleTypeName = a.VehicleType != null ? a.VehicleType.LocalName:null
 
                                                                                 }).ToList();
             SupplierInvoiceItemVehicleModQueryService supplierInvoiceItemVehicleModificationQueryService = new SupplierInvoiceItemVehicleModQueryService(context);
@@ -84,7 +82,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                                                     LineNumber = a.LineNumber,
                                                                                     Tenant = a.Tenant,
                                                                                     ExcludeFromInterface = a.ExcludeFromInterface,
-                                                                                    IdentifierID=a.IdentifierID
 
                                                                                 }).ToList();
             SupplierInvoiceItemVehicleModQueryService supplierInvoiceItemVehicleModificationQueryService = new SupplierInvoiceItemVehicleModQueryService(context);

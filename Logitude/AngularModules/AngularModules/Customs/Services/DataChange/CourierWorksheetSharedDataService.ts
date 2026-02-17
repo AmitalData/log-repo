@@ -5,22 +5,12 @@ import { ObservableCollection } from '../../../Infrastructure/Utilities/Observab
 
 @Injectable()
 export class CourierWorksheetSharedDataService {
-    public _SelectedItems: ObservableCollection = new ObservableCollection([]);
-    public _UnSelectedItems: ObservableCollection = new ObservableCollection([]);
-
-    public connectedSelectAll: boolean;
-    public disconnectedSelectAll: boolean;
-
+  public _SelectedItems: ObservableCollection = new ObservableCollection([]);
   public SupperssOnRowSelectedAction: boolean = false;
     private messageSource = new BehaviorSubject('default message');
     CurrentMessage = this.messageSource.asObservable();
-    WebAPICourierGWMessageECTHRDataMaman: string;
-    public IsDisplayOnly: boolean = false;
+    IsWebAPICourierGWMessageECTHRDataMamanEnable: boolean;
     constructor() { }
-
-
-
-
 
     SendNextMessage(message: string) {
         this.messageSource.next(message)

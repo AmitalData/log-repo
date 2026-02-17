@@ -15,7 +15,7 @@ namespace Logitude.BL.DataContracts
 {
     public class UpdateShipmentProfitClass
     {
-        public static void UpdatePayables(string shipmentId, int tenant, bool isInvoiceUpdated, string invoiceId)
+        public static void UpdatePayables(string shipmentId,int tenant, bool isInvoiceUpdated)
         {
             string strConnString = GetConnection(tenant);
             using (SqlConnection cn = new SqlConnection(strConnString))
@@ -32,13 +32,6 @@ namespace Logitude.BL.DataContracts
                 param2.Direction = ParameterDirection.Input;
                 param2.Value = isInvoiceUpdated;
                 cmd.Parameters.Add(param2);
-
-                SqlParameter param3 = new SqlParameter("@InvoiceId_PARAM", SqlDbType.VarChar);
-                param3.Direction = ParameterDirection.Input;
-                param3.Value = invoiceId == null ? "no invoice" : invoiceId;
-                cmd.Parameters.Add(param3);
-
-                cmd.CommandTimeout = 6000;
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
@@ -63,13 +56,11 @@ namespace Logitude.BL.DataContracts
                 param2.Value = isInvoiceUpdated;
                 cmd.Parameters.Add(param2);
 
-                cmd.CommandTimeout = 6000;
-
                 cn.Open();
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }
-        }
+        }        
         public static void UpdateProfit(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -82,8 +73,6 @@ namespace Logitude.BL.DataContracts
                 param1.Direction = ParameterDirection.Input;
                 param1.Value = shipmentId;
                 cmd.Parameters.Add(param1);
-
-                cmd.CommandTimeout = 6000;
 
                 cn.Open();
                 cmd.ExecuteNonQuery();
@@ -186,7 +175,7 @@ namespace Logitude.BL.DataContracts
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;

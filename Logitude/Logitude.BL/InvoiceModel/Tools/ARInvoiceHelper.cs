@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
@@ -22,7 +22,7 @@ using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -41,7 +41,6 @@ using Logitude.Server.Tools.QueueService;
 using Simplog.Global.Data.GlobalModel;
 using Intuit.Ipp.OAuth2PlatformClient;
 using System.Net;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
@@ -92,9 +91,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         List<ARInvoiceLinePM> lines;
         private bool isIndiaCountry=false;
         private string IndiaExternalQBOStates = "";
-        private Tenant loggedTenant;
-        private AccountingSystemPM accountingSystem;
-
         private void GetObjectTableData()
         {
 
@@ -118,81 +114,58 @@ namespace Logitude.BL.InvoiceModel.Tools
                 myObjectTableId = objectTable.Id;
             }
         }
-        public  void ARInvoiceQuickbooksValidating(ARInvoice entityPOCO, ARInvoicePM entityPM, Boolean IsSetApproved, Boolean isNewEntity, IInvoiceContext InvoiceContext, ICommonDataContext CommonContext,Boolean isSetVoided)
+        public  void ARInvoiceQuickbooksValidating(ARInvoicePM entityPM, Boolean IsSetApproved, Boolean isNewEntity, IInvoiceContext InvoiceContext, ICommonDataContext CommonContext,Boolean isSetVoided)
         {
-            if (entityPM.TransferStatusCode == "BL")
-            {
-                return;
-            }
-
             if ((isSetVoided && entityPM.ARInvoiceTypeCode != "CD" && entityPM.ARInvoiceTypeCode != "CC") || (entityPM.StatusCode == "VD" && entityPM.SetReSendQBO == true))
             {
-                bool isTransferingVoiding = true;
-
-                if (entityPOCO.StatusCode == null || entityPOCO.StatusCode == "DR" || entityPOCO.StatusCode == "PR")
-                {
-                    isTransferingVoiding = false;
-                }
-
-                else if (entityPOCO.TransferStatusCode == "ET")
-                {
-                    isTransferingVoiding = false;
-                }
-
-                if (entityPM.IsConstituentInvoice && string.IsNullOrEmpty(entityPM.ConsolidationInvoiceId))
-                {
-                    isTransferingVoiding = false;
-                }
-
-                if (isTransferingVoiding)
-                {
-                    commonContext = CommonContext;
-                    this.globalContext = GlobalContext.GetContext(tenant);
-                    loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
-                    tenant = loggedTenant.Id;
-                    tenantName = loggedTenant.Company;
-                    AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
-                    AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                    accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
-                    if (loggedTenant.AccountingSetting != null)
-                        if (IsQuickBooksAccoutingSystemTransfer(entityPM))
+                commonContext = CommonContext;
+                this.globalContext = GlobalContext.GetContext(tenant);
+                Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                tenant = loggedTenant.Id;
+                tenantName = loggedTenant.Company;
+                AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
+                AccountingSystemQuery query = new AccountingSystemQuery(tenant);
+                AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                if (loggedTenant.AccountingSetting != null)
+                    if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled && AccountingSystemPM.AllowARInvoicesTransfer)
+                    {
+                        if(entityPM.ExternalAccountingEntityId != null)
                         {
-                            if (entityPM.ExternalAccountingEntityId != null)
-                            {
-                                ARInvoice = entityPM;
-                                ARInvoiceId = entityPM.Id;
-                                GetObjectTableData();
-                                documentRepository = new DocumentRepository(commonContext);
-                                communicationLogRepository = new CommunicationLogRepository(commonContext);
-                                //ContactRepository contactRepository = new ContactRepository(commonContext);
-                                //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
-                                //LoggedContactId = loggedContact.Id;
+                            ARInvoice = entityPM;
+                            ARInvoiceId = entityPM.Id;
+                            GetObjectTableData();
+                            documentRepository = new DocumentRepository(commonContext);
+                            communicationLogRepository = new CommunicationLogRepository(commonContext);
+                            //ContactRepository contactRepository = new ContactRepository(commonContext);
+                            //Simplog.Data.CommonDataModel.EntityPOCOs.Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+                            //LoggedContactId = loggedContact.Id;
 
-                                entityPM.TransferStatusCode = "IP";
-                                entityPM.TransferError = null;
-                                this.SendXMLFileInvoiceVoid(entityPM.ExternalAccountingEntityId, "QBO");
-                            }
-
-                            else
-                            {
-                                throw new ApplicationException("This Invoice is not transfered yet to quickbooks online.");
-                            }
+                            entityPM.TransferStatusCode = "IP";
+                            entityPM.TransferError = null;
+                            this.SendXMLFileInvoiceVoid(entityPM.ExternalAccountingEntityId, "QBO");
                         }
-                }
+                        else
+                        {
+                            throw new ApplicationException("This Invoice is not transfered yet to quickbooks online.");
+
+                        }
+
+
+                    }
             }
 
             else if (IsSetApproved || (entityPM.IsAutoCredit && entityPM.ExternalAccountingEntityId==null))
             {
                 commonContext = CommonContext;
-                loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
+                Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                 tenant = loggedTenant.Id;
                 this.globalContext = GlobalContext.GetContext(tenant);
                 tenantName = loggedTenant.Company;
                 AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                 AccountingSystemQuery query = new AccountingSystemQuery(tenant);
-                accountingSystem = query.GetSingleAccountingSystemPM(AccountingSystemCode);
+                AccountingSystemPM AccountingSystemPM = query.GetSingleAccountingSystemPM(AccountingSystemCode);
                 if (loggedTenant.AccountingSetting != null)
-                    if (IsQuickBooksAccoutingSystemTransfer(entityPM))
+                    if ((AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG") && loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled && AccountingSystemPM.AllowARInvoicesTransfer)
                     {
                         ARInvoice = entityPM;
                         ARInvoiceId = entityPM.Id;
@@ -345,7 +318,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             }
                           
                                 VatType myVatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, false);
-                            ExternalVatTypesCode.Add(myVatType.ReceivablesExternalId);
+                            ExternalVatTypesCode.Add(myVatType.ExternalVATCard);
 
                             if (line.VatPercentage != 0 || AccountingSystemCode == "QBOG")
                             {
@@ -358,7 +331,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                         myError = string.IsNullOrEmpty(myError) ? error : myError + ";" + error;                                    
                                 }
 
-                                if (FieldIsEmpty(myVatType.ReceivablesExternalId))
+                                if (FieldIsEmpty(myVatType.ExternalVATCard))
                                 {
                                     vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";
                                     isReady = false;
@@ -395,15 +368,6 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
             }
-        }
-
-        private bool IsQuickBooksAccoutingSystemTransfer(ARInvoicePM aRInvoicePM)
-        {
-            if (!(AccountingSystemCode == "QBO" || AccountingSystemCode == "QBOG")) return false;
-            if (!(loggedTenant.AccountingSetting.IsARInvoicesTransferEnabled)) return false;
-            if (!(accountingSystem.AllowARInvoicesTransfer)) return false;
-            if ((loggedTenant.AccountingSetting.ARInvoiceTransferStartDate != null && aRInvoicePM.InvoiceDate < loggedTenant.AccountingSetting.ARInvoiceTransferStartDate)) return false;
-            return true;
         }
 
         public  List<Intuit.Ipp.Data.Customer> GetQuickBooksOnlineCustomersByText(String sql, String tenant)
@@ -650,11 +614,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
-                    {
-                        QBOInvoice.GlobalTaxCalculationSpecified = true;
-                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
-                    }
+
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     if (this.isIndiaCountry)
@@ -749,11 +709,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOInvoice.TransactionLocationType = IndiaExternalQBOStates;
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
-                    {
-                        QBOInvoice.GlobalTaxCalculationSpecified = true;
-                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
-                    }
+
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     for (int i = 0; i < lines.Count; i++)
@@ -777,13 +733,12 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 Value = ExternalChargesTypesCode[i]
                             };
-
                             if (lines[i].VatPercentage != 0)
                             {
-                                ExternalVatTypeCodeWhereIsNotZeroPercentage = ExternalVatTypesCode[i];
-                                lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = "TAX" };
+                                ExternalVatTypeCodeWhereIsNotZeroPercentage = ExternalVatTypesCode[i];                                                                                               
+                                    lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = "TAX" };                                
+
                             }
-      
                         }
 
                         else if (AccountingSystemCode == "QBOG")
@@ -793,7 +748,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 Value = ExternalChargesTypesCode[i]
                             };
-                            lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = ExternalVatTypesCode[i] };
+                                 lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = ExternalVatTypesCode[i] };
                             
                         }
 
@@ -894,10 +849,9 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
-                TimeSpan? delayTime = GetQuickbooksQueueMessageDelayTime();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "Invoice" },{ "OldTransferStatusCode", OldTransferStatusCode } };
-                queueservice.Send(param, tenant, delayTime);
+                queueservice.Send(param);
                 queueservice.Complete();          
                   }
 
@@ -972,12 +926,11 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
-                TimeSpan? delayTime = GetQuickbooksQueueMessageDelayTime();
 
                 queueservice.InitializeQueue("QBO", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "MEMO" } }, tenant, delayTime);
+                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "MEMO" } });
                 queueservice.Complete();
-            }
+                  }
 
             catch (Exception ex)
             {
@@ -999,17 +952,6 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
 
-        }
-
-        private TimeSpan? GetQuickbooksQueueMessageDelayTime()
-        {
-            TimeSpan? delayTime = null;
-            if (FeatureToggleHelper.HasFeatureToggle("INU", tenant))
-            {
-                delayTime = new TimeSpan(0, 0, 5);
-            }
-
-            return delayTime;
         }
 
         private void SendXMLFileInvoiceVoid(string ARInvoiceExternalId, string queueName)
@@ -1060,10 +1002,9 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
-                TimeSpan? delayTime = GetQuickbooksQueueMessageDelayTime();
 
                 queueservice.InitializeQueue("QBO", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARInvoiceVoid" } }, tenant, delayTime);
+                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARInvoiceVoid" } });
                 queueservice.Complete();
             }
 
@@ -1156,20 +1097,10 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             return myResult;
         }
-        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string globalTaxCalculation)
-        {
-            if (globalTaxCalculation == "TE")
-            {
-                return GlobalTaxCalculationEnum.TaxExcluded;
-            }
-            else if (globalTaxCalculation == "TI")
-            {
-                return GlobalTaxCalculationEnum.TaxInclusive;
-            }
-            else
-            {
-                return GlobalTaxCalculationEnum.NotApplicable;
-            }
-        }
+
+
+
+
+
     }
 }

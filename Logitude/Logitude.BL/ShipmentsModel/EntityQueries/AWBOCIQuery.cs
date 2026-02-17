@@ -51,7 +51,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         AWBInformationCode = a.AWBInformationCode,
                         SupplementaryCustomsInfo = a.SupplementaryCustomsInfo,
                         AWBCustomsInformationCode = a.AWBCustomsInformationCode,
-                    }).OrderBy(a => a.Id);
+                    });
         }
 
         public IQueryable<AWBOCIList> GetIQueryableEntityList(IQueryable<AWBOCIList> iQueryable)

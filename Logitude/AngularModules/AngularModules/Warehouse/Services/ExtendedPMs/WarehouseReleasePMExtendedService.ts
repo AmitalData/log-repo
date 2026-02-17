@@ -1,8 +1,7 @@
 
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -18,10 +17,10 @@ import {WarehouseReleasePackagePM} from '../../EntityPMs/WarehouseReleasePackage
 @Injectable()
 export class WarehouseReleasePMExtendedService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/WarehouseReleaseExtended';
     }
 
@@ -30,8 +29,11 @@ export class WarehouseReleasePMExtendedService {
 
     Insert(entityPM: WarehouseReleasePM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -46,8 +48,10 @@ export class WarehouseReleasePMExtendedService {
                 var mappedEntity: WarehouseReleasePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl + '/postwarehousereleasepm', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                return this._http.post(this._apiUrl + '/postwarehousereleasepm', JSON.stringify(mappedEntity),
+
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: WarehouseReleasePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -58,24 +62,30 @@ export class WarehouseReleasePMExtendedService {
 
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
-        });
+        }
+
+        );
     }
 
     CancelRelease(entityPM: WarehouseReleasePM) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
-              var validator: ClassLevelValidator;
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var validator: ClassLevelValidator;
 
             validator = new ClassLevelValidator();
 
@@ -87,8 +97,10 @@ export class WarehouseReleasePMExtendedService {
                 var mappedEntity: WarehouseReleasePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl + '/PutCancelWarehouseReleasePM', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                        var pm = res;
+                return this._http.put(this._apiUrl + '/PutCancelWarehouseReleasePM', JSON.stringify(mappedEntity),
+
+                    { headers: authHeader }).map((res) => {
+                        var pm = res.json();
                         if (pm) {
                             var mappedResult: WarehouseReleasePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -97,14 +109,14 @@ export class WarehouseReleasePMExtendedService {
 
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         }
@@ -113,44 +125,17 @@ export class WarehouseReleasePMExtendedService {
     }
     
     GetCrossDockWorkspaceSummary(transportModeId: string, directionId: string) {
-        
-        
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        return this._http.get(this._apiUrl + '/GetCrossDockWorkspaceSummary?' + 'transportModeId=' + transportModeId + '&directionId=' + directionId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/GetCrossDockWorkspaceSummary?' + 'transportModeId=' + transportModeId + '&directionId=' + directionId, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
-            pmresponse.Result = response;
+            pmresponse.Result = response.json();
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
-
-
-    GetWarehouseReleaseByCustomerIdAndwarehouseId(customerId: string, warehouseId: string) {
-        
-        
-        return this._http.get(this._apiUrl + '/GetWarehouseReleaseByCustomerIdAndwarehouseId?' + 'customerId=' + customerId + '&warehouseId=' + warehouseId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-
-    EnableWarehouseRelaseForUse(releaseNumber:string,shipmentId:string) {
-        
-        
-        return this._http.get(this._apiUrl + '/GetEnableWarehouseRelaseForUse?' + 'releaseNumber=' + releaseNumber + '&shipmentId=' + shipmentId  , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-            pmresponse.Result = response;
-            return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
-    }
-
-
-
 
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: WarehouseReleasePM = null) {
@@ -280,29 +265,12 @@ export class WarehouseReleasePMExtendedService {
         return entityPM;
     }
 
-    GetNumberofConnectedWarehouseReleasesByEntryId(entryId: string) {
-
-
-        return this._http.get(this._apiUrl + "/GetNumberofConnectedWarehouseReleasesByEntryId" + '?entryId=' + entryId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var result = response;
-
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-
-            pmresponse.Result = result;
-            return pmresponse;
-
-
-        }), catchError(ServiceHelper.HandleServiceError));
-    }
-
     GetWarehouseConnectedReleaseByEntityId(entityId: string) {
-        
-        
-        return this._http.get(this._apiUrl + "/GetWarehouseConnectedReleaseByEntityId" + '?entityId=' + entityId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetWarehouseConnectedReleaseByEntityId" + '?entityId=' + entityId, { headers: authHeader }).map(response => {
 
-            var result = response;
+            var result = response.json();
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
@@ -311,7 +279,7 @@ export class WarehouseReleasePMExtendedService {
             return pmresponse;
 
 
-        }),catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
 
 

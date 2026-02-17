@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;

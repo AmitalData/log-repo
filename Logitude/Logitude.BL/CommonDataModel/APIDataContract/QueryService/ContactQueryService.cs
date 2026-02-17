@@ -9,12 +9,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 {
     public partial class ContactQueryService
     {
-        public List<Contact> ContactCustomDataMapping(CardPM EntityPm, List<ContactPM> MyEntityPMs, int Tenant, string ComputingPartnerName = "")
+        public List<Contact> ContactCustomDataMapping(CardPM EntityPm, List<ContactPM> MyEntityPMs, int Tenant)
         {
-            return this.ContactMapping(MyEntityPMs, Tenant,ComputingPartnerName);           
+            return this.ContactMapping(MyEntityPMs, Tenant);           
         }
 
-        public List<ContactPM> ContactCustomDataMappingAndValidatin(Customer MainEntity, List<Contact> MyEntities, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
+        public List<ContactPM> ContactCustomDataMappingAndValidatin(Customer MainEntity, List<Contact> MyEntities, int Tenant, string ComputingPartnerName = "")
         {
             return this.ContactMappingAndValidating(MyEntities, Tenant, ComputingPartnerName);
         }
@@ -23,7 +23,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         {
             try
             {
-                var contacts = new List<Contact>();
+                var MyList = new List<Contact>();
                 foreach (var item in MyEntityPM)
                 {
                     var temp = new Contact();
@@ -32,14 +32,10 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                     temp.LocalName = item.LocalName;
                     temp.Code = item.ExternalId;
                     temp.Email = item.Email;
-                    temp.Position = item.Position;
-                    temp.Mobile = item.Mobile;
-                    temp.BusinessPhone = item.BusinessPhone;
-                    temp.Code = item.ExternalId;
-                    contacts.Add(temp);
+                    MyList.Add(temp);
                 }
 
-                return contacts;
+                return MyList;
             }
 
             catch (Exception ex)
@@ -48,44 +44,37 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
             }
         }
 
-        public List<ContactPM> ContactMappingAndValidating(List<Contact> MyEntity, int tenant, string ComputingPartnerName = "")
+        public List<ContactPM> ContactMappingAndValidating(List<Contact> MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
             {
-                var contacts = new List<ContactPM>();
+                var MyList = new List<ContactPM>();
                 foreach (var item in MyEntity)
                 {
-                    var contactPM = new ContactPM();
+                    var temp = new ContactPM();
                     if (!string.IsNullOrEmpty(item.Id))
                     {
-                        contactPM = query.GetSinglePM(item.Id, tenant);
-
-                        if (contactPM == null)
-                            throw new ApplicationException("Contact with Id " + item.Id + " doesn't exist");
+                        temp = query.GetSinglePM(item.Id, Tenant);
                     }
 
-                    else if (!string.IsNullOrEmpty(item.Email))
+                    if (temp == null)
                     {
-                        contactPM = new ContactPM();
-                        contactPM.IsAPIContact = true;
-                        contactPM.IsCreatedWithPartner = true;                       
+                        throw new ApplicationException("Contact with Id " + item.Id + " doesn't exist");
                     }
-                   
-                    contactPM.Id = item.Id;
-                    contactPM.Tenant = tenant;
-                    contactPM.EnglishName = item.EnglishName;
-                    contactPM.LocalName = item.LocalName;
-                    contactPM.ExternalId = item.Code;
-                    contactPM.Email = item.Email;
-                    contactPM.Position = item.Position;
-                    contactPM.Mobile = item.Mobile;
-                    contactPM.BusinessPhone = item.BusinessPhone;
-                    contactPM.ExternalId = item.Code;
-                    contactPM.SetAsPrimaryForCard = item.IsPrimaryContact;
-                    contacts.Add(contactPM);
+
+                    if (string.IsNullOrEmpty(temp.Id))
+                    {
+                        temp.Id = item.Id;
+                    }
+
+                    temp.EnglishName = item.EnglishName;
+                    temp.LocalName = item.LocalName;
+                    temp.ExternalId = item.Code;
+                    temp.Email = item.Email;
+                    MyList.Add(temp);
                 }
 
-                return contacts;
+                return MyList;
             }
 
             catch (Exception ex)

@@ -89,8 +89,6 @@
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'GLAccount'"
                                                                         [HideColumns]="true"
-                                                                        [StartSearchFromChar]="3"
-                                                                        [StartSearchFromNumber]="5"
                                                                        >
                                                                 </LogLov>
                                                            
@@ -179,38 +177,32 @@
                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="Journals"   (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                       
                                                 <log-column [header]="'Journal.F.JournalNumber' | TextCodeTranslationPipe" [visibility]="'visibile'" [width]="'120'" [Alignment]="'center'" >
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" style="text-align:center">
                                                             <span class="hyperlink"  (click)="JournalHyperlinkClicked(item)">{{item.JournalNumber}}</span>
                                                         </div>
                                                     
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
 
                                                 <log-column [header]="'Journal.F.AccountingDate' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'center'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" style="text-align:center">
                                                             <span>{{item.AccountingDate | DateTimeToDatePipe}}</span>
                                                         </div>
 
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
 
                                                 <log-column [header]="'Journal.F.StatusName' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'center'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" style="text-align:center">
                                                             <span>{{item.StatusName }}</span>
                                                         </div>
 
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
                                               
 
@@ -251,50 +243,42 @@
 
                                                 <!-- ActionCode -->
                                                 <log-column [header]="'JournalLine.F.ActionCode' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="'center'" [binding]="'ActionCode'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template  [IgnoreMods]="true"   #logcelltemplate>
+                                                    <log-cell-template  [IgnoreMods]="true" template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                                                             <span>{{item.ActionName}}</span>
                                                         </div>
                                                       
                                                     </log-cell-template>
-                                                    </ng-template>
                                                 </log-column>
 
                                                 <!-- Ref. Date -->
                                                 <log-column [header]="'JournalLine.F.DocumentDate' | TextCodeTranslationPipe" [width]="'130'" [Alignment]="'center'" [binding]="'DocumentDate'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"  #logcelltemplate  >
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate  >
                                                         <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                                                             <span>{{item.DocumentDate | DateTimeToDatePipe}}</span>
                                                         </div>
                                                        
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
                                                 <!-- Due Date -->
                                                 <log-column [header]="'JournalLine.F.DueDate' | TextCodeTranslationPipe" [width]="'100'" [Alignment]="'center'" [binding]="'DueDate'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"  #logcelltemplate >
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate >
                                                         <div *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                                                             <span>{{item.DueDate | DateTimeToDatePipe}}</span>
                                                         </div>
                                                        
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
                                                 <!-- C. Account -->
                                                 <log-column [header]="'JournalLine.F.CreditAccountName' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="'center'" [binding]="'CreditAccountId'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate  >
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate  >
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:center">
                                                             <span>{{item.CreditAccountName}}</span>
                                                         </div>
                                                        
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
                                              

@@ -5,10 +5,10 @@ using Logitude.CRM.BL.EntityQueryServices;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -27,7 +27,7 @@ namespace WebFreight.Web.Helpers
             EntityChangePM entityChangePM = EntityChangeQuery.GetSinglePM(entitychangeId, tenant);
 
             List<ObjectField> objectFieldLists = ObjectFieldRepository.GetObjectFieldsByObjectTableName(objectTableName, tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             EntityChangeAutomationsSummary entityChangeAutomationsSummary = new EntityChangeAutomationsSummary();
             List<ChangeField> changeFieldsList = new List<ChangeField>();
 
@@ -83,10 +83,8 @@ namespace WebFreight.Web.Helpers
                                 changeField.OldValue = newValue.Value.Date.ToShortDateString();
 
                             }
-                            if (IsMatchChangeFieldsAutmationConditions(objectField, changeField))
-                            {
-                                changeFieldsList.Add(changeField);
-                            }
+
+                            changeFieldsList.Add(changeField);
                         }
                     }
 
@@ -100,7 +98,7 @@ namespace WebFreight.Web.Helpers
 
                     foreach (c field in ChangesFields)
                     {
-                        ObjectField objectField = objectFieldLists.Where(d => d.FieldCode== field.f).FirstOrDefault();
+                        ObjectField objectField = objectFieldLists.Where(d => d.Id == field.f).FirstOrDefault();
 
                         if (objectField != null && objectField.FieldName != "UpdateDate")
                         {
@@ -149,16 +147,24 @@ namespace WebFreight.Web.Helpers
                 #endregion
 
 
-                entityChangeAutomation = GetEntityChangeAutomationLists(entityChangePM.SetAutomationSsucceedXml, entityChangePM.SetAutomationFailedXml);
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.EmailAutomationSsucceedXml, entityChangePM.EmailAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.FollowUpAutomationSsucceedXml, entityChangePM.FollowUpAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.SetSLAAutomationSsucceedXml, entityChangePM.SetSLAAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.QueuedTaskAutomationSsucceedXml, entityChangePM.QueuedTaskAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.SendInterfaceAutomationSsucceedXml, entityChangePM.SendInterfaceAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.SendDocumentAutomationSsucceedXml, entityChangePM.SendDocumentAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.CreateTaskAutomationSsucceedXml, entityChangePM.CreateTaskAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.OnUpdateDocumentAutomationSsucceedXml, entityChangePM.OnUpdateDocumentAutomationFailedXml)).ToList();
-                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.EventAutomationSsucceedXml, entityChangePM.EventAutomationFailedXml)).ToList();
+                entityChangeAutomation = CreateEntityChangeAutomation(entityChangePM, "Set");
+
+                foreach (EntityChangeAutomation item in CreateEntityChangeAutomation(entityChangePM, "Email"))
+                {
+                    entityChangeAutomation.Add(item);
+                }
+
+                foreach (EntityChangeAutomation item in CreateEntityChangeAutomation(entityChangePM, "FollowUp"))
+                {
+                    entityChangeAutomation.Add(item);
+                }
+
+                foreach (EntityChangeAutomation item in CreateEntityChangeAutomation(entityChangePM, "SetSLA"))
+                {
+                    entityChangeAutomation.Add(item);
+                }
+
+
 
                 entityChangeAutomation = entityChangeAutomation.OrderByDescending(d => d.CreateDate).ToList();
 
@@ -171,42 +177,111 @@ namespace WebFreight.Web.Helpers
             return entityChangeAutomationsSummary;
         }
 
-        private static bool IsMatchChangeFieldsAutmationConditions(ObjectField objectField, ChangeField changeField)
+        public  List<EntityChangeAutomation> CreateEntityChangeAutomation(EntityChangePM entityChangePM, string type)
         {
-            return !objectField.IsCustom || (objectField.IsCustom && IsValueChanged(changeField));
-        }
+            List<EntityChangeAutomation> entityChangeAutomation = new List<EntityChangeAutomation>();
 
-        private static bool IsValueChanged(ChangeField changeField)
-        {
-            return changeField.NewValue != changeField.OldValue;
-        }
-
-        private static List<EntityChangeAutomation> GetEntityChangeAutomationLists( string automationSsucceedXml ,string automationFailedXml)
-        {
-           List<EntityChangeAutomation> entityChangeAutomationLists = new List<EntityChangeAutomation>();
-
-            if (!string.IsNullOrEmpty(automationSsucceedXml))
+            if (type == "Set")
             {
-                entityChangeAutomationLists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(automationSsucceedXml);
-            }
-
-            if (!string.IsNullOrEmpty(automationFailedXml))
-            {
-                if (entityChangeAutomationLists != null && entityChangeAutomationLists.Count > 0)
+                if (!string.IsNullOrEmpty(entityChangePM.SetAutomationSsucceedXml))
                 {
-                    List<EntityChangeAutomation> entityChangesAutomationFailedXml = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(automationFailedXml);
-                    foreach (EntityChangeAutomation item in entityChangesAutomationFailedXml)
+                    entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.SetAutomationSsucceedXml);
+                }
+
+                if (!string.IsNullOrEmpty(entityChangePM.SetAutomationFailedXml))
+                {
+                    if (entityChangeAutomation != null && entityChangeAutomation.Count > 0)
                     {
-                        entityChangeAutomationLists.Add(item);
+                        List<EntityChangeAutomation> entityChangesAutomationFailedXml = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.SetAutomationFailedXml);
+                        foreach (EntityChangeAutomation item in entityChangesAutomationFailedXml)
+                        {
+                            entityChangeAutomation.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.SetAutomationFailedXml);
                     }
                 }
-                else
+            }
+
+           else if (type == "Email")
+            {
+                if (!string.IsNullOrEmpty(entityChangePM.EmailAutomationSsucceedXml))
                 {
-                    entityChangeAutomationLists = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(automationFailedXml);
+                    entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.EmailAutomationSsucceedXml);
+                }
+
+                if (!string.IsNullOrEmpty(entityChangePM.EmailAutomationFailedXml))
+                {
+                    if (entityChangeAutomation != null && entityChangeAutomation.Count > 0)
+                    {
+                        List<EntityChangeAutomation> entityChangesAutomationFailedXml = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.EmailAutomationFailedXml);
+                        foreach (EntityChangeAutomation item in entityChangesAutomationFailedXml)
+                        {
+                            entityChangeAutomation.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.EmailAutomationFailedXml);
+                    }
                 }
             }
 
-            return entityChangeAutomationLists;
+            else if (type == "FollowUp")
+            {
+                if (!string.IsNullOrEmpty(entityChangePM.FollowUpAutomationSsucceedXml))
+                {
+                    entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.FollowUpAutomationSsucceedXml);
+                }
+
+                if (!string.IsNullOrEmpty(entityChangePM.FollowUpAutomationFailedXml))
+                {
+                    if (entityChangeAutomation != null && entityChangeAutomation.Count > 0)
+                    {
+                        List<EntityChangeAutomation> entityChangesAutomationFailedXml = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.FollowUpAutomationFailedXml);
+                        foreach (EntityChangeAutomation item in entityChangesAutomationFailedXml)
+                        {
+                            entityChangeAutomation.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.FollowUpAutomationFailedXml);
+                    }
+                }
+            }
+
+            else if (type == "SetSLA")
+            {
+                if (!string.IsNullOrEmpty(entityChangePM.SetSLAAutomationSsucceedXml))
+                {
+                    entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.SetSLAAutomationSsucceedXml);
+                }
+
+                if (!string.IsNullOrEmpty(entityChangePM.SetSLAAutomationFailedXml))
+                {
+                    if (entityChangeAutomation != null && entityChangeAutomation.Count > 0)
+                    {
+                        List<EntityChangeAutomation> entityChangesAutomationFailedXml = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.SetSLAAutomationFailedXml);
+                        foreach (EntityChangeAutomation item in entityChangesAutomationFailedXml)
+                        {
+                            entityChangeAutomation.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        entityChangeAutomation = LogitudeXmlSerializer.DeserializeObject<List<EntityChangeAutomation>>(entityChangePM.SetSLAAutomationFailedXml);
+                    }
+                }
+            }
+
+            return entityChangeAutomation;
         }
+
+
+
+
     }
 }

@@ -21,9 +21,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Harmonize { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string InsidePackageId { get; set; }
-
         public ChangeSetOperation ChangeSetOp { get; set; }
 
     }

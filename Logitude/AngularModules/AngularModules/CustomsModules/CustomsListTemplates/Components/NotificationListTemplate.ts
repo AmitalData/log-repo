@@ -8,7 +8,7 @@ import {DateAgeHelper} from '../../../Infrastructure/Utilities/DateAgeHelper';
 import { NotificationExtendedListService } from '../../../Customs/Services/ExtendedLists/NotificationExtendedListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NotificationListTemplate.html',
 })
 
@@ -70,10 +70,13 @@ export class NotificationListTemplate {
         }
         else {
             this.IconeVisibility = false;
-            this.BlueIconVisibility = true;
-
         }
 
+        if (this.rowData.NotificationDefinitionCode == "5101N") {
+            this.BlueIconVisibility = true;
+            this.IconeVisibility = false;
+
+        }
 
         var valueDate = new Date(rowData.DueDate.valueOf()).valueOf();
         var today = DateTool.GetCurrentDateAsUtc().valueOf();
@@ -98,7 +101,7 @@ export class NotificationListTemplate {
     ClosedByAssignee: string = null;
     ClosedByAssigneeClicked() {
         this.CurrentSession.FireEvent({ Name: 'ClosedByAssigneeClicked', rowIndex: this.AdditionalData.rowIndex, gridId: this.AdditionalData.gridId });
-        this.notificationExtendedListService.PutNotificationsStatus(this.rowData).subscribe((response:any) => {
+        this.notificationExtendedListService.PutNotificationsStatus(this.rowData).subscribe(response => {
             if (response) {
                 if (!response.HasError) {
                     this.IsClosed = true;

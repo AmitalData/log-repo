@@ -1,8 +1,9 @@
+﻿import 'rxjs/add/operator/map';
 declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Component, EventEmitter, OnInit, Output, SimpleChanges}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -13,10 +14,9 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {DocumentTypeTemplateViewModel} from '../DocumentComponent/DocsOut/ViewModel/DocumentTypeTemplateViewModel';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import {AppTool, DateTool, FileLoader} from '../../../../Infrastructure/Tools';
-import { DocumentTypePMService } from '../../../../Common/Services/StandardPMs/DocumentTypePMService';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'DocumentTypeTemplate',
     templateUrl: './DocumentTypeTemplateComponent.html',
     inputs: ['DocumentType','DocumentTypeTemplates', 'TypeTab'],
@@ -33,20 +33,15 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     TemplateTabCode = "";
     public PageType: string;
     IsShowDeflutCoulm: boolean = false;
-    IsShowOriginalTemplateColum: boolean = false; 
-    IsEnableEdit: boolean = false;
-    Tenant: number = SessionInfo.LoggedUserTenant;
+    IsShowOriginalTemplateColum: boolean = false;
     public documentTypeTemplatePMService: DocumentTypeTemplatePMService;
     CurrentDocumentTypeTemplatePM: DocumentTypeTemplateViewModel;
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
-    private CurrentSession = SessionLocator.SelectedSession;
-    public documentTypePMService: DocumentTypePMService;
-    @Output() ReloadTemplates: EventEmitter<any> = new EventEmitter();
 
     constructor() {
         super();
-         
-        this.documentTypePMService = new DocumentTypePMService();;
+
+
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
 
@@ -61,17 +56,16 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
         if (this.DocumentType) {
             if (this.TypeTab == "Document") {
 
-                this.Title =   TextCodeTranslator.Translate("DocumentType.O.Templates")
+                this.Title =   TextCodeTranslator.Translate("DocumentType.TH.Templates")
                 this.TemplateTabCode = "P";
             }
             else {
                 this.TemplateTabCode = "M";
-                this.Title =    TextCodeTranslator.Translate("DocumentType.O.HTMLTemplates")
+                this.Title =    TextCodeTranslator.Translate("DocumentType.TH.HTMLTemplates")
             }
 
             this.FillDocumentTypeTemplate();
         }
-        this.CheckManageDocumentFeature();
 
         if (FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPEPROPERTIES")) {
             this.IsShowDeflutCoulm = true;
@@ -89,26 +83,6 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes['DocumentTypeTemplates']) {
-            this.DocumentTypeTemplates = changes['DocumentTypeTemplates'].currentValue;
-            this.FillDocumentTypeTemplate();
-        }
-    }
-
-    CheckManageDocumentFeature() {
-        if (FeatureLocator.HasFeaturePermession("DocumentType", "MANAGEDOCUMENTTEMPLATES")) {
-            this.IsEnableEdit = true;
-        }
-    }
-
-    private StartBusyIndicator() {
-        this.CurrentSession.StartBusyIndicator("Saving...");
-    }
-    private StopBusyIndicator() {
-        this.CurrentSession.StopBusyIndicator();
-    }
-
     FillDocumentTypeTemplate() {
 
         this.DocumentTypeTemplateLists = [];
@@ -120,7 +94,6 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
                     else item.IsDefault = false;
                 }
                 else {
-
                     if (item.Id == this.DocumentType.DocumentTypeDefaultReportTemplateId) item.IsDefault = true;
                     else item.IsDefault = false;
 
@@ -159,12 +132,9 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
        
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentType/NewReportTemplateComponent');
-        logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event) {
-                this.ReloadTemplates.emit("reload");
-            }
-        });
+
     }
+
 
     DeleteTemplateButtonClicked() {
 
@@ -174,7 +144,6 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
         if (this.CurrentDocumentTypeTemplatePM && this.DocumentType){
             if (this.TypeTab == "Document") {
-
                 this.DocumentType.DocumentTypeDefaultReportTemplateId = this.CurrentDocumentTypeTemplatePM.Id;
                 this.CurrentDocumentTypeTemplatePM.IsDefault = true;
                 this.DocumentTypeTemplateLists.forEach((item) => {
@@ -201,7 +170,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     CheckInActiveclick(item: DocumentTypeTemplateViewModel) {
 
         if (item.InActive) item.InActive = false;
-        else item.InActive = true;   
+        else item.InActive = true;
         this.UpdateDocumentTypeTemplate(item.Entity);
 
 
@@ -240,12 +209,8 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
             logWindow.WindowArgs = windowArgs;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
-            logWindow.WindowClosed.subscribe((res: any) => {
-                this.ReloadTemplates.emit("reload");
-            })  
-        }
 
-        else {
+        } else {
             var windowArgs: any = {};
             windowArgs.DataViewModel = this;
             windowArgs.TemplateId = item.Id;
@@ -271,6 +236,16 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
             logWindow.WindowArgs = windowArgs;
             window.designerClosed = false;
+
+
+            //FileLoader.LoadStimulSoftResources().then((isLoaded: boolean) => {
+            
+            // logWindow.Show("./Infrastructure/Components/StimulsoftComponent/StimulsoftDesignerComponent");
+
+           
+            //});
+
+            
                 logWindow.Show("./Infrastructure/Components/StimulsoftDesigner/StimulsoftDesigner");
               
                 var pollTimer = window.setInterval(function () {
@@ -279,10 +254,6 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
                         this.designerPopUpClosed();
                     }
                 }, 200);
-
-                logWindow.WindowClosed.subscribe((res: any) => {
-                this.ReloadTemplates.emit("reload");
-                })   
            
         }
 
@@ -339,18 +310,20 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     }
 
 
-    UpdateDocumentTypeTemplate(item: any) { 
+    UpdateDocumentTypeTemplate(item: any) {
+
         this.DocumentType.IsAir = !this.DocumentType.IsAir;
-        this.DocumentType.IsAir = !this.DocumentType.IsAir; 
-        this.StartBusyIndicator();
-        this.documentTypeTemplatePMService.update(item).subscribe((res:any) => {
-         
+        this.DocumentType.IsAir = !this.DocumentType.IsAir;
+        this.documentTypeTemplatePMService.update(item).subscribe(res=> {
+
         });
-        this.UpdateDocumentType();  
-    } 
-    UpdateDocumentType() {
-        this.documentTypePMService.update(this.DocumentType).subscribe((res: any) => {
-            this.StopBusyIndicator();
-        });
-    } 
+    }
+
+
+
+ 
+
+
+
+
 }

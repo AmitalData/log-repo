@@ -20,7 +20,7 @@ export class TenantAdditionalDataPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -74,10 +74,7 @@ export class TenantAdditionalDataPM {
     public OldEntityPM: TenantAdditionalDataPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -85,7 +82,6 @@ export class TenantAdditionalDataPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TenantAdditionalData");
            
         }
-	 }
     }
     private MyClone: TenantAdditionalDataPM;
 

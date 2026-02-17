@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
@@ -36,7 +36,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
                         SecurityUtility.AuthenticationOnEntityTenant("ARInvoice", entityPM.Tenant, authToken.Tenant);
 
                         if (entityPM.Id == null)

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -43,7 +43,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
                                                          OccasionId = a.OccasionId,
                                                          ContactId = a.ContactId,
-                                                         ContactName = a.Contact != null ? a.Contact.EnglishName :null,
+                                                         ContactName = a.Contact != null ? a.Contact.EnglishName : "",
                                                          CustomerName = a.Contact != null ? a.Contact.CompanyName : "",
                                                          OccasionName = a.Occasion != null ? a.Occasion.Name : "",
                                                          ContactEmail = a.Contact != null ? a.Contact.Email : "",

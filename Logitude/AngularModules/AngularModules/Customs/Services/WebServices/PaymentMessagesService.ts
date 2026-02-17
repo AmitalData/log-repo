@@ -1,7 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -16,10 +15,10 @@ import { NewPaymentRequestParams } from '../../DataContract/RequestParams/NewPay
 @Injectable()
 
 export class PaymentMessagesService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PaymentMessages';
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PaymentMessages';
 
@@ -27,7 +26,7 @@ export class PaymentMessagesService {
 
     PostPaymentOrderQueryRequest(entity: PaymentOrderRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -39,13 +38,13 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostPaymentOrderQueryRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -53,7 +52,7 @@ export class PaymentMessagesService {
 
     PostMasavPaymentsToAgentRequest(entity: MasavPaymentsToAgentRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -65,13 +64,13 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostMasavPaymentsToAgentRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -79,7 +78,7 @@ export class PaymentMessagesService {
 
     PostNewPaymentRequest(entity: NewPaymentRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -91,13 +90,13 @@ export class PaymentMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostNewPaymentRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );

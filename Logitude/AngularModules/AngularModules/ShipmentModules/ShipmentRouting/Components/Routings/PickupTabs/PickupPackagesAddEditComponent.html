@@ -360,7 +360,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'PickupPackageCancelbtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'PickupPackageCancelbtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -368,7 +368,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'AddPickupPackage' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'AddPickupPackage' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public HybridTenantThresholdRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public HybridTenantThresholdRepository(ICommonDataContext context)
         {
@@ -35,12 +38,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-              public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant,int typecode)
+              public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant,int tenant2)
         {
-            return (from record in context.HybridTenantThresholds where record.Tenant == tenant  && record.TypeCode== typecode  select record).FirstOrDefault();
+            return (from record in context.HybridTenantThresholds where record.Tenant == tenant select record).FirstOrDefault();
         }
 
-        public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant )
+        public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant)
         {
             return (from record in context.HybridTenantThresholds where record.Tenant == tenant select record).FirstOrDefault();
         }

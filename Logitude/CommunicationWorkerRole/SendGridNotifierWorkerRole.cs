@@ -4,11 +4,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,47 +94,8 @@ namespace CommunicationWorkerRole
 
             string body = BuildAlertEmailHTML(emailDeliveryError, contactName);
             byte[] bytearray = enc.GetBytes(body);
-           
-            
-            string fromemail =  SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) ? SettingUtil.Emails.FromNoReplyLogbox : SettingUtil.Emails.FromNoReply;
 
-            CommunicationLog emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, Tenant);
-            string emailLog = $"From0: {fromemail}";
-            if (emailCommunication != null)
-            {
-                emailLog += $"\nFrom1: {emailCommunication.From}";
-                if (!string.IsNullOrEmpty(emailCommunication.From))
-                {
-                    if (emailCommunication.From.Contains("no-reply@")) fromemail = emailCommunication.From;
-                }
-
-
-
-                emailLog += $"\nFrom2: {fromemail}";
-            }
-            else if (Tenant != 0)
-            {
-                emailLog += $"\nFrom3: {fromemail}";
-
-
-
-                emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, 0);
-                if (emailCommunication != null && !string.IsNullOrEmpty(emailCommunication.From))
-                {
-                    if (emailCommunication.From.Contains("no-reply@")) fromemail = emailCommunication.From;
-
-
-
-                    emailLog += $"\nFrom4: {fromemail} Tenant Zero Log";
-                }
-
-
-
-
-            }
-
-
-
+            string fromemail = "no-reply@LogitudeWorld.com";
             string subject = "Email Delivery Failure : " + EmailSubject;
 
             Document document = new Document()
@@ -167,12 +127,11 @@ namespace CommunicationWorkerRole
                 DocumentId = document.Id,
                 SearchFields = "sendgridnotifier" + "," + subject,
                 CreateDateUTC = DateTime.UtcNow,
-                Logs = emailLog,
             };
 
             communicationLogRepository.Add(commLog);
 
-
+            CommunicationLog emailCommunication = communicationLogRepository.GetSingleCommunicationLog(CurrentLogId, Tenant);
             if (emailCommunication != null)
             {
                 CommunicationAttachment attachment = new CommunicationAttachment()
@@ -215,7 +174,7 @@ namespace CommunicationWorkerRole
 				//queueservice.Send(message);
 
 				DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
+				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
 			}
 
             catch (Exception ex)

@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -54,7 +54,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string loggedUserEmail = authToken.Email;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    SecurityUtility.AuthenticationOnTenant(args.Tenant);
 
                     if (args != null)
                     {

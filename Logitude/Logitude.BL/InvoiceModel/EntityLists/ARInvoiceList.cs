@@ -16,8 +16,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string BillToId { get; set; }
         public string BillToName { get; set; }
         public string BillToLocalName { get; set; }
-        public string BillToDisplayNumber { get; set; }
-
         public string BillToCode { get; set; }
         public string BillToAddressId { get; set; }
         public string VatNumber { get; set; }       
@@ -42,9 +40,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string PaymentTermName { get; set; }
         public bool IsAutoCredit { get; set; }
         public bool IsCancelled { get; set; }
-        public bool IsFromInterestBatchInvoice { get; set; }
-        public bool HasDoc { get; set; }
-
         public string CancelledByARInvoiceId { get; set; }
         public string InternalNotes { get; set; }
         public string PrintNotes { get; set; }
@@ -64,7 +59,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public double? AmountDueInLocalCurrency { get; set; }
         public double? AmountDueInProfitCurrency { get; set; }
         public string MainEntityId { get; set; }
-        public string MasterEntityId { get; set; }
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
         public string Description { get; set; }
@@ -103,13 +97,12 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string AccountingExternalCode { get; set; }
         public bool ReadyForTransfer { get; set; }
         public bool IsDueDateColorRed { get; set; }
-        public bool IsDigitalDueDateColorRed { get; set; }
         public bool IsExpectedPaymentDateColorRed { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
         public string ApprovedByUserName { get; set; }
         public DateTime? OperationalDate { get; set; }
-        public DateTime? DateForInterest { get; set; }
+        public DateTime? DateForVATInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }
         public bool IsExternalEntity { get; set; }
         public bool IsGeneralInvoice { get; set; }
@@ -124,9 +117,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         //public string MetodoPagoCode { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
-        public string PeriodCode { get; set; }
-        public string RegimenFiscalCode { get; set; }
-        public string Period { get; set; }
         public string SATTransferStatusCode { get; set; }
         public string SATTransferStatusName { get; set; }
         public string TransmissionError { get; set; }
@@ -135,7 +125,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string SATInvoiceStatusName { get; set; }
         public bool Intercompany { get; set; }
         public string BankAccountLiteId { get; set; }
-        public bool HasInterestFeature { get; set; }
 
         public bool IsMultiCurrency { get; set; }
 
@@ -184,49 +173,6 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
         public string CreatedByPartner { get; set; }
-
-        public string SATXML { get; set; }
-
-        public string BillToGLAccountId { get; set; }
-
-        public string RegionalTaxId { get; set; }
-        public double? RegionalTaxPercentage { get; set; }
-        public string PaidStatus { get; set; }
-
-        public DateTime? PaidDate { get; set; }
-
-        public string PartnerId { get; set; }
-        public string PartnerName { get; set; }
-        public string ShipmentsNumbers { get; set; }
-        public string MasterNumbers { get; set; }
-        public string MasterShipmentNumbers { get; set; }
-        public string HouseNumbers { get; set; }
-        public string GlobalTaxCalculation { get; set; }
-        public string PaymentReferences { get; set; }
-        public string SATCancelReasonCode { get; set; }
-        public string DigitalPortalSearchFields { get; set; }
-        public Decimal? TotalExamptFortaxReport { get; set; }
-        public string DocumentTemplateId { get; set; }
-        public string ConcurrencyGUID { get; set; }
-        public double? TotalAmountNotForTaxReport { get; set; }
-
-        public string ReportUrl { get; set; }
-        public bool IsAutoCredited { get; set; }
-        public string IsSigned { get; set; }
-
-        public string IsSignedName { get; set; }
-
-        public string ConfirmationNumber { get; set; }
-        public string ConfirmationNumberStatus { get; set; }
-        public string ConfirmationNumberStatusName { get; set; }
-        public string APIResponseToConfirmation { get; set; }
-        public string SequenceStatus { get; set; }
-        public string InvoiceNumberPart { get; set; }
-        public string InvoiceSeries { get; set; }
-        public bool IsApprovalFailed { get; set; }
-        public DateTime? ReferenceDate { get; set; }
-        public bool ApprovalInProgress { get; set; }
-
 
     }
 }

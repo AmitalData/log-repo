@@ -4,7 +4,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -21,8 +21,6 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using Logitude.CustomsMessaging.MessagingServices;
-using static WebFreight.Web.Controllers.CustomsModel.Extended.CourierMasterController;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -72,7 +70,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 if (entity.IsAllSelected)
                 {
-                    connectedItems = queryService.GetCertificateConnectedItemsList(entity.DeclarationId, entity.oldAttachment, entity.ReqConfirmationTypeCode, entity.oldCertificateExempt, entity.oldCertificateNumber, entity.oldResConfirmation, tenant, entity.SearchFields);
+                    connectedItems = queryService.GetCertificateConnectedItemsList(entity.DeclarationId, entity.oldAttachment, entity.ReqConfirmationTypeCode, entity.oldCertificateExempt, entity.oldCertificateNumber, entity.oldResConfirmation, tenant);
 
                     if (!string.IsNullOrEmpty( entity.ExcludedItemsKeys))
                     {
@@ -159,7 +157,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             updateService.Update(cert, true);
 
                             // 2- update supp invoice item
-                           string status= updateService.UpdateCertificateStatus(cert, tenant);
+                            updateService.UpdateCertificateStatus(cert, tenant);
 
                         });
                     }
@@ -322,42 +320,40 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SupplierInvoiceItemPM itemPM = itemQueryService.GetSingle(connectedItem.DeclarationId, connectedItem.InvoiceCounterKey, connectedItem.LineNumber, true, false);
                 SupplierInvoiceItemsProdIdentUpdateService updateService = new SupplierInvoiceItemsProdIdentUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
                 SupplierInvoiceItemUpdateService itemupdateService = new SupplierInvoiceItemUpdateService(customContext, new Dictionary<string, IContext>(), tenant);
-                
+
                 var identification = itemPM.SupplierInvoiceItemsProdIdents.Where(d => d.TypeCode == "MN").FirstOrDefault();
-                if (connectedItem?.CatalogNumber != null) {
-                    if (identification != null)
+                if (identification != null)
+                {
+                    identification.Identification = connectedItem.CatalogNumber;
+                    identification.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    updateService.Update(identification, true);
+                }
+                else
+                {
+                    int line = 0;
+                    if (itemPM.SupplierInvoiceItemsProdIdents.Count > 0)
                     {
-                        identification.Identification = connectedItem.CatalogNumber;
-                        identification.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        updateService.Update(identification, true);
+
+                        line = itemPM.SupplierInvoiceItemsProdIdents.Max(d => d.LineNumber);
+                       
                     }
-                    else
-                    {
-                        int line = 0;
-                        if (itemPM.SupplierInvoiceItemsProdIdents.Count > 0)
-                        {
 
-                            line = itemPM.SupplierInvoiceItemsProdIdents.Max(d => d.LineNumber);
+                    line += 1;
+                    var item= new SupplierInvoiceItemsProdIdentPM();
 
-                        }
+                    item.DeclarationId = connectedItem.DeclarationId;
+                    item.Tenant = tenant;
+                    item.InvoiceCounterKey = connectedItem.InvoiceCounterKey;
+                    item.InvoiceItemLineNumber = itemPM.LineNumber;
+                    item.LineNumber = line;
+                    item.Identification = connectedItem.CatalogNumber;
+                    item.TypeCode = "MN";
+                    item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                  //  updateService.Update(identification, true);
+                    itemPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    itemPM.SupplierInvoiceItemsProdIdents.Add(item);
+                    itemupdateService.Update(itemPM, true);
 
-                        line += 1;
-                        var item = new SupplierInvoiceItemsProdIdentPM();
-
-                        item.DeclarationId = connectedItem.DeclarationId;
-                        item.Tenant = tenant;
-                        item.InvoiceCounterKey = connectedItem.InvoiceCounterKey;
-                        item.InvoiceItemLineNumber = itemPM.LineNumber;
-                        item.LineNumber = line;
-                        item.Identification = connectedItem.CatalogNumber;
-                        item.TypeCode = "MN";
-                        item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                        //  updateService.Update(identification, true);
-                        itemPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        itemPM.SupplierInvoiceItemsProdIdents.Add(item);
-                        itemupdateService.Update(itemPM, true);
-
-                    }
                 }
                
 
@@ -404,61 +400,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetUpdateAllCertificateWithoutResponse(string declarationId,string customFileNo)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                //SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(customContext);
-
-                //var count = updateService.UpdateAllCertificateWithoutResponse(declarationId, tenant);
-                var messagingService = new DCAInUCBUpdateAllCertificateWithoutResponse_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, declarationId, customFileNo);
-               
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetCreateCertificateForInvoiceItems(string declarationId, string customFileNo, string attachmentTypeCode,
-            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber, string certificateExemptionTypeCode, string selectedInvoiceItemsKeys)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                
-                var messagingService = new DCAInUCBCreateCertificateForInvoiceItems_MsgMessagingService();
-                string RequestInProgressList;
-                var sts = messagingService.CreateCRS(
-                    tenant, null, declarationId, customFileNo, attachmentTypeCode, reqConfirmationTypeCode, resConfirmationTypeCode, certificateNumber, certificateExemptionTypeCode, selectedInvoiceItemsKeys, out RequestInProgressList);
-                DataResult result = new DataResult();
-                result.RequestInProgressList = RequestInProgressList;
-                result.Message = sts;
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
     }
 }

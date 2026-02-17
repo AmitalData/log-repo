@@ -23,7 +23,7 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'BankPageEventsComponent',
     templateUrl: './BankPageEventsComponent.html',
     providers: [EntityArgs],

@@ -19,7 +19,7 @@ namespace Logitude.BL.Helpers
             {
                 ContactQuery contactRep = new ContactQuery(tenant);
                 UserQuery userQuery = new UserQuery(tenant);
-                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, false);
                 UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
 
                 if (user != null && user.IsProductRestricted)
@@ -50,7 +50,7 @@ namespace Logitude.BL.Helpers
             {
                 ContactQuery contactRep = new ContactQuery(tenant);
                 UserQuery userQuery = new UserQuery(tenant);
-                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, false);
                 UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
 
                 if (user != null && user.IsProductRestricted)
@@ -82,7 +82,7 @@ namespace Logitude.BL.Helpers
                     IQueryable<T> queryData = (new List<T>() { entity }).AsQueryable<T>();
                     ContactQuery contactRep = new ContactQuery(tenant);
                     UserQuery userQuery = new UserQuery(tenant);
-                    ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                    ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, false);
                     UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
 
                     if (user != null && user.IsProductRestricted)

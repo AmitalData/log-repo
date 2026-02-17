@@ -13,8 +13,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -39,17 +38,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (authToken != null)
                 {
                     int tenant = authToken.Tenant;
-                    
-                    CustomDocumentTypeTenantQueryService customDocumentTypeTenantQueryService = new CustomDocumentTypeTenantQueryService(tenant);
-                    CustomDocumentTypeTenantPM customDocumentTypeTenantPm = customDocumentTypeTenantQueryService.GetByTenant(tenant, entityPOCO.Code).FirstOrDefault();
-                    if (customDocumentTypeTenantPm != null)
-                    {
-                        entityPM.AutoSetOriginalDocumentTrue = customDocumentTypeTenantPm.AutoSetOriginalDocumentTrue;
-                        entityPM.CustomsDocumentUpload = customDocumentTypeTenantPm.CustomsDocumentUpload;
-                        entityPM.IsCourierManadatory = customDocumentTypeTenantPm.IsCourierManadatory;
-                        entityPM.IsDiamondManadatory = customDocumentTypeTenantPm.IsDiamondManadatory;
-                        entityPM.PointerLevel = customDocumentTypeTenantPm.PointerLevel;
-                    }
 
                     if (entityPOCO.PointerLevel != null)
                     {
@@ -60,17 +48,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                             entityPM.PointerLevelName = pointerLevelPM.LocalName;
                         }
                     }
-
-                    if (entityPOCO.CustomsDocumentUpload != null)
-                    {
-                        CustomsDocumentUploadQueryService customsDocumentUploadQueryService = new CustomsDocumentUploadQueryService(tenant);
-                        CustomsDocumentUploadPM customsDocumentUploadPM = customsDocumentUploadQueryService.GetSingle(entityPOCO.CustomsDocumentUpload, false, true);
-                        if (customsDocumentUploadPM != null)
-                        {
-                            entityPM.CustomsDocumentUploadName = customsDocumentUploadPM.LocalName;
-                        }
-                    }
-                    
                 }
             }
         }

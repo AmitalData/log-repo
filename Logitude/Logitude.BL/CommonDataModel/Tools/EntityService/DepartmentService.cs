@@ -3,13 +3,10 @@ using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using System.Collections.Generic;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -51,8 +48,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DepartmentMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-
-            AddDepartmentKafkaQueueMessage();
         }
 
         public void Update(DepartmentPM entityPM)
@@ -79,28 +74,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DepartmentMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
-            AddDepartmentKafkaQueueMessage();
-        }
-
-        private void AddDepartmentKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Department" },
-                { "EntityId", entityPm.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
     }
 }

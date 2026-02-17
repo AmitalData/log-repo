@@ -2,7 +2,7 @@
 
 @Component({
     selector: 'ContactDatePicker',
-    
+    moduleId: module.id,
     templateUrl: './ContactDatePicker.html',
     inputs:['Date'],
 })

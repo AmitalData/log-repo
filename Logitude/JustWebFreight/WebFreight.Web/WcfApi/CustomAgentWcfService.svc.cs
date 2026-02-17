@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Validators;
@@ -15,7 +15,6 @@ using WebFreight.Web.Security;
 using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -80,9 +79,8 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.CardExternalCodeByCurrencies);
                         service.Update(entityPM);
                     }
-					CardGLAccountConnectBatch CardGLAccountConnectBatch = new CardGLAccountConnectBatch();
-					CardGLAccountConnectBatch.ConnectSingleCardToGLAccountInBatch(entityPM.Tenant, entityPM.Id);
-					response.Result = entityPM.Id;
+
+                    response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
                 }

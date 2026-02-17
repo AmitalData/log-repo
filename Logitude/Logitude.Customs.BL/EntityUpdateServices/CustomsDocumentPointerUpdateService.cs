@@ -50,9 +50,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 declarationRep.SetIsChangedAndSubmitChanges(declaration);
 
                 //-----------------------------------------------------------------------------------------------------------------//
-          
-                 UpdateUnifreight(entityPM, declaration);
-              
+                var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
+                if (setting.IsConnectedToUniFreight)
+                {
+                    UpdateUnifreight(entityPM);
+                }
             }
 
             //CustomsDocumentsTicketId adjustment 16/10/2016 mohammad
@@ -170,7 +172,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!string.IsNullOrWhiteSpace(dirtyEntityPM.DocumentTypeCode))
             {
                 CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(dirtyEntityPM.Tenant);
-                CustomDocumentTypePM customDocumentType = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(dirtyEntityPM.DocumentTypeCode, dirtyEntityPM.Tenant);
+                CustomDocumentTypePM customDocumentType = customDocumentTypeQueryService.GetSingle(dirtyEntityPM.DocumentTypeCode, false, false);
                 desc = desc + "\n" + "סוג מסמך-" + customDocumentType.LocalName;
             }
             if (!string.IsNullOrWhiteSpace(dirtyEntityPM.CustomsDocId))

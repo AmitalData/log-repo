@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -43,19 +43,6 @@ using Unifreight.Data.AmitalModel;
 using WebFreight.Web.WebServices;
 using System.Net.Http.Headers;
 using System.Xml.Linq;
-using Logitude.CustomsMessaging.Helpers;
-using Logitude.Server.Tools.Models;
-using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.CustomsMessaging.Common.RequestParams;
-
-
-using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.CustomsMessaging.RequestServices;
-using System.Xml;
- using Newtonsoft.Json;
- using System.Globalization;
-using System.Configuration;
- 
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -78,31 +65,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 DeclarationRepository declarationRep = new DeclarationRepository(customContext);
-                string id = declarationRep.GetIdByCustomFileNoAndAmendmentDontDisplayInList(customFileNo, tenant, false);
+                string id = declarationRep.GetIdByCustomFileNo(customFileNo, tenant);
 
                 DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
                 DeclarationListQueryService listService = new DeclarationListQueryService(customContext);
                 DeclarationList declaration = listService.GetSingle(id);
-
-                return Request.CreateResponse(HttpStatusCode.OK, declaration);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-          
-        public HttpResponseMessage GetLastAmendmentByCustomFileNo(string customFileNo)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                
-                string id = new DeclarationRepository(customContext).GetLastAmendmentIdByCustomFileNo(customFileNo, authToken.Tenant);
-                DeclarationList declaration = new DeclarationListQueryService(customContext).GetSingle(id);
 
                 return Request.CreateResponse(HttpStatusCode.OK, declaration);
             }
@@ -167,38 +134,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 List<ConsignmentPM> myConsignmentPM = declarationQuery.GetConsignmentListPMByDeclarationId(DeclarationId, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myConsignmentPM);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-        public HttpResponseMessage GetDeclarationPendingListPMByDeclarationId(string declarationId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-
-                DeclarationRepository declarationRep = new DeclarationRepository(customContext);
-                 if (string.IsNullOrWhiteSpace(declarationId))
-                {
-                    //return null;
-                    return Request.CreateResponse(HttpStatusCode.OK, declarationId);
-                }
-
-                DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
-                List<DeclarationPendingPM> myDeclarationPendingPM = declarationQuery.GetDeclarationPendingListPMByDeclarationId(declarationId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myDeclarationPendingPM);
             }
 
             catch (Exception ex)
@@ -280,10 +215,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-
-
         public HttpResponseMessage PutCopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {
+
+
+
+
+
 
             try
             {
@@ -373,7 +311,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     long lCUSTOMFILENO;
                     if (long.TryParse(customFileNo, out lCUSTOMFILENO))
                     {
-                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, tenant);
+                        int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                         if (FILENO.HasValue)
                         {
                             declaration.Id = FILENO.ToString();
@@ -469,262 +407,5 @@ new XElement("FileStreamError",
 
 
         }
-
-
-
-
-
-        public HttpResponseMessage GetLast2755ResponseDataAsFileStream(string customFileNo, int tenant)//AMI-66312 - שליחת מסר תשובה של מסר הגשה במקום של טיוטה אחרונה
-        {
-			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
-			string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20240818T155633.LogUntilDateyyyyMMdd"];
-			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
-			{
-				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
-													"yyyyMMdd",
-													CultureInfo.InvariantCulture,
-													DateTimeStyles.None);
-			}
-
-
-			//http://192.116.221.103:572/NextProd572/api/Declarartion/GetLast2755ResponseDataAsFileStream?customFileNo=51340159&tenant=1
-			string responseDataDocumentId = "NaN";
-            string declarationVersionId = "NaN";
-            string Status = "Error";
-            HttpResponseMessage httpResponse = null;
-            try
-            {
-
-                ICustomContext customContext = CustomContext.GetContext(tenant);
-
-                DeclarationRepository declarationRep = new DeclarationRepository(customContext);
-                var decPoco = declarationRep.GetByCustomFileNo(customFileNo, tenant);
-
-                // first check if Declaration exist 
-                if (decPoco == null)
-                {
-                    throw new BusinessErrorException("Declaration !exist ");
-                }
-				LogitudeSettings.HandleLogMe(customFileNo+ "Declaration exist", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-				declarationVersionId = decPoco.VersionId;
-                if (String.IsNullOrWhiteSpace(declarationVersionId))
-                {
-                    throw new BusinessErrorException("declarationVersionId !exist ");
-                }
-				LogitudeSettings.HandleLogMe(customFileNo + "declarationVersionId exist", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-				var crsAnalyzeStatus = "30";
-                string interfaceTypeCode = "2755";
-                var crsRepo = new CustomsRequestsSheetRepository(customContext);
-                var crsPoco = crsRepo.GetLastCRSByCustomfileStatusInterfaceFirstOrDefault(decPoco.CustomFileNo, crsAnalyzeStatus, interfaceTypeCode, tenant);
-                if (crsPoco == null)
-                {
-                    throw new BusinessErrorException(/*"CustomsRequestsSheet !exist "*/ $"Message '{interfaceTypeCode}' didn't send yet  to customs!!!.");
-                }
-				LogitudeSettings.HandleLogMe(customFileNo + "Message send yet  to customs", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-				var stepRepo = new CommunicationLogStepRepository(tenant);
-                int stepReceivedCustomResponseCorrelation = 20;
-                var stepPoco = stepRepo.CommunicationLogStep(crsPoco.RequestComminicationId, stepReceivedCustomResponseCorrelation, tenant);
-                responseDataDocumentId = stepPoco.DocumentId;
-                if (String.IsNullOrWhiteSpace(responseDataDocumentId))
-                {
-                    throw new BusinessErrorException("ResponseDataDocumentId !exist ");
-                }
-				LogitudeSettings.HandleLogMe(customFileNo + "ResponseDataDocumentId exist" + responseDataDocumentId, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-
-				string blobId = tenant + "_" + responseDataDocumentId;
-                httpResponse = Uploader.GetFileStream(blobId);
-                Status = "OK";
-				LogitudeSettings.HandleLogMe(customFileNo + "ResponseDataDocumentId exist" + responseDataDocumentId, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-			}
-			catch (BusinessErrorException businessErrorException)
-            {
-				LogitudeSettings.HandleLogMe(customFileNo + "businessErrorException", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-				XElement myXml =
-new XElement("FileStreamError",
-    new XElement("Error", businessErrorException.Message
-        ));
-                httpResponse = GetResponse(responseDataDocumentId, myXml);
-            }
-            catch (Exception ee)
-            {
-				LogitudeSettings.HandleLogMe(customFileNo + "Exception12" + ee.Message.ToString(), false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-				XElement myXml =
-new XElement("FileStreamError",
-    new XElement("Error", ee.ToString()
-
-        )
-    );
-                httpResponse = GetResponse(responseDataDocumentId, myXml);
-            }
-            finally
-            {
-				LogitudeSettings.HandleLogMe(customFileNo + "finally ", false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-				var fileName = httpResponse.Content.Headers.ContentDisposition.FileName;
-                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                var Extension = Path.GetExtension(fileName);
-                var newFileName = $"DocumentId={responseDataDocumentId};DeclarationVersionId={declarationVersionId};Status={Status}" + Extension;
-                httpResponse.Content.Headers.ContentDisposition.FileName = newFileName;
-				LogitudeSettings.HandleLogMe(customFileNo + "finally fileName: " + newFileName, false, "GetLast2755ResponseDataAsFileStream", stopLogAt);
-
-			}
-			return httpResponse;
-
-
-        }
-
-        private static HttpResponseMessage GetResponse(string responseDataDocumentId, XElement myXml)
-        {
-            HttpResponseMessage httpResponse;
-            var data = System.Text.UTF8Encoding.UTF8.GetBytes(myXml.ToString());
-
-            httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
-
-            httpResponse.Content = new StreamContent(new MemoryStream(data));
-            httpResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            httpResponse.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            httpResponse.Content.Headers.ContentDisposition.FileName = responseDataDocumentId + ".xml";
-            return httpResponse;
-        }
-
-        public HttpResponseMessage PostSendCollateral8212(SendCollateralsRequestParams requestParamsData)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                var messagingService = new DCAInUCB8212_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData.Collaterals);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-
-        public HttpResponseMessage GetDeclarationAmendmentsById(string id)
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            int tenant = authToken.Tenant;
-            string loggedUserEmail = authToken.Email;
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            DeclarationList declaration = new DeclarationList();
-            ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-            try {
-                DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
-
-                var declarations=  declarationQuery.GetDeclarationAmendmentsById(tenant , id, true);
-
-                ServiceResponse response = new ServiceResponse();
-                response.Count = declarations.Count();
-
-                response.Result = declarations;
-                return Request.CreateResponse(HttpStatusCode.OK, response); 
-        }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-
-}
-        public HttpResponseMessage GetSingleFullData(string id)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", authToken.Tenant);
-
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                DeclarationQueryService declarationQuery = new DeclarationQueryService(MyContext);
-                //declarationQuery.InitializeSettings();
-                DeclarationPM declarationPM = declarationQuery.GetSingle(id, true, false);
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        public HttpResponseMessage GetDiamondsDeclarationsCounts(string requestedCounts)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                var requestedCountsList = JsonConvert.Deserialize<List<string>>(requestedCounts);
-
-                ICustomContext context = CustomContext.GetContext(authToken.Tenant);
-                DeclarationQueryService declarationQueryService = new DeclarationQueryService(authToken.Tenant);
-                var counts = declarationQueryService.GetDiamondsDeclarationsCounts(authToken.Tenant, requestedCountsList);
-
-                return Request.CreateResponse(HttpStatusCode.OK, counts);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-		[HttpPost]
-		public async Task<HttpResponseMessage> UpdateDeclarationInU2L()
-		{
-			try
-			{
-                string body = await Request.Content.ReadAsStringAsync();
-                var myAmitalCu= JsonConvert.DeserializeObject<LogitudeCustomsFile>(body);
-				var amitalObjExample = new LOGICUSTFILE();
-
-				amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCu };
-
-				var xml = Logitude.AmitalMessaging.Utils.XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
-
-				var dus = new Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService();
-				string MoreParams = ""; string MessageOut = "";
-				dus.ProccessGenericRequest(xml, ref MoreParams,
-					out MessageOut);
-
-				return Request.CreateResponse(HttpStatusCode.OK, MessageOut);
-
-			}
-
-			catch (Exception ex)
-			{
-
-				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-			}
-		}
-
-	}
+    }
 }

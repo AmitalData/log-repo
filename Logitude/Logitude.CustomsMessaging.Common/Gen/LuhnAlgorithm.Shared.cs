@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Windows;
-using System.Text.RegularExpressions;
 
 namespace Logitude.CustomsMessaging.Common.Gen
 {
@@ -70,16 +69,6 @@ namespace Logitude.CustomsMessaging.Common.Gen
             {
                 return 10 - (sum % 10);
             }
-        }
-
-        public static bool IsVatNumberValid(string number)
-        {
-            var hasCharacters = Regex.IsMatch(number, @"[^\d{9}$]");
-            if (hasCharacters) 
-                return false;
-
-            var checksumDigit = CalculateLuhnAlgorithm(number);
-            return checksumDigit == 0;
         }
     }
 }

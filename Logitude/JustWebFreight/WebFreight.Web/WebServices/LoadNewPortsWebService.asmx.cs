@@ -3,9 +3,8 @@ using System.Linq;
 using System.Web.Services;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.WebServices
 {
@@ -22,8 +21,7 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public string LoadPorts(string file)
         {
-            int tenant = 0;
-            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            ICommonDataContext objectContext = CommonDataContext.GetContext(0);
 
             Simplog.Data.CommonDataModel.Repositories.CountryRepository countryRepository = new Simplog.Data.CommonDataModel.Repositories.CountryRepository(objectContext);
             PortRepository portRepository = new PortRepository(objectContext);
@@ -97,7 +95,7 @@ namespace WebFreight.Web.WebServices
                             {
                                 newPort.CountryId = country.Id;
                                 newPort.Country = country;
-                                UpdatePortSearchFieldService.Update(newPort);
+
                                 portRepository.Add(newPort);
                             }
                         }

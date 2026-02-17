@@ -1,5 +1,4 @@
-
-<table>
+﻿<table>
 
     <tr>
         <td colspan="3" style="vertical-align:top">
@@ -8,60 +7,54 @@
                 <logitude-edit-grid GridWidth="100%" [HeaderHeight]="25" GridHeight="100%" [ItemSource]="ItemsSource">
 
                     <log-column [width]="'300'" [header]="'Country'">
-                        <ng-template let-item>
-                            <log-cell-template  #logcelltemplate [IsEnabled]="false">
-                                <table>
-                                    <tr>
-                                        <td style="width:18px;">
-                                            <img [attr.title]="item.Name" style="height:16px;width:16px;float:left;" src="{{item.CountryCode | CountryFlagPipe}}" />
-                                        </td>
-                                        <td style="float:left;padding-left:3px;">
-                                            {{item.CountryName}}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" >
+                            <table>
+                                <tr>
+                                    <td style="width:18px;">
+                                        <img [attr.title]="item.Name" style="height:16px;width:16px;float:left;" src="{{item.CountryCode | CountryFlagPipe}}"/>
+                                    </td>
+                                    <td style="float:left;padding-left:3px;">
+                                        {{item.CountryName}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </log-cell-template>
                     </log-column>
 
                     <log-column [width]="'97'" [header]="'OpportunityProductLocation.F.NumberOfShipments' | TextCodeTranslationPipe ">
-                        <ng-template let-item>
-                            <log-cell-template  #logcelltemplate [IsEnabled]="false">
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.NumberOfShipments}}
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.NumberOfShipments}}
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <log-column [width]="'120'" [header]="'OpportunityProductLocation.F.ChargeableWeight' | TextCodeTranslationPipe " [Alignment]="'left'">
-                        <ng-template let-item>
-                            <log-cell-template  #logcelltemplate [IsEnabled]="false">
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.ChargeableWeight | NumbersPipe:'N2'}}
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.ChargeableWeight | NumbersPipe:'N2'}}
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <log-column [width]="'110'" [header]="'OpportunityProductLocation.F.Revenue'| TextCodeTranslationPipe" [Alignment]="'left'">
-                        <ng-template let-item>
-                            <log-cell-template  #logcelltemplate [IsEnabled]="false">
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.Revenue | NumbersPipe:'N2' }}
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.Revenue | NumbersPipe:'N2' }}
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                     <log-column *ngIf="TEUVisibility" [width]="'90'" [header]="'OpportunityProductLocation.F.TEU' | TextCodeTranslationPipe " [Alignment]="'left'">
-                        <ng-template let-item>
-                            <log-cell-template  #logcelltemplate [IsEnabled]="false">
-                                <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
-                                    {{item.TEU | NumbersPipe:'N2'}}
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            <div style="width: 100%; text-align: right;" *ngIf="logcelltemplate.IsDisplayMode">
+                                {{item.TEU | NumbersPipe:'N2'}}
+                            </div>
+                        </log-cell-template>
                     </log-column>
 
                 </logitude-edit-grid>

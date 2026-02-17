@@ -64,6 +64,7 @@
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'ChargesGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
+
                                                 <td>
                                                     <LogLov [ObjectFieldName]="'ChargesGroupId'"
                                                             [ObjectTableName]="ObjectTableName"
@@ -72,18 +73,19 @@
                                                     </LogLov>
                                                 </td>
                                             </tr>
-                                     
+
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-                                                <td>
+
+                                                <td style="padding-right:18px;">
                                                     <LogLov [ObjectFieldName]="'MeasurementId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Measurement'"
                                                             [DependencyFilter2Value]="false"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
+                                                            [HideLastColumn]="true">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -97,8 +99,7 @@
                                                     <LogLov [ObjectFieldName]="'ContainerMeasurementId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Measurement'"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters">
+                                                            [LookUpTableName]="'Measurement'">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -112,7 +113,8 @@
                                                     <LogLov [ObjectFieldName]="'VatTypeId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'VatType'" [DependencyFilter2Value]="false">
+                                                            [LookUpTableName]="'VatType'"
+                                                            >
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -158,7 +160,8 @@
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [SelectedValue]="ReceivablesDefaultCurrencyId"
-                                                                        [LookUpTableName]="'Currency'">
+                                                                        [LookUpTableName]="'Currency'"
+                                                                        >
                                                                 </LogLov>
                                                             </td>
                                                         </tr>
@@ -204,6 +207,17 @@
                                                 </td>
                                             </tr>
 
+                                            <!--<tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsBackToBack'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogCheckBox [ObjectFieldName]="'IsBackToBack'"[Value]="IsBackToBack"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                </td>
+                                            </tr>-->
+
+
                                             <tr class="FormFieldRow">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'IsExpense'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -211,36 +225,6 @@
 
                                                 <td>
                                                     <LogCheckBox [ObjectFieldName]="'IsExpense'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow" *ngIf="DisplayRegoinalTax">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'ApplyRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'ApplyRegionalTax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'HasPickup'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'HasPickup'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="FormFieldRow">
-                                                <td>
-                                                    <LogLabel [ObjectFieldName]="'HasDelivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogCheckBox [ObjectFieldName]="'HasDelivery'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                 </td>
                                             </tr>
 
@@ -276,20 +260,9 @@
                                 <tr>
                                     <td>
                                         <table>
-                                            <!--Active in-->
-                                            <tr class="SectionHeader">
-                                                <td colspan="3" style="padding-left:10px; font-size:13px;">{{'ChargesType.O.ActiveIn' | TextCodeTranslationPipe}}</td>
-                                            </tr>
-
-                                            <tr style="height:5px;">
-                                                <td colspan="3">
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-
                                             <tr>
                                                 <!--Transport mode-->
-                                                <td>
+                                                <td >
                                                     <table>
                                                         <tr class="SectionHeader">
                                                             <td style="padding-left:10px; font-size:13px;">{{'ChargesType.O.Transport' | TextCodeTranslationPipe}}</td>
@@ -375,146 +348,6 @@
                                                     <div></div>
                                                 </td>
 
-                                                <!--Direction-->
-                                                <!--*ngIf="IsChargeTypesRestrictedFeatureToggleOn"-->
-                                                <td>
-                                                    <table>
-                                                        <tr class="SectionHeader">
-                                                            <td style="padding-left:10px; font-size:13px;">{{'ChargesType.O.Direction' | TextCodeTranslationPipe}}</td>
-                                                        </tr>
-
-                                                        <tr style="height:5px;">
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td>
-                                                                <table>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <RadioButton [Name]="'IsDirectionRestricted'" [IsChecked]="!IsDirectionRestricted" (Checked)="SetIsDirectionRestricted(false)" [Text]="'ChargesType.O.ActiveInAllDirections' | TextCodeTranslationPipe"></RadioButton>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <RadioButton [Name]="'IsDirectionRestricted'" [IsChecked]="IsDirectionRestricted" (Checked)="SetIsDirectionRestricted(true)" [Text]="'ChargesType.O.ActiveInSomeDirections' | TextCodeTranslationPipe"></RadioButton>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <table>
-                                                                                <tr style="height:20px;">
-                                                                                    <td style="width:20px;">
-                                                                                        <div></div>
-                                                                                    </td>
-
-                                                                                    <td style="width:20px;">
-                                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInExport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                    </td>
-
-                                                                                    <td style="width:10px;"><div></div></td>
-
-                                                                                    <td style="width:25px;">
-                                                                                        <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/E.png" />
-                                                                                    </td>
-
-                                                                                    <td style="width:50px;">
-                                                                                        <label class="Label">{{'ChargesType.F.IsActiveInExport' | TextCodeTranslationPipe}}</label>
-                                                                                    </td>
-
-                                                                                    <td><div></div></td>
-                                                                                </tr>
-
-                                                                                <tr style="height:20px;">
-                                                                                    <td style="width:20px;">
-                                                                                        <div></div>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInImport'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                    </td>
-
-                                                                                    <td style="width:10px;"><div></div></td>
-
-                                                                                    <td>
-                                                                                        <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/I.png" />
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <label class="Label">{{'ChargesType.F.IsActiveInImport' | TextCodeTranslationPipe}}</label>
-                                                                                    </td>
-
-                                                                                    <td><div></div></td>
-                                                                                </tr>
-
-                                                                                <tr style="height:20px;">
-                                                                                    <td style="width:20px;">
-                                                                                        <div></div>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInDomestic'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                    </td>
-
-                                                                                    <td style="width:10px;"><div></div></td>
-
-                                                                                    <td>
-                                                                                        <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/D.png" />
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <label class="Label">{{'ChargesType.F.IsActiveInDomestic' | TextCodeTranslationPipe}}</label>
-                                                                                    </td>
-
-                                                                                    <td><div></div></td>
-                                                                                </tr>
-
-                                                                                <tr style="height:20px;">
-                                                                                    <td style="width:20px;">
-                                                                                        <div></div>
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsActiveInDrop'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                    </td>
-
-                                                                                    <td style="width:10px;"><div></div></td>
-
-                                                                                    <td>
-                                                                                        <img width="18" height="16" style="vertical-align: middle;margin-left: -7px;" src="./Images/Directions/R.png" />
-                                                                                    </td>
-
-                                                                                    <td>
-                                                                                        <label class="Label">{{'ChargesType.F.IsActiveInDrop' | TextCodeTranslationPipe}}</label>
-                                                                                    </td>
-
-                                                                                    <td><div></div></td>
-                                                                                </tr>
-
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <div></div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr>
                                                 <!--Auto display-->
                                                 <td>
                                                     <table>

@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AirlineAWBStockTabComponent.html',
 })
 
@@ -27,7 +27,7 @@ export class AirlineAWBStockTabComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
-        this._entityResourceService.getEntityResourceByTableName("MAWBStack", 0).subscribe((response: any)=> {
+        this._entityResourceService.getEntityResourceByTableName("MAWBStack", 0).subscribe(response=> {
             this.IsVisibile = true;
             this.EntityPM = entityArgs.EntityPM;
             this.StackDomainService = new AWBStackDomainService();

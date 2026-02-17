@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebFreight.Web.WebPages
-{
-
-
-    public partial class FBInfoPage
-    {
-
+namespace WebFreight.Web.WebPages {
+    
+    
+    public partial class FBInfoPage {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace WebFreight.Web.WebPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -31,5 +29,14 @@ namespace WebFreight.Web.WebPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// Time1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+       // protected global::Facebook.Web.FbmlControls.Time Time1;
     }
 }

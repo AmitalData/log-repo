@@ -2,43 +2,12 @@
     .FormFieldRow {
         height: 32px;
     }
-
-    .col2Label {
+    .col2Label{
         width: 150px;
-        padding-right: 15px;
+        padding-right:15px;
     }
 </style>
 <div style="padding:10px;">
-    <div style="margin: 0% 90%;">
-        <div  *ngIf="EntityPM.Id==null || showCopyRichbit" tabindex="0" class="ToggleButton" [style.width.px]="'100'">
-
-            <table>
-                <tr>
-                    <td style="width: 2px;">
-                        <div></div>
-                    </td>
-                    <td class="TextTrimming" style="text-shadow: 1px 1px white; color: #3a3d58; padding: 0px 2px;">
-                        {{'Customs.Vehicle.O.MoreActions' | TextCodeTranslationPipe}}
-                    </td>
-                    <td style="width: 3px;">
-                        <div></div>
-                    </td>
-                    <td style="width: 10px;">
-                        <img class="LeftCenter" src="Images/ToggleIcon.png" style="padding-left: 3px" />
-                    </td>
-                </tr>
-            </table>
-
-            <div class="ToggleButtonMenu">
-                <div>
-                    <button style="text-align: right " (click)="OpenCopyRichbit()">
-                        <div>{{'Customs.Vehicle.O.CopyRichbit' | TextCodeTranslationPipe}}</div>
-                    </button>
-                  
-                </div>
-            </div>
-        </div>
-    </div>
     <table>
 
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -47,9 +16,6 @@
             </td>
         </tr>
 
-        <tr></tr>
-
-
         <tr>
             <td colspan="2">
                 <table style="table-layout: fixed;" *ngIf="EntityPM">
@@ -57,13 +23,15 @@
                         <!-- ImporterIdentityId -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'ImporterIdentityId'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
                             <LogLov tabindex="1" [ObjectFieldName]="'ImporterIdentityId'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.Client'" [SelectedValue]="ImporterIdentityId"
-                                [HideColumns]="true">
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.Client'"
+                                    [SelectedValue]="ImporterIdentityId"
+                                    [HideColumns]="true">
                             </LogLov>
 
                         </td>
@@ -72,16 +40,15 @@
                         <!-- RichbitFileNumber -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'RichbitFileNumber'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
-                            <LogTextBox [ObjectFieldName]="'RichbitFileNumber'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'RichbitFileNumber'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -89,29 +56,30 @@
                         <!-- ImporterPassportNumber -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'ImporterPassportNumber'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
                             <LogTextBox [ObjectFieldName]="'ImporterPassportNumber'"
-                                [ObjectTableName]="'Customs.Vehicle'" [Text]="ImporterPassportNumber"
-                                [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [Text]="ImporterPassportNumber"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
                         <!-- PassportName -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'PassportName'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
-                            <LogTextBox [ObjectFieldName]="'PassportName'" [ObjectTableName]="'Customs.Vehicle'"
-                                [Text]="PassportName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'PassportName'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [Text]="PassportName"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -119,33 +87,35 @@
 
                         <!-- ImporterPassCountryCode -->
                         <td style="width: 150px;padding-right:5px;">
-                            <LogLabel [ObjectFieldName]="'ImporterPassCountryCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'ImporterPassCountryCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
                             <LogLov tabindex="1" [ObjectFieldName]="'ImporterPassCountryCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [SelectedValue]="ImporterPassCountryCode"
-                                [HideColumns]="true">
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.CustomsCountry'"
+                                    [SelectedValue]="ImporterPassCountryCode"
+                                    [HideColumns]="true">
                             </LogLov>
                         </td>
 
                         <!-- ImporterPassportTypeCode -->
                         <td class="col2Label">
-                            <LogLabel [ObjectFieldName]="'ImporterPassportTypeCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'ImporterPassportTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
-                            <LogLov [ObjectFieldName]="'ImporterPassportTypeCode'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" [LookUpTableName]="'Customs.PassportType'"
-                                [SelectedValue]="ImporterPassportTypeCode" [HideColumns]="true"
-                                [SelectedValue]="ImporterPassportTypeCode">
+                            <LogLov [ObjectFieldName]="'ImporterPassportTypeCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.PassportType'"
+                                    [SelectedValue]="ImporterPassportTypeCode"
+                                    [HideColumns]="true">
                             </LogLov>
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -154,13 +124,13 @@
                         <!-- VehicleChassisNumber -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'VehicleChassisNumber'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
                             <LogTextBox #VehicleChassisNumberTextBox [ObjectFieldName]="'VehicleChassisNumber'"
-                                [ObjectTableName]="'Customs.Vehicle'"
-                                (LostFocus)="OnVehicleChassisNumberLostFocus(VehicleChassisNumberTextBox)"
-                                [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        (LostFocus)="OnVehicleChassisNumberLostFocus(VehicleChassisNumberTextBox)"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
@@ -168,16 +138,15 @@
                         <!-- VehicleWindowNumber -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'VehicleWindowNumber'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
-                            <LogTextBox [ObjectFieldName]="'VehicleWindowNumber'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'VehicleWindowNumber'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -185,36 +154,36 @@
                         <!-- VehiclePoolTypeCode -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'VehiclePoolTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
 
 
 
                             <LogLov tabindex="4" [ObjectFieldName]="'VehiclePoolTypeCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.VehiclePoolType'" [HideColumns]="true"
-                                [SelectedValue]="VehiclePoolTypeCode">
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.VehiclePoolType'"
+                                    [HideColumns]="true">
                             </LogLov>
                         </td>
 
 
                         <!-- VehicleManufacturerCode -->
                         <td class="col2Label">
-                            <LogLabel [ObjectFieldName]="'VehicleManufacturerCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'VehicleManufacturerCode'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
                             <LogLov tabindex="4" [ObjectFieldName]="'VehicleManufacturerCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.VehicleManufacturer'" [HideColumns]="true"
-                                [SelectedValue]="VehicleManufacturerCode">
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.VehicleManufacturer'"
+                                    [HideColumns]="true">
                             </LogLov>
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -223,15 +192,16 @@
                         <!-- ModelCode -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'ModelCode'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
 
 
 
-                            <LogTextBox [ObjectFieldName]="'ModelCode'" [InputType]="'unsinteger'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext" [HideColumns]="true"
-                                [Text]="ModelCode"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'ModelCode'"
+                                        [InputType]="'unsinteger'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
@@ -239,17 +209,16 @@
                         <!-- ModelDescription -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'ModelDescription'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
-                            <LogTextBox [ObjectFieldName]="'ModelDescription'" [InputType]="'ntext'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext" [HideColumns]="true"
-                                [Text]="ModelDescription"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'ModelDescription'"
+                                        [InputType]="'ntext'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -257,16 +226,17 @@
                         <!-- FuelTypeCode -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'FuelTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
 
 
 
                             <LogLov tabindex="1" [ObjectFieldName]="'FuelTypeCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.FuelType'" [HideColumns]="true"
-                                [SelectedValue]="FuelTypeCode">
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.FuelType'"
+                                    [HideColumns]="true">
                             </LogLov>
 
                         </td>
@@ -275,17 +245,16 @@
                         <!-- EngineCapacity -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'EngineCapacity'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
-                            <LogTextBox [ObjectFieldName]="'EngineCapacity'" [InputType]="'unsinteger'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext" [HideColumns]="true"
-                                [Text]="EngineCapacity"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'EngineCapacity'"
+                                        [InputType]="'unsinteger'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -294,15 +263,16 @@
                         <!-- TotalVehicleWeight -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'TotalVehicleWeight'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
 
 
 
-                            <LogTextBox [ObjectFieldName]="'TotalVehicleWeight'" [InputType]="'unsinteger'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext" [HideColumns]="true"
-                                [Text]="TotalVehicleWeight"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'TotalVehicleWeight'"
+                                        [InputType]="'unsinteger'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
@@ -310,20 +280,19 @@
                         <!-- ManufactureCountryCode -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'ManufactureCountryCode'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
 
                             <LogLov tabindex="1" [ObjectFieldName]="'ManufactureCountryCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true"
-                                [SelectedValue]="ManufactureCountryCode">
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.CustomsCountry'"
+                                    [HideColumns]="true">
                             </LogLov>
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -333,39 +302,35 @@
                         <!-- NumberOfWheels -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'NumberOfWheels'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
 
 
 
-                            <LogTextBox [ObjectFieldName]="'NumberOfWheels'" [InputType]="'unsinteger'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext" [HideColumns]="true"
-                                [Text]="NumberOfWheels"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'NumberOfWheels'"
+                                        [InputType]="'unsinteger'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
 
                         </td>
 
 
                         <!-- VehicleManufactureDate -->
                         <td class="col2Label">
-                            <LogLabel *ngIf="refresh" [ObjectFieldName]="'VehicleManufactureDate'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"></LogLabel>
-                            <LogLabel *ngIf="!refresh" [ObjectFieldName]="'VehicleManufactureDate'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"></LogLabel>
-
+                            <LogLabel [ObjectFieldName]="'VehicleManufactureDate'" [ObjectTableName]="'Customs.Vehicle'"
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
 
                             <LogDatePicker [ObjectFieldName]="'VehicleManufactureDate'"
-                                [ObjectTableName]="'Customs.Vehicle'" [InputType]="'date'" [DataContext]="DataContext"
-                                [HideColumns]="true" [SelectedDateValue]="VehicleManufactureDate" [RefreshMe]="refresh">
-                            </LogDatePicker>
+                                           [ObjectTableName]="ObjectTableName"
+                                           [InputType]="'date'" [DataContext]="DataContext"
+                                           [HideColumns]="true"></LogDatePicker>
 
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
 
@@ -373,13 +338,14 @@
                         <!-- VehicleTypeCode -->
                         <td style="width: 150px;padding-right:5px;">
                             <LogLabel [ObjectFieldName]="'VehicleTypeCode'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
                             <LogLov tabindex="1" [ObjectFieldName]="'VehicleTypeCode'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.VehicleType'" [HideColumns]="true"
-                                [SelectedValue]="VehicleTypeCode">
+                                    [ObjectTableName]="'Customs.Vehicle'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.VehicleType'"
+                                    [HideColumns]="true">
                             </LogLov>
 
                         </td>
@@ -388,24 +354,21 @@
                         <!-- CommercialNickname -->
                         <td class="col2Label">
                             <LogLabel [ObjectFieldName]="'CommercialNickname'" [ObjectTableName]="'Customs.Vehicle'"
-                                [DataContext]="DataContext"></LogLabel>
+                                      [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width: 200px;">
-                            <LogTextBox [ObjectFieldName]="'CommercialNickname'" [InputType]="'text'"
-                                [ObjectTableName]="'Customs.Vehicle'" [DataContext]="DataContext"
-                                [Placeholder]="'הזן באנגלית בלבד'" [HideColumns]="true" [Text]="CommercialNickname">
-                            </LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'CommercialNickname'"
+                                        [InputType]="'text'"
+                                        [ObjectTableName]="'Customs.Vehicle'"
+                                        [DataContext]="DataContext"
+                                        [Placeholder]="'הזן באנגלית בלבד'"
+                                        [HideColumns]="true"></LogTextBox>
 
                         </td>
 
-                        <td>
-                            <div></div>
-                        </td>
+                        <td><div></div></td>
 
                     </tr>
-
-
-
 
                     <tr>
                         <td>
@@ -416,7 +379,18 @@
             </td>
         </tr>
 
+        <!--<tr style="height: 40px;">
+            <td colspan="4" style="vertical-align: bottom;">
+                <button style="width: 57px; float: left; margin-left: 10px;" class="Button" (click)="CancelButtonClicked()">
+                    {{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}
+                </button>
 
+                <custom-send-options style="float: left; margin-left: 10px;"
+                                     #MyCustomSendOptionsComponent
+                                     (SendButtonClicked)="SendButtonClicked()">
+                </custom-send-options>
+            </td>
+        </tr>-->
 
     </table>
 </div>

@@ -22,20 +22,7 @@
 
             <!--Date DatePicker-->
             <td style="width:100%" *ngIf="ShowLogDatePicker">
-
-                <table>
-                    <tr>
-                        <td>
-                            <LogDatePicker [InputType]="'date'" [ObjectTableName]="ObjectTableName" (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="Context"></LogDatePicker>
-
-                        </td>
-                        <td *ngIf="IsShowTime" style="width:5px"></td>
-                        <td *ngIf="IsShowTime" style="width:47%">
-                            <LogDatePicker [InputType]="'time'"   [ObjectTableName]="ObjectTableName" (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="Context"></LogDatePicker>
-
-                        </td>
-                    </tr>
-                </table>
+                <LogDatePicker (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="DataContext"></LogDatePicker>
 
             </td>
 

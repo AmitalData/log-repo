@@ -203,7 +203,6 @@
       <xs:element minOccurs="0" name="GrossWeightPerTon" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="HasException" type="xs:boolean" />
       <xs:element minOccurs="0" name="House" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingError" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingStatusCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingStatusName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingTransStatusCode" nillable="true" type="xs:string" />
@@ -214,7 +213,6 @@
       <xs:element minOccurs="0" name="INTTRADocumentTypeCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRAInstructions" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRAIsFreighted" type="xs:boolean" />
-      <xs:element minOccurs="0" name="INTTRALastBookingResponse" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRALastStatusDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRASIError" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRASIStatusCode" nillable="true" type="xs:string" />

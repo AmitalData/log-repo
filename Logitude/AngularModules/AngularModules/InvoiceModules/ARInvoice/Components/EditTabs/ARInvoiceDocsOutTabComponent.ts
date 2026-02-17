@@ -7,7 +7,7 @@ import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
 import {ARInvoiceEntityPM} from '../../../../Invoice/EntityPMs/ARInvoiceEntityPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARInvoiceDocsOutTabComponent.html',
 })
 
@@ -24,7 +24,7 @@ export class ARInvoiceDocsOutTabComponent implements OnInit {
     public CustomFilterOperation: string = "";
     public CustomFilterValue: string = "";
     public ChildEntityId: string = "";
-    public ShowMessageDocument: boolean = false;
+
     constructor(private entityArgs: EntityArgs) {
 
     }
@@ -53,7 +53,6 @@ export class ARInvoiceDocsOutTabComponent implements OnInit {
                 this.EntityReference = myReference;
                 this.CustomFilterOperation = "Equal";
                 this.CustomFilterValue = "999C";
-                this.ShowMessageDocument = true;
 
             }
 

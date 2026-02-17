@@ -13,16 +13,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
     {
         public void AdjustBankFees()
         {
-            // must have rows with 
 
-            //if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
-            if (_JournalPM.JournalExternalReconciles.Any(r=> string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId) && string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
+            if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
-                throw new ApplicationException("there is line with empty ReconcileExternalPageLineId && empty LedgerTransactionId");
-            }
-            if (!_JournalPM.JournalExternalReconciles.Where(r => !string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId) && string.IsNullOrWhiteSpace(r.LedgerTransactionId)).Any())
-            {
-                throw new ApplicationException("at least one JournalExternalReconciles LedgerTransactionId must be empty   ");
+                throw new Exception("in all JournalExternalReconciles LedgerTransactionId must be empty   ");
             }
 
             List<ReconcileExternalPageList> listOfpageList = RecheckAndGetListOfpageList();
@@ -41,7 +35,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
         private List<ReconcileExternalPageList> RecheckAndGetListOfpageList()
         {
-            List<string> reconcileExternalPageLineIdList = _JournalPM.JournalExternalReconciles.Where(r => !String.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId)).Select(r => r.ReconcileExternalPageLineId).ToList();
+            List<string> reconcileExternalPageLineIdList = _JournalPM.JournalExternalReconciles.Select(r => r.ReconcileExternalPageLineId).ToList();
             //reconcileExternalPageLineIdList
             IExternalReconcileAdjustBankFees_Validate myExternalReconcileAdjustBankFeesService = new ExternalReconcileAdjustBankFeesService();
             myExternalReconcileAdjustBankFeesService.MustInit(_ExternalReconcileDataProvider);
@@ -51,19 +45,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             List<ReconcileExternalPageLineList> listOfpageLineList;
             List<ReconcileExternalPageList> listOfpageList;
             bool CheckWhileStreaming = true;
-            List<string> ledgerTransactionIds= _JournalPM.JournalExternalReconciles.Where(r => !String.IsNullOrWhiteSpace(r.LedgerTransactionId)).Select(r => r.LedgerTransactionId).ToList();
-
-            var skipValidation = _JournalPM.JournalExternalReconciles.Any(r => r.SkipAccountsValidation == true);
-
-            myExternalReconcileAdjustBankFeesService.PrapareAndValid(_JournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming,
-                 
-                ledgerTransactionIds,
-                out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList, skipValidation
-                );
+            myExternalReconcileAdjustBankFeesService.PrapareAndValid(_JournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming);
 
             if (listOfpageLineList.Any(r => !r.InProgressExternalReconcile))
             {
-                throw new ApplicationException("All connected ReconcileExternalPageLineList  must be InProgress");
+                throw new Exception("All connected ReconcileExternalPageLineList  must be InProgress");
             }
 
             return listOfpageList;
@@ -124,7 +110,6 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 ReconciliationId = reconcile_BankFees.Id,
                 Line = line++,
                 ExternalPageLineId = r.ReconcileExternalPageLineId,
-                LedgerTransactionId = r.LedgerTransactionId,
             })
             );
             return line;

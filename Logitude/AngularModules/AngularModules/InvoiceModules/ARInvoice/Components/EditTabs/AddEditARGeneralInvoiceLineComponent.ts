@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
 import {ARInvoiceLineItem} from './ARInvoiceDetailsTabGeneral';
@@ -8,53 +8,19 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
-import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './AddEditARGeneralInvoiceLineComponent.html',
 })
 
-export class AddEditARGeneralInvoiceLineComponent implements OnInit{
+export class AddEditARGeneralInvoiceLineComponent {
     public EntityPM: ARInvoiceLinePM = null;
     public ObjectTableName = "ARInvoiceLine";
     public DataContext: ARInvoiceLineItem;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    ColumnsWidths: ColumnsWidths[] = [];
-    IsAccountingActivated: boolean = false;
-    public ReceivableCreditGLAccountFilterItems: ApiQueryFilters;
-
     constructor() {
-        if (SessionLocator.TenantPM.AccountingActivated) {
-            this.FillChargesTypesCustomLOVColumnsWidths();
-        }
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-
-        this.ReceivableCreditGLAccountFilterItems = new ApiQueryFilters();
-        this.ReceivableCreditGLAccountFilterItems.addAdditionalFilter("ReceivableCreditFilter", "1", null, null, "Equals", true, false, false, "string", false, true);
-    }
-    ngOnInit(): void {
-        this.SetDefaultValues(); 
-    }
-
-    SetDefaultValues() {
-        this.Quantity = this.EntityPM.Quantity != null ? this.EntityPM.Quantity : 1;
-            this.ForiegnCurrencyId = this.EntityPM.ForiegnCurrencyId?.length != 0 ? this.EntityPM.ForiegnCurrencyId : 
-            ( this.IsAccountingActivated ? this.EntityPM.InvoiceCurrencyId : SessionLocator.TenantPM.CurrencyId );
-
-    }
-
-    FillChargesTypesCustomLOVColumnsWidths()
-    {
-        this.ColumnsWidths = [
-            { ColumnName: 'Code', Width: 80 },
-            { ColumnName: 'EnglishName', Width: 200 },
-            { ColumnName: 'LocalName', Width: 200 },
-            { ColumnName: 'MeasurementShortName', Width: 80 },
-            { ColumnName: 'ChargesGroupName', Width: 80 },
-            { ColumnName: 'VatTypeName', Width: 80 }
-        ];
     }
 
     SetDataContext(dataContext: ARInvoiceLineItem) {
@@ -68,16 +34,15 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("ReceivableCreditGLAccountId", true, null, null, "IsNotNull", false, false, false, "Text");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "Boolean");
     }
 
-  //  public AmountForiegnLabel: string = null;
+    public AmountForiegnLabel: string = null;
     public AmountLocalLabel: string = null;
     public AmountInvoiceLabel: string = null;
     SetLabels() {
-     //   this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.DataContext.ForiegnCurrencyCode);
+        this.AmountForiegnLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.ForiegnCurrencyAmount").replace("%ForiegnCurrencyCode", this.DataContext.ForiegnCurrencyCode);
         this.AmountLocalLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.LocalCurrencyAmount").replace("%LocalCurrencyCode", SessionLocator.LocalCurrencyCode);
         this.AmountInvoiceLabel = TextCodeTranslator.Translate("ARInvoiceLine.F.InvoiceCurrencyAmount").replace("%InvoiceCurrencyCode", this.DataContext.InvoiceCurrencyCode);
     }
@@ -85,20 +50,6 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
-    }
-
-    get Quantity() { return this.EntityPM.Quantity; }
-    set Quantity(newValue: number) {
-        if (this.EntityPM.Quantity != newValue) {
-            this.EntityPM.Quantity = newValue;
-        }
-    }
-    get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
-    set ForiegnCurrencyId(newValue: string) {
-        if (this.EntityPM.ForiegnCurrencyId != newValue) {
-            this.EntityPM.ForiegnCurrencyId = newValue;
-            this.SetLabels();
-        }
     }
 
     OkButtonClicked() {
@@ -126,17 +77,11 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
             }
         }
 
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        if (AppTool.IsNullOrEmpty(this.EntityPM.ReceivableCreditGLAccountId)) {
-            var field = TextCodeTranslator.Translate("ARInvoiceLine.F.ReceivableCreditGLAccountId");
-            errors.push(msg.replace("%FieldName", field));
-        }
-
-        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.ReceivableCreditGLAccountId) && AppTool.IsNullOrEmpty(this.EntityPM.ReceivableCreditGLAccountId)) {
+        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.ReceivableCreditGLAccountId)) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.NoGLAccount"));
         }
 
-        if (this.DataContext.fatherComponent.glaccount != null && this.DataContext.fatherComponent.glaccount.IsVATExempt == true && this.DataContext.VatPercentage > 0) {
+        if (this.DataContext.fatherComponent.glaccount != null && this.DataContext.fatherComponent.glaccount.IsVATExempt == false && this.DataContext.VatPercentage > 0) {
             errors.push("The partner is VAT exempt");
         }
 
@@ -155,7 +100,7 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
         else {
             var errors_new = [];
             errors.forEach(item => {
-
+                
                 if (item.indexOf("%ForiegnCurrencyCode") > -1) {
                     errors_new.push(item.replace("%ForiegnCurrencyCode", this.DataContext.ForiegnCurrencyCode));
                 }
@@ -192,7 +137,6 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
         this.myCloner.AddField('ForiegnCurrencyAmount');
         this.myCloner.AddField('LocalCurrencyAmount');
         this.myCloner.AddField('InvoiceCurrencyAmount');
-        this.myCloner.AddField('ReceivableCreditGLAccountId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
     }

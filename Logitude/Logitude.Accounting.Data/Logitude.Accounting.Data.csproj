@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Accounting.Data</RootNamespace>
     <AssemblyName>Logitude.Accounting.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -19,14 +18,12 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,79 +31,43 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -118,47 +79,14 @@
   <ItemGroup>
     <Compile Include="AccountingContext.cs" />
     <Compile Include="AccountingContext.SharedTable.cs" />
-    <Compile Include="DataContract\CloseBalanceInterestReportData.cs" />
-    <Compile Include="DataContract\InterestReportCustomerData.cs" />
     <Compile Include="DataContract\TaxReportData.cs" />
-    <Compile Include="EntitiesTypeEnums.CS" />
-    <Compile Include="EntityKeys\AccountingEntityJournalKeys.cs" />
     <Compile Include="EntityKeys\AccountingIntegrityCheckKeys.cs" />
     <Compile Include="EntityKeys\AccountingNoteKeys.cs" />
-    <Compile Include="EntityKeys\ARPaymentsJournalKeys.cs" />
-    <Compile Include="EntityKeys\Aur_ItemKeys.cs" />
-    <Compile Include="EntityKeys\Aur_PaymentItemKeys.cs" />
-    <Compile Include="EntityKeys\Aur_PaymentKeys.cs" />
-    <Compile Include="EntityKeys\Aur_TimesheetKeys.cs" />
     <Compile Include="EntityKeys\AutomaticExternalReconcileMethodKeys.cs" />
     <Compile Include="EntityKeys\BankPageEntryTypeKeys.cs" />
-    <Compile Include="EntityKeys\CalculatedChartsLineTypeKeys.cs" />
-    <Compile Include="EntityKeys\CalculatedChartsOfAccountKeys.cs" />
-    <Compile Include="EntityKeys\CalculatedChartsOfAccountsLineKeys.cs" />
-    <Compile Include="EntityKeys\ChequeCounterSerialKeys.cs" />
-    <Compile Include="EntityKeys\CopyFromTenant0Keys.cs" />
-    <Compile Include="EntityKeys\CustomerDebtNotificationKeys.cs" />
     <Compile Include="EntityKeys\ExternalPageAdditionalDataKeys.cs" />
-    <Compile Include="EntityKeys\GLAccountAgingDataKeys.cs" />
-    <Compile Include="EntityKeys\GLAccountCardsDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountCounterKeys.cs" />
-    <Compile Include="EntityKeys\GLAccountFollowUpDataKeys.cs" />
-    <Compile Include="EntityKeys\GLAccountInterestPeriodKeys.cs" />
-    <Compile Include="EntityKeys\GLAccountRecocileDataKeys.cs" />
     <Compile Include="EntityKeys\IntegrityCheckStatusKeys.cs" />
-    <Compile Include="EntityKeys\InterestBasesPeriodKeys.cs" />
-    <Compile Include="EntityKeys\InterestBasesTypeKeys.cs" />
-    <Compile Include="EntityKeys\InterestEntityTypeKeys.cs" />
-    <Compile Include="EntityKeys\InterestLastBatchServiceKeys.cs" />
-    <Compile Include="EntityKeys\InterestReportKeys.cs" />
-    <Compile Include="EntityKeys\InterestReportLineKeys.cs" />
-    <Compile Include="EntityKeys\InterestReportLinesByDateKeys.cs" />
-    <Compile Include="EntityKeys\InterestReportsConnectInvoiceKeys.cs" />
-    <Compile Include="EntityKeys\InterestReportStatuseKeys.cs" />
-    <Compile Include="EntityKeys\InterestTransactionKeys.cs" />
-    <Compile Include="EntityKeys\InvoiceApiCommunicationLogKeys.cs" />
-    <Compile Include="EntityKeys\InvoiceApiStatusKeys.cs" />
-    <Compile Include="EntityKeys\InvoiceApiStepKeys.cs" />
     <Compile Include="EntityKeys\JournalAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\JournalExternalReconcileKeys.cs" />
     <Compile Include="EntityKeys\JournalMoreDataKeys.cs" />
@@ -173,68 +101,21 @@
     <Compile Include="EntityKeys\TaxReportLineTransmitStatusKeys.cs" />
     <Compile Include="EntityKeys\TaxReportLineTypeKeys.cs" />
     <Compile Include="EntityKeys\TaxReportStatusKeys.cs" />
-    <Compile Include="EntityKeys\TenantIdleStatusKeys.cs" />
-    <Compile Include="EntityKeys\UserDefinedReportKeys.cs" />
     <Compile Include="EntityKeys\VatReportStatusKeys.cs" />
-    <Compile Include="EntityListQueryServices\AccountingEntityJournalListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AccountingIntegrityCheckListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AccountingNoteListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ARPaymentsJournalListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\Aur_ItemListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\Aur_PaymentItemListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\Aur_PaymentListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\Aur_TimesheetListQueryService.cs" />
     <Compile Include="EntityListQueryServices\AutomaticExternalReconcileMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BankPageEntryTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CalculatedChartsLineTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CalculatedChartsOfAccountListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CalculatedChartsOfAccountsLineListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ChequeCounterSerialListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CopyFromTenant0ListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomerDebtNotificationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExternalPageAdditionalDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AccountingEntityJournalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingIntegrityCheckListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingNoteListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ARPaymentsJournalListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\Aur_ItemListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\Aur_PaymentItemListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\Aur_PaymentListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\Aur_TimesheetListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AutomaticExternalReconcileMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BankPageEntryTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CalculatedChartsLineTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountsLineListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ChequeCounterSerialListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CopyFromTenant0ListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomerDebtNotificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExternalPageAdditionalDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GLAccountAgingDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GLAccountCardsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountCounterListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GLAccountFollowUpDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GLAccountInterestPeriodListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\GLAccountRecocileDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\IntegrityCheckStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestBasesPeriodListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestBasesTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestEntityTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestLastBatchServiceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestReportLineListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestReportLinesByDateListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestReportListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestReportsConnectInvoiceListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestReportStatuseListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InterestTransactionListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InvoiceApiCommunicationLogListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InvoiceApiStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\InvoiceApiStepListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalAdditionalDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\JournalExternalReconcileListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalMoreDataListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\JournalReconcileListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\Generated\JournalReconcileListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RevaluationStatusListQueryService.Generated.cs" />
@@ -246,31 +127,10 @@
     <Compile Include="EntityListQueryServices\Generated\TaxReportLineTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TaxReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TaxReportStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\TenantIdleStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\UserDefinedReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\VatReportStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\GLAccountAgingDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GLAccountCardsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\GLAccountCounterListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GLAccountFollowUpDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GLAccountInterestPeriodListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\GLAccountRecocileDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\IntegrityCheckStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestBasesPeriodListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestBasesTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestEntityTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestLastBatchServiceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestReportLineListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestReportLinesByDateListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestReportListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestReportsConnectInvoiceListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestReportStatuseListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InterestTransactionListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InvoiceApiCommunicationLogListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InvoiceApiStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\InvoiceApiStepListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalAdditionalDataListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\JournalExternalReconcileListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalMoreDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportStatusListQueryService.cs" />
@@ -283,49 +143,15 @@
     <Compile Include="EntityListQueryServices\TaxReportLineTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TaxReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TaxReportStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\TenantIdleStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\UserDefinedReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VatReportStatusListQueryService.cs" />
-    <Compile Include="EntityLists\CashBookLineList.cs" />
-    <Compile Include="EntityLists\Generated\AccountingEntityJournalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingIntegrityCheckList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingNoteList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ARPaymentsJournalList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\Aur_ItemList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\Aur_PaymentItemList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\Aur_PaymentList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\Aur_TimesheetList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AutomaticExternalReconcileMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BankPageEntryTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CalculatedChartsLineTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountsLineList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ChequeCounterSerialList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CopyFromTenant0List.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomerDebtNotificationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExternalPageAdditionalDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GLAccountAgingDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GLAccountCardsDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountCounterList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GLAccountFollowUpDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GLAccountInterestPeriodList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\GLAccountRecocileDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\IntegrityCheckStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestBasesPeriodList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestBasesTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestEntityTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestLastBatchServiceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestReportLineList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestReportLinesByDateList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestReportList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestReportsConnectInvoiceList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestReportStatuseList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InterestTransactionList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InvoiceApiCommunicationLogList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InvoiceApiStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\InvoiceApiStepList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\JournalExternalReconcileList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalMoreDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportStatusList.Generated.cs" />
@@ -338,48 +164,14 @@
     <Compile Include="EntityLists\Generated\TaxReportLineTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TaxReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TaxReportStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\TenantIdleStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\UserDefinedReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
-    <Compile Include="EntityLists\LedgerTransactionDeductionDTO.cs" />
-    <Compile Include="EntityLists\LedgerTransactionJournalLineLT.cs" />
-    <Compile Include="EntityMapping\AccountingEntityJournalMap.cs" />
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
     <Compile Include="EntityMapping\AccountingNoteMap.cs" />
-    <Compile Include="EntityMapping\ARPaymentsJournalMap.cs" />
-    <Compile Include="EntityMapping\Aur_ItemMap.cs" />
-    <Compile Include="EntityMapping\Aur_PaymentItemMap.cs" />
-    <Compile Include="EntityMapping\Aur_PaymentMap.cs" />
-    <Compile Include="EntityMapping\Aur_TimesheetMap.cs" />
     <Compile Include="EntityMapping\AutomaticExternalReconcileMethodMap.cs" />
     <Compile Include="EntityMapping\BankPageEntryTypeMap.cs" />
-    <Compile Include="EntityMapping\CalculatedChartsLineTypeMap.cs" />
-    <Compile Include="EntityMapping\CalculatedChartsOfAccountMap.cs" />
-    <Compile Include="EntityMapping\CalculatedChartsOfAccountsLineMap.cs" />
-    <Compile Include="EntityMapping\ChequeCounterSerialMap.cs" />
-    <Compile Include="EntityMapping\CopyFromTenant0Map.cs" />
-    <Compile Include="EntityMapping\CustomerDebtNotificationMap.cs" />
     <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
-    <Compile Include="EntityMapping\GLAccountAgingDataMap.cs" />
-    <Compile Include="EntityMapping\GLAccountCardsDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountCounterMap.cs" />
-    <Compile Include="EntityMapping\GLAccountFollowUpDataMap.cs" />
-    <Compile Include="EntityMapping\GLAccountInterestPeriodMap.cs" />
-    <Compile Include="EntityMapping\GLAccountRecocileDataMap.cs" />
     <Compile Include="EntityMapping\IntegrityCheckStatusMap.cs" />
-    <Compile Include="EntityMapping\InterestBasesPeriodMap.cs" />
-    <Compile Include="EntityMapping\InterestBasesTypeMap.cs" />
-    <Compile Include="EntityMapping\InterestEntityTypeMap.cs" />
-    <Compile Include="EntityMapping\InterestLastBatchServiceMap.cs" />
-    <Compile Include="EntityMapping\InterestReportLineMap.cs" />
-    <Compile Include="EntityMapping\InterestReportLinesByDateMap.cs" />
-    <Compile Include="EntityMapping\InterestReportMap.cs" />
-    <Compile Include="EntityMapping\InterestReportsConnectInvoiceMap.cs" />
-    <Compile Include="EntityMapping\InterestReportStatuseMap.cs" />
-    <Compile Include="EntityMapping\InterestTransactionMap.cs" />
-    <Compile Include="EntityMapping\InvoiceApiCommunicationLogMap.cs" />
-    <Compile Include="EntityMapping\InvoiceApiStatusMap.cs" />
-    <Compile Include="EntityMapping\InvoiceApiStepMap.cs" />
     <Compile Include="EntityMapping\JournalAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\JournalExternalReconcileMap.cs" />
     <Compile Include="EntityMapping\JournalMoreDataMap.cs" />
@@ -394,50 +186,17 @@
     <Compile Include="EntityMapping\TaxReportLineTypeMap.cs" />
     <Compile Include="EntityMapping\TaxReportMap.cs" />
     <Compile Include="EntityMapping\TaxReportStatusMap.cs" />
-    <Compile Include="EntityMapping\TenantIdleStatusMap.cs" />
-    <Compile Include="EntityMapping\UserDefinedReportMap.cs" />
     <Compile Include="EntityMapping\VatReportStatusMap.cs" />
-    <Compile Include="EntityPOCOs\AccountingEntityJournal.cs" />
     <Compile Include="EntityPOCOs\AccountingIntegrityCheck.cs" />
     <Compile Include="EntityPOCOs\AccountingNote.cs" />
-    <Compile Include="EntityPOCOs\ARPaymentsJournal.cs" />
-    <Compile Include="EntityPOCOs\Aur_Item.cs" />
-    <Compile Include="EntityPOCOs\Aur_Payment.cs" />
-    <Compile Include="EntityPOCOs\Aur_PaymentItem.cs" />
-    <Compile Include="EntityPOCOs\Aur_Timesheet.cs" />
     <Compile Include="EntityPOCOs\AutomaticExternalReconcileMethod.cs" />
     <Compile Include="EntityPOCOs\BankPageEntryType.cs" />
-    <Compile Include="EntityPOCOs\CalculatedChartsLineType.cs" />
-    <Compile Include="EntityPOCOs\CalculatedChartsOfAccount.cs" />
-    <Compile Include="EntityPOCOs\CalculatedChartsOfAccountsLine.cs" />
-    <Compile Include="EntityPOCOs\ChequeCounterSerial.cs" />
-    <Compile Include="EntityPOCOs\CopyFromTenant0.cs" />
-    <Compile Include="EntityPOCOs\CustomerDebtNotification.cs" />
     <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
-    <Compile Include="EntityPOCOs\GLAccountAgingData.cs" />
-    <Compile Include="EntityPOCOs\GLAccountCardsData.cs" />
     <Compile Include="EntityPOCOs\GLAccountCounter.cs" />
-    <Compile Include="EntityPOCOs\GLAccountFollowUpData.cs" />
-    <Compile Include="EntityPOCOs\GLAccountInterestPeriod.cs" />
-    <Compile Include="EntityPOCOs\GLAccountRecocileData.cs" />
     <Compile Include="EntityPOCOs\IntegrityCheckStatus.cs" />
-    <Compile Include="EntityPOCOs\InterestBasesPeriod.cs" />
-    <Compile Include="EntityPOCOs\InterestBasesType.cs" />
-    <Compile Include="EntityPOCOs\InterestEntityType.cs" />
-    <Compile Include="EntityPOCOs\InterestLastBatchService.cs" />
-    <Compile Include="EntityPOCOs\InterestReport.cs" />
-    <Compile Include="EntityPOCOs\InterestReportLine.cs" />
-    <Compile Include="EntityPOCOs\InterestReportLinesByDate.cs" />
-    <Compile Include="EntityPOCOs\InterestReportsConnectInvoice.cs" />
-    <Compile Include="EntityPOCOs\InterestReportStatuse.cs" />
-    <Compile Include="EntityPOCOs\InterestTransaction.cs" />
-    <Compile Include="EntityPOCOs\InvoiceApiCommunicationLog.cs" />
-    <Compile Include="EntityPOCOs\InvoiceApiStatus.cs" />
-    <Compile Include="EntityPOCOs\InvoiceApiStep.cs" />
     <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
     <Compile Include="EntityPOCOs\JournalExternalReconcile.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
-    <Compile Include="EntityPOCOs\LedgerTransactionsDeductionView.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReport.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReportStatus.cs" />
     <Compile Include="EntityPOCOs\RevaluationStatus.cs" />
@@ -449,78 +208,7 @@
     <Compile Include="EntityPOCOs\TaxReportLineTransmitStatus.cs" />
     <Compile Include="EntityPOCOs\TaxReportLineType.cs" />
     <Compile Include="EntityPOCOs\TaxReportStatus.cs" />
-    <Compile Include="EntityPOCOs\TenantIdleStatus.cs" />
-    <Compile Include="EntityPOCOs\UserDefinedReport.cs" />
     <Compile Include="EntityPOCOs\VatReportStatus.cs" />
-    <Compile Include="Enums\AccountingEntityCodes.cs" />
-    <Compile Include="Enums\ChartOfAccountsTypes.cs" />
-    <Compile Include="Enums\GLAccountTypes.cs" />
-    <Compile Include="Enums\InterestEntityTypeCodes.cs" />
-    <Compile Include="Enums\InputsTaxReportLineTypes.cs" />
-    <Compile Include="Enums\InterestEntityTypes.cs" />
-    <Compile Include="Enums\InterestPeriodLineTypes.cs" />
-    <Compile Include="Enums\InterestReportStatusCodes.cs" />
-    <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
-    <Compile Include="Enums\JournalActionTypes.cs" />
-    <Compile Include="Enums\ReconcileMethodCodes.cs" />
-    <Compile Include="Enums\RevaluationStatusEnum.cs" />
-    <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
-    <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
-    <Compile Include="Repositories\Aur_ItemRepository.cs" />
-    <Compile Include="Repositories\Aur_PaymentItemRepository.cs" />
-    <Compile Include="Repositories\Aur_PaymentRepository.cs" />
-    <Compile Include="Repositories\Aur_TimesheetRepository.cs" />
-    <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
-    <Compile Include="Repositories\CalculatedChartsOfAccountRepository.cs" />
-    <Compile Include="Repositories\CalculatedChartsOfAccountsLineRepository.cs" />
-    <Compile Include="Repositories\ChequeCounterSerialRepository.cs" />
-    <Compile Include="Repositories\CopyFromTenant0Repository.cs" />
-    <Compile Include="Repositories\CustomerDebtNotificationRepository.cs" />
-    <Compile Include="Repositories\Generated\AccountingEntityJournalRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\ARPaymentsJournalRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\Aur_ItemRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\Aur_PaymentItemRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\Aur_PaymentRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\Aur_TimesheetRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\CalculatedChartsLineTypeRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\CalculatedChartsOfAccountRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\CalculatedChartsOfAccountsLineRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\ChequeCounterSerialRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\CopyFromTenant0Repository.Generated.cs" />
-    <Compile Include="Repositories\Generated\CustomerDebtNotificationRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\GLAccountFollowUpDataRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\GLAccountRecocileDataRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\GLAccountAgingDataRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\GLAccountCardsDataRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestLastBatchServiceRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestReportLineRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestReportLinesByDateRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestReportRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestReportsConnectInvoiceRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestReportStatuseRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InvoiceApiCommunicationLogRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InvoiceApiStatusRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InvoiceApiStepRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\TenantIdleStatusRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\UserDefinedReportRepository.Generated.cs" />
-    <Compile Include="Repositories\GLAccountFollowUpDataRepository.cs" />
-    <Compile Include="Repositories\GLAccountRecocileDataRepository.cs" />
-    <Compile Include="Repositories\GLAccountAgingDataRepository.cs" />
-    <Compile Include="Repositories\GLAccountCardsDataRepository.cs" />
-    <Compile Include="Repositories\InterestLastBatchServiceRepository.cs" />
-    <Compile Include="Repositories\InterestReportLineRepository.cs" />
-    <Compile Include="Repositories\InterestReportLinesByDateRepository.cs" />
-    <Compile Include="Repositories\InterestReportRepository.cs" />
-    <Compile Include="Repositories\InterestReportsConnectInvoiceRepository.cs" />
-    <Compile Include="Repositories\InterestReportStatuseRepository.cs" />
-    <Compile Include="Repositories\InvoiceApiCommunicationLogRepository.cs" />
-    <Compile Include="Repositories\InvoiceApiStatusRepository.cs" />
-    <Compile Include="Repositories\InvoiceApiStepRepository.cs" />
-    <Compile Include="Repositories\TenantIdleStatusRepository.cs" />
-    <Compile Include="Repositories\UserDefinedReportRepository.cs" />
-    <Compile Include="Utilities\InterestTransactionGetParameters.cs" />
-    <Compile Include="Utilities\LedgerTransactionHelper.cs" />
-    <Compile Include="Utilities\LedgerTransactionsSorter.cs" />
     <Compile Include="Repositories\AccountingIntegrityCheckRepository.cs" />
     <Compile Include="Repositories\AccountingNoteRepository.cs" />
     <Compile Include="Repositories\AutomaticExternalReconcileMethodRepository.cs" />
@@ -533,12 +221,7 @@
     <Compile Include="EntityListQueryServices\Generated\GLAccountWithholdingTaxListQueryService.Generated.cs" />
     <Compile Include="Repositories\Generated\ExternalPageAdditionalDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountCounterRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\GLAccountInterestPeriodRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\IntegrityCheckStatusRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestBasesPeriodRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestBasesTypeRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestEntityTypeRepository.Generated.cs" />
-    <Compile Include="Repositories\Generated\InterestTransactionRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalAdditionalDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalExternalReconcileRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\JournalMoreDataRepository.Generated.cs" />
@@ -555,12 +238,7 @@
     <Compile Include="Repositories\Generated\TaxReportStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\VatReportStatusRepository.Generated.cs" />
     <Compile Include="Repositories\GLAccountCounterRepository.cs" />
-    <Compile Include="Repositories\GLAccountInterestPeriodRepository.cs" />
     <Compile Include="Repositories\IntegrityCheckStatusRepository.cs" />
-    <Compile Include="Repositories\InterestBasesPeriodRepository.cs" />
-    <Compile Include="Repositories\InterestBasesTypeRepository.cs" />
-    <Compile Include="Repositories\InterestEntityTypeRepository.cs" />
-    <Compile Include="Repositories\InterestTransactionRepository.cs" />
     <Compile Include="Repositories\JournalAdditionalDataRepository.cs" />
     <Compile Include="Repositories\JournalExternalReconcileRepository.cs" />
     <Compile Include="Repositories\JournalMoreDataRepository.cs" />
@@ -577,10 +255,6 @@
     <Compile Include="Repositories\TaxReportStatusRepository.cs" />
     <Compile Include="Repositories\VatReportStatusRepository.cs" />
     <Compile Include="Repositories\WithholdingTaxDeductionTypeRepository.cs" />
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="AccountingContext.Views.cs" />
     <Compile Include="CardGLAccountDataViewContext.cs" />
     <Compile Include="CashBookStatusChartDataViewContext.cs" />
@@ -1038,12 +712,12 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
-      <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
       <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
@@ -1060,7 +734,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512251803228_allAccountings.resx">
       <DependentUpon>201512251803228_allAccountings.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -1070,10 +743,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

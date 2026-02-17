@@ -4,13 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.QuoteModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class QuotePackagePM : ChildEntitiesCustomFieldPM
+    public class QuotePackagePM
     {
         [Key]
         public string Id { get; set; }
@@ -51,6 +50,5 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public virtual QuotePM Quote { get; set; }
 
         public ChangeSetOperation ChangeSetOp { get; set; }
-
     }
 }

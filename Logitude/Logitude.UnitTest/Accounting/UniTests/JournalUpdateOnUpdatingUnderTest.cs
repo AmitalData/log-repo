@@ -18,8 +18,7 @@ using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
-    [TestClass]
-    [Ignore("Disabled: requires DB/global context; failing in current environment")]
+    
     public partial class JournalUpdateOnUpdatingUnderTest
     {
 
@@ -472,7 +471,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                  QueueId ="StreamedtoAcc"
 
             };
@@ -555,7 +554,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 QueueId = "StreamedtoAcc"
 
             };
@@ -623,7 +622,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 IsVoided = true,
                 QueueId = "StreamedtoAcc"
             };
@@ -693,7 +692,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 QueueId = "StreamedtoAcc"
             };
 
@@ -784,7 +783,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 QueueId = "StreamedtoAcc"
             };
 
@@ -886,8 +885,8 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
                         fakeJournalUpdateOnUpdating.OnUpdating(myPM, JournalPoco, mychangTrack);
                     },
-                //Check
-                "Approved Journal Can Only Change To Voided Property (Change JournalLines fix credrit or debit) line=",
+                    //Check
+                "BLException :Approved Journal Can Only Change To Voided Property (Change JournalLines)",
                 "if (propChanged.Any())");
 
             }
@@ -901,7 +900,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 IsVoided = true,
 
 
@@ -954,7 +953,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 //OriginalJournalId = "This is A strono"
             };
 
@@ -983,7 +982,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         step_JournalApproveParser++;
 
                     });
-                A.CallTo(() => fakeIJournalApproveParser.ParseIt(null))
+                A.CallTo(() => fakeIJournalApproveParser.ParseIt())
                     .Invokes(() =>
                     {
                         if (step_JournalApproveParser != 2)
@@ -1044,7 +1043,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
                 //OriginalJournalId = "This is A strono"
             };
 
@@ -1073,7 +1072,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         step_JournalApproveParser++;
 
                     });
-                A.CallTo(() => fakeIJournalApproveParser.ParseIt(null))
+                A.CallTo(() => fakeIJournalApproveParser.ParseIt())
                     .Invokes(() =>
                     {
                         if (step_JournalApproveParser != 2)

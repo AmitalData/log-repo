@@ -2,12 +2,11 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
-using Logitude.Server.Tools;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -48,42 +47,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TemplateTechnologyCode = entityPM.TemplateTechnologyCode;
             poco.CC = entityPM.CC;
             poco.BCC = entityPM.BCC;
-            poco.DefultAttachmentsXML = entityPM.DefultAttachmentsXML;
-            poco.To = entityPM.To;
-            poco.AutomationId = entityPM.AutomationId;
-
-            poco.AttachedExternalDocumentsIds = entityPM.AttachedExternalDocumentsIds;
-            poco.IsSystem = entityPM.IsSystem;
-            poco.EntityId = entityPM.EntityId;
-            poco.ObjectTableId = entityPM.ObjectTableId;
-
-            if (entityPM.IsDefultAttachmentsXMLChanged)
-            {
-                poco.DefultAttachmentsXML = GetDefultAttachmentsXML(entityPM);
-                entityPM.IsDefultAttachmentsXMLChanged = false;
-            }
-
-
 
         }
-
-        private static string GetDefultAttachmentsXML(DocumentTypeTemplatePM entityPM )
-        {
-            string result = string.Empty;
-            if (entityPM.DocumentDefultAttachments != null)
-            {
-                System.Type type1 = "string".GetType();
-                System.Type[] types = new System.Type[1];
-                types[0] = type1;
-                result = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.DocumentDefultAttachments, types);
-            }
-            return result;
-        }
-
-
-
-
-
-
     }
 }

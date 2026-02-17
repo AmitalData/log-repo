@@ -17,13 +17,13 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Azure;
 using Microsoft.WindowsAzure.Storage;
 using WebFreight.Web.InfrastructureModel.DomainServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -36,7 +36,6 @@ using Logitude.Server.Tools.Helpers;
 using CHAMP;
 using Logitude.XSD.Analyzers.CHAMPAnalyzer;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Server.Infrastructure;
 
 namespace CommunicationWorkerRole
 {
@@ -49,7 +48,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+                if (!General.IsUpdating())
                 {
                     //try
                     //{

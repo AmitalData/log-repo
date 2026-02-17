@@ -9,71 +9,62 @@
     <tr>
         <td>
             <div class="MediaFill">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
-                                    [UseVirtuallization]="IsUsingVirtuallization">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
 
                     <!-- Status -->
                     <log-column [width]="'250'" [header]="'Status'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.StatusName}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.StatusName}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Location -->
                     <log-column [width]="'80'" [header]="'Location'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.LocationCode}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.LocationCode}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Event Date -->
                     <log-column [width]="'140'" [header]="'Event Date'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.EventDate | DateTimePipe:'DT'}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.EventDate | DateTimePipe:'DT'}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Received date -->
                     <log-column [width]="'140'" [header]="'Received Date'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.ReceivingDate | DateTimePipe:'DT'}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ReceivingDate | DateTimePipe:'DT'}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Vessel / Voyage -->
                     <log-column [width]="'250'" [header]="'Vessel / Voyage'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.VesselName}} / {{item.VoyageNumber}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.VesselName}} / {{item.VoyageNumber}}
+                        </log-cell-template>
                     </log-column>
 
                     <!-- Departure / Arrival Date -->
                     <log-column [width]="'250'" [header]="'Departure / Arrival Date'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.DepartureArrivalDateInfo}} : {{item.DepartureArrivalDate | DateTimePipe:'DT'}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.DepartureArrivalDateInfo}} : {{item.DepartureArrivalDate | DateTimePipe:'DT'}}
+                        </log-cell-template>
                     </log-column>
 
-                    <!-- Source -->
-                    <log-column [width]="'200'" [header]="'Source'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                {{item.StatusSourceName}}
-                            </log-cell-template>
-                        </ng-template>
-                    </log-column>
+                    <!-- Departure -->
+                    <!--<log-column [width]="'250'" [header]="'Departure'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.DepartureDate | DateTimePipe:'DT'}} {{item.DepartureDateInfo}}
+                        </log-cell-template>
+                    </log-column>-->
+                    <!-- Arrival -->
+                    <!--<log-column [width]="'250'" [header]="'Arrival'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ArrivalDate | DateTimePipe:'DT'}} {{item.ArrivalDateInfo}}
+                        </log-cell-template>
+                    </log-column>-->
 
                 </logitude-edit-grid>
             </div>
@@ -89,7 +80,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseClicked()">Close</button>
                     </td>
                 </tr>
             </table>

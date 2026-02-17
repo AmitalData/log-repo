@@ -21,12 +21,13 @@ import { ObservableCollection } from '../../../../Infrastructure/Utilities/Obser
 
 @Component({
     selector: 'PrintRequestComponent',
-    
+    moduleId: module.id,
     templateUrl: './PrintRequestComponent.html',
 })
 
-export class PrintRequestComponent    extends BaseRequestsSheetMassaging    implements AfterViewInit,IRequestsSheetMassagingComponent {
-  public IsDisplayOnly: boolean = false;
+export class PrintRequestComponent
+    extends BaseRequestsSheetMassaging
+    implements AfterViewInit,IRequestsSheetMassagingComponent {
 
     public DataContext: PrintRequestComponent = this;
     public ObjectTableName: string = "Customs.Declaration";
@@ -249,7 +250,7 @@ export class PrintRequestComponent    extends BaseRequestsSheetMassaging    impl
         }
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא להדפסת הצהרה", true)
             .then((res) => {
                 this.ResponseData = res;

@@ -1,6 +1,5 @@
 ﻿using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,8 +24,6 @@ namespace CommunicationWorkerRole.Tasks
             {
                 SqlCommand cmd = new SqlCommand("[dbo].[DeleteDoneQueueMessages]", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-
                 cn.Open();
                 var output = cmd.ExecuteNonQuery();
                 cn.Close();

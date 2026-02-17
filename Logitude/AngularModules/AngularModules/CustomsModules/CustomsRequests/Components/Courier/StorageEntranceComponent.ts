@@ -22,7 +22,7 @@ import {DeclarationConsAcceptancePM} from '../../../../Customs/EntityPMs/Declara
 
 @Component({
     selector: 'StorageEntranceComponent',
-    
+    moduleId: module.id,
     templateUrl: './StorageEntranceComponent.html',
 })
 
@@ -128,7 +128,7 @@ export class StorageEntranceComponent
         }
     }
 
-    DeleteStorageEntranceCommand(item: DeclarationConsignmentAcceptanceComponent) {
+    private DeleteStorageEntranceCommand(item: DeclarationConsignmentAcceptanceComponent) {
         this.StorageEntranceObservableList.Remove(item);
     }
 
@@ -236,7 +236,7 @@ export class StorageEntranceComponent
         currRequestParams.PackageTypeCode = storageEntranceItem.PackageTypeCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת מסר זמינות כניסה למחסן", true)
+                .ShowProgressBar(currRequestParams.PBId, "שליחת מסר זמינות כניסה למחסן", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

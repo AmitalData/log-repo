@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.Repsitories
             //        where a.DeclarationId == declarationId && a.InvoiceCounterKey == invoiceCounterKey
             //        select a).ToList();
 
-            var q = (from a in context.SupplierInvoiceItemVehicles.Include("VehicleType")
+            var q = (from a in context.SupplierInvoiceItemVehicles
                      where a.DeclarationId == declarationId && a.InvoiceCounterKey == invoiceCounterKey
                      select a);
             if (FilterLine != null)

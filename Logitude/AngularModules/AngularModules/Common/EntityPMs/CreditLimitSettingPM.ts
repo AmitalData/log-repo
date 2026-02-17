@@ -20,7 +20,7 @@ export class CreditLimitSettingPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -155,19 +155,11 @@ export class CreditLimitSettingPM {
     public set WarehousesInvoicesBlock(newValue: boolean) { if (this.warehousesInvoicesBlock != newValue) { this.warehousesInvoicesBlock = newValue; this.MarkAsDirty("WarehousesInvoicesBlock"); } }
        
 	 
-    private shipmentCreationWarning: boolean;
-    public get ShipmentCreationWarning() { return this.shipmentCreationWarning; }
-    public set ShipmentCreationWarning(newValue: boolean) { if (this.shipmentCreationWarning != newValue) { this.shipmentCreationWarning = newValue; this.MarkAsDirty("ShipmentCreationWarning"); } }
-       
-	 
 
     public OldEntityPM: CreditLimitSettingPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -175,7 +167,6 @@ export class CreditLimitSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CreditLimitSetting");
            
         }
-	 }
     }
     private MyClone: CreditLimitSettingPM;
 

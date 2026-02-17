@@ -10,37 +10,38 @@
 
     <title>Shipment</title>
 
-    <link href="../css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="../js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.dateFormat-1.0.js" type="text/javascript"></script>
-    <script src="../js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="../js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="../js/knockout-kendo.min.js" type="text/javascript"></script>
-
     <link href="../HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" />
     <link href="../HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" />
+
+    <link href="../HtmlHelpers/CSS/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css"/>
+
     <link href="../HtmlHelpers/CSS/sunburst.css" rel="stylesheet" />
     <link href="../HtmlHelpers/CSS/app.css" rel="stylesheet" />
     <link href="../HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/JS/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Converters.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/Logitude.Entites.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/ContactActivityLog.js" type="text/javascript"></script>
-    <script src="../HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>   
-
+ 
+    
 <style type="text/css">
     img[src] {
-        visibility: visible;
-    }
+    visibility: visible;
+}
 
-    img {
-        border: 0px;
-        outline: none;
-        visibility: hidden;
-        vertical-align: middle;
-    }
-
-    #EntityHeaderArea {
+img {
+    border: 0px;
+    outline: none;
+    visibility: hidden;
+    vertical-align: middle;
+}
+    #EntityHeaderArea
+    {
         height: 60px;
         margin: 0 5px;
         background: #F7F7F7;
@@ -48,7 +49,8 @@
         padding-top: 3px;
     }
 
-    .RoutingListBoxItem {
+    .RoutingListBoxItem
+    {
         float: left;
         width: 99%;
         height: 100px;
@@ -60,7 +62,8 @@
         background: url('../HtmlHelpers/Images/Bars_Images/RoutingItemBody.png') repeat-x;
     }
 
-    .PartnerListBoxItem {
+    .PartnerListBoxItem
+    {
         float: left;
         width: 49%;
         margin: 0 2px 5px 2px;
@@ -72,12 +75,13 @@
         border: 1px solid #D1D1D1;
     }
 
-    .DocumentListBoxItem {
+    .DocumentListBoxItem
+    {
         width: 100%;
         height: 30px;
         margin: 0px 0 5px 0;
         border: 1px solid #D1D1D1;
-        background: #F7F7F7;
+        background:#F7F7F7;
         text-indent: 5px;
         display: table;
         border-radius: 5px;
@@ -85,41 +89,18 @@
         -moz-border-radius: 5px;
     }
 
-    .EventListBoxItem {
+    .EventListBoxItem
+    {
         width: 100%;
         height: 80px;
         margin: 0px 0 5px 0;
         border: 1px solid #D1D1D1;
-        background: #F7F7F7;
+        background:#F7F7F7;
         text-indent: 5px;
         /*display: table;*/
         border-radius: 1px;
         -webkit-border-radius: 1px;
         -moz-border-radius: 1px;
-    }
-
-    .showNoteButton {
-        background-color: #faf0b4;
-    }
-
-    .noteDiv {
-        padding: 2px;
-        border-radius: 4px 4px 0px 0px;
-    }
-
-        .noteDiv:hover {
-            cursor: pointer;
-        }
-
-    .noteDetils {
-        position: absolute;
-        width: 150px;
-        background-color: #faf0b4;
-        right: 0px;
-        border-radius: 4px 0px 4px 4px;
-        padding: 3px;
-        z-index:1;
-        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5); 
     }
 </style>
 
@@ -127,11 +108,8 @@
 
 <body>
 
-    <form style="visibility:collapse;">
-        <input id="TokenInput" runat="server" />
-        <input id="LoginInput" runat="server" />
-    </form>
-
+    <script src="../HtmlHelpers/JS/knockout-2.2.0.js" type="text/javascript"></script>
+    <script src="../HtmlHelpers/JS/knockout-kendo.min.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="../HtmlHelpers/JS/app.js" type="text/javascript"></script>
 
@@ -226,33 +204,15 @@
                                 <td style="width:5px;"></td>
 
                                 <td style="width:70px; vertical-align:bottom;">
-                                    <div id="BackButton"></div>                                 
+                                    <div id="BackButton"></div>                                    
                                 </td>
 
                                 <td style="vertical-align:central;">
-                                    <div style="    display: flex; justify-content: space-between;">
-                                        <div class="ShowOnDataControl" style="display:none; background:#F2F2F2; float:left; padding:2px 10px 2px 2px">
-                                            <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: DirectionSRC }" />
-                                            <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: TransportSRC }" />
-                                            <span style="font-size:15px; display:inline; color:#1B90CB;" data-bind="text: ShipmentNumber"> </span>
-                                        </div>
-                                        <div id="noteAria" style="position:relative">
-                                            <div class="noteDiv" id="noteButton" onclick="showHideNote()">
-                                                <img width="25px" height="20px" data-bind="attr: { src: noteSRC }" />
-                                            </div>
-                                            <div id="noteDetilsid" class="noteDetils" style="display:none" >
-                                                <div style="line-height: 25px;color: #1B90CB;font-size: 14px; padding: 6px 0px 0px 6px;">Notes</div>
-                                                <div style="padding: 0px 1px;">
-                                                    <pre style="background:none !important;min-height:150px;" data-bind="text: NotesSharedWithCustomer">
-                                                    
-                                                </pre>
-                                                </div>
-                                                
-                                            </div>
-
-                                        </div>
+                                    <div class="ShowOnDataControl" style="display:none; background:#F2F2F2; float:left; padding:2px 10px 2px 2px">
+                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: DirectionSRC}" />
+                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: TransportSRC}" />
+                                        <span style="font-size:15px; display:inline; color:#1B90CB;" data-bind="text: ShipmentNumber"> </span>
                                     </div>
-                                    
                                 </td>
 
                                 <td style="width:10px;"></td>
@@ -561,7 +521,7 @@
 
                                                                             </td>
                                                                             <td style="width:100px;text-align:right">
-                                                                                <a  id="DownloadAll" onclick='OnDownloadAllDocument()'>
+                                                                                <a  id="DownloadAll"  href='javascript:document.location.href=GetURL();' target="_blank" onclick='OnDownloadAllDocument()'>
                                                                                 <div style="cursor:pointer; font-size:13px; color:#27AAE1; text-align:right;padding-right:5px"> Download All</div>
                                                                                     </a>
                                                                                </td>
@@ -923,14 +883,13 @@
                                         </tr>
                                     </table> 
                                 </td>
-     
+
                                 <td style="width:45px; height:45px; vertical-align:top;">
-                                 <div style="visibility: #= FlagSRCVisibility #;">
-                                    <img src="${FlagSRC}" style="width:45px; height:45px; line-height:45px; margin:0; padding:0; margin-top: -7px;visibility: inherit" />
-                                </div>
+                                    <img src="${FlagSRC}" style="width:45px; height:45px; line-height:45px; margin:0; padding:0; margin-top: -7px;" />
                                 </td>
 
                                 <td></td>
+
                             </tr>
                         </table>
                     </td>
@@ -982,13 +941,13 @@
     </script>
 
     <script type="text/x-kendo-tmpl" id="DocumentListBoxItemDataTemplate">
-        <a class="DocumentListBoxItem" id="#= Id #" OnClick="OnDownloadDocument(Id)">
+        <a class="DocumentListBoxItem" id="#= Id #"  href="#= Url #" target="_blank" OnClick="OnDownloadDocument()">
              <div class="content">
                  <div>${Name}</div>
              </div>
         </a>
     </script>
-    
+
     <script type="text/x-kendo-tmpl" id="EventListBoxItemDataTemplate">
         <div class="EventListBoxItem">
             <div>
@@ -1034,42 +993,26 @@
             </div>
         </div>
     </script>
+    
     <script type="text/javascript">
-        function OnDownloadDocument(url) {
+        function OnDownloadDocument() {
             $.SendContactActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            //window.open(url);
-
-            var params = [];
-            params.push({ name: "Token", value: $.Token });
-            PostFormParamsBlank(url, params);
         }
 
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-
-            var url = "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":CS";
-
-            if ($.IsExternalURL) {
-                url += ":securitykey:" + $.CurrentEntityKey;
-            }
-
-            var params = [];
-            params.push({ name: "Token", value: $.Token });
-            PostFormParamsBlank(url, params);
-
-            //window.open(url);
+            window.open("../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType);
         }
 
         function GetURL() {
-            return null;
-            //return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            return "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType ;
         }
     </script>
    
     <script type="text/javascript" src="ShipmentPageViewModel.js"></script>
     
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function () {              
             var myLogoMethodUrl = "../api/authentication?myDummyInteger=" + 0 + "&myDummyString=" + "0";
             $.ajax({
                 url: myLogoMethodUrl,
@@ -1077,7 +1020,7 @@
                 contentType: 'application/json',
 
                 success: function (myLogoCode) {
-
+                    
                     switch (myLogoCode) {
                         case "U.N.I": {
                             $(".Footer_UNI").show();
@@ -1088,76 +1031,51 @@
                             $(".Footer_LOG").show();
                             break;
                         }
-                    }
+                    }                                     
                 },
             });
         });
-
-
-        function showHideNote() {
-            if ($("#noteButton").hasClass('showNoteButton'))
-                hideNote();
-            else
-                showNote();
-        }
-        function showNote() {
-            var item = $("#noteButton");
-            item.addClass('showNoteButton')
-            item.isShow = true;
-            var noteDetils = $("#noteDetilsid");
-            noteDetils.show();
-
-
-        }
-
-        function hideNote() {
-            var item = $("#noteButton");
-            item.removeClass('showNoteButton')
-            var noteDetils = $("#noteDetilsid");
-            noteDetils.hide();
-        }
-
-            $('#noteAria').click(e => {
-                e.stopPropagation();
-            })
-            $(document).click(e => {
-                hideNote();
-            })
-
     </script>
 
     <style>
-        .headerDiv {
-            height: 25px;
+               
+        .headerDiv
+        {
+            height:25px;
             background: url("../HtmlHelpers/Images/Bars_Images/ItemHead.png") repeat-x;
-            border-radius: 5px 5px 0 0;
+             border-radius:  5px 5px 0 0;
             -webkit-border-radius: 5px 5px 0 0;
-            -moz-border-radius: 5px 5px 0 0;
-            display: table;
+            -moz-border-radius:  5px 5px 0 0;  
+            display:table;
             text-indent: 5px;
-            width: 100%;
+            width:100%;           
         }
-
-        .content {
-            display: table-cell;
-            vertical-align: middle;
+        
+        .content
+        {
+            display:table-cell;
+            vertical-align: middle;             
         }
-
-        .headerDiv .headerTitle {
+        
+        .headerDiv .headerTitle
+        {
             font-size: 13px;
             color: #1B90CB;
         }
-
-        .headerDiv .headerValue {
+        
+        .headerDiv .headerValue
+        {
             font-size: 13px;
-            color: #282E30;
+            color: #282E30;            
         }
-
-        .bodyDiv {
+                
+        .bodyDiv
+        {
             padding: 5px;
             font-size: 10px;
             color: #6E7172;
         }
+        
     </style>
 
 </body>

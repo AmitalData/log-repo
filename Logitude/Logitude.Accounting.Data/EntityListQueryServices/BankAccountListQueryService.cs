@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,28 +13,18 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
-{
+{ 
 
     public partial class BankAccountListQueryService
     {
-        private IQueryable<BankAccountList> GetIqueryableList(IQueryable<BankAccount> iQueryable)
+	    private IQueryable<BankAccountList> GetIqueryableList(IQueryable<BankAccount> iQueryable)
         {
-            IQueryable<BankAccountList> query = (from a in iQueryable.Include("GLAccount").Include("DeferredGLAccount").Include("TransferGLAcccount")
-                                                 .Include("BankCode")
-                                                 .Include("Currency")
-                                                 join qBTotalOpenTransInBankViews in context.TotalOpenTransInBankViews
-                                                 on
-                                                 new { BankID = a.Id, Tenant = a.Tenant } equals
-                                                 new { BankID = qBTotalOpenTransInBankViews.Id, Tenant = qBTotalOpenTransInBankViews.Tenant }
-                                                  //  a.Id equals qBTotalOpenTransInBankViews.Id
-                                                  into qBTotalOpenTransInBankViewsJoin
-                                                 from MyJoinpenTransInBankViews in qBTotalOpenTransInBankViewsJoin.DefaultIfEmpty()
-                                                     //.DefaultIfEmpty()
+            IQueryable<BankAccountList> query = (from a in iQueryable.Include("GLAccount").Include("DeferredGLAccount").Include("TransferGLAcccount").Include("BankCode")
                                                  select new BankAccountList()
                                                  {
 
@@ -83,40 +73,37 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      GLAccountCurrencyId = a.GLAccount == null ? null : a.GLAccount.CurrencyId,
 
                                                      ChequeCounter = a.ChequeCounter,
-                                                     TransferGLAcccountId = a.TransferGLAcccountId,
+
                                                      TransferGLAcccountNumber = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.DisplayNumber,
                                                      TransferGLAcccountEnglishName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.EnglishName,
                                                      TransferGLAcccountLocalName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.LocalName,
-                                                     ChequeCounterSeriesID = a.ChequeCounterSeriesID,
+
                                                      CurrencyCode = a.Currency == null ? null : a.Currency.Code,
                                                      CurrencySign = a.Currency == null ? null : a.Currency.Sign,
                                                      CurrencyId = a.CurrencyId,
-                                                     TotalOpenExternalTransactions = MyJoinpenTransInBankViews.TotalLedgerTransactionsCount.ToString(),
-                                                     TotalOpenPagesLines = MyJoinpenTransInBankViews.TotalReconcileExternalPageLinesCount.ToString(),
-                                                     MasavGLAcccountId = a.MasavGLAcccountId
+
                                                  });
             return query;
-        }
+		}
 
-        private IQueryable<BankAccount> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<BankAccount> iQueryable, int tenant)
+        private IQueryable<BankAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<BankAccount> iQueryable, int tenant)
         {
             return iQueryable;
-        }
-        private IQueryable<BankAccount> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<BankAccount> iQueryable, int tenant)
+		}
+		private IQueryable<BankAccount> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<BankAccount> iQueryable, int tenant)
         {
-            return iQueryable;
-        }
+			return iQueryable;
+		}
 
 
-        public BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant)
+        public BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant)
         {
             IQueryable<BankAccount> accountQuery = (from a in context.BankAccounts
-                                                    where a.Tenant == tenant
-                                                    && a.AccountNumber == accountNumber
+                                                    where a.Tenant == tenant 
+                                                    && a.AccountNumber == accountNumber 
                                                     && a.BranchNumber == branchNumber
                                                     && a.BankId == bankId
-                                                    && a.CurrencyId == currencyId
-                                                    select a);
+                                                  select a);
 
             IQueryable<BankAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
             List<BankAccountList> accountList = accountListQuery.ToList();
@@ -168,3 +155,4 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 }
+	

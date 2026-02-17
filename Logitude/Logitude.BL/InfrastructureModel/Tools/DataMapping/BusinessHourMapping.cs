@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,21 +41,21 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.IsSaturdayEnabeled = entityPM.IsSaturdayEnabeled;
             entityPOCO.IsSundayEnabeled = entityPM.IsSundayEnabeled;
 
-            entityPOCO.MondayFromHour = entityPM.MondayFromHour ?? (entityPM.MondayFromHourDate !=null? entityPM.MondayFromHourDate.Value.TimeOfDay: (TimeSpan?)null);
-            entityPOCO.TuesdayFromHour = entityPM.TuesdayFromHour ??(entityPM?.TuesdayFromHourDate != null ? entityPM.TuesdayFromHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.WednesdayFromHour = entityPM.WednesdayFromHour ??( entityPM?.WednesdayFromHourDate!=null ? entityPM.WednesdayFromHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.ThursdayFromHour = entityPM.ThursdayFromHour ?? (entityPM?.ThursdayFromHourDate!=null ? entityPM.ThursdayFromHourDate.Value.TimeOfDay : (TimeSpan?)null); 
-            entityPOCO.FridayFromHour = entityPM.FridayFromHour ?? (entityPM?.FridayFromHourDate!=null ? entityPM.FridayFromHourDate.Value.TimeOfDay : (TimeSpan?)null); 
-            entityPOCO.SaturdayFromHour = entityPM.SaturdayFromHour ??( entityPM?.SaturdayFromHourDate!=null? entityPM.SaturdayFromHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.SundayFromHour = entityPM.SundayFromHour ??( entityPM?.SundayFromHourDate!=null ? entityPM.SundayFromHourDate.Value.TimeOfDay : (TimeSpan?)null);
+            entityPOCO.MondayFromHour = entityPM.MondayFromHour;
+            entityPOCO.TuesdayFromHour = entityPM.TuesdayFromHour;
+            entityPOCO.WednesdayFromHour = entityPM.WednesdayFromHour;
+            entityPOCO.ThursdayFromHour = entityPM.ThursdayFromHour;
+            entityPOCO.FridayFromHour = entityPM.FridayFromHour;
+            entityPOCO.SaturdayFromHour = entityPM.SaturdayFromHour;
+            entityPOCO.SundayFromHour = entityPM.SundayFromHour;
 
-            entityPOCO.MondayToHour = entityPM.MondayToHour ?? (entityPM?.MondayToHourDate!=null ? entityPM.MondayToHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.TuesdayToHour = entityPM.TuesdayToHour ?? (entityPM?.TuesdayToHourDate!=null ? entityPM.TuesdayToHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.WednesdayToHour = entityPM.WednesdayToHour ?? (entityPM?.WednesdayToHourDate!=null ? entityPM.WednesdayToHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.ThursdayToHour = entityPM.ThursdayToHour ??( entityPM?.ThursdayToHourDate!=null ? entityPM.ThursdayToHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.FridayToHour = entityPM.FridayToHour ??( entityPM?.FridayToHourDate!=null ? entityPM.FridayToHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.SaturdayToHour = entityPM.SaturdayToHour ?? (entityPM?.SaturdayToHourDate!=null ? entityPM.SaturdayToHourDate.Value.TimeOfDay : (TimeSpan?)null);
-            entityPOCO.SundayToHour = entityPM.SundayToHour ?? (entityPM?.SundayToHourDate!=null ? entityPM.SundayToHourDate.Value.TimeOfDay : (TimeSpan?)null);
+            entityPOCO.MondayToHour = entityPM.MondayToHour;
+            entityPOCO.TuesdayToHour = entityPM.TuesdayToHour;
+            entityPOCO.WednesdayToHour = entityPM.WednesdayToHour;
+            entityPOCO.ThursdayToHour = entityPM.ThursdayToHour;
+            entityPOCO.FridayToHour = entityPM.FridayToHour;
+            entityPOCO.SaturdayToHour = entityPM.SaturdayToHour;
+            entityPOCO.SundayToHour = entityPM.SundayToHour;
             entityPOCO.SearchFields = entityPM.SearchFields;
             BuildSearchFields(entityPM, entityPOCO);
         }

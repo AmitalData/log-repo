@@ -16,6 +16,5 @@ export class AgentSharedDocumentList {
 		StatusCode: string;
 		AgentId: string;
 		ShipmentLevelCode: string;
-		AgentSharedManifestRef: string;
-	
+        AgentSharedManifestRef: string;
 }

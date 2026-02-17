@@ -6,9 +6,12 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map'
+import { max } from 'rxjs/operator/max';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TariffTabsContentComponent.html',
 })
 
@@ -24,7 +27,7 @@ export class TariffTabsContentComponent implements OnDestroy {
     public Tabs: TariffDetailsTab[] = [];   
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private EditTabTariffType = "VR";
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private http: Http) {
         this.Listen();
         this.pageService = new PagerService();
     }
@@ -109,7 +112,7 @@ export class TariffTabsContentComponent implements OnDestroy {
         });
 
 
-        this.CurrentSessionSaveEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((result:any) => {
+        this.CurrentSessionSaveEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe(result => {
             this.ComputeDraftHeader();
 
         });
@@ -123,7 +126,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 header = "Version " + draftVersion.Version;
             }
 
@@ -152,6 +155,7 @@ export class TariffTabsContentComponent implements OnDestroy {
                     draftTab.Header = header;
                 }
             }
+
         }
     }
 
@@ -162,12 +166,9 @@ export class TariffTabsContentComponent implements OnDestroy {
 
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
-            this.EditTabTariffType = "SVR";
-        }
 
-        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            this.EditTabTariffType = "CCVR";
+        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+            this.EditTabTariffType = "SVR";
         }
 
         else if (this.EntityPM.TypeCode == "OLC") {
@@ -178,16 +179,6 @@ export class TariffTabsContentComponent implements OnDestroy {
             this.EditTabTariffType = "CVR";
         }
 
-        else if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
-            this.EditTabTariffType = "OVR";
-        }
-
-        else if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
-            this.EditTabTariffType = "CHVR";
-        }
-        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
-            this.EditTabTariffType = "LCVR";
-        }
         this.BuildTabs();
         this.RunComponent();        
     }
@@ -205,7 +196,7 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 header = "Version " + draftVersion.Version;
             }
 
@@ -235,7 +226,7 @@ export class TariffTabsContentComponent implements OnDestroy {
         }
                 
         this.EntityPM.ActiveVersions.sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
                 header = "Version " + item.Version;
             }
 
@@ -272,8 +263,6 @@ export class TariffTabsContentComponent implements OnDestroy {
 
     private Retries: number = 0;
     private timerToken: any;
-    private lineIdFromPriceCheck: string;
-    private chargeableWeightInKG: number;
     RunComponent(IsNext: boolean = true) {
         var index = 0;
         if (!IsNext) {
@@ -286,30 +275,15 @@ export class TariffTabsContentComponent implements OnDestroy {
             }
 
             else {
-                if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponentArgument)) {
-
-                    var versionId = this.entityArgs.EditComponentArgument['VersionId'];
-                    this.lineIdFromPriceCheck = this.entityArgs.EditComponentArgument['LineId'];
-                    this.chargeableWeightInKG = this.entityArgs.EditComponentArgument['ChargeableWeightInKG'];
-                                        
-                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + versionId) : 0)[0];
+                if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponent.PreSelectedTabCode)) {
+                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + this.entityArgs.EditComponent.PreSelectedTabCode) : 0)[0];
 
                     if (SelectedTab) {
                         this.SelectionChanged(SelectedTab);
                     }
 
                     else {
-                        SelectedTab = this.Tabs.filter(p => p.Code == "VH")[0];
-                        if (SelectedTab == undefined) {
-                            this.pager.startIndex = this.pager.endIndex + 1;
-                            if (this.pager.endIndex + 4 >= this.AllTabs.length - 1)
-                                this.pager.endIndex = this.AllTabs.length - 1;
-                            else
-                                this.pager.endIndex  = this.pager.endIndex + 4;
-                            this.Tabs = this.AllTabs.slice(this.pager.startIndex, this.pager.endIndex + 1);
-                            this.RunComponent(false);
-                        }
-                        this.SelectionChanged(SelectedTab);
+                        this.SelectionChanged(this.Tabs[index]);
                     }
 
                     this.entityArgs.EditComponent.PreSelectedTabCode = null;
@@ -378,18 +352,7 @@ export class TariffTabsContentComponent implements OnDestroy {
                                 this.Tabs.filter(p => p.Index == this.SelectedTabItem.Index)[0].IsTabLoaded = true;
                             }
                             if (this.SelectedTabItem.VersionPM) {
-                                cmpRef.instance.Intialize({
-                                    CurrentVersion: this.SelectedTabItem.VersionPM,
-                                    SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version,
-                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck,
-                                    ChargeableWeightInKG: this.chargeableWeightInKG
-                                });
-                            }
-                            if (this.SelectedTabItem.Code == "VH") {
-                                cmpRef.instance.Intialize({
-                                    LineIdFromPriceCheck: this.lineIdFromPriceCheck,
-                                    ChargeableWeightInKG: this.chargeableWeightInKG
-                                });
+                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.VersionPM, SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version });
                             }
                         });
                     }
@@ -428,18 +391,11 @@ class TariffDetailsTab {
                 break;
             }
 
-            case "CVR": {
-                this.IsDraft = version.IsDraft;
-                this.VersionPM = version;
-                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLVersionTabComponent";
-                break;
-            }
-
-            case "OVR":
+            case "CVR":
                 {
                     this.IsDraft = version.IsDraft;
                     this.VersionPM = version;
-                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLSurchargeVersionTabComponent";
+                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/OceanFCLVersionTabComponent";
                     break;
                 }
 
@@ -455,27 +411,13 @@ class TariffDetailsTab {
 
             case "EV": {
                 this.ComponentPath = "./Common/Components/Events/EventsTabComponent";
-                break;
+                break;                    
             }
-
-            case "CCVR": {
-                this.IsDraft = version.IsDraft;
-                this.VersionPM = version;
-                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/CustomChargesVersionTabComponent";
-                break;
-            }
-
-            case "LCVR":
-                {
-                    this.IsDraft = version.IsDraft;
-                    this.VersionPM = version;
-                    this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/LocalChargesVersionTabComponent";
-                    break;
-
-                }
         }
     }
 }
+
+
 
 export class PagerService {
     getPager(totalItems: number, currentPage: number = 1, pageSize: number = 4) {

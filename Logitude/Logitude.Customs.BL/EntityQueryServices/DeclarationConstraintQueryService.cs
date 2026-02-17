@@ -54,27 +54,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetDeclarationConstraintsByConstraintId(constraint, tenant);
         }
 
-      
-        public List<string> GetIsConsignmentConectContainerization(int tenant, string[] ArrayDeclartiosId, string ContainerizationID, string CargoTypeCode, string ManifestNumber, string SecondCargoID, string ThirdCargoID)
-        {
-            return repository.GetIsConsignmentConectContainerization ( tenant, ArrayDeclartiosId, ContainerizationID, CargoTypeCode, ManifestNumber, SecondCargoID, ThirdCargoID);
-        }
-
         public bool GetDeclarationConstraint(string declarationId, int tenant)
         {
             return repository.DeclarationHasConstraint(declarationId, tenant);
-        }
-        public string GetDeclarationConstraintByDeclarationId(string declarationId)
-        {
-            if (!string.IsNullOrWhiteSpace(declarationId))
-            {
-                var type = context.DeclarationConstraints.FirstOrDefault(x => x.DeclarationID == declarationId);
-                if (type != null)
-                {
-                    return type.ConstraintNumber;
-                }
-            }
-            return "";
         }
     }
 }

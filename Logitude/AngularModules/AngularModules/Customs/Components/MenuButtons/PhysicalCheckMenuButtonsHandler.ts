@@ -59,8 +59,8 @@ export class PhysicalCheckMenuButtonsHandler {
                         button.Width = 70;
                     }
 
-                    if (button.EventCode == "ClosePhysicalCheck" ) {
-                        if (this.EntityPM.IsClosed || this.EntityPM.BringQueueForwardIndicatorS == "4") {
+                    if (button.EventCode == "ClosePhysicalCheck") {
+                        if (this.EntityPM.IsClosed) {
                             button.IsDisabled = true;
                         }
                         else {
@@ -101,12 +101,11 @@ export class PhysicalCheckMenuButtonsHandler {
                 this._PhysicalCheckWebService.PostClosePhysicalCheck(this.EntityPM.Id, this.EntityPM.Tenant)
                     .subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;
                             messageWindow.Show("הבדיקה נסגרה בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
                         }
                     });
             }

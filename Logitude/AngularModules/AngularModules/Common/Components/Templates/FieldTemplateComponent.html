@@ -1,10 +1,10 @@
-
+﻿
 
 <table *ngIf="Entity">
     <tr>
         <td>
             <div class="MediaFill">
-
+       
                 <div *ngIf="ObjectTableName == 'CustomsShipper' && FieldName == 'ValidityEndDate'">
                     <span style="font-weight: bold;" [ngStyle]="{color: CustomsShipperValidityEndDateBackgroudColor}"> {{FieldValue | DateTimeToDatePipe}}</span>
                 </div>
@@ -33,7 +33,7 @@
                     </tr>
                 </table>
 
-                <div *ngIf="(ObjectTableName == 'Customer' || ObjectTableName == 'Card') && (FieldName == 'SharedLogisticsInvitationStatusName' || FieldName == 'CargoTrackingInvitationStatusName')">
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'SharedLogisticsInvitationStatusName'">
                     <span [ngStyle]="{color: SharedLogisticsInvitationStatusColor}">{{FieldValue}}</span>
                 </div>
 
@@ -41,7 +41,7 @@
                     <span [style.color]="Entity['StatusName'] | LogBoxStatusForegroundPipe">{{FieldValue}}</span>
                 </div>
 
-                <div *ngIf="ObjectTableName == 'Customer' && (FieldName == 'LastLoginDate' || FieldName == 'LastLoginDateViaPC' || FieldName == 'LastLoginDateViaMobile')">
+                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'LastLoginDate'">
                     <span>{{FieldValue | DateTimeToDatePipe}}</span>
                 </div>
 
@@ -73,22 +73,6 @@
                     <span>{{StartWorkingDateValue}}</span>
                 </div>
 
-                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'CodeDataTemplate'">
-                    <span>{{FieldValue}}</span>
-                </div>
-
-                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'CityNameDataTemplate'">
-                    <span>{{FieldValue}}</span>
-                </div>
-
-                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'StartWorkingDataTemplate'">
-                    <span>{{StartWorkingDateValue}}</span>
-                </div>
-
-                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'EnglishNameDataTemplate'">
-                    <span>{{FieldValue}}</span>
-                </div>
-
                 <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'CustomerStatusCode'">
                     <span [ngStyle]="{color: Entity['CustomerStatusCode'] | StringToColorPipe:'InActive'}">{{FieldValue}}</span>
                 </div>
@@ -109,10 +93,10 @@
                     </div>
                 </div>
 
-                <div *ngIf="FieldName == 'InOut'" style="display: flex; align-items: center; justify-content: center;">
-                    <img *ngIf="FieldValue == 'O' || FieldValue == 'Out'" style="vertical-align:middle; margin: auto;margin-top:-2px; width:48px ;margin-left: 44px;"  [attr.src]="'./Images/Icons/OutArrow.png'" [title]="'Out'" />
+                <div *ngIf="FieldName == 'InOut'">
+                    <img *ngIf="FieldValue == 'O' || FieldValue == 'Out'" style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowRight.png'" [title]="'Out'" />
 
-                    <img *ngIf="FieldValue == 'I' || FieldValue == 'In' " style="vertical-align:middle; margin: auto;margin-top:-2px; width:48px;"  [attr.src]="'./Images/Icons/InArrow.png'" [title]="'In'" />
+                    <img *ngIf="FieldValue == 'I' || FieldValue == 'In' " style="vertical-align:middle; margin: auto;margin-top:-2px" [attr.src]="'./Images/Icons/ArrowLeft.png'" [title]="'In'" />
                 </div>
 
                 <div *ngIf="FieldName == 'EnglishName'" class="TextTrimming">
@@ -125,7 +109,7 @@
                                 </div>
                             </td>
                             <td style="min-width:10px;width:10px;max-width:50px">
-                                <img *ngIf="isPotentialCustomer" style="vertical-align:middle;float:left; margin: auto;margin-top:-2px" [attr.src]="'./Images/PotentialCustomer.png'" [title]="Entity['CustomerStatusName']" />
+                                <img *ngIf="isPotentialCustomer" style="vertical-align:middle;float:left; margin: auto;margin-top:-2px" [attr.src]="'./Images/PotentialCustomer.png'" [title]="Entity[CustomerStatusName]" />
 
                             </td>
                         </tr>
@@ -136,7 +120,6 @@
                 <div *ngIf="ObjectTableName == 'DocumentsFiling' && FieldName == 'Extension'">
                     <img style="width:22px;height:25px;margin-left:5px;cursor:pointer;" *ngIf="FieldValue" src="{{FieldValue | AttatchmentIconPipe}}" />
                 </div>
-
                 <div *ngIf="ObjectTableName == 'DocumentsFiling' && FieldName == 'IsDigitallySigned'">
                     <img *ngIf="Entity['IsDigitallySigned']" src="./Images/DigitallySigned.png" />
                     <img *ngIf="!Entity['IsDigitallySigned']" src="./Images/DigitallySignedG.png" />
@@ -156,7 +139,7 @@
                                 <div></div>
                             </td>
                             <td *ngIf="Entity['EmailDeliveryError'] != null && Entity['CommunicationStatusTypeCode'] = 'D'" style="width:25px;">
-                                <HelpIcon [Position]="Entity['$id']" [V2Grid]="true" [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="Entity['EmailDeliveryError']" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
+                                <HelpIcon [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="Entity['EmailDeliveryError']" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
                             </td>
                             <td>
                                 <div></div>
@@ -170,11 +153,6 @@
 
                     </div>
                 </div>
-
-                <div *ngIf="ObjectTableName == 'Horse' && FieldName == 'YearOfBirth'">
-                    <span>{{FieldValue}}</span>
-                </div>
-
             </div>
         </td>
     </tr>

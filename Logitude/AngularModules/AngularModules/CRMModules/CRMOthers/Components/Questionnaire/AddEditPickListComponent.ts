@@ -16,7 +16,7 @@ import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDa
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPickListComponent.html',
     providers: [CustomPickListPMExtendedService],
 })
@@ -55,7 +55,7 @@ export class AddEditPickListComponent extends BaseComponent {
 
     LoadData() {
         this.CustomPickListPMLists = [];
-        this._customPickListPMExtendedService.GetCustomPickListsByCode(this.PickListCode, SessionLocator.Tenant).subscribe((response: ServiceResponse) => {
+        this._customPickListPMExtendedService.GetCustomPickListsByCode(this.PickListCode, SessionLocator.Tenant).subscribe(response => {
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CustomPickListPMLists = response.Result;
 
@@ -171,7 +171,7 @@ export class AddEditPickListComponent extends BaseComponent {
 
                         }
 
-                        this._customPickListPMExtendedService.InsertupdateCustomPickLists(customPickListPMLists).subscribe((res: ServiceResponse) => {
+                        this._customPickListPMExtendedService.InsertupdateCustomPickLists(customPickListPMLists).subscribe(res => {
                             this.CurrentSession.StopBusyIndicator();
                             this.CurrentSession.CurrentWindow.Close(this.PickListCode);
                           CachedDataManager.RefreshTableData("CustomPickList", true);

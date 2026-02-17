@@ -11,7 +11,7 @@ namespace Logitude.Update.SandBox
         public void Test()
         {
             var updateClass = new WebFreight.Web.MetaDataUpdate.UpdateClasses.CustomUpdate();
-            updateClass.FillCustomsRequestsSheetStatusTable(0);
+            updateClass.FillCustomsRequestsSheetStatusTable();
             updateClass.FillCustomsNotificationDefinitions();
 
             updateClass.FillCustomsInterfaceManagements();
@@ -20,7 +20,7 @@ namespace Logitude.Update.SandBox
         void FillCustomsRequestsSheetStatusTable()
         {
             var myCustomUpdate = new WebFreight.Web.MetaDataUpdate.UpdateClasses.CustomUpdate();
-            myCustomUpdate.FillCustomsRequestsSheetStatusTable(0);
+            myCustomUpdate.FillCustomsRequestsSheetStatusTable();
         }
 
         void FillCustomsNotificationDefinitions()

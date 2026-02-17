@@ -1,5 +1,6 @@
 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 
@@ -16,10 +17,9 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {AutomationArgs} from '../../../../Infrastructure/DataContracts/AutomationArgs';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectFieldPMExtendedService} from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
-import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'AutomationsSettingsComponent',
     templateUrl: './AutomationsSettingsComponent.html',
@@ -29,7 +29,6 @@ import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 export class AutomationsSettingsComponent implements OnInit {
 
     IsShowTabUpdate: boolean = false;
-    IsShowTabDocumentUpdate: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private objectFieldPMExtendedService: ObjectFieldPMExtendedService;
     
@@ -45,7 +44,6 @@ export class AutomationsSettingsComponent implements OnInit {
     ScheduleAutomationList: AutomationItemViewModel[] = [];
     OnUpdateAutomationList: AutomationItemViewModel[] = [];
     OnCreateAutomationList: AutomationItemViewModel[] = [];
-    OnDocumentUpdateAutomationList: AutomationItemViewModel[] = [];
 
     OnCreateAutomationListSelected: AutomationItemViewModel;
     OnUpdateAutomationListSelected: AutomationItemViewModel;
@@ -53,31 +51,20 @@ export class AutomationsSettingsComponent implements OnInit {
     OnCreateAutomationTabTitle: string;
     OnUpdateAutomationTabTitle: string;
     ScheduleAutomationTabTitle: string;
-    OnDocumentUpdateAutomationTabTitle: string;
 
     IsAddAtomationEnable: boolean = false;
     OnUpdateTabVisibility: boolean = false;
     ScheduleTabVisibility: boolean = false;
-    IsShowSendInterfaceResult: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _automationExtendedPMService: AutomationExtendedPMService, public _automationPMService: AutomationPMService) {
 
         this.objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
-
-
-        if (FeatureLocator.HasFeaturePermession("Automation", "SENDINTERFACERESULT")) {
-            this.IsShowSendInterfaceResult = true;
-        }
-
-
-
     }
 
     ngOnInit(
 
 
     ) {
-
 
     }
     EntityDisplayName: string;
@@ -97,11 +84,11 @@ export class AutomationsSettingsComponent implements OnInit {
                     this.LoadAutomationsList();
                 }
 
-                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
 
 
                     if (tableName == "Master") {
-                        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe((response:any) => {
+                        this._entityResourceService.getEntityResourceByTableName("Shipment").subscribe(response => {
                             this.LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName);
 
                         });
@@ -109,56 +96,43 @@ export class AutomationsSettingsComponent implements OnInit {
                 });
             }
         }
-
     }
-
-
-
-
-
-
 
     public EntityObjectAutomationFieldLists: any[];
     LoadEntityAuomationAllowedinAutomationConditionsObjectFields(tableName: string) {
-        var entityObjectTable: string[] =[];
+        var entityObjectTableIds: string = "";
+
         var tableId: string = this.ObjectTableId; 
         if (this.ObjectTableName == "Master") {
             var table = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
-            if (table) tableId = table.Id;
+            if (table) {
+                tableId = table.Id;;
+            }
         }
 
-        if (tableName == "Quote") entityObjectTable.push("QuoteTemplate");
+
 
         window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == tableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == tableName)[0]))).forEach((objectField) => {
             if (objectField.LookUpTableId) {
-                if (entityObjectTable.indexOf(objectField.ObjectTable_LookUpTableName) == -1) {
-                    entityObjectTable.push(objectField.ObjectTable_LookUpTableName);
-                }
+                if (entityObjectTableIds) entityObjectTableIds += ",";
+                entityObjectTableIds += objectField.LookUpTableId;
             }
         });
 
-        if (entityObjectTable.length > 0) this.LoadAdditionalEntityResource(entityObjectTable);
-        else this.Start();
-
+        if (entityObjectTableIds) {
+            this.objectFieldPMExtendedService.GetEntityAuomationAllowedinAutomationConditionsObjectFieldPMsByEntityTableIds(entityObjectTableIds, SessionLocator.Tenant).subscribe(res => {
+                var pmResponse: ServiceResponse = res;
+                if (pmResponse.Result) {
+                    this.EntityObjectAutomationFieldLists = pmResponse.Result;//pmResponse.Result.filter(d => entityObjectTableIds.split(',').indexOf(d.ObjectTableId) != -1);
+                    this.Start();
+                }
+            });
+        } else this.Start();
 
     }
 
 
-    NumberOfLeadedAdditionalEntityResource: number = 0;
-    LoadAdditionalEntityResource(additionalentityObjectTableNames: string[]) {
-        this.NumberOfLeadedAdditionalEntityResource = 0;
-        var additionalentityObjectTableCount: number = additionalentityObjectTableNames.length;
 
-            additionalentityObjectTableNames.forEach((objectTableName) => {
-                this._entityResourceService.getEntityResourceByTableName(objectTableName).subscribe((response: any) => { this.NumberOfLeadedAdditionalEntityResource += 1; this.CompleteLoadAdditionalEntityResource(additionalentityObjectTableCount) });
-
-        });
-    }
-
-    CompleteLoadAdditionalEntityResource(additionalentityObjectTableCount:number) {
-
-        if (additionalentityObjectTableCount == this.NumberOfLeadedAdditionalEntityResource) this.Start();
-    }
 
     Start() {
 
@@ -181,23 +155,14 @@ export class AutomationsSettingsComponent implements OnInit {
             this.IsShowTabUpdate = true;
         }
 
-        this.ShowTabDocumentUpdate();
-
     }
 
-
-    ShowTabDocumentUpdate() {
-        const onUpdateDocumentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ODA")[0];
-        if (onUpdateDocumentFeatureToggle != null &&(this.ObjectTableName == "Shipment" || this.ObjectTableName == "Master")) {
-            this.IsShowTabDocumentUpdate = true;
-        }
-    }
 
     LoadAutomationsList() {
 
         this.CurrentSession.StartBusyIndicatorLoading();
         this.AutomationList = [];
-        this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
+        this._automationExtendedPMService.getAutomationesByObjectTableId(this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -209,15 +174,8 @@ export class AutomationsSettingsComponent implements OnInit {
 
                 });
 
-                if (!this.IsShowSendInterfaceResult) {
-                    this.AutomationList = this.AutomationList.filter(d => d.ResultCode != "SENDINTERFACE");
-                }
-
-
-
                 this.RefreshAutomationList("OnCreate");
                 this.RefreshAutomationList("OnUpdate");
-                this.RefreshAutomationList("OnDocumentUpdate");
                 this.CurrentSession.StopBusyIndicator();
             }
         });
@@ -270,25 +228,6 @@ export class AutomationsSettingsComponent implements OnInit {
             }
         }
 
-        windowArgs.AutomationItemClass = this.AutomationItemClass;
-
-    }
-
-    public AutomationItemClass: any;
-    SetWindowArgs(args: any) {
-        this.AutomationItemClass = args.AutomationItemClass;
-    }
-
-    onAddAutomation(event) {
-        this.AddAutomation(event.type);
-    }
-
-    onEditAutomation(event) {
-        this.EditAutomation(event.type, event.item);
-    }
-
-    onRefreshAutomation(event) {
-        this.RefreshAutomationList(event.automationListType, event.IsInCludeInActive)
     }
 
     AddAutomation(type: string) {
@@ -304,7 +243,7 @@ export class AutomationsSettingsComponent implements OnInit {
         newEntity.Description = "";
         newEntity.Version = 1,
         newEntity.Inactive = false;
-        newEntity.ResultCode = type == "OnDocumentUpdate" ? "ONUPDATEDOCUMENT" : "EMAIL";
+        newEntity.ResultCode = "EMAIL";
         newEntity.DocumentTypeId = "";
         newEntity.TemplateId = "";
         newEntity.Id = "";
@@ -320,11 +259,11 @@ export class AutomationsSettingsComponent implements OnInit {
         this.SetObjectTableInWindoWArgs(windowArgs);
 
         windowArgs.DataViewModel = this;
-        windowArgs.AutomationPM = ServiceHelper.CloneEntityPM(newEntity);
+        windowArgs.AutomationPM = newEntity;
         windowArgs.Mode = "Add";
         windowArgs.IsNewEntity = true;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 870;
+        logWindow.Width = 820;
         logWindow.Height = 815;
         logWindow.Title = "Add " + this.EntityDisplayName+" Automation";
         logWindow.IsShowCloseButton = true;
@@ -339,14 +278,14 @@ export class AutomationsSettingsComponent implements OnInit {
         var isDirty: boolean = item.EntityPM.IsDirty;
         var windowArgs: any = {};
         windowArgs.DataViewModel = this;
-        windowArgs.AutomationPM =  ServiceHelper.CloneEntityPM(item.EntityPM);
+        windowArgs.AutomationPM = item.EntityPM;
         windowArgs.Mode = "Edit";
         this.SetObjectTableInWindoWArgs(windowArgs);
 
         windowArgs.IsNewEntity = false;
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 870;
+        logWindow.Width = 820;
         logWindow.Height = 815;
         logWindow.Title = "Edit " + this.EntityDisplayName + " Automation";
         logWindow.IsShowCloseButton = true;
@@ -363,7 +302,7 @@ export class AutomationsSettingsComponent implements OnInit {
 
 
 
-    RefreshAutomationList(automationListType: string, IsInCludeInActive: boolean = false) {
+    RefreshAutomationList(automationListType: string) {
 
         if (automationListType == "OnCreate") {
 
@@ -378,14 +317,6 @@ export class AutomationsSettingsComponent implements OnInit {
             else this.OnUpdateAutomationList = this.AutomationList.filter(d => d.EntityPM.Type == "OnUpdate" && d.EntityPM.Inactive == false);
 
             this.OnUpdateAutomationList = this.OnUpdateAutomationList.sort((a, b) => { return a.Order - b.Order });
-
-        }
-        else if (automationListType == "OnDocumentUpdate") {
-
-            if (IsInCludeInActive) this.OnDocumentUpdateAutomationList = this.AutomationList.filter(d => d.EntityPM.Type == "OnDocumentUpdate");
-            else this.OnDocumentUpdateAutomationList = this.AutomationList.filter(d => d.EntityPM.Type == "OnDocumentUpdate" && d.EntityPM.Inactive == false);
-
-            this.OnDocumentUpdateAutomationList = this.OnDocumentUpdateAutomationList.sort((a, b) => { return a.Order - b.Order });
 
         }
         //else if (automationListType == "Schedule") {
@@ -413,7 +344,7 @@ export class AutomationsSettingsComponent implements OnInit {
           this.OnCreateAutomationTabTitle = "On Create (" + this.OnCreateAutomationList.length.toString() + ")";
           this.OnUpdateAutomationTabTitle = "On Update (" + this.OnUpdateAutomationList.length.toString() + ")";
           this.ScheduleAutomationTabTitle = "Schedule (" + this.ScheduleAutomationList.length.toString() + ")";
-          this.OnDocumentUpdateAutomationTabTitle = "On Document Update (" + this.OnDocumentUpdateAutomationList.length.toString() + ")";
+
 
      }
 
@@ -446,7 +377,7 @@ export class AutomationsSettingsComponent implements OnInit {
             //});
 
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe((res:any) => {
+            this._automationExtendedPMService.putAuomationList(automationArgsLists).subscribe(res => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CurrentSession.CloseCurrentWindow();
             });
@@ -485,7 +416,7 @@ export class AutomationsSettingsComponent implements OnInit {
                         this.OnUpdateAutomationList.splice(i, 0, upColumn);
                     }
             }
-   
+     
         }
   
     }

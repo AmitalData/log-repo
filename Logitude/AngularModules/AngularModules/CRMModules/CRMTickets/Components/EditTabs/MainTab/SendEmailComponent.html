@@ -129,7 +129,7 @@
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
 
@@ -250,7 +250,7 @@
 
                                                         <td style="width:5px;">
                                                             <div>
-                                                                <!--<span class="CellSeparator" style="float: left;width: 3px"></span>-->
+                                                                <span class="CellSeparator" style="float: left;width: 3px"></span>
                                                             </div>
                                                         </td>
 
@@ -261,18 +261,18 @@
                                                         <td style="width:50px;">
                                                             <table>
                                                                 <tr *ngIf="TextAlignRegionVisibility">
-                                                                    <td style="width: 16px;height: 14px;">
-                                                                        <div [title]="'RTL'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignLeftClicked()">
-                                                                            <img src="./Images/LTR.png" style="width: 16px;height: 14px;" (click)="AlignRightClicked()" />
+                                                                    <td style="width: 20px;height: 25px;">
+                                                                        <div [title]="'RTL'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="AlignRightClicked()">
+                                                                            <img src="./Images/LTR.png" style="width: 16px;height: 22px;" (click)="AlignRightClicked()" />
 
                                                                         </div>
                                                                     </td>
                                                                     <td width="10px;">
                                                                         <div></div>
                                                                     </td>
-                                                                    <td style="width: 16px;height: 14px;">
-                                                                        <div [title]="'LTR'" style="width: 16px;height: 14px;cursor:pointer;vertical-align:central;" (click)="AlignRightClicked()">
-                                                                            <img src="./Images/RTL.png" style="width: 16px;height: 14px;" (click)="AlignLeftClicked()" />
+                                                                    <td style="width: 20px;height: 25px;">
+                                                                        <div [title]="'LTR'" style="width: 16px;height: 22px;cursor:pointer;vertical-align:central;" (click)="AlignLeftClicked()">
+                                                                            <img src="./Images/RTL.png" style="width: 16px;height: 22px;" (click)="AlignLeftClicked()" />
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -283,15 +283,9 @@
                                                             <div></div>
                                                         </td>
 
-                                                        <td [style.width]="!ShowQuotationAttachmentLink ? '190px':'290px'" style="width:190px; float:right;">
+                                                        <td style="width:190px; float:right;">
                                                             <table>
                                                                 <tr>
-                                                                    <td *ngIf="ShowQuotationAttachmentLink">
-                                                                        <span class="hyperlink" (click)="AddQuotationAttachemnt()">Attach Quotation</span>
-                                                                    </td>
-
-                                                                    <td *ngIf="ShowQuotationAttachmentLink" style="width:5px;"></td>
-
                                                                     <td>
                                                                         <span class="hyperlink" (click)="AttachInternalFile()">Attach Internal File</span>
                                                                     </td>

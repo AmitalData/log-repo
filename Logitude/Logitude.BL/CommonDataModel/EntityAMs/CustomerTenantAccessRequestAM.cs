@@ -10,9 +10,6 @@ namespace Logitude.BL.CommonDataModel.EntityAMs
     {
         public int PartnerTenant { get; set; }
         public int CustomerTenant { get; set; }
-
-        public bool IsExportActivated { get; set; }
-        public bool IsCustomsActivated { get; set; }
         //public string StatusCode { get; set; }
     }
 }

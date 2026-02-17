@@ -7,9 +7,9 @@ using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -267,10 +267,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
 
         [Invoke]
-        public bool CheckIfExistCustomerFieldsUpdateSetting(string objectFieldCode, int tenant)
+        public bool CheckIfExistCustomerFieldsUpdateSetting(string objectFieldId, int tenant)
         {
             CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(tenant);
-            bool result =customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(objectFieldCode, tenant);
+            bool result =customerFieldsUpdateSettingQuery.CheckIfExistCustomerFieldsUpdateSetting(objectFieldId, tenant);
             return result;
 
         }

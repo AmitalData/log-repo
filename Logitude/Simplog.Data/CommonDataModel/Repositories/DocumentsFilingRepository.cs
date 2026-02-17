@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
-using System.Data.Entity.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -13,7 +11,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public DocumentsFilingRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public DocumentsFilingRepository(int tenant)
         {
@@ -36,13 +37,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.DocumentsFilings 
                     select record);
         }
-        public DocumentsFiling GetSingleDocumentsFilingDocument(string id, int tenant)
-        {
-            var q = (from a in context.DocumentsFilings.Include("Document").Include("DocumentType")
-                     where a.Id == id && a.Tenant == tenant
-                                 select a);
-            return q.FirstOrDefault();
-        }
 
         public DocumentsFiling GetSingleDocumentsFiling(string id, int tenant)
         {
@@ -52,52 +46,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
-        public DocumentsFiling GetSingleWithIncludeDocumentType(string id, int tenant)
+
+        public List<DocumentsFiling> GetDocumentsFilingsByEntityId(string entityId, int tenant)
         {
-            DocumentsFiling d = (from a in context.DocumentsFilings.Include("DocumentType")
-                                 where a.Id == id && a.Tenant == tenant
-                                 select a).FirstOrDefault();
-            return d;
-        }
-        public IList<FilingDocumentInfoDto> GetSecurityIdsByFilingIds(IEnumerable<string> filingIds, int tenant)
-        {
-            if (filingIds == null || !filingIds.Any())
-                return new List<FilingDocumentInfoDto>();
-
-            return (from f in context.DocumentsFilings
-                    join d in context.Documents
-                         on f.DocumentId equals d.Id            
-                    where f.Tenant == tenant && filingIds.Contains(f.Id)
-                    select new FilingDocumentInfoDto
-                    {
-                        Id = f.Id,
-                        SecurityId = f.SecurityId,
-                        Extension = d.Extension                  
-                    })
-              .ToList();
-        }
-
-        public List<DocumentsFiling> GetDocumentsFilingsByEntityId1(string entityId, int tenant)
-        {
-
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                                                   where (a.EntityId == entityId || a.ChildEntityId == entityId)  && a.Tenant == tenant
                                                   select a).ToList();
             return externalDocuments;
         }
-        public List<DocumentsFiling> GetDocumentsFilingsByEntityId_noInclude(string entityId, int tenant)
-        {
 
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
-            List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings
-                                                       //.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
-                                                       where (a.EntityId == entityId || a.ChildEntityId == entityId) && a.Tenant == tenant
-                                                       select a).ToList();
-            return externalDocuments;
-        }
         public List<DocumentsFiling> GetRequestedDocumentsFilingPMsByEntityId(string entityId, int tenant)
         {
             List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
@@ -129,10 +86,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             DocumentsFiling externalDocument = null;
             externalDocument = CacheManager.GetOrInsertNewObject<DocumentsFiling>(name, () =>
         {
-            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             var poco = (from a in context.DocumentsFilings
-                            ///.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
+                        ///.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                         where a.DocumentId == DocumentId && a.Tenant == tenant
                         select a).FirstOrDefault();
             return poco;
@@ -143,28 +98,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return externalDocument;
 
         }
-         public string GetSingleDocumentsFilingIdByDocumentId(string DocumentId, int tenant)
-        {
-
-
-            var DocumentsFilingId = (from a in context.DocumentsFilings
-                            ///.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
-                        where a.DocumentId == DocumentId && a.Tenant == tenant
-                        select a.Id).FirstOrDefault();
-            return DocumentsFilingId;
-
-        }
- 
-        public DocumentsFiling GetSingleDocumentFilingByDocumentId(string DocumentId, int tenant)
-        {
-
-            var poco = (from a in context.DocumentsFilings
-                                .Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
-                        where a.DocumentId == DocumentId && a.Tenant == tenant
-                        select a).FirstOrDefault();
-            return poco;
-        }
-         public bool CheckIfDocumentTypeHasDocumentFilling(string documentTypeId, string objectTableId, string entityId, int tenant)
+        public bool CheckIfDocumentTypeHasDocumentFilling(string documentTypeId, string objectTableId, string entityId, int tenant)
         {
 
             return (
@@ -192,38 +126,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
             return q;
         }
-        public List<DocumentsFilingDTO> GetByEntity(string objectTableId, string entityId, int tenant)
+
+        public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant ,out string DocumentsFilingId)
         {
-            var q = (from a in context.DocumentsFilings
-                     where
-                     //a.DocumentTypeId == documentTypeId && 
-                     a.Tenant == tenant && a.ObjectTableId == objectTableId && a.EntityId == entityId
-                     select new DocumentsFilingDTO()
-                     {
-                         Id = a.Id,
-                         DocumentTypeId=a.DocumentTypeId,
-                         DocumentId=a.DocumentId
-                     });
-            var allForEntity = q.ToList();
-			return allForEntity;
-        }
-		public IQueryable<DocumentsFiling> GetByEntityAndChiled(string objectTableId, string entityId,string objectTableIdChiled, string entityIdChiled, int tenant,string documentTypeId)
-		{
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
-            var q = (from a in context.DocumentsFilings
-                     where
-                     a.Tenant == tenant && a.ObjectTableId == objectTableId && a.EntityId == entityId && a.ChildObjectTableId == objectTableIdChiled && a.ChildEntityId == entityIdChiled && a.DocumentTypeId == documentTypeId
-                     select a);
-					
-			
-			return q;
-		}
-
-		public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant ,out string DocumentsFilingId)
-        {
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             DocumentsFilingId = null;
             bool ihabIsSureItsBetter = true;
             if (ihabIsSureItsBetter)
@@ -279,7 +184,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             {
                 entity.ComputedForwarderDocumentId = entity.ForwarderDocumentId;
             }
-            entity.ComputedCustomerDocumentId = string.IsNullOrEmpty(entity.CustomerDocumentId) ? entity.Id : entity.CustomerDocumentId;
 
             context.DocumentsFilings.Add(entity);
         }
@@ -352,30 +256,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             }
             return null;
         }
-
-        public IQueryable<DocumentsFiling> GetDocumentsFilingByEntityId(string EntityId, string ObjectTableId, int tenant)
-        {
-            var documentsFilings = (from a in context.DocumentsFilings
-                                    where a.EntityId == EntityId && a.Tenant == tenant && a.ObjectTableId == ObjectTableId
-                                    select a);
-
-            return documentsFilings;
-        }
-
-
-
-
-        public string GetDocumentIdById(string documentsFilingId, int tenant)
-        {
-            return (from a in context.DocumentsFilings
-                    where a.Id == documentsFilingId && a.Tenant == tenant
-                    select a.DocumentId).FirstOrDefault();
-
-        }
-
-
-
-
         public DocumentsFiling GetSingleDocumentsFiling(string id)
         {
             DocumentsFiling d = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
@@ -387,14 +267,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public DocumentsFiling GetSingleDocumentFilingBySecurityId(string id, int tenant)
         {
             DocumentsFiling d = (from a in context.DocumentsFilings
-                                                  .Include("CreatedByUser.Contact")
-                                                  .Include("Document")
-                                                  .Include("Owner.Contact")
-                                                  .Include("ObjectTable")
-                                                  .Include("DocumentType")
                                  where a.SecurityId == id && a.Tenant == tenant
-                                 select a)
-                                 .FirstOrDefault();
+                                 select a).FirstOrDefault();
             return d;
         }
 
@@ -432,36 +306,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                                        select a).ToList();
             return externalDocuments;
         }
-        public double? GetDocumentFileSizeByDocumentFilingId(string DocumentsFilingId,int tenant)
-        {
-            
-            return   (from a in context.Documents
-                          join d in context.DocumentsFilings
-                          on a.Id equals d.DocumentId
-                          where d.Id == DocumentsFilingId && a.Tenant == tenant
-                          select a.FileSize).FirstOrDefault();
-        }
-        public string GetFileDataMD5HashByDocumentIdAndTenant(string documentId, int tenant)
-        {
-            return context.DocumentsFilings
-                          .Where(df => df.DocumentId == documentId && df.Tenant == tenant)
-                          .Select(df => df.FileDataMD5Hash)
-                          .FirstOrDefault();
-        }
+
 
 
     }
-    public class DocumentsFilingDTO
-    {
-        public string Id { get; internal set; }
-        public string DocumentTypeId { get; internal set; }
-        public string DocumentId { get; internal set; }
-    }
-    public sealed class FilingDocumentInfoDto
-    {
-        public string Id { get; set; }
-        public string SecurityId { get; set; }
-        public string Extension { get; set; }
-    }
-
 }

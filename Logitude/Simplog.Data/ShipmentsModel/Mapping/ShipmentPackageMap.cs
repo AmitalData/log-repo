@@ -10,7 +10,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Description).HasMaxLength(4000).IsUnicode(true);
+            this.Property(t => t.Description).HasMaxLength(2000).IsUnicode(false);
             this.Property(t => t.PackageTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ContainerNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ShipperSeal).HasMaxLength(15).IsUnicode(false);
@@ -24,7 +24,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Temperature).HasMaxLength(8).IsUnicode(false);
             this.Property(t => t.Harmonize).HasMaxLength(60).IsUnicode(false);
             this.Property(t => t.ShipmentId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.MaterialDescription).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.MaterialDescription).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.OriginalShipmentPackageId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CommodityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.NumberOfInsidePackages).IsRequired();
@@ -54,6 +54,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Routing).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.RoutingIds).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.VoyageTripNumber).HasMaxLength(10).IsUnicode(false);
+
             this.Property(t => t.Make).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Model).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.Year).HasMaxLength(100).IsUnicode(false);
@@ -61,9 +62,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChassisNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.RegistrationNumber).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.WarehouseReleaseNumber).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.HorseId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ContainerStatusSourceCode).HasMaxLength(3).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentPackages");
@@ -73,7 +71,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PackageTypeId).HasColumnName("PackageTypeId");
             this.Property(t => t.ContainerNumber).HasColumnName("ContainerNumber");
             this.Property(t => t.ShipperSeal).HasColumnName("ShipperSeal");
-            this.Property(t => t.Quantity).HasColumnName("Quantity").IsRequired();
+            this.Property(t => t.Quantity).HasColumnName("Quantity");
             this.Property(t => t.Weight).HasColumnName("Weight");
             this.Property(t => t.Volume).HasColumnName("Volume");
             this.Property(t => t.Tare).HasColumnName("Tare");
@@ -145,6 +143,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.RoutingIds).HasColumnName("RoutingIds");
             this.Property(t => t.VoyageTripNumber).HasColumnName("VoyageTripNumber");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
+
             this.Property(t => t.Make).HasColumnName("Make");
             this.Property(t => t.Model).HasColumnName("Model");
             this.Property(t => t.Year).HasColumnName("Year");
@@ -152,11 +151,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChassisNumber).HasColumnName("ChassisNumber");
             this.Property(t => t.RegistrationNumber).HasColumnName("RegistrationNumber");
             this.Property(t => t.CountryId).HasColumnName("CountryId");
-            this.Property(t => t.WarehouseReleaseNumber).HasColumnName("WarehouseReleaseNumber");
-            this.Property(t => t.InUse).HasColumnName("InUse");
-            this.Property(t => t.HorseId).HasColumnName("HorseId");
-            this.Property(t => t.ContainerStatusSourceCode).HasColumnName("ContainerStatusSourceCode");
-            this.Property(t => t.ContainerStrippedDate).HasColumnName("ContainerStrippedDate");
 
             this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.PackageType).WithMany().HasForeignKey(d => d.PackageTypeId);
@@ -164,12 +158,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasOptional(t => t.Delivery).WithMany().HasForeignKey(d => d.DeliveryId);
             this.HasOptional(t => t.EmptyContainerReturn).WithMany().HasForeignKey(d => d.EmptyContainerReturnId);
             this.HasOptional(t => t.TemperatureUnit).WithMany().HasForeignKey(d => d.TemperatureUnitCode);
-            this.HasOptional(t => t.ContainerStatusSource).WithMany().HasForeignKey(d => d.ContainerStatusSourceCode);
+            this.HasOptional(t => t.LastStatus).WithMany().HasForeignKey(d => d.LastStatusCode);
             this.HasOptional(t => t.DeliveryTransportMode).WithMany().HasForeignKey(d => d.DeliveryTransportModeCode);
             this.HasOptional(t => t.ECRTransportMode).WithMany().HasForeignKey(d => d.ECRTransportModeCode);
             this.HasOptional(t => t.FlashPointTemperatureUnit).WithMany().HasForeignKey(d => d.FlashPointTemperatureUnitCode);
+
             this.HasOptional(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);
-            this.HasOptional(t => t.Horse).WithMany().HasForeignKey(d => d.HorseId);
+
         }
     }
 }

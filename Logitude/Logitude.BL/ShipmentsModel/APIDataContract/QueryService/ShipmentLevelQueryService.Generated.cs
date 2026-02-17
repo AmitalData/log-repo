@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -38,21 +36,21 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public ShipmentLevel GetShipmentLevelByCode(string Code,int Tenant,  string ComputingPartnerName = "")
+		public ShipmentLevel GetShipmentLevelByCode(string Code,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Code, Tenant);				
+				var temp = query.GetSinglePM(Code,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ShipmentLevel with Code " + Code + " doesn't exist");
 
-				return ShipmentLevelDataMapping(temp,Tenant,ComputingPartnerName);
+				return ShipmentLevelDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -74,7 +72,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public ShipmentLevelPM ShipmentLevelDataMappingAndValidatin(ShipmentLevel MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public ShipmentLevelPM ShipmentLevelDataMappingAndValidatin(ShipmentLevel MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -82,36 +80,18 @@ using Simplog.Data.ShipmentsModel;
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
-					} 
-					
-			  	   if(temp == null)
+					} 					   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentLevel with Code " + MyEntity.Code + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{								
-							temp.Code = MyEntity.Code;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.Code;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Name = MyEntity.Name;
-
-										}  
-
-										   
-					return temp;
+					temp.Name = MyEntity.Name;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -119,8 +99,6 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

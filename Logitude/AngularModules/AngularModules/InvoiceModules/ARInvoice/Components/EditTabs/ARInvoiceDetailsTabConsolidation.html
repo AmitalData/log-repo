@@ -43,27 +43,6 @@
                                 <tr>
                                     <td style="width: 375px;">
                                         <table>
-                                            <!-- PartnerId -->
-                                            <tr class="FormFieldRow">
-                                                <td style="width: 135px;">
-                                                    <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                </td>
-
-                                                <td>
-                                                    <LogLov [ObjectFieldName]="'PartnerId'"
-                                                            [SelectedValue]="PartnerId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="BillToDependencyValue1"
-                                                            [DependencyFilter1IsList]="true"
-                                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
-                                                    </LogLov>
-                                                </td>
-
-                                            </tr>
 
                                             <!-- BillToId -->
                                             <tr class="FormFieldRow">
@@ -77,9 +56,8 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Card'"
-                                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5"
-                                            [QueryFilterItems]="GLAccountsFilterItems">
+                                                            [DependencyFilter1Value]="BillToDependencyValue1"
+                                                            [DependencyFilter1IsList]="true">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -239,7 +217,6 @@
                                                     <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
-
                                         </table>
                                     </td>
 
@@ -331,12 +308,12 @@
                                                     <div></div>
                                                 </td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.InvoiceNumberListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.CustomerRefListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'ARInvoice.CH.MasterNumberListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoice.CH.HouseNumberListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.CustomerRefLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 130px; min-width: 130px; max-width: 130px;">{{'ARInvoice.CH.MasterNumberLabel' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 150px; min-width: 150px; max-width: 150px;">{{'ARInvoice.CH.HouseNumberLabel' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ARInvoice.CH.MainEntityReferenceListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.S.Details.Subtotal' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.O.VATListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.CH.SubTotalInInvoiceCurrencyListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.CH.VATListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 140px; min-width: 140px; max-width: 140px;">{{'ARInvoice.CH.AmountInInvoiceCurrencyListLable' | TextCodeTranslationPipe}}</td>
                                                 <td class="LastChild">
                                                     <div></div>
@@ -352,14 +329,14 @@
                                                 <td style="padding:0; width: 25px; min-width: 25px; max-width: 25px;">
                                                     <div class="MediaFill">
                                                         <div class="CenterCenter" style="width: 16px;">
-                                                            <CheckBox id="{{'IsConsolidationChecked' | IdGeneratorAsyncPipe | async}}"attr.data-cy="{{'CheckBox' + item.InvoiceNumber | IdGeneratorAsyncPipe | async}}" *ngIf="item.IsMatched" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
+                                                            <CheckBox *ngIf="item.IsMatched" [IsChecked]="item.IsConnected" (Checked)="item.IsConnected = $event" [IsEnabled]="IsEditingEnabled"></CheckBox>
                                                             <img *ngIf="!item.IsMatched" src="./Images/Info.png" class="CenterCenter" [attr.title]="'Not matched due to currency'" />
                                                         </div>
                                                     </div>
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                    <Hyperlink (click)="item.ViewEntityClicked('ARInvoice')">{{item.InvoiceNumber}}</Hyperlink>
+                                                    <Hyperlink (click)="item.ViewEntityClicked()">{{item.InvoiceNumber}}</Hyperlink>
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
@@ -375,7 +352,7 @@
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px;">
-                                                    <Hyperlink (click)="item.ViewEntityClicked('Shipment')">{{item.MainEntityReference}}</Hyperlink>
+                                                    {{item.MainEntityReference}}
                                                 </td>
 
                                                 <td class="GridViewCell" style="width: 140px; min-width: 140px; max-width: 140px;">

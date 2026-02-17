@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             showLocals = SetShowLocalLabels(entityPM);
             if (entityPM.ToDate > DateTime.Today)
             {
-                throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.FutureDateNotAllowed", entityPM.Tenant, showLocals));
+                throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.FutureDateNotAllowed", entityPM.Tenant, showLocals));
             }
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
            entityPM.ToDate = new DateTime(entityPM.ToDate.Year, entityPM.ToDate.Month,  entityPM.ToDate.Day, 23, 59, 59);
@@ -110,7 +110,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
-                }, Tenant);
+                });
 
             }
         }

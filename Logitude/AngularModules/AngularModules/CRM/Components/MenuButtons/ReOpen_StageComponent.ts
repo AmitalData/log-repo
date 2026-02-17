@@ -8,7 +8,7 @@ import {StageListService} from '../../Services/StandardLists/StageListService';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {StageList} from '../../EntityLists/StageList';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ReOpen_StageComponent.html',
 })
 
@@ -54,7 +54,7 @@ export class ReOpen_StageComponent extends BaseComponent {
         if (this.ValidationErrorsList.length == 0) {
             var listService: StageListService = new StageListService();
 
-            listService.getAllFromCache().subscribe((result:any) => {
+            listService.getAllFromCache().subscribe(result => {
                 var stage: StageList = result.Result.filter(d => d.Id == this.StageId)[0];
                 if (stage != null) {
                     this.entityPM.Probability = stage.Probability;

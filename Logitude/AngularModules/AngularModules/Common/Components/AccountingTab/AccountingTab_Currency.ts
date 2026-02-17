@@ -6,7 +6,7 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {CurrencyPM} from '../../EntityPMs/CurrencyPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AccountingTab_Currency.html',
 })
 

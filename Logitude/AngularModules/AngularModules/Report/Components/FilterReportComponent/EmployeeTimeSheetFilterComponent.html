@@ -1,4 +1,3 @@
-
 <table style="height:75px;width:100%;">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -6,39 +5,32 @@
         </td>
     </tr>
     <tr>
-        <td>
-            <div style="color:#1B90CB;font-size:15px;">Filter By:</div>
-        </td>
+        <td><div style="color:#1B90CB;font-size:15px;">Filter By:</div></td>
     </tr>
     <tr>
         <td>
             <table>
                 <tr>
-                    <td style="width:80px;">
-                        <div style="width:80px;">Employee:</div>
+                    <td style="width:80px;"><div style="width:80px;">Employee:</div></td>
+                    <td style="width:120px;">
+                        <LogLov [NoObjectField]="true"
+                                [ObjectFieldName]="'EmployeeUserId'"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="EmployeeUserId"
+                                [LookUpTableName]="'User'"
+                                [HideColumns]="true" [HideAdd]="true" [HideAddLink]="true" [HideEdit]="true">
+                        </LogLov>
                     </td>
-                    <td style="width:200px;">
-                        <ComboBoxWithInCheckBox [IsAreasMenu]="'true'" [ItemsSource]="UsersComboList" [SelectedItem]="SelectedUsers" (EditedItemSource)="EditedItemSource($event)" (SelectedItemChanged)="SelectedUsers = $event" [Binding]="'Name'"></ComboBoxWithInCheckBox>                       
-                    </td>
-
-                    <td style="width:20px;">
-                        <div style="width:20px"></div>
-                    </td>
-                    <td style="width:100px;">
-                        <div style="width:80px;">Time Required:</div>
-                    </td>
+                    <td style="width:20px;"><div style="width:20px"></div></td>
+                    <td style="width:100px;"><div style="width:80px;">Time Required:</div></td>
                     <td style="width:120px;">
                         <TimeInput [TextAlign]="'left'" [TotalMinutes]="DateOfWorkMinutes" (TotalMinutesChanged)="DateOfWorkMinutes = $event" [InputValue]="DateOfWorkDateFormat" [DisplayValue]="DateOfWorkDateFormat" (Changed)="DateOfWorkDateFormat = $event" [IsShowText]="false"></TimeInput>
                     </td>
-                    <td style="width:20px;">
-                        <div style="width:20px"></div>
-                    </td>
+                    <td style="width:20px;"><div style="width:20px"></div></td>
                     <td style="width:200px;">
                         <table>
                             <tr>
-                                <td style="width:70px;">
-                                    <div style="width:70px">From Date:</div>
-                                </td>
+                                <td style="width:70px;"><div style="width:70px">From Date:</div></td>
                                 <td style="width:120px;">
                                     <div style="width:120px;">
                                         <LogDatePicker [ObjectFieldName]="'FromDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
@@ -47,15 +39,11 @@
                             </tr>
                         </table>
                     </td>
-                    <td style="width:50px">
-                        <div style="width:50px"></div>
-                    </td>
+                    <td style="width:50px"><div style="width:50px"></div></td>
                     <td style="width:200px;">
                         <table>
                             <tr>
-                                <td style="width:55px;">
-                                    <div style="width:55px;"> To Date: </div>
-                                </td>
+                                <td style="width:55px;"><div style="width:55px;"> To Date: </div></td>
                                 <td style="width:120px;">
                                     <div style="width:120px;">
                                         <LogDatePicker [ObjectFieldName]="'ToDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
@@ -69,9 +57,7 @@
                             <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">Run Report</div>
                         </button>
                     </td>
-                    <td>
-                        <div></div>
-                    </td>
+                    <td><div></div></td>
                 </tr>
             </table>
         </td>

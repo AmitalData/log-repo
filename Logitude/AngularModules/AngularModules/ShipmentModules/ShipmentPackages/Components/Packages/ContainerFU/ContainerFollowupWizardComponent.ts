@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ContainerFollowupWizardTemplate} from './ContainerFollowupWizardTemplate';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -17,20 +17,19 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {RoutingHelper} from '../../../../../Shipment/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ContainerFollowupWizardComponent.html',
 })
 
-export class ContainerFollowupWizardComponent extends BaseComponent implements AfterViewInit {
+export class ContainerFollowupWizardComponent extends BaseComponent {
     public ShipmentPM: ShipmentPM;
     public EntityPM: ShipmentPackagePM;
     public EntityId: string;
     public Shipmentd: string;
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
-    public isEntityChange: boolean = false;
     public TemplateComponent: ContainerFollowupWizardTemplate;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) ChildViewContainerRef: ViewContainerRef; 
+    @ViewChild('Child', { read: ViewContainerRef }) ChildViewContainerRef: ViewContainerRef; 
     private entityPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
@@ -67,8 +66,9 @@ export class ContainerFollowupWizardComponent extends BaseComponent implements A
                                     }
                                 }
 
+                                this.RunComponent();
+
                                 this.IsResourcesReady = true;
-                                this.LoadTemplate();
                             }
 
                             else {
@@ -83,27 +83,44 @@ export class ContainerFollowupWizardComponent extends BaseComponent implements A
         });
     }
 
-    private isViewInited: boolean = false;
-    ngAfterViewInit() {
-        this.isViewInited = true;
-        this.LoadTemplate();
+    private isLoaderReady: boolean = false;
+    RunComponent() {
+        if (this.ChildViewContainerRef) {
+            this.isLoaderReady = true;
+            this.LoadTemplate();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
     }
 
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
     LoadTemplate() {
-        if (this.isViewInited && this.IsResourcesReady) {
-            if (this.ChildViewContainerRef) {
-                this.ChildViewContainerRef.clear();
+        if (this.ChildViewContainerRef) {
+            this.ChildViewContainerRef.clear();
 
-                var myComponentPath = './ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardTemplate';
+            var myComponentPath = './ShipmentModules/ShipmentPackages/Components/Packages/ContainerFU/ContainerFollowupWizardTemplate';
 
-                SessionLocator.DynamicLoader.Load(myComponentPath, this.ChildViewContainerRef)
-                    .then(cmpRef => {
+            SessionLocator.DynamicLoader.Load(myComponentPath, this.ChildViewContainerRef)
+                .then(cmpRef => {
 
-                        this.TemplateComponent = cmpRef.instance;
+                    this.TemplateComponent = cmpRef.instance;
 
-                        cmpRef.instance.Run({ FatherComponent: this });
-                    });
-            }
+                    cmpRef.instance.Run({ FatherComponent: this });                    
+                });
         }
     }
 
@@ -170,7 +187,6 @@ export class ContainerFollowupWizardComponent extends BaseComponent implements A
                 else {
                     this.ShipmentPM = myResponse.Result;
                     this.EntityPM = this.ShipmentPM.ShipmentPackages.filter(f => f.Id == this.EntityId)[0];
-                    this.isEntityChange = true;
                     this.LoadTemplate();
                     this.OnSaveCompleted(myCommandCode);
                 }

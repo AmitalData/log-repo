@@ -12,7 +12,7 @@ using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -38,8 +38,6 @@ using System.Xml;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.CToolWorkflows;
-using WebFreight.Web.Helpers.CallBack;
 
 namespace CommunicationWorkerRole
 {
@@ -53,8 +51,6 @@ namespace CommunicationWorkerRole
         private string communicationLogTypeCode;
         private string toPartner;
         private string queueName;
-        private const int AttachmentsBytesMaximumSize = 20;
-        private string callBackDetails = string.Empty;
         public EmailsWorkerRole(string communicationLogTypeCode, string toPartner)
         {
             this.communicationLogTypeCode = communicationLogTypeCode;
@@ -117,115 +113,103 @@ namespace CommunicationWorkerRole
                         //{
                         //    queueservice = QueueServiceManager.GetQueueService(queueName, 0);
                         //}
-                        //using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                        //{
-                            var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
-                            LastActivity = DateTime.UtcNow;
 
-                            if (response.MessageId != null)
+                        var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
+                        LastActivity = DateTime.UtcNow;
+
+                        if (response.MessageId != null)
+                        {
+
+                            string communicationLogId = response.MessageValues["CommunicationLogId"].ToString();
+                            int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+                            context = CommonDataContext.GetContext(tenant);
+                            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+                            CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+
+                            bool processEnebled = true;//IsCommunicationLogProcessEnabled(communicationLogId, tenant); since there is queueservice.delay(timespan).... ihab mohammad jalal
+                            try
                             {
-                                string communicationLogId = response.MessageValues["CommunicationLogId"].ToString();
-                                int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-                                callBackDetails = response.MessageValues.ContainsKey("CallBackDetails") ? response.MessageValues["CallBackDetails"] : "";
-                                context = CommonDataContext.GetContext(tenant);
-                                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
-                                CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-
-                                bool processEnebled = true;//IsCommunicationLogProcessEnabled(communicationLogId, tenant); since there is queueservice.delay(timespan).... ihab mohammad jalal
-                                try
+                                if (processEnebled)
                                 {
-                                    if (processEnebled)
+                                    if (cl != null)
                                     {
-                                        if (cl != null)
+                                        
+
+                                        if (cl.CommunicationStatusTypeCode == "D")
                                         {
-
-
-                                            if (cl.CommunicationStatusTypeCode == "D")
+                                            queueservice.Complete();
+                                        }
+                                        else
+                                        {
+                                            var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
+                                            if (sendingEmailQuotaResult.IsQuotaExceeded)
                                             {
-                                                queueservice.Complete();
+                                                cl.CommunicationStatusTypeCode = "F";
+                                                cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                                cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                                communicationLogRep.Update(cl);
+                                                communicationLogRep.SubmitChanges();
                                             }
-                                            else
-                                            {
-                                                var sendingEmailQuotaResult = EmailLimitationHelper.CheckEmailSendingQuotaForTenant(tenant);
-                                                if (sendingEmailQuotaResult.IsQuotaExceeded)
-                                                {
-                                                    cl.CommunicationStatusTypeCode = "F";
-                                                    cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
-                                                    cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-                                                    communicationLogRep.Update(cl);
-                                                    communicationLogRep.SubmitChanges();
-                                                }
-                                                else
-                                                {
-                                                    SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep, response);
-                                                }
-                                                queueservice.Complete();
+                                            else SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep, response);
 
-                                                LogDoneItemInMemory();
+                                            queueservice.Complete();
+                                            LogDoneItemInMemory();
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (response.RetryNumber <= 4)
+                                        {
+                                            if (response.RetryNumber <= 1)
+                                            {
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 40));
+                                            }
+
+                                            if (response.RetryNumber >= 2 && response.RetryNumber < 3)
+                                            {
+                                                queueservice.Delay(new TimeSpan(0, 0, 1, 0));
+                                            }
+
+                                            //if (response.RetryNumber > 5 && response.RetryNumber <= 10)
+                                            //{
+
+                                            //    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
+                                            //    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                            //        + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                            //    Thread.Sleep(3000);
+                                            //}
+                                            if (response.RetryNumber == 3)
+                                            {
+
+                                                queueservice.Delay(new TimeSpan(0, 0, 2, 0));
+                                                AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                                + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                                //Thread.Sleep(10000);
 
                                             }
                                         }
                                         else
                                         {
-                                            if (response.RetryNumber <= 4)
-                                            {
-                                                if (response.RetryNumber <= 1)
-                                                {
-                                                    queueservice.Delay(new TimeSpan(0, 0, 0, 40));
-                                                }
 
-                                                if (response.RetryNumber >= 2 && response.RetryNumber < 3)
-                                                {
-                                                    queueservice.Delay(new TimeSpan(0, 0, 1, 0));
-                                                }
+                                            //cl.CommunicationStatusTypeCode = "F";
+                                            //cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
+                                            //cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+                                            //communicationLogRep.Update(cl);
+                                            //communicationLogRep.SubmitChanges();
 
-                                                //if (response.RetryNumber > 5 && response.RetryNumber <= 10)
-                                                //{
-
-                                                //    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                                //    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                                //        + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                                //    Thread.Sleep(3000);
-                                                //}
-                                                if (response.RetryNumber == 3)
-                                                {
-
-                                                    queueservice.Delay(new TimeSpan(0, 0, 2, 0));
-                                                    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                                    + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                                    //Thread.Sleep(10000);
-
-                                                }
-                                            }
-                                            else
-                                            {
-
-                                                //cl.CommunicationStatusTypeCode = "F";
-                                                //cl.ExceptionMessage = sendingEmailQuotaResult.ExceptionMessage;
-                                                //cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-                                                //communicationLogRep.Update(cl);
-                                                //communicationLogRep.SubmitChanges();
-
-                                                queueservice.Complete();
-                                                AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                                    + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                            }
-                                        }
-
-                                        // Send Kafka message to CTool
-                                        if (FeatureToggleHelper.HasFeatureToggle("CTL", tenant))
-                                        {
-                                            EntityChangesMessageProducer.ProduceSendEmailMessage(cl);
+                                            queueservice.Complete();
+                                            AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                                + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
                                         }
                                     }
                                 }
-                                catch (Exception insideEx)
-                                {
-                                    HandleEmailsExceptionRetries(response, insideEx);
-                                }
                             }
-                          //  scope.Complete();
-                        //}
+                            catch (Exception insideEx)
+                            {
+                                HandleEmailsExceptionRetries(response, insideEx);
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -353,7 +337,7 @@ namespace CommunicationWorkerRole
             cl.Logs += Environment.NewLine + "Retry #" + cl.Retries + " Next Retry: " + cl.NextTryDateTimeUTC.ToString();
         }
 
-        ICommonDataContext context; 
+        ICommonDataContext context;
         private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep, QueueResponse response)
         {
 
@@ -362,7 +346,7 @@ namespace CommunicationWorkerRole
             {
                 if (response.RetryNumber < 30 && cl.Retries < 30)
                 {
-                    SendWaitingCommunicationLog(cl);  
+                    SendWaitingCommunicationLog(cl);
                 }
 
                 else
@@ -604,17 +588,37 @@ namespace CommunicationWorkerRole
 
             catch (Exception e)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                Trace.TraceError("Error Message : " + e.Message.ToString());
+
+                if (e.InnerException != null)
+                {
+                    Trace.TraceError("Inner Exception : " + e.InnerException.ToString());
+                }
             }
 
-            CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
 
-            if (!ValidateAttachmenstSize(attachmentsList))
+            //string sentByUser = string.IsNullOrEmpty(currentLog.CreatedByUser.Contact.EnglishName) ? "Simplgo User" : currentLog.CreatedByUser.Contact.EnglishName;
+            string sentByUser = "";
+            if (currentLog != null)
             {
-                SetFailCommunicationLog(currentLog, commLogrepository);
-                return;
+                if (currentLog.CreatedByUser != null)
+                {
+                    if (currentLog.CreatedByUser.Contact != null)
+                    {
+                        if (!string.IsNullOrEmpty(currentLog.CreatedByUser.Contact.EnglishName))
+                        {
+                            sentByUser = currentLog.CreatedByUser.Contact.EnglishName;
+                        }
+                    }
+                }
             }
-
+            if (!string.IsNullOrEmpty(currentLog.From))
+            {
+                if (currentLog.From.Contains("no-reply"))
+                {
+                    sentByUser = "";
+                }
+            }
 
             //attachements
             List<Attachment> attachements = new List<Attachment>();
@@ -665,11 +669,11 @@ namespace CommunicationWorkerRole
                         string calculatedFileName = "";
                         if (ca.Document != null && !string.IsNullOrEmpty(ca.Document.CalculatedFileName))
                         {
-                            calculatedFileName = ca.Document.CalculatedFileName + "." + ca.Document.Extension;
+                            calculatedFileName = ca.Document.CalculatedFileName.Replace(" ", "") + "." + ca.Document.Extension;
                         }
+
                         else if (docCopy != null)
                         {
-
                             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(docCopy.DocumentOutId, ca.Tenant);
                             DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentOut.DocumentsFiling.DocumentTypeId, ca.Tenant);
                             DocumentTypeCopy documentTypeCopy = documentTypeCopyRepository.GetSingleDocumentTypeCopy(docCopy.DocumentTypeCopyId);
@@ -686,11 +690,12 @@ namespace CommunicationWorkerRole
                                     name = docCopy.DocumentTypeCopy.Name;
                                 }
                             }
-
                         }
                         else
                         {
                             DocumentsFilingRepository rep = new DocumentsFilingRepository(context);
+
+
                             DocumentsFiling docIn = rep.GetSingleDocumentsFiling(ca.DocumentId, ca.Tenant);
                             if (docIn != null)
                             {
@@ -719,6 +724,7 @@ namespace CommunicationWorkerRole
                 IsBodyHtml = true,
                 Tenant = currentLog.Tenant,
                 Body = htmlTemplate.ToString(),
+                SentByUser = sentByUser,
                 Subject = currentLog.Subject,
                 Retries = currentLog.Retries,
             };
@@ -727,15 +733,23 @@ namespace CommunicationWorkerRole
 
             if (!string.IsNullOrEmpty(currentLog.ReplyToList) && !string.IsNullOrWhiteSpace(currentLog.ReplyToList))
             {
+
                 string[] replyToList = currentLog.ReplyToList.Split(';');
                 foreach (string replyto in replyToList)
                 {
                     parameters.ReplyToList.Add(replyto);
                 }
+
+
             }
 
+            string contactName = "";
 
-            parameters.SentByUser = GetSentByUserName(currentLog, parameters);
+            if (!string.IsNullOrEmpty(parameters.From) && parameters.From.Contains('@'))
+            {
+                ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
+                contactName = contactRepository.GetConactNameByemail(parameters.From, currentLog.Tenant);
+            }
 
             if (parameters.ReplyToList != null && parameters.ReplyToList.Count > 0)
             {
@@ -745,15 +759,20 @@ namespace CommunicationWorkerRole
                 }
             }
 
+            if (!string.IsNullOrEmpty(contactName))
+            {
+                parameters.SentByUser = contactName;
+            }
+
             parameters.CommunicationLogId = currentLog.Id;
             parameters.CommunicationLogCreateDate = currentLog.CreateDate;
             parameters.Tenant = currentLog.Tenant;
             EmailingHelper.SendEmail(parameters);
 
-            // After sent successfully, change status to done 
+            // After sent successfully, change status to done
+            CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
 
             EmailProvider provider = EmailingHelper.GetEmailProvider(parameters.Tenant, parameters.Retries, parameters.IsProviderNumberSpecified, parameters.ProviderNumber);
-
             if (provider != null && provider.SupportsEmailDelivery)
             {
                 currentLog.CommunicationStatusTypeCode = "C";
@@ -768,70 +787,7 @@ namespace CommunicationWorkerRole
             currentLog.LastStatusDateUTC = DateTime.UtcNow;
             commLogrepository.Update(currentLog);
             commLogrepository.SubmitChanges();
-
-            if (!string.IsNullOrEmpty(callBackDetails))
-            {
-                CallBackService.Notifiy(callBackDetails, null);
-            }
         }
-
-        private string GetSentByUserName(CommunicationLog currentLog, EmailParameters emailParameters)
-        {
-            string sentByUser = (currentLog?.CreatedByUser?.Contact?.EnglishName) ?? "";
-            if (!string.IsNullOrEmpty(currentLog.From) && currentLog.From.Contains("no-reply")) sentByUser = "";
-
-
-            if (string.IsNullOrEmpty(emailParameters.From) || !emailParameters.From.Contains('@')) return sentByUser;
-            ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
-            string contactMe = contactRepository.GetConactNameByemail(emailParameters.From, currentLog.Tenant);
-            //if (contactMe == null && currentLog.From == "info@logitudeworld.com" && SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Simplog)) 
-            //    contactMe = contactRepository.GetConactNameByemail(emailParameters.From, LogitudeSettings.LogitudeCRMTenantNumber);
-
-            return string.IsNullOrEmpty(contactMe) ? sentByUser : contactMe;
-        }
-
-        private bool ValidateAttachmenstSize(List<CommunicationAttachment> attachmentsList)
-        {
-            double? attachementsSize = GetBytesAttachmentSize(attachmentsList); 
-            return (attachementsSize < AttachmentsBytesMaximumSize); 
-        } 
-
-        private double? GetBytesAttachmentSize(List<CommunicationAttachment> communicationAttachments)
-        {
-            double? attachementsSize = 0;
-
-            foreach (CommunicationAttachment communicationAttachment in communicationAttachments)
-            {
-                if (communicationAttachment.Document.FileSize != null)
-                    attachementsSize = attachementsSize + communicationAttachment.Document.FileSize;
-            }
-
-            attachementsSize = GetByteSize(attachementsSize); 
-            return attachementsSize;
-        }
-
-        private static void SetFailCommunicationLog(CommunicationLog communicationLog, CommunicationLogRepository communicationLogRepository)
-        {
-            communicationLog.CommunicationStatusTypeCode = "F";
-            communicationLog.ExceptionMessage = "Maximum size of files attachments exceeded 20 MB";
-            communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(communicationLog.Tenant);
-            communicationLogRepository.Update(communicationLog);
-            communicationLogRepository.SubmitChanges();
-        }  
-
-        private double GetByteSize(double? size)
-        {
-
-            int byteValue = 1024;
-            double fileSize = 0;
-
-            if (size != null)
-            {
-                fileSize = (double)(size / (byteValue * byteValue));
-            }
-            return fileSize;
-        }
-
 
         //        public void SendEmail(string from, string to, string cc, string bcc, string subject, string body)
         //        {
@@ -1099,7 +1055,7 @@ namespace CommunicationWorkerRole
             return gateWay;
         }
 
-        private void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
+        private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
         {
             string iSendingURL = null;
             string iSendingPassword = null;
@@ -1168,11 +1124,11 @@ namespace CommunicationWorkerRole
                 //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);
                 //System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> iResponse = client.PostAsync(iSendingURL, content);
 
-                var iResponse = client.PostAsync(iSendingURL, content);
-                iResponse.Wait();
+                System.Net.Http.HttpResponseMessage iResponse = await client.PostAsync(iSendingURL, content);
+
                 if (iResponse != null)
                 {
-                    if (iResponse.Result.StatusCode == HttpStatusCode.OK)
+                    if (iResponse.StatusCode == HttpStatusCode.OK)
                     {
                         waitingCommLog.CommunicationStatusTypeCode = "D";
                         waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
@@ -1190,7 +1146,7 @@ namespace CommunicationWorkerRole
                         waitingCommLog.CommunicationStatusTypeCode = "F";
                         waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
                         waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-                        waitingCommLog.ExceptionMessage = iResponse.Result.StatusCode.ToString();
+                        waitingCommLog.ExceptionMessage = iResponse.StatusCode.ToString();
 
                         CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
                         commLogrepository.Update(waitingCommLog);

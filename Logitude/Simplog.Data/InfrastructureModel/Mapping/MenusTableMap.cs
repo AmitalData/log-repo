@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -47,10 +47,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
-            this.Property(t => t.FeatureUniqeCode)
-                .HasMaxLength(120)
-                .IsUnicode(false); 
-
             this.Property(t => t.Code)
                 .IsRequired()
                 .HasMaxLength(4)
@@ -59,10 +55,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HtmlView)
                 .HasMaxLength(120)
                 .IsUnicode(false);
-
-            this.Property(t => t.QuerySection)
-                 .HasMaxLength(100)
-                 .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("MenusTables");
@@ -78,17 +70,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.FeatureId).HasColumnName("FeatureId");
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.HtmlView).HasColumnName("HtmlView");
-            this.Property(t => t.FeatureUniqeCode).HasColumnName("FeatureUniqeCode");
-            this.Property(t => t.QuerySection).HasColumnName("QuerySection");
-
 
             // Relationships
             //this.HasOptional(t => t.CategoryType)
             //    .WithMany(t => t.MenusTables)
             //    .HasForeignKey(d => d.CategoryTypeCode);
-            //this.HasOptional(t => t.Feature)
-            //    .WithMany()
-            //    .HasForeignKey(d => d.FeatureId);
+            this.HasOptional(t => t.Feature)
+                .WithMany()
+                .HasForeignKey(d => d.FeatureId);
             //this.HasRequired(t => t.MenuType)
             //    .WithMany(t => t.MenusTables)
             //    .HasForeignKey(d => d.MenuTypeCode);

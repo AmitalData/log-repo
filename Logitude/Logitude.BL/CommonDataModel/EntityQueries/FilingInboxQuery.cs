@@ -4,7 +4,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -312,7 +312,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 }
 
                 var contact = myContactRepository.GetSingleContact(item.Sender, tenant);
-                item.SenderName = contact != null ? contact.EnglishName : null;
+                item.SenderName = contact != null ? contact.EnglishName : "";
             }
 
             IQueryable<FilingInboxPM> iQueryableList;

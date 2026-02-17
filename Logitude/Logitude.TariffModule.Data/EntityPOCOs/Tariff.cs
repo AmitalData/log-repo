@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -60,11 +60,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public DateTime? LastExpirationDate { get; set; }
         [Column("PriceSteps")]
 	    public string PriceSteps { get; set; }
-        [ForeignKey("TariffType")]
         [Column("TypeCode")]
 	    public string TypeCode { get; set; }
-	      
-        public virtual TariffType TariffType { get; set; }
         [Column("LastStartDate")]
 	    public DateTime? LastStartDate { get; set; }
         [Column("LastVersion")]
@@ -200,37 +197,6 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string ContainerType5Id { get; set; }
 	      
         public virtual PackageType ContainerType5 { get; set; }
-        [ForeignKey("Product")]
-        [Column("TariffProductId")]
-	    public string TariffProductId { get; set; }
-	      
-        public virtual TariffProduct Product { get; set; }
-        [Column("SellerPartnerTypeId")]
-	    public string SellerPartnerTypeId { get; set; }
-        [Column("LastUsedDate")]
-	    public DateTime? LastUsedDate { get; set; }
-        [ForeignKey("ChargesType")]
-        [Column("FreightChargeId")]
-	    public string FreightChargeId { get; set; }
-	      
-        public virtual ChargesType ChargesType { get; set; }
-        [ForeignKey("CustomsBroker")]
-        [Column("CustomsBrokerId")]
-	    public string CustomsBrokerId { get; set; }
-	      
-        public virtual Card CustomsBroker { get; set; }
-        [Column("CustomsBrokerPartnerTypeId")]
-	    public string CustomsBrokerPartnerTypeId { get; set; }
-        [ForeignKey("UnitOfMeasurement")]
-        [Column("UnitOfMeasurementCode")]
-	    public string UnitOfMeasurementCode { get; set; }
-	      
-        public virtual WeightUnit UnitOfMeasurement { get; set; }
-        [ForeignKey("CustomerGroup")]
-        [Column("CustomerGroupId")]
-	    public string CustomerGroupId { get; set; }
-	      
-        public virtual CustomerGroup CustomerGroup { get; set; }
     }
 }
 	 

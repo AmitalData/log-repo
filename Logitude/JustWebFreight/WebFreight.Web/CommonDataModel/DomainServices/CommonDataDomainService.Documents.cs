@@ -7,10 +7,10 @@ using System.ServiceModel.DomainServices.Server;
 using System.Transactions;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -33,8 +33,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using ICSharpCode.SharpZipLib.Zip;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using ICSharpCode.SharpZipLib.Checksum;
-using System.Text;
+using ICSharpCode.SharpZipLib.Checksums;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -741,11 +740,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             newDocumentFiling.Id = IdCounter.GetNumber("Document", tenant).ToString();
 
             Random rnd = new Random();
-         // newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
-            string com_id = newDocumentFiling.Id;        // Length = 30
-            string com_md5 = CreateMD5(com_id); // Length = 32 
-            string com_short = newDocumentFiling.Id.Substring(0, 8);
-            newDocumentFiling.SecurityId = com_short + com_md5; // Length = 40
+            newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
 
             newDocumentFiling.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
             newDocumentFiling.CreatedByUserId = loggedUser.Id;
@@ -766,42 +761,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             DocumentOutPM docPM = documentOutQuery.GetSinglePM(newDocument.Id, newDocument.Tenant);
             return docPM;
         }
-
-
-        private static string CreateMD5(string input)
-
-        {
-
-            // Use input string to calculate MD5 hash
-
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-
-            {
-
-                byte[] inputBytes = System.Text.Encoding.Unicode.GetBytes(input);
-
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                //return Convert.ToHexString(hashBytes); // .NET 5 +
-
-                //Convert the byte array to hexadecimal string prior to.NET 5
-
-                StringBuilder sb = new System.Text.StringBuilder();
-
-                for (int i = 0; i < hashBytes.Length; i++)
-
-                {
-
-                    sb.Append(hashBytes[i].ToString("X2"));
-
-                }
-
-                return sb.ToString();
-
-            }
-
-        }
-
 
         public void UpdateDocumentOut(DocumentOutPM currentEntity)
         {
@@ -1361,12 +1320,12 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(documentTypeId, tenant).ToList();
         }
 
-        //public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomations(string documentTypeId, int tenant)
-        //{
-        //    SecurityUtility.AuthenticationOnTenant(tenant);
-        //    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
-        //    return documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(documentTypeId, tenant);
-        //}
+        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomations(string documentTypeId, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+            return documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(documentTypeId, tenant);
+        }
 
         public List<DocumentTypeTemplateList> GetDocumentTypeTemplateListsForDocumentType(string documentTypeId, int tenant)
         {
@@ -1756,7 +1715,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     OriginalTemplateId = documentTypeTemplate.Id,
                     IsCopiedAtSignup = true,
                     IsEnabledForCustomers = true,
-                    IsSystem = documentTypeTemplate.IsSystem,
                     
                 };
                 documentTypeTemplateRepository.Add(itemDocumentTypeTemplate);
@@ -2385,7 +2343,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 ShipmentCompField.IsRequestedDocuments = documentsFilingQuery.GetIfIsRequestedForEntity(entity.EntityId, Tenant);
                 ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(entity.EntityId, Tenant);
                 ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
-                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField, shipmentComputedFieldsRepository.context);
+                shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
 
 
                // shipmentComputedFieldsRepository.Update(ShipmentCompField);

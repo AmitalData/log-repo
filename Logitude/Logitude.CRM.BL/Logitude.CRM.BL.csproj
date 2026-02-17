@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,21 +9,19 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.CRM.BL</RootNamespace>
     <AssemblyName>Logitude.CRM.BL</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,14 +29,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,90 +44,40 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\All Projects\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
-    <OutputPath>bin\x64\None\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.11.0, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -140,7 +87,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyticTableServices\OpportunityAnalyticTableService.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActivityPriorityDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActivityStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActivityTimeTypeDetails.Generated.cs" />
@@ -157,8 +103,6 @@
     <Compile Include="CloseTables\EnumGenerated\OccasionStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TimeUnitStruct.Generated.cs" />
     <Compile Include="DataContracts\CRMChartingClass.cs" />
-    <Compile Include="DataContracts\LogitudeCRMReportFilter.cs" />
-    <Compile Include="DataContracts\OpportunityCRMDetails.cs" />
     <Compile Include="EntityDataMappings\ActivityDataMapping.cs" />
     <Compile Include="EntityDataMappings\ActivityEmailRecipientDataMapping.cs" />
     <Compile Include="EntityDataMappings\ActivityInviteeDataMapping.cs" />
@@ -216,7 +160,6 @@
     <Compile Include="EntityDataMappings\Generated\SLAHeaderDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SLALineDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\StageDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\SupportMailboxDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TicketClassificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TicketCreatedByTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TicketDataMapping.Generated.cs" />
@@ -249,7 +192,6 @@
     <Compile Include="EntityDataMappings\SLAHeaderDataMapping.cs" />
     <Compile Include="EntityDataMappings\SLALineDataMapping.cs" />
     <Compile Include="EntityDataMappings\StageDataMapping.cs" />
-    <Compile Include="EntityDataMappings\SupportMailboxDataMapping.cs" />
     <Compile Include="EntityDataMappings\TicketClassificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\TicketCreatedByTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TicketDataMapping.cs" />
@@ -305,7 +247,6 @@
     <Compile Include="EntityPMs\Generated\SLAHeaderPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SLALinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\StagePM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\SupportMailboxPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TicketClassificationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TicketCreatedByTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TicketEscalationPM.Generated.cs" />
@@ -320,7 +261,6 @@
     <Compile Include="EntityPMs\QuestionnaireQuestionPM.cs" />
     <Compile Include="EntityPMs\TicketPM.cs" />
     <Compile Include="EntityQueryServices\ActivityOwnerHistoryQueryService.cs" />
-    <Compile Include="EntityQueryServices\TicketStageQueryService.cs" />
     <Compile Include="EntityQueryServices\ActivityQueryService.cs" />
     <Compile Include="EntityQueryServices\CorrespondenceQueryService.cs" />
     <Compile Include="EntityQueryServices\CorrespondencesAttachmentQueryService.cs" />
@@ -367,7 +307,6 @@
     <Compile Include="EntityQueryServices\Generated\SLAHeaderQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SLALineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\StageQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\SupportMailboxQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketCreatedByTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TicketEscalationQueryService.Generated.cs" />
@@ -388,7 +327,6 @@
     <Compile Include="EntityQueryServices\SLAEscalationQueryService.cs" />
     <Compile Include="EntityQueryServices\SLAEscalationRecepientQueryService.cs" />
     <Compile Include="EntityQueryServices\SLAHeaderQueryService.cs" />
-    <Compile Include="EntityQueryServices\SupportMailboxQueryService.cs" />
     <Compile Include="EntityQueryServices\TicketEscalationQueryService.cs" />
     <Compile Include="EntityQueryServices\TicketQueryService.cs" />
     <Compile Include="EntityUpdateServices\ActivityEmailRecipientUpdateService.cs" />
@@ -439,7 +377,6 @@
     <Compile Include="EntityUpdateServices\Generated\SLAHeaderUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SLALineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\StageUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\SupportMailboxUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketClassificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketCreatedByTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketEscalationUpdateService.Generated.cs" />
@@ -449,7 +386,6 @@
     <Compile Include="EntityUpdateServices\Generated\TicketTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TicketUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TimeUnitUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\OccasionContactSearchresult.cs" />
     <Compile Include="EntityUpdateServices\OccasionInviteeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\OccasionUpdateService.cs" />
@@ -466,7 +402,6 @@
     <Compile Include="EntityUpdateServices\SLAHeaderUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SLALineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\StageUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\SupportMailboxUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TicketClassificationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TicketEscalationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TicketSeverityUpdateService.cs" />
@@ -485,10 +420,6 @@
     <Compile Include="WorkRoles\TicketEscalationAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -513,9 +444,9 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -526,14 +457,6 @@
     <Folder Include="APIDataContract\QueryService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

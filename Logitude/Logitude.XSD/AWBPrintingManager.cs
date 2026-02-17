@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -81,14 +81,12 @@ namespace Logitude.XSD
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(myResult.Tenant);
-                SettingRepository mySettingRepository = new SettingRepository();
-                var isDemoTenant = mySettingRepository.IsDemoTenant(myResult.Tenant.ToString());
 
                 if (tenantManagement != null)
                 {
                     myResult.IsAWBStockPrepaid = tenantManagement.IsAWBStockPrepaid;
 
-                    if (isDemoTenant || tenantManagement.IsEAWBOnlyDemo)
+                    if (myResult.Tenant == 65 || tenantManagement.IsEAWBOnlyDemo)
                     {
                         myResult.IsDemoTenant = true;
                     }

@@ -57,13 +57,13 @@ GenerateAllListQueryServices("../EntityFiles","../../Logitude.TariffModule.Data/
 GenerateAllUpdateClasses("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses","TariffModule");
 GenerateMetaDataUpdateClass("../EntityFiles","../../JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate","TariffModuleUpdateClass");
 GenerateAllCloseTableDetailsEnumsClasss("../EntityFiles","../../Logitude.TariffModule.BL/CLoseTables");
-//GenerateAllDomainServices("../EntityFiles","../../JustWebFreight/WebFreight.Web/TariffModuleModel","TariffModuleContext","Logitude.TariffModule","TariffModuleDomainService");
+//GenerateAllDomainServices("../EntityFiles","../.../JustWebFreight/WebFreight.Web/TariffModuleModel","TariffModuleContext","Logitude.TariffModule","TariffModuleDomainService");
 
 
 
 // ---------------------------- typedscript generated files
 
-	GenerateAllControllers("../EntityFiles","../../JustWebFreight/WebFreight.Web/Controllers","TariffModuleContext","Logitude.TariffModule","TariffModuleModel");
+	GenerateAllControllers("../EntityFiles","../.../JustWebFreight/WebFreight.Web/Controllers","TariffModuleContext","Logitude.TariffModule","TariffModuleModel");
  
 
 // Generate TariffModule TS files---------------------------------------------------------------------------------------------------------------

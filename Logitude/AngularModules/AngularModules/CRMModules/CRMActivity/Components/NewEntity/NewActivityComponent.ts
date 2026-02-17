@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ActivityPM} from '../../../../CRM/EntityPMs/ActivityPM';
 import {ActivityInputTemplate} from './ActivityInputTemplate';
@@ -10,22 +10,18 @@ import {ActivityPMInitService} from '../../../../CRM/EntityPMInitServices/Activi
 import {AppTool} from '../../../../Infrastructure/Tools'; 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewActivityComponent.html',
 })
 
-export class NewActivityComponent implements AfterViewInit {
+export class NewActivityComponent {
     public EntityPM: ActivityPM;
     public ValidationErrorsList: string[] = [];
 
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-
-    }
-
-    ngAfterViewInit() {
-        this.LoadChildComponent();
+        this.RunComponent();
     }
 
     public TypeCode = "";
@@ -69,6 +65,30 @@ export class NewActivityComponent implements AfterViewInit {
         }
         
         this.IsAddCustomerAllowed = args.IsAddCustomerAllowed;
+    }
+
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
 
     private IsAddCustomerAllowed = true;

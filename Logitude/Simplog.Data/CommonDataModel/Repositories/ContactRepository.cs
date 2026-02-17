@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.Helpers;
@@ -15,7 +15,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public ContactRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
         public ContactRepository(ICommonDataContext context)
         {
             commonDataContext = context;
@@ -121,7 +124,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Contact entity;
                 if (getFromCache)
                 {
-                   
+                    if (HttpContext.Current != null)
+                    {
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             
@@ -140,8 +144,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                             entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
                             // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    
-              
+                    }
+                    else
+                    {
+                      
+                        entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                    }
                 }
                 else
                 {
@@ -160,11 +168,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             {
                 string entityName = "Contact" + id + tenant;
                 Contact entity;
-             
-
                 if (getFromCache)
                 {
-                  
+                    if (HttpContext.Current != null)
+                    {
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -183,8 +190,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                             entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
                             // HttpContext.Current.Cache.Insert(EntityNameValue, Entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
-                    
-                
+                    }
+                    else
+                    {
+                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                        entity = (from record in context.Contacts where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                    }
                 }
                 else
                 {
@@ -246,7 +257,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Contact entity;
                 if (getFromCache)
                 {
-                   
+                    if (HttpContext.Current != null)
+                    {
                         if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
                             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -265,22 +277,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
                                 if (entity == null)
                                 {
-								    entityName = "Contact" + email + 0;
-                                    if(CacheManager.CacheWrapper.Get(entityName) == null)
-                                    {
-									   entity = (from a in context.Contacts
-									   		  where a.Email == email && a.Tenant == 0
-									   		  select a).FirstOrDefault();
-                                       if(entity != null)
-                                       {
-										 CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-
-									   }
-								    }
-                                    else
-                                    {
-									    entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
-								    }
+                                    entity = (from a in context.Contacts
+                                              where a.Email == email && a.Tenant == 0
+                                              select a).FirstOrDefault();
                                 }
                             }
                             //}
@@ -294,8 +293,19 @@ namespace Simplog.Data.CommonDataModel.Repositories
                             entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
 
                         }
-                    
-              
+                    }
+                    else
+                    {
+                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                        entity = (from record in context.Contacts where record.Email == email && record.Tenant == tenant select record).FirstOrDefault();
+
+                        if (entity == null)
+                        {
+                            entity = (from a in context.Contacts
+                                      where a.Email == email && a.Tenant == 0
+                                      select a).FirstOrDefault();
+                        }
+                    }
 
 
                    
@@ -318,71 +328,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             else
                 return null;
         }
-        public Contact GetSingleContactByEmailMultiDB(string email, int tenant, bool getFromCache = false,int contextTenant=0)
-        {
-            if (!string.IsNullOrEmpty(email))
-            {
-                email = email.ToLower();
-                string entityName = "Contact" + email + tenant;
-                Contact entity;
-                if (getFromCache)
-                {
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-                        ICommonDataContext context = CommonDataContext.GetContext(contextTenant);
-                        entity = (from a in context.Contacts
-                                  where a.Tenant == tenant && a.Email == email
-                                  select a).FirstOrDefault();
-
-
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-
-                        else
-                        {
-
-                            if (entity == null)
-                            {
-                                entity = (from a in context.Contacts
-                                          where a.Email == email && a.Tenant == 0
-                                          select a).FirstOrDefault();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
-
-                    }
-
-
-
-
-
-                }
-                else
-                {
-                    ICommonDataContext context = CommonDataContext.GetContext(contextTenant);
-                    entity = (from record in context.Contacts where record.Email == email.ToLower() && record.Tenant == tenant select record).FirstOrDefault();
-
-                    if (entity == null)
-                    {
-                        entity = (from a in context.Contacts
-                                  where a.Email == email.ToLower() && a.Tenant == 0
-                                  select a).FirstOrDefault();
-                    }
-                }
-
-                return entity;
-            }
-            else
-                return null;
-        }
-
-
+     
         public bool IsContactByEmailExists(string email, int tenant)
         {
             bool result = false;
@@ -439,8 +385,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void Add(Contact entity)
         {
-            SetComputedKeyValue(entity);
-            SetUpdateDate(entity);
             context.Contacts.Add(entity);
         }
 
@@ -456,31 +400,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void Update(Contact entity)
         {
-            SetComputedKeyValue(entity);
-            SetUpdateDate(entity);
             try
             {
                 context.Contacts.Attach(entity);
             }
             catch { }
             context.SetAsModified(entity);
-        }
-
-        private void SetComputedKeyValue(Contact entity)
-        {
-            if (!string.IsNullOrEmpty(entity.Email))
-                entity.ComputedKey = entity.Email;
-            else
-                entity.ComputedKey = entity.Id;
-
-        }
-
-        private void SetUpdateDate(Contact entity)
-        {
-            if(entity.UpdateDate == null)
-            {
-                entity.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant);
-            }
         }
 
         public List<Contact> All()
@@ -628,48 +553,5 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                                select a);
             return contactlist;
         }
-        public string GetContactForAccountingByGLAccountIdExcludeOneCard(string glAccountId, int tenant, string excludeContactId, string includeContactId)
-        {
-            var contacts = (
-                from contact in context.Contacts
-                where contact.ContactForAccounting == true 
-                && (
-                    from cardContact in context.CardContacts
-                    where (
-                        from card in context.Cards
-                        where card.GLAccountId == glAccountId && card.Tenant == tenant
-                        select card.Id
-                    ).Contains(cardContact.CardId)
-                    select cardContact.ContactId
-                ).Contains(contact.Id)
-                && (includeContactId == null || contact.Id.ToString() == includeContactId) // Include specific contact ID
-                && (excludeContactId == null || contact.Id.ToString() != excludeContactId) // Exclude specific contact ID
-                select contact
-            ).FirstOrDefault();
-
-            return contacts?.Id.ToString(); 
-        }
-		public List<Contact> GetContactsForAccountingByGLAccountId(string glAccountId, int tenant)
-		{
-			var contacts = (
-			from contact in context.Contacts
-			join cardContact in context.CardContacts on contact.Id equals cardContact.ContactId
-			join card in context.Cards on cardContact.CardId equals card.Id
-			where contact.ContactForAccounting == true
-			&& card.GLAccountId == glAccountId
-			&& card.Tenant == tenant
-			select contact
-			).Distinct().ToList();
-
-			return contacts;
-		}
-
-		public Contact GetContactByEmail(string email, int tenant)
-        {
-            return context.Contacts
-            .Where(a => (a.Tenant == tenant || a.Tenant == 0) && a.Email == email.ToLower())
-            .FirstOrDefault();
-        }
-
     }
 }

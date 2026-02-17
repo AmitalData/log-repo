@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -33,7 +33,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          InvoiceAmount = a.InvoiceAmount,
                                                          InvoiceCounterKey = a.InvoiceCounterKey,
                                                          InvoiceCurrencyTypeCode = a.InvoiceCurrencyTypeCode,
-                                                         InvoiceCurrencyTypeName = a.CurrencyType != null ? a.CurrencyType.LocalName : null,
                                                          InvoiceNumber = a.InvoiceNumber,
                                                          IsPreference = a.IsPreference,
                                                          IssueCountryCode = a.IssueCountryCode,
@@ -52,7 +51,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          IssueCountryName = a.IssueCountry != null? a.IssueCountry.LocalName : null,
                                                          PreferenceDocumentTypeName = a.TradeAgreement.LocalName,
                                                          InsruancePercentage = a.InsruancePercentage,
-                                                         ChangeInSupplierInvoice = a.ChangeInSupplierInvoice,
                                                      });
             return query;
 		}

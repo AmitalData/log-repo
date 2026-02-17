@@ -14,24 +14,13 @@ namespace Logitude.Customs.BL.Messaging.Customs
     public class CustomsRequestsSheetDomainModelUtil
     {
 
-        public static void SetExceptionMessage(int tenant, string CustomsRequestsSheetId, string exceptionMessage ,
-            bool append= false)
+        public static void SetExceptionMessage(int tenant, string CustomsRequestsSheetId, string ExceptionMessage)
         {
             var qs = new CustomsRequestsSheetQueryService(tenant);
             var pm =qs.GetSingle(CustomsRequestsSheetId, false, false);
             var myCommunicationLogRepository = new CommunicationLogRepository(tenant) ;
             var myCommunicationLog = myCommunicationLogRepository.GetSingleCommunicationLog(pm.RequestComminicationId, tenant);
-            if (append)
-            {
-                string myExceptionMessage = exceptionMessage +"-LstErr:" + myCommunicationLog.ExceptionMessage;
-                
-                myCommunicationLog.ExceptionMessage = myExceptionMessage.Substring(0, Math.Min(7999, myExceptionMessage.Length));
-            }
-            else
-            {
-                myCommunicationLog.ExceptionMessage = exceptionMessage;
-            }
-            
+            myCommunicationLog.ExceptionMessage = ExceptionMessage;
             myCommunicationLogRepository.Update(myCommunicationLog);
             myCommunicationLogRepository.SubmitChanges();
  

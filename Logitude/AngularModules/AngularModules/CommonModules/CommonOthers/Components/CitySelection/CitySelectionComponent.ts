@@ -7,15 +7,9 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {CitySelectionArgs} from '../../../../Common/Args';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-import { CountryCityGeneralTabComponent } from '../../../../Common/Components/Maintenance/CountryCity/CountryCityGeneralTabComponent';
-import { CountryCityPM } from 'Common/EntityPMs/CountryCityPM';
-import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
-import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CitySelectionComponent.html',
 })
 
@@ -28,7 +22,7 @@ export class CitySelectionComponent {
     private ObjectTableName: string = "CountryCity";
     public IsResourcesReady: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityResourceService: EntityResourceService, public entityPMService:EntityPMService) {
+    constructor(private entityResourceService: EntityResourceService) {
         this.myService = new CountryCityListService();
         this.ItemsSource = new Array<CountryCityList>();
     }
@@ -89,7 +83,6 @@ export class CitySelectionComponent {
         this.SelectedCity = item;
 
         if (item == null) {
-            this.args.CityId = null;
             this.args.CityName = null;
             this.args.CityLocalName = null;
             this.args.CountryId = null;
@@ -98,7 +91,6 @@ export class CitySelectionComponent {
         }
 
         else {
-            this.args.CityId = item.Id;
             this.args.CityName = item.EnglishName;
             this.args.CityLocalName = item.LocalName;
             this.args.CountryId = item.CountryId;
@@ -111,34 +103,5 @@ export class CitySelectionComponent {
 
     Close() {
         this.CurrentSession.CloseCurrentWindow();
-    }
-    AddNewCity(){
-
-
-        var componentPath = "./Infrastructure/GenericComponents/NewEntityComponent";
-        this.entityPMService.getNewEntity("CountryCity").then(response => {
-          
-            var args = new EntityArgs();
-            args.EntityPM = response;
-
-            args.ObjectTableName = "CountryCity";
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 960;
-            logWindow.Height = 570;
-            var windowTitle = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.Translate("CountryCity"));
-            logWindow.WindowArgs = args;
-            logWindow.Title = windowTitle;
-            logWindow.Show(componentPath);
-
-
-            logWindow.WindowClosed.subscribe($event => {
-                debugger
-                if ($event) {
-                   
-                    this.LoadData();
-                }
-            });
-        });
-       
     }
 }

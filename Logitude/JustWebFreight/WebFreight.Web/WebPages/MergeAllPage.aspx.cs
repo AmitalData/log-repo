@@ -9,7 +9,7 @@ using Atp.Pdf;
 //using Microsoft.WindowsAzure.Storage;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;

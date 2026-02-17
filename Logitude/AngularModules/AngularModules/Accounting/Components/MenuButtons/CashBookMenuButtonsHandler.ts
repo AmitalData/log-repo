@@ -1,4 +1,3 @@
-import { CashBookExtendedPMService } from './../../Services/ExtendedPMs/CashBookExtendedPMService';
 declare var window: any;
 import {CashBookPM} from '../../EntityPMs/CashBookPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -16,11 +15,6 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
-const cashCashbookTypeCode = '1';
-const CashbookTotalUpdateWindow = "Adjust Cashbook Total";
-const CashbookUpdateTotalWindowWidth = 400;
-const CashbookUpdateTotalWindowHeight = 180;
-
 export class CashBookMenuButtonsHandler {
     public EntityPM: CashBookPM;
     public entityArgs: EntityArgs
@@ -29,7 +23,6 @@ export class CashBookMenuButtonsHandler {
     TotalSum: number = 0;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    _CashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -77,12 +70,6 @@ export class CashBookMenuButtonsHandler {
                                 }
                                 break;
                             }
-                            case "RecalculateTotals":
-                            {
-                                button.IsHidden = !SessionLocator.LoggedUserPM.IsCustomerCare;
-                                button.IsDisabled = this.EntityPM.Inactive;
-                                break;
-                            }
                     }
                 }
             }
@@ -107,7 +94,6 @@ export class CashBookMenuButtonsHandler {
                             this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.BalanceOfCashbookUnequalZeroCantBlocked"));//"The balance of the cashbook is unequal to zero, can’t be blocked");
                         } else {
                             this.EntityPM.Inactive = true;
-                            this.EntityPM.IsDirty = true;
                             this.entityArgs.EditComponent.SaveChanges();
                         }
                         break;
@@ -115,12 +101,6 @@ export class CashBookMenuButtonsHandler {
                 case "CashBookDeposite":
                     {
                         this.RunNewDepositWizard();
-                        break;
-                    }
-
-                case "RecalculateTotals":
-                    {
-                        this.RecalculateCashbookTotals();
                         break;
                     }
 
@@ -142,115 +122,43 @@ export class CashBookMenuButtonsHandler {
     RunNewDepositWizard() {
 
         if (this.EntityPM.CashBookTypeCode == "2") { // 2-Cheque
+            var exist = this.EntityPM.CashBookLines.find(d => d.IsDeposited == false);
+            if (!exist) {
+                var msg = new MessageWindow();
+                msg.Width = 350;
+                msg.RTL = this.isRTL;
+                msg.Show(TextCodeTranslator.Translate("Accounting.O.NoChequesInCashbook"));//"There are no Cheques in the Cashbook");
 
-            this.RunNewDepositForChequeCashbook();
-
+                return;
+            }
         } else if (this.EntityPM.CashBookTypeCode == "1") { // 1-Cash
+            if (AppTool.IsNullOrZero(this.EntityPM.TotalAmount)){
+                var msg = new MessageWindow();
+                msg.Width = 350;
+                msg.RTL = this.isRTL;
+                msg.Show(TextCodeTranslator.Translate("Accounting.O.NoCashInCashbook"));//"There are no Cash in the Cashbook");
 
-            this.RunNewDepositForCashCashbook();
-
+                return;
+            }
         }
 
-    }
-
-    RecalculateCashbookTotals(){
-
-        if(this.EntityPM.CashBookTypeCode == cashCashbookTypeCode){
-            this.ShowCashbookTotalUpdateWindow();
-        }else{
-            this.RecalculateTotalOfChequesCashbook();
-        }
-
-    }
-
-    private ShowCashbookTotalUpdateWindow()
-    {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = CashbookUpdateTotalWindowWidth;
-        logitudeWindow.Height = CashbookUpdateTotalWindowHeight;
-        logitudeWindow.Title = CashbookTotalUpdateWindow;
-        logitudeWindow.WindowArgs = { CashbookPM: this.EntityPM };
-        logitudeWindow.Show('./Accounting/Components/EditTabs/CashBook/CashbookTotalAdjustWindow');
-        logitudeWindow.WindowClosed.subscribe(() => {} );
-    }
-
-
-    private RecalculateTotalOfChequesCashbook()
-    {
-        this.StartBusyIndicator('Recalculating totals...');
-        this._CashBookExtendedPMService.RecalculateCashbookTotal(this.EntityPM.Id)
-            .subscribe((response: ServiceResponse) =>
-            {
-                if (!response.HasError) {
-                    this.ShowMessage("Total recalculated successfully");
-                    this.StopBusyIndicator();
-                }
-                else {
-                    this.ShowErrorMessage(response);
-                    this.StopBusyIndicator();
-                }
-            });
-    }
-
-    private RunNewDepositForCashCashbook()
-    {
-        if (AppTool.IsNullOrZero(this.EntityPM.TotalAmount)) {
-            var msg = new MessageWindow();
-            msg.Width = 350;
-            msg.RTL = this.isRTL;
-            msg.Show(TextCodeTranslator.Translate("Accounting.O.NoCashInCashbook")); //"There are no Cash in the Cashbook");
-        }
-        else {
-            this.OpenNewDepositWindow();
-        }
-    }
-
-    private RunNewDepositForChequeCashbook()
-    {
-        this._CashBookExtendedPMService.GetCashbookUndepositedChequesCount(this.EntityPM.Id)
-            .subscribe((response: ServiceResponse) =>
-            {
-                console.log("[GetCashbookChequesCounter]", response);
-                if (!response.HasError) {
-                    var undepositedChequeCount: number = response.Result;
-                    if (undepositedChequeCount == 0) {
-                        this.DisplayNoChequesErrorMsg();
-                    }
-                    else {
-                        this.OpenNewDepositWindow();
-                    }
-                }
-                else {
-                    console.error(response.ErrorsArray);
-                }
-            });
-    }
-
-    private OpenNewDepositWindow()
-    {
         var windowTitle = "New Deposit";
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
+
         var windowArgs = new Args;
         windowArgs.CashBookId = this.EntityPM.Id;
+
         var logWindow = new LogitudeWindow();
         logWindow.Width = 520;
         logWindow.Height = 240;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) =>
-        {
+        logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
         logWindow.Show('./Accounting/Components/NewEntity/NewBankDepositComponent');
     }
 
-    private DisplayNoChequesErrorMsg()
-    {
-        var msg = new MessageWindow();
-        msg.Width = 350;
-        msg.RTL = this.isRTL;
-        msg.Show(TextCodeTranslator.Translate("Accounting.O.NoChequesInCashbook"));
-    }
 
     private StartBusyIndicator(message: string) {
         this.CurrentSession.StartBusyIndicator(message);
@@ -259,23 +167,8 @@ export class CashBookMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
-
-    ShowErrorMessage(response: ServiceResponse)
-    {
-        const messageWindow = new MessageWindow();
-        messageWindow.Show("Update Total Failed, please check browser console");
-        console.error(response.ErrorsArray);
-    }
-
-    ShowMessage(message: string)
-    {
-        const messageWindow = new MessageWindow();
-        messageWindow.Show(message);
-
-    }
 }
+
 export class Args {
     CashBookId: string;
 }
-
-

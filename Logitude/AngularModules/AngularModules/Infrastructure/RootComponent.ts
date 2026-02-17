@@ -1,129 +1,103 @@
-import { Component, AfterViewInit, ViewChild } from '@angular/core';
-import { DynamicLoader } from '../App/DynamicLoader/DynamicLoader';
-import { ServiceHelper } from './Utilities/ServiceHelper';
-import { SessionLocator } from './Utilities/SessionLocator';
-import { ExternalParams, ExternalParamsArg } from './Utilities/ExternalParams';
-import { TermsofUseService } from './Services/WebServices/TermsofUseService';
-import { SessionInfo } from './Utilities/SessionInfo';
-import { ServiceResponse } from './DataContracts/ServiceResponse';
-import { TermsofUseArgs } from './DataContracts/TermsofUseArgs';
-import { environment } from '../environments/environment';
-import { LoginService } from './Services/LoginService';
-import { AppTool } from './Tools';
-import { ChildDirective } from './Directives/ChildDirective';
-import { RootService } from './RootService';
-declare var IsMobileDetected;
 
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {DynamicLoader} from './Utilities/DynamicLoader';
+import {ServiceHelper} from './Utilities/ServiceHelper';
+import {SessionLocator} from './Utilities/SessionLocator';
+import {ExternalParams, ExternalParamsArg} from './Utilities/ExternalParams';
+import {TermsofUseService} from './Services/WebServices/TermsofUseService';
+import {SessionInfo} from './Utilities/SessionInfo'
+import {ServiceResponse} from './DataContracts/ServiceResponse';
+import {TermsofUseArgs} from './DataContracts/TermsofUseArgs';
+import { environment } from '../environments/environment';
+
+import {LoginService} from './Services/LoginService';
+import {AppTool} from './Tools'
+declare var IsMobileDetected;
 @Component({
     selector: 'RootComponent',
-    template: `
+    template:
+    `
         <div class="MediaFillRelative">
-            <div ChildDirective></div>
+            <div #Child></div>
         </div>
     `,
 })
-export class RootComponent implements AfterViewInit {
-    @ViewChild(ChildDirective) Child: ChildDirective;
 
-    private _shouldFreshReload: boolean = false;
-
+export class RootComponent implements OnInit {
+    private isComponentBooted: boolean = false;
+    private isComponentInited: boolean = false;
+    @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
     constructor() {
-        if (this._shouldFreshReload) { this.clearAppData(); }
 
         var data = window.sessionStorage.getItem('userdata');
 
-        if (data != 'SignOut') {
+        if (data != "SignOut") {
             this.BuildExternalParams();
         }
     }
 
     Boot(args: any) {
-        ServiceHelper.HttpClient = args['Http'];
+        ServiceHelper.Http = args["Http"];
+        SessionLocator.Http = args["Http"];
+        DynamicLoader.Compiler = args["Compiler"];
+        DynamicLoader.Resolver = args["Resolver"];
+        DynamicLoader.Injector = args["Injector"];
+        DynamicLoader.ModuleLoader = args["ModuleLoader"];
         SessionLocator.DynamicLoader = DynamicLoader;
         SessionLocator.RootComponent = this;
 
         if (environment.production) {
             SessionLocator.IsProduction = true;
         }
-    }
 
-    ngAfterViewInit() {
+        this.isComponentBooted = true;
         this.RunComponent();
     }
 
+    ngOnInit() {
+        this.isComponentInited = true;
+        this.RunComponent();
+    }  
+
     isDSV: boolean = false;
-    isPrivateLable: boolean = false;
     RunComponent() {
-        const url = window.location.href;
-        //if (url.indexOf("staging") > -1)
-        //    SessionLocator.WorkerRoleName = "staging";
+        if (this.isComponentBooted && this.isComponentInited) {
+            var url = window.location.href;
 
-        if (url.indexOf('localhost') > -1)
-            SessionLocator.WorkerRoleName = 'development';
-        if (url.indexOf('staging') > -1)
-            SessionLocator.WorkerRoleName = 'staging';
+            this.isDSV = url.toLowerCase().indexOf(".dsv.") > -1 ? true : false;
 
-        console.log('WorkerRoleName: ' + SessionLocator.WorkerRoleName);
-        this.isPrivateLable =
-            window.sessionStorage.getItem('IsPrivateLabel') == 'true';
-        this.isDSV = window.sessionStorage.getItem('IsDSV') == 'true';
-        this.LoginToSystem();
-    }
+            var data = window.sessionStorage.getItem('userdata');
+            if ((data && data == "SignOut") || (!data && !SessionLocator.IsExternalParams && url.indexOf('localhost') == -1)) {
+                document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+            }
 
-    LoginToSystem() {
-        const url = window.location.href;
-        var data = window.sessionStorage.getItem('userdata');
-        if (
-            url.indexOf('localhost:4200/?D{%22$id') > -1 ||
-            url.indexOf('localhost:4200/?P{%22$id') > -1
-        ) {
-            this.isPrivateLable = true;
-            this.isDSV = url.indexOf('localhost:4200/?D{%22$id') > -1;
-            data = url.split('?' + this.isDSV ? 'D' : 'P')[1];
-        }
-        if (
-            (data && data == 'SignOut') ||
-            (!data &&
-                !SessionLocator.IsExternalParams &&
-                url.indexOf('localhost') == -1)
-        ) {
-            document.location.href =
-                ServiceHelper.GetLogitudeURL() + 'Login.aspx';
-        } else {
-            this.LoadLoginPage();
-            var IsPREQ =
-                SessionLocator.IsExternalParams &&
-                SessionLocator.ExternalParams &&
-                SessionLocator.ExternalParams.Menu &&
-                (SessionLocator.ExternalParams.Menu.toLocaleLowerCase() ==
-                    'preq' ||
-                    SessionLocator.ExternalParams.Menu.toLocaleLowerCase() ==
-                    'uid');
-            if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
-                window.onbeforeunload = function (e) {
-                    var message = '';
-                    if (
-                        SessionLocator.ExternalParams &&
-                        SessionLocator.ExternalParams.OneTimePasswordId
-                    ) {
-                        message =
-                            "when you leave this site can't not be used the key agin";
-                    } else if (!SessionLocator.IsSiguOut) {
-                        message = 'Are you sure you want to leave this page ?';
-                    }
+            else {
+                this.LoadLoginPage();
+                var IsPREQ = SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq";
+                if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
+                    window.onbeforeunload = function (e) {
+                        var message = "";
+                        if (SessionLocator.ExternalParams && SessionLocator.ExternalParams.OneTimePasswordId) {
+                            message = "when you leave this site can't not be used the key agin";
+                        }
+                        else if (!SessionLocator.IsSiguOut) {
+                            message = "Are you sure you want to leave this page ?";
+                        }
 
-                    if (!AppTool.IsNullOrEmpty(message)) {
-                        e.returnValue = message;
-                        return message;
-                    }
-                };
+                        if (!AppTool.IsNullOrEmpty(message)) {
+                            e.returnValue = message;
+                            return message;
+                        }
+                    };
+                }
+
             }
         }
     }
 
     private ClearLocation() {
-        if (this.Child.Location) {
-            this.Child.Location.clear();
+        if (this.location) {
+            this.location.clear();
         }
     }
 
@@ -139,10 +113,8 @@ export class RootComponent implements AfterViewInit {
                     SessionLocator.IsExternalParams = true;
                     for (var i = 0; i < vars.length; i++) {
                         var pair = vars[i].split('=');
-                        SessionLocator.ExternalParams[
-                            decodeURIComponent(pair[0])
-                        ] = pair[1];
-                        if (decodeURIComponent(pair[0]) == 'Parmters') {
+                        SessionLocator.ExternalParams[decodeURIComponent(pair[0])] = pair[1];
+                        if (decodeURIComponent(pair[0]) == "Parmters") {
                             var str1 = pair[1];
                             var str = decodeURIComponent(str1);
                             var jsonPMKeys = JSON.parse(str);
@@ -160,366 +132,220 @@ export class RootComponent implements AfterViewInit {
     }
     _FinishLogin: boolean = false;
     LoadLoginPage() {
+
         this.ClearLocation();
 
-        if (this.isPrivateLable == true) {
-            this.LoadPrivateLablePages();
-        } else if (
-            SessionLocator?.ExternalParams?.Menu?.toUpperCase().startsWith(
-                'SATISFACTIONSURVEY'
-            )
-        )
-            SessionLocator.DynamicLoader.Load(
-                './Infrastructure/Components/SatisfactionSurvey/SatisfactionSurveyComponent',
-                this.Child.Location
-            ).then();
-        else if (SessionLocator?.ExternalParams?.Menu?.startsWith("IdentityShaamLandingPage"))
-            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/IdentityShaamLandingPageComponent/IdentityShaamLandingPageComponent", this.Child.Location).then()
-        else if (RootService.redirectToExternalLink())
-            return;
+        //this.isDSV = true;
+
+        if (this.isDSV == true) {
+            if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVMobileLoginProcessComponent", this.location)
+                    .then(cmpRef => {
+
+                        cmpRef.instance.Blocking.subscribe(s => {
+                            SessionLocator.BlockType = s;
+                            this.LoadBlockingScreen();
+                        });
+
+                        cmpRef.instance.LoginCompleted.subscribe(s => {
+                            this.OnLoginCompleted();
+                        });
+                    });
+            }
+            else {
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/CustomLoginComponents/DSVLoginProcessComponent", this.location)
+                    .then(cmpRef => {
+
+                        cmpRef.instance.Blocking.subscribe(s => {
+                            SessionLocator.BlockType = s;
+                            this.LoadBlockingScreen();
+                        });
+
+                        cmpRef.instance.LoginCompleted.subscribe(s => {
+                            this.OnLoginCompleted();
+                        });
+                    });
+            }
+        }
         else {
-            SessionLocator.DynamicLoader.Load(
-                './Infrastructure/Components/LoginComponent/LoginComponent',
-                this.Child.Location
-            ).then((cmpRef) => {
-                cmpRef.instance.Blocking.subscribe((s) => {
-                    //SessionLocator.BlockType = s;
-                    //this.LoadBlockingScreen();
+            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.location)
+                .then(cmpRef => {
+
+                    cmpRef.instance.Blocking.subscribe(s => {
+                        //SessionLocator.BlockType = s;
+                        //this.LoadBlockingScreen();
+                    });
+
+                    cmpRef.instance.LoginCompleted.subscribe(s => {
+                        this.OnLoginCompleted(s);
+                    });
                 });
-
-                cmpRef.instance.LoginCompleted.subscribe((s) => {
-                    this.OnLoginCompleted(s);
-                });
-            });
-        }
+        } 
     }
-    LoadPrivateLablePages() {
-        if (
-            SessionLocator.IsExternalParams &&
-            SessionLocator.ExternalParams &&
-            SessionLocator.ExternalParams.Menu &&
-            SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == 'dapp' &&
-            IsMobileDetected() == true
-        ) {
-            this.LoadPrivateLableMobileLoginProcess();
-        } else {
-            this.LoadPrivateLableLoginProcess();
-        }
-    }
-
-    private LoadPrivateLableLoginProcess() {
-        SessionLocator.DynamicLoader.Load(
-            './Infrastructure/Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent',
-            this.Child.Location
-        ).then((cmpRef) => {
-            cmpRef.instance.Blocking.subscribe((s) => {
-                SessionLocator.BlockType = s;
-                this.LoadBlockingScreen();
-            });
-
-            cmpRef.instance.LoginCompleted.subscribe((s) => {
-                this.OnLoginCompleted();
-            });
-        });
-    }
-
-    LoadPrivateLableMobileLoginProcess() {
-        SessionLocator.DynamicLoader.Load(
-            './Infrastructure/Components/LoginComponent/PrivateLabelComponents/DSVMobileLoginProcessComponent',
-            this.Child.Location
-        ).then((cmpRef) => {
-            cmpRef.instance.Blocking.subscribe((s) => {
-                SessionLocator.BlockType = s;
-                this.LoadBlockingScreen();
-            });
-
-            cmpRef.instance.LoginCompleted.subscribe((s) => {
-                this.OnLoginCompleted();
-            });
-        });
-    }
-
     LoadBlockingScreen() {
         this.ClearLocation();
 
-        SessionLocator.DynamicLoader.Load(
-            './Infrastructure/Components/LoginComponent/BlockScreenComponent',
-            this.Child.Location
-        ).then((cmpRefBlocked) => {
-            cmpRefBlocked.instance.BackToLoginCompleted.subscribe((r) => {
-                this.SignOutCompleted();
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/BlockScreenComponent", this.location)
+            .then(cmpRefBlocked => {
+                cmpRefBlocked.instance.BackToLoginCompleted.subscribe(r => {                    
+                    this.SignOutCompleted();
+                });
             });
-        });
     }
     ViewHomeComponent() {
+
         this.ClearLocation();
 
-        //SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
-        SessionLocator.DynamicLoader.Load(
-            './Infrastructure/Components/HomeComponent/HomeComponent',
-            this.Child.Location
-        ).then((cmpRef) => {
-            cmpRef.instance.RunComponent();
+         //SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/HomeComponent/HomeComponent", this.location)
+            .then(cmpRef => {
+                cmpRef.instance.RunComponent();
 
-            cmpRef.instance.SignoutCompleted.subscribe((s) => {
-                if (s == 'Block') {
-                    this.LoadBlockingScreen();
-                } else {
-                    this.SignOutCompleted();
-                }
-            });
-        });
-    }
+                cmpRef.instance.SignoutCompleted.subscribe(s => {
+                    if (s == "Block") {
+                        this.LoadBlockingScreen();
 
-    ViewDeclarationApprovalComponent() {
-        this.ClearLocation();
-
-        SessionLocator.DynamicLoader.Load(
-            './ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent',
-            this.Child.Location
-        ).then((cmpRef) => {
-            cmpRef.instance.RunComponent();
-
-            //cmpRef.instance.SignoutCompleted.subscribe(s => {
-            //    if (s == "Block") {
-            //        this.LoadBlockingScreen();
-
-            //    }
-
-            //    else {
-            //        this.SignOutCompleted();
-            //    }
-            //});
-        });
-    }
-    ViewEComercePaymentRequestComponent() {
-        this.ClearLocation();
-
-        SessionLocator.DynamicLoader.Load(
-            './ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent',
-            this.Child.Location
-        ).then((cmpRef) => {
-            cmpRef.instance.RunComponent();
-
-            //cmpRef.instance.SignoutCompleted.subscribe(s => {
-            //    if (s == "Block") {
-            //        this.LoadBlockingScreen();
-
-            //    }
-
-            //    else {
-            //        this.SignOutCompleted();
-            //    }
-            //});
-        });
-    }
-
-    VieUserIdNumberMobileComponent() {
-        this.ClearLocation();
-        SessionLocator.DynamicLoader.Load(
-            './ShipmentModules/ShipmentLogBox/Components/Logbox/UserIdNumberMobileComponent',
-            this.Child.Location
-        ).then((cmpRef) => {
-            cmpRef.instance.RunComponent();
-        });
-    }
-
-    OnLoginCompleted(Param: any = null) {
-        if (Param == 'IgnoreTerms') {
-            if (
-                SessionLocator.IsExternalParams &&
-                SessionLocator.ExternalParams &&
-                SessionLocator.ExternalParams.Menu &&
-                SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == 'uid'
-            ) {
-                this.VieUserIdNumberMobileComponent();
-            } else {
-                this.ViewEComercePaymentRequestComponent();
-            }
-            return;
-        }
-        this._FinishLogin = true;
-        var termsofUseService = new TermsofUseService();
-        termsofUseService
-            .GetCheckIfGoToTermUseComponent(
-                SessionLocator.LoggedUserId
-            )
-            .subscribe((res: ServiceResponse) => {
-                var serviceResponse: ServiceResponse = res;
-                this.checkTermsOfUseResult(serviceResponse);
-            });
-    }
-
-    checkTermsOfUseResult(serviceResponse: ServiceResponse) {
-        var termsofUseArgs: TermsofUseArgs = serviceResponse.Result;
-        if (!serviceResponse.HasError) {
-            if (termsofUseArgs) {
-                if (termsofUseArgs.IsTermOfUse) {
-                    this.LoadTermsOfUse(serviceResponse);
-                } else {
-                    this.checkSessionLocator();
-                }
-            }
-        } else {
-            this.LoadTermsOfUse(serviceResponse);
-        }
-    }
-    private LoadTermsOfUse(serviceResponse: ServiceResponse) {
-        //let isLogbox = ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1"
-        this.ClearLocation();
-        if (this.isPrivateLable == true) {
-            //&& !isLogbox) {
-            this.LoadPrivateLableTermsOfUseComponent(serviceResponse);
-        } else this.LoadTermsOfUsesStartup(serviceResponse);
-    }
-
-    private LoadTermsOfUsesStartup(serviceResponse: ServiceResponse) {
-        {
-            if (!serviceResponse.HasError) {
-                var termsofUseArgs: TermsofUseArgs = serviceResponse.Result;
-            } else {
-                this.ClearLocation();
-            }
-            SessionLocator.DynamicLoader.Load(
-                './InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent',
-                this.Child.Location
-            ).then((cmpRef) => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                if (!serviceResponse.HasError) {
-                    cmpRef.instance.Load(
-                        termsofUseArgs.PrivateLabelId,
-                        termsofUseArgs.Id,
-                        termsofUseArgs.VersionDocumentId
-                    );
-                } else {
-                    if (
-                        serviceResponse.ErrorsArray &&
-                        serviceResponse.ErrorsArray.length > 0
-                    ) {
-                        cmpRef.instance.LoadErrorMessage(
-                            serviceResponse.ErrorsArray[0]
-                        );
                     }
-                }
-                cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
-                    if ($event == 'Accept') {
-                        this.ViewHomeComponent();
-                    } else if ($event == 'Decline') {
+
+                    else {
                         this.SignOutCompleted();
                     }
                 });
             });
-        }
     }
 
-    private checkSessionLocator() {
-        if (
-            SessionLocator.IsExternalParams &&
-            SessionLocator.ExternalParams &&
-            SessionLocator.ExternalParams.Menu &&
-            SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == 'dapp' &&
-            IsMobileDetected() == true
-        ) {
-            this.ViewDeclarationApprovalComponent();
-        } else if (
-            SessionLocator.IsExternalParams &&
-            SessionLocator.ExternalParams &&
-            SessionLocator.ExternalParams.Menu &&
-            SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == 'preq' &&
-            IsMobileDetected() == true
-        ) {
-            this.ViewEComercePaymentRequestComponent();
-        } else if (
-            SessionLocator.IsExternalParams &&
-            SessionLocator.ExternalParams &&
-            SessionLocator.ExternalParams.Menu &&
-            SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == 'uid' &&
-            IsMobileDetected() == true
-        ) {
-            this.VieUserIdNumberMobileComponent();
-        } else {
-            this.ViewHomeComponent();
-        }
-    }
-
-    LoadPrivateLableTermsOfUseComponent(serviceResponse: ServiceResponse) {
-        if (!serviceResponse.HasError) {
-            var termsofUseArgs: TermsofUseArgs = serviceResponse.Result;
-        } else {
-            this.ClearLocation();
-        }
-
-        SessionLocator.DynamicLoader.Load(
-            './InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent',
-            this.Child.Location
-        ).then((cmpRef) => {
-            cmpRef.instance.ComponentRef = cmpRef;
-            if (!serviceResponse.HasError) {
-                cmpRef.instance.Load(
-                    termsofUseArgs.PrivateLabelId,
-                    termsofUseArgs.Id,
-                    termsofUseArgs.VersionDocumentId
-                );
-            } else {
-                if (
-                    serviceResponse.ErrorsArray &&
-                    serviceResponse.ErrorsArray.length > 0
-                ) {
-                    cmpRef.instance.LoadErrorMessage(
-                        serviceResponse.ErrorsArray[0]
-                    );
-                }
-            }
-            cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
-                if ($event == 'Accept') {
-                    this.ViewHomeComponent();
-                } else if ($event == 'Decline') {
-                    this.SignOutCompleted();
-                }
-            });
-        });
-    }
-
-    SignOutCompleted() {
-        var loginService = new LoginService();
-        loginService.GetSignOut().subscribe((res: any) => { });
-
-        window.sessionStorage.setItem('userdata', 'SignOut');
-        SessionLocator.ClearLocalStorage();
-        SessionLocator.IsSiguOut = true;
-        SessionInfo.LoggedUserEmail = '';
-        SessionInfo.LoggedUserId = '';
-        SessionInfo.Token = '';
+    ViewDeclarationApprovalComponent() {
 
         this.ClearLocation();
-        this.BackToLoginPage();
+
+        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/PrivateLabelApprovebyMobileComponent", this.location)
+            .then(cmpRef => {
+                cmpRef.instance.RunComponent();
+
+                //cmpRef.instance.SignoutCompleted.subscribe(s => {
+                //    if (s == "Block") {
+                //        this.LoadBlockingScreen();
+
+                //    }
+
+                //    else {
+                //        this.SignOutCompleted();
+                //    }
+                //});
+            });
+    }
+    ViewEComercePaymentRequestComponent() {
+
+        this.ClearLocation();
+
+        SessionLocator.DynamicLoader.Load("./ShipmentModules/ShipmentLogBox/Components/Logbox/ECommercePaymentRequestMobileComponent", this.location)
+            .then(cmpRef => {
+                cmpRef.instance.RunComponent();
+
+                //cmpRef.instance.SignoutCompleted.subscribe(s => {
+                //    if (s == "Block") {
+                //        this.LoadBlockingScreen();
+
+                //    }
+
+                //    else {
+                //        this.SignOutCompleted();
+                //    }
+                //});
+            });
+    }
+
+    OnLoginCompleted(Param: any = null) {
+        
+        if (Param == "IgnoreTerms") {
+            this.ViewEComercePaymentRequestComponent();
+            return;
+        }
+        this._FinishLogin = true;
+        var termsofUseService = new TermsofUseService();
+        termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe(res => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult: TermsofUseArgs = pmResponse.Result;
+                if (myResult) {
+                    if (myResult.IsTermOfUse) {
+                        this.ClearLocation();
+                        if (this.isDSV == true) {
+                            SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.location)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Load(myResult.Version);
+                                    cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
+
+                                        if ($event == "Accept") {
+                                            this.ViewHomeComponent();
+                                        }
+
+                                        else if ($event == "Decline") {
+                                            this.SignOutCompleted();
+                                        }
+                                    });
+                                });
+                        }
+                        else {
+                            SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.location)
+                                .then(cmpRef => {
+                                    cmpRef.instance.ComponentRef = cmpRef;
+                                    cmpRef.instance.Load(myResult.Version);
+                                    cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
+
+                                        if ($event == "Accept") {
+                                            this.ViewHomeComponent();
+                                        }
+
+                                        else if ($event == "Decline") {
+                                            this.SignOutCompleted();
+                                        }
+                                    });
+                                });
+                        } 
+                    }
+
+                    else {
+                        if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "dapp" && IsMobileDetected() == true) {
+                            this.ViewDeclarationApprovalComponent();
+                        }
+                        else if (SessionLocator.IsExternalParams && SessionLocator.ExternalParams && SessionLocator.ExternalParams.Menu && SessionLocator.ExternalParams.Menu.toLocaleLowerCase() == "preq" && IsMobileDetected() == true) {
+                            this.ViewEComercePaymentRequestComponent();
+                        }
+                        else {
+                            this.ViewHomeComponent();
+                        } 
+                    }
+                }
+            }
+        });
+    }
+    SignOutCompleted() {
+    
+        var loginService = new LoginService();
+        loginService.GetSignOut().subscribe(res => {
+
+        });
+
+        window.sessionStorage.setItem("userdata", "SignOut");
+        SessionLocator.ClearLocalStorage();
+        SessionLocator.IsSiguOut = true;
+        SessionInfo.LoggedUserEmail = "";
+        SessionInfo.LoggedUserId = "";
+        SessionInfo.Token = "";
+
+        this.ClearLocation();
+        document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+
+
+
 
         //SignOutAut
 
-        //window.sessionStorage.setItem("Token", "");
-    }
+      
 
-    private BackToLoginPage() {
-        if (
-            window.sessionStorage.getItem('IsSharedLogistics') == 'true' &&
-            !AppTool.IsNullOrEmpty(SessionInfo.LoggedUserTenant)
-        ) {
-            document.location.href =
-                ServiceHelper.GetLogitudeURL() +
-                '?tenant=' +
-                SessionInfo.LoggedUserTenant;
-        } else {
-            document.location.href =
-                ServiceHelper.GetLogitudeURL() + 'Login.aspx';
-        }
-    }
-    private clearAppData() {
-        localStorage.clear();
-        sessionStorage.clear();
-        if ('caches' in window) {
-            caches.keys().then((names) => {
-                names.forEach((name) => caches.delete(name));
-            });
-        }
+        //window.sessionStorage.setItem("Token", "");
+
     }
 }

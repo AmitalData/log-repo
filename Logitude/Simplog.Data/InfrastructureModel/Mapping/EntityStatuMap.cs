@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -42,9 +42,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
-            this.Property(t => t.EntityStatusTypeCode)
-                .HasMaxLength(3)
-                .IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("EntityStatus");
@@ -57,17 +54,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.DisplayName).HasColumnName("DisplayName");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
-            this.Property(t => t.StatusLocalWeight).HasColumnName("StatusLocalWeight");
-            this.Property(t => t.EntityStatusTypeCode).HasColumnName("EntityStatusTypeCode");
-            this.Property(t => t.AllowPartial).HasColumnName("AllowPartial");
-            this.Property(t => t.IsDigitalPortal).HasColumnName("IsDigitalPortal");
-            
             // Relationships
             //this.HasRequired(t => t.ObjectTable)
             //    .WithMany(t => t.EntityStatus)
             //    .HasForeignKey(d => d.ObjectTableId);
-            this.HasOptional(t => t.EntityStatusType).WithMany().HasForeignKey(d => d.EntityStatusTypeCode);
 
         }
     }

@@ -8,7 +8,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TaxDeductionReportLogTabComponent.html'
 })
 

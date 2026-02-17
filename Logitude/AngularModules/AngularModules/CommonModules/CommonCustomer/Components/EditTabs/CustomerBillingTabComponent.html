@@ -1,41 +1,14 @@
-<style>
-      :host ::ng-deep div ng-component div div div{
-        margin-bottom: 0px !important;
-    }
-</style>
+
 <div class="TabHolder">
     <table>
-        <tr *ngIf="IsBlockMessageVisible" style="height: 1px;">
-            <td>
-                <div class="OrangeInfo" style="margin: 5px;">
-                    <label class="Value">{{ObjectTableName}} connected to Unifreight, updates allowed from Unifreight
-                        only</label>
-                </div>
-            </td>
-        </tr>
         <tr class="TabTitleRow">
             <td>{{'Customer.TH.Billing' | TextCodeTranslationPipe}}</td>
         </tr>
 
-        <tr style="height: 1px;" *ngIf="isDataLoaded">
+        <tr style="height: 1px;">
             <td>
                 <div style="width: 100%; position: relative;">
                     <div #BillingChild></div>
-                    <div >
-                        <table>
-                            <tr class="FormFieldRow">
-                                <td style="width: 190px;">
-                                    <LogLabel [ObjectFieldName]="'IsAutonomy'" [ObjectTableName]="'Card'"
-                                        [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogCheckBox [ObjectFieldName]="'IsAutonomy'" [Checked]="IsAutonomy"
-                                        [ObjectTableName]="'Card'" [DataContext]="DataContext">
-                                    </LogCheckBox>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
             </td>
         </tr>
@@ -98,21 +71,6 @@
                                     </td>
                                 </tr>
 
-                                <tr *ngIf="Profact4Enabled" class="FormFieldRow">
-                                    <td style="width: 140px;">
-                                        <LogLabel [ObjectFieldName]="'RegimenFiscalCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogLov [ObjectFieldName]="'RegimenFiscalCode'"
-                                                [SelectedValue]="RegimenFiscalCode"
-                                                [ObjectTableName]="ObjectTableName"
-                                                [DataContext]="DataContext"
-                                                [LookUpTableName]="'RegimenFiscal'">
-                                        </LogLov>
-                                    </td>
-                                </tr>
-
                                 <tr class="FormFieldRow">
                                     <td style="width: 140px;">
                                         <LogLabel [ObjectFieldName]="'SATForeignRFC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -120,16 +78,6 @@
 
                                     <td>
                                         <LogTextBox [ObjectFieldName]="'SATForeignRFC'" [Text]="SATForeignRFC" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-                                </tr>
-
-                                <tr *ngIf="Profact4Enabled" class="FormFieldRow">
-                                    <td style="width: 140px;">
-                                        <LogLabel [ObjectFieldName]="'SATCustomerName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'SATCustomerName'" [Text]="SATCustomerName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
                                 </tr>
 
@@ -214,7 +162,7 @@
                                     <td style="width: 1px;">
                                         <div class="Label">
                                             {{'Customer.F.BlockNewShipmentCreation' | TextCodeTranslationPipe}}
-                                        </div>
+                                        </div>                                       
                                     </td>
 
                                     <td style="width: 5px;">
@@ -230,20 +178,6 @@
                                     </td>
                                 </tr>
 
-                                <tr class="FormFieldRow" *ngIf="IsAccountingActivated">
-                                    <td style="width: 140px;">
-                                        <LogLabel [ObjectFieldName]="'InsuredcreditLimit'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="InsuredcreditLimit"></LogLabel>
-                                    </td>
-
-                                    <td style="width: 200px;">
-                                        <LogTextBox [ObjectFieldName]="'InsuredcreditLimit'" [Text]="InsuredcreditLimit" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
-                                </tr>
-                               
                                 <!-- Open Balance -->
                                 <tr class="FormFieldRow">
                                     <td>
@@ -349,22 +283,10 @@
                                         <div></div>
                                     </td>
                                 </tr>
-
-                               
-                                
-
                             </table>
                         </td>
                     </tr>
                 </table>
-            </td>
-        </tr>
-
-        <tr style="height: 1px;">
-            <td>
-                <div style="width: 100%; position: relative;">
-                    <div class="LocationDirective" #ARInvoiceDocumentTypeTemplateArea></div>
-                </div>
             </td>
         </tr>
 

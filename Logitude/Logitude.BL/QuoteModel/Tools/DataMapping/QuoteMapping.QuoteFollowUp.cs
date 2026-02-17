@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Logitude.BL.QuoteModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.QuoteModel.Tools.DataMapping
 {
@@ -26,7 +26,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.DocumentsFilingId = itemPM.ExternalDocumentId;
             itemPoco.InternalDocumentId = itemPM.InternalDocumentId;
             itemPoco.LegType = itemPM.LegType;
-            itemPoco.Notes = itemPM.Notes;
+            itemPoco.Notes = itemPM.Note;
             itemPoco.EventTypeId = itemPM.EventTypeId;
             itemPoco.OwnerUserId = itemPM.OwnerUserId;
             itemPoco.DocumentTypeId = itemPM.DocumentTypeId;

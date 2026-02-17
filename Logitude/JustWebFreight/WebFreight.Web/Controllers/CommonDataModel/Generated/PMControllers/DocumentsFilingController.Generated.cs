@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,57 +26,55 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.SystemLogs;
-
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
-{
+{ 
 
-
+    
     public partial class DocumentsFilingsController : ApiController
     {
-
-
+	  
+       
         public HttpResponseMessage GetSingle(string id)
         {
-            try
+		  try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
+			    string logKey = PerformanceLogger.LogCurrentTime();
+			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 SecurityUtility.CheckContactFeature("DocumentsFiling", "READ", authToken.Tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
                 DocumentsFilingPM documentsFilingPM = documentsFilingQuery.GetSinglePM(id, authToken.Tenant);
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                
+				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, documentsFilingPM);
-
-            }
+			 
+			}
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
+           
         }
 
-
-
+         
+		
 
         public HttpResponseMessage Post(DocumentsFilingPM entityPM)
         {
@@ -92,11 +90,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("DocumentsFiling", "NEW", authToken.Tenant);
                         SecurityUtility.AuthenticationOnEntityTenant("DocumentsFiling", entityPM.Tenant, authToken.Tenant);
-
+                
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         DocumentsFilingService service = new DocumentsFilingService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
-
+				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DocumentsFiling", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
@@ -120,12 +118,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-        static Dictionary<string, DateTime> UpdatedDocumentsFilingEntites = new Dictionary<string, DateTime>();
-        static Dictionary<string, int> UpdatedDocumentsFilingEntitesCounter = new Dictionary<string, int>();
 
 
         public HttpResponseMessage Put(DocumentsFilingPM entityPM)
@@ -135,33 +131,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 try
                 {
                     string logKey = PerformanceLogger.LogCurrentTime();
-                    if (UpdatedDocumentsFilingEntites.ContainsKey(entityPM.Id))
-                    {
-                        if (UpdatedDocumentsFilingEntitesCounter.ContainsKey(entityPM.Id))
-                        {
-                            UpdatedDocumentsFilingEntitesCounter[entityPM.Id]++;
-                            DateTime lastEntityUpdate = UpdatedDocumentsFilingEntites[entityPM.Id];
-                            TimeSpan ts = DateTime.Now - lastEntityUpdate;
-                            if (ts.TotalSeconds < 5 && UpdatedDocumentsFilingEntitesCounter[entityPM.Id] > 1)
-                            {
-                                Exception e = new Exception("Duplicate update for enitiy " + entityPM.Id);
-                                APIException aPIException = ApiExceptionBuilder.BuildException(e);
-                                ExceptionHandler.HandleException(new Exception("Duplicate update for enitiy " + entityPM.Id + " Tenant:" + entityPM.Tenant), DateTime.Now, 0, null, "Duplicate update for enitiy" + entityPM.Id + " Tenant:" + entityPM.Tenant, null, System.Environment.MachineName);
-
-                                return Request.CreateResponse(HttpStatusCode.BadRequest, aPIException);
-                            }
-                        }
-                    }
-                    UpdatedDocumentsFilingEntites[entityPM.Id] = DateTime.Now;
-                    if (UpdatedDocumentsFilingEntitesCounter.ContainsKey(entityPM.Id))
-                    {
-                        if (UpdatedDocumentsFilingEntitesCounter[entityPM.Id] > 1)
-                            UpdatedDocumentsFilingEntitesCounter[entityPM.Id] = 0;
-                    }
-                    else
-                    {
-                        UpdatedDocumentsFilingEntitesCounter[entityPM.Id] = 0;
-                    }
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
@@ -180,7 +149,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         {
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
-
+                
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         DocumentsFilingService service = new DocumentsFilingService(MyContext, entityPM.Tenant);
                         service.Update(entityPM, true);
@@ -209,7 +178,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                 }
             }
             else
-            {
+            { 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
@@ -218,18 +187,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
         public void Delete(int id)
         {
         }
+	    
 
 
+		
+          
+			
+			 
+		  
+        
 
-
-
-
-
-
-
-
-
-
-
+		
+			 		
+      
     }
 }
+	 

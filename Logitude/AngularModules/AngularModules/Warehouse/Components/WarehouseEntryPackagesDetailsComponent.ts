@@ -20,13 +20,11 @@ import {PackageTypeListService} from '../../Common/Services/StandardLists/Packag
 import {ClassLevelValidator} from '../../Infrastructure/Validators/ClassLevelValidator';
 import {ObservableCollection} from '../../Infrastructure/Utilities/ObservableCollection';
 import {WarehouseEntryPackageItem} from '../../Warehouse/Components/AddEditWarehouseEntryPackagesAndContainers';
-import { isNullOrUndefined } from 'util';
-import { ShipmentPMService } from '../../Shipment/Services/StandardPMs/ShipmentPMService';
 
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'WarehouseEntryPackagesDetailsComponent',
     templateUrl: './WarehouseEntryPackagesDetailsComponent.html',
 
@@ -43,7 +41,6 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     WarehouseEntryPackagesLists: WarehouseEntryPackagePM[] = [];
     SelectedWarehouseEntryPackage: WarehouseEntryPackagePM;
     warehouseEntryPM: WarehouseEntryPM;
-    IsCancelled: boolean = false;
     ObjectTableName: string = "WarehouseEntryPM";
     VolumeLabel: string;
     GrossWeightLabel: string;
@@ -58,21 +55,17 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
     IsNewEntity: boolean = false;
     public ItemsSource: ObservableCollection;
     IsEditMode: boolean = false;
-    IsCFSWarehouse: boolean = false;
     IsFromFullWarehouseEntryComponent: boolean = false;
 
     myPackageTypeService: PackageTypeListService;
-    shipmentPMService: ShipmentPMService;
     savedItems: WarehouseEntryPackagePM[] = [];
 
     ShowAddPackageButton: boolean = false;
-    DisableAddPackageButton: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myPackageTypeService = new PackageTypeListService();
-        this.shipmentPMService = new ShipmentPMService();
         this.ItemsSource = new ObservableCollection([]);
 
     }
@@ -92,7 +85,6 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
         this.IsEditMode = args.IsEditMode;
         this.ShowPackageSummary = args.ShowPackageSummary;
         this.ShowAddPackageButton = args.ShowAddPackageButton;
-        this.IsCFSWarehouse = args.IsCFSWarehouse;
         if (!this.IsEditMode) {
             this.ShowAddPackageButton = true;
         }
@@ -260,7 +252,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
 
@@ -280,22 +272,6 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
     }
 
-    OnQuantityChange(item: any) {
-        this.OnQuantityLostFocus(item.Quantity, item.EntityPM.ShipmentPackageId);
-    }
-
-    OnQuantityLostFocus(quantity: any, shipmentPackageId: any) {
-        if (this.warehouseEntryPM.DirectionId == "I") {
-            this.WarehouseEntryPackagesLists.filter(entryPackage => {
-                if (entryPackage.ShipmentPackageId == shipmentPackageId) {
-                    if (entryPackage.OldQuantity < quantity)
-                        entryPackage.OverManifest = quantity - entryPackage.OldQuantity;
-                    else entryPackage.OverManifest = 0;
-                    this.CurrentSession.FireEvent({ Name: 'QuantityChanged', DataContext: this.DataContext })
-                }
-            });
-        }
-    }
 
     private ComputeGrossWeigh_Kg_Ton() {
 
@@ -422,13 +398,10 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
  
     Start(args) {
         this.warehouseEntryPM = args.WarehouseEntryPM;
-        this.IsCancelled = this.warehouseEntryPM.StatusCode == "CAEA" ? true : false;
         this.ViewModelTrigger = args.ViewModelTrigger;
         
         if (this.warehouseEntryPM) {
-            if (this.warehouseEntryPM.DirectionId == "I" && !AppTool.IsNullOrEmpty(this.warehouseEntryPM.ConnectedTo)) {
-                this.DisableAddPackageButton = true;
-            }
+
             if (this.warehouseEntryPM.Ratio == null) {
                 var isDirty = this.warehouseEntryPM.IsDirty;
                 this.warehouseEntryPM.Ratio = AppTool.GetRatio(this.warehouseEntryPM.DirectionId, this.warehouseEntryPM.TransportModeId, this.warehouseEntryPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
@@ -443,7 +416,7 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
 
             //SetDefultPackage
 
-            if (this.warehouseEntryPM.WarehouseEntryPackages.length == 0 && this.warehouseEntryPM.DirectionId != 'I') {
+            if (this.warehouseEntryPM.WarehouseEntryPackages.length == 0) {
                 var i = 0;
                 while (i < 5) {
                     var warehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
@@ -500,21 +473,9 @@ export class WarehouseEntryPackagesDetailsComponent extends BaseComponent implem
             });
         }
 
-        if (isNullOrUndefined(this.IsCFSWarehouse) && !AppTool.IsNullOrEmpty(this.warehouseEntryPM.ConnectedTo)) {
-            if (!AppTool.IsNullOrEmpty(this.warehouseEntryPM.ShipmentId)) {
-                this.shipmentPMService.CheckIsCFSShipmentById(this.warehouseEntryPM.ShipmentId).subscribe((Response: ServiceResponse) => {
-                    if (!Response.HasError) {
-                        this.IsCFSWarehouse = Response.Result;
-                        this.BuildItemsSource();
-                        this.ComputeAndFullTotalPackage(true);
-                    }
-                });
-            }
-        }
-        else {
-            this.BuildItemsSource();
-            this.ComputeAndFullTotalPackage(true);
-        }
+  
+        this.BuildItemsSource();
+        this.ComputeAndFullTotalPackage(true);
     }
 
 

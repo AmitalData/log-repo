@@ -1,5 +1,4 @@
 ﻿using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +25,15 @@ namespace WebFreight.Web
 
                 if (string.IsNullOrEmpty(myPartner))
                 {
-                    if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox))
+                    if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && (LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1" || LogitudeSettings.DeploymentStage.ToLower() == "test2"))
                     {
                         myPartner = "logbox";
                     }
-                    else myPartner = "logitude";
-                    if (LogitudeSettings.WorkEnvironment == "cloud") myPartner = "cloud";
+                    else
+                    {
+
+                        myPartner = "logitude";
+                    }
                 }
 
                 else

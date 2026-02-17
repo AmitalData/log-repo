@@ -11,8 +11,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int FailedQueue { get; set; }
       
         public int WaitingQueue { get; set; }
-        public int HybridWaitingQueue { get; set; }
-        public int HybridFailedQueue { get; set; }
 
         public string LastUpdateDateTimeTextColor { get; set; }
         public string WaitingQueueTextColor { get; set; }
@@ -23,9 +21,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
         public DateTime LastUpdateDateTime { get; set; }
         public DateTime? LastQueueDateTime { get; set; }
-
-        public string VersionNumber { get; set; }
-        public DateTime? VersionDate { get; set; }
-
     }
 }

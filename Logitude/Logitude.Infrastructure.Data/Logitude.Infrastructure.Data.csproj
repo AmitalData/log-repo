@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,21 +9,19 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Infrastructure.Data</RootNamespace>
     <AssemblyName>Logitude.Infrastructure.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,77 +29,44 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -114,121 +78,68 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomFilters\TeamCustomFilter.cs" />
-    <Compile Include="EntityKeys\AuditLogKeys.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionKeys.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionStatusKeys.cs" />
-    <Compile Include="EntityKeys\BIFoldersPermissionKeys.cs" />
     <Compile Include="EntityKeys\BIReportFolderKeys.cs" />
     <Compile Include="EntityKeys\BIReportKeys.cs" />
     <Compile Include="EntityKeys\BIReportsExecutionLogKeys.cs" />
     <Compile Include="EntityKeys\BIReportsTypeKeys.cs" />
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
-    <Compile Include="EntityKeys\ContainerSettingKeys.cs" />
-    <Compile Include="EntityKeys\DigitalFieldSecurityKeys.cs" />
-    <Compile Include="EntityKeys\DigitalPortalLanguageKeys.cs" />
-    <Compile Include="EntityKeys\DigitalPortalScreenKeys.cs" />
-    <Compile Include="EntityKeys\DigitalPreDefinedComponentKeys.cs" />
-    <Compile Include="EntityKeys\DigitalProfileKeys.cs" />
-    <Compile Include="EntityKeys\DigitalTextCodeKeys.cs" />
     <Compile Include="EntityKeys\FeatureToggleKeys.cs" />
-    <Compile Include="EntityKeys\LastRunDetailKeys.cs" />
     <Compile Include="EntityKeys\LBPTeamMemberKeys.cs" />
-    <Compile Include="EntityKeys\PriceStepKeys.cs" />
-    <Compile Include="EntityKeys\SatisfactionSurveyKeys.cs" />
+    <Compile Include="EntityKeys\PriceStepsKeys.cs" />
     <Compile Include="EntityKeys\SharedLogisticsSettingKeys.cs" />
     <Compile Include="EntityKeys\TeamKeys.cs" />
     <Compile Include="EntityKeys\TeamMemberBusinessRoleKeys.cs" />
     <Compile Include="EntityKeys\ToggleKeys.cs" />
-    <Compile Include="EntityListQueryServices\AuditLogListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionStatusListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\BIFoldersPermissionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportFolderListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportsExecutionLogListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportsTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ContainerSettingListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DigitalFieldSecurityListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DigitalPortalLanguageListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DigitalPortalScreenListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DigitalPreDefinedComponentListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DigitalProfileListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DigitalTextCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FeatureToggleListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\Generated\AuditLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionStatusListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\BIFoldersPermissionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportFolderListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportsExecutionLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportsTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ContainerSettingListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DigitalFieldSecurityListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DigitalPortalLanguageListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DigitalPortalScreenListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DigitalPreDefinedComponentListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DigitalProfileListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DigitalTextCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureToggleListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\LastRunDetailListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LBPTeamMemberListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\PriceStepListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\SatisfactionSurveyListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PriceStepsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamMemberBusinessRoleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ToggleListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\LastRunDetailListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LBPTeamMemberListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\PriceStepListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\SatisfactionSurveyListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PriceStepsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SharedLogisticsSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamMemberBusinessRoleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ToggleListQueryService.cs" />
-    <Compile Include="EntityLists\Generated\AuditLogList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionStatusList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\BIFoldersPermissionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportFolderList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportsExecutionLogList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportsTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ContainerSettingList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DigitalFieldSecurityList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DigitalPortalLanguageList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DigitalPortalScreenList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DigitalPreDefinedComponentList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DigitalProfileList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DigitalTextCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FeatureToggleList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\LastRunDetailList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LBPTeamMemberList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\PriceStepList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\SatisfactionSurveyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PriceStepsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SharedLogisticsSettingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
-    <Compile Include="EntityMapping\AuditLogMap.cs" />
-    <Compile Include="EntityMapping\ContainerSettingMap.cs" />
-    <Compile Include="EntityMapping\DigitalFieldSecurityMap.cs" />
-    <Compile Include="EntityMapping\DigitalPortalLanguageMap.cs" />
-    <Compile Include="EntityMapping\DigitalPortalScreenMap.cs" />
-    <Compile Include="EntityMapping\DigitalPreDefinedComponentMap.cs" />
-    <Compile Include="EntityMapping\DigitalProfileMap.cs" />
-    <Compile Include="EntityMapping\DigitalTextCodeMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
-    <Compile Include="EntityMapping\BIFoldersPermissionMap.cs" />
     <Compile Include="EntityMapping\BIReportFolderMap.cs" />
     <Compile Include="EntityMapping\BIReportMap.cs" />
     <Compile Include="EntityMapping\BIReportsExecutionLogMap.cs" />
@@ -236,120 +147,74 @@
     <Compile Include="EntityMapping\BusinessProcessQueueMap.cs" />
     <Compile Include="EntityMapping\BusinessRoleMap.cs" />
     <Compile Include="EntityMapping\FeatureToggleMap.cs" />
-    <Compile Include="EntityMapping\LastRunDetailMap.cs" />
     <Compile Include="EntityMapping\LBPTeamMemberMap.cs" />
-    <Compile Include="EntityMapping\PriceStepMap.cs" />
-    <Compile Include="EntityMapping\SatisfactionSurveyMap.cs" />
+    <Compile Include="EntityMapping\PriceStepsMap.cs" />
     <Compile Include="EntityMapping\SharedLogisticsSettingMap.cs" />
     <Compile Include="EntityMapping\TeamMap.cs" />
     <Compile Include="EntityMapping\TeamMemberBusinessRoleMap.cs" />
     <Compile Include="EntityMapping\ToggleMap.cs" />
-    <Compile Include="EntityPOCOs\AuditLog.cs" />
     <Compile Include="EntityPOCOs\BatchTaskExecution.cs" />
     <Compile Include="EntityPOCOs\BatchTaskExecutionStatus.cs" />
-    <Compile Include="EntityPOCOs\BIFoldersPermission.cs" />
     <Compile Include="EntityPOCOs\BIReport.cs" />
     <Compile Include="EntityPOCOs\BIReportFolder.cs" />
     <Compile Include="EntityPOCOs\BIReportsExecutionLog.cs" />
     <Compile Include="EntityPOCOs\BIReportsType.cs" />
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
-    <Compile Include="EntityPOCOs\ContainerSetting.cs" />
-    <Compile Include="EntityPOCOs\DigitalFieldSecurity.cs" />
-    <Compile Include="EntityPOCOs\DigitalPortalLanguage.cs" />
-    <Compile Include="EntityPOCOs\DigitalPortalScreen.cs" />
-    <Compile Include="EntityPOCOs\DigitalPreDefinedComponent.cs" />
-    <Compile Include="EntityPOCOs\DigitalProfile.cs" />
-    <Compile Include="EntityPOCOs\DigitalTextCode.cs" />
     <Compile Include="EntityPOCOs\FeatureToggle.cs" />
-    <Compile Include="EntityPOCOs\IndexerWaterMark.cs" />
-    <Compile Include="EntityPOCOs\LastRunDetail.cs" />
     <Compile Include="EntityPOCOs\LBPTeamMember.cs" />
-    <Compile Include="EntityPOCOs\PriceStep.cs" />
-    <Compile Include="EntityPOCOs\SatisfactionSurvey.cs" />
+    <Compile Include="EntityPOCOs\PriceSteps.cs" />
     <Compile Include="EntityPOCOs\SharedLogisticsSetting.cs" />
     <Compile Include="EntityPOCOs\Team.cs" />
     <Compile Include="EntityPOCOs\TeamMemberBusinessRole.cs" />
     <Compile Include="EntityPOCOs\Toggle.cs" />
-    <Compile Include="ExtendedServices\AvailableForSchedulingBIReportService.cs" />
     <Compile Include="IInfrastructureContext.cs" />
     <Compile Include="InfrastructureContext.cs" />
-    <Compile Include="Models\AuditLog\FieldChange.cs" />
-    <Compile Include="Models\BIReportsFilterArguments.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repsitories\AuditLogRepository.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionRepository.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionStatusRepository.cs" />
-    <Compile Include="Repsitories\BIFoldersPermissionRepository.cs" />
     <Compile Include="Repsitories\BIReportFolderRepository.cs" />
     <Compile Include="Repsitories\BIReportRepository.cs" />
     <Compile Include="Repsitories\BIReportsExecutionLogRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
-    <Compile Include="Repsitories\ContainerSettingRepository.cs" />
-    <Compile Include="Repsitories\DigitalFieldSecurityRepository.cs" />
-    <Compile Include="Repsitories\DigitalPortalLanguageRepository.cs" />
-    <Compile Include="Repsitories\DigitalPortalScreenRepository.cs" />
-    <Compile Include="Repsitories\DigitalPreDefinedComponentRepository.cs" />
-    <Compile Include="Repsitories\DigitalProfileRepository.cs" />
-    <Compile Include="Repsitories\DigitalTextCodeRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
-    <Compile Include="Repsitories\Generated\AuditLogRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionStatusRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\BIFoldersPermissionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportFolderRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportsExecutionLogRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportsTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ContainerSettingRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DigitalFieldSecurityRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DigitalPortalLanguageRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DigitalPortalScreenRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DigitalPreDefinedComponentRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DigitalProfileRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DigitalTextCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FeatureToggleRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\LastRunDetailRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LBPTeamMemberRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\PriceStepRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\SatisfactionSurveyRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PriceStepsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SharedLogisticsSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamMemberBusinessRoleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ToggleRepository.Generated.cs" />
-    <Compile Include="Repsitories\LastRunDetailRepository.cs" />
     <Compile Include="Repsitories\LBPTeamMemberRepository.cs" />
-    <Compile Include="Repsitories\PriceStepRepository.cs" />
-    <Compile Include="Repsitories\SatisfactionSurveyRepository.cs" />
+    <Compile Include="Repsitories\PriceStepsRepository.cs" />
     <Compile Include="Repsitories\SharedLogisticsSettingRepository.cs" />
     <Compile Include="Repsitories\TeamMemberBusinessRoleRepository.cs" />
     <Compile Include="Repsitories\TeamRepository.cs" />
     <Compile Include="Repsitories\ToggleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.DashboardModule.Data\Logitude.DashboardModule.Data.csproj">
-      <Project>{156bdc54-4d7d-4964-9b48-c0b86b571de9}</Project>
-      <Name>Logitude.DashboardModule.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{ACC2EA9E-E150-4099-8AA1-66326AB14BE8}</Project>
@@ -357,14 +222,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

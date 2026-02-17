@@ -107,38 +107,6 @@
                         </td>
                     </tr>
 
-                    <!-- Token Expiration Time -->
-                    <tr class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'TokenExpirationTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <table>
-                                <tr>
-                                    <td style="width: 100px;">
-                                        <LogTextBox [ObjectFieldName]="'TokenExpirationTime'" [Text]="TokenExpirationTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                    </td>
-                                    <td style="width: 5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width: 140px;">
-                                        <span class="Value">Hours</span>
-                                    </td>
-
-                                    <td style="width:36px;">
-                                        <div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
-
                     <!-- CreateDate -->
                     <tr class="FormFieldRow" *ngIf="!IsNewEntity">
                         <td>
@@ -203,27 +171,30 @@
 
 
                     <!--<tr class="FormFieldRow" >
-        <td>
-            <LogLabel [ObjectFieldName]="'ComputingPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-        </td>
+                        <td>
+                            <LogLabel [ObjectFieldName]="'ComputingPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
 
-        <td>
-            <div style="width:250px">
-                <LogLov [ObjectFieldName]="'ComputingPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'"></LogLov>
-            </div>
+                        <td>
+                            <div style="width:250px">
+                                <LogLov [ObjectFieldName]="'ComputingPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [LookUpTableName]="'ComputingPartner'"></LogLov>
+                            </div>
+                           
+                        </td>
 
-        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>-->
 
-        <td>
-            <div></div>
-        </td>
-    </tr>-->
+
+
                     <!--<tr class="FormFieldRow" style="vertical-align:top">
-        <td style="width:5px"><div></div></td>
-        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'DocumentTypeCategoryCode'" [Text]="'Category'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
-        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'DocumentTypeCategoryCode'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM" [LookUpTableName]="'DocumentTypeCategory'"></LogLov></td>
-        <td><div></div></td>
-    </tr>-->
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'DocumentTypeCategoryCode'" [Text]="'Category'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:230px"><LogLov style="width:230px" [LogitudeForm]="myForm" [ObjectFieldName]="'DocumentTypeCategoryCode'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM" [LookUpTableName]="'DocumentTypeCategory'"></LogLov></td>
+                        <td><div></div></td>
+                    </tr>-->
                     <tr>
                         <td colspan="3">
                             <div></div>

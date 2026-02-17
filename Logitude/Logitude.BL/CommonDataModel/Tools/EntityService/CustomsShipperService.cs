@@ -9,7 +9,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -22,8 +22,6 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -105,13 +103,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "CustomsShipper", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomsShipperPM> { entityPM }.Cast<object>().ToList() }).Update();
 
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (!LogitudeSettings.IsCostomsDeploy)
-                {
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-                }
                 scope.Complete();
             }
    
@@ -150,15 +142,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 cardRepository.Update(entityCard);
                 entityRepository.Update(entityPOCO);
                 entityRepository.SubmitChanges();
-                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "CustomsShipper", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomsShipperPM> { entityPM }.Cast<object>().ToList() }).Update();
 
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "CustomsShipper");
                 TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-                string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-                if (!LogitudeSettings.IsCostomsDeploy)
-                {
-                    RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-                }
                 scope.Complete();
             }
         }
@@ -242,7 +228,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-           
         }
 
         

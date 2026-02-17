@@ -6,7 +6,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Azure;
@@ -38,8 +38,6 @@ using Logitude.Customs.Def.ClosedTable;
 using Logitude.Server.Tools.Models;
 using System.ComponentModel;
 using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
-using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -90,12 +88,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public MessagingServiceBase()
         {
-            string cmd= Environment.CommandLine ?? "";
-            if (!cmd.Contains("AmitalCustomsWindowsService"))
-            //if (CurrentCustomsCommandWR == null)
-            {
-                LogMessagingUtil.Instance.Clear();
-            }
+            LogMessagingUtil.Instance.Clear();
             _swMessagingServiceBase = Stopwatch.StartNew(); 
             MessagingServiceFactoryHelper.InitContainer();
             var interfaceCode = this.MainInterfaceCode;//may raise NotImplementedException
@@ -191,8 +184,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             
             Stopwatch totalStopwatch = null;
 
-            InitDef();
-            this.RequestParams = requestParams;
+            InitDef(); this.RequestParams = requestParams;
             if (customsRequestCalc == null)
             {
                 if (true
@@ -276,12 +268,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return;
             }
             var interfaceCode = this.MainInterfaceCode;//may raise NotImplementedException
-            int tenant = SettingUtil.GetCurrentTenant();
-            var interfaceTypeQueryService = new InterfaceManagementQueryService(tenant);
+            var interfaceTypeQueryService = new InterfaceManagementQueryService(0);
             _MainMessageDefinition = interfaceTypeQueryService.GetSingle(interfaceCode, false, true);
         }
 
-        
+
 
 
         private void DoPreCallWSCompleteTrans(TRequestParams requestParams, TCustomsRequest customsRequest)
@@ -304,8 +295,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 _IIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
                 stopwatch.Stop();
-                scope.Complete();
                 LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:PreCallWS:Took:" + stopwatch.Elapsed.ToString());
+                scope.Complete();
                 LogMessagingUtil.Instance.AppendLine("RequestsSheetExternalId =" + this.RequestsSheetExternalId);
             }
         }
@@ -321,9 +312,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 var timeout = TimeSpan.FromMinutes(1);
                 var transactionScopeOption = TransactionScopeOption.Required;
-                if (this.MainInterfaceCode == "9000" || this.MainInterfaceCode == "8302" || this.MainInterfaceCode == "2715")
+                if (this.MainInterfaceCode == "9000")
                 {
-                    LogMessagingUtil.Instance.AppendLine("GetTransaction(timeout)=TimeSpan.FromMinutes(5)");
                     timeout = TimeSpan.FromMinutes(5);
                     //transactionScopeOption = TransactionScopeOption.Suppress;
                 }
@@ -441,8 +431,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:Start");
                     //throw new Exception("tst");
                     _ResponseService.Update(customsResponse, requestParams);
-				
-					stopwatch.Stop();
+                    stopwatch.Stop();
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:" + stopwatch.Elapsed.ToString());
                 }
                 catch (DbEntityValidationException ex)
@@ -748,11 +737,6 @@ Please instance and set MyResponseData ");
             foreach (var curException in exceptionList)
             {
                 errMessage += Environment.NewLine + curException.ExeptionDescription;//In Hebrew  
-
-                if (curException.ExeptionDescription.Contains("Please Contact ESB Administrator"))
-                {
-                    errMessage += "\n יש לפנות למוקד מלמ - שער עולמי טלפון 03-5312222 שלוחה 1";
-                }
             }
             throw new FaultException<UnifreightIIGFault>(
                     new UnifreightIIGFault(UnifreightIIGFault.PlaceFaultEnum.IIGBusinessError, errMessage));
@@ -824,60 +808,6 @@ Please instance and set MyResponseData ");
 
         }
 
-        private byte[] TaskSignItHSM(int tenant, TCustomsRequest customsRequest)
-        {
-            var sw = Stopwatch.StartNew();
-            byte[] bytesSignedSerilazeObject = null;
-            try
-            {
-                LogMessagingUtil.Instance.AppendLine("Must HSM Sign It");
-                //BuildRequestContentHeaderB4Sign(customsRequest);
-                
-                var xmlSerilazeObject = XmlGenericUtil<TCustomsRequest>.SerializeObject(customsRequest);
-                var bytesSerilazeObject = UTF8Encoding.UTF8.GetBytes(xmlSerilazeObject);
-
-                CustomsSettingQueryService settingService = new CustomsSettingQueryService(RequestParams.Tenant);
-                var setting = settingService.GetSettingByTenantN(RequestParams.Tenant);
-
-                var hSMSignFileService = new HSMSignFileService();
-
-                SignQueueByType signQueueByType = SignQueueByType.None;
-                string companypersonal = "";
-                Enum.TryParse<SignQueueByType>(RequestParams.SignQueueByCompanyOrPersonal, out signQueueByType);
-                switch (signQueueByType)
-                {
-
-                    case SignQueueByType.SignQueueByPersonId:
-                        companypersonal = "P";
-                        break;
-                    case SignQueueByType.SignQueueByCustomsAgentId:
-                    default:
-                        companypersonal = "C";
-                        break;
-                }
-                LogMessagingUtil.Instance.AppendLine(
-                    $"hSMSignFile({RequestParams.SignByPersonalId}, {companypersonal})");
-                bytesSignedSerilazeObject  = hSMSignFileService
-                    .SignCustomsRequest(
-                    RequestParams.Tenant, RequestParams.PBId,
-                    RequestParams.SignByPersonalId, companypersonal,
-                    setting.CustomsAgentId, bytesSerilazeObject, RequestParams?.HsmStationContext);
-
-
-
-            }
-            catch (Exception ex)
-            {
-                var msg = "HSM Sign service failed " + Environment.NewLine + ex.Message;
-                ex.GetType().GetField("_message", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(ex, msg);
-                throw ex;
-
-                //throw new Exception("Sign service failed ", e);
-            }
-            return bytesSignedSerilazeObject;
-
-        }
-
         private TCustomsRequest TaskCustomRequest(TRequestParams requestParams)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -887,19 +817,8 @@ Please instance and set MyResponseData ");
             {
                 _RequestService = new TRequestService();
             }
-            if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null) 
-            { 
-			    GeneralLockQueryService generalLockQueryService = new GeneralLockQueryService(requestParams.Tenant);
-			    var generalLock = generalLockQueryService.CheckIsLocked(requestParams.Tenant, "MessageInteractive", requestParams.LoggingUserId,requestParams.LoggingEntityId,requestParams.LoggingObjectTableId,true);
 
-			    if (generalLock != null)
-                {
-                    string message = $"The entity {generalLock.EntityId1} object {generalLock.ObjectTable1} is locked by {generalLock.UserName}";
-			    	LogMessagingUtil.Instance.AppendLine(message);
-			    	throw new Exception(message);
-			    }
-			}
-			TCustomsRequest customsRequest = _RequestService.GetRequest(requestParams);
+            TCustomsRequest customsRequest = _RequestService.GetRequest(requestParams);
             if (customsRequest == null) //itzik
             {
                 LogMessagingUtil.Instance.AppendLine("_RequestService.GetRequest(requestParams) return null ???!!!  ");

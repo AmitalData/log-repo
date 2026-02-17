@@ -1,8 +1,7 @@
 ﻿using Logitude.Server.Tools;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -15,7 +14,6 @@ using System.Text;
 using System.Web;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Security;
-using Simplog.Global.Data.GlobalModel;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -30,7 +28,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AzureLog.SaveLogsInStorage("( Token : " + token + " ) => this is the coming Token ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                AzureLog.SaveLogsInStorage("( Token : " + token + " ) => this is the coming Token ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
             }
             catch (Exception)
             {
@@ -38,31 +36,32 @@ namespace WebFreight.Web.WcfApi
             }
             if (string.IsNullOrEmpty(myEmail))
             {
-                //AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => HttpContext.Current.User.Identity.Name is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => HttpContext.Current.User.Identity.Name is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AzureLog.SaveLogsInStorage("( Token : " + token + " ) => myEmail is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                AzureLog.SaveLogsInStorage("( Token : " + token + " ) => myEmail is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(GlobalContext.GetContext());
+                    ICommonDataContext context = CommonDataContext.GetContext(0);
+                    AuthenticationTokenRepository tokenRep = new AuthenticationTokenRepository(context);
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     if (authToken != null)
                     {
-                        //AzureLog.SaveLogsInStorage("( authToken.Email : " + authToken.Email + " ) => authToken is not null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                        AzureLog.SaveLogsInStorage("( authToken.Email : " + authToken.Email + " ) => authToken is not null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                         myEmail = authToken.Email;
                         if (string.IsNullOrEmpty(myEmail))
                         {
-                            //AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => authToken.Email is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                            AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => authToken.Email is null or empty ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                         }
                     }
                     else
                     {
-                        //AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => authToken is null ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                        AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => authToken is null ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                     }
                 }
             }
             //else
             //{
-                //AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => authToken.Email is " + myEmail + " AuthOnTenant is Running", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => authToken.Email is " + myEmail + " AuthOnTenant is Running", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                 SecurityUtility.AuthenticationOnTenant(tenant);
             //}
 
@@ -72,8 +71,8 @@ namespace WebFreight.Web.WcfApi
                 {
                     SecurityUtility.CheckContactTableFeatures(featuresList, myEmail, tenant);
 
-                    //AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => CheckContactTableFeatures Done with No Problems. for Email => " + myEmail, "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
-                    //AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => CheckContactTableFeatures Results => ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                    AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => CheckContactTableFeatures Done with No Problems. for Email => " + myEmail, "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                    AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => CheckContactTableFeatures Results => ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
                     //foreach (var item in featuresList)
                     //{
                     //    AzureLog.SaveLogsInStorage("( " + item.FeatureCode + " " + item.ObjectTableName + " HasAccess => " + item.HasAccess + " ) ", "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
@@ -95,7 +94,7 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
 
-                //AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => Exception " + response.ErrorMessage , "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
+                AzureLog.SaveLogsInStorage("( Tenant : " + tenant + " ) => Exception " + response.ErrorMessage , "P", DateTime.Now, "", "", 0, "", "FeatureWcfService", null);
 
 
                 return null;

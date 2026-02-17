@@ -4,11 +4,11 @@ using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -114,15 +114,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
-        }
-
-        public void Delete(BusinessHourPM entityPM)
-        {
-            this.isNewEntity = false;
-            this.entityPm = entityPM;
-            this.Poco = entityRepository.GetSingleBusinessHours(entityPM.Id, entityPm.Tenant);
-            entityRepository.Remove(Poco);
-            entityRepository.SubmitChanges();
         }
 
         private void UpdateBusinessHoursHolidayCollection()

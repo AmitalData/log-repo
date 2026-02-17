@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return Context; }
         }
 
-
+        public VatMandatoryTypeRepository()
+        {
+            this.Context = new CommonDataContext();
+        }
 
         public VatMandatoryTypeRepository(int tenant)
         {
@@ -32,11 +35,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return context.VatMandatoryTypes;
         }
-        public IQueryable<VatMandatoryType> GetVatMandatoryType()
-        {
-            return context.VatMandatoryTypes;
-        }
-        
         public IQueryable<VatMandatoryType> GetAll()
         {
             return context.VatMandatoryTypes;

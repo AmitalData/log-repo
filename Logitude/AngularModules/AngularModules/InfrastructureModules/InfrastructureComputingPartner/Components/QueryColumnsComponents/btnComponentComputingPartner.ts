@@ -3,7 +3,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ContactListService} from '../../../../Common/Services/StandardLists/ContactListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 @Component({
-    
+    moduleId: module.id,
     selector: 'btnComponentComputingPartner',
     templateUrl: './btnComponentComputingPartner.html',
 })
@@ -14,12 +14,12 @@ export class btnComponentComputingPartner   {
     MoreDetails() {
         var ServiceContact: ContactListService = new ContactListService();
         this.CurrentSession.StartBusyIndicatorLoading();
-        ServiceContact.getSingle(this.rowData.CreatedByUserId).subscribe((res:any) => {
+        ServiceContact.getSingle(this.rowData.CreatedByUserId).subscribe(res => {
             if (!res.HasError) {
                 if (res.Result != null)
                     this.rowData.CreatedByUserName = res.Result.EnglishName;
             }
-            ServiceContact.getSingle(this.rowData.UpdatedByUserId).subscribe((res:any) => {
+            ServiceContact.getSingle(this.rowData.UpdatedByUserId).subscribe(res => {
                 if (!res.HasError) {
                     if (res.Result != null)
                         this.rowData.UpdatedByUserName = res.Result.EnglishName;

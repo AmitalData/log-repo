@@ -3,12 +3,11 @@
         width:250px;
     }
 </style>
-<!-- <LogitudeHotKeysComponent  (SaveHotKey)="OnSaveHotKeyPressed()" 
- (ESCHotKey)="OnEscHotKeyPressed()"></LogitudeHotKeysComponent> -->
 <table style="margin:5px">
 
 
-    <tr *ngIf="EntityPM.Direction!='E'" style="height:32px" class="FormFieldRow">
+
+    <tr style="height:32px" class="FormFieldRow">
 
 
         <td style="width: 150px;" *ngIf="ImporterVisibility">
@@ -66,66 +65,7 @@
         <td style="width:40px"><div></div></td>
         <td><div></div></td>
     </tr>
-
-    <tr *ngIf="EntityPM.Direction == 'E'" style="height:32px" class="FormFieldRow">
-
-
-        <td style="width: 150px;" *ngIf="ImporterVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.ExporterTypeCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-        <td style="width: 150px;" *ngIf="EntitleVisibility">
-            <LogLabel [ObjectFieldName]="'EntitleImporterTypeCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-        <td style="width: 150px;" *ngIf="TransferVisibility">
-            <LogLabel [TextCode]="''" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-
-
-        <td style="width: 160px;" *ngIf="ImporterVisibility">
-            <LogLov [ObjectFieldName]="'ImporterTypeCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [LookUpTableName]="'Customs.CustomerIdentifyType'"
-                    [DisplayMemberPath]="'LocalName'"
-                    (SelectedItemChanged)="CustomerIdentifyType = $event"
-                    [SelectedValue]="ImporterTypeCode"
-                    [HideColumns]="true">
-            </LogLov>
-        </td>
-
-        <td style="width: 160px;" *ngIf="EntitleVisibility">
-            <LogLov [ObjectFieldName]="'EntitleImporterTypeCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    (SelectedItemChanged)="EntitleCustomerIdentifyType = $event"
-                    [LookUpTableName]="'Customs.CustomerIdentifyType'"
-                    [DisplayMemberPath]="'LocalName'"
-                    [SelectedValue]="EntitleImporterTypeCode"
-                    [HideColumns]="true">
-            </LogLov>
-        </td>
-        <td style="width: 160px;" *ngIf="TransferVisibility">
-            <LogLov [ObjectFieldName]="'TransferImporterTypeCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    (SelectedItemChanged)="TransferCustomerIdentifyType = $event"
-                    [LookUpTableName]="'Customs.CustomerIdentifyType'"
-                    [DisplayMemberPath]="'LocalName'"
-                    [SelectedValue]="TransferImporterTypeCode"
-                    [HideColumns]="true">
-            </LogLov>
-        </td>
-
-        <td style="width:40px"><div></div></td>
-        <td><div></div></td>
-    </tr>
-    <tr *ngIf="EntityPM.Direction != 'E'" style="height:32px" class="FormFieldRow">
+    <tr style="height:32px" class="FormFieldRow">
 
 
         <td *ngIf="ImporterVisibility">
@@ -203,85 +143,7 @@
         <td><div></div></td>
         <td><div></div></td>
     </tr>
-    <tr *ngIf="EntityPM.Direction == 'E'" style="height:32px" class="FormFieldRow">
-
-
-        <td *ngIf="ImporterVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.ExporterPassportNumber'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-        <td *ngIf="EntitleVisibility">
-            <LogLabel [ObjectFieldName]="'EntitlePassportNumber'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td *ngIf="TransferVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.TransferExporterPassportNumber'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-        <td *ngIf="ImporterVisibility">
-            <!--<LogTextBox [ObjectFieldName]="'ImporterPassportNumber'" [ObjectTableName]="ObjectTableName"
-                [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
-            <!--[ObjectTableName]="'Customs.Client'"-->
-            <SearchBox [ObjectTableName]="'Client'"
-                       [IsQuickSearch]="true"
-                       [DropDownWidth]="143"
-                       [DisplayMember]="'PassportNumber'"
-                       [DisplayText]="ImporterPassportNumber"
-                       [Watermark]="''"
-                       [UseTimer]="false"
-                       [IsImporterDetails]="true"
-                       [IsDisabled]="!IsImporterEnabled"
-                       [ItemHeight]="36"
-                       [HideIcons]="true"
-                       [HasFilters]="true"
-                       (LostFocus)="ImporterLostFocus('Importer', $event)"
-                       (TextChanged)="ImporterNumberTextChanged('Importer',$event)"
-                       (ItemClicked)="ImporterClicked('Importer',$event)"></SearchBox>
-        </td>
-        <td *ngIf="EntitleVisibility">
-            <!--<LogTextBox [ObjectFieldName]="'EntitlePassportNumber'" [ObjectTableName]="ObjectTableName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
-            <SearchBox [ObjectTableName]="'Client'"
-                       [IsQuickSearch]="true"
-                       [DropDownWidth]="143"
-                       [DisplayMember]="'PassportNumber'"
-                       [DisplayText]="EntitlePassportNumber"
-                       [Watermark]="''"
-                       [UseTimer]="false"
-                       [IsDisabled]="!IsEntitleImporterEnabled"
-                       [IsImporterDetails]="true"
-                       [ItemHeight]="36"
-                       [HideIcons]="true"
-                       [HasFilters]="true"
-                       (LostFocus)="ImporterLostFocus('Entitle', $event)"
-                       (TextChanged)="ImporterNumberTextChanged('Entitle',$event)"
-                       (ItemClicked)="ImporterClicked('Entitle',$event)"></SearchBox>
-        </td>
-        <td *ngIf="TransferVisibility">
-            <!--<LogTextBox [ObjectFieldName]="'TransferPassportNumber'" [ObjectTableName]="ObjectTableName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>-->
-            <SearchBox [ObjectTableName]="'Client'"
-                       [IsQuickSearch]="true"
-                       [DropDownWidth]="143"
-                       [DisplayMember]="'PassportNumber'"
-                       [DisplayText]="TransferPassportNumber"
-                       [Watermark]="''"
-                       [UseTimer]="false"
-                       [IsImporterDetails]="true"
-                       [IsDisabled]="!IsTransferImporterEnabled"
-                       [ItemHeight]="36"
-                       [HideIcons]="true"
-                       [HasFilters]="true"
-                       (LostFocus)="ImporterLostFocus('Transfer', $event)"
-                       (TextChanged)="ImporterNumberTextChanged('Transfer',$event)"
-                       (ItemClicked)="ImporterClicked('Transfer',$event)"></SearchBox>
-        </td>
-        <td><div></div></td>
-        <td><div></div></td>
-    </tr>
-    <tr *ngIf="EntityPM.Direction != 'E'" style="height:32px" class="FormFieldRow">
+    <tr style="height:32px" class="FormFieldRow">
 
 
 
@@ -329,55 +191,7 @@
         <td><div></div></td>
         <td><div></div></td>
     </tr>
-    <tr *ngIf="EntityPM.Direction == 'E'" style="height:32px" class="FormFieldRow">
-
-
-
-        <td *ngIf="ImporterVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.ExporterCountryCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td *ngIf="EntitleVisibility">
-            <LogLabel [ObjectFieldName]="'EntitleImporterCountryCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td *ngIf="TransferVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.TransferExporterCountryCode'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-
-
-        <td *ngIf="ImporterVisibility">
-            <LogLov [ObjectFieldName]="'ImporterPassCountryCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [LookUpTableName]="'Customs.CustomsCountry'"
-                    [HideColumns]="true"
-                    [SelectedValue]="ImporterPassCountryCode">
-            </LogLov>
-        </td>
-        <td *ngIf="EntitleVisibility">
-            <LogLov [ObjectFieldName]="'EntitleImporterCountryCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [LookUpTableName]="'Customs.CustomsCountry'"
-                    [HideColumns]="true"
-                    [SelectedValue]="EntitleImporterCountryCode">
-            </LogLov>
-        </td>
-        <td *ngIf="TransferVisibility">
-            <LogLov [ObjectFieldName]="'TransferImporterCountryCode'"
-                    [ObjectTableName]="ObjectTableName"
-                    [DataContext]="DataContext"
-                    [LookUpTableName]="'Customs.CustomsCountry'"
-                    [HideColumns]="true"
-                    [SelectedValue]="TransferImporterCountryCode">
-            </LogLov>
-        </td>
-        <td><div></div></td>
-        <td><div></div></td>
-    </tr>
-    <tr *ngIf="EntityPM.Direction != 'E'" style="height:32px" class="FormFieldRow">
+    <tr style="height:32px" class="FormFieldRow">
 
 
         <td *ngIf="ImporterVisibility">
@@ -422,7 +236,7 @@
         <td><div></div></td>
         <td><div></div></td>
     </tr>
-    <tr *ngIf="EntityPM.Direction != 'E'" style="height:32px" class="FormFieldRow">
+    <tr style="height:32px" class="FormFieldRow">
 
 
 
@@ -452,37 +266,7 @@
         </td>
 
     </tr>
-    <tr *ngIf="EntityPM.Direction == 'E'" style="height:32px" class="FormFieldRow">
-
-
-
-        <td *ngIf="ImporterVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.ExporterName'" [ObjectFieldName]="'ImporterName'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td *ngIf="EntitleVisibility">
-            <LogLabel [ObjectFieldName]="'EntitleImporterName'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td *ngIf="TransferVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.TransferExporterName'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td class="EditMe" *ngIf="ImporterVisibility">
-            <LogTextBox [ObjectFieldName]="'ImporterName'" [ObjectTableName]="ObjectTableName" [Text]="ImporterName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-        </td>
-        <td class="EditMe" *ngIf="EntitleVisibility">
-            <LogTextBox [ObjectFieldName]="'EntitleImporterName'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-        </td>
-        <td class="EditMe" *ngIf="TransferVisibility">
-            <LogTextBox [ObjectFieldName]="'TransferImporterName'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-        </td>
-
-    </tr>
-    <tr *ngIf="EntityPM.Direction != 'E' && !isCourierDeclaration" style="height:32px" class="FormFieldRow" >
+    <tr style="height:32px" class="FormFieldRow" *ngIf="!isCourierDeclaration">
 
 
         <td *ngIf="ImporterVisibility">
@@ -495,37 +279,6 @@
         </td>
         <td *ngIf="TransferVisibility">
             <LogLabel [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td class="EditMe" *ngIf="ImporterVisibility  && !isCourierDeclaration">
-            <LogTextBox [ObjectFieldName]="'ImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="ImporterAddress"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-        </td>
-
-        <td class="EditMe" *ngIf="EntitleVisibility">
-            <LogTextBox [ObjectFieldName]="'EntitleImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="EntitleImporterAddress"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-        </td>
-        <td class="EditMe" *ngIf="TransferVisibility">
-            <LogTextBox [ObjectFieldName]="'TransferImporterAddress'" [ObjectTableName]="ObjectTableName" [Text]="TransferImporterAddress"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
-        </td>
-
-
-    </tr>
-    <tr *ngIf="EntityPM.Direction == 'E' && !isCourierDeclaration" style="height:32px" class="FormFieldRow"  >
-
-
-        <td *ngIf="ImporterVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.ExporterAddress'" [ObjectFieldName]="'ImporterAddress'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td *ngIf="EntitleVisibility">
-            <LogLabel [ObjectFieldName]="'EntitleImporterAddress'" [ObjectTableName]="ObjectTableName"
-                      [DataContext]="DataContext"></LogLabel>
-        </td>
-        <td *ngIf="TransferVisibility">
-            <LogLabel [TextCode]="'Customs.Declaration.F.TransferExporterAddress'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
         <td class="EditMe" *ngIf="ImporterVisibility  && !isCourierDeclaration">
@@ -567,7 +320,7 @@
     </tr>
 
 
-
+    
     <tr style="height:32px" class="FormFieldRow" *ngIf="ImporterVisibility  && isCourierDeclaration">
         <td>
             <LogLabel [ObjectFieldName]="'CasualImporterCity'" [ObjectTableName]="ObjectTableName"
@@ -641,7 +394,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && isCourierDeclaration" [disabled]="IsDisplayOnly">נקה נתונים</button>
+                        <button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && isCourierDeclaration">נקה נתונים</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>
@@ -656,7 +409,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

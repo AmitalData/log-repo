@@ -1,4 +1,4 @@
-import { Component, OnDestroy, EventEmitter } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -21,19 +21,18 @@ import { DatePipe } from '@angular/common';
 import { TariffVersionAllInChargePM } from '../../../EntityPMs/TariffVersionAllInChargePM';
 import { AirCostTariffLineData } from '../../../../TariffModule/Components/EditTabs/Tariff/TariffLineData';
 import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
-
 declare var ResultAsArray: any;
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './VersionTabComponent.html',
 })
 
-export class VersionTabComponent extends BaseComponent implements OnDestroy  {
+export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
-    public DeletedTariffsLines: AirCostTariffLineData[] = [];
+    public DeletedTariffsLines: AirCostTariffLineData [] = [];
     public DataContext = this;
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
@@ -43,54 +42,30 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
-    private FileExtension: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
     public SelectedVersionNumber: number;
     public OriginDependencyFilterValue: string = "A";
     public DestinationDependencyFilterValue = "A";
-    public ViaDependencyFilterValue = "A";
-    public IsAir: boolean = false;
-    public LineIdFromPriceCheck: string;
-    public AllInCharges: string;
-    public LinesCount: number;
-    public selectedRow: any;
-    public changeScrollPosition: EventEmitter<any> = new EventEmitter();
-    public darkerColler: string = "#f8ca12";
-    public chargeableWeightInKG: number;
 
-    constructor(public entityArgs: EntityArgs ) {    
+    constructor(public entityArgs: EntityArgs) {
         super();
-        
         this.EntityPM = entityArgs.EntityPM;
-        this.GetTariffType();
         this.Listen();
-    }
-
-    GetTariffType() {
-        if (this.EntityPM.TypeCode == "AFC") {
-            this.IsAir = true;
-        }
-    }
-
-    GetDisplayMemberPath() {
-        return this.IsAir ? "Code" : "CombinedCode";
     }
 
     Intialize(args: any) {
         this.CurrentVersion = args['CurrentVersion'];
         this.SelectedVersionNumber = args['SelectedVersionNumber'];
-        this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
-        this.chargeableWeightInKG = args['ChargeableWeightInKG'];
         this.LoadVersions();
         this.SetOriginDependencyFilterValue();
+
     }
 
     SetOriginDependencyFilterValue() {
         if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
             this.OriginDependencyFilterValue = "O";
             this.DestinationDependencyFilterValue = "O";
-            this.ViaDependencyFilterValue = "O";
         }
     }
 
@@ -109,7 +84,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
 
         this.LoadCompareToVersions();
 
-
+       
         if (this.CurrentVersion.IsDraft) {
             this.FillTariffLines(this.CurrentVersion.TariffLines);
         }
@@ -117,45 +92,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         else {
             this.LoadTariffLines("currentVersion");
         }
-
-        this.BuildAllInChargesText();
         this.GetTariffSettings();
         this.SetUIProperties();
         this.SetStepsLabelsAndVisibility();
-    }
-
-    private BuildAllInChargesText() {
-        var allInCharges: string = null;
-
-        if (this.CurrentVersion != null) {
-            var codesList: TariffVersionAllInChargePM[] = [];
-            var addDots: boolean = false;
-
-            if (this.CurrentVersion.TariffAllInCharges.length > 4) {
-                codesList = this.CurrentVersion.TariffAllInCharges.slice(0, 4);
-                addDots = true;
-            }
-
-            else {
-                codesList = this.CurrentVersion.TariffAllInCharges;
-            }
-
-            codesList.forEach((item: TariffVersionAllInChargePM) => {
-                if (AppTool.IsNullOrEmpty(allInCharges)) {
-                    allInCharges = item.ChargesTypeCode;
-                }
-
-                else {
-                    allInCharges = allInCharges + ", " + item.ChargesTypeCode;
-                }
-            });
-        }
-
-        if (addDots) {
-            allInCharges = allInCharges + "...";
-        }
-
-        this.AllInCharges = allInCharges;
     }
 
     private GetTariffSettings() {
@@ -173,7 +112,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
 
                     this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersionNumber)[0];
 
@@ -187,7 +126,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                     else {
                         this.LoadTariffLines("currentVersion");
                     }
-
+                    
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -198,18 +137,24 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
+                    if (this.isUploadExcelFinished) {
+                        this.isUploadExcelFinished = false;
+                        CachedDataManager.RefreshTableData("Port", true);
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+
                     if (this.isUpdateMissingPortsClicked) {
                         this.isUpdateMissingPortsClicked = false;
                         CachedDataManager.RefreshTableData("Port", true);
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
-                    if (this.isRefreshTranslationsClicked) {
-                        this.isRefreshTranslationsClicked = false;
-                        this.DoRefresh();
-                    }
-
                     this.LoadVersions();
+                    //this.PriceStepsModifiedEvent = this.CurrentSession.SessionEvent.subscribe((res) => {
+                    //    if (res == "PriceStepsModified") {
+                    //        this.LoadVersions();
+                    //    }
+                    //});
                 }
 
                 else {
@@ -225,6 +170,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         }
 
         this.isApproveButtonClicked = false;
+        this.isUploadExcelFinished = false;
         this.isCopyButtonClicked = false;
     }
 
@@ -236,11 +182,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     ngOnDestroy() {
         this.KillEvents();
     }
-
+    
     private loadedTariffLines: TariffLinePM[];
     private compareTariffLines: TariffLinePM[];
     private LoadTariffLines(type: string) {
-
         this.CurrentSession.StartBusyIndicatorLoading();
 
         if (type == "currentVersion") {
@@ -265,7 +210,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
 
                 this.CurrentSession.StopBusyIndicator();
             });
-        }
+        }        
     }
 
     SetUIProperties() {
@@ -297,7 +242,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
     set StartDate(value: Date) {
         if (this.CurrentVersion.StartDate != value) {
             this.CurrentVersion.StartDate = value;
-
+            
             this.UpdateDates("start", value);
         }
     }
@@ -343,36 +288,20 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
 
     private ItemsCollection: AirCostTariffLineData[] = [];
     FillTariffLines(tariffLines: TariffLinePM[]) {
-
-        this.LinesCount = tariffLines.length;
-
         if (this.TariffsLinesSource != null) {
             this.TariffsLinesSource.Clear();
         }
+      
+        this.ItemsCollection = [];  
+        
 
-        this.ItemsCollection = [];
-        var count = 0; var selectedIndexRow = 0; var isItemSelectExist = false;
         tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
-            var itemAir = new AirCostTariffLineData(item, this)
-            count++;
-            this.ItemsCollection.push(itemAir);
-            if (!AppTool.IsNullOrEmpty(this.LineIdFromPriceCheck) && itemAir.EntityPM.Id == this.LineIdFromPriceCheck) {
-                this.selectedRow = itemAir;
-                selectedIndexRow = count;
-                isItemSelectExist = true;
-            }
+            this.ItemsCollection.push(new AirCostTariffLineData(item, this));
         });
+
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
 
-        //this.InitializePager();
-        //this.FillGridPagerItems();
-        this.DoCompare();
-        if (isItemSelectExist) {
-            this.changeScrollPosition.emit({
-                RowIndex: selectedIndexRow
-            });
-        }
-      
+        this.DoCompare();        
     }
 
     private DoCompare() {
@@ -387,7 +316,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         this.ItemsCollection.forEach((item: AirCostTariffLineData) => {
             item.IsNewEntity = false;
 
-            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId )[0];
+            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -408,7 +337,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         }
 
         this.compareTariffLines.sort(p => p.Index).forEach(item => {
-            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId && a.ViaPortId == item.ViaPortId)[0];
+            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new AirCostTariffLineData(item, this));// Deleted 
             }
@@ -437,7 +366,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
             this.ComparingCalculations(false);
         }
     }
-
+    
     public Step1PriceLabel: string;
     public Step2PriceLabel: string;
     public Step3PriceLabel: string;
@@ -477,12 +406,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                     this.Step1PriceVisibility = true;
                 }
                 for (var i = 1; i <= count; i++) {
-                    this["Step" + i + "PriceLabel"] = steps[i - 1].concat(" " , this.EntityPM.UnitOfMeasurementCode);
+                    this["Step" + i + "PriceLabel"] = steps[i - 1] + " KG";
                     this["Step" + i + "PriceVisibility"] = true;
                 }
             }
             else {
-                this.Step1PriceLabel = this.PriceSteps.concat(" ", this.EntityPM.UnitOfMeasurementCode);
+                this.Step1PriceLabel = this.PriceSteps;
                 this.Step1PriceVisibility = true;
             }
         }
@@ -508,17 +437,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         }
 
         var itemComponent = new AirCostTariffLineData(itemPM, this, true);
-        logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode ,UnitOfMeasurementCode: this.EntityPM.UnitOfMeasurementCode };
+        logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
-        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
     EditTariffButtonClicked(item: AirCostTariffLineData) {
         var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode, UnitOfMeasurementCode:this.EntityPM.UnitOfMeasurementCode};
+        logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
-        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -550,19 +477,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                 var messageWindow: MessageWindow = new MessageWindow();
                 messageWindow.Show("You have to upload excel files only");
             }
-        }
+        } 
     }
     UploadExcel(file: any) {
-        this.CurrentSession.StartBusyIndicator("Uploading...");
-
         this.FileName = null;
-        this.FileExtension = null;
-
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
             if (name.length == 2) {
                 this.FileName = name[0];
-                this.FileExtension = name[1];
             }
         }
         if (file && file.size > 0) {
@@ -599,8 +521,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
+            filter.TariffType = context.EntityPM.TypeCode;
             filter.FileName = context.FileName;
-            filter.FileExtension = context.FileExtension;
             context.SendExcelToServer(filter);
 
         };
@@ -612,20 +534,57 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         context.EntityPM.FileUploadedName = this.FileName;
     }
     SendExcelToServer(filter: any) {
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                this.CurrentSession.StopBusyIndicator();
-                CachedDataManager.RefreshTableData("Port", true);
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-
-            else {
-                this.CurrentSession.StopBusyIndicator();
-                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = response.ErrorsArray;
+                var tariffLines: ExcelTariffLines[] = response.Result;
+                if (tariffLines) {
+                    this.CurrentVersion.TariffLines = [];
+                    this.InsertNewRowsFromExcel(tariffLines);
+                }
             }
         });
+    }
+
+    private isUploadExcelFinished: boolean = false;
+    private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
+            var tariffLine = new TariffLinePM(null);
+            tariffLine.StartDate = this.StartDate;
+            tariffLine.ExpirationDate = this.InitialEnddate;
+            tariffLine.Tenant = SessionLocator.Tenant;
+            tariffLine.Version = this.CurrentVersion.Version;
+            tariffLine.OriginPortId = item.FromPortId;
+            tariffLine.OriginPortCode = item.FromPortCode;
+            tariffLine.OriginPortName = item.FromPortName;
+            tariffLine.DestinationPortId = item.ToPortId;
+            tariffLine.DestinationPortCode = item.ToPortCode;
+            tariffLine.DestinationPortName = item.ToPortName;
+            tariffLine.OriginPortText = item.FromPortText;
+            tariffLine.DestinationPortText = item.ToPortText;
+            tariffLine.HasErrors = item.HasErrors;
+            tariffLine.ErrorText = item.ErrorText;
+            tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
+            
+            if (this.PriceSteps.indexOf(',') > -1) {
+                var steps: string[] = this.PriceSteps.split(",");
+                var count = steps.length;
+
+                tariffLine.MinPrice = item.MinPrice;
+                tariffLine.MinPriceText = item.MinPriceText;
+
+                for (var i = 1; i <= count; i++) {
+                    tariffLine["Step" + i + "Price"] = item["Step" + i + "Price"];
+                    tariffLine["Step" + i + "PriceText"] = item["Step" + i + "PriceText"];
+                }                
+            }
+
+            this.CurrentVersion.AddTariffLine(tariffLine);
+        });
+        
+        this.EntityPM.TariffLinesAddedFromExcel = true;
+        this.isUploadExcelFinished = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
 
     // Download Excel 
@@ -640,7 +599,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                     window.open(url);
                 }
             }
-        });
+        });        
     }
 
     private isApproveButtonClicked: boolean = false;
@@ -651,7 +610,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
-
+    
     CopyVersionClicked() {
         if (this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0]) {
             var messageWindow: MessageWindow = new MessageWindow();
@@ -700,16 +659,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                         tariffLine.Version = copiedVersion.Version;
                         tariffLine.OriginPortId = item.OriginPortId;
                         tariffLine.OriginPortCode = item.OriginPortCode;
-                        tariffLine.OriginPortCombinedCode = item.OriginPortCombinedCode;
                         tariffLine.OriginPortName = item.OriginPortName;
                         tariffLine.DestinationPortId = item.DestinationPortId;
                         tariffLine.DestinationPortCode = item.DestinationPortCode;
-                        tariffLine.DestinationPortCombinedCode = item.DestinationPortCombinedCode;
                         tariffLine.DestinationPortName = item.DestinationPortName;
-                        tariffLine.ViaPortId = item.ViaPortId;
-                        tariffLine.ViaPortCode = item.ViaPortCode;
-                        tariffLine.ViaPortCombinedCode = item.ViaPortCombinedCode;
-                        tariffLine.ViaPortName = item.ViaPortName;
                         tariffLine.MinPrice = item.MinPrice;
                         tariffLine.Step1Price = item.Step1Price;
                         tariffLine.Step2Price = item.Step2Price;
@@ -721,7 +674,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                         tariffLine.Step8Price = item.Step8Price;
                         tariffLine.Index = item.Index;
                         tariffLine.Notes = item.Notes;
-                        tariffLine.TransitTime = item.TransitTime;
                         copiedVersion.AddTariffLine(tariffLine);
                     });
 
@@ -752,7 +704,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
                 this.compareToVersions = response.Result;
                 this.BuildVersionsList();
             }
-        });
+        });        
     }
 
     public VersionsList: VersionClass[];
@@ -768,7 +720,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
             newVersion.Version = item.Version;
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
-            newVersion.Id = item.TariffId;
+            newVersion.Id = item.TariffId; 
             this.VersionsList.push(newVersion);
         });
 
@@ -781,7 +733,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked && !this.IsFirstDraft);
 
     }
-
+    
     private selectedVersion: VersionClass;
     get SelectedVersion() { return this.selectedVersion; }
     set SelectedVersion(value: VersionClass) {
@@ -816,7 +768,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditAllInChargesComponent");
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
-                this.BuildAllInChargesText();
+                
             }
         });
     }
@@ -829,71 +781,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy  {
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
-
-    private isRefreshTranslationsClicked: boolean = false;
-    RefreshPortsFromTranslations() {
-        if (!this.isRefreshTranslationsClicked) {
-            this.isRefreshTranslationsClicked = true;
-            this.EntityPM.IsRefreshTranslations = true;
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
-        }
-    }
-    private DoRefresh() {
-        this.TariffDomainService.RefreshPortsFromTranslations(this.EntityPM.Id, this.VersionNumber).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-        });
-    }
-
-    private isAllSelected: boolean = false;
-    get IsAllSelected() { return this.isAllSelected; }
-    set IsAllSelected(value: boolean) {
-        if (this.isAllSelected != value) {
-            this.isAllSelected = value;
-
-            this.ItemsCollection.forEach((item: AirCostTariffLineData) => {
-                item.IsLineSelected = value;
-            });
-        }
-    }
-
-    DeleteLinesClicked() {
-        if (this.ItemsCollection.filter(f => f.IsLineSelected).length == 0) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Show("Please select lines you would like to delete");
-        }
-
-        else {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Show("Selected lines will be deleted");
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
-                    this.ItemsCollection.filter(d => d.IsLineSelected).forEach((item: AirCostTariffLineData) => {
-                        this.CurrentVersion.RemoveTariffLine(item.EntityPM);                                          
-                    });
-
-                    this.FillTariffLines(this.CurrentVersion.TariffLines);                    
-                }
-            });
-        }
-    }
-
-    ViewUploadedExcelFilesClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Uploaded Excel Files";
-        logWindow.Width = 600;
-        logWindow.Height = 500;
-        logWindow.WindowArgs = { TariffId: this.EntityPM.Id, Version: this.CurrentVersion.Version };
-        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UploadedExcelsComponent');
-    }
 }
 
 export class VersionClass {
-  public Code: number;
-  public Name: string;
-  public Id: string;
-  public Version: number;
-  public ParentVersionNumber: number;
+    public Code: number;
+    public Name: string;
+    public Id: string;
+    public Version: number;
+    public ParentVersionNumber: number;
 }
 

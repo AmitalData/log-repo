@@ -37,9 +37,7 @@
 
                                                             [QueryFilterItems]="filterAgrs"
                                                             (SelectedItemChanged)="Account = $event"
-                                                            [HideColumns]="true"
-                                                            [StartSearchFromChar]="3"
-                                                            [StartSearchFromNumber]="5">
+                                                            [HideColumns]="true">
                                                     </LogLov> </td>
                                                 <td><div></div></td>
                                             </tr>
@@ -71,7 +69,6 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'BankAccount'"
-                                                            [QueryFilterItems]="BankAccountFilter"
                                                             [DisplayMemberPath]="BankName"
                                                             (SelectedItemChanged)="BankAccount = $event"
                                                             [HideColumns]="true">
@@ -191,27 +188,26 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="CellContent"  >
+                                        <div class="CellContent" style="">
                                             <logitude-edit-grid GridWidth="100%"
                                                                 GridHeight="100%"
                                                                 [IsReadOnly]="!AddLineEnabled"
                                                                 [ItemSource]="Lines">
 
                                                 <log-column [header]="'#'" [width]="'30'" [Editable]="false" [Alignment]="'right'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template   #logcelltemplate>
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                             <span>{{item.SequenceNumeric}}</span>
                                                         </div>
 
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
 
                                                 <log-column [header]="'PaymentChequeLine.F.Notes' | TextCodeTranslationPipe" [width]="'680'" [Editable]="true" [Alignment]="isRTL ? 'right' : 'left'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template   #logcelltemplate>
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                             <span title="{{item.Note}}">{{item.Note}}</span>
                                                         </div>
@@ -223,15 +219,14 @@
 
                                                         </div>
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
 
 
 
                                                 <log-column [header]="AmountHeader" [binding]="'Amount'" [width]="'110'" [Editable]="true" [Alignment]="'center'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template   #logcelltemplate>
+
+                                                    <log-cell-template template="let item" #logcelltemplate>
                                                         <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right">
                                                             <span>{{item.Amount | NumbersPipe:'N2'}}</span>
                                                         </div>
@@ -243,12 +238,10 @@
 
                                                         </div>
                                                     </log-cell-template>
-                                                </ng-template>
                                                 </log-column>
 
                                                 <log-column [width]="'22'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
-                                                    <ng-template let-item>
-                                                    <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
+                                                    <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                                         <div style="width: 18px; float: left; height:20px; padding-top: 2px;">
                                                             <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="item.DeleteButtonClicked()" [IsEnabled]="AddLineEnabled"></IconButton>
                                                         </div>
@@ -256,7 +249,6 @@
 
 
                                                     </log-cell-template>
-                                                    </ng-template>
                                                 </log-column>
 
 

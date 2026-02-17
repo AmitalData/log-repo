@@ -5,9 +5,9 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
 using Logitude.BL.GlobalModel.Tools.TraceEvents;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -203,7 +203,6 @@ namespace WebFreight.Web.GlobalModel
                              TenantConnectedToAirlineCode = a.TenantConnectedToAirlineCode,
                              SupportActivated= a.SupportActivated,
                              SupportEmail=a.SupportEmail,
-                             TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                              IsMultiPackage = a.IsMultiPackage,
                              MobileLastDate = a.MobileLastDate,
                              MobileTotalLastWeek = a.MobileTotalLastWeek,
@@ -383,7 +382,6 @@ namespace WebFreight.Web.GlobalModel
                              TenantConnectedToAirlineCode = a.TenantConnectedToAirlineCode,
                              SupportActivated = a.SupportActivated,
                              SupportEmail = a.SupportEmail,
-                             TranzilaPaymentWithBit= a.TranzilaPaymentWithBit,
                              IsMultiPackage = a.IsMultiPackage,
                              MobileLastDate = a.MobileLastDate,
                              MobileTotalLastWeek = a.MobileTotalLastWeek,
@@ -493,7 +491,6 @@ namespace WebFreight.Web.GlobalModel
                              TenantConnectedToAirlineCode = a.TenantConnectedToAirlineCode,
                              SupportActivated = a.SupportActivated,
                              SupportEmail = a.SupportEmail,
-                             TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                              IsMultiPackage = a.IsMultiPackage,
                              MobileLastDate = a.MobileLastDate,
                              MobileTotalLastWeek = a.MobileTotalLastWeek,
@@ -603,7 +600,6 @@ namespace WebFreight.Web.GlobalModel
                     TenantConnectedToAirlineCode = tenantManagement.TenantConnectedToAirlineCode,
                     SupportActivated = tenantManagement.SupportActivated,
                     SupportEmail = tenantManagement.SupportEmail,
-                    TranzilaPaymentWithBit= tenantManagement.TranzilaPaymentWithBit,
                     IsMultiPackage = tenantManagement.IsMultiPackage,
                     MobileLastDate = tenantManagement.MobileLastDate,
                     MobileTotalLastWeek = tenantManagement.MobileTotalLastWeek,
@@ -826,7 +822,6 @@ namespace WebFreight.Web.GlobalModel
                                                                    TenantTypeCode = a.TenantTypeCode,
                                                                    TenantConnectedToAirlineCode = a.TenantConnectedToAirlineCode,
                                                                    SupportEmail = a.SupportEmail,
-                                                                   TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                                                                    SupportActivated=a.SupportActivated,
                                                                    IsMultiPackage = a.IsMultiPackage,
                                                                    MobileLastDate = a.MobileLastDate,
@@ -934,7 +929,6 @@ namespace WebFreight.Web.GlobalModel
                              TenantTypeCode = a.TenantTypeCode,
                              TenantConnectedToAirlineCode = a.TenantConnectedToAirlineCode,
                              SupportEmail = a.SupportEmail,
-                             TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                              SupportActivated = a.SupportActivated,
                              IsMultiPackage = a.IsMultiPackage,
                              MobileLastDate = a.MobileLastDate,
@@ -1069,7 +1063,7 @@ namespace WebFreight.Web.GlobalModel
                     SupportActivated = tenantManagement.SupportActivated,
                     SupportEmail = tenantManagement.SupportEmail,
                     IsMultiPackage = tenantManagement.IsMultiPackage,
-                    TranzilaPaymentWithBit=tenantManagement.TranzilaPaymentWithBit,
+
                     MobileLastDate = tenantManagement.MobileLastDate,
                     MobileTotalLastWeek = tenantManagement.MobileTotalLastWeek,
                     MobileTotalLastMonth = tenantManagement.MobileTotalLastMonth,
@@ -1082,11 +1076,6 @@ namespace WebFreight.Web.GlobalModel
                     Technology = tenantManagement.Technology,
                     PrivateLabelId = tenantManagement.GlobalTenant != null ? tenantManagement.GlobalTenant.PrivateLabelId : "",
                     SilverlightEndDate = tenantManagement.SilverlightEndDate,
-                    LastEbookingSentDate = tenantManagement.LastEbookingSentDate,
-                    LastSISentDate = tenantManagement.LastSISentDate,
-                    NumberOfBookingSentLastWeek = tenantManagement.NumberOfBookingSentLastWeek,
-                    NumberOfSISentLastWeek = tenantManagement.NumberOfSISentLastWeek,
-                    LastContainerStatusReceived = tenantManagement.LastContainerStatusReceived,
                 };
 
                 return tenantManagementList;

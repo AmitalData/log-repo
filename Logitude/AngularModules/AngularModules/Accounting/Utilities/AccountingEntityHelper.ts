@@ -1,9 +1,7 @@
-import { AppTool } from "Infrastructure/Tools";
-import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 
 export class AccountingEntityHelper {
 
-    static getEntityIcon(_sourceTypeCode: string) {
+    static getEntityIcon(_sourceTypeCode: string){
         var iconTxt = "";
         switch (_sourceTypeCode) {
             // 1-Journal
@@ -71,158 +69,79 @@ export class AccountingEntityHelper {
 
                 break;
             }
-            case AccountingEntityValues.TaxReport: {
-                iconTxt = "TR";
-                break;
-            }
         }
         return iconTxt;
     }
 
-    static GetPartnerTypeObjectTableName(partnerTypeId: string){
-        var objectTableName;
-        switch (partnerTypeId) {
-            case 'AG': { objectTableName = 'Agent'; break; }
-            case 'AL': { objectTableName = 'Airline'; break; }
-            case 'CG': { objectTableName = 'CustomAgent'; break; }
-            case 'CH': { objectTableName = 'CustomsShipper'; break; }
-            case 'CS': { objectTableName = 'Customer'; break; }
-            case 'PO': { objectTableName = 'Customer'; break; }
-            case 'PT': { objectTableName = 'Participant'; break; }
-            case 'SG': { objectTableName = 'ShippingAgent'; break; }
-            case 'SL': { objectTableName = 'ShippingLine'; break; }
-            case 'TR': { objectTableName = 'Trucker'; break; }
-            case 'VD': { objectTableName = 'Vendor'; break; }
-            case 'WH': { objectTableName = 'Warehouse'; break; }
-            case 'AC': { objectTableName = 'AccountingPartner'; break; }
+    static getEntityObjectTableName(_sourceTypeCode: string){
+        var tableName = "Journal";
 
-            case 'CC': { objectTableName = 'Custom Clearance'; break; } // not found
-            case 'CO': { objectTableName = 'Coloader'; break; } // not found
-            case 'FL': { objectTableName = 'Freelancer'; break; } // not found
-            case 'OT': { objectTableName = 'Others'; break; } // not found
-        }
-        return objectTableName;
-    }
-    static GetBillingTabByPartnerType(partnerTypeId: string){
-        var billingTab;
-        switch (partnerTypeId) {
-            case 'AG': { billingTab = 'AGBL'; break; }
-            case 'AL': { billingTab = 'ALBL'; break; }
-            case 'CG': { billingTab = 'CUBL'; break; }
-            case 'CS': { billingTab = 'CLBL'; break; }
-            case 'PO': { billingTab = 'CLBL'; break; }
-            case 'PT': { billingTab = 'PCBL'; break; }
-            case 'SG': { billingTab = 'SABL'; break; }
-            case 'SL': { billingTab = 'SLBL'; break; }
-            case 'TR': { billingTab = 'TRBL'; break; }
-            case 'VD': { billingTab = 'VDBL'; break; }
-            case 'WH': { billingTab = 'WHBL'; break; }
-            case 'AC': { billingTab = 'ACBL'; break; }
-        }
-        return billingTab;
-    }
-
-    static OpenCard(connectedCardId: string, partnerTypeName: string, selectedTabCode: string)
-    {
-        if (!AppTool.IsNullOrEmpty(connectedCardId)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                .then(cmpRef =>
-                {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName == "Others" || partnerTypeName == "Coloader" ? "Vendor" : partnerTypeName, SelectedTabCode: selectedTabCode });
-                    cmpRef.instance.BackCompleted.subscribe(bk =>
-                    {
-                        SessionLocator.SelectedSession?.FireEvent("BackFromCard");
-                    });
-                });
-        }
-    }
-    
-    static getEntityObjectTableName(sourceTypeCode: string) {
-        let tableName = 'Journal';
-
-        switch (sourceTypeCode) {
+        switch (_sourceTypeCode) {
             // 1-Journal
-            case '1': {
-                tableName = 'Journal';
+            case "1": {
+                tableName = "Journal";
                 break;
             }
 
             // 2-ARInvoice
-            case '2': {
-                tableName = 'ARInvoice';
+            case "2": {
+                tableName = "ARInvoice";
                 break;
             }
 
             // 3-ARPayment
-            case '3': {
-                tableName = 'ARPayment';
+            case "3": {
+                tableName = "ARPayment";
 
                 break;
             }
 
             // 4-APInvoice
-            case '4': {
-                tableName = 'APInvoice';
+            case "4": {
+                tableName = "APInvoice";
 
                 break;
             }
 
             // 5-APPayment
-            case '5': {
-                tableName = 'APPayment';
+            case "5": {
+                tableName = "APPayment";
 
                 break;
             }
 
             // 6-Cheque Deposit
-            case '6': {
-                tableName = 'BankDeposit';
+            case "6": {
+                tableName = "BankDeposit";
 
                 break;
             }
 
             // 7-Cash Deposit
-            case '7': {
-                tableName = 'BankDeposit';
+            case "7": {
+                tableName = "BankDeposit";
 
                 break;
             }
 
             // 8-Revaluation
-            case '8': {
-                tableName = 'Revaluation';
+            case "8": {
+                tableName = "Revaluation";
 
                 break;
             }
 
             // 9-PaymentCheque
-            case '9': {
-                tableName = 'PaymentCheque';
+            case "9": {
+                tableName = "PaymentCheque";
 
                 break;
             }
 
             // 10-Adjustment
-            case '10': {
-                tableName = 'Reconciliation';
+            case "10": {
+                tableName = "Journal";
 
-                break;
-            }
-
-            // 11-InterestReport
-            case '11': {
-                tableName = 'InterestReport';
-
-                break;
-            }
-            case '12': {
-               tableName = 'ExternalReconciliation';
-
-               break;
-            }
-            case AccountingEntityValues.TaxReport: {
-                tableName = 'TaxReport';
                 break;
             }
 
@@ -231,22 +150,4 @@ export class AccountingEntityHelper {
 
     }
 
-
-}
-
-export class AccountingEntityValues
-{
-   public static Journal: string = "1";
-   public static ARInvoice: string = "2";
-   public static ARPayment: string = "3";
-   public static APInvoice: string = "4";
-   public static APPayment: string = "5";
-   public static ChequeDeposit: string = "6";
-   public static CashDeposit: string = "7";
-   public static Revaluation: string = "8";
-   public static PaymentCheque: string = "9";
-   public static Adjustment: string = "10";
-   public static YearTransfer: string = "11";
-   public static BankAdjustment: string = "12";
-   public static TaxReport: string = "13";
 }

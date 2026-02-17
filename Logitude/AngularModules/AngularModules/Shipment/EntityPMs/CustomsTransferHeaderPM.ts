@@ -82,11 +82,6 @@ export class CustomsTransferHeaderPM {
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
-    private shipmentNumber: string;
-    public get ShipmentNumber() { return this.shipmentNumber; }
-    public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
-       
-	 
      
 	private customsTransferLines: CustomsTransferLinePM[];
     get  CustomsTransferLines() {
@@ -127,10 +122,7 @@ export class CustomsTransferHeaderPM {
     public OldEntityPM: CustomsTransferHeaderPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -138,7 +130,6 @@ export class CustomsTransferHeaderPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "CustomsTransferHeader");
            
         }
-	 }
     }
     private MyClone: CustomsTransferHeaderPM;
 

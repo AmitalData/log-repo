@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
-using System.Text;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -74,14 +73,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public EventType GetSingleEventTypeByCode(string code, int tenant)
         {
-            string key = $"GetSingleEventTypeByCode({code}, {tenant})";
-            return Simplog.Server.Infrastructure.Helpers.CacheManager.GetOrInsertNewObject<EventType>(key, () =>
-            {
-                return GetSingleEventTypeByCodeReal(code, tenant);
-            });
-        }
-        EventType GetSingleEventTypeByCodeReal(string code, int tenant)
-        {
             EventType entity = (from a in context.EventType where a.Tenant == tenant && a.Code == code select a).FirstOrDefault();
             return entity;
         }
@@ -116,9 +107,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Add(EventType entity)
         {
-            entity.LocalName = TryConvertFromBase64(entity.LocalName);
-            entity.FollowUpLocalName = TryConvertFromBase64(entity.FollowUpLocalName);
-
             context.EventType.Add(entity);
         }
 
@@ -130,9 +118,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Update(EventType entity)
         {
-            entity.LocalName = TryConvertFromBase64(entity.LocalName);
-            entity.FollowUpLocalName = TryConvertFromBase64(entity.FollowUpLocalName);
-
             try
             {
                 context.EventType.Attach(entity);
@@ -156,12 +141,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.SaveChanges();
         }
 
-        public string GetCustomFieldByEventTypeId(string id, int tenant)
-        {
-            return (from a in context.EventType
-                    where a.Id == id && a.Tenant == tenant 
-                    select a.CustomField).FirstOrDefault();
-        }
 
 
 
@@ -173,52 +152,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public EventType GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
-        }
-        public static string TryConvertFromBase64(string input)
-        {
-            try
-            {
-                if (input == null)
-                {
-                    return null;
-                }
-                if (input.StartsWith("BS64:") || input.StartsWith("\"BS64:"))
-                {
-
-                    return ConvertFromBase64(input);
-
-
-                }
-                return input;
-
-            }
-            catch (FormatException)
-            {
-                return input;
-            }
-        }
-
-        private static string ConvertFromBase64(string input)
-        {
-            string substringToRemove = "\"";
-            string backUp = input;
-            try
-            {
-                input = input.Trim('\"');
-                input = input.Substring(5);//REMOVE BS64:
-                byte[] data = Convert.FromBase64String(input);
-                string decodedString = Encoding.UTF8.GetString(data);
-                decodedString = decodedString.Trim('\"');
-                decodedString = decodedString.Replace("\\\"", "\"").Replace("\\\\", "\\");
-
-                return decodedString;
-
-            }
-            catch (FormatException)
-            {
-                return backUp;
-            }
-
         }
     }
 }

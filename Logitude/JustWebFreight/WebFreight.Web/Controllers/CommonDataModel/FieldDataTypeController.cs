@@ -1,16 +1,12 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -21,15 +17,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
                 DataTypeRepository dataTypeRepository = new DataTypeRepository(tenant);
-                
-                
-                List<FieldDataType> result = dataTypeRepository.GetDataTypes();
+
+
+                List<FieldDataType> result = dataTypeRepository.GetDataTypes().Where(d => d.Code != "Byte[]" && d.Code != "Emails" && d.Code != "Constant" && d.Code != "List" && d.Code != "SigDouble" && d.Code != "UnsDecimal" && d.Code != "UnsInteger" ).ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

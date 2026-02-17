@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {CardList} from '../../../../../Common/EntityLists/CardList';
 import {AddressList} from '../../../../../Common/EntityLists/AddressList';
 import {CardListService} from '../../../../../Common/Services/StandardLists/CardListService';
@@ -14,22 +15,26 @@ import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 import {AddEditPartnerArgs} from '../../../../../Shipment/Args';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { AWBOCIPM } from '../../../../../Shipment/EntityPMs/AWBOCIPM';
+import {SessionInfo} from '../../../../../Infrastructure/Utilities/SessionInfo';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     selector: 'PartnersTabComponent',
     templateUrl: './AWBPartnersTabComponent.html',
 })
 
-export class AWBPartnersTabComponent extends BaseComponent{
+export class AWBPartnersTabComponent extends BaseComponent
+{
     public EntityPM: ShipmentPM;
     public Wizard: AWBWizardComponent;
     public DataContext: AWBPartnersTabComponent = this;
     public ObjectTableName: string;
     public LabelColumnWidth: number = 85;
     public PartnerBoxHeight: number = 200;
+    private IsFirstTime: boolean = true;
     private myCardListService: CardListService;
     constructor() {
         super();
@@ -38,7 +43,8 @@ export class AWBPartnersTabComponent extends BaseComponent{
 
     private InitializeServices() {
         if (this.myCardListService == null) {
-            this.myCardListService = new CardListService();            
+            this.myCardListService = new CardListService();
+            
         }
     }
 
@@ -853,8 +859,8 @@ export class AWBPartnersTabComponent extends BaseComponent{
         }
     }
 
-    private consigneeEORINumber: string;
-    private GetConsigneeCard() {        
+    private GetConsigneeCard() {
+        
         if (this.ConsigneeId == null) {
             this.ConsigneeAddressId = null;
             this.ConsigneeReference1 = null;
@@ -862,7 +868,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
             this.EntityPM.ConsigneeName = null;
             this.EntityPM.ConsigneeNote = null;
             this.EntityPM.ConsigneeContactId = null;
-            this.consigneeEORINumber = null;
             this.Validate_CON();
             this.FireWizardEvent();
         }
@@ -871,7 +876,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
             this.LoadConsigneeCard();
         }
     }
-    
     private LoadConsigneeCard() {
         this.myCardListService.getSingle(this.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -882,7 +886,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
                         this.EntityPM.ConsigneeName = myCard.EnglishName;
                         this.EntityPM.ConsigneeNote = myCard.Notes;
                         this.EntityPM.ConsigneeContactId = myCard.PrimaryContactId;
-                        this.consigneeEORINumber = myCard.EORInumber;
                     }
 
                     if (this.isPartnerChanged_Consignee) {
@@ -920,7 +923,6 @@ export class AWBPartnersTabComponent extends BaseComponent{
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
                         this.SetConsigneeAddress(myResponse.Result);
-                        this.CheckConsignee_OCI(myResponse.Result);
                     }
                 }
             });
@@ -975,26 +977,7 @@ export class AWBPartnersTabComponent extends BaseComponent{
         }
 
         this.Validate_CON();
-        this.FireWizardEvent();        
-    }
-
-    private CheckConsignee_OCI(consigneeAddress: AddressList) {
-        if (!consigneeAddress) return;
-        if (!consigneeAddress.CountryEC) return;
-        if (AppTool.IsNullOrEmpty(this.consigneeEORINumber)) return;
-
-        var OCIItem = new AWBOCIPM(null);
-        OCIItem.ShipmentId = this.EntityPM.Id;
-        OCIItem.Tenant = this.EntityPM.Tenant;
-        OCIItem.CountryId = this.EntityPM.ConsigneeCountryId;
-        OCIItem.AWBInformationCode = "CNE";
-        OCIItem.AWBCustomsInformationCode = "T";
-        OCIItem.SupplementaryCustomsInfo = this.consigneeEORINumber;
-
-        if (this.EntityPM.AWBOCIPMs.indexOf(OCIItem) == -1) {
-            this.EntityPM.AddOCI(OCIItem);
-            this.Wizard.RefreshTab("OCI");
-        }
+        this.FireWizardEvent();
     }
 
     // Notify1

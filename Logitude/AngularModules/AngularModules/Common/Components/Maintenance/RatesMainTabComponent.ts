@@ -9,31 +9,24 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {RatesTablePM} from '../../../Infrastructure/EntityPMs/RatesTablePM';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { AdditionalCurrencyRateListService } from 'Infrastructure/Services/StandardLists/AdditionalCurrencyRateListService';
-import { AdditionalCurrencyRateList } from 'Infrastructure/EntityLists/AdditionalCurrencyRateList';
-
 
 @Component({
     selector: 'RatesMainTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './RatesMainTabComponent.html',
 })
 
 export class RatesMainTabComponent extends BaseComponent {
-  public imgNgStyle: any = null;
+
     //Props 
     public TodayDate: Date = DateTool.GetCurrentDateAsUtc();
     public ItemsSource: RatesItem[] = [];
     public TenantPM: TenantPM;
     public DataContext: RatesMainTabComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
-    IsAccountingActivated: boolean = false;
-    public CurrencyRateTypes: AdditionalCurrencyRateList[];
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.BuildData();
     }
 
@@ -49,7 +42,7 @@ export class RatesMainTabComponent extends BaseComponent {
         logWindow.Width = 600;
         logWindow.Height = 400;
         logWindow.Title = windowTitle;
-        logWindow.WindowArgs = { LastRate: item.LastRate, CurrencyRateTypes: this.CurrencyRateTypes };
+        logWindow.WindowArgs = item.LastRate;
         logWindow.Show('./Common/Components/Maintenance/RatesHistoryComponent');
     }
 
@@ -66,7 +59,6 @@ export class RatesMainTabComponent extends BaseComponent {
         entityPM.LogDateTime = DateTool.GetCurrentDateTimeAsUtc();
         itemComponent.EntityPM = entityPM;
         logitudeWindow.DataContext = itemComponent;
-        logitudeWindow.WindowArgs = { CurrencyRateTypes: this.CurrencyRateTypes }
         logitudeWindow.Show('./Common/Components/Maintenance/EditLastRateComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnEditWindowClosed($event));
     }
@@ -95,33 +87,29 @@ export class RatesMainTabComponent extends BaseComponent {
         else {
             var list: LastRate[] = new Array<LastRate>();
             var myService: CurrencyRatesService = new CurrencyRatesService();
-            const additionalCurrencyRateListService: AdditionalCurrencyRateListService = new AdditionalCurrencyRateListService();
             var loadingDate: Date = this.TodayDate;
             if (loadingDate == null) {
                 loadingDate = DateTool.GetCurrentDateAsUtc();
             }
-           
-            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate,true).subscribe((resp:any) => {
+
+            if (loadingDate != null) {
+                //loadingDate = Date.SpecifyKind(loadingDate, Date.UTC);
+            }
+
+            myService.GetCurrenciesExchangeRateByValueDate(this.TenantPM.CurrencyId, loadingDate).subscribe(resp => {
                 var result: ServiceResponse = resp;
                 if (!result.HasError) {
-                    additionalCurrencyRateListService.getAll().subscribe((rateTypesResp:any) => {
-                        if (!rateTypesResp.HasError){
-                            this.CurrencyRateTypes = rateTypesResp.Result;
-                        }
-
-                        result.Result.forEach(item => {
-                            var itemData: RatesItem = new RatesItem(item);
-                            this.ItemsSource.push(itemData);
-                        });
+                    result.Result.forEach(item => {
+                        var itemData: RatesItem = new RatesItem(item);
+                        this.ItemsSource.push(itemData);
                     });
                 }
-                
+                //else {
+                //    var errors = result.ErrorsArray;
+                //}
             });
         }
     }    
-    GetFoundRate(currencyRates: any[], AdditionalCurrencyRateId: number): any {
-        return Array.isArray(currencyRates) ? currencyRates.find(rate => rate.AdditionalCurrencyRateId === AdditionalCurrencyRateId) : undefined;
-    }
 }
 
 export class RatesItem extends BaseComponent implements OnInit {
@@ -131,15 +119,11 @@ export class RatesItem extends BaseComponent implements OnInit {
     public EntityPM: RatesTablePM;
     public ObjectTableName = "RatesTable";
     public DataContext: RatesItem = this;
-    IsAccountingActivated: boolean = false;
-    public CurrencyRates = [];
 
     constructor(entityPM: LastRate) {
         super();
-        this.CurrencyRates = entityPM.CurrencyRates;
         this.LastRate = entityPM;
         this.TenantPM = SessionLocator.TenantPM;
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.CreateRatesTablePM();
     }
 
@@ -150,8 +134,6 @@ export class RatesItem extends BaseComponent implements OnInit {
         this.EntityPM.ForeignCurrencyId = this.LastRate.ForeignCurrencyId;
         this.EntityPM.LogDateTime = DateTool.GetCurrentDateAsUtc();
         this.EntityPM.ValueDate = DateTool.GetCurrentDateAsUtc();
- 
-                  
     }
 
     ngOnInit() {
@@ -179,8 +161,6 @@ export class RatesItem extends BaseComponent implements OnInit {
         }
     }
 
-    
-
     get Rate() {
         return this.EntityPM.Rate;
     }
@@ -195,7 +175,7 @@ export class RatesItem extends BaseComponent implements OnInit {
     get IsEditingEnabled() {
         var myResult: boolean = true;
 
-        if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
+        if (this.TenantPM.Id == 65) {
             myResult = false;
 
             if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -228,29 +208,8 @@ export class RatesItem extends BaseComponent implements OnInit {
     get CurrentRate() {
         return this.LastRate.Rate;
     }
-
     set CurrentRate(value: number) {
         this.LastRate.Rate = value;
-    }
-    get UpdatedByUserName() {
-        return this.LastRate.UpdatedByUserNameName;
-    }
-
-    set UpdatedByUserName(value: string) {
-        this.LastRate.UpdatedByUserNameName = value;
-    }
-
-    get Unit() {
-        
-        if(this.IsAccountingActivated){
-            if(this.LastRate.Unit == null || this.LastRate.Unit <= 0){
-                return 1;
-            }
-            return this.LastRate.Unit;
-        } else {
-            return 1;
-        }
-       
     }
 
     get ViewHistoryIsEnabled() {

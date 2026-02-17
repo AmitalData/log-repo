@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     BranchRepository branchRepository = new BranchRepository(context);
                     BranchQuery branchQuery = new BranchQuery(branchRepository);
                     myResult.Branches = branchQuery.GetBranchPMsByTenant(tenant).ToList();
-                    myResult.Branches = myResult.Branches.Where(a=>!a.InActive).ToList();
+
                     List<ShippingLinePM> ShippingLines = (from d in context.ShippingLines.Include("Card")
                                                           where d.IsINTTRARegistered == true && d.Tenant == tenant
                                                           select new ShippingLinePM()

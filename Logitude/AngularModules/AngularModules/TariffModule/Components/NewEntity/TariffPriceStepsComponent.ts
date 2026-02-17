@@ -6,7 +6,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TariffPriceStepsComponent.html',
 })
 
@@ -17,16 +17,13 @@ export class TariffPriceStepsComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public ItemsSource: TariffSettingStep[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
-    public UnitOfMeasurementLabel = "Unit Of Measurement ";
-    private unitOfMeasurementCode: string;
 
     constructor() {
         super();
     }
 
     SetWindowArgs(args) {
-        this.DefaultPriceSteps = args[0];
-        this.unitOfMeasurementCode  = args[1];
+        this.DefaultPriceSteps = args;
         this.BuildItemsSource();
     }
 
@@ -35,13 +32,6 @@ export class TariffPriceStepsComponent extends BaseComponent {
     set DefaultPriceSteps(value: string) {
         if (this.defaultPriceSteps != value) {
             this.defaultPriceSteps = value;
-        }
-    }
-
-    get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
-    set UnitOfMeasurementCode(value: string) {
-        if (this.unitOfMeasurementCode != value) {
-            this.unitOfMeasurementCode = value;
         }
     }
 
@@ -127,13 +117,12 @@ export class TariffPriceStepsComponent extends BaseComponent {
 
 class TariffSettingStep extends BaseComponent {
     public Index: number;
-    public UnitOfMeasurementCode: string;
     public DataContext = this;
     constructor(iStep: string, index: number, private father: TariffPriceStepsComponent) {
         super();
 
         this.Index = index;
-        this.UnitOfMeasurementCode = this.father.UnitOfMeasurementCode;
+
         if (iStep) {
             this.Step = +iStep;
         }
@@ -147,7 +136,6 @@ class TariffSettingStep extends BaseComponent {
             this.father.BuildDefaultPriceSteps();
         }
     }
-
 
     DeleteClicked() {
         this.Step = null;

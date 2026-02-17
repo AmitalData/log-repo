@@ -1,9 +1,9 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -41,34 +41,21 @@ namespace WebFreight.Web.MetaDataUpdate
                 LoadBaseTablesForConnection(db.DBConnection);
             }
         }
-
         public void UpgradeClosedTablesForTenantZero()
         {
             isUpdate = true;
+            List<GlobalDB> dbList = null;
+            using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
+            {
+                GlobalDBRepository globalDbRep = new GlobalDBRepository();
+                dbList = globalDbRep.GetGlobalDBs().ToList();
+                scop.Complete();
+            }
 
-            string enviroment = ConfigurationManager.AppSettings.Get(1);
-
-         
-                List<GlobalDB> dbList = null;
-                using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
-                {
-                    GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                    dbList = globalDbRep.GetGlobalDBs().ToList();
-                    scop.Complete();
-                }
-
-                foreach (GlobalDB db in dbList)
-                {
-                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-                    {
-                        LoadBaseTablesForConnection_oracle(db.DBConnection);
-                    }
-                    else
-                    {
-                        LoadBaseTablesForConnection(db.DBConnection);
-                    }
-                }
-          
+            foreach (GlobalDB db in dbList)
+            {
+                LoadBaseTablesForConnection(db.DBConnection);
+            }
         }
 
         private void LoadBaseTablesForConnection(string connectionStr)
@@ -237,9 +224,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //-------------Transport Mode---------------
             TransportModeRepository transModeRep = new TransportModeRepository(tempContext);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air", LocalName = "אויר" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" , LocalName = "ים" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" , LocalName = "יבשה" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" }, transModeRep);
 
             //============= Just For Testing ============= 
             if (Testing.General.IsTesting)
@@ -357,7 +344,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Text", Name = "Text" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "nText", Name = "nText" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime", Name = "DateTime" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime2", Name = "DateTime2" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Date", Name = "Date" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Integer", Name = "Integer" }, fieldDataTypeRep);
             AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "UnsInteger", Name = "UnsInteger" }, fieldDataTypeRep);
@@ -628,8 +614,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "ACC", Name = "Accounting" }, categoryTypeRep);
             AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "BUP", Name = "Business Process" }, categoryTypeRep);
             AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "OCS", Name = "Occasions" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "TRF", Name = "Tariffs" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "QUO", Name = "Quotation" }, categoryTypeRep);
+            
             //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Ven", Name = "Vendors" }, categoryTypeRep);
             //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Cli", Name = "Clients" }, categoryTypeRep);
             //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Tab", Name = "Tables" }, categoryTypeRep);
@@ -850,8 +835,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             apInvoiceStatusRepository.SubmitChanges();
 
-           
-
             //---------AP Invoice Type---------
             APInvoiceTypeRepository apInvoiceTypeRepository = new APInvoiceTypeRepository(invoiceContext);
             AddClosedTables.AddAPInvoiceTypes(new APInvoiceTypeDetails() { Code = "IN", Name = "Invoice" }, apInvoiceTypeRepository);
@@ -864,8 +847,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "AD", Name = "Approved" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "VD", Name = "Void" }, apPaymentStatusRepository);
             AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "CL", Name = "Closed" }, apPaymentStatusRepository);
-            AddClosedTables.AddAPPaymentstatus(new APPaymentStatusDetails() { Code = "PD", Name = "Paid" }, apPaymentStatusRepository);
-
             apPaymentStatusRepository.SubmitChanges();
 
             //-------- SAT Interfaces ----------//
@@ -1216,14 +1197,14 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Quote Closing Reason
-            //QuoteClosingReasonRepository quoteClosingReasonRep = new QuoteClosingReasonRepository(quotesContext);
-            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "EQ", Name = "Expensive Quote" }, quoteClosingReasonRep);
-            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "GS", Name = "Given directly to the Shipping Line" }, quoteClosingReasonRep);
-            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LC", Name = "Lost to Competitor" }, quoteClosingReasonRep);
-            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LS", Name = "Lack of Service in the Last Shipment" }, quoteClosingReasonRep);
-            //AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "XQ", Name = "Expired Quote" }, quoteClosingReasonRep);
+            QuoteClosingReasonRepository quoteClosingReasonRep = new QuoteClosingReasonRepository(quotesContext);
+            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "EQ", Name = "Expensive Quote" }, quoteClosingReasonRep);
+            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "GS", Name = "Given directly to the Shipping Line" }, quoteClosingReasonRep);
+            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LC", Name = "Lost to Competitor" }, quoteClosingReasonRep);
+            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "LS", Name = "Lack of Service in the Last Shipment" }, quoteClosingReasonRep);
+            AddClosedTables.AddQuoteClosingReason(new QuoteClosingReasonDetails() { Code = "XQ", Name = "Expired Quote" }, quoteClosingReasonRep);
 
-            //quoteClosingReasonRep.SubmitChanges();
+            quoteClosingReasonRep.SubmitChanges();
             #endregion
 
             //-------------Customer Status---------------
@@ -1330,676 +1311,6 @@ namespace WebFreight.Web.MetaDataUpdate
             UpdateINTTRASIStatuses(shipmentContext);
             UpdateINTTRAStatuses(shipmentContext);
             UpdateINTTRADocumentTypes(shipmentContext);
-            UpdateConfirmationNumberStatusClosedTable(invoiceContext);
-            UpdateMasavInterfaceStatusClosedTable(invoiceContext);
-
-
-        }
-
-        private void LoadBaseTablesForConnection_oracle(string connectionStr)
-        {
-            WebFreightContext tempContext = new WebFreightContext(DatabaseInitializer.GetConnection(connectionStr));
-            CommonDataContext commonContext = new CommonDataContext(DatabaseInitializer.GetConnection(connectionStr));
-                    
-            string dbConnectionInfo = "";
-            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-            {
-                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
-
-            }
-            else
-            {
-                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
-            }
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            GlobalContext globalContext = new GlobalContext(connection);
-
-            #region PasswordPolicy
-            PasswordPolicyRepository passwordPolicySrepository = new PasswordPolicyRepository(commonContext);
-            AddClosedTables.AddPasswordPolicies(new PasswordPolicyDetails() { Code = "MEDU", PasswordStrength = "Meduim" }, passwordPolicySrepository);
-            AddClosedTables.AddPasswordPolicies(new PasswordPolicyDetails() { Code = "STRO", PasswordStrength = "Strong" }, passwordPolicySrepository);
-            AddClosedTables.AddPasswordPolicies(new PasswordPolicyDetails() { Code = "VSTR", PasswordStrength = "Very Strong" }, passwordPolicySrepository);
-            passwordPolicySrepository.SubmitChanges();
-            #endregion
-
-            #region WeightUnit
-            WeightUnitRepository weightRep = new WeightUnitRepository(commonContext);
-            AddClosedTables.AddWeightUnits(new WeightUnitDetails() { Code = "KG", Name = "Kilogram" }, weightRep);
-            AddClosedTables.AddWeightUnits(new WeightUnitDetails() { Code = "LB", Name = "Pound" }, weightRep);
-            AddClosedTables.AddWeightUnits(new WeightUnitDetails() { Code = "MT", Name = "Metric Ton" }, weightRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddWeightUnits(new WeightUnitDetails() { Code = "TST", Name = "Test" }, weightRep);
-            }
-            //============================================
-
-            weightRep.SubmitChanges();
-            #endregion
-
-            
-
-          
-
-            #region RateClass
-            RateClassRepository retesRep = new RateClassRepository(commonContext);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "M", Name = "Minimum Charge" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "B", Name = "Basic Charge" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "C", Name = "Specific Commodity Rate" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "E", Name = "ULD Additional Rate" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "K", Name = "Rate Per Kilogram" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "N", Name = "Normal Rate" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "Q", Name = "Quantity Rate" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "R", Name = "Class Rate Reduction" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "S", Name = "Class Rate Surcharge" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "U", Name = "ULD Basic Charge or Rate" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "X", Name = "ULD Additional Information" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "Y", Name = "ULD Discount" }, retesRep);
-            AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "P", Name = "International Priority Service Rate" }, retesRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddRateClasses(new RateClassDetails() { Code = "TST", Name = "Test" }, retesRep);
-            }
-            //============================================
-            retesRep.SubmitChanges();
-            #endregion
-
-            #region DocumentTypeCategory
-            DocumentTypeCategoryRepository DocsRep = new DocumentTypeCategoryRepository(commonContext);
-            AddClosedTables.AddDocumentTypeCategories(new DocumentTypeCategoryDetails() { Code = "P", Name = "Operational Documents" }, DocsRep);
-            AddClosedTables.AddDocumentTypeCategories(new DocumentTypeCategoryDetails() { Code = "A", Name = "Accounting Documents" }, DocsRep);
-            AddClosedTables.AddDocumentTypeCategories(new DocumentTypeCategoryDetails() { Code = "O", Name = "Others" }, DocsRep);
-
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddDocumentTypeCategories(new DocumentTypeCategoryDetails() { Code = "TST", Name = "Test" }, DocsRep);
-            }
-            //============================================
-            DocsRep.SubmitChanges();
-            #endregion
-
-            #region CustomerTenantAccessStatusType
-
-            CustomerTenantAccessStatusTypeRepository CusTenantAccRep = new CustomerTenantAccessStatusTypeRepository(commonContext);
-            AddClosedTables.AddCustomerTenantAccessStatusTypes(new CustomerTenantAccessStatusTypeDetails() { Code = "W", EnglishName = "Waiting For Approval", LocalName = "Waiting For Approval" }, CusTenantAccRep);
-            AddClosedTables.AddCustomerTenantAccessStatusTypes(new CustomerTenantAccessStatusTypeDetails() { Code = "A", EnglishName = "Accepted", LocalName = "Accepted" }, CusTenantAccRep);
-            AddClosedTables.AddCustomerTenantAccessStatusTypes(new CustomerTenantAccessStatusTypeDetails() { Code = "IA", EnglishName = "InActive", LocalName = "InActive" }, CusTenantAccRep);
-            AddClosedTables.AddCustomerTenantAccessStatusTypes(new CustomerTenantAccessStatusTypeDetails() { Code = "IP", EnglishName = "In Progress", LocalName = "In Progress" }, CusTenantAccRep);
-            AddClosedTables.AddCustomerTenantAccessStatusTypes(new CustomerTenantAccessStatusTypeDetails() { Code = "N", EnglishName = "New", LocalName = "New" }, CusTenantAccRep);
-
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddCustomerTenantAccessStatusTypes(new CustomerTenantAccessStatusTypeDetails() { Code = "TST", EnglishName = "Test" }, CusTenantAccRep);
-            }
-            //============================================
-            CusTenantAccRep.SubmitChanges();
-            #endregion
-
-            //-------------Dimensions Unit---------------
-            DimensionsUnitRepository dimensionsRep = new DimensionsUnitRepository(commonContext);
-            AddClosedTables.AddDimensionsUnits(new DimensionsUnitDetails() { Code = "Cm", Name = "Cm" }, dimensionsRep);
-            AddClosedTables.AddDimensionsUnits(new DimensionsUnitDetails() { Code = "Inc", Name = "Inch" }, dimensionsRep);
-            AddClosedTables.AddDimensionsUnits(new DimensionsUnitDetails() { Code = "Ft", Name = "Ft" }, dimensionsRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddDimensionsUnits(new DimensionsUnitDetails() { Code = "TST", Name = "Test" }, dimensionsRep);
-            }
-            //============================================
-            dimensionsRep.SubmitChanges();
-
-            #region Due Type
-            DueTypeRepository duetypeRep = new DueTypeRepository(commonContext);
-            AddClosedTables.AddDueTypes(new DueTypeDetails() { Code = "CA", Name = "Carrier" }, duetypeRep);
-            AddClosedTables.AddDueTypes(new DueTypeDetails() { Code = "AG", Name = "Agent" }, duetypeRep);
-            AddClosedTables.AddDueTypes(new DueTypeDetails() { Code = "TX", Name = "Tax" }, duetypeRep);
-            AddClosedTables.AddDueTypes(new DueTypeDetails() { Code = "VL", Name = "Valuation" }, duetypeRep);
-            AddClosedTables.AddDueTypes(new DueTypeDetails() { Code = "NO", Name = "none" }, duetypeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddDueTypes(new DueTypeDetails() { Code = "TS", Name = "Test" }, duetypeRep);
-            }
-            //============================================
-            duetypeRep.SubmitChanges();
-            #endregion
-
-            //-------------Transport Mode---------------
-            TransportModeRepository transModeRep = new TransportModeRepository(tempContext);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air", LocalName = "אויר" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean", LocalName = "יבשה" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland", LocalName = "ים" }, transModeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "T", Name = "Test" }, transModeRep);
-            }
-            //============================================
-            transModeRep.SubmitChanges();
-
-            //-------------Direction---------------
-            DirectionRepository directionRep = new DirectionRepository(tempContext);
-            AddClosedTables.AddDirections(new DirectionDetails() { Id = "E", Name = "Export" }, directionRep);
-            AddClosedTables.AddDirections(new DirectionDetails() { Id = "I", Name = "Import" }, directionRep);
-            AddClosedTables.AddDirections(new DirectionDetails() { Id = "D", Name = "Domestic" }, directionRep);
-            AddClosedTables.AddDirections(new DirectionDetails() { Id = "R", Name = "Drop" }, directionRep);
-            AddClosedTables.AddDirections(new DirectionDetails() { Id = "C", Name = "Customs Import" }, directionRep);
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddDirections(new DirectionDetails() { Id = "T", Name = "Test" }, directionRep);
-            }
-            //============================================
-            directionRep.SubmitChanges();
-
-            //-------------Prepaid Collect---------------
-            PrepaidCollectRepository prepaidCollectRep = new PrepaidCollectRepository(tempContext);
-            AddClosedTables.AddPrepaidCollects(new PrepaidCollectDetails() { Id = "P", Name = "Prepaid", DisplayInLOV = true }, prepaidCollectRep);
-            AddClosedTables.AddPrepaidCollects(new PrepaidCollectDetails() { Id = "C", Name = "Collect", DisplayInLOV = true }, prepaidCollectRep);
-            AddClosedTables.AddPrepaidCollects(new PrepaidCollectDetails() { Id = "B", Name = "Both", DisplayInLOV = false }, prepaidCollectRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddPrepaidCollects(new PrepaidCollectDetails() { Id = "T", Name = "Test" }, prepaidCollectRep);
-            }
-            //============================================
-            prepaidCollectRep.SubmitChanges();
-
-          
-
-            //-------------Partner Type---------------
-            PartnerTypeRepository partnerTypesRep = new PartnerTypeRepository(commonContext);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "AG", Name = "Agent" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "CG", Name = "Custom Agent" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "SG", Name = "Shipping Agent" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "TR", Name = "Trucker" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "AL", Name = "AirLine" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "SL", Name = "Shipping Line" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "OT", Name = "Others" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "CS", Name = "Customer" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "VD", Name = "Vendor" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "WH", Name = "Warehouse" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "CO", Name = "Coloader" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "CC", Name = "Custom Clearance" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "PO", Name = "Potential Customer" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "FL", Name = "Freelancer" }, partnerTypesRep);
-            AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "PT", Name = "Participant" }, partnerTypesRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddPartnerTypes(new PartnerTypeDetails() { Id = "TS", Name = "Test" }, partnerTypesRep);
-            }
-            //============================================
-            partnerTypesRep.SubmitChanges();
-
-            //-------------Address Type---------------
-            AddressTypeRepository addressTypeRep = new AddressTypeRepository(commonContext);
-            AddClosedTables.AddAddressTypes(new AddressTypeDetails() { Id = "M", Name = "Main" }, addressTypeRep);
-            AddClosedTables.AddAddressTypes(new AddressTypeDetails() { Id = "B", Name = "Billing" }, addressTypeRep);
-            AddClosedTables.AddAddressTypes(new AddressTypeDetails() { Id = "P", Name = "Pickup Delivery" }, addressTypeRep);
-            AddClosedTables.AddAddressTypes(new AddressTypeDetails() { Id = "L", Name = "Local Address" }, addressTypeRep);
-            AddClosedTables.AddAddressTypes(new AddressTypeDetails() { Id = "O", Name = "Others" }, addressTypeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddAddressTypes(new AddressTypeDetails() { Id = "T", Name = "Test" }, addressTypeRep);
-            }
-            //============================================
-            addressTypeRep.SubmitChanges();
-
-            //-------------Entity Date---------------
-            EntityDateRepository entityDateRep = new EntityDateRepository(commonContext);
-            AddClosedTables.AddEntityDates(new EntityDateDetails() { Id = "PICD", Name = "Pick Up Departure Date" }, entityDateRep);
-            AddClosedTables.AddEntityDates(new EntityDateDetails() { Id = "PICA", Name = "Pick Up Arrival Date" }, entityDateRep);
-            AddClosedTables.AddEntityDates(new EntityDateDetails() { Id = "Open", Name = "Open Date" }, entityDateRep);
-            AddClosedTables.AddEntityDates(new EntityDateDetails() { Id = "McAr", Name = "Main Carriage Arrivel" }, entityDateRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddEntityDates(new EntityDateDetails() { Id = "TST", Name = "Test" }, entityDateRep);
-            }
-            //============================================
-            entityDateRep.SubmitChanges();
-
-            //-------------Field Data Type---------------
-            FieldDataTypesRepository fieldDataTypeRep = new FieldDataTypesRepository(tempContext);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Text", Name = "Text" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "nText", Name = "nText" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime", Name = "DateTime" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "DateTime2", Name = "DateTime2" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Date", Name = "Date" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Integer", Name = "Integer" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "UnsInteger", Name = "UnsInteger" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Double", Name = "Double" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "SigDouble", Name = "SigDouble" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Boolean", Name = "Boolean" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Decimal", Name = "Decimal" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "UnsDecimal", Name = "UnsDecimal" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "LookUp", Name = "LookUp" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Constant", Name = "Constant" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "PickList", Name = "PickList" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "List", Name = "List" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Emails", Name = "Emails" }, fieldDataTypeRep);
-            AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "Byte[]", Name = "Byte[]" }, fieldDataTypeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddFieldDataTypes(new FieldDataTypeDetails() { Code = "TST", Name = "Test" }, fieldDataTypeRep);
-            }
-            //============================================
-            fieldDataTypeRep.SubmitChanges();
-
-            //-------------Text Code Type---------------
-            TextCodeTypesRepository textCodesTypeRep = new TextCodeTypesRepository(tempContext);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "T", Name = "Table" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "F", Name = "Field" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "B", Name = "Button And Action" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "M", Name = "Message" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "H", Name = "Help Text" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "O", Name = "Other" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "Q", Name = "Query" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "S", Name = "Screen" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "G", Name = "General" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "MH", Name = "Menu Header" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "MC", Name = "Maintenance" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "QC", Name = "Query Column" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "CH", Name = "Column Header" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "TH", Name = "Tab Header" }, textCodesTypeRep);
-            AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "TIP", Name = "Tip" }, textCodesTypeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddTextCodeTypes(new TextCodeTypeDetails() { Code = "TS", Name = "Test" }, textCodesTypeRep);
-            }
-            //============================================
-            textCodesTypeRep.SubmitChanges();
-
-            //-------------Charges Group---------------
-            ChargesGroupRepository chargesRep = new ChargesGroupRepository(tempContext);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Freight", Code = "FRT", Name = "Freight" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Surcharges", Code = "SCH", Name = "Surcharges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Other Charges", Code = "OCH", Name = "Other Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Documentation Charges", Code = "DCCH", Name = "Documentation Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Documentation Charges Ex", Code = "DCCHX", Name = "Documentation Charges Ex" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Handling Charges", Code = "HNDCH", Name = "Handling Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Custom Charges", Code = "CUSCH", Name = "Custom Charges" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Valuation", Code = "VAL", Name = "Valuation" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Tax", Code = "TAX", Name = "Tax" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "None", Code = "NONE", Name = "None" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Disbursement", Code = "DIS", Name = "Disbursement" }, chargesRep);
-            AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Id = IdCounter.GetNumber("ChargesGroup", 0).ToString(), Tenant = 0, LocalName = "Commission", Code = "COMM", Name = "Commission" }, chargesRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddChargesGroups(new ChargesGroupDetails() { Code = "TST", Name = "Test" }, chargesRep);
-            }
-            //============================================
-            chargesRep.SubmitChanges();
-
-            //-------------Volume Unit---------------
-            VolumeUnitRepository volumeRep = new VolumeUnitRepository(tempContext);
-            AddClosedTables.AddVolumeUnits(new VolumeUnitDetails() { Code = "CBM", Name = "CBM" }, volumeRep);
-            AddClosedTables.AddVolumeUnits(new VolumeUnitDetails() { Code = "CBI", Name = "CBI" }, volumeRep);
-            AddClosedTables.AddVolumeUnits(new VolumeUnitDetails() { Code = "CBF", Name = "CBF" }, volumeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddVolumeUnits(new VolumeUnitDetails() { Code = "TST", Name = "Test" }, volumeRep);
-            }
-            //============================================
-            volumeRep.SubmitChanges();
-
-
-
-            //-------------Menu Type---------------
-            MenuTypeRepository menuTypeRep = new MenuTypeRepository(tempContext);
-            AddClosedTables.AddMenuType(new MenuTypeDetails() { Code = "Main", Name = "Main" }, menuTypeRep);
-            AddClosedTables.AddMenuType(new MenuTypeDetails() { Code = "MTC", Name = "Maintenance" }, menuTypeRep);
-            AddClosedTables.AddMenuType(new MenuTypeDetails() { Code = "CSM", Name = "Customs Maintenance" }, menuTypeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddMenuType(new MenuTypeDetails() { Code = "TST", Name = "Test" }, menuTypeRep);
-            }
-            //============================================
-            menuTypeRep.SubmitChanges();
-
-            //-------------Category Type--------------
-            CategoryTypeRepository categoryTypeRep = new CategoryTypeRepository(tempContext);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Par", Name = "Partners" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Bil", Name = "Billing" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Oth", Name = "Others" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Loc", Name = "Locations" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "CRM", Name = "CRM" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "TKT", Name = "Tickets" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "CSM", Name = "Customs" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "ACC", Name = "Accounting" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "BUP", Name = "Business Process" }, categoryTypeRep);
-            AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "OCS", Name = "Occasions" }, categoryTypeRep);
-
-            //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Ven", Name = "Vendors" }, categoryTypeRep);
-            //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Cli", Name = "Clients" }, categoryTypeRep);
-            //AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "Tab", Name = "Tables" }, categoryTypeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddCategoryType(new CategoryTypeDetails() { Code = "TST", Name = "Test" }, categoryTypeRep);
-            }
-            //============================================
-            categoryTypeRep.SubmitChanges();
-
-            //-------------Vat Type--------------
-            if (!isUpdate)
-            {
-                VatTypeRepository vatTypeRep = new VatTypeRepository(commonContext);
-                VatType vat1 = new VatType() { Code = "ZERO", EnglishName = "Zero", LocalName = "Zero", Id = IdCounter.GetNumber("VatType", 0).ToString(), Tenant = 0 };
-                VatType vat2 = new VatType() { Code = "STD", EnglishName = "STD", LocalName = "STD", Id = IdCounter.GetNumber("VatType", 0).ToString(), Tenant = 0 };
-                VatType vat3 = new VatType() { Code = "EXMPT", EnglishName = "Excempt", LocalName = "Excempt", Id = IdCounter.GetNumber("VatType", 0).ToString(), Tenant = 0 };
-                vatTypeRep.Add(vat1);
-                vatTypeRep.Add(vat2);
-                vatTypeRep.Add(vat3);
-                vatTypeRep.SubmitChanges();
-            }
-
-            //-------------Template Format--------------
-            TemplateFormatRepository templateFormatRep = new TemplateFormatRepository(commonContext);
-            AddClosedTables.AddTemplateFormat(new TemplateFormatDetails() { Code = "P", Name = "Print" }, templateFormatRep);
-            AddClosedTables.AddTemplateFormat(new TemplateFormatDetails() { Code = "M", Name = "Message" }, templateFormatRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddTemplateFormat(new TemplateFormatDetails() { Code = "T", Name = "Test" }, templateFormatRep);
-            }
-            //============================================
-            templateFormatRep.SubmitChanges();
-
-            //-------------Rule Type--------------
-            RuleTypeRepository ruletypeRep = new RuleTypeRepository(tempContext);
-            AddClosedTables.AddRuleType(new RuleTypeDetails() { Code = "REQ", Name = "Required" }, ruletypeRep);
-            AddClosedTables.AddRuleType(new RuleTypeDetails() { Code = "EVAL", Name = "Entity Validation" }, ruletypeRep);
-            AddClosedTables.AddRuleType(new RuleTypeDetails() { Code = "BLCK", Name = "Block Field" }, ruletypeRep);
-            AddClosedTables.AddRuleType(new RuleTypeDetails() { Code = "SETV", Name = "Set Field Value" }, ruletypeRep);
-            AddClosedTables.AddRuleType(new RuleTypeDetails() { Code = "DUPL", Name = "Field Duplication" }, ruletypeRep);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddRuleType(new RuleTypeDetails() { Code = "TST", Name = "Test" }, ruletypeRep);
-            }
-            //============================================
-            ruletypeRep.SubmitChanges();
-
-            //-------------Trigger Type--------------
-            TriggerTypeRepository triggerTypeRepository = new TriggerTypeRepository(tempContext);
-            AddClosedTables.AddTriggerType(new TriggerTypeDetails() { Code = "ALLW", Name = "Allways" }, triggerTypeRepository);
-            AddClosedTables.AddTriggerType(new TriggerTypeDetails() { Code = "COND", Name = "Condition" }, triggerTypeRepository);
-            AddClosedTables.AddTriggerType(new TriggerTypeDetails() { Code = "FLDC", Name = "Field Changed" }, triggerTypeRepository);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddTriggerType(new TriggerTypeDetails() { Code = "TSTT", Name = "Test" }, triggerTypeRepository);
-            }
-            //============================================
-            triggerTypeRepository.SubmitChanges();
-
-            //-------------Rule Notification Type---------------
-            RuleNotificationTypeRepository ruleNotificationTypeRepository = new RuleNotificationTypeRepository(tempContext);
-            AddClosedTables.AddRuleNotificationType(new RuleNotificationTypeDetails() { Code = "ERR", Name = "Error" }, ruleNotificationTypeRepository);
-            AddClosedTables.AddRuleNotificationType(new RuleNotificationTypeDetails() { Code = "WAR", Name = "Warning" }, ruleNotificationTypeRepository);
-
-            //============= Just For Testing ============= 
-            if (Testing.General.IsTesting)
-            {
-                AddClosedTables.AddRuleNotificationType(new RuleNotificationTypeDetails() { Code = "TST", Name = "Test" }, ruleNotificationTypeRepository);
-            }
-            //============================================
-            ruleNotificationTypeRepository.SubmitChanges();
-
-           
-           
-
-            //-------------Tarrif Type---------------
-            TarrifTypeRepository tarrifTypeRepository = new TarrifTypeRepository(commonContext);
-            AddClosedTables.AddTarrifType(new TarrifTypeDetails() { Code = "F", Name = "Freight" }, tarrifTypeRepository);
-            AddClosedTables.AddTarrifType(new TarrifTypeDetails() { Code = "S", Name = "Surcharges" }, tarrifTypeRepository);
-            tarrifTypeRepository.SubmitChanges();
-
-            //-------------Tarrif From To Type---------------
-            TarrifFromToTypeRepository tarrifFromToTypeRepository = new TarrifFromToTypeRepository(commonContext);
-            AddClosedTables.AddTarrifFromToType(new TarrifFromToTypeDetails() { Code = "F", Name = "From" }, tarrifFromToTypeRepository);
-            AddClosedTables.AddTarrifFromToType(new TarrifFromToTypeDetails() { Code = "T", Name = "To" }, tarrifFromToTypeRepository);
-            tarrifFromToTypeRepository.SubmitChanges();
-
-           
-            //-------------Permission Type---------------
-            PermissionTypeRepository permissionTypeRepository = new PermissionTypeRepository(tempContext);
-            AddClosedTables.AddPermissionTypes(new PermissionTypeDetails() { Code = "RDUP", Name = "Read/Update" }, permissionTypeRepository);
-            AddClosedTables.AddPermissionTypes(new PermissionTypeDetails() { Code = "NOAC", Name = "No Access" }, permissionTypeRepository);
-            AddClosedTables.AddPermissionTypes(new PermissionTypeDetails() { Code = "READ", Name = "Read" }, permissionTypeRepository);
-            permissionTypeRepository.SubmitChanges();
-
-            //-------------Feature Type---------------
-            FeatureTypeRepository featureTypeRepository = new FeatureTypeRepository(commonContext);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "NEW", Name = "New" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "UPDT", Name = "Update" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "READ", Name = "Read" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "ACT", Name = "Actions" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "SET", Name = "Settings" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "MENU", Name = "Menu" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "AREA", Name = "Area" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "OTH", Name = "Others" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "MODL", Name = "Module" }, featureTypeRepository);
-            AddClosedTables.AddFeatureTypes(new FeatureTypeDetails() { Code = "QUER", Name = "Query" }, featureTypeRepository);
-
-            featureTypeRepository.SubmitChanges();
-
-            //-------------Role Type---------------
-            RoleTypeRepository roleTypeRepository = new RoleTypeRepository(commonContext);
-            AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "SA", Name = "Sales" }, roleTypeRepository);
-            AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "AC", Name = "Accounting" }, roleTypeRepository);
-            AddClosedTables.AddRoleTypes(new RoleTypeDetails() { Code = "IN", Name = "Internal User" }, roleTypeRepository);
-            roleTypeRepository.SubmitChanges();
-
-            //-------------Object Table Type---------------
-            ObjectTableTypeRepository objectTableTypeRepository = new ObjectTableTypeRepository(tempContext);
-            AddClosedTables.AddObjectTableTypes(new ObjectTableTypeDetails() { Code = "MD", Name = "Master Data" }, objectTableTypeRepository);
-            AddClosedTables.AddObjectTableTypes(new ObjectTableTypeDetails() { Code = "BR", Name = "Business Record" }, objectTableTypeRepository);
-            objectTableTypeRepository.SubmitChanges();
-
-          
-            //-------------Shared Logistics Update Status---------------
-            SharedLogisticsUpdateStatusRepository sharedLogisticsUpdateStatusRepository = new SharedLogisticsUpdateStatusRepository(tempContext);
-            AddClosedTables.AddSharedLogisticsUpdateStatus(new SharedLogisticsUpdateStatusDetails() { Code = "ACPT", Name = "Accepted" }, sharedLogisticsUpdateStatusRepository);
-            AddClosedTables.AddSharedLogisticsUpdateStatus(new SharedLogisticsUpdateStatusDetails() { Code = "REJT", Name = "Rejected" }, sharedLogisticsUpdateStatusRepository);
-            AddClosedTables.AddSharedLogisticsUpdateStatus(new SharedLogisticsUpdateStatusDetails() { Code = "WAIT", Name = "Waiting" }, sharedLogisticsUpdateStatusRepository);
-            sharedLogisticsUpdateStatusRepository.SubmitChanges();
-
-           
-            //---------Recurring Periods---------
-            RecurringPeriodRepository recurringPeriodRepository = new RecurringPeriodRepository(globalContext);
-            AddClosedTables.AddRecurringPeriods(new RecurringPeriodDetails() { Code = "MO", Name = "Monthly" }, recurringPeriodRepository);
-            AddClosedTables.AddRecurringPeriods(new RecurringPeriodDetails() { Code = "YE", Name = "Yearly" }, recurringPeriodRepository);
-            AddClosedTables.AddRecurringPeriods(new RecurringPeriodDetails() { Code = "QU", Name = "Quarterly" }, recurringPeriodRepository);
-            recurringPeriodRepository.SubmitChanges();
-
-            //---------Entity Last Activity Types---------
-            EntityLastActivityTypeRepository entityLastActivityTypeRepository = new EntityLastActivityTypeRepository(tempContext);
-            AddClosedTables.AddEntityLastActivityTypes(new EntityLastActivityTypeDetails() { Code = "N", Name = "New" }, entityLastActivityTypeRepository);
-            AddClosedTables.AddEntityLastActivityTypes(new EntityLastActivityTypeDetails() { Code = "U", Name = "Update" }, entityLastActivityTypeRepository);
-            AddClosedTables.AddEntityLastActivityTypes(new EntityLastActivityTypeDetails() { Code = "V", Name = "View" }, entityLastActivityTypeRepository);
-            entityLastActivityTypeRepository.SubmitChanges();
-
-            //---------Payment Methods---------
-            PaymentMethodRepository paymentMethodRepository = new PaymentMethodRepository(globalContext);
-            AddClosedTables.AddPaymentMethods(new PaymentMethodDetails() { Code = "CC", Name = "Credit Card" }, paymentMethodRepository);
-            AddClosedTables.AddPaymentMethods(new PaymentMethodDetails() { Code = "BT", Name = "Bank Transfer" }, paymentMethodRepository);
-            AddClosedTables.AddPaymentMethods(new PaymentMethodDetails() { Code = "CH", Name = "Cheque" }, paymentMethodRepository);
-            AddClosedTables.AddPaymentMethods(new PaymentMethodDetails() { Code = "PP", Name = "Pay Pal" }, paymentMethodRepository);
-            paymentMethodRepository.SubmitChanges();
-
-            //---------Payment Channels---------
-            PaymentChannelRepository paymentChannelRepository = new PaymentChannelRepository(globalContext);
-            AddClosedTables.AddPaymentChannels(new PaymentChannelDetails() { Code = "PL", Name = "Bluesnap" }, paymentChannelRepository);
-            AddClosedTables.AddPaymentChannels(new PaymentChannelDetails() { Code = "DI", Name = "Direct" }, paymentChannelRepository);
-            paymentChannelRepository.SubmitChanges();
-
-            //---------Event Type Categories---------
-            EventTypeCategoryRepository eventTypeCategoryRepository = new EventTypeCategoryRepository(tempContext);
-            AddClosedTables.AddEventTypeCategories(new EventTypeCategoryDetails() { Code = "LEG", Name = "Routings" }, eventTypeCategoryRepository);
-            AddClosedTables.AddEventTypeCategories(new EventTypeCategoryDetails() { Code = "OPE", Name = "Operations" }, eventTypeCategoryRepository);
-            AddClosedTables.AddEventTypeCategories(new EventTypeCategoryDetails() { Code = "LOG", Name = "Logs" }, eventTypeCategoryRepository);
-            AddClosedTables.AddEventTypeCategories(new EventTypeCategoryDetails() { Code = "DOC", Name = "Documents" }, eventTypeCategoryRepository);
-            eventTypeCategoryRepository.SubmitChanges();
-
-          
-
-            //---------Shared Logistics Invitation Status---------
-            SharedLogisticsInvitationStatusRepository sharedLogisticsInvitationStatusRepository = new SharedLogisticsInvitationStatusRepository(tempContext);
-            AddClosedTables.AddSharedLogisticsInvitationStatus(new SharedLogisticsInvitationStatusDetails() { Code = 1, Name = "Not Invited" }, sharedLogisticsInvitationStatusRepository);
-            AddClosedTables.AddSharedLogisticsInvitationStatus(new SharedLogisticsInvitationStatusDetails() { Code = 2, Name = "Invited" }, sharedLogisticsInvitationStatusRepository);
-            AddClosedTables.AddSharedLogisticsInvitationStatus(new SharedLogisticsInvitationStatusDetails() { Code = 3, Name = "Activated" }, sharedLogisticsInvitationStatusRepository);
-            sharedLogisticsInvitationStatusRepository.SubmitChanges();
-
-            //---------Product Type---------
-            ProductTypeRepository productTypeRepository = new ProductTypeRepository(commonContext);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "AE", Name = "Air Export" }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "AI", Name = "Air Import" }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "AD", Name = "Air Domestic", InActive = true }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "AR", Name = "Air Drop", InActive = true }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "OE", Name = "Ocean Export" }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "OI", Name = "Ocean Import" }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "OD", Name = "Ocean Domestic", InActive = true }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "OR", Name = "Ocean Drop", InActive = true }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "IE", Name = "Inland Export" }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "II", Name = "Inland Import" }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "ID", Name = "Inland Domestic", InActive = true }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "IR", Name = "Inland Drop", InActive = true }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "CI", Name = "Customs Import" }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "IN", Name = "Insurance", InActive = true }, productTypeRepository);
-            AddClosedTables.AddProductType(new ProductTypeDetails() { Code = "DL", Name = "Delivery", InActive = true }, productTypeRepository);
-            productTypeRepository.SubmitChanges();
-
-            //---------Product Period---------
-            ProductPeriodRepository productPeriodRepository = new ProductPeriodRepository(commonContext);
-            AddClosedTables.AddProductPeriod(new ProductPeriodDetails() { Code = "MO", Name = "Monthly", SearchFields = "MO,Monthly" }, productPeriodRepository);
-            AddClosedTables.AddProductPeriod(new ProductPeriodDetails() { Code = "QU", Name = "Quarterly", SearchFields = "QU,Quarterly" }, productPeriodRepository);
-            AddClosedTables.AddProductPeriod(new ProductPeriodDetails() { Code = "YE", Name = "Yearly", SearchFields = "YE,Yearly" }, productPeriodRepository);
-            productPeriodRepository.SubmitChanges();
-
-            //---------Contact Done Method---------
-            ContactDoneMethodRepository doneRepository = new ContactDoneMethodRepository(commonContext);
-            AddClosedTables.AddContactDoneMethod(new ContactDoneMethodDetails() { Code = "PC", Name = "Phone Call", SearchFields = "PC,Phone Call" }, doneRepository);
-            AddClosedTables.AddContactDoneMethod(new ContactDoneMethodDetails() { Code = "EM", Name = "Email", SearchFields = "EM,Email" }, doneRepository);
-            AddClosedTables.AddContactDoneMethod(new ContactDoneMethodDetails() { Code = "GT", Name = "Gift", SearchFields = "GT,Gift" }, doneRepository);
-            AddClosedTables.AddContactDoneMethod(new ContactDoneMethodDetails() { Code = "SM", Name = "Sms", SearchFields = "SM,Sms" }, doneRepository);
-            AddClosedTables.AddContactDoneMethod(new ContactDoneMethodDetails() { Code = "NO", Name = "None", SearchFields = "NO,None" }, doneRepository);
-            doneRepository.SubmitChanges();
-
-            #region VatUniqueType
-            VatUniqueTypeRepository vatUniqueTypeRepository = new VatUniqueTypeRepository(commonContext);
-            AddClosedTables.AddVatUniqueTypeMethod(new VatUniqueTypeDetails() { Code = "UNT", Name = "Not Unique", ViewOrder = 0 }, vatUniqueTypeRepository);
-            AddClosedTables.AddVatUniqueTypeMethod(new VatUniqueTypeDetails() { Code = "USC", Name = "Unique for a specific country", ViewOrder = 1 }, vatUniqueTypeRepository);
-            AddClosedTables.AddVatUniqueTypeMethod(new VatUniqueTypeDetails() { Code = "UFA", Name = "Unique for all countries", ViewOrder = 2 }, vatUniqueTypeRepository);
-            vatUniqueTypeRepository.SubmitChanges();
-            #endregion
-
-            #region VatMandatoryType
-            VatMandatoryTypeRepository vatMandatoryTypeRepository = new VatMandatoryTypeRepository(commonContext);
-            AddClosedTables.AddVatMandatoryTypeMethod(new VatMandatoryTypeDetails() { Code = "MNT", Name = "Not Mandatory", ViewOrder = 0 }, vatMandatoryTypeRepository);
-            AddClosedTables.AddVatMandatoryTypeMethod(new VatMandatoryTypeDetails() { Code = "MSC", Name = "Mandatory for a specific country", ViewOrder = 1 }, vatMandatoryTypeRepository);
-            AddClosedTables.AddVatMandatoryTypeMethod(new VatMandatoryTypeDetails() { Code = "MFA", Name = "Mandatory for all countries", ViewOrder = 2 }, vatMandatoryTypeRepository);
-
-            vatUniqueTypeRepository.SubmitChanges();
-            #endregion
-
-            #region VatFormatType
-            VatFormatTypeRepository vatFormatTypeRepository = new VatFormatTypeRepository(commonContext);
-            AddClosedTables.AddVatFormatTypeMethod(new VatFormatTypeDetails() { Code = "NOF", Name = "No Format", ViewOrder = 0 }, vatFormatTypeRepository);
-            AddClosedTables.AddVatFormatTypeMethod(new VatFormatTypeDetails() { Code = "FSC", Name = "Apply for a Specific Country", ViewOrder = 1 }, vatFormatTypeRepository);
-            AddClosedTables.AddVatFormatTypeMethod(new VatFormatTypeDetails() { Code = "FAC", Name = "Apply for All Countries", ViewOrder = 2 }, vatFormatTypeRepository);
-            vatFormatTypeRepository.SubmitChanges();
-            #endregion
-
-           
-
-            //-------------Customer Status---------------
-            CustomerStatusRepository CustomerStatusRep = new CustomerStatusRepository(commonContext);
-            AddClosedTables.AddCustomerStatus(new CustomerStatusDetails() { Code = "POT", Name = "Potential" }, CustomerStatusRep);
-            AddClosedTables.AddCustomerStatus(new CustomerStatusDetails() { Code = "WAC", Name = "Waiting for Activation" }, CustomerStatusRep);
-            AddClosedTables.AddCustomerStatus(new CustomerStatusDetails() { Code = "ACT", Name = "Active" }, CustomerStatusRep);
-            AddClosedTables.AddCustomerStatus(new CustomerStatusDetails() { Code = "INA", Name = "Inactive" }, CustomerStatusRep);
-            CustomerStatusRep.SubmitChanges();
-
-            FeatureAccessLevelRepository featureAccessLevelRepository = new FeatureAccessLevelRepository(commonContext);
-            AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "NO", Name = "None" }, featureAccessLevelRepository);
-            AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "US", Name = "User" }, featureAccessLevelRepository);
-            AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "BU", Name = "Business Unit" }, featureAccessLevelRepository);
-            AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "PR", Name = "Parent" }, featureAccessLevelRepository);
-            AddClosedTables.AddFeatureAccessLevel(new FeatureAccessLevelDetails() { Code = "OR", Name = "Organization" }, featureAccessLevelRepository);
-            featureAccessLevelRepository.SubmitChanges();
-
-            //---------Payment Currencies---------
-            PaymentCurrencyRepository paymentCurrencyRepository = new PaymentCurrencyRepository(globalContext);
-            AddClosedTables.AddPaymentCurrencies(new PaymentCurrencyDetails() { Code = "USD", Name = "United States Of America Dollar" }, paymentCurrencyRepository);
-            //AddClosedTables.AddPaymentCurrencies(new PaymentCurrencyDetails() { Code = "NIS", Name = "Shekel" }, paymentCurrencyRepository);
-            //AddClosedTables.AddPaymentCurrencies(new PaymentCurrencyDetails() { Code = "EUR", Name = "Euro" }, paymentCurrencyRepository);
-            paymentCurrencyRepository.SubmitChanges();
-
-            //---------Tenant Types---------
-            TenantTypeRepository tenantTypeRepository = new TenantTypeRepository(globalContext);
-            AddClosedTables.AddTenantTypes(new TenantTypeDetails() { Code = "FOR", Name = "Forwarder" }, tenantTypeRepository);
-            AddClosedTables.AddTenantTypes(new TenantTypeDetails() { Code = "SHC", Name = "Shipper/Consignee" }, tenantTypeRepository);
-            AddClosedTables.AddTenantTypes(new TenantTypeDetails() { Code = "AIR", Name = "Airlines" }, tenantTypeRepository);
-            AddClosedTables.AddTenantTypes(new TenantTypeDetails() { Code = "CUT", Name = "Customs" }, tenantTypeRepository);
-            AddClosedTables.AddTenantTypes(new TenantTypeDetails() { Code = "CRM", Name = "CRM" }, tenantTypeRepository);
-            tenantTypeRepository.SubmitChanges();
-
-
-            SharedManifestsStatusRepository sharedManifestsStatusRepository = new SharedManifestsStatusRepository(commonContext);
-            AddClosedTables.AddSharedManifestsStatus(new SharedManifestsStatusDetails() { StatusCode = "WAIT", StatusName = "Waiting", SearchFields = "WAIT,Waiting" }, sharedManifestsStatusRepository);
-            AddClosedTables.AddSharedManifestsStatus(new SharedManifestsStatusDetails() { StatusCode = "COMP", StatusName = "Completed", SearchFields = "CREA,Completed" }, sharedManifestsStatusRepository);
-            AddClosedTables.AddSharedManifestsStatus(new SharedManifestsStatusDetails() { StatusCode = "CANC", StatusName = "Cancelled", SearchFields = "CANC,Cancelled" }, sharedManifestsStatusRepository);
-            sharedManifestsStatusRepository.SubmitChanges();
-
-            CustomsInterfaces(commonContext);
-
-
-
-            
-            #region WarehouseType
-            WarehouseTypeRepository warehouseTypeRep = new WarehouseTypeRepository(commonContext);
-            AddClosedTables.AddWarehouseTypes(new WarehouseTypeDetails() { Code = "TM", Name = "Terminal", SearchFields = "TM,Terminal" }, warehouseTypeRep);
-            AddClosedTables.AddWarehouseTypes(new WarehouseTypeDetails() { Code = "BO", Name = "Bonded", SearchFields = "BO,Bonded" }, warehouseTypeRep);
-            warehouseTypeRep.SubmitChanges();
-            #endregion
-
-            UpdateLoginPolicyClosedTable(commonContext);
-            UpdateMetodoPagoClosedTable(commonContext);
-            UpdateRegistryDateTypes(commonContext);
-            UpdateUsoCFDIClosedTable(commonContext);
-            UpdateTemperatureUnits(commonContext);
         }
 
         public static void CustomsInterfaces(CommonDataContext commonContext)
@@ -2565,58 +1876,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
             entityRepository.SubmitChanges();
         }
-        private void UpdateConfirmationNumberStatusClosedTable(InvoiceContext invoiceContext)
-        {
-            ConfirmationNumberStatusRepository confirmationNumberStatusRepository = new ConfirmationNumberStatusRepository(invoiceContext);
-            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
-            {
-                Code = "1",
-                Name = " Confirmation number needed",
-                LocalName = "נדרש הקצאה",
-                InActive = false
-
-            }, confirmationNumberStatusRepository);
-            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
-            {
-                Code = "2",
-                Name = "Confirmation number received ",
-                LocalName = "הקצאה התקבלה",
-                InActive = false
-
-            }, confirmationNumberStatusRepository);
-            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
-            {
-                Code = "3",
-                Name = "Confirmation number not received ",
-                LocalName = "לא התקבלה הקצאה",
-                InActive = false
-
-            }, confirmationNumberStatusRepository);
-            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
-            {
-                Code = "4",
-                Name = "Confirmation number not needed ",
-                LocalName = "לא נדרש הקצאה",
-                InActive = false
-
-            }, confirmationNumberStatusRepository);
-            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
-            {
-                Code = "5",
-                Name = "Confirmation number failed ",
-                LocalName = "כשלון בקבלת הקצאה",
-                InActive = false
-            }, confirmationNumberStatusRepository);
-            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
-            {
-                Code = "6",
-                Name = "Delayed invoice",
-                LocalName = "חשבונית מעוכבת",
-                InActive = false
-            }, confirmationNumberStatusRepository);
-
-            confirmationNumberStatusRepository.SubmitChanges();
-        }
         private void UpdateSATInvoiceStatusClosedTable(InvoiceContext invoiceContext)
         {
             SATInvoiceStatusRepository entityRepository = new SATInvoiceStatusRepository(invoiceContext);
@@ -2627,51 +1886,10 @@ namespace WebFreight.Web.MetaDataUpdate
 
             entityRepository.SubmitChanges();
         }
-        private void UpdateMasavInterfaceStatusClosedTable(InvoiceContext invoiceContext)
-        {
-            MasavInterfaceStatusRepository entityRepository = new MasavInterfaceStatusRepository(invoiceContext);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus() {
-                Name = "Draft",               
-                Code = "DR",
-                LocalName = "טיוטה",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Transmitted",
-                Code = "TR",
-                LocalName = "שודר",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Cancelled",
-                Code = "CN",
-                LocalName = "בוטל",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Failed",
-                Code = "FD",
-                LocalName = "נכשל",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "In Progress",
-                Code = "IP",
-                LocalName = "בתהליך",
-            }, entityRepository);
-            AddClosedTables.AddMasavInterfaceStatus(new MasavInterfaceStatus()
-            {
-                Name = "Cancellation In Progress",
-                Code = "CP",
-                LocalName = "הביטול בתהליך",
-            }, entityRepository);
-            entityRepository.SubmitChanges();
-        }
         public void LoadMeasurements()
         {
             MeasurementRepository = new MeasurementRepository(0);
-            Dictionary<string, Measurement> TenantMeasurements = MeasurementRepository.GetMeasurementsByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
-
+            Dictionary<string, Measurement> TenantMeasurements = MeasurementRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
             AddMeasurements.AddMeasurement(new MeasurementDetails() { Code = "GRWT", Name = "Gross Weight", ShortName = "Gr Weight" }, MeasurementRepository, TenantMeasurements);
             AddMeasurements.AddMeasurement(new MeasurementDetails() { Code = "CHWT", Name = "Chargeable Weight / WM", ShortName = "Ch Weight" }, MeasurementRepository, TenantMeasurements);
             AddMeasurements.AddMeasurement(new MeasurementDetails() { Code = "VOLU", Name = "Volume", ShortName = "Volume" }, MeasurementRepository, TenantMeasurements);
@@ -2695,8 +1913,7 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadCreditCardTypes()
         {
             CreditCardTypeRepository = new CreditCardTypeRepository(0);
-            Dictionary<string, CreditCardType> TenantCreditCardTypes = CreditCardTypeRepository.GetCreditCardTypes(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
-
+            Dictionary<string, CreditCardType> TenantCreditCardTypes = CreditCardTypeRepository.GetCreditCardTypes(0).ToDictionary(d => d.Code, a => a);
 
             AddCreditCardTypes.AddCreditCardType(new CreditCardTypeDetails() { Code = "VI", Name = "Visa" }, CreditCardTypeRepository, TenantCreditCardTypes);
             AddCreditCardTypes.AddCreditCardType(new CreditCardTypeDetails() { Code = "AX", Name = "AMEX" }, CreditCardTypeRepository, TenantCreditCardTypes);
@@ -2711,8 +1928,7 @@ namespace WebFreight.Web.MetaDataUpdate
         public void LoadMoveTypes()
         {
             MoveTypeRepository = new MoveTypeRepository(0);
-            Dictionary<string, MoveType> TenantMoveTypes = MoveTypeRepository.GetMoveTypesByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
-
+            Dictionary<string, MoveType> TenantMoveTypes = MoveTypeRepository.GetMoveTypesByTenant(0).ToDictionary(d => d.Code, a => a);
 
             AddMoveTypes.AddMoveType(new MoveTypeDetails() { Code = "ATA", MoveTypeEnglishName = "Airport to Airport", MoveTypeLocalName = "Airport to Airport", TransportModeId = "A" }, MoveTypeRepository, TenantMoveTypes);
             AddMoveTypes.AddMoveType(new MoveTypeDetails() { Code = "ATD", MoveTypeEnglishName = "Airport to Door", MoveTypeLocalName = "Airport to Door", TransportModeId = "A" }, MoveTypeRepository, TenantMoveTypes);
@@ -2733,7 +1949,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             ICommonDataContext ObjectContext = CommonDataContext.GetContext(0);
             RankRepository = new RankRepository(ObjectContext);
-            Dictionary<string, Rank> tenantRanks = RankRepository.GetRanks(0).GroupBy(d => d.Code ).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+            Dictionary<string, Rank> tenantRanks = RankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
 
             AddRanks.AddRank(new RankDetails() { Name = "Silver", Tenant = 0, Code = "1", SearchFields = "Silver,1" }, RankRepository, tenantRanks);
             AddRanks.AddRank(new RankDetails() { Name = "Gold", Tenant = 0, Code = "2", SearchFields = "Gold,2" }, RankRepository, tenantRanks);
@@ -2754,7 +1970,7 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             ObjectContext = WebFreightContext.GetContext(0);
             TranslationHeaderRepository = new TranslationHeaderRepository(ObjectContext);
-            Dictionary<string, TranslationHeader> tenantTranslationHeaders = TranslationHeaderRepository.GetTranslationHeadersByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+            Dictionary<string, TranslationHeader> tenantTranslationHeaders = TranslationHeaderRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Code, a => a);
             //AddTranslationHeaders.AddTranslationHeader(new TranslationHeaderDetails() { Description = "Arabic", Tenant = 0 }, TranslationHeaderRepository, tenantTranslationHeaders);
             AddTranslationHeaders.AddTranslationHeader(new TranslationHeaderDetails() { Code = "EN", Description = "English", Tenant = 0 }, TranslationHeaderRepository, tenantTranslationHeaders);
             //AddTranslationHeaders.AddTranslationHeader(new TranslationHeaderDetails() { Description = "Spanish", Tenant = 0 }, TranslationHeaderRepository, tenantTranslationHeaders);

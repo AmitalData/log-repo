@@ -1,7 +1,7 @@
 
 
 
-
+import { Response} from '@angular/http';
 import {UserLoginLogList} from '../../../Common/EntityLists/UserLoginLogList';
 import {Component, OnInit}  from '@angular/core';
 
@@ -12,7 +12,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'UserLoginHistory',
     templateUrl: './UserLoginHistoryComponent.html',

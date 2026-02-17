@@ -20,7 +20,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerActivationComponent.html',
 })
 
@@ -31,7 +31,7 @@ export class CustomerActivationComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private partnersDomainService: PartnersDomainService;
     private customerService: CustomerPMService;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -136,7 +136,7 @@ export class CustomerActivationComponent extends BaseComponent {
         }
         else {
             var countryListService: CountryListService = new CountryListService();
-            countryListService.getSingleFromCache(this.CountryId_Potential).subscribe((myResult:any) => {
+            countryListService.getSingleFromCache(this.CountryId_Potential).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
                     var list: CountryList = myResponse.Result;
@@ -174,7 +174,7 @@ export class CustomerActivationComponent extends BaseComponent {
     private CheckIfVatUnique() {
         if (this.EntityPM.IsCustomer) {
             if (!AppTool.IsNullOrEmpty(this.VatNumber)) {
-                this.partnersDomainService.GetIsVATUniqueForCustomer(this.VatNumber, this.EntityPM.Id, this.CountryId_Potential, this.EntityPM.PartnerTypeId).subscribe((myResponse: ServiceResponse) => {
+                this.partnersDomainService.GetIsVATUniqueForCustomer(this.VatNumber, this.EntityPM.Id, this.CountryId_Potential).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.vatTypeNotUnique = myResponse.Result;
                     }
@@ -203,7 +203,7 @@ export class CustomerActivationComponent extends BaseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunAdditionalFieldsComponent(), 1);
         }
     }
@@ -513,7 +513,7 @@ export class CustomerActivationComponent extends BaseComponent {
             this.CurrentSession.StartBusyIndicatorSaving();
         }
 
-        this.customerService.update(this.EntityPM).subscribe((myResult:any) => {
+        this.customerService.update(this.EntityPM).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 if (msg == "Activated") {

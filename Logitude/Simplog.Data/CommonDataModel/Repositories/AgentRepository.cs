@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -16,7 +16,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public AgentRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AgentRepository(int tenant)
         {
@@ -25,17 +28,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public int GetAgentsCount(int tenant)
         {
-            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.PaymentTerm").Include("Card.InvoiceCurrency") where record.Tenant == tenant select record).Count();
+            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus") where record.Tenant == tenant select record).Count();
         }
 
         public IQueryable<Agent> GetAgents(int tenant)
         {
-            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.PaymentTerm").Include("Card.InvoiceCurrency") where record.Tenant == tenant select record);
+            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus") where record.Tenant == tenant select record);
         }
 
         public Agent GetSingleAgent(int tenant, string id)
         {
-            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.PaymentTerm").Include("Card.InvoiceCurrency") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.InvoiceCurrency") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public Agent GetSingleAgentWithOutIncluded(int tenant, string id)
@@ -45,17 +48,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Agent GetSingleAgent(string id, int tenant)
         {
-            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.PaymentTerm").Include("Card.InvoiceCurrency") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public Agent GetSingleAgentByCode(string code, int tenant)
         {
-            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.PaymentTerm").Include("Card.InvoiceCurrency") where record.Card.Code == code && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus") where record.Card.Code == code && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public Agent GetSingleAgentBySharedKey(string key, int tenant)
         {
-            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus").Include("Card.PaymentTerm").Include("Card.InvoiceCurrency") where record.AgentSharedLogisticsKey == key && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Agents.Include("Card").Include("Card.SharedLogisticsInvitationStatus") where record.AgentSharedLogisticsKey == key && record.Tenant == tenant select record).FirstOrDefault();
         }
 
         public string GetAgentIdBySharedKey(string key, int tenant)
@@ -113,6 +116,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             context.SaveChanges();
         }
 
+
+
+
         public List<Agent> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
@@ -121,13 +127,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public Agent GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-
-        public Agent GetFirstSingleByName(string name, int tenant)
-        {
-            return (from record in context.Agents.Include("Card")
-                    where record.Card.EnglishName == name && record.Tenant == tenant
-                    select record).FirstOrDefault();
         }
     }
 }

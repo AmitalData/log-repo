@@ -5,7 +5,7 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DeclarationQueryListTemplate.html',
 })
 

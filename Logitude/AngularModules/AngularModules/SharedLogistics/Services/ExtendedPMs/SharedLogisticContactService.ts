@@ -1,7 +1,7 @@
-import {Injectable, } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import {Injectable, } from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {SharedLogisticContactPM} from '../../../Common/EntityPMs/SharedLogisticContactPM';
@@ -10,18 +10,19 @@ import {SharedLogisticContactPM} from '../../../Common/EntityPMs/SharedLogisticC
 @Injectable()
 export class SharedLogisticContactService {
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SharedLogisticContact';
     }
    // GetSharedLogisticContactsbyCardId(string cardId, int tenant)
     getSharedLogisticContactsbyCardId(cardId: string, tenant: number) {
 
-
-        return this._http.get(this._apiUrl + '/getsharedlogisticcontactsbycardid/?' + 'cardId=' + cardId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-            var result:any = response;
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/getsharedlogisticcontactsbycardid/?' + 'cardId=' + cardId + '&tenant=' + tenant, { headers: authHeader }).map(response => {
+            var result = response.json();
             var entity: SharedLogisticContactPM;
             var SharedLogisticContactPMLists: SharedLogisticContactPM[];
             SharedLogisticContactPMLists = new Array<SharedLogisticContactPM>();
@@ -34,15 +35,20 @@ export class SharedLogisticContactService {
 
             pmresponse.Result = SharedLogisticContactPMLists;
             return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
+        }).catch(ServiceHelper.HandleServiceError);
     }
     
 
     ContactInternetAccessInvitation(entityPM: SharedLogisticContactPM) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.put(this._apiUrl + '/putcontactinternetaccessinvitation', JSON.stringify(entityPM), {
+                headers: authHeader,
 
-        return defer(() => {
-            return this._http.put(this._apiUrl + '/putcontactinternetaccessinvitation', JSON.stringify(entityPM), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var pm = response;
+            }).map(response => {
+                var pm = response.json();
                 var entity: SharedLogisticContactPM;
                 entity = this.MapJsonToEntityPM(pm);
                 var pmresponse: ServiceResponse;
@@ -50,7 +56,7 @@ export class SharedLogisticContactService {
 
                 pmresponse.Result = entity;
                 return pmresponse;
-            }), catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         }
 
         );

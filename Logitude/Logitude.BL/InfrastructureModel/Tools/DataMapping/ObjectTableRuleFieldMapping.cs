@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -12,8 +12,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             ruleField.ObjectTableRuleId = ruleFieldPM.ObjectTableRuleId;
             ruleField.SystemLevel = ruleFieldPM.SystemLevel;
             ruleField.Expression = ruleFieldPM.Expression;
-            ruleField.RuleNotificationTypeCode = ruleFieldPM.RuleNotificationTypeCode;
-            ruleField.ObjectFieldCode = ruleFieldPM.ObjectFieldCode;
+            ruleField.RuleNotificationTypeCode = ruleFieldPM.RuleNotificationTypeCode;      
         }
     }
 }

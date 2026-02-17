@@ -28,6 +28,5 @@ export class QuoteTemplateList {
 		IsLastQuoteTemplateDocumentVersion: boolean;
 		IsCopiedAtSignup: boolean;
 		IsEnabledForCustomers: boolean;
-		TenantName: string;
 	
 }

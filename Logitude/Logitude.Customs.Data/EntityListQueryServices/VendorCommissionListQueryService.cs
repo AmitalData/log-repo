@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,11 +26,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                       {
 
                                                           VendorId = a.VendorId,
+
                                                           CustomerId = a.CustomerId,
-                                                          ModificationsTypeCode = a.ModificationsTypeCode,
-                                                          ModificationsTypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
+
                                                           CommisionPercentage = a.CommisionPercentage,
-                                                          Tenant = a.Tenant,
+
                                                       });
             return query;
         }
@@ -47,11 +47,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return (from a in context.VendorCommissions.Where(d => d.CustomerId == customerId && d.Tenant == tenant)
                     select new VendorCommissionList()
                     {
+
                         VendorId = a.VendorId,
+
                         CustomerId = a.CustomerId,
-                        ModificationsTypeCode = a.ModificationsTypeCode,
+
                         CommisionPercentage = a.CommisionPercentage,
-                        ModificationsTypeName = a.ModificationAndDiscountType != null ? (a.ModificationAndDiscountType.LocalName != null ? a.ModificationAndDiscountType.LocalName : a.ModificationAndDiscountType.EnglishName) : null,
+
                     }).ToList();
         }
 

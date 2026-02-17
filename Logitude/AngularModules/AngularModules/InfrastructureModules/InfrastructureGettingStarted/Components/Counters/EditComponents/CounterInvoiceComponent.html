@@ -25,27 +25,19 @@
                             <table>
                                 <tr style="height: 20px;">
                                     <td>
-                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffCustomRadio'" [IsChecked]="SameForAllTypes == true && !IsCustomizedCounter" (Checked)="SameForAllTypesChecked()" [Text]="SameRadioButtonLabel"></RadioButton>
+                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffRadio'" [IsChecked]="SameForAllTypes == true" (Checked)="SameForAllTypes = true" [Text]="SameRadioButtonLabel"></RadioButton>
                                     </td>
                                 </tr>
 
                                 <tr style="height: 20px;">
                                     <td>
-                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffCustomRadio'" [IsChecked]="SameForAllTypes == false && !IsCustomizedCounter" (Checked)="DiffForEachTypesChecked()" [Text]="DiffRadioButtonLabel"></RadioButton>
+                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffRadio'" [IsChecked]="SameForAllTypes == false" (Checked)="SameForAllTypes = false" [Text]="DiffRadioButtonLabel"></RadioButton>
                                     </td>
                                 </tr>
 
-                                <tr style="height: 20px;" *ngIf="HasCustomizedCounterFeature">
+                                <tr style="height: 20px;" *ngIf="SameForAllTypes == false">
                                     <td>
-                                        <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'SameDiffCustomRadio'" [IsChecked]="SameForAllTypes == false && IsCustomizedCounter" (Checked)="IsCustomizedCounterChecked()" [Text]="CustomizedRadioButtonLabel"></RadioButton>
-                                    </td>
-                                </tr>
-
-                               
-
-                                <tr style="height: 20px;" *ngIf="HasBranchCounterCodeFeature && HasSeparatePerBranchCounterCodeFeature && !IsCustomizedCounter">
-                                    <td>
-                                        <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="SeperatePerBranch" (Checked)="SeperatePerBranch = $event" [Text]="'Seperate Per Branch'"></CheckBox>
+                                        <CheckBox [IsEnabled]="!IsCounterUsed" [IsChecked]="UniquePerPrefix" (Checked)="UniquePerPrefix = $event" [Text]="'Unique Per Prefix'"></CheckBox>
                                     </td>
                                 </tr>
                             </table>
@@ -63,7 +55,7 @@
                             <div class="MediaFill" style="border: 1px solid #D1D1D1; padding: 5px;">
 
                                 <!-- SameForAll -->
-                                <table *ngIf="SameForAllTypes == true && !IsCustomizedCounter">
+                                <table *ngIf="SameForAllTypes == true">
 
                                     <!-- Prefix -->
                                     <tr class="FormFieldRow">
@@ -147,11 +139,11 @@
                                     </tr>
 
                                     <!--<tr style="height: 1px;">
-            <td colspan="3">
-                <div class="NoDataTextStyle" style="text-align: left;">The created numbers have the following format:</div>
-                <div class="Value" style="padding-left: 15px;">[Prefix]Number[Suffix]</div>
-            </td>
-        </tr>-->
+                                        <td colspan="3">
+                                            <div class="NoDataTextStyle" style="text-align: left;">The created numbers have the following format:</div>
+                                            <div class="Value" style="padding-left: 15px;">[Prefix]Number[Suffix]</div>
+                                        </td>
+                                    </tr>-->
 
                                     <tr>
                                         <td colspan="3">
@@ -161,8 +153,28 @@
                                 </table>
 
                                 <!-- Different | List -->
-                                <table *ngIf="SameForAllTypes == false && !IsCustomizedCounter">
-                                  
+                                <table *ngIf="SameForAllTypes == false">
+
+                                    <!-- StartNumber -->
+                                    <tr class="FormFieldRow" *ngIf="!UniquePerPrefix">
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width: 100px;">
+                                                        <LogLabel [ObjectFieldName]="'StartNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+
+                                                    <td style="width: 150px;">
+                                                        <LogTextBox [ObjectFieldName]="'StartNumber'" [Text]="StartNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
 
                                     <tr>
                                         <td>
@@ -171,9 +183,9 @@
                                                     <ScrollViewer>
                                                         <ul>
                                                             <li style="height: 100px; margin-bottom: 5px;" *ngFor="let item of ItemsSource">
-                                                                <table [style.opacity]="item.EntityPM.InActive ? '0.5':'1'" [style.pointer-events]="item.EntityPM.InActive ? 'none':'auto'">
+                                                                <table>
                                                                     <tr>
-                                                                        <td style="width: 130px; border: 1px solid #D1D1D1; text-align: center; padding: 5px;" class="CounterItemBackground">
+                                                                        <td style="width: 110px; border: 1px solid #D1D1D1; text-align: center; padding: 5px;" class="CounterItemBackground">
                                                                             {{item.Name}}
                                                                         </td>
 
@@ -259,12 +271,6 @@
                                         </td>
                                     </tr>
                                 </table>
-
-
-                                <div class="MediaFill" *ngIf="IsCustomizedCounter">
-                                    <div class="LocationDirective" #CustomizedCounterComponent></div>
-                                </div>
-
                             </div>
                         </td>
                     </tr>

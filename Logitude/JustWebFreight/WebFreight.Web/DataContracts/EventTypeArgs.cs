@@ -8,7 +8,7 @@ namespace WebFreight.Web.DataContracts
     public class EventTypeArgs
     {
 
-        public List<string> EventTypeCodeList { get; set; }
+        public List<string> EventTypeCodeList {get; set;}
         public List<EventTypeClass> EventTypeList { get; set; }
 
         public string EntityId { get; set; }
@@ -28,13 +28,4 @@ namespace WebFreight.Web.DataContracts
 
     }
 
-    public class PostTraceEventArgs
-    {
-        public int tenant { get; set; }
-        public string entityId { get; set; }
-        public string tableName { get; set; }
-        public string notes { get; set; }
-        public string eventTypeCode { get; set; }
-        public string loggedUserEmail { get; set; } = "";
-    }
 }

@@ -12,7 +12,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "OpportunityHelperComponent.html",
 })
 

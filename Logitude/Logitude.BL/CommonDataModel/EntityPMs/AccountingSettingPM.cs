@@ -31,13 +31,15 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? ARInvoiceTransferStartDate { get; set; }
         public DateTime? APInvoiceTransferStartDate { get; set; }
         public DateTime? ARPaymentTransferStartDate { get; set; }
-        public DateTime? APPaymentTransferStartDate { get; set; }
         public bool AllowPositiveAmountsInTheCreditNote { get; set; }
         public string QBOrealMeID { get; set; }
+        public string QBOAccessToken { get; set; }
+        public string QBOAccessTokenSecret { get; set; }
         public string VatNumber { get; set; }
         public string PaymentTermId { get; set; }
         public DateTime? AccountingActivationDate { get; set; }
         public bool AccountingActivated { get; set; }
+        //public bool RequestedPaymentMethodIsMandatory { get; set; }
         public bool TransferToDropboxActivated { get; set; }
         public bool EnableMultiPercentageVATTypes { get; set; }
         public bool NotifyPastDateOnInvoiceEdit { get; set; }
@@ -53,13 +55,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool EnableInvoiceStocksManagement { get; set; }
         public string RefreshToken { get; set; }
         public int QBOOAuth { get; set; }
-        public bool AllowManualARPaymentNumber { get; set; }
-        public bool AllowRegionalTaxManagement { get; set; }
-        public bool EnableAPPaymentExternalPayment { get; set; }
-        public bool TransferToFTPActivated { get; set; }
-        public string TransferFTPDetailId { get; set; }
-        public string TransferFTPDetailHost { get; set; }
-        public bool EnableEnteringTotalVAT { get; set; }
-        public bool BlockSendInvoiceOriginalCopy { get; set; }
+
     }
 }

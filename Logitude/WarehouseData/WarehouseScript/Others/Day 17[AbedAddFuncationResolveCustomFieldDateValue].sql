@@ -13,28 +13,22 @@ RETURNS sql_variant
 AS  
 BEGIN  
  DECLARE @MyValueOut sql_variant
-  DECLARE @Result date
-  DECLARE @DateString as varchar(20)
- if(@DataTypeCode = ''Date'' ) begin  set @Result = ''1-1-1''; end 
+ if(@DataTypeCode = ''Date'' )begin  set @MyValueOut = -1; end 
 
 if(@DataTypeCode = ''DateTime'' and  LEN(@FieldValue) >= 14)
 begin
-set @DateString = SUBSTRING(@FieldValue, 1, 4) + ''-''+ SUBSTRING(@FieldValue, 5, 2) + ''-''+ SUBSTRING(@FieldValue, 7, 2) +'' ''+ SUBSTRING(@FieldValue, 9, 2) + '':''+ SUBSTRING(@FieldValue, 11, 2) + '':''+ SUBSTRING(@FieldValue, 13, 2) 
-
-set @Result = convert(varchar, Try_CAST(@DateString AS datetime), 20)
--- set @Result = CONVERT(DATE, @Result)
-
+set @MyValueOut = SUBSTRING(@FieldValue, 1, 4) + ''-''+ SUBSTRING(@FieldValue, 5, 2) + ''-''+ SUBSTRING(@FieldValue, 7, 2) +'' ''+ SUBSTRING(@FieldValue, 9, 2) + '':''+ SUBSTRING(@FieldValue, 11, 2) + '':''+ SUBSTRING(@FieldValue, 13, 2) 
+set @MyValueOut = convert(varchar, CAST(@MyValueOut AS datetime), 20)
+set @MyValueOut = CONVERT(DATE, @MyValueOut)
 end
 
 ELSE if(@DataTypeCode = ''Date''  and  LEN(@FieldValue) >= 8) 
-begin
-
-set @DateString = SUBSTRING(@FieldValue, 1, 4) + ''-''+ SUBSTRING(@FieldValue, 5, 2) + ''-''+ SUBSTRING(@FieldValue, 7, 2)
-SET @Result =  convert(varchar, Try_CAST(@DateString AS datetime), 23) 
-set @Result = dbo.GetDateFormateAsNumber(CONVERT(DATE, @Result))
+begin 
+set @MyValueOut = SUBSTRING(@FieldValue, 1, 4) + ''-''+ SUBSTRING(@FieldValue, 5, 2) + ''-''+ SUBSTRING(@FieldValue, 7, 2)
+SET @MyValueOut =  convert(varchar, CAST(@MyValueOut AS datetime), 23) 
+set @MyValueOut = dbo.GetDateFormateAsNumber(CONVERT(DATE, @MyValueOut))
 end
 
-set @MyValueOut = @Result;
   RETURN(@MyValueOut);  
 
 END;';

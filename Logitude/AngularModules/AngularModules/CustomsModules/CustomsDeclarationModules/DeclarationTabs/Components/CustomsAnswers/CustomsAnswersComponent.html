@@ -1,16 +1,5 @@
-
+﻿
 <style>
-    .Selected:hover {
-        background: -moz-linear-gradient(50% 119.23% 90deg,rgba(133, 203, 237, 1) 0%,rgba(232, 247, 255, 1) 100%) !important;
-        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
-        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
-    }
-
-    .Selected, .Selected >*{
-        background: -moz-linear-gradient(50% 119.23% 90deg,rgba(133, 203, 237, 1) 0%,rgba(232, 247, 255, 1) 100%) !important;
-        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
-        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
-    }
     .subTitle {
         color: #4b90cb;
         font-size: 17px;
@@ -76,7 +65,7 @@
         -moz-border-radius: 4px;
         -webkit-border-radius: 4px;
         margin-bottom: 3px;
-        /* z-index: 0; */
+        z-index: 0;
     }
 
         .ConstraintList li:hover {
@@ -129,7 +118,7 @@
         width: 510px;
         padding: 10px;
         min-height: 60px;
-        background: #e2e2e2;
+        /*background: #e2e2e2;*/
         z-index: 1;
     }
     .leftDarkBackground{
@@ -148,10 +137,6 @@
     .hidden {
         opacity: 0;
         visibility: collapse;
-    }
-
-    .criticalWarning {
-        color: rgb(229, 48, 48)
     }
 </style>
 <table>
@@ -173,7 +158,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr *ngIf="!IsDisplayOnly && (ShowStorageStatusMessage||IsDisplayMessage)" style="height: 28px;">
+                    <tr *ngIf="!IsDisplayOnly && ShowStorageStatusMessage" style="height: 28px;">
                         <td colspan="3">
                             <div style="width: 100%;text-align:center">
                                 <div class="DisbleBox">
@@ -184,7 +169,7 @@
                     </tr>
                     <!-- Title -->
                     <tr style="height: 28px;">
-                        <td *ngIf="!IsAmendmentErrors"  style="width:70px" class="subTitle">{{'Customs.Declaration.TH.CustomsAnswers' | TextCodeTranslationPipe}}</td>
+                        <td  style="width:70px" class="subTitle">{{'Customs.Declaration.TH.CustomsAnswers' | TextCodeTranslationPipe}}</td>
                         <td style="width: 320px;" *ngIf="IsCourierDeclaration">
                             <ul class="FiltersMenu">
                                 <li id="All" (click)="CourierFilterClicked('Declaration')" style="width: 80px; height: 22px;"
@@ -263,20 +248,17 @@
                                                 [ItemSource]="Errorslist"
                                                 [UseVirtuallization]="true"
                                                 [IsDarkHeader]="true"
-                                                (SelectedItemChanged)="EditEntity($event,AnswerType.Error)"
-                                                [SelectedRow]="SelectedRowsByType.get(AnswerType.Error)">
+                                                (SelectedItemChanged)="EditEntity($event)">
 
                                 <!-- Description -->
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -284,13 +266,11 @@
                                 <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -298,13 +278,11 @@
                                 <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -312,13 +290,11 @@
                                 <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -326,44 +302,14 @@
                                 <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
                                         <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
-                                <!-- DepositionStatusCode -->
-                                <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
-                                            [width]="'150'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
-
-                                            <span>
-                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
-                                                </button>
-                                            </span>
-
-                                            <span>
-                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
-                                                </button>
-                                            </span>
-
-                                            <div style="text-align: right;" class="TextTrimming" *ngIf="DepositionStatusCode == 'L' && IsDepositionStatusCodeButton">
-                                                <span style="font-size: 12px;color: #FF9933; font-weight:bold">{{DepositionStatusCodeText}}</span>
-                                            </div>
-
-                                        </div>
-                                    </log-cell-template>
-</ng-template>
-                                    
-                                </log-column>
                             </logitude-edit-grid>
                         </td>
                     </tr>
@@ -393,8 +339,7 @@
                             <div>
 
                                 <ul class="ConstraintList">
-                                    
-                                    <li *ngFor="let constraint of ConstraintsList" [class.Selected]="SelectedConstraint?.ConstraintId == constraint.ConstraintId && constraint.ConstraintId">
+                                    <li *ngFor="let constraint of ConstraintsList" >
                                         <!-- Status-->
                                         <div class="ListItem-right">
                                             <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsStatusHyperlinkVisibile" style="display: block;" href="#">{{constraint.ConstraintStatus}}</a>
@@ -403,7 +348,7 @@
                                         </div>
 
                                         <!-- Error -->
-                                        <div class="ListItem-middle" (click)="EditEntity(constraint,AnswerType.Constraint)">
+                                        <div class="ListItem-middle" (click)="EditEntity(constraint.hasNoError ? null : constraint.declarationError)">
                                             <div style="display: inline-block;width: 40px; position: absolute; height: 100%;">
                                                 <span style="font-size: 12px;color: #1b90cb;">{{constraint.ConstraintTypeName}}</span>
                                             </div>
@@ -430,7 +375,7 @@
                                                                         [IsMultiline]="true"></LogTextBox>
                                                         </td>
                                                         <td style="width: 110px">
-                                                            <custom-send-options [IsDisabled]="constraint.displayOnly || IsConstraintDisplayOnly"
+                                                            <custom-send-options [IsDisabled]="constraint.displayOnly"
                                                                                  #MyCustomSendOptionsComponent
                                                                                  (SendButtonClicked)="SendButtonClicked(constraint, $event)">
                                                             </custom-send-options>
@@ -567,20 +512,18 @@
                                                 [ItemSource]="Warninglist"
                                                 [UseVirtuallization]="true"
                                                 [IsDarkHeader]="true"
-                                                (SelectedItemChanged)="EditEntity($event,AnswerType.Warning)"
-                                                [SelectedRow]="SelectedRowsByType.get(AnswerType.Warning)">
+                                                (SelectedItemChanged)="EditEntity($event)">
+
 
                                 <!-- Description -->
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming" [title]="item.Description" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming"  [title]="item.Description">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -588,13 +531,11 @@
                                 <log-column [header]="'Customs.Declaration.O.Entity' | TextCodeTranslationPipe"
                                             [width]="'200'" [Alignment]="'right'" [binding]="'TableNameTextCode'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -602,13 +543,11 @@
                                 <log-column [header]="'Customs.Declaration.O.Field' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'FieldNameTextCode'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -616,13 +555,11 @@
                                 <log-column [header]="'Customs.Declaration.O.Line' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'LineNumber'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
 
                                 </log-column>
 
@@ -630,42 +567,11 @@
                                 <log-column [header]="'Customs.Declaration.O.ErrorType' | TextCodeTranslationPipe"
                                             [width]="'160'" [Alignment]="'right'" [binding]="'ErrorType'">
 
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
+                                    <log-cell-template template="let item" [IgnoreMods]="true" #logcelltemplate>
+                                        <div style="text-align: right;" class="TextTrimming">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
-</ng-template>
-
-                                </log-column>
-
-                                <!-- DepositionStatusCode -->
-                                <log-column [header]="'Customs.Declaration.F.DepositionStatusCode' | TextCodeTranslationPipe"
-                                            [width]="'160'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
-                                    <ng-template let-item>
-<log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
-
-                                            <span>
-                                                <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img [src]="src" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
-                                                </button>
-                                            </span>
-
-                                            <span>
-                                                <button class="Button" style="height:18px; width: 90px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'LOGBOX'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
-                                                    <img src="./Images/LogBox/DSV/U_LOGBOX.png" style="margin-right: -4px; margin-top: 1px" />  משימה ליבואן
-                                                </button>
-                                            </span>
-
-                                            <div style="text-align: right;" class="TextTrimming" *ngIf="DepositionStatusCode == 'L' && IsDepositionStatusCodeButton">
-                                                <span style="font-size: 12px;color: #FF9933; font-weight:bold">{{DepositionStatusCodeText}}</span>
-                                            </div>
-
-                                        </div>
-                                    </log-cell-template>
-</ng-template>
 
                                 </log-column>
 

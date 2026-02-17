@@ -64,10 +64,7 @@ export class AccountingSystemsSyncStatusPM {
     public OldEntityPM: AccountingSystemsSyncStatusPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -75,7 +72,6 @@ export class AccountingSystemsSyncStatusPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AccountingSystemsSyncStatus");
            
         }
-	 }
     }
     private MyClone: AccountingSystemsSyncStatusPM;
 

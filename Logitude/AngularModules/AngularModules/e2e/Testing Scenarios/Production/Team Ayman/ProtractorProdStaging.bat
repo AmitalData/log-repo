@@ -1,62 +1,60 @@
 SETLOCAL enabledelayedexpansion
 SET NumberErrors=0
+SET TotalErrors
+
 cd /
 cd windows
 c:
 cd C:\Program Files (x86)\Jenkins\workspace\2019.R3.DevOps\Logitude\AngularModules\AngularModules
 
+
 FOR /L %%A IN (1,1,1) DO (  
 --------------------------------------------------Direct-------------------------------------------------------------------------------------------------
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --suite=login,NewShipment 
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="D" --params.ShipParams.Direction="Export" --params.ShipParams.TransportMode="A" --params.ShipParams.ShipmentType="" --suite=login,NewShipment >D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Export-Air-Direct"
 
 --------------------------------------------------Houses-------------------------------------------------------------------------------------------------
-cmd /c call npm run do-e2e -- --params.Env="staging"  --params.Team="aymanProd" --params.ShipParams.ShipmentLevelCode="H" --params.ShipParams.Direction="Import" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="FCL" --suite=login,NewShipment
+cmd /c call npm run e2e -- --params.Env="staging"  --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="H" --params.ShipParams.Direction="Import" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="FCL" --suite=login,NewShipment> D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Import-Ocean-FCL-House"
 
 --------------------------------------------------Master-------------------------------------------------------------------------------------------------
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.ShipParams.ShipmentLevelCode="M" --params.ShipParams.Direction="Domestic" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="LCL" --suite=login,NewShipment
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.ShipParams.ShipmentLevelCode="M" --params.ShipParams.Direction="Domestic" --params.ShipParams.TransportMode="O" --params.ShipParams.ShipmentType="LCL" --suite=login,NewShipment> D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Domestic-Ocean-LCL-Master"
 
 --------------------------------------------------SpotRate-------------------------------------------------------------------------------------------------
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd"  --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote 
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman"  --params.QuoteParams.Direction="Export" --params.QuoteParams.TransportMode="A"  --params.QuoteParams.ShipmentType="" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote > D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Export-Air-SpotRate"
 
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="LTL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.QuoteParams.Direction="Domestic" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="LTL" --params.QuoteParams.QuoteType="SpotRate" --suite=login,NewQuote > D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Domestic-Inland-LTL-SpotRate"
 
 --------------------------------------------------RoutingRate-------------------------------------------------------------------------------------------------
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.QuoteParams.Direction="Import" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="FTL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote 
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.QuoteParams.Direction="Import" --params.QuoteParams.TransportMode="I"  --params.QuoteParams.ShipmentType="FTL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote > D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Import-Inland-LTL-RoutingRate"
   
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.QuoteParams.Direction="Drop" --params.QuoteParams.TransportMode="O"  --params.QuoteParams.ShipmentType="FCL" --params.QuoteParams.QuoteType="RoutingRate" --suite=login,NewQuote > D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Drop-Ocean-FCL-RoutingRate" 
 
 --------------------------------------------------Activities-------------------------------------------------------------------------------------------------
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.CRM.CRMType="activity" --params.CRM.ActivityType="task" --suite=login,CRM 
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.CRM.CRMType="activity" --params.CRM.ActivityType="task" --suite=login,CRM > D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Task"
 
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.CRM.CRMType="activity" --params.CRM.ActivityType="call" --suite=login,CRM 
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.CRM.CRMType="activity" --params.CRM.ActivityType="call" --suite=login,CRM > D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "PhoneCall"
 
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.CRM.CRMType="activity" --params.CRM.ActivityType="appoint" --suite=login,CRM 
+cmd /c call npm run e2e -- --params.Env="staging" --params.Team="ayman" --params.CRM.CRMType="activity" --params.CRM.ActivityType="appoint" --suite=login,CRM >D:\E2ETeamAyman\Prod\prot.log 2>&1
 CALL :CheckError "Appointment"
- -------------------------------------------------- Opportunities-------------------------------------------------------------------------------------------------
-
-cmd /c call npm run do-e2e -- --params.Env="staging" --params.Team="aymanProd" --params.CRM.CRMType="opportunity" --suite=login,CRM 
-CALL :CheckError "opportunity"
 
 )
 cd /
 cd C:\Automation e2e\TeamAyman\Prod
->test.txt echo Total Errors :%NumberErrors% 
+>test.txt echo Errors in : %TotalErrors%
+>>test.txt echo Total Errors :%NumberErrors% 
 
-IF %NumberErrors% NEQ 0 (
-       "C:\Program Files\WinRAR\rar.exe" -r a "C:\Automation e2e\TeamAyman\Prod\screenshots\screenshots.rar"
-		XCOPY  "C:\Automation e2e\TeamAyman\Prod\screenshots\screenshots.rar" "C:\Program Files (x86)\Jenkins\workspace\TeamAymanE2EScriptsProd"  /S /I /Q /Y /F
+IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-
+Pause
 
 SETLOCAL
 :CheckError

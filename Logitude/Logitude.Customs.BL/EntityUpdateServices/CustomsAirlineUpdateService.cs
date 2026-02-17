@@ -19,11 +19,11 @@ using Simplog.Data.CommonDataModel;
 using System.IO;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Diagnostics;
 using Logitude.Customs.Data.Repsitories;
 
@@ -42,7 +42,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(CustomsAirlinePM entityPM, CustomsAirline entityPOCO)
         {
             ValidateEntity(entityPM);
-            entityPM.LocalName = entityPM.LocalName ?? entityPM.EnglishName;
 
             base.OnUpdating(entityPM, entityPOCO);
         }

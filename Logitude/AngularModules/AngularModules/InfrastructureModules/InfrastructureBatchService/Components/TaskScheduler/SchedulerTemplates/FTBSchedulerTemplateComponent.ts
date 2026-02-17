@@ -6,16 +6,14 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { AppTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'FTBSchedulerTemplateComponent',
     templateUrl: './FTBSchedulerTemplateComponent.html',
-    inputs: ['DataContext','BasicDisplayMode']
 })
 
 export class FTBSchedulerTemplateComponent {
-    public DataContext: any;
-    public BasicDisplayMode: boolean = false;
+    DataContext: any;
     public ObjectTableName: string = "TasksScheduler";
     constructor() {
 

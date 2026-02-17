@@ -1,16 +1,19 @@
-﻿using Logitude.Infrastructure.Data.Models.AuditLog;
-using Logitude.Infrastructure.Data.Repsitories;
-using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Logitude.Server.Tools.Counters;
+using System.Data.Entity;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.Validation;
 using System.IO;
-using System.Linq;
-using System.Transactions;
-using System.Xml;
 using System.Xml.Serialization;
+using System.Xml;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Server.Tools
 {
@@ -38,10 +41,6 @@ namespace Logitude.Server.Tools
         protected TEntityParentPM EntityParentPM;
         protected List<string> ErrorsList;
         protected bool ThrowValidationException;
-
-        protected List<FieldChange> FieldChanges;
-        protected AuditLogRepository AuditLogRepository;
-
         public EntityUpdateService()
         {
 
@@ -54,9 +53,6 @@ namespace Logitude.Server.Tools
             this.MainContext = mainContext;
             this.ErrorsList = new List<string>();
             this.ThrowValidationException = true;
-
-            FieldChanges = new List<FieldChange>();
-            AuditLogRepository = new AuditLogRepository(tenant);
         }
 
         public void UpdateMulti(List<TEntityPM> entityPMList, List<TEntityPM> deletedEntityPMList, TEntityParentPM entityParentPM, bool commit)
@@ -129,8 +125,8 @@ namespace Logitude.Server.Tools
                     case ChangeSetOperation.Insert:
                         {
                             EntityPOCO = new TEntityPOCO();
-                            FillDefaultValuesOnCreate(entityPM);
                             OnCreating(EntityPM, EntityParentPM);
+                            FillDefaultValuesOnCreate(entityPM);
                             break;
                         }
                     case ChangeSetOperation.Update:
@@ -143,8 +139,6 @@ namespace Logitude.Server.Tools
                             OldEntityPM = new TEntityPM();
                             ChangeTrackingEntityPM = new TEntityPM();
                             Mapping.POCOToPM(OldEntityPM, EntityPOCO);
-                            //Mapping.CustomPOCOToPM(OldEntityPM, EntityPOCO);
-
                             Mapping.POCOToPM(ChangeTrackingEntityPM, EntityPOCO);
                             Mapping.PMToOldPM(entityPM, ChangeTrackingEntityPM);
                             break;
@@ -219,13 +213,11 @@ namespace Logitude.Server.Tools
                 }
                 AfterUpdating(entityPM, EntityParentPM);
                 AddStepTrace("AfterUpdating");
-                UpdateCalculatedFields(entityPM, EntityParentPM, EntityPOCO);
-                AddStepTrace("UpdateCalculatedFields");
             }
             //scope.Complete();
         }
         
-        
+
         protected virtual void SubmitChanges()
         {
             try
@@ -269,11 +261,7 @@ namespace Logitude.Server.Tools
         {
 
         }
-        protected virtual void UpdateCalculatedFields(TEntityPM entityPM, TEntityParentPM entityParentPM, TEntityPOCO entityPOCO)
-        {
 
-        }
-        
         protected abstract EntityKeyFields GetKeys(TEntityPM entityPM);
 
         protected virtual void Trace(TEntityPM entityPM,TEntityPOCO entityPOCO,string changesXml)
@@ -304,23 +292,18 @@ namespace Logitude.Server.Tools
 
                     if (value.PropertyType == "CustomFieldClass")
                     {
-                        if (value.NewValue != null)
+                        object newFieldValue = value.NewValue;
+                        if (newFieldValue.GetType() == typeof(CustomFieldClass))
                         {
-                            object newFieldValue = value.NewValue;
-                            if (newFieldValue.GetType() == typeof(CustomFieldClass))
-                            {
-                                CustomFieldClass classvalue = newFieldValue as CustomFieldClass;
-                                newValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value : "";
-                            }
+                            CustomFieldClass classvalue = newFieldValue as CustomFieldClass;
+                            newValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value:"";
                         }
-                        if (value.OldValue != null)
+                
+                        object oldFieldValue = value.OldValue;
+                        if (oldFieldValue.GetType() == typeof(CustomFieldClass))
                         {
-                            object oldFieldValue = value.OldValue;
-                            if (oldFieldValue.GetType() == typeof(CustomFieldClass))
-                            {
-                                CustomFieldClass classvalue = oldFieldValue as CustomFieldClass;
-                                oldValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value : "";
-                            }
+                            CustomFieldClass classvalue = oldFieldValue as CustomFieldClass;
+                            oldValue = !string.IsNullOrEmpty(classvalue.Value) ? classvalue.Value : "";
                         }
                     }
 

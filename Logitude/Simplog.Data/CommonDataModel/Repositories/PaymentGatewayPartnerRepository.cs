@@ -4,7 +4,7 @@ using System.Linq;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -19,7 +19,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-
+        public PaymentGatewayPartnerRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PaymentGatewayPartnerRepository(int tenant)
         {

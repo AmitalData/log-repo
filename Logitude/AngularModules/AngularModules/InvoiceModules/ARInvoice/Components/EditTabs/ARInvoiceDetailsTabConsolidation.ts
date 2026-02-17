@@ -28,10 +28,9 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
-import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ARInvoiceDetailsTabConsolidation.html',
 })
 
@@ -48,22 +47,23 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
-    public GLAccountsFilterItems: ApiQueryFilters;
-
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
         this.EntityPM = entityArgs.EntityPM;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-        this.InitLOVFilters();
         this.InitializeServices();
         this.InitializeComponent();
         this.SetUIProperties();
         this.BuildScreenData();
         this.Listen()
 
-        this.BuildEntityWarnings();
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
+            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
+            this.EntityWarning = this.EntityPM.TransmissionError;
+        }
+
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -78,18 +78,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
 
         this.BuildInvoiceNumberFilters();
     }
-    InitLOVFilters() {
-        this.GLAccountsFilterItems = new ApiQueryFilters();
-        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
-    }
-    private BuildEntityWarnings() {
-        this.EntityWarning = "";
-        this.EntityWarningsList = [];
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.TransmissionError)) {
-            this.EntityWarningsList.push(this.EntityPM.TransmissionError);
-            this.EntityWarning = this.EntityPM.TransmissionError;
-        }
-    }
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;  
@@ -101,7 +89,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadInvoices();
-                    this.BuildEntityWarnings();
                 }
 
                 else {
@@ -118,7 +105,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadInvoices();
-                    this.BuildEntityWarnings();
                 }
             });
         }
@@ -159,7 +145,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("PartnerId", this.ObjectTableName, isEditingEnabled);
+
         // Generated General Tab
         if (this.EntityPM != null) {
             this.EntityPM.UIProperties.SetEnabled("UpdateDate", this.ObjectTableName, false);
@@ -195,7 +181,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
             }            
         }
 
-        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, isFieldtEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_BillToAddress() {
@@ -298,28 +284,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
     }
 
-    get PartnerId() { return this.EntityPM.PartnerId; }
-    set PartnerId(newValue: string) {
-        if (this.EntityPM.PartnerId != newValue) {
-            this.EntityPM.PartnerId = newValue;
-            if (AppTool.IsNullOrEmpty(newValue)) {
-                this.BillToId = null;
-            }
-            else {
-                this.myCardListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        var list: CardList = myResponse.Result;
-                        if (list != null) {
-                            this.BillToId = list.BillToId;
-                            if (AppTool.IsNullOrEmpty(this.BillToId)) {
-                                this.BillToId = newValue;
-                            }
-                        }
-                    }
-                });
-            }
-        }
-    }
     // Bill To
     public BillToDependencyValue1: string = null;
     get BillToId() { return this.EntityPM.BillToId; }
@@ -1088,6 +1052,8 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         }
     }
 
+
+
     get IsInvoiceNumberManuallySet() { return this.EntityPM.IsInvoiceNumberManuallySet; }
     set IsInvoiceNumberManuallySet(value: boolean) {
         if (this.EntityPM.IsInvoiceNumberManuallySet != value) {
@@ -1237,26 +1203,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.IsInvoiceNumberComboBoxEnabled = false;
         this.CurrentSession.CurrentEditComponent.SaveChanges(msg);
     }
-
-    ComputeShipmentsNumbers() {
-        var shipmentsNumbers: string = "";
-
-        this.ItemsSource.filter(f => f.IsConnected).forEach(item => {
-            if (AppTool.IsNullOrEmpty(shipmentsNumbers)) {
-                shipmentsNumbers = item.MainEntityReference;
-            }
-
-            else {
-                shipmentsNumbers = shipmentsNumbers + ", " + item.MainEntityReference;
-            }
-        });
-
-        if (shipmentsNumbers.length > 1000) {
-            shipmentsNumbers = shipmentsNumbers.substring(0, 1000);
-        }
-
-        this.EntityPM.ShipmentsNumbers = shipmentsNumbers;         
-    }
 }
 export class SubInvoiceLine {
     public entityList: ARInvoiceList;
@@ -1295,7 +1241,6 @@ export class SubInvoiceLine {
     get MasterNumber() { return this.entityList.MasterNumber; }
     get HouseNumber() { return this.entityList.HouseNumber; }
     get MainEntityReference() { return this.entityList.MainEntityReference; }
-    get MainEntityId() { return this.entityList.MainEntityId; }
     get SubTotalInInvoiceCurrency() { return this.entityList.SubTotalInInvoiceCurrency; }
     get SubTotalInLocalCurrency() { return this.entityList.SubTotalInLocalCurrency; }
     get AmountInInvoiceCurrency() { return this.entityList.AmountInInvoiceCurrency; }
@@ -1341,7 +1286,6 @@ export class SubInvoiceLine {
                 var itemPM: ConstituentPM = new ConstituentPM(null);
                 itemPM.Id = this.entityList.Id;
                 itemPM.Tenant = this.entityList.Tenant;
-                itemPM.ConcurrencyGUID = this.entityList.ConcurrencyGUID;
                 itemPM.ConsolidationInvoiceId = this.fatherComponent.EntityPM.Id;
                 this.fatherComponent.EntityPM.AddConstituentPM(itemPM);
             }
@@ -1349,12 +1293,10 @@ export class SubInvoiceLine {
             else {
                 var itemPM: ConstituentPM = this.fatherComponent.EntityPM.ConstituentInvoices.filter(f => f.ConsolidationInvoiceId == this.fatherComponent.EntityPM.Id && f.Id == this.Id)[0];
                 if (itemPM) {
-                    itemPM.ConcurrencyGUID = this.entityList.ConcurrencyGUID;
                     this.fatherComponent.EntityPM.RemoveConstituentPM(itemPM);
                 }
             }
 
-            this.fatherComponent.ComputeShipmentsNumbers();
             this.fatherComponent.ComputeTotals();
             this.fatherComponent.SetUIProperties_Connected();
 
@@ -1366,48 +1308,36 @@ export class SubInvoiceLine {
         }
     }
 
-    ViewEntityClicked(entityCode: string) {
-        var entityId: string = "";
-
-        if (entityCode == "ARInvoice") {
-            entityId = this.Id;
+    ViewEntityClicked() {
+        var myBackButtonLabel = "A/R Invoice";
+        if (!AppTool.IsNullOrEmpty(this.fatherComponent.EntityPM.InvoiceNumber)) {
+            myBackButtonLabel += ": " + this.fatherComponent.EntityPM.InvoiceNumber;
         }
 
-        else if (entityCode == "Shipment") {
-            entityId = this.MainEntityId;
-        }
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: this.Id, ObjectTableName: 'ARInvoice', BackButtonLabel: myBackButtonLabel });
 
-        if (!AppTool.IsNullOrEmpty(entityId)) {
-            var myBackButtonLabel = "A/R Invoice";
-            if (!AppTool.IsNullOrEmpty(this.fatherComponent.EntityPM.InvoiceNumber)) {
-                myBackButtonLabel += ": " + this.fatherComponent.EntityPM.InvoiceNumber;
-            }
+                let isEditComponentSaved = false;
 
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: entityCode, BackButtonLabel: myBackButtonLabel });
-
-                    let isEditComponentSaved = false;
-
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        if (isEditComponentSaved) {
-                            this.fatherComponent.LoadInvoices();
-                        }
-                    });
-
-                    cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                        if (isSaveSuccess) {
-                            isEditComponentSaved = true;
-                        }
-                    });
-
-                    cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                        if (isSaveSuccess) {
-                            isEditComponentSaved = true;
-                        }
-                    });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.fatherComponent.LoadInvoices();
+                    }
                 });
-        }
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });                
+            });
     }
 }

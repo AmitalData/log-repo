@@ -15,7 +15,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.InfrastructureModel.DomainServices;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.ServiceModel.DomainServices.Server;
@@ -23,7 +23,7 @@ using WebFreight.Web.DataContracts;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.CRM.Data.EntityKeys;
 using Simplog.Data.Helpers;
 using Logitude.BL.DataContracts;
@@ -76,13 +76,6 @@ namespace WebFreight.Web.CRMModel.DomainServices
             DocumentsFilingQuery query = new DocumentsFilingQuery(tenant);
             List<DocumentsFilingPM> docsIn = query.GetDocumentsFilingPMsByEntityId(tenant,entityPM.Id,table.Id);
 
-
-            if (!string.IsNullOrEmpty(entityPM.QuoteId))
-            {
-                DocumentsFilingPM documentsFilingPM = GetQuotationLastVersionDocumentsFilingPM(entityPM);
-                if (documentsFilingPM != null) docsIn.Add(documentsFilingPM);
-            }
-
             CorrespondenceQueryService correspondenceQuery = new CorrespondenceQueryService(tenant);
             List<CorrespondencePM> correspondencesList = correspondenceQuery.GetAllCorrespondencesByEntityIdAndTenant(entityPM.Id, tenant);
 
@@ -100,29 +93,26 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 foreach (CorrespondencesAttachment attach in myCorrespondence)
                 {
                     DocumentsFilingPM doc = docsIn.Where(a => a.Id == attach.DocumentFilingId).FirstOrDefault();
-                    if (doc != null)
+                    DocumentDataPM datapm = new DocumentDataPM()
                     {
-                        DocumentDataPM datapm = new DocumentDataPM()
-                        {
-                            Id = doc.Id,
-                            EntityId = doc.EntityId,
-                            DocumentTypeId = doc.DocumentTypeId,
-                            Code = doc.Code,
-                            ReceivedDate = doc.CreateDate,
-                            Tenant = doc.Tenant,
-                            DocumentId = doc.DocumentId,
-                            DocumentTypeName = doc.CustomsDocumentTypeName,
-                            FileName = doc.FileName != null && doc.FileExtension != null ? doc.FileName + "." + doc.FileExtension : null,
-                            SecurityId = doc.SecurityId,
-                            CorrespondenceId = attach.CorrespondenceId,
-                            FileExtension = doc.FileExtension != null ? doc.FileExtension : null,
-                            FileSize = doc.FileSize,
-                            CreateDate = doc.CreateDate,
-                            UpdateDate = doc.UpdateDate,
-                        };
+                        Id = doc.Id,
+                        EntityId = doc.EntityId,
+                        DocumentTypeId = doc.DocumentTypeId,
+                        Code = doc.Code,
+                        ReceivedDate = doc.CreateDate,
+                        Tenant = doc.Tenant,
+                        DocumentId = doc.DocumentId,
+                        DocumentTypeName = doc.CustomsDocumentTypeName,
+                        FileName = doc.FileName != null && doc.FileExtension != null ? doc.FileName + "." + doc.FileExtension : null,
+                        SecurityId = doc.SecurityId,
+                        CorrespondenceId = attach.CorrespondenceId,
+                        FileExtension = doc.FileExtension != null ? doc.FileExtension : null,
+                        FileSize = doc.FileSize,
+                        CreateDate = doc.CreateDate,
+                        UpdateDate = doc.UpdateDate,
+                    };
 
-                        entityPM.TicketDocumentData.Add(datapm);
-                    }
+                    entityPM.TicketDocumentData.Add(datapm);
 
                 }
             }
@@ -151,16 +141,6 @@ namespace WebFreight.Web.CRMModel.DomainServices
             return entityPM;
         }
 
-        private static DocumentsFilingPM GetQuotationLastVersionDocumentsFilingPM(TicketPM entityPM)
-        {
-            string objectTableId = ObjectTableRepository.GetObjectTableByName("Quote");
-            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(entityPM.Tenant);
-            var documentTypeId = documentTypeQuery.GetDocumentTypeIdByCode("QUOTE", entityPM.Tenant);
-            DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(entityPM.Tenant);
-            DocumentsFilingPM documentsFilingPM = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(entityPM.QuoteId, objectTableId, documentTypeId, entityPM.Tenant);
-            return documentsFilingPM;
-        }
-
         public TicketList GetSingleTicketList(string id, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
@@ -174,7 +154,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService listService = new TicketListQueryService(crmContext);
             TicketList myResult = listService.GetSingle(id);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, new List<TicketList> { myResult }.Cast<object>().ToList());
 
             return myResult;
@@ -198,7 +178,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService listService = new TicketListQueryService(crmContext);
             List<TicketList> myResult = listService.GetList(tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult;
@@ -224,7 +204,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<TicketList> myResult = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult.AsQueryable();
@@ -243,7 +223,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<TicketList> myResult = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult;
@@ -371,7 +351,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
                 CreatedByContactId = entityPM.CreatedByContactId,
             };
 
-            string senderEmail = GetSenderEmail(entityPM.Tenant, entityPM.GuidId, entityPM.SupportMailboxId);
+            string senderEmail = GetSenderEmail(entityPM.Tenant, entityPM.GuidId);
 
             InboundEmailLinePM line = new InboundEmailLinePM()
             {
@@ -499,7 +479,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService queryService = new TicketListQueryService(crmContext);
             IQueryable<TicketList> myResult = queryService.GetRecentEntityLists(ownerId, employeeGroupId , tenant, contact.Id, objectTable.Id).AsQueryable();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
@@ -617,7 +597,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService listService = new TicketListQueryService(crmContext);
             List<TicketList> myResult = listService.GetTicketListByShipmentIdList(shipmentId,tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult;

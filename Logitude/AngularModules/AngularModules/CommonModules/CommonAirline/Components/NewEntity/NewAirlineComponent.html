@@ -1,10 +1,10 @@
-
+﻿
 <table *ngIf="IsVisible">
 
     <tr *ngIf="ZeroExistsMessageVisibility" style="height:1px;width:1px;">
         <td>
             <div style="margin:5px;background:#FFF69C;border-color:#FEAC10;border-radius:2px;">
-                <label class="SingleError" style="margin: 10px 5px 10px 5px; font-size:14px"> {{Message}} </label>
+                <label style="margin: 10px 5px 10px 5px; font-size:14px"> {{Message}} </label>
             </div>
         </td>
     </tr>
@@ -111,19 +111,7 @@
                                     <div></div>
                                 </td>
                             </tr>
-                            <!-- VatNumber -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
 
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'VatNumber'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
                             <!-- InActive -->
                             <tr class="FormFieldRow">
                                 <td>

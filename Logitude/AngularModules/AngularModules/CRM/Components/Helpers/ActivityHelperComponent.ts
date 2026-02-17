@@ -7,7 +7,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ActivityPM} from '../../EntityPMs/ActivityPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "ActivityHelperComponent.html",
 })
 

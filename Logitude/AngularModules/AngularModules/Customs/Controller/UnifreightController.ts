@@ -1,4 +1,4 @@
-import { AmitalGatewayUtil, UnifreightMessageM } from '../../Infrastructure/Utilities/AmitalGatewayUtil';
+﻿import { AmitalGatewayUtil, UnifreightMessageM } from '../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { AppTool } from '../../Infrastructure/Tools';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { IEditComponentController } from '../../Infrastructure/Components/EditComponent/EditComponent';
@@ -22,25 +22,16 @@ export class UnifreightController {
             this._ViewModelName, PrintParamsXml);
         
     }
-    public RaiseLookUpAsync(LOV_FORM: string,PRIMARY_KEY:string) {
-        var declarationId = this._DeclarationPM.Id;
-        var declarationNumber = this._DeclarationPM.DeclarationNumber;
-        var customFileNo = this._DeclarationPM.CustomFileNo;
-
-        AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseLookUp
-            (customFileNo, declarationId, this._ViewModelName, LOV_FORM,PRIMARY_KEY);
-
-    }
     public SendRequestInstructionToUnifreightAsync(ViewPlace: string) {
         var declarationId = this._DeclarationPM.Id;
         var declarationNumber = this._DeclarationPM.DeclarationNumber;
         var customFileNo = this._DeclarationPM.CustomFileNo;
+
         AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinue
-            (customFileNo, declarationId, this._ViewModelName, ViewPlace, this._DeclarationPM.Direction);
+            (customFileNo, declarationId, this._ViewModelName, ViewPlace);
 
     }
 
-    
     public GetPromise(): Promise<UnifreightResponseEventArgs> {
         return new Promise((resolve, reject) => {
 
@@ -78,38 +69,4 @@ export class UnifreightResponseEventArgs {
     constructor(
         public UnifreightMessage: UnifreightMessageM,
         public UnifreightResponseStatus: boolean) { }
-}
-
-
-export class UnifreightInstructionController {
-    constructor(private EntityPM: DeclarationPM, private ViewPlace: string) { }
-
-    public ShowInstruction(OnResponceOKMethod: () => void, OnResponceFailedMethod: () => void) {
-        if (this.EntityPM.Direction === "E") {
-            OnResponceOKMethod();
-            return;
-        }
-        if (AmitalGatewayUtil.Instance.IsDeclarationInUse(this.EntityPM.CustomFileNo, this.EntityPM.IsConvertedDeclaration, this.EntityPM.IsConnectedToUnifreight)) {
-            SessionLocator.SelectedSession.StartBusyIndicator("Check Instruction...");
-
-            var myUnifreightController = new UnifreightController(this.EntityPM,
-                "UnifreightInstructionController");
-
-            myUnifreightController.SendRequestInstructionToUnifreightAsync(this.ViewPlace/*"SENDTOMEHES"*/);
-            myUnifreightController.GetPromise().
-                then((e) => {
-                    SessionLocator.SelectedSession.StopBusyIndicator();
-                    var UnifreightResponseStatus = e.UnifreightResponseStatus;
-                    var UnifreightMessage = e.UnifreightMessage;
-                    if (UnifreightResponseStatus) {
-                        OnResponceOKMethod();
-                    }
-                    else {
-                        OnResponceFailedMethod();
-                    }
-                });
-        } else {
-            OnResponceOKMethod();
-        }
-    }
 }

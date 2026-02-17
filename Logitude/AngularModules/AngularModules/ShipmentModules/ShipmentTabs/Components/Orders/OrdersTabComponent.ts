@@ -20,11 +20,11 @@ import {AirlineListService} from '../../../../Common/Services/StandardLists/Airl
 import {VesselListService} from '../../../../Common/Services/StandardLists/VesselListService';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 declare var window: any;
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './OrdersTabComponent.html',
 })
 
@@ -39,7 +39,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
     public DataContext: OrdersTabComponent = this;
     public IsResourcesReady: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsCarrierServiceLineVisible: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -105,10 +104,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsInlandDomestic = ShipmentTool.IsInlandDomestic(this.EntityPM);
-
-            if (FeatureLocator.HasFeaturePermession("ShippingLine", "ShippingLine.Tab.ServiceLines") && this.TransportModeId == "O") {
-                this.IsCarrierServiceLineVisible = true;
-            }
 
             this.entityResourceService.getEntityResourceByTableName("ShipmentOrderPackage").subscribe((res1: any) => {
                 this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDelivery").subscribe((res2: any) => {
@@ -190,8 +185,8 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         }
 
         else {
-            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeightUnitCode.Short");
-            this.BookingChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.ChargeableWeight.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
+            this.ChargeableWeightUnitCodeLabel = TextCodeTranslator.Translate("Shipment.F.WtMsrUnitCode.Short");
+            this.BookingChargeableWeightLabel = TextCodeTranslator.Translate("Shipment.F.WtMsr.Short").replace("%ChargWeightCode", this.EntityPM.ChargeableWeightUnitCode);
         }
     }
 
@@ -274,8 +269,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("CutoffDate", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isConfirmationEnabled);
         this.UIProperties.SetEnabled("BookingConfirmationNotes", this.ObjectTableName, isConfirmationEnabled);
-        this.UIProperties.SetEnabled("INTTRAContractNumber", this.ObjectTableName, isConfirmationEnabled);
-        this.UIProperties.SetEnabled("MainHarmonize", this.ObjectTableName, isConfirmationEnabled);
 
         this.UIProperties.SetEnabled("WarehouseLegCutOffDate", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegVGMCutOffDate", this.ObjectTableName, isEditingEnabled);
@@ -291,7 +284,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.SetUIProperties_Totals();
         this.SetUIProperties_DimFactor();
         this.SetUIProperties_DimensionsUnitCode();
-        this.SetUIProperties_ServiceLine();
     }
     SetUIProperties_Totals() {
         var isTotalsFieldEnabled = false;
@@ -311,9 +303,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         this.UIProperties.SetEnabled("OrderGrossWeight", this.ObjectTableName, isTotalsEditedFieldEnabled);
         this.UIProperties.SetEnabled("OrderChargeableWeight", this.ObjectTableName, isTotalsEditedFieldEnabled);
     }
-    SetUIProperties_ServiceLine() {
-        this.UIProperties.SetEnabled("CarrierServiceLineId", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.MainCarriageCarrierId));
-    }
+
     public DimensionsDependencyProperty1: string = null;
     public DimensionsDependencyProperty1IsList: boolean = false;
     private SetUIProperties_DimensionsUnitCode() {
@@ -333,7 +323,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
     // Measurments
@@ -666,15 +656,12 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         if (this.EntityPM.MainCarriageCarrierId != value) {
             this.EntityPM.MainCarriageCarrierId = value;
 
-            this.CarrierServiceLineId = null;
-            this.SetUIProperties_ServiceLine();
-
             if (AppTool.IsNullOrEmpty(value)) {
                 this.MainCarriageCarrierPrefix = null;
                 this.MainCarriageCarrierNumber = null;
-                this.Master = null;                
+                this.Master = null;
 
-                RoutingHelper.MainCarriageCarrierChanged(this.EntityPM, null);                
+                RoutingHelper.MainCarriageCarrierChanged(this.EntityPM, null);
 
                 if (this.TransportModeId == "A") {
                     if (AppTool.IsNullOrEmpty(this.EntityPM.InterlineId)) {
@@ -740,12 +727,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
                     }
                 });
             }
-        }
-    }
-    get CarrierServiceLineId() { return this.EntityPM.CarrierServiceLineId; }
-    set CarrierServiceLineId(value: string) {
-        if (this.EntityPM.CarrierServiceLineId != value) {
-            this.EntityPM.CarrierServiceLineId = value;
         }
     }
 
@@ -921,32 +902,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
         }
     }
 
-    get INTTRAContractNumber() { return this.EntityPM.INTTRAContractNumber; }
-    set INTTRAContractNumber(value: string) {
-        if (this.EntityPM.INTTRAContractNumber != value) {
-            this.EntityPM.INTTRAContractNumber = value;
-        }
-    }
-
-    get MainHarmonize() { return this.EntityPM.MainHarmonize; }
-    set MainHarmonize(value: string) {
-        if (this.EntityPM.MainHarmonize != value) {
-            this.EntityPM.MainHarmonize = value;
-        }
-    }
-
-    ChooseHarmonizeClicked() {
-        if (this.IsEditingEnabled) {
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = TextCodeTranslator.TranslateTablePlural("HarmonizeCode") + " Search";
-            logitudeWindow.WindowArgs = { Entity: this.EntityPM, FieldName: 'MainHarmonize' };
-            logitudeWindow.Show("./ShipmentModules/ShipmentTabs/Components/Windows/Harmonizes/HarmonizesComponent");
-            logitudeWindow.WindowClosed.subscribe(s => {
-
-            });
-        }
-    }
-
     //Details
     get BookingNumberOfPackages() { return this.EntityPM.BookingNumberOfPackages; }
     set BookingNumberOfPackages(newValue: number) {
@@ -964,7 +919,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
 
             if (this.EntityPM.ShipmentOrderPackages.length == 0) {
                 this.EntityPM.OrderChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.OrderGrossWeight, this.EntityPM.OrderVolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-                this.ComputeOrderVolumetricWeight();
             }
         }
     }

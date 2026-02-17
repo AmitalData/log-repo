@@ -1,20 +1,19 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { SessionLocator } from '../Infrastructure/Utilities/SessionLocator';
-import { FeatureLocator } from '../Infrastructure/Utilities/FeatureLocator';
-import { AppTool } from '../Infrastructure/Tools';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
+import {FeatureLocator} from '../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'DirectionsFilter',
-    inputs: ['SelectedValue', 'HideCustomsImport', 'HideImportDomistic', 'HideAMANACFilters', 'ShowCustomFilter', 'HideExport', 'Width'],
+    inputs: ['SelectedValue', 'HideCustomsImport', 'HideImportDomistic', 'HideAMANACFilters'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
-        `
+    `
     <ul class="FiltersMenu" [style.width.px]="DirectionWidth" style="display:block">
         <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')" [class.SelectedFilter]="SelectedValue === 'All'">
             All
         </li>
-        <li *ngIf="!HideExport" (click)="itemClicked('E')" (mouseover)="itemMouseOver('E')" (mouseleave)="itemMouseLeave('E')" [class.SelectedFilter]="SelectedValue === 'E'" title="Export">
+        <li (click)="itemClicked('E')" (mouseover)="itemMouseOver('E')" (mouseleave)="itemMouseLeave('E')" [class.SelectedFilter]="SelectedValue === 'E'" title="Export">
             <img [attr.id]="FilterId_E" class="CenterCenter" [attr.src]="SelectedValue === 'E' ? './_Resources/Images/Icons/Directions/E_w.png' : './_Resources/Images/Icons/Directions/E_g.png'"   />
         </li>
         <li *ngIf="!itmImportDomistic" (click)="itemClicked('I')" (mouseover)="itemMouseOver('I')" (mouseleave)="itemMouseLeave('I')" [class.SelectedFilter]="SelectedValue === 'I'" title="Import">
@@ -26,7 +25,7 @@ import { AppTool } from '../Infrastructure/Tools';
         <li *ngIf="!itmImportDomistic && !HideAMANACFilters" (click)="itemClicked('D')" (mouseover)="itemMouseOver('D')" (mouseleave)="itemMouseLeave('D')" [class.SelectedFilter]="SelectedValue === 'D'" title="Domestic">
             <img [attr.id]="FilterId_D" class="CenterCenter"  [attr.src]="SelectedValue === 'D' ? './_Resources/Images/Icons/Directions/D_w.png' : './_Resources/Images/Icons/Directions/D_g.png'" />
         </li>
-        <li *ngIf="(!HideAMANACFilters || ShowCustomFilter) && (itmImportShipments || itmImportDomistic)" (click)="itemClicked('C')" (mouseover)="itemMouseOver('C')" (mouseleave)="itemMouseLeave('C')" [class.SelectedFilter]="SelectedValue === 'C'" title="Customs Import">
+        <li *ngIf="!HideAMANACFilters && (itmImportShipments || itmImportDomistic)" (click)="itemClicked('C')" (mouseover)="itemMouseOver('C')" (mouseleave)="itemMouseLeave('C')" [class.SelectedFilter]="SelectedValue === 'C'" title="Customs Import">
             <img [attr.id]="FilterId_C" class="CenterCenter" [attr.src]="SelectedValue === 'C' ? './_Resources/Images/Icons/Directions/C_w.png' : './_Resources/Images/Icons/Directions/C_g.png'" />
         </li>
     </ul>
@@ -40,12 +39,11 @@ export class DirectionsFilter {
     public FilterId_D: string;
     public FilterId_C: string;
     public DirectionWidth: number = 140;
-
+  
     public itmImportShipments: boolean = false;
     public itmImportDomistic: boolean = false;
     public HideAMANACFilters: boolean = false;
-    public HideExport: boolean = false;
-     
+
     @Output() SelectedValueChanged = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -72,15 +70,6 @@ export class DirectionsFilter {
     }
 
 
-    private width: number;
-    public get Width() { return this.width; }
-    public set Width(value: number) {
-        if (this.width == value) return;
-        this.width = value;
-        this.DirectionWidth = AppTool.IsNullOrEmpty(value) ? this.DirectionWidth : value;
-    }
-
-
     private selectedValue: string = "All";
     public get SelectedValue() { return this.selectedValue; }
     public set SelectedValue(value: string) {
@@ -97,15 +86,6 @@ export class DirectionsFilter {
         if (this.hideCustomsImport != value) {
             this.hideCustomsImport = value;
             this.SetVisibilityImportShipments();
-        }
-    }
-
-    private showCustomFilter: boolean = false;
-    public get ShowCustomFilter() { return this.showCustomFilter; }
-    public set ShowCustomFilter(value: boolean) {
-        if (this.showCustomFilter != value) {
-            this.showCustomFilter = value;
-            this.SetVisibilityCustomsFilter();
         }
     }
 
@@ -132,9 +112,9 @@ export class DirectionsFilter {
                 var img_R = document.getElementById(this.FilterId_R);
             }
             if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                var img_D = document.getElementById(this.FilterId_D);
-            if (this.itmImportShipments && (!this.HideAMANACFilters || this.ShowCustomFilter))
-                var img_C = document.getElementById(this.FilterId_C);
+            var img_D = document.getElementById(this.FilterId_D);
+            if (this.itmImportShipments && !this.HideAMANACFilters)
+            var img_C = document.getElementById(this.FilterId_C);
 
             switch (itemValue) {
                 case "E": {
@@ -144,7 +124,7 @@ export class DirectionsFilter {
 
                 case "I": {
                     if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                        img_I.setAttribute("src", "./_Resources/Images/Icons/Directions/I.png");
+                    img_I.setAttribute("src", "./_Resources/Images/Icons/Directions/I.png");
                     break;
                 }
 
@@ -155,13 +135,13 @@ export class DirectionsFilter {
 
                 case "D": {
                     if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                        img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D.png");
+                    img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D.png");
                     break;
                 }
 
                 case "C": {
-                    if (this.itmImportShipments && (!this.HideAMANACFilters || this.ShowCustomFilter))
-                        img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C.png");
+                    if (this.itmImportShipments && !this.HideAMANACFilters)
+                    img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C.png");
                     break;
                 }
             }
@@ -175,9 +155,9 @@ export class DirectionsFilter {
                 var img_R = document.getElementById(this.FilterId_R);
             }
             if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                var img_D = document.getElementById(this.FilterId_D);
-            if (this.itmImportShipments && (!this.HideAMANACFilters || this.ShowCustomFilter))
-                var img_C = document.getElementById(this.FilterId_C);
+            var img_D = document.getElementById(this.FilterId_D);
+            if (this.itmImportShipments && !this.HideAMANACFilters)
+            var img_C = document.getElementById(this.FilterId_C);
 
             switch (itemValue) {
                 case "E": {
@@ -187,7 +167,7 @@ export class DirectionsFilter {
 
                 case "I": {
                     if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                        img_I.setAttribute("src", "./_Resources/Images/Icons/Directions/I_g.png");
+                    img_I.setAttribute("src", "./_Resources/Images/Icons/Directions/I_g.png");
                     break;
                 }
 
@@ -198,13 +178,13 @@ export class DirectionsFilter {
 
                 case "D": {
                     if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                        img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D_g.png");
+                    img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D_g.png");
                     break;
                 }
 
                 case "C": {
-                    if (this.itmImportShipments && (!this.HideAMANACFilters || this.ShowCustomFilter))
-                        img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C_g.png");
+                    if (this.itmImportShipments && !this.HideAMANACFilters)
+                    img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C_g.png");
                     break;
                 }
             }
@@ -217,9 +197,9 @@ export class DirectionsFilter {
             var img_R = document.getElementById(this.FilterId_R);
         }
         if (!this.itmImportDomistic && !this.HideAMANACFilters)
-            var img_D = document.getElementById(this.FilterId_D);
-        if (this.itmImportShipments && (!this.HideAMANACFilters || this.showCustomFilter))
-            var img_C = document.getElementById(this.FilterId_C);
+        var img_D = document.getElementById(this.FilterId_D);
+        if (this.itmImportShipments && !this.HideAMANACFilters)
+        var img_C = document.getElementById(this.FilterId_C);
 
         if (img_E) {
             img_E.setAttribute("src", "./_Resources/Images/Icons/Directions/E_g.png");
@@ -228,9 +208,9 @@ export class DirectionsFilter {
                 img_R.setAttribute("src", "./_Resources/Images/Icons/Directions/R_G.png");
             }
             if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D_G.png");
+            img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D_G.png");
             if (this.itmImportShipments && !this.HideAMANACFilters)
-                img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C_G.png");
+            img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C_G.png");
 
             switch (this.SelectedValue) {
                 case "E": {
@@ -240,7 +220,7 @@ export class DirectionsFilter {
 
                 case "I": {
                     if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                        img_I.setAttribute("src", "./_Resources/Images/Icons/Directions/I_w.png");
+                    img_I.setAttribute("src", "./_Resources/Images/Icons/Directions/I_w.png");
                     break;
                 }
 
@@ -251,13 +231,13 @@ export class DirectionsFilter {
 
                 case "D": {
                     if (!this.itmImportDomistic && !this.HideAMANACFilters)
-                        img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D_w.png");
+                    img_D.setAttribute("src", "./_Resources/Images/Icons/Directions/D_w.png");
                     break;
                 }
 
                 case "C": {
-                    if (this.itmImportShipments && (!this.HideAMANACFilters || this.ShowCustomFilter))
-                        img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C_w.png");
+                    if (this.itmImportShipments && !this.HideAMANACFilters)
+                    img_C.setAttribute("src", "./_Resources/Images/Icons/Directions/C_w.png");
                     break;
                 }
             }
@@ -265,7 +245,7 @@ export class DirectionsFilter {
     }
 
     SetVisibilityImportShipments() {
-        if (FeatureLocator.HasFeaturePermession("General", "IMPORTSHIPMETNS") && !this.HideCustomsImport) {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "IMPORTSHIPMETNS") && !this.HideCustomsImport) {
             this.itmImportShipments = true;
             this.DirectionWidth = 168;
         }
@@ -281,14 +261,8 @@ export class DirectionsFilter {
             this.DirectionWidth = 112;
         }
         //else {
-
+          
         //}
-    }
-
-    SetVisibilityCustomsFilter() {
-        if (this.ShowCustomFilter) {
-            this.DirectionWidth = 114;
-        }
     }
 
 }

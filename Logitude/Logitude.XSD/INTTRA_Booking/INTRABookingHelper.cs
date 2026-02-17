@@ -9,10 +9,10 @@ using Logitude.XSD.INTTRA.BL;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -143,7 +143,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 {
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue(commLog.QueueName, 0);
-                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } }, Tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", Tenant.ToString() } });
                 }
 
                 catch (Exception ex)
@@ -162,8 +162,7 @@ namespace Logitude.XSD.INTTRA_Booking
         private void UpdateShipmentStatus()
         {
             this.DataContext.Shipment.INTTRABookingStatusCode = "ST";
-            this.DataContext.Shipment.INTTRABookingStatusCode = "ST";
-            this.DataContext.Shipment.INTTRALastEBbookingSendDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
+            this.DataContext.Shipment.INTTRABookingTransStatusCode = "BRS";
             this.DataContext.shipmentRepository.Update(this.DataContext.Shipment);
         }
 

@@ -4,7 +4,7 @@ import { ShippingLinePM } from '../../../../../Common/EntityPMs/ShippingLinePM';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShippingLineDocsInTabComponent.html',
 })
 

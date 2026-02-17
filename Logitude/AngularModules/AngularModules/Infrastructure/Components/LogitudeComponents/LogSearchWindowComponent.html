@@ -21,69 +21,6 @@
         background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
     }
 </style>
-
-<style>
-    .search-window-footer {
-        padding: 0;
-        margin: 0;
-        height: 26px;
-    }
-        .search-window-footer ul {
-            height: 100%;
-            /* float: left; */
-
-        }
-            .search-window-footer ul li {
-                float: right;
-                color: #4a4a4a;
-                background: white;
-                line-height: 25px;
-                font-size: 10px;
-                height: 100% ;
-                text-align: center;
-            }
-            .search-window-footer ul li:hover {
-                background: rgb(196, 196, 196);
-            }
-            .search-window-footer ul li.SelectedFilter {
-                background: rgb(226, 226, 226);
-                /* box-shadow: inset 0 0 5px 0px #ababab; */
-            }
-            .search-window-footer ul li:active {
-                box-shadow: inset 0 0 5px 1px #969696;
-            }
-
-        .search-window-footer a {
-            color: #6d6d6d;
-            padding: 0 10px;
-            display: block;
-            /* float: right; */
-            background: white;
-            height: 100%;
-            line-height: 25px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .search-window-footer a:hover {
-            background: rgb(218, 218, 218);
-        }
-        .search-window-footer a:active {
-            background: rgb(218, 218, 218);
-            box-shadow: inset 0 0 5px 1px #969696;
-        }
-
-
-        .noselect {
-        -webkit-touch-callout: none; /* iOS Safari */
-        -webkit-user-select: none; /* Chrome/Safari/Opera */
-        -khtml-user-select: none; /* Konqueror */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-        user-select: none; /* Non-prefixed version, currently
-                                  not supported by any browser */
-    }
-
-</style>
 <table>
 
     <tr style="height: 21px;">
@@ -121,10 +58,9 @@
                                             <tr class="SystemDefaultsBoxHeader">
                                                 <td>
                                                     <table>
-
-                                                        <tr [style.background-color]="DataSource.rowCount == ConstantPageSize && DontApplyVirtualization ? '#FFFBDA':''">
+                                                        <tr>
                                                             <td style="color: #666666; font-size: 11px; padding-left: 15px;">
-                                                                <div *ngIf="IsReady"> <span *ngIf="(DataSource.rowCount != ConstantPageSize || !DontApplyVirtualization)">  {{ObjectTableNamePluralName}} ({{DataSource.rowCount}}) </span>   <span *ngIf="(DataSource.rowCount == ConstantPageSize && DontApplyVirtualization)">Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
+                                                                My {{ObjectTableNamePluralName}} ({{DataSource.rowCount}})
                                                             </td>
 
                                                             <!-- Add US Warehouse Button -->
@@ -191,20 +127,11 @@
                                                         <tr>
                                                             <td style="height: 100%">
                                                                 <div *ngIf="IsDataReady" class="GeneratedGridContainer">
-                                                                    <logitude-grid *ngIf="false" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
+                                                                    <logitude-grid GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
                                                                                    [columns]="columns1" [autoLoad]="true" [rows]="items"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
-                                                                                   (CountReady)="onCountReady($event)"
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid>
-
-                                                                    <logitude-grid-v2 *ngIf="true" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource"
-                                                                                    [ColumnsReady]="columnsReadyEvent"
-                                                                                    [columns]="columns1" [autoLoad]="true" [rows]="items"
-                                                                                      [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
-                                                                                      (CountReady)="onCountReady($event)" [DontApplyVirtualization]="DontApplyVirtualization"
-                                                                                      (rowSelectedEvent)="onRowSelected($event)" [RowBackGroundColor]="'#fbbcbc'" [ChangeColorByPropName]="'InActive'" [ChangeColorByPropValue]="true">
-                                                                    </logitude-grid-v2>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -239,7 +166,7 @@
                                                 <td>
                                                     <table>
                                                         <tr>
-                                                          <td style="color: #666666; font-size: 11px; padding-left: 15px;">All {{ObjectTableNamePluralName}} ({{DataSource2.rowCount2}})</td>
+                                                            <td style="color: #666666; font-size: 11px; padding-left: 15px;">All {{ObjectTableNamePluralName}} ({{DataSource2.rowCount}})</td>
                                                         </tr>
 
                                                     </table>
@@ -252,19 +179,11 @@
                                                         <tr>
                                                             <td style="height: 100%">
                                                                 <div *ngIf="IsDataReady" class="GeneratedGridContainer">
-                                                                    <logitude-grid *ngIf="false" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
+                                                                    <logitude-grid GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
                                                                                    [columns]="columns" [autoLoad]="true" [rows]="items"
                                                                                    [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
-                                                                                   (CountReady)="onCountReady($event)"
-
                                                                                    (rowSelectedEvent)="onRowSelected($event)">
                                                                     </logitude-grid>
-                                                                    <logitude-grid-v2 *ngIf="true" GridWidth="100%" GridHeight="100%" [dataSource]="DataSource2"
-                                                                                      [columns]="columns" [autoLoad]="true" [rows]="items"
-                                                                                      [searchFields]="searchFields" [SearchFieldchangeevent]="SearchFieldchangeevent"
-                                                                                      (CountReady)="onCountReady($event)" [DontApplyVirtualization]="DontApplyVirtualization"
-                                                                                      (rowSelectedEvent)="onRowSelected($event)" [RowBackGroundColor]="'#fbbcbc'" [ChangeColorByPropName]="'InActive'" [ChangeColorByPropValue]="true">
-                                                                    </logitude-grid-v2>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -288,16 +207,7 @@
             <table style="height: 22px;">
                 <tr>
                     <td>
-                        <div class="search-window-footer">
-                            <ul *ngIf="ForceShowLanguageFilter"  float-start >
-                                <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'L'" (click)="SwitchLanguage('L')" class="noselect">
-                                    Local
-                                </li>
-                                <li style="width: 50px;" [class.SelectedFilter]="LanguageFilterValue == 'E'" (click)="SwitchLanguage('E')" class="noselect">
-                                    English
-                                </li>
-                            </ul>
-                        </div>
+                        <div></div>
                     </td>
 
                     <td style="width: 5px;">
@@ -313,7 +223,3 @@
     </tr>
 
 </table>
-
-
-
-

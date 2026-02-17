@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -85,8 +85,8 @@ namespace WebFreight.Web.WcfApi
                     {
                          
                         string subject = "The contact received is already found in the CRM tenant";
-                        string fromEmail = SettingUtil.Emails.FromNoReply;
-                        string toEmails = SettingUtil.Emails.CrmManagers;
+                        string fromEmail = "admin@fnarsoft.com";
+                        string toEmails = LogitudeSettings.DeploymentStage == "Simplog" ? "info@logitudeworld.com" : "islam@logitudeworld.com;jalal@logitudeworld.com";
                         
                         StringBuilder HtmlTemplate = new StringBuilder();
                         HtmlTemplate.Append("<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>The contact received is already found in the CRM tenant:</div>");
@@ -113,6 +113,8 @@ namespace WebFreight.Web.WcfApi
                             Subject = subject,
                             From = fromEmail,
                             To = toEmails,
+                            CC = null,
+                            BCC = null,
                             EmailBody = HtmlTemplate.ToString(),
                             Tenant = crmTenant,
                             LoggingUserId = contact.Id,

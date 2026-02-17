@@ -486,37 +486,31 @@
                                                                 <log-column [header]="'Customs.CustomsDocument.SupplierInvoice' | TextCodeTranslationPipe"
                                                                             [binding]="'SupplierInvoice'"
                                                                             [width]="'100'" [Alignment]="'right'">
-                                                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                    <log-cell-template template="let item" #logcelltemplate>
                                                                         <div class="RightCenter">
                                                                             <span>{{item.SupplierInvoice}}</span>
                                                                         </div>
                                                                     </log-cell-template>
-</ng-template>
                                                                 </log-column>
 
                                                                 <log-column [header]="'Customs.ReleaseGoods.O.GoodsItemPath' | TextCodeTranslationPipe"
                                                                             [binding]="'GoodsItemPath'"
                                                                             [width]="'100'" [Alignment]="'right'">
-                                                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                    <log-cell-template template="let item" #logcelltemplate>
                                                                         <div class="RightCenter">
                                                                             <span>{{item.GoodsItemPath}}</span>
                                                                         </div>
                                                                     </log-cell-template>
-</ng-template>
                                                                 </log-column>
 
                                                                 <log-column [header]="'Customs.ReleaseGoods.O.GoodsItem' | TextCodeTranslationPipe"
                                                                             [binding]="'CustomItemID'"
                                                                             [width]="'100'" [Alignment]="'right'">
-                                                                    <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                                    <log-cell-template template="let item" #logcelltemplate>
                                                                         <div class="RightCenter">
                                                                             <span>{{item.CustomItemID}}</span>
                                                                         </div>
                                                                     </log-cell-template>
-</ng-template>
                                                                 </log-column>
 
                                                             </logitude-edit-grid>

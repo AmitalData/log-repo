@@ -1,8 +1,7 @@
 ﻿using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.Utils;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -14,75 +13,34 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.Data.CustomFilters
 {
-    public class DeclarationCustomFilters
+   public class DeclarationCustomFilters
     {
-        public IQueryable<Declaration> GetFilteredQuery(QueryOperations operations, IQueryable<Declaration> queryableData, int tenant, ICustomContext context)
-        {
-            List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
-            foreach (QueryFilterItem item in queryFilters)
-            {
-                if (item.FieldName == "DeclarationWithoutRelease")
-                {
+       public IQueryable<Declaration> GetFilteredQuery(QueryOperations operations, IQueryable<Declaration> queryableData)
+       {
+           List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
+
+
+
+           foreach (QueryFilterItem item in queryFilters)
+           {
+               if (item.FieldName == "DeclarationWithoutRelease")
+               {
                     //queryableData = queryableData.Where(d => (d.HatraDate == null));
                     queryableData = queryableData.Where(d => (d.IsClose == false));
-                }
-
-                if (item.FieldName == "ExportDecWithoutRelease")
-                {
-                    queryableData = queryableData.Where(d => (d.IsExportClosed == false && d.IsClose==false));
 
                 }
 
-                if (item.FieldName == "PaidDeclarationWithoutRelease")
-                {
-                    queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
-                }
+               if (item.FieldName == "PaidDeclarationWithoutRelease")
+               {
+                   queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
+               }
+           }
 
-                if (item.FieldName == "DiamondsDeclarationFilter")
-                {
-                    queryableData = AddDiamondsDeclarationFilter(queryableData, (string)item.FieldValue);
-                }
+           return queryableData;
 
-                if (item.FieldName == "CourierPendingReasonList")
-                {
-                    queryableData = queryableData.Join(context.DeclarationCourierStatuses, x => x.Id, x => x.DeclarationId, (dec, sta) => new { dec = dec, sta = sta })
-                        .Where(x => x.sta.Tenant == tenant && x.sta.CourierPendingReasonList != null 
-                            && (x.sta.CourierPendingReasonList != null? ("," + x.sta.CourierPendingReasonList + ",").Contains("," + item.FieldValue.ToString() + ","): false) == true)
-                        .Select(x => x.dec);
-                    }
-            }
 
-            return queryableData;
-        }
-
-        public IQueryable<Declaration> AddDiamondsDeclarationFilter(IQueryable<Declaration> queryableData, string menuFilter)
-        {
-            string correctDraftStatus = "13";
-            List<string> releasedStatuses = new List<string> { "44", "43", "8", "7" };
-
-            switch (menuFilter)
-            {
-                case "DeclarationsWithDeficiencies":
-                    queryableData = queryableData.Where(d => d.DeclarationNumber == null);
-                    break;
-                case "IncorrectDeclarations":
-                    queryableData = queryableData.Where(d => d.DeclarationNumber != null && d.DeclarationStatusTypeCode != correctDraftStatus && !releasedStatuses.Contains(d.DeclarationStatusTypeCode) && d.IsSubmitDeclaration != true);
-                    break;
-                case "CorrectDraft":
-                    queryableData = queryableData.Where(d => d.DeclarationStatusTypeCode == correctDraftStatus);
-                    break;
-                case "PaidDeclarations":
-                    queryableData = queryableData.Where(d => d.IsSubmitDeclaration == true && !releasedStatuses.Contains(d.DeclarationStatusTypeCode));
-                    break;
-                case "ReleasedDeclarations":
-                    queryableData = queryableData.Where(d => releasedStatuses.Contains(d.DeclarationStatusTypeCode));
-                    break;
-                default:
-                    return null;
-            }
-            return queryableData;
-        }
+       }
 
         public IQueryable<Declaration> GetFreelancerDeclarations(QueryOperations operations, IQueryable<Declaration> queryableData, int tenant)
         {
@@ -90,9 +48,12 @@ namespace Logitude.Customs.Data.CustomFilters
             if (frlUtil.user.IsFreelancer)
             {
                 List<string> customersIds = frlUtil.GetConnectedCustomersIds(tenant);
-               queryableData = queryableData.Where(d => customersIds.Contains(d.CustomerId));
+                if (customersIds.Count > 0)
+                {
+                    queryableData = queryableData.Where(d => customersIds.Contains(d.CustomerId));
+                }
             }
-
+            
             return queryableData;
         }
 

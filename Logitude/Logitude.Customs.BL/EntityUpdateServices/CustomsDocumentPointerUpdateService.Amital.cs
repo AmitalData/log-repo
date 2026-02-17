@@ -8,14 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CustomsDocumentPointerUpdateService
     {
 
-        private void UpdateUnifreight(CustomsDocumentPointerPM dirtyEntityPM, Declaration  declaration)
+        private void UpdateUnifreight(CustomsDocumentPointerPM dirtyEntityPM)
         {
             string loggingUserId = "";
             //var contactRep = new ContactRepository(dirtyEntityPM.Tenant);
@@ -44,80 +43,44 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (toSendStatusCRD == true)
             {
-                SendDocumentPointerStatus("CRD", "CRD", dirtyEntityPM, loggingUserId, declaration);
+                SendDocumentPointerStatus("CRD", "CRD", dirtyEntityPM, loggingUserId);
             }
             if (toSendStatusCRC == true)
             {
-                SendDocumentPointerStatus("CRC", "CRC", dirtyEntityPM, loggingUserId , declaration);
+                SendDocumentPointerStatus("CRC", "CRC", dirtyEntityPM, loggingUserId);
             }
         }
 
-        private void SendDocumentPointerStatus(string statusId, string unifrieghtStatus, CustomsDocumentPointerPM dirtyEntityPM, string loggingUserId, Declaration declaration)
+        private void SendDocumentPointerStatus(string statusId, string unifrieghtStatus, CustomsDocumentPointerPM dirtyEntityPM, string loggingUserId)
         {
             try
             {
-
                 var eventContextTagModel = dirtyEntityPM.CurrentContextTag as EventContextTagModel;
-                Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel myAmitalEventTracerModel;
-                if (declaration.Direction=="E")
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
-                    myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                    Tenant = dirtyEntityPM.Tenant,
+                    objectTableName = eventContextTagModel.StatusObjectTable,
+                    EventCode = statusId,
+                    notes = eventContextTagModel.EventRemarks,
+                    CommunicationLoggingEntityReference = eventContextTagModel.StatusEntityId,
+                    EntityId = dirtyEntityPM.Id,
+                    UserId = loggingUserId,
+
+                    CommunicationSubject = "FU Status from logitude ",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
                     {
-                        Tenant = dirtyEntityPM.Tenant,
-                        objectTableName = eventContextTagModel.StatusObjectTable,
-                        EventCode = statusId,
-                        notes = eventContextTagModel.EventRemarks,
-                        CommunicationLoggingEntityReference = eventContextTagModel.StatusEntityId,
-                        EntityId = declaration.Id,
-                        UserId = loggingUserId,
-                        CommunicationSubject = "FU Status from logitude ",
-                        MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                        {
-                            entname = "CFIFILEM",
-                            primary_number = eventContextTagModel.StatusCustomFileNo,
-                            status = "new",
-                            xml_status = "new",
-                            status_id = unifrieghtStatus,
-                            status_DateTime = DateTime.Now,
-                            //status_place = "FRA",
-                            //status_save = "no_fail",
-                            comments = eventContextTagModel.FUStatusRemarks,
-                        }
-
-                    };
-                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true, isExport: true);
-
-                }
-                else
-                {
-                      myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-                        Tenant = dirtyEntityPM.Tenant,
-                        objectTableName = eventContextTagModel.StatusObjectTable,
-                        EventCode = statusId,
-                        notes = eventContextTagModel.EventRemarks,
-                        CommunicationLoggingEntityReference = eventContextTagModel.StatusEntityId,
-                        EntityId = declaration.Id,
-                        UserId = loggingUserId,
-
-                        CommunicationSubject = "FU Status from logitude ",
-                        MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                        {
-                            entname = "CFIFILEM",
-                            primary_number = eventContextTagModel.StatusCustomFileNo,
-                            status = "new",
-                            xml_status = "new",
-                            status_id = unifrieghtStatus,
-                            status_DateTime = DateTime.Now,
-                           
-                            //status_place = "FRA",
-                            //status_save = "no_fail",
-                            comments = eventContextTagModel.FUStatusRemarks,
-                        }
-                    };
-                    AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-                }
-
+                        entname = "CFIFILEM",
+                        primary_number = eventContextTagModel.StatusCustomFileNo,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = unifrieghtStatus,
+                        status_DateTime = DateTime.Now,
+                        //status_place = "FRA",
+                        //status_save = "no_fail",
+                        comments = eventContextTagModel.FUStatusRemarks,
+                    }
+                };
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
             }
             catch (Exception)
             {

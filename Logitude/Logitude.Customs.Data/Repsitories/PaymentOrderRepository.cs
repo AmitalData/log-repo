@@ -24,22 +24,15 @@ namespace Logitude.Customs.Data.Repsitories
 
         public string GetIdByPaymentNumber(string paymentNumber, int tenant)
        {
-            var payment =
-                            (
-                            from rec in context.PaymentOrders
-                            where rec.PaymentNumber == paymentNumber && rec.Tenant == tenant
-                            select rec
-                            )//
+            return 
+                (
+                from rec in   context.PaymentOrders
+                where rec.PaymentNumber == paymentNumber && rec.Tenant == tenant  
+                select rec.Id 
+                )
                 .FirstOrDefault();
            
                    
-            if(payment!= null)
-            {
-                return payment.Id;
-            }
-
-            return null;
-
        }
 
 
@@ -51,24 +44,7 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).ToList();
         }
 
-        public string GetDecIdOfCustomFileByPaymentNumber(string PaymentNumber, int tenant)
-        {
-
-           var CustomFiles =  (from a in context.PaymentOrders
-                    where a.PaymentNumber == PaymentNumber && a.Tenant == tenant
-                    select a).FirstOrDefault()?.CustomFiles;
-
-            if(CustomFiles != null)
-            {
-                CustomFiles = CustomFiles.Replace("*", "");
-                return (from a in context.Declarations
-                    where a.CustomFileNo == CustomFiles && a.Tenant == tenant && a.AmendmentDontDisplayInList == false
-                    select a).FirstOrDefault()?.Id;
-            }
-           return null;
-        }
-
-    }
+   }
 
 }
    

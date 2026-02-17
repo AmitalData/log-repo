@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class CreditLimitSettingQuery
     {
         CreditLimitSettingRepository repository;
- 
+        public CreditLimitSettingQuery()
+        {
+            repository = new CreditLimitSettingRepository();
+        }
         public CreditLimitSettingQuery(int tenant)
         {
             repository = new CreditLimitSettingRepository(tenant);
@@ -62,7 +65,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                VendorsShipmentsBlock = a.VendorsShipmentsBlock,
                                                WarehousesInvoicesBlock = a.WarehousesInvoicesBlock,
                                                WarehousesShipmentsBlock = a.WarehousesShipmentsBlock,
-                                               ShipmentCreationWarning = a.ShipmentCreationWarning,
                                            }).FirstOrDefault();
 
 
@@ -100,7 +102,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             VendorsShipmentsBlock = a.VendorsShipmentsBlock,
                                                             WarehousesInvoicesBlock = a.WarehousesInvoicesBlock,
                                                             WarehousesShipmentsBlock = a.WarehousesShipmentsBlock,
-                                                            ShipmentCreationWarning = a.ShipmentCreationWarning,
                                                         };
             return result;
         }

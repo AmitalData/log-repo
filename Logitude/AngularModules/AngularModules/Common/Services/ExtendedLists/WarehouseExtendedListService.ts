@@ -1,22 +1,21 @@
-import {Injectable, Injector, Inject} from '@angular/core';
-
-import { defer, of } from 'rxjs';
+﻿import {Injectable, Injector, Inject} from '@angular/core';
+import {Http, Headers, ConnectionBackend, BaseRequestOptions} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {CardList} from '../../EntityLists/CardList';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+
 @Injectable()
 
 export class WarehouseExtendedListService {
     private _apiUrl: string;
-    private _http: HttpClient;
+    private _http: Http;
     private CachedData: Array<CardList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/warehouseextended';
         this.CachedData = [];
     }
@@ -49,11 +48,13 @@ export class WarehouseExtendedListService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         var callUrl = this._apiUrl.concat(urlparameters);
 
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpResponse<any>) => {
-
-                var viewResponse: ServiceResponse = response.body;
+                var viewResponse: ServiceResponse;
+                viewResponse = response.json();
                 var _mappedListsArray: Array<CardList> = [];
                 if (viewResponse.Result) {
                     for (var key in viewResponse.Result) {
@@ -65,23 +66,10 @@ export class WarehouseExtendedListService {
                 }
                 viewResponse.Result = _mappedListsArray;
                 return viewResponse;
-            }));
+            });
         }
         );
     }
-
-    GetWarehouseTypeById(warehouseId) {
-
-        return this._http.get(this._apiUrl + '/GetWarehouseTypeById/?' + 'warehouseId=' + warehouseId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-            var pmresponse: ServiceResponse;
-            pmresponse = new ServiceResponse();
-
-            pmresponse.Result = response;
-            return pmresponse;
-        }), catchError(ServiceHelper.HandleServiceError));
-    }
-
 
     MapJsonToEntityList(jsonList: any) {
 

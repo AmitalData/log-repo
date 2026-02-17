@@ -7,7 +7,7 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-            AlterColumn("dbo.PackageTypes", "PrintAs", c => c.String(nullable: true, maxLength: 20, unicode: false));
+            AlterColumn("dbo.PackageTypes", "PrintAs", c => c.String(nullable: false, maxLength: 20, unicode: false));
         }
         
         public override void Down()

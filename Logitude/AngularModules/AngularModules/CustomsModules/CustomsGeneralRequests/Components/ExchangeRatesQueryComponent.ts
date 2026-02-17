@@ -18,7 +18,7 @@ import { CustomMessageProgressComponent } from '../../../CustomsModules/CustomsC
 
 @Component({
     selector: 'ExchangeRatesQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './ExchangeRatesQueryComponent.html',
 })
 
@@ -43,12 +43,10 @@ export class ExchangeRatesQueryComponent
         if (this.SuperCustomMessageWrapperComponent == null) {
             console.warn("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent == null");
         } else {
-            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null" + this.SuperCustomMessageWrapperComponent.MyGuid);
-
+            console.log("SuperCustomMessageWrapperComponent.ngAfterViewInit MyCustomMessageWrapperComponent != null");
         }
         this.MyCustomMessageWrapperComponent = this.SuperCustomMessageWrapperComponent;
-        this.subscribeWrapperComponent();
-        ///this.CurrentSession.StartBusyIndicator("Test");
+        this.subscribeWrapperComponent()
     }
 
     OnMassageDisplayMethod() {
@@ -63,7 +61,6 @@ export class ExchangeRatesQueryComponent
             this.ExchangeRatesQueryObservableList.InsertCollection(this.ResponseData.CurrencyRateList);
         }
     }
-
 
     get FromDate() { return this.RequestParams.FromDate; }
     set FromDate(value: Date) {
@@ -160,11 +157,9 @@ export class ExchangeRatesQueryComponent
         currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
+            .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
             .then((res) => {
-                
                 this.ResponseData = res;
-                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
@@ -180,12 +175,6 @@ export class ExchangeRatesQueryComponent
             });
     }
 
-    _LOVListCurrencys: any[] = [];
-    get LOVListCurrencys() { return this._LOVListCurrencys; }
-    set LOVListCurrencys(value) {
-        if (this._LOVListCurrencys != value) {
-            this._LOVListCurrencys = value;
-        }
-    }
-    
+
+
 }

@@ -6,7 +6,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
 
-    
+    moduleId: module.id,
     templateUrl: './OpportunityDocsOutTabComponent.html',
 })
 

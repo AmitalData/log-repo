@@ -12,7 +12,7 @@ import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
     selector: 'CurrencyRatesComponent',
-    
+    moduleId: module.id,
     templateUrl: './CurrencyRatesComponent.html',
 })
 

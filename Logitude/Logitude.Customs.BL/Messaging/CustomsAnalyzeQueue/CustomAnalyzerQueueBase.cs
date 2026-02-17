@@ -2,9 +2,8 @@
 using Logitude.Customs.Def.ClosedTable;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -12,7 +11,6 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -30,8 +28,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         
 
         protected InterfaceDetails _InterfaceDetails;
-        protected QueueDetails _QueueDetails;
-
         protected CommunicationLog _CommunicationLog;
 
         protected StringBuilder _SBLog;
@@ -44,178 +40,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             this._InterfaceDetails = MyInterfaceDetails;
             
         }
-
-        public CustomAnalyzerQueueBase(QueueDetails queueDetails)
-        {
-            _SBLog = new StringBuilder();
-            this._QueueDetails = queueDetails;
-
-        }
-
-        public void Run( AnalyzeQueueRepository analyzeQueueRepository, int tenant, string candidateCommunicationLogId , string message, QueueDetails queue, out string log , out bool success)
-        {
-            success = false;
-            log = "none";
-            try
-            {
-                this.analyzeQueueRepository = analyzeQueueRepository;
-
-                if (String.IsNullOrWhiteSpace(candidateCommunicationLogId))
-                {
-                    
-                        var _CommunicationsParams = new CommunicationsParams()
-                        {
-
-                            Tenant = tenant,
-
-                            //LoggingObjectTableId = objectTableId,
-                            //LoggingEntityId = entityId,
-
-                            Subject = queue.Name,
-                            //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
-                           // LoggingUserId = LoggingUserId,
-                            //CorrelationID = documentsFilingPM.Id,
-
-                            Status = "W",
-                            To = "RabbitMQ",
-                            CommunicationLogTypeCode = "T",
-                            FolderName = "RabbitMQ",
-                            From = "Logitude",
-                            InOut = "O",
-
-                        };
-
-
-                        var messageByte = Encoding.UTF8.GetBytes(message);
-                        _CommunicationsParams.ByteData = messageByte;
-                          candidateCommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
-
-                    
-                     //   throw new Exception("CommunicationLogId is null");
-                }
-
-                try
-                {
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
-                    if (_CommunicationLog == null)
-                    {
-                        _CommunicationLog = Communications.GetCommunicationLogByCorrelationID(tenant, candidateCommunicationLogId);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log = "Cannnot GetCommunicationLog : " + ex.Message;
-
-                    throw new Exception("Cannnot GetCommunicationLog");
-                }
-
-                if (_CommunicationLog == null)
-                {
-
-
-                    var _CommunicationsParams = new CommunicationsParams()
-                    {
-
-                        Tenant = tenant,
-
-                        //LoggingObjectTableId = objectTableId,
-                        //LoggingEntityId = entityId,
-
-                        Subject = queue.Name,
-                        //LoggingEntityReference = documentsFilingPM.ExternalEntityReference,
-                        // LoggingUserId = LoggingUserId,
-                        //CorrelationID = documentsFilingPM.Id,
-                        CorrelationID = candidateCommunicationLogId,
-                        Status = "W",
-                        To = "RabbitMQ",
-                        CommunicationLogTypeCode = "T",
-                        FolderName = "RabbitMQ",
-                        From = "Logitude",
-                        InOut = "O",
-
-                    };
-
-
-                    var messageByte = Encoding.UTF8.GetBytes(message);
-                    _CommunicationsParams.ByteData = messageByte;
-                    candidateCommunicationLogId = Communications.AddCommunicationLog(_CommunicationsParams);
-
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
-
-                }
-
-                if (_CommunicationLog.Retries >= 5)
-                { 
-                    success = true;
-                    log = "_CommunicationLog.Retries == 5";
-
-                    return;
-
-                 }
-                log = "_CommunicationLog != null";
-                var sw = Stopwatch.StartNew();
-                var communicationsData = message;  
-
-                try
-                {
-                    _AnalyzeResultModel = this.AnalyzeData(communicationsData);
-                 }
-                catch (Exception ex )
-                {
-                    log = ex.Message + Environment.NewLine + message + Environment.NewLine + ex.StackTrace;
-                    _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel();
-                    _AnalyzeResultModel.MyCommStatusEnum = CommStatusEnum.W;
-                    _AnalyzeResultModel.ErrorMessage = log;
-
-                    success = false;
-                    throw new Exception(log);
-                }
-
-
-                log = _AnalyzeResultModel.ErrorMessage;
-
-                //;
-                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel();
-                LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));//log the result !!
-                LogMessagingUtil.Instance.AppendLine($"CustomAnalyzer:{queue?.Name}took:{sw?.Elapsed}  ");
-
-                if ( _CommunicationLog == null)
-                {
-                    _CommunicationLog = Communications.GetCommunicationLog(tenant, candidateCommunicationLogId);
-
-                }
-                if (_CommunicationLog != null)
-                {
-                    UpdateAnlayzeDone();
-                    success = true;
-                }
-                else
-                {
-                    log = log + "---" + "cannot update ";
-                    success = false;
-                    UpdateAnlayzeRetry();
-
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel()
-                {
-                    ErrorMessage = ex.ToString(),
-                    MyCommStatusEnum = CommStatusEnum.W
-                };
-                //AnalyzeFailed(ex.ToString());
-               // UpdateAnlayzeDone();
-                UpdateAnlayzeRetry();
-
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomAnalyzerQueueBase : Run() Method", null);
-
-            }
-        }
-
-        public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository, int tenant)
+        public void Run(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
 
 
@@ -243,7 +68,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
                 
 
-                _CommunicationLog = Communications.GetCommunicationLog(tenant, this._AnalyzeQueue.CommunicationLogId);
+                _CommunicationLog = Communications.GetCommunicationLog(1, this._AnalyzeQueue.CommunicationLogId);
                 if (_CommunicationLog == null)
                 {
                     throw new Exception("Cannnot GetCommunicationLog");
@@ -259,8 +84,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 LogMessagingUtil.Instance.Clear();
                 _AnalyzeResultModel = this.AnalyzeData(communicationsData);
                 ;
-                _AnalyzeResultModel = _AnalyzeResultModel ?? new AnalyzeResultModel(); 
-                LogMessagingUtil.Instance.AppendLine(ProxyUtil.JsonConvertSerialize(_AnalyzeResultModel));
                 UpdateAnlayzeQ();
             }
 
@@ -286,7 +109,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         private void UpdateAnlayzeQ()
         {
-            _AnalyzeQueue = _AnalyzeQueue ?? new AnalyzeQueue();
             if (_CommunicationLog != null)
             {
 
@@ -297,7 +119,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 myCommunicationLog.CommunicationStatusTypeCode = _AnalyzeResultModel.MyCommStatusEnum.ToString();
                 myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
                 myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
-                myCommunicationLog.ExceptionMessage = _AnalyzeQueue.ErrorMessage;
+
                 myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
                 if (!string.IsNullOrWhiteSpace(_AnalyzeResultModel.EntityID) &&
                     !string.IsNullOrWhiteSpace(_AnalyzeResultModel.ObjectTableID))
@@ -321,100 +143,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             }
 
             _AnalyzeQueue.Status = _AnalyzeResultModel.MyCommStatusEnum.ToString();
-            string mm = _AnalyzeResultModel.ErrorMessage ?? "";
-            mm = mm.Substring(0, Math.Min(mm.Length, 2000 - 1));
-            _AnalyzeQueue.ErrorMessage = mm;// _AnalyzeResultModel.ErrorMessage;
+            _AnalyzeQueue.ErrorMessage = _AnalyzeResultModel.ErrorMessage;
             analyzeQueueRepository.Update(_AnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();
-        }
-        private void UpdateAnlayzeRetry()
-        {
-            _AnalyzeQueue = _AnalyzeQueue ?? new AnalyzeQueue();
-            if (_CommunicationLog != null)
-            {
-
-
-                var myCommunicationLogRepository = new CommunicationLogRepository(_CommunicationLog.Tenant);
-                var myCommunicationLog = myCommunicationLogRepository.GetSingleCommunicationLog(_CommunicationLog.Id, _CommunicationLog.Tenant);
-                myCommunicationLog.Retries++;
-                myCommunicationLog.CommunicationStatusTypeCode = _AnalyzeResultModel.MyCommStatusEnum.ToString();
-                if (myCommunicationLog.Retries == 5) 
-                    myCommunicationLog.CommunicationStatusTypeCode = "F";
-   ;            myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
-                myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
-                myCommunicationLog.ExceptionMessage = _AnalyzeQueue.ErrorMessage;
-                myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
-                if (!string.IsNullOrWhiteSpace(_AnalyzeResultModel.EntityID) &&
-                    !string.IsNullOrWhiteSpace(_AnalyzeResultModel.ObjectTableID))
-                {
-
-                    myCommunicationLog.ObjectTableId = _AnalyzeResultModel.ObjectTableID;
-                    myCommunicationLog.EntityId = _AnalyzeResultModel.EntityID;
-                    LogMessagingUtil.Instance.AppendLine($".ObjectTableId = {_AnalyzeResultModel.ObjectTableID}");
-                    LogMessagingUtil.Instance.AppendLine($".EntityId = {_AnalyzeResultModel.EntityID}");
-                    LogMessagingUtil.Instance.AppendLine($".EntityReference = {_AnalyzeResultModel.EntityReference}");
-
-
-                }
-                myCommunicationLogRepository.Update(myCommunicationLog);
-                myCommunicationLogRepository.SubmitChanges();
-
-            }
-            else
-            {
-                LogMessagingUtil.Instance.AppendLine($"(_CommunicationLog != null)");
-            }
-
-            //_AnalyzeQueue.Status = _AnalyzeResultModel.MyCommStatusEnum.ToString();
-            //string mm = _AnalyzeResultModel.ErrorMessage ?? "";
-            //mm = mm.Substring(0, Math.Min(mm.Length, 2000 - 1));
-            //_AnalyzeQueue.ErrorMessage = mm;// _AnalyzeResultModel.ErrorMessage;
-            //analyzeQueueRepository.Update(_AnalyzeQueue);
-            //analyzeQueueRepository.SubmitChanges();
-        }
-
-        private void UpdateAnlayzeDone()
-        {
-            _AnalyzeQueue = _AnalyzeQueue ?? new AnalyzeQueue();
-            if (_CommunicationLog != null)
-            {
-
-
-                var myCommunicationLogRepository = new CommunicationLogRepository(_CommunicationLog.Tenant);
-                var myCommunicationLog = myCommunicationLogRepository.GetSingleCommunicationLog(_CommunicationLog.Id, _CommunicationLog.Tenant);
-                myCommunicationLog.Retries++;
-                myCommunicationLog.CommunicationStatusTypeCode = _AnalyzeResultModel.MyCommStatusEnum.ToString();
-                myCommunicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(_AnalyzeQueue.Tenant);
-                myCommunicationLog.Logs = _AnalyzeResultModel.ErrorMessage ?? "" + Environment.NewLine + LogMessagingUtil.Instance.ToString().GetLast((8000 - 1));
-                myCommunicationLog.ExceptionMessage = _AnalyzeQueue.ErrorMessage;
-                myCommunicationLog.EntityReference = _AnalyzeResultModel.EntityReference;
-                if (!string.IsNullOrWhiteSpace(_AnalyzeResultModel.EntityID) &&
-                    !string.IsNullOrWhiteSpace(_AnalyzeResultModel.ObjectTableID))
-                {
-
-                    myCommunicationLog.ObjectTableId = _AnalyzeResultModel.ObjectTableID;
-                    myCommunicationLog.EntityId = _AnalyzeResultModel.EntityID;
-                    LogMessagingUtil.Instance.AppendLine($".ObjectTableId = {_AnalyzeResultModel.ObjectTableID}");
-                    LogMessagingUtil.Instance.AppendLine($".EntityId = {_AnalyzeResultModel.EntityID}");
-                    LogMessagingUtil.Instance.AppendLine($".EntityReference = {_AnalyzeResultModel.EntityReference}");
-
-
-                }
-                myCommunicationLogRepository.Update(myCommunicationLog);
-                myCommunicationLogRepository.SubmitChanges();
-
-            }
-            else
-            {
-                LogMessagingUtil.Instance.AppendLine($"(_CommunicationLog != null)");
-            }
-
-            //_AnalyzeQueue.Status = _AnalyzeResultModel.MyCommStatusEnum.ToString();
-            //string mm = _AnalyzeResultModel.ErrorMessage ?? "";
-            //mm = mm.Substring(0, Math.Min(mm.Length, 2000 - 1));
-            //_AnalyzeQueue.ErrorMessage = mm;// _AnalyzeResultModel.ErrorMessage;
-            //analyzeQueueRepository.Update(_AnalyzeQueue);
-            //analyzeQueueRepository.SubmitChanges();
         }
 
 
@@ -429,7 +160,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         //    myCommunicationLogRepository.Update(_CommunicationLog);
         //    myCommunicationLogRepository.SubmitChanges();
 
-
+            
 
         //    _AnalyzeQueue.Status = "D";
         //    _AnalyzeQueue.ErrorMessage = null;
@@ -520,11 +251,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             MyCommStatusEnum = Def.ClosedTable.CommStatusEnum.D;//default !!
         }
         public string ErrorMessage { get; set; }
-        public CommStatusEnum MyCommStatusEnum { get; set; }
-        public string EntityID { get; set; }
-        public string ObjectTableID { get; set; }
-        public string EntityReference { get; set; }
-        public string MoreInfo { get; set; }
-        public string Took { get; set; }
+        public CommStatusEnum MyCommStatusEnum { get; internal set; }
+        public string EntityID { get; internal set; }
+        public string ObjectTableID { get; internal set; }
+        public string EntityReference { get; internal set; }
     }
 }

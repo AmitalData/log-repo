@@ -63,13 +63,7 @@ namespace Logitude.TariffModule.Data.Repositories
                     select a).ToList();
         }
 
-        public IQueryable<TariffVersion> GetActiveVersionsByTariffId(string tariffId, int tenant)
-        {
-            return from a in context.TariffVersions
-                   where a.Tenant == tenant && a.TariffId == tariffId && !a.IsDraft
-                   select a;
-        }
-
     }
+
 }
    

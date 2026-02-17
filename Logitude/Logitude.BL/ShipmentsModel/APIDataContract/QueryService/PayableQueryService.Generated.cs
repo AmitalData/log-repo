@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -48,57 +46,39 @@ using Simplog.Data.ShipmentsModel;
 				{
 				   
 				   var temp = new Payable(); 
-				   temp.Id = item.Id; 
-
-			  
+				   temp.Id = item.Id;			  
 				   if(item.ChargesTypeId != null)
 				   {
 					   ChargesTypeQueryService ChargesTypeService0 = new ChargesTypeQueryService(Tenant);
-					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.ChargesType = ChargesTypeService0.GetChargesTypeById(item.ChargesTypeId,Tenant); 
 			       
 					   				   }
-				    
-
-			  
+				   			  
 				   if(item.MeasurementId != null)
 				   {
 					   MeasurementQueryService MeasurementService1 = new MeasurementQueryService(Tenant);
-					   					   temp.Measurement = MeasurementService1.GetMeasurementById(item.MeasurementId,Tenant,ComputingPartnerName); 
+					   					   temp.Measurement = MeasurementService1.GetMeasurementById(item.MeasurementId,Tenant); 
 			       
 					   				   }
 				   
 				   temp.Quantity = item.Quantity;
-				   temp.UnitPrice = item.UnitPrice; 
-
-			  
+				   temp.UnitPrice = item.UnitPrice;			  
 				   if(item.CurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService2 = new CurrencyQueryService(Tenant);
-					   					   temp.Currency = CurrencyService2.GetCurrencyById(item.CurrencyId,Tenant,ComputingPartnerName); 
+					   					   temp.Currency = CurrencyService2.GetCurrencyById(item.CurrencyId,Tenant); 
 			       
 					   				   }
 				   
-				   temp.Rate = item.Rate; 
-
-			  
+				   temp.Rate = item.Rate;			  
 				   if(item.PrepaidCollectId != null)
 				   {
 					   PrepaidCollectQueryService PrepaidCollectService3 = new PrepaidCollectQueryService(Tenant);
-					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant,ComputingPartnerName); 
+					   					   temp.PrepaidCollect = PrepaidCollectService3.GetPrepaidCollectById(item.PrepaidCollectId,Tenant); 
 			       
 					   				   }
 				   
-				   temp.Amount = item.ExpectedAmount; 
-
-			  
-				   if(item.VendorId != null)
-				   {
-					   CardQueryService CardService4 = new CardQueryService(Tenant);
-					   					   temp.Vendor = CardService4.GetCardById(item.VendorId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   
-				   temp.ChangeSetOp = item.ChangeSet;					
+				   temp.Amount = item.ExpectedAmount;					
 					MyList.Add(temp);
 				}
 					
@@ -111,7 +91,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPayablePM> PayableDataMappingAndValidatin(List<Payable> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<ShipmentPayablePM> PayableDataMappingAndValidatin(List<Payable> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -124,14 +104,11 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentPayable with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -144,157 +121,64 @@ using Simplog.Data.ShipmentsModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//} 
-
-						
+						//}
 					}
 					ChargesTypeQueryService ChargesTypeChargesTypeService = new ChargesTypeQueryService(Tenant);
 					if(item.ChargesType != null)
 					{
-						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myChargesTypePM != null)
-						{ 
-
+						var myChargesTypePM = ChargesTypeChargesTypeService.ChargesTypeDataMappingAndValidatin(item.ChargesType,Tenant,ComputingPartnerName);
+												if(myChargesTypePM != null)
+						{
+							temp.ChargesTypeId = myChargesTypePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.ChargesTypeId = myChargesTypePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
 					MeasurementQueryService MeasurementMeasurementService = new MeasurementQueryService(Tenant);
 					if(item.Measurement != null)
 					{
-						var myMeasurementPM = MeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.Measurement,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myMeasurementPM != null)
-						{ 
-
+						var myMeasurementPM = MeasurementMeasurementService.MeasurementDataMappingAndValidatin(item.Measurement,Tenant,ComputingPartnerName);
+												if(myMeasurementPM != null)
+						{
+							temp.MeasurementId = myMeasurementPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.MeasurementId = myMeasurementPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Quantity = item.Quantity;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.UnitPrice = item.UnitPrice;
-
-										}  
-
-					
+					temp.Quantity = item.Quantity;
+					temp.UnitPrice = item.UnitPrice;
 					CurrencyQueryService CurrencyCurrencyService = new CurrencyQueryService(Tenant);
 					if(item.Currency != null)
 					{
-						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myCurrencyPM != null)
-						{ 
-
+						var myCurrencyPM = CurrencyCurrencyService.CurrencyDataMappingAndValidatin(item.Currency,Tenant,ComputingPartnerName);
+												if(myCurrencyPM != null)
+						{
+							temp.CurrencyId = myCurrencyPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.CurrencyId = myCurrencyPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Rate = item.Rate;
-
-										}  
-
-					
+					temp.Rate = item.Rate;
 					PrepaidCollectQueryService PrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
 					if(item.PrepaidCollect != null)
 					{
-						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myPrepaidCollectPM != null)
-						{ 
-
+						var myPrepaidCollectPM = PrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(item.PrepaidCollect,Tenant,ComputingPartnerName);
+												if(myPrepaidCollectPM != null)
+						{
+							temp.PrepaidCollectId = myPrepaidCollectPM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.PrepaidCollectId = myPrepaidCollectPM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ExpectedAmount = item.Amount;
-
-										}  
-
-					
-					CardQueryService VendorCardService = new CardQueryService(Tenant);
-					if(item.Vendor != null)
-					{
-						var myVendorPM = VendorCardService.CardDataMappingAndValidatin(item.Vendor,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myVendorPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.VendorId = myVendorPM.Id;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-					
-                    							
-						temp.ChangeSet = item.ChangeSetOp;
-
-					 
-
-										   
+					temp.ExpectedAmount = item.Amount;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -302,8 +186,6 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

@@ -44,19 +44,11 @@ export class TariffTypePM {
     public set TransportModeCode(newValue: string) { if (this.transportModeCode != newValue) { this.transportModeCode = newValue; this.MarkAsDirty("TransportModeCode"); } }
        
 	 
-    private directionCode: string;
-    public get DirectionCode() { return this.directionCode; }
-    public set DirectionCode(newValue: string) { if (this.directionCode != newValue) { this.directionCode = newValue; this.MarkAsDirty("DirectionCode"); } }
-       
-	 
 
     public OldEntityPM: TariffTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -64,7 +56,6 @@ export class TariffTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffType");
            
         }
-       }
     }
 
     private MyClone: TariffTypePM;

@@ -7,7 +7,7 @@ using Logitude.BL.QuoteModel.EmailAlerts;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -113,7 +113,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                         Tenant = tenant,
                         EventTypeCode = "QTOP",
                         UserId = loggedContactId,
-                        EntityId = entityPoco.OpportunityId,
+                        EntityId = entityPM.OpportunityId,
                         ObjectTableName = "Opportunity",
                         Notes = "Quote: " + entityPM.QuoteNumber + " Deleted",
                     });
@@ -133,19 +133,6 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                         EntityId = entityPM.Id,
                         ObjectTableName = "Quote",
                         Notes = myEventNotes,
-                    });
-                }
-
-                if (entityPM.IncotermId != entityPoco.IncotermId)
-                {
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                    {
-                        Tenant = tenant,
-                        EventTypeCode = "ICUP",
-                        UserId = loggedContactId,
-                        EntityId = entityPM.Id,
-                        ObjectTableName = "Quote",
-                        Notes = "",
                     });
                 }
             }
@@ -196,7 +183,7 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Quote",
-                    Notes=string.IsNullOrEmpty(entityPM.ExternalEntityNumber) ? entityPM.EventNote : ("Quote sent from Ticket " + entityPM.ExternalEntityNumber),
+                    Notes= entityPM.EventNote,
                 });
 
                 entityPM.SentDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -243,7 +230,6 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                     }
                 }
 
-                entityPM.QuoteClosingReasonId = null;
                 entityPM.QuoteClosingReasonCode = null;
                 entityPM.IsAutomaticallyClosed = false;
                 entityPM.AutomaticallyCloseDate = null;
@@ -254,17 +240,14 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
             {
                 if (entityPM.ActionType == "Accept")
                 {
-                    string traceEventNotes = entityPM.QuoteClosingReasonNotes;
-                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonId))
+                    string traceEventNotes = entityPM.EventNote;
+                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonCode))
                     {
                         QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
-                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
+                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonCode);
                         if (myQuoteClosingReason != null)
                         {
-                            traceEventNotes = "";
-                            traceEventNotes +=  myQuoteClosingReason.Name;
-                            traceEventNotes += "\n";
-                            traceEventNotes += entityPM.QuoteClosingReasonNotes;
+                            traceEventNotes = myQuoteClosingReason.Name;
                         }
                     }
 
@@ -298,17 +281,14 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
 
                 else if (entityPM.ActionType == "Decline")
                 {
-                    string traceEventNotes = entityPM.QuoteClosingReasonNotes;
-                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonId))
+                    string traceEventNotes = entityPM.EventNote;
+                    if (!string.IsNullOrEmpty(entityPM.QuoteClosingReasonCode))
                     {
                         QuoteClosingReasonRepository closingReasonRepository = new QuoteClosingReasonRepository(tenant);
-                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonId, tenant);
+                        QuoteClosingReason myQuoteClosingReason = closingReasonRepository.GetSingleQuoteClosingReason(entityPM.QuoteClosingReasonCode);
                         if (myQuoteClosingReason != null)
                         {
-                            traceEventNotes = "";
-                            traceEventNotes += myQuoteClosingReason.Name;
-                            traceEventNotes += "\n";
-                            traceEventNotes += entityPM.QuoteClosingReasonNotes;
+                            traceEventNotes = myQuoteClosingReason.Name;
                         }
                     }
 
@@ -386,19 +366,6 @@ namespace Logitude.BL.QuoteModel.Tools.TraceEvents
                 {
                     Tenant = tenant,
                     EventTypeCode = "oFCL",
-                    UserId = loggedContactId,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "Quote",
-                    Notes = entityPM.EventNote,
-                });
-            }
-
-            if (entityPM.ConvertTransportMode)
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = tenant,
-                    EventTypeCode = "QCTM",
                     UserId = loggedContactId,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Quote",

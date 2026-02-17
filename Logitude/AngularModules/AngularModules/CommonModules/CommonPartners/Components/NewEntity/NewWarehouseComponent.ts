@@ -9,7 +9,7 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewWarehouseComponent.html',
 })
 
@@ -21,7 +21,7 @@ export class NewWarehouseComponent {
     public DomainService: PartnersDomainService;
     private PartnerTamplate: NewPartnerTamplate;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityPM = new WarehousePM();
@@ -60,7 +60,7 @@ export class NewWarehouseComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -111,7 +111,6 @@ export class NewWarehouseComponent {
             args.Warehouse = this.EntityPM;
             args.Address = this.PartnerTamplate.Address;
             if (this.PartnerTamplate.IsAddContactChecked) {
-                this.PartnerTamplate.Contact.SetAsPrimaryForCard = true;
                 args.Contact = this.PartnerTamplate.Contact;
             }
 

@@ -20,7 +20,7 @@ declare var makeAMLineChart, BarClick, ResetItem, makeAmBarChart, makePieChart, 
 
 @Component({
     selector: 'DashBoard',
-    
+    moduleId: module.id,
     templateUrl: './AirLineDashboardComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -85,7 +85,7 @@ export class AirLineDashboardComponent implements OnInit {
     public dailySpotLightClass: DailySpotlightClass;
 
     LoadParticipantsQuery(days: number) {
-        this.dashboarddomainservice.GetTopParticipantsDashBoard(days).subscribe((result:any) => {
+        this.dashboarddomainservice.GetTopParticipantsDashBoard(days).subscribe(result => {
             if (result.length == 0) {
                 this.TopParticipantsDashboardIdExistance = false;
                 try {
@@ -508,7 +508,7 @@ var displayTitle="";
 
     LoadSpotlightQueries() {
 
-        this.dashboarddomainservice.GetAirlineDashboardSpotlightCounts(this.TenantPM.Id).subscribe((myResult:any) => {
+        this.dashboarddomainservice.GetAirlineDashboardSpotlightCounts(this.TenantPM.Id).subscribe(myResult => {
 
             this.dailySpotLightClass = myResult;
             if (this.dailySpotLightClass.Participations_Today != 0)
@@ -596,7 +596,7 @@ var displayTitle="";
 
     private flagEmpty: boolean = false;
     LoadChartData(days: number, showType: string) {
-        this.dashboarddomainservice.GetActivityStatusByMessagesLogs(days, showType).subscribe((myResult:any) => {
+        this.dashboarddomainservice.GetActivityStatusByMessagesLogs(days, showType).subscribe(myResult => {
             this.ActivityStatusData = myResult.getAll();
             this.FillActivitiesStatus(this.ActivityStatusData);
         });
@@ -605,7 +605,7 @@ var displayTitle="";
     }
     LoadPieQueries() {
 
-        this.dashboarddomainservice.GetDashBoardBookings(this.TenantPM.Id).subscribe((myResult:any) => {
+        this.dashboarddomainservice.GetDashBoardBookings(this.TenantPM.Id).subscribe(myResult => {
             this.PieData = myResult;
             if (this.PieData.length > 0) {
                 this.NoBookingInProgress = false;

@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Validators;
@@ -15,10 +15,6 @@ using WebFreight.Web.Security;
 using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -52,10 +48,9 @@ namespace WebFreight.Web.WcfApi
                    
                     ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
 
-                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
                     AccountingPartnerRepository AccountingPartnerRepository = new AccountingPartnerRepository(objectContext);
-                    AccountingPartnerService service = new AccountingPartnerService(objectContext, entityPM.Tenant); 
-                    UserRepository userReporistory = new UserRepository(objectContext);
+                    AccountingPartnerService service = new AccountingPartnerService(objectContext, entityPM.Tenant);
+
                     if (entityPM.PrimaryContactId != null)
                     {
                         ContactRepository contactRepository = new ContactRepository(objectContext);
@@ -72,27 +67,6 @@ namespace WebFreight.Web.WcfApi
                         }
                     }
 
-                    if (entityPM.PaymentTermId != null)
-                    {
-                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
-                        if (paymentTerm != null)
-                        {
-                            entityPM.PaymentTermId = paymentTerm.Id;
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
-                            return response;
-                        }
-                    }
-
-                   response = MapCollectedIdField(entityPM, userReporistory);
-                    if (response.HasError)
-                    {
-                        return response;
-                    }
-
                     entityPM.IsHybrid = true;
                     AccountingPartner entity = AccountingPartnerRepository.GetSingleAccountingPartnerByCode(entityPM.Code, entityPM.Tenant);
                     if (entity == null)
@@ -105,10 +79,8 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.CardExternalCodeByCurrencies);
                         service.Update(entityPM);
                     }
-					CardGLAccountConnectBatch CardGLAccountConnectBatch = new CardGLAccountConnectBatch();
-					CardGLAccountConnectBatch.ConnectSingleCardToGLAccountInBatch(entityPM.Tenant, entityPM.Id);
 
-					response.Result = entityPM.Id;
+                    response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
                 }
@@ -144,116 +116,6 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
                 return response;
-            }
-        }
-
-        private Response MapCollectedIdField(AccountingPartnerPM entityPM, UserRepository userReporistory)
-        {
-            Response response = new Response();
-            if (entityPM.CollectorId != null)
-            {
-                User user = userReporistory.GetSingleUserByCode(entityPM.CollectorId, entityPM.Tenant, true);
-                if (user != null)
-                {
-                    entityPM.CollectorId = user.Id;
-                    
-                }
-                else
-                {
-                    response = this.GetNotExistErrorMessage("CollectedId", response);
-                }
-            }
-
-            return response;
-        }
-         
-
-        private Response GetNotExistErrorMessage(string fieldName, Response response)
-        {
-            response.HasError = true;
-            response.ErrorMessage = fieldName+" field doesn't exist in the database,Upsert this entity before using it.";
-            return response; 
-        }
-     
-
-        public AccountingPartnerPM GetAccountingPartnerPM(DataContracts.AccountingPartnerApiFilters filters, int tenant, ref Response response)
-        { 
-            try
-            {
-                AccountingPartnerPM entityPM = null;
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("AccountingPartner", "UPDATE", tenant);//UPDATE//READ
-                if (CacheManager.CacheWrapper == null)
-                {
-                    CacheManager.CacheWrapper = new MockCacheWrapper();
-                }
-
-                ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-
-                UserRepository userReporistory = new UserRepository(objectContext);
-                CardRepository cardRepository = new CardRepository(objectContext);
-                ContactRepository contactRepository = new ContactRepository(objectContext);
-                CountryRepository countryRepository = new CountryRepository(objectContext);
-                RankRepository rankRepository = new RankRepository(objectContext);
-                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(objectContext); 
-                AccountingPartnerQuery query = new AccountingPartnerQuery(tenant);
-
-                if (filters.ById)
-                {
-                    entityPM = query.GetSinglePMForHybrid(filters.SearchCode, tenant);
-                }
-                if (filters.ByCode)
-                {
-                    entityPM = query.GetSinglePMByCodeForHybrid(filters.SearchCode, tenant, false);
-                }
-                if (filters.ByVatNumber)
-                {
-                    entityPM = query.GetSinglePMByVatNumberForHybrid(filters.SearchCode, tenant, false);
-                }
-
-                if (entityPM != null)
-                { 
-
-                    if (entityPM.PrimaryContactId != null)
-                    {
-                        Contact contact = contactRepository.GetSingleContact(entityPM.PrimaryContactId, entityPM.Tenant);
-                        if (contact != null && !string.IsNullOrEmpty(contact.ExternalId))
-                        {
-                            entityPM.PrimaryContactId = contact.ExternalId;
-                            entityPM.PrimaryContactEmail = contact.Email;
-                            entityPM.PrimaryContactName = contact.EnglishName;
-                            entityPM.PrimaryContactPhone = contact.BusinessPhone;
-
-                        }
-                    }
-                     
-
-                    if (entityPM.PaymentTermId != null)
-                    {
-                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
-                        if (paymentTerm != null)
-                        {
-                            entityPM.PaymentTermId = paymentTerm.Code;
-
-                        }
-                    }  
-                }
-
-                return entityPM;
-            }
-            catch (Exception ex)
-            {
-                response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
-                response.HasError = true;
-                response.ErrorMessage = ex.Message;
-                response.InnerErrorMessage = ex.InnerException != null ? ex.InnerException.Message : null;
-                if (!string.IsNullOrEmpty(ex.StackTrace))
-                {
-                    response.ErrorMessage += Environment.NewLine + ex.StackTrace;
-                }
-
-                return null;
-
             }
         }
     }

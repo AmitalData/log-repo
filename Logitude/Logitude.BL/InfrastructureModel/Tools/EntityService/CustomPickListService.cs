@@ -8,14 +8,12 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -56,7 +54,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
-            ProcessPickListCToolMessage(theEntityPm, "UpsertCustomPickListValue");
         }
 
         public void Update(CustomPickListPM theEntityPm)
@@ -76,32 +73,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             CustomPickListMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
-            ProcessPickListCToolMessage(theEntityPm, "UpsertCustomPickListValue");
-        }
-
-        public void ProcessPickListCToolMessage(CustomPickListPM theEntityPm, string messageType)
-        {
-            if (IsMetConditionsToSendCToolMessage(theEntityPm))
-            {
-                AddKafkaQueueMessage(theEntityPm, messageType);
-            }
-        }
-
-        private bool IsMetConditionsToSendCToolMessage(CustomPickListPM theEntityPm)
-        {
-            return FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant);
-        }
-
-        private void AddKafkaQueueMessage(CustomPickListPM theEntityPm, string messageType)
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", messageType },
-                { "EntityId", theEntityPm.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
     }
 }

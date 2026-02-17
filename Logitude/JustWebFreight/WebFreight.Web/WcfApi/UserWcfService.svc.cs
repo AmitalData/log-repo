@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
@@ -142,16 +142,6 @@ namespace WebFreight.Web.WcfApi
                     }
 
                     User entity = userRepository.GetSingleUserByCodeOrEmailForTenant(entityPM.Code, entityPM.Email, entityPM.Tenant, false);
-                    //if (entity == null && !string.IsNullOrEmpty(entityPM.Email) && entityPM.Tenant != 0)
-                    //{
-                    //    var tenantZeroUser = userRepository.GetSingleUserByEmail(entityPM.Email, 0, false);
-                    //    if(tenantZeroUser != null)
-                    //    {
-                    //        response.HasError = true;
-                    //        response.ErrorMessage = "This user already exists on tenant zero!";
-                    //        return response;
-                    //    }
-                    //}
                     if (entity == null)
                     {
                         RolePM defaultRole = null;
@@ -186,31 +176,22 @@ namespace WebFreight.Web.WcfApi
                     }
                     else
                     {
-                        if (entityPM.DocumentFilingInbox == null)
-                            entityPM.DocumentFilingInbox = entity.DocumentFilingInbox;
+
                         if (entityPM.Roles != null && entityPM.Roles.Count != 0) // DON'T DELETE EXISTING ROLES IF NOT SENT BY HYBRID
                         {
                             List<RolePM> oldRoles = rolesQuery.GetRolesForContact(entity.Id, entity.Tenant).Where(r => r.Exists).ToList();
                             foreach (RolePM role in oldRoles)
                             {
-                                var sentRole = entityPM.Roles.FirstOrDefault(r => r.Name == role.Name && r.Added);
-                                if (sentRole == null)
+                                UserRolesPM userRolePM = new UserRolesPM()
                                 {
-                                    UserRolesPM userRolePM = new UserRolesPM()
-                                    {
-                                        Id = role.Id,
-                                        Name = role.Name,
-                                        Removed = true,
-                                        UserId = entity.Id,
-                                        Tenant = entity.Tenant,
-                                    };
+                                    Id = role.Id,
+                                    Name = role.Name,
+                                    Removed = true,
+                                    UserId = entity.Id,
+                                    Tenant = entity.Tenant,
+                                };
 
-                                    entityPM.Roles.Add(userRolePM);
-                                }
-                                else
-                                {
-                                    sentRole.Added = false;// rebuild an existing role
-                                }
+                                entityPM.Roles.Add(userRolePM);
                             }
                         }
 

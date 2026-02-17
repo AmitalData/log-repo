@@ -1,53 +1,23 @@
-
+﻿
 <table>
-    <tr style="height: 1px;" *ngIf="IsCurrencyFilterVisible || IsAccrualsApprovingVisible">
+    <tr style="height: 1px;" *ngIf="IsCurrencyFilterVisible">
         <td>
             <table>
                 <tr>
                     <td>
-                        <div>
-                            <CheckBox [IsChecked]="ExpenseChargesIncluded" (Checked)="ExpenseChargesIncluded = $event" [Text]="'Expense Charges Included'"></CheckBox>
-                        </div>
+                        <div></div>
                     </td>
 
-                    <td style="width: 320px;">
-                        <table>
-                            <tr>
-                                <td style="width: 120px;" *ngIf="IsAccrualsApprovingVisible">
-                                    <button class="Button" (click)="OnAccrualsApprovingClicked()" [disabled]="EntityPM.IsAccrualsApproved">Approve Accruals</button>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-
-                                <td style="width: 66px;" *ngIf="IsCurrencyFilterVisible">
-                                    <div style="width: 66px;">
-                                        <ul class="FiltersMenu">
-                                            <li (click)="OnSelectCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === ProfitCurrencyCode" style="width:33px;">
-                                                {{ProfitCurrencyCode}}
-                                            </li>
-                                            <li (click)="OnSelectCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === LocalCurrencyCode" style="width:33px;">
-                                                {{LocalCurrencyCode}}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr style="height: 1px;">
-        <td>
-            <table>
-                <tr>
-                    <td>
-                        <div>
-                            <CheckBox [IsChecked]="IncludingVAT" (Checked)="IncludingVAT = $event" [Text]="'Including VAT'"></CheckBox>
+                    <td style="width: 66px;">
+                        <div style="width: 66px;">
+                            <ul class="FiltersMenu">
+                                <li (click)="OnSelectCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === ProfitCurrencyCode" style="width:33px;">
+                                    {{ProfitCurrencyCode}}
+                                </li>
+                                <li (click)="OnSelectCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrencyCode === LocalCurrencyCode" style="width:33px;">
+                                    {{LocalCurrencyCode}}
+                                </li>
+                            </ul>
                         </div>
                     </td>
                 </tr>
@@ -55,7 +25,7 @@
         </td>
     </tr>
 
-    <tr style="height: 5px;" *ngIf="IsCurrencyFilterVisible || IsAccrualsApprovingVisible">
+    <tr style="height: 5px;" *ngIf="IsCurrencyFilterVisible">
         <td>
             <div></div>
         </td>
@@ -84,20 +54,12 @@
                                     {{item.ChargeTypeName}}
                                 </td>
 
-                                <td *ngIf="IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
-                                    {{item.ReceivableAmountWithVat | NumbersPipe:'N2'}}
-                                </td>
-
-                                <td *ngIf="!IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
                                     {{item.ReceivableAmount | NumbersPipe:'N2'}}
                                 </td>
 
-                                <td *ngIf="!IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
                                     {{item.PayableAmount | NumbersPipe:'N2'}}
-                                </td>
-
-                                <td *ngIf="IncludingVAT" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right; padding-right: 3px;">
-                                    {{item.PayableAmountWithVat | NumbersPipe:'N2'}}
                                 </td>
 
                                 <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px; text-align: right; padding-right: 3px;" [ngStyle]="{color: item.Profit | StringToColorPipe:'number'}">

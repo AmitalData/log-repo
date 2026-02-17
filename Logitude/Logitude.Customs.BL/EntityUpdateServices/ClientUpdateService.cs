@@ -12,8 +12,6 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using System.Data;
 using Simplog.Server.Infrastructure;
-using NetCommonHelper.Logger;
-using Newtonsoft.Json;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -22,10 +20,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnCreating(ClientPM entityPM, EntityPM entityParentPM)
         {
             entityPM.Id = IdCounter.GetNumber("Customs.Client", entityPM.Tenant);
-
-            WriteLog(entityPM);
-
-			if (string.IsNullOrEmpty(entityPM.FullName))
+            if (string.IsNullOrEmpty(entityPM.FullName))
             {
                 entityPM.FullName = "Empty";
             }
@@ -34,49 +29,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.Code = "Empty";
             }
         }
-        public void WriteLog(ClientPM entityPM)
-        {
-            try
-            {
-				string[] stacklines = GetStack(0);
-				NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ClientUpdateService FullName: " + entityPM.FullName + " Code: " + entityPM.Code, new RelatedLogEntity { EntityID = entityPM.Id.ToString(), EntityType = "Client" });
-				NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines), new RelatedLogEntity { EntityID = entityPM.Id.ToString(), EntityType = "Client" });
 
-			}
-			catch (Exception ex)
-			{
-				NetCommonHelper.Logger.DevLog.Instance.WriteError("Error in WriteLog: " + ex.Message, new RelatedLogEntity { EntityID = entityPM.Id.ToString(), EntityType = "Client" });
-			}
-        }
-        private static string[] GetStack(int removeLines)
-		{
-			string[] stack = Environment.StackTrace.Split(
-				new string[] { Environment.NewLine },
-				StringSplitOptions.RemoveEmptyEntries);
-
-			if (stack.Length <= removeLines)
-				return new string[0];
-
-			string[] actualResult = new string[stack.Length - removeLines];
-			for (int i = removeLines; i < stack.Length; i++)
-				// Remove 6 characters (e.g. "  at ") from the beginning of the line
-				// This might be different for other languages and platforms
-				actualResult[i - removeLines] = stack[i].Substring(6);
-
-			return actualResult;
-		}
-		protected override void OnUpdating(ClientPM entityPM)
-        {
-            string[] InActiveStatues  = { "40", "50", "60" };
-            bool isExportPoaActive_before = entityPM.IsExportPoaActive.GetValueOrDefault();
-            if (entityPM.ClientPoas == null || entityPM.ClientPoas.Count() == 0)
-                entityPM.IsExportPoaActive = null;
-            else
-                entityPM.IsExportPoaActive =
-                        entityPM.ClientPoas.Any(x => x.PoaAuthorizationType == "200" && DateTime.Now >= x.StartDate && DateTime.Now <= x.EndDate && !InActiveStatues.Contains(x.PoaStatus) && x.Tenant == entityPM.Tenant);
-            if (entityPM.IsExportPoaActive == true && isExportPoaActive_before == false && entityPM.IsPOAExpireReminderSent == true)
-                entityPM.IsPOAExpireReminderSent = false;
-        }
         protected override void UpdateComposition(ClientPM entityPM)
         {
             ClientAddressUpdateService clientAddressUpdateService = new ClientAddressUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
@@ -84,16 +37,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             ClientDrivingLicenseUpdateService clientDrivingLicenseUpdateService = new ClientDrivingLicenseUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
             clientDrivingLicenseUpdateService.UpdateMulti(entityPM.ClientDrivingLicenses, entityPM.DeletedClientDrivingLicenses, entityPM, false);
-
-            ClientsPoaUpdateService clientsPoaUpdateService = new ClientsPoaUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-            clientsPoaUpdateService.UpdateMulti(entityPM.ClientPoas, entityPM.DeletedClientPoas, entityPM, false);
-
-
-            ClientsTapagUpdateService clientsTapagUpdateService = new ClientsTapagUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-            clientsTapagUpdateService.UpdateMulti(entityPM.ClientsTapags, entityPM.DeletedClientsTapags, entityPM, false);
-
-            ClientIndicationUpdateService clientIndicationUpdateService = new ClientIndicationUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
-            clientIndicationUpdateService.UpdateMulti(entityPM.ClientIndications, entityPM.DeletedClientIndications, entityPM, false);
 
             base.UpdateComposition(entityPM);
         }
@@ -111,11 +54,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void InsertNewClientOnlyByCode(ClientPM entityPM, bool commit)
         {
-            LogMessagingUtil.Instance.AppendLine("InsertNewClientOnlyByCode");
+
             ClientPM newClientPM = new ClientPM();
             newClientPM.ChangeSetOp = ChangeSetOperation.Insert;
             newClientPM.Tenant = entityPM.Tenant;
-            LogMessagingUtil.Instance.AppendLine("InsertNewClientOnlyByCode ,entityPM.Code" + entityPM.Code);
+
             if (!string.IsNullOrWhiteSpace(entityPM.Code))
             {
                 newClientPM.Code = GetExternalID(entityPM.Code);
@@ -124,7 +67,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 newClientPM.Code = entityPM.PassportNumber;
             }
-            LogMessagingUtil.Instance.AppendLine("InsertNewClientOnlyByCode ,newClientPM.Code"+ newClientPM.Code);
             newClientPM.PassportNumber = entityPM.PassportNumber;
             newClientPM.PassportTypeCode = entityPM.PassportTypeCode;
             newClientPM.PassportCountryCode = entityPM.PassportCountryCode;
@@ -135,19 +77,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             newClientPM.IsActive = true;
 
             this.Update(newClientPM, commit);
-
-            entityPM.Id = newClientPM.Id;
         }
 
         private string GetExternalID(string ExternalId)
-            {
+        {
             while (ExternalId.Length < 9)
             {
                 ExternalId = ExternalId.Insert(0, "0");
             }
             return ExternalId;
         }
-
-        
-        }
+       
     }
+}

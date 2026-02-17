@@ -75,8 +75,8 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
                 (accountingContext as DbContextBase)
     .DeleteWhere<BankDepositLine>(rec => rec.Tenant == tenant);
-    //            (accountingContext as DbContextBase)
-    //.DeleteWhere<BankDeposit>(rec => rec.Tenant == tenant);
+                (accountingContext as DbContextBase)
+    .DeleteWhere<BankDeposit>(rec => rec.Tenant == tenant);
 
 
 
@@ -125,7 +125,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
                 
                 using (var cn = conn as SqlConnection)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"CommandExecuteNonQuery({cmd})");
+                    Debug.WriteLine($"CommandExecuteNonQuery({cmd})");
 
 
                     var command = new SqlCommand(cmd, cn);

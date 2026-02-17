@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CCUPAYLINEF GetSingle(int FILENO, int LINENO, int? tenant)
+        public CCUPAYLINEF GetSingle(int FILENO, int LINENO)
         {
             return (from a in context.CCUPAYLINEFs
-                    where a.FILENO == FILENO && a.LINENO == LINENO && a.TENANT == tenant
+                    where a.FILENO == FILENO && a.LINENO == LINENO
                     select a).FirstOrDefault();
         }
 
@@ -38,7 +38,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUPAYLINEF entity)
         {
             context.CCUPAYLINEFs.Add(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUPAYLINEF entity)
@@ -49,7 +48,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToCCUPAYLINEFs 
             context.CCUPAYLINEFs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUPAYLINEF entity)
@@ -58,7 +56,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUPAYLINEFs.Attach(entity); context.SetAsModified(entity);
             }
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUPAYLINEF> All()
@@ -81,20 +78,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             var keys = entityKeys as CCUPAYHANDKeys;
 
             return (from a in context.CCUPAYLINEFs
-                    where a.FILENO == keys.FILENO && a.TENANT == keys.Tenant
+                    where a.FILENO == keys.FILENO
                     select a).ToList();
         }
 
         public CCUPAYLINEF GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUPAYLINEFKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO, keys.Tenant);
+            return this.GetSingle(keys.FILENO, keys.LINENO);
         }
 
-        public int FastDeleteMulti(EntityKeyFields parentEntityKeys)  
+        public int FastDeleteMulti(EntityKeyFields parentEntityKeys) // moran 5.1.16 - AMI-55274
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUPAYLINEF>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
+            return context.DeleteWhere<CCUPAYLINEF>(rec => rec.FILENO == keys.FILENO);
         }
     }
 }

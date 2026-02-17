@@ -19,9 +19,6 @@ using UnifreightIIG.Common.CommonIIGInterface;
 using Logitude.Customs.BL.EntityQueryServices;
 using System.Diagnostics;
 using Logitude.CustomsMessaging.MessagingServices;
-using System.Transactions;
-using Simplog.Server.Infrastructure;
-using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Logitude.CustomsMessaging.Helpers
 {
@@ -65,7 +62,7 @@ namespace Logitude.CustomsMessaging.Helpers
             sw.Stop();
             if (sw.Elapsed > TimeSpan.FromSeconds(12))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("***" + sw.Elapsed.ToString());
+                Debug.Write("***" + sw.Elapsed.ToString());
             }
         }
         public List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> GetTableData(
@@ -194,7 +191,6 @@ namespace Logitude.CustomsMessaging.Helpers
 2011 - תחנות מכס
 1354 - מזהה מטען      
 1259 – סוג רשימון
-1422 – תהליכים לסחורה
             */
 
             switch (TableID)
@@ -216,17 +212,12 @@ namespace Logitude.CustomsMessaging.Helpers
                 case "1585":
                 case "1423":
                 //Yuval Chalup 16.07.2015 TASK-13872 --->
-                //case "1259": Removed by Yuval Chalup 27.04.2015 TASK-12921
+                    //case "1259": Removed by Yuval Chalup 27.04.2015 TASK-12921
                 case "1930": //Yuval Chalup 24.01.2016 AMI-55745
                 case "13": //Yuval Chalup 05.07.2016 TASK-21102
                 case "1385":
-                case "1259":
                 case "1345":
                 case "1416":
-                case "1422":
-                case "2192":
-                case "1998":
-                case "1366":
                     return true;
                     break;
                 default:
@@ -389,52 +380,26 @@ namespace Logitude.CustomsMessaging.Helpers
             }
         }
 
-        public static CUSTOMS_TABLE CreateCustomTable(string TableID, List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> myResponseTableData, int Tenant)
-        {
-            var myCUSTOMS_TABLE = new CUSTOMS_TABLE();
-            myCUSTOMS_TABLE.TABLECODE = new TABLECODE[] { new TABLECODE { TABLECODE_ID = TableID } };
-            var myTABLEDATAList = new List<TABLEDATA>();
-            myResponseTableData.ForEach(recMehes =>
-            {
-                TABLEDATA newTABLEDATA = DefaultInerface(recMehes);
-                newTABLEDATA = SpecialMapping(newTABLEDATA, recMehes, TableID, Tenant);
-                myTABLEDATAList.Add(newTABLEDATA);
-            });
-            myCUSTOMS_TABLE.TABLECODE[0].TABLEDATA = myTABLEDATAList.ToArray();
 
-            return myCUSTOMS_TABLE;
-        }
-
-        public static void Send2AmitalFromCloud(string tableID, List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> myResponseTableData, int tenant)
-        {
-            List<int> notSeprarateDBs = CustomsSettingQueryService.GetNotSeperatedDB().Select(x => x.Tenant).ToList();
-            bool isSeperateDB = new GlobalDBRepository().All().Any(x => x.Id == tenant.ToString());
-            List<int> tenants = notSeprarateDBs.Contains(tenant) ? notSeprarateDBs : new List<int>() { tenant };
-            
-            foreach (int t in tenants)
-            {
-                CUSTOMS_TABLE myCUSTOMS_TABLE = CreateCustomTable(tableID, myResponseTableData, t);
-                if (Transaction.Current != null)
-                {
-                    Transaction.Current.TransactionCompleted += (sender, e) =>
-                    {
-                        try
-                        {
-                            UServerCommunication.SendUpdateTableToUnifreight(t, tableID, myCUSTOMS_TABLE, true);
-                        }
-                        catch (System.Exception ex)
-                        {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, $"Send system table by Userver failed, tenant: {t}, tableId {tableID}, error: {ex.Message}");
-                        }
-                    };
-                }
-            }
-        }
 
         public static void Send2Amital(string TableID, List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> myResponseTableData, int Tenant)
         {
-            var myCUSTOMS_TABLE = CreateCustomTable(TableID, myResponseTableData, Tenant);
-           
+            var myCUSTOMS_TABLE = new CUSTOMS_TABLE();
+            //myCUSTOMS_TABLE.TABLECODE = TableID;
+            myCUSTOMS_TABLE.TABLECODE = new TABLECODE[] { new TABLECODE { TABLECODE_ID = TableID } }; ;
+            var myTABLEDATAList = new List<TABLEDATA>();
+            myResponseTableData.ForEach(recMehes =>
+            {
+                TABLEDATA newTABLEDATA = null;
+                newTABLEDATA = DefaultInerface(recMehes);
+                newTABLEDATA = SpecialMapping(newTABLEDATA, recMehes, TableID, Tenant);
+
+                myTABLEDATAList.Add(newTABLEDATA);
+            }
+            );
+            myCUSTOMS_TABLE.TABLECODE[0].TABLEDATA = myTABLEDATAList.ToArray();
+
+
             //for (int curTenant = 1; curTenant < 2; curTenant++)// by mohammad i added the tenant and saw this code commented so i uncommented it to make the project build please do you adjustment.
             //{
             if (_AllSettingInDBZero == null)
@@ -446,7 +411,7 @@ namespace Logitude.CustomsMessaging.Helpers
                 var setting = CustomsSettingQueryService.GetSettingByTenant(item.Tenant);
                 if (setting != null)
                 {
-                    if (setting.IsConnectedToUniFreight )
+                    if (setting.IsConnectedToUniFreight || !String.IsNullOrWhiteSpace(setting.UnfConnectionString))
                     {
                         UServerCommunication.SendUpdateTableToUnifreight(item.Tenant, TableID, myCUSTOMS_TABLE, false, true);
                     }

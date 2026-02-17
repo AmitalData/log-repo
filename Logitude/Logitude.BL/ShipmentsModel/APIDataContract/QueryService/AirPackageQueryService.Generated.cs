@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -48,13 +46,11 @@ using Simplog.Data.ShipmentsModel;
 				{
 				   
 				   var temp = new AirPackage(); 
-				   temp.Id = item.Id; 
-
-			  
+				   temp.Id = item.Id;			  
 				   if(item.PackageTypeId != null)
 				   {
 					   PackageTypeQueryService PackageTypeService0 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant); 
 			       
 					   				   }
 				   
@@ -69,8 +65,7 @@ using Simplog.Data.ShipmentsModel;
 				   temp.Reference3 = item.Reference3;
 				   temp.CommodityNumber = item.CommodityNumber;
 				   temp.Reference4 = item.Reference4;
-				   temp.Notes = item.Notes;
-				   temp.ChangeSetOp = item.ChangeSet;					
+				   temp.Notes = item.Notes;					
 					MyList.Add(temp);
 				}
 					
@@ -83,7 +78,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPackagePM> AirPackageDataMappingAndValidatin(List<AirPackage> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<ShipmentPackagePM> AirPackageDataMappingAndValidatin(List<AirPackage> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -96,14 +91,11 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -116,112 +108,36 @@ using Simplog.Data.ShipmentsModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//} 
-
-						
+						//}
 					}
 					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.PackageType != null)
 					{
-						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myPackageTypePM != null)
-						{ 
-
-						 								
-								temp.PackageTypeId = myPackageTypePM.Id;
-						  
-
-							
-						} 
-
+						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName);
+												if(myPackageTypePM != null)
+						{
+							temp.PackageTypeId = myPackageTypePM.Id;
+						}
+						 
 					}
 			
 					
-                    							
-						temp.Length = item.Length;
-
-					 
-
-					
-                    							
-						temp.Width = item.Width;
-
-					 
-
-					
-                    							
-						temp.Height = item.Height;
-
-					 
-
-					
-                    							
-						temp.Quantity = item.Pieces;
-
-					 
-
-					
-                    							
-						temp.Volume = item.Volume;
-
-					 
-
-					
-                    							
-						temp.Weight = item.GrossWeight;
-
-					 
-
-					
-                    							
-						temp.Reference1 = item.Reference1;
-
-					 
-
-					
-                    							
-						temp.Reference2 = item.Reference2;
-
-					 
-
-					
-                    							
-						temp.Reference3 = item.Reference3;
-
-					 
-
-					
-                    							
-						temp.CommodityNumber = item.CommodityNumber;
-
-					 
-
-					
-                    							
-						temp.Reference4 = item.Reference4;
-
-					 
-
-					
-                    
-					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
-					{							
-						temp.Notes = item.Notes;
-
-										}  
-
-					
-                    							
-						temp.ChangeSet = item.ChangeSetOp;
-
-					 
-
-										   
+					temp.Length = item.Length;
+					temp.Width = item.Width;
+					temp.Height = item.Height;
+					temp.Quantity = item.Pieces;
+					temp.Volume = item.Volume;
+					temp.Weight = item.GrossWeight;
+					temp.Reference1 = item.Reference1;
+					temp.Reference2 = item.Reference2;
+					temp.Reference3 = item.Reference3;
+					temp.CommodityNumber = item.CommodityNumber;
+					temp.Reference4 = item.Reference4;
+					temp.Notes = item.Notes;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -229,8 +145,6 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

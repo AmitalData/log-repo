@@ -1,5 +1,5 @@
 ﻿(function (jQuery) {
-    jQuery.Token = null;
+
     jQuery.CurrentEmail = null;
     jQuery.CurrentTenant = null;
     jQuery.CurrentCardId = null;
@@ -10,12 +10,10 @@
     jQuery.IsAgentShared = false;
     jQuery.IsShipperShared = false;
     jQuery.IsConsigneeShared = false;
-    jQuery.LoadingCount = 100;
+    jQuery.LoadingCount = 1001;
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
-    jQuery.SearchText_QUOTESREQUESTS = null;
-
     jQuery.SearchTimer_SHI = null;
     jQuery.SearchTimer_INV = null;
     jQuery.SelectedQuery_SHI = null;
@@ -27,19 +25,10 @@
     jQuery.IsDataCountLoaded = false;
     jQuery.IsShipmentsDataLoaded = false;
     jQuery.IsInvoicesDataLoaded = false;
-    jQuery.IsQuotesRequestsDataLoaded = false;
-    jQuery.IsReportsDataLoaded = false;
 
-    jQuery.ContactId = "";
-    jQuery.RequestedBy = "";
-
-    jQuery.AllQuotesRequests = null;
     jQuery.SelectedTabId = "TAB_SHI";
     jQuery.watermark_SHI = "Search partners / ports / ref.#";
     jQuery.watermark_INV = "Search Inv. # / bill to / ref.#";
-    jQuery.watermark_QUOTESREQUESTS = "Search requester / reference / status / brand / PO";
-
-
 
     jQuery.ResizePage = (function (myFixedHeight) {
         var minHeight = 400;
@@ -62,9 +51,6 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
 
@@ -97,12 +83,6 @@
         }
     });
 
-    jQuery.SetQuotesRequestsTabVisibility = (function (isVisibly ) {
-        $("#TAB_QUOTESREQUESTS").toggle(isVisibly);
-    });
-
-
-
     jQuery.GetLogginData = (function () {
 
         var url = "api/commondata/?email=" + $.CurrentEmail + "&tenant=" + $.CurrentTenant + "&cardId=" + $.CurrentCardId;
@@ -111,23 +91,18 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {'Token': $.Token},
-            
+                        
             success: function (result) {
                 
                 $("#CompanyText").html(result.TenantCompany);
                 $("#MemberText").html(result.ContactName);
-                $("#RequestedByContact").html(result.ContactName);
-                $.ContactId = result.ContactId;
-                $.RequestedBy = result.ContactId;
                 $("#MemberCardText").html(" (" + result.CardName + ")");
                 $.TenantDateTimeFormat = result.TenantDateTimeFormat;
                 $.IsInvoicesMenuEnabled = result.IsInvoicesMenuEnabled;
                 $.IsAgentShared = result.IsAgentShared;
                 $.IsShipperShared = result.IsShipperShared;
                 $.IsConsigneeShared = result.IsConsigneeShared;
-                $.SetQuotesRequestsTabVisibility(result.IsQuotesRequestsMenuEnabled);
-                $.SetReportTabVisibility(result.IsReportsMenuEnabled);
+
                 $.SetTabsHidden($.IsInvoicesMenuEnabled);
                 $.SetSelectedTab();                
             },
@@ -151,11 +126,6 @@
         $('#SavedSelectedTabId').attr("value", $.SelectedTabId);
         $("#mainTabsDiv").data("kendoTabStrip").select($('#' + $.SelectedTabId));
     });
-
-    jQuery.SetReportTabVisibility = (function (isVisibly) {
-        $("#TAB_REPORTS").toggle(isVisibly);
-    });
-
 
     jQuery.LoadInvoices = (function () {
 
@@ -188,25 +158,19 @@
             data: JSON.stringify(filters),
             type: 'POST',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
                 $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
-                $("#InvoicesQueryLimitMessage").html("");
+
 
                 if (result.length >= $.LoadingCount) {
                     $("#InvoicesQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
-                    $("#InvoicesQueryLimitMessage").html($.GetQueryLimitMessage(filters.PageSize));
-
                 }
-                 
+
                 else {
                     $("#InvoicesQueryCount").html("(" + result.length + ")");
                 }
 
-                $("#InvoicesListBox").html("");
                 $("#InvoicesListBox").kendoListView(
 		        {
 		            dataSource: { data: BuildInvoicesList(result, $.TenantDateTimeFormat) },
@@ -225,7 +189,7 @@
 
     });
 
-    jQuery.LoadShipments = (function (pageSize) {
+    jQuery.LoadShipments = (function () {
 
         $("#ShipmentsBusyIndicator").show();
 
@@ -261,30 +225,25 @@
             data: JSON.stringify(filters),
             type: 'POST',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {                
-                $("#ShipmentsQueryLimitMessage").html("");
+
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Shipments List", $.CurrentTenant, $.CurrentCardId);
 
                 if (result.length >= $.LoadingCount) {
                     $("#ShipmentsQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
-                    $("#ShipmentsQueryLimitMessage").html($.GetQueryLimitMessage(filters.PageSize));
-
                 }
 
                 else {
                     $("#ShipmentsQueryCount").html("(" + result.length + ")");
                 }
 
-                $("#ShipmentsListBox").html("");
                 $("#ShipmentsListBox").kendoListView(
-                    {
+		        {
+                        scrollable: true,
                         dataSource: { data: BuildShipmentsList(result, $.TenantDateTimeFormat, $.IsAgentShared, $.IsShipperShared, $.IsConsigneeShared) },
-                        template: kendo.template($("#ShipmentListBoxItemDataTemplate").html())
-                    });
+		            template: kendo.template($("#ShipmentListBoxItemDataTemplate").html())
+		        });
 
                 $("#ShipmentsBusyIndicator").hide();
             },
@@ -296,91 +255,6 @@
             }
         });
     });
-
-    jQuery.GetQueryLimitMessage = (function (pageSize) {
-        return ("Showing the first " + pageSize + " rows, use the search field to find more results.");
-    });
-
-    jQuery.SetQuotesRequestQueryCount = (function (result) {
-        let quotesRequestQueryCount = (result.length >= $.LoadingCount) ? "(" + ($.LoadingCount - 1) + "+)" : "(" + result.length + ")";
-        $("#QuotesRequestQueryCount").html(quotesRequestQueryCount);
-    });
-
-    jQuery.FullQuotesRequestsListData = (function (result) {
-        $.AllQuotesRequests = BuildQuotesRequests(result, $.TenantDateTimeFormat)
-        $("#QuotesRequestsListBox").html("");
-        $("#QuotesRequestsListBox").kendoListView(
-            {
-                dataSource: { data: $.AllQuotesRequests },
-                template: kendo.template($("#QuotesRequestsListBoxItemDataTemplate").html())
-            });
-
-    });
-  
-    function QuotesRequstFilters() {
-        this.PartnerId = $.CurrentCardId;
-        this.SearchField = ($.trim($.SearchText_QUOTESREQUESTS) == "" || $.trim($.SearchText_QUOTESREQUESTS) == $.watermark_QUOTESREQUESTS) ? null : $.trim($.SearchText_QUOTESREQUESTS);
-        this.OnlyOpened = $('#OnlyOpened').is(':checked');
-        this.RequestedBy = $.RequestedBy;
-        this.CustomerStatus = $('#SelectStatusFilter').val();
-        this.PageSize = jQuery.LoadingCount;
-        this.PageIndex = 0;
-        this.FromDate = new Date($('#FromDate').val());
-        this.ToDate = new Date($('#ToDate').val());
-        this.Tenant = $.CurrentTenant;
-    };
-
-    
-
-    jQuery.LoadQuotesRequsts = (function () {
-
-        $("#QuotesRequestsBusyIndicator").show();
-        var filters = new QuotesRequstFilters();
-        var url = "api/QuotesRequest/GetQuotesRequestsByFilters";
-        $.ajax({
-            url: url,
-            data: JSON.stringify(filters),
-            type: 'POST',
-            contentType: 'application/json',
-            headers: { 'Token': $.Token },
-            success: function (result) {
-                $.QuotesRequstsLoadedSsuccess(result);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $.QuotesRequstsLoadedFailure(jqXHR);
-            }
-        });
-
-    });
-
-
-
-    jQuery.QuotesRequstsLoadedSsuccess = (function (result) {
-        $.SendContactActivity($.CurrentEmail, "QuoteRequsts", "Quote Requsts List", $.CurrentTenant, $.CurrentCardId);
-        $.SetQuotesRequestQueryCount(result);
-        $.FullQuotesRequestsListData(result);
-        $("#QuotesRequestsBusyIndicator").hide();
-    });
-    
-
-    jQuery.QuotesRequstsLoadedFailure = (function (jqXHR) {
-        $.CheckUserException(jqXHR);
-        $("#QuotesRequestQueryCount").html("(0)");
-        $("#QuotesRequestsBusyIndicator").hide();
-    });
-
-
-    jQuery.LoadReports = (function () {
-
-        let reportLists =  [{ "Name": "Shipments Report"}];
-        $("#ReportListBox").html("");
-        $("#ReportListBox").kendoListView(
-            {
-                dataSource: { data: reportLists },
-                template: kendo.template($("#ReportListBoxItemDataTemplate").html())
-            });
-    });
-
 
     jQuery.LoadDataCount = (function () {
 
@@ -412,35 +286,8 @@
                 $.LoadInvoices();
                 break;
             }
-
-            case "TAB_QUOTESREQUESTS": {
-                var dateNow = new Date();
-                var month = dateNow.getUTCMonth() + 1;
-                var day = padWithZeroes(dateNow.getUTCDate().toString(), 2);
-                var year = dateNow.getUTCFullYear();
-                var previousMonth = month == 1 ? 12 : month - 1;
-                var nextMonth = month == 12 ? 1 : month + 1;
-                var fromYear = month == 1 ? year - 1 : year;
-                var toYear = month == 12 ? year + 1 : year;
-
-                $('#FromDate').val(fromYear + '-' + padWithZeroes(previousMonth,2) + '-' + padWithZeroes(day,2));
-                $('#ToDate').val(toYear + '-' + padWithZeroes(nextMonth,2) + '-' + padWithZeroes(day,2));
-                $.LoadQuotesRequsts();
-                break;
-            }
-
-            case "TAB_REPORTS": {
-                $.LoadReports();
-                break;
-            }
-
         }
     });
-
-    function padWithZeroes(str, max) {
-        str = str.toString();
-        return str.length < max ? padWithZeroes("0" + str, max) : str;
-    }
 
     jQuery.SelectQuery = (function () {
 
@@ -503,22 +350,6 @@
                 }
 
                 $("#InvoicesQueryTitle").html(SelectedQueryLabel);
-            }
-
-
-            case "TAB_QUOTESREQUESTS": {
-
-                $(".HyperLinkQuery_QUOTESREQUESTS").css({
-                    "color": "#45494A",
-                    "background": "transparent",
-                });
-
-                $("#" + $.SelectedQuery_QuotesRequest).css({
-                    "color": "white",
-                    "background": "url('HtmlHelpers/Images/Bars_Images/SelectedQuery.png') repeat-x",
-                });
-
-                $("#QuotesRequestQueryTitle").html("All Quotes Requests");
             }
         }
 
@@ -656,40 +487,6 @@
 
                 break;
             }
-
-            case "TAB_QUOTESREQUESTS": {
-
-                $.SearchText_QUOTESREQUESTS = $('#SavedSearchText_QUOTESREQUESTS').val();
-                $.SelectedQuery_QuotesRequest = $('#SavedSelectedQuery_QUOTESREQUESTS').val();
-                if ($.trim($.SelectedQuery_QUOTESREQUESTS) == "") {
-                    $.SelectedQuery_QuotesRequest = "Query_PRG_QUOTESREQUESTS";
-                    $('#SavedSelectedQuery_QUOTESREQUESTS').attr("value", $.SelectedQuery_QuotesRequest);
-                }
-
-                $.SelectQuery();
-
-                if (!$.IsQuotesRequestsDataLoaded) {
-                    $.IsQuotesRequestsDataLoaded = true;
-                    $.LoadData();
-                }
-
-                break;
-            }
-
-            case "TAB_REPORTS": {
-
-                if (!$.IsReportsDataLoaded) {
-                    $.IsReportsDataLoaded = true;
-                    $.LoadData();
-                }
-
-                break;
-            }
-
-
-
-
-
         }
 
     });
@@ -703,23 +500,20 @@
 	        var clss = $("#" + id).attr('class');
 
 	        var currentTarget = "#" + $.SelectedTabId + " div span .TabImage";
-           
-            var currentScr = $(currentTarget).attr('src');
-            if (currentScr) {
-                var currenttargetSRC = currentScr.replace('S.png', 'N.png');
-                $(currentTarget).attr("src", currenttargetSRC);
-            }
+	        var currentScr = $(currentTarget).attr('src');
+	        var currenttargetSRC = currentScr.replace('S.png', 'N.png');
+	        $(currentTarget).attr("src", currenttargetSRC);
+
 	        var target = "#" + id + " div span .TabImage";
-            var scr = $(target).attr('src');
-            if (scr) {
-                var targetSRC = scr.replace('O.png', 'S.png');
-                if (targetSRC == scr) {
+	        var scr = $(target).attr('src');
+	        var targetSRC = scr.replace('O.png', 'S.png');
+	        if (targetSRC == scr) {
 
-                    targetSRC = scr.replace('N.png', 'S.png');
-                }
+	            targetSRC = scr.replace('N.png', 'S.png');
+	        }
 
-                $(target).attr("src", targetSRC);
-            }
+	        $(target).attr("src", targetSRC);
+
 	        $.SelectedTabId = $(e.item).attr("id");
 	        $('#SavedSelectedTabId').attr("value", $.SelectedTabId);
 	        $.SelectTab($.SelectedTabId);
@@ -773,30 +567,6 @@
 
                 break;
             }
-
-
-            case "SearchBox_QUOTESREQUESTS": {
-
-                if ($("#SearchBox_QUOTESREQUESTS").val().length == 0 || $("#SearchBox_QUOTESREQUESTS").val() == $.watermark_QUOTESREQUESTS) {
-                    $('#SearchDeleteButton_QUOTESREQUESTS').hide();
-                }
-
-                else {
-                    $('#SearchDeleteButton_QUOTESREQUESTS').show();
-                }
-
-                $.SearchText_QUOTESREQUESTS = $("#SearchBox_QUOTESREQUESTS").val();
-                $('#SavedSearchText_QUOTESREQUESTS').attr("value", $.SearchText_QUOTESREQUESTS);
-
-                if ($.SearchTimer_QUOTESREQUESTS != null) {
-                    clearTimeout($.SearchTimer_QUOTESREQUESTS);
-                }
-
-                $.SearchTimer_QUOTESREQUESTS = setTimeout(function () { $.LoadData() }, 500);
-
-                break;
-            }
-
         }
     });
 
@@ -812,20 +582,9 @@
         $.LoadInvoices();
     });
 
-    $("#QuotesRequestRefreshButton").click(function () {
-
-        $("#QuotesRequestsListBox").html("");
-        $.LoadQuotesRequsts();
-    });
-
-
-
-
     $('.SearchDeleteButton').hide();
     $('#SearchBox_SHI').val($.watermark_SHI).addClass('watermark');
     $('#SearchBox_INV').val($.watermark_INV).addClass('watermark');
-    $('#SearchBox_QUOTESREQUESTS').val($.watermark_QUOTESREQUESTS).addClass('watermark');
-    $('#SearchBox_QUOTESREQUESTS').attr('title', $.watermark_QUOTESREQUESTS);
 
     $('.SearchBox').blur(function () {
 
@@ -850,17 +609,6 @@
                     $('#SearchDeleteButton_INV').hide();
                 }
             }
-
-            case "SearchBox_QUOTESREQUESTS": {
-
-                if ($(this).val().length == 0) {
-                    $(this).val($.watermark_QUOTESREQUESTS).addClass('watermark');
-                    $('#SearchIcon_QUOTESREQUESTS').show();
-                    $('#SearchDeleteButton_QUOTESREQUESTS').hide();
-                }
-            }
-
-
         }
     });
     $('.SearchBox').focus(function () {
@@ -884,15 +632,6 @@
                     $('#SearchIcon_INV').hide();
                 }
             }
-
-            case "SearchBox_QUOTESREQUESTS": {
-
-                if ($(this).val() == $.watermark_QUOTESREQUESTS) {
-                    $(this).val('').removeClass('watermark');
-                    $('#SearchIcon_QUOTESREQUESTS').hide();
-                }
-            }
-
         }
     });
     $('.SearchBox').keyup(function () {
@@ -917,15 +656,6 @@
                 $('#SearchBox_INV').val($.watermark_INV).addClass('watermark');
                 $.SearchTextChanged("SearchBox_INV");
             }
-
-            case "SearchDeleteButton_QUOTESREQUESTS": {
-                $('#SearchIcon_QUOTESREQUESTS').show();
-                $('#SearchBox_QUOTESREQUESTS').attr("value", "");
-                $('#SearchBox_QUOTESREQUESTS').val($.watermark_QUOTESREQUESTS).addClass('watermark');
-                $.SearchTextChanged("SearchBox_QUOTESREQUESTS");
-            }
-
-
         }
     });
 
@@ -1017,12 +747,9 @@
 
             var target = "#" + id + " div span .TabImage";
             var scr = $(target).attr('src');
+            var targetSRC = scr.replace('N.png', 'O.png');
 
-            if (scr) {
-                var targetSRC = scr.replace('N.png', 'O.png');
-
-                $(target).attr("src", targetSRC);
-            }
+            $(target).attr("src", targetSRC);
         }
     });
     $(".k-tabstrip .k-item").mouseleave(function () {
@@ -1034,10 +761,9 @@
 
             var target = "#" + id + " div span .TabImage";
             var scr = $(target).attr('src');
-            if (scr) {
-                var targetSRC = scr.replace('O.png', 'N.png');
-                $(target).attr("src", targetSRC);
-            }
+            var targetSRC = scr.replace('O.png', 'N.png');
+
+            $(target).attr("src", targetSRC);
         }
     });
 
@@ -1079,36 +805,6 @@
         }
     });
 
-
-    $(".HyperLinkQuery_QUOTESREQUESTS").mouseenter(function () {
-        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
-            $(this).css({ "color": "black", "background": "url('HtmlHelpers/Images/Bars_Images/tab-over.png') repeat-x" });
-        }
-    });
-    $(".HyperLinkQuery_QUOTESREQUESTS").mouseleave(function () {
-        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
-            $(this).css({ "color": "#45494A", "background": "transparent" });
-        }
-    });
-
-
-
-    $(".HyperLinkQuery_QUOTESREQUESTS").click(function () {
-        if ($(this).attr('id') != $.SelectedQuery_QuotesRequest) {
-            $.SelectedQuery_QuotesRequest = $(this).attr('id');
-            $("#SavedSelectedQuery_QUOTESREQUESTS").attr("value", $.SelectedQuery_QuotesRequest);
-            $.SelectQuery();
-            $.LoadData();
-        }
-    });
-
-
-
-
-
-
-
-
     $("#SignOutButton").click(function () {
 
 
@@ -1118,17 +814,13 @@
             url: url,
             type: 'GET',
             contentType: 'application/json',
-            headers: {
-                'Token': $.Token
-            },
 
             success: function (result) {
          
                 window.localStorage.setItem("Token", "");
                 window.localStorage.setItem("CardId", "");
 
-                //document.location.href = "../../Login.aspx";
-                document.location.href = "../../?tenant=" + $.CurrentTenant;
+                document.location.href = "../../Login.aspx";
 
             },
 
@@ -1150,29 +842,19 @@
 
     $(document).ready(function () {
         $("#TAB_INV").hide();
-        $("#TAB_QUOTESREQUESTS").hide();
 
-        
         $.ResizePage(130);
 
-        var userdata = null;
-        $.Token = $("#TokenInput").val();
-        var linkQuery = $("#LoginInput").val();
-        var linkParameters = null;
+        var hash = $(location).attr('href');
+        var arr = hash.split('=');
+        var userdata = arr[1];
+        var arrdata = userdata.split(':');
 
-        if ($.trim($.Token) == "") {
-            var link = $(location).attr('href');
-            var linkArray = link.split('=')
-            linkQuery = linkArray[1];
-        }
-
-        linkParameters = linkQuery.split(':')
-
-        $.CurrentEmail = linkParameters[0];
-        $.CurrentTenant = linkParameters[1];
-        $.CurrentCardId = linkParameters[2];
-        $.CurrentCardType = linkParameters[3];
-        $.IsBrandingEnabled = linkParameters[4];
+        $.CurrentEmail = arrdata[0];
+        $.CurrentTenant = arrdata[1];
+        $.CurrentCardId = arrdata[2];
+        $.CurrentCardType = arrdata[3];
+        $.IsBrandingEnabled = arrdata[4];
         
         if ($.IsBrandingEnabled == "true" || $.IsBrandingEnabled == "True") {
             $(".PoweredArea").hide();
@@ -1183,5 +865,3 @@
     });
 
 }(jQuery));
-
-

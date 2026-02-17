@@ -10,8 +10,5 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     public interface IBankAccountQueryServiceExt
     {
         BankAccountPM GetByFirstOrDefault(string id, int tenant);
-        BankAccountPM GetBankAccountByNumber(string number, int tenant);
-        BankAccountPM GetBankAccountByDisplay(string number, int tenant);
-
     }
 }

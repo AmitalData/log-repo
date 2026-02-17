@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -14,7 +14,7 @@
                         <table>
 
                             <tr class="FormFieldRow">
-                                <td style="width: 130px;">
+                                <td style="width: 110px;">
                                     <LogLabel [ObjectFieldName]="'IsDangerous'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
@@ -62,25 +62,6 @@
 
                                 <td>
                                     <LogTextBox [ObjectFieldName]="'DangerousPackagingGroup'" [Text]="DangerousPackagingGroup" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'EmergencyContactId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogLov [ObjectFieldName]="'EmergencyContactId'"
-                                            [SelectedValue]="EmergencyContactId"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'Contact'">
-                                    </LogLov>
                                 </td>
 
                                 <td>
@@ -180,7 +161,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button  id="{{'CancelBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button  id="{{'CancelBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -188,7 +169,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button  id="{{'OKBtn' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button  id="{{'OKBtn' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

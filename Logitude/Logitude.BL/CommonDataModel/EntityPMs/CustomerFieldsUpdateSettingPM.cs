@@ -16,9 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ObjectFieldId { get; set; }
         public string UpdateDirection { get; set; }
         public string ObjectFieldName { get; set; }
-        public string ObjectFieldCode { get; set; }
-        public string SearchFields { get; set; }
-
+        
 
 
     }

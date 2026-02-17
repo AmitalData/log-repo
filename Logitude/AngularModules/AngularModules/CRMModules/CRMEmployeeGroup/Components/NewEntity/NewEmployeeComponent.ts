@@ -10,7 +10,7 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewEmployeeComponent.html',
 })
 

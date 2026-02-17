@@ -25,7 +25,7 @@ using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel;
 using WebFreight.Web.GlobalModelDB;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using WebFreight.Web.DataContracts;
 using System.Collections.Generic;

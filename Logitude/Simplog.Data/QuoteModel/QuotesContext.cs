@@ -6,7 +6,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Transactions;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.EntityPOCOs;
@@ -90,6 +90,7 @@ namespace Simplog.Data.QuoteModel
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
             modelBuilder.Configurations.Add(new QuoteDocumentVersionMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -319,7 +320,6 @@ namespace Simplog.Data.QuoteModel
         public IDbSet<QuoteCharge> QuoteCharges { get; set; }
         public IDbSet<QuotePriceSteps> QuotePriceSteps { get; set; }
         public IDbSet<QuoteType> QuoteTypes { get; set; }
-        public IDbSet<ValidByType> ValidByTypes { get; set; }
         public IDbSet<MarkUpType> MarkUpTypes { get; set; }
         public IDbSet<QuoteCustomerType> QuoteCustomerTypes { get; set; }
         public IDbSet<QuotePackage> QuotePackages { get; set; }
@@ -337,13 +337,10 @@ namespace Simplog.Data.QuoteModel
         public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }
         public IDbSet<QuoteStage> QuoteStages { get; set; }
         public IDbSet<QuoteRating> QuoteRatings { get; set; }
-        public IDbSet<QuoteComputedField> QuoteComputedField { get; set; }
         public IDbSet<QuoteTemplateSectionModification> QuoteTemplateSectionModifications { get; set; }
         public IDbSet<QuoteTemplateExcludedSection> QuoteTemplateExcludedSections { get; set; }
         public IDbSet<QuoteTotalVAT> QuoteTotalVATs { get; set; }
         public IDbSet<QuoteSetting> QuoteSettings { get; set; }
-
-        public IDbSet<QuoteAnalytic> QuoteAnalytics { get; set; }
 
         public void SetAsModified(object entity)
         {

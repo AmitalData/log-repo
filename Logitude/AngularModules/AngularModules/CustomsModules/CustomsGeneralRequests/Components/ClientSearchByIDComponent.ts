@@ -20,11 +20,10 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ClientList } from '../../../Customs/EntityLists/ClientList';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     selector: 'ClientSearchByIDComponent',
-    
+    moduleId: module.id,
     templateUrl: './ClientSearchByIDComponent.html',
 })
 
@@ -43,29 +42,13 @@ export class ClientSearchByIDComponent
     public ExportRequestList: ObservableCollection;
     public IndicationPerClassificationList: ObservableCollection;
     private CurrentSession = SessionLocator.SelectedSession;
-    EntityResourceService: EntityResourceService=new EntityResourceService();
     constructor() {
         super();
-        this.EntityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
-
-           this.CustomerActivityList = new ObservableCollection([]);
-           this.AuthorizedList = new ObservableCollection([]);
-           this.AuthorizerList = new ObservableCollection([]);
-           this.ExportRequestList = new ObservableCollection([]);
-           this.IndicationPerClassificationList = new ObservableCollection([]);
-        });
-    }
-
-    SetWindowArgs(menuArg: any) {
-        this.OnMassageDisplayMethod();
-        if (menuArg.Mode == "DeclarationGeneralComponent") {
-            this.IsExternalId = menuArg.IsExternalId;
-            this.ExternalId=menuArg.ImporterCode;
-            this.IsPassport = menuArg.IsPassport;
-            this.PassportNumber = menuArg.PassportNumber;
-            this.PassportTypeCode = menuArg.PassportTypeCode;
-            this.PassportCountryCode = menuArg.PassportCountryCode;
-            }
+        this.CustomerActivityList = new ObservableCollection([]);
+        this.AuthorizedList = new ObservableCollection([]);
+        this.AuthorizerList = new ObservableCollection([]);
+        this.ExportRequestList = new ObservableCollection([]);
+        this.IndicationPerClassificationList = new ObservableCollection([]);
     }
 
     @ViewChild(CustomMessageWrapperComponent)
@@ -208,10 +191,10 @@ export class ClientSearchByIDComponent
         windowArgs.CustomerIndicationList = item.CustomerIndicationList;
 
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 470;
-        logitudeWindow.Height = 520;
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 400;
         logitudeWindow.IsShowCloseButton = false;
-        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient"); 
+        logitudeWindow.Title = "אינדיקציות ללקוח";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/CustomerIndicationComponent');
     }
@@ -254,7 +237,7 @@ export class ClientSearchByIDComponent
         currRequestParams.PassportCountryCode = this.PassportCountryCode;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לנתונים נוספים ליבואן", true)
             .then((res) => {
                 this.ResponseData = res;
@@ -273,4 +256,3 @@ export class ClientSearchByIDComponent
 
     //#endregion Commands
 }
- 

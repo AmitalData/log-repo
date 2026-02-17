@@ -1,8 +1,7 @@
 ﻿using Devart.Data.Oracle;
 using Logitude.Server.Tools.Helpers;
-using Newtonsoft.Json;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -10,37 +9,29 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using System.Web;
-using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Server.Tools.QueueService
 {
     public partial class DbQueueService : IQueueService
     {
-        QueueSendModel QueueSendModel { get; set; }
         protected int Tenant { get; set; }
         protected string QueueCode { get; set; }
         protected string CurrentMessageId { get; set; }
-        private const int messageBodyLength = 2000;
-        [ThreadStatic] public static int? MessageID = null;
         public DbQueueService()
         {
 
         }
 
-        public DbQueueService(string queueCode, int tenant, string queueDefinitionCode = null)
+        public DbQueueService(string queueCode, int tenant)
         {
-            this.InitializeQueue(queueCode, tenant, queueDefinitionCode);
+            this.InitializeQueue(queueCode, tenant);
         }
-
-
-        public void InitializeQueue(string queueCode, int tenant, string queueDefinitionCode = null)
+        public void InitializeQueue(string queueCode, int tenant)
         {
             if (!String.IsNullOrWhiteSpace(LogitudeSettings.DebugKey))
             {
@@ -51,27 +42,17 @@ namespace Logitude.Server.Tools.QueueService
 
             }
             this.Tenant = tenant;
-            if (!string.IsNullOrEmpty(queueDefinitionCode))
-            {
-                this.QueueCode = queueDefinitionCode;
-            }
             this.QueueCode = queueCode;
             QueueMessageRepository messagesRepository = new QueueMessageRepository(Tenant);
             QueueMessageMoreDetailsRepository messagesMoreDetailsRepository = new QueueMessageMoreDetailsRepository(Tenant);
             QueueDefinitionRepository queueDefRep = new QueueDefinitionRepository(tenant);
-               
             QueueDefinition queueDefinition = GetQueueDefFromCache(queueCode, queueDefRep);
-            queueDefinition = queueDefinition ?? queueDefRep.GetSingleQueueDefinition(queueCode);//ensure
             if (queueDefinition == null)
             {
                 queueDefinition = new QueueDefinition() { Code = queueCode, Name = queueCode };
                 queueDefRep.Add(queueDefinition);
                 queueDefRep.SubmitChanges();
-                //SetInCache()
-                string key = $"GetQueueDefFromCache({queueCode})";
             }
-
-
         }
 
         private static QueueDefinition GetQueueDefFromCache(string queueCode, QueueDefinitionRepository queueDefRep)
@@ -80,35 +61,16 @@ namespace Logitude.Server.Tools.QueueService
             var def = CacheManager.GetOrInsertNewObject<QueueDefinition>(key, () =>
             {
                 return queueDefRep.GetSingleQueueDefinition(queueCode);
-            }, donotCacheNull:true);
+            });
             return def;
         }
 
-        public void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
+        public void Send(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         {
-            SendReturnId(messageValues, tenant, delayTime, CustomerId, BatchNumber, NextRunDate);
+            SendReturnId(messageValues, delayTime, CustomerId, BatchNumber, NextRunDate);
         }
-        protected int? SendReturnId(Dictionary<string, string> messageValues, 
-            int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null//,int tenantPriority = 89
-            ,QueueSendModel queueSendModel= null)
+        protected int? SendReturnId(Dictionary<string, string> messageValues, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
         {
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                return SendReturnIdCustoms(messageValues,
-            tenant, delayTime, CustomerId, BatchNumber, NextRunDate
-            , queueSendModel);
-            }
-
-
-            int tenantPriority = queueSendModel?.TenantPriority ?? 89;  
-            if (tenantPriority < 1)
-            {
-                tenantPriority = 89;
-            }
-            else if (tenantPriority > 99)
-            {
-                tenantPriority = 89;
-            }
             int? queueMessageId = null;
             if (LogitudeSettings.IsCostomsDeploy) //ITZIK + YARON 
             {
@@ -119,44 +81,18 @@ namespace Logitude.Server.Tools.QueueService
                     return null;
                 }
             }
-            if (delayTime!=null)
-            {
-                LogMessagingUtil.Instance.AppendLine($"Delay  {this.QueueCode} Queue {delayTime.GetValueOrDefault()}");
-            }
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
             {
                 string messageBody = DictionaryJsonConverter.FromDictionaryToJson(messageValues);
                 string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
-                string bodyHashCode = MD5HashUtil.GenerateHashForString(messageBody);
-
                 QueueResponse response = new QueueResponse();
                 DataTable tblQueue = new DataTable();//
                 int delaySeconds = 0;
                 string CId = "";
-                string BNo = "";
+                string BNo = ""; 
                 if (delayTime != null)
                 {
                     delaySeconds = (int)delayTime.Value.TotalSeconds;
-                }
-                else
-                {
-                    
-                        if (NextRunDate.HasValue)
-                        {
-                            if (DateTime.UtcNow > NextRunDate)
-                            {
-                                delaySeconds = 0;
-
-                            }
-                            else
-                            {
-                                var ts = NextRunDate.Value.Subtract(DateTime.UtcNow);
-                                delaySeconds = (int)ts.TotalSeconds;
-                            }
-                            NextRunDate = null;
-                        }
-                  
-
                 }
                 if (CustomerId != null)
                 {
@@ -165,7 +101,7 @@ namespace Logitude.Server.Tools.QueueService
                 if (BatchNumber != null)
                 {
                     BNo = BatchNumber;
-                }
+                } 
                 if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                 {
                     if (NextRunDate.HasValue)
@@ -176,106 +112,44 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         OracleCommand cmd = new OracleCommand();
                         cmd.Connection = cn;
-                        cmd.CommandText =
-                            DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
-                        //DbContextBaseUtil.GetStoredProcedureName("TSTQueue_Enqueue", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                        cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_Enqueue", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                         cmd.CommandType = CommandType.StoredProcedure;
 
 
                         OracleParameter queueCodePar = new OracleParameter("QueueDefinitionCode", OracleDbType.VarChar, 255);
-                        OracleParameter msgBodyPar = new OracleParameter("v_MessageBody", OracleDbType.VarChar, 1000);
-                        OracleParameter tenantPar = new OracleParameter("Tenant", OracleDbType.Number);
-                        OracleParameter delayPar = new OracleParameter("v_DelaySeconds", OracleDbType.Number);
-                        OracleParameter customerId = new OracleParameter("v_CustomerId", OracleDbType.VarChar, 15);
-                        OracleParameter batchNumber = new OracleParameter("v_BatchNumber", OracleDbType.VarChar, 15);
-                        OracleParameter hashCodePar = new OracleParameter("v_HashCode", OracleDbType.NVarChar, 1000);
+                        OracleParameter msgBodyPar = new OracleParameter("MessageBody", OracleDbType.VarChar, 1000);
+                        OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
+                        OracleParameter customerId = new OracleParameter("CustomerId", OracleDbType.VarChar, 15);
+                        OracleParameter batchNumber = new OracleParameter("BatchNumber", OracleDbType.VarChar, 15);
                         //OracleParameter NextRunDateTime = new OracleParameter("NextRunDate", OracleDbType.Date);
 
                         OracleParameter queueMessageIdPar = new OracleParameter("v_QueueMessageId", OracleDbType.Number);
                         queueMessageIdPar.Direction = ParameterDirection.Output;
 
-                        OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
-                        watingStatusPar.Direction = ParameterDirection.Input;
-
-                        OracleParameter tenantPriPar = new OracleParameter("p_TenantPriority ", OracleDbType.Number);
-                        tenantPriPar.Direction = ParameterDirection.Input;
-
-                        OracleParameter InterfaceTypeCodePar = new OracleParameter("p_InterfaceTypeCode", OracleDbType.VarChar, 32);
-                        InterfaceTypeCodePar.Direction = ParameterDirection.Input;
-
-                        OracleParameter UseRabbitMQPar = new OracleParameter("p_UseRabbitMQ", OracleDbType.Number);
-                        UseRabbitMQPar.Direction = ParameterDirection.Input;
-
-
-                        OracleParameter QueueCodeRabbitPar = new OracleParameter("p_QueueCodeRabbit", OracleDbType.VarChar, 256);
-                        QueueCodeRabbitPar.Direction = ParameterDirection.Input;
-
-                        OracleParameter entityCodePar = new OracleParameter("p_EntityCode", OracleDbType.VarChar, 40);
-                        entityCodePar.Direction = ParameterDirection.Input;
-
-                        OracleParameter entityIdPar = new OracleParameter("p_EntityId", OracleDbType.VarChar, 40);
-                        entityIdPar.Direction = ParameterDirection.Input;
-
-
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
-                        tenantPar.Direction = ParameterDirection.Input;
                         delayPar.Direction = ParameterDirection.Input;
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
-                        hashCodePar.Direction = ParameterDirection.Input;
                         //NextRunDateTime.Direction = ParameterDirection.Input;
 
                         queueCodePar.Value = this.QueueCode;
                         msgBodyPar.Value = messageBody;
-                        tenantPar.Value = tenant;
                         delayPar.Value = delaySeconds;
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
-                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant, this.QueueCode);
                         //NextRunDateTime.Value = NextRunDate;
-                        hashCodePar.Value = bodyHashCode;
-                        tenantPriPar.Value = tenantPriority;
-                        InterfaceTypeCodePar.Value = queueSendModel?.InterfaceTypeCode;
-                        if (queueSendModel != null && queueSendModel.UseRabbitMQ)
-                        {
-                            UseRabbitMQPar.Value = 1;
-                        }
-                        else
-                        {
-                            UseRabbitMQPar.Value = 0;
-                        }
-
-                        string myQueueCodeRabbit = RabbitQueueCodeService.GetRabbitQueueCode(this.QueueCode, queueSendModel?.QueueGroupCodeRabbit);
-                        QueueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
-                        entityCodePar.Value= queueSendModel?.EntityCode;
-                        entityIdPar.Value = queueSendModel?.EntityId;
-
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
-                        cmd.Parameters.Add(tenantPar);
                         cmd.Parameters.Add(delayPar);
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
-                        cmd.Parameters.Add(hashCodePar);
-                        cmd.Parameters.Add(watingStatusPar);
-                        cmd.Parameters.Add(tenantPriPar);
-
-                        cmd.Parameters.Add(InterfaceTypeCodePar);
-                        cmd.Parameters.Add(UseRabbitMQPar);
-                        cmd.Parameters.Add(QueueCodeRabbitPar);
-                        cmd.Parameters.Add(entityCodePar);
-                        cmd.Parameters.Add(entityIdPar);
-
-
                         cmd.Parameters.Add(queueMessageIdPar);
 
 
-
-
                         //cmd.Parameters.Add(NextRunDateTime);
-
+                        
                         try
                         {
                             cn.Open();
@@ -288,7 +162,6 @@ namespace Logitude.Server.Tools.QueueService
                                 if (!String.IsNullOrWhiteSpace(sQueueMessageId))
                                 {
                                     queueMessageId = sQueueMessageId.ChangeValue<int>();
-                                  
                                 }
                             }
 
@@ -302,7 +175,7 @@ namespace Logitude.Server.Tools.QueueService
                         cn.Close();
                     }
 
-
+                    
                 }
                 else
                 {
@@ -310,101 +183,37 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         SqlCommand cmd = new SqlCommand("[dbo].[Queue_Enqueue]", cn);
                         cmd.CommandType = CommandType.StoredProcedure;
-                        SqlParameter queueCodePar = new SqlParameter("@V_QueueDefinitionCode", SqlDbType.VarChar, 255);
-                        SqlParameter msgBodyPar = new SqlParameter("@V_MessageBody", SqlDbType.VarChar, messageBodyLength);
-                        SqlParameter tenantPar = new SqlParameter("@V_Tenant", SqlDbType.Int);
-                        SqlParameter delayPar = new SqlParameter("@V_DelaySeconds", SqlDbType.Int);
-                        SqlParameter customerId = new SqlParameter("@V_CustomerId", SqlDbType.VarChar, 15);
-                        SqlParameter batchNumber = new SqlParameter("@V_BatchNumber", SqlDbType.VarChar, 15);
-                      //  SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
-                        SqlParameter hashCodePar = new SqlParameter("@V_HashCode", SqlDbType.NVarChar, 1000);
-                        SqlParameter watingStatusPar = new SqlParameter("@V_WatingStatus", SqlDbType.Int);
-                        SqlParameter messageIdPar = new SqlParameter("@V_QUEUEMESSAGEID", SqlDbType.BigInt);
-                        SqlParameter tenantpriorityPar = new SqlParameter("@P_TENANTPRIORITY", SqlDbType.Int);
-                        SqlParameter interfaceTypeCodePar = new SqlParameter("@P_INTERFACETYPECODE", SqlDbType.VarChar, 255);
-                        SqlParameter useRabbitMQPar = new SqlParameter("@P_USERABBITMQ", SqlDbType.Bit);
-                        SqlParameter queueCodeRabbitPar = new SqlParameter("@P_QUEUECODERABBIT", SqlDbType.VarChar ,255);
-                        SqlParameter entityCodePar = new SqlParameter("@P_ENTITYCODE", SqlDbType.VarChar, 255);
-                        SqlParameter entityIPar = new SqlParameter("@P_ENTITYID", SqlDbType.VarChar,255);
-
+                        SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.VarChar, 255);
+                        SqlParameter msgBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
+                        SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
+                        SqlParameter customerId = new SqlParameter("@CustomerId", SqlDbType.VarChar, 15);
+                        SqlParameter batchNumber = new SqlParameter("@BatchNumber", SqlDbType.VarChar, 15);
+                        SqlParameter NextRunDateTime = new SqlParameter("@NextRunDTime", SqlDbType.DateTime);
 
                         queueCodePar.Direction = ParameterDirection.Input;
                         msgBodyPar.Direction = ParameterDirection.Input;
-                        tenantPar.Direction = ParameterDirection.Input;
                         delayPar.Direction = ParameterDirection.Input;
                         customerId.Direction = ParameterDirection.Input;
                         batchNumber.Direction = ParameterDirection.Input;
-                     //   NextRunDateTime.Direction = ParameterDirection.Input;
-                        hashCodePar.Direction = ParameterDirection.Input;
-                        tenantpriorityPar.Direction = ParameterDirection.Input;
-                        watingStatusPar.Direction = ParameterDirection.Input;
-                        interfaceTypeCodePar.Direction = ParameterDirection.Input;
-                        useRabbitMQPar.Direction = ParameterDirection.Input;
-                        queueCodeRabbitPar.Direction = ParameterDirection.Input;
-                        entityCodePar.Direction = ParameterDirection.Input;
-                        entityIPar.Direction = ParameterDirection.Input;
-
-                        messageIdPar.Direction = ParameterDirection.Output;
+                        NextRunDateTime.Direction = ParameterDirection.Input;
 
                         queueCodePar.Value = this.QueueCode;
                         msgBodyPar.Value = messageBody;
-                        tenantPar.Value = tenant;
                         delayPar.Value = delaySeconds;
                         customerId.Value = CId;
                         batchNumber.Value = BNo;
-                    //    NextRunDateTime.Value = NextRunDate;
-                        hashCodePar.Value = bodyHashCode;
-                        watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant, this.QueueCode);
-                        tenantpriorityPar.Value = tenantPriority;
-                        interfaceTypeCodePar.Value =   queueSendModel?.InterfaceTypeCode!= null? queueSendModel?.InterfaceTypeCode: "";
-                        
-                        if (queueSendModel != null && queueSendModel.UseRabbitMQ)
-                        {
-                            useRabbitMQPar.Value = 1;
-                        }
-                        else
-                        {
-                            useRabbitMQPar.Value = 0;
-                        }
-
-                        string myQueueCodeRabbit = RabbitQueueCodeService.GetRabbitQueueCode(this.QueueCode, queueSendModel?.QueueGroupCodeRabbit);
-                        queueCodeRabbitPar.Value = myQueueCodeRabbit.ToLower();
-
-                        entityCodePar.Value = queueSendModel?.EntityCode;
-                        entityIPar.Value = queueSendModel?.EntityId;
-
+                        NextRunDateTime.Value = NextRunDate;
 
                         cmd.Parameters.Add(queueCodePar);
                         cmd.Parameters.Add(msgBodyPar);
-                        cmd.Parameters.Add(tenantPar);
                         cmd.Parameters.Add(delayPar);
                         cmd.Parameters.Add(customerId);
                         cmd.Parameters.Add(batchNumber);
-                     //   cmd.Parameters.Add(NextRunDateTime);
-                        cmd.Parameters.Add(hashCodePar);
-                        cmd.Parameters.Add(watingStatusPar);
-                        cmd.Parameters.Add(messageIdPar);
-                        cmd.Parameters.Add(tenantpriorityPar);
-                        cmd.Parameters.Add(interfaceTypeCodePar);
-                        cmd.Parameters.Add(useRabbitMQPar);
-                        cmd.Parameters.Add(queueCodeRabbitPar);
-                        cmd.Parameters.Add(entityCodePar);
-                        cmd.Parameters.Add(entityIPar);
+                        cmd.Parameters.Add(NextRunDateTime);
 
                         cn.Open();
                         var output = cmd.ExecuteNonQuery();
                         cn.Close();
-
-                        var v_QueueMessageId = cmd.Parameters["@V_QUEUEMESSAGEID"].Value;
-                        if (v_QueueMessageId != null)
-                        {
-                            string sQueueMessageId = v_QueueMessageId.ToString();
-                            if (!String.IsNullOrWhiteSpace(sQueueMessageId))
-                            {
-                                queueMessageId = sQueueMessageId.ChangeValue<int>();                               
-                                AddQueueDetailsToRequestHeaders(messageBody, sQueueMessageId);
-                            }
-                        }
 
                     }
                 }
@@ -417,35 +226,8 @@ namespace Logitude.Server.Tools.QueueService
             return queueMessageId;
         }
 
-
-        private static void AddQueueDetailsToRequestHeaders(string messageBody, string sQueueMessageId)
-        {
-            if (HttpContext.Current != null && HttpContext.Current.Request != null)
-            {
-                if (HttpContext.Current.Response.Headers["SentQueueMessages"] == null)
-                {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>
-                    {
-                        { sQueueMessageId, messageBody }
-                    };
-                    string addedQueues = dictionary.FromDictionaryToJson();
-                    HttpContext.Current.Response.Headers.Add("SentQueueMessages", addedQueues);
-
-                }
-                else
-                {
-                    string openedQueues = HttpContext.Current.Response.Headers["SentQueueMessages"];
-                    Dictionary<string, string> dictionary = openedQueues.FromJsonToDictionary();
-                    dictionary.Add(sQueueMessageId, messageBody);
-                    string addedQueues = dictionary.FromDictionaryToJson();
-                    HttpContext.Current.Response.Headers["SentQueueMessages"] = addedQueues;
-
-
-                }
-            }
-        }
-
-        public QueueResponse ReceiveDetailsByTenant(string objectTable, TimeSpan? serverWaitTime = null)
+ 
+        public QueueResponse Receive(TimeSpan? serverWaitTime = null)
         {
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
@@ -466,9 +248,9 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_Jouranl_Approval", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
-
+                             
                             OracleParameter messageIdPar = new OracleParameter("v_MessageId", OracleDbType.Number);
                             OracleParameter nextRunDelayInSecPar = new OracleParameter("v_NextRunDelayInSec", OracleDbType.Number);
 
@@ -476,8 +258,8 @@ namespace Logitude.Server.Tools.QueueService
                             OracleParameter messageBodyPar = new OracleParameter("v_MessageBody", OracleDbType.VarChar, 1000);
                             OracleParameter retryNumberPar = new OracleParameter("v_RetryNumber", OracleDbType.Number);
                             OracleParameter messageCreatedServerTimePar = new OracleParameter("v_MessageCreatedServerTime", OracleDbType.Date);
-                            OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
 
+                            
                             queueCodePar.Direction = ParameterDirection.Input;
                             nextRunDelayInSecPar.Direction = ParameterDirection.Input;
 
@@ -485,9 +267,6 @@ namespace Logitude.Server.Tools.QueueService
                             messageBodyPar.Direction = ParameterDirection.Output;
                             retryNumberPar.Direction = ParameterDirection.Output;
                             messageCreatedServerTimePar.Direction = ParameterDirection.Output;
-                            watingStatusPar.Direction = ParameterDirection.Input;
-
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
                             nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
@@ -497,10 +276,9 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(messageCreatedServerTimePar);
                             cmd.Parameters.Add(queueCodePar);
                             cmd.Parameters.Add(nextRunDelayInSecPar);
-                            cmd.Parameters.Add(watingStatusPar);
 
 
-
+                             
                             try
                             {
                                 cn.Open();
@@ -522,11 +300,7 @@ namespace Logitude.Server.Tools.QueueService
                                             Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                             response.MessageValues = messageValues;
                                         }
-
-                                        RunDebuggerBreak();
                                     }
-
-
                                 }
 
                             }
@@ -545,35 +319,24 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
-                            SqlCommand cmd = new SqlCommand("[dbo].[usp_Queue_Peek_ThreadPerTenant]", cn);
+                            SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
-                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, messageBodyLength);
+                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
                             SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
-                            SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
-                            SqlParameter tenantPar = new SqlParameter("@Tenant", SqlDbType.Int);
-                            SqlParameter objectTablePar = new SqlParameter(parameterName: "@ObjectTable", SqlDbType.VarChar, 25);
 
                             messageIdPar.Direction = ParameterDirection.Output;
                             messageBodyPar.Direction = ParameterDirection.Output;
                             queueCodePar.Direction = ParameterDirection.Input;
                             retryNumberPar.Direction = ParameterDirection.Output;
-                            watingStatusPar.Direction = ParameterDirection.Input;
-                            tenantPar.Direction = ParameterDirection.Output;
-                            objectTablePar.Direction = ParameterDirection.Input;
 
                             queueCodePar.Value = QueueCode;
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-                            objectTablePar.Value = objectTable;
 
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);
                             cmd.Parameters.Add(queueCodePar);
-                            cmd.Parameters.Add(watingStatusPar);
-                            cmd.Parameters.Add(tenantPar);
-                            cmd.Parameters.Add(objectTablePar);
 
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();
@@ -585,33 +348,20 @@ namespace Logitude.Server.Tools.QueueService
 
                                 if (long.TryParse(cmd.Parameters["@MessageId"].Value.ToString(), out messageId))
                                 {
-                                    try
-                                    {
-                                        MessageID = (int)messageId;
-                                    }
-                                    catch
-                                    {
-
-                                    }
                                     this.CurrentMessageId = response.MessageId = messageId.ToString();
                                     response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
-                                    response.Tenant = (int)cmd.Parameters["@Tenant"].Value;
-
                                     string messageBody = cmd.Parameters["@MessageBody"].Value as string;
                                     if (!string.IsNullOrEmpty(messageBody))
                                     {
                                         Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                         response.MessageValues = messageValues;
                                     }
-
-                                    RunDebuggerBreak();
                                 }
-
-
                             }
 
                         }
                     }
+
                     scope.Complete();
                 }
 
@@ -626,246 +376,13 @@ namespace Logitude.Server.Tools.QueueService
             return response;
         }
 
-        public void FreeTenants(string objectTable)
-        {
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
-            {
-
-                string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    SqlCommand cmd = new SqlCommand("[dbo].[SetTenantIdleProcedure]", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    SqlParameter objectTablePar = new SqlParameter(parameterName: "@ObjectTable", SqlDbType.VarChar, 25);
-                    objectTablePar.Direction = ParameterDirection.Input;
-                    objectTablePar.Value = objectTable;
-                    cmd.Parameters.Add(objectTablePar);
-
-
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    cn.Close();
-
-                }
-                scope.Complete();
-            }
-        }
-
-        public QueueResponse Receive(TimeSpan? serverWaitTime = null)
-        {
- 
-            return ReceiveDetail(serverWaitTime, suppressSleep: false);
-        }
-        public QueueResponse ReceiveDetail(TimeSpan? serverWaitTime,bool suppressSleep)
-        {
-
-            //
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                return ReceiveCustoms(((int)(serverWaitTime??TimeSpan.FromSeconds(60)).TotalSeconds));
-            }
-
-             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(60); }
-
-            long messageId = -1;
-
-            string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
-            QueueResponse response = new QueueResponse();
-            if (string.IsNullOrEmpty(this.CurrentMessageId))
-            {
-                DataTable tblQueue = new DataTable();
-
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
-                {
-                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-                    {
-
-                        using (OracleConnection cn = new OracleConnection(strConnString))
-                        {
-                            OracleCommand cmd = new OracleCommand();
-                            cmd.Connection = cn;
-                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_Peek", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
-                            cmd.CommandType = CommandType.StoredProcedure;
-
-                            OracleParameter messageIdPar = new OracleParameter("v_MessageId", OracleDbType.Number);
-                            OracleParameter nextRunDelayInSecPar = new OracleParameter("v_NextRunDelayInSec", OracleDbType.Number);
-
-                            OracleParameter queueCodePar = new OracleParameter("v_QueueDefinitionCode", OracleDbType.VarChar, 255);
-                            OracleParameter messageBodyPar = new OracleParameter("v_MessageBody", OracleDbType.VarChar, 1000);
-                            OracleParameter retryNumberPar = new OracleParameter("v_RetryNumber", OracleDbType.Number);
-                            OracleParameter messageCreatedServerTimePar = new OracleParameter("v_MessageCreatedServerTime", OracleDbType.Date);
-                            OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
-
-                            queueCodePar.Direction = ParameterDirection.Input;
-                            nextRunDelayInSecPar.Direction = ParameterDirection.Input;
-
-                            messageIdPar.Direction = ParameterDirection.Output;
-                            messageBodyPar.Direction = ParameterDirection.Output;
-                            retryNumberPar.Direction = ParameterDirection.Output;
-                            messageCreatedServerTimePar.Direction = ParameterDirection.Output;
-                            watingStatusPar.Direction = ParameterDirection.Input;
-
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-
-                            queueCodePar.Value = QueueCode;
-                            //nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.TotalSeconds;
-                            cmd.Parameters.Add(messageIdPar);
-                            cmd.Parameters.Add(messageBodyPar);
-                            cmd.Parameters.Add(retryNumberPar);
-                            cmd.Parameters.Add(messageCreatedServerTimePar);
-                            cmd.Parameters.Add(queueCodePar);
-                            cmd.Parameters.Add(nextRunDelayInSecPar);
-                            cmd.Parameters.Add(watingStatusPar);
-
-
-
-                            try
-                            {
-                                cn.Open();
-                                var output = cmd.ExecuteNonQuery();
-                                cn.Close();
-
-                                object messageOb = cmd.Parameters["v_MessageId"].Value;
-                                if (messageOb != null)
-                                {
-
-                                    if (long.TryParse(cmd.Parameters["v_MessageId"].Value.ToString(), out messageId))
-                                    {
-                                        this.CurrentMessageId = response.MessageId = messageId.ToString();
-                                        response.RetryNumber = Convert.ToInt32(cmd.Parameters["v_RetryNumber"].Value);
-                                        response.MessageCreatedServerTime = (DateTime)cmd.Parameters["v_MessageCreatedServerTime"].Value;
-                                        string messageBody = cmd.Parameters["v_MessageBody"].Value as string;
-                                        if (!string.IsNullOrEmpty(messageBody))
-                                        {
-                                            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
-                                            response.MessageValues = messageValues;
-                                        }
-
-                                        RunDebuggerBreak();
-                                    }
-
-
-                                }
-
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Console.WriteLine("Exception: {0}", ex.ToString());
-                                throw;
-                            }
-
-                            cn.Close();
-                        }
-
-
-                    }
-                    else
-                    {
-                        using (SqlConnection cn = new SqlConnection(strConnString))
-                        {
-                            SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek]", cn);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter queueCodePar = new SqlParameter("@V_QueueDefinitionCode", SqlDbType.NVarChar, 255);
-                            SqlParameter messageBodyPar = new SqlParameter("@V_MessageBody", SqlDbType.VarChar, messageBodyLength);
-                            SqlParameter retryNumberPar = new SqlParameter("@V_RetryNumber", SqlDbType.Int);
-                            SqlParameter watingStatusPar = new SqlParameter("@V_WatingStatus", SqlDbType.Int);
-                            SqlParameter messageCreatedServerTimepar = new SqlParameter("@V_MESSAGECREATEDSERVERTIME", SqlDbType.DateTime);
-                            SqlParameter nextRunDelayInSecPar = new SqlParameter("@V_NEXTRUNDELAYINSEC", SqlDbType.Int);
-
-                            messageIdPar.Direction = ParameterDirection.Output;
-                            messageBodyPar.Direction = ParameterDirection.Output;
-                            queueCodePar.Direction = ParameterDirection.Input;
-                            retryNumberPar.Direction = ParameterDirection.Output;
-                            messageCreatedServerTimepar.Direction = ParameterDirection.Output;
-
-                            watingStatusPar.Direction = ParameterDirection.Input;
-                            nextRunDelayInSecPar.Direction = ParameterDirection.Input;
-
-                            queueCodePar.Value = QueueCode;
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
-
-                            cmd.Parameters.Add(messageIdPar);
-                            cmd.Parameters.Add(messageBodyPar);
-                            cmd.Parameters.Add(retryNumberPar);
-                            cmd.Parameters.Add(queueCodePar);
-                            cmd.Parameters.Add(watingStatusPar);
-                            cmd.Parameters.Add(messageCreatedServerTimepar);
-                            cmd.Parameters.Add(nextRunDelayInSecPar);
-
-                            cn.Open();
-                            var output = cmd.ExecuteNonQuery();
-                            cn.Close();
-
-                            object messageOb = cmd.Parameters["@V_MessageId"].Value;
-                            if (messageOb != null)
-                            {
-
-                                if (long.TryParse(cmd.Parameters["@V_MessageId"].Value.ToString(), out messageId))
-                                {
-                                    try
-                                    {
-                                        MessageID = (int)messageId;
-                                    }
-                                    catch
-                                    {
-
-                                    }
-                                    this.CurrentMessageId = response.MessageId = messageId.ToString();
-                                    response.RetryNumber = (int)cmd.Parameters["@V_RetryNumber"].Value;
-                                    response.MessageCreatedServerTime = (DateTime)cmd.Parameters["@V_MESSAGECREATEDSERVERTIME"].Value;
-
-                                    string messageBody = cmd.Parameters["@V_MessageBody"].Value as string;
-                                    if (!string.IsNullOrEmpty(messageBody))
-                                    {
-                                        Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
-                                        response.MessageValues = messageValues;
-                                    }
-
-                                    RunDebuggerBreak();
-                                }
-
-
-                            }
-
-                        }
-                    }
-
-                    scope.Complete();
-                }
-
-
-            }
-
-            if (!suppressSleep && string.IsNullOrEmpty(response.MessageId))
-            {
-                Thread.Sleep(serverWaitTime.Value);
-            }
-
-            return response;
-        }
-
-        private static void RunDebuggerBreak()
-        {
-            if (Debugger.IsAttached && LogitudeSettings.RunWorkerRoleAutomaticBreakPoint)
-                Debugger.Break();
-        }
-
         public QueueResponse Receive()
         {
             int nextRunDelayInSec = 60;
             return Receive(nextRunDelayInSec);
         }
-        public QueueResponse Receive(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
+        public QueueResponse Receive(int nextRunDelayInSec = 60)
         {
-            //
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                return ReceiveCustoms(nextRunDelayInSec);
-            }
-            if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
 
             string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
@@ -873,7 +390,7 @@ namespace Logitude.Server.Tools.QueueService
             if (string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 DataTable tblQueue = new DataTable();
-                
+
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
                 {
                     if (LogitudeSettings.DatabaseManagementSystem == "oracle")
@@ -893,7 +410,7 @@ namespace Logitude.Server.Tools.QueueService
                             OracleParameter messageBodyPar = new OracleParameter("v_MessageBody", OracleDbType.VarChar, 1000);
                             OracleParameter retryNumberPar = new OracleParameter("v_RetryNumber", OracleDbType.Number);
                             OracleParameter messageCreatedServerTimePar = new OracleParameter("v_MessageCreatedServerTime", OracleDbType.Date);
-                            OracleParameter watingStatusPar = new OracleParameter("v_WatingStatus", OracleDbType.Number);
+
 
                             queueCodePar.Direction = ParameterDirection.Input;
                             nextRunDelayInSecPar.Direction = ParameterDirection.Input;
@@ -902,8 +419,6 @@ namespace Logitude.Server.Tools.QueueService
                             messageBodyPar.Direction = ParameterDirection.Output;
                             retryNumberPar.Direction = ParameterDirection.Output;
                             messageCreatedServerTimePar.Direction = ParameterDirection.Output;
-                            watingStatusPar.Direction = ParameterDirection.Input;
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
 
                             queueCodePar.Value = QueueCode;
                             nextRunDelayInSecPar.Value = nextRunDelayInSec;
@@ -913,7 +428,6 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(messageCreatedServerTimePar);
                             cmd.Parameters.Add(queueCodePar);
                             cmd.Parameters.Add(nextRunDelayInSecPar);
-                            cmd.Parameters.Add(watingStatusPar);
 
 
 
@@ -938,11 +452,7 @@ namespace Logitude.Server.Tools.QueueService
                                             Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                             response.MessageValues = messageValues;
                                         }
-
-                                        RunDebuggerBreak();
                                     }
-
-
                                 }
 
                             }
@@ -963,68 +473,43 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter queueCodePar = new SqlParameter("@V_QueueDefinitionCode", SqlDbType.NVarChar, 255);
-                            SqlParameter messageBodyPar = new SqlParameter("@V_MessageBody", SqlDbType.VarChar, messageBodyLength);
-                            SqlParameter retryNumberPar = new SqlParameter("@V_RetryNumber", SqlDbType.Int);
-                            SqlParameter watingStatusPar = new SqlParameter("@V_WatingStatus", SqlDbType.Int);
-                            SqlParameter messageCreatedServerTimepar = new SqlParameter("@V_MESSAGECREATEDSERVERTIME", SqlDbType.DateTime);
-                            SqlParameter nextRunDelayInSecPar = new SqlParameter("@V_NEXTRUNDELAYINSEC", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
+                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, 1000);
+                            SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
 
                             messageIdPar.Direction = ParameterDirection.Output;
                             messageBodyPar.Direction = ParameterDirection.Output;
                             queueCodePar.Direction = ParameterDirection.Input;
                             retryNumberPar.Direction = ParameterDirection.Output;
-                            watingStatusPar.Direction = ParameterDirection.Input;
-                            messageCreatedServerTimepar.Direction = ParameterDirection.Output;
-                            nextRunDelayInSecPar.Direction = ParameterDirection.Input;
 
-                            watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
                             queueCodePar.Value = QueueCode;
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
 
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
                             cmd.Parameters.Add(retryNumberPar);
                             cmd.Parameters.Add(queueCodePar);
-                            cmd.Parameters.Add(watingStatusPar);
-                            cmd.Parameters.Add(messageCreatedServerTimepar);
-                            cmd.Parameters.Add(nextRunDelayInSecPar);
 
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();
                             cn.Close();
 
-                            object messageOb = cmd.Parameters["@V_MessageId"].Value;
+                            object messageOb = cmd.Parameters["@MessageId"].Value;
                             if (messageOb != null)
                             {
 
-                                if (long.TryParse(cmd.Parameters["@V_MessageId"].Value.ToString(), out messageId))
+                                if (long.TryParse(cmd.Parameters["@MessageId"].Value.ToString(), out messageId))
                                 {
                                     this.CurrentMessageId = response.MessageId = messageId.ToString();
-                                    try
-                                    {
-                                        MessageID = (int)messageId;
-                                    }
-                                    catch
-                                    {
-
-                                    }
-                                    response.RetryNumber = (int)cmd.Parameters["@V_RetryNumber"].Value;
-                                    response.MessageCreatedServerTime = (DateTime)cmd.Parameters["@V_MESSAGECREATEDSERVERTIME"].Value;
-
-                                    string messageBody = cmd.Parameters["@v_MessageBody"].Value as string;
+                                    response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
+                                    string messageBody = cmd.Parameters["@MessageBody"].Value as string;
                                     if (!string.IsNullOrEmpty(messageBody))
                                     {
                                         Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
                                         response.MessageValues = messageValues;
                                     }
-
-                                    RunDebuggerBreak();
                                 }
                             }
-
-
 
                         }
                     }
@@ -1035,122 +520,13 @@ namespace Logitude.Server.Tools.QueueService
 
             }
 
-            if (string.IsNullOrEmpty(response.MessageId))
-            {
-                Thread.Sleep(serverWaitTime.Value);
-            }
 
             return response;
-        }
-
-        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null, int? selectCount = null, QueueSendModel queueSendModel = null)
-        {
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                return ReceiveCustoms_new(nextRunDelayInSec, selectCount);
-            }
-
-            if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
-            long messageId = -1;
-
-            string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
-            List<QueueResponse> responseList = new List<QueueResponse>();
-            if (string.IsNullOrEmpty(this.CurrentMessageId))
-            {
-                DataTable tblQueue = new DataTable();
-
-                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
-                {
-                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-                    {
-                        using (OracleConnection DBConnection = new OracleConnection(strConnString))
-                        {
-                            OracleCommand cmd = new OracleCommand(DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", LogitudeDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
-                            try
-                            {
-                                DBConnection.Open();
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                var nextRunDelayInSecPar = cmd.CreateParameter(); nextRunDelayInSecPar.ParameterName = "v_NextRunDelayInSec"; nextRunDelayInSecPar.DbType = DbType.Double;
-                                var queueCodePar = cmd.CreateParameter(); queueCodePar.ParameterName = "v_QueueDefinitionCode"; queueCodePar.DbType = DbType.String; queueCodePar.Size = 255;
-                                var watingStatusPar = cmd.CreateParameter(); watingStatusPar.ParameterName = "v_WatingStatus"; watingStatusPar.DbType = DbType.Double;
-                                var selectCountPar = cmd.CreateParameter(); selectCountPar.ParameterName = "v_SelectCount"; selectCountPar.DbType = DbType.Double;
-                                OracleParameter vQueueMessages = new OracleParameter("cursor_", OracleDbType.Cursor, 18);
-
-                                queueCodePar.Direction = ParameterDirection.Input;
-                                nextRunDelayInSecPar.Direction = ParameterDirection.Input;
-                                selectCountPar.Direction = ParameterDirection.Input;
-                                vQueueMessages.Direction = ParameterDirection.Output;
-                                watingStatusPar.Direction = ParameterDirection.Input;
-
-                                var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
-                                if (!string.IsNullOrEmpty(num))
-                                {
-                                    selectCountPar.Value = int.Parse(num);
-                                }
-                                else
-                                {
-                                    selectCountPar.Value = 10;
-                                }
-                                watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-                                queueCodePar.Value = QueueCode;
-                                nextRunDelayInSecPar.Value = nextRunDelayInSec;
-
-                                cmd.Parameters.Add(vQueueMessages);
-                                cmd.Parameters.Add(queueCodePar);
-                                cmd.Parameters.Add(nextRunDelayInSecPar);
-                                cmd.Parameters.Add(watingStatusPar);
-                                cmd.Parameters.Add(selectCountPar);
-
-                                var output = cmd.ExecuteNonQuery();
-                                OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
-                                while (reader.Read())
-                                {
-                                    var response = new QueueResponse()
-                                    {
-                                        MessageId = reader.GetString(0),
-                                        RetryNumber = reader.GetInt32(2),
-                                        MessageCreatedServerTime = reader.GetDateTime(3),
-                                    };
-                                    if (!string.IsNullOrEmpty(reader.GetString(1).ToString()))
-                                    {
-                                        Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary((reader.GetString(1).ToString()));
-                                        response.MessageValues = messageValues;
-                                    }
-                                    responseList.Add(response);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Console.WriteLine("Exception: {0}", ex.ToString());
-                                throw;
-                            }
-                            finally
-                            {
-                                cmd.Connection.Close();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //sql will be in the future
-                    }
-
-                    scope.Complete();
-                }
-            }
-
-            return responseList;
         }
 
 
         public void Delay(TimeSpan delayTime)
         {
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                DelayCustoms(delayTime);
-                return ;
-            }
-
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -1172,7 +548,7 @@ namespace Logitude.Server.Tools.QueueService
 
 
                             OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number, 18);
-                            OracleParameter delayPar = new OracleParameter("v_DelaySeconds", OracleDbType.Number);
+                            OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
 
                             messageIdPar.Direction = ParameterDirection.Input;
                             delayPar.Direction = ParameterDirection.Input;
@@ -1206,8 +582,8 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_DelayMessage]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@v_MessageId", SqlDbType.BigInt);
-                            SqlParameter delayPar = new SqlParameter("@v_DelaySeconds", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
 
 
                             messageIdPar.Direction = ParameterDirection.Input;
@@ -1236,11 +612,6 @@ namespace Logitude.Server.Tools.QueueService
 
         public void Return()
         {
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                throw new Exception("Queue_ReturnMessage not in use  in CostomsDeploy"); 
-            }
-    
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -1310,11 +681,6 @@ namespace Logitude.Server.Tools.QueueService
         /// </summary>
         public void Complete()
         {
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                CompleteCustoms(false);
-                return;
-            }
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -1335,7 +701,7 @@ namespace Logitude.Server.Tools.QueueService
 
                             OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number, 18);
                             OracleParameter statusPar = new OracleParameter("Statud", OracleDbType.Number);
-
+                            
                             messageIdPar.Direction = ParameterDirection.Input;
                             statusPar.Direction = ParameterDirection.Input;
 
@@ -1368,8 +734,8 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_SetStatus]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter statusPar = new SqlParameter("@V_Statud", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter statusPar = new SqlParameter("@Statud", SqlDbType.Int);
 
 
                             messageIdPar.Direction = ParameterDirection.Input;
@@ -1394,19 +760,9 @@ namespace Logitude.Server.Tools.QueueService
                 }
             }
         }
-
-        public void CompleteAsFailedParam(string queueId)
-        {
-            this.CurrentMessageId = queueId;
-            this.CompleteAsFailed();
-        }
+        
         public void CompleteAsFailed()
         {
-            if (LogitudeSettings.IsCostomsDeploy)
-            {
-                CompleteCustoms(true);
-                return;
-            }
             if (!string.IsNullOrEmpty(this.CurrentMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
@@ -1460,8 +816,8 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_SetStatus]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter statusPar = new SqlParameter("@V_Statud", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter statusPar = new SqlParameter("@Statud", SqlDbType.Int);
 
 
                             messageIdPar.Direction = ParameterDirection.Input;
@@ -1493,7 +849,7 @@ namespace Logitude.Server.Tools.QueueService
             this.Complete();
         }
 
-        public void DelayAndReturnBackToQueue(TimeSpan delayTime, string myMessageId)
+        public void DelayAndReturnBackToQueue(TimeSpan delayTime,string myMessageId)
         {
             if (!string.IsNullOrEmpty(myMessageId))
             {
@@ -1511,12 +867,12 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             OracleCommand cmd = new OracleCommand();
                             cmd.Connection = cn;
-                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Q_DelayMsgandChangeStatusTo0", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessageandChangeStatusTozero", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
                             cmd.CommandType = CommandType.StoredProcedure;
 
 
-                            OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number);
-                            OracleParameter delayPar = new OracleParameter("v_DelaySeconds", OracleDbType.Number);
+                            OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number, 18);
+                            OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
 
                             messageIdPar.Direction = ParameterDirection.Input;
                             delayPar.Direction = ParameterDirection.Input;
@@ -1550,8 +906,8 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_DelayMessageandChangeStatusTozero]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter delayPar = new SqlParameter("@V_DelaySeconds", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
 
 
                             messageIdPar.Direction = ParameterDirection.Input;
@@ -1578,7 +934,7 @@ namespace Logitude.Server.Tools.QueueService
 
         }
 
-       
+
 
     }
 }

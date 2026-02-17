@@ -1,8 +1,0 @@
-﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
-		<![CDATA[
-    UPDATE ENTITYSTATUS
-		SET SEARCHFIELDS = CONCAT(SEARCHFIELDS, ',', DISPLAYNAME)
-   ]]>
-	</Sql>
-</Script>

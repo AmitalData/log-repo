@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -28,7 +28,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.SignedDatetime).HasColumnName("SignedDatetime");
             this.Property(t => t.ContactId).HasColumnName("ContactId");
-            this.Property(t => t.TermsofUseId).HasColumnName("TermsofUseId");
+            this.Property(t => t.TermsofUseVersion).HasColumnName("TermsofUseVersion");
 
             // Relationships
             this.HasRequired(t => t.Contact)
@@ -36,7 +36,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasForeignKey(d => d.ContactId);
             this.HasRequired(t => t.TermsofUse)
                 .WithMany()
-                .HasForeignKey(d => d.TermsofUseId);
+                .HasForeignKey(d => d.TermsofUseVersion);
 
         }
     }

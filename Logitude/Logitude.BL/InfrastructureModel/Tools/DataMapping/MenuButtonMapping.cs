@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -17,9 +17,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             menuButton.MenuButtonType = menuButtonPM.MenuButtonType;
             menuButton.DropDownControl = menuButtonPM.DropDownControl;
             menuButton.Style = menuButtonPM.Style;
-            menuButton.FeatureUniqeCode = menuButtonPM.FeatureUniqeCode;
-
-            menuButton.LabelTextCodeCode = menuButtonPM.LabelTextCodeCode;
         }
     }
 }

@@ -54,7 +54,6 @@ namespace CommunicationWorkerRole.Tasks
                         _SB.Append(DateTime.Now.ToString()).Append("Exception:").Append(ex.Message).AppendLine();
                         LogException(new StringBuilder().Append(DateTime.Now.ToString()).Append("Exception:").Append(ex.Message).AppendLine().ToString());
                         ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", $"PayableARPaymentChequeTask({tenant})", null);
-                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                     }
                     
                 }
@@ -62,16 +61,11 @@ namespace CommunicationWorkerRole.Tasks
             }
             finally
             {
-
+                AccountingLogger.LogMe(_SB.ToString(),failed);
                 if (failed)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(_SB.ToString());
                     LogException(_SB.ToString());
                     throw new Exception(_SB.ToString());
-                }
-                else
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(_SB.ToString());
                 }
             }
             //base.StartTask();

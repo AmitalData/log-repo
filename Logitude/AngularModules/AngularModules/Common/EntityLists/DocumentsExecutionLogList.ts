@@ -21,6 +21,5 @@ export class DocumentsExecutionLogList {
 		StartDate: Date;
 		Logs: string;
 		Subject: string;
-		ExecutedByServerName: string;
 	
 }

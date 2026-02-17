@@ -68,29 +68,6 @@ namespace Logitude.Server.Tools.Helpers
             return hashedText;
             //ICy5YqxZB1uWSwcVLSNLcA==
         }
-        public static string GetUnfPassword(string password)
-        {
-            Byte[] originalBytes;
-            Byte[] encodedBytes;
-            string encryptedData = "";
-            try
-            {
-                var myMd5 = new MD5CryptoServiceProvider();
-                originalBytes = ASCIIEncoding.Default.GetBytes(password);
-                Encoding.Default.GetBytes(password);
-                encodedBytes = myMd5.ComputeHash(originalBytes);
-                encodedBytes = myMd5.ComputeHash(encodedBytes);
-                encodedBytes = myMd5.ComputeHash(encodedBytes);
-                encryptedData = BitConverter.ToString(encodedBytes);
-                encryptedData = encryptedData.Replace("-", "");
-            }
-            catch(Exception ex)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(ex.Message);
-                return "";
-            }
-            return encryptedData;
-        }
 
 
         public static string GetBCryptHashedPassword(string email, string password)

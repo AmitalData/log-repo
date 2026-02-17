@@ -13,7 +13,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentReceivableLineStatusCode).IsRequired().IsFixedLength().HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.CurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.ChargesTypeId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdateByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
@@ -26,7 +26,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.QuoteChargeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentReceivableParentId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.PayableVendorId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentReceivables");
@@ -42,7 +41,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ChargesTypeId).HasColumnName("ChargesTypeId");
             this.Property(t => t.Rate).HasColumnName("Rate");
             this.Property(t => t.PayableLocal).HasColumnName("PayableLocal");
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
             this.Property(t => t.UpdateByUserId).HasColumnName("UpdateByUserId");
             this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
             this.Property(t => t.AWBPrint).HasColumnName("AWBPrint");
@@ -56,7 +55,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ProfitCurrencyExchangeRate).HasColumnName("ProfitCurrencyExchangeRate");
             this.Property(t => t.ARInvoiceId).HasColumnName("ARInvoiceId");
             this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
-            this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.IATACodeId).HasColumnName("IATACodeId");
             this.Property(t => t.VatTypeId).HasColumnName("VatTypeId");
             this.Property(t => t.IsBackToBack).HasColumnName("IsBackToBack");
@@ -64,7 +63,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ShipmentReceivableParentId).HasColumnName("ShipmentReceivableParentId");
             this.Property(t => t.QuoteSaleMinAmount).HasColumnName("QuoteSaleMinAmount");
             this.Property(t => t.QuoteSaleMaxAmount).HasColumnName("QuoteSaleMaxAmount");
-            this.Property(t => t.PayableVendorId).HasColumnName("PayableVendorId");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -95,7 +93,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.HasRequired(t => t.CreatedByUser).WithMany().HasForeignKey(d => d.CreatedByUserId).WillCascadeOnDelete(false);
             this.HasOptional(t => t.VatType).WithMany().HasForeignKey(d => d.VatTypeId);
             this.HasOptional(t => t.ShipmentReceivableParent).WithMany(t => t.ChildShipmentReceivables).HasForeignKey(d => d.ShipmentReceivableParentId);
-            this.HasOptional(t => t.PayableVendor).WithMany().HasForeignKey(d => d.PayableVendorId);
         }
     }
 }

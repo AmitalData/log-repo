@@ -19,7 +19,7 @@ export class CRMComp {
         this.Customers = new CustomerModule();
     }
     DoCRM(CRMcomponent: string) {
-        this.CRMTab.GoToMainMenu2('General.MH.CRM');
+        this.CRMTab.GoToMainMenu('General.MH.CRM');
         if (CRMcomponent == 'Overview') {
             this.CRMTab.SelectMenuWorkSpaceTabs('CRMOVE');
         }

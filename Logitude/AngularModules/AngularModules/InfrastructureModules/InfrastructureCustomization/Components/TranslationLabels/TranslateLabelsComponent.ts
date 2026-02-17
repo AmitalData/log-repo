@@ -14,7 +14,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TranslateLabelsComponent.html',
 })
 
@@ -35,16 +35,11 @@ export class TranslateLabelsComponent extends BaseComponent {
         this.BuildFilters();
     }
 
-    IsFromCustomizedScreen: boolean;
     private selectedLanguageCode: string;
     private allTranslationsList: FieldsTranslations[];
-    SetWindowArgs(args: any) {
-        this.selectedLanguageCode = args.TranslationLanguageCode;
-        if (args.ObjectTableId) {
-            this.IsFromCustomizedScreen = true;
-            this.ObjectTableId = args.ObjectTableId;
-        }
-
+    SetWindowArgs(args: string) {
+        this.selectedLanguageCode = args;
+        
         this.allTranslationsList = [];
         this.LoadAllTranslationMethod();
     }
@@ -339,7 +334,7 @@ export class TranslateLabelsComponent extends BaseComponent {
                 }
 
                 else {
-                    CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
+                    CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.CurrentSession.CloseCurrentWindow();
                     });

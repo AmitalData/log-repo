@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -48,13 +46,11 @@ using Simplog.Data.QuoteModel;
 				{
 				   
 				   var temp = new QuotePackage(); 
-				   temp.Id = item.Id; 
-
-			  
+				   temp.Id = item.Id;			  
 				   if(item.PackageTypeId != null)
 				   {
 					   PackageTypeQueryService PackageTypeService0 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant); 
 			       
 					   				   }
 				   
@@ -77,7 +73,7 @@ using Simplog.Data.QuoteModel;
             }
         } 
 
-		public List<QuotePackagePM> QuotePackageDataMappingAndValidatin(List<QuotePackage> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<QuotePackagePM> QuotePackageDataMappingAndValidatin(List<QuotePackage> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -90,14 +86,11 @@ using Simplog.Data.QuoteModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("QuotePackage with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -110,91 +103,31 @@ using Simplog.Data.QuoteModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//} 
-
-						
+						//}
 					}
 					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.PackageType != null)
 					{
-						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myPackageTypePM != null)
-						{ 
-
+						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName);
+												if(myPackageTypePM != null)
+						{
+							temp.PackageTypeId = myPackageTypePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.PackageTypeId = myPackageTypePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Quantity = item.Quantity;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.GrossWeight = item.GrossWeight;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Volume = item.Volume;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Height = item.Height;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Width = item.Width;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Length = item.Length;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.VolumetricWeight = item.VolumetricWeight;
-
-										}  
-
-										   
+					temp.Quantity = item.Quantity;
+					temp.GrossWeight = item.GrossWeight;
+					temp.Volume = item.Volume;
+					temp.Height = item.Height;
+					temp.Width = item.Width;
+					temp.Length = item.Length;
+					temp.VolumetricWeight = item.VolumetricWeight;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -202,8 +135,6 @@ using Simplog.Data.QuoteModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

@@ -33,8 +33,6 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
-using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
@@ -64,8 +62,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				FeatureAccessLevelRepository  featureAccessLevelRepository = new FeatureAccessLevelRepository(MyContext);
 				FeatureAccessLevelList entityList = null;
 				FeatureAccessLevel entityPoco = featureAccessLevelRepository.GetSingleFeatureAccessLevel(code );
-                
-                if (entityPoco != null)
+
+				if (entityPoco != null)
 				{
 									List<FeatureAccessLevel> singleEntityList = new List<FeatureAccessLevel>();
 					singleEntityList.Add(entityPoco);
@@ -171,12 +169,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+							 queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-					
+
 
 
                 }
@@ -200,7 +198,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+							 queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                         }
                         else
                         {
@@ -212,18 +210,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "FeatureAccessLevel",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
 
-								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 FeatureAccessLevelRepository  featureAccessLevelRepository = new FeatureAccessLevelRepository(MyContext);
                 IQueryable<FeatureAccessLevel> entityPocos = featureAccessLevelRepository.GetFeatureAccessLevels();
@@ -231,19 +218,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 FeatureAccessLevelQuery featureAccessLevelQuery = new FeatureAccessLevelQuery(featureAccessLevelRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
                 entityPocos = genericFilter.GetFilteredQuery<FeatureAccessLevel>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<FeatureAccessLevelList> entityLists = featureAccessLevelQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<FeatureAccessLevelList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<FeatureAccessLevelList>(entityLists , treeFilterQueryArgs);
 
-		      
-			  								
+		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(FeatureAccessLevelList).GetProperty(queryOperations.SortByColumnName);
@@ -307,18 +292,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 				 }
                 }
-            }					  						
-	       else
+            }
+		    else
             {
                 entityLists = entityLists.OrderBy(d => d.Code);
-            } 
+            }
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-    		  }
+			  }
 			  	if(!queryOperations.GetAll)
 				 {
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, OnDestroy} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -11,10 +11,9 @@ import {ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import {CardList } from '../../../../Common/EntityLists/CardList';
 import {CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 import {ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { CommonTool } from '../../../../Common/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPayableComponent.html',
 })
 
@@ -25,79 +24,21 @@ export class AddEditPayableComponent implements OnDestroy {
     public ShipmentLevelCode: string = null;
     public ValidationErrorsList: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
-    public MeasurementsQueryFilters: ApiQueryFilters;
     public IsOrangeInfoVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private PropertyChangedEvent: any = null;
-    @ViewChild('AdditionalFieldsArea', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    @ViewChild('ByContainerAdditionalFieldsArea', { read: ViewContainerRef, static: false }) byContainerViewContainerRef: ViewContainerRef;
 
     constructor() {
-        this.LoadAdditionalCustomFieldsArea();
+        
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.PropertyChangedEvent);
     }
 
-    public LoadAdditionalCustomFieldsArea() {
-
-        if (!this.viewContainerRef ) {
-            this.RunComponentTimer("DefaultAdditionalCustomFields");
-            return;
-        }
-
-        this.LoadChildComponent(this.viewContainerRef);
-    }
-
-    IsByContainerAdditionalFieldsAreaLoaded: boolean = false;
-    public LoadByContainerAdditionalFieldsArea() {
-
-        if (this.IsByContainerAdditionalFieldsAreaLoaded) return;
-
-        this.Retries= 0;
-        if (!this.byContainerViewContainerRef) {
-            this.RunComponentTimer("ByContainerAdditionalCustomFields");
-            return;
-        }
-
-        this.LoadChildComponent(this.byContainerViewContainerRef);
-        this.IsByContainerAdditionalFieldsAreaLoaded = true;
-    }
-
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer(componentName:String) {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = componentName == "ByContainerAdditionalCustomFields" ? setTimeout(() => this.LoadByContainerAdditionalFieldsArea(), 1) : setTimeout(() => this.LoadAdditionalCustomFieldsArea(), 1);
-        }
-    }
-
-    LoadChildComponent(viewContainerRef) {
-        let screenCode: string = "ShipmentPayable.AdditionalFields";
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.HideLastColumn = true;
-                cmpRef.instance.LabelWidth = 120;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-            });
-    }
-
-
-
-
-
     SetDataContext(dataContext: ShipmentPayableItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        dataContext.AddEditPayableComponent = this;
         this.ShipmentLevelCode = dataContext.ShipmentPM.ShipmentLevelCode;
         this.IsOrangeInfoVisible = AppTool.IsNullOrEmpty(this.EntityPM.ShipmentPayableParentId) ? false : true;
         this.SetDependencies();
@@ -126,8 +67,6 @@ export class AddEditPayableComponent implements OnDestroy {
     }
 
     private BuildQueryFilters() {
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -149,39 +88,38 @@ export class AddEditPayableComponent implements OnDestroy {
                 break;
             }
         }
-        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.ShipmentPM.DirectionId); 
     }
 
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
-    private errors: string[] = [];
+
     OkButtonClicked() {
-        this.errors = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors);
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (this.EntityPM.ShipmentPayableAmountTypeCode == "ACCU") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.MeasurementId)) {
-                this.errors.push("Measurement field is Required");
+                errors.push("Measurement field is Required");
             }
         }
 
         if (this.DataContext.IsByContainerType) {
             if (this.DataContext.ByContainersItemsSource.length == 0) {
-                this.errors.push("This shipment doesn't contain any containers");
+                errors.push("This shipment doesn't contain any containers");
             }
 
             else {
                 this.DataContext.ByContainersItemsSource.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, this.errors);
+                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
                 });
             }
         }
-        this.ValidateAddingPFCLUOM();
+
         // Back To Back Check
 
-        this.ValidationErrorsList = this.errors;
+        this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.DataContext.VendorId != null && this.DataContext.VendorCardEntity != null) {
@@ -217,16 +155,6 @@ export class AddEditPayableComponent implements OnDestroy {
             }
         }
     }
-
-    ValidateAddingPFCLUOM() {
-        if (this.EntityPM.MeasurementCode == "PFCL") {
-            if (this.DataContext.ShipmentPM.ShipmentPayables.filter(d => d.MeasurementCode == "PFCL" && d.Id != this.EntityPM.Id).length > 0) {
-                this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
-            }
-        }
-    }
-
-
     AddPayable() {
         if (this.DataContext.IsByContainerType) {
             this.AddByContainerEntities();
@@ -249,8 +177,6 @@ export class AddEditPayableComponent implements OnDestroy {
 
             this.DataContext.fatherComponent.ComputeShipmentFields();
         }
-
-        this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
         if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNewEntity) {
 
@@ -343,14 +269,14 @@ export class AddEditPayableComponent implements OnDestroy {
                 item.AccountedAmountInLocalCurrency = 0;
                 item.AccountedAmountInProfitCurrency = 0;
 
-                var exsistingEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.VendorId == item.VendorId)[0];
+                var exsistingEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId)[0];
                 if (exsistingEntity == null) {
                     this.DataContext.ShipmentPM.AddPayable(item);
                 }
 
                 else {
-                    var acctEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.VendorId == item.VendorId && (f.ShipmentPayableLineStatusCode == "ACCT" || f.ShipmentPayableLineStatusCode == "PACC"))[0];
-                    var openEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && f.VendorId == item.VendorId && (f.ShipmentPayableLineStatusCode == "EMPT" || f.ShipmentPayableLineStatusCode == "OAMT"))[0];
+                    var acctEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && (f.ShipmentPayableLineStatusCode == "ACCT" || f.ShipmentPayableLineStatusCode == "PACC"))[0];
+                    var openEntity = this.DataContext.ShipmentPM.ShipmentPayables.filter(f => f.ChargesTypeId == item.ChargesTypeId && f.MeasurementId == item.MeasurementId && f.CurrencyId == item.CurrencyId && (f.ShipmentPayableLineStatusCode == "EMPT" || f.ShipmentPayableLineStatusCode == "OAMT"))[0];
 
                     if (acctEntity == null) {
                         openEntity.Quantity = item.Quantity;
@@ -408,7 +334,6 @@ export class AddEditPayableComponent implements OnDestroy {
         this.myCloner.AddField('VendorId');
         this.myCloner.AddField('Notes');
         this.myCloner.AddField('TariffId');
-        this.myCloner.AddField('TariffNumber');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

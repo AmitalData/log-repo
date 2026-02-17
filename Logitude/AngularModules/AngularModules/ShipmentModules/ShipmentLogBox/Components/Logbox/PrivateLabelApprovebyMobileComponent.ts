@@ -6,7 +6,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -28,21 +28,20 @@ import {DocumentsFilingExtendedPMService} from '../../../../Common/Services/Exte
 import {GroupByPipe} from '../../../../Infrastructure/Pipes/GroupByPipe';
 import {ImageLibraryService} from '../../../../Common/Services/Others/ImageLibraryService';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
-//import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {DocumentTypeMetaDataExtendedService} from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService' 
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PrivateLabelApprovebyMobileComponent.html'
 })
 
 export class PrivateLabelApprovebyMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
 
     DataContext: PrivateLabelApprovebyMobileComponent = this;
-    //private messageWindow: MessageWindow = new MessageWindow();
+    private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
     AdditionalData: any = {};
     externalDocs: any[] = [];
@@ -98,10 +97,10 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
                 }
             }
         }
-        this._ShipmentPMService.getSingleByForwarderShipmentNumber(ForwarderShipmentNumber).subscribe((MyResult:any) => {
+        this._ShipmentPMService.getSingleByForwarderShipmentNumber(ForwarderShipmentNumber).subscribe(MyResult => {
             if (MyResult.Result) {
                 this.EntityPm = MyResult.Result;
-                this._ShipmentAdditionalCloudDataService.get(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
+                this._ShipmentAdditionalCloudDataService.get(this.EntityPm.Id).subscribe(AdditionalResult => {
                     
                         this.AdditionalData = AdditionalResult.Result
                         if (this.AdditionalData.IsImporterApprovalRequried){
@@ -137,7 +136,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
                                 }
                                 var ObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
                                 //this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
-                                this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe((res:any) => {
+                                this._documentsFilingExtendedPMService.getAllDocumentsFilingsByEntityIdAndObjectTable(this.EntityPm.Id, ObjectTable.Id, "I", SessionLocator.Tenant).subscribe(res => {
                                     var Result = [];//DocumentTypeMetaDataExtendedService
 
                                     Result = res.Result.filter(a => a.IsDeleted == false);
@@ -150,7 +149,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
                                     var tempSupplierInvoice = [];
                                     var tempOthers = [];
                                     var DRELID = "";
-                                    this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe((myResult:any) => {
+                                    this._DocumentTypeMetaDataExtendedService.GetDocumentsMetaDataTypeByCode("DREL").subscribe(myResult => {
                                         if (myResult.Result) {
                                             DRELID = myResult.Result.Id;
                                             if (!AppTool.IsNullOrEmpty(DRELID)) {
@@ -225,7 +224,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
     ApproveButtonClicked() {
         //this.CurrentSession.CurrentWindow.StartBusyIndicator("Approving ...");
         this.ValidationWarningsList = null;
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
             if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
                 //this.messageWindow.RTL = true;
@@ -240,9 +239,8 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
             }
             else {
                 entity.ApprovedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-                this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult:any) => {
+                this._ShipmentAdditionalCloudDataService.update(entity).subscribe(AdditionalResult => {
                     ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
-                    MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Approve Declaration" });
                     this.DimApproveButton = true;
                     var today = new Date();
                     var d = today.getDate();
@@ -283,7 +281,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
     public set DenyReason(newValue: string) { this.AdditionalData.DenyReason = newValue; }
 
     DownloadDocumentFile(item) {
-        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe((res:any) => {
+        //this._ImageLibraryService.DownloadFile(item.DocumentId, item.FileExtension, item.Folder, SessionLocator.Tenant).subscribe(res => {
             var EntityNumber = "";
             if (this.EntityPm != null) {
                 EntityNumber = this.EntityPm.ShipmentNumber;
@@ -430,7 +428,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
         //newWindow.Height = 220;
         //newWindow.RTL = true;
 
-        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
+        this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe(AdditionalResult => {
             var entity = AdditionalResult.Result
             this.MyAdditionalData = AdditionalResult.Result;
             if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
@@ -479,7 +477,7 @@ export class PrivateLabelApprovebyMobileComponent extends BaseComponent implemen
             //this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.MyAdditionalData.IsImporterApprovalRequried = false;
             this.MyAdditionalData.DenyReason = SessionLocator.LoggedUserPM.EnglishName + ", " + SessionLocator.LoggedUserPM.LocalName + ", " + SessionLocator.LoggedUserPM.Email + ", " + this.DenyReason + ", " + this.MyAdditionalData.VersionApproved;
-            this._ShipmentAdditionalCloudDataService.update(this.MyAdditionalData).subscribe((AdditionalResult:any) => {
+            this._ShipmentAdditionalCloudDataService.update(this.MyAdditionalData).subscribe(AdditionalResult => {
                 //this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 //this.CurrentSession.CloseCurrentWindowEmit("Denied");
                 this.FinalMessage = "דחיית הצהרה נשלח ל -" + SessionLocator.PrivateLableSettings.PrivateLabelShortName;

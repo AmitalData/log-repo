@@ -25,6 +25,6 @@ export class BatchTaskExecutionList {
 	CreatedByUserName: string;
 	Subject: string;
 	CallStack: string;
-	NotDisplayInMenu :boolean;
+	
 }
  

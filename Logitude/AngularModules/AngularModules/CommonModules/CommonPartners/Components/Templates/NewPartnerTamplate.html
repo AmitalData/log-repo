@@ -36,7 +36,7 @@
                                     <!-- Code -->
                                     <tr class="FormFieldRow" *ngIf="IsCardCodeVisible">
                                         <td style="width: 110px;">
-                                            <LogLabel [ObjectFieldName]="'CardCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [LayoutDirection]="'ltr'"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'CardCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -58,7 +58,7 @@
                                     <tr class="FormFieldRow">
 
                                         <td style="width: 110px;">
-                                            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext" [TextCode]="'Customer.O.CompanyName'"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customer.O.CompanyName'"></LogLabel>
                                         </td>
 
                                         <td>
@@ -84,7 +84,7 @@
                                     <tr class="FormFieldRow">
 
                                         <td style="width: 110px;">
-                                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext" [TextCode]="'Customer.O.CompanyLocalName'"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'LocalName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Customer.O.CompanyLocalName'"></LogLabel>
                                         </td>
 
                                         <td>
@@ -95,7 +95,7 @@
                                     <!-- Address1 -->
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Address1'" [ObjectTableName]="ObjectTableName"   [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Address1'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -106,7 +106,7 @@
                                     <!-- Address2 -->
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'Address2'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'Address2'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -117,7 +117,7 @@
                                     <!-- ZipCode -->
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -138,7 +138,7 @@
                                     <!-- City -->
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'City'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -152,10 +152,9 @@
                                                         <div></div>
                                                     </td>
 
-                                                    <td style="width: 30px;">
+                                                    <td>
                                                         <span class="hyperlink" (click)="SelectCityCommand()" [class.HyperlinkDisabled]="!IsSelectCityEnabled">Select</span>
                                                     </td>
-                                                    <td></td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -164,7 +163,7 @@
                                     <!-- Country -->
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -191,7 +190,7 @@
                                     <!-- State -->
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'StateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -219,7 +218,7 @@
                                     <!-- Salesman -->
                                     <tr class="FormFieldRow" *ngIf="IsCustomerPartner">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -258,9 +257,9 @@
                             <td style="width: 290px;">
                                 <table>
                                     <!-- VatNumber -->
-                                    <tr class="FormFieldRow">
+                                    <tr class="FormFieldRow" *ngIf="IsCustomerPartner">
                                         <td style="width: 90px;">
-                                            <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -274,7 +273,7 @@
                                     <!-- PhoneNumber -->
                                     <tr class="FormFieldRow">
                                         <td style="width: 90px;">
-                                            <LogLabel [ObjectFieldName]="'PhoneNumber'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'PhoneNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -288,7 +287,7 @@
                                     <!-- FaxNumber -->
                                     <tr class="FormFieldRow">
                                         <td style="width: 90px;">
-                                            <LogLabel [ObjectFieldName]="'FaxNumber'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'FaxNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -302,7 +301,7 @@
                                     <!-- TypeCode -->
                                     <tr class="FormFieldRow" *ngIf="IsWarehouseTypeCodeVisible">
                                         <td style="width: 90px;">
-                                            <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="'Warehouse'"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'TypeCode'" [ObjectTableName]="'Warehouse'" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -321,7 +320,7 @@
                                     <!-- FirmCode -->
                                     <tr class="FormFieldRow" *ngIf="PartnerTypeId == 'WH'">
                                         <td style="width: 90px;">
-                                            <LogLabel [ObjectFieldName]="'FirmCode'" [ObjectTableName]="'Warehouse'"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'FirmCode'" [ObjectTableName]="'Warehouse'" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td colspan="2">
@@ -426,7 +425,7 @@
                                 <table>
                                     <tr class="FormFieldRow">
                                         <td style="width: 110px;">
-                                            <LogLabel [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -436,7 +435,7 @@
 
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'ContactName'" [ObjectTableName]="ObjectTableName"   [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'ContactName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -454,7 +453,7 @@
                                 <table>
                                     <tr class="FormFieldRow">
                                         <td style="width: 105px;">
-                                            <LogLabel [ObjectFieldName]="'ContactPosition'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'ContactPosition'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -464,7 +463,7 @@
 
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'ContactBusinessPhone'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'ContactBusinessPhone'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -482,7 +481,7 @@
                                 <table>
                                     <tr class="FormFieldRow">
                                         <td style="width: 100px;">
-                                            <LogLabel [ObjectFieldName]="'ContactMobile'" [ObjectTableName]="ObjectTableName"  [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'ContactMobile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>
@@ -492,7 +491,7 @@
 
                                     <tr class="FormFieldRow">
                                         <td>
-                                            <LogLabel [ObjectFieldName]="'ContactFax'" [ObjectTableName]="ObjectTableName"   [LayoutDirection]="'ltr'" [DataContext]="DataContext"></LogLabel>
+                                            <LogLabel [ObjectFieldName]="'ContactFax'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                         </td>
 
                                         <td>

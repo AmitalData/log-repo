@@ -15,7 +15,6 @@ namespace Logitude.Customs.BL.Models
             CH_NG_190_MSG1_NoticeToClientResponseServiceInsert,
             CH_NG_190_MSG1_NoticeToClientResponseServiceUpdate,
             CH_NG_190_MSG1_NoticeToClientResponseServiceDelete,
-            CH_NG_192_MSG1_QueueAdvanceDeniedResponseService,
             TSH_MSG7_AgentPaymentReplyResponseService,
             Deficit_NG_5009_MSG14_FirstAndSeconderyRequirementsMessageResponseService,
             GRNT_MSG15_createGurateeRequestInfoResponseService,
@@ -60,8 +59,6 @@ namespace Logitude.Customs.BL.Models
             DeclarationClosure,
             CancelDeclarationClose,
             TSH_MSG7_AgentPaymentReplyResponseServiceBLD,
-            DF_NG_8251_Web02_DeclarationStatusResponseServicePreClearance,
-            DF_NG_8251_Web02_DeclarationStatusResponseServiceMessageToAgent,
         }
         public ProccessEnum CallProccessID { get; set; } //CargoExitFromCheckSite196
         //public PhysicalCheckPM DBOcc { get; set; } 

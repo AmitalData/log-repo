@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         MAWBStackRepository repository;
 
-
+        public MAWBStackQuery()
+        {
+            repository = new MAWBStackRepository(); 
+        }
 
         public MAWBStackQuery(int tenant)
         {
@@ -119,28 +122,63 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     select a).Any();
         }
 
-        public IQueryable<MAWBStackPM> GetMAWBStackPMsByAirlineId(string airlineId, int tenant)
+        public List<MAWBStackPM> GetMAWBStackPMsByAirlineId(string airlineId, int tenant)
         {
-            return (from a in repository.context.MAWBStacks.Include("AssignedToCard")
-                    where a.Tenant == tenant && a.AirlineId == airlineId && a.IsUsed == false
-                    select new MAWBStackPM()
-                    {
-                        Id = a.Id,
-                        AirlineId = a.AirlineId,
-                        Tenant = a.Tenant,
-                        Number = a.Number,
-                        InsertionDate = a.InsertionDate,
-                        Notes = a.Notes,
-                        AssignedToId = a.AssignedToId,
-                        IsUsed = a.IsUsed,
-                        AssignedToShipperName = a.AssignedToCard == null ? null : a.AssignedToCard.EnglishName
-                    });
+            List<MAWBStackPM> query = (from a in repository.context.MAWBStacks
+                                             where a.Tenant == tenant && a.AirlineId == airlineId && a.IsUsed == false
+                                             select new MAWBStackPM()
+                                             {
+                                                 Id = a.Id,
+                                                 AirlineId = a.AirlineId,
+                                                 Tenant = a.Tenant,
+                                                 Number = a.Number,
+                                                 InsertionDate = a.InsertionDate,
+                                                 Notes = a.Notes,
+                                                 AssignedToId = a.AssignedToId,
+                                                 IsUsed = a.IsUsed,
+                                             }).ToList();
 
+            CardRepository cardRepository = new CardRepository(tenant);
+            foreach (MAWBStackPM stack in query)
+            {
+                if (stack.AssignedToId != null)
+                {
+                    stack.AssignedToShipperName = cardRepository.GetSingleCard(stack.AssignedToId, tenant).EnglishName;
+                }
+            }
+
+            return query;
         }
 
-        public bool CheckMAWBStackExistByAirlineIdAndNumber(string airlineId, int tenant, int number)
+
+
+        public List<MAWBStackPM> GetAllMAWBStackPMsByAirlineId(string airlineId, int tenant)
         {
-            return repository.context.MAWBStacks.Any(x => x.Tenant == tenant && x.AirlineId == airlineId && x.Number == number);
+            List<MAWBStackPM> query = (from a in repository.context.MAWBStacks
+                                       where a.Tenant == tenant && a.AirlineId == airlineId 
+                                       select new MAWBStackPM()
+                                       {
+                                           Id = a.Id,
+                                           AirlineId = a.AirlineId,
+                                           Tenant = a.Tenant,
+                                           Number = a.Number,
+                                           InsertionDate = a.InsertionDate,
+                                           Notes = a.Notes,
+                                           AssignedToId = a.AssignedToId,
+                                           IsUsed = a.IsUsed,
+                                       }).ToList();
+
+            CardRepository cardRepository = new CardRepository(tenant);
+            foreach (MAWBStackPM stack in query)
+            {
+                if (stack.AssignedToId != null)
+                {
+                    stack.AssignedToShipperName = cardRepository.GetSingleCard(stack.AssignedToId, tenant).EnglishName;
+                }
+            }
+
+
+            return query;
         }
 
         public IQueryable<MAWBStackPM> GetNotAssignedMAWBStackPMsByAirlineId(string airlineId, int tenant)

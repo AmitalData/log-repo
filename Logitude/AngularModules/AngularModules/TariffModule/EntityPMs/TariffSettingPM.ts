@@ -64,34 +64,11 @@ export class TariffSettingPM {
     public set LCLDefaultSteps(newValue: string) { if (this.lCLDefaultSteps != newValue) { this.lCLDefaultSteps = newValue; this.MarkAsDirty("LCLDefaultSteps"); } }
        
 	 
-    private containerDefaults: string;
-    public get ContainerDefaults() { return this.containerDefaults; }
-    public set ContainerDefaults(newValue: string) { if (this.containerDefaults != newValue) { this.containerDefaults = newValue; this.MarkAsDirty("ContainerDefaults"); } }
-       
-	 
-    private defaultCurrencyId: string;
-    public get DefaultCurrencyId() { return this.defaultCurrencyId; }
-    public set DefaultCurrencyId(newValue: string) { if (this.defaultCurrencyId != newValue) { this.defaultCurrencyId = newValue; this.MarkAsDirty("DefaultCurrencyId"); } }
-       
-	 
-    private airUnitOfMeasurementCode: string;
-    public get AirUnitOfMeasurementCode() { return this.airUnitOfMeasurementCode; }
-    public set AirUnitOfMeasurementCode(newValue: string) { if (this.airUnitOfMeasurementCode != newValue) { this.airUnitOfMeasurementCode = newValue; this.MarkAsDirty("AirUnitOfMeasurementCode"); } }
-       
-	 
-    private lCLUnitOfMeasurementCode: string;
-    public get LCLUnitOfMeasurementCode() { return this.lCLUnitOfMeasurementCode; }
-    public set LCLUnitOfMeasurementCode(newValue: string) { if (this.lCLUnitOfMeasurementCode != newValue) { this.lCLUnitOfMeasurementCode = newValue; this.MarkAsDirty("LCLUnitOfMeasurementCode"); } }
-       
-	 
 
     public OldEntityPM: TariffSettingPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -99,7 +76,6 @@ export class TariffSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TariffSetting");
            
         }
-       }
     }
 
     private MyClone: TariffSettingPM;

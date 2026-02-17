@@ -20,9 +20,9 @@ export class WarehouseReleasePackagePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	                  this.EntityParentPM = _entityParentPM;
-                this.UIProperties = new UIProperties(this);
-                this.IsDirty = false;
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
       }
 
 	 
@@ -207,21 +207,6 @@ export class WarehouseReleasePackagePM {
     public set CountryId(newValue: string) { if (this.countryId != newValue) { this.countryId = newValue; this.MarkAsDirty("CountryId"); } }
        
 	 
-    private shipmentId: string;
-    public get ShipmentId() { return this.shipmentId; }
-    public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-       
-	 
-    private releaseStatus: string;
-    public get ReleaseStatus() { return this.releaseStatus; }
-    public set ReleaseStatus(newValue: string) { if (this.releaseStatus != newValue) { this.releaseStatus = newValue; this.MarkAsDirty("ReleaseStatus"); } }
-       
-	 
-    private releaseNumber: string;
-    public get ReleaseNumber() { return this.releaseNumber; }
-    public set ReleaseNumber(newValue: string) { if (this.releaseNumber != newValue) { this.releaseNumber = newValue; this.MarkAsDirty("ReleaseNumber"); } }
-       
-	 
 
     public OldEntityPM: WarehouseReleasePackagePM;
 	
@@ -236,10 +221,7 @@ export class WarehouseReleasePackagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -249,7 +231,6 @@ export class WarehouseReleasePackagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WarehouseReleasePackage");
            
         }
-       }
     }
 
     private MyClone: WarehouseReleasePackagePM;

@@ -8,7 +8,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -20,7 +20,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentsExecutionLogRepository repository;
 
-
+        public DocumentsExecutionLogQuery()
+        {
+            repository = new DocumentsExecutionLogRepository();
+        }
 
         public DocumentsExecutionLogQuery(int tenant)
         {
@@ -52,7 +55,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Logs = a.Logs,
                                                              RequestXML = a.RequestXML,
                                                              RetryNumber = a.RetryNumber,
-                                                             ExecutedByServerName = a.ExecutedByServerName,
 
                                                          };
 
@@ -82,8 +84,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Logs = a.Logs,
                                                 RequestXML = a.RequestXML,
                                                 RetryNumber = a.RetryNumber,
-                                                ExecutedByServerName = a.ExecutedByServerName,
-
                                             }).FirstOrDefault();
             return entity;
         }
@@ -108,8 +108,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                            Logs = a.Logs,
                                                                            RequestXML = a.RequestXML,
                                                                            RetryNumber = a.RetryNumber,
-                                                                           ExecutedByServerName = a.ExecutedByServerName,
-
                                                                        };
             return DocumentsExecutionLogPMs;
         }
@@ -134,8 +132,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                Logs = a.Logs,
                                                                                RequestXML = a.RequestXML,
                                                                                RetryNumber = a.RetryNumber,
-                                                                               ExecutedByServerName = a.ExecutedByServerName,
-
 
                                                                            };
             return DocumentsExecutionLogLists;
@@ -154,8 +150,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   StatusCode = a.StatusCode,
                                                   ExceptionMessage = a.ExceptionMessage,
                                                   CreateDate = a.CreateDate,
-                                                  ExecutedByServerName = a.ExecutedByServerName,
-
                                               }).FirstOrDefault();
 
             if (documentsExecutionLogList != null) documentsExecutionLogList.ExceptionMessage = GetUnderStandableMessageFromMessageException(documentsExecutionLogList.ExceptionMessage);

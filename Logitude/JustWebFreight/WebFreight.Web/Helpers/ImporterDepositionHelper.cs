@@ -20,7 +20,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
@@ -65,7 +65,8 @@ namespace WebFreight.Web.Helpers
                 ImporterDepositionAM importerDepositionAM = new ImporterDepositionAM();
                 MapImporterDepositionPMToImporterDepositionAM(importerDepositionPM, importerDepositionAM);
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
-                string logId = AddAPILogs(importerDepositionAM, "Start Sending Importer Deposition to LogBox ..", tenant);
+                string logId = AddAPILogs(importerDepositionAM, "Start Sending Importer Deposition to LogBox ..",tenant);
+
                 string token = string.Empty;
                 APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
                 {
@@ -83,8 +84,7 @@ namespace WebFreight.Web.Helpers
                     token = User.Token;
                 }
 
-              //  token = "Jmn4iSPqOvya/KOK3QRRJnfyj7SR+XF8iHs=";
-
+                //token = "gDNp0Sp+D90SDbJ7S6N1dQINIBwDr5r01F8=";
 
                 if (!string.IsNullOrEmpty(token))
                 {
@@ -146,7 +146,7 @@ namespace WebFreight.Web.Helpers
 
                 IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                 APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
-                apiLogsService.Create(LogPM);
+                apiLogsService.Create(LogPM); 
                 var msg = "There is no LogBox Tenant To Send this Composition to ..";
 
                 APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionPM), null, null, "");
@@ -157,13 +157,13 @@ namespace WebFreight.Web.Helpers
             return response;
 
         }
+
         public void StartImporterDeposition(ImporterDepositionAM importerDepositionAM)
         {
             bool isNew = false;
             int tenant = importerDepositionAM.CustomerTenant;
-
-            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
             CustomsShipperQuery customsShipperQuery = new CustomsShipperQuery(tenant);
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
             CustomsShipperService customsShipperService = new CustomsShipperService(objectContext, tenant);
             CustomsShipperPM customsShipperPM = customsShipperQuery.GetSinglePMByShipperCode(importerDepositionAM.ShipperCode, tenant);
 
@@ -173,7 +173,7 @@ namespace WebFreight.Web.Helpers
                 customsShipperPM = CreateCustomsShipper(importerDepositionAM, tenant, customsShipperService);
             }
 
-            CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(objectContext);
+            CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(tenant);
             CustomerDeposition customerDeposition = !isNew ? customerDepositionRepository.GetCustomerDepositionByCustomsShipperIdAndDepositionNumber(customsShipperPM.Id, importerDepositionAM.DepositionNumber, tenant) : null;
 
             if (customerDeposition == null)
@@ -182,23 +182,33 @@ namespace WebFreight.Web.Helpers
             }
             else
             {
-                customerDeposition.ValidityStartDate = importerDepositionAM.ValidityStartDate;
-                customerDeposition.ValidityEndDate = importerDepositionAM.ValidityEndDate;
-                customerDepositionRepository.Update(customerDeposition);
-                customerDepositionRepository.SubmitChanges();
+                if (customerDeposition.ValidityStartDate != importerDepositionAM.ValidityStartDate || customerDeposition.ValidityEndDate != importerDepositionAM.ValidityEndDate)
+                {
+                    customerDeposition.ValidityStartDate = importerDepositionAM.ValidityStartDate;
+                    customerDeposition.ValidityEndDate = importerDepositionAM.ValidityEndDate;
+                    customerDepositionRepository.Update(customerDeposition);
+                    customerDepositionRepository.SubmitChanges();
+                }
             }
 
 
             if (!isNew)
             {
-                if (customerDeposition.ValidityEndDate > customsShipperPM.ValidityEndDate)
+                CustomerDeposition validCustomerDeposition = customerDepositionRepository.GetValidityCustomerDepositionByCustomsShipperId(customsShipperPM.Id, customsShipperPM.Tenant);
+                if (validCustomerDeposition != null)
                 {
-                    customsShipperPM.ValidityStartDate = customerDeposition.ValidityStartDate;
-                    customsShipperPM.ValidityEndDate = customerDeposition.ValidityEndDate;
-                    customsShipperPM.ValidDepositionNumber = customerDeposition.DepositionNumber;
-                    customsShipperService.Update(customsShipperPM);
+                    if (customerDeposition.ValidityEndDate > validCustomerDeposition.ValidityEndDate) validCustomerDeposition = customerDeposition;
+                    if (customsShipperPM.ValidityStartDate != validCustomerDeposition.ValidityStartDate || customsShipperPM.ValidityEndDate != validCustomerDeposition.ValidityEndDate)
+                    {
+                        customsShipperPM.ValidityStartDate = validCustomerDeposition.ValidityStartDate;
+                        customsShipperPM.ValidityEndDate = validCustomerDeposition.ValidityEndDate;
+                        customsShipperPM.ValidDepositionNumber = validCustomerDeposition.DepositionNumber;
+                        customsShipperService.Update(customsShipperPM);
+                    }
                 }
+
             }
+
 
         }
 
@@ -259,7 +269,7 @@ namespace WebFreight.Web.Helpers
 
         #region API Logs
 
-        public string AddAPILogs(ImporterDepositionAM importerDepositionAM, string message = null, int tenant = 0)
+        public string AddAPILogs(ImporterDepositionAM importerDepositionAM, string message = null,int tenant = 0)
         {
             //int tenant = importerDepositionAM.CustomerTenant;
 

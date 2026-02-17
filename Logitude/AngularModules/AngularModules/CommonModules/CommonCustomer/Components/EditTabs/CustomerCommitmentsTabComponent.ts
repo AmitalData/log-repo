@@ -30,12 +30,11 @@ import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerCommitmentsTabComponent.html',
 })
 
 export class CustomerCommitmentsTabComponent extends BaseComponent {
-    public imgNgStyle: any = null;
     public ItemsSource: ObservableCollection;
     public EntityPM: CustomerPM;
     public ObsList: Array<ProductViewModelData> = [];
@@ -101,7 +100,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         //this.ActualObsList = [];
         var list = [];
         if (this.SelectedItem != null) {
-            this.partnersDomainService.GetCustomerProductHistoryActualData(this.EntityPM.Id, this.SelectedItem.ProductTypeCode).subscribe((result:any) => {
+            this.partnersDomainService.GetCustomerProductHistoryActualData(this.EntityPM.Id, this.SelectedItem.ProductTypeCode).subscribe(result => {
                 result.Result.filter(d => d.NumberOfShipments > 0).sort((a, b) => { return ((a.Year === b.Year) ? ((a.Month === b.Month) ? 0 : (a.Month < b.Month) ? -1 : 1) : (a.Year < b.Year ? -1 : 1)) }).reverse().forEach(item => {
                     list.push(new ProductActualViewModelData(item));
                 });
@@ -128,9 +127,9 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         var control: string = "";
         var windowTitle = "Edit Product";
         var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
-        this._entityResourceService.getEntityResourceByTableName("CustomerProductLocation", 0).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName("CustomerProductLocation", 0).subscribe(p => {
             this.Clone(item);
-            proeductTypeListService.getAllFromCache().subscribe((result:any) => {
+            proeductTypeListService.getAllFromCache().subscribe(result => {
                 var list = result.Result.filter(d => d.Code == item.ProductTypeCode)[0];
                 if (list != null)
                     windowTitle += ": " + list.Name;
@@ -204,7 +203,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         listArgs.DisplayTitle = "Customer Actual Data";
         listArgs.BackButtonTitle = "Back";
         listArgs.ShowViews = false;
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe((response: any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -222,7 +221,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         this.ActualObsList = new ObservableCollection([]);
         this.EntityPM = entityArgs.EntityPM;
         this._currencyListService = new CurrencyListService();
-        this._currencyListService.getAllFromCache().subscribe((result:any) => {
+        this._currencyListService.getAllFromCache().subscribe(result => {
             var myCurrencyCode: string = "";
             var list: CurrencyList = result.Result.filter(d => d.Id == (SessionLocator.TenantPM.ProfitCurrencyId))[0];
             if (list != null) {
@@ -264,7 +263,7 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         this.ToggleButtonList = [];
         var proeductTypeListService: ProductTypeListService = new ProductTypeListService();
 
-        proeductTypeListService.getAllFromCache().subscribe((result:any) => {
+        proeductTypeListService.getAllFromCache().subscribe(result => {
             var FullProductsList = result.Result.filter(i => i.InActive == false).sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
             FullProductsList.forEach(item => {
                 this.ToggleButtonList.push(new ProductTypeItemClass(item, this.EntityPM, this, FullProductsList));
@@ -277,13 +276,13 @@ export class CustomerCommitmentsTabComponent extends BaseComponent {
         this.ObsList = [];
         this.EntityPM.CustomerProducts.sort((a, b) => { return (a.ProductTypeCode === b.ProductTypeCode) ? 0 : (a.ProductTypeCode < b.ProductTypeCode) ? -1 : 1 }).forEach(item => {
 
-            //if (item.ProductTypeCode == "AD" || item.ProductTypeCode == "OD" || item.ProductTypeCode == "ID") {
-            //    // continue;
-            //}
+            if (item.ProductTypeCode == "AD" || item.ProductTypeCode == "OD" || item.ProductTypeCode == "ID") {
+                // continue;
+            }
 
-            //else {
-            this.ObsList.push(new ProductViewModelData(this.EntityPM, item, false, "CustomerProductLocation"));
-            //}
+            else {
+                this.ObsList.push(new ProductViewModelData(this.EntityPM, item, false, "CustomerProductLocation"));
+            }
         });
         if (this.ObsList.length > 0)
             this.SelectedItem = this.ObsList[0];
@@ -324,7 +323,7 @@ export class ProductViewModelData extends BaseComponent {
         this.isPotential = isPotential;
         this.TargetEntityName = "CustomerProduct";
         var _productTypeListService: ProductTypeListService = new ProductTypeListService();
-        _productTypeListService.getAllFromCache().subscribe((result:any) => {
+        _productTypeListService.getAllFromCache().subscribe(result => {
             this._ProductTypeList = result.Result;
         });
 

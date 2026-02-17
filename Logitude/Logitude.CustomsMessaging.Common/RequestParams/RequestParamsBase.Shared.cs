@@ -44,7 +44,6 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string LoggingUserId { get; set; }
         public bool IsFakeResponse { get; set; }
         public int Tenant { get; set; }
-        public int TenantPriority { get; set; }
         public string RequestName { get; set; }
         public string ResponseName { get; set; }
         public TestCase TestCase { get; set; }
@@ -84,34 +83,14 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 
 
         public string UnifreightListOnServerOnly { get; set; }
-
-        public bool SplitterModeLetCreateMyType { get; set; }
-
-        public bool AvoidSign { get; set; }
-        public bool FromAutomate { get; set; }
-
-        public string SignMethodByQueue { get; set; }
-        public string SignByPersonalId { get; set; }
-        public string SignQueueByCompanyOrPersonal { get; set; }
-        public string ParentId { get; set; }
-        public bool ForceCompanySign { get; set; }
-        public string DeclarationDirection { get; set; } = null;
-        public bool ignoreConcurrentKiller { get; set; }
-
-        public bool SendUpdateContainerization { get; set; }
-
-        public string HsmStationContext { get; set; } = null;
     }
 
     public class TestCase
     {
         public string Code { get; set; }
-        public string Param1 { get; set; }
-        public string Param2 { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
         public string Group { get; set; }
         public int IndexOrder { get; set; }
-        
     }
 }

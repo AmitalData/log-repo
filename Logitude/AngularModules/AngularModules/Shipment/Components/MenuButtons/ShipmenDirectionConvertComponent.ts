@@ -24,7 +24,7 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { CountersDomainService } from '../../../Common/Services/CountersDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ShipmenDirectionConvertComponent.html',
 })
 
@@ -262,9 +262,6 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     }
 
     SetPartners() {
-        this.EntityPM.InlandDomesticFromTypeCode = "PART";
-        this.EntityPM.InlandDomesticToTypeCode = "PART";
-
         this.IsShipperMyCustomer = false;
         this.IsConsigneeMyCustomer = false;
         var myCRMCustomerId = null;
@@ -959,8 +956,8 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityId: myAddressId, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {
@@ -1012,8 +1009,8 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Add Address";
-            logeWindow.WindowArgs = { EntityPM: entityPM };
-            logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
+            logeWindow.WindowArgs = { EntityPM: entityPM, PartnerTypeId: myPartnerTypeId, IsCustomer: isCustomer };
+            logeWindow.Show("./Shipment/Components/NewEntity/WizardAddEditAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
                     switch (myAddressCode) {

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Rx';
 import { Guid } from '../../Infrastructure/Utilities/Guid';
 import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
@@ -21,10 +22,10 @@ import { ARInvoiceTotalVATPM } from '../EntityPMs/ARInvoiceTotalVATPM';
 @Injectable()
 
 export class ConsilidationInvoiceDomainService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ConsilidationInvoiceDomain';
     }
 
@@ -32,7 +33,11 @@ export class ConsilidationInvoiceDomainService {
     post(entityPM: ARInvoicePM) {
 
         var callTime = new Date();
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
             var validator: ClassLevelValidator;
 
@@ -52,10 +57,9 @@ export class ConsilidationInvoiceDomainService {
                 var mappedEntity: ARInvoicePM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(
-                    map((response: HttpResponse<any>) => {
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),{ headers: authHeader }).map((response) => {
 
-                        var pm = response.body;
+                        var pm = response.json();
                         if (pm) {
                             var mappedResult: ARInvoicePM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -66,14 +70,14 @@ export class ConsilidationInvoiceDomainService {
                         PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoice", "SaveChanges", "");
                         return serviceResponse;
 
-                    }),catchError(ServiceHelper.HandleServiceError));
+                    }).catch(ServiceHelper.HandleServiceError);
             }
 
             else {
 
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
 
             }
         });

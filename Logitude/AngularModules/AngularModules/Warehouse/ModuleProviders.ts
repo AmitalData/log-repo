@@ -1,4 +1,4 @@
-
+﻿
 
 
 import {WarehouseEntryListService} from './Services/StandardLists/WarehouseEntryListService';
@@ -14,7 +14,7 @@ import {WarehouseReleasePMService} from './Services/StandardPMs/WarehouseRelease
 
 // Menu Buttons 
 import {WarehouseReleaseMenuButtonsHandler} from './Components/MenuButtons/WarehouseReleaseMenuButtonsHandler';
-import { WarehouseEntryMenuButtonsHandler } from './Components/MenuButtons/WarehouseEntryMenuButtonsHandler';
+
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -35,7 +35,6 @@ export class ModuleProviders {
             case "WarehouseReleaseStatusListService": { myResult = new WarehouseReleaseStatusListService(); break; }
 
             case "WarehouseReleaseMenuButtonsHandler": { myResult = new WarehouseReleaseMenuButtonsHandler(); break; }
-            case "WarehouseEntryMenuButtonsHandler": { myResult = new WarehouseEntryMenuButtonsHandler(); break; }
         }
 
         return myResult;

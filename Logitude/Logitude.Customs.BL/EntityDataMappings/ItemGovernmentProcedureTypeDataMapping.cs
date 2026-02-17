@@ -19,11 +19,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(ItemGovernmentProcedureTypePM entityPM, ItemGovernmentProcedureType entityPOCO)
         {
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                entityPOCO.Code = entityPM.Code;
-            }
+         
         }
 
         public void CustomPOCOToPM(ItemGovernmentProcedureTypePM entityPM, ItemGovernmentProcedureType entityPOCO)

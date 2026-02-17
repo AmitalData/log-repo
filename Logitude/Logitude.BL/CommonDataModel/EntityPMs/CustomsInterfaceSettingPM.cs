@@ -49,7 +49,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? AMCOceanStartDate { get; set; }
-
-        public string LocalCustomsInterfaceName { get; set; }
     }
 }

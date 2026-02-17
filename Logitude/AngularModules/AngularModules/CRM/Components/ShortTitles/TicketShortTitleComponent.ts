@@ -11,7 +11,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "TicketShortTitleComponent.html",
 })
 
@@ -128,7 +128,7 @@ export class TicketShortTitleComponent {
                 objectTable = "Customer";
             }
 
-            //this._entityResourceService.getEntityResourceByTableName(objectTable, 0).subscribe((response:any) => {
+            //this._entityResourceService.getEntityResourceByTableName(objectTable, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;

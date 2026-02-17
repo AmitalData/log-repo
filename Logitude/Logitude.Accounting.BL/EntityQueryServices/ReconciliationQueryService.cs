@@ -12,7 +12,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Logitude.Accounting.Data.Repositories;
-using System.Data.Entity.Core.Objects;
 
 
 namespace Logitude.Accounting.BL.EntityQueryServices
@@ -25,6 +24,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             ReconciliationKeys reconciliationKeys = entityKeys as ReconciliationKeys;
             ReconciliationLineQueryService reconciliationLineQueryService = new ReconciliationLineQueryService(context);
             entityPM.ReconciliationLines = reconciliationLineQueryService.GetMulti(reconciliationKeys, true);
+
+            //if (entityPM.ReconciliationLines.Count > 0)
+            //{
+            //    entityPM.LastLineNumber = entityPM.ReconciliationLines.Max(m => m.Line);
+            //}
 
             base.GetComposition(entityKeys, entityPM);
         }
@@ -39,23 +43,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return pms;
         }
-        public List<ReconciliationPM> GetLightReconciliationsByIds(List<string> recoIds, int tenant)
-        {
-            List<Reconciliation> recoLines = (from a in context.Reconciliations
-                                              where recoIds.Contains(a.Id) && a.Tenant == tenant
-                                              select a).ToList();
-
-            List<ReconciliationPM> pms = recoLines.Select(reco => new ReconciliationPM()
-            {
-                Id = reco.Id,
-                Number = reco.Number,
-                AccountId = reco.AccountId,
-                IsCancelled = reco.IsCancelled
-
-            }).ToList();
-
-            return pms;
-        }
         public ReconciliationPM GetByNumber(string number, int tenant)
         {
             Reconciliation reco = (from a in context.Reconciliations
@@ -67,11 +54,5 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pm;
         }
 
-        public  IQueryable<Reconciliation> GetNotCancelledByAccountId(string accountId, int tenant)
-        {
-            return this.repository.GetAll(tenant)
-                .Where(rec => rec.AccountId == accountId && rec.IsCancelled == false);
-
-        }
     }// class ReconciliationQueryService
 }

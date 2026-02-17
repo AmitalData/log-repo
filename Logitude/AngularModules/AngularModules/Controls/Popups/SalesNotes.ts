@@ -8,7 +8,7 @@ import {ConfirmWindow} from '../Windows/ConfirmWindow';
 
 @Component({
     selector: "SalesNotes",
-    
+    moduleId: module.id,
     templateUrl: './SalesNotes.html',
     inputs: ['Title', 'IconCode', 'IsEnabled', 'EntityPM', 'CustomerPM', 'IsFromQuote'],
 })

@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
-using System.Text;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public class CardRepository : IRepository<Card>
+    public class CardRepository:IRepository<Card>
     {
         ICommonDataContext commonDataContext;
 
-  
+        public CardRepository()
+        {
+            commonDataContext=new CommonDataContext();
+        }
 
         public CardRepository(int tenant)
         {
@@ -67,8 +69,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 foreach (Card item in cityResult)
                 {
                     Address addr = addressRepository.GetMainAddressByCardId(item.Id, item.Tenant);
-                    Country addressCountry = countryRepository.GetSingleCountry(addr.CountryId, tenant);
-                    if (addressCountry.EnglishName != null)
+                     Country addressCountry = countryRepository.GetSingleCountry(addr.CountryId, tenant);
+                     if (addressCountry.EnglishName != null)
                     {
                         if (addressCountry.EnglishName.ToUpper().StartsWith(country.ToUpper()))
                         {
@@ -106,47 +108,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return myResult;
         }
-        public Card GetSingleCardCache(string id, int Tenant)
-        {
-            string entityKeyString = $"GetSingleCard({id},{Tenant})";
-            var res = CacheManager.GetOrInsertNewObject<Card>(entityKeyString, () =>
-            {
-                //return this.GetSingleCard(id, Tenant);
-                Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards
-
-                                                                  //.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
-
-                                                              where a.Id == id
-                                                              select a));
-
-                return entity;
-
-            });
-            return res;
-        }
+  
         public Card GetSingleCard(string id, int tenant)
         {
             Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
-                                                          where a.Id == id
-                                                          select a));
+                           where  a.Id == id
+                           select a));
 
-            return entity;
-        }
-        public Card GetCardWithCollecter(string id, int tenant)
-        {
-            var card = context.Cards
-                .Include("CollectorUser.Contact")
-                .Include("CollectorUser.Contact")
-                .Where(e => e.Id == id && e.Tenant == tenant).FirstOrDefault();
-            return card;
-        }
-        public Card Get(string id, int tenant)
-        {
-            Card entity = Queryable.FirstOrDefault<Card>((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
-                                                          where a.Id == id
-                                                          select a));
-
-            return entity;
+                return entity;
         }
 
         public Card GetSingleCardWithoutInclude(string id, int tenant)
@@ -163,36 +132,28 @@ namespace Simplog.Data.CommonDataModel.Repositories
             string accountingCard = (from a in context.Cards
                                      where a.Id == id
                                      && a.Tenant == tenant
-                                     select a.ReceivablesAccountingCard).FirstOrDefault();
+                                     select a.ReceivablesAccountingCard).FirstOrDefault();                                                          
 
             return accountingCard;
         }
 
-        public Card GetCardByGLAccountId(string id, int tenant, bool fromCache = false, List<string> partnerTypes = null)
+        public Card GetCardByGLAccountId(string id, int tenant,bool fromCache=false )
         {
-            if (partnerTypes != null) {
-                return  (from a in context.Cards
-                             where a.Tenant == tenant
-                             && a.GLAccountId == id && partnerTypes.Contains(a.PartnerTypeId)
-                             select a).FirstOrDefault();
-            }
-            if (fromCache)
-            {
-                string key = $"GetCardByGLAccountId({id},{tenant})";
-                return CacheManager.GetOrInsertNewObject<Card>(key, () => GetCardByGLAccountId(id, tenant));
 
-                
-            }
+            string key = $"GetCardByGLAccountId({id},{tenant})";
+            var cardFromCache = CacheManager.GetOrInsertNewObject<Card>(key, () =>
+              {
+                  Card card = (from a in context.Cards
+                               where a.Tenant == tenant
+                               && a.GLAccountId == id
+                               select a).FirstOrDefault();
+                  return card;
+              }, fromCache);
+            
 
-            return GetCardByGLAccountId(id, tenant);
+            return cardFromCache;
         }
-        public Card GetCardByGLAccountId(string id, int tenant)
-        {
-            return (from a in context.Cards
-                    where a.Tenant == tenant
-                    && a.GLAccountId == id
-                    select a).FirstOrDefault();
-        }
+
 
         public List<Card> GetCardsByGLAccountIds(List<string> glaccountIds, int tenant)
         {
@@ -200,17 +161,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
             List<Card> cards = (from a in context.Cards
-                                where a.Tenant == tenant
-                                && glaccountIds.Contains(a.GLAccountId)
-                                select a).ToList();
-            return cards;
+                             where a.Tenant == tenant
+                             && glaccountIds.Contains(a.GLAccountId)
+                             select a).ToList();
+                return cards;
+           
 
 
-
-
+           
         }
-
-
 
         public List<string> GetGLAccountIdssByCardIds(List<string> Ids, int tenant)
         {
@@ -218,23 +177,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
             List<string> cards = (from a in context.Cards
-                                  where a.Tenant == tenant
-                                  && Ids.Contains(a.Id)
-                                  select a.GLAccountId).ToList();
+                                where a.Tenant == tenant
+                                && Ids.Contains(a.Id)
+                                select a.GLAccountId).ToList();
             return cards;
 
 
 
 
-        }
-
-        public string GetGLAccountIdByCardId(string cardId, int tenant)
-        {
-            string cards = (from a in context.Cards
-                            where a.Tenant == tenant
-                            && a.Id == cardId
-                            select a.GLAccountId).FirstOrDefault();
-            return cards;
         }
 
         public Card GetSingleCardByCode(string code, int tenant, bool getFromCache)
@@ -245,25 +195,29 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    if (HttpContext.Current != null)
                     {
-
-                        entity = (from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus")
-                                  where a.Tenant == tenant && a.Code == code
-                                  select a).FirstOrDefault();
-
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+                            entity = (from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus")
+                                      where a.Tenant == tenant && a.Code == code
+                                      select a).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                        else
+                        {
+                            entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
                     }
                     else
                     {
-                        entity = (Card)CacheManager.CacheWrapper.Get(entityName);
+                        entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus") where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
                     }
-
-
                 }
                 else
                 {
@@ -281,27 +235,39 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    if (HttpContext.Current != null)
                     {
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
 
+                            entity = (from d in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus")
+                                      where
+                                      d.Tenant == tenant
+                                      && d.Code == code
+                                      && d.PartnerTypeId == partnerTypeId
+                                      select d).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+
+                        else
+                        {
+                            entity = (Card)CacheManager.CacheWrapper.Get(entityName);
+                        }
+                    }
+
+                    else
+                    {
                         entity = (from d in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus")
                                   where
                                   d.Tenant == tenant
                                   && d.Code == code
                                   && d.PartnerTypeId == partnerTypeId
                                   select d).FirstOrDefault();
-
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
                     }
-
-                    else
-                    {
-                        entity = (Card)CacheManager.CacheWrapper.Get(entityName);
-                    }
-
                 }
 
                 else
@@ -309,7 +275,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     entity = (from d in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus")
                               where
                               d.Tenant == tenant
-                              && d.Code == code
+                              && d.Code == code 
                               && d.PartnerTypeId == partnerTypeId
                               select d).FirstOrDefault();
                 }
@@ -328,25 +294,29 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    if (HttpContext.Current != null)
                     {
-
-                        entity = (from a in context.Cards
-                                  where a.Tenant == tenant && a.Code == code
-                                  select a).FirstOrDefault();
-
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+                            entity = (from a in context.Cards
+                                      where a.Tenant == tenant && a.Code == code
+                                      select a).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                        else
+                        {
+                            entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
                     }
                     else
                     {
-                        entity = (Card)CacheManager.CacheWrapper.Get(entityName);
+                        entity = (from record in context.Cards where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
                     }
-
-
                 }
                 else
                 {
@@ -364,25 +334,32 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    if (HttpContext.Current != null)
                     {
-                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                        entity = (from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
-                                  where a.Tenant == tenant && a.Id == id
-                                  select a).FirstOrDefault();
-
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                            entity = (from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
+                                      where a.Tenant == tenant && a.Id == id
+                                      select a).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                        else
+                        {
+                            entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
                     }
                     else
                     {
-                        entity = (Card)CacheManager.CacheWrapper.Get(entityName);
+                        ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                        entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
+                                  where record.Id == id && record.Tenant == tenant
+                                  select record).FirstOrDefault();
                     }
-
-
                 }
                 else
                 {
@@ -396,7 +373,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return null;
         }
 
-        public Card GetSingleCardByIdAndTenant(string id, int tenant, bool getFromCache)
+        public  Card GetSingleCardByIdAndTenant(string id, int tenant, bool getFromCache)
         {
             if (!string.IsNullOrEmpty(id))
             {
@@ -404,29 +381,35 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 Card entity;
                 if (getFromCache)
                 {
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    if (HttpContext.Current != null)
                     {
-
-                        entity = (from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
-                                  where a.Tenant == tenant && a.Id == id
-                                  select a).FirstOrDefault();
-
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
                         {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                         
+                            entity = (from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
+                                      where a.Tenant == tenant && a.Id == id
+                                      select a).FirstOrDefault();
+
+                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                            {
+                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            }
+                        }
+                        else
+                        {
+                            entity = (Card)CacheManager.CacheWrapper.Get(entityName);
                         }
                     }
                     else
                     {
-                        entity = (Card)CacheManager.CacheWrapper.Get(entityName);
+                        entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent").Include("Customer.AccountManagerUser.Contact")
+                                  where record.Id == id && record.Tenant == tenant
+                                  select record).FirstOrDefault();
                     }
-
-
                 }
                 else
                 {
-
+                   
                     entity = (from record in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("Agent")
                               where record.Id == id && record.Tenant == tenant
                               select record).FirstOrDefault();
@@ -444,131 +427,53 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 string entityName = "Card_CachedId" + code + tenant;
 
 
+                if (HttpContext.Current != null)
+                {
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
 
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        entityId = (from a in context.Cards
+                                    where a.Tenant == tenant && a.Code == code
+                                    select a.Id).FirstOrDefault();
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null && entityId != null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, entityId, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+                    }
+                    else
+                    {
+                        entityId = (string)CacheManager.CacheWrapper.Get(entityName);
+                    }
+                }
+                else
                 {
 
                     entityId = (from a in context.Cards
                                 where a.Tenant == tenant && a.Code == code
                                 select a.Id).FirstOrDefault();
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null && entityId != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, entityId, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
                 }
-                else
-                {
-                    entityId = (string)CacheManager.CacheWrapper.Get(entityName);
-                }
-
-
             }
 
             return entityId;
         }
 
-        public string GetCardIdByCodePartnerTypes(string code, int tenant, List<string> partnerTypes = null)
-        {
-            string entityId = null;
-            if (!string.IsNullOrEmpty(code))
-            {
-                string entityName = "Card_CachedId" + code + tenant;
 
-
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-
-                    entityId = (from a in context.Cards
-                                where a.Tenant == tenant && a.Code == code && partnerTypes.Contains(a.PartnerTypeId)
-                                select a.Id).FirstOrDefault();
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null && entityId != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, entityId, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
-                }
-                else
-                {
-                    entityId = (string)CacheManager.CacheWrapper.Get(entityName);
-                }
-
-
-            }
-
-            return entityId;
-        }
-
-        public string GetCardIdByExternalId(string externalId, int tenant)
-        {
-            string entityId = null;
-            if (!string.IsNullOrEmpty(externalId))
-            {
-                string entityName = "Card_CachedId" + externalId + tenant;
-
-
-
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-
-                    entityId = (from a in context.Cards
-                                where a.Tenant == tenant && a.ReceivablesAccountingCard == externalId
-                                select a.Id).FirstOrDefault();
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null && entityId != null)
-                    {
-                        CacheManager.CacheWrapper.Insert(entityName, entityId, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
-                }
-                else
-                {
-                    entityId = (string)CacheManager.CacheWrapper.Get(entityName);
-                }
-
-
-            }
-
-            return entityId;
-        }
 
         public string GetActiveCardIdByCode(string code, int tenant)
         {
-
+        
             string entityId = (from a in context.Cards
-                               where a.Tenant == tenant && a.Code == code && !a.InActive
-                               select a.Id).FirstOrDefault();
+                        where a.Tenant == tenant && a.Code == code && !a.InActive
+                        select a.Id).FirstOrDefault();
 
             return entityId;
         }
 
-        public List<string> GetActiveCardsIdsByCodes(List<string> codes, string typeId, int tenant)
-        {
-
-            List<string> entitiesIds = (from a in context.Cards
-                                        where a.Tenant == tenant && codes.Contains(a.Code) && a.PartnerTypeId == typeId && !a.InActive
-                                        select a.Id).ToList();
-
-            return entitiesIds;
-        }
 
 
 
-        public Card GetCardWithPrimaryContactById(string id, int tenant)
-        {
-            return (from a in context.Cards.Include("PrimaryContact")
-                    where a.Id == id && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
-        public Card GetCard(string id, int tenant)
-        {
-            
-                return (from a in context.Cards
-                    where a.Id == id && a.Tenant == tenant
-                    select a).FirstOrDefault();
-            
-            
-        }
+
 
 
         public IQueryable<Card> GetCards(List<string> allCardsId, int tenant)
@@ -582,7 +487,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return myResult;
         }
-
+      
         public void Add(Card entity)
         {
             context.Cards.Add(entity);
@@ -648,10 +553,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Dictionary<string, string> GetCustomerNamesById(List<string> customerIds)
         {
-            //   Dictionary<string, string> result = new Dictionary<string, string>();
+         //   Dictionary<string, string> result = new Dictionary<string, string>();
             Dictionary<string, string> customers = (from a in context.Cards
                                                     where customerIds.Contains(a.Id)
-                                                    select a).ToDictionary(d => d.Id, f => f.LocalName != null ? f.LocalName : f.EnglishName);
+                                                 select a).ToDictionary(d => d.Id, f => f.LocalName!=null? f.LocalName:f.EnglishName);
 
 
 
@@ -671,10 +576,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                           && a.Tenant == tenant
                                           select a);
             return cardLists;
-        }
-        public List<Card> GetAllCardsByContactId(string contactId, int tenant)
+        }  
+        public List<Card> GetAllCardsByContactId(string contactId,int tenant)
         {
-            return context.Cards.Where(a => a.PrimaryContactId == contactId && a.Tenant == tenant).ToList();
+            return context.Cards.Where(a=>a.PrimaryContactId == contactId && a.Tenant==tenant).ToList();
         }
 
 
@@ -688,9 +593,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public string GetEnglishNameCardById(string id, int tenant)
         {
-            string englishName = ((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
-                                   where a.Id == id
-                                   select a.EnglishName)).FirstOrDefault();
+            string englishName =((from a in context.Cards.Include("PartnerType").Include("PaymentTerm").Include("Customer").Include("Customer.SalesmanUser").Include("Airline").Include("SharedLogisticsInvitationStatus").Include("ImageDetail").Include("InvoiceCurrency").Include("VatType").Include("Trucker").Include("ShippingLine").Include("CustomAgent").Include("ShippingAgent").Include("Warehouse").Include("Agent").Include("Vendor")
+                                                          where a.Id == id
+                                                          select a.EnglishName)).FirstOrDefault();
 
             return englishName;
         }
@@ -701,106 +606,5 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where record.Tenant == tenant && record.PartnerTypeId == "AL"
                     select record);
         }
-
-        public IQueryable<Card> GetCustomerCards(int tenant)
-        {
-            return (from record in context.Cards
-                    where record.Tenant == tenant && record.PartnerTypeId == "CS"
-                    select record);
-        }
-
-        public bool IsUploadingUniqueKeyExist(string uniqueCode)
-        {
-            return (from a in context.Cards
-                    where a.UploadingUniqueKey == uniqueCode
-                    select a).Any();
-        }
-
-        public Card GetSingleCardByUniqueCode(string unique, int tenant, bool getFromCache)
-        {
-            if (!string.IsNullOrEmpty(unique))
-            {
-                string entityName = "Card" + unique + tenant;
-                Card entity;
-                if (getFromCache)
-                {
-
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-
-                        entity = (from a in context.Cards
-                                  where a.Tenant == tenant && a.UploadingUniqueKey == unique
-                                  select a).FirstOrDefault();
-
-                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                        }
-                    }
-                    else
-                    {
-                        entity = (Card)CacheManager.CacheWrapper.Get(entityName);
-                    }
-
-
-                }
-                else
-                {
-                    entity = (from record in context.Cards where record.UploadingUniqueKey == unique && record.Tenant == tenant select record).FirstOrDefault();
-                }
-                return entity;
-            }
-            return null;
-        }
-
-        public List<Card> GetCardsFromIdList(List<string> ids, int tenant)
-        {
-            ICommonDataContext cardViewContext = CommonDataContext.GetContext(tenant);
-            List<Card> cards = new List<Card>();
-            if (ids.Count() != 0)
-            {
-                StringBuilder values = new StringBuilder();
-                values.AppendFormat("{0}", "'" + ids[0] + "'");
-                for (int i = 1; i < ids.Count; i++)
-                    values.AppendFormat(", {0}", "'" + ids[i] + "'");
-
-                string sql = string.Format("SELECT * FROM CARDS WHERE ID IN ({0})", values);
-                cards = cardViewContext.GetActiveDbContext().Database.SqlQuery<Card>(sql).ToList();
-            }
-
-            return cards;
-        }
-      
-
-        public List<string> GetBillToCardById(string ids, int tenant)
-        {
-            if (string.IsNullOrWhiteSpace(ids))
-            {
-                return null;
-            }
-
-            List<string> cards = ids?.Split(',').ToList<string>();
-            var billToIds = context.Cards
-                                   .Where(a => cards.Contains(a.Id) 
-                                               && a.Tenant == tenant 
-                                               && !string.IsNullOrEmpty(a.BillToId))
-                                   .Select(a => a.BillToId)
-                                   .ToList();
-
-            return billToIds;
-        }
-
-        public string CheckIfVatNumberExists(string partnerTypeId, string vatNumber, string Code, int tenant)
-        {
-           var code = context.Cards
-                                   .Where(a =>
-                                               a.Tenant == tenant
-                                               && a.VatNumber == vatNumber && a.Code != Code
-                                               && a.PartnerTypeId == partnerTypeId).FirstOrDefault()?.Code;
-
-            return code;
-        }
-
-
     }
 }

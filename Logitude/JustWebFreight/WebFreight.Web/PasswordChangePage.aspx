@@ -7,20 +7,19 @@
 
     <title></title>
 
-    <link href="css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="js/knockout-kendo.min.js" type="text/javascript"></script>
-
     <link href="HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
     <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css" />
     <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css" />
+    <link href="HtmlHelpers/CSS/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
+    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css" />
     <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css" />
-    <script src="HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>
-    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
+
+    <script src="HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js" type="text/javascript"></script>
+
 
     <style type="text/css">
         .auto-style1 {
@@ -212,9 +211,13 @@
                 top: 1px;
             }
     </style>
+    <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>
 </head>
-
 <body>
+
+    <script src="HtmlHelpers/JS/knockout-2.2.0.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/knockout-kendo.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/app.js" type="text/javascript"></script>
 
     <form id="form1" runat="server">
@@ -225,7 +228,7 @@
                     <tr style="height: 140px;">
                         <td></td>
                         <td style="width: 1024px; text-align: center; vertical-align: top;">
-                            <img id="loginlogo" width="290" height="114" style="margin-top: 50px;" [src]="LoginLogo" />
+                            <img id="loginlogo" width="290" height="114" style="margin-top: 50px;" src="images/LoginScreen/header.jpg" />
                         </td>
                         <td></td>
                     </tr>
@@ -435,27 +438,18 @@
 
     <script type="text/javascript">
 
-
          var x =  window.sessionStorage.getItem("PasswordChange");
-         var LoginLogo = ""; //"images/LoginScreen/header.jpg"; 
-         var IsLogitude = window.location.href.indexOf("logitudeworld") > -1
-
-        if (IsLogitude == true) {
-          $("#loginlogo").attr("src", "images/LoginScreen/header.jpg");
-        }  
 
          if (x == "ShowLink") {
              window.sessionStorage.setItem("PasswordChange", "");
              document.getElementById("BackToLogin").style.display = "";
            
          } else document.getElementById("BackToLogin").style.display = "none";
-        var url = window.location.href;
-        
-
-
-        //var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;
-        var myDomain = url.split('/')[2].split(':')[0];
-           
+           var url = window.location.href;
+           var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;
+           var myDomain = url.split('/')[2];
+           if (isDSV == true) {
+               window.sessionStorage.setItem("ResetPWD", "true");
                var myLogoMethodUrl = "api/PrivateLable/getisprivatelableurl/?url=" + myDomain;
                $.ajax({
                    url: myLogoMethodUrl,
@@ -465,32 +459,30 @@
                    success: function (result) {
                        if (result) IsPrivateLabel = result.EnablePrivateLable;
                        if (IsPrivateLabel == true) {
-                           window.sessionStorage.setItem("ResetPWD", "true");
                            window.sessionStorage.setItem("ContactEmail", result.ContactUsEmail);
                            window.sessionStorage.setItem("IsPrivateLabel", IsPrivateLabel);
                            window.sessionStorage.setItem("SmallLogoURL", result.SmallLogoURL);
                            window.sessionStorage.setItem("LogoURL", result.LogoURL);
                            window.sessionStorage.setItem("PrivateLabelUrl", result.PrivateLabelUrl);
                            window.sessionStorage.setItem("PrivateLabelShortName", result.PrivateLabelShortName);
-                           window.sessionStorage.setItem("IsDSV", result.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1);
 
                            //$("#BackToLogin").attr("href", "Login.aspx?tenant=" + BrandingTenant);
-                           document.location.href = "AngularLogin" + "/index.html";
+
                        }
-                       else {
-                           var Containerelem = document.getElementById("Container");
-                           if (Containerelem) {
-                               Containerelem.style.display = 'block';
-                           }
-                       }
+                       document.location.href = "AngularLogin" + "/index.html";
                    },
                });
 
                //var version = "";
                //if (userdata.HtmlVersion) version = userdata.HtmlVersion;
                //document.location.href = "Angular" + version + "/index.html";
-           
-           
+           }
+           else {
+               var Containerelem = document.getElementById("Container");
+               if (Containerelem) {
+                   Containerelem.style.display = 'block';
+               }
+           }
            document.onkeypress = capLock;
 
            function capLock(e) {
@@ -1070,9 +1062,7 @@
                                 });
                             }
                             else {
-
-                                $("#loginlogo").attr("src", GetApplicationLogoSource(myLogoCode));
-
+                                $("#loginlogo").attr("src", "images/LoginScreen/header.jpg");
                             }
 
                         },
@@ -1180,9 +1170,8 @@
         }
 
         $(document).ready(function () {
-            var bindingNode = document.getElementById('Container');
-            ko.cleanNode(bindingNode);
-            ko.applyBindings(new viewModel(), bindingNode);
+           
+            ko.applyBindings(new viewModel());
         });
     </script>
 

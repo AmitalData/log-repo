@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -62,7 +62,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Freight).HasColumnName("Freight");
             this.Property(t => t.OtherCharges).HasColumnName("OtherCharges");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             // Relationships
             //this.HasRequired(t => t.FreightPrepaidCollect)

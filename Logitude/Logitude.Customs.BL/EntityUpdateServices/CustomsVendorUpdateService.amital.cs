@@ -23,7 +23,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             Send2Amital("TableID",dirtyCustomsVendorPM);
         }
         private static void Send2Amital(string TableID,CustomsVendorPM dirtyCustomsVendorPM)
-        {         
+        {
+            var setting = CustomsSettingQueryService.GetSettingByTenant(dirtyCustomsVendorPM.Tenant);
+            if (setting != null)
+            {
+                if (!setting.IsConnectedToUniFreight)
+                {
+                    return;
+                }
+            }
+
             var myCUSTOMS_TABLE = new CUSTOMS_TABLE();
             //myCUSTOMS_TABLE.TABLECODE = TableID;
             myCUSTOMS_TABLE.TABLECODE = new TABLECODE[] { new TABLECODE { TABLECODE_ID = "CTBCUSTSUP" } }; ;

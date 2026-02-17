@@ -11,11 +11,9 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {TenantLoginPolicyList} from '../../../../Common/EntityLists/TenantLoginPolicyList';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {UserExtendedListService} from '../../../../Common/Services/ExtendedLists/UserExtendedListService';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './UserGeneralTabComponent.html',
     providers: [TenantLoginPolicyListService],
 })
@@ -25,62 +23,14 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public ObjectTableName: string = "User";
     public DataContext = this;
     public TechnologyList: CodeNameClass[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
-    public SignatureImageId: string;
-    public EntityId: string; 
-    private fullAccountingSettingListService: FullAccountingSettingListService;
-
+    private CurrentSession = SessionLocator.SelectedSession;    
     constructor(public entityArgs: EntityArgs, public TenantLoginPolicyListService: TenantLoginPolicyListService) {
         super();
-        this.fullAccountingSettingListService = new FullAccountingSettingListService();
         this.EntityPM = entityArgs.EntityPM;
-        this.EntityId = this.EntityPM.Id;
         this.BuildTechnologyList();
-        this.SetUIProperties(); 
+        this.SetUIProperties();
         this.Listen();
-        this.CheckSecurityPolicySettingToShowPhone();
-
-        this.BuildLayoutDirectionList();
-        this.SetSelectedDirection();
-
-        this.InitializeImageIds();
-        this.getAccountingSettingSecurityLevelField();
-       // this.SelectedDirection = this.EntityPM.LayoutDirection == 'ltr' ? this.LayoutDirections[0] : this.LayoutDirections[1];
-    }
-
-    private InitializeImageIds() {
-        this.SignatureImageId = this.EntityPM.SignatureImageId;
-    }
-
-    SignatureUploadedCompleted(imageId) {
-        this.SignatureImageId = imageId;
-        this.EntityPM.SignatureImageId = imageId;
-
-    }
-
-    RemoveImage(name) {
-
-        switch (name) {
-            case "SignatureImageId": {
-                this.EntityPM.SignatureImageId = null;
-                this.SignatureImageId = null;
-                break;
-            }
-            default: {
-                //statements; 
-                break;
-            }
-        }
-    } 
-
-    private SetSelectedDirection() {
-        if (this.EntityPM.LayoutDirection == 'ltr') {
-            this.SelectedDirection = this.LayoutDirections[0];
-        }
-        else if (this.EntityPM.LayoutDirection == 'rtl') {
-            this.SelectedDirection = this.LayoutDirections[1];
-        }
-        else this.SelectedDirection = this.LayoutDirections[2];
+        this.CheckSecurityPolicySettingToShowPhone();        
     }
 
     private SaveCompletedEvent: any = null;
@@ -110,24 +60,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
-    public LayoutDirections: CodeNameClass[];
-   
 
-    private selectedDirection: CodeNameClass;
-    get SelectedDirection() { return this.selectedDirection; }
-    set SelectedDirection(value: CodeNameClass) {
-        if (this.selectedDirection != value) {
-            this.selectedDirection = value;
-            if (value.Code == "3") {
-                if (!AppTool.IsNullOrEmpty(this.EntityPM.LayoutDirection)) {
-                    this.EntityPM.LayoutDirection = null;
-                }
-            } else if ( this.EntityPM.LayoutDirection != value.Name.toLowerCase()) {
-                this.EntityPM.LayoutDirection = value.Name.toLowerCase();
-            }
-
-        }
-    }
     public SelectedTechnology: CodeNameClass;
     BuildTechnologyList() {
         this.TechnologyList = [];
@@ -161,7 +94,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     CheckSecurityPolicySettingToShowPhone() {
 
 
-        this.TenantLoginPolicyListService.getSingle(SessionLocator.Tenant).subscribe((res:any) => {
+        this.TenantLoginPolicyListService.getSingle(SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var result: TenantLoginPolicyList = pmResponse.Result;
@@ -173,21 +106,6 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         });
     }
 
-    getAccountingSettingSecurityLevelField() {
-        this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
-            this.CurrentSession.StopBusyIndicator();         
-            if (response != null) {
-                var response = response.Result;
-                if (response.IsSecurityLevelActivated) {
-                        this.IsSecurityLevelVisibile = true;
-                    }
-                    else {
-                        this.IsSecurityLevelVisibile= false;
-                    }
-                }
-        });
-    }
-
     public IsEditingEnabled: boolean = false;
     public IsPersonalIdVisible: boolean = false;
     public IsExpirationDateVisible: boolean = false;
@@ -195,20 +113,11 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public IsLicencedUserVisible: boolean = false;
     public IsShowContactInMobileVisiable: boolean = false;
     public IsAdditionalPackagesOnlyVisible: boolean = false;
-    public IsLayoutDirectionVisibile: boolean = false;
-    public IsDontShowLocalLabelsVisibile: boolean = false;
-    public IsSecurityLevelVisibile: boolean = false;
-
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("User", "PERSONALID")) {
             this.IsPersonalIdVisible = true;
         }
-        if (FeatureLocator.HasFeaturePermession("User", "LYDR")) {
-            this.IsLayoutDirectionVisibile = true;
-        }
-        if (FeatureLocator.HasFeaturePermession("User", "DontShowLocalLabels")) {
-            this.IsDontShowLocalLabelsVisibile = true;
-        }
+
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
             this.IsExpirationDateVisible = true;
         }
@@ -230,7 +139,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
 
         var isEditingEnabled = true;
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
                 isEditingEnabled = false;
             }
@@ -240,7 +149,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("Email", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("PersonalId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("PersonalId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("DepartmentId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("BusinessUnitId", this.ObjectTableName, isEditingEnabled);
@@ -253,19 +162,8 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("LicencedUser", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("IsShowContactDetailsInTheMobileApp", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ShowLocalNameInLOV", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("DontShowLocalLabels", this.ObjectTableName, isEditingEnabled);
-
-    }
-   
-    BuildLayoutDirectionList() {
-
-        this.LayoutDirections = [];
-        this.LayoutDirections.push(new CodeNameClass("1", "LTR"));
-        this.LayoutDirections.push(new CodeNameClass("2", "RTL"));
-        this.LayoutDirections.push(new CodeNameClass("3", "Not set"));
     }
 
-   
     public get Email() { return this.EntityPM.Email; }
     public set Email(value: string) {
         if (this.EntityPM.Email != value) {
@@ -352,7 +250,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
 
             if (SessionLocator.TenantManagementJS.IsMultiPackage || SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
                 var service: UserExtendedListService = new UserExtendedListService();
-                service.GetUserLicensesCountForUser(this.EntityPM.Id).subscribe((myResult:any) => {
+                service.GetUserLicensesCountForUser(this.EntityPM.Id).subscribe(myResult => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         var count: number = myResponse.Result;
@@ -419,24 +317,10 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
     }
 
-    public get DontShowLocalLabels () { return this.EntityPM.DontShowLocalLabels; }
-    public set DontShowLocalLabels (value: boolean) {
-        if (this.EntityPM.DontShowLocalLabels  != value) {
-            this.EntityPM.DontShowLocalLabels  = value;
-        }
-    }
-
     public get AdditionalPackagesOnly() { return this.EntityPM.AdditionalPackagesOnly; }
     public set AdditionalPackagesOnly(value: boolean) {
         if (this.EntityPM.AdditionalPackagesOnly != value) {
             this.EntityPM.AdditionalPackagesOnly = value;
-        }
-    }
-
-    public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
-    public set SecurityLevel(value: number) {
-        if (this.EntityPM.SecurityLevel != value) {
-            this.EntityPM.SecurityLevel = value;
         }
     }
 }

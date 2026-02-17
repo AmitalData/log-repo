@@ -7,7 +7,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -25,36 +25,21 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.ShipmentsModel;
-using Simplog.Data.QuoteModel;
-using Logitude.BL.Interfaces;
-using Logitude.Server.Tools;
-using Microsoft.Practices.Unity;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Validating
 {
     public class ShipmentValidating
     {
-        public static void Validate(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity, ICommonDataContext myCommonContext, Tenant loggedTenant, bool isPatchUpdate = false)
+        public static void Validate(ShipmentPM entityPM, Shipment entityPoco, bool isNewEntity, ICommonDataContext myCommonContext, Tenant loggedTenant)
         {
             if (isNewEntity)
             {
-                ValidateShipmentNumber(entityPM);
                 ValidateProductTypePermission(entityPM, myCommonContext);
             }
 
             else
             {
-                if (!isPatchUpdate)
-                {
-                    ValidateConcurrencyGUID(entityPM, entityPoco);
-                }
+                ValidateConcurrencyGUID(entityPM, entityPoco);
             }
 
             if (entityPM.DirectionId.ToUpper() == "D")
@@ -67,16 +52,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 throw new ApplicationException("Ratio must be between 1-10");
             }
 
-            if (!loggedTenant.LogBoxTenantSetting.IsDocumentsArchive)
-            {
-                ValidateFromPort(entityPM, loggedTenant, isNewEntity);
-                ValidateToPort(entityPM, loggedTenant);
-                ValidateCarrierPrefix(entityPM);
-                ValidateAirlineRestriction(entityPM);
-                ValidateShipmentBookingFields(entityPM, isNewEntity);
-                ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
-                ValidateConvertShipmentType(entityPM);
-            }
+            ValidateFromPort(entityPM, loggedTenant);
+            ValidateToPort(entityPM, loggedTenant);
+            ValidateCarrierPrefix(entityPM);
+            ValidateAirlineRestriction(entityPM);
+            ValidateMasterNumber(entityPM);
+            ValidateShipmentBookingFields(entityPM, isNewEntity);
+            ValidateCreditLimitSetting(entityPM, entityPoco, myCommonContext, loggedTenant, isNewEntity);
+            ValidateConvertShipmentType(entityPM);
+           
+            //ValidateMultiVatPercentages(entityPM, myCommonContext);
 
             if (!entityPM.IsHybrid)
             {
@@ -84,89 +69,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 ValidateMasterTypeDueToTransportMode(entityPM);
                 ValidateMainCarriageCarrierDueToTransportMode(entityPM);
                 ValidatePartnerTypes(entityPM);
-                ValidateShipmentSubType(entityPM);
-
-                if (entityPM.IsMultiUpdate || FeatureToggleHelper.HasFeatureToggle("UNV", entityPM.Tenant))
-                {
-                    ValidateShipmentOperationalClose(entityPM, entityPoco);
-                    ValidateShipmentAccountingClose(entityPM, entityPoco);
-
-                    ValidateShipmentOperationalReOpen(entityPM, entityPoco);
-                    ValidateShipmentAccountingReOpen(entityPM, entityPoco);
-                }
-
-                if (FeatureToggleHelper.HasFeatureToggle("UNV", entityPM.Tenant))
-                {
-                    ValidateRoutingDates(entityPM, entityPoco);
-                }
             }
         }
 
-        private static void ValidateShipmentNumber(ShipmentPM entityPM)
-        {
-            ShipmentRepository shipmentRepository = new ShipmentRepository(entityPM.Tenant);
-            bool isShipmentNumberExist = shipmentRepository.CheckShipmentExistsByNumber(entityPM.ShipmentNumber, entityPM.Tenant);
-            if (!isShipmentNumberExist) return;
-            throw new ApplicationException("This shipment number is already exists");
-        }
-
-        public static string GetCustomerCreditLimitDetails(string customerId, string quoteId, bool isBuildFromQuote, int tenant)
-        {
-            var limitWarningMsg = "";
-            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
-            string myCreditLimitSettingsId = tenant.ToString();
-            CreditLimitSetting mySettings = (from d in myCommonContext.CreditLimitSettings where d.Id == myCreditLimitSettingsId select d).FirstOrDefault();
-            CustomerRepository myCustomerRepository = new CustomerRepository(myCommonContext);
-            Customer myCustomer = myCustomerRepository.GetSingleCustomer(customerId, tenant, false);
-            var IsCreditLimitActivated = mySettings.IsCreditLimitEnabled;
-            var IsCreditLimitHasAction = (mySettings.ShipmentCreationWarning == true) ? true : false;
-
-            if (IsCreditLimitActivated && IsCreditLimitHasAction && myCustomer != null && myCustomer.IsCreditLimitEnabled && FeatureToggleHelper.HasFeatureToggle("SWC", tenant))
-            {
-                if (myCustomer.CreditLimitAmount != null)
-                {
-                    IInvoiceContext myContext = InvoiceContext.GetContext(tenant);
-                    ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(myContext);
-                    ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
-                    double? myResult = invoiceQuery.GetCustomerCreditLimitActualAmount(customerId, tenant);
-                    double LimitAmount = myCustomer.CreditLimitAmount == null ? 0 : myCustomer.CreditLimitAmount.Value;
-                    double ActualBalance = myResult == null ? 0 : myResult.Value;
-                    int? WarningPercentage = myCustomer.CreditLimitWarningPercentage;
-
-                    if (myCustomer.CreditLimitOpenBalance != null)
-                    {
-                        ActualBalance += myCustomer.CreditLimitOpenBalance.Value;
-                    }
-
-                    if (isBuildFromQuote && quoteId != null)
-                    {
-                        IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
-                        double? quoteSaleLocalAmount = (from d in quotesContext.QuoteCharges
-                                                        where d.QuoteId == quoteId
-                                                        select d.SaleTotalAmountLocal).Sum();
-
-                        if (quoteSaleLocalAmount != null)
-                        {
-                            ActualBalance += quoteSaleLocalAmount.Value;
-                        }
-                    }
-
-                    LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
-                    ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
-
-                    if (WarningPercentage != null && (ActualBalance > (WarningPercentage * LimitAmount / 100)) && ActualBalance <= LimitAmount)
-                    {
-                        if (mySettings.ShipmentCreationWarning)
-                        {
-                            var RemainingLimit = LimitAmount - ActualBalance;
-                            limitWarningMsg = "The remaining credit limit for this customer is " + RemainingLimit;
-                        }
-                    }
-                }
-            }
-
-            return limitWarningMsg;
-        }
         private static void ValidateProductTypePermission(ShipmentPM entityPM, ICommonDataContext myCommonContext)
         {
             string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
@@ -199,44 +104,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         }
         private static void ValidateConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
         {
-            if (!entityPM.IsUpdatedByChampAnalyzer && !entityPM.IsDocsKPIsUpdatedFromWR)
+            if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
             {
-                if (!entityPM.ConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPoco.ConcurrencyGUID))
+                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+
+                if (entityPoco.UpdatedByPartner != null)
                 {
-                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-
-                    if (entityPoco.UpdatedByPartner != null)
-                    {
-                        msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
-                    }
-
-                    throw new OptimisticConcurrencyException(msg);
+                    msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
                 }
-            }
-            if (!entityPM.IsUpdatedOceanInsightsAnalyzer && !entityPM.IsHybrid)
-            {
-                ValidateOceanInsightsConcurrencyGUID(entityPM, entityPoco);
+
+                throw new OptimisticConcurrencyException(msg);
             }
         }
-
-        private static void ValidateOceanInsightsConcurrencyGUID(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            if (entityPM.OIConcurrencyGUID != entityPoco.OIConcurrencyGUID && entityPM.OINewConcurrencyGUID != entityPoco.OIConcurrencyGUID)
-            {
-                HandelThrowExcptionForOceanInsightsConcurrency(entityPM, entityPoco);
-            }
-        }
-
-        private static void HandelThrowExcptionForOceanInsightsConcurrency(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
-            if (entityPoco.UpdatedByPartner != null)
-            {
-                msg = msg.Replace("another user", entityPoco.UpdatedByPartner);
-            }
-            throw new OptimisticConcurrencyException(msg);
-        }
-
         private static void ValidateDomesticShipment(ShipmentPM entityPM)
         {
             if (entityPM.DirectionId.ToUpper() == "D")
@@ -257,16 +136,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     else
                     {
-                        ValidateInlandDomesticCasualAddressFields(entityPM);
-                        List<DomesticCountry> iDomesticCountries = GetInlandDomesticCountries(entityPM);
+                        List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+                        AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageFromAddressId, entityPM.Tenant);
+                        AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageToAddressId, entityPM.Tenant);
 
                         if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
                         {
                             bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                             bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
-                            bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                            if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
+                            if (!isAllPortsEC && !isAllPortsNA)
                             {
                                 throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
                             }
@@ -291,9 +170,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     {
                         bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                         bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
-                        bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                        if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
+                        if (!isAllPortsEC && !isAllPortsNA)
                         {
                             throw new ApplicationException("All Ports must be in the same country since the direction is Domestic");
                         }
@@ -301,11 +179,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateFromPort(ShipmentPM entityPM, Tenant loggedTenant, bool IsNewEntity)
+
+        private static void ValidateFromPort(ShipmentPM entityPM, Tenant loggedTenant)
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
 
-            if (!isInlandDomestic && (entityPM.IsCustomShipment && !IsNewEntity))
+            if (!isInlandDomestic)
             {
                 if (string.IsNullOrEmpty(entityPM.MainCarriageFromPortId))
                 {
@@ -360,7 +239,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
 
-            if (!isInlandDomestic && !entityPM.IsCustomShipment)
+            if (!isInlandDomestic)
             {
                 if (string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
                 {
@@ -422,13 +301,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 entityPM.Transshipment1CarrierPrefix = (entityPM.Transshipment1CarrierPrefix == null) ? null : entityPM.Transshipment1CarrierPrefix.Trim();
                 entityPM.Transshipment2CarrierPrefix = (entityPM.Transshipment2CarrierPrefix == null) ? null : entityPM.Transshipment2CarrierPrefix.Trim();
                 entityPM.Transshipment3CarrierPrefix = (entityPM.Transshipment3CarrierPrefix == null) ? null : entityPM.Transshipment3CarrierPrefix.Trim();
-                string flightCodeValidationMessage = entityPM.IsHybrid ? "airline prefix is not exist" : "flight Code is not exists";
+
                 if (!string.IsNullOrEmpty(entityPM.MainCarriageCarrierPrefix))
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.MainCarriageCarrierPrefix, entityPM.Tenant))
                     {
-
-                        throw new ApplicationException("Main Carriage "+ flightCodeValidationMessage);
+                        throw new ApplicationException("Main Carriage flight Code is not exists");
                     }
                 }
 
@@ -436,7 +314,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.Transshipment1CarrierPrefix, entityPM.Tenant))
                     {
-                        throw new ApplicationException("Transshipment1 " + flightCodeValidationMessage);
+                        throw new ApplicationException("Transshipment1 flight Code is not exists");
                     }
                 }
 
@@ -444,7 +322,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.Transshipment2CarrierPrefix, entityPM.Tenant))
                     {
-                        throw new ApplicationException("Transshipment2 " + flightCodeValidationMessage);
+                        throw new ApplicationException("Transshipment2 flight Code is not exists");
                     }
                 }
 
@@ -452,7 +330,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     if (!cardRepository.IsAirlineExistsInTenant(entityPM.Transshipment3CarrierPrefix, entityPM.Tenant))
                     {
-                        throw new ApplicationException("Transshipment3 " + flightCodeValidationMessage);
+                        throw new ApplicationException("Transshipment3 flight Code is not exists");
                     }
                 }
             }
@@ -498,6 +376,72 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         }
 
                         throw new ApplicationException("You are restricted for " + airlineCodes + " Airlines only");
+                    }
+                }
+            }
+        }
+        private static void ValidateMasterNumber(ShipmentPM entityPM)
+        {
+            if (entityPM.Tenant != 343 && entityPM.Tenant != 528 && !entityPM.IsHybrid)
+            {
+                if (!string.IsNullOrEmpty(entityPM.Master) && !string.IsNullOrEmpty(entityPM.AirlinePrefix) && !entityPM.IsCancelled)
+                {
+                    if (entityPM.DirectionId == "E" && entityPM.TransportModeId == "A")
+                    {
+                        if (entityPM.ShipmentLevelCode == "C" || entityPM.ShipmentLevelCode == "D")
+                        {
+                            int myTenant = entityPM.Tenant;
+                            bool isMasterFieldUsed = false;
+
+                            //ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+                            //IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(myTenant);
+
+                            //iQueryable = (from a in iQueryable
+                            //              where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
+                            //              && a.IsCancelled == false
+                            //                  && a.DirectionId == entityPM.DirectionId
+                            //                  && a.TransportModeId == entityPM.TransportModeId
+                            //              && a.Master == entityPM.Master
+                            //                  && a.AirlinePrefix == entityPM.AirlinePrefix
+                            //              select a);
+
+                            IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
+
+                            var iQueryable = (from myShipment in iContext.Shipments
+                                              join db_Masters in iContext.ShipmentMasterDatas
+                                              on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                              from myMasterData in ShipmentsMasters.DefaultIfEmpty()
+
+                                              where myShipment.Tenant == myTenant
+                                              && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
+                                              && myShipment.IsCancelled == false
+                                              && myShipment.DirectionId == entityPM.DirectionId
+                                              && myShipment.TransportModeId == entityPM.TransportModeId
+                                              && myMasterData.Master == entityPM.Master
+                                              && myMasterData.AirlinePrefix == entityPM.AirlinePrefix
+                                              select myShipment);
+
+                            if (!string.IsNullOrEmpty(entityPM.Id))
+                            {
+                                iQueryable = iQueryable.Where(d => d.Id != entityPM.Id);
+                            }
+
+                            if (iQueryable.Count() > 0)
+                            {
+                                isMasterFieldUsed = true;
+                                throw new ApplicationException("Master field already used in another Shipment");
+                            }
+
+                            else
+                            {
+                                BookingRepository myBookingRepository = new BookingRepository(myTenant);
+                                isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(entityPM.Master, entityPM.AirlinePrefix, entityPM.BookingId, myTenant, entityPM.DirectionId, entityPM.TransportModeId);
+                                if (isMasterFieldUsed)
+                                {
+                                    throw new ApplicationException("Master field already used in another Booking");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -691,16 +635,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                         myPartnerId_PM = entityPM.CustomerId;
                         myPartnerId_DB = entityPoco.CustomerId;
                         myPartnerText = TranslateTextsClass.Translate("Shipment.F.CustomerId", tenant) + ": " + entityPM.CustomerName;
-                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity, entityPM);
+                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity);
 
                         myPartnerId_PM = entityPM.AgentId;
                         myPartnerId_DB = entityPoco.AgentId;
                         myPartnerText = TranslateTextsClass.Translate("Shipment.F.AgentId", tenant) + ": " + entityPM.AgentName;
-                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity, entityPM);
+                        ValidateCreditLimitPartner(tenant, myAgentRepository, myCustomerRepository, myPartnerId_PM, myPartnerId_DB, myPartnerText, localCurrencyCode, isNewEntity);
                     }
                 }
             }
         }
+
         private static void ValidateCreditLimitPartnersRestrictions(ShipmentPM entityPM, Shipment entityPoco, CreditLimitSetting mySettings, bool isNewEntity)
         {
             if (entityPM.CustomerId != null)
@@ -832,7 +777,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity, ShipmentPM entityPM)
+
+        private static void ValidateCreditLimitPartner(int tenant, AgentRepository myAgentRepository, CustomerRepository myCustomerRepository, string myPartnerId, string mydbPartnerId, string myPartnerText, string localCurrencyCode, bool isNewEntity)
         {
             if (!string.IsNullOrEmpty(myPartnerId))
             {
@@ -877,26 +823,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                                         ActualBalance += myCustomer.CreditLimitOpenBalance.Value;
                                     }
 
-                                    if (isNewEntity && entityPM.IsBuildFromQuote)
-                                    {
-                                        if (entityPM.QuoteId != null)
-                                        {
-                                            IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
-
-                                            double? quoteSaleLocalAmount = (from d in quotesContext.QuoteCharges
-                                                                            where d.QuoteId == entityPM.QuoteId
-                                                                            select d.SaleTotalAmountLocal).Sum();
-
-                                            if (quoteSaleLocalAmount != null)
-                                            {
-                                                ActualBalance += quoteSaleLocalAmount.Value;
-                                            }
-                                        }
-                                    }
-
-                                    LimitAmount = MethodHelper.Roundd(LimitAmount, 2);
-                                    ActualBalance = MethodHelper.Roundd(ActualBalance, 2);
-
                                     if (ActualBalance > LimitAmount)
                                     {
                                         string errorText_Exceeded = "";
@@ -929,13 +855,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
-        public static void ValidateFutureRoutingDates(ShipmentPM entityPM, List<ShipmentPickUpPM> list1, List<ShipmentDeliveryPM> list2)
+
+        public static void ValidateRoutingDates(ShipmentPM entityPM, List<ShipmentPickUpPM> list1, List<ShipmentDeliveryPM> list2)
         {
             var tenantQuery = new TenantQuery(entityPM.Tenant);
             var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
 
-            var LBtenantsettingQuery = new LogBoxTenantSettingQuery(entityPM.Tenant);
-            var tenantsettingPM = LBtenantsettingQuery.GetSinglePM(entityPM.Tenant);
+           var LBtenantsettingQuery = new LogBoxTenantSettingQuery(entityPM.Tenant);
+           var  tenantsettingPM = LBtenantsettingQuery.GetSinglePM(entityPM.Tenant);
 
             if (!entityPM.IsHybrid && !tenantsettingPM.IsDocumentsArchive)
             {
@@ -961,20 +888,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
 
                 // PreCarriage
-                if (entityPM.ShipmentLevelCode == "H" && entityPM.PreForwardingATD > todayDateTime)
-                {
-                    throw new ApplicationException(message.Replace("Field", "Pre Forwarding ATD"));
-                }
-                else if (entityPM.PreCarriageATD > todayDateTime)
+                if (entityPM.PreCarriageATD > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "Pre Carriage ATD"));
                 }
-
-                if (entityPM.ShipmentLevelCode == "H" && entityPM.PreForwardingATA > todayDateTime)
-                {
-                    throw new ApplicationException(message.Replace("Field", "Pre Forwarding ATA"));
-                }
-                else if (entityPM.PreCarriageATA > todayDateTime)
+                if (entityPM.PreCarriageATA > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "Pre Carriage ATA"));
                 }
@@ -1036,20 +954,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
 
                 // OnCarriage
-                if (entityPM.ShipmentLevelCode == "H" && entityPM.OnForwardingATD > todayDateTime)
-                {
-                    throw new ApplicationException(message.Replace("Field", "On Forwarding ATD"));
-                }
-                else if (entityPM.OnCarriageATD > todayDateTime)
+                if (entityPM.OnCarriageATD > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "On Carriage ATD"));
                 }
-
-                if (entityPM.ShipmentLevelCode == "H" && entityPM.OnForwardingATA > todayDateTime)
-                {
-                    throw new ApplicationException(message.Replace("Field", "On Forwarding ATA"));
-                }
-                else if (entityPM.OnCarriageATA > todayDateTime)
+                if (entityPM.OnCarriageATA > todayDateTime)
                 {
                     throw new ApplicationException(message.Replace("Field", "On Carriage ATA"));
                 }
@@ -1082,6 +991,84 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+        public static bool IsMasterFieldUsedByAnotherShipment(string entityId, string myMasterField, string myAirlinePrefixField, string myDirectionId, string myTransportModeId, string myShipmentLevelCode, bool isCancelled, int myTenant)
+        {
+            bool isMasterFieldUsed = false;
+
+            if (myTenant != 343 && myTenant != 528)
+            {
+                if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
+                {
+                    if (myDirectionId == "E" && myTransportModeId == "A")
+                    {
+                        if (myShipmentLevelCode == "C" || myShipmentLevelCode == "D")
+                        {
+                            //ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+                            //IQueryable<ShipmentDataView> iQueryable1 = shipmentRepository.GetShipmentViewsByTenant(myTenant);
+
+                            //iQueryable1 = (from a in iQueryable1
+                            //               where (a.ShipmentLevelCode == "C" || a.ShipmentLevelCode == "D")
+                            //               && a.IsCancelled == false
+                            //               && a.DirectionId == myDirectionId
+                            //               && a.TransportModeId == myTransportModeId
+                            //                       && a.Master == myMasterField
+                            //                   && a.AirlinePrefix == myAirlinePrefixField
+                            //               select a);
+
+                            IShipmentsContext iContext = ShipmentsContext.GetContext(myTenant);
+
+                            var iQueryable = (from myShipment in iContext.Shipments
+                                              join db_Masters in iContext.ShipmentMasterDatas
+                                              on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
+                                              from myMasterData in ShipmentsMasters.DefaultIfEmpty()
+
+                                              where myShipment.Tenant == myTenant
+                                              && (myShipment.ShipmentLevelCode == "C" || myShipment.ShipmentLevelCode == "D")
+                                              && myShipment.IsCancelled == false
+                                              && myShipment.DirectionId == myDirectionId
+                                              && myShipment.TransportModeId == myTransportModeId
+                                              && myMasterData.Master == myMasterField
+                                              && myMasterData.AirlinePrefix == myAirlinePrefixField
+                                              select myShipment);
+
+                            if (!string.IsNullOrEmpty(entityId))
+                            {
+                                iQueryable = iQueryable.Where(d => d.Id != entityId);
+                            }
+
+                            if (iQueryable.Count() > 0)
+                            {
+                                isMasterFieldUsed = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return isMasterFieldUsed;
+        }
+        public static bool IsMasterFieldUsedByAnotherBooking(string myBookingId, string myMasterField, string myAirlinePrefixField, string myDirectionId, string myTransportModeId, string myShipmentLevelCode, bool isCancelled, int myTenant)
+        {
+            bool isMasterFieldUsed = false;
+
+            if (myTenant != 343 && myTenant != 528)
+            {
+                if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
+                {
+                    if (myDirectionId == "E" && myTransportModeId == "A")
+                    {
+                        if (myShipmentLevelCode == "C" || myShipmentLevelCode == "D")
+                        {
+                            BookingRepository myBookingRepository = new BookingRepository(myTenant);
+                            isMasterFieldUsed = myBookingRepository.IsMasterFieldUsed(myMasterField, myAirlinePrefixField, myBookingId, myTenant, myDirectionId, myTransportModeId);
+                        }
+                    }
+                }
+            }
+
+            return isMasterFieldUsed;
+        }
+
         private static void ValidateMasterTypeDueToTransportMode(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentLevelCode == "C")
@@ -1108,7 +1095,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     case "A":
                         {
-                            if (string.IsNullOrEmpty(entityPM.ShipmentTypeId) || entityPM.ShipmentTypeId != "Air")
+                            if (!string.IsNullOrEmpty(entityPM.ShipmentTypeId))
                             {
                                 throw new ApplicationException("Shipment type is not allowed for air transport mode");
                             }
@@ -1161,12 +1148,104 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+
         private static void ValidatePartnerTypes(ShipmentPM entityPM)
         {
             CardRepository cardRepository = new CardRepository(entityPM.Tenant);
             Card myCard = null;
+
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
+
+            if (!string.IsNullOrEmpty(entityPM.ShipperId))
+            {
+                myCard = cardRepository.GetSingleCard(entityPM.ShipperId, entityPM.Tenant);
+                if (myCard != null)
+                {
+                    if (entityPM.ShipmentLevelCode == "C")
+                    {
+                        if (tenantPM.AllowCustomersInAgentsLOV)
+                        {
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Shipper partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Shipper partner type should be agent");
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (tenantPM.AllowAgentInCustomersLOV)
+                        {
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Shipper partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "CS")
+                            {
+                                throw new ApplicationException("Shipper partner type should be customer");
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.ConsigneeId))
+            {
+                myCard = cardRepository.GetSingleCard(entityPM.ConsigneeId, entityPM.Tenant);
+                if (myCard != null)
+                {
+                    if (entityPM.ShipmentLevelCode == "C")
+                    {
+                        if (tenantPM.AllowCustomersInAgentsLOV)
+                        {
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Consignee partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Consignee partner type should be agent");
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (tenantPM.AllowAgentInCustomersLOV)
+                        {
+                            if (myCard.PartnerTypeId != "CS" && myCard.PartnerTypeId != "AG")
+                            {
+                                throw new ApplicationException("Consignee partner type should be agent or customer");
+                            }
+                        }
+
+                        else
+                        {
+                            if (myCard.PartnerTypeId != "CS")
+                            {
+                                throw new ApplicationException("Consignee partner type should be customer");
+                            }
+                        }
+                    }
+                }
+            }
 
             if (!string.IsNullOrEmpty(entityPM.AgentId))
             {
@@ -1208,7 +1287,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 myCard = cardRepository.GetSingleCard(entityPM.CustomAgentExportId, entityPM.Tenant);
                 if (myCard != null)
                 {
-                    if (myCard.PartnerTypeId != "CG" && myCard.PartnerTypeId != "AG")
+                    if (myCard.PartnerTypeId != "CG")
                     {
                         throw new ApplicationException("Customs agent export partner type should be customs agent");
                     }
@@ -1220,7 +1299,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 myCard = cardRepository.GetSingleCard(entityPM.CustomAgentImportId, entityPM.Tenant);
                 if (myCard != null)
                 {
-                    if (myCard.PartnerTypeId != "CG" && myCard.PartnerTypeId != "AG")
+                    if (myCard.PartnerTypeId != "CG")
                     {
                         throw new ApplicationException("Customs agent import partner type should be customs agent");
                     }
@@ -1314,9 +1393,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
             //}
         }
+
         private static void ValidateConvertShipmentType(ShipmentPM entityPM)
         {
-            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL || entityPM.ConvertShipmentToLTL || entityPM.ConvertShipmentToFTL)
+            if (entityPM.ConvertShipmentToLCL || entityPM.ConvertShipmentToFCL)
             {
                 if (!string.IsNullOrEmpty(entityPM.QuoteId))
                 {
@@ -1338,18 +1418,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 {
                     throw new ApplicationException("Cannot change shipment type when connected to house shipments ");
                 }
-                else if (HasPayablesAmounts(entityPM) && HasReceivablesAmounts(entityPM))
-                {
-                    throw new ApplicationException("Cannot change shipment type when shipment has Payables and Receivables amounts ");
-                }
-                else if (HasPayablesAmounts(entityPM))
-                {
-                    throw new ApplicationException("Cannot change shipment type when shipment has Payables amounts ");
-                }
-                else if (HasReceivablesAmounts(entityPM))
-                {
-                    throw new ApplicationException("Cannot change shipment type when shipment has Receivables amounts ");
-                }
             }
         }
         private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
@@ -1364,63 +1432,14 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iPort.Id + "P",
+                            Id = iPort.Id,
                             CountryId = iPort.CountryId,
                             CountryIsEC = iPort.CountryEC,
                             CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
-                            CountryIsGreaterChinese = iPort.CountryIsGreaterChinese,
                         });
                     }
-                }
+                }                                  
             }
-        }
-        private static List<DomesticCountry> GetInlandDomesticCountries(ShipmentPM entityPM)
-        {
-            List<DomesticCountry> domesticCountries = new List<DomesticCountry>();
-
-            switch (entityPM.InlandDomesticFromTypeCode)
-            {
-                case "PART":
-                    {
-                        AddDomesticAddress(domesticCountries, entityPM.MainCarriageFromAddressId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "PORT":
-                    {
-                        AddDomesticPort(domesticCountries, entityPM.MainCarriageFromPortId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
-                        break;
-                    }
-            }
-
-            switch (entityPM.InlandDomesticToTypeCode)
-            {
-                case "PART":
-                    {
-                        AddDomesticAddress(domesticCountries, entityPM.MainCarriageToAddressId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "PORT":
-                    {
-                        AddDomesticPort(domesticCountries, entityPM.MainCarriageToPortId, entityPM.Tenant);
-                        break;
-                    }
-
-                case "CASL":
-                    {
-                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticToCountryId, entityPM.Tenant);
-                        break;
-                    }
-            }
-
-            return domesticCountries;
         }
         private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
         {
@@ -1435,493 +1454,28 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iAddress.Id + "A",
+                            Id = iAddress.Id,
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
-                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
                         });
                     }
                 }
             }
         }
-        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iCountryId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
-                {
-                    CountryRepository countryRepository = new CountryRepository(iTenant);
-                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
-
-                    if (iCountry != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iCountry.Id + "C",
-                            CountryId = iCountry.Id,
-                            CountryIsEC = iCountry.EC,
-                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
-                            CountryIsGreaterChinese = iCountry.IsGreaterChina,
-                        });
-                    }
-                }
-            }
-        }
-
-        public static void ValidateCustomShipment(ShipmentPM entityPM, bool isNewEntity)
-        {
-            if (string.IsNullOrEmpty(entityPM.DepartmentId) && isNewEntity)
-            {
-                throw new ApplicationException("DepartmentId is mandatory");
-            }
-            if (string.IsNullOrEmpty(entityPM.CustomerId) && isNewEntity)
-            {
-                throw new ApplicationException("CustomerId is mandatory");
-            }
-            if (string.IsNullOrEmpty(entityPM.DeclarationOfficeCode) && isNewEntity)
-            {
-                throw new ApplicationException("DeclarationOfficeCode is mandatory");
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.IskaNumber) && !entityPM.IskaNumber.ToUpper().StartsWith("I"))
-            {
-                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidIskaNumber", entityPM.Tenant, true));
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.Mawb) && entityPM.TransportModeId == "A" && !(entityPM.Mawb.Count() == 8 && entityPM.Mawb.Count(char.IsDigit) == 8))
-            {
-                throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidMawb", entityPM.Tenant, true));
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.FlightVoyageNumber))
-            {
-                if (entityPM.TransportModeId == "A" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 4))
-                {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber", entityPM.Tenant, true));
-                }
-                if (entityPM.TransportModeId == "O" && !(entityPM.FlightVoyageNumber.Count() == 4 && entityPM.FlightVoyageNumber.Count(char.IsDigit) == 3 && char.IsLetter(entityPM.FlightVoyageNumber[0])))
-                {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Shipment.O.InvalidFlightVoyageNumber1", entityPM.Tenant, true));
-                }
-            }
-        }
-        public static List<MessageDetails> ValidateCheckAndConnectCustomShipment(ShipmentPM entityPM, Shipment shipment)
-        {
-            // get shipment freight forwarder reference and declaration referant data
-            FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(entityPM.Tenant);
-            FreightForwarderReference freightForwarderReferenceList = freightForwarderReferenceRepository.GetByForwarderShipmentNumber(entityPM.ForwarderShipmentNumber, entityPM.Tenant).FirstOrDefault();
-
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
-            string decId = declarationQueryService.GetIdByCustomFileNo(entityPM.ShipmentNumber, entityPM.Tenant);
-            DeclarationReferantDataRepository declarationReferantDataRepository = new DeclarationReferantDataRepository(entityPM.Tenant);
-            DeclarationReferantData declarationReferantDataPM = declarationReferantDataRepository.GetSingle(decId, entityPM.Tenant);
-
-            List<MessageDetails> messageDetailsList = new List<MessageDetails>();
-
-            if (entityPM.CustomerId != shipment.CustomerId)
-            {
-                messageDetailsList.Add(MessageDetailsProvider.NotMatchedCustomerId);
-            }
-            if (entityPM.ForwarderShipmentNumber == freightForwarderReferenceList?.ForwarderShipmentNumber && entityPM.FreightForwarderId == shipment.FreightForwarderId)
-            {
-                messageDetailsList.Add(MessageDetailsProvider.CustomFileAlreadyLinked);
-            }
-            if (!string.IsNullOrEmpty(shipment.TransportModeId) && entityPM.TransportModeId != shipment.TransportModeId)
-            {
-                messageDetailsList.Add(MessageDetailsProvider.NotMatchedTransportModeId);
-            }
-            if (!string.IsNullOrEmpty(declarationReferantDataPM?.CarrierCode) && entityPM.CarrierCode != declarationReferantDataPM.CarrierCode)
-            {
-                messageDetailsList.Add(MessageDetailsProvider.NotMatchedCarrierCode);
-            }
-            if (!string.IsNullOrEmpty(declarationReferantDataPM?.Mawb) && entityPM.Mawb != declarationReferantDataPM.Mawb)
-            {
-                messageDetailsList.Add(MessageDetailsProvider.NotMatchedMawb);
-            }
-            if (!string.IsNullOrEmpty(shipment.House) && entityPM.House != shipment.House)
-            {
-                messageDetailsList.Add(MessageDetailsProvider.NotMatchedHouse);
-            }
-            if (!string.IsNullOrEmpty(shipment.IskaNumber) && entityPM.IskaNumber != shipment.IskaNumber)
-            {
-                messageDetailsList.Add(MessageDetailsProvider.NotMatchedIskaNumber);
-            }
-            return messageDetailsList;
-        }
-
-        public static class MessageDetailsProvider
-        {
-            private static readonly Dictionary<string, MessageDetails> PredefinedMessageDetailsList = new Dictionary<string, MessageDetails>()
-            {
-                { "NotFoundShipmentNumber", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 1, MessageData = "תיק עמילות לא קיים" } },
-                { "NotMatchedCustomerId", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 2, MessageData = "לקוח  בתיק שילוח שונה מלקוח מתיק העמילות" } },
-                { "CustomFileAlreadyLinked", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 3, MessageData = "תיק מקושר כבר לתיק שילוח" } },
-                { "NotMatchedTransportModeId", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 4, MessageData = "סוג הובלה לא מתאים" } },
-                { "NotMatchedCarrierCode", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 5, MessageData = "קוד חב' תעופה לא מתאים" } },
-                { "NotMatchedMawb", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 6, MessageData = "שטר מטען ראשי לא זהה" } },
-                { "NotMatchedHouse", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 7, MessageData = "שטר מטען פנימי לא זהה" } },
-                { "NotMatchedIskaNumber", new MessageDetails { MessageType = MessageTypeEnum.Warning, MessageCode = 8, MessageData = "מזהה עיסקה פנימי לא זהה" } },
-                { "FoundShipment", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 9, MessageData = "אותר תיק עמילות" } },
-                { "FoundMultipleShipments", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 10, MessageData = "אותרו כמה תיקי עמילות מתאימים לחיבור" } },
-                { "LinkedToAnotherForwarderShipment", new MessageDetails { MessageType = MessageTypeEnum.Error, MessageCode = 11, MessageData = "תיק עמילות {CustomShipmentNumber} מחובר לתיק שילוח {ForwarderShipmentNumber}" } },
-            };
-
-            public static MessageDetails NotFoundShipmentNumber => PredefinedMessageDetailsList["NotFoundShipmentNumber"];
-            public static MessageDetails NotMatchedCustomerId => PredefinedMessageDetailsList["NotMatchedCustomerId"];
-            public static MessageDetails CustomFileAlreadyLinked => PredefinedMessageDetailsList["CustomFileAlreadyLinked"];
-            public static MessageDetails NotMatchedTransportModeId => PredefinedMessageDetailsList["NotMatchedTransportModeId"];
-            public static MessageDetails NotMatchedCarrierCode => PredefinedMessageDetailsList["NotMatchedCarrierCode"];
-            public static MessageDetails NotMatchedMawb => PredefinedMessageDetailsList["NotMatchedMawb"];
-            public static MessageDetails NotMatchedHouse => PredefinedMessageDetailsList["NotMatchedHouse"];
-            public static MessageDetails NotMatchedIskaNumber => PredefinedMessageDetailsList["NotMatchedIskaNumber"];
-            public static MessageDetails FoundShipment => PredefinedMessageDetailsList["FoundShipment"];
-            public static MessageDetails FoundMultipleShipments => PredefinedMessageDetailsList["FoundMultipleShipments"];
-            public static MessageDetails LinkedToAnotherForwarderShipment => PredefinedMessageDetailsList["LinkedToAnotherForwarderShipment"];
-        }
-
-        public class MessageDetails
-        {
-            public string MessageType { get; set; }
-            public int MessageCode { get; set; }
-            public string MessageData { get; set; }
-        }
-
-        public static class MessageTypeEnum
-        {
-            public const string Error = "Error";
-            public const string Warning = "Warning";
-        }
-
-        public static void ValidateContainerNumbers(ShipmentPM entityPM)
+        private static void ValidateContainerNumbers(ShipmentPM entityPM)
         {
             if (entityPM.ShipmentTypeId == "FCL" || entityPM.ShipmentTypeId == "FCLD")
             {
                 if (entityPM.ShipmentPackages != null && entityPM.ShipmentPackages.Count() > 0)
                 {
-                    var IsDuplicate = entityPM.ShipmentPackages.Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.ContainerNumber != null).GroupBy(g => g.ContainerNumber.Trim()).Any(g => g.Count() > 1);
+                    var IsDuplicate = entityPM.ShipmentPackages .Where(a => a.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && a.ContainerNumber != null).GroupBy(g => g.ContainerNumber).Any(g => g.Count() > 1);
                     if (IsDuplicate)
                     {
                         throw new ApplicationException("Cannot have 2 containers with the same number, you can use inside packages to add detailed packages");
                     }
                 }
             }
-        }
-        private static void ValidateShipmentSubType(ShipmentPM entityPM)
-        {
-            if (!string.IsNullOrEmpty(entityPM.ShipmentSubTypeId))
-            {
-                ShipmentSubTypeRepository subTypeRepository = new ShipmentSubTypeRepository(entityPM.Tenant);
-                ShipmentSubType subType = subTypeRepository.GetSingleShipmentSubType(entityPM.ShipmentSubTypeId, entityPM.Tenant);
-
-                if (subType != null && subType.Code?.ToLower() != "horse")
-                {
-                    if (entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode?.ToLower())
-                    {
-                        throw new ApplicationException("Sub Type is not allowed with this shipment type");
-                    }
-                }
-            }
-        }
-
-        private static bool HasPayablesAmounts(ShipmentPM entityPM)
-        {
-            bool hasAnyPayableAmount = false;
-            if (entityPM.ShipmentPayables != null)
-            {
-                hasAnyPayableAmount = entityPM.ShipmentPayables.Select(payable => payable.ExpectedAmount).Where(payable => payable != null && payable != 0.0).Any();
-            }
-            return hasAnyPayableAmount;
-        }
-        private static bool HasReceivablesAmounts(ShipmentPM entityPM)
-        {
-            bool hasAnyReceivableAmount = false;
-            if (entityPM.ShipmentReceivables != null)
-            {
-                hasAnyReceivableAmount = entityPM.ShipmentReceivables.Select(receivable => receivable.TotalAmount).Where(receivable => receivable != null && receivable != 0.0).Any();
-            }
-            return hasAnyReceivableAmount;
-        }
-        private static void ValidateShipmentOperationalClose(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            if (entityPM.IsOperationalClosed && !entityPoco.IsOperationalClosed)
-            {
-                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)            
-                throw new ApplicationException("House shipments cannot be operational closed. They can only be closed by closing the connected Master shipment");
-                
-                OperationalCloseValidator operationalCloseValidator = new OperationalCloseValidator(entityPM, entityPoco);
-                string errorMessage = operationalCloseValidator.StartValidating();
-                if (!string.IsNullOrEmpty(errorMessage))
-                    throw new ApplicationException(errorMessage.TrimStart(','));                
-            }
-        }
-        private static void ValidateShipmentOperationalReOpen(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            if (!entityPM.IsOperationalClosed && entityPoco.IsOperationalClosed)
-            {
-                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
-                    throw new ApplicationException("House shipments cannot be operational reopened. They can only be opened by opening the connected Master shipment");
-
-                if (entityPM.IsAccountingClosed)
-                    throw new ApplicationException("Can't operational reopen shipment, beacause it not accounting closed");
-            }
-        }
-        private static void ValidateShipmentAccountingReOpen(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            if (!entityPM.IsMultiUpdate) return;
-
-            if (!entityPM.IsAccountingClosed && entityPoco.IsAccountingClosed)
-            {
-                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
-                    throw new ApplicationException("House shipments cannot be accounting reopened. They can only be opened by opening the connected Master shipment");
-            }
-        }
-        private static void ValidateShipmentAccountingClose(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            if (!entityPM.IsMultiUpdate) return;
-
-            if (entityPM.IsAccountingClosed && !entityPoco.IsAccountingClosed)
-            {
-                if (entityPM.ShipmentLevelCode == "H" && !entityPM.IsHouseUpdatedByMaster)
-                    throw new ApplicationException("House shipments cannot be accounting closed. They can only be closed by closing the connected Master shipment");
-
-                if (!entityPM.IsOperationalClosed)
-                    throw new ApplicationException("Can't accouting close shipment, beacause it's not operationaly closed");
-
-                AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(entityPM.Tenant);
-                AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountingSetting(entityPM.Tenant);
-
-                bool hasOpenPayables = CheckOpenPayables(entityPM, accountingSetting);
-                bool hasOpenReceivables = CheckOpenReceivables(entityPM.ShipmentReceivables);
-
-                if (hasOpenPayables || hasOpenReceivables)
-                {
-                    ValidateAcocuntingCloseDueToShipmentLevel(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
-                }
-            }
-        }
-        private static bool CheckOpenPayables(ShipmentPM entityPM, AccountingSetting accountingSetting)
-        {
-            bool hasOpenPayables = false;
-            if (!accountingSetting.AllowClosureWithoutPayables && entityPM.ShipmentPayables.Count > 0)
-            {
-                foreach (ShipmentPayablePM shipmentPayable in entityPM.ShipmentPayables.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ShipmentPayableLineStatusCode != "ACCT" && d.ShipmentPayableLineStatusCode != "EMPT"))
-                {
-                    if (shipmentPayable.ShipmentPayableAmountTypeCode == "NEXP"
-                        && (shipmentPayable.AccountedAmount != null && shipmentPayable.AccountedAmount != null
-                        || shipmentPayable.ExpectedAmount != null && shipmentPayable.ExpectedAmount != 0))
-                    {
-                        hasOpenPayables = true;
-
-                    }
-
-                    else if (shipmentPayable.ExpectedAmount != null && shipmentPayable.ExpectedAmount != 0)
-                    {
-                        hasOpenPayables = true;
-                    }
-                }
-            }
-
-            return hasOpenPayables;
-        }
-        private static bool CheckOpenReceivables(List<ShipmentReceivablePM> shipmentReceivables)
-        {
-            if (shipmentReceivables.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ShipmentReceivableLineStatusCode != "ACCT" && d.ShipmentReceivableLineStatusCode != "EMPT"
-             && d.TotalAmount != null && d.TotalAmount != 0).Any())
-            {
-                return true;
-            }
-
-            return false;
-        }
-        private static void ValidateAcocuntingCloseDueToShipmentLevel(ShipmentPM entityPM, bool hasOpenPayables, bool hasOpenReceivables, AccountingSetting accountingSetting)
-        {
-            if (entityPM.ShipmentLevelCode == "C")
-            {
-                ValidateMasterAccountingClose(entityPM, hasOpenPayables, hasOpenReceivables, accountingSetting);
-            }
-
-            else
-            {
-                ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
-            }
-        }
-        private static void ValidateMasterAccountingClose(ShipmentPM entityPM, bool hasOpenPayables, bool hasOpenReceivables, AccountingSetting accountingSetting)
-        {
-            if (hasOpenPayables && hasOpenReceivables)
-            {
-                ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
-            }
-            else
-            {
-                string myResult = CheckHousesOpenAmounts(entityPM.Id, entityPM.Tenant);
-                if (string.IsNullOrEmpty(myResult)) return;
-
-                if (myResult.Contains('R'))
-                {
-                    hasOpenReceivables = true;
-                }
-
-                if (accountingSetting.AllowClosureWithoutPayables && myResult.Contains('P'))
-                {
-                    hasOpenPayables = true;
-                }
-
-                ThrowAccountingCloseException(hasOpenPayables, hasOpenReceivables, entityPM.ShipmentLevelCode);
-            }
-        }
-        private static void ThrowAccountingCloseException(bool hasOpenPayables, bool hasOpenReceivables, string levelCode)
-        {
-            if (hasOpenPayables || hasOpenReceivables)
-            {
-                string error = "Can’t close for accounting if there are any open payables/receivables";
-                if (levelCode == "C")
-                {
-                    error = "Can’t close for accounting if there are any open payables/receivables in the Master or one \nof the connected shipments. Please check and fix this issue and try again";
-                }
-
-                throw new ApplicationException(error);
-            }
-        }
-        private static string CheckHousesOpenAmounts(string masterId, int tenant)
-        {
-            bool hasOpenPayables = false;
-            bool hasOpenReceivables = false;
-
-            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-            ShipmentPM masterPM = shipmentQuery.GetSinglePM(masterId, tenant);
-            if (masterPM == null) return null;
-
-            foreach (ConsoleShipmentPM consoleShipmentPM in masterPM.ShipmentConsoleShipments)
-            {
-                ShipmentPM consoleShipment = shipmentQuery.GetSinglePM(consoleShipmentPM.Id, tenant);
-                if (consoleShipment != null)
-                {
-                    hasOpenReceivables = CheckHouseReceivablesOpenAmounts(consoleShipment, hasOpenReceivables);
-                    hasOpenPayables = CheckHousePayablesOpenAmounts(consoleShipment, hasOpenPayables);
-                }
-            }
-
-            string myResult = "";
-            if (hasOpenPayables)
-            {
-                myResult += "P";
-            }
-
-            if (hasOpenReceivables)
-            {
-                myResult += "R";
-            }
-
-            return myResult;
-        }
-        private static bool CheckHouseReceivablesOpenAmounts(ShipmentPM consoleShipment, bool hasOpenReceivables)
-        {
-            if (!hasOpenReceivables)
-            {
-                foreach (ShipmentReceivablePM item in consoleShipment.ShipmentReceivables)
-                {
-                    if (item.ShipmentReceivableLineStatusCode != "ACCT" && item.ShipmentReceivableLineStatusCode != "EMPT"
-                        && item.TotalAmount != null && item.TotalAmount != 0)
-                    {
-                        hasOpenReceivables = true;
-                        break;
-                    }
-                }
-            }
-
-            return hasOpenReceivables;
-        }
-        private static bool CheckHousePayablesOpenAmounts(ShipmentPM consoleShipment, bool hasOpenPayables)
-        {
-            if (!hasOpenPayables)
-            {
-                foreach (ShipmentPayablePM item in consoleShipment.ShipmentPayables)
-                {
-                    if (item.ShipmentPayableLineStatusCode != "ACCT" && item.ShipmentPayableLineStatusCode != "EMPT" && item.ShipmentPayableParentId == null)
-                    {
-                        if (item.ShipmentPayableAmountTypeCode == "NEXP" && item.AccountedAmount != null && item.AccountedAmount != 0)
-                        {
-                            hasOpenPayables = true;
-                            break;
-                        }
-
-                        else if (item.ExpectedAmount != null && item.ExpectedAmount != 0)
-                        {
-                            hasOpenPayables = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return hasOpenPayables;
-        }
-        private static void ValidateInlandDomesticCasualAddressFields(ShipmentPM entityPM)
-        {
-            ValidateInlandDomesticFromCasualAddress(entityPM);
-            ValidateInlandDomesticToCasualAddress(entityPM);
-        }
-        private static void ValidateInlandDomesticFromCasualAddress(ShipmentPM entityPM)
-        {
-            if (entityPM.InlandDomesticFromTypeCode != "CASL") return;
-
-            Country myCountry = GetInlandDomesticCountry(entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
-            if (myCountry == null) return;
-
-            ValidateInlandDomesticCountryStateRequired(myCountry.IsStateRequired, entityPM.InlandDomesticFromStateId, "From");
-            ValidateInlandDomesticCountryHasCities(myCountry, entityPM.InlandDomesticFromCity, entityPM.IsHybrid);
-        }
-        private static void ValidateInlandDomesticToCasualAddress(ShipmentPM entityPM)
-        {
-            if (entityPM.InlandDomesticToTypeCode != "CASL") return;
-
-            Country myCountry = GetInlandDomesticCountry(entityPM.InlandDomesticToCountryId, entityPM.Tenant);
-            if (myCountry == null) return;
-
-            ValidateInlandDomesticCountryStateRequired(myCountry.IsStateRequired, entityPM.InlandDomesticToStateId, "To");
-            ValidateInlandDomesticCountryHasCities(myCountry, entityPM.InlandDomesticToCity, entityPM.IsHybrid);
-        }
-        private static Country GetInlandDomesticCountry(string countryId, int tenant)
-        {
-            CountryRepository countryRepository = new CountryRepository(tenant);
-            return countryRepository.GetSingleCountry(countryId, tenant);
-        }
-        private static void ValidateInlandDomesticCountryStateRequired(bool isStateRequired, string stateId, string casualAddressCode)
-        {
-            if (isStateRequired && string.IsNullOrEmpty(stateId))
-            {
-                throw new ApplicationException(casualAddressCode + " State is Required");
-            }
-        }
-        private static void ValidateInlandDomesticCountryHasCities(Country myCountry, string city, bool isHybrid)
-        {
-            if (myCountry.HasCitiesList && !isHybrid && !string.IsNullOrEmpty(city))
-            {
-                CountryCityRepository citiesRepository = new CountryCityRepository(myCountry.Tenant);
-                IQueryable<CountryCity> allCities = citiesRepository.GetCountryCitiesByCountry(myCountry.Id, myCountry.Tenant);
-
-                bool isCityExists = CheckIsCityExists(city, allCities);
-
-                if (!isCityExists) throw new ApplicationException("This city doesn't exist in cities table");
-            }
-        }
-        private static bool CheckIsCityExists(string myCity, IQueryable<CountryCity> allCities)
-        {
-            bool isCityExists =
-                 (from d in allCities
-                  where
-                  (d.EnglishName != null && d.EnglishName.ToLower() == myCity.ToLower())
-                  ||
-                  (d.LocalName != null && d.LocalName.ToLower() == myCity.ToLower())
-                  select d).Any();
-
-            return isCityExists;
-        }
-        private static void ValidateRoutingDates(ShipmentPM entityPM, Shipment entityPoco)
-        {
-            RoutingDatesValidator routingDatesValidator = new RoutingDatesValidator(entityPM);
-            routingDatesValidator.Validate();
         }
     }
     public class DomesticCountry
@@ -1930,323 +1484,5 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
         public string CountryId { get; set; }
         public bool CountryIsEC { get; set; }
         public bool CountryIsNorthAmerica { get; set; }
-        public bool CountryIsGreaterChinese { get; set; }
-
-    }
-    public class OperationalCloseValidator
-    {
-        private ShipmentPM shipmentPM;
-        private readonly Shipment entityPoco;
-        private IRulesValidator ruleValidator;
-        private int tenant;
-        private ObjectFieldRepository objectFieldRepository;
-        private ShipmentQuery shipmentQuery;
-        public OperationalCloseValidator(ShipmentPM shipmentPM, Shipment entityPoco)
-        {
-            this.shipmentPM = shipmentPM;
-            this.entityPoco = entityPoco;
-            this.tenant = shipmentPM.Tenant;
-            this.objectFieldRepository = new ObjectFieldRepository(tenant);
-            this.shipmentQuery = new ShipmentQuery(tenant);
-            this.InitializeRulesValidator();
-        }
-
-        private void InitializeRulesValidator()
-        {
-            ruleValidator = ContainerAccessor.Container.Resolve(typeof(IRulesValidator), "RulesValidator", new ParameterOverride("", 1)) as IRulesValidator;
-            ruleValidator.Initialize(tenant);
-        }
-
-        public string StartValidating()
-        {
-            string errorMessage = ValidateShipment(shipmentPM);
-
-            if (shipmentPM.ShipmentLevelCode == "C" && shipmentPM.ShipmentConsoleShipments.Count > 0)
-            {
-                string housesErrors = ValidateHouses();
-                string housesPackagesErrors = ValidateHousePackages();
-
-                if (string.IsNullOrEmpty(errorMessage))
-                {
-                    errorMessage = housesErrors;
-                }
-
-                else
-                {
-                    errorMessage = errorMessage + ", " + housesErrors;
-                }
-
-                if (string.IsNullOrEmpty(errorMessage))
-                {
-                    errorMessage = housesPackagesErrors;
-                }
-
-                else
-                {
-                    errorMessage = errorMessage + ", " + housesPackagesErrors;
-                }
-            }
-
-            if (OperationalClosedChangedFromHouse())
-            {
-                var errorMsg = "House shipments cannot be operationally closed. They can only be closed by closing the connected Master shipment";
-                errorMessage = string.IsNullOrEmpty(errorMessage) ? errorMsg : errorMessage + ", " + errorMsg;
-            }
-
-            return errorMessage;
-        }
-
-        private bool OperationalClosedChangedFromHouse()
-        {
-            return shipmentPM.ShipmentLevelCode == "H" && !shipmentPM.IsHouseUpdatedByMaster && (entityPoco.IsOperationalClosed != shipmentPM.IsOperationalClosed);
-        }
-
-        private string ValidateShipment(ShipmentPM shipment)
-        {
-            List<ObjectTableRuleField> requiredFields = ruleValidator.ValidateAllRequiredFieldRules(shipment, "Shipment", tenant);
-            return GenerateErrorMessage(requiredFields);
-        }
-        private string ValidateHouses()
-        {
-            Dictionary<string, string> housesErrors = new Dictionary<string, string>();
-            foreach (ConsoleShipmentPM consoleShipment in shipmentPM.ShipmentConsoleShipments)
-            {
-                string houseError = ValidateSingleHouse(consoleShipment);
-
-                if (!string.IsNullOrEmpty(houseError))
-                {
-                    housesErrors.Add(consoleShipment.ShipmentNumber, houseError);
-                }
-            }
-
-            return this.BuildHousesErrorMessage(housesErrors);
-        }
-        private string ValidateSingleHouse(ConsoleShipmentPM consoleShipment)
-        {
-            ShipmentPM house = shipmentQuery.GetSinglePMByShipmentNumber(consoleShipment.ShipmentNumber, tenant);
-            house.IsOperationalClosed = true;
-            return ValidateShipment(house);
-        }
-        private string ValidateHousePackages()
-        {
-            if (shipmentPM.ShipmentTypeId.ToUpper().Contains("MYG"))
-                return null;
-
-            PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
-            IQueryable<PackageType> packageTypes = packageTypeRepository.GetPackageTypes(tenant);
-            List<ShipmentPackagePM> houseShipmentsPackaes = shipmentQuery.GetShipmentConsolidationPackages(shipmentPM.Id, tenant);
-
-            List<LineData> FCL_ObsList1 = new List<LineData>();
-            List<LineData> FCL_ObsList2 = new List<LineData>();
-
-            List<ByPckageType> housesGroup = new List<ByPckageType>();
-            List<ByPckageType> masterGroup = new List<ByPckageType>();
-
-            foreach (ShipmentPackagePM item in houseShipmentsPackaes.Where(p => p.IsContainer))
-            {
-                ByPckageType existsedItem = housesGroup.Where(f => f.PackageTypeId == item.PackageTypeId).FirstOrDefault();
-                if (existsedItem == null)
-                {
-                    existsedItem = new ByPckageType();
-                    existsedItem.PackageTypeId = item.PackageTypeId;
-                    existsedItem.Quantity = item.Quantity;
-                    existsedItem.MeasurementId = (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()) != null ? (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()).MeasurementId : null;
-                    housesGroup.Add(existsedItem);
-                }
-                else
-                {
-                    existsedItem.Quantity += item.Quantity;
-                }
-            }
-
-            foreach (ShipmentPackagePM item in shipmentPM.ShipmentPackages.Where(d => d.IsContainer))
-            {
-                ByPckageType existsedItem = masterGroup.Where(f => f.PackageTypeId == item.PackageTypeId).FirstOrDefault();
-                if (existsedItem == null)
-                {
-                    existsedItem = new ByPckageType();
-                    existsedItem.PackageTypeId = item.PackageTypeId;
-                    existsedItem.Quantity = item.Quantity;
-                    existsedItem.MeasurementId = (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()) != null ? (packageTypes.Where(f => f.Id == item.PackageTypeId).FirstOrDefault()).MeasurementId : null;
-                    masterGroup.Add(existsedItem);
-                }
-                else
-                {
-                    existsedItem.Quantity += item.Quantity;
-                }
-            }
-
-            foreach (ByPckageType houseItem in housesGroup)
-            {
-                PackageType packageType = packageTypes.Where(f => f.Id == houseItem.PackageTypeId).FirstOrDefault();
-                if (packageType != null)
-                {
-                    LineData line = new LineData();
-                    line.LineLabel = packageType.EnglishName;
-                    line.HouseValue = houseItem.Quantity;
-
-                    ByPckageType masterItem = masterGroup.Where(f => f.PackageTypeId == houseItem.PackageTypeId && f.MeasurementId == houseItem.MeasurementId).FirstOrDefault();
-                    if (masterItem != null)
-                    {
-                        line.MasterValue = masterItem.Quantity;
-                        line.IsEquals = (houseItem.Quantity == masterItem.Quantity);
-                        List<ByPckageType> temp = new List<ByPckageType>();
-                        foreach (ByPckageType p in masterGroup)
-                        {
-                            if (p != masterItem)
-                                temp.Add(p);
-                        }
-                        masterGroup = temp;
-                    }
-
-                    else
-                    {
-                        line.MasterValue = 0;
-                        line.IsEquals = false;
-                    }
-                    FCL_ObsList1.Add(line);
-                }
-            }
-
-            foreach (ByPckageType masterItem in masterGroup)
-            {
-                PackageType packageType = packageTypes.Where(f => f.Id == masterItem.PackageTypeId).FirstOrDefault();
-                if (packageType != null)
-                {
-                    LineData line = new LineData();
-                    line.LineLabel = packageType.EnglishName;
-                    line.HouseValue = 0;
-                    line.MasterValue = masterItem.Quantity;
-                    line.IsEquals = false;
-                    FCL_ObsList1.Add(line);
-                }
-            }
-
-            List<ShipmentPackagePM> masterPackages = shipmentPM.ShipmentPackages;
-            foreach (ShipmentPackagePM houseItem in houseShipmentsPackaes.OrderBy(d => d.ShipmentId))
-            {
-                PackageType packageType  = packageTypes.Where(p => p.Id == houseItem.PackageTypeId).FirstOrDefault();
-                if (packageType != null)
-                {
-                    LineData line = new LineData();
-                    line.ShipmentNumber = houseItem.ShipmentNumber;
-                    line.LineLabel = packageType.EnglishName;
-                    line.HouseStringValue = string.IsNullOrEmpty(houseItem.ContainerNumber) ? "- - -" : houseItem.ContainerNumber;
-
-                    if (string.IsNullOrEmpty(line.ShipmentNumber))
-                    {
-                        ConsoleShipmentPM dd = shipmentPM.ShipmentConsoleShipments.Where(d => d.Id == houseItem.ShipmentId).FirstOrDefault();
-                        if (dd != null)
-                        {
-                            line.ShipmentNumber = dd.ShipmentNumber;
-                        }
-                    }
-
-                    ShipmentPackagePM masterItem = masterPackages.Where(d => d.OriginalShipmentPackageId == houseItem.Id).FirstOrDefault();
-                    if (masterItem != null)
-                    {
-                        List<ShipmentPackagePM> temp = new List<ShipmentPackagePM>();                        
-                        foreach(ShipmentPackagePM p in masterPackages)
-                        {
-                            if (p != masterItem)
-                                temp.Add(p);
-                        }
-                        masterPackages = temp;
-                        line.MasterStringValue = string.IsNullOrEmpty(masterItem.ContainerNumber) ? "- - -" : masterItem.ContainerNumber;
-                        line.IsEquals = (line.HouseStringValue == line.MasterStringValue);                        
-                    }
-                    else
-                    {
-                        line.MasterStringValue = "Not exists";
-                        line.IsEquals = false;                        
-                    }
-
-                    if (!line.IsEquals)
-                    {
-                        FCL_ObsList2.Add(line);
-                    }
-                }
-            }
-
-            foreach (ShipmentPackagePM item in masterPackages)
-            {
-                PackageType packageType = packageTypes.Where(d => d.Id == item.PackageTypeId).FirstOrDefault();
-                if (packageType != null)
-                {
-                    LineData line = new LineData();
-                    line.ShipmentNumber = shipmentPM.ShipmentNumber;
-                    line.LineLabel = packageType.EnglishName;
-                    line.HouseStringValue = "Not exists";
-                    line.MasterStringValue = string.IsNullOrEmpty(item.ContainerNumber) ? "- - -" : item.ContainerNumber;
-                    line.IsEquals = false;
-                    FCL_ObsList2.Add(line);
-                }
-            }
-
-            if (FCL_ObsList1.Where(d => d.IsEquals == false).FirstOrDefault() != null || FCL_ObsList2.Where(d => d.IsEquals == false).FirstOrDefault() != null)
-            {
-                return "Mismatch Quantities or Container numbers";
-            }
-
-            return null;
-        }
-        private string GenerateErrorMessage(List<ObjectTableRuleField> requiredFields)
-        {
-            string errorMessage = "";
-            foreach (ObjectTableRuleField field in requiredFields)
-            {
-                ObjectField f = objectFieldRepository.GetSingleObjectFieldByFieldCode(field.ObjectFieldCode, tenant);
-                if (string.IsNullOrEmpty(errorMessage))
-                {
-                    errorMessage = TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
-                }
-
-                else
-                {
-                    errorMessage += ", " + TranslateTextsClass.GetTranslation("General.M.FieldIsRequired", f.FullNameTextCode.Code, null, null, field.Tenant);
-                }
-            }
-
-            return errorMessage;
-        }
-        private string BuildHousesErrorMessage(Dictionary<string, string> housesErrors)
-        {
-            string errorMessage = "";
-
-            foreach (KeyValuePair<string, string> item in housesErrors)
-            {
-                string houseError = "House " + item.Key + ": " + item.Value;
-
-                if (string.IsNullOrEmpty(errorMessage))
-                {
-                    errorMessage = houseError;
-                }
-
-                else
-                {
-                    errorMessage = errorMessage + ", " + houseError;
-                }
-            }
-
-            return errorMessage;
-        }
-    }
-    public class ByPckageType
-    {
-        public int? Quantity { get; set; }
-        public string PackageTypeId { get; set; }
-        public string MeasurementId { get; set; }
-        public string MeasurementCode { get; set; }
-        public string MeasurementShortName { get; set; }
-    }
-    public class LineData
-    {
-        public string LineLabel { get; set; }
-        public int? HouseValue { get; set; }
-        public int? MasterValue { get; set; }
-        public bool IsEquals { get; set; }
-        public string ShipmentNumber { get; set; }
-        public string MasterStringValue { get; set; }
-        public string HouseStringValue { get; set; }
     }
 }

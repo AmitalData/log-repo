@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -37,7 +37,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.SearchFields = entityPM.Code + "," + entityPM.Name;
             poco.CanTransferToDropbox = entityPM.CanTransferToDropbox;
             poco.AllowAPPaymentsTransfer = entityPM.AllowAPPaymentsTransfer;
-            poco.CanTransferToFTP = entityPM.CanTransferToFTP;
         }
     }
 }

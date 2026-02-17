@@ -4,10 +4,10 @@ using Logitude.BookingLib.BL.EntityUpdateServices;
 using Logitude.BookingLib.Data;
 using Logitude.BookingLib.Data.EntityListQueryServices;
 using Logitude.BookingLib.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -36,7 +36,6 @@ using System.Text.RegularExpressions;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
-using Logitude.BookingLib.BL.EntityUpdateServices.Behaviours.BookingBehaviours.Validators;
 
 namespace WebFreight.Web.BookingModel.DomainServices
 {
@@ -295,39 +294,18 @@ namespace WebFreight.Web.BookingModel.DomainServices
         {
             string myResult = null;
 
-            try
+            if (myTenant != 343 && myTenant != 528)
             {
-                BookingMasterIsUsedValidator validator = new BookingMasterIsUsedValidator();
-
-                validator.Validate(new BookingMasterIsUsedValidatorArgs()
+                if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
                 {
-                    Tenant = myTenant,
-                    BookingId = entityId,
-                    DirectionCode = myDirectionCode,
-                    TransportModeCode = myTransportModeCode,
-                    Master = myMasterField,
-                    AirlinePrefix = myAirlinePrefixField,
-                    IsCancelled = isCancelled,
-                });
+                    BookingRepository myBookingRepository = new BookingRepository(myTenant);
+                    bool isFieldExists = myBookingRepository.IsMasterFieldUsed(myMasterField, myAirlinePrefixField, entityId, myTenant, myDirectionCode, myTransportModeCode);
+                    if (isFieldExists)
+                    {
+                        myResult = "Master field already used in another Booking";
+                    }
+                }
             }
-
-            catch (Exception ex)
-            {
-                myResult = ex.Message;
-            }
-
-            //if (myTenant != 343 && myTenant != 528)
-            //{
-            //    if (!string.IsNullOrEmpty(myMasterField) && !string.IsNullOrEmpty(myAirlinePrefixField) && !isCancelled)
-            //    {
-            //        BookingRepository myBookingRepository = new BookingRepository(myTenant);
-            //        bool isFieldExists = myBookingRepository.IsMasterFieldUsed(myMasterField, myAirlinePrefixField, entityId, myTenant, myDirectionCode, myTransportModeCode);
-            //        if (isFieldExists)
-            //        {
-            //            myResult = "Master field already used in another Booking";
-            //        }
-            //    }
-            //}
 
             return myResult;
         }
@@ -471,7 +449,6 @@ namespace WebFreight.Web.BookingModel.DomainServices
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                 TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(myResultClass.Tenant);
-                SettingRepository mySettingRepository = new SettingRepository();
 
                 if (tenantManagement != null)
                 {
@@ -482,7 +459,7 @@ namespace WebFreight.Web.BookingModel.DomainServices
                     myResultClass.IsAWBStockPrepaid = tenantManagement.IsAWBStockPrepaid;
                 }
 
-                if (mySettingRepository.IsDemoTenant(myResultClass.Tenant.ToString()) || myResultClass.IsEAWBOnlyDemo)
+                if (myResultClass.Tenant == 65 || myResultClass.IsEAWBOnlyDemo)
                 {
                     myResultClass.IsDemoTenant = true;
                 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -12,7 +12,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class VatTypeRepository:IRepository<VatType>
     {
         ICommonDataContext commonDataContext;
-
+        public VatTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
         public VatTypeRepository(ICommonDataContext context)
         {
             commonDataContext = context;
@@ -43,7 +46,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             VatType entity;
             if (getFromCache)
             {
-             
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -65,8 +69,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     {
                         entity = (VatType)CacheManager.CacheWrapper.Get(entityName);
                     }
-                
-            
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                    entity = (from record in context.VatTypes where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                }
             }
             else
             {

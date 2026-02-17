@@ -1,5 +1,4 @@
-.HyperlinkButton:hover,
-.HyperlinkButton:focus {
+.HyperlinkButton:hover, .HyperlinkButton:focus {
     height: auto !important;
     width: auto !important;
     background: none !important;
@@ -47,9 +46,9 @@
     -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
     -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
     background: #fe1a00;
-    background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
-    background: -moz-linear-gradient(center top, #fe1a00 5%, #ce0100 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100));
+    background: linear-gradient(to bottom, #fe1a00 5%, #ce0100 100% );
+    background: -moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
 }
 
 .UnLockButton:hover {
@@ -76,15 +75,15 @@
     -moz-box-shadow: inset 0px 1px 0px 0px #f29c93;
     -webkit-box-shadow: inset 0px 1px 0px 0px #f29c93;
     background: #F1315A;
-    background: linear-gradient(to bottom, #F1315A 5%, #F1315A 100%);
-    background: -moz-linear-gradient(center top, #F1315A 5%, #F1315A 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #F1315A), color-stop(1, #F1315A));
+    background: linear-gradient(to bottom, #F1315A 5%, #F1315A 100% );
+    background: -moz-linear-gradient( center top, #F1315A 5%, #F1315A 100% );
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #F1315A), color-stop(1, #F1315A) );
 }
 
 .EntityChangesButton:hover:not(:disabled) {
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 197, 129, 1) 100%);
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(255, 197, 129, 1) 100%);
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 197, 129, 1) 100%);
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(255, 197, 129, 1)));
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(255, 197, 129, 1) ));
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 197, 129, 1) 100%);
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 197, 129, 1) 100%);
     -webkit-box-shadow: 0px 0px 6px 0px #FF994B;
@@ -113,9 +112,9 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(237, 192, 147, 1)));
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
     -webkit-box-shadow: 0px 0px 6px 0px #EDC093;
@@ -139,79 +138,70 @@
 }
 
 .GreenButton:hover:not(:disabled) {
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.5) 100%);
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.5) 100%);
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.5) 100%);
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(0, 145, 97, 0.5)));
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.5) ));
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.5) 100%);
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.5) 100%);
 }
 
 .RedButton:hover:not(:disabled) {
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(237, 192, 147, 0.85)));
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
 }
 
 .Button:hover:not(:disabled) {
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(221, 232, 245, 1)));
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
 }
 
-.Button span,
-.RedButton span,
-.GreenButton span,
-.ActualRedButton span,
-.BlueButton span {
+.Button span, .RedButton span, .GreenButton span {
     text-shadow: 1px 1px white;
 }
 
-.Button:disabled,
-.RedButton:disabled,
-.GreenButton:disabled,
-.ActualRedButton:disabled {
+.Button:disabled, .RedButton:disabled, .GreenButton:disabled {
     opacity: 0.5;
     pointer-events: none;
 }
 
 .GreenButton {
     border: 1px solid #009161;
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.6) 100%);
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(0, 145, 97, 0.6)));
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.6) ));
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
 }
 
 .RedButton {
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%) !important;
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(237, 192, 147, 1))) !important;
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) )) !important;
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%) !important;
 }
 
 .Button {
-    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
     background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(186, 206, 227, 1)));
+    background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
     background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
     background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
 }
 
-.Button,
-.RedButton,
-.GreenButton,
-.ActualRedButton,
-.BlueButton {
+.Button, .RedButton, .GreenButton {
+    /*display: block;*/
     outline: none;
     text-align: center;
     font-size: 11px;
     color: #45494A;
+    /*width: 100%;*/
     height: 22px;
     border: 1px solid #6A8299;
     border-radius: 3px;
@@ -222,47 +212,18 @@
     cursor: pointer;
 }
 
-button:not(.ag-paging-button),
-.Button,
-.RedButton,
-.GreenButton,
-.EntityChangesButton,
-.ActualRedButton,
-.BlueButton {
+
+
+button:not(.ag-paging-button), .Button, .RedButton, .GreenButton, .EntityChangesButton {
     height: 22px;
     padding: 0 5px;
+    /*width: 100%;*/
+    /*min-width: 100%;*/
+    /*display:inline-block;
+    width: auto !important;*/
     display: block;
     width: 100%;
-}
-
-.ActualRedButton {
-    background: linear-gradient(180deg, rgba(246, 235, 233, 1) 56%, rgba(252, 199, 199, 1) 85%);
-}
-
-.ActualRedButton:hover:not(:disabled) {
-    background: linear-gradient(180deg, rgba(246, 235, 233, 1) 56%, rgba(252, 199, 199, 0.85) 85%);
-}
-
-.ActualRedButton:focus:not(:disabled) {
-    border: 1px solid #f1e0dc;
-    -webkit-box-shadow: 0px 0px 6px 0px #f1e0dc;
-    -moz-box-shadow: 0px 0px 6px 0px #f1e0dc;
-    box-shadow: 0px 0px 6px 0px #f1e0dc;
-}
-
-.BlueButton {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(120, 184, 255, 1) 100%, rgba(0, 212, 255, 1) 100%);
-}
-
-.BlueButton:hover:not(:disabled) {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(120, 184, 255, 0.5) 100%, rgba(0, 212, 255, 1) 100%);
-}
-
-.BlueButton:focus:not(:disabled) {
-    border: 1px solid #f1e0dc;
-    -webkit-box-shadow: 0px 0px 6px 0px #f1e0dc;
-    -moz-box-shadow: 0px 0px 6px 0px #f1e0dc;
-    box-shadow: 0px 0px 6px 0px #f1e0dc;
+    /*min-width: 100%;*/
 }
 
 /*http://www.w3schools.com/css/css3_buttons.asp*/

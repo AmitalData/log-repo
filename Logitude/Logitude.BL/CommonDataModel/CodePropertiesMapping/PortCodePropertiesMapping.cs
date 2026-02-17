@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -78,8 +78,6 @@ namespace Logitude.BL.CommonDataModel.CodePropertiesMapping
                 port = portRepository.GetSinglePortByCodeCountryCode(0, Code, CountryCode, false);
             }
 
-            if (port == null) throw new Exception("Port with " + Code + " code is missing!");
-
             newPort = portRepository.GetSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
             Country country = null;
 
@@ -143,8 +141,6 @@ namespace Logitude.BL.CommonDataModel.CodePropertiesMapping
                     AddedManually = false,
                     InActive = false,
                     CountryId = country.Id,
-                    CountryCode = country.Code,
-                    CountryName = country.EnglishName,
                     IsAir = port.IsAir,
                     IsInland = port.IsInland,
                     IsOcean = port.IsOcean,

@@ -1,6 +1,5 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -25,16 +24,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             throw new NotImplementedException();
         }
-
-        protected override VAL_NG_8228_MSG550_RequiredDocumentVerificationDecisionMessage GetFakeCustomsResponse(GenericRequestParams requestParamsData)
-        {
-
-            var fake_VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService = new Fake_VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService(requestParamsData);
-            return fake_VAL_NG_8228_RequiredDocumentVerificationDecisionResponseService.GetFakeCustomsResponse(requestParamsData);
-
-
-        }
-
 
         public override string MainInterfaceCode
         {

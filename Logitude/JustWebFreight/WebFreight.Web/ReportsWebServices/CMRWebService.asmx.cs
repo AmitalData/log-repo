@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -15,7 +15,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using WebFreight.Web.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -34,16 +34,13 @@ namespace WebFreight.Web.ReportsWebServices
             CMRDataProvider cmrDataProvider = GetDeliveryDataProvider(entityId, childentityId, tenant, userId, documentTypeCopyId);
 
             XmlSerializer serializer = new XmlSerializer(typeof(CMRDataProvider));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, cmrDataProvider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
-            
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, cmrDataProvider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         private CMRDataProvider GetDeliveryDataProvider(string entityId, string childentityId, int tenant, string userId, string documentTypeCopyId)
@@ -167,24 +164,23 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                cmrDataProvider.ShipmentNumber = shipment.ShipmentNumber;
+                cmrDataProvider.ShipmentNumber = shipment.ShipmentNumber ;
                 cmrDataProvider.HAWBNumber = shipment.House;
-                cmrDataProvider.DescriptionOfGoods = shipment.DescriptionOfGoods;
 
                 ShipmentMasterData masterData = (from a in shipmentsContext.ShipmentMasterDatas
                                                  where a.Id == shipment.MasterShipmentDataId
                                                  select a).FirstOrDefault();
 
-                cmrDataProvider.MAWBNumber = EntityFieldsHelper.GetLongMasterField(shipment, masterData);
+                cmrDataProvider.MAWBNumber  = EntityFieldsHelper.GetLongMasterField(shipment, masterData);
 
                 if (myPickUpDelivery != null)
                 {
                     #region
 
-                    if (myPickUpDelivery.TransportModeCode != null)
+                    if(myPickUpDelivery.TransportModeCode != null)
                     {
                         PickUpDeliveryTransportMode myTransportMode = shipmentsContext.PickUpDeliveryTransportModes.Where(d => d.Code == myPickUpDelivery.TransportModeCode).FirstOrDefault();
-                        if (myTransportMode != null)
+                        if(myTransportMode != null)
                         {
                             cmrDataProvider.PickUpOrDeliveryTransportMode = myTransportMode.Name;
                         }
@@ -552,27 +548,13 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-
-                    DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
-                                                         where copy.Id == documentTypeCopyId
-                                                         select copy).FirstOrDefault();
-
-
                     // custom fields//
-                    List<FormCustomField> customfieldsList = new List<FormCustomField>();
-                    List<DocumentTypeCustomField> documentCustomfieldsList = new List<DocumentTypeCustomField>();
-
-
-                    if (documenttypecopy != null)
-                    {
-                        customfieldsList = commonContext.FormCustomFields.Where(a => a.EntityId == shipment.Id && a.DocumentTypeId == documenttypecopy.DocumentTypeId && a.Tenant == tenant).ToList();
-                        documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(a => a.DocumentTypeId == documenttypecopy.DocumentTypeId && a.Tenant == tenant).ToList();
-
-                    }
+                    List<FormCustomField> customfieldsList = commonContext.FormCustomFields.ToList();
+                    List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.ToList();
 
                     //----cash on delivery---//
                     FormCustomField cashOnDeliveryField = (from a in customfieldsList
-                                                           where a.FieldCode == "CashOnDelivery"
+                                                           where a.FieldCode == "CashOnDelivery" && a.EntityId == shipment.Id
                                                            select a).FirstOrDefault();
 
                     DocumentTypeCustomField cashOnDeliveryDocumentCustom = (from a in documentCustomfieldsList
@@ -589,7 +571,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     //--Documents attached--//
                     FormCustomField documentsAttachedField = (from a in customfieldsList
-                                                              where a.FieldCode == "DocumentsAttached"
+                                                              where a.FieldCode == "DocumentsAttached" && a.EntityId == shipment.Id
                                                               select a).FirstOrDefault();
 
                     DocumentTypeCustomField documentsAttachedDocumentCustom = (from a in documentCustomfieldsList
@@ -607,7 +589,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     //----Instructions---//
                     FormCustomField instructionsField = (from a in customfieldsList
-                                                         where a.FieldCode == "Instructions"
+                                                         where a.FieldCode == "Instructions" && a.EntityId == shipment.Id
                                                          select a).FirstOrDefault();
 
                     DocumentTypeCustomField instructionsDocumentCustom = (from a in documentCustomfieldsList
@@ -623,7 +605,9 @@ namespace WebFreight.Web.ReportsWebServices
                         cmrDataProvider.SendersInstructions = instructionsDocumentCustom.DefaultValue;
                     }
 
-
+                    DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies
+                                                         where copy.Id == documentTypeCopyId
+                                                         select copy).FirstOrDefault();
 
                     if (documenttypecopy != null)
                     {
@@ -664,7 +648,7 @@ namespace WebFreight.Web.ReportsWebServices
                 cmrDataProvider.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;
                 #endregion
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, cmrDataProvider);
             }
 
@@ -742,7 +726,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         private string GetDimensions(ShipmentPickUpDeliveryPackage package)
         {
-            string myDimensions = "";
+            string myDimensions = ""; 
 
             if (package.Length == null && package.Width == null && package.Height == null)
             {

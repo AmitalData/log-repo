@@ -1,8 +1,0 @@
-﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
-		<![CDATA[
-		update FieldDataTypes set Name='Text' where Code='nText'
-		update FieldDataTypes set Name='Checkbox' where Code='Boolean'
-    ]]>
-	</Sql> 
-</Script>

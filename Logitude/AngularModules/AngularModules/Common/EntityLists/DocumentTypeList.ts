@@ -22,7 +22,6 @@ export class DocumentTypeList {
 		ObjectTableId: string;
 		ObjectTableName: string;
 		Subject: string;
-
 		DocumentTypeDefaultReportTemplateId: string;
 		DocumentTypeDefaultHTMLTemplateId: string;
 		DocumentTypeDefaultEditorTool: string;
@@ -34,7 +33,6 @@ export class DocumentTypeList {
 		IsHouse: boolean;
 		CustomControl: string;
 		IsCustomerView: boolean;
-		IsCustomerUploadPermission: boolean;
 		IsAgentView: boolean;
 		IsReadOnly: boolean;
 		LimitedPrintCopyId: string;
@@ -44,18 +42,7 @@ export class DocumentTypeList {
 		IsEnabledForCustomers: boolean;
 		DocumentTypeCategoryCode: string;
 		DocumentTypeCategoryName: string;
-		FileName: string;
-		IsAgentSharedInMaster: boolean;
-		IsAgentSharedInDirect: boolean;
-		IsAgentSharedInHouse: boolean;
-		SharedDocumentTypeCopyId: string;
-		OnSendPopulateDateFieldName: string;
-		OnUploadPopulateDateFieldName: string;
-		OnPrintPopulateDateFieldName: string;
 		OrderBy: number;
 		OrderedDisplayName: string;
-		IsSystemAdditionalPrintingFields: boolean;
-		PrintingFieldsScreenCode: string;
-		AddedManually: boolean;
-	
-}
+        FileName: string;
+}

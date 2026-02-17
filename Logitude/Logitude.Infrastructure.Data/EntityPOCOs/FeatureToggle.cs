@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -40,7 +40,7 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
         [Column("TenantNumber")]
-	    public int? TenantNumber { get; set; }
+	    public int TenantNumber { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
         [ForeignKey("Toggle")]
@@ -48,12 +48,6 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string ToggleCode { get; set; }
 	      
         public virtual Toggle Toggle { get; set; }
-        [Column("IsMultiTenant")]
-	    public bool IsMultiTenant { get; set; }
-        [Column("FromTenantNumber")]
-	    public int? FromTenantNumber { get; set; }
-        [Column("ToTenantNumber")]
-	    public int? ToTenantNumber { get; set; }
     }
 }
 	 

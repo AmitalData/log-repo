@@ -15,7 +15,7 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 declare var window;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ObjectLabelsComponent.html',
 })
 

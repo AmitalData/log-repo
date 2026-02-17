@@ -1,112 +1,173 @@
-
-
+﻿
 
 <table>
 
-    <tr style="height:1px">
+    <tr style="height:40px"><td></td></tr>
+
+    <tr style="height:100%">
+
+
+        <td style="width:80px"><div></div></td>
         <td>
-            <div style="display:block;margin-left:5px;font-size:10px;margin-top:5px;vertical-align:top">This Shared Logistics wizard will help you to set up and control what information you want to share with your partners. Once Shared Logistics is</div>
-            <div style="display:block;margin-left:5px;font-size:10px;vertical-align:top"> activated, your partners can access information such as documents and events relating to their shipments.</div>
+        
+      <div style="height:100%">
+
+          <table>
+
+              <tr style="height:30px">
+
+                  <td>
+
+                      <div style="display:block;margin-left:5px;font-size:10px;margin-top:5px;vertical-align:top">This Shared Logistics wizard will help you to set up and control what information you want to share with your partners. Once Shared Logistics is</div>
+                      <div style="display:block;margin-left:5px;font-size:10px;vertical-align:top"> activated, your partners can access information such as documents and events relating to their shipments.</div>
+
+                  </td>
+              </tr>
+
+              <tr style="height:5px"><td></td></tr>
+            <tr style="height:100%;vertical-align:top">
+
+
+                  <td style="height:100% ;position: relative;vertical-align:top">
+                      <div class="TabControl" style="position: absolute; top:0px; height: calc(100% - 0px)">
+                          <div class="TabControlHead">
+                              <ul style="margin-left: 10px;">
+
+
+                                  <li [class.Selected]="SelectedTabCode == 'GEN'" (click)="SelectedTabCode = 'GEN'">
+                                      <div style="width:120px;text-align:center;font-size:12px;color:#1B90CB" class="InnerChild">
+                                          <span >General</span>
+
+
+                                      </div>
+                                  </li>
+
+
+                                  <li [class.Selected]="SelectedTabCode == 'EVE'" (click)="SelectedTabCode = 'EVE'">
+                                      <div style="width:120px;text-align:center;font-size:12px;color:#1B90CB" class="InnerChild">
+                                          <span>Event Types</span>
+
+
+                                      </div>
+                                  </li>
+
+                                  <li [class.Selected]="SelectedTabCode == 'DOC'" (click)="SelectedTabCode = 'DOC'">
+                                      <div style="width:120px;text-align:center;font-size:12px;color:#1B90CB" class="InnerChild">
+                                          <span style="width:100px">Document Types</span>
+
+
+                                      </div>
+                                  </li>
+
+                              </ul>
+
+
+
+
+                          </div>
+
+                          <div class="TabControlBody">
+
+                              <!--General Tab-->
+                              <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'GEN'" >
+
+                                  <div  class="LocationDirective" LocationDirective Code="GEN">
+                                
+                                      <div style="margin-left:10px;margin-top:5px;margin-right:10px;height:322px">
+                                    
+                                          <SharedLogisticsSetting  [OnCloseWindowEvent]="OnCloseWindowEvent"  [TenantPM]="TenantPM" ></SharedLogisticsSetting>
+                                     
+
+                                      </div>
+                                        
+                                  </div>
+
+                              </div>
+
+                              <!--EventType Tab-->
+                              <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'EVE'">
+
+                                  <div  class="LocationDirective" LocationDirective Code="EVE">
+                                      <div style="margin-left:10px;margin-top:5px;margin-right:10px;height:322px;">
+                                          
+                                          <SharedLogisticsEventPermissios  [OnCloseWindowEvent]="OnCloseWindowEvent" ></SharedLogisticsEventPermissios> 
+                                            
+                                      </div>
+
+                                      
+                   
+                                  
+                                  </div>
+
+                              </div>
+
+
+                              <!--Document Tab-->
+                              <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'DOC'" >
+
+                                  <div class="LocationDirective" LocationDirective Code="DOC">
+                                      <div style="margin-left:10px;margin-top:5px;margin-right:10px;height:322px;">
+                                          
+                                          <SharedLogisticsDocumentPermissios [OnCloseWindowEvent]="OnCloseWindowEvent"></SharedLogisticsDocumentPermissios> 
+                                          
+                                      </div>
+                                  </div>
+
+                              </div>
+
+                          </div>
+
+
+
+                      </div>
+                  </td>
+
+
+
+
+              </tr>
+
+              <tr style="height: 32px;">
+                  <td style="vertical-align: bottom">
+                      <table style="height: 22px;">
+                          <tr>
+                              <td>
+                                  <div></div>
+                              </td>
+
+                              <td style="width: 57px;">
+                                  <div>
+                                      <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                                  </div>
+                              </td>
+
+                              <td style="width: 5px;">
+                                  <div></div>
+                              </td>
+
+                              <td style="width: 57px;">
+                                  <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+              </tr>
+
+          </table>
+         
+      </div>
+        
+        
         </td>
+
+        <td style="width:80px"><div></div></td>
+
+
     </tr>
 
-    <tr style="height:15px">
-        <td>
-            <div></div>
-        </td>
-    </tr>
 
-    <tr>
-        <td>
-            <div class="MediaFill">
-                <div class="TabControl" style="position: absolute; top:0px; height: calc(100% - 0px)">
-                    <div class="TabControlHead">
-                        <ul style="margin-left: 10px;">
-
-                            <li [class.Selected]="SelectedTabCode == 'GEN'" (click)="SelectedTabCode = 'GEN'">
-                                <div style="width:120px;text-align:center;font-size:12px;color:#1B90CB" class="InnerChild">
-                                    <span>General</span>
-                                </div>
-                            </li>
-
-                            <li [class.Selected]="SelectedTabCode == 'EVE'" (click)="SelectedTabCode = 'EVE'">
-                                <div style="width:120px;text-align:center;font-size:12px;color:#1B90CB" class="InnerChild">
-                                    <span>Event Types</span>
-                                </div>
-                            </li>
-
-                            <li [class.Selected]="SelectedTabCode == 'DOC'" (click)="SelectedTabCode = 'DOC'">
-                                <div style="width:120px;text-align:center;font-size:12px;color:#1B90CB" class="InnerChild">
-                                    <span style="width:100px">Document Types</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="TabControlBody">
-
-                        <!--General Tab-->
-                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'GEN'">
-                            <div class="LocationDirective">
-                                <div style="margin-left:10px;margin-top:5px;margin-right:10px;height:322px">
-                                    <SharedLogisticsSetting [OnCloseWindowEvent]="OnCloseWindowEvent" [TenantPM]="TenantPM"></SharedLogisticsSetting>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--EventType Tab-->
-                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'EVE'">
-                            <div class="LocationDirective">
-                                <div style="margin-left:10px;margin-top:5px;margin-right:10px;height:322px;">
-                                    <SharedLogisticsEventPermissios [OnCloseWindowEvent]="OnCloseWindowEvent"></SharedLogisticsEventPermissios>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--Document Tab-->
-                        <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'DOC'">
-                            <div class="LocationDirective">
-                                <div style="margin-left:10px;margin-top:5px;margin-right:10px;height:322px;">
-                                   <SharedLogisticsDocumentPermissios [OnCloseWindowEvent]="OnCloseWindowEvent"></SharedLogisticsDocumentPermissios>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </td>
-    </tr>
-
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <div>
-                            <button class="Button" (click)="CloseButtonClicked()">Close</button>
-                        </div>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-
+    <tr style="height:30px"><td></td></tr>
 </table>
-
-
-
 
 
 

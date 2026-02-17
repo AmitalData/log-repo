@@ -12,6 +12,7 @@ import { ObjectsLocator } from "../../../../Infrastructure/Locators/ObjectsLocat
 import { ConfirmWindow } from "../../../../Controls/Windows/ConfirmWindow";
 
 @Component({
+    moduleId: module.id,
     templateUrl: "./GLAccountSelectComponent.html"
 })
 export class GLAccountSelectComponent extends BaseComponent implements OnInit
@@ -23,7 +24,6 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
     public CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
-    public warningMessageShown: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
     entityListService: EntityListService = new EntityListService();
     gLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
@@ -48,12 +48,11 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
                 this.ReloadData();
             });
     }
-    PartnerId: string;
+
     SetWindowArgs(args)
     {
         this.chartOfAccountTypeCode = args.AccountTypeCode;
         this.cardId = args.CardId;
-        this.PartnerId = args.PartnerId;
     }
 
     public columns: any[] = null;
@@ -180,7 +179,6 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
     onRowSelected($event)
     {
         var glaccount = $event.rowData;
-        this.chartOfAccountTypeCode = glaccount.ChartOfAccountsTypeCode;
         var glaccountId = $event.rowData["Id"];
 
         if (glaccountId) {
@@ -217,19 +215,15 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
 
     private handleError(errorsString: string)
     {
-        if (this.chartOfAccountTypeCode == "4" || this.chartOfAccountTypeCode == "3" || this.PartnerId =="AC") // 4- Vendor 3- Customer
+        if (this.chartOfAccountTypeCode == "4") // 4- Vendor
         {
-            if(!this.warningMessageShown)
-            {
-                this.showWarningMessage(errorsString);
-            }
+            this.showWarningMessage(errorsString);
         }
         else {
             this.showErrorMessage(errorsString);
         }
 
     }
-
 
     private showErrorMessage(errorsString: string)
     {
@@ -247,7 +241,6 @@ export class GLAccountSelectComponent extends BaseComponent implements OnInit
         warningMsg.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
         warningMsg.Width = 400;
         warningMsg.Show(errorsString);
-        this.warningMessageShown = true;
         warningMsg.WindowClosed.subscribe((result: any) =>
         {
             if (warningMsg.Yes) {

@@ -3,7 +3,7 @@ import {CRMTool}from '../../Tools';
 import {AppTool} from '../../../Infrastructure/Tools'; 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FieldTemplateComponent.html',
 })
 

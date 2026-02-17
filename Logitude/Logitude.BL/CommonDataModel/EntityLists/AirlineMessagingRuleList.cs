@@ -18,7 +18,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsMandatoryForSending { get; set; }
         public int? MaxSize { get; set; }
         public bool InActive { get; set; }
-        public string RuleFieldCode { get; set; }
 
         //dummy
         public string RuleFieldName { get; set; }

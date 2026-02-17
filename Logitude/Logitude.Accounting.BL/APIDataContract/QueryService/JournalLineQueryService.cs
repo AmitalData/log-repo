@@ -25,6 +25,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             {
 
                 var lines = new List<JournalLinePM>();
+                // lines = query.GetJournalLinesByJournalId(MyEntity.Id);
                 foreach (var item in journalLines)
                 {
 
@@ -49,13 +50,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
                     Logitude.Accounting.BL.EntityQueryServices.GLAccountQueryService gLAccoutQueryService = new EntityQueryServices.GLAccountQueryService(Tenant);
-                    if(!string.IsNullOrEmpty( item.CreditControlAccount))
+                    if(item.CreditControlAccount != null)
                     {
                         GLAccountPM CreditControlAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.CreditControlAccount, Tenant);
 
                         if (CreditControlAccount == null)
                         {
-                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
+                            throw new ApplicationException("GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
 
                         }
                         else
@@ -63,13 +64,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                             temp.CreditControlAccountId = CreditControlAccount.Id;
                         }
                     }
-                    if (!string.IsNullOrEmpty(item.CreditAccount) )
+                    if (item.CreditAccount != null)
                     {
                         GLAccountPM CreditAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.CreditAccount, Tenant);
 
                         if (CreditAccount == null)
                         {
-                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.CreditAccount + " doesn't exist");
+                            throw new ApplicationException("GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
 
                         }
                         else
@@ -79,13 +80,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     }
 
 
-                    if (!string.IsNullOrEmpty( item.DebitControlAccount))
+                    if (item.DebitControlAccount != null)
                     {
                         GLAccountPM DebitControlAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.DebitControlAccount, Tenant);
 
                         if (DebitControlAccount == null)
                         {
-                            throw new ApplicationException("In Journal line " + item.Line + " GLAccount with internal number " + item.DebitControlAccount + " doesn't exist");
+                            throw new ApplicationException("GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
 
                         }
                         else
@@ -96,13 +97,13 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     }
 
 
-                    if (!string.IsNullOrEmpty(item.DebitAccount))
+                    if (item.DebitAccount != null)
                     {
                         GLAccountPM DebitAccount = gLAccoutQueryService.GetSinglePMByInternalNumber(item.DebitAccount, Tenant);
 
                         if (DebitAccount == null)
                         {
-                            throw new ApplicationException("In Journal line " + item.Line +" GLAccount with internal number " + item.DebitAccount + " doesn't exist");
+                            throw new ApplicationException("GLAccount with internal number " + item.CreditControlAccount + " doesn't exist");
 
                         }
                         else
@@ -110,6 +111,31 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                             temp.DebitAccountId = DebitAccount.Id;
                         }
                     }
+
+
+                    //GLAccountQueryService CreditControlAccountGLAccountService = new GLAccountQueryService(Tenant);
+                    //if (item.CreditControlAccount != null)
+                    //{
+                    //    var myCreditControlAccountPM = CreditControlAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditControlAccount, Tenant, ComputingPartnerName);
+                    //    if (myCreditControlAccountPM != null)
+                    //    {
+                    //        temp.CreditControlAccountId = myCreditControlAccountPM.Id;
+                    //    }
+
+                    //}
+
+
+                    //GLAccountQueryService CreditAccountGLAccountService = new GLAccountQueryService(Tenant);
+                    //if (item.CreditAccount != null)
+                    //{
+                    //    var myCreditAccountPM = CreditAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditAccount, Tenant, ComputingPartnerName);
+                    //    if (myCreditAccountPM != null)
+                    //    {
+                    //        temp.CreditAccountId = myCreditAccountPM.Id;
+                    //    }
+
+                    //}
+
 
                     temp.DocumentDate = item.DocumentDate;
                     temp.AccountingDate = item.AccountingDate;
@@ -132,12 +158,14 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.Reference1 = item.Reference1;
                     temp.Reference2 = item.Reference2;
                     temp.Reference3 = item.Reference3;
+                    //temp.CreditAccountNumber = item.CreditAccountNumber;
+                    //temp.DebitAccountNumber = item.DebitAccountNumber;
                     temp.Notes = item.Notes;
                     if(item.ExternalOpenAmount != null)
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
+                    //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
+                    //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
-                    temp.ConfirmationNumber = item.ConfirmationNumber; 
-                    temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
 
                     JournalActionTypeQueryService journalActionTypeService = new JournalActionTypeQueryService(Tenant);
                     temp.ActionCode = item.ActionCode;
@@ -161,22 +189,45 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             {
 
                 var MyList = new List<JournalLine>();
-                JournalPM journalPM = null;
-
-                JournalQueryService journalQueryService = new JournalQueryService(Tenant);
-
-                if (lines != null && lines.Any())
-                    journalPM = journalQueryService.GetJournalPMById(lines[0].JournalId, Tenant);
-
                 foreach (var item in lines)
                 {
 
                     var temp = new JournalLine();
 
+                    JournalQueryService journalQueryService = new JournalQueryService(Tenant);
+                    JournalPM journalPM = journalQueryService.GetJournalPMById(item.JournalId, Tenant);
                     if (journalPM != null)
                         temp.JournalNumber = journalPM.JournalNumber;
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
+                    //if (item.DebitControlAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService0 = new GLAccountQueryService(Tenant);
+                    //    temp.DebitControlAccount = GLAccountService0.GetGLAccountById(item.DebitControlAccountId, Tenant);
+
+                    //}
+
+                    //if (item.DebitAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService1 = new GLAccountQueryService(Tenant);
+                    //    temp.DebitAccount = GLAccountService1.GetGLAccountById(item.DebitAccountId, Tenant);
+
+                    //}
+
+                    //if (item.CreditControlAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
+                    //    temp.CreditControlAccount = GLAccountService2.GetGLAccountById(item.CreditControlAccountId, Tenant);
+
+                    //}
+
+                    //if (item.CreditAccountId != null)
+                    //{
+                    //    GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
+                    //    temp.CreditAccount = GLAccountService3.GetGLAccountById(item.CreditAccountId, Tenant);
+
+                    //}
+
                     temp.DocumentDate = item.DocumentDate;
                     temp.AccountingDate = item.AccountingDate;
                     temp.DueDate = item.DueDate;
@@ -197,12 +248,15 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.CreditControlAccount = item.CreditControlAccountNumber;
                     temp.DebitControlAccount = item.DebitControlAccountNumber;
                     temp.DebitAccount = item.DebitAccountNumber;
+
+                    //temp.CreditAccountNumber = item.CreditAccountNumber;
+                    //temp.DebitAccountNumber = item.DebitAccountNumber;
                     temp.Notes = item.Notes;
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
+                    //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
+                    //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     temp.ActionCode = item.ActionCode;
-                    temp.ConfirmationNumber = item.ConfirmationNumber;
-                    temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
                     MyList.Add(temp);
                 }
 

@@ -24,8 +24,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 		     None,  
 	         Code, 
 	         Name, 
-	         SearchFields, 
-	         Description,
+	         SearchFields,
 	      }
 
 
@@ -34,8 +33,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 		     None,  
 	         Code, 
 	         Name, 
-	         SearchFields, 
-	         Description,
+	         SearchFields,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -52,11 +50,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
-            {
-				entityPOCO.Description = entityPM.Description;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -80,11 +73,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Description))
-            {
-					entityPM.Description = entityPOCO.Description;
-            }
-
 		}
 
 		public void PMToOldPM(TogglePM entityPM, TogglePM oldEntityPM)
@@ -101,11 +89,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Description))
-            {
-                oldEntityPM.Description = entityPM.Description;
-            }
-			
 		}
 
 	    public void EncodeBase64NVARCHARFields(TogglePM entityPM)
@@ -118,10 +101,6 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.Description)) //T4 find type == nText 
-            {
-                entityPM.Description = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Description));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

@@ -5,7 +5,7 @@ import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './OpportunityDocsInTabComponent.html',
 })
 

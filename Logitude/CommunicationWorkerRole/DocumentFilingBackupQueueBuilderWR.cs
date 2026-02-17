@@ -2,7 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -74,7 +74,7 @@ namespace CommunicationWorkerRole
                                                 foreach (var DocumentFilingPMId in documentIds)
                                                 {
                                                     queueservice.InitializeQueue("DocumentFilingBackupBatchQueue", 0);
-                                                    queueservice.Send(new Dictionary<string, string>() { { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", Tenant.ToString() }, { "BatchId", BatchId } }, Tenant, null, BatchId, documentsBatch.BatchNumber);
+                                                    queueservice.Send(new Dictionary<string, string>() { { "DocumentFilingId", DocumentFilingPMId }, { "Tenant", Tenant.ToString() }, { "BatchId", BatchId } }, null, BatchId, documentsBatch.BatchNumber);
 
                                                 }
                                             }

@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+﻿import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
@@ -20,26 +19,23 @@ import { SpecialActivityRequestParams } from '../../DataContract/RequestParams/S
 import { UpdateDeleteVehicleRequestParams } from '../../DataContract/RequestParams/UpdateDeleteVehicleRequestParams';
 import { CH_NG_191_MSG2_ChangingTimeRequestParams } from '../../DataContract/RequestParams/CH_NG_191_MSG2_ChangingTimeRequestParams';
 import { CargoQueryRequestParams } from '../../DataContract/RequestParams/CargoQueryRequestParams';
-import { LazyLoadEvent } from 'primeng/api';
-import { RequestParamsBase } from 'Customs/DataContract/RequestParams/RequestParamsBase';
-import { CustomsItemDetailsQueryRequestParams } from 'Customs/DataContract/RequestParams/CustomsItemDetailsQueryRequestParams';
 
 
 @Injectable()
 
 export class IIGGeneralMessagesService {
-    
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
 
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/IIGGeneralMessages';
 
     }
 
     PostMorningMessages(entity: MorningMessageRequestParams) {
-        return defer(() => {
+
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -48,16 +44,16 @@ export class IIGGeneralMessagesService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
+
             return this._http.post(
                 this._apiUrl + '/PostMorningMessages/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-
-                    serviceResponse.Result = res;
-
-                    return serviceResponse;
-
-                }),catchError(ServiceHelper.HandleServiceError));
+                { headers: authHeader })
+                .map((res) => {
+                    //               serviceResponse.Result = res.json();
+                    //             return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            ;
 
         }
 
@@ -66,7 +62,7 @@ export class IIGGeneralMessagesService {
 
     PostCourierBOLRequest(entity: CourierBOLQueryRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -78,13 +74,13 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCourierBOLRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -93,7 +89,7 @@ export class IIGGeneralMessagesService {
 
     PostMasterBOLRequest(entity: MasterBOLQueryRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -104,10 +100,10 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostMasterBOLRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -115,7 +111,7 @@ export class IIGGeneralMessagesService {
 
     PostCreditQueryRequest(entity: CreditQueryRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -126,10 +122,10 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCreditQueryRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -137,7 +133,7 @@ export class IIGGeneralMessagesService {
 
     PostGoldCreditQueryRequest(entity: CreditQueryRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -148,10 +144,10 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostGoldCreditQueryRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -159,7 +155,7 @@ export class IIGGeneralMessagesService {
 
     PostSpecialActivityRequest(entity: SpecialActivityRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -170,10 +166,10 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostSpecialActivityRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -181,7 +177,7 @@ export class IIGGeneralMessagesService {
 
     PostImporterDeclarationRequest(entity: ImporterDeclarationRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -192,38 +188,38 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostImporterDeclarationRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
-    
+
     GetClientProgressBarIndicatorCurrentStage(tenant: number, CustomsRequestsSheetId: string, BasicResponse: boolean) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
 
 
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetClientProgressBarIndicatorCurrentStage/?' + '&BasicResponse=' + BasicResponse + '&tenant=' + tenant + '&CustomsRequestsSheetId=' + CustomsRequestsSheetId,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                { headers: authHeader }).map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
+                    serviceResponse.Result = response.json();
 
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
     }
     PostExchangeRatesQuery(entity: ExchangeRatesQueryRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -237,42 +233,13 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostExchangeRatesQuery/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                { headers: authHeader }).map((res) => {
 
-                    serviceResponse.Result = res;
-
-                    return serviceResponse;
-
-                }),catchError(ServiceHelper.HandleServiceError));
-
-        }
-
-        );
-    }
-    PostCustomsItemDetailsQuery(entity: CustomsItemDetailsQueryRequestParams) {
-
-
-        return defer(() => {
-
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostCustomsItemDetailsQuery/',
-                JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-
-                    serviceResponse.Result = res;
+                    serviceResponse.Result = res.json();
 
                     return serviceResponse;
 
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
 
         }
 
@@ -281,7 +248,7 @@ export class IIGGeneralMessagesService {
 
     PostCustomItemLegalDemandsQuery(entity: CustomItemLegalDemandsQueryRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -293,16 +260,16 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCustomItemLegalDemandsQuery/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
     PostUpdateClosedTables(entity: SystemTableRequestParams) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -314,17 +281,17 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostUpdateClosedTables/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
 
     PostFillNotExistedClosedTables(entity: SystemTableRequestParams) {
-        return defer(() => {
+        return Observable.defer(() => {
 
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -336,10 +303,10 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostFillNotExistedClosedTables/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -349,7 +316,7 @@ export class IIGGeneralMessagesService {
 
     PostVehicleRequest(entity: UpdateDeleteVehicleRequestParams) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -360,10 +327,10 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostVehicleRequest/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -372,7 +339,7 @@ export class IIGGeneralMessagesService {
 
     PostCustomFileCredit(entity: any) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -383,17 +350,17 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCustomFileCredit/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
     GetDefBankForCustomer(customerCode: string, tenant: number) {
 
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -404,16 +371,16 @@ export class IIGGeneralMessagesService {
             return this._http.get(
                 this._apiUrl + '/GetDefBankForCustomer/?' + 'customerCode=' + customerCode + '&tenant=' + tenant.toString(),
                 //JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
     PostChangingTimeRequestParams(entity: CH_NG_191_MSG2_ChangingTimeRequestParams) {
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -424,38 +391,16 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostChangingTimeRequestParams/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
 
 
-    GetClearCacheItems() {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-
-
-        return defer(() => {
-            return this._http
-                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-                .get(this._apiUrl + '/GetClearCacheItems',
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-
-                    var serviceResponse: ServiceResponse = new ServiceResponse();
-                    //serviceResponse.Result = response;
-                    serviceResponse.Result = response;
-                    return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
-        });
-
-
-    }
 
 
     GetResetDeclarationNumber(declarationId: string, tenant: number) {
@@ -464,18 +409,18 @@ export class IIGGeneralMessagesService {
 
 
 
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetResetDeclarationNumber/?' + '&declarationId=' + declarationId + '&tenant=' + tenant,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                { headers: authHeader }).map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    //serviceResponse.Result = response;
+                    //serviceResponse.Result = response.json();
                     serviceResponse.Result = response;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
 
 
@@ -483,7 +428,7 @@ export class IIGGeneralMessagesService {
 
 
     PostCargoQueryRequestParams(entity: CargoQueryRequestParams) {
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -494,39 +439,18 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCargoQueryRequestParams/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
 
 
-    
-    PostMessageWaitingRequestParams(entity: any) {
-        return defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', SessionInfo.Token);
-            authHeader.append('Content-Type', 'application/json');
-
-            var serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
-
-            return this._http.post(
-                this._apiUrl + '/PostMessageWaitingRequestParams/',
-                JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
-                    return serviceResponse;
-                }), catchError(ServiceHelper.HandleServiceError));
-        }
-
-        );
-    }
     PostMessageRestoreRequestParams(entity: any) {
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -537,16 +461,16 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostMessageRestoreRequestParams/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
     PostBlockListInWarehouseRequestParams(entity: any) {
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -557,10 +481,10 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostBlockListInWarehouseRequestParams/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
@@ -577,7 +501,7 @@ export class IIGGeneralMessagesService {
 
         //GetLOGISUPPACC(string declarationId, int InvoiceCounterKey, int LineNumber, int tenant)
 
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http
                 //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
                 .get(this._apiUrl + '/GetLOGISUPPACC/?' +
@@ -585,15 +509,15 @@ export class IIGGeneralMessagesService {
                 '&InvoiceCounterKey=' + InvoiceCounterKey +
                 '&LineNumber=' + LineNumber +
                 '&tenant=' + tenant,
-                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                { headers: authHeader }).map(response => {
 
 
                     var serviceResponse: ServiceResponse = new ServiceResponse();
-                    var myObj: any = response;
+                    var myObj: any = response.json();
                     serviceResponse.Result =myObj.MyXML;
                     //serviceResponse.Result = (response as any)._body;
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         });
 
 
@@ -602,7 +526,7 @@ export class IIGGeneralMessagesService {
 
 
     PostCustomsBookInRequestParams(entity: any) {
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -613,16 +537,16 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostCustomsBookInRequestParams/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
     PostDeficitFileFilterRequestParams(entity: any) {
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -633,17 +557,17 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostDeficitFileFilterRequestParams/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
     }
 
     PostTPG_NG_8244_ClaimFileFilterRequestParams(entity: any) {
-        return defer(() => {
+        return Observable.defer(() => {
             var authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
@@ -654,108 +578,13 @@ export class IIGGeneralMessagesService {
             return this._http.post(
                 this._apiUrl + '/PostTPG_NG_8244_ClaimFileFilterRequestParams/',
                 JSON.stringify(entity),
-                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    serviceResponse.Result = res;
+                { headers: authHeader }).map((res) => {
+                    serviceResponse.Result = res.json();
                     return serviceResponse;
-                }),catchError(ServiceHelper.HandleServiceError));
+                }).catch(ServiceHelper.HandleServiceError);
         }
 
         );
-    }
-    GetVirtualDeclarationCourierStatus(jsonAmitalLazyLoadEvent: string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        
-
-
-
-        return defer(() => {
-            return this._http
-                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-                .post(this._apiUrl + '/PostVirtualDeclarationCourierStatus/',
-                    jsonAmitalLazyLoadEvent,
-
-                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-
-                        var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = response;
-
-                        return serviceResponse;
-                    }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-    GetVirtualDeclarationCourierStatusOld(getCount: boolean, lazyLoadEvent: LazyLoadEvent) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        let AmitalLazyLoadEvent = { GetCount: getCount, MyLazyLoadEvent: lazyLoadEvent };
-
-
-
-        return defer(() => {
-            return this._http
-                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-                .post(this._apiUrl + '/PostVirtualDeclarationCourierStatus/' ,
-                    JSON.stringify(AmitalLazyLoadEvent),
-
-                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-
-                        var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = response;
-
-                        return serviceResponse;
-                    }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    //getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-    GetVirtualCar(getCount: boolean, event: LazyLoadEvent) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-      
-
-
-        return defer(() => {
-            return this._http
-                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-                .get(this._apiUrl + '/GetVirtualCar/?' + '&GetCount=' + getCount + '&first=' + event.first + '&rows=' + event.rows
-                    + '&sortField=' + event.sortField + '&sortOrder=' + event.sortOrder
-
-                    ,
-                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-
-                        var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = response;
-
-                        return serviceResponse;
-                    }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
-    GetVirtualCar__(getCount: boolean, event: LazyLoadEvent) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        let newObj
-
-
-        return defer(() => {
-            return this._http
-                //GetClientProgressBarIndicatorCurrentStage(int tenant, string CustomsRequestsSheetId)
-                .get<any>(this._apiUrl + '/GetVirtualCar/?' + '&GetCount=' + getCount + '&first=' + event.first + '&rows=' + event.rows
-                    + '&sortField=' + event.sortField + '&sortOrder=' + event.sortOrder,
-                    ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-
-                        var serviceResponse: ServiceResponse = new ServiceResponse();
-                        serviceResponse.Result = response;
-
-                        return serviceResponse;
-                    }), catchError(ServiceHelper.HandleServiceError));
-        });
     }
     
 }
@@ -768,3 +597,4 @@ export class ResultClientProgressBar {
 
 }
 ////////////////////////////////////////
+   

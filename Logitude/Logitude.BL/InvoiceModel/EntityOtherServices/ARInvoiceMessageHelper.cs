@@ -1,37 +1,35 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Server.Tools.StorageService;
-using Logitude.SystemLogs;
-using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.ShipmentsModel;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.DataContracts;
+using Microsoft.Practices.Unity;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools;
 
 namespace Logitude.BL.InvoiceModel.EntityOtherServices
 {
@@ -48,51 +46,25 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private IShipmentsContext shipmentsContext;
         private MessageTransferHelper Helper;
         private bool isDropBox = false;
-        private bool UsingFTP = false;
-        private string FTPDetailId;
-        private bool ReturnEntityFile = false;
-        public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false, bool isFTP = false)
-        {
-            Initialize(invoices, tenant);
-            this.filename = filename;
-            this.isDropBox = isDropBox;
-            this.UsingFTP = isFTP;
-        }
-
-        public ARInvoiceMessageHelper(ARInvoicePM arInvoicePM, int tenant, string selectedInterfaceCode)
-        {
-            //For Automation Send Interface
-            ARInvoice arInvoice = new ARInvoice(); 
-            Tools.DataMapping.ARInvoiceMapping.MapEntity(arInvoicePM, arInvoice, true, arInvoicePM.CreatedByUserId);
-            arInvoice.UpdatedByUserId = arInvoicePM.UpdatedByUserId;
-            
-            List<ARInvoice> invoices = new List<ARInvoice> { arInvoice };
-            Initialize(invoices, tenant);
-            ReturnEntityFile = true;
-            myAccountingSystemCode = selectedInterfaceCode;
-        }
-
-        private void Initialize(List<ARInvoice> invoices, int tenant)
+        public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false)
         {
             this.tenant = tenant;
+            this.filename = filename;
             this.invoices = invoices;
             this.invoiceCotnext = InvoiceContext.GetContext(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.shipmentsContext = ShipmentsContext.GetContext(tenant);
             this.Helper = new MessageTransferHelper(tenant, this.invoiceCotnext, this.commonContext, this.shipmentsContext);
-
+            this.isDropBox = isDropBox;
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(commonContext);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
-            
-            if (accountingSetting == null) return;
-
-            myVATableTempCard = accountingSetting.ReceivableVATableTempCard;
-            myVATExemptTempCard = accountingSetting.ReceivableVATExemptTempCard;
-            myAccountingSystemCode = accountingSetting.AccountingSystemCode;
-            FTPDetailId = accountingSetting.TransferFTPDetailId;
-
+            if (accountingSetting != null)
+            {
+                myVATableTempCard = accountingSetting.ReceivableVATableTempCard;
+                myVATExemptTempCard = accountingSetting.ReceivableVATExemptTempCard;
+                myAccountingSystemCode = accountingSetting.AccountingSystemCode;
+            }
         }
-
         public ARInvoiceMessageHelper(int tenant)
         {
             this.tenant = tenant;
@@ -111,16 +83,16 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
         }
 
-        public object Transfer()
+        public void Transfer()
         {
             if (myAccountingSystemCode == "GI" || myAccountingSystemCode == "AI")
             {
-                return this.GetGenericInterfaceData();
+                this.GetGenericInterfaceData();
             }
 
             else
             {
-                return this.GetOriginalTranferData();
+                this.GetOriginalTranferData();
             }
         }
         public void RebuildFile()
@@ -136,12 +108,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
         }
 
-        private ARInvoiceRoot GetGenericInterfaceData()
+        private void GetGenericInterfaceData()
         {
             ARInvoiceRoot log = new ARInvoiceRoot();
             log.Invoices = new List<ARInvoiceElement>();
-
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             List<string> allInvoiceIds = invoices.Select(s => s.Id).ToList();
             List<string> allCardsIds = invoices.Select(s => s.BillToId).ToList();
@@ -156,6 +126,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                                                     && allInvoiceIds.Contains(d.ARInvoiceId)
                                                     select d).ToList();
 
+
             List<string> allChargesTypesIds = (from d in allInvoicesLines
                                                group d by d.ChargesTypeId into g
                                                select g.Key).ToList();
@@ -166,11 +137,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                    && allChargesTypesIds.Contains(f.ChargesTypeId)
                    select f).ToList();
 
-            List<ARInvoiceTotalVAT> allInvoicesTotalVATs = (from d in invoiceCotnext.ARInvoiceTotalVATs.Include("VatType")
-                                                    where d.Tenant == tenant
-                                                    && allInvoiceIds.Contains(d.ARInvoiceId)
-                                                    select d).ToList();
-
             List<SATPaymentMethod> allPaymentMethods = (from d in invoiceCotnext.SATPaymentMethods select d).ToList();
 
             CardExternalAccountsByProductRepository myCardExternalAccountsByProductRepository = new CardExternalAccountsByProductRepository(commonContext);
@@ -179,13 +145,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             ShipmentQuery shipmentQuery = new ShipmentQuery(new ShipmentRepository(this.shipmentsContext));
             ShipmentReceivableRepository shipmentReceivableRepository = new ShipmentReceivableRepository(this.shipmentsContext);
             PrepaidCollectRepository prepaidCollectRepository = new PrepaidCollectRepository(tenant);
-            VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
 
             foreach (ARInvoice item in invoices)
             {
                 ARInvoiceElement invoiceElement = new ARInvoiceElement();
-
-                List<ARInvoiceTotalVAT> myTotalVATs = allInvoicesTotalVATs.Where(d => d.ARInvoiceId == item.Id).ToList();
 
                 ShipmentPM shipment = null;
                 if (!string.IsNullOrEmpty(item.MainEntityId))
@@ -199,7 +162,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.InvoiceNumber = item.InvoiceNumber;
                 invoiceElement.InvoiceDate = item.InvoiceDate;
                 invoiceElement.InvoiceNotes = item.PrintNotes;
-                invoiceElement.InvoiceCurrency = GetInvoiceCurrencyCode(item);
+                invoiceElement.InvoiceCurrency = item.InvoiceCurrency.Code;
                 invoiceElement.ShipmentNumber = item.MainEntityReference;
                 invoiceElement.MasterReference = item.MasterNumber;
                 invoiceElement.HouseReference = item.HouseNumber;
@@ -211,10 +174,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.VATNumber = item.VatNumber;
                 invoiceElement.PaymentTermExternalId = item.PaymentTermExternalId;
                 invoiceElement.SATPaymentMethodCode = item.SATPaymentMethodCode;
-                invoiceElement.SATPaymentMethodName = allPaymentMethods.Where(a => a.Code == item.SATPaymentMethodCode).Select(a => a.Name).FirstOrDefault();
+                invoiceElement.SATPaymentMethodName = allPaymentMethods.Where(a=>a.Code == item.SATPaymentMethodCode).Select(a=>a.Name).FirstOrDefault();
                 invoiceElement.Tenant = tenant;
                 invoiceElement.Intercompany = item.Intercompany ? "True" : "False";
-                invoiceElement.TotalTaxAmountInInvoiceCurrency = (decimal)myTotalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
 
                 if (item.IsConsolidationInvoice)
                 {
@@ -238,7 +200,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     invoiceElement.Card.Name = myPartnerCard.EnglishName;
                     invoiceElement.Card.VATNumber = myPartnerCard.VatNumber;
 
-                    AddressPM address = addressQuery.GetSingleAddressPM(item.BillToAddressId, tenant, !ReturnEntityFile);
+                    AddressPM address = addressQuery.GetSingleAddressPM(item.BillToAddressId, tenant, true);
                     if (address != null)
                     {
                         invoiceElement.Card.Address1 = address.Address1;
@@ -246,7 +208,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         invoiceElement.Card.City = address.City;
                         invoiceElement.Card.ZipCode = address.ZipCode;
                         invoiceElement.Card.Country = address.CountryEnglishName;
-                        invoiceElement.Card.CountryCode = address.CountryCode;
                         invoiceElement.Card.State = address.StateEnglishName;
                     }
 
@@ -286,14 +247,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 #region Lines
                 invoiceElement.InvoiceLines = new List<ARInvoiceLineElement>();
                 List<ARInvoiceLine> dueVatLines = new List<ARInvoiceLine>();
-                List<ARInvoiceLine> lines = allInvoicesLines.Where(d => d.ARInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();              
-                List<string> allInvoiceLinesVATTypesIds = lines.Select(s => s.VatTypeId).Distinct().ToList();
-                
-                List<VATTypesGroup> allVATTypesGroups = (from d in commonContext.VATTypesGroups
-                                                        where d.Tenant == tenant
-                                                        && allInvoiceLinesVATTypesIds.Contains(d.GroupVATTypeId)
-                                                        select d).ToList();
-
+                List<ARInvoiceLine> lines = allInvoicesLines.Where(d => d.ARInvoiceId == item.Id).OrderBy(o => o.ChargesType.ViewOrder).ToList();
+               
                 int count = 1;
                 foreach (ARInvoiceLine myline in lines)
                 {
@@ -307,14 +262,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         AmountInOriginalCurrency = myline.ForiegnCurrencyAmount == null ? 0 : (decimal)myline.ForiegnCurrencyAmount,
                         AmountInInvoiceCurrency = myline.InvoiceCurrencyAmount == null ? 0 : (decimal)myline.InvoiceCurrencyAmount,
                         AmountInLocalCurrency = myline.LocalCurrencyAmount == null ? 0 : (decimal)myline.LocalCurrencyAmount,
+                        TaxPercentage = myline.VatPercentage == null ? 0 : (decimal)myline.VatPercentage,
                         ChargeTypeCode = myline.ChargesType == null ? "" : myline.ChargesType.Code,
                         TaxCode = myline.VatType == null ? "" : myline.VatType.Code,
                         UnitPrice = myline.UnitPrice == null ? 0 : (decimal)myline.UnitPrice,
                         Quantity = myline.Quantity == null ? 0 : (decimal)myline.Quantity,
-                        IsMultiTAX = myline.VatType == null ? false : myline.VatType.IsMultiPercentage,
-                        AppliesRegionalTax = myline.IsRegionalTax,
                     };
-                    
+
                     if (string.IsNullOrEmpty(lineElement.OriginalCurrency))
                     {
                         Currency currency = CurrencyRepository.GetSingleCurrency(myline.ForiegnCurrencyId, tenant, true);
@@ -333,6 +287,15 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         }
                     }
 
+                    if (string.IsNullOrEmpty(lineElement.TaxCode))
+                    {
+                        VatType vatType = VatTypeRepository.GetSingleVatType(myline.VatTypeId, tenant, true);
+                        if (vatType != null)
+                        {
+                            lineElement.TaxCode = vatType.Code;
+                        }
+                    }
+
                     if (string.IsNullOrEmpty(lineElement.MeasurementCode))
                     {
                         Measurement myMeasurement = measurementRepository.GetSingleMeasurement(myline.MeasurementId, tenant);
@@ -341,7 +304,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                             lineElement.MeasurementCode = myMeasurement.Code;
                         }
                     }
-                    
+
                     if (!string.IsNullOrEmpty(myline.PrepaidCollectId))
                     {
                         PrepaidCollect prepaidCollect = prepaidCollectRepository.GetSinglePrepaidCollect(myline.PrepaidCollectId);
@@ -350,7 +313,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                             lineElement.PrepaidCollect = prepaidCollect.Name;
                         }
                     }
-
+                    
                     lineElement.Advanced = new LineAdvancedElement();
                     lineElement.Advanced.GLAccount = "";
                     lineElement.Advanced.CostCenter = "";
@@ -379,57 +342,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         }
                     }
 
-                    lineElement.TaxDetails = new List<LineTaxDetailsElement>();
-                    VatType lineVatType = VatTypeRepository.GetSingleVatType(myline.VatTypeId, item.Tenant, true);
-
-                    if (lineVatType != null)
-                    {
-                        if (string.IsNullOrEmpty(lineElement.TaxCode))
-                        {
-                            lineElement.TaxCode = lineVatType.Code;
-                        }
-
-                        if (!lineVatType.IsMultiPercentage)
-                        {
-                            ARInvoiceTotalVAT totalVAT = myTotalVATs.Where(d => d.VatTypeId == lineVatType.Id).FirstOrDefault();
-                            lineElement.TaxPercentage = totalVAT.VatPercent == null ? 0 : (decimal)totalVAT.VatPercent;
-                            lineElement.VATExternalId = totalVAT.ExternalVATCard;
-
-                            lineElement.TaxDetails.Add(new LineTaxDetailsElement()
-                            {
-                                TaxCode = lineVatType.Code,
-                                TaxPercentage = totalVAT.VatPercent == null ? 0 : (decimal)totalVAT.VatPercent,
-                                VATExternalId = totalVAT.ExternalVATCard
-                            });
-                        }
-
-                        else
-                        {
-                            double multiVatPercentage = 0;
-                            List<VATTypesGroup> myVATTypesGroups = allVATTypesGroups.Where(d => d.GroupVATTypeId == lineVatType.Id).ToList();
-
-                            foreach (VATTypesGroup vATGroupItem in myVATTypesGroups)
-                            {
-                                ARInvoiceTotalVAT totalVAT = myTotalVATs.Where(d => d.VatTypeId == vATGroupItem.SingleVATTypeId).FirstOrDefault();
-                                VatType lineSingleVatType = VatTypeRepository.GetSingleVatType(vATGroupItem.SingleVATTypeId, item.Tenant, true);
-
-                                if (totalVAT.VatPercent != null)
-                                {
-                                    multiVatPercentage += totalVAT.VatPercent.Value;
-                                }
-
-                                lineElement.TaxDetails.Add(new LineTaxDetailsElement()
-                                {
-                                    TaxCode = lineSingleVatType.Code,
-                                    TaxPercentage = totalVAT.VatPercent == null ? 0 : (decimal)totalVAT.VatPercent,
-                                    VATExternalId = totalVAT.ExternalVATCard
-                                });
-                            }
-
-                            lineElement.TaxPercentage = (decimal)multiVatPercentage;
-                        }                       
-                    }
-                    
                     invoiceElement.InvoiceLines.Add(lineElement);
                     count++;
 
@@ -438,21 +350,21 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         dueVatLines.Add(myline);
                     }
 
-                    #endregion                    
+                    #endregion
                 }
-                
-                //if (dueVatLines.Count != 0)
-                //{
-                //    foreach (ARInvoiceLine myline in dueVatLines)
-                //    {
-                //        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
-                //    }
-                //}
 
-                //else
-                //{
-                //    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
-                //}
+                if (dueVatLines.Count != 0)
+                {
+                    foreach (ARInvoiceLine myline in dueVatLines)
+                    {
+                        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
+                    }
+                }
+
+                else
+                {
+                    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
+                }
                 #endregion
 
                 #region Shipment
@@ -774,17 +686,128 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                             invoiceElement.ShipmentDetails.DeliveryATA = myDelivery.ATA;
                         }
 
-                        this.SetPreCarriageValues(invoiceElement, shipment);
-                        this.SetOnCarriageValues(invoiceElement, shipment);
-                        this.SetPreForwardingValues(invoiceElement, shipment);
-                        this.SetOnForwardingValues(invoiceElement, shipment);
-                        this.SetMainCarriageValues(invoiceElement, shipment);
-                        this.SetVia1Values(invoiceElement, shipment);
-                        this.SetVia2Values(invoiceElement, shipment);
-                        this.SetVia3Values(invoiceElement, shipment);
-                        this.SetFromLocationValues(invoiceElement, shipment, addressQuery);
-                        this.SetToLocationValues(invoiceElement, shipment, addressQuery);
-                        this.SetFinalLocationValues(invoiceElement, shipment, addressQuery);
+                        #region PreCarriage
+                        invoiceElement.ShipmentDetails.PreCarriageTransportMode = this.Helper.GetTransportModes(shipment.PreCarriageTransportModeId);
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortCode = shipment.PreCarriageFromPortCode;
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortName = shipment.PreCarriageFromPortName;
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryCode = shipment.PreCarriageFromPortCountryCode;
+                        invoiceElement.ShipmentDetails.PreCarriageFromPortCountryName = shipment.PreCarriageFromPortCountryName;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortCode = shipment.PreCarriageToPortCode;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortName = shipment.PreCarriageToPortName;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryCode = shipment.PreCarriageToPortCountryCode;
+                        invoiceElement.ShipmentDetails.PreCarriageToPortCountryName = shipment.PreCarriageToPortCountryName;
+                        invoiceElement.ShipmentDetails.PreCarriageCarrierName = shipment.PreCarriageCarrierName;
+                        invoiceElement.ShipmentDetails.PreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
+                        invoiceElement.ShipmentDetails.PreCarriageETD = shipment.PreCarriageETD;
+                        invoiceElement.ShipmentDetails.PreCarriageETA = shipment.PreCarriageETA;
+                        invoiceElement.ShipmentDetails.PreCarriageATD = shipment.PreCarriageATD;
+                        invoiceElement.ShipmentDetails.PreCarriageATA = shipment.PreCarriageATA;
+                        #endregion
+
+                        #region OnCarriage
+                        invoiceElement.ShipmentDetails.OnCarriageTransportMode = this.Helper.GetTransportModes(shipment.OnCarriageTransportModeId);
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortCode = shipment.OnCarriageFromPortCode;
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortName = shipment.OnCarriageFromPortName;
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryCode = shipment.OnCarriageFromPortCountryCode;
+                        invoiceElement.ShipmentDetails.OnCarriageFromPortCountryName = shipment.OnCarriageFromPortCountryName;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortCode = shipment.OnCarriageToPortCode;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortName = shipment.OnCarriageToPortName;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryCode = shipment.OnCarriageToPortCountryCode;
+                        invoiceElement.ShipmentDetails.OnCarriageToPortCountryName = shipment.OnCarriageToPortCountryName;
+                        invoiceElement.ShipmentDetails.OnCarriageCarrierName = shipment.OnCarriageCarrierName;
+                        invoiceElement.ShipmentDetails.OnCarriageCarrierNumber = shipment.OnCarriageCarrierNumber;
+                        invoiceElement.ShipmentDetails.OnCarriageETD = shipment.OnCarriageETD;
+                        invoiceElement.ShipmentDetails.OnCarriageETA = shipment.OnCarriageETA;
+                        invoiceElement.ShipmentDetails.OnCarriageATD = shipment.OnCarriageATD;
+                        invoiceElement.ShipmentDetails.OnCarriageATA = shipment.OnCarriageATA;
+                        #endregion
+
+                        #region MainCarriage
+                        invoiceElement.ShipmentDetails.MainCarriageCarrierCode = shipment.MainCarriageCarrierCode;
+                        invoiceElement.ShipmentDetails.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
+                        invoiceElement.ShipmentDetails.MainCarriageAirlinePrefix = shipment.MainCarriageCarrierPrefix;
+                        invoiceElement.ShipmentDetails.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
+                        invoiceElement.ShipmentDetails.MainCarriageETD = shipment.MainCarriageETD;
+                        invoiceElement.ShipmentDetails.MainCarriageATD = shipment.MainCarriageATD;
+                        invoiceElement.ShipmentDetails.MainCarriageETA = shipment.MainCarriageETA;
+                        invoiceElement.ShipmentDetails.MainCarriageATA = shipment.MainCarriageATA;
+                        invoiceElement.ShipmentDetails.MainCarriageVessel = shipment.MainCarriageVesselName;
+                        #endregion
+
+                        #region Via1
+                        invoiceElement.ShipmentDetails.Via1CarrierCode = shipment.Transshipment1CarrierCode;
+                        invoiceElement.ShipmentDetails.Via1CarrierName = shipment.Transshipment1CarrierName;
+                        invoiceElement.ShipmentDetails.Via1AirlinePrefix = shipment.Transshipment1CarrierPrefix;
+                        invoiceElement.ShipmentDetails.Via1CarrierNumber = shipment.Transshipment1CarrierNumber;
+                        invoiceElement.ShipmentDetails.Via1ETD = shipment.Transshipment1ETD;
+                        invoiceElement.ShipmentDetails.Via1ATD = shipment.Transshipment1ATD;
+                        invoiceElement.ShipmentDetails.Via1ETA = shipment.Transshipment1ETA;
+                        invoiceElement.ShipmentDetails.Via1ATA = shipment.Transshipment1ATA;
+                        invoiceElement.ShipmentDetails.Via1Vessel = shipment.Transshipment1VesselName;
+                        #endregion
+
+                        #region Via2
+                        invoiceElement.ShipmentDetails.Via2CarrierCode = shipment.Transshipment2CarrierCode;
+                        invoiceElement.ShipmentDetails.Via2CarrierName = shipment.Transshipment2CarrierName;
+                        invoiceElement.ShipmentDetails.Via2AirlinePrefix = shipment.Transshipment2CarrierPrefix;
+                        invoiceElement.ShipmentDetails.Via2CarrierNumber = shipment.Transshipment2CarrierNumber;
+                        invoiceElement.ShipmentDetails.Via2ETD = shipment.Transshipment2ETD;
+                        invoiceElement.ShipmentDetails.Via2ATD = shipment.Transshipment2ATD;
+                        invoiceElement.ShipmentDetails.Via2ETA = shipment.Transshipment2ETA;
+                        invoiceElement.ShipmentDetails.Via2ATA = shipment.Transshipment2ATA;
+                        invoiceElement.ShipmentDetails.Via2Vessel = shipment.Transshipment2VesselName;
+                        #endregion
+
+                        #region Via3
+                        invoiceElement.ShipmentDetails.Via3CarrierCode = shipment.Transshipment3CarrierCode;
+                        invoiceElement.ShipmentDetails.Via3CarrierName = shipment.Transshipment3CarrierName;
+                        invoiceElement.ShipmentDetails.Via3AirlinePrefix = shipment.Transshipment3CarrierPrefix;
+                        invoiceElement.ShipmentDetails.Via3CarrierNumber = shipment.Transshipment3CarrierNumber;
+                        invoiceElement.ShipmentDetails.Via3ETD = shipment.Transshipment3ETD;
+                        invoiceElement.ShipmentDetails.Via3ATD = shipment.Transshipment3ATD;
+                        invoiceElement.ShipmentDetails.Via3ETA = shipment.Transshipment3ETA;
+                        invoiceElement.ShipmentDetails.Via3ATA = shipment.Transshipment3ATA;
+                        invoiceElement.ShipmentDetails.Via3Vessel = shipment.Transshipment3VesselName;
+                        #endregion
+
+                        #region FromLocation
+                        invoiceElement.ShipmentDetails.FromPortCode = shipment.FromPort;
+                        invoiceElement.ShipmentDetails.FromPortName = shipment.FromPortName;
+                        invoiceElement.ShipmentDetails.FromCountryCode = shipment.FromPortCountry;
+                        invoiceElement.ShipmentDetails.FromCountryName = shipment.FromPortCountryName;
+
+                        if (isInlandDomesticShipment)
+                        {
+                            AddressPM fromAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageFromAddressId, tenant, true);
+                            invoiceElement.ShipmentDetails.FromAddress = this.Helper.GetAddress(fromAddress);
+                        }
+                        #endregion
+
+                        #region ToLocation
+                        invoiceElement.ShipmentDetails.ToPortCode = shipment.ToPort;
+                        invoiceElement.ShipmentDetails.ToPortName = shipment.ToPortName;
+                        invoiceElement.ShipmentDetails.ToCountryCode = shipment.ToPortCountry;
+                        invoiceElement.ShipmentDetails.ToCountryName = shipment.ToPortCountryName;
+
+                        if (isInlandDomesticShipment)
+                        {
+                            AddressPM toAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
+                            invoiceElement.ShipmentDetails.ToAddress = this.Helper.GetAddress(toAddress);
+                        }
+                        #endregion
+
+                        #region FinalLocation
+                        invoiceElement.ShipmentDetails.FinalPortCode = shipment.MainCarriageFinalDestinationPortCode;
+                        invoiceElement.ShipmentDetails.FinalPortName = shipment.MainCarriageFinalDestinationPortName;
+                        invoiceElement.ShipmentDetails.FinalCountryCode = shipment.MainCarriageFinalDestinationPortCountryCode;
+                        invoiceElement.ShipmentDetails.FinalCountryName = shipment.MainCarriageFinalDestinationPortCountryName;
+
+                        if (isInlandDomesticShipment)
+                        {
+                            AddressPM finalAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
+                            invoiceElement.ShipmentDetails.FinalAddress = this.Helper.GetAddress(finalAddress);
+                        }
+                        #endregion
 
                         #endregion
 
@@ -941,212 +964,12 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
                 #endregion
 
-                #region TAX
-                invoiceElement.TaxTotalsInInvoiceCurrency = new List<InvoiceTaxElement>();
-                
-                foreach (ARInvoiceTotalVAT myline in myTotalVATs)
-                {
-                    InvoiceTaxElement invoiceTaxElement = new InvoiceTaxElement()
-                    {
-                        TaxCode = myline.VatType == null ? null : myline.VatType.Code,
-                        TaxPercentage = myline.VatPercent == null ? 0 : (decimal)myline.VatPercent.Value,
-                        TaxAmount = myline.InvoiceCurrencyVATAmount == null ? 0 : (decimal)myline.InvoiceCurrencyVATAmount.Value,
-                        IsRegionalTax = myline.IsRegionalTax,
-                    };
-
-                    invoiceElement.TaxTotalsInInvoiceCurrency.Add(invoiceTaxElement);
-                }
-                #endregion
-
                 log.Invoices.Add(invoiceElement);
-
-            }
-            if (ReturnEntityFile)
-            {
-                return log;
             }
 
             this.BuildXMLFile(log, tenant, filename);
-
-            return log;
         }
-
-        private string GetInvoiceCurrencyCode(ARInvoice item)
-        {
-            if (item.InvoiceCurrency != null)
-            {
-                return item.InvoiceCurrency.Code;
-            }
-
-            Currency currency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant, true);
-            if (currency != null)
-            {
-                return currency.Code;
-            }
-
-            return null;
-        }
-
-        private void SetPreCarriageValues(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.PreCarriageTransportMode = this.Helper.GetTransportModes(shipment.PreCarriageTransportModeId);
-            invoiceElement.ShipmentDetails.PreCarriageFromPortCode = shipment.PreCarriageFromPortCode;
-            invoiceElement.ShipmentDetails.PreCarriageFromPortName = shipment.PreCarriageFromPortName;
-            invoiceElement.ShipmentDetails.PreCarriageFromPortCountryCode = shipment.PreCarriageFromPortCountryCode;
-            invoiceElement.ShipmentDetails.PreCarriageFromPortCountryName = shipment.PreCarriageFromPortCountryName;
-            invoiceElement.ShipmentDetails.PreCarriageToPortCode = shipment.PreCarriageToPortCode;
-            invoiceElement.ShipmentDetails.PreCarriageToPortName = shipment.PreCarriageToPortName;
-            invoiceElement.ShipmentDetails.PreCarriageToPortCountryCode = shipment.PreCarriageToPortCountryCode;
-            invoiceElement.ShipmentDetails.PreCarriageToPortCountryName = shipment.PreCarriageToPortCountryName;
-            invoiceElement.ShipmentDetails.PreCarriageCarrierName = shipment.PreCarriageCarrierName;
-            invoiceElement.ShipmentDetails.PreCarriageCarrierNumber = shipment.PreCarriageCarrierNumber;
-            invoiceElement.ShipmentDetails.PreCarriageETD = shipment.PreCarriageETD;
-            invoiceElement.ShipmentDetails.PreCarriageETA = shipment.PreCarriageETA;
-            invoiceElement.ShipmentDetails.PreCarriageATD = shipment.PreCarriageATD;
-            invoiceElement.ShipmentDetails.PreCarriageATA = shipment.PreCarriageATA;
-        }
-        private void SetOnCarriageValues(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.OnCarriageTransportMode = this.Helper.GetTransportModes(shipment.OnCarriageTransportModeId);
-            invoiceElement.ShipmentDetails.OnCarriageFromPortCode = shipment.OnCarriageFromPortCode;
-            invoiceElement.ShipmentDetails.OnCarriageFromPortName = shipment.OnCarriageFromPortName;
-            invoiceElement.ShipmentDetails.OnCarriageFromPortCountryCode = shipment.OnCarriageFromPortCountryCode;
-            invoiceElement.ShipmentDetails.OnCarriageFromPortCountryName = shipment.OnCarriageFromPortCountryName;
-            invoiceElement.ShipmentDetails.OnCarriageToPortCode = shipment.OnCarriageToPortCode;
-            invoiceElement.ShipmentDetails.OnCarriageToPortName = shipment.OnCarriageToPortName;
-            invoiceElement.ShipmentDetails.OnCarriageToPortCountryCode = shipment.OnCarriageToPortCountryCode;
-            invoiceElement.ShipmentDetails.OnCarriageToPortCountryName = shipment.OnCarriageToPortCountryName;
-            invoiceElement.ShipmentDetails.OnCarriageCarrierName = shipment.OnCarriageCarrierName;
-            invoiceElement.ShipmentDetails.OnCarriageCarrierNumber = shipment.OnCarriageCarrierNumber;
-            invoiceElement.ShipmentDetails.OnCarriageETD = shipment.OnCarriageETD;
-            invoiceElement.ShipmentDetails.OnCarriageETA = shipment.OnCarriageETA;
-            invoiceElement.ShipmentDetails.OnCarriageATD = shipment.OnCarriageATD;
-            invoiceElement.ShipmentDetails.OnCarriageATA = shipment.OnCarriageATA;
-        }
-        private void SetPreForwardingValues(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.PreForwardingTransportMode = this.Helper.GetTransportModes(shipment.PreForwardingTransportModeId);
-            invoiceElement.ShipmentDetails.PreForwardingFromPortCode = shipment.PreForwardingFromPortCode;
-            invoiceElement.ShipmentDetails.PreForwardingFromPortName = shipment.PreForwardingFromPortName;
-            invoiceElement.ShipmentDetails.PreForwardingFromPortCountryCode = shipment.PreForwardingFromPortCountryCode;
-            invoiceElement.ShipmentDetails.PreForwardingFromPortCountryName = shipment.PreForwardingFromPortCountryName;
-            invoiceElement.ShipmentDetails.PreForwardingToPortCode = shipment.PreForwardingToPortCode;
-            invoiceElement.ShipmentDetails.PreForwardingToPortName = shipment.PreForwardingToPortName;
-            invoiceElement.ShipmentDetails.PreForwardingToPortCountryCode = shipment.PreForwardingToPortCountryCode;
-            invoiceElement.ShipmentDetails.PreForwardingToPortCountryName = shipment.PreForwardingToPortCountryName;
-            invoiceElement.ShipmentDetails.PreForwardingCarrierName = shipment.PreForwardingCarrierName;
-            invoiceElement.ShipmentDetails.PreForwardingCarrierNumber = shipment.PreForwardingCarrierNumber;
-            invoiceElement.ShipmentDetails.PreForwardingETD = shipment.PreForwardingETD;
-            invoiceElement.ShipmentDetails.PreForwardingETA = shipment.PreForwardingETA;
-            invoiceElement.ShipmentDetails.PreForwardingATD = shipment.PreForwardingATD;
-            invoiceElement.ShipmentDetails.PreForwardingATA = shipment.PreForwardingATA;
-        }
-        private void SetOnForwardingValues(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.OnForwardingTransportMode = this.Helper.GetTransportModes(shipment.OnForwardingTransportModeId);
-            invoiceElement.ShipmentDetails.OnForwardingFromPortCode = shipment.OnForwardingFromPortCode;
-            invoiceElement.ShipmentDetails.OnForwardingFromPortName = shipment.OnForwardingFromPortName;
-            invoiceElement.ShipmentDetails.OnForwardingFromPortCountryCode = shipment.OnForwardingFromPortCountryCode;
-            invoiceElement.ShipmentDetails.OnForwardingFromPortCountryName = shipment.OnForwardingFromPortCountryName;
-            invoiceElement.ShipmentDetails.OnForwardingToPortCode = shipment.OnForwardingToPortCode;
-            invoiceElement.ShipmentDetails.OnForwardingToPortName = shipment.OnForwardingToPortName;
-            invoiceElement.ShipmentDetails.OnForwardingToPortCountryCode = shipment.OnForwardingToPortCountryCode;
-            invoiceElement.ShipmentDetails.OnForwardingToPortCountryName = shipment.OnForwardingToPortCountryName;
-            invoiceElement.ShipmentDetails.OnForwardingCarrierName = shipment.OnForwardingCarrierName;
-            invoiceElement.ShipmentDetails.OnForwardingCarrierNumber = shipment.OnForwardingCarrierNumber;
-            invoiceElement.ShipmentDetails.OnForwardingETD = shipment.OnForwardingETD;
-            invoiceElement.ShipmentDetails.OnForwardingETA = shipment.OnForwardingETA;
-            invoiceElement.ShipmentDetails.OnForwardingATD = shipment.OnForwardingATD;
-            invoiceElement.ShipmentDetails.OnForwardingATA = shipment.OnForwardingATA;
-        }
-        private void SetMainCarriageValues(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.MainCarriageCarrierCode = shipment.MainCarriageCarrierCode;
-            invoiceElement.ShipmentDetails.MainCarriageCarrierName = shipment.MainCarriageCarrierName;
-            invoiceElement.ShipmentDetails.MainCarriageAirlinePrefix = shipment.MainCarriageCarrierPrefix;
-            invoiceElement.ShipmentDetails.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
-            invoiceElement.ShipmentDetails.MainCarriageETD = shipment.MainCarriageETD;
-            invoiceElement.ShipmentDetails.MainCarriageATD = shipment.MainCarriageATD;
-            invoiceElement.ShipmentDetails.MainCarriageETA = shipment.MainCarriageETA;
-            invoiceElement.ShipmentDetails.MainCarriageATA = shipment.MainCarriageATA;
-            invoiceElement.ShipmentDetails.MainCarriageVessel = shipment.MainCarriageVesselName;
-        }
-        private void SetVia1Values(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.Via1CarrierCode = shipment.Transshipment1CarrierCode;
-            invoiceElement.ShipmentDetails.Via1CarrierName = shipment.Transshipment1CarrierName;
-            invoiceElement.ShipmentDetails.Via1AirlinePrefix = shipment.Transshipment1CarrierPrefix;
-            invoiceElement.ShipmentDetails.Via1CarrierNumber = shipment.Transshipment1CarrierNumber;
-            invoiceElement.ShipmentDetails.Via1ETD = shipment.Transshipment1ETD;
-            invoiceElement.ShipmentDetails.Via1ATD = shipment.Transshipment1ATD;
-            invoiceElement.ShipmentDetails.Via1ETA = shipment.Transshipment1ETA;
-            invoiceElement.ShipmentDetails.Via1ATA = shipment.Transshipment1ATA;
-            invoiceElement.ShipmentDetails.Via1Vessel = shipment.Transshipment1VesselName;
-        }
-        private void SetVia2Values(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.Via2CarrierCode = shipment.Transshipment2CarrierCode;
-            invoiceElement.ShipmentDetails.Via2CarrierName = shipment.Transshipment2CarrierName;
-            invoiceElement.ShipmentDetails.Via2AirlinePrefix = shipment.Transshipment2CarrierPrefix;
-            invoiceElement.ShipmentDetails.Via2CarrierNumber = shipment.Transshipment2CarrierNumber;
-            invoiceElement.ShipmentDetails.Via2ETD = shipment.Transshipment2ETD;
-            invoiceElement.ShipmentDetails.Via2ATD = shipment.Transshipment2ATD;
-            invoiceElement.ShipmentDetails.Via2ETA = shipment.Transshipment2ETA;
-            invoiceElement.ShipmentDetails.Via2ATA = shipment.Transshipment2ATA;
-            invoiceElement.ShipmentDetails.Via2Vessel = shipment.Transshipment2VesselName;
-        }
-        private void SetVia3Values(ARInvoiceElement invoiceElement, ShipmentPM shipment)
-        {
-            invoiceElement.ShipmentDetails.Via3CarrierCode = shipment.Transshipment3CarrierCode;
-            invoiceElement.ShipmentDetails.Via3CarrierName = shipment.Transshipment3CarrierName;
-            invoiceElement.ShipmentDetails.Via3AirlinePrefix = shipment.Transshipment3CarrierPrefix;
-            invoiceElement.ShipmentDetails.Via3CarrierNumber = shipment.Transshipment3CarrierNumber;
-            invoiceElement.ShipmentDetails.Via3ETD = shipment.Transshipment3ETD;
-            invoiceElement.ShipmentDetails.Via3ATD = shipment.Transshipment3ATD;
-            invoiceElement.ShipmentDetails.Via3ETA = shipment.Transshipment3ETA;
-            invoiceElement.ShipmentDetails.Via3ATA = shipment.Transshipment3ATA;
-            invoiceElement.ShipmentDetails.Via3Vessel = shipment.Transshipment3VesselName;
-        }
-        private void SetFromLocationValues(ARInvoiceElement invoiceElement, ShipmentPM shipment, AddressQuery addressQuery)
-        {
-            invoiceElement.ShipmentDetails.FromPortCode = shipment.FromPort;
-            invoiceElement.ShipmentDetails.FromPortName = shipment.FromPortName;
-            invoiceElement.ShipmentDetails.FromCountryCode = shipment.FromPortCountry;
-            invoiceElement.ShipmentDetails.FromCountryName = shipment.FromPortCountryName;
-
-            if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
-            {
-                AddressPM fromAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageFromAddressId, tenant, true);
-                invoiceElement.ShipmentDetails.FromAddress = this.Helper.GetAddress(fromAddress);
-            }
-        }
-        private void SetToLocationValues(ARInvoiceElement invoiceElement, ShipmentPM shipment, AddressQuery addressQuery)
-        {
-            invoiceElement.ShipmentDetails.ToPortCode = shipment.ToPort;
-            invoiceElement.ShipmentDetails.ToPortName = shipment.ToPortName;
-            invoiceElement.ShipmentDetails.ToCountryCode = shipment.ToPortCountry;
-            invoiceElement.ShipmentDetails.ToCountryName = shipment.ToPortCountryName;
-
-            if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
-            {
-                AddressPM toAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
-                invoiceElement.ShipmentDetails.ToAddress = this.Helper.GetAddress(toAddress);
-            }
-        }
-        private void SetFinalLocationValues(ARInvoiceElement invoiceElement, ShipmentPM shipment, AddressQuery addressQuery)
-        {
-            invoiceElement.ShipmentDetails.FinalPortCode = shipment.MainCarriageFinalDestinationPortCode;
-            invoiceElement.ShipmentDetails.FinalPortName = shipment.MainCarriageFinalDestinationPortName;
-            invoiceElement.ShipmentDetails.FinalCountryCode = shipment.MainCarriageFinalDestinationPortCountryCode;
-            invoiceElement.ShipmentDetails.FinalCountryName = shipment.MainCarriageFinalDestinationPortCountryName;
-
-            if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
-            {
-                AddressPM finalAddress = addressQuery.GetSingleAddressPM(shipment.MainCarriageToAddressId, tenant, true);
-                invoiceElement.ShipmentDetails.FinalAddress = this.Helper.GetAddress(finalAddress);
-            }
-        }
-        private object GetOriginalTranferData()
+        private void GetOriginalTranferData()
         {
             string allInvoicesMessage = "";
             ARInvoiceLineRepository invoiceLineRepository = new ARInvoiceLineRepository(tenant);
@@ -1169,13 +992,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Encoding encoding = new UTF8Encoding();
                 stringbuilder.AppendLine(allInvoicesMessage);
                 byte[] errordata = encoding.GetBytes(stringbuilder.ToString());
-                
-                if (ReturnEntityFile)
-                {
-                    return errordata;
-                }
-
                 string[] fileProps = filename.Split('.');
+
                 Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
                 {
                     FileName = fileProps[0],
@@ -1189,7 +1007,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                 storageservice.Write(errordata, fileInfo);
             }
-            return null;
         }
 
         private string Compute(ARInvoice invoice, List<ARInvoiceLine> lines)
@@ -1840,7 +1657,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
                 }
 
-                if (!ReturnEntityFile && string.IsNullOrEmpty(income.CreditAccount1))
+                if (string.IsNullOrEmpty(income.CreditAccount1))
                 {
                     throw new ApplicationException("Error: Missing CreditAccount");
                 }
@@ -1969,7 +1786,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
                 }
 
-                if (!ReturnEntityFile && string.IsNullOrEmpty(income.CreditAccount1))
+                if (string.IsNullOrEmpty(income.CreditAccount1))
                 {
                     throw new ApplicationException("Error: Missing CreditAccount");
                 }
@@ -2040,14 +1857,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             {
                 this.BulidDropBoxXMLLFile(bytearray);
             }
-
-            else if(this.UsingFTP && !string.IsNullOrEmpty(this.FTPDetailId))
-            {
-                this.BuildFile_ViaFTP(bytearray);
-            }
-
             else
             {
+                Stream blbstr = null;
                 if (bytearray != null)
                 {
                     string[] fileProps = fileName.Split('.');
@@ -2062,6 +1874,22 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     };
                     Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                     storageservice.Write(bytearray, fileInfo);
+
+
+
+
+                    //CloudBlobContainer blobContainer = null;
+                    //blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
+                    //blobContainer.CreateIfNotExists();
+
+                    //CloudBlockBlob blobfile = blobContainer.GetBlockBlobReference(fileName);
+
+                    //using (blbstr = blobfile.OpenWrite())
+                    //{
+                    //    StringBuilder stringbuilder = new StringBuilder();
+                    //    Encoding encoding = new UTF8Encoding();
+                    //    blbstr.Write(bytearray, 0, bytearray.Length);
+                    //}
                 }
             }
         }
@@ -2078,64 +1906,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 entityId = invoice.Id;
             }
             var commLog = helper.CreateDropBoxCommunicationLog(tenant, objectTableId, bytearray, this.filename, "ARInvoices", "AR Invoice", entityId);
-        }
-
-        private string myDocumentId;
-        private string myDocumentFolder;
-        private string myDocumentExtension;
-        private string myCommunicationLogId;
-        private void BuildFile_ViaFTP(byte[] myByteArray)
-        {
-            ObjectTableRepository repo = new ObjectTableRepository(tenant);
-            string  objectTableId = repo.GetObjectTableIdByName("ARInvoice");
-            string FTPFileName = "";
-
-            AccountingTranferViaFTPHelper helper = new AccountingTranferViaFTPHelper(tenant, objectTableId, FTPDetailId);           
-            var invoice = this.invoices.FirstOrDefault();
-            var entityId = "";
-            if (invoice != null)
-            {
-                entityId = invoice.Id;
-                FTPFileName = ("ARInvoice_" + invoice.InvoiceNumber).ToLower();
-            }
-            
-            CommunicationLog commLog = helper.CreateCommunicationLog(myByteArray, FTPFileName, entityId, myAccountingSystemCode);
-
-            this.myDocumentId = helper.DocumentId;
-            this.myDocumentFolder = helper.DocumentFolder;
-            this.myDocumentExtension = helper.DocumentExtension;
-            this.myCommunicationLogId = commLog.Id;
-
-            BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = myDocumentId,
-                FolderName = myDocumentFolder,
-                Extension = myDocumentExtension,
-                Tenant = tenant,
-                FileSize = myByteArray.Length,
-            };
-
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(myByteArray, fileInfo);
-
-            try
-            {
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue(commLog.QueueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() } }, tenant);
-            }
-
-            catch (Exception ex)
-            {
-                string ip = "";
-
-                if (HttpContext.Current != null && HttpContext.Current.Request != null)
-                {
-                    ip = HttpContext.Current.Request.UserHostAddress;
-                }
-
-                ExceptionHandler.HandleException(ex, System.DateTime.Now, 0, null, "AR Invoice Transfer", null, ip);
-            }
         }
         #endregion
 
@@ -2158,12 +1928,11 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Card myCard = CardRepository.GetSingleCard(invoice.BillToId, invoice.Tenant, true);
                 if (myCard != null)
                 {
-                    AccountingSystemHelper accountingSystemHelper = new AccountingSystemHelper();
-                    myResult = accountingSystemHelper.GetGenericCreditAccount(myCard.Id, invoice.InvoiceCurrencyId, tenant, false);
+                    myResult = myCard.ReceivablesAccountingCard;
                 }                
             }
 
-            if (!ReturnEntityFile && string.IsNullOrEmpty(myResult))
+            if (string.IsNullOrEmpty(myResult))
             {
                 throw new ApplicationException("Error: Missing Debit Account 1");
             }
@@ -2195,7 +1964,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
             }
 
-            if (!ReturnEntityFile && string.IsNullOrEmpty(myResult))
+            if (string.IsNullOrEmpty(myResult))
             {
                 throw new ApplicationException("Error: Missing Credit Account");
             }
@@ -2205,7 +1974,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private void SetCustomFields(string objectTableName, int tenant, Object entity, ARShipmentDetailsElement element)
         {
             TextCodeRepository textCodeRepository = new TextCodeRepository(this.tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
             foreach (ObjectField field in customFields)
@@ -2218,12 +1987,9 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                     if (!string.IsNullOrEmpty(fieldValue))
                     {
-                        string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeCode, tenant).DefaultText;
+                        string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeId, tenant).DefaultText;
                         PropertyInfo namePropInfo = element.GetType().GetProperty(objectTableName + field.FieldName + "Name");
-                        if (namePropInfo != null)
-                        {
-                            namePropInfo.SetValue(element, fieldName, null);
-                        }
+                        namePropInfo.SetValue(element, fieldName, null);
                     }
                 }
             }

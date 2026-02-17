@@ -1,4 +1,4 @@
-
+﻿
 <div class="TabHolder">
     <table>
         <tr style="height:5px">
@@ -43,7 +43,7 @@
                     <tr>
                         <td colspan="2"> <div> </div> </td>
                         <td style="width: 1px;">
-                            <button [attr.data-cy]="'AddSurchargeTariff'" class="Button" (click)="AddSurchargeTariff()">
+                            <button class="Button" (click)="AddSurchargeTariff()">
                                 {{AddSurchargeTarrif}}
                             </button>
                         </td>
@@ -80,7 +80,7 @@
 
                     <div class="SimpleGridViewBody" style="overflow-y:auto;overflow-x:hidden">
                         <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ObsList" [ngStyle]="{background: CheckColor(item)}">
+                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ObsList" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" [ngStyle]="{background: CheckColor(item)}">
                                 <td class="GridViewCell" style="width: 230px; min-width: 230px;max-width:230px;">
                                     <table>
                                         <tr>

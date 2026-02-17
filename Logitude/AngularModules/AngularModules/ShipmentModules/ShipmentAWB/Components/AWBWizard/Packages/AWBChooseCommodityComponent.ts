@@ -12,7 +12,7 @@ import {EntityArgs} from '../../../../../Infrastructure/DataContracts/EntityArgs
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './AWBChooseCommodityComponent.html',
 })
@@ -61,8 +61,6 @@ export class AWBChooseCommodityComponent {
         filters.SortBy = "Code";
         filters.SortDirection = "Descending";
 
-        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
-
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string");
         }
@@ -88,8 +86,6 @@ export class AWBChooseCommodityComponent {
         filters.SortBy = "Code";
         filters.SortDirection = "Descending";
         filters.Tenant = 0;
-
-        filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {            
             filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string");
@@ -159,7 +155,7 @@ export class AWBChooseCommodityComponent {
             this.DomainService = new CommonDomainService();
         }
 
-        this.DomainService.GetCopyCommodityToTenant(tenantZeroId).subscribe((myResult:any) => {
+        this.DomainService.GetCopyCommodityToTenant(tenantZeroId).subscribe(myResult => {
             this.Close();
         });
     }

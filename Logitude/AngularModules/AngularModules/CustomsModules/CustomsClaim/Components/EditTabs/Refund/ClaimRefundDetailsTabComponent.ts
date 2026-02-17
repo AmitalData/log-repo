@@ -6,7 +6,9 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
+import { ClientAddressPM } from '../../../../../Customs/EntityPMs/ClientAddressPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
+import { ClientPM } from '../../../../../Customs/EntityPMs/ClientPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -16,7 +18,7 @@ import {EntityResourceService} from '../../../../../Infrastructure/Services/Enti
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClaimRefundDetailsTabComponent.html',
 })
 
@@ -40,8 +42,8 @@ export class ClaimRefundDetailsTabComponent extends BaseComponent {
         super();
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
                    if (this.entityArgs.EntityPM != null) {
                        this.EntityPM = this.entityArgs.EntityPM;
                        this.SetBankFieldsEnabled();
@@ -151,7 +153,7 @@ export class ClaimRefundDetailsTabComponent extends BaseComponent {
 
             if (value != null) {
                 this.BankTypeCode = value.BankCode;
-                this.AccountBranchCode = Number(value.BranchCode).toString() + "," + value.BankCode;
+                this.AccountBranchCode = value.BranchCode + "," + value.BankCode;
                 this.AccountNumber = value.AccountNumber;
             }
             else {

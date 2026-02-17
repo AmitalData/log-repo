@@ -12,7 +12,7 @@ import {CommonDomainService, ContactSummary} from '../../../Common/Services/Comm
 import {CRMWorkspaceComponent} from './CRMWorkspaceComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ContactWorkspaceComponent.html',
 })
 
@@ -113,7 +113,7 @@ export class ContactWorkspaceComponent {
     //Load Data Counts
     public WithoutRemindersCount: number;
     private LoadQueriesCounts() {
-        this.myCommonDomainService.GetContactsCounts().subscribe((myResult:any) => {
+        this.myCommonDomainService.GetContactsCounts().subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
 
@@ -140,7 +140,7 @@ export class ContactWorkspaceComponent {
         filters.SortBy = "EnglishName";
         filters.GetCount = true;
         filters.GetAll = true;
-        this.ContactListService.getByFilters(filters).subscribe((myResult:any) => {
+        this.ContactListService.getByFilters(filters).subscribe(myResult => {
             if (myResult == null) {
                 this.UpcomingBirthdaysList = [];
                 this.UpcomingBirthdaysListCount = 0;

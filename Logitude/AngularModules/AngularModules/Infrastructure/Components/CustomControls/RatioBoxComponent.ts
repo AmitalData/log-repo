@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../Components/LogitudeComponents/BaseComponent';
 import { AppTool } from '../../Tools';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 
 @Component({
     selector: 'RatioBox',
-    
+    moduleId: module.id,
     templateUrl: './RatioBoxComponent.html',
     inputs: ['EntityPM', 'ObjectFieldName', 'ObjectTableName', 'DataContext', 'IsEnabled'],
 })
@@ -54,24 +54,10 @@ export class RatioBoxComponent extends BaseComponent implements OnInit, OnDestro
     public get Ratio() { return this.iRatio; }
     public set Ratio(value: number) {
         if (this.iRatio != value) {
-            this.iRatio = AppTool.Round(value, 3);
-
-            this.DataContext[this.ObjectFieldName] = this.iRatio;
+            this.iRatio = value;
+            this.DataContext[this.ObjectFieldName] = value;
             this.Validate();
 
-            this.CurrentSession.FireEvent("RatioBoxValueChanged");
-        }
-    }
-
-    private selectedValue: number;
-    @Input() public get SelectedValue() {
-        return this.selectedValue;
-    }
-    public set SelectedValue(newValue: number) {
-        if (this.selectedValue != newValue) {
-            this.selectedValue = newValue;
-
-            this.DataContext[this.ObjectFieldName] = this.selectedValue;
             this.CurrentSession.FireEvent("RatioBoxValueChanged");
         }
     }

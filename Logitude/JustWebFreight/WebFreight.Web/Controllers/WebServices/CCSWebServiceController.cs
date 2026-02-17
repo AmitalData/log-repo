@@ -1,6 +1,6 @@
 ﻿using Logitude.XSD;
 using Logitude.XSD.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -18,7 +18,7 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class CCSWebServiceController : ApiController
     {
-        public HttpResponseMessage GetMessageResult(string myShipmentId, string myRecipient, bool isSendingCargonaut, bool isSendingDEXX, bool isMultiHS)
+        public HttpResponseMessage GetMessageResult(string myShipmentId, string myRecipient, bool isSendingCargonaut, bool isSendingDEXX)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
 
-                    CCSHelper myCCSHelper = new CCSHelper(myShipmentId, tenant, myRecipient, isSendingCargonaut, isSendingDEXX, isMultiHS);
+                    CCSHelper myCCSHelper = new CCSHelper(myShipmentId, tenant, myRecipient, isSendingCargonaut, isSendingDEXX);
 
                     myCCSHelper.Run();
 
@@ -54,7 +54,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 AWBValidator validator = new AWBValidator(tenant);
 
                 List<FHLShipmentValidator> myResult = validator.GetFHLsValidation(myMasterId);
@@ -74,7 +74,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 AWBValidator validator = new AWBValidator(tenant);
 
                 AWBResultClass myResult = validator.GetSendingValidating(myShipmentId, myRecipient, isSendingFHLs, isSendingCargonaut, isSendingDEXX, mainCarriageCarrierId);
@@ -94,7 +94,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 AWBPrintingManager myPrintingManager = new AWBPrintingManager();
                 AWBPrintResult myResult = myPrintingManager.GetPrintingResult(myShipmentId, isCargonautSending, isDEXXSending, isConfirmedByUser, tenant);
 

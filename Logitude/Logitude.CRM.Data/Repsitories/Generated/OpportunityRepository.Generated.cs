@@ -49,12 +49,10 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
-		 		                 
-        partial void OnEntityAdd(Opportunity entity);
+		         
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(Opportunity entity)
         {
-            OnEntityAdd(entity);
             onAdd();
             context.Opportunities.Add(entity);
         }
@@ -65,11 +63,9 @@ namespace Logitude.CRM.Data.Repsitories
             context.Opportunities.Remove(entity);
         }
 
-        partial void OnEntityUpdate(Opportunity entity);
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(Opportunity entity)
         {
-            OnEntityUpdate(entity);
             onUpdate();
             context.Opportunities.Attach(entity);
             context.SetAsModified(entity);

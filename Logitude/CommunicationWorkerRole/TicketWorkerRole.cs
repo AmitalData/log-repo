@@ -12,11 +12,10 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -205,17 +204,14 @@ namespace CommunicationWorkerRole
                 myTimeSpan = myDueDate - myCreateDate;
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "Tenant", Tenant.ToString() }, { "TicketId", myTicket.Id.ToString() } };
 
-                queueservice.Send(param, Tenant, myTimeSpan);
+                queueservice.Send(param, myTimeSpan);
             }
         }
 
         private void SendEmailAlerts(TicketEscalation myCurrentTicket, TicketPM myTicket)
         {
-            if (!string.IsNullOrEmpty(myCurrentTicket.Recepients))
-            {
-                this.CreateCommunicationLog(myCurrentTicket, myTicket);
-                this.AddEscalationEvent(myCurrentTicket, myTicket);
-            }
+            this.CreateCommunicationLog(myCurrentTicket, myTicket);
+            this.AddEscalationEvent(myCurrentTicket, myTicket);
         }
 
         private void CreateCommunicationLog(TicketEscalation myCurrentTicket, TicketPM myTicket)
@@ -228,7 +224,7 @@ namespace CommunicationWorkerRole
             string body = BuildAlertEmailHTML(myCurrentTicket, myTicket);
             byte[] bytearray = enc.GetBytes(body);
 
-            string fromemail = SettingUtil.Emails.FromNoReply;
+            string fromemail = "no-reply@LogitudeWorld.com";
             string subject = "Ticket Alert";
 
             if (myCurrentTicket.EscalationFor == "FR")
@@ -317,7 +313,7 @@ namespace CommunicationWorkerRole
                 //queueservice.Send(message);
 
                 DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
             }
 
             catch (Exception ex)

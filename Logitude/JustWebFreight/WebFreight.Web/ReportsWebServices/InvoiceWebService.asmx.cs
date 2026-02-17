@@ -44,9 +44,6 @@ using System.Drawing;
 using WebFreight.Web.Helpers;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
-using General = WebFreight.Web.DataProviders.General;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.Server.Tools.CustomFields;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -55,26 +52,19 @@ namespace WebFreight.Web.ReportsWebServices
     [ToolboxItem(false)]
     public class InvoiceWebService : WebService
     {
-        public ARInvoicePM invoicePM;
-        private ARInvoiceStockQuery aRInvoiceStockQuery;
-        private ARInvoiceStockLineRepository aRInvoiceStockLineRepository;
-        private VatTypePercentageRepository vatTypePercentageRepository;
-        private const int ConfNoRightPartLen = 9;
         [WebMethod]
         public byte[] GetInvoiceData(string invoiceId, string documentTypeCopyId, int tenant)
         {
             InvoiceDataProvider invoicedataprovider = GetInvoiceDataProvider(invoiceId, documentTypeCopyId, tenant);
 
             XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, invoicedataprovider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, invoicedataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         public InvoiceDataProvider GetInvoiceDataProvider(string invoiceId, string documentTypeCopyId, int tenant)
@@ -83,21 +73,24 @@ namespace WebFreight.Web.ReportsWebServices
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
 
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
-            aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
-            aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(invoiceCotnext);
             ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(invoiceCotnext);
             ARInvoice myInvoice = invoiceRepository.GetSingleInvoice(invoiceId);
 
             if (myInvoice != null)
             {
-                if (myInvoice.IsConsolidationInvoice || myInvoice.IsGeneralInvoice)
+                if (myInvoice.IsConsolidationInvoice)
                 {
                     dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
                 }
-                  else
+                else if (myInvoice.IsGeneralInvoice)
+                {
+                    dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+                }
+                else
                 {
                     dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
                 }
+
                 this.FillDocumentCustomFields(myInvoice, dataProvider, documentTypeCopyId, tenant);
             }
 
@@ -127,14 +120,12 @@ namespace WebFreight.Web.ReportsWebServices
                 Tenant tenantSettings = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
 
                 WebServiceHelper myServicHelper = new WebServiceHelper(tenant);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
 
                 ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
                 SATInterfaceSettingRepository satInterfaceSettingRepository = new SATInterfaceSettingRepository(invoiceCotnext);
                 SATInterfaceSetting satSetting = satInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-
-                vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
-
+              
                 if (tenantSettings != null)
                 {
                     invoicedataprovider.TenantName = tenantSettings.Company;
@@ -165,10 +156,9 @@ namespace WebFreight.Web.ReportsWebServices
                 List<Currency> allCurrencies = (from d in commonContext.Currencies where d.Tenant == tenant select d).ToList();
                 List<Measurement> allMeasurements = (from d in commonContext.Measurements where d.Tenant == tenant select d).ToList();
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
-                Contact loggedcontact = GetLoggedContact(currentInvoice.Tenant);
+
                 #region Start
 
-                this.FillARStockVariables(invoicedataprovider, currentInvoice);
                 string invoiceTypeCode = "";
 
                 #region ObjectTable | DocumentTypeCopy
@@ -255,14 +245,31 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.CustomsDeclarationNumber = shipment.CustomsDeclarationNumber != null ? shipment.CustomsDeclarationNumber : "";
                 invoicedataprovider.ProjectNumber = shipment.ProjectNumber != null ? shipment.ProjectNumber : "";
 
-                this.SetOriginalInvoiceNumber(currentInvoice, invoiceCotnext, invoicedataprovider);
+                if (currentInvoice.IsAutoCredit)
+                {
+                    ARInvoice OriginalInvoice = invoiceCotnext.ARInvoices.Where(i => i.CancelledByARInvoiceId == currentInvoice.Id).FirstOrDefault();
+                    if (OriginalInvoice != null)
+                    {
+                        invoicedataprovider.OriginalInvoiceNumber = OriginalInvoice.InvoiceNumber;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(invoicedataprovider.OriginalInvoiceNumber))
+                {
+                    invoicedataprovider.OriginalInvoiceNumber_label = "Original Invoice Number";
+                }
+
+                else
+                {
+                    invoicedataprovider.OriginalInvoiceNumber_label = "";
+                }
 
                 if (currentInvoice.StatusCode == "DR")
                 {
                     invoicedataprovider.WaterMark = invoicedataprovider.Status;
                     invoicedataprovider.CopyName = invoicedataprovider.Status;
                     invoicedataprovider.CopyName_hebrew = "פרופורמה";
-                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? "Draft: " + currentInvoice.DraftNumber : "";
+                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? currentInvoice.DraftNumber : "";
                 }
 
                 else if (currentInvoice.StatusCode == "LL")
@@ -270,7 +277,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.WaterMark = invoicedataprovider.Status;
                     invoicedataprovider.CopyName = invoicedataprovider.Status;
                     invoicedataprovider.CopyName_hebrew = "מבוטלת";
-                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? "Draft: " + currentInvoice.DraftNumber : "";
+                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? currentInvoice.DraftNumber : "";
                 }
 
                 else
@@ -294,7 +301,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     if (invoicetype.Code == "CD")
                     {
-
+                        
                         invoicedataprovider.InvoiceType_labelHebrew = "הודעת זיכוי";
                         invoicedataprovider.InvoiceType_label_Spanish = "Nota de Credito";
                     }
@@ -312,6 +319,16 @@ namespace WebFreight.Web.ReportsWebServices
 
 
                 invoicedataprovider.AccountingNumber = currentInvoice.DebitAccount != null ? currentInvoice.DebitAccount : !string.IsNullOrEmpty(invoicedataprovider.DebitAccount) ? invoicedataprovider.DebitAccount : "";
+
+                User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
+                if (salesman != null)
+                {
+                    if (salesman.Contact != null)
+                    {
+                        invoicedataprovider.SalesMan = salesman.Contact.EnglishName;
+                    }
+                }
+
                 invoicedataprovider.InvoiceDate = currentInvoice.InvoiceDate != null ? String.Format("{0:dd.MMM.yyyy}", currentInvoice.InvoiceDate) : "";
                 invoicedataprovider.InvoiceDateAsDateFormat = currentInvoice.InvoiceDate;
                 invoicedataprovider.DueDate = currentInvoice.DueDate != null ? String.Format("{0:dd.MMM.yyyy}", currentInvoice.DueDate) : "";
@@ -354,6 +371,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.ShipmentCreateDate = shipment.CreateDateTime == null ? "" : String.Format("{0:dd.MMM.yyyy}", shipment.CreateDateTime);
                     invoicedataprovider.ShipmentCreateDateAsDateFormat = shipment.CreateDateTime;
                     invoicedataprovider.InsidePackagesDetails = shipment.NumberOfInsidePackagesDetails;
+
                     invoicedataprovider.IsAir = shipment.TransportModeId == "A" ? true : false;
                     invoicedataprovider.IsOcean = shipment.TransportModeId == "O" ? true : false;
                     invoicedataprovider.IsInland = shipment.TransportModeId == "I" ? true : false;
@@ -376,39 +394,10 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.MainHarmonize = shipment.MainHarmonize;
                     invoicedataprovider.AgentReference1 = shipment.AgentReference1;
                     invoicedataprovider.AgentReference2 = shipment.AgentReference2;
+
                     invoicedataprovider.Transshipment1MasterNumber = shipment.Transshipment1AdditionalMAWBOBLBL;
                     invoicedataprovider.Transshipment1FromPortName = shipment.Transshipment1FromPortName;
                     invoicedataprovider.Transshipment1CarrierName = shipment.Transshipment1CarrierName;
-                    invoicedataprovider.CustomsClearancePointName = shipment.CustomClearancePointName;
-                    invoicedataprovider.ValueOfGoods = shipment.ValueOfGoods;
-                    invoicedataprovider.MoveType = shipment.MoveTypeName;
-                    invoicedataprovider.MainCarriageLastdestinationPortName = shipment.MainCarriageFinalDestinationPortName;
-                    invoicedataprovider.MainCarriageLastdestinationPortCode = shipment.MainCarriageFinalDestinationPortCode;
-                    invoicedataprovider.TrailerNumber = shipment.TrailerNumber;
-                    invoicedataprovider.SpecialServiceType = shipment.SpecialServicesTypeName;
-                    invoicedataprovider.WarehouseFreeDays = shipment.WarehouseStorageFreeDays == null ? 0 : shipment.WarehouseStorageFreeDays.Value;
-                    invoicedataprovider.PreCarriageVessel = shipment.PreCarriageVesselName;
-                    invoicedataprovider.PreForwardingVessel = shipment.PreForwardingVesselName;
-                    invoicedataprovider.ConnectedQuoteNumber = shipment.QuoteNumber;
-
-                    User salesman = userRepository.GetSingleUser(shipment.SalesmanUserId, shipment.Tenant, false);
-                    if (salesman != null)
-                    {
-                        if (salesman.Contact != null)
-                        {
-                            invoicedataprovider.SalesMan = salesman.Contact.EnglishName;
-                            invoicedataprovider.SalesmanEmail = salesman.Contact.Email;
-                        }
-                    }
-
-                    if (shipment.ValueOfGoodsCurrencyId != null)
-                    {
-                        Currency currency = commonContext.Currencies.Where(d => d.Id == shipment.ValueOfGoodsCurrencyId).FirstOrDefault();
-                        if (currency != null)
-                        {
-                            invoicedataprovider.ValueOfGoodsCurrency = currency.Code;
-                        }
-                    }
 
                     if (!string.IsNullOrEmpty(shipment.OBLTypeCode))
                     {
@@ -530,8 +519,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                     invoicedataprovider.GrossWeight = shipment.GrossWeight != null ? String.Format("{0:#,0.00}", shipment.GrossWeight.Value) + " " + grossWeightUnitCode : "";
                     invoicedataprovider.ChargeableWeight = shipment.ChargeableWeight != null ? String.Format("{0:#,0.00}", shipment.ChargeableWeight.Value) + " " + chargeableWeightUnitCode : "";
-                    invoicedataprovider.ChargeableWeight_Double = shipment.ChargeableWeight;
-                    invoicedataprovider.ChargeableWeightUnitCode = shipment.ChargeableWeightUnitCode;
                     invoicedataprovider.BillToVatNumber = currentInvoice.VatNumber != null ? currentInvoice.VatNumber : "";
                     invoicedataprovider.ClientRef1 = shipment.CustomerReference1 != null ? shipment.CustomerReference1 : "";
                     invoicedataprovider.ClientRef2 = shipment.CustomerReference2 != null ? shipment.CustomerReference2 : "";
@@ -605,11 +592,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     invoicedataprovider.Volume = shipment.Volume != null ? String.Format("{0:#,0.00}", shipment.Volume) + " " + volumeUnitCode : "";
                     invoicedataprovider.VolumetricWeight = shipment.VolumetricWeight != null ? String.Format("{0:#,0.00}", shipment.VolumetricWeight) + " " + chargeableWeightUnitCode : "";
-                    
-                    if(currentInvoice.StatusCode == "DR"  && currentInvoice.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant, !loggedcontact.DontShowLocalLabels))
-                       invoicedataprovider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant, !loggedcontact.DontShowLocalLabels);
-                    else
-                        invoicedataprovider.Notes = currentInvoice.PrintNotes != null ? currentInvoice.PrintNotes : "";
+                    invoicedataprovider.Notes = currentInvoice.PrintNotes != null ? currentInvoice.PrintNotes : "";
 
                     //invoice payment term
                     PaymentTerm paymentterm = (from pa in commonContext.PaymentTerms
@@ -674,8 +657,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (myCard != null)
                         {
                             invoicedataprovider.Notify1VATNumber = myCard.VatNumber;
-                            invoicedataprovider.Notify1Name = myCard.EnglishName;
-
+                            
                             if (!string.IsNullOrEmpty(shipment.Notify1AddressId))
                             {
                                 Address myAddress = addressRepository.GetSingleAddress(shipment.Notify1AddressId, tenant);
@@ -727,7 +709,6 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
                     #endregion
-
                     if (shipment.DirectionId == "E")
                     {
                         invoicedataprovider.MainCarriageExpectedDate = shipment.MainCarriageETD != null ? String.Format("{0:dd.MMM.yy}", shipment.MainCarriageETD) : "";
@@ -745,7 +726,6 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         invoicedataprovider.DeliveryETD = myLastDelivery.ETD;
                         invoicedataprovider.DeliveryAddress = myServicHelper.GetPickUpAddress(myLastDelivery);
-                        invoicedataprovider.LastDeliveryATD = myLastDelivery.ATD;
                     }
 
                     #region LoadingPlace
@@ -762,7 +742,6 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.PickupETD = myFirstPickup.ETD;
                         invoicedataprovider.PickupAddress = myServicHelper.GetPickUpAddress(myFirstPickup);
                         invoicedataprovider.PickupShortAddress = myServicHelper.GetPickUpDeliveryShortAddress(myFirstPickup);
-                        invoicedataprovider.FirstPickupEmptyContainer = string.IsNullOrEmpty(myFirstPickup.EmptyPickupContainerPartnerId) ? null : commonContext.Cards.FirstOrDefault(x=> x.Id == myFirstPickup.EmptyPickupContainerPartnerId && x.Tenant == tenant)?.EnglishName;
                     }
 
                     #endregion
@@ -776,7 +755,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     invoicedataprovider.PlaceOfDelivery = myServicHelper.GetPlaceOfDelivery(shipment, myDelivery);
                     invoicedataprovider.DeliveryFrom = myServicHelper.GetFromDeliveryName(shipment, myDelivery);
-                    invoicedataprovider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery, false);
+                    invoicedataprovider.DeliveryTo = myServicHelper.GetToDeliveryName(shipment, myDelivery);
                     invoicedataprovider.Incoterm = shipment.IncotermCode;
 
                     if (myDelivery != null)
@@ -848,9 +827,6 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.FinalDestination = lastDelivery.ToAddressCity + " " + lastDelivery.ToAddressCountryCode;
                         }
-
-                        invoicedataprovider.LastDeliveryATD = lastDelivery.ATD;
-                        invoicedataprovider.LastDeliveryEmptyContainerReturn = string.IsNullOrEmpty(lastDelivery.EmptyDeliveryContainerPartnerId) ? null : commonContext.Cards.FirstOrDefault(x => x.Id == lastDelivery.EmptyDeliveryContainerPartnerId && x.Tenant == tenant)?.EnglishName;
                     }
 
                     if (pickup != null)
@@ -881,10 +857,6 @@ namespace WebFreight.Web.ReportsWebServices
                                              where a.Id == shipment.OnCarriageToPortId
                                              select a).FirstOrDefault();
 
-                    Port onForwardingToPort = (from a in commonContext.Ports.Include("Country")
-                                               where a.Id == shipment.OnForwardingToPortId
-                                               select a).FirstOrDefault();
-
                     if (mainCarriageFromPort != null)
                     {
                         invoicedataprovider.MainCarriageFromPortName = mainCarriageFromPort.EnglishName;
@@ -908,18 +880,11 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.FinalDestinationPortCountryLocalName = finalDistinationPort.Country != null ? finalDistinationPort.Country.LocalName : "";
                     }
 
-                    if (onForwardingToPort != null)
-                    {
-                        invoicedataprovider.FianlDestinationInclOnCarriagePortName = onForwardingToPort.EnglishName;
-                        invoicedataprovider.FianlDestinationInclOnCarriagePortCode = onForwardingToPort.Code + (onForwardingToPort.Country != null ? " (" + onForwardingToPort.Country.Code + ")" : "");
-                    }
-
-                    else if (onCarriageToPort != null)
+                    if (onCarriageToPort != null)
                     {
                         invoicedataprovider.FianlDestinationInclOnCarriagePortName = onCarriageToPort.EnglishName;
                         invoicedataprovider.FianlDestinationInclOnCarriagePortCode = onCarriageToPort.Code + (onCarriageToPort.Country != null ? " (" + onCarriageToPort.Country.Code + ")" : "");
                     }
-
                     else if (finalDistinationPort != null)
                     {
                         invoicedataprovider.FianlDestinationInclOnCarriagePortName = finalDistinationPort.EnglishName;
@@ -1006,85 +971,22 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.ETAAsDateFormat = shipment.MainCarriageFinalDestinationETA;
                     invoicedataprovider.ATAAsDateFormat = shipment.MainCarriageFinalDestinationATA;
 
-                    invoicedataprovider.Transshipment1FlightNumber = shipment.Transshipment1FullCarrierNumber;
-                    invoicedataprovider.Transshipment1ETD = shipment.Transshipment1ETD;
-                    invoicedataprovider.Transshipment1ETA = shipment.Transshipment1ETA;
-                    invoicedataprovider.Transshipment1ATD = shipment.Transshipment1ATD;
-                    invoicedataprovider.Transshipment1ATA = shipment.Transshipment1ATA;
-                    invoicedataprovider.Transshipment1VesselName = shipment.Transshipment1VesselName;
-                    invoicedataprovider.Transhipment1VoyageNo = shipment.Transshipment1CarrierNumber;
-                    invoicedataprovider.Transshipment2VesselName = shipment.Transshipment2VesselName;
-                    invoicedataprovider.Transhipment2VoyageNo = shipment.Transshipment2CarrierNumber;
-                    invoicedataprovider.Transshipment3VesselName = shipment.Transshipment3VesselName;
-                    invoicedataprovider.Transhipment3VoyageNo = shipment.Transshipment3CarrierNumber;
-
-                    invoicedataprovider.PreForwardingFromPortName = shipment.PreForwardingFromPortName;
-                    invoicedataprovider.PreForwardingFromPortCode = shipment.PreForwardingFromPortCode;
-                    invoicedataprovider.PreForwardingToPortName = shipment.PreForwardingToPortName;
-                    invoicedataprovider.PreForwardingToPortCode = shipment.PreForwardingToPortCode;
-
                     // Inland + Domestic
                     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                     {
-                        switch (shipment.InlandDomesticToTypeCode)
+                        Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, tenant);
+                        Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, tenant);
+
+                        if (fromAddress != null)
                         {
-                            case "PART":
-                                {
-                                    invoicedataprovider.ToLocation = this.SetToLocationFromInlanDomesticPartner(shipment.MainCarriageToAddressId, tenant);
-                                    break;
-                                }
-
-                            case "PORT":
-                                {
-                                    invoicedataprovider.ToLocation = shipment.MainCarriageToPortName;
-                                    break;
-                                }
-
-                            case "CASL":
-                                {
-                                    invoicedataprovider.ToLocation = this.SetToLocationFromInlanDomesticCasual(shipment.InlandDomesticToCity, shipment.InlandDomesticToCountryId, tenant);
-                                    invoicedataprovider.ToCasualAddressZipCode = shipment.InlandDomesticToZipCode;
-                                    break;
-                                }
+                            invoicedataprovider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
                         }
 
-                        switch (shipment.InlandDomesticFromTypeCode)
+                        if (toAddress != null)
                         {
-                            case "PART":
-                                {
-                                    Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, shipment.Tenant);
-                                    if (fromAddress != null)
-                                    {
-                                        invoicedataprovider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-                                    }
-                                    break;
-                                }
-
-                            case "PORT":
-                                {
-                                    invoicedataprovider.FromLocation = shipment.MainCarriageFromPortName;
-                                    break;
-                                }
-
-                            case "CASL":
-                                {
-                                    invoicedataprovider.FromLocation = shipment.InlandDomesticFromCity;
-                                    invoicedataprovider.FromCasualAddressZipCode = shipment.InlandDomesticFromZipCode;
-
-                                    if (!string.IsNullOrEmpty(shipment.InlandDomesticFromCountryId))
-                                    {
-                                        CountryRepository countryRepository = new CountryRepository(tenant);
-                                        Country country = countryRepository.GetSingleCountry(shipment.InlandDomesticFromCountryId, tenant);
-                                        if (country != null)
-                                        {
-                                            invoicedataprovider.FromLocation += " " + country.Code;
-                                        }
-                                    }
-                                    break;
-                                }
+                            invoicedataprovider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
+                            invoicedataprovider.FinalLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
                         }
-
-                        invoicedataprovider.FinalLocation = invoicedataprovider.ToLocation;
                     }
                     else
                     {
@@ -1131,7 +1033,6 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.HouseNumber_Label = "FBL";
                         invoicedataprovider.HouseNumber_HBL = "HBL";
                         invoicedataprovider.Containers_Label = "Containers";
-                        invoicedataprovider.MainCarriageVesselName = shipment.MainCarriageVesselName;
 
                         //Vessel name
                         Vessel maincarriagevessel = (from mc in commonContext.Vessels
@@ -1140,6 +1041,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (maincarriagevessel != null)
                         {
+                            invoicedataprovider.MainCarriageVesselName = maincarriagevessel.EnglishName;
                             invoicedataprovider.MainCarriageVessel_LocalName = maincarriagevessel.LocalName != null ? maincarriagevessel.LocalName : "";
                         }
                     }
@@ -1207,60 +1109,14 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.WarehouseLegRemarks = shipment.WarehouseLegRemarks;
                     invoicedataprovider.WarehouseLegReference = shipment.WarehouseLegReference;
                     invoicedataprovider.WarehouseLegTerminalName = shipment.WarehouseLegTerminalName;
-
                     if (shipment.WarehouseLegAddressId != null)
                     {
                         Address warehouseAddress = addressRepository.GetSingleAddress(shipment.WarehouseLegAddressId, tenant);
                         invoicedataprovider.WarehouseLegAddress = DataProviders.General.GetAddress(warehouseAddress);
                     }
-
                     invoicedataprovider.WarehouseLegEntryDate = shipment.WarehouseLegEntryDate;
                     invoicedataprovider.WarehouseLegReleaseDate = shipment.WarehouseLegReleaseDate;
                     invoicedataprovider.WarehouseLegTerminalCode = shipment.WarehouseLegTerminalCode;
-
-                    invoicedataprovider.StorageFreeDays = shipment.WarehouseStorageFreeDays;
-
-                    if (shipment.WarehouseLegActualEntryDate != null && shipment.WarehouseLegActualReleaseDate != null)
-                    {
-                        if (shipment.WarehouseLegActualReleaseDate >= shipment.WarehouseLegActualEntryDate)
-                        {
-                            invoicedataprovider.StorageDays = (shipment.WarehouseLegActualReleaseDate - shipment.WarehouseLegActualEntryDate).Value.Days;
-                        }
-                    }
-
-                    string warehouseName = null;
-                    if (!string.IsNullOrEmpty(shipment.WarehouseLegWarehouseId))
-                    {
-                        Card warehouse = (from mc in commonContext.Cards
-                                          where mc.Id == shipment.WarehouseLegWarehouseId
-                                          select mc).FirstOrDefault();
-
-                        if (warehouse != null)
-                        {
-                            warehouseName = warehouse.EnglishName;
-                        }
-                    }
-
-                    if (shipment.ShipmentStoragePricings != null && shipment.ShipmentStoragePricings.Count > 0)
-                    {
-                        invoicedataprovider.ShipmentStoragePricings = new List<StoragePricing>();
-
-                        foreach (ShipmentStoragePricingPM pricing in shipment.ShipmentStoragePricings)
-                        {
-                            StoragePricing newItem = new StoragePricing();
-                            newItem.StepFrom = pricing.StepFrom;
-                            newItem.StepTo = pricing.StepTo;
-                            newItem.Days = pricing.Days;
-                            newItem.SalePrice = pricing.SalePrice;
-                            newItem.Amount = pricing.Amount;
-                            newItem.LineNumber = pricing.LineNumber;
-                            newItem.WarehouseName = warehouseName;
-                            newItem.ChargeableDays = pricing.ChargeableDays;
-
-                            invoicedataprovider.ShipmentStoragePricings.Add(newItem);
-                        }
-                    }
-
                     #endregion
 
                     #region pickups
@@ -1280,7 +1136,7 @@ namespace WebFreight.Web.ReportsWebServices
                             newItem.Notes = pick.Notes;
                             newItem.TransportMode = pick.TransportModeName;
                             newItem.Weight = pick.ShipmentPickUpDeliveryPackages.Sum(s => s.Weight);
-                            myServicHelper.GetPickUpAddresses(pick, newItem, addressRepository, tenant);
+                            myServicHelper.GetPickUpFromAddress(pick, newItem, addressRepository, tenant);
 
                             foreach (ShipmentPickUpDeliveryPackagePM package in pick.ShipmentPickUpDeliveryPackages)
                             {
@@ -1373,32 +1229,12 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.BillToAddress_NoName = DataProviders.General.GetAddress(billToCardAddress);
                             invoicedataprovider.BillToStateCode = billToCardAddress.State == null ? null : billToCardAddress.State.Code;
-                            invoicedataprovider.BillToAddress1 = billToCardAddress.Address1;
-                            invoicedataprovider.BillToAddress2 = billToCardAddress.Address2;
-                            invoicedataprovider.BillToFax = billToCardAddress.FaxNumber;
-                            invoicedataprovider.BillToCity = billToCardAddress.City;
-                            if (billToCardAddress.Country != null)
-                            {
-                                invoicedataprovider.BillToCountry = loggedcontact.DontShowLocalLabels ? billToCardAddress.Country.EnglishName : billToCardAddress.Country.LocalName;
-                                if (billToCardAddress.City != null)
-                                {
-                                    CountryCityPM countryCity = GetCountryCityPM(billToCardAddress.CountryId, billToCardAddress.City, billToCardAddress.Tenant);
-                                    if (countryCity != null)
-                                    {
-                                        invoicedataprovider.BillToCity = loggedcontact.DontShowLocalLabels ? countryCity.EnglishName : countryCity.LocalName;
-                                    }
-                                }
-                            }
-
-                            if (billToCardAddress.State != null)
-                                invoicedataprovider.BillToState = loggedcontact.DontShowLocalLabels ? billToCardAddress.State.EnglishName : billToCardAddress.State.LocalName;
 
                             if (billToCardAddress.IsLocalLanguage && !string.IsNullOrEmpty(invoicedataprovider.BillTo_LocalName))
                             {
                                 invoicedataprovider.BillToAddress = invoicedataprovider.BillTo_LocalName + Environment.NewLine + DataProviders.General.GetAddress(billToCardAddress);
                                 invoicedataprovider.BillToAddress_OneLine = Environment.NewLine + DataProviders.General.GetAddress_OneLine(billToCardAddress);
                                 invoicedataprovider.BillToAddressDescription = billToCardAddress.Description;
-                                invoicedataprovider.BillToAddressName = billToCardAddress.Name;
                             }
 
                             else
@@ -1406,7 +1242,6 @@ namespace WebFreight.Web.ReportsWebServices
                                 invoicedataprovider.BillToAddress = invoicedataprovider.BillTo + DataProviders.General.GetAddress(billToCardAddress);
                                 invoicedataprovider.BillToAddress_OneLine = DataProviders.General.GetAddress_OneLine(billToCardAddress);
                                 invoicedataprovider.BillToAddressDescription = billToCardAddress.Description;
-                                invoicedataprovider.BillToAddressName = billToCardAddress.Name;
                             }
 
                             invoicedataprovider.SAT.BillToZipCode = billToCardAddress.ZipCode;
@@ -1416,17 +1251,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (billToCard.PartnerTypeId == "CS")
                     {
-                        CustomerRepository customerRepository = new CustomerRepository(tenant);
-                        Customer customer = customerRepository.GetSingleCustomer(billToCard.Id, tenant, false);
+                        CustomerQuery customerQuery = new CustomerQuery(tenant);
+                        CustomerPM customer = customerQuery.GetSinglePM(billToCard.Id, tenant);
                         if (customer != null)
                         {
-                            customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoicedataprovider);
 
-                            if (!string.IsNullOrEmpty(customer.IndustryId))
-                            {
-                                Industry industry = (from a in commonContext.Industries where a.Id == customer.IndustryId select a).FirstOrDefault();
-                                invoicedataprovider.BillToIndustry = industry?.Name;
-                            }
+                            customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoicedataprovider);
                         }
                     }
 
@@ -1438,17 +1268,11 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.BillToPrimaryContactMobile = billToContact.Mobile;
                         invoicedataprovider.BillToPrimaryContactBusinessPhone = billToContact.BusinessPhone;
                     }
-
-                    Address billingAddress = addressRepository.GetBillingAddressByCardId(billToCard.Id, tenant);
-                    if (billingAddress != null)
-                    {
-                        invoicedataprovider.BillToBillingAddress = General.GetAddress(billingAddress);
-                    }
                 }
                 #endregion
 
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicedataprovider);
-                invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
+                ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
 
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoicePM, invoicedataprovider);
 
@@ -1459,13 +1283,29 @@ namespace WebFreight.Web.ReportsWebServices
                     Contact contact = issuedByuser.Contact;
                     if (contact != null)
                     {
-                        invoicedataprovider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : null;
+                        invoicedataprovider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : "";
                         invoicedataprovider.IssuedByUser_LocalName = contact.LocalName != null ? contact.LocalName : "";
-                        invoicedataprovider.IssuedByUserEmail = contact.Email;
                     }
 
+                    currentInvoice.PrintByUserId = issuedByuser.Id;
+                    currentInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-                    //this.SaveInvoice(currentInvoice);                   
+                    switch (currentInvoice.StatusCode)
+                    {
+                        case "AD":
+                        case "VD":
+                        case "PD":
+                        case "PP":
+                        case "AR":
+                        case "AC":
+                            {
+                                currentInvoice.IsPrinted = true;
+                                break;
+                            }
+                    }
+
+                    invoiceRepository.Update(currentInvoice);
+                    invoiceRepository.SubmitChanges();
                 }
                 #endregion
 
@@ -1713,11 +1553,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (invoiceTypeCode == "CD")
                 {
-                    if (invoicedataprovider.TotalVats != 0 && (invoiceSubTotals < 0 || invoiceAmount < 0))
-                    {
-                        invoicedataprovider.TotalVats = invoicedataprovider.TotalVats * -1;
-                    }
-
                     if (invoiceSubTotals < 0)
                     {
                         invoiceSubTotals = invoiceSubTotals * -1;
@@ -1787,32 +1622,13 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.AmountInWordsFrench = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + FrenchFractions;
                 invoicedataprovider.AmountInWordsFrenchWithFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + FrenchFractionsWords;
                 invoicedataprovider.AmountInWordsFrenchNoFR = FirstCharToUpper(numbersConverterToWords.NumbersToFrench((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName;
-                invoicedataprovider.NewAmountInWordsFrenchWithFraction = FirstCharToUpper(numbersConverterToWords.ConvertNumbersToFrenchNewVersion(invoiceAmount.Value, invoicedataprovider.InvoicecurrencyLocalName));
                 invoicedataprovider.AmountInWordsSpanishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoicedataprovider.AmountsInEnglishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToEnglish((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoicedataprovider.AmountInWordsRussian = FirstCharToUpper(numbersConverterToWords.NumbersToRussian((int)invoiceAmount.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + strWithZeros;
 
-                invoicedataprovider.LocalAmountInWordsSpanish = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmountLocal.Value) + " ") + invoicedataprovider.InvoicecurrencyLocalName + " " + str;
 
                 invoicedataprovider.AmountDueInInvoiceCurrency = currentInvoice.AmountDue;
                 invoicedataprovider.AmountDueInLocalCurrency = currentInvoice.AmountDueInLocalCurrency;
-                invoicedataprovider.ConfirmationNumber = currentInvoice.ConfirmationNumber;
-
-                if (!String.IsNullOrEmpty(invoicedataprovider.ConfirmationNumber))
-                {
-                    int len = invoicedataprovider.ConfirmationNumber.Length;
-                    if (len > ConfNoRightPartLen)
-                    {
-                        invoicedataprovider.ConfirmationNumber_LeftPart = invoicedataprovider.ConfirmationNumber.Substring(0, len - 1 - ConfNoRightPartLen);
-                        invoicedataprovider.ConfirmationNumber_RightPart = invoicedataprovider.ConfirmationNumber.Substring(len - ConfNoRightPartLen);
-                    }
-                    else
-                    {
-                        invoicedataprovider.ConfirmationNumber_LeftPart = "";
-                        invoicedataprovider.ConfirmationNumber_RightPart = invoicedataprovider.ConfirmationNumber;
-                    }
-                }
-                invoicedataprovider.ShipmentSubTypeName = shipment == null ? null : shipment.ShipmentSubTypeName;
                 #endregion
 
                 #region Vatable amounts
@@ -1864,12 +1680,6 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicedataprovider.ExpenseInvoiceLinesList = new List<ReportInvoiceLine>();
                 invoicedataprovider.NoExpenseInvoiceLinesList = new List<ReportInvoiceLine>();
 
-                DateTime? loadingDate = currentInvoice.InvoiceDate;
-                if (loadingDate == null)
-                {
-                    loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                }
-
                 if (currentInvoice.ARInvoiceTypeCode == "MN")
                 {
                     double totalQuantity = 0;
@@ -1886,8 +1696,7 @@ namespace WebFreight.Web.ReportsWebServices
                                      a.MeasurementId,
                                      a.VatTypeId,
                                      a.Notes,
-                                     a.IsExpense,
-                                     a.IsRegionalTax,
+                                     a.IsExpense
                                  } into gr
                                  select new
                                  {
@@ -1900,7 +1709,6 @@ namespace WebFreight.Web.ReportsWebServices
                                      MeasurementId = gr.Key.MeasurementId,
                                      VatTypeId = gr.Key.VatTypeId,
                                      IsExpense = gr.Key.IsExpense,
-                                     IsRegionalTax = gr.Key.IsRegionalTax,
                                      LocalAmount = gr.Sum(d => (d.LocalCurrencyAmount != null ? d.LocalCurrencyAmount.Value : 0)),
                                      InvoiceAmount = gr.Sum(d => (d.InvoiceCurrencyAmount != null ? d.InvoiceCurrencyAmount.Value : 0)),
                                      ForeignAmount = gr.Sum(d => (d.ForiegnCurrencyAmount != null ? d.ForiegnCurrencyAmount.Value : 0)),
@@ -1921,12 +1729,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
-                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
-
-                        if (invoiceline.Quantity != 0)
-                        {
-                            reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
-                        }
+                        reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
 
                         double? lineAmount_Foreign = invoiceline.ForeignAmount;
                         double? lineAmount_Invoice = invoiceline.InvoiceAmount;
@@ -1982,7 +1785,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                                 if (!vattype.IsMultiPercentage)
                                 {
-                                    List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vattype.Id && percentage.FromDate <= invoicePM.InvoiceDate orderby percentage.FromDate descending select percentage).ToList();
+                                    List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vattype.Id orderby percentage.FromDate descending select percentage).ToList();
 
                                     if (vattypepercentageList.Count > 0)
                                     {
@@ -1993,7 +1796,6 @@ namespace WebFreight.Web.ReportsWebServices
                                             reportinvoiceline.VatIndication = "*";
                                             reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                             reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
-                                            reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                         }
 
                                         else
@@ -2001,7 +1803,6 @@ namespace WebFreight.Web.ReportsWebServices
                                             reportinvoiceline.VatIndication = "";
                                             reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                             reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
-                                            reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                         }
 
                                         double vatamountinlocalcurrency = (invoiceline.LocalAmount * (vattypepercentageList[0].Percentage != null ? (vattypepercentageList[0].Percentage / 100) : 0)).Value;
@@ -2018,18 +1819,15 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatAmountInLocalCurrency = String.Format("{0:#,0.00}", vatamountinlocalcurrency);
                                         reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                         reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatAmountInForeignCurrecy);
-                                        reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
+
                                         reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
-                                        reportinvoiceline.VatAmountInForeignCurrency_Double = vatAmountInForeignCurrecy;
                                     }
                                 }
 
                                 else
                                 {
-                                    reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceAmount, invoiceline.VatTypeId, tenant);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
-                                    reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                 }
                             }
                             #endregion
@@ -2045,7 +1843,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentInvoice.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -2053,7 +1851,6 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         reportinvoiceline.Quantity = String.Format("{0:#,0.00}", invoiceline.Quantity);
-                        reportinvoiceline.QuantityDouble = invoiceline.Quantity;
                         totalQuantity += invoiceline.Quantity;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
@@ -2062,9 +1859,8 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeType = chargetype.EnglishName != null ? chargetype.EnglishName : "";
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
+
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
-                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
-                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -2082,14 +1878,11 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
-                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
-                        reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
                         invoicedataprovider.InvoiceLinesList.Add(reportinvoiceline);
                     }
 
-                    MapChargesTypeCustomFields(tenant, invoicedataprovider);
                     #endregion
 
                     invoicedataprovider.Quantity = String.Format("{0:#,0.##}", totalQuantity);
@@ -2113,13 +1906,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
-
-                        if (invoiceline.Quantity != 0 && invoiceline.Quantity != null)
-                        {
-                            reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
-                        }
-
-                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
+                        reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
 
                         double? line_UnitPrice = invoiceline.UnitPrice;
                         double? lineAmount_Local = invoiceline.LocalCurrencyAmount;
@@ -2150,12 +1937,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (invoiceTypeCode == "CD")
                         {
-                            bool isCreditByAutoCreditInvoice = CheckAutoCreditInvoice(currentInvoice);
-                            if (isCreditByAutoCreditInvoice)
-                            {
-                                line_UnitPrice = Math.Abs(line_UnitPrice.Value);
-                            }
-                            //   line_UnitPrice = line_UnitPrice * -1;
+                            line_UnitPrice = line_UnitPrice * -1;
                             lineAmount_Foreign = lineAmount_Foreign * -1;
                             lineAmount_Invoice = lineAmount_Invoice * -1;
                             lineAmount_Local = lineAmount_Local * -1;
@@ -2192,14 +1974,12 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatIndication = "*";
                                         reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
-                                        reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
                                     else
                                     {
                                         reportinvoiceline.VatIndication = "";
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
-                                        reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
 
                                     double vatamountinlocalcurrency = ((invoiceline.LocalCurrencyAmount != null ? invoiceline.LocalCurrencyAmount : 0) * (myPercentage != null ? (myPercentage / 100) : 0)).Value;
@@ -2216,17 +1996,14 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInLocalCurrency = String.Format("{0:#,0.00}", vatamountinlocalcurrency);
                                     reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                     reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatamountinForeigncurrecy);
-                                    reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
+
                                     reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
-                                    reportinvoiceline.VatAmountInForeignCurrency_Double = vatamountinForeigncurrecy;
                                 }
 
                                 else
                                 {
-                                    reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceCurrencyAmount, invoiceline.VatTypeId, tenant);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                     reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
-                                    reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                 }
                             }
                         }
@@ -2242,7 +2019,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(currentInvoice.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -2250,7 +2027,6 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         reportinvoiceline.Quantity = invoiceline.Quantity != null ? String.Format("{0:#,0.00}", invoiceline.Quantity) : "";
-                        reportinvoiceline.QuantityDouble = invoiceline.Quantity;
                         totalQuantity += invoiceline.Quantity != null ? invoiceline.Quantity.Value : 0;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
@@ -2260,8 +2036,6 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
-                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
-                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -2279,13 +2053,10 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
-                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
-                        reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
                         invoicedataprovider.InvoiceLinesList.Add(reportinvoiceline);
                     }
-                    MapChargesTypeCustomFields(tenant, invoicedataprovider);
                     #endregion
 
                     invoicedataprovider.Quantity = String.Format("{0:#,0.##}", totalQuantity);
@@ -2293,9 +2064,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoicedataprovider.TotalVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.VATableAmountInInvoiceCurrency_double));
                 invoicedataprovider.TotalNONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.NONVATableAmountInInvoiceCurrency_double));
-
-                invoicedataprovider.TotalVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.VATableAmountInLocalCurrency_double));
-                invoicedataprovider.TotalNONVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoicedataprovider.InvoiceLinesList.Sum(s => s.NONVATableAmountInLocalCurrency_double));
 
                 invoicedataprovider.ExpenseInvoiceLinesList = invoicedataprovider.InvoiceLinesList.Where(d => d.IsExpense).ToList();
                 invoicedataprovider.NoExpenseInvoiceLinesList = invoicedataprovider.InvoiceLinesList.Where(d => !d.IsExpense).ToList();
@@ -2354,7 +2122,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
+                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
                 {
                     if (!string.IsNullOrEmpty(currentInvoice.SATXML))
                     {
@@ -2364,7 +2132,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         else
                         {
-                            MapProfactFields(currentInvoice, invoicedataprovider, tenantSettings);
+                            MapProfact33Fields(currentInvoice, invoicedataprovider, tenantSettings);
                         }
                     }
                     else
@@ -2380,17 +2148,13 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             invoicedataprovider.SAT.MetodoPago = (currentInvoice.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
                         }
-                        invoicedataprovider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode);
-                        invoicedataprovider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(currentInvoice.RegimenFiscalCode, billToCard.RegimenFiscalCode, currentInvoice.Tenant);
-                        invoicedataprovider.SAT.BillToSATName = GetBillToSATName(billToCard);
-                        invoicedataprovider.SAT.SATForeignRFC = billToCard.SATForeignRFC;
                         invoicedataprovider.SAT.FormadePago = currentInvoice.SATPaymentMethodCode;
 
 
                         invoicedataprovider.WaterMark = "Draft";
                         invoicedataprovider.CopyName = "Draft";
                         invoicedataprovider.CopyName_hebrew = "פרופורמה";
-                        invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? "Draft: " + currentInvoice.DraftNumber : "";
+                        invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? currentInvoice.DraftNumber : "";
                     }
                 }
 
@@ -2430,9 +2194,6 @@ namespace WebFreight.Web.ReportsWebServices
                 #region NoExpense
                 invoicedataprovider.NoExpenseSubTotalLocalCurr = invoicedataprovider.NoExpenseInvoiceLinesList.Sum(s => s.LocalAmount_Double);
                 invoicedataprovider.NoExpenseSubTotalInvoiceCurr = invoicedataprovider.NoExpenseInvoiceLinesList.Sum(s => s.InvoiceAmount_Double);
-
-                if (invoicedataprovider.NoExpenseSubTotalLocalCurr != null) invoicedataprovider.NoExpenseSubTotalLocalCurr = Math.Round(invoicedataprovider.NoExpenseSubTotalLocalCurr.Value, 2);
-                if (invoicedataprovider.NoExpenseSubTotalInvoiceCurr != null) invoicedataprovider.NoExpenseSubTotalInvoiceCurr = Math.Round(invoicedataprovider.NoExpenseSubTotalInvoiceCurr.Value, 2);
 
                 if (invoicedataprovider.NoExpenseTotalVatList != null)
                 {
@@ -2477,9 +2238,6 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
-                #region Payments
-                AddPayments(invoiceCotnext, tenant,invoicedataprovider , currentInvoice.Id);
-                #endregion
             }
 
             //------------------------------------------------
@@ -2507,189 +2265,11 @@ namespace WebFreight.Web.ReportsWebServices
             return invoicedataprovider;
         }
 
-
-        private static string GetRegimenFiscalReceptorCode(string arInvoiceRegimenFiscalCode, string billToCardRegimenFiscalCode)
-        {
-            return !string.IsNullOrEmpty(arInvoiceRegimenFiscalCode) ? arInvoiceRegimenFiscalCode : billToCardRegimenFiscalCode;
-        }
-
-        private static string GetRegimenFiscalReceptorName(string arInvoiceRegimenFiscalCode, string billToCardRegimenFiscalCode, int tenant)
-        {
-
-            if (!string.IsNullOrEmpty(arInvoiceRegimenFiscalCode))
-            {
-                return SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptorName(arInvoiceRegimenFiscalCode, tenant);
-            }
-            if (!string.IsNullOrEmpty(billToCardRegimenFiscalCode))
-            {
-                return SATInvoiceProfact40DataProviderMappingFields.GetRegimenFiscalReceptorName(billToCardRegimenFiscalCode, tenant);
-            }
-
-            return null;
-        }
-
-
-        private string SetToLocationFromInlanDomesticPartner(string addressId, int tenant)
-        {
-            string toLocation = "";
-            AddressRepository addressRepository = new AddressRepository(tenant);
-            Address toAddress = addressRepository.GetSingleAddress(addressId, tenant);
-            if (toAddress != null)
-            {
-                toLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-            }
-
-            return toLocation;
-        }
-
-        private string SetToLocationFromInlanDomesticCasual(string city, string countryId, int tenant)
-        {
-            string toLocation = city;
-
-            if (!string.IsNullOrEmpty(countryId))
-            {
-                CountryRepository countryRepository = new CountryRepository(tenant);
-                Country country = countryRepository.GetSingleCountry(countryId, tenant);
-                if (country != null)
-                {
-                    toLocation += " " + country.Code;
-                }
-            }
-
-            return toLocation;
-        }
-
-        private void SaveInvoice(ARInvoice currentInvoice)
-        {
-            ARInvoiceRepository arInvoiceRepositoryWithNewContext = new ARInvoiceRepository(currentInvoice.Tenant);
-            ARInvoice savedInvoice = arInvoiceRepositoryWithNewContext.GetSingleInvoice(currentInvoice.Id);
-            if (savedInvoice != null)
-            {
-                savedInvoice.PrintByUserId = currentInvoice.IssuedByUserId;
-                savedInvoice.PrintDate = TenantServerConfigration.GetCurrentDateTime(currentInvoice.Tenant);
-
-                switch (currentInvoice.StatusCode)
-                {
-                    case "AD":
-                    case "VD":
-                    case "PD":
-                    case "PP":
-                    case "AR":
-                    case "AC":
-                        {
-                            if (currentInvoice.IsFromInterestBatchInvoice == false)
-                            {
-                                savedInvoice.IsPrinted = true;
-                            }
-                            break;
-                        }
-                }
-
-                arInvoiceRepositoryWithNewContext.Update(savedInvoice);
-                arInvoiceRepositoryWithNewContext.SubmitChanges();
-            }
-        }
-
-        private void FillARStockVariables(InvoiceDataProvider invoicedataprovider, ARInvoice invoice)
-        {
-            var arInvoiceStockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(invoice.ARInvoiceStockId, invoice.Tenant);
-            if (arInvoiceStockLine == null)
-                return;
-            var arInvoiceStock = aRInvoiceStockQuery.GetSinglePM(arInvoiceStockLine.ARInvoiceStockId, arInvoiceStockLine.Tenant);
-            invoicedataprovider.StockDescription = arInvoiceStock?.Description;
-            invoicedataprovider.StockExpirationDate = arInvoiceStock?.EndDate;
-            invoicedataprovider.StockStartNumberPrefix = arInvoiceStock?.ARInvoiceStockLines?.OrderByDescending(a => a.Id).Select(a => a.Number).LastOrDefault();
-            invoicedataprovider.StockEndNumberPrefix = arInvoiceStock?.ARInvoiceStockLines?.OrderByDescending(a => a.Id).Select(a => a.Number).FirstOrDefault();
-        }
-
-        private double? ComputeVatAmount_MultiVat(List<VATTypesGroup> allVatGroups, List<VatType> allVatTypes, DateTime? loadingDate, double? invoiceAmount, string VATTypeId, int tenant)
-        {
-            double? allLineVATAmount = 0;
-
-            List<VATTypesGroup> vatTypesGroup = allVatGroups.Where(d => d.GroupVATTypeId == VATTypeId).ToList();
-
-            foreach (VATTypesGroup itemGroup in vatTypesGroup)
-            {
-                VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
-                VatTypePercentage myPercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(itemGroup.SingleVATTypeId, tenant, loadingDate);
-                if (myPercentage != null)
-                {
-                    var vatTypePercentage = MethodHelper.GetValue(myPercentage.Percentage);
-                    allLineVATAmount += MethodHelper.Round(invoiceAmount * vatTypePercentage / 100, 2);
-                }
-            }
-
-            return allLineVATAmount;
-        }
-
-        private string GetBillToSalesManUserName(Card billToCard)
-        {
-            User salesman = GetSalesManUser(billToCard);
-            var SalesManUserName = "";
-            if (salesman?.Contact != null)
-            {
-                SalesManUserName = GetLocalizedSalesManUserName(salesman, billToCard);
-            }
-
-            return SalesManUserName;
-        }
-
-        private static User GetSalesManUser(Card billToCard)
-        {
-            UserRepository userRepository = new UserRepository(billToCard.Tenant);
-            User salesman = userRepository.GetSingleUser(billToCard.SalesmanUserId, billToCard.Tenant, false);
-            return salesman;
-        }
-
-        private string GetLocalizedSalesManUserName(User salesman, Card billToCard)
-        {
-            bool showLocals = MustContactShowLocalLables(billToCard);
-            var englishName = salesman.Contact.EnglishName;
-            var localName = salesman.Contact.LocalName;
-            string SalesManUserName = showLocals ? (localName == null ? englishName : localName) : englishName;
-            return SalesManUserName;
-        }
-
-        private bool MustContactShowLocalLables(Card billToCard)
-        {
-            Contact loggedcontact = GetLoggedContact(billToCard.Tenant);
-            var showLocals = !loggedcontact.DontShowLocalLabels;
-            return showLocals;
-        }
-
         public static string FirstCharToUpper(string input)
         {
             if (String.IsNullOrEmpty(input))
                 return "";
             return input.First().ToString().ToUpper() + input.Substring(1);
-        }
-        
-        private static void MapProfactFields(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Tenant tenantSettings)
-        {
-            int currentDocumentSATVersion = GetCurrentDocumentSATVersion(currentInvoice.SATXML);
-            if (currentDocumentSATVersion == 3)
-            {
-                MapProfact33Fields(currentInvoice, invoicedataprovider, tenantSettings);
-            }
-            else
-            {
-                MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
-            }
-        }
-
-        private static int GetCurrentDocumentSATVersion(string sATXML)
-        {
-            int currentDocumentSATVersion = 3;
-            try
-            {
-                Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(sATXML);
-                return currentDocumentSATVersion;
-            }
-            catch(Exception ex)
-            {
-                currentDocumentSATVersion = 4;
-                return currentDocumentSATVersion;
-            }
         }
 
         private static void MapProfact32Fields(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Tenant tenantSettings)
@@ -2828,7 +2408,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.SAT.CadenaOriginal = additionalFields.CadenaOriginal;
                         if (!string.IsNullOrEmpty(additionalFields.QRImage))
                         {
-                            //invoicedataprovider.SAT.QRImage = Image.FromStream(new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)));
+                            invoicedataprovider.SAT.QRImage = Image.FromStream(new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)));
                         }
 
                         //if (!string.IsNullOrEmpty(additionalFields.QRImage))
@@ -2901,11 +2481,6 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
-        private static void MapProfact40Fields(ARInvoice currentInvoice, InvoiceDataProvider invoicedataprovider, Tenant tenantSettings)
-        {
-            SATInvoiceProfact40DataProviderMappingFields.MapProfact40Fields(currentInvoice, invoicedataprovider, tenantSettings);
-        }
-
         private static string GetSATTimbreFiscalDigitalValue(string attributeName, System.Xml.XmlElement timbreFiscalDigitalElement)
         {
             string value = "";
@@ -2962,7 +2537,7 @@ namespace WebFreight.Web.ReportsWebServices
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 AddressRepository addressRepository = new AddressRepository(commonContext);
                 ContactRepository contactRepository = new ContactRepository(commonContext);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                 IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                 WebServiceHelper myServicHelper = new WebServiceHelper(tenant);
                 SATInterfaceSettingRepository satInterfaceSettingRepository = new SATInterfaceSettingRepository(invoiceCotnext);
@@ -2976,10 +2551,6 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ChargesType> allChargesTypes = (from d in commonContext.ChargesTypes where d.Tenant == tenant select d).ToList();
                 invoiceDataProvider.AccountDisplayNumber = GetGLAccountDisplayNumberByBillToId(entityPOCO);
                 Contact loggedcontact = GetLoggedContact(entityPOCO.Tenant);
-                List<VATTypesGroup> allVatGroups = (from d in commonContext.VATTypesGroups where d.Tenant == tenant select d).ToList();
-                List<VatType> allVatTypes = (from d in commonContext.VatTypes where d.Tenant == tenant select d).ToList();
-                vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
-
                 #region Tenant Properties
                 Tenant myTenant = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
                 if (myTenant != null)
@@ -2990,7 +2561,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoiceDataProvider.InvoiceSection2 = myTenant.InvoiceSection2;
                     invoiceDataProvider.BankDetails = myTenant.BankDetails;
                     invoiceDataProvider.Logo = DataProviders.General.GetLogo(myTenant.Id);
-
+                  
                 }
                 #endregion
 
@@ -3035,20 +2606,14 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     invoiceDataProvider.InvoiceType_label = invoiceType != null ? invoiceType.Name : "";
                 }
-                bool isCreditByAutoCreditInvoice = CheckAutoCreditInvoice(entityPOCO);
+
                 switch (entityPOCO.ARInvoiceTypeCode)
                 {
                     case "CD":
                         {
                             if (myTenant.AccountingActivated)
                             {
-
-                                if (isCreditByAutoCreditInvoice)
-                                {
-                                    invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית";
-                                }
-                                else
-                                    invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית זיכוי";
+                                invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית זיכוי";
 
                             }
                             else
@@ -3072,12 +2637,6 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.InvoiceType_label_Spanish = "Tax Invoice";
                             break;
                         }
-                    case "IT":
-                        {
-                            invoiceDataProvider.InvoiceType_labelHebrew = "חשבונית מס";
-                            break;
-                        }
-
                 }
 
                 invoiceDataProvider.Status = entityPOCO.Status != null ? entityPOCO.Status.Name : "";
@@ -3090,35 +2649,13 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.DueDateAsDateFormat = entityPOCO.DueDate;
                 invoiceDataProvider.CustomerRef = entityPOCO.CustomerRef;
                 invoiceDataProvider.BillToVatNumber = entityPOCO.VatNumber != null ? entityPOCO.VatNumber : "";
-                if (entityPOCO.StatusCode == "DR" && entityPOCO.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant, !loggedcontact.DontShowLocalLabels))
-                    invoiceDataProvider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant, !loggedcontact.DontShowLocalLabels);
-                else
-                    invoiceDataProvider.Notes = entityPOCO.PrintNotes != null ? entityPOCO.PrintNotes : "";
+                invoiceDataProvider.Notes = entityPOCO.PrintNotes != null ? entityPOCO.PrintNotes : "";
 
                 invoiceDataProvider.ApprovedDate = entityPOCO.ApprovedDate != null ? String.Format("{0:dd.MMM.yyyy}", entityPOCO.ApprovedDate) : "";
                 invoiceDataProvider.ApprovedDateAsDateFormat = entityPOCO.ApprovedDate;
 
                 invoiceDataProvider.AmountDueInInvoiceCurrency = entityPOCO.AmountDue;
                 invoiceDataProvider.AmountDueInLocalCurrency = entityPOCO.AmountDueInLocalCurrency;
-
-                invoiceDataProvider.ConfirmationNumber = entityPOCO.ConfirmationNumber;
-
-                if (!String.IsNullOrEmpty(invoiceDataProvider.ConfirmationNumber))
-                {
-                    int len = invoiceDataProvider.ConfirmationNumber.Length;
-                    if (len > ConfNoRightPartLen)
-                    {
-                        invoiceDataProvider.ConfirmationNumber_LeftPart = invoiceDataProvider.ConfirmationNumber.Substring(0, len - 1 - ConfNoRightPartLen);
-                        invoiceDataProvider.ConfirmationNumber_RightPart = invoiceDataProvider.ConfirmationNumber.Substring(len - ConfNoRightPartLen);
-                    }
-                    else
-                    {
-                        invoiceDataProvider.ConfirmationNumber_LeftPart = "";
-                        invoiceDataProvider.ConfirmationNumber_RightPart = invoiceDataProvider.ConfirmationNumber;
-                    }
-                }
-
-
 
                 if (entityPOCO.ApprovedByUser != null)
                 {
@@ -3128,14 +2665,27 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                this.SetOriginalInvoiceNumber(entityPOCO, invoiceCotnext, invoiceDataProvider);
+                if (entityPOCO.IsAutoCredit)
+                {
+                    invoiceDataProvider.OriginalInvoiceNumber = invoiceCotnext.ARInvoices.Where(i => i.CancelledByARInvoiceId == invoiceId).FirstOrDefault().InvoiceNumber;
+                }
+
+                if (!string.IsNullOrEmpty(invoiceDataProvider.OriginalInvoiceNumber))
+                {
+                    invoiceDataProvider.OriginalInvoiceNumber_label = "Original Invoice Number";
+                }
+
+                else
+                {
+                    invoiceDataProvider.OriginalInvoiceNumber_label = "";
+                }
 
                 if (entityPOCO.StatusCode == "DR")
                 {
                     invoiceDataProvider.WaterMark = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName_hebrew = "פרופורמה";
-                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? "Draft: " + entityPOCO.DraftNumber : "";
+                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? entityPOCO.DraftNumber : "";
                     invoiceDataProvider.Draft_labelHebrew = "פרופורמה";
                     invoiceDataProvider.Draft_label = "Draft";
                 }
@@ -3145,7 +2695,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoiceDataProvider.WaterMark = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName_hebrew = "מבוטלת";
-                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? "Draft: " + entityPOCO.DraftNumber : "";
+                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? entityPOCO.DraftNumber : "";
                     invoiceDataProvider.Draft_labelHebrew = "מבוטלת";
                     invoiceDataProvider.Draft_label = "Cancelled";
                 }
@@ -3175,7 +2725,6 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.PaymentTermLocalDescription = paymentTerm.LocalDescription != null ? paymentTerm.LocalDescription : "";
                     }
                 }
-                this.FillARStockVariables(invoiceDataProvider, entityPOCO);
                 #endregion
 
                 #region Bill To Properties
@@ -3187,7 +2736,6 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.BillTo = billToCard.EnglishName != null ? billToCard.EnglishName + Environment.NewLine : "";
                         invoiceDataProvider.BillTo_LocalName = billToCard.LocalName != null ? billToCard.LocalName : "";
                         invoiceDataProvider.BillToCustomerCode = billToCard.Code;
-                        invoiceDataProvider.BillToSalesMan = GetBillToSalesManUserName(billToCard);
 
                         if (!string.IsNullOrEmpty(entityPOCO.BillToAddressId))
                         {
@@ -3196,41 +2744,17 @@ namespace WebFreight.Web.ReportsWebServices
                             if (billToAddress != null)
                             {
                                 invoiceDataProvider.BillToAddress_NoName = DataProviders.General.GetAddress(billToAddress);
-                                invoiceDataProvider.BillToAddress1 = billToAddress.Address1;
-                                invoiceDataProvider.BillToAddress2 = billToAddress.Address2;
-                                invoiceDataProvider.BillToFax = billToAddress.FaxNumber;
-                                invoiceDataProvider.BillToCity = billToAddress.City;
-                                if (billToAddress.Country != null)
-                                {
-                                    invoiceDataProvider.BillToCountry = loggedcontact.DontShowLocalLabels ? billToAddress.Country.EnglishName : billToAddress.Country.LocalName;
-                                    if (billToAddress.City != null)
-                                    {
-                                        CountryCityPM countryCity = GetCountryCityPM(billToAddress.CountryId, billToAddress.City, billToAddress.Tenant);
-                                        if (countryCity != null)
-                                        {
-                                            invoiceDataProvider.BillToCity = loggedcontact.DontShowLocalLabels ? countryCity.EnglishName : countryCity.LocalName;
-                                        }
-                                    }
-                                }
-                                if (billToAddress.State != null)
-                                {
-                                    invoiceDataProvider.BillToState = loggedcontact.DontShowLocalLabels ? billToAddress.State.EnglishName : billToAddress.State.LocalName;
-                                }
+
                                 if (!loggedcontact.DontShowLocalLabels && !string.IsNullOrEmpty(invoiceDataProvider.BillTo_LocalName))
                                 {
                                     invoiceDataProvider.BillToAddress = invoiceDataProvider.BillTo_LocalName + Environment.NewLine + DataProviders.General.GetAddress(billToAddress);
-                                    invoiceDataProvider.BillToAddress_OneLine = Environment.NewLine + DataProviders.General.GetAddress_OneLine(billToAddress);
                                     invoiceDataProvider.BillToAddressDescription = billToAddress.Description;
-                                    invoiceDataProvider.BillToAddressName = billToAddress.Name;
-
                                 }
 
                                 else
                                 {
                                     invoiceDataProvider.BillToAddress = invoiceDataProvider.BillTo + DataProviders.General.GetAddress(billToAddress);
-                                    invoiceDataProvider.BillToAddress_OneLine = DataProviders.General.GetAddress_OneLine(billToAddress);
-                                    invoiceDataProvider.BillToAddressName = billToAddress.Name;
-                                   invoiceDataProvider.BillToAddressDescription = billToAddress.Description;
+                                    invoiceDataProvider.BillToAddressDescription = billToAddress.Description;
                                 }
 
                                 invoiceDataProvider.SAT.BillToZipCode = billToAddress.ZipCode;
@@ -3240,18 +2764,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (billToCard.PartnerTypeId == "CS")
                         {
-                            CustomerRepository customerRepository = new CustomerRepository(tenant);
-                            Customer customer = customerRepository.GetSingleCustomer(billToCard.Id, tenant);
-                            if (customer != null)
+                            CustomerQuery customerQuery = new CustomerQuery(tenant);
+                            CustomerPM customerPM = customerQuery.GetSinglePM(billToCard.Id, tenant);
+                            if (customerPM != null)
                             {
-                                customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customer, invoiceDataProvider);
-
-                                if (!string.IsNullOrEmpty(customer.IndustryId))
-                                {
-                                    Industry industry = commonContext.Industries.Where(d => d.Id == customer.IndustryId).FirstOrDefault();
-                                    if (industry != null)
-                                        invoiceDataProvider.BillToIndustry = industry.Name;
-                                }
+                                customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, customerPM, invoiceDataProvider);
                             }
                         }
 
@@ -3262,11 +2779,6 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.ContactPersonEmail = billToContact.Email;
                             invoiceDataProvider.BillToPrimaryContactMobile = billToContact.Mobile;
                             invoiceDataProvider.BillToPrimaryContactBusinessPhone = billToContact.BusinessPhone;
-                        }
-                        Address billingAddress = addressRepository.GetBillingAddressByCardId(billToCard.Id, tenant);
-                        if (billingAddress != null)
-                        {
-                            invoiceDataProvider.BillToBillingAddress = General.GetAddress(billingAddress);
                         }
 
                         invoiceDataProvider.BillToBankName = billToCard.BankName;
@@ -3280,8 +2792,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region CustomFieldResolver
                 ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(invoiceRepository);
-                invoicePM = invoiceQuery.GetSinglePM(invoiceId, tenant);
-                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoicePM, invoiceDataProvider);
+                ARInvoicePM entityPM = invoiceQuery.GetSinglePM(invoiceId, tenant);
+                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, entityPM, invoiceDataProvider);
                 #endregion
 
                 #region PrintByUser
@@ -3294,12 +2806,29 @@ namespace WebFreight.Web.ReportsWebServices
                         Contact contact = issuedByuser.Contact;
                         if (contact != null)
                         {
-                            invoiceDataProvider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : null;
+                            invoiceDataProvider.IssuedByUser = contact.EnglishName != null ? contact.EnglishName : "";
                             invoiceDataProvider.IssuedByUser_LocalName = contact.LocalName != null ? contact.LocalName : "";
-                            invoiceDataProvider.IssuedByUserEmail = contact.Email;
                         }
 
-                        //this.SaveInvoice(entityPOCO);
+                        entityPOCO.PrintByUserId = issuedByuser.Id;
+                        entityPOCO.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                        switch (entityPOCO.StatusCode)
+                        {
+                            case "AD":
+                            case "VD":
+                            case "PD":
+                            case "PP":
+                            case "AR":
+                            case "AC":
+                                {
+                                    entityPOCO.IsPrinted = true;
+                                    break;
+                                }
+                        }
+
+                        invoiceRepository.Update(entityPOCO);
+                        invoiceRepository.SubmitChanges();
                     }
                 }
                 #endregion
@@ -3315,12 +2844,6 @@ namespace WebFreight.Web.ReportsWebServices
                 List<ARInvoiceLine> invoiceLines = invoiceCotnext.ARInvoiceLines.Where(d => d.ARInvoiceId == invoiceId && d.Tenant == tenant).OrderBy(o => o.ChargesType.ViewOrder).ToList();
 
                 List<string> foriegnCurrencies = invoiceLines.GroupBy(g => new { g.ForiegnCurrencyId }).Select(s => s.Key.ForiegnCurrencyId).ToList();
-
-                DateTime? loadingDate = entityPOCO.InvoiceDate;
-                if (loadingDate == null)
-                {
-                    loadingDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                }
 
                 if (entityPOCO.ARInvoiceTypeCode == "MN")
                 {
@@ -3338,8 +2861,7 @@ namespace WebFreight.Web.ReportsWebServices
                                      a.MeasurementId,
                                      a.VatTypeId,
                                      a.Notes,
-                                     a.IsExpense,
-                                     a.IsRegionalTax
+                                     a.IsExpense
                                  } into gr
                                  select new
                                  {
@@ -3352,7 +2874,6 @@ namespace WebFreight.Web.ReportsWebServices
                                      VatTypeId = gr.Key.VatTypeId,
                                      Notes = gr.Key.Notes,
                                      IsExpense = gr.Key.IsExpense,
-                                     IsRegionalTax = gr.Key.IsRegionalTax,
                                      LocalAmount = gr.Sum(d => (d.LocalCurrencyAmount != null ? d.LocalCurrencyAmount.Value : 0)),
                                      InvoiceAmount = gr.Sum(d => (d.InvoiceCurrencyAmount != null ? d.InvoiceCurrencyAmount.Value : 0)),
                                      ForeignAmount = gr.Sum(d => (d.ForiegnCurrencyAmount != null ? d.ForiegnCurrencyAmount.Value : 0)),
@@ -3372,13 +2893,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
-
-                        if (invoiceline.Quantity != 0)
-                        {
-                            reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
-                        }
-
-                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
+                        reportinvoiceline.CalculatedUnitPrice = Math.Round(invoiceline.InvoiceAmount / invoiceline.Quantity, 2);
 
                         double? lineAmount_Foreign = invoiceline.ForeignAmount;
                         double? lineAmount_Invoice = invoiceline.InvoiceAmount;
@@ -3411,7 +2926,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                             if (!vattype.IsMultiPercentage)
                             {
-                                List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vattype.Id  && percentage.FromDate <= entityPOCO.InvoiceDate  orderby percentage.FromDate descending select percentage).ToList();
+                                List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages where percentage.VatTypeId == vattype.Id orderby percentage.FromDate descending select percentage).ToList();
 
                                 if (vattypepercentageList.Count > 0)
                                 {
@@ -3422,14 +2937,12 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatIndication = "*";
                                         reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                         reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
-                                        reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                     }
                                     else
                                     {
                                         reportinvoiceline.VatIndication = "";
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
-                                        reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                                     }
 
                                     double vatamountinlocalcurrency = (invoiceline.LocalAmount * (vattypepercentageList[0].Percentage != null ? (vattypepercentageList[0].Percentage / 100) : 0)).Value;
@@ -3446,18 +2959,15 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInLocalCurrency = String.Format("{0:#,0.00}", vatamountinlocalcurrency);
                                     reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                     reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatamountinForeigncurrecy);
-                                    reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
+
                                     reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
-                                    reportinvoiceline.VatAmountInForeignCurrency_Double = vatamountinForeigncurrecy;
                                 }
                             }
 
                             else
                             {
-                                reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceAmount, invoiceline.VatTypeId, tenant);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceAmount);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceAmount;
-                                reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalAmount;
                             }
                         }
                         #endregion
@@ -3472,7 +2982,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPOCO.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -3480,7 +2990,6 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         reportinvoiceline.Quantity = String.Format("{0:#,0.00}", invoiceline.Quantity);
-                        reportinvoiceline.QuantityDouble = invoiceline.Quantity;
                         totalQuantity += invoiceline.Quantity;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
@@ -3490,8 +2999,6 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
-                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
-                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -3509,13 +3016,10 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
-                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
-                        reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
                         invoiceDataProvider.InvoiceLinesList.Add(reportinvoiceline);
                     }
-                    MapChargesTypeCustomFields(tenant, invoiceDataProvider);
                     #endregion
 
                     invoiceDataProvider.Quantity = String.Format("{0:#,0.00}", totalQuantity);
@@ -3539,13 +3043,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.LocalDescription = invoiceline.LocalDescription != null ? invoiceline.LocalDescription : "";
                         reportinvoiceline.DescriptionAndNotes = reportinvoiceline.Description + Environment.NewLine + reportinvoiceline.Notes;
                         reportinvoiceline.IsExpense = invoiceline.IsExpense;
-
-                        if (invoiceline.Quantity != 0 && invoiceline.Quantity != null)
-                        {
-                            reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
-                        }
-
-                        reportinvoiceline.IsRegionalTax = invoiceline.IsRegionalTax;
+                        reportinvoiceline.CalculatedUnitPrice = Math.Round((invoiceline.InvoiceCurrencyAmount / invoiceline.Quantity).Value, 2);
 
                         double? line_UnitPrice = invoiceline.UnitPrice;
                         double? lineAmount_Foreign = invoiceline.ForiegnCurrencyAmount;
@@ -3554,10 +3052,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (entityPOCO.ARInvoiceTypeCode == "CD")
                         {
-                            if (!isCreditByAutoCreditInvoice)
-                            {
-                                line_UnitPrice = Math.Abs(line_UnitPrice.Value);
-                            }
+                            line_UnitPrice = line_UnitPrice * -1;
                             lineAmount_Foreign = lineAmount_Foreign * -1;
                             lineAmount_Invoice = lineAmount_Invoice * -1;
                             lineAmount_Local = lineAmount_Local * -1;
@@ -3587,7 +3082,6 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 List<VatTypePercentage> vattypepercentageList = (from percentage in commonContext.VatTypePercentages
                                                                                  where percentage.VatTypeId == vattype.Id
-                                                                                 && percentage.FromDate <= entityPOCO.InvoiceDate
                                                                                  orderby percentage.FromDate descending
                                                                                  select percentage).ToList();
 
@@ -3600,14 +3094,12 @@ namespace WebFreight.Web.ReportsWebServices
                                         reportinvoiceline.VatIndication = "*";
                                         reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
-                                        reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
                                     else
                                     {
                                         reportinvoiceline.VatIndication = "";
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                         reportinvoiceline.NONVATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
-                                        reportinvoiceline.NONVATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                                     }
 
                                     double vatamountinlocalcurrency = ((invoiceline.LocalCurrencyAmount != null ? invoiceline.LocalCurrencyAmount : 0) * (vattypepercentageList[0].Percentage != null ? (vattypepercentageList[0].Percentage / 100) : 0)).Value;
@@ -3624,18 +3116,15 @@ namespace WebFreight.Web.ReportsWebServices
                                     reportinvoiceline.VatAmountInLocalCurrency = String.Format("{0:#,0.00}", vatamountinlocalcurrency);
                                     reportinvoiceline.VatAmountInInvoiceCurrency = String.Format("{0:#,0.00}", vatamountininvoicecurrecy);
                                     reportinvoiceline.VatAmountInForeignCurrency = String.Format("{0:#,0.00}", vatamountinForeigncurrecy);
-                                    reportinvoiceline.VatAmountInInvoiceCurrency_Double = vatamountininvoicecurrecy;
+
                                     reportinvoiceline.LocalAmountWithVAT = lineAmount_Local + vatamountinlocalcurrency;
-                                    reportinvoiceline.VatAmountInForeignCurrency_Double = vatamountinForeigncurrecy;
                                 }
                             }
 
                             else
                             {
-                                reportinvoiceline.VatAmountInInvoiceCurrency_Double = this.ComputeVatAmount_MultiVat(allVATTypesGroups, allVATTypes, loadingDate, invoiceline.InvoiceCurrencyAmount, invoiceline.VatTypeId, tenant);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceline.InvoiceCurrencyAmount);
                                 reportinvoiceline.VATableAmountInInvoiceCurrency_double = invoiceline.InvoiceCurrencyAmount;
-                                reportinvoiceline.VATableAmountInLocalCurrency_double = invoiceline.LocalCurrencyAmount;
                             }
                         }
                         #endregion
@@ -3650,7 +3139,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 reportinvoiceline.UOMPercentage = "%";
                             }
 
-                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
+                            if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
                             {
                                 ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPOCO.Tenant);
                                 reportinvoiceline.ClaveUnidad = computingPartnerHelper.GetComputingPartnerCodeTranslation(myMeasurement.Code, "G-Profact", "Measurement");
@@ -3658,7 +3147,6 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         reportinvoiceline.Quantity = invoiceline.Quantity != null ? String.Format("{0:#,0.00}", invoiceline.Quantity) : "";
-                        reportinvoiceline.QuantityDouble = invoiceline.Quantity;
                         totalQuantity += invoiceline.Quantity != null ? invoiceline.Quantity.Value : 0;
 
                         ChargesType chargetype = allChargesTypes.Where(d => d.Id == invoiceline.ChargesTypeId).FirstOrDefault();
@@ -3668,8 +3156,6 @@ namespace WebFreight.Web.ReportsWebServices
                             reportinvoiceline.ChargeTypeLocalName = chargetype.LocalName != null ? chargetype.LocalName : "";
                             reportinvoiceline.ChrageTypeCode = chargetype.Code != null ? chargetype.Code : "";
                             reportinvoiceline.ClaveProdServ = chargetype.SATExternalId;
-                            reportinvoiceline.ChargeTypeDescription = chargetype.Description == null ? "" : chargetype.Description;
-                            reportinvoiceline.ChargeTypeId = chargetype.Id != null ? chargetype.Id : "";
                         }
 
                         if (foreigncurrency != null && invoicecurrency != null)
@@ -3687,13 +3173,11 @@ namespace WebFreight.Web.ReportsWebServices
                             }
 
                             reportinvoiceline.ForeignToInvoiceExchangeRate = "1 " + foreigncurrency.Code + " = " + Math.Round(foreignExchangeRate.Value, 2) + " " + invoicecurrency.Code;
-                            reportinvoiceline.ForeignToInvoiceExchangeRate_Double = Math.Round(foreignExchangeRate.Value, 3);
                         }
 
-                        reportinvoiceline.TotalAmount = reportinvoiceline.InvoiceAmount_Double + reportinvoiceline.VatAmountInInvoiceCurrency_Double;
                         invoiceDataProvider.InvoiceLinesList.Add(reportinvoiceline);
                     }
-                    MapChargesTypeCustomFields(tenant, invoiceDataProvider);
+
                     #endregion
 
                     invoiceDataProvider.Quantity = String.Format("{0:#,0.00}", totalQuantity);
@@ -3701,9 +3185,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoiceDataProvider.TotalVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.VATableAmountInInvoiceCurrency_double));
                 invoiceDataProvider.TotalNONVATableAmountInInvoiceCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.NONVATableAmountInInvoiceCurrency_double));
-
-                invoiceDataProvider.TotalVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.VATableAmountInLocalCurrency_double));
-                invoiceDataProvider.TotalNONVATableAmountInLocalCurrency = String.Format("{0:#,0.00}", invoiceDataProvider.InvoiceLinesList.Sum(s => s.NONVATableAmountInLocalCurrency_double));
 
                 invoiceDataProvider.ExpenseInvoiceLinesList = invoiceDataProvider.InvoiceLinesList.Where(d => d.IsExpense).ToList();
                 invoiceDataProvider.NoExpenseInvoiceLinesList = invoiceDataProvider.InvoiceLinesList.Where(d => !d.IsExpense).ToList();
@@ -3880,7 +3361,6 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.AmountInWordsSpanishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmount.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoiceDataProvider.AmountsInEnglishWithZero = FirstCharToUpper(numbersConverterToWords.NumbersToEnglish((int)invoiceAmount.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + strWithZeros;
                 invoiceDataProvider.AmountInWordsRussian = FirstCharToUpper(numbersConverterToWords.NumbersToRussian((int)invoiceAmount.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + strWithZeros;
-                invoiceDataProvider.LocalAmountInWordsSpanish = FirstCharToUpper(numbersConverterToWords.NumbersToSpanish((int)invoiceAmountLocal.Value) + " ") + invoiceDataProvider.InvoicecurrencyLocalName + " " + str;
 
                 #endregion
 
@@ -3959,10 +3439,6 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (myShipment != null)
                                 {
                                     myRecord.MainCarriageATD = myShipment.MainCarriageATD;
-                                    myRecord.MainCarriageETD = myShipment.MainCarriageETD;
-                                    myRecord.MainCarriageATA = myShipment.MainCarriageATA;
-                                    myRecord.MainCarriageETA = myShipment.MainCarriageETA;
-                                    myRecord.FinalMainCarriageATA = myShipment.Transshipment3ATA ?? myShipment.Transshipment2ATA ?? myShipment.Transshipment1ATA  ?? myShipment.MainCarriageATA;
                                     myRecord.Shipper = myShipment.ShipperName;
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.Carrier = myShipment.MainCarriageCarrierName;
@@ -3971,78 +3447,31 @@ namespace WebFreight.Web.ReportsWebServices
                                     myRecord.Volume = myShipment.Volume == null ? "" : String.Format("{0:N2}", myShipment.Volume.Value);
                                     myRecord.GrossWeight = myShipment.GrossWeight == null ? "" : String.Format("{0:N2}", myShipment.GrossWeight.Value);
                                     myRecord.ChargeableWeight = myShipment.ChargeableWeight == null ? "" : String.Format("{0:N2}", myShipment.ChargeableWeight.Value);
-                                    myRecord.ChargeableWeight_Double = myShipment.ChargeableWeight;
-                                    myRecord.ChargeableWeightUnitCode = myShipment.ChargeableWeightUnitCode;
                                     myRecord.PackagesQuantity = myShipment.PackagesQuantity == null ? "" : String.Format("{0:N0}", myShipment.PackagesQuantity.Value);
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.ShipmentRouting = myShipment.Routing;
-                                    myRecord.ConnectedQuoteNumber = myShipment.QuoteNumber;
-                                    myRecord.ProjectNumber = myShipment.ProjectNumber;
-                                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
                                     #region From:To Location
                                     if (myShipment.TransportModeId == "I" && myShipment.DirectionId == "D")
                                     {
-                                        switch (myShipment.InlandDomesticFromTypeCode)
+                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
                                         {
-                                            case "PART":
-                                                {
-                                                    if (!string.IsNullOrEmpty(myShipment.MainCarriageFromAddressId))
-                                                    {
-                                                        Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageFromAddressId, tenant);
-                                                        if (myAddress != null)
-                                                        {
-                                                            myRecord.FromLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
-                                                        }
-                                                    }
-                                                    break;
-                                                }
-
-                                            case "PORT":
-                                                {
-                                                    myRecord.FromLocation = myShipment.MainCarriageFromPortName;
-                                                    break;
-                                                }
-
-                                            case "CASL":
-                                                {
-                                                    myRecord.FromLocation = myShipment.InlandDomesticFromCity;
-
-                                                    if (!string.IsNullOrEmpty(myShipment.InlandDomesticFromCountryId))
-                                                    {
-                                                        CountryRepository countryRepository = new CountryRepository(tenant);
-                                                        Country country = countryRepository.GetSingleCountry(myShipment.InlandDomesticFromCountryId, tenant);
-                                                        if (country != null)
-                                                        {
-                                                            myRecord.FromLocation += " " + country.Code;
-                                                        }
-                                                    }
-                                                    break;
-                                                }
+                                            Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageFromAddressId, tenant);
+                                            if (myAddress != null)
+                                            {
+                                                myRecord.FromLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
+                                            }
                                         }
 
-                                        switch (myShipment.InlandDomesticToTypeCode)
+                                        if (!string.IsNullOrEmpty(myShipment.MainCarriageToAddressId))
                                         {
-                                            case "PART":
-                                                {
-                                                    myRecord.ToLocation = this.SetToLocationFromInlanDomesticPartner(myShipment.MainCarriageToAddressId, tenant);
-                                                    break;
-                                                }
-
-                                            case "PORT":
-                                                {
-                                                    myRecord.ToLocation = myShipment.MainCarriageToPortName;
-                                                    break;
-                                                }
-
-                                            case "CASL":
-                                                {
-                                                    myRecord.ToLocation = this.SetToLocationFromInlanDomesticCasual(myShipment.InlandDomesticToCity, myShipment.InlandDomesticToCountryId, tenant);
-                                                    break;
-                                                }
+                                            Address myAddress = addressRepository.GetSingleAddress(myShipment.MainCarriageToAddressId, tenant);
+                                            if (myAddress != null)
+                                            {
+                                                myRecord.ToLocation = myAddress.City + " " + (myAddress.Country != null ? myAddress.Country.Code : "");
+                                                myRecord.FinalDestination = myAddress.City;
+                                            }
                                         }
-
-                                        myRecord.FinalDestination = myRecord.ToLocation;
                                     }
 
                                     else
@@ -4076,7 +3505,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                                     if (myDelivery != null)
                                     {
-                                        myRecord.LastDeliveryATD = myDelivery.ATD;
                                         ShipmentPickUpDeliveryPackageRepository rep = new ShipmentPickUpDeliveryPackageRepository(tenant);
                                         List<ShipmentPickUpDeliveryPackage> deliveryPackages = rep.GetPackagesByDeliveryId(myDelivery.Id, tenant).ToList();
 
@@ -4210,7 +3638,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33" || satSetting.SATInterfaceCode == "PROF40"))
+                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33"))
                 {
                     if (!string.IsNullOrEmpty(entityPOCO.SATXML))
                     {
@@ -4220,7 +3648,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         else
                         {
-                            MapProfactFields(entityPOCO, invoiceDataProvider, tenantSettings);
+                            MapProfact33Fields(entityPOCO, invoiceDataProvider, tenantSettings);
                         }
                     }
                     else
@@ -4231,22 +3659,16 @@ namespace WebFreight.Web.ReportsWebServices
                         else
                             invoiceDataProvider.SAT.TipoDeComprobante = "I";
 
-                        if (!string.IsNullOrEmpty(invoicePM.MetodoPagoCode))
+                        if (!string.IsNullOrEmpty(entityPM.MetodoPagoCode))
                         {
-                            invoiceDataProvider.SAT.MetodoPago = (invoicePM.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
+                            invoiceDataProvider.SAT.MetodoPago = (entityPM.MetodoPagoCode == "PUE" ? "PUE Pago en una sola exhibición" : "PPD Pago en parcialidades o diferido");
                         }
-
-                        Card billToCard = GetBillToCard(invoicePM);
-                        invoiceDataProvider.SAT.RegimenFiscalReceptor = GetRegimenFiscalReceptorName(invoicePM.RegimenFiscalCode, billToCard.RegimenFiscalCode, invoicePM.Tenant);
-                        invoiceDataProvider.SAT.RegimenFiscalReceptorCode = GetRegimenFiscalReceptorCode(invoicePM.RegimenFiscalCode, billToCard.RegimenFiscalCode);
-                        invoiceDataProvider.SAT.BillToSATName = GetBillToSATName(billToCard);
-                        invoiceDataProvider.SAT.SATForeignRFC = billToCard.SATForeignRFC;
                         invoiceDataProvider.SAT.FormadePago = entityPOCO.SATPaymentMethodCode;
 
                         invoiceDataProvider.WaterMark = "Draft";
                         invoiceDataProvider.CopyName = "Draft";
                         invoiceDataProvider.CopyName_hebrew = "פרופורמה";
-                        invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? "Draft: " + entityPOCO.DraftNumber : "";
+                        invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? entityPOCO.DraftNumber : "";
                     }
                 }
 
@@ -4255,7 +3677,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Expense
                 invoiceDataProvider.ExpenseSubTotalLocalCurr = invoiceDataProvider.ExpenseInvoiceLinesList.Sum(s => s.LocalAmount_Double);
                 invoiceDataProvider.ExpenseSubTotalInvoiceCurr = invoiceDataProvider.ExpenseInvoiceLinesList.Sum(s => s.InvoiceAmount_Double);
-
+              
                 if (invoiceDataProvider.ExpenseTotalVatList != null)
                 {
                     invoiceDataProvider.ExpenseTotalLocalCurr = invoiceDataProvider.ExpenseSubTotalLocalCurr + invoiceDataProvider.ExpenseTotalVatList.Sum(s => s.TotalVatAmountInLocalCurrency_Double);
@@ -4325,7 +3747,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (entityPOCO.BankAccountLiteId != null)
                 {
                     BankAccountLite myBankAccountLite = (from d in invoiceCotnext.BankAccountLites where d.Tenant == tenant && d.Id == entityPOCO.BankAccountLiteId select d).FirstOrDefault();
-                    if (myBankAccountLite != null)
+                    if(myBankAccountLite != null)
                     {
                         invoiceDataProvider.DepositBankEnglishName = myBankAccountLite.EnglishName;
                         invoiceDataProvider.DepositBankLocalName = myBankAccountLite.LocalName;
@@ -4334,73 +3756,11 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
                 #endregion
-                #region Payments
-
-                AddPayments(invoiceCotnext, tenant, invoiceDataProvider, invoiceId);
-
-                #endregion
-
             }
 
             return invoiceDataProvider;
         }
 
-        private void AddPayments(IInvoiceContext invoiceCotnext, int tenant, InvoiceDataProvider invoiceDataProvider, string invoiceId)
-        {
-            var payments = invoiceCotnext.ARInvoicePayments.Include("ARPayment").Include("ARPayment.AccountingPaymentMethod").Include("ARPayment.PaymentCurrency")
-                .Where(e => e.ARInvoiceId == invoiceId && e.Tenant == tenant).ToList();
-            invoiceDataProvider.Payments = new List<Payment>();
-            foreach (var payment in payments)
-            {
-                invoiceDataProvider.Payments.Add(CretePayment(payment));
-            }
-        }
-
-        private Payment CretePayment(ARInvoicePayment payment)
-        {
-            return new Payment()
-            {
-                PaymentDate = payment.ARPayment?.ValueDate,
-                PaymentMethod = payment.ARPayment?.AccountingPaymentMethod?.Name,
-                PaymentNumber = payment.ARPayment?.PaymentNo,
-                PaymentReferenceNumber = payment.ARPayment?.ChequeOrPaymentRef,
-                BankName = payment.ARPayment?.Bank,
-                PaymentAmount = payment.ARPayment?.AmountInPaymentCurrency,
-                PaymentCurrency = payment.ARPayment?.PaymentCurrency?.Code,
-            };
-        }
-
-        private static string GetBillToSATName(Card billToCard)
-        {
-            return !string.IsNullOrEmpty(billToCard.SATCustomerName) ? billToCard.SATCustomerName : billToCard.EnglishName;
-        }
-
-        private static Card GetBillToCard(ARInvoicePM currentInvoice)
-        {
-            ICommonDataContext commonContext = CommonDataContext.GetContext(currentInvoice.Tenant);
-            return (from a in commonContext.Cards where a.Id == currentInvoice.BillToId select a).FirstOrDefault();
-        }
-
-        private CountryCityPM GetCountryCityPM(string countryId, string cityName, int tenant)
-        {
-            CountryCityQuery countryCityQuery = new CountryCityQuery(tenant);
-            CountryCityPM city = countryCityQuery.GetCountryCityPMByCountryIdAndNAme(countryId, cityName, tenant);
-            return city;
-        }
-        private bool CheckAutoCreditInvoice(ARInvoice invoice)
-        {
-            if (invoice.IsAutoCredit && invoice.StatusCode == "AC" && invoice.ARInvoiceTypeCode == "CD" && invoice.CreditedByARInvoiceId != null)
-            {
-                ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(invoice.Tenant);
-                string invoiceType = aRInvoiceQuery.GetARinvoiceTypeCode(invoice.CreditedByARInvoiceId, invoice.Tenant);
-                if (invoiceType == "CD")
-                {
-                    return true;
-                }
-                else return false;
-            }
-            else return false;
-        }
         private Contact GetLoggedContact(int tenant)
         {
             string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
@@ -4523,7 +3883,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 LocalCurrencyAmount = item.LocalCurrencyAmount,
                                 InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
                                 ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                ExternalVatCard = lineVatType.ReceivablesExternalId,
+                                ExternalVatCard = lineVatType.ExternalVATCard,
                                 ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                                 IsExpense = item.IsExpense,
                             };
@@ -4549,7 +3909,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                 if (vatType != null)
                                 {
-                                    newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+                                    newItem.ExternalVatCard = vatType.ExternalVATCard;
                                     newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                 }
 
@@ -4789,18 +4149,18 @@ namespace WebFreight.Web.ReportsWebServices
             DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies where copy.Id == documentTypeCopyId select copy).FirstOrDefault();
 
             string documentTypeId = null;
-            if (documenttypecopy != null)
+            if(documenttypecopy != null)
             {
                 documentTypeId = documenttypecopy.DocumentTypeId;
             }
 
             if (!string.IsNullOrEmpty(documentTypeId))
             {
-                List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId && fc.EntityId == myInvoice.Id && fc.Tenant == tenant).ToList();
-                List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId && fc.Tenant == tenant).ToList();
-
+                List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId).ToList();
+                List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypeId).ToList();
+                
                 FormCustomField shipper2CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper2"
+                                                       where a.FieldCode == "Shipper2" && a.EntityId == myInvoice.MainEntityId
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper2DocumentCustom = (from a in documentCustomfieldsList
@@ -4808,7 +4168,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField shipper3CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper3"
+                                                       where a.FieldCode == "Shipper3" && a.EntityId == myInvoice.MainEntityId
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper3DocumentCustom = (from a in documentCustomfieldsList
@@ -4816,7 +4176,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField shipper4CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper4"
+                                                       where a.FieldCode == "Shipper4" && a.EntityId == myInvoice.MainEntityId
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper4DocumentCustom = (from a in documentCustomfieldsList
@@ -4824,7 +4184,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField shipper5CustomField = (from a in customfieldsList
-                                                       where a.FieldCode == "Shipper5"
+                                                       where a.FieldCode == "Shipper5" && a.EntityId == myInvoice.MainEntityId
                                                        select a).FirstOrDefault();
 
                 DocumentTypeCustomField shipper5DocumentCustom = (from a in documentCustomfieldsList
@@ -4832,7 +4192,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                   select a).FirstOrDefault();
 
                 FormCustomField HAWB2CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB2"
+                                                    where a.FieldCode == "HAWB2" && a.EntityId == myInvoice.MainEntityId
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB2DocumentCustom = (from a in documentCustomfieldsList
@@ -4840,7 +4200,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                select a).FirstOrDefault();
 
                 FormCustomField HAWB3CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB3"
+                                                    where a.FieldCode == "HAWB3" && a.EntityId == myInvoice.MainEntityId
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB3DocumentCustom = (from a in documentCustomfieldsList
@@ -4848,7 +4208,7 @@ namespace WebFreight.Web.ReportsWebServices
                                                                select a).FirstOrDefault();
 
                 FormCustomField HAWB4CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB4"
+                                                    where a.FieldCode == "HAWB4" && a.EntityId == myInvoice.MainEntityId
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB4DocumentCustom = (from a in documentCustomfieldsList
@@ -4856,13 +4216,13 @@ namespace WebFreight.Web.ReportsWebServices
                                                                select a).FirstOrDefault();
 
                 FormCustomField HAWB5CustomField = (from a in customfieldsList
-                                                    where a.FieldCode == "HAWB5"
+                                                    where a.FieldCode == "HAWB5" && a.EntityId == myInvoice.MainEntityId
                                                     select a).FirstOrDefault();
 
                 DocumentTypeCustomField HAWB5DocumentCustom = (from a in documentCustomfieldsList
                                                                where a.FieldCode == "HAWB5"
                                                                select a).FirstOrDefault();
-
+                
                 myDataProvider.Shipper2 = shipper2CustomField != null ? shipper2CustomField.Value : (shipper2DocumentCustom != null ? shipper2DocumentCustom.DefaultValue : "");
                 myDataProvider.Shipper3 = shipper3CustomField != null ? shipper3CustomField.Value : (shipper3DocumentCustom != null ? shipper3DocumentCustom.DefaultValue : "");
                 myDataProvider.Shipper4 = shipper4CustomField != null ? shipper4CustomField.Value : (shipper4DocumentCustom != null ? shipper4DocumentCustom.DefaultValue : "");
@@ -4955,38 +4315,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             return myResult;
         }
-
-        private void SetOriginalInvoiceNumber(ARInvoice invoice, IInvoiceContext invoiceCotnext, InvoiceDataProvider dataProvider)
-        {
-            if (invoice.IsAutoCredit)
-            {
-                ARInvoice OriginalInvoice = invoiceCotnext.ARInvoices.Where(i => i.CancelledByARInvoiceId == invoice.Id).FirstOrDefault();
-
-                if (OriginalInvoice != null)
-                {
-                    dataProvider.OriginalInvoiceNumber = OriginalInvoice.InvoiceNumber;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(dataProvider.OriginalInvoiceNumber))
-            {
-                dataProvider.OriginalInvoiceNumber_label = "Original Invoice Number";
-            }
-
-            else
-            {
-                dataProvider.OriginalInvoiceNumber_label = "";
-            }
-
-            dataProvider.AutoCreditedInvoiceNumber = dataProvider.OriginalInvoiceNumber;
-            dataProvider.AutoCreditedInvoiceNumber_label = dataProvider.OriginalInvoiceNumber_label;
-        }
-        private void MapChargesTypeCustomFields(int tenant, InvoiceDataProvider invoicedataprovider)
-        {
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "List", Entities = invoicedataprovider.InvoiceLinesList.Cast<Object>().ToList(), KeyName = "ChargeTypeId" }).Set();
-            new CustomFieldResolver(tenant).SetCustomFieldsValues("ChargesType", tenant, invoicedataprovider.InvoiceLinesList.Cast<Object>().ToList());
-        }
-
     }
 
     public class InvoiceTotalVATItem

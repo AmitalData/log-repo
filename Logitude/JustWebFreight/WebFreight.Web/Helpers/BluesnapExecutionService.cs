@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +25,12 @@ namespace WebFreight.Web.Helpers
             this.documentRepository = new DocumentRepository(tenant);
         }
 
-        public void SaveBluesnapTransaction(dynamic args)
+        public void SaveBluesnapTransaction(string file, string type,DateTime? TransactionDate)
         {
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                this.SaveDocument(args.stringdetails);
+                this.SaveDocument(file);
+
                 using (TransactionScope globalScope = TransactionFactory.GetNewTransaction())
                 {
                     BluesnapTransactionRepository bluesnapTransactionRepository = new BluesnapTransactionRepository();
@@ -37,20 +38,20 @@ namespace WebFreight.Web.Helpers
                     {
                         CreateDate = DateTime.Now,
                         DocumentId = documentId,
-                        LogitudeAmital = args.analyzeQueueSubject,
+                        LogitudeAmital = type,
                         Tenant = Convert.ToInt32(tenant),
                         Id = IdCounter.GetNumber("BluesnapTransaction", tenant),
-                        TransactionDate = args.transactionDate,
-                        InvoiceAmountInUSD = args.invoiceAmountUSD,
-                        TaxAmountInUSD = args.taxAmountUSD,
-                        ContractNumber = args.contractId,
+                        TransactionDate = TransactionDate,
+                        
                     };
 
                     bluesnapTransactionRepository.Add(transaction);
                     bluesnapTransactionRepository.SubmitChanges();
                     globalScope.Complete();
                 }
+
                 scope.Complete();
+
             }
         }
 
@@ -76,6 +77,9 @@ namespace WebFreight.Web.Helpers
                 
             };
 
+
+
+
             documentId = document.Id;
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
@@ -92,6 +96,7 @@ namespace WebFreight.Web.Helpers
 
             Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
             storageservice.Write(myByteArray, fileInfo);
+
         }
 
         public int GetUserTenantByEmail(string email)
@@ -104,5 +109,7 @@ namespace WebFreight.Web.Helpers
             }
             return 0;
         }
+
+
     }
 }

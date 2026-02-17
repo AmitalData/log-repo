@@ -1,4 +1,4 @@
-
+﻿
 import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
@@ -10,6 +10,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
+    moduleId: module.id,
     templateUrl: './ReconciliationLineListTemplate.html',
 })
 
@@ -40,10 +41,10 @@ export class ReconciliationLineListTemplate {
     }
 
     GetTransacionAmount(){
-        if (AppTool.IsNullOrZero(this.rowData.AmountCredit)) {
-            return  -1 * this.rowData.AmountDebit;
+        if (AppTool.IsNullOrZero(this.rowData.ForeignAmountCredit)) {
+            return  -1 * this.rowData.ForeignAmountDebit;
         } else {
-            return this.rowData.AmountCredit;
+            return this.rowData.ForeignAmountCredit;
         }
     }
 

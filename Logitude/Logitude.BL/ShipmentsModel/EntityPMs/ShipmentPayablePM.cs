@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 using Logitude.BL.Validators;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentPayableValidator), "IsShipmentPayableValid")]
-    public class ShipmentPayablePM : ChildEntitiesCustomFieldPM
+    public class ShipmentPayablePM
     {
         [Key]
         public string Id { get; set; }
@@ -24,7 +23,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ChargesTypeCode { get; set; }
         public string ChargesTypeName { get; set; }
         public string ChargesGroupCode { get; set; }
-        public bool? IsExpenseCharge { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ShipmentPayableLineStatusCode { get; set; }
@@ -62,7 +60,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdateByUserId { get; set; }
-        public string UpdateByUserName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? UpdateDate { get; set; }
@@ -104,7 +101,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CreatedByUserId { get; set; }
-        public string CreatedByUserName{ get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? AccountedAmount { get; set; }
@@ -163,8 +159,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         // Dummy Fields
         public int ViewOrder { get; set; }
-        public double? ProratedAmountInLocalCurrency { get; set; }
-        public double? ProratedAmountInProfitCurrency { get; set; }
+        
         public string UOMPercentage { get; set; }
 
         List<ShipmentPayablePM> childShipmentPayables;
@@ -202,22 +197,11 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string TariffId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsCustomsChargesTariff { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string TariffNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int TariffVersion { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string TariffLineId { get; set; }
 
         public bool PayablesDisconnectedFromTariff { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? VatAmountLocal { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? VatAmountProfit { get; set; }
-        public string ChangeSet { get; set; }
     }
 }

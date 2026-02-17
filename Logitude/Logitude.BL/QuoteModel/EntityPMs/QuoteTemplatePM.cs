@@ -31,7 +31,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsLastQuoteTemplateDocumentVersion { get; set; }
         public bool IsCopiedAtSignup { get; set; }
         public bool IsEnabledForCustomers { get; set; }
-        public string TenantName { get; set; }
+
 
 
 

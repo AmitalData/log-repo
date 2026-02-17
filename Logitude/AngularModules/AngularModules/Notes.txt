@@ -1,0 +1,56 @@
+﻿1.	Remove bower_components stuff
+2.	Remove tsconfig-aot.json
+3.	Remove tsconfig-aot-customs.json
+4.	Remove systemjs.config.js
+5.	Remove rollup.js
+6.	Remove customs-rollup.js
+7.	Remove node_modules.rar
+8.	Remove node_modules
+9.	Remove typings
+10. Remove typings.json
+
+11. Add Folders
+		assets
+		e2e
+		environments
+
+12. Add Files
+		.angular-cli.json
+		.editorconfig
+		.gitignore
+		karma.conf.js
+		protractor.conf.js
+		README.md
+		tslint.json
+		favicon.ico
+		polyfills.ts
+		styles.css
+		test.ts
+		tsconfig.app.json
+		tsconfig.spec.json
+		typings.d.ts
+
+13. Modify index.html
+14. Modify .angular-cli.json
+15. Modify tsconfig.json
+16. Modify tsconfig.app.json
+17. Modify styles.css
+18. Modify package.json
+19. npm install
+20. download https://nodejs.org/en/ latest
+
+Commands
+node --max_old_space_size=6000 node_modules/\@angular/cli/bin/ng build
+node --max_old_space_size=6000 node_modules/\@angular/cli/bin/ng serve
+node --max_old_space_size=12000 node_modules/\@angular/cli/bin/ng build --prod
+node --max_old_space_size=12000 node_modules/\@angular/cli/bin/ng serve --prod
+
+
+    "start": "webpack-dev-server --port=4200",
+    "build": "webpack",
+
+
+
+html changes not detected
+https://github.com/angular/angular/issues/6131
+https://github.com/angular/angular-cli/issues/1610

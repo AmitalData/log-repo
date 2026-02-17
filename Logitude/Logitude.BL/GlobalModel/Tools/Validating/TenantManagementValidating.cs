@@ -1,9 +1,8 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityPMs;
-using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -12,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -27,124 +25,80 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                 throw new ApplicationException("Main Package field is required");
             }
 
+            ValidateCCSParameter(entityPM, entityRepository);
             ValidateNumberOfUsers(entityPM);
             ValidateConnectedAirline(entityPM, entityRepository);
             ValidateSupportEmail(entityPM, entityRepository);
-            ValidateCargoTracking(entityPM);
-        }
-        private static void ValidateCargoTracking(TenantManagementPM tenantManagement){
-            if(tenantManagement.MainColor != null)
-            {
-                ValidateRGBACode(tenantManagement.MainColor);
-               
-            }
-            if (tenantManagement.SecondaryColor != null) {
-                ValidateRGBACode(tenantManagement.SecondaryColor);
-            }
-            if (tenantManagement.CustomerURL != null)
-            {
-                ValidateIsDomainAlreadyExist(tenantManagement);
-            }
-        }
-        private static void ValidateIsDomainAlreadyExist(TenantManagementPM tenantManagement)
-        {
-            tenantManagement.CustomerURL = TrimDomainByRegex(tenantManagement.CustomerURL);
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-            bool IsExist = tenantManagementQuery.CheckIsdomainAlreadyExist(tenantManagement);
-            if (IsExist)
-            {
-                string msg = "This cargo tracking URL already exists";
-                throw new ApplicationException(msg);
-            }
         }
 
-        private static string TrimDomainByRegex(string domain)
+        private static void ValidateCCSParameter(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
         {
-            domain = domain.EndsWith("/") ? domain.Substring(0, domain.Length - 1) : domain;
-            domain = Regex.Replace(domain, @"^(?:http(?:s)?://)?(?:www(?:[0-9]+)?\.)?", string.Empty, RegexOptions.IgnoreCase);
-            return domain;
-        }
-        private static void ValidateRGBACode(string color)
-        {
-            Regex regex = new Regex(@"((rgba)\((\d{1,3}%?,\s?){3}(1|0?\.\d+)\))");
-            if (!regex.IsMatch(color))
+            if (!string.IsNullOrEmpty(entityPM.TTY) || !string.IsNullOrEmpty(entityPM.PIMA))
             {
-                string msg = "This is not a valid color code";
-                throw new ApplicationException(msg);
+                IQueryable<TenantManagement> iQueryable = entityRepository.GetAllTenants();
+
+                if (!string.IsNullOrEmpty(entityPM.TTY))
+                {
+                    if (iQueryable.Where(d => d.TTY == entityPM.TTY && d.Id != entityPM.Id).Any())
+                    {
+                        throw new ApplicationException("the TTY field is alredy used by another tenant");
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(entityPM.PIMA))
+                {
+                    if (iQueryable.Where(d => d.PIMA == entityPM.PIMA && d.Id != entityPM.Id).Any())
+                    {
+                        throw new ApplicationException("the PIMA field is alredy used by another tenant");
+                    }
+                }
             }
         }
-      
         private static void ValidateNumberOfUsers(TenantManagementPM entityPM)
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            if (!entityPM.IsMultiPackage)
             {
+                int? totalUsers = entityPM.NumberOfUsers;
+                if (entityPM.FreeUsers != null)
+                {
+                    totalUsers += entityPM.FreeUsers;
+                }
+
+                //if (totalUsers > 999)
+                //{
+                //    throw new Exception("The maximum number of users is 999 !!");
+                //}
+
+                //else
+                //{
                 int tenantUsers = 0;
-                int totalUsers = 0;
                 string usersType = "active";
 
-                UserRepository userRepository = new UserRepository(entityPM.Id);
-                IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
-
-                allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com" && d.Contact.InActive == false);
-
-                if (entityPM.ManageLicencesPerUser)
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
-                    usersType = "licenced";
-                }
+                    UserRepository userRepository = new UserRepository(entityPM.Id);
+                    IQueryable<User> allTenantUsers = userRepository.GetUsers(entityPM.Id);
 
-                if (entityPM.MainAdditionalPackageApplied)
-                {
-                    allTenantUsers = allTenantUsers.Where(d => !d.AdditionalPackagesOnly);
-                }
+                    allTenantUsers = allTenantUsers.Where(d => d.Contact.Email.ToLower() != "customercare@logitudeworld.com");
+                    allTenantUsers = allTenantUsers.Where(d => d.Contact.InActive == false);
 
-                tenantUsers = allTenantUsers.Count();
-                
-                if (entityPM.IsMultiPackage)
-                {
-                    UserLicenseRepository userLicenseRepository = new UserLicenseRepository(entityPM.Id);
-                    IQueryable<UserLicense> allTenantLicenses = userLicenseRepository.GetUserLicenses(entityPM.Id);
-
-                    if(entityPM.MainAdditionalPackageApplied)
+                    if (entityPM.ManageLicencesPerUser)
                     {
-                        int num1 = entityPM.FreeUsers == null ? 0 : entityPM.FreeUsers.Value;
-                        int num2 = entityPM.NumberOfUsers == null ? 0 : entityPM.NumberOfUsers.Value;
-                        totalUsers = num1 + num2;
-
-                        if (tenantUsers > totalUsers)
-                        {
-                            throw new Exception("You can't change the number of users to less than " + tenantUsers + " for main package (" + entityPM.PackageCode + ")");
-                        }
+                        allTenantUsers = allTenantUsers.Where(d => d.LicencedUser == true);
+                        usersType = "licenced";
                     }
 
-                    foreach(TenantManagementLicensePM item in entityPM.TenantManagementLicenses)
-                    {
-                        int licensesCount = allTenantLicenses.Where(d => d.PackageCode == item.PackageCode).Count();
+                    tenantUsers = allTenantUsers.Count();
 
-                        int num1 = item.FreeUsers == null ? 0 : item.FreeUsers.Value;
-                        int num2 = item.NumberOfUsers == null ? 0 : item.NumberOfUsers.Value;
-                        
-                        if (licensesCount > (num1 + num2))
-                        {
-                            throw new Exception("You can't change the number of users to less than " + licensesCount + " for package " + item.PackageCode);
-                        }
-                    }
+                    scope.Complete();
                 }
 
-                else
+                if (tenantUsers > totalUsers)
                 {
-                    int num1 = entityPM.TotalFreeUsers == null ? 0 : entityPM.TotalFreeUsers.Value;
-                    int num2 = entityPM.TotalNumberOfUsers == null ? 0 : entityPM.TotalNumberOfUsers.Value;
-                    totalUsers = num1 + num2;
-
-                    if (tenantUsers > totalUsers)
-                    {
-                        throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
-                    }
-                }                
-
-                scope.Complete();
-            }            
+                    throw new Exception("You can't change the number of users to less than " + tenantUsers + " (Number of " + usersType + " users)");
+                }
+                //}
+            }
         }
         private static void ValidateConnectedAirline(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
         {
@@ -166,7 +120,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
 
                         if (tenants.Where(d => d.TenantConnectedToAirlineCode == entityPM.TenantConnectedToAirlineCode && d.Id != entityPM.Id).Any())
                         {
-                            throw new Exception("The Airline you are trying to connect has been connected to another tenant");
+                            throw new Exception("The Airline you are trying to connect have been connected to another tenant");
                         }
 
                         else
@@ -186,20 +140,19 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
         {
             if (entityPM.SupportActivated)
             {
-                if (string.IsNullOrEmpty(entityPM.SupportDomain))
+                if (string.IsNullOrEmpty(entityPM.SupportEmail))
                 {
-                    throw new Exception("Support Domain is Required");
+                    throw new Exception("Support Email is Required");
                 }
 
                 else
                 {
-                    if (entityRepository.CheckSupportEmailTenantManagement(entityPM.SupportDomain, entityPM.Id))
+                    if (entityRepository.CheckSupportEmailTenantManagement(entityPM.SupportEmail, entityPM.Id))
                     {
-                        throw new Exception("Support Domain is used");
+                        throw new Exception("Support Email is used");
                     }
                 }
             }
-        }
-
+        }        
     }
 }

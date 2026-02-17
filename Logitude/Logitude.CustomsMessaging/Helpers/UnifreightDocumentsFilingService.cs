@@ -18,13 +18,9 @@ namespace Logitude.CustomsMessaging.Helpers
 
         public bool FeatureIsOn = true;
 
-        public UnifreightDocumentsFilingService(ICommonDataContext objectContext, int tenant,
-            CustomDocumentsFilingParams customDocumentsFilingParams,
-            
-            string DeclarationNumVersionId = null)
+        public UnifreightDocumentsFilingService(ICommonDataContext objectContext, int tenant,string DeclarationNumVersionId = null)
             :base(objectContext, tenant)
         {
-            base.MyCustomDocumentsFilingParams = customDocumentsFilingParams;
             base.MetaDataVersionValue = DeclarationNumVersionId;
         }
         public bool OnlyIfChangeUpdateAndAddVersion { get; set; }
@@ -33,13 +29,13 @@ namespace Logitude.CustomsMessaging.Helpers
         {
 
             
+            var uniGDMFILINGQueryService = new GDMFILINGQueryService(AmitalContext.GetContext(theEntityPm.Tenant));
             
             var IsUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant,
                 "docsin" //-- must call from CostomMessage that create "docsin" !!!
                 );
             if (FeatureIsOn && IsUnifreightFillingMode )
             {
-                var uniGDMFILINGQueryService = new GDMFILINGQueryService(AmitalContext.GetContext(theEntityPm.Tenant));
 
                 var gdmfiling = uniGDMFILINGQueryService.GetSingle(theEntityPm.Id, true);
                 if (gdmfiling != null)

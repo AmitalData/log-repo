@@ -192,7 +192,7 @@
                                                                 <tr>
                                                                     <td colspan="2">
                                                                         <div style="float:right;">
-                                                                            <Hyperlink [DataCy]="'AdvancedARHyperlinkId'" [IsEnabled]="!IsDemoTenant" (click)="ViewAdvancedARSettings()" [Text]="'Advanced Settings'"></Hyperlink>
+                                                                            <Hyperlink (click)="ViewAdvancedSettings()" [Text]="'Advanced Settings'"></Hyperlink>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -383,15 +383,6 @@
 
                                                                                 <td>
                                                                                     <LogCheckBox [ObjectFieldName]="'EnableMultiCurrencyAPPayments'" [Checked]="EnableMultiCurrencyAPPayments" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <!-- Advanced Settings -->
-                                                                            <tr>
-                                                                                <td colspan="2">
-                                                                                    <div style="float:right;">
-                                                                                        <Hyperlink [IsEnabled]="!IsDemoTenant" (click)="ViewAdvancedAPSettings()" [Text]="'Advanced Settings'"></Hyperlink>
-                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>

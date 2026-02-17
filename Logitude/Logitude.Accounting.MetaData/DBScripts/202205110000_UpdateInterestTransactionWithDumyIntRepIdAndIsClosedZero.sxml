@@ -1,8 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting">
-	<Sql Version="2">
-		<![CDATA[
-            --Update InterestTransactions set InterestReportId = '999' where Id like '4%' 
-            --Update InterestTransactions set IsClosed = 0 where Id like '3%' 
-     ]]>
-	</Sql>
-</Script>

@@ -30,12 +30,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
     public string EnglishName { get; set; }
     
     public string LocalName { get; set; }
-    
-	[XmlAttribute]
-    public string PartnerCode { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
-    public string DirectionId { get; set; }
 
     }
 } 

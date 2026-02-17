@@ -11,8 +11,6 @@ namespace WebFreight.Web.DataProviders
         public string ClientNumber { get; set; }
         public string PaymentCurrencyCode { get; set; }
         public string PaymentCurrencyName { get; set; }
-        public string APPaymentBankAddress { get; set; }
-
 
         public string PaidBy { get; set; } // custom
         public string PrintNotes { get; set; }
@@ -27,7 +25,6 @@ namespace WebFreight.Web.DataProviders
         public string Account { get; set; }
 
         //paid to - Vendor
-        public string VendorWebsite { get; set; }
         public string PaidTo { get; set; }
         public string PaidToName { get; set; }
         public string PaidToAddress { get; set; }
@@ -71,28 +68,12 @@ namespace WebFreight.Web.DataProviders
         public string CustomerField8 { get; set; }
         public string CustomerField9 { get; set; }
         public string CustomerField10 { get; set; }
-
-        public string APPaymentField1 { get; set; }
-        public string APPaymentField2 { get; set; }
-        public string APPaymentField3 { get; set; }
-        public string APPaymentField4 { get; set; }
-        public string APPaymentField5 { get; set; }
-        public string APPaymentField6 { get; set; }
-        public string APPaymentField7 { get; set; }
-        public string APPaymentField8 { get; set; }
-        public string APPaymentField9 { get; set; }
-        public string APPaymentField10 { get; set; }
-        public int? DeductionPercentage { get; set; }
-        public double? DeductionAmount { get; set; }
-        public double? TotalPaymentAfterDeduction { get; set; }
         public string BranchAddress { get; set; }
-        public string BranchName { get; set; }        
-        public DateTime? TodayLocal { get; set; }
-        public string TotalPaymentInWordFR { get; set; }
-        public string BankAccountEnglishName { get; set; }
-		public string GLAccountDisplayNumber { get; set; }
+        public string BranchName { get; set; }
 
-		public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
+        public DateTime? TodayLocal { get; set; }
+
+        public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
 
         public class ReportAPInvoicePayments
         {

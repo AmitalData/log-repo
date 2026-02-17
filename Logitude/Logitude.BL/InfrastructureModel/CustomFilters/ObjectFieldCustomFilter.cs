@@ -1,5 +1,5 @@
 ﻿
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -37,22 +37,6 @@ namespace Logitude.BL.InfrastructureModel.CustomFilters
                         if (item.FieldValue != null)
                         {
                             queryableData = queryableData = queryableData.Where(d => string.IsNullOrEmpty(d.RecordType) || d.DisplayInAutomationAsEnitity || (!string.IsNullOrEmpty(d.RecordType) && d.RecordType.Contains(item.FieldValue.ToString())));
-                        }
-                    }
-                    if (item.FieldName == "CanAutomateSetValue")
-                    {
-                        if (item.FieldValue != null)
-                        {
-                            queryableData = queryableData.Where(d => d.CanAutomateSetValue == true || d.IsCustom == true);
-                        }
-                    }
-
-                    if (item.FieldName == "IsFullCustom")
-                    {
-                        if (item.FieldValue != null && item.FieldValue.GetType().Equals(typeof(bool)))
-                        {
-                            bool filterValue = Convert.ToBoolean(item.FieldValue);
-                            queryableData = queryableData.Where(d => d.IsCustom == filterValue || d.ObjectTable.IsCustom == filterValue);
                         }
                     }
                 }

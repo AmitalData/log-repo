@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
@@ -10,7 +10,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public AutomationResultEmailRecipientRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public AutomationResultEmailRecipientRepository(ICommonDataContext context)
         {
@@ -29,10 +32,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-        public IQueryable<AutomationResultEmailRecipient> GetAutomationResultEmailRecipient()
-        {
-            return this.context.AutomationResultEmailRecipients;
-        }
+
 
         public List<AutomationResultEmailRecipient> GetAutomationResultEmailRecipientByAutomationId(string automationId, int tenant)
         {

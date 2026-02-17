@@ -1,4 +1,3 @@
-import { CashBookExtendedPMService } from './../../Services/ExtendedPMs/CashBookExtendedPMService';
 import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -15,11 +14,10 @@ import {CashBookPMService} from '../../Services/StandardPMs/CashBookPMService';
 import {AccountingPeriodExtendedListService} from '../../Services/ExtendedLists/AccountingPeriodExtendedListService';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {RatesTableExtendedListService } from '../../../Infrastructure/Services/ExtendedLists/RatesTableExtendedListService';
-import { CashbookChequesCounter } from '../../DataContracts/CashbookChequesCounter';
 
 @Component({
     selector: 'NewBankDepositComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewBankDepositComponent.html',
 })
 
@@ -33,28 +31,23 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     private myAccountingPeriodListService: AccountingPeriodExtendedListService = new AccountingPeriodExtendedListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
-    cashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
 
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe(res => { });
 
         this.EntityPM = new BankDepositPM();
         this.EntityPM.AccountingDate = new Date();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.DepositDate = new Date();
         this.EntityPM.DepositNumber = 0;
-        this.SetUIProperties();
-        this.GetClosedMonth();
-    }
 
-    SetUIProperties() {
-            this.UIProperties.SetRequired("CashBookId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.CashBookId));
-        //    this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate));
-            this.UIProperties.SetRequired("DepositBankAccountId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DepositBankAccountId));
+        this.GetClosedMonth();
+
+
     }
 
     SetWindowArgs(args: any) {
@@ -76,9 +69,8 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
+
             this.EntityPM.DepositDate = value;
-            this.AccountingDateLostFocus();
-            this.GetClosedMonth();
         }
     }
 
@@ -86,16 +78,13 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     set CashBookId(value: string) {
         if (this.EntityPM.CashBookId != value) {
             this.EntityPM.CashBookId = value;
-            this.SetUIProperties();
         }
-        
     }
 
     get DepositBankAccountId() { return this.EntityPM.DepositBankAccountId; }
     set DepositBankAccountId(value: string) {
         if (this.EntityPM.DepositBankAccountId != value) {
             this.EntityPM.DepositBankAccountId = value;
-            this.SetUIProperties();
         }
     }
 
@@ -125,10 +114,10 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
 
         // Required check
-        if (AppTool.IsNullOrEmpty(this.DepositBankAccountId) || AppTool.IsNullOrEmpty(this.CashBookId) ||  AppTool.IsNullOrEmpty(this.AccountingDate)) {
+        if (AppTool.IsNullOrEmpty(this.DepositBankAccountId) || AppTool.IsNullOrEmpty(this.CashBookId)) {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.AllFieldsRequired"));
         }
-        else if (this.EntityPM.DepositCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+        if (this.EntityPM.DepositCurrencyId != SessionLocator.TenantPM.CurrencyId) {
             //check rate
             this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
             this.ratesTableExtendedListService.getClosestRate(SessionLocator.TenantPM.CurrencyId, this.EntityPM.DepositCurrencyId).subscribe((myResponse: ServiceResponse) => {
@@ -148,15 +137,13 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
                 }
             });
 
-        
+            if (errors.length > 0) {
+                this.ValidationErrorsList = errors;
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            }
         } else {
             //continu saving
             this.CheckIfThereIsCheques(this.CashBookId);
-        }
-
-        if (errors.length > 0) {
-            this.ValidationErrorsList = errors;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
     }
@@ -171,51 +158,45 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
     CheckIfThereIsCheques(id) {
 
-        if (!AppTool.IsNullOrEmpty(this.cashbook)) {
+        // 1-get cashbook pm
+        this.cashBookPMService.get(id).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
 
-            //2-check
-            if (this.cashbook.CashBookTypeCode == "2") { // 2-cheques
+            if (!myResponse.HasError) {
+                var entityPm: CashBookPM;
 
+                entityPm = myResponse.Result;
+                if (!AppTool.IsNullOrEmpty(entityPm)) {
 
-
-                this.CurrentSession.CurrentWindow.StartBusyIndicator("Check Cashbook Cheques ...");
-
-
-                    this.cashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.CashBookId)
-                        .subscribe((response: ServiceResponse) =>
-                        {
-                            console.log("[GetCashbookChequesCounter]", response);
+                    //2-check
+                    if (entityPm.CashBookTypeCode == "2") { // 2-cheques
+                        var exist = entityPm.CashBookLines.find(d => d.IsDeposited == false);
+                        if (exist) {
+                            this.SubmitChanges();
+                        } else {
+                            this.ValidationErrorsList = [];
+                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noChequesinCashbook"));
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        }
+                    } else if (entityPm.CashBookTypeCode == "1") { // 1-cash
+                        if (AppTool.IsNullOrZero(entityPm.TotalAmount)) {
+                            this.ValidationErrorsList = [];
+                            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noCashICashbook"));
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        } else {
+                            this.SubmitChanges();
+                        }
+                    }
 
-                            if (!response.HasError) {
-                                var chequesCounter: CashbookChequesCounter = response.Result;
-
-                                var hasChequesToDeposit = chequesCounter.AllChequesCount > 0;
-                                if (hasChequesToDeposit) {
-                                    this.SubmitChanges();
-                                } else {
-                                    this.ValidationErrorsList = [];
-                                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noChequesinCashbook"));
-                                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                                }
-                            }
-                            else {
-                                console.error(response.ErrorsArray);
-                            }
-                        });
-
-
-            } else if (this.cashbook.CashBookTypeCode == "1") { // 1-cash
-                if (AppTool.IsNullOrZero(this.cashbook.TotalAmount)) {
-                    this.ValidationErrorsList = [];
-                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.noCashICashbook"));
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                } else {
-                    this.SubmitChanges();
                 }
-            }
 
-        }
+            } else {
+                console.log("error");
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
+            }
+        });
+
 
     }
 
@@ -266,15 +247,8 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
     //#region closed month
     validateAccountingPeriod()
-    {   var isValid :boolean=false;
-        if(AppTool.IsNullOrEmpty(this.AccountingDate)){
-            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate))
-        }
-        else{
-
-            this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, AppTool.IsNullOrEmpty(this.AccountingDate))
-
-          isValid = this.IsMonthOpenForAccountingDate();
+    {
+        var isValid = this.IsMonthOpenForAccountingDate();
         if (!isValid) {
             //this.ValidationErrorsList = [];
             //this.ValidationErrorsList.push("חודש סגור!"); // closed month
@@ -282,18 +256,18 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
         } else {
             this.UIProperties.SetValidity("AccountingDate", this.ObjectTableName, true, "");
         }
-    }
         return isValid;
     }
-    IsMonthOpenForAccountingDate() {
+    IsMonthOpenForAccountingDate()
+    {
         var valid = true;
         if (this.accountingPeriod == null) {
             valid = false;
             //errorsList.Add(transText);
         }
-        else if (this.EntityPM.AccountingDate) {
+        else {
             var accountingDateMonth = this.EntityPM.AccountingDate.getMonth() + 1;
-            var accountingDateYear = this.EntityPM.AccountingDate.getFullYear();
+
             if (accountingDateMonth > this.accountingPeriod.ClosedMonth) {
                 //Valid ... AccountingDateMonth must be greater than close Mounth
             }
@@ -304,16 +278,16 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
                 valid = false;
                 //errorsList.Add(transText); //ClosedMonth Must B
             }
-            if (accountingDateYear < this.accountingPeriod.Year || (accountingDateYear == this.accountingPeriod.Year && accountingDateMonth <= this.accountingPeriod.OpenMonth)) {
+            if (accountingDateMonth == this.accountingPeriod.OpenMonth) {
                 //valid ... accountingDateMonth can be  equal to OpenMonth
+            }
+            else if (accountingDateMonth < this.accountingPeriod.OpenMonth) {
+                //valid ... accountingDateMonth can be  less than OpenMonth
             }
             else {
                 valid = false;
                 //errorsList.Add(transText);
             }
-        }
-        else {
-            valid = false;
         }
         return valid;
     }
@@ -321,11 +295,10 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     private accountingPeriod: any;
     private GetClosedMonth() {
         var periodTypeCode = "1" // 1-Regular
-        this.myAccountingPeriodListService.getByYear(this.AccountingDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
+        this.myAccountingPeriodListService.getByYear(new Date().getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.accountingPeriod = myResponse.Result;
-                    this.AccountingDateLostFocus();
                 }
             }
         });

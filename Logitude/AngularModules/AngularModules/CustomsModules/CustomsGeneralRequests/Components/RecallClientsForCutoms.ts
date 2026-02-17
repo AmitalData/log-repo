@@ -25,7 +25,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'RecallClientsForCutoms',
-    
+    moduleId: module.id,
     templateUrl: './RecallClientsForCutoms.html',
 })
 
@@ -101,7 +101,7 @@ export class RecallClientsForCutoms
         messageWindow.Show(message);
     }
 
-    public SendRecallMessageToServer(isForCardsTable: boolean = false) {
+    public SendRecallMessageToServer() {
         this.ProgressBarPercentText = "0%";
 
         this.filterImageParameter = new ImageParameter();
@@ -110,37 +110,12 @@ export class RecallClientsForCutoms
         this.filterImageParameter.UploadMode = "Block";
         this.filterImageParameter.Tenant = SessionLocator.Tenant;
 
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
+        var myCustomMessageProgressHelper = new CustomMessageProgressHelper();
         myCustomMessageProgressHelper.BasicResponse = true;
         myCustomMessageProgressHelper.StartProgress(this.filterImageParameter.Key, 5, true);
 
-        this._ClientMessagesService.PutRecallClientsForCutomsRequest(this.filterImageParameter, isForCardsTable).subscribe((myServiceResponse: ServiceResponse) => {
+        this._ClientMessagesService.PutRecallClientsForCutomsRequest(this.filterImageParameter).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Send] Response/PutRecallClientsForCutomsRequest : ", myServiceResponse.Result);
-            var response = myServiceResponse.Result;
-
-            myCustomMessageProgressHelper.MessageArrived = true;
-            this.CurrentSession.StopBusyIndicator();
-            if (!AppTool.IsNullOrEmpty(response)) {
-            }
-        });
-
-    }
-
-    public SendRecallMessageConcurrencyGuidToServer() {
-        this.ProgressBarPercentText = "0%";
-
-        this.filterImageParameter = new ImageParameter();
-        this.filterImageParameter.Key = Guid.newGuid();
-        this.filterImageParameter.IsFirstTry = true;
-        this.filterImageParameter.UploadMode = "Block";
-        this.filterImageParameter.Tenant = SessionLocator.Tenant;
-
-        var myCustomMessageProgressHelper = new CustomMessageProgressHelper(this.CurrentSession);
-        myCustomMessageProgressHelper.BasicResponse = true;
-        myCustomMessageProgressHelper.StartProgress(this.filterImageParameter.Key, 5, true);
-
-        this._ClientMessagesService.PutRecallClientsConcurrencyGuidForCutomsRequest(this.filterImageParameter).subscribe((myServiceResponse: ServiceResponse) => {
-            console.log("[Send] Response/PutRecallClientsConcurrencyGuidForCutomsRequest : ", myServiceResponse.Result);
             var response = myServiceResponse.Result;
 
             myCustomMessageProgressHelper.MessageArrived = true;

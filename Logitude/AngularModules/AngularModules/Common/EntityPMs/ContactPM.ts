@@ -9,8 +9,6 @@
 
 
 import {CardContactAdditionalServicePM} from './CardContactAdditionalServicePM';
-
-import {CardContactProductPM} from './CardContactProductPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -24,7 +22,7 @@ export class ContactPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -162,11 +160,6 @@ export class ContactPM {
     private dontShowLocal: boolean;
     public get DontShowLocal() { return this.dontShowLocal; }
     public set DontShowLocal(newValue: boolean) { if (this.dontShowLocal != newValue) { this.dontShowLocal = newValue; this.MarkAsDirty("DontShowLocal"); } }
-       
-	 
-    private dontShowLocalLabels: boolean;
-    public get DontShowLocalLabels() { return this.dontShowLocalLabels; }
-    public set DontShowLocalLabels(newValue: boolean) { if (this.dontShowLocalLabels != newValue) { this.dontShowLocalLabels = newValue; this.MarkAsDirty("DontShowLocalLabels"); } }
        
 	 
     private mustChangePassword: boolean;
@@ -309,11 +302,6 @@ export class ContactPM {
     public set IsCreatedWithPartner(newValue: boolean) { if (this.isCreatedWithPartner != newValue) { this.isCreatedWithPartner = newValue; this.MarkAsDirty("IsCreatedWithPartner"); } }
        
 	 
-    private isAPIContact: boolean;
-    public get IsAPIContact() { return this.isAPIContact; }
-    public set IsAPIContact(newValue: boolean) { if (this.isAPIContact != newValue) { this.isAPIContact = newValue; this.MarkAsDirty("IsAPIContact"); } }
-       
-	 
     private companyName: string;
     public get CompanyName() { return this.companyName; }
     public set CompanyName(newValue: string) { if (this.companyName != newValue) { this.companyName = newValue; this.MarkAsDirty("CompanyName"); } }
@@ -327,11 +315,6 @@ export class ContactPM {
     private createDate: Date;
     public get CreateDate() { return this.createDate; }
     public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
-       
-	 
-    private updateDate: Date;
-    public get UpdateDate() { return this.updateDate; }
-    public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
        
 	 
     private isUserAdditionalPackagesOnly: boolean;
@@ -380,73 +363,11 @@ export class ContactPM {
         }
     }
 	    //public CardContactAdditionalServices: Array<CardContactAdditionalServicePMPM>= [];
-      
-	private cardContactProducts: CardContactProductPM[];
-    get  CardContactProducts() {
-        if (this.cardContactProducts == null) {
-            this.cardContactProducts = [];
-        }
-
-        return this.cardContactProducts;
-    }
-    set  CardContactProducts(newValue: CardContactProductPM[]) {
-        if (this.cardContactProducts != newValue) {
-            this.cardContactProducts = newValue;
-        }
-    }
-    public AddCardContactProductPM(item: CardContactProductPM) {
-        if (item != null) {
-            var index = this.CardContactProducts.indexOf(item);
-            if (index == -1) {
-
-                item.EntityParentPM = this;
-
-                this. CardContactProducts.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveCardContactProductPM(item: CardContactProductPM) {
-        if (item != null) {
-            var index = this.CardContactProducts.indexOf(item);
-            if (index > -1) {
-                this. CardContactProducts.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-	    //public CardContactProducts: Array<CardContactProductPMPM>= [];
-     private oldSimilarInactiveContactId: string;
-    public get OldSimilarInactiveContactId() { return this.oldSimilarInactiveContactId; }
-    public set OldSimilarInactiveContactId(newValue: string) { if (this.oldSimilarInactiveContactId != newValue) { this.oldSimilarInactiveContactId = newValue; this.MarkAsDirty("OldSimilarInactiveContactId"); } }
-       
-	 
-    private digitalPortalCardId: string;
-    public get DigitalPortalCardId() { return this.digitalPortalCardId; }
-    public set DigitalPortalCardId(newValue: string) { if (this.digitalPortalCardId != newValue) { this.digitalPortalCardId = newValue; this.MarkAsDirty("DigitalPortalCardId"); } }
-       
-	 
-    private timeZone: string;
-    public get TimeZone() { return this.timeZone; }
-    public set TimeZone(newValue: string) { if (this.timeZone != newValue) { this.timeZone = newValue; this.MarkAsDirty("TimeZone"); } }
-       
-	 
-    private digitalPortalLanguage: string;
-    public get DigitalPortalLanguage() { return this.digitalPortalLanguage; }
-    public set DigitalPortalLanguage(newValue: string) { if (this.digitalPortalLanguage != newValue) { this.digitalPortalLanguage = newValue; this.MarkAsDirty("DigitalPortalLanguage"); } }
-       
-    private contactForAccounting: boolean;
-    public get ContactForAccounting() { return this.contactForAccounting; }
-    public set ContactForAccounting(newValue: boolean) { if (this.contactForAccounting != newValue) { this.contactForAccounting = newValue; this.MarkAsDirty("ContactForAccounting"); } }
-       
-
+ 
     public OldEntityPM: ContactPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -454,7 +375,6 @@ export class ContactPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Contact");
            
         }
-	 }
     }
     private MyClone: ContactPM;
 
@@ -466,4 +386,4 @@ export class ContactPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

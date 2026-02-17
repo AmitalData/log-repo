@@ -3,7 +3,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     int tenant = authToken.Tenant;
 
                     ICustomContext MyContext = CustomContext.GetContext(tenant);
-                    var myDeclarationQueryService = new DeclarationQueryService(tenant);
+                    var myDeclarationQueryService = new DeclarationQueryService(1);
                     var myDeclaration = myDeclarationQueryService.GetSingle(declarationId, true, false);
                     if (myDeclaration != null 
                         //&& 
@@ -81,7 +81,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             CargoTypeCode = myDeclaration.Consignments[0].CargoTypeCode;
                         }
                         var myCustomsDocumentsDefinitionQueryService = new CustomsDocumentsDefinitionQueryService(tenant);
-                        listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, myDeclaration.DeclarationTypeCode, tenant);
+                        listCustomsDocumentsDefinition = myCustomsDocumentsDefinitionQueryService.GetCustomsDocumentsDefinitionsForDeclaration(CargoTypeCode, myDeclaration.ProcedureCurrentCode, myDeclaration.TransportModeId, 1);
                     }
 
                     

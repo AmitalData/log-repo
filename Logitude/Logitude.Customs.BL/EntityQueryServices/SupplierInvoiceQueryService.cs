@@ -10,13 +10,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityDataMappings;
-using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.Customs.Data.Repsitories;
-using System.Runtime.Remoting.Contexts;
-using Logitude.Customs.BL.EntityUpdateServices;
-using System.Data.Entity;
-using Microsoft.Practices.ObjectBuilder2;
-using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -55,18 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
             entityPM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, true);
 
-            SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
-            entityPM.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(supplierInvoiceKeys, true);
-
-
-            SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
-            entityPM.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(supplierInvoiceKeys, true);
-
-
-
 
             #region new code for get Composition
-
+            
             SupplierInvoiceItemsConDeclarQueryService supplierInvoiceItemsConnectedDeclarationService = new SupplierInvoiceItemsConDeclarQueryService(context);
             
             List<SupplierInvoiceItemsConDeclarPM> supplierInvoiceItemsConDeclars = supplierInvoiceItemsConnectedDeclarationService.GetSupplierInvoiceItemsConDeclarPMsForSupplierInvoice(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, Tenant, listLines);
@@ -90,10 +74,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<SupplierInvoiceItemVehiclePM> supplierInvoiceItemVehicles = supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoice(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, Tenant, listLines);
             SupplierInvoiceItemModVehicleQueryService supplierInvoiceItemModVehicleQueryService = new SupplierInvoiceItemModVehicleQueryService(context);
             List<SupplierInvoiceItemModVehiclePM> supplierInvoiceItemModVehicles = supplierInvoiceItemModVehicleQueryService.GetSupplierInvoiceItemModVehiclesForSupplierInvoice(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, Tenant, listLines);
-            SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(context);
-            List<SupplierInvoiceItemsPricePM> supplierInvoiceItemsPrices = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, listLines, entityPM.Tenant);
-            SuppInvoiceItemsAbachStatementQueryService suppInvoiceItemsAbachStatementQueryService = new SuppInvoiceItemsAbachStatementQueryService(context);
-            List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatementQueryService.GetSuppInvoiceItemsAbachStatementsForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, listLines, entityPM.Tenant);
 
             SupplierInvoiceItemVehicleModQueryService supplierInvoiceItemVehicleModQueryService = new SupplierInvoiceItemVehicleModQueryService(context); // moran 20.10.15 - Task 17209
 
@@ -109,15 +89,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 supplierInvoiceItem.SupplierInvoiceItemProcesTypes = supplierInvoiceItemProcesTypes.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
                 supplierInvoiceItem.SupplierInvoiceItemLevies = supplierInvoiceItemsLevies.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
                 supplierInvoiceItem.SupplierInvoiceItemVehicles = supplierInvoiceItemVehicles.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
-                supplierInvoiceItem.SupplierInvoiceItemsPrices = supplierInvoiceItemsPrices.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
-                supplierInvoiceItem.SuppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatements.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
-
                 // moran 20.10.15 - Task 17209 --> 
-                /*                List<SupplierInvoiceItemVehicleModPM> supplierInvoiceItemVehicleMods = supplierInvoiceItemVehicleModQueryService.GetSupplierInvoiceItemVehicleModsForSupplierInvoice(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, supplierInvoiceItem.LineNumber, Tenant);
-                                foreach (SupplierInvoiceItemVehiclePM supplierInvoiceItemVehicle in supplierInvoiceItem.SupplierInvoiceItemVehicles)
-                                {
-                                    supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleMods = supplierInvoiceItemVehicleMods.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber && d.VehicleLineNumber == supplierInvoiceItemVehicle.LineNumber).ToList();
-                                } */
+/*                List<SupplierInvoiceItemVehicleModPM> supplierInvoiceItemVehicleMods = supplierInvoiceItemVehicleModQueryService.GetSupplierInvoiceItemVehicleModsForSupplierInvoice(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, supplierInvoiceItem.LineNumber, Tenant);
+                foreach (SupplierInvoiceItemVehiclePM supplierInvoiceItemVehicle in supplierInvoiceItem.SupplierInvoiceItemVehicles)
+                {
+                    supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleMods = supplierInvoiceItemVehicleMods.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber && d.VehicleLineNumber == supplierInvoiceItemVehicle.LineNumber).ToList();
+                } */
                 // moran 20.10.15 - Task 17209 <--
                 supplierInvoiceItem.SupplierInvoiceItemModVehicles = supplierInvoiceItemModVehicles.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
 
@@ -308,30 +285,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return supplierInvoicePMs.OrderBy(d=>d.SequenceNumeric).ToList();
         }
 
-        public List<SupplierInvoicePM> GetInvoicesForDeclarationByInvoiceNum(string declarationId, string invoiceNumber, int tenant,  bool getComposition = false)
-        {
-            List<SupplierInvoice> supplierInvoices = repository.GetInvoicesForDeclarationByInvoiceNum(declarationId,invoiceNumber, tenant);
-
-            if (supplierInvoices == null) { return null; }
-            SupplierInvoiceDataMapping mappings = new SupplierInvoiceDataMapping();
-            List<SupplierInvoicePM> supplierInvoicesPM = new List<SupplierInvoicePM>();
-
-            foreach (SupplierInvoice supplierInvoice in supplierInvoices)
-            {
-                SupplierInvoicePM invoicePM = new SupplierInvoicePM();
-
-                mappings.CustomPOCOToPM(invoicePM, supplierInvoice);
-                mappings.POCOToPM(invoicePM, supplierInvoice);
-                if (getComposition)
-                {
-                    GetComposition(new SupplierInvoiceKeys() { DeclarationId = invoicePM.DeclarationId, InvoiceCounterKey = invoicePM.InvoiceCounterKey }, invoicePM);
-                }
-                supplierInvoicesPM.Add(invoicePM);
-            }
-            return supplierInvoicesPM;
-            
-        }
-
 
         public IQueryable<SupplierInvoicePM> GetSupplierInvoicesQueryForDeclaration(string declarationId, int tenant, bool getComposition = false)
         {
@@ -359,9 +312,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.GetSupplierInvoiceCountForDeclaration(declarationId, tenant);
         }
 
-        public int? GetMaxSequenceNumeric(string declarationId, int tenant)
+        public int? GetMaxCounterKey(string declarationId, int tenant)
         {
-            return repository.GetMaxSequenceNumeric(declarationId, tenant);
+            return repository.GetMaxCounterKey(declarationId, tenant);
         }
 
         // this is for editing an invoice from the declaration invoice tab.
@@ -407,13 +360,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                
             SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
             entityPM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, true);
-
-            SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
-            entityPM.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(supplierInvoiceKeys, true);
-
-            SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
-            entityPM.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(supplierInvoiceKeys, true);
-
+            
 
             #region new code for get Composition
 
@@ -439,12 +386,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             List<SupplierInvoiceItemVehiclePM> supplierInvoiceItemVehicles = supplierInvoiceItemVehicleQueryService.GetSupplierInvoiceItemVehiclesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey,itemsLineNumbers, Tenant);
             SupplierInvoiceItemModVehicleQueryService supplierInvoiceItemModVehicleQueryService = new SupplierInvoiceItemModVehicleQueryService(context);
             List<SupplierInvoiceItemModVehiclePM> supplierInvoiceItemModVehicles = supplierInvoiceItemModVehicleQueryService.GetSupplierInvoiceItemModVehiclesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey,itemsLineNumbers, Tenant);
-            SupplierInvoiceItemsPriceQueryService supplierInvoiceItemsPriceQueryService = new SupplierInvoiceItemsPriceQueryService(context);
-            List<SupplierInvoiceItemsPricePM> supplierInvoiceItemsPrices = supplierInvoiceItemsPriceQueryService.GetSupplierInvoiceItemsPricesForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, itemsLineNumbers, entityPM.Tenant);
-            SuppInvoiceItemsAbachStatementQueryService suppInvoiceItemsAbachStatementQueryService = new SuppInvoiceItemsAbachStatementQueryService(context);
-            List<SuppInvoiceItemsAbachStatementPM> suppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatementQueryService.GetSuppInvoiceItemsAbachStatementsForSupplierInvoiceWithSpecificKeys(supplierInvoiceKeys.DeclarationId, supplierInvoiceKeys.InvoiceCounterKey, itemsLineNumbers, entityPM.Tenant);
-          
-            //  SupplierInvoiceItemVehicleModQueryService supplierInvoiceItemVehicleModQueryService = new SupplierInvoiceItemVehicleModQueryService(context); // moran 20.10.15 - Task 17209
+
+          //  SupplierInvoiceItemVehicleModQueryService supplierInvoiceItemVehicleModQueryService = new SupplierInvoiceItemVehicleModQueryService(context); // moran 20.10.15 - Task 17209
 
             foreach (SupplierInvoiceItemPM supplierInvoiceItem in entityPM.SupplierInvoiceItems)
             {
@@ -466,8 +409,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 } */
                 // moran 20.10.15 - Task 17209 <--
                 supplierInvoiceItem.SupplierInvoiceItemModVehicles = supplierInvoiceItemModVehicles.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
-                supplierInvoiceItem.SupplierInvoiceItemsPrices = supplierInvoiceItemsPrices.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
-                supplierInvoiceItem.SuppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatements.Where(d => d.DeclarationId == supplierInvoiceItem.DeclarationId && d.InvoiceCounterKey == supplierInvoiceItem.CounterKey && d.InvoiceItemLineNumber == supplierInvoiceItem.LineNumber).ToList();
 
                 if (supplierInvoiceItem.SupplierInvoiceItemsConDeclars != null)
                 {
@@ -629,22 +570,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             ICustomContext context = MainContext as CustomContext;
             SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
             supplierInvoiceItemQueryService.LoadComposition = true;
+            SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
             SupplierInvoiceKeys supplierInvoiceKeys = new SupplierInvoiceKeys() { DeclarationId = entityPM.DeclarationId, InvoiceCounterKey = entityPM.InvoiceCounterKey };
 
-
-            SupplierInvoicePaymentQueryService supplierInvoicePaymentQueryService = new SupplierInvoicePaymentQueryService(context);
-            entityPM.SupplierInvoicePayments = supplierInvoicePaymentQueryService.GetMulti(supplierInvoiceKeys, true);
-
-            SupplierInvoiceUCRQueryService supplierInvoiceUCRQueryService = new SupplierInvoiceUCRQueryService(context);
-            entityPM.SupplierInvoiceUCRs = supplierInvoiceUCRQueryService.GetMulti(supplierInvoiceKeys, true);
-
-            SupplierInvoiceModificationQueryService supplierInvoiceModificationQueryService = new SupplierInvoiceModificationQueryService(context);
             entityPM.SupplierInvoiceModifications = supplierInvoiceModificationQueryService.GetMulti(supplierInvoiceKeys, true);
+              SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
 
-            SupplierInvoiceFreightAmountQueryService supplierInvoiceFreightAmountQueryService = new SupplierInvoiceFreightAmountQueryService(context);
             entityPM.SupplierInvoiceFreightAmounts = supplierInvoiceFreightAmountQueryService.GetMulti(supplierInvoiceKeys, true);
-
-
             if (entityPM.SupplierInvoiceFreightAmounts == null)
             {
                 entityPM.SupplierInvoiceFreightAmounts = new List<SupplierInvoiceFreightAmountPM>();
@@ -779,7 +711,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return repository.DoesAnyInvoiceHasFreight(declarationId, tenant);
         }
 
-
         public List<SupplierInvoicePM> GetSupplierInvoicesForDeclarationWithFreightsOnly(string declarationId, int tenant)
         {
             List<SupplierInvoice> supplierInvoices = repository.GetSupplierInvoicesForDeclaration(declarationId, tenant);
@@ -804,96 +735,5 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return supplierInvoicePMs.OrderBy(d => d.SequenceNumeric).ToList();
         }
-
-
-        public bool UpdateSupplierInvoiceByOcrDefaults(string declarationId, string supplierInvocieList,  SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats, SupplierInvioceExportDefaultPM supplierInvioceExportDefault,int tenant)
-        {
-            var context = CustomContext.GetContext(tenant);
-            var arrSupplierInvocie = supplierInvocieList.Split(',');
-            var myDeclarationQueryService = new DeclarationQueryService(context);
-            DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(declarationId, true, false);
-            if (declarationPM == null)
-                return false;
-           
-
-            var supplierInvoiceQueryServices = new SupplierInvoiceQueryService(context);
-            var supplierInvoices = supplierInvoiceQueryServices.GetSupplierInvoicesForDeclaration(declarationId, tenant,true).Where(i=> arrSupplierInvocie.Contains((i.InvoiceCounterKey).ToString(), StringComparer.OrdinalIgnoreCase));
-
-            foreach (var supplierInvoice in supplierInvoices)
-            {
-                UpdateSupplierInvoices(supplierInvoice, supplierInvioceExportDefault, context,  supplierInvioceItemCertificats);
-            }
-            // var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                            return true;
-        }
-        private void UpdateSupplierInvoices(SupplierInvoicePM supplierInvoice, SupplierInvioceExportDefaultPM supplierInvioceExportDefault,ICustomContext context, SupplierInvioceItemCertificatPM[] supplierInvioceItemCertificats)
-        {
-            var supplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), supplierInvoice.Tenant); 
-            var supplierInvoiceItemUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), supplierInvioceExportDefault.Tenant);
-
-            if (supplierInvioceExportDefault != null) {
-                supplierInvoice.AccountTypeCode = supplierInvioceExportDefault.AccountTypeCode != null ? (supplierInvioceExportDefault.AccountTypeCode != "non"? supplierInvioceExportDefault.AccountTypeCode : null) : supplierInvoice.AccountTypeCode;
-                supplierInvoice.PartyRelationshipCode = supplierInvioceExportDefault.PartyRelationshipCode!= null ? (supplierInvioceExportDefault.PartyRelationshipCode != "non" ? supplierInvioceExportDefault.PartyRelationshipCode : null) : supplierInvoice.PartyRelationshipCode;
-                supplierInvoice.BuyerRoleCode = supplierInvioceExportDefault.BuyerRoleCode!= null ? (supplierInvioceExportDefault.BuyerRoleCode != "non" ? supplierInvioceExportDefault.BuyerRoleCode : null) : supplierInvoice.BuyerRoleCode;
-                supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
-            }
-           
-            foreach (var supplierInvoiceItem in supplierInvoice.SupplierInvoiceItems)
-            {
-                if (supplierInvioceExportDefault != null)
-                {
-                    
-					supplierInvoiceItem.TransactionNatureCode = supplierInvioceExportDefault.TransactionNatureCode!= null ? (supplierInvioceExportDefault.TransactionNatureCode != "non" ? supplierInvioceExportDefault.TransactionNatureCode : null) : supplierInvoiceItem.TransactionNatureCode;
-                    supplierInvoiceItem.ClaimReasonCode = supplierInvioceExportDefault.ClaimReasonCode!= null ? (supplierInvioceExportDefault.ClaimReasonCode != "non" ? supplierInvioceExportDefault.ClaimReasonCode : null) : supplierInvoiceItem.ClaimReasonCode;
-
-                    supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
-
-                    if (supplierInvioceExportDefault.ProcessTypeCode != null)
-                    {
-                        if (supplierInvoiceItem.SupplierInvoiceItemProcesTypes.Count() > 0) {
-                            foreach (var supplierInvoiceItemProcesType in supplierInvoiceItem.SupplierInvoiceItemProcesTypes)
-                            {
-                                supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode!="non"? supplierInvioceExportDefault.ProcessTypeCode : null;
-                                supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Update;
-
-                            }
-                        }
-                        else
-                        {
-                            SupplierInvoiceItemProcesTypePM supplierInvoiceItemProcesType=new SupplierInvoiceItemProcesTypePM();
-                            supplierInvoiceItemProcesType.ProcessTypeCode = supplierInvioceExportDefault.ProcessTypeCode != "non" ? supplierInvioceExportDefault.ProcessTypeCode : null;
-							supplierInvoiceItemProcesType.DeclarationId = supplierInvoiceItem.DeclarationId;
-                            supplierInvoiceItemProcesType.ChangeSetOp = ChangeSetOperation.Insert;
-                            supplierInvoiceItem.SupplierInvoiceItemProcesTypes.Add(supplierInvoiceItemProcesType);
-
-                        }
-
-                    }
-					supplierInvoiceItem.ItemAdditionalStatus = supplierInvoiceItem.ClaimReasonCode != null || supplierInvoiceItem.TransactionNatureCode != null || (supplierInvoiceItem.SupplierInvoiceItemProcesTypes != null && supplierInvoiceItem.SupplierInvoiceItemProcesTypes.Any(x=>x.ProcessTypeCode != null));
-
-				}
-
-				if (supplierInvioceItemCertificats != null)
-                {
-                    SupplierInvioceItemCertificatUpdateService updateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), supplierInvoice.Tenant);
-
-                    supplierInvoiceItem.SupplierInvioceItemCertificats.ForEach(x => x.ChangeSetOp = ChangeSetOperation.Delete);
-                    foreach (var Certificat in supplierInvioceItemCertificats)
-                    {
-                        Certificat.ChangeSetOp = ChangeSetOperation.Insert;
-                        supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
-                        supplierInvoice.ChangeSetOp = ChangeSetOperation.Update;
-                        supplierInvoiceItem.SupplierInvioceItemCertificats.Add(Certificat);
-                        supplierInvoiceItem.CertificatesStatusCode= updateService.UpdateCertificateStatus(Certificat, supplierInvoice.Tenant, true);
-                        //CertificatUpdateService.Update(MyCertificat,true);
-                    }
-                   
-                }
-            }
-
-            supplierInvoiceItemUpdateService.Update(supplierInvoice, true);
-
-        }
-
     }
 }

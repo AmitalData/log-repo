@@ -37,10 +37,6 @@ namespace Logitude.Server.Tools.Helpers
             {
                 return date;
             }
-            if (DateTime.TryParseExact(txt, "yyyyMMddHHmmffff", CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
-            {
-                return date;
-            }
             throw new Exception("AmitalConvertUtil:GetShortDate:value=" + txt + " Field=" + dtdField);
         }
     }

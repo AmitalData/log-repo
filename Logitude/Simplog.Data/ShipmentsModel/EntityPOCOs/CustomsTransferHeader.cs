@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +20,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomsTransferTypeCode { get; set; }
         public string SearchFields { get; set; }        
         public string Notes { get; set; }
-        public string ShipmentNumber { get; set; }
+        
         public virtual CustomsTransferType CustomsTransferType { get; set; }        
         public virtual User CreatedByUser { get; set; }
     }

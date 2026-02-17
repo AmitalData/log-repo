@@ -7,7 +7,7 @@ using Logitude.BL.Interfaces;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
@@ -25,8 +25,6 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 {
     class BankDepositPrintService
     {
-        private readonly int ChequePairValidationDays = 183;
-        public BankDepositPM bankDepositPM;
         public void BuildBankDepositReport(string entityId, int tenant, string documentOutId)
         {
             // 1 
@@ -54,12 +52,12 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             //Build report
             Byte[] templatedata = null;
             StiReport report = new StiReport();
-            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
+            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(tenant);
 
 
             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
-            DocumentTypeTemplatePM defaulttemplate = documentTypeTemplateQuery.GetById(documentOut.DocumentTemplateId, tenant);
+            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(documentOut.DocumentTemplateId);
 
             if (defaulttemplate != null)
                 templatedata = defaulttemplate.TemplateBody;
@@ -67,10 +65,8 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 
             if (templatedata != null)
             {
-
                 if (templatedata.Length != 0)
                 {
-                    defaulttemplate.DocumentOutId = documentOut?.Id;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     report = exportDocumentHelper.LoadandRender( defaulttemplate, currentBusinessObject, tenant);
                 }
@@ -88,7 +84,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
 
-            bankDepositPM = bankDepositQuery.GetSingle(entityId, true, false);
+            BankDepositPM bankDepositPM = bankDepositQuery.GetSingle(entityId, true, false);
    
             if(bankDepositPM != null)
             {
@@ -96,68 +92,46 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 bankDepositDP.BankAccountNumber = bankDepositPM.BankAccountNumber == null ? "" : bankDepositPM.BankAccountNumber;
                 bankDepositDP.DepositDate = bankDepositPM.DepositDate;
                 bankDepositDP.DepositDate = bankDepositPM.DepositDate;
+                bankDepositDP.CreatedByUserName = bankDepositPM.CreatedByUserName;
                 bankDepositDP.LocalDepositAmount = bankDepositPM.LocalDepositAmount;
                 bankDepositDP.ForeignAmount = bankDepositPM.ForeignAmount;
                 bankDepositDP.CurrencyCode = bankDepositPM.DepositCurrencyCode;
 
-                SetCreatedByUserName(tenant, bankDepositDP, bankDepositPM);
-
                 // BankAccount mapping
-                BankAccountPM bankAccount = bankAccountQuery.GetSingle(bankDepositPM.DepositBankAccountId, false,false);
-                if (bankAccount != null)
+                BankAccountPM bankAccount = bankAccountQuery.GetByAccountNumber(bankDepositPM.BankAccountNumber, tenant);
+                if(bankAccount != null)
                 {
                     bankDepositDP.BankAccountBranchNo = bankAccount.BranchNumber == null ? "" : bankAccount.BranchNumber;
                     bankDepositDP.BankAccountBranchAddress = bankAccount.BranchAddress == null ? "" : bankAccount.BranchAddress;
                     bankDepositDP.BankAccountLocalName = bankAccount.LocalName == null ? "" : bankAccount.LocalName;
                 }
+                else
+                {
+                    //no connected bank account
 
+                }
 
                 // map lines
-                List<BankDepositLine> lines = bankDepositPM.BankDepositLines
-                       .Select(d => new
-                       {
-                           Line = d,
-                           TimeGroupKey = (int)(d.DueDate.Ticks / TimeSpan.FromDays(this.ChequePairValidationDays).Ticks)
-                       })
-                       .GroupBy(x => new
-                       {
-                           x.Line.Bank,
-                           x.Line.Branch,
-                           x.Line.AccountNumber,
-                           x.Line.ChequeNumber,
-                           x.TimeGroupKey
-                       })
-                      .Select(group => new BankDepositLine
-                      {
-                          Bank = group.Key.Bank,
-                          Branch = group.Key.Branch,
-                          AccountNumber = group.Key.AccountNumber,
-                          ChequeNumber = group.Key.ChequeNumber,
-                          DueDate = group.First().Line.DueDate,
-                          Currency = group.First().Line.Currency,
-                          Line = group.First().Line.Line,
-                          ARPaymentNumber = group.First().Line.ARPaymentNumber,
-                          LocalAmount = group.Sum(x => x.Line.LocalAmount),
-                          ForiegnAmount = group.Sum(x => x.Line.ForeignAmount)
-                    
-                      }).ToList();
+                List<BankDepositLine> lines = bankDepositPM.BankDepositLines.Select(d => new BankDepositLine()
+                {
+                    Line = d.Line,
+                    ChequeNumber = d.ChequeNumber,
+                    ForiegnAmount = d.ForeignAmount,
+                    LocalAmount = d.LocalAmount,
+                    DueDate = d.DueDate,
+                    Currency = d.Currency,
+                    AccountNumber = d.AccountNumber,
+                    Bank = d.Bank,
+                    Branch = d.Branch,
+                    ARPaymentNumber = d.ARPaymentNumber,
+
+                }).ToList();
 
                 bankDepositDP.BankDepositLines = lines;
 
             }
 
             return bankDepositDP;
-        }
-
-        private static void SetCreatedByUserName(int tenant, BankDepositDataProvider bankDepositDP, BankDepositPM bankDepositPM)
-        {
-            UserQuery userQuery = new UserQuery(tenant);
-            UserPM userPM = userQuery.GetSinglePM(bankDepositPM.CreatedByUserId, tenant);
-            if (userPM != null)
-            {
-                bool showLocals = !userPM.DontShowLocalLabels;
-                bankDepositDP.CreatedByUserName = showLocals ? userPM.LocalName == null ? userPM.EnglishName : userPM.LocalName : userPM.EnglishName;
-            }
         }
 
         private ContactPM GetLoggedContact(int tenant)
@@ -168,6 +142,8 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
         }
+
+
 
     }
 }

@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -200,98 +200,6 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LCLDefaultSteps",OldValue=lCLDefaultSteps,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   lCLDefaultSteps=value;
-		   }
-			
-		 }
-	   }
-	  private string containerDefaults ;
-	  	  
-       
-	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ContainerDefaults  
-	   {
-	    
-	     get
-		{
-		   return containerDefaults;
-		 }
-		 set
-		 {
-		   if(containerDefaults != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerDefaults",OldValue=containerDefaults,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   containerDefaults=value;
-		   }
-			
-		 }
-	   }
-	  private string defaultCurrencyId ;
-	  	  
-       
-	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DefaultCurrencyId  
-	   {
-	    
-	     get
-		{
-		   return defaultCurrencyId;
-		 }
-		 set
-		 {
-		   if(defaultCurrencyId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultCurrencyId",OldValue=defaultCurrencyId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   defaultCurrencyId=value;
-		   }
-			
-		 }
-	   }
-	  private string airUnitOfMeasurementCode ;
-	  	  
-       
-	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AirUnitOfMeasurementCode  
-	   {
-	    
-	     get
-		{
-		   return airUnitOfMeasurementCode;
-		 }
-		 set
-		 {
-		   if(airUnitOfMeasurementCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AirUnitOfMeasurementCode",OldValue=airUnitOfMeasurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   airUnitOfMeasurementCode=value;
-		   }
-			
-		 }
-	   }
-	  private string lCLUnitOfMeasurementCode ;
-	  	  
-       
-	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string LCLUnitOfMeasurementCode  
-	   {
-	    
-	     get
-		{
-		   return lCLUnitOfMeasurementCode;
-		 }
-		 set
-		 {
-		   if(lCLUnitOfMeasurementCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LCLUnitOfMeasurementCode",OldValue=lCLUnitOfMeasurementCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   lCLUnitOfMeasurementCode=value;
 		   }
 			
 		 }

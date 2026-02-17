@@ -38,7 +38,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.TransportModeId).HasColumnName("TransportModeId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
 
             // Relationships
             //this.HasRequired(t => t.TransportMode)

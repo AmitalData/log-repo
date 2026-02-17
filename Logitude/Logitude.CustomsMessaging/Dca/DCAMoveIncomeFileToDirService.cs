@@ -1,5 +1,4 @@
-﻿using Logitude.Server.Tools.ExternalServices;
-using Logitude.Server.Tools.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using System;
 using System.Collections.Generic;
@@ -11,16 +10,17 @@ namespace Logitude.CustomsMessaging.Dca
 {
     class DCAMoveIncomeFileToDirService : IDisposable
     {
-        private IDcaManagerShim _dca;
+        private Server.Tools.ExternalServices.DcaManager _DcaManager;
 
-        public DCAMoveIncomeFileToDirService(IDcaManagerShim dca)
+        public DCAMoveIncomeFileToDirService(Server.Tools.ExternalServices.DcaManager _DcaManager)
         {
-            _dca = dca;
+            // TODO: Complete member initialization
+            this._DcaManager = _DcaManager;
         }
 
         public void Dispose()
         {
-            this._dca = null;
+            this._DcaManager = null;
         }
 
         internal bool MoveItToDir(string SelectedFileDownload, string _AppendToDownloadFolderName,
@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.Dca
                 
                 bool errorOccurred = false; string MessageLog = "";
                 string MoreParams = "";
-                _dca.MoveIncomeFileToDir(SelectedFileDownload, SelectedFileDownload, _AppendToDownloadFolderName,MoveUnUseDCAFilesToDIr, ref MoreParams,
+                _DcaManager.MoveIncomeFileTorDir(SelectedFileDownload, SelectedFileDownload, _AppendToDownloadFolderName,MoveUnUseDCAFilesToDIr, ref MoreParams,
                     out errorOccurred, out MessageLog);
                 if (errorOccurred)
                 {

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
@@ -11,62 +12,199 @@ import {JournalPM} from '../../EntityPMs/JournalPM';
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { ExternalReconciliationLinePM } from '../../EntityPMs/ExternalReconciliationLinePM';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
- 
+
 @Injectable()
 
 export class ExternalReconciliationExtendedPMService {
-
+    private _http: Http;
     private _apiUrl: string;
-    private httpClient: HttpClient;
     constructor() {
-   
-        this.httpClient = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ExternalReconciliationExtended';
     }
     
-    
+    //delsertDraftLedgerTransaction(transactions: LedgerTransactionPM[]) {
+
+    //    return Observable.defer(() => {
+
+    //        var authHeader = new Headers();
+    //        authHeader.append('Token', SessionInfo.Token);
+    //        authHeader.append('Content-Type', 'application/json');
+
+    //        var serviceResponse: ServiceResponse;
+    //        serviceResponse = new ServiceResponse();
+
+    //        return this._http.put(this._apiUrl + '/PutDelsertDraftLedgerTransaction/', JSON.stringify(transactions), { headers: authHeader })
+    //            .map((res) => {
+    //                serviceResponse.Result = res.json();
+    //                return serviceResponse;
+    //            })
+    //            .catch(ServiceHelper.HandleServiceError);
+    //    }
+    //    );
+    //}
+
+
+    //MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ExternalReconciliationPM = null) {
+
+
+    //    if (!entityPM) {
+
+    //        entityPM = new ExternalReconciliationPM();
+    //    }
+
+    //    var jsonPMKeys = Object.keys(jsonPM);
+
+    //    for (var key in jsonPMKeys) {
+    //        if (jsonPMKeys[key] === "UIProperties") {
+
+    //            continue;
+    //        }
+    //        var property = jsonPMKeys[key];
+    //        entityPM[property] = jsonPM[property];
+    //    }
+
+    //    var oldReconciliationLines: ReconciliationLinePM[] = [];
+    //    if (entityPM.OldEntityPM && !mapParent) {
+    //        oldReconciliationLines = entityPM.OldEntityPM.ExternalReconciliationLines;
+    //    }
+
+
+    //    entityPM.ExternalReconciliationLines = new Array<ReconciliationLinePM>();
+    //    for (var item in jsonPM.ReconciliationLines) {
+
+    //        var jItem = jsonPM.ReconciliationLines[item];
+    //        if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+    //            continue;
+    //        }
+    //        var newReconciliationLinePM: ReconciliationLinePM;
+    //        if (mapParent) {
+    //            newReconciliationLinePM = new ReconciliationLinePM(entityPM);
+    //        }
+    //        else {
+    //            newReconciliationLinePM = new ReconciliationLinePM(null);
+    //        }
+
+    //        var pmKeysArray = Object.keys(jItem);
+    //        for (var pmKey in pmKeysArray) {
+
+    //            if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties") {
+    //                continue;
+    //            }
+    //            var pmProperty = pmKeysArray[pmKey];
+    //            newReconciliationLinePM[pmProperty] = jItem[pmProperty];
+    //        }
+    //        newReconciliationLinePM.IsDirty = false;
+    //        if (mapParent) {
+    //            newReconciliationLinePM.OldEntityPM = this.clone(newReconciliationLinePM);
+    //            newReconciliationLinePM.UniqueKey = Guid.newGuid();
+    //            newReconciliationLinePM.ChangeSetOp = "None";
+    //            jItem.ChangeSetOp = "None";
+
+    //        }
+    //        else {
+
+    //            if (newReconciliationLinePM.UniqueKey) {
+
+    //                if (jItem.IsDirty)
+    //                    newReconciliationLinePM.ChangeSetOp = "Update";
+    //            }
+    //            else {
+    //                newReconciliationLinePM.ChangeSetOp = "Insert";
+    //            }
+
+    //            newReconciliationLinePM.OldEntityPM = null;
+    //            newReconciliationLinePM.EntityParentPM = null;
+    //        }
+
+
+    //        entityPM.ExternalReconciliationLines.push(newReconciliationLinePM);
+    //    }
+
+    //    if (oldReconciliationLines) {
+
+    //        for (var itemKey in oldReconciliationLines) {
+    //            if (entityPM.ExternalReconciliationLines.filter(p => p.UniqueKey === oldReconciliationLines[itemKey].UniqueKey).length === 0) {
+
+    //                if (oldReconciliationLines[itemKey]) {
+    //                    oldReconciliationLines[itemKey].ChangeSetOp = "Delete";
+    //                    entityPM.ExternalReconciliationLines.push(oldReconciliationLines[itemKey]);
+    //                }
+    //            }
+    //        }
+    //    }
+
+
+    //    entityPM.IsDirty = false;
+
+    //    if (mapParent) {
+    //        entityPM.OldEntityPM = this.clone(entityPM);
+    //        entityPM.OldEntityPM.ExternalReconciliationLines = [];
+    //        for (var m in entityPM.ExternalReconciliationLines) {
+    //            entityPM.OldEntityPM.ExternalReconciliationLines.push(this.clone(entityPM.ExternalReconciliationLines[m]));
+    //        }
+
+    //    }
+    //    else {
+
+    //        entityPM.OldEntityPM = null;
+    //    }
+
+    //    return entityPM;
+    //}
 
 
     CreateJournalReconcileAdjustBankFee(
-        //reconcileExternalPageLineId,//
         reconcileExternalPageLineIdList: string[],
-        ledgerTransactionIds: string[],
         TheAccountId: string, AdjustAccountId: string, AccountDate: string,Remarks: string) {
 
-        let a = new CreateJournalReconcileAdjustBankFeeM();
-        a.LedgerTransactionIds = ledgerTransactionIds;
-        a.ReconcileExternalPageLineIdList = reconcileExternalPageLineIdList;
+        return Observable.defer(() => {
 
-        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
 
-           
+            //var validator: ClassLevelValidator;
+
+            //validator = new ClassLevelValidator();
+
+            //var errorsArray = validator.Validate("ReconciliationPM", entityPM);
+
 
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-           
+            //if (errorsArray.length == 0) {
+            //var mappedEntity: ReconciliationPM[];
 
-            return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcileAdjustBankFee?"
-                
-                //+ "&reconcileExternalPageLineId=" + reconcileExternalPageLineId
-            + "&TheAccountId=" + TheAccountId
-            + "&AdjustAccountId=" + AdjustAccountId
-            + "&AccountDate=" + AccountDate                
-            + "&Remarks=" + Remarks
-                , JSON.stringify(a),  ServiceHelper.GetHttpHeaders()).pipe(
-                map(res => {
-                    var pm = res;
+
+            return this._http.post(this._apiUrl + "/PostCreateJournalReconcileAdjustBankFee?"
+                + "&TheAccountId=" + TheAccountId
+                + "&AdjustAccountId=" + AdjustAccountId
+                + "&AccountDate=" + AccountDate                
+                + "&Remarks=" + Remarks
+                , JSON.stringify(reconcileExternalPageLineIdList),
+                { headers: authHeader }).map((res) => {
+                    var pm = res.json();
                     if (pm) {
                         var mappedResult: JournalPM;
                         //mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                         serviceResponse.Result = pm;
                     }
+
+
+
                     return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError));
-          
-            
+
+                }).catch(ServiceHelper.HandleServiceError);
+            //}
+            //else {
+
+            //    serviceResponse.HasError = true;
+            //    serviceResponse.ErrorsArray = errorsArray;
+
+            //    return Observable.of(serviceResponse);
+
+            //}
         }
 
         );
@@ -90,11 +228,5 @@ export class ExternalReconciliationExtendedPMService {
         }
         return entityPM;
     }
-
-}
-
-export class CreateJournalReconcileAdjustBankFeeM {
-    LedgerTransactionIds: string[]
-    ReconcileExternalPageLineIdList: string[]
 
 }

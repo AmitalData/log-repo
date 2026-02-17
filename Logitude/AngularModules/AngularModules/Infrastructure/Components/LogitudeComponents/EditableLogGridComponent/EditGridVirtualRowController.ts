@@ -1,6 +1,9 @@
-import {EventEmitter, Output, OnInit, OnChanges, Component} from '@angular/core';
+﻿import {EventEmitter, Output, OnInit, OnChanges, Component} from '@angular/core';
+import * as Rx from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
 import {ViewResponse} from '../../../DataContracts/ViewResponse';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {LogEvents} from '../../../../Infrastructure/Utilities/LogEvents';
 
 interface IRow {
     pageIndex: number;

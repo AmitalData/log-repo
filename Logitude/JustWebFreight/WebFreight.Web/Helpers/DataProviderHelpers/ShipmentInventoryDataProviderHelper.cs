@@ -21,15 +21,14 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         {
             ShipmentInventoryDataProvider dataprovider = LoadShipmentInventoryDataProvider(entityId, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentInventoryDataProvider));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, dataprovider);
-                memstream.Seek(0, SeekOrigin.Begin);
-                var reader = new StreamReader(memstream);
-                string content = reader.ReadToEnd();
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+
         }
 
         private ShipmentInventoryDataProvider LoadShipmentInventoryDataProvider(string entityId, int tenant)
@@ -79,8 +78,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
 
             WarehouseEntryPackageQueryService warehouseEntryPackageQueryService = new WarehouseEntryPackageQueryService(tenant);
-
-            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(new WarehouseEntryPackageArgs() { Tenant = tenant , ShipmentId = entityId});
+            List<WarehouseEntryPackageItem> result = warehouseEntryPackageQueryService.GetWarehouseEntryPackageItemForInventoryReport(null, null,null, tenant, entityId);
 
             List<ShipmentInventoryDataProvider.InventoryGroup> finalResults = (from a in result
                                                                        group a by new { a.WarehouseName, a.WarehouseId, }

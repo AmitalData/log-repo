@@ -1,3 +1,5 @@
+
+
 <style type="text/css">
     .RatioBox .NumericButtonDisabled {
         opacity: 0.5;
@@ -28,10 +30,10 @@
         opacity: 0.5;
         pointer-events: none;
     }
-
-    .amcharts-pie-slice {
-        cursor: default;
-    }
+    
+.amcharts-pie-slice {
+  cursor:default;
+}
 
     .RatioBox {
         height: 22px;
@@ -53,451 +55,463 @@
         overflow: hidden;
     }
 
-    .amcharts-pie-slice {
-        cursor: default;
-    }
+            .amcharts-pie-slice {
+  cursor: default;
+}
 </style>
-
 <div style="overflow-x:auto;height:100%;width:100%;overflow-y:hidden;">
-    <table>
-        <tr style="height:50px">
-            <td>
+<table>
+    <tr style="height:30px">
+        <td>
                 <table>
                     <tr>
-                        <td style="width:50%">
-                            <div class="CellContent">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td style="width:70px">
-                                                        <BackButton [Text]="'Dashboard'" (click)="BackButtonClicked()"></BackButton>
-                                                    </td>
-
-                                                    <td style="width:3px"></td>
-
-                                                    <td style="width:120px">
-                                                        <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
-                                                    </td>
-
-                                                    <td style="width:3px"></td>
-
-                                                    <td style="width:120px">
-                                                        <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
-                                                    </td>
-                                                    <td style="width:3px"></td>
-
-                                                    <td style="width:120px">
-                                                        <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
-                                                    </td>
-                                                    <td style="width:3px"></td>
-
-                                                    <td style="width:120px">
-
-                                                        <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
-                                                    </td>
-                                                    <td></td>
-
-                                                </tr>
-                                            </table>
-
-                                        </td>
-
-                                    </tr>
-                                </table>
-
-
-                            </div>
+                        <td  style="width:70px">
+                            <BackButton [Text]="'Dashboard'" (click)="BackButtonClicked()"></BackButton>
 
                         </td>
                         <td>
-                            <table>
-                                <tr>
-                                    <td style="width:50px">Show:</td>
-                                    <td style="width:130px">
-                                        <ComboBox (SelectedItemChanged)="SelectedShowItem = $event" [ItemsSource]="ShowFilterList" [SelectedItem]="SelectedShowItem" [Binding]="'Title'"></ComboBox>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </table>
+
                         </td>
                     </tr>
                 </table>
-            </td>
+        </td>
+    </tr>
 
-
-        </tr>
-        <tr>
-            <td>
-                <table>
-                    <tr style="min-height:50%">
-
-                        <td>
+    <tr style="height:50px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:50%">
+                        <div class="CellContent">
                             <table>
-                                <tr class="SectionHeader" style="height:27px">
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <label>Shipments Quanitity By Time</label>
-                                                </td>
-
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr style="height:10px">
-                                    <td></td>
-                                </tr>
-                                <tr style="height:20px">
+                                <tr>
                                     <td>
                                         <table>
                                             <tr>
                                                 <td style="width:120px">
-                                                    <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterShipment = $event"></TransportsFilter>
+                                                    <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
                                                 </td>
-                                                <td>
-                                                    <div style="width:3px"></div>
+                                                <td style="width:3px"></td>
+
+                                                <td style="width:120px">
+                                                    <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
                                                 </td>
-                                                <td>
+                                                <td style="width:3px"></td>
 
-                                                    <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilterShipment = $event"></DirectionsFilter>
-
-
+                                                <td style="width:120px">
+                                                    <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
-                                            </tr>
+                                                <td style="width:3px"></td>
 
-                                        </table>
-
-                                    </td>
-
-                                </tr>
-                                <tr style="height:10px">
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div [attr.id]="ShipmentsQuantityByTimeDashboardId" class="MediaFill"></div>
-
-                                        <div *ngIf="NoShipmentsQuantityByTime" style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
-                                            <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
-                                        </div>
-
-
-                                    </td>
-                                </tr>
-                                <tr style="height:10px">
-                                    <td></td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td style="width:10px;max-width:10px;min-width:10px"></td>
-                        <td style="width:50%;height:50%">
-                            <table>
-                                <tr class="SectionHeader" style="height:27px">
-                                    <td>
-                                        <label>Direction And Transport Mode</label>
-                                    </td>
-                                </tr>
-                                <tr style="height:10px">
-                                    <td></td>
-                                </tr>
-
-                                <tr style="height:1px">
-
-                                    <td>
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <table>
-                                            <tr style="height:1px">
-                                                <td>
-                                                    <div [attr.id]="DirectionAndTransportModeDashboardId" class="MediaFill"></div>
-                                                </td>
-                                                <td style="width:100px;min-width:100px;overflow-y:auto;padding-right:10px">
-                                                    <div class="MediaFill">
-                                                        <ScrollViewer [Small]="true">
-                                                            <div [attr.id]="DirectionAndtransportModeLegendId" style="position:relative;width:100%;float:left"></div>
-                                                        </ScrollViewer>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr *ngIf="NoDirectionAndTransportMode">
-                                                <td colspan="2">
-                                                    <div style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
-                                                        <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-
-                            </table>
-                        </td>
-
-                    </tr>
-
-                    <tr style="min-height:50%">
-                        <td>
-                            <table>
-                                <tr class="SectionHeader" style="height:27px">
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td style="width:80px">
-                                                    <label>Countries</label>
-
-
-                                                </td>
-                                                <td style="padding-bottom:4px;font:small;vertical-align:central">
-                                                    <label style="font-size:x-small">Drop shipments country is the final destination of the shipment</label>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr style="height:10px">
-                                    <td></td>
-                                </tr>
-                                <tr style="height:20px">
-                                    <td style="vertical-align:top">
-                                        <table style="height:1px">
-                                            <tr>
-                                                <td style="width:140px;min-width:120px">
-                                                    <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterCountries = $event"></TransportsFilter>
-                                                </td>
-
-                                                <td style="width:260px;min-width:140px">
-
-                                                    <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilterCountries = $event"></DirectionsFilter>
-
-
-                                                </td>
-                                                <td style="width:auto">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:35px">
-                                                                <label style="font-size:small">Top: </label>
-
-                                                            </td>
-                                                            <td style="width:10px">
-                                                                <div class="RatioBox" style="width:40px">
-                                                                    <table>
-                                                                        <tr>
-
-                                                                            <td style="font-size: 11px; padding-left: 2px;">
-                                                                                {{TopCountries}}
-                                                                            </td>
-
-                                                                            <td style="width: 15px;">
-                                                                                <div class="NumericButton" (mousedown)="CountriesTopValueChanged(true)">
-                                                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
-                                                                                </div>
-                                                                                <div class="NumericButton" (mousedown)="CountriesTopValueChanged(false)">
-                                                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-
-
-                                                </td>
-
-                                                <td style="width:200px;min-width:10px"></td>
-
-                                                <td style="width:20px;min-width:20px">
-
-                                                    <LogCheckBox [ObjectFieldName]="'IncludeOthersCountries'" [DataContext]="DataContext"></LogCheckBox>
-
-
-                                                </td>
-                                                <td style="min-width:5px;width:5px"></td>
-
-                                                <td style="font:x-small">
-                                                    <label style="font-size:x-small"> Include Others </label>
-                                                </td>
-
-                                                <td></td>
-                                            </tr>
-
-                                        </table>
-
-                                    </td>
-
-                                </tr>
-                                <tr style="height:5px">
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td>
-                                        <table>
-                                            <tr style="height:1px">
-                                                <td>
-                                                    <div [attr.id]="CountriesDashboardId" class="MediaFill"></div>
-                                                </td>
-                                                <td style="width:100px;min-width:100px;overflow-y:auto;padding-right:10px">
-                                                    <div class="MediaFill">
-                                                        <ScrollViewer [Small]="true">
-                                                            <div [attr.id]="CountriesDashboardLegendId" style="position:relative;width:100%;float:left"></div>
-                                                        </ScrollViewer>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr *ngIf="NoCountries">
-                                                <td colspan="2">
-                                                    <div style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
-                                                        <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Countries</label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </td>
-                        <td style="width:10px;max-width:10px;min-width:10px"></td>
-
-                        <td style="width:50%">
-
-                            <table>
-                                <tr class="SectionHeader" style="height:27px">
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <label>Customers</label>
+                                                <td style="width:120px">
+                                                    
+                                                    <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                                 <td></td>
 
-
-
                                             </tr>
-                                        </table>
-                                    </td>
-
-                                </tr>
-                                <tr style="height:10px">
-                                    <td></td>
-                                </tr>
-                                <tr style="height:20px">
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td style="width:140px;min-width:120px">
-                                                    <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterCustomers = $event"></TransportsFilter>
-                                                </td>
-
-                                                <td style="width:260px;min-width:140px">
-
-                                                    <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilterCustomers = $event"></DirectionsFilter>
-
-
-                                                </td>
-                                                <td style="width:auto">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:35px">
-                                                                <label style="font-size:small">Top: </label>
-
-                                                            </td>
-                                                            <td>
-                                                                <div class="RatioBox" style="width:40px">
-                                                                    <table>
-                                                                        <tr>
-
-                                                                            <td style="font-size: 11px; padding-left: 2px;">
-                                                                                {{TopCustomers}}
-                                                                            </td>
-
-                                                                            <td style="width: 15px;">
-                                                                                <div class="NumericButton" (mousedown)="CustomersTopValueChanged(true)">
-                                                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
-                                                                                </div>
-                                                                                <div class="NumericButton" (mousedown)="CustomersTopValueChanged(false)">
-                                                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-
-
-                                                </td>
-
-                                                <td style="width:200px;min-width:10px"></td>
-
-                                                <td style="width:20px;min-width:20px">
-
-                                                    <LogCheckBox [ObjectFieldName]="'IncludeOthersCustomers'" [DataContext]="DataContext"></LogCheckBox>
-
-
-                                                </td>
-                                                <td style="min-width:5px;width:5px"></td>
-                                                <td style="font:x-small">
-                                                    <label style="font-size:x-small"> Include Others </label>
-                                                </td>
-
-                                                <td></td>
-                                            </tr>
-
                                         </table>
 
                                     </td>
-                                </tr>
-                                <tr>
 
-                                    <td>
-                                        <table>
-                                            <tr style="height:1px">
-                                                <td>
-                                                    <div [attr.id]="CustomersDashboardId" class="MediaFill"></div>
-                                                </td>
-                                                <td style="width:100px;min-width:100px;overflow-y:auto;padding-right:10px">
-                                                    <div class="MediaFill">
-                                                        <ScrollViewer [Small]="true">
-                                                            <div [attr.id]="CustomersDashboardLegendId" style="position:relative;width:100%;float:left"></div>
-                                                        </ScrollViewer>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr *ngIf="NoCustomers">
-                                                <td colspan="2">
-                                                    <div style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
-                                                        <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Customers</label>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
                                 </tr>
                             </table>
 
-                        </td>
 
-                    </tr>
-                </table>
-            </td>
+                        </div>
+
+                    </td>
+                    <td>
+                    <table>
+                        <tr>
+                            <td style="width:50px">Show:</td>
+                            <td style="width:130px">
+                                <ComboBox (SelectedItemChanged)="SelectedShowItem = $event" [ItemsSource]="ShowFilterList" [SelectedItem]="SelectedShowItem" [Binding]="'Title'"></ComboBox>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+       
+
         </tr>
+<tr>
+        <td>
+            <table>
+                <tr style="min-height:50%">
 
-        <tr style="height:10px;width:100%">
-            <td></td>
-        </tr>
-    </table>
-</div>
+                    <td>
+                        <table>
+                            <tr class="SectionHeader" style="height:27px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label>Shipments Quanitity By Time</label>
+                                            </td>
+                                          
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height:10px">
+                                <td></td>
+                            </tr>
+                            <tr style="height:20px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:120px">
+                                                <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterShipment = $event"></TransportsFilter>
+                                            </td>
+                                            <td>
+                                                <div style="width:3px"></div>
+                                            </td>
+                                            <td>
+
+                                                <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilterShipment = $event"></DirectionsFilter>
+
+
+                                            </td>
+                                        </tr>
+
+                                    </table>
+
+                                </td>
+
+                            </tr>
+                            <tr  style="height:10px">
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div [attr.id]="ShipmentsQuantityByTimeDashboardId" class="MediaFill"></div>
+
+                                    <div *ngIf="NoShipmentsQuantityByTime" style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                        <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                            <tr style="height:10px">
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:10px;max-width:10px;min-width:10px"></td>
+                    <td style="width:50%;height:50%">
+                        <table>
+                            <tr class="SectionHeader" style="height:27px">
+                                <td>
+                                    <label>Direction And Transport Mode</label>
+                                </td>
+                            </tr>
+                            <tr style="height:10px">
+                                <td></td>
+                            </tr>
+
+                            <tr style="height:1px">
+
+                                <td>
+
+                                  
+
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr style="height:1px">
+                                            <td>
+                                                <div [attr.id]="DirectionAndTransportModeDashboardId" class="MediaFill"></div>
+                                            </td>
+                                            <td style="width:100px;min-width:100px;overflow-y:auto;padding-right:10px">
+                                                <div class="MediaFill">
+                                                    <ScrollViewer [Small]="true">
+                                                        <div [attr.id]="DirectionAndtransportModeLegendId" style="position:relative;width:100%;float:left"></div>
+                                                    </ScrollViewer>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr  *ngIf="NoDirectionAndTransportMode">
+                                            <td colspan="2">
+                                                <div  style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                                    <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </table>
+                                </td>           
+                          </tr>
+
+                        </table>
+                    </td>
+
+                </tr>
+
+                <tr style="min-height:50%">
+                    <td>
+                        <table>
+                            <tr class="SectionHeader" style="height:27px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:80px">
+                                                <label>Countries</label>
+
+
+                                            </td>
+                                            <td style="padding-bottom:4px;font:small;vertical-align:central">
+                                                <label style="font-size:x-small">Drop shipments country is the final destination of the shipment</label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr style="height:10px">
+                                <td></td>
+                            </tr>
+                            <tr style="height:20px">
+                                <td style="vertical-align:top">
+                                    <table style="height:1px">
+                                        <tr>
+                                            <td style="width:140px;min-width:120px">
+                                                <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterCountries = $event"></TransportsFilter>
+                                            </td>
+
+                                            <td style="width:260px;min-width:140px">
+
+                                                <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilterCountries = $event"></DirectionsFilter>
+
+
+                                            </td>
+                                            <td style="width:auto">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:35px">
+                                                            <label style="font-size:small">Top: </label>
+
+                                                        </td>
+                                                        <td style="width:10px">
+                                                            <div class="RatioBox" style="width:40px">
+                                                                <table>
+                                                                    <tr>
+
+                                                                        <td style="font-size: 11px; padding-left: 2px;">
+                                                                            {{TopCountries}}
+                                                                        </td>
+
+                                                                        <td style="width: 15px;">
+                                                                            <div class="NumericButton" (mousedown)="CountriesTopValueChanged(true)">
+                                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                                            </div>
+                                                                            <div class="NumericButton" (mousedown)="CountriesTopValueChanged(false)">
+                                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+
+                                            </td>
+
+                                            <td style="width:200px;min-width:10px"></td>
+
+                                            <td style="width:20px;min-width:20px">
+
+                                                <LogCheckBox [ObjectFieldName]="'IncludeOthersCountries'" [DataContext]="DataContext"></LogCheckBox>
+
+
+                                            </td>
+                                            <td style="min-width:5px;width:5px"></td>
+
+                                            <td style="font:x-small">
+                                                <label style="font-size:x-small"> Include Others </label>
+                                            </td>
+
+                                            <td></td>
+                                        </tr>
+
+                                    </table>
+
+                                </td>
+
+                            </tr>
+                            <tr style="height:5px">
+                                <td></td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    <table>
+                                        <tr style="height:1px">
+                                            <td>
+                                                <div [attr.id]="CountriesDashboardId" class="MediaFill"></div>
+                                            </td>
+                                            <td style="width:100px;min-width:100px;overflow-y:auto;padding-right:10px">
+                                                <div class="MediaFill">
+                                                    <ScrollViewer [Small]="true">
+                                                        <div [attr.id]="CountriesDashboardLegendId" style="position:relative;width:100%;float:left"></div>
+                                                    </ScrollViewer>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr  *ngIf="NoCountries">
+                                            <td colspan="2">
+                                                <div style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                                    <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Countries</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>       
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td style="width:10px;max-width:10px;min-width:10px"></td>
+
+                    <td style="width:50%">
+
+                        <table>
+                            <tr class="SectionHeader" style="height:27px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label>Customers</label>
+                                            </td>
+                                            <td></td>
+
+                                            
+
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+                            <tr style="height:10px">
+                                <td></td>
+                            </tr>
+                            <tr style="height:20px">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:140px;min-width:120px">
+                                                <TransportsFilter (SelectedValueChanged)="SelectedTransportFilterCustomers = $event"></TransportsFilter>
+                                            </td>
+
+                                            <td style="width:260px;min-width:140px">
+
+                                                <DirectionsFilter (SelectedValueChanged)="SelectedDirectionFilterCustomers = $event"></DirectionsFilter>
+
+
+                                            </td>
+                                            <td style="width:auto">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:35px">
+                                                            <label style="font-size:small">Top: </label>
+
+                                                        </td>
+                                                        <td>
+                                                            <div class="RatioBox" style="width:40px">
+                                                                <table>
+                                                                    <tr>
+
+                                                                        <td style="font-size: 11px; padding-left: 2px;">
+                                                                            {{TopCustomers}}
+                                                                        </td>
+
+                                                                        <td style="width: 15px;">
+                                                                            <div class="NumericButton" (mousedown)="CustomersTopValueChanged(true)">
+                                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                                            </div>
+                                                                            <div class="NumericButton" (mousedown)="CustomersTopValueChanged(false)">
+                                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                           
+                                            </td>
+
+                                            <td style="width:200px;min-width:10px"></td>
+
+                                            <td style="width:20px;min-width:20px">
+
+                                                <LogCheckBox [ObjectFieldName]="'IncludeOthersCustomers'" [DataContext]="DataContext"></LogCheckBox>
+
+
+                                            </td>
+                                            <td style="min-width:5px;width:5px"></td>
+                                            <td style="font:x-small">
+                                                <label style="font-size:x-small"> Include Others </label>
+                                            </td>
+
+                                            <td></td>
+                                        </tr>
+
+                                    </table>
+
+                                </td>
+                            </tr>
+                            <tr>
+
+                                <td>
+                                    <table>
+                                        <tr style="height:1px">
+                                            <td>
+                                                <div [attr.id]="CustomersDashboardId" class="MediaFill"></div>
+                                            </td>
+                                            <td style="width:100px;min-width:100px;overflow-y:auto;padding-right:10px">
+                                                <div class="MediaFill">
+                                                    <ScrollViewer [Small]="true">
+                                                        <div [attr.id]="CustomersDashboardLegendId" style="position:relative;width:100%;float:left"></div>
+                                                    </ScrollViewer>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <tr *ngIf="NoCustomers">
+                                            <td colspan="2">
+                                                <div style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                                    <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Customers</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>                                    
+                            </tr>
+                        </table>
+
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px;width:100%">
+        <td></td>
+    </tr>
+</table>
+    </div>

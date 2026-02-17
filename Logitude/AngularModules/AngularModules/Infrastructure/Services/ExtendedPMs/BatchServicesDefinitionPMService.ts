@@ -1,102 +1,141 @@
-import { BatchServicesDefinitionPM } from '../../EntityPMs/BatchServicesDefinitionPM';
-import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
-import { HttpClient, HttpResponse, HttpEvent } from '@angular/common/http';
-import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
-import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
-import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
+import {ServiceResponse} from '../../DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
+import {Guid} from '../../Utilities/Guid';
+import {InfraSettings} from '../../Utilities/InfraSettings';
+import {ServiceHelper} from '../../Utilities/ServiceHelper';
+import {SessionInfo} from '../../Utilities/SessionInfo';
+import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
+import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
+
+import {BatchServicesDefinitionPM} from '../../EntityPMs/BatchServicesDefinitionPM';
+
 
 @Injectable()
+
 export class BatchServicesDefinitionPMService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/batchservicesdefinitionextended';
     }
 
     get(code: string) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
-        var url = this._apiUrl + '/getsingle?' + 'code=' + code;
-        return defer(() => {
-            return this._http.get(url, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
-                if (response instanceof HttpResponse) {
-                    var pm = response;
-                    var entity: BatchServicesDefinitionPM;
-                    if (pm) {
-                        entity = this.MapJsonToEntityPM(pm);
-                    }
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'code=' + code, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
 
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = entity;
 
-                    var servertime = response.headers.get('ServerExecutionTime');
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BatchServicesDefinition", "GetSinglePM", 'code=' + code);
 
-                    return serviceResponse;
+                var entity: BatchServicesDefinitionPM;
+                if (pm) {
+                    entity = this.MapJsonToEntityPM(pm);
                 }
-            }), catchError(ServiceHelper.HandleServiceError));
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BatchServicesDefinition", "GetSinglePM", 'code=' + code);
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
     insert(entityPM: BatchServicesDefinitionPM) {
+
         var callTime = new Date();
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
             var validator: ClassLevelValidator;
+
             validator = new ClassLevelValidator();
+
             var errorsArray = validator.Validate("BatchServicesDefinition", entityPM);
+
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-
             if (errorsArray.length == 0) {
                 var mappedEntity: BatchServicesDefinitionPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var pm = response;
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
+
+                        var pm = response.json();
                         if (pm) {
                             var mappedResult: BatchServicesDefinitionPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                             serviceResponse.Result = mappedResult;
                         }
 
+
                         var servertime = response.headers.get('ServerExecutionTime');
                         PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BatchServicesDefinition", "SaveChanges", "");
 
+
                         return serviceResponse;
-                    }
-                }), catchError(ServiceHelper.HandleServiceError));
+
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
+
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
+
             }
-        });
+        }
+
+        );
     }
 
     update(entityPM: BatchServicesDefinitionPM) {
+
         var callTime = new Date();
-        return defer(() => {
+        return Observable.defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
             var validator: ClassLevelValidator;
+
             validator = new ClassLevelValidator();
+
             var errorsArray = validator.Validate("BatchServicesDefinition", entityPM);
+
+
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-
             if (errorsArray.length == 0) {
                 var mappedEntity: BatchServicesDefinitionPM;
                 mappedEntity = this.MapJsonToEntityPM(entityPM, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
-                    if (response instanceof HttpResponse) {
-                        var pm = response;
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                    { headers: authHeader }).map((response) => {
+
+
+                        var pm = response.json();
                         if (pm) {
                             var mappedResult: BatchServicesDefinitionPM;
                             mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
@@ -107,20 +146,30 @@ export class BatchServicesDefinitionPMService {
                         PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BatchServicesDefinition", "SaveChanges", "");
 
                         return serviceResponse;
-                    }
-                }), catchError(ServiceHelper.HandleServiceError));
+
+                    }).catch(ServiceHelper.HandleServiceError);
             }
             else {
+
                 serviceResponse.HasError = true;
                 serviceResponse.ErrorsArray = errorsArray;
 
-                return of(serviceResponse);
+                return Observable.of(serviceResponse);
+
             }
-        });
+        }
+
+        );
+
     }
 
+
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: BatchServicesDefinitionPM = null) {
+
+
         if (!entityPM) {
+
             entityPM = new BatchServicesDefinitionPM();
         }
 
@@ -164,6 +213,7 @@ export class BatchServicesDefinitionPMService {
         return entityPM;
     }
 
+
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -179,7 +229,6 @@ export class BatchServicesDefinitionPMService {
             entityPM[property] = jsonPM[property];
 
         }
-
         return entityPM;
     }
 
@@ -188,4 +237,6 @@ export class BatchServicesDefinitionPMService {
         entityPM = new BatchServicesDefinitionPM();
         return entityPM;
     }
+
+
 }

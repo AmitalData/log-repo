@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
-using System.Data.Entity;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -32,33 +31,12 @@ namespace Logitude.Accounting.Data.Repositories
             return entity;
         }
 
-        public List<BankAccount> GetFactoringBankAccounts(int tenant)
-        {
-            return context.BankAccounts
-                          .Include(x => x.BankCode)
-                          .Where(a => !a.Inactive.HasValue || !a.Inactive.Value)
-                          .Where(a => a.FactoringBank.HasValue && a.FactoringBank.Value)
-                          .Where(a => a.Tenant == tenant)
-                          .ToList();
-        }
         public BankAccount GetBankAccountByNumber(string number, int tenant)
         {
             BankAccount entity;
 
             entity = (from a in context.BankAccounts
                       where a.AccountNumber == number && a.Tenant == tenant
-                      select a).FirstOrDefault();
-
-            return entity;
-        }
-
-        public BankAccount GetBankAccountByDisplay(string number, int tenant)
-        {
-            BankAccount entity;
-
-            entity = (from a in context.BankAccounts
-                      join gl in context.GLAccounts on a.GLAccountId equals gl.Id
-                      where gl.DisplayNumber == number && a.Tenant == tenant && gl.Tenant == tenant
                       select a).FirstOrDefault();
 
             return entity;
@@ -74,19 +52,18 @@ namespace Logitude.Accounting.Data.Repositories
 
             return entity;
         }
-        public List<BankAccount> GetBankAccountListByBankIdAccNumber(string  BankId, string AccountNumber, int tenant)
+        public BankAccount GetBankAccountByBankIdAccNumber(string  BankId, string AccountNumber, int tenant)
         {
-            
+            BankAccount entity;
 
-            var entityList = (from a in context.BankAccounts
+            entity = (from a in context.BankAccounts
                       where
                       a.BankId == BankId &&
-                      a.AccountNumber == AccountNumber &&
+                      a.AccountNumber == AccountNumber && 
                       a.Tenant == tenant
-                      select a)/*.FirstOrDefault();*/
-                      ;
+                      select a).FirstOrDefault();
 
-            return entityList.ToList();
+            return entity;
         }
 
         public BankAccount GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)
@@ -102,15 +79,7 @@ namespace Logitude.Accounting.Data.Repositories
 
             return entity;
         }
-
-        public bool CheckIfGlAccountExistsInBankAccount(string accountId, int tenant)
-        {
-
-            return (from a in context.BankAccounts
-                      where (a.GLAccountId == accountId || a.DeferredGLAccountId == accountId || a.TransferGLAcccountId == accountId) && a.Tenant == tenant
-                      select a).Any();
-        }
-
     }
+
 }
    

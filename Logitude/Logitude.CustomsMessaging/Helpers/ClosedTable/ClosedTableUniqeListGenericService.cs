@@ -7,7 +7,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;

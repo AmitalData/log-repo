@@ -1,7 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -14,7 +13,6 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -135,18 +133,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public byte[] GetData()
         {
             StatisticsByClientDataProvider myDataProvider = new StatisticsByClientDataProvider();
+
             myDataProvider = this.LoadDataProvider();
-            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(StatisticsByClientDataProvider), tenant);
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(StatisticsByClientDataProvider));
+            MemoryStream memoryStream = new MemoryStream();
+            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            StreamReader streamReader = new StreamReader(memoryStream);
+            string content = streamReader.ReadToEnd();
+            byte[] bytearray = memoryStream.ToArray();
+            return bytearray;
         }
 
         private StatisticsByClientDataProvider LoadDataProvider()
         {
             StatisticsByClientDataProvider myDataProvider = new StatisticsByClientDataProvider();
-            myDataProvider.StatisticsList_NoGroup = new List<StatisticsByClientReport>();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
-            CardRepository cardRepository = new CardRepository(tenant);
-            ContactRepository contactRepository = new ContactRepository(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
@@ -271,29 +274,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         record.CustomerName = shipment.CustomerName;
                     }
 
-                    Card myCustomer = cardRepository.GetSingleCard(record.CustomerId, tenant);
-                    if (myCustomer != null)
-                    {
-                        if(!string.IsNullOrEmpty(myCustomer.SalesmanUserId))
-                        {
-                            Contact salesman = contactRepository.GetSingleContact(myCustomer.SalesmanUserId, tenant);
-                            record.CustomerSalesman = salesman?.EnglishName;
-                        }
-
-                        if (myCustomer.Customer != null)
-                        {
-                            customFieldResolver.SetDataProviderCustomFieldsValues("Customer", tenant, myCustomer.Customer, record);
-                        }
-                    }
-
-                    record.ChargeableWeightInKg = shipment.ChargeableWeightInKG;
                     record.TransportMode = shipment.TransportModeName;
                     record.Direction = shipment.DirectionName;
                     record.TransmodeDirection = shipment.DirectionName + shipment.TransportModeName;
                     record.GrossWeight = shipment.GrossWeight;
                     record.Volume = shipment.Volume;
                     record.TEU = shipment.TEU;
-                    
+
                     if (currencytype == "profit")
                     {
                         record.Payables = shipment.OpenPayablesInProfitCurrency + shipment.AccountedPayablesInProfitCurrency;
@@ -310,7 +297,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                     tempList.Add(record);
                 }
-                myDataProvider.StatisticsList_NoGroup = tempList;
             }
             #endregion
 

@@ -12,7 +12,7 @@ using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -33,7 +33,6 @@ using System.Web;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure.Azure;
-using Logitude.Server.Tools.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -192,7 +191,7 @@ namespace WebFreight.Web.WcfApi
                     {
                         entityPM.Id = entity.Id;
 
-                        if (entity.ActivityStatusCode != "C" || (entity.MeetingSummary != entityPM.MeetingSummary))
+                        if (entity.ActivityStatusCode != "C")
                         {
                             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
                             //entityPM.MeetingSummary = entity.MeetingSummary;
@@ -612,54 +611,6 @@ namespace WebFreight.Web.WcfApi
                 return null;
 
             }
-        }
-
-        public Response GetStorageContainerConnectionString(int tenant)
-        {
-            Response response = new Response();
-            try
-            {
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                response.Result = DocumentFileUploadHelper.GetTempStorageSasWrite(tenant);
-                response.Result2 = DocumentFileUploadHelper.GetStorageEncryptionKey(tenant);
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                return UpdateResponseException(response, ex);
-            }
-        }
-
-        private Response UpdateResponseException(Response response, Exception ex)
-        {
-            response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
-            response.HasError = true;
-            response.ErrorMessage = ex.Message;
-            response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
-            if (!string.IsNullOrEmpty(ex.StackTrace))
-            {
-                response.ErrorMessage += Environment.NewLine + ex.StackTrace;
-            }
-
-            return response;
-        }
-
-        public Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId = null)
-        {
-            Response response = new Response();
-            if (string.IsNullOrEmpty(blobname))
-                return UpdateResponseException(response, new ArgumentException("blobname is null or empty"));
-
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage start:" + "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
-
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            response = DocumentFileUploadHelper.AddDocumentAndSendToInternalStorage(tenant, blobname, DocumentId);
-
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage finish:"+ "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
-            
-            return response;
         }
 
         public Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId)

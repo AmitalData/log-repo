@@ -1,1 +1,0 @@
-ALTER TABLE ObjectTables DROP CONSTRAINT FK_ScreenObjectTable

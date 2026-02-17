@@ -14,7 +14,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ShipmentId).HasMaxLength(15).IsRequired().IsUnicode(false);
+            this.Property(t => t.ShipmentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CountryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AWBCustomsInformationCode).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.AWBInformationCode).HasMaxLength(3).IsUnicode(false);
@@ -29,7 +29,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.AWBInformationCode).HasColumnName("AWBInformationCode");
             this.Property(t => t.SupplementaryCustomsInfo).HasColumnName("SupplementaryCustomsInfo");
 
-            this.HasRequired(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
+            this.HasOptional(t => t.Shipment).WithMany().HasForeignKey(d => d.ShipmentId);
             this.HasOptional(t => t.Country).WithMany().HasForeignKey(d => d.CountryId);
             this.HasOptional(t => t.AWBCustomsInformation).WithMany().HasForeignKey(d => d.AWBCustomsInformationCode);
             this.HasOptional(t => t.AWBInformation).WithMany().HasForeignKey(d => d.AWBInformationCode);

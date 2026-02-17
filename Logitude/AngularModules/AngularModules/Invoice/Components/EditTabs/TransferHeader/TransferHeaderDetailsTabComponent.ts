@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './TransferHeaderDetailsTabComponent.html',
 })
 
@@ -41,7 +41,7 @@ export class TransferHeaderDetailsTabComponent extends BaseComponent {
                 this.ColumnHeader_Date = TextCodeTranslator.Translate("ARInvoice.CH.InvoiceDateListLable");
                 this.ColumnHeader_Number = TextCodeTranslator.Translate("ARInvoice.CH.InvoiceNumberListLable");
                 this.ColumnHeader_Partner = TextCodeTranslator.Translate("ARInvoice.CH.BillToNameListLable");
-                this.ColumnHeader_Status = TextCodeTranslator.Translate("ARInvoice.O.StatusNameRateListLable");
+                this.ColumnHeader_Status = TextCodeTranslator.Translate("ARInvoice.CH.StatusNameRateListLable");
                 this.ColumnHeader_Amount = TextCodeTranslator.Translate("ARInvoice.CH.AmountInInvoiceCurrencyListLable");
                 break;
             }

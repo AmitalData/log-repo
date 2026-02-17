@@ -7,7 +7,7 @@ using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -32,7 +32,6 @@ namespace CommunicationWorkerRole
         AirlineStatisticsRepository airlineStatisticsRepository;
         QueueDescription queueDescription;
         QueueClient client;
-        PortRepository portRepository;
 
         public override void Run()
         {
@@ -60,7 +59,7 @@ namespace CommunicationWorkerRole
                             foreach (TenantManagement item in airlineTenants)
                             {
                                 airlineStatisticsRepository = new AirlineStatisticsRepository(item.Id);
-                                portRepository = new PortRepository(item.Id);
+                                
                                 ParticipantRepository participantRepository = new ParticipantRepository(item.Id);
                                 IQueryable<Participant> participants = participantRepository.GetParticipants(item.Id);
 
@@ -262,9 +261,9 @@ namespace CommunicationWorkerRole
             newRecord.Flight2Date = entity.Transshipment1ATD != null ? entity.Transshipment1ATD : entity.Transshipment1ETD;
             newRecord.Flight3 = entity.Transshipment2CarrierCode + entity.Transshipment2CarrierNumber;
             newRecord.Flight3Date = entity.Transshipment2ATD != null ? entity.Transshipment2ATD : entity.Transshipment2ETD;
-            newRecord.OnCarriageTo = this.GetPortCodeById(entity.OnCarriageToPortId, newRecord.Tenant);
+            newRecord.OnCarriageTo = entity.OnCarriageToPortCode;
             newRecord.OnCarriageDate = entity.OnCarriageATD != null ? entity.OnCarriageATD : entity.OnCarriageETD;
-            newRecord.PreCarriageFrom = this.GetPortCodeById(entity.PreCarriageFromPortId, newRecord.Tenant);
+            newRecord.PreCarriageFrom = entity.PreCarriageFromPortCode;
             newRecord.PreCarriageDate = entity.PreCarriageATD != null ? entity.PreCarriageATD : entity.PreCarriageETD;
             newRecord.IsCancelled = entity.IsCancelled;
             newRecord.AirlinePrefix = entity.AirlinePrefix;
@@ -273,22 +272,6 @@ namespace CommunicationWorkerRole
             newRecord.SearchFields = BuildSearchFields(newRecord);
 
             airlineStatisticsRepository.Add(newRecord);
-        }
-
-        private string GetPortCodeById(string portId, int tenant)
-        {
-            string portCode = null;
-
-            if(!string.IsNullOrEmpty(portId))
-            {
-                Port myPort = portRepository.GetSinglePort(portId, tenant);
-                if(myPort != null)
-                {
-                    portCode = myPort.Code;
-                }
-            }
-
-            return portCode;
         }
 
         private void UpdateAirlineStatistics(BookingList booking, bool isDirect)
@@ -359,9 +342,9 @@ namespace CommunicationWorkerRole
             statistics.Flight2Date = shipment.Transshipment1ATD != null ? shipment.Transshipment1ATD : shipment.Transshipment1ETD;
             statistics.Flight3 = shipment.Transshipment2CarrierCode + shipment.Transshipment2CarrierNumber;
             statistics.Flight3Date = shipment.Transshipment2ATD != null ? shipment.Transshipment2ATD : shipment.Transshipment2ETD;
-            statistics.OnCarriageTo = this.GetPortCodeById(shipment.OnCarriageToPortId, statistics.Tenant);
+            statistics.OnCarriageTo = shipment.OnCarriageToPortCode;
             statistics.OnCarriageDate = shipment.OnCarriageATD != null ? shipment.OnCarriageATD : shipment.OnCarriageETD;
-            statistics.PreCarriageFrom = this.GetPortCodeById(shipment.PreCarriageFromPortId, statistics.Tenant);
+            statistics.PreCarriageFrom = shipment.PreCarriageFromPortCode;
             statistics.PreCarriageDate = shipment.PreCarriageATD != null ? shipment.PreCarriageATD : shipment.PreCarriageETD;
             statistics.SearchFields = this.BuildSearchFields(statistics);
             statistics.IsCancelled = shipment.IsCancelled;

@@ -12,7 +12,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CLAIM_2340_ClaimRequestRequestParams } from '../../../../Customs/DataContract/RequestParams/CLAIM_2340_ClaimRequestRequestParams';
-import { HsmStationContext, SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { SendRequestVIA } from '../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from '../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { ClientSearchResponseData } from '../../../../Customs/DataContract/ResponseData/ClientSearchResponseData';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
@@ -26,7 +26,7 @@ import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPM
 import { ClaimPM } from '../../../../Customs/EntityPMs/ClaimPM';
 
 @Component({
-
+    moduleId: module.id,
     selector: 'SendClaimComponent',
     templateUrl: "SendClaimComponent.html",
 })
@@ -69,8 +69,6 @@ export class SendClaimComponent {
                 this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.UpdateEntityWithSendClaimsRelatedEntity();
-
                     }
                 });
             }
@@ -79,7 +77,6 @@ export class SendClaimComponent {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.UpdateEntityWithSendClaimsRelatedEntity();
                     }
                 });
             }
@@ -100,35 +97,6 @@ export class SendClaimComponent {
         }
     }
 
-    sendList: string[] = [];
-    RetrieveIsSendClaimsRelatedEntity() {
-        this.sendList = [];
-        if (this.EntityPM.ClaimsRelatedEntities != null && this.EntityPM.ClaimsRelatedEntities.length > 0) {
-            for (let claimsRelatedEntityItem of this.EntityPM.ClaimsRelatedEntities) {
-                if (claimsRelatedEntityItem.IsSendClaimsRelatedEntity == true) {
-                    this.sendList.push(claimsRelatedEntityItem.EntityCounterKey.toString());
-                }
-            }
-        }
-    }
-    UpdateEntityWithSendClaimsRelatedEntity() {
-        var isDirty = false;
-        if (this.sendList != null) {
-            this.EntityPM.ClaimsRelatedEntities.forEach((item) => {
-                if (this.sendList.includes(item.EntityCounterKey.toString())) {
-                    item.IsSendClaimsRelatedEntity = true;
-                }
-                else {
-                    item.IsSendClaimsRelatedEntity = false;
-                    isDirty = true;
-                }
-            });
-            if (isDirty) {
-                this.EntityPM.IsDirty = false
-            }
-        }
-    }
-
     reloadEvent: any;
     public SaveEntityChanges(customSendOptionsArgs, isDelete: boolean) {
         this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -136,7 +104,7 @@ export class SendClaimComponent {
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             return;
         }
-        this.RetrieveIsSendClaimsRelatedEntity();
+
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.ClaimPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
@@ -150,12 +118,10 @@ export class SendClaimComponent {
                 this.EntityPM = myResponse.Result;
                 if (this.CurrentSession.CurrentEditComponent) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    this.UpdateEntityWithSendClaimsRelatedEntity();
                     this.reloadEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                         this.reloadEvent.unsubscribe();
                         if (isLoadSuccess) {
                             this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                            this.UpdateEntityWithSendClaimsRelatedEntity();
                             this.CurrentSession.StartBusyIndicator("");
 
                             if (this.PostSendPaymentOrderChecksAndPrecalculations() == true) {
@@ -242,8 +208,6 @@ export class SendClaimComponent {
 
     InstructionSendToMehes() {
         var counter: number = 0;
-        this.sendClaimsRelatedEntitiesList = [];
-        this.UpdateEntityWithSendClaimsRelatedEntity();
         if (this.EntityPM.ClaimsRelatedEntities != null && this.EntityPM.ClaimsRelatedEntities.length > 0) {
             for (let claimsRelatedEntityItem of this.EntityPM.ClaimsRelatedEntities) {
                 if (claimsRelatedEntityItem.IsSendClaimsRelatedEntity == true) {
@@ -254,9 +218,9 @@ export class SendClaimComponent {
                 }
             }
             if (this.sendClaimsRelatedEntitiesList == null || (this.sendClaimsRelatedEntitiesList != null && this.sendClaimsRelatedEntitiesList.length == 0)) {
-                var errorMessage: string = TextCodeTranslator.Translate("Customs.General.O.SelectOneEntityAtLeast");
+                var errorMessage: string = "חובה לבחור לפחות ישות תביעה אחת לשליחה";
                 if (this.EntityPM.ClaimsRelatedEntities.length == counter) {
-                    errorMessage = TextCodeTranslator.Translate("Customs.General.O.CanotSendReceivedClaim");
+                    errorMessage = "בתביעה זו לא ניתן לבצע שליחה, כיוון שכל תיקי התביעה עודכנו וקיבלו תיק תביעה במכס";
                 }
                 this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
                 var winConfirmation: ConfirmWindow = new ConfirmWindow();
@@ -279,7 +243,7 @@ export class SendClaimComponent {
             winConfirmation.ShowNoButton = false;
             winConfirmation.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             winConfirmation.ShowCancelButton = false;
-            winConfirmation.Show(TextCodeTranslator.Translate("Customs.General.O.SelectOneEntityAtLeast"));
+            winConfirmation.Show("חובה לבחור לפחות ישות תביעה אחת לשליחה");
             return;
         }
         this.PreClaimSendChecks();
@@ -312,7 +276,7 @@ export class SendClaimComponent {
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => this.OnAddEditWindowClosed($event));
-        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
     }
 
     OnAddEditWindowClosed(event) {
@@ -329,11 +293,10 @@ export class SendClaimComponent {
         currRequestParams.RequestName = "Claim Request";
         currRequestParams.ResponseName = "Claim Response";
         currRequestParams.ForcePersonalSign = this.ForcePersonalSign;
-        currRequestParams.HsmStationContext = HsmStationContext.Import;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,
-                "שליחת תביעה", false)
+            .ShowProgressBar(currRequestParams.PBId,
+            "שליחת תביעה", false)
             .then((res) => {
                 console.log(res);
                 this.ResponseData = res;

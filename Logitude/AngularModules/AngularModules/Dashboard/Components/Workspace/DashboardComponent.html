@@ -1,10 +1,10 @@
-
 <style>
     a {
         color: black;
         text-decoration: none;
         cursor: auto;
     }
+
 
     .selected {
         background: #87CEEB;
@@ -17,530 +17,379 @@
     }
 
     .amcharts-pie-slice {
-        cursor: default !important;
-    }
+  cursor:default !important;
+}
+
 
     .Enabled {
         pointer-events: auto;
         cursor: pointer;
     }
 
-    .Enabled:hover {
-        text-decoration: underline;
+        .Enabled:hover {
+            text-decoration: underline;
+        }
+
+
+
+    .notSelected {
     }
+
+        .notSelected:hover {
+            background-color: #F0F8FF;
+            cursor: pointer;
+        }        
 </style>
-<div #MoreDetiles></div>
-<table *ngIf="IsMenuVisible">
-    <tr>
-        <td>
-            <div class="MediaFill">
-                <div *ngIf="isNotMoreDetails" style="width:100%;height:100%">
-                    <table>
-                        <tr style="height:10px;width:100%;">
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <table>
-                                    <tr>
-
-                                        <td>
-                                            <table>
-                                                <tr class="SectionHeader" style="height:27px">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <label>Activity Status</label>
-                                                                </td>
-                                                                <td style="width:100px;padding-bottom:4px">
-                                                                    <button style="font-size:xx-small;margin-top:2px;background-color:transparent;cursor:pointer;text-decoration:underline;color:#1d1dce;margin-right:4px;float:right"
-                                                                            (click)="OpenDashBoard()">
-                                                                        More Details
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height:5px">
-                                                    <td></td>
-                                                </tr>
-                                                <tr style="height:20px">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="width:120px">
-                                                                                <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event"
-                                                                                          [ItemsSource]="DateTypeFilterList"
-                                                                                          [SelectedItem]="SelectedDateTypeItem"
-                                                                                          [Binding]="'Title'"></ComboBox>
-                                                                            </td>
-                                                                            <td style="width:3px"></td>
-
-                                                                            <td style="width:120px">
-                                                                                <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event"
-                                                                                          [ItemsSource]="TimeRangeFilterList"
-                                                                                          [SelectedItem]="SelectedTimeRangeItem"
-                                                                                          [Binding]="'Title'"></ComboBox>
-                                                                            </td>
-                                                                            <td style="width:3px"></td>
-
-                                                                            <td style="width:120px">
-                                                                                <LogDatePicker [NoObjectField]="true"
-                                                                                               [SelectedDateValue]="ActivityToDate"
-                                                                                               [HideColumns]="true"
-                                                                                               [ObjectFieldName]="'ActivityToDate'"
-                                                                                               [ObjectTableName]="'Shipment'"
-                                                                                               [DataContext]="DataContext"></LogDatePicker>
-                                                                            </td>
-                                                                            <td style="width:3px"></td>
-
-                                                                            <td style="width:120px">
-                                                                                <LogDatePicker [NoObjectField]="true"
-                                                                                               [SelectedDateValue]="ActivityFromDate"
-                                                                                               [HideColumns]="true"
-                                                                                               [ObjectFieldName]="'ActivityFromDate'"
-                                                                                               [ObjectTableName]="'Shipment'"
-                                                                                               [DataContext]="DataContext"></LogDatePicker>
-                                                                            </td>
-                                                                            <td></td>
-
-                                                                            <td style="width:50px">Show:</td>
-                                                                            <td style="width:130px">
-                                                                                <ComboBox (SelectedItemChanged)="SelectedShowItem = $event"
-                                                                                          [ItemsSource]="ShowFilterList"
-                                                                                          [SelectedItem]="SelectedShowItem"
-                                                                                          [Binding]="'Title'"></ComboBox>
-                                                                            </td>
-
-                                                                        </tr>
-                                                                    </table>
-
-                                                                </td>
-
-                                                            </tr>
-                                                        </table>
-
-
-
-
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div [attr.id]="ActivityStatusDashboardId" class="MediaFill"></div>
-                                                        <div *ngIf="NoShipmentsInActivityStatus"
-                                                             style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
-                                                            <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">
-                                                                No
-                                                                Shipments
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height:10px">
-                                                    <td></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                        <td style="width:10px;max-width:10px;min-width:10px"></td>
-                                        <td style="width:300px;height:50%">
-                                            <table>
-                                                <tr class="SectionHeader" style="height:27px">
-                                                    <td>
-                                                        <label>Daily Spotlights</label>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height:10px">
-                                                    <td></td>
-                                                </tr>
-
-                                                <tr style="height:1px">
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-
-                                                                <td>
-                                                                    <table>
-                                                                        <tr style="height:25px">
-                                                                            <td style="width:80px"></td>
-                                                                            <td style="width:10px"></td>
-
-                                                                            <td style="vertical-align:top;text-align:center;background-color:#dbf1fe;border-top-left-radius:5px;border-top-right-radius:5px;width:60px">
-                                                                                <a style="font-size:x-small;">Today</a>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-                                                                            <td style="vertical-align:top;text-align:center;background-color:#dddddd;border-top-left-radius:5px;border-top-right-radius:5px;width:60px">
-                                                                                <a style="font-size:x-small">Yesterday</a>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-                                                                            <td style="vertical-align:top;text-align:center;background-color:#dddddd;border-top-left-radius:5px;border-top-right-radius:5px;width:60px">
-                                                                                <a style="font-size:x-small">Last Week</a>
-                                                                            </td>
-                                                                            <td></td>
-                                                                        </tr>
-
-
-
-
-                                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD ; ">
-
-                                                                            <td style="vertical-align:middle;text-align:left">
-                                                                                <label style="font-size:small">Shipments</label>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe">
-                                                                                <button style="font-size:large;color:cornflowerblue;background-color:transparent"
-                                                                                        [class.Enabled]="!Shipments_Today_Status"
-                                                                                        class="Enabled"
-                                                                                        [disabled]="Shipments_Today_Status"
-                                                                                        (click)="DailySpotLightClick('SH_TD')">
-                                                                                    {{dailySpotLightClass.Shipments_Today}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!Shipments_Yesterday_Status"
-                                                                                        [disabled]="Shipments_Yesterday_Status"
-                                                                                        (click)="DailySpotLightClick('SH_YS')">
-                                                                                    {{dailySpotLightClass.Shipments_Yesterday}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!Shipments_LastWeek_Status"
-                                                                                        [disabled]="Shipments_LastWeek_Status"
-                                                                                        (click)="DailySpotLightClick('SH_LW')">
-                                                                                    {{dailySpotLightClass.Shipments_LastWeek}}
-                                                                                </button>
-                                                                            </td>
-
-
-                                                                        </tr>
-
-
-                                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
-                                                                            <td style="vertical-align:middle;text-align:left">
-                                                                                <label style="font-size:small;width:50px">Invoices</label>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe">
-                                                                                <button style="font-size:large;color:cornflowerblue;background-color:transparent"
-                                                                                        [class.Enabled]="!ARInvoices_Today_Status"
-                                                                                        [disabled]="ARInvoices_Today_Status"
-                                                                                        (click)="DailySpotLightClick('AR_TD')">
-                                                                                    {{dailySpotLightClass.ARInvoices_Today}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!ARInvoices_Yesterday_Status"
-                                                                                        [disabled]="ARInvoices_Yesterday_Status"
-                                                                                        (click)="DailySpotLightClick('AR_YS')">
-                                                                                    {{dailySpotLightClass.ARInvoices_Yesterday}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!ARInvoices_LastWeek_Status"
-                                                                                        [disabled]="ARInvoices_LastWeek_Status"
-                                                                                        (click)="DailySpotLightClick('AR_LW')">
-                                                                                    {{dailySpotLightClass.ARInvoices_LastWeek}}
-                                                                                </button>
-                                                                            </td>
-
-                                                                        </tr>
-
-
-
-                                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
-
-                                                                            <td style="vertical-align:middle;text-align:left;width:50px">
-                                                                                <label style="font-size:small;">Quotes</label>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe">
-                                                                                <button style="font-size:large;color:cornflowerblue;background-color:transparent"
-                                                                                        [class.Enabled]="!Quotes_Today_Status"
-                                                                                        [disabled]="Quotes_Today_Status"
-                                                                                        (click)="DailySpotLightClick('QT_TD')">
-                                                                                    {{dailySpotLightClass.Quotes_Today}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!Quotes_Yesterday_Status"
-                                                                                        [disabled]="Quotes_Yesterday_Status"
-                                                                                        (click)="DailySpotLightClick('QT_YS')">
-                                                                                    {{dailySpotLightClass.Quotes_Yesterday}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!Quotes_LastWeek_Status"
-                                                                                        [disabled]="Quotes_LastWeek_Status"
-                                                                                        (click)="DailySpotLightClick('QT_LW')">
-                                                                                    {{dailySpotLightClass.Quotes_LastWeek}}
-                                                                                </button>
-                                                                            </td>
-
-                                                                        </tr>
-                                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
-                                                                            <td style="vertical-align:middle;text-align:left">
-                                                                                <label style="font-size:small;">
-                                                                                    New
-                                                                                    Customers
-                                                                                </label>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe;border-bottom-left-radius:5px;border-bottom-right-radius:5px;color:cornflowerblue">
-                                                                                <button style="font-size:large;color:cornflowerblue;background-color:transparent"
-                                                                                        [class.Enabled]="!Customers_Today_Status"
-                                                                                        [disabled]="Customers_Today_Status"
-                                                                                        (click)="DailySpotLightClick('CS_TD')">
-                                                                                    {{dailySpotLightClass.Customers_Today}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-                                                                            <td style="vertical-align:middle;text-align:center ;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!Customers_Yesterday_Status"
-                                                                                        [disabled]="Customers_Yesterday_Status"
-                                                                                        (click)="DailySpotLightClick('CS_YS')">
-                                                                                    {{dailySpotLightClass.Customers_Yesterday}}
-                                                                                </button>
-                                                                            </td>
-                                                                            <td style="width:10px;min-width:3px"></td>
-
-                                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px">
-                                                                                <button style="font-size:large;background-color:transparent"
-                                                                                        [class.Enabled]="!Customers_LastWeek_Status"
-                                                                                        [disabled]="Customers_LastWeek_Status"
-                                                                                        (click)="DailySpotLightClick('CS_LW')">
-                                                                                    {{dailySpotLightClass.Customers_LastWeek}}
-                                                                                </button>
-                                                                            </td>
-
-                                                                        </tr>
-
-
-                                                                    </table>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <div></div>
-                                                    </td>
-                                                </tr>
-
-                                            </table>
-                                        </td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <table>
-                                                <tr class="SectionHeader" style="height:27px">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <label>Money In ({{MoneyInLabel}})</label>
-
-                                                                </td>
-                                                                <td style="width:200px;padding-bottom:4px;font:small;vertical-align:central">
-                                                                    <label style="float:right;font-size:12px;margin-top:2px;margin-right:3px">Payments</label>
-                                                                    <div style="width:15px;height:15px;background-color:rgb(42 , 168, 204);float:right;margin-top:4px;">
-                                                                    </div>
-                                                                    <label style="float:right;margin-right:7px;font-size:12px;margin-top:2px;">Invoices</label>
-                                                                    <div style="width:5px;float:right"></div>
-                                                                    <div style="width:15px;height:15px;margin-top:4px;background-color:rgb(210, 145, 39);float:right">
-                                                                    </div>
-                                                                    <div style="width:5px;float:right"></div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height:5px">
-                                                    <td></td>
-                                                </tr>
-                                                <tr style="height:20px">
-                                                    <td>
-
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td style="width:80px">
-                                                                                <label>Time Range</label>
-                                                                            </td>
-                                                                            <td style="width:3px"></td>
-
-                                                                            <td style="width:120px">
-                                                                                <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem2 = $event"
-                                                                                          [ItemsSource]="TimeRangeFilterList2"
-                                                                                          [SelectedItem]="SelectedTimeRangeItem2"
-                                                                                          [Binding]="'Title'"></ComboBox>
-                                                                            </td>
-                                                                            <td style="width:3px"></td>
-
-                                                                            <td style="width:120px">
-                                                                                <LogDatePicker [NoObjectField]="true"
-                                                                                               [SelectedDateValue]="MoneyToDate"
-                                                                                               [HideColumns]="true"
-                                                                                               [ObjectFieldName]="'MoneyToDate'"
-                                                                                               [ObjectTableName]="'Shipment'"
-                                                                                               [DataContext]="DataContext"></LogDatePicker>
-                                                                            </td>
-                                                                            <td style="width:3px"></td>
-
-                                                                            <td style="width:120px">
-                                                                                <LogDatePicker [NoObjectField]="true"
-                                                                                               [SelectedDateValue]="MoneyFromDate"
-                                                                                               [HideColumns]="true"
-                                                                                               [ObjectFieldName]="'MoneyFromDate'"
-                                                                                               [ObjectTableName]="'Shipment'"
-                                                                                               [DataContext]="DataContext"></LogDatePicker>
-                                                                            </td>
-                                                                            <td></td>
-
-                                                                        </tr>
-                                                                    </table>
-
-                                                                </td>
-
-                                                            </tr>
-                                                        </table>
-
-
-
-
-                                                    </td>
-
-                                                </tr>
-                                                <tr style="height:15px">
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div [attr.id]="MoneyInDashboardId" class="MediaFill"></div>
-
-                                                    </td>
-
-
-                                                </tr>
-                                            </table>
-
-                                        </td>
-                                        <td style="width:10px;max-width:10px;min-width:10px"></td>
-
-                                        <td style="width:300px">
-
-                                            <table>
-                                                <tr class="SectionHeader" style="height:27px">
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <label>Top 5 Debtors Exposure</label>
-                                                                </td>
-                                                                <td></td>
-
-                                                                <td style="width:80px">
-                                                                    <ul class="FiltersMenu">
-                                                                        <li (click)="ChangeCurrency(ProfitCurrencyCode)"
-                                                                            [class.SelectedFilter]="SelectedCurrency === '2'"
-                                                                            style="width:33px;">
-                                                                            {{ProfitCurrencyCode}}
-                                                                        </li>
-                                                                        <li (click)="ChangeCurrency(LocalCurrencyCode)"
-                                                                            [class.SelectedFilter]="SelectedCurrency === '1'"
-                                                                            style="width:33px;">
-                                                                            {{LocalCurrencyCode}}
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
-
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-
-                                                </tr>
-                                                <tr style="height:10px">
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-
-
-                                                    <td>
-                                                        <table>
-                                                            <tr>
-                                                                <td>
-                                                                    <div [attr.id]="TopFiveDashboardId" class="MediaFill"></div>
-                                                                </td>
-                                                                <td style="width:100px;min-width:100px;overflow-y:auto">
-                                                                    <div class="MediaFill">
-                                                                        <ScrollViewer [Small]="true">
-                                                                            <div [attr.id]="TopFiveDashboardLegendId"
-                                                                                 style="position:relative;width:100%;float:left">
-                                                                            </div>
-                                                                        </ScrollViewer>
-                                                                    </div>
-                                                                </td>
-
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-
-                                        </td>
-
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-
-
-                    </table>
-                </div>
-
-                <div *ngIf="!isNotMoreDetails" style="width:100%;height:100%">
-                    <ActivityStatusDetails [Show]="!isNotMoreDetails" (BackButtonClickedEvent)="OnMoreDetailsBackButtonClicked($event)"></ActivityStatusDetails>
-                </div>
-            </div>
-        </td>
-    </tr>
-</table>
+
+<div *ngIf="isNotMoreDetails" style="width:100%;height:100%">
+    <table >
+        <tr style="height:10px;width:100%;">
+            <td></td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+
+                        <td>
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Activity Status</label>
+                                                </td>
+                                                <td style="width:100px;padding-bottom:4px">
+                                                    <button style="font-size:xx-small;margin-top:2px;background-color:transparent;cursor:pointer;text-decoration:underline;color:#1d1dce;margin-right:4px;float:right" (click)="OpenDashBoard()">More Details</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px">
+                                    <td></td>
+                                </tr>
+                                <tr style="height:20px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:120px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedDateTypeItem = $event" [ItemsSource]="DateTypeFilterList" [SelectedItem]="SelectedDateTypeItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem = $event" [ItemsSource]="TimeRangeFilterList" [SelectedItem]="SelectedTimeRangeItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityToDate" [HideColumns]="true" [ObjectFieldName]="'ActivityToDate'" [ObjectTableName]="'Shipment'"  [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="ActivityFromDate" [HideColumns]="true" [ObjectFieldName]="'ActivityFromDate'" [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                            <td></td>
+
+                                                            <td style="width:50px">Show:</td>
+                                                            <td style="width:130px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedShowItem = $event" [ItemsSource]="ShowFilterList" [SelectedItem]="SelectedShowItem" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+
+                                                        </tr>
+                                                    </table>
+
+                                                </td>                                               
+
+                                            </tr>
+                                        </table>
+
+
+
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div [attr.id]="ActivityStatusDashboardId" class="MediaFill"></div>
+                                        <div *ngIf="NoShipmentsInActivityStatus" style="text-align:center;vertical-align:central;width:100%;overflow-y:hidden">
+                                            <label style="font-size:large;text-align:center;vertical-align:central;width:100%;height:100%">No Shipments</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px">
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:10px;max-width:10px;min-width:10px"></td>
+                        <td style="width:300px;height:50%">
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <label>Daily Spotlights</label>
+                                    </td>
+                                </tr>
+                                <tr style="height:10px">
+                                    <td></td>
+                                </tr>
+
+                                <tr style="height:1px">
+
+                                    <td>
+                                        <table>
+                                            <tr>
+
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:25px">
+                                                            <td style="width:80px"></td>
+                                                            <td style="width:10px"></td>
+
+                                                            <td style="vertical-align:top;text-align:center;background-color:#dbf1fe;border-top-left-radius:5px;border-top-right-radius:5px;width:60px"><a style="font-size:x-small;">Today</a></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:top;text-align:center;background-color:#dddddd;border-top-left-radius:5px;border-top-right-radius:5px;width:60px"><a style="font-size:x-small">Yesterday</a></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:top;text-align:center;background-color:#dddddd;border-top-left-radius:5px;border-top-right-radius:5px;width:60px"><a style="font-size:x-small">Last Week</a></td>
+                                                            <td></td>
+                                                        </tr>
+
+
+
+
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD ; ">
+
+                                                            <td style="vertical-align:middle;text-align:left"><label style="font-size:small">Shipments</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!Shipments_Today_Status" class="Enabled" [disabled]="Shipments_Today_Status" (click)="DailySpotLightClick('SH_TD')">{{dailySpotLightClass.Shipments_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Shipments_Yesterday_Status" [disabled]="Shipments_Yesterday_Status" (click)="DailySpotLightClick('SH_YS')">{{dailySpotLightClass.Shipments_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Shipments_LastWeek_Status" [disabled]="Shipments_LastWeek_Status" (click)="DailySpotLightClick('SH_LW')">{{dailySpotLightClass.Shipments_LastWeek}}</button></td>
+
+
+                                                        </tr>
+
+
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
+                                                            <td style="vertical-align:middle;text-align:left"><label style="font-size:small;width:50px">Invoices</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!ARInvoices_Today_Status" [disabled]="ARInvoices_Today_Status" (click)="DailySpotLightClick('AR_TD')">{{dailySpotLightClass.ARInvoices_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!ARInvoices_Yesterday_Status" [disabled]="ARInvoices_Yesterday_Status" (click)="DailySpotLightClick('AR_YS')">{{dailySpotLightClass.ARInvoices_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!ARInvoices_LastWeek_Status" [disabled]="ARInvoices_LastWeek_Status" (click)="DailySpotLightClick('AR_LW')">{{dailySpotLightClass.ARInvoices_LastWeek}}</button></td>
+
+                                                        </tr>
+
+
+
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
+
+                                                            <td style="vertical-align:middle;text-align:left;width:50px"><label style="font-size:small;">Quotes</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!Quotes_Today_Status" [disabled]="Quotes_Today_Status" (click)="DailySpotLightClick('QT_TD')">{{dailySpotLightClass.Quotes_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Quotes_Yesterday_Status" [disabled]="Quotes_Yesterday_Status" (click)="DailySpotLightClick('QT_YS')">{{dailySpotLightClass.Quotes_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Quotes_LastWeek_Status" [disabled]="Quotes_LastWeek_Status" (click)="DailySpotLightClick('QT_LW')">{{dailySpotLightClass.Quotes_LastWeek}}</button></td>
+
+                                                        </tr>
+                                                        <tr style="height:50px;border-bottom:dashed 0.05px #BDBDBD;">
+                                                            <td style="vertical-align:middle;text-align:left"><label style="font-size:small;">New Customers</label> </td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dbf1fe;border-bottom-left-radius:5px;border-bottom-right-radius:5px;color:cornflowerblue"><button style="font-size:large;color:cornflowerblue;background-color:transparent" [class.Enabled]="!Customers_Today_Status" [disabled]="Customers_Today_Status" (click)="DailySpotLightClick('CS_TD')">{{dailySpotLightClass.Customers_Today}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+                                                            <td style="vertical-align:middle;text-align:center ;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Customers_Yesterday_Status" [disabled]="Customers_Yesterday_Status" (click)="DailySpotLightClick('CS_YS')">{{dailySpotLightClass.Customers_Yesterday}}</button></td>
+                                                            <td style="width:10px;min-width:3px"></td>
+
+                                                            <td style="vertical-align:middle;text-align:center;background-color:#dddddd;border-bottom-left-radius:5px;border-bottom-right-radius:5px"><button style="font-size:large;background-color:transparent" [class.Enabled]="!Customers_LastWeek_Status" [disabled]="Customers_LastWeek_Status" (click)="DailySpotLightClick('CS_LW')">{{dailySpotLightClass.Customers_LastWeek}}</button></td>
+
+                                                        </tr>
+
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+
+                                <tr><td><div></div></td></tr>
+
+                            </table>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Money In ({{MoneyInLabel}})</label>
+
+                                                </td>
+                                                <td style="width:200px;padding-bottom:4px;font:small;vertical-align:central">
+                                                    <label style="float:right;font-size:12px;margin-top:2px;margin-right:3px">Payments</label><div style="width:15px;height:15px;background-color:rgb(42 , 168, 204);float:right;margin-top:4px;"></div>
+                                                    <label style="float:right;margin-right:7px;font-size:12px;margin-top:2px;">Invoices</label><div style="width:5px;float:right"></div>
+                                                    <div style="width:15px;height:15px;margin-top:4px;background-color:rgb(210, 145, 39);float:right"></div>
+                                                    <div style="width:5px;float:right"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr style="height:5px">
+                                    <td></td>
+                                </tr>
+                                <tr style="height:20px">
+                                    <td>
+
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:80px">
+                                                                <label>Time Range</label>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <ComboBox (SelectedItemChanged)="SelectedTimeRangeItem2 = $event" [ItemsSource]="TimeRangeFilterList2" [SelectedItem]="SelectedTimeRangeItem2" [Binding]="'Title'"></ComboBox>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="MoneyToDate" [HideColumns]="true" [ObjectFieldName]="'MoneyToDate'"  [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                            <td style="width:3px"></td>
+
+                                                            <td style="width:120px">
+                                                                <LogDatePicker [NoObjectField]="true" [SelectedDateValue]="MoneyFromDate" [HideColumns]="true" [ObjectFieldName]="'MoneyFromDate'"  [ObjectTableName]="'Shipment'" [DataContext]="DataContext"></LogDatePicker>
+                                                            </td>
+                                                            <td></td>                                                          
+
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+
+                                            </tr>
+                                        </table>
+
+
+
+
+                                    </td>
+
+                                </tr>
+                                <tr style="height:15px">
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div [attr.id]="MoneyInDashboardId"  class="MediaFill"></div>
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+
+                        </td>
+                        <td style="width:10px;max-width:10px;min-width:10px"></td>
+
+                        <td style="width:300px">
+
+                            <table>
+                                <tr class="SectionHeader" style="height:27px">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <label>Top 5 Debtors Exposure</label>
+                                                </td>
+                                                <td></td>
+
+                                                <td style="width:80px">
+                                                    <ul class="FiltersMenu">
+                                                        <li (click)="ChangeCurrency(ProfitCurrencyCode)" [class.SelectedFilter]="SelectedCurrency === '2'" style="width:33px;">
+                                                            {{ProfitCurrencyCode}}
+                                                        </li>
+                                                        <li (click)="ChangeCurrency(LocalCurrencyCode)" [class.SelectedFilter]="SelectedCurrency === '1'" style="width:33px;">
+                                                            {{LocalCurrencyCode}}
+                                                        </li>
+                                                    </ul>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                                <tr style="height:10px">
+                                    <td></td>
+                                </tr>
+                                <tr>
+
+
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <div [attr.id]="TopFiveDashboardId"  class="MediaFill" ></div>
+                                                </td>
+                                                <td style="width:100px;min-width:100px;overflow-y:auto">
+                                                    <div class="MediaFill">
+                                                        <ScrollViewer [Small]="true">
+                                                            <div [attr.id]="TopFiveDashboardLegendId" style="position:relative;width:100%;float:left"></div>
+                                                        </ScrollViewer>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>           
+                                </tr>
+                            </table>
+
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+       
+    </table>
+</div>
+<div *ngIf="!isNotMoreDetails">  
+    <table>
+
+    </table>
+</div>

@@ -20,7 +20,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data; 
 using Logitude.CRM.Data.EntityMapping;
-using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.CRM.Data
 {
@@ -51,16 +50,6 @@ namespace Logitude.CRM.Data
             CRMContext context = new CRMContext(connection);
             return context;
         }
-        public static ICRMContext GetSecContext(int tenant)
-		{
-			GlobalDB currentDb;
-			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-			string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-			DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
-			CRMContext context = new CRMContext(connection);
-			return context;
-		}
-
         public override LogitudeDBSchema LogitudeDBSchema
         {
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
@@ -70,7 +59,7 @@ namespace Logitude.CRM.Data
         {
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = OracleEntityProviderConfig.Instance;
+                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
                 
@@ -158,8 +147,6 @@ namespace Logitude.CRM.Data
 	
             modelBuilder.Configurations.Add(new StageMap());
 	
-            modelBuilder.Configurations.Add(new SupportMailboxMap());
-	
             modelBuilder.Configurations.Add(new TicketMap());
 	
             modelBuilder.Configurations.Add(new TicketClassificationMap());
@@ -209,6 +196,7 @@ namespace Logitude.CRM.Data
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -710,12 +698,6 @@ namespace Logitude.CRM.Data
 	 
 	 }
 	
-	 public IDbSet<SupportMailbox> SupportMailboxes 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<Ticket> Tickets 
 	 {
 	      get; set;
@@ -769,10 +751,7 @@ namespace Logitude.CRM.Data
 	      get; set;
 	 
 	 }
-	 public IDbSet<OpportunityAnalytic> OpportunityAnalytics
-	 {
-	      get; set;	 
-	 }
+	  
  }
 
 

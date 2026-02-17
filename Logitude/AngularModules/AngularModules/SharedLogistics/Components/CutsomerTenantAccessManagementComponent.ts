@@ -35,7 +35,7 @@ import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
 import {ObservableCollection} from '../../Infrastructure/Utilities/ObservableCollection';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CutsomerTenantAccessManagementComponent.html',
     providers: [SharedLogisticsService, DocumentTypeListService],
 })
@@ -64,7 +64,6 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     AcceptedCountEnabled: boolean;
     InProgressCountEnabled: boolean;
     InactiveCountEnabled: boolean;
-    IsCreateLogboxTenantVisibile: boolean;
     public ItemsSource: ObservableCollection;
    
 
@@ -81,7 +80,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe(response => {
             this.LoadData();
         });
     }
@@ -91,13 +90,12 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     LoadData() {
         this.LoadCurrentTenant();
         this.LoadLastCustomerRequest();
-        this.IsCreateLogboxTenantVisibile = FeatureLocator.HasFeaturePermession("CustomerTenantAccess", "CreateNewTenant");
     }
 
 
 
     LoadCurrentTenant() {
-        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this.tenantPMService.get(SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -110,11 +108,10 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     }
 
     LoadLastCustomerRequest() {
-        this._sharedLogisticsService.GetLastCustomerRequest(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+        this._sharedLogisticsService.GetLastCustomerRequest(SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.LastCustomerRequestList = pmResponse.Result;
-                this.ItemsSource.Clear();
                 this.LastCustomerRequestList.forEach((item) => {
                     this.ItemsSource.Insert(item);
                 });
@@ -140,7 +137,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
     RefreshTenantScreenData() {
 
-        if (this.myTenantPM != null && !this.myTenantPM.CustomerTenantShareCustomsFile) {
+        if (this.myTenantPM != null && !this.myTenantPM.IsCustomerTenantShare) {
             this.EnableAccess = false;
         }
 
@@ -150,7 +147,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
 
     loadCustomerRequestStatusData() {
-        this._sharedLogisticsService.getCustomerTenantAccessRequestStatusCount(SessionInfo.LoggedUserTenant).subscribe((res: any) => {
+        this._sharedLogisticsService.getCustomerTenantAccessRequestStatusCount(SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -197,17 +194,6 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
     }
 
-    CreateLogboxTenantLinkClick() {
-        let windowArgs: any = {};
-        windowArgs.IsCreateLogboxTenantFromCloud = true;
-        windowArgs.LogBoxAdminUserId = this.myTenantPM.LogBoxAdminUserId;
-        var logWindow = new LogitudeWindow();
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 750;
-        logWindow.Height = 500;
-        logWindow.Title = "Create Tenant";
-        logWindow.Show("./InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantComponent");
-    }
 
 
 
@@ -247,7 +233,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             //listArgs.ShowViews = false;
-            //this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+            //this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -443,7 +429,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
         if (item.PartnerTypeName == "Customer") {
             item.IsEnabledShowDetailsButton = false;
-            this._customerPMService.get(item.CardId).subscribe((res:any) => {
+            this._customerPMService.get(item.CardId).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 item.IsEnabledShowDetailsButton = true;
                 if (!pmResponse.HasError) {
@@ -484,12 +470,5 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
         logitudeWindow.Height = 500;
         logitudeWindow.Width = 800;
         logitudeWindow.Show("./SharedLogistics/Components/ViewBlocedCustomerComponent");
-    }
-
-
-    RefreshButtonClicked() {
-        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe((response: any) => {
-            this.LoadData();
-        });
     }
 }

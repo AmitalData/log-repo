@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { TariffPM } from '../../EntityPMs/TariffPM';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "TariffHelperComponent.html",
 })
 export class TariffHelperComponent {

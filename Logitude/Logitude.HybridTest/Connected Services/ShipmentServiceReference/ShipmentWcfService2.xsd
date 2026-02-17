@@ -375,19 +375,6 @@
       <xs:element minOccurs="0" name="HasOnCarriage" type="xs:boolean" />
       <xs:element minOccurs="0" name="HasPreCarriage" type="xs:boolean" />
       <xs:element minOccurs="0" name="House" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingError" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_PODCCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_PODCName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_PODDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_PODPort" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_PODPortCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_POFCCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_POFCName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_POFPort" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_POFPortCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_POLDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_ShippingLine" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="INTTRABookingResponse_Voyage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingStatusCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingStatusName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRABookingTransStatusCode" nillable="true" type="xs:string" />
@@ -398,7 +385,6 @@
       <xs:element minOccurs="0" name="INTTRADocumentTypeCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRAInstructions" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRAIsFreighted" type="xs:boolean" />
-      <xs:element minOccurs="0" name="INTTRALastBookingResponse" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRALastStatusDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="INTTRASIError" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="INTTRASIStatusCode" nillable="true" type="xs:string" />

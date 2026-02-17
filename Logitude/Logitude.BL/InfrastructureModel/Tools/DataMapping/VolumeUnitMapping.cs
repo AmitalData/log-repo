@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -9,7 +9,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
         {
             poco.Code = entityPM.Code;
             poco.Name = entityPM.Name;
-            poco.PrintAs = entityPM.PrintAs;
             poco.SearchFields = entityPM.SearchFields; 
 
         }

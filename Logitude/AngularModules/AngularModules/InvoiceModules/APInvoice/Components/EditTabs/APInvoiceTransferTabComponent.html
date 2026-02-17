@@ -1,30 +1,29 @@
+﻿<table>
+    <tr>
+        <td>
+            <div class="TabHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'APInvoice.TH.Transfer' | TextCodeTranslationPipe}}</td>
+                    </tr>
+                   
+                    <tr style="height:22px;">
+                        <td>
+                            <div class="OrangeInfo" style="padding-left:5px;color:black;">
+                                Note that updating the fields will update this specific invoice only
+                            </div>
+                        </td>
+                    </tr>
 
-<table>
-  <tr>
-    <td>
-      <div class="TabHolder">
-        <table>
-          <tr class="TabTitleRow">
-            <td>{{'APInvoice.TH.Transfer' | TextCodeTranslationPipe}}</td>
-          </tr>
-
-          <tr style="height:22px;">
-            <td>
-              <div class="OrangeInfo" style="padding-left:5px;color:black;">
-                Note that updating the fields will update this specific invoice only
-              </div>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <div class="MediaFill">
-                <div class="LocationDirective" ChildDirective></div>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </td>
-  </tr>
+                    <tr style="vertical-align:top;">
+                        <td>
+                            <div class="MediaFill">
+                                <div class="LocationDirective" #Child></div>
+                            </div>
+                        </td>
+                    </tr>                   
+                </table>
+            </div>
+        </td>
+    </tr>
 </table>

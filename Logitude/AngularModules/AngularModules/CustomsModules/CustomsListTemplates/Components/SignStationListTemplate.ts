@@ -17,7 +17,7 @@ import { ResponseDataBase } from '../../../Customs/DataContract/ResponseData/Res
 
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SignStationListTemplate.html',
 })
 

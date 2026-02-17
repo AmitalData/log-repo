@@ -10,14 +10,12 @@ using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.Batch
@@ -45,8 +43,6 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         private void RunService(IntegrityCheckArgs args)
         {
             bool shouldFix=false;
-            string stringXML = string.Empty;
-            string stringXML_toSend = string.Empty;
             try
             {
 
@@ -133,29 +129,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     }
                     entityPM.ShouldFix = res.ShouldFix;
                     // serialize resultXML
-                    stringXML = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res);
-                    List<AccountingIntegrityStep> errorSteps = new List<AccountingIntegrityStep>();
-                    res.MyAccountingIntegrityStep.ForEach(s =>
-                    {
-                        if (s != null && (!String.IsNullOrEmpty(s.ExceptionMessage) || s.ShouldFix || s.BadRows > 0))
-                        {
-                            errorSteps.Add(s);
-                        }
-                    });
-                    AccountingIntegrityResult res_toSend = new AccountingIntegrityResult()
-                    {
-                        LedgerOpenAmount = res.LedgerOpenAmount,
-                        MyAccountingIntegrityStep = errorSteps,
-                        BalanceInLocalCurrencyResult = res.BalanceInLocalCurrencyResult,
-                        DueLocalBalance = res.DueLocalBalance,
-                        HasException = res.HasException,
-                        JournalLineToLedgerResult = res.JournalLineToLedgerResult,
-                        LedgerToMounthTotalResult = res.LedgerToMounthTotalResult,
-                        ShouldFix = res.ShouldFix,
-                        TotalOpenReconciliationResult = res.TotalOpenReconciliationResult,
-                        InterestReportResult = res.InterestReportResult
-                    };
-                    stringXML_toSend = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res_toSend);
+                    string stringXML = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res);
 
                     // update
                     entityPM.ResultXML = stringXML;
@@ -172,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
                     if (shouldFix)
                     {
-                        SendEmailWhileError(args.Tenant, "has been failed", stringXML_toSend);
+                        SendEmailWhileError(args.Tenant, "has been failed");
                     }
                     else
                     {
@@ -186,30 +160,20 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
         }
 
-        private void SendEmailWhileError(int tenant, string remark, string stringXML)
+        private void SendEmailWhileError(int tenant, string remark)
         {
             try
             {
 
-                bool formatXml = true;
-                if (formatXml)
-                {
-                    XDocument doc = XDocument.Parse(stringXML);
-                    stringXML = doc.ToString();
-                }
-                
-
 
                 var error = $"Integrity Check for tenant:{tenant} {remark}  (TASK 56708)";
-                string emailbody = $"<div><div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>{error}</div><xmp>{stringXML}</xmp></div></div>";
-
+                string emailbody = $"<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>{error}</div>";
                 EmailCommunicationParams emailParams = new EmailCommunicationParams();
 
                 emailParams = new EmailCommunicationParams()
                 {
-                    From = SettingUtil.Emails.FromNoReply,
-                    To = SettingUtil.Emails.AccountingManagers,
-                    CC = SettingUtil.Emails.DevTeamManagers,
+                    From = "admin@fnarsoft.com",
+                    To = "eyal@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il",
                     Subject = error,
                     EmailBody = emailbody,
                     Tenant = tenant,

@@ -9,7 +9,7 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ManageDefaultsComponent.html',
 })
 
@@ -196,7 +196,7 @@ export class ManageDefaultsComponent {
             this.myDomainService = new CommonDomainService();
         }
 
-        this.myDomainService.InvokeUpdateAutoDisplay(myChargeId, myPropertyTypeCode, isAutoDisplay).subscribe((myResult:any) => {
+        this.myDomainService.InvokeUpdateAutoDisplay(myChargeId, myPropertyTypeCode, isAutoDisplay).subscribe(myResult => {
 
         });
     }

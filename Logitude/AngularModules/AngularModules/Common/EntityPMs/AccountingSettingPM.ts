@@ -20,7 +20,7 @@ export class AccountingSettingPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -145,11 +145,6 @@ export class AccountingSettingPM {
     public set ARPaymentTransferStartDate(newValue: Date) { if (this.aRPaymentTransferStartDate != newValue) { this.aRPaymentTransferStartDate = newValue; this.MarkAsDirty("ARPaymentTransferStartDate"); } }
        
 	 
-    private aPPaymentTransferStartDate: Date;
-    public get APPaymentTransferStartDate() { return this.aPPaymentTransferStartDate; }
-    public set APPaymentTransferStartDate(newValue: Date) { if (this.aPPaymentTransferStartDate != newValue) { this.aPPaymentTransferStartDate = newValue; this.MarkAsDirty("APPaymentTransferStartDate"); } }
-       
-	 
     private allowPositiveAmountsInTheCreditNote: boolean;
     public get AllowPositiveAmountsInTheCreditNote() { return this.allowPositiveAmountsInTheCreditNote; }
     public set AllowPositiveAmountsInTheCreditNote(newValue: boolean) { if (this.allowPositiveAmountsInTheCreditNote != newValue) { this.allowPositiveAmountsInTheCreditNote = newValue; this.MarkAsDirty("AllowPositiveAmountsInTheCreditNote"); } }
@@ -158,6 +153,16 @@ export class AccountingSettingPM {
     private qBOrealMeID: string;
     public get QBOrealMeID() { return this.qBOrealMeID; }
     public set QBOrealMeID(newValue: string) { if (this.qBOrealMeID != newValue) { this.qBOrealMeID = newValue; this.MarkAsDirty("QBOrealMeID"); } }
+       
+	 
+    private qBOAccessToken: string;
+    public get QBOAccessToken() { return this.qBOAccessToken; }
+    public set QBOAccessToken(newValue: string) { if (this.qBOAccessToken != newValue) { this.qBOAccessToken = newValue; this.MarkAsDirty("QBOAccessToken"); } }
+       
+	 
+    private qBOAccessTokenSecret: string;
+    public get QBOAccessTokenSecret() { return this.qBOAccessTokenSecret; }
+    public set QBOAccessTokenSecret(newValue: string) { if (this.qBOAccessTokenSecret != newValue) { this.qBOAccessTokenSecret = newValue; this.MarkAsDirty("QBOAccessTokenSecret"); } }
        
 	 
     private vatNumber: string;
@@ -255,54 +260,11 @@ export class AccountingSettingPM {
     public set QBOOAuth(newValue: number) { if (this.qBOOAuth != newValue) { this.qBOOAuth = newValue; this.MarkAsDirty("QBOOAuth"); } }
        
 	 
-    private allowManualARPaymentNumber: boolean;
-    public get AllowManualARPaymentNumber() { return this.allowManualARPaymentNumber; }
-    public set AllowManualARPaymentNumber(newValue: boolean) { if (this.allowManualARPaymentNumber != newValue) { this.allowManualARPaymentNumber = newValue; this.MarkAsDirty("AllowManualARPaymentNumber"); } }
-       
-	 
-    private allowRegionalTaxManagement: boolean;
-    public get AllowRegionalTaxManagement() { return this.allowRegionalTaxManagement; }
-    public set AllowRegionalTaxManagement(newValue: boolean) { if (this.allowRegionalTaxManagement != newValue) { this.allowRegionalTaxManagement = newValue; this.MarkAsDirty("AllowRegionalTaxManagement"); } }
-       
-	 
-    private enableAPPaymentExternalPayment: boolean;
-    public get EnableAPPaymentExternalPayment() { return this.enableAPPaymentExternalPayment; }
-    public set EnableAPPaymentExternalPayment(newValue: boolean) { if (this.enableAPPaymentExternalPayment != newValue) { this.enableAPPaymentExternalPayment = newValue; this.MarkAsDirty("EnableAPPaymentExternalPayment"); } }
-       
-	 
-    private transferToFTPActivated: boolean;
-    public get TransferToFTPActivated() { return this.transferToFTPActivated; }
-    public set TransferToFTPActivated(newValue: boolean) { if (this.transferToFTPActivated != newValue) { this.transferToFTPActivated = newValue; this.MarkAsDirty("TransferToFTPActivated"); } }
-       
-	 
-    private transferFTPDetailId: string;
-    public get TransferFTPDetailId() { return this.transferFTPDetailId; }
-    public set TransferFTPDetailId(newValue: string) { if (this.transferFTPDetailId != newValue) { this.transferFTPDetailId = newValue; this.MarkAsDirty("TransferFTPDetailId"); } }
-       
-	 
-    private transferFTPDetailHost: string;
-    public get TransferFTPDetailHost() { return this.transferFTPDetailHost; }
-    public set TransferFTPDetailHost(newValue: string) { if (this.transferFTPDetailHost != newValue) { this.transferFTPDetailHost = newValue; this.MarkAsDirty("TransferFTPDetailHost"); } }
-       
-	 
-    private enableEnteringTotalVAT: boolean;
-    public get EnableEnteringTotalVAT() { return this.enableEnteringTotalVAT; }
-    public set EnableEnteringTotalVAT(newValue: boolean) { if (this.enableEnteringTotalVAT != newValue) { this.enableEnteringTotalVAT = newValue; this.MarkAsDirty("EnableEnteringTotalVAT"); } }
-       
-	 
-    private blockSendInvoiceOriginalCopy: boolean;
-    public get BlockSendInvoiceOriginalCopy() { return this.blockSendInvoiceOriginalCopy; }
-    public set BlockSendInvoiceOriginalCopy(newValue: boolean) { if (this.blockSendInvoiceOriginalCopy != newValue) { this.blockSendInvoiceOriginalCopy = newValue; this.MarkAsDirty("BlockSendInvoiceOriginalCopy"); } }
-       
-	 
 
     public OldEntityPM: AccountingSettingPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -310,7 +272,6 @@ export class AccountingSettingPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "AccountingSetting");
            
         }
-	 }
     }
     private MyClone: AccountingSettingPM;
 

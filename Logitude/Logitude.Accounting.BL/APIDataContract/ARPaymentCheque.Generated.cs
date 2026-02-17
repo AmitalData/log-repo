@@ -24,8 +24,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public int Tenant { get; set; }
     
-    public Currency Currency { get; set; }
-    
     public string ChequeNumber { get; set; }
     
     public DateTime ValueDate { get; set; }
@@ -34,14 +32,10 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public decimal ForeignAmount { get; set; }
     
-    public string BankId { get; set; }
+    public string BankName { get; set; }
     
     public string BankBranch { get; set; }
     
     public string BankAccount { get; set; }
-    
-    public string StatusCode { get; set; }
-    
-    public string StatusName { get; set; }
     }
 } 

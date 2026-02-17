@@ -584,39 +584,11 @@ export class TicketPM {
     public set EntityNumber(newValue: string) { if (this.entityNumber != newValue) { this.entityNumber = newValue; this.MarkAsDirty("EntityNumber"); } }
        
 	 
-    private supportMailboxId: string;
-    public get SupportMailboxId() { return this.supportMailboxId; }
-    public set SupportMailboxId(newValue: string) { if (this.supportMailboxId != newValue) { this.supportMailboxId = newValue; this.MarkAsDirty("SupportMailboxId"); } }
-       
-	 
-    private lastCorrespondence: string;
-    public get LastCorrespondence() { return this.lastCorrespondence; }
-    public set LastCorrespondence(newValue: string) { if (this.lastCorrespondence != newValue) { this.lastCorrespondence = newValue; this.MarkAsDirty("LastCorrespondence"); } }
-       
-	 
-    private entityTypeName: string;
-    public get EntityTypeName() { return this.entityTypeName; }
-    public set EntityTypeName(newValue: string) { if (this.entityTypeName != newValue) { this.entityTypeName = newValue; this.MarkAsDirty("EntityTypeName"); } }
-       
-	 
-    private quoteRequestFeedback: string;
-    public get QuoteRequestFeedback() { return this.quoteRequestFeedback; }
-    public set QuoteRequestFeedback(newValue: string) { if (this.quoteRequestFeedback != newValue) { this.quoteRequestFeedback = newValue; this.MarkAsDirty("QuoteRequestFeedback"); } }
-       
-	 
-    private quoteRequestComments: string;
-    public get QuoteRequestComments() { return this.quoteRequestComments; }
-    public set QuoteRequestComments(newValue: string) { if (this.quoteRequestComments != newValue) { this.quoteRequestComments = newValue; this.MarkAsDirty("QuoteRequestComments"); } }
-       
-	 
 
     public OldEntityPM: TicketPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -624,7 +596,6 @@ export class TicketPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Ticket");
            
         }
-       }
     }
 
     private MyClone: TicketPM;

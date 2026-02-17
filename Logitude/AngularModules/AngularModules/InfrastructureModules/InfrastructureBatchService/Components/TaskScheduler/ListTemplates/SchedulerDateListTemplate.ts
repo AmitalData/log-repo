@@ -7,11 +7,10 @@ import { DownloadManager } from '../../../../../Infrastructure/Utilities/Downloa
 import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TasksSchedulerPMService } from '../../../../../Infrastructure/Services/StandardPMs/TasksSchedulerPMService';
 import { TaskSchedulerItemClass } from '../../../../../InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'SchedulerDateListTemplate',
     templateUrl: './SchedulerDateListTemplate.html',
@@ -55,7 +54,7 @@ export class SchedulerDateListTemplate {
         else {
             var pmDate = new Date(rowData[fieldName]);
             if (pmDate.getFullYear() > 1970) {
-                this.dateValue = rowData[fieldName];
+                this.dateValue = pmDate;
             }
         }
         var isDestroyed: boolean = this.CD['destroyed'];
@@ -71,15 +70,11 @@ export class SchedulerDateListTemplate {
         if (!AppTool.IsNullOrEmpty(logDocumentId)) {
 
             DownloadManager.DownloadPage(logDocumentId);
-        } else {
-            
-            var logWindow = new MessageWindow();
-            logWindow.Show("No log is available");
         }
     }
 
     EditTaskClicked() {
-        this.myTasksSchedulerPMService.get(this.rowData["Id"]).subscribe((myResult:any) => {
+        this.myTasksSchedulerPMService.get(this.rowData["Id"]).subscribe(myResult => {
             if (myResult.Result) {
                 var MyTask = new TaskSchedulerItemClass(myResult.Result, null, false);
                 var logWindow = new LogitudeWindow();

@@ -22,7 +22,7 @@ import { CustomMessageProgressComponent } from '../../../../CustomsModules/Custo
 
 @Component({
     selector: 'MasavPaymentsToAgentComponent',
-    
+    moduleId: module.id,
     templateUrl: './MasavPaymentsToAgentComponent.html',
 })
 
@@ -123,7 +123,7 @@ export class MasavPaymentsToAgentComponent
         currRequestParams.PaymentDate = this.PaymentDate;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
+            .ShowProgressBar(currRequestParams.PBId,
             "שליחת שאילתא לבקשת דוח קופה לסוכן", true)
             .then((res) => {
                 this.ResponseData = res;

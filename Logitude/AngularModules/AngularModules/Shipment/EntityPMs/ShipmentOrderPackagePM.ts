@@ -13,18 +13,16 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-
 
 export class ShipmentOrderPackagePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -98,24 +96,9 @@ export class ShipmentOrderPackagePM {
     public set PackageTypeName(newValue: string) { if (this.packageTypeName != newValue) { this.packageTypeName = newValue; this.MarkAsDirty("PackageTypeName"); } }
        
 	 
-    private dimensions: string;
-    public get Dimensions() { return this.dimensions; }
-    public set Dimensions(newValue: string) { if (this.dimensions != newValue) { this.dimensions = newValue; this.MarkAsDirty("Dimensions"); } }
-       
-	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
-       
-	 
-    private containerNumber: string;
-    public get ContainerNumber() { return this.containerNumber; }
-    public set ContainerNumber(newValue: string) { if (this.containerNumber != newValue) { this.containerNumber = newValue; this.MarkAsDirty("ContainerNumber"); } }
-       
-	 
-    private packageTypeCode: string;
-    public get PackageTypeCode() { return this.packageTypeCode; }
-    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
        
 	 
 
@@ -128,10 +111,7 @@ export class ShipmentOrderPackagePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -141,7 +121,6 @@ export class ShipmentOrderPackagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ShipmentOrderPackage");
            
         }
-	 }
     }
     private MyClone: ShipmentOrderPackagePM;
 

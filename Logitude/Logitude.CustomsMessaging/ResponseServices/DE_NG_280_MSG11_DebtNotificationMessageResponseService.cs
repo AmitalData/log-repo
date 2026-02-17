@@ -1,15 +1,12 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.Security;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.BL.Models;
 using Logitude.Customs.Data;
-using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.Dca;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -25,11 +22,12 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.MessageLib.DeclarationDeal;
 using UnifreightIIG.Common.MessageLib.Deficit;
+using Logitude.Customs.BL.Models;
 using Attachment = UnifreightIIG.Common.MessageLib.Deficit.Attachment;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
-    public class DE_NG_280_MSG11_DebtNotificationMessageResponseService :
+    public class DE_NG_280_MSG11_DebtNotificationMessageResponseService:
         ResponseServiceBase<INF_MSG_GenericResponseData, DE_NG_280_MSG11_DebtNotificationMessage, GenericRequestParams>
     {
         private int _MyDeficitTenant;
@@ -49,14 +47,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (customResponse == null) return;
                 if (customResponse.Attachment == null) return;
-                customResponse.Attachment.ToList().ForEach(attachment => {
+                 customResponse.Attachment.ToList().ForEach( attachment=>{
 
-                    var MD5Hash = MD5HashUtil.GetMD5Hash(attachment.content);
-                    attachment.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
-                });
+                     var MD5Hash = MD5HashUtil.GetMD5Hash(attachment.content);
+                     attachment.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);
+                 }) ;
 
 
-
+                
 
 
             };
@@ -64,22 +62,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DE_NG_280_MSG11_DebtNotificationMessage customResponse, GenericRequestParams requestParams)
         {
-            var setting = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            bool hasImportAndExport = SecurityUtility.CheckFeature("Customs.Declaration", "IIGEXPORTIMPORTDECLARATION", requestParams.Tenant);
-            bool hasExportOnly = SecurityUtility.CheckFeature("Customs.Declaration", "EXPORTDECLARATIONPSCREEN", requestParams.Tenant);
-
-            if (!hasImportAndExport && hasExportOnly)
-            {
-                this.MyResponseData = new INF_MSG_GenericResponseData();
-                this.MyResponseData.Succeeded = true;
-                this.MyResponseData.HasException = false;
-                this.MyResponseData.UserMessage = "בקשה חוזרת להודעת חיוב " + customResponse.DebtNotificationMessag.debtNotificationID + "(לא נותח - סביבת יצוא)";
-                return;
-            }
-
-
-                //Analyze message 280- Debt Notification
-                this._MyDeficitTenant = requestParams.Tenant;
+            //Analyze message 280- Debt Notification
+            this._MyDeficitTenant = requestParams.Tenant;
             this.myDbContext = CustomContext.GetContext(this._MyDeficitTenant);
 
             var deficitQueryService = new DeficitQueryService(this.myDbContext);
@@ -107,7 +91,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 return;
             }
-
+           
             // Create new record in Deficit Table
             GetDeficitDetails(customResponse);
             deficitUpdateService.Update(this._MyDeficitPM, true);
@@ -172,7 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this._MyDeficitPM.TapagNumber = CodeCounter.GetNumber("Customs.Tapag", this._MyDeficitTenant).ToString();
             this._MyDeficitPM.TapagTypeCode = "1";
             this._MyDeficitPM.LeadingFileNumber = customResponse.DebtNotificationMessag.leadingFileNumber.ToString();
-            var clientId = clientQueryService.GetIdByCode(customResponse.DebtNotificationMessag.externalID.ToString(), this._MyDeficitTenant, true);
+            var clientId = clientQueryService.GetIdByCode(customResponse.DebtNotificationMessag.externalID.ToString(), this._MyDeficitTenant,true);
             if (!String.IsNullOrWhiteSpace(clientId))
             {
                 //this._MyDeficitPM.CustomerId = clientId;
@@ -309,7 +293,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void AnalyzeDeficitDocument(Attachment[] attachment, GenericRequestParams requestParams)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "280" });
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             DocumentsFilingPM documentsFilingPM = null;
@@ -362,12 +346,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void UpdatePaymentDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, GenericRequestParams requestParams)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "280" });
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             var documentsFilingQuery = new DocumentsFilingQuery(requestParams.Tenant);
             string logMessage = "";
 
-            documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            documentsFilingService.Update(documentsFilingPM, attachment.content,requestParams.LoggingUserId);
             if (this._MyDeclarationPM != null)
             {
                 logMessage = " -For declaration " + _MyDeclarationPM.DeclarationNumber;
@@ -378,7 +362,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private void CreatePaymentDocument(Attachment attachment, GenericRequestParams requestParams)
         {
             ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "280" });
+            var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant);
             var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
             string logMessage = "";
 
@@ -412,15 +396,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ExternalEntityName = "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
-            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            documentsFilingService.Create(documentsFilingPM, attachment.content,requestParams.LoggingUserId);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
         }
 
         private string GetTapagConnection(string fileNumber, int numeral)
         {
             var tapagConnectionTableQueryService = new TapagConnectionTableQueryService(this._MyDeficitTenant);
-            TapagConnectionTablePM tapagConnectionTablePM = tapagConnectionTableQueryService.GetTapagConnectionByFileAndNumeral(fileNumber, numeral, this._MyDeficitTenant);
-            if (tapagConnectionTablePM != null)
+            TapagConnectionTablePM tapagConnectionTablePM = tapagConnectionTableQueryService.GetTapagConnectionByFileAndNumeral(fileNumber, numeral,this._MyDeficitTenant);
+            if(tapagConnectionTablePM != null)
             {
                 return tapagConnectionTablePM.DeclarationId;
             }

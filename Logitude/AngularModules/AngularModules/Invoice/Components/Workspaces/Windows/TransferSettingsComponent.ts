@@ -15,11 +15,9 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ObjectsUpdater } from '../../../../Infrastructure/Locators/ObjectsUpdater';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './TransferSettingsComponent.html',
 })
 
@@ -50,14 +48,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     constructor(entityResourceService: EntityResourceService) {
         super();
         this.OldSessionAccountingSystem = SessionLocator.AccountingSystemPM;
-        this.QBOWindowSessionEvent = this.CurrentSession.SessionEvent.subscribe((res: any) => {
+        this.QBOWindowSessionEvent = this.CurrentSession.SessionEvent.subscribe(res => {
             if (res.Name == "QBOWindowCLosed") {
                 this.QBOWindowCLosed(res.Timer);
                 this.RefreshData();
             }
         });
 
-        entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe((res: any) => {
+        entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe(res => {
             this.InitializeServices();
             this.LoadData();
         });
@@ -73,6 +71,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.CurrentSession.StartBusyIndicatorLoading();
         this.entityPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
+                this.EntityPM.QBOAccessToken = myResponse.Result.QBOAccessToken;
+                this.EntityPM.QBOAccessTokenSecret = myResponse.Result.QBOAccessTokenSecret;
                 this.EntityPM.RefreshToken = myResponse.Result.RefreshToken;
                 this.EntityPM.QBOOAuth = myResponse.Result.QBOOAuth;
 
@@ -103,6 +103,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
                 if (this.EntityPM.AccountingSystemCode != "QBO" && this.EntityPM.AccountingSystemCode != "QBOG") {
+                    this.EntityPM.QBOAccessToken = null;
+                    this.EntityPM.QBOAccessTokenSecret = null;
                     this.EntityPM.QBOrealMeID = null;
                     this.EntityPM.RefreshToken = null;
                     this.EntityPM.QBOOAuth = 0;
@@ -111,7 +113,6 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             }
 
             this.SetUIProperties();
-            this.BuildExternalTransmissionList();            
             this.SetQuickBookProperties();
             this.CurrentSession.StopBusyIndicator();
             this.IsResourcesReady = true;
@@ -122,16 +123,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public IsAccountingSystem_HV_RH: boolean = false;
     public IsAccountingSystem_QB_QBO: boolean = false;
     public IsAccountingSystem_QB_QBO_old: boolean = false;
+
     public IsAccountingSystem_AI_GI: boolean = false;
-    public CanTransferToFTP: boolean = false;
-    public IsFTPSettingsVisible: boolean = false;
     SetUIProperties() {
         var isAccountingSystem_NO: boolean = false;
         var isAccountingSystem_HV_RH: boolean = false;
         var isAccountingSystem_QB_QBO: boolean = false;
         var IsAccountingSystem_QB_QBO_old: boolean = false;
         var isAccountingSystem_AI_GI: boolean = false;
-        this.IsFTPSettingsVisible = false;
 
         if (this.AccountingSystemCode == "NO") {
             isAccountingSystem_NO = true;
@@ -157,16 +156,11 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         this.IsAccountingSystem_HV_RH = isAccountingSystem_HV_RH;
         this.IsAccountingSystem_QB_QBO = isAccountingSystem_QB_QBO;
         this.IsAccountingSystem_QB_QBO_old = IsAccountingSystem_QB_QBO_old;
+
         this.IsAccountingSystem_AI_GI = isAccountingSystem_AI_GI;
 
-        if (FeatureLocator.HasFeaturePermession("AccountingTransferHeader", "DisableFTPSettings")) {
-            if (this.IsAccountingSystem_AI_GI) {
-                this.IsFTPSettingsVisible = true;
-            }
-        }
-
         var isDemoTenant = false;
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             isDemoTenant = true;
             if (SessionLocator.LoggedUserPM.Email) {
                 if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -185,31 +179,28 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         else {
             var isARInvoicesTransferEnabled = false;
             var isAPInvoicesTransferEnabled = false;
+
             var isARPaymentsTransferEnabled = false;
             var isAPPaymentsTransferEnabled = false;
-            var canTransferToFTP = false;
 
             if (SessionLocator.AccountingSystemPM) {
                 isARInvoicesTransferEnabled = SessionLocator.AccountingSystemPM.AllowARInvoicesTransfer;
                 isAPInvoicesTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPInvoicesTransfer;
                 isARPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowARPaymentsTransfer;
                 isAPPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPPaymentsTransfer;
-                canTransferToFTP = SessionLocator.AccountingSystemPM.CanTransferToFTP;
-                this.CanTransferToDropbox = SessionLocator.AccountingSystemPM.CanTransferToDropbox;
             }
 
             this.UIProperties.SetEnabled("IsARInvoicesTransferEnabled", this.ObjectTableName, isARInvoicesTransferEnabled);
             this.UIProperties.SetEnabled("IsAPInvoicesTransferEnabled", this.ObjectTableName, isAPInvoicesTransferEnabled);
+
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, isARPaymentsTransferEnabled);
             this.UIProperties.SetEnabled("IsAPPaymentsTransferEnabled", this.ObjectTableName, isAPPaymentsTransferEnabled);
         }
 
         this.UIProperties.SetEnabled("ARInvoiceTransferStartDate", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("APInvoiceTransferStartDate", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ARPaymentTransferStartDate", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("APPaymentTransferStartDate", this.ObjectTableName, false);
-        //this.UIProperties.SetEnabled("TransferToDropboxActivated", this.ObjectTableName, this.IsDropBoxConnected);
-        
+        this.UIProperties.SetEnabled("TransferToDropboxActivated", this.ObjectTableName, this.IsDropBoxConnected);
+
         var isReceivableVATableTempCardRequired = false;
         var isReceivableVATExemptTempCardRequired = false;
         var isPayableVATableTempCardRequired = false;
@@ -266,57 +257,12 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public isQBO: boolean = false;
     SetQuickBookProperties() {
 
-        if (this.EntityPM.RefreshToken != null) {
+        if (this.EntityPM.RefreshToken != null || this.EntityPM.QBOAccessToken != null) {
             this.isLogedInQBO = true;
         }
 
         else {
             this.isLogedInQBO = false;
-        }
-    }
-
-    public ExternalTransmissionList: CodeNameClass[];
-    private BuildExternalTransmissionList() {
-        this.ExternalTransmissionList = [];
-        this.ExternalTransmissionList.push(new CodeNameClass("NON", "None"));
-
-        if (this.CanTransferToDropbox && this.IsAccountingSystem_AI_GI) {
-            this.ExternalTransmissionList.push(new CodeNameClass("DRP", "Dropbox"));
-        }
-
-        if (this.IsFTPSettingsVisible) {
-            this.ExternalTransmissionList.push(new CodeNameClass("FTP", "FTP"));
-        }
-
-        if (this.EntityPM.TransferToDropboxActivated) {
-            this.selectedExternalTransmission = this.ExternalTransmissionList.filter(d => d.Code == "DRP")[0];
-        }
-
-        else if (this.EntityPM.TransferToFTPActivated) {
-            this.selectedExternalTransmission = this.ExternalTransmissionList.filter(d => d.Code == "FTP")[0];
-        }
-
-        else {
-            this.selectedExternalTransmission = this.ExternalTransmissionList.filter(d => d.Code == "NON")[0];
-        }
-    }
-
-    private selectedExternalTransmission: CodeNameClass;
-    get SelectedExternalTransmission() { return this.selectedExternalTransmission; }
-    set SelectedExternalTransmission(value: CodeNameClass) {
-        if (this.selectedExternalTransmission != value) {
-            this.selectedExternalTransmission = value;
-
-            this.EntityPM.TransferToDropboxActivated = false;
-            this.EntityPM.TransferToFTPActivated = false;
-
-            if (value.Code == "DRP") {
-                this.EntityPM.TransferToDropboxActivated = true;
-            }
-
-            else if (value.Code == "FTP") {
-                this.EntityPM.TransferToFTPActivated = true;
-            }
         }
     }
 
@@ -354,10 +300,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                         this.IsAPInvoicesTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPInvoicesTransfer;
                         this.IsARPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowARPaymentsTransfer;
                         this.IsAPPaymentsTransferEnabled = SessionLocator.AccountingSystemPM.AllowAPPaymentsTransfer;
-                        this.CanTransferToFTP = SessionLocator.AccountingSystemPM.CanTransferToFTP;
 
                         this.SetUIProperties();
-                        this.BuildExternalTransmissionList();   
                     }
                 });
             }
@@ -385,20 +329,6 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     public set APInvoiceTransferStartDate(value: Date) {
         if (this.EntityPM.APInvoiceTransferStartDate != value) {
             this.EntityPM.APInvoiceTransferStartDate = value;
-        }
-    }
-
-    public get ARPaymentTransferStartDate() { return this.EntityPM.ARPaymentTransferStartDate; }
-    public set ARPaymentTransferStartDate(value: Date) {
-        if (this.EntityPM.ARPaymentTransferStartDate != value) {
-            this.EntityPM.ARPaymentTransferStartDate = value;
-        }
-    }
-
-    public get APPaymentTransferStartDate() { return this.EntityPM.APPaymentTransferStartDate; }
-    public set APPaymentTransferStartDate(value: Date) {
-        if (this.EntityPM.APPaymentTransferStartDate != value) {
-            this.EntityPM.APPaymentTransferStartDate = value;
         }
     }
 
@@ -475,10 +405,21 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         }
     }
 
+
     get IsAPPaymentsTransferEnabled() { return this.EntityPM.IsAPPaymentsTransferEnabled; }
     set IsAPPaymentsTransferEnabled(value: boolean) {
         if (this.EntityPM.IsAPPaymentsTransferEnabled != value) {
             this.EntityPM.IsAPPaymentsTransferEnabled = value;
+        }
+    }
+
+
+
+
+    public get TransferToDropboxActivated() { return this.EntityPM.TransferToDropboxActivated; }
+    public set TransferToDropboxActivated(value: boolean) {
+        if (this.EntityPM.TransferToDropboxActivated != value) {
+            this.EntityPM.TransferToDropboxActivated = value;
         }
     }
 
@@ -501,6 +442,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
     DissConnectQBO(loadeding = true) {
         if (loadeding) {
             this.CurrentSession.StartBusyIndicator("Disconnecting..");
+            this.EntityPM.QBOAccessToken = null;
+            this.EntityPM.QBOAccessTokenSecret = null;
             this.EntityPM.RefreshToken = null;
             this.EntityPM.QBOOAuth = 0;
 
@@ -547,7 +490,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             AuthenticationLink = "QuickbooksOnlineAuth2.aspx?connect=true&tenant=";
         }
         else {
-            //AuthenticationLink = "QuickbooksOnline.aspx?connect=true&tenant=";
+            AuthenticationLink = "QuickbooksOnline.aspx?connect=true&tenant=";
 
         }
 
@@ -602,6 +545,8 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             if (loadedEntity.AccountingSystemCode != "QBO" && loadedEntity.AccountingSystemCode != "QBOG") {
                 this.EntityPM.AccountingSystemCode = loadedEntity.AccountingSystemCode;
                 this.EntityPM.QBOrealMeID = null;
+                this.EntityPM.QBOAccessToken = null;
+                this.EntityPM.QBOAccessTokenSecret = null;
                 this.EntityPM.RefreshToken = null;
                 this.EntityPM.QBOOAuth = 0;
 
@@ -645,20 +590,24 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
             }
         }
 
-        if (this.AccountingSystemCode == "GI" || this.AccountingSystemCode == "AI") {
-            if (this.EntityPM.TransferToFTPActivated) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.TransferFTPDetailId)) {
-                    errors.push(TextCodeTranslator.Translate("AccountingSetting.F.TransferFTPDetailId"));
-                }
-            }
-        }
-
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
             this.CurrentSession.StartBusyIndicatorSaving();
 
             if (this.AccountingSystemCode != "QBO" && this.AccountingSystemCode != "QBOG") {
+                //if (this.EntityPM.QBOrealMeID) {
+                //    this.EntityPM.QBOrealMeID = null;
+                //}
+
+                if (this.EntityPM.QBOAccessToken) {
+                    this.EntityPM.QBOAccessToken = null;
+                }
+
+                if (this.EntityPM.QBOAccessTokenSecret) {
+                    this.EntityPM.QBOAccessTokenSecret = null;
+                }
+
                 if (this.EntityPM.RefreshToken) {
                     this.EntityPM.RefreshToken = null;
                 }
@@ -680,6 +629,14 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
 
                         if (this.EntityPM.QBOrealMeID != loadedEntity.QBOrealMeID) {
                             this.EntityPM.QBOrealMeID = loadedEntity.QBOrealMeID;
+                        }
+
+                        if (this.EntityPM.QBOAccessToken != loadedEntity.QBOAccessToken) {
+                            this.EntityPM.QBOAccessToken = loadedEntity.QBOAccessToken;
+                        }
+
+                        if (this.EntityPM.QBOAccessTokenSecret != loadedEntity.QBOAccessTokenSecret) {
+                            this.EntityPM.QBOAccessTokenSecret = loadedEntity.QBOAccessTokenSecret;
                         }
 
                         if (this.EntityPM.RefreshToken != loadedEntity.RefreshToken) {
@@ -740,7 +697,7 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
                     //nth
                 }
                 else if (confirmWindow.No) {
-                    this.EntityPM.TransferToDropboxActivated = false;
+                    this.TransferToDropboxActivated = false;
                 }
             });
         }
@@ -759,22 +716,13 @@ export class TransferSettingsComponent extends BaseComponent implements OnDestro
         });
     }
 
-    ExternalTransmissionSettingsClicked() {
-        var windowTitle: string;
-
-        if (this.SelectedExternalTransmission.Code == "FTP") {
-            windowTitle = "FTP Settings";
-        }
-
-        else if (this.SelectedExternalTransmission.Code == "DRP") {
-            windowTitle = "Dropbox Settings";
-        }
-
-        var logWindow: LogitudeWindow = new LogitudeWindow();
+    ConnectDropBox() {
+        var windowTitle = "Dropbox Connection";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 350;
+        logWindow.Height = 225;
         logWindow.Title = windowTitle;
-        logWindow.WindowArgs = { TransmissionCode: this.SelectedExternalTransmission.Code, EntityPM: this.EntityPM };
-        //logWindow.Width = ;
-        //logWindow.Height = ;
-        logWindow.Show("./Invoice/Components/Workspaces/Windows/ExternalTransmissionSettingsComponent");
+        logWindow.IsShowCloseButton = false;
+        logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/DropBox/DropBoxConnectionComponent');
     }
 }

@@ -213,7 +213,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 {
                     Tenant = tenant,
                     JournalId = id,
-                    ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                    ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
 
                     DueDate = jlDueDate,
                     LocalAmount = localAmount,
@@ -437,7 +437,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                {
                    Tenant = tenant,
                    JournalId = id,
-                   ActionTypeCode = ((int)JournalActionTypeEnum.Credit).ToString(),
+                   ActionTypeCode = ((int)MyJournalActionTypeEnum.Credit).ToString(),
                    DueDate = jlDueDate,
 
                    Line = jline,
@@ -522,7 +522,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(state2Check.Item3);
+                    Debug.WriteLine(state2Check.Item3);
                     var JournalLineDebitMapping = GetVatExtractFalseDebitMap(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,
@@ -645,7 +645,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
                     var JournalLineDebitMapping = GetVatExtractFalseDebitMap(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,
@@ -773,7 +773,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
                     var JournalLineDebitMapping = GetVatExtractFalseDebitMap(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,
@@ -903,7 +903,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
+                    Debug.WriteLine("state Test: " + state2Check.Item3);
                     var JournalLineDebitMapping = GetVatExtractFalseDebitMap(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,

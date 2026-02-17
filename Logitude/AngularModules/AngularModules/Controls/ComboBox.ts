@@ -1,21 +1,20 @@
-import {Component, OnInit, OnDestroy, Output,Input, EventEmitter, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, OnDestroy, Output, EventEmitter, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../Infrastructure/Tools'
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
-import { TextCodeTranslator } from '../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'ComboBox',
-
+    moduleId: module.id,
     templateUrl: './ComboBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons', 'CyData','ListType', 'AdditionalTitleBinding', 'BindingTextCode'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithIcons'],
 })
 
 export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     public Text: string = null;
     public WaterMark: string = null;
     private itemsSource: any[];
-
+  //  public ItemsSource: any[];
     dropdownTimertoken: any;
     get ItemsSource() { return this.itemsSource; }
     set ItemsSource(value: any[]) {
@@ -23,25 +22,23 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
 
             this.itemsSource = value;
             if (this.ItemsButtonClicked) {
+                //this.OnMouseDown(false);
                 if (this.dropdownTimertoken) {
                     clearTimeout(this.dropdownTimertoken);
                 }
-
                 this.dropdownTimertoken = setTimeout(() => {
+                    //this.OnMouseDown(false);
                     if (this.selectedIndex) this.SelectedItem = this.ItemsSource[this.selectedIndex];
-                }, 1);
+            }, 1);
+                //this.cd.detectChanges();
             }
-
             this.ItemsButtonClicked = false;
+
         }
     }
 
-    @Input() HideSelectedText: boolean = false;
-
     public WithIcons: boolean = false;
-    public WithCheckBoxes: boolean = false;
     public Binding: string = null;
-    public AdditionalTitleBinding: string = null;
     public ControlId: string = null;
     public DropdownId: string = null;
     public ListControlId: string = null;
@@ -53,17 +50,11 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     public FocusOnMe: boolean = false;
     public LayoutDirection: string = 'ltr';
     public ItemsButtonClicked: boolean;
-    @Output() SelectedItemIds: EventEmitter<any> = new EventEmitter();
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     @Output() ComboBoxDropDownClicked: EventEmitter<any> = new EventEmitter();
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
-    public SearchTextId: string = "SearchTextId";
-    public CyData: string;
-    public ListType: string;
-    public BindingTextCode: string = null;
-
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private cd:ChangeDetectorRef) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
         this.ItemsSource = [];
@@ -72,7 +63,6 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             this.ControlId = "ComboBox_-1_-1";
             this.DropdownId = "Dropdown_-1_-1";
             this.ListControlId = "List_-1_-1";
-            this.SearchTextId = "SearchText_-1_-1";
         }
 
         else {
@@ -80,9 +70,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             this.ControlId = "ComboBox_" + idIndex;
             this.DropdownId = "Dropdown_" + idIndex;
             this.ListControlId = "List_" + idIndex;
-            this.SearchTextId = "SearchText_" + idIndex;
         }
-        
     }
 
     private MouseDownEvent: any = null;
@@ -116,11 +104,30 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             element.focus();
 
             this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id });
+            //this.timerToken = setTimeout(() => {
+            //    SelectingElement(element);
+            //}, 1);
+
         }
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.MouseDownEvent);
     }
+
+    //private itemsSource: any[];
+    //get ItemsSource() { return this.itemsSource; }
+    //set ItemsSource(value: any[]) {
+    //    if (this.itemsSource != value) {
+
+    //        this.itemsSource = value;
+
+    //        if (this.ItemsButtonClicked && !this.IsOpened) {
+    //            this.CloseDropDown();
+    //        }
+
+    //        this.ItemsButtonClicked = false;
+    //    }
+    //}
 
     private isGreenButton = false;
     get IsGreenButton() { return this.isGreenButton; }
@@ -213,12 +220,12 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
 
             document.getElementById(this.DropdownId).style.width = itemRect.width + "px";
 
-            if (this.ItemsSource?.length == 0) {
+            if (this.ItemsSource.length == 0) {
                 document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
             }
 
             else {
-                var itemsHeight = ((this.ItemsSource?.length * 23) + 3);
+                var itemsHeight = ((this.ItemsSource.length * 23) + 3);
                 if (itemsHeight > this.MaxHeight) {
                     document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
                     document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
@@ -245,7 +252,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             //this.ItemsButtonClicked = true;
             this.ComboBoxDropDownClicked.emit();
         }
-    }
+    }    
 
     OnLostFocus() {
         this.CloseDropDown();
@@ -273,27 +280,25 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private SetDisplayText() {
-        if (!this.HideSelectedText) {
-            var myDisplayText: string = null;
+        var myDisplayText: string = null;
 
-            if (this.SelectedItem != null) {
-                if (this.WithCheckBoxes) {
+        if (this.SelectedItem != null) {
+            if (this.WithIcons) {
+                myDisplayText = this.SelectedItem;
+            }
+
+            else {
+                if (this.Binding == null) {
                     myDisplayText = this.SelectedItem;
                 }
 
                 else {
-                    if (this.Binding == null) {
-                        myDisplayText = this.BindingTextCode ? TextCodeTranslator.Translate(this.SelectedItem[this.BindingTextCode]) : this.SelectedItem;
-                    }
-
-                    else {
-                        myDisplayText = this.SelectedItem[this.Binding];
-                    }
+                    myDisplayText = this.SelectedItem[this.Binding];
                 }
             }
-
-            this.Text = myDisplayText;
         }
+
+        this.Text = myDisplayText;
     }
 
     selectedIndex: number;
@@ -373,7 +378,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             //Set scroll
             var selectedElements = document.getElementsByClassName("SelectedComboboxItem");
             if (selectedElements) {
-                var selectedElement: any = selectedElements[0];
+                var selectedElement:any = selectedElements[0];
                 if (selectedElement) selectedElement.scrollIntoView(false);
             }
 
@@ -457,7 +462,6 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private selectedIds: string;
     public CheckSource: Array<boolean>;
     ClickItem(item: any, index: any) {
         if (this.CheckSource == null) {
@@ -476,39 +480,22 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
         }
 
         item.Checked = this.CheckSource[index];
-
+        
         this.ItemsSource[index] = item;
         this.Text = "";
 
         for (var i = 0; i < this.ItemsSource.length; i++) {
             if (this.ItemsSource[i].Checked) {
-                if (this.WithIcons) {
-                    // product types
-                    if (AppTool.IsNullOrEmpty(this.Text)) {
-                        this.Text = this.ItemsSource[i].Code;
-                    }
-
-                    else {
-                        this.Text = this.Text + ", " + this.ItemsSource[i].Code;
-                    }
+                if (AppTool.IsNullOrEmpty(this.Text)) {
+                    this.Text = this.ItemsSource[i].Code;
                 }
 
                 else {
-                    //additional services
-                    if (AppTool.IsNullOrEmpty(this.Text)) {
-                        this.Text = this.ItemsSource[i].Name;
-                        this.selectedIds = this.ItemsSource[i].Id;
-                    }
-
-                    else {
-                        this.Text = this.Text + ", " + this.ItemsSource[i].Name;
-                        this.selectedIds = this.selectedIds + ", " + this.ItemsSource[i].Id;
-                    }
+                    this.Text = this.Text + ", " + this.ItemsSource[i].Code;
                 }
             }
-
-            this.SelectedItemChanged.emit(this.Text);
-            this.SelectedItemIds.emit(this.selectedIds);
         }
+
+        this.SelectedItemChanged.emit(this.Text);
     }
 }

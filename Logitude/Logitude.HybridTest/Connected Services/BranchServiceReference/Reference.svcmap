@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="9abbdc5d-6c9b-4c76-8c40-d0b69b016b57" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:9996/WcfApi/BranchWcfService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BranchWcfService.wsdl" MetadataType="Wsdl" ID="3a7aba3b-4867-499e-9a6f-6e42d19e0e9c" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/BranchWcfService.svc?wsdl" />
+    <MetadataFile FileName="BranchWcfService.xsd" MetadataType="Schema" ID="c08b3ae1-9806-40fd-8436-cd6ed61e7323" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/BranchWcfService.svc?xsd=xsd4" />
+    <MetadataFile FileName="BranchWcfService1.xsd" MetadataType="Schema" ID="2ab39ad8-ca0b-4491-bb8f-810899507b6d" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/BranchWcfService.svc?xsd=xsd3" />
+    <MetadataFile FileName="BranchWcfService2.xsd" MetadataType="Schema" ID="1c669b89-11ba-43c7-8ed2-a903ebfdb311" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/BranchWcfService.svc?xsd=xsd2" />
+    <MetadataFile FileName="BranchWcfService3.xsd" MetadataType="Schema" ID="d6ff5860-6026-447e-917c-cdaa41af9275" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/BranchWcfService.svc?xsd=xsd1" />
+    <MetadataFile FileName="BranchWcfService4.xsd" MetadataType="Schema" ID="2f8bbc51-7162-4501-9619-30547f899228" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/BranchWcfService.svc?xsd=xsd0" />
+    <MetadataFile FileName="BranchWcfService.disco" MetadataType="Disco" ID="c95540c8-e86d-49e5-a048-c4d7d510fa7b" SourceId="1" SourceUrl="http://localhost:9996/WcfApi/BranchWcfService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

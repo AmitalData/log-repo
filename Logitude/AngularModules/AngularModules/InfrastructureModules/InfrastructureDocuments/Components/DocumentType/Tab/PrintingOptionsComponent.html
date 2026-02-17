@@ -2,13 +2,9 @@
 <table>
 
 
-
-    <tr  style="height:15px"> <td colspan="4"><div></div></td>  </tr>
-    <tr style="height:15px"> <td colspan="4"><span style="font-size:15px;color:#1B90CB;margin-left:5px">Printing Options</span>    </td>  </tr>
-    <tr style="height:5px"> <td colspan="4"><div></div></td>  </tr>
-
-
-   
+    <tr style="height:20px">
+        <td colspan="4"></td>
+    </tr>
     <tr style="vertical-align:top;height:33px">
         <td style="width:10px">
             <div></div>
@@ -24,6 +20,22 @@
         </td>
     </tr>
 
+
+    <!--<tr style="vertical-align:top;height:33px">
+        <td style="width:10px"><div></div></td>
+        <td title="'Is System Additional Printing Fields'" style="width:165px;"><LogLabel [ObjectFieldName]="'IsSystemAdditionalPrintingFields'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel></td>
+        <td style="width:230px;text-align:left"><LogCheckBox [ObjectFieldName]="'IsSystemAdditionalPrintingFields'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox></td>
+        <td><div></div></td>
+    </tr>
+
+
+
+    <tr style="vertical-align:top;height:33px">
+        <td style="width:10px"><div></div></td>
+        <td style="width:165px;"><LogLabel [ObjectFieldName]="'PrintingFieldsScreenCode'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel></td>
+        <td style="width:230px"><LogTextBox style="width:230px" [ObjectFieldName]="'PrintingFieldsScreenCode'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogTextBox></td>
+        <td><div></div></td>
+    </tr>-->
 
     <tr style="vertical-align:top;height:30px">
         <td style="width:10px">
@@ -53,194 +65,9 @@
 
     </tr>
 
-    <tr *ngIf="!IsShowPopulateAutomaticDate">
+
+    <tr>
         <td colspan="4"></td>
     </tr>
 
-    <tr *ngIf="IsShowPopulateAutomaticDate">
-        <td colspan="4">
-
-            <table>
-                <tr style="height:15px"> <td colspan="4"><div></div></td>  </tr>
-                <tr style="height:15px"> <td colspan="4"><span style="font-size:15px;color:#1B90CB;margin-left:5px">Populate Automatic Date Values</span>    </td>  </tr>
-                <tr style="height:5px"> <td colspan="4"><div></div></td>  </tr>
-
-
-
-
-                <tr style="vertical-align:top;height:30px">
-                    <td style="width:10px">
-                        <div></div>
-                    </td>
-                    <td style="width:165px;">
-                        <LogLabel [ObjectFieldName]="'OnSendPopulateDateFieldName'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel>
-                    </td>
-
-                    <td style="width:230px">
-                        <table>
-                            <tr>
-                                <td style="width:193px">
-                                    <LogLov *ngIf="IsRefreshPopulateDateField" (SelectedItemChanged)="OnPopulateDateFieldNameFieldChange($event,'Send')"
-                                            [ObjectFieldName]="'OnSendPopulateDateFieldName'"
-                                            [QueryFilterItems]="ObjectFieldFilterItems"
-                                            [ObjectTableName]="'ObjectField'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'ObjectField'"
-                                            [NoValidation]="true"
-                                            [IsFreeText]="true"
-                                            [SelectedValue]="OnSendPopulateDateFieldName"
-                                            [HideColumns]="true"
-                                            [HideLastColumn]="true"
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
-                                    </LogLov>
-                                    <LogLov *ngIf="!IsRefreshPopulateDateField" (SelectedItemChanged)="OnPopulateDateFieldNameFieldChange($event,'Send')"
-                                            [ObjectFieldName]="'OnSendPopulateDateFieldName'"
-                                            [QueryFilterItems]="ObjectFieldFilterItems"
-                                            [ObjectTableName]="'ObjectField'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'ObjectField'"
-                                            [NoValidation]="true"
-                                            [IsFreeText]="true"
-                                            [SelectedValue]="OnSendPopulateDateFieldName"
-                                            [HideColumns]="true"
-                                            [HideLastColumn]="true"
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-
-
-                </tr>
-
-
-
-                <tr style="vertical-align:top;height:30px">
-                    <td style="width:10px">
-                        <div></div>
-                    </td>
-                    <td style="width:165px;">
-                        <LogLabel [ObjectFieldName]="'OnPrintPopulateDateFieldName'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel>
-                    </td>
-
-                    <td style="width:230px">
-                        <table>
-                            <tr>
-                                <td style="width:193px">
-                                    <LogLov *ngIf="IsRefreshPopulateDateField" (SelectedItemChanged)="OnPopulateDateFieldNameFieldChange($event,'Print')"
-                                            [ObjectFieldName]="'OnPrintPopulateDateFieldName'"
-                                            [QueryFilterItems]="ObjectFieldFilterItems"
-                                            [ObjectTableName]="'ObjectField'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'ObjectField'"
-                                            [NoValidation]="true"
-                                            [IsFreeText]="true"
-                                            [SelectedValue]="OnPrintPopulateDateFieldName"
-                                            [HideColumns]="true"
-                                            [HideLastColumn]="true"
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
-                                    </LogLov>
-                                    <LogLov *ngIf="!IsRefreshPopulateDateField" (SelectedItemChanged)="OnPopulateDateFieldNameFieldChange($event,'Print')"
-                                            [ObjectFieldName]="'OnPrintPopulateDateFieldName'"
-                                            [QueryFilterItems]="ObjectFieldFilterItems"
-                                            [ObjectTableName]="'ObjectField'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'ObjectField'"
-                                            [NoValidation]="true"
-                                            [IsFreeText]="true"
-                                            [SelectedValue]="OnPrintPopulateDateFieldName"
-                                            [HideColumns]="true"
-                                            [HideLastColumn]="true"
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-
-
-                </tr>
-
-
-                <tr style="vertical-align:top;height:30px">
-                    <td style="width:10px">
-                        <div></div>
-                    </td>
-                    <td style="width:165px;">
-                        <LogLabel [ObjectFieldName]="'OnUploadPopulateDateFieldName'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogLabel>
-                    </td>
-
-                    <td style="width:230px">
-                        <table>
-                            <tr>
-                                <td style="width:193px">
-                                    <LogLov *ngIf="IsRefreshPopulateDateField" (SelectedItemChanged)="OnPopulateDateFieldNameFieldChange($event,'Upload')"
-                                            [ObjectFieldName]="'OnUploadPopulateDateFieldName'"
-                                            [QueryFilterItems]="ObjectFieldFilterItems"
-                                            [ObjectTableName]="'ObjectField'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'ObjectField'"
-                                            [NoValidation]="true"
-                                            [IsFreeText]="true"
-                                            [SelectedValue]="OnUploadPopulateDateFieldName"
-                                            [HideColumns]="true"
-                                            [HideLastColumn]="true"
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
-                                    </LogLov>
-                                    <LogLov *ngIf="!IsRefreshPopulateDateField" (SelectedItemChanged)="OnPopulateDateFieldNameFieldChange($event,'Upload')"
-                                            [ObjectFieldName]="'OnUploadPopulateDateFieldName'"
-                                            [QueryFilterItems]="ObjectFieldFilterItems"
-                                            [ObjectTableName]="'ObjectField'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'ObjectField'"
-                                            [NoValidation]="true"
-                                            [IsFreeText]="true"
-                                            [SelectedValue]="OnUploadPopulateDateFieldName"
-                                            [HideColumns]="true"
-                                            [HideLastColumn]="true"
-                                            [DisplayMemberPath]="'FullNameTextCodeDefaultText'">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <td>
-                        <div></div>
-                    </td>
-
-
-                </tr>
-
-
-
-                <tr>
-                    <td colspan="4"></td>
-                </tr>
-
-            </table>
-
-        </td>
-    </tr>
-
-
-    
 </table>

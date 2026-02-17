@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -15,7 +15,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.TextCodeId).IsRequired().HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.TranslatedTextPlural).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.TranslatedByUserId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.TextCodeCode).IsRequired().HasMaxLength(100).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Translations");
@@ -28,7 +27,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.TranslatedByUserId).HasColumnName("TranslatedByUserId");
             this.Property(t => t.TranslateDate).HasColumnName("TranslateDate");
             this.Property(t => t.UpdateDateGMT).HasColumnName("UpdateDateGMT");
-            this.Property(t => t.TextCodeCode).HasColumnName("TextCodeCode");
 
             this.HasOptional(t => t.TranslatedByUser).WithMany().HasForeignKey(d => d.TranslatedByUserId);
         }

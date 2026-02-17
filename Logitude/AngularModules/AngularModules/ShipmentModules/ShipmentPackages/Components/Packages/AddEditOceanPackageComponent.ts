@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -11,11 +11,9 @@ import {ShipmentDeliveryPM} from '../../../../Shipment/EntityPMs/ShipmentDeliver
 import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPickUpDeliveryPackagePM';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
-import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
-import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditOceanPackageComponent.html',
 })
 
@@ -25,59 +23,21 @@ export class AddEditOceanPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public SelectedTabCode: string = "0";
     public IsFCLEntity: boolean = false;
-    public IsLCLEntity: boolean = false;
-    public IsFromStandAloneScreen: boolean = false;
+    public IsLCLEntity: boolean = false; 
     public ValidationErrorsList: string[] = [];
-    public IsContainerEntityReferenceVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    public IsMYGOEntity: boolean = false;
     constructor() {
-        this.RunComponent();
-    }
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
-        }
 
-        else {
-            this.RunComponentTimer();
-        }
     }
 
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-    LoadChildComponent() {
-        let screenCode: string = "ShipmentPackage.AdditionalFields";
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.HideLastColumn = true;
-                cmpRef.instance.LabelWidth = 120;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-            });
-    }
     SetDataContext(dataContext: ShipmentPackageItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
         this.IsLCLEntity = dataContext.IsLCLEntity;
-        this.IsMYGOEntity = dataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "mygo";
-        this.IsFromStandAloneScreen = dataContext.IsFromStandAloneScreen;
         this.SetLabels();
         this.Clone();
-        this.GetContainerEntityReferenceVisiblity();
     }
 
     public TareLabel: string;
@@ -88,7 +48,7 @@ export class AddEditOceanPackageComponent {
     SetLabels() {
         this.TareLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Tare').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumeLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Volume').replace('%VolumeCode', this.DataContext.ShipmentPM.VolumeUnitCode);
-        this.DimensionsLabel = TextCodeTranslator.Translate('Shipment.O.Packages.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
+        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.DataContext.ShipmentPM.DimensionsUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.DataContext.ShipmentPM.GrossWeightUnitCode);
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.DataContext.ShipmentPM.ChargeableWeightUnitCode);
     }
@@ -154,17 +114,6 @@ export class AddEditOceanPackageComponent {
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.Weight)) {
             errors.push("Gross Weight is required");
-        }
-
-        if (AppTool.IsNullOrEmpty(this.EntityPM.ContainerNumber) && this.IsFromStandAloneScreen) {
-            errors.push("Container Number is required");
-        }
-        if (this.DataContext.ShipmentPM != null && !AppTool.IsNullOrEmpty(this.DataContext.ContainerNumber) && this.IsFromStandAloneScreen) {
-            if (this.DataContext.ShipmentPM.ShipmentPackages != null) {
-                if (this.DataContext.ShipmentPM.ShipmentPackages.find(item => item.ContainerNumber == this.DataContext.ContainerNumber)) {
-                    errors.push("Cannot have 2 containers with the same number");
-                }
-            }
         }
 
         this.ValidationErrorsList = errors;
@@ -277,19 +226,6 @@ export class AddEditOceanPackageComponent {
 
             });
         }
-    }
-
-    GetContainerEntityReferenceVisiblity() {
-        this.IsContainerEntityReferenceVisible = false;
-        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
-            if (this.DataContext.ShipmentPM.TransportModeId == "O" && (this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcl" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcld" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "mygo")) {
-                this.IsContainerEntityReferenceVisible = true;
-            }
-        }
-    }
-
-    OpenContainerEntityWindow() {
-        this.DataContext.fatherComponent.ViewContainerEntity(this.DataContext);
     }
 
     private myCloner: Cloner;

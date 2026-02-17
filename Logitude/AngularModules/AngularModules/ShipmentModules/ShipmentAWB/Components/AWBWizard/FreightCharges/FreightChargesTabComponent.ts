@@ -8,7 +8,7 @@ import {AppTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentTool} from '../../../../../Shipment/Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'FreightChargesTabComponent',
     templateUrl: './FreightChargesTabComponent.html',    
@@ -302,7 +302,12 @@ export class FreightChargesTabComponent extends BaseComponent {
         //}
     }
     private ComputeAWBChargeAmount() {
-        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM);
+        var chargeAmount = this.EntityPM.ChargeableWeight;
+        if (this.RateClassCode == "K") {
+            chargeAmount = this.EntityPM.ChargeableWeightInKG;
+        }
+ 
+        this.AWBChargeAmount = ShipmentTool.ComputeAWBChargeAmount(this.EntityPM.RateClassCode, this.EntityPM.AWBChargeRate, chargeAmount);
     }
     private ComputeAWBFrieghtAmount() {
         var computedAmount = this.AWBChargeAmount;

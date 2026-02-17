@@ -24,36 +24,7 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
         public JournalPM GetJournalByAccountingEntityIdAndCode(string accountingEntityId, string accountingEntityCode, int tenant)
         {
             JournalQueryService query = new JournalQueryService(tenant);
-            return query.GetByAccountingEntityIdAndAccountingEntityCodeWithComposition(accountingEntityId, accountingEntityCode, tenant);
-        }
-        public JournalPM GetJournalById(string Id, int tenant)
-        {
-            JournalQueryService query = new JournalQueryService(tenant);
-            return query.GetSingle(Id, true, false);
-        }
-        public List<JournalPM> GetJournalsWithLinesByAccountingEntityIdAndCode(string accountingEntityId, string accountingEntityCode, int tenant)
-        {
-            JournalQueryService query = new JournalQueryService(tenant);
-            return query.GetJournalsByAccountingEntityIdAndTypeCode(accountingEntityId, accountingEntityCode, tenant);
-        }
-
-        public JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant)
-        {
-            JournalQueryService query = new JournalQueryService(tenant);
-            return query.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
-        }
-
-
-        public JournalPM GetApprovedJournalByAccountingEntityId(string accountingEntityId, string accountingEntityCode, int tenant)
-        {
-            JournalQueryService query = new JournalQueryService(tenant);
-            return query.GetApprovedJournalByAccountingEntityId(accountingEntityId, accountingEntityCode, tenant);
-        }
-        public JournalPM GetSingleWithLinesByEntityIdAndCode(string accountingEntityId, string accountingEntityCode, int tenant)
-        {
-            JournalQueryService query = new JournalQueryService(tenant);
-            return query.GetSingleWithLinesByEntityIdAndCode(accountingEntityId, accountingEntityCode, tenant);
+            return query.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, tenant);
         }
     }
 }
-

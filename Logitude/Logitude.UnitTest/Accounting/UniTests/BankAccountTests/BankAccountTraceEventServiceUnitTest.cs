@@ -10,7 +10,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.UnitTest.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.UnitTest.Accounting.UniTests.BankAccountTests
 {

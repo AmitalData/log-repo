@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using System.Threading;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -89,7 +89,6 @@ namespace CommunicationWorkerRole
                                         }
                                         catch(Exception exc)
                                         {
-                                            ExceptionHandler.HandleException(exc, DateTime.Now, 0, null, "AgentsSharedLogistics worker role start", null, null);
 
                                             commLog.Retries++;
                                             commLog.ExceptionMessage = GetExceptionMessage(exc);

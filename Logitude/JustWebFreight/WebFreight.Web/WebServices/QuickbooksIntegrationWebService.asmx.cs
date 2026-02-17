@@ -20,7 +20,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using WebFreight.Web.Security;
 using WebFreight.Web.DataProviders;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -272,7 +272,7 @@ namespace WebFreight.Web.WebServices
             if (contactPassword != null)
             {
                 authReturn[1] = "";
-                IInvoiceContext context = InvoiceContext.GetContext(tenant);
+                IInvoiceContext context = InvoiceContext.GetContext(0);
                 QuickbooksSyncRequestTicketService ticketService = new QuickbooksSyncRequestTicketService(context);
                 QuickbooksSyncRequestTicketPM ticketPM = new QuickbooksSyncRequestTicketPM() { Ticket = authReturn[0], UserName = userName, Password = contactPassword.Password, Tenant = tenant };
                 ticketService.Create(ticketPM);
@@ -608,7 +608,7 @@ namespace WebFreight.Web.WebServices
                 }
 
             }
-            IInvoiceContext context = InvoiceContext.GetContext(tenant);
+            IInvoiceContext context = InvoiceContext.GetContext(0);
             QuickbooksSyncRequestTicketService service = new QuickbooksSyncRequestTicketService(context);
             service.Update(ticketPM);
 
@@ -821,7 +821,7 @@ namespace WebFreight.Web.WebServices
                 ticketPM.IsCurrentInvoiceChecked = false;
             }
 
-            IInvoiceContext context = InvoiceContext.GetContext(tenant);
+            IInvoiceContext context = InvoiceContext.GetContext(0);
             QuickbooksSyncRequestTicketService service = new QuickbooksSyncRequestTicketService(context);
             service.Update(ticketPM);
 
@@ -1226,7 +1226,7 @@ namespace WebFreight.Web.WebServices
                 }
             }
 
-            IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            IInvoiceContext invoiceContext = InvoiceContext.GetContext(0);
             QuickbooksSyncRequestTicketService service = new QuickbooksSyncRequestTicketService(invoiceContext);
             service.Update(ticketPM);
             return invoiceXML;

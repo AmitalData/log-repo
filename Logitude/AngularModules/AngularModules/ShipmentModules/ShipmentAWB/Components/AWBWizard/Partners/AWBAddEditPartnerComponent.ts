@@ -42,7 +42,7 @@ import {InfraSettings} from '../../../../../Infrastructure/Utilities/InfraSettin
 import {ServiceHelper} from '../../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AWBAddEditPartnerComponent.html',
 })
 

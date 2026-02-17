@@ -23,7 +23,6 @@ export class TenantManagementJS {
     public IsDEXXConnectionEnabled: boolean;
     public ManageLicencesPerUser: boolean;
     public ChangeHeaderColor: boolean;
-    public HeaderColor: string;
     public TrailDaysLeft: number;
     public PaidDaysLeft: number;
     public SuspendDaysLeft: number;
@@ -47,7 +46,6 @@ export class TenantManagementJS {
     public ExpirationDaysLeft: number;
 
     public BluesnapAccount: string;
-    public PaymentChannelCode: string;
     public ManagesRegisteredAgent: boolean;
     public IsINTTRAOnlyDemo: boolean;
     public IsMultiPackage: boolean;
@@ -56,8 +54,6 @@ export class TenantManagementJS {
     public PackagesCodes_BS: Array<string> = [];
     public CountryName: string;
     public MainAdditionalPackageApplied: boolean;
-    public IsContainerTrackingPrepaid: boolean;
-    public MinutsTimeOutSession: number;
 
     private tenantManagementLicenses: TenantManagementLicensePM[];
     get TenantManagementLicenses() {
@@ -72,6 +68,4 @@ export class TenantManagementJS {
             this.tenantManagementLicenses = newValue;
         }
     }
-
-    public CustomerURL: string;
 }

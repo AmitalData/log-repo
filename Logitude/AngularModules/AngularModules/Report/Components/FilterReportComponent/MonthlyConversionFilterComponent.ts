@@ -9,9 +9,8 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ReportsDomainService} from '../../Services/ReportsDomainService';
 import {CodeNameClass} from './CodeNameClass';
 import {DateTool} from '../../../Infrastructure/Tools';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 @Component({
-    
+    moduleId: module.id,
     selector: 'MonthlyConversionFilterComponent',
     templateUrl: './MonthlyConversionFilterComponent.html',
 })
@@ -28,11 +27,18 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
     public OpportunityTypeId: string;
     public BusinessUnitId: string;
     public OwnerId: string;
-    public SelectedProdustsItem: any;   
+    public IsByCreateDate: boolean = true;
+    public IsStageDate: boolean = false;
+    public IsCreateDate: boolean = true;
+    public SelectedProdustsItem: any;
+    public IsCreateDateId: string = "IsCreateDateId_";
+    public IsStageDateId: string = "IsStageDateId";
+    public ShipmentTypeRadio: string = "ShipmentTypeRadio_";
     private reportDoaminService: ReportsDomainService;
     public ResellerId: string = null;
-    public IncludeCancelled: boolean = false;
-    AdditionalServiceSelectedValue:string
+    IsStageDateClicked() {
+        this.IsByCreateDate = false;
+    }
 
     fillcombo(arr: any) {
         this.FilterdAdditionalService = [];
@@ -45,12 +51,12 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
                 this.FilterdAdditionalService.push(i);
             }          
         });
-        this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
-        this.FilterdAdditionalService.forEach((item: any) => {
-            item.Checked = this.SelectedItem == "NotAll" && this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id);
-        });
+        this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });        
     }
-    
+
+    IsCreateDateClicked() {
+        this.IsByCreateDate = true;        
+    }
     public TenantPM: TenantPM;
     queryFilterItems: QueryFilterItem[];
     public CustomerId = null;
@@ -58,12 +64,17 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
     public ObjectTableName: string = "Report";
 
     public SelectedViewItem: any;
-  
+
+
+
     public DataContext: MonthlyConversionFilterComponent = this;
     public IsCRMTenant: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        super();        
+        super();
+        this.IsStageDateId = this.IsStageDateId+this.CurrentSession.GetNewId(this.IsStageDateId);
+        this.IsCreateDateId = this.IsCreateDateId + this.CurrentSession.GetNewId(this.IsCreateDateId);
+        this.ShipmentTypeRadio = this.ShipmentTypeRadio + this.CurrentSession.GetNewId(this.ShipmentTypeRadio);
         this.reportDoaminService = new ReportsDomainService();
 
         if (SessionLocator.Tenant == 341) {
@@ -103,69 +114,10 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
         aDate.setDate(0);
         return (DateTool.GetDateParts(aDate).DateObject.getDate());
     }
-    public IsSchedulerReport: boolean = false;  
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport; 
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-               
-                case "ToDate":
-                    this.ToDate =new Date(queryFilterItem.FieldValue);
-                    break;                          
-                case "BusinessUnitId":
-                    this.BusinessUnitId =   queryFilterItem.FieldValue;
-                        break; 
-                case "DataType":
-                    this.OpportunityTypeId = queryFilterItem.FieldValue;
-                    break;
-                case "OwnerId":
-                    this.OwnerId = queryFilterItem.FieldValue;
-                    break;
-                case "CountryId":
-                    this.CountryId = queryFilterItem.FieldValue;
-                    break;
-                case "LeadSources":{
-                    this.SelectedItem =  queryFilterItem.FieldValue=="All"?"All":"NotAll"; 
-                    this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
-                    break;
-                }
-                case "IncludeCancelled":
-                    this.IncludeCancelled = queryFilterItem.FieldValue;
-                    break;
-                case "StageCount":
-                    this.StageCountRadio = queryFilterItem.FieldValue;
-                    break;
-                   
-                        
-                        
-            }
-    
-        }
-    }
-    ValidateSelectedFilters() {
-        this.ValidationErrorsList = [];
 
+    RunReport(isloading: boolean) {
+
+        this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
         }
@@ -178,17 +130,91 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
 
-        return this.ValidationErrorsList.length == 0;
-    }
-    RunReport(isloading: boolean) {
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
+            var myAdditionalServices: string = "";
 
-      
+            if (this.SelectedItem == "All")
+                myAdditionalServices = "All";
 
-        if (this.ValidateSelectedFilters()) {
+            else {
+                this.FilterdAdditionalService.forEach((i) => {
+                    if (i.Checked) {
+                        myAdditionalServices += i.Id + ",";
+                    }
+                });
+            }
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "LeadSources";
+            this.queryFilterItem.FieldValue = myAdditionalServices;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "BusinessUnitId";
+            this.queryFilterItem.FieldValue = this.BusinessUnitId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "DataType";
+            this.queryFilterItem.FieldValue = this.OpportunityTypeId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "OwnerId";
+            this.queryFilterItem.FieldValue = this.OwnerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "CountryId";
+            this.queryFilterItem.FieldValue = this.CountryId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsByCreateDate";
+            this.queryFilterItem.FieldValue = this.IsByCreateDate;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
             
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);   
+
+            if (this.IsCRMTenant) {
+                if (this.ResellerId) {
+                    this.queryFilterItem = new QueryFilterItem();
+                    this.queryFilterItem.DisplayInList = false;
+                    this.queryFilterItem.FieldName = "ResellerId";
+                    this.queryFilterItem.FieldValue = this.ResellerId;
+                    this.queryFilterItem.Operator = "Equals";
+                    this.queryFilterItems.push(this.queryFilterItem);
+                }
+            }
+
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -197,98 +223,7 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
             this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
         }
     }
-    GetQueryFilterItems(){
-        this.queryFilterItems = new Array<QueryFilterItem>();
-        var myAdditionalServices: string = "";
 
-        if (this.SelectedItem == "All")
-            myAdditionalServices = "All";
-
-        else {
-            this.FilterdAdditionalService.forEach((i) => {
-                if (i.Checked) {
-                    myAdditionalServices += i.Id + ",";
-                }
-            });
-        }
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "LeadSources";
-        this.queryFilterItem.FieldValue = myAdditionalServices;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "BusinessUnitId";
-        this.queryFilterItem.FieldValue = this.BusinessUnitId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "DataType";
-        this.queryFilterItem.FieldValue = this.OpportunityTypeId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "OwnerId";
-        this.queryFilterItem.FieldValue = this.OwnerId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "CountryId";
-        this.queryFilterItem.FieldValue = this.CountryId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-        
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);   
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IncludeCancelled";
-        this.queryFilterItem.FieldValue = this.IncludeCancelled;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        if (this.IsCRMTenant) {
-            if (this.ResellerId) {
-                this.queryFilterItem = new QueryFilterItem();
-                this.queryFilterItem.DisplayInList = false;
-                this.queryFilterItem.FieldName = "ResellerId";
-                this.queryFilterItem.FieldValue = this.ResellerId;
-                this.queryFilterItem.Operator = "Equals";
-                this.queryFilterItems.push(this.queryFilterItem);
-            }
-      }
-
-      if (this.StageCountRadio != null) {
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "StageCount";
-        this.queryFilterItem.FieldValue = this.StageCountRadio;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-      }
-        return this.queryFilterItems;
-    }
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);
@@ -298,12 +233,5 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
         date.setUTCMinutes(0);
         date.setUTCSeconds(0);
         return date;
-  }
-
-  public StageCountRadio: string = "Actual";
-  SetStageCountRadio(value: string) {
-    if (this.StageCountRadio != value) {
-      this.StageCountRadio = value;
     }
-  }
 }

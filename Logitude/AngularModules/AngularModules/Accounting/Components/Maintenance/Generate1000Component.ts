@@ -8,7 +8,7 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './Generate1000Component.html',
 })
 

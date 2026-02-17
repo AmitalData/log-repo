@@ -1,13 +1,13 @@
 ﻿import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Components, Pipes, Directives, ModuleDeclarations } from './ModuleDeclarations';
+import {FormsModule, ReactiveFormsModule}   from '@angular/forms';
+import {Components, Pipes, ModuleDeclarations} from './ModuleDeclarations';
 import {ModuleProviders} from './ModuleProviders';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule],
-    declarations: [...Components, ...Pipes, ...Directives],
-    exports: [...Components, ...Pipes, ...Directives, CommonModule, FormsModule, ReactiveFormsModule],
+    declarations: [...Components, Pipes],
+    exports: [...Components, ...Pipes, CommonModule, FormsModule, ReactiveFormsModule],
     entryComponents: [...Components],
 })
 

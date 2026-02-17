@@ -23,6 +23,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? ProfitCurrencyVATAmount { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
         public double? VatRecognizedPercentage { get; set; }
-        public decimal LocalVatAmountWithVatRecognized { get; set; }
+        
     }
 }

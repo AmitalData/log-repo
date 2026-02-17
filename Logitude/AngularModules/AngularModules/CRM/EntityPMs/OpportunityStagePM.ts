@@ -78,10 +78,7 @@ export class OpportunityStagePM {
     public OldEntityPM: OpportunityStagePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -89,7 +86,6 @@ export class OpportunityStagePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "OpportunityStage");
            
         }
-       }
     }
 
     private MyClone: OpportunityStagePM;

@@ -1,8 +1,0 @@
-﻿<Script DBType="Main" Module="Infrastructure">
-	<Sql Version="1">
-		<![CDATA[
-		INSERT INTO CategoryTypes(Code,Name,SearchFields)
-		VALUES('CSO', 'Custom Objects','cso,custom objects')
-    ]]>
-	</Sql> 
-</Script>

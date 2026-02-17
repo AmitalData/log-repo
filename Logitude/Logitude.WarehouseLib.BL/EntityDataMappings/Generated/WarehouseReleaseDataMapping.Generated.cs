@@ -10,7 +10,6 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs; 
 using Logitude.WarehouseLib.Data;
@@ -68,12 +67,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToAddressId, 
 	         ToAddressZipCode, 
 	         ToAddressCity, 
-	         ToAddressCountryId, 
-	         IsUsed, 
-	         TruckerId, 
-	         TruckerReference, 
-	         ChildEntityReference, 
-	         MasterShipmentNumber,
+	         ToAddressCountryId,
 	      }
 
 
@@ -131,15 +125,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ToAddressId, 
 	         ToAddressZipCode, 
 	         ToAddressCity, 
-	         ToAddressCountryId, 
-	         IsUsed, 
-	         Destination, 
-	         TruckerId, 
-	         TruckerReference, 
-	         ChildEntityReference, 
-	         MasterShipmentNumber, 
-	         IsUpdateByAutomation, 
-	         CustomerPrimaryContactId,
+	         ToAddressCountryId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -373,33 +359,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 				entityPOCO.ToAddressCountryId = entityPM.ToAddressCountryId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
-            {
-				entityPOCO.IsUsed = entityPM.IsUsed;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
-            {
-				entityPOCO.TruckerId = entityPM.TruckerId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
-            {
-				entityPOCO.TruckerReference = entityPM.TruckerReference;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityReference))
-            {
-				entityPOCO.ChildEntityReference = entityPM.ChildEntityReference;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterShipmentNumber))
-            {
-				entityPOCO.MasterShipmentNumber = entityPM.MasterShipmentNumber;
-			}
-			
-			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseRelease", Tenant = entityPM.Tenant }).Update();
-		 
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -636,33 +595,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.ToAddressCountryId = entityPOCO.ToAddressCountryId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsUsed))
-            {
-					entityPM.IsUsed = entityPOCO.IsUsed;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerId))
-            {
-					entityPM.TruckerId = entityPOCO.TruckerId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TruckerReference))
-            {
-					entityPM.TruckerReference = entityPOCO.TruckerReference;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChildEntityReference))
-            {
-					entityPM.ChildEntityReference = entityPOCO.ChildEntityReference;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MasterShipmentNumber))
-            {
-					entityPM.MasterShipmentNumber = entityPOCO.MasterShipmentNumber;
-            }
-
-			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "WarehouseRelease", Tenant = entityPM.Tenant }).Set();
-		 
 		}
 
 		public void PMToOldPM(WarehouseReleasePM entityPM, WarehouseReleasePM oldEntityPM)
@@ -892,31 +824,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ToAddressCountryId))
             {
                 oldEntityPM.ToAddressCountryId = entityPM.ToAddressCountryId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUsed))
-            {
-                oldEntityPM.IsUsed = entityPM.IsUsed;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerId))
-            {
-                oldEntityPM.TruckerId = entityPM.TruckerId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TruckerReference))
-            {
-                oldEntityPM.TruckerReference = entityPM.TruckerReference;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChildEntityReference))
-            {
-                oldEntityPM.ChildEntityReference = entityPM.ChildEntityReference;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MasterShipmentNumber))
-            {
-                oldEntityPM.MasterShipmentNumber = entityPM.MasterShipmentNumber;
             }
 			
 		}

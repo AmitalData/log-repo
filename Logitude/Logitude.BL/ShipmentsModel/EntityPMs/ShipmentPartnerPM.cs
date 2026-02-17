@@ -19,7 +19,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string CountryName { get; set; }
-        public string CountryCode { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
         public string Email { get; set; }
@@ -32,16 +31,12 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ReferentName { get; set; }
         public string Telephone { get; set; }
         public bool IsCountManager { get; set; }
-        public string FlagSRCVisibility { get; set; }
-
-        
         public ShipmentPartnerPM()
         {
             this.FlagSRC = "";
             this.Email = "";
             this.ContactName = "";
             this.ReferenceVisibility = "visible";
-            this.FlagSRCVisibility = "visible";
             this.Reference2Visibility = "collapse";
         }
     }

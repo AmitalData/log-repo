@@ -9,7 +9,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.BL.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Social.BL.Helpers;
@@ -19,18 +19,11 @@ using Simplog.Data.Helpers;
 using System.Data;
 using Logitude.CRM.BL.Validators;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.CRM.BL.Helpers;
 using System.Web;
 using System.Data.Entity.Core;
-using Logitude.Server.Tools.QueueService;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Global.Data.GlobalModel;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.CRM.BL.AnalyticTableServices;
-using Logitude.Server.Tools;
 
 namespace Logitude.CRM.BL.EntityUpdateServices
 {
@@ -59,7 +52,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 {
                     if (entityPM.StageDueDate == null)
                     {
-                        DateTime? stageDueDate = null;
+                        DateTime? stageDueDate = null;                        
                         Stage stage = stageRepository.GetStageByCode("QUA", entityPM.Tenant);
                         if (stage != null)
                         {
@@ -83,7 +76,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                         entityPM.Probability = stage.Probability;
                     }
                 }
-
+                
                 decimal? field1 = entityPM.Probability == null ? 0 : Convert.ToDecimal(entityPM.Probability);
                 decimal? field2 = entityPM.NumberOfShipments == null ? 0 : Convert.ToDecimal(entityPM.NumberOfShipments);
                 entityPM.ValueField = field1 * field2 / 100;
@@ -96,18 +89,11 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Opportunity", 0, true);
                 string email = HttpContext.Current.User.Identity.Name;
                 ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-                UserRepository userRepository = new UserRepository(entityPM.Tenant);
                 Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-                User loggeduser = userRepository.GetSingleUserByEmail(email, entityPM.Tenant);
-               
                 if (loggedContact != null)
                 {
-                    if (loggeduser == null)
-                    {
-                        loggeduser = userRepository.GetSingleUserByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
-                    }
-                    ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggeduser.Id);
-                }         
+                    ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
+                       }
             }
         }
 
@@ -128,27 +114,20 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Opportunity", 0, true);
                 string email = HttpContext.Current.User.Identity.Name;
                 ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-                UserRepository userRepository = new UserRepository(entityPM.Tenant);
-
                 Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-                User loggeduser = userRepository.GetSingleUserByEmail(email, entityPM.Tenant);
-
                 if (loggedContact != null)
                 {
-                    if (loggeduser == null)
-                    {
-                        loggeduser = userRepository.GetSingleUserByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
-                    }
-                    ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggeduser.Id);
-                    entityPM.UpdatedByUserId = loggeduser.Id;
-                }          
+                    ActivityLogger.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);                   
+                   entityPM.UpdatedByUserId = loggedContact.Id;                   
+                }
+
             }
         }
 
         protected override void OnUpdating(EntityPMs.OpportunityPM entityPM, Opportunity entityPOCO)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
-            {
+            {               
                 if (entityPM.StageId != entityPOCO.StageId)
                 {
                     DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -156,7 +135,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     if (entityPM.LastStageDate == null)
                     {
                         entityPM.LastStageDate = entityPM.CreateDate;
-                    }
+                    }                    
 
                     OpportunityStage opportunityStage = new OpportunityStage()
                     {
@@ -174,8 +153,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     OpportunityStageRepository opportunityStageRepository = new OpportunityStageRepository(entityPM.Tenant);
                     opportunityStageRepository.Add(opportunityStage);
                     opportunityStageRepository.SubmitChanges();
-
-                    AddOpportunityStageChangingQueue(entityPM);
                 }
 
                 if (entityPM.CustomerId != entityPOCO.CustomerId)
@@ -190,10 +167,11 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     }
 
                     activityRepository.SubmitChanges();
-
+                    
                 }
 
                 this.SetCustomerDateFields(entityPM, entityPOCO);
+               
             }
         }
 
@@ -209,38 +187,20 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             additionalServiceUpdateService.UpdateMulti(entityPM.OpportunityAdditionalServices, entityPM.DeletedOpportunityAdditionalServices, entityPM, false);
         }
 
-        protected override void UpdateCalculatedFields(OpportunityPM entityPM, EntityPM entityParentPM, Opportunity entityPOCO)
-        {
-            new OpportunityAnalyticTableService(MainContext.GetActiveDbContext()).AddUpdate(entityPOCO, entityPM.Tenant);
-        }
-
         protected override void Trace(OpportunityPM entityPM, Opportunity entityPOCO, string changesXml)
-        {
+        {            
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
-            UserRepository userRepository = new UserRepository(commonContext);
-
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-
-            Contact SystemContact = contactRep.GetSingleContactByEmail("system@tenant" + entityPM.Tenant + ".com", entityPM.Tenant);
-
-            if (contact == null)
-            {
-                contact = SystemContact;
-            }
-            User myUser = userRepository.GetSingleUser(contact.Id, entityPM.Tenant);
-            if (myUser == null)
-            {
-                myUser = userRepository.GetSingleUser(SystemContact.Id, entityPM.Tenant);
-            }
+            
             ICRMContext crmContext = this.MainContext as ICRMContext;
             CRMEmailAlertsHelper helper = new CRMEmailAlertsHelper();
-
+            
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 if (entityPM.Subject != entityPOCO.Subject)
                 {
-                    AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", myUser.Id, entityPM.Subject, "changed Opportunity Subject from " + entityPOCO.Subject + " to " + entityPM.Subject, true, entityPM.Tenant);
+                    AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", contact.Id, entityPM.Subject, "changed Opportunity Subject from " + entityPOCO.Subject + " to " + entityPM.Subject, true, entityPM.Tenant);
                 }
 
                 if (entityPM.StageDueDate != entityPOCO.StageDueDate)
@@ -254,7 +214,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     {
                         Tenant = entityPM.Tenant,
                         EventTypeCode = "OPSG",
-                        UserId = myUser.Id,
+                        UserId = contact.Id,
                         EntityId = entityPM.Id,
                         ObjectTableName = "Opportunity",
                         Notes = myEventNotes,
@@ -267,14 +227,14 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     StagePM oldStage = stageQueryService.GetSingle(entityPOCO.StageId, false, false);
                     StagePM newStage = stageQueryService.GetSingle(entityPM.StageId, false, false);
 
-                    AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", myUser.Id, entityPM.Subject, "changed Opportunity Stage from " + oldStage.Name + " to " + newStage.Name, true, entityPM.Tenant);
+                    AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", contact.Id, entityPM.Subject, "changed Opportunity Stage from " + oldStage.Name + " to " + newStage.Name, true, entityPM.Tenant);
 
                     if (entityPM.PostToFollowersAsWon)
                     {
                         string message = (newStage.Code == "CLS") ? "Opportunity closed as lost" : "Opportunity closed as won";
                         message += ":" + Environment.NewLine + entityPM.ClosingDescription;
                         entityPM.PostToFollowersAsWon = false;
-                        AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", myUser.Id, entityPM.Subject, message, false, entityPM.Tenant);
+                        AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", contact.Id, entityPM.Subject, message, false, entityPM.Tenant);
                     }
 
                     if (entityPM.OwnerId != entityPM.UpdatedByUserId)
@@ -298,7 +258,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     {
                         Tenant = entityPM.Tenant,
                         EventTypeCode = "OPST",
-                        UserId = myUser.Id,
+                        UserId = contact.Id,
                         EntityId = entityPM.Id,
                         ObjectTableName = "Opportunity",
                         Notes = "Stage changed from " + oldStage.Name + " to " + newStage.Name
@@ -308,14 +268,14 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 if (entityPM.OwnerId != entityPOCO.OwnerId && entityPM.OwnerId != entityPM.UpdatedByUserId)
                 {
                     helper.SendEmailAlert(entityPM, entityPOCO, "Opportunity", entityPM.Tenant, "OOPA", false);
-                }
+                }                
 
                 if (entityPM.RatingCode != entityPOCO.RatingCode)
                 {
                     RatingQueryService ratingService = new RatingQueryService(crmContext);
                     RatingPM oldRating = ratingService.GetSingle(entityPOCO.RatingCode, false, false);
                     RatingPM newRating = ratingService.GetSingle(entityPM.RatingCode, false, false);
-                    AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", myUser.Id, entityPM.Subject, "changed Opportunity Rating from " + oldRating.Name + " to " + newRating.Name, true, entityPM.Tenant);
+                    AutomaticPosting.CreatePost(entityPM.Id, "Opportunity", contact.Id, entityPM.Subject, "changed Opportunity Rating from " + oldRating.Name + " to " + newRating.Name, true, entityPM.Tenant);
                 }
             }
 
@@ -323,37 +283,37 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             {
                 if (entityPM.OwnerId != entityPM.UpdatedByUserId)
                 {
-                    helper.SendEmailAlert(entityPM, entityPOCO, "Opportunity", entityPM.Tenant, "OOPA", true);
+                    helper.SendEmailAlert(entityPM, entityPOCO, "Opportunity", entityPM.Tenant,  "OOPA", true);                   
                 }
 
                 helper.SendEmailAlert(entityPM, entityPOCO, "Opportunity", entityPM.Tenant, "GNOP", true);
 
                 CardRepository cardRepository = new CardRepository(commonContext);
                 Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-                AutomaticPosting.CreatePost(entityPM.CustomerId, "Customer", myUser.Id, customer.EnglishName, "Opportunity of Subject (" + entityPM.Subject + ") has been created for this customer", true, entityPM.Tenant);
+                AutomaticPosting.CreatePost(entityPM.CustomerId, "Customer", contact.Id, customer.EnglishName, "Opportunity of Subject (" + entityPM.Subject + ") has been created for this customer", true, entityPM.Tenant);
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,
                     EventTypeCode = "CROP",
-                    UserId = myUser.Id,
+                    UserId = contact.Id,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Opportunity",
                     Notes = changesXml
                 });
 
-                this.TraceProducts(entityPM, myUser.Id, true);
-                this.TraceCompetitors(entityPM, myUser.Id, true);
-                this.TraceAdditionalServices(entityPM, myUser.Id, true);
+                this.TraceProducts(entityPM, contact.Id, true);
+                this.TraceCompetitors(entityPM, contact.Id, true);
+                this.TraceAdditionalServices(entityPM, contact.Id, true);
             }
 
             else
-            {
+            {                
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = entityPM.Tenant,
                     EventTypeCode = "UPOP",
-                    UserId = myUser.Id,
+                    UserId = contact.Id,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Opportunity",
                     Notes = changesXml
@@ -382,7 +342,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                             {
                                 Tenant = entityPM.Tenant,
                                 EventTypeCode = "CWOP",
-                                UserId = myUser.Id,
+                                UserId = contact.Id,
                                 EntityId = entityPM.Id,
                                 ObjectTableName = "Opportunity",
                                 Notes = myResounNotes,
@@ -396,7 +356,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                             {
                                 Tenant = entityPM.Tenant,
                                 EventTypeCode = "CLOP",
-                                UserId = myUser.Id,
+                                UserId = contact.Id,
                                 EntityId = entityPM.Id,
                                 ObjectTableName = "Opportunity",
                                 Notes = myResounNotes,
@@ -415,7 +375,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                                 {
                                     Tenant = entityPM.Tenant,
                                     EventTypeCode = "CCOP",
-                                    UserId = myUser.Id,
+                                    UserId = contact.Id,
                                     EntityId = entityPM.Id,
                                     ObjectTableName = "Opportunity",
                                     Notes = "Lost To " + comp.Name + myClosingDescription,
@@ -429,7 +389,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                                 {
                                     Tenant = entityPM.Tenant,
                                     EventTypeCode = "CCOP",
-                                    UserId = myUser.Id,
+                                    UserId = contact.Id,
                                     EntityId = entityPM.Id,
                                     ObjectTableName = "Opportunity",
                                     Notes = myResounNotes,
@@ -444,7 +404,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                             {
                                 Tenant = entityPM.Tenant,
                                 EventTypeCode = "CAOP",
-                                UserId = myUser.Id,
+                                UserId = contact.Id,
                                 EntityId = entityPM.Id,
                                 ObjectTableName = "Opportunity",
                                 Notes = myResounNotes,
@@ -459,7 +419,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     {
                         Tenant = entityPM.Tenant,
                         EventTypeCode = "COOP",
-                        UserId = myUser.Id,
+                        UserId = contact.Id,
                         EntityId = entityPM.Id,
                         ObjectTableName = "Opportunity",
                     });
@@ -471,16 +431,16 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                     {
                         Tenant = entityPM.Tenant,
                         EventTypeCode = "ROOP",
-                        UserId = myUser.Id,
+                        UserId = contact.Id,
                         EntityId = entityPM.Id,
                         ObjectTableName = "Opportunity",
                     });
                 }
 
-                this.TraceProducts(entityPM, myUser.Id, false);
-                this.TraceCompetitors(entityPM, myUser.Id, false);
-                this.TraceAdditionalServices(entityPM, myUser.Id, false);
-            }
+                this.TraceProducts(entityPM, contact.Id, false);
+                this.TraceCompetitors(entityPM, contact.Id, false);
+                this.TraceAdditionalServices(entityPM, contact.Id, false);
+            }            
         }
 
         private void TraceProducts(OpportunityPM entityPM, string loggedContactId, bool isNewEntity)
@@ -715,7 +675,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         private void UpdateCustomerFields(OpportunityPM opportunityPM, CustomerRepository iCustomerRepository)
         {
             DateTime myDate = TenantServerConfigration.GetCurrentDateTime(opportunityPM.Tenant);
-
+          
             Customer customer = iCustomerRepository.GetSingleCustomer(opportunityPM.CustomerId, opportunityPM.Tenant, false);
             if (customer != null)
             {
@@ -774,7 +734,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
             IQueryable<Activity> iQueryableActivities = activityRepository.GetActivitiesByOpportunityId(entityPM.Id, entityPM.Tenant);
             iQueryableActivities = iQueryableActivities.Where(d => d.StartDateTime != null && d.IsOpen);
             Activity nextDBActivity = iQueryableActivities.OrderBy(d => d.StartDateTime).FirstOrDefault();
-
+            
             if (nextDBActivity != null)
             {
                 nextSubject = nextDBActivity.Subject;
@@ -784,7 +744,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
 
             entityPM.NextActivitySubject = nextSubject;
             entityPM.NextActivityTypeCode = nextTypeCode;
-            entityPM.NextActivityDate = nextDateTime;
+            entityPM.NextActivityDate = nextDateTime; 
         }
 
         private void InitializeBusinessUnit(OpportunityPM entityPM)
@@ -814,34 +774,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
             }
             base.CheckConcurrency(entityPM, entityPOCO);
-        }
-
-        private void AddOpportunityStageChangingQueue(OpportunityPM opportunity)
-        {
-            string clientId = this.GetClientId(opportunity.Id);
-            if (string.IsNullOrEmpty(clientId)) return;
-
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("OpportunityStageChangingQueue", opportunity.Tenant);
-            queueservice.Send(new Dictionary<string, string>() {
-                    { "StageName", opportunity.StageName },
-                    { "Tenant", opportunity.Tenant.ToString() },
-                    { "ClientId",  clientId } },
-                opportunity.Tenant, null, null, null, null);
-        }
-
-        private string GetClientId(string opportunityId)
-        {
-            string clientId = null;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                IGlobalContext globalContext = GlobalContext.GetContext();
-                LogitudeLead myLead = (from d in globalContext.LogitudeLeads where d.OpportunityId == opportunityId select d).FirstOrDefault();
-                clientId = myLead?.Street;
-                scope.Complete();
-            }
-
-            return clientId;
         }
     }
 }

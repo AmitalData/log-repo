@@ -13,12 +13,8 @@ export class EntityArgs {
     public EntityParentPM: any;
     public IsNewEntity: boolean = false;
     public SkipCtor: boolean = false;
-    public IsFromStandAloneScreen: boolean = false;
     public PreSelectedTabCode: string = null;
-    public EditComponentArgument: any = null;
-    public SelectedTabCode: string = null;
     public EntityArgEventEmitter: EventEmitter<any> = new EventEmitter<any>();
-    public customObjectFields?: any[] = [];
     public SendMessage(token: any) {//itzik test 
         this.EntityArgEventEmitter.emit(token);
     }

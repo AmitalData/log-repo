@@ -11,9 +11,6 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Server.Infrastructure;
 using Unifreight.BL.EntityDataMappings;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.Models;
-using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityQueryServices
 {
@@ -26,15 +23,15 @@ namespace Unifreight.BL.EntityQueryServices
             this.mapping = new CCUFILEMDataMapping();
         }
 
-        public CCUFILEMPM GetSingle(int FILENO,int tenant,  bool getComposition, bool getFromCache )
+        public CCUFILEMPM GetSingle(int FILENO, bool getComposition, bool getFromCache )
         {
-            var EntityKeys = new CCUFILEMKeys() { FILENO = FILENO , TENANT= tenant};
+            var EntityKeys = new CCUFILEMKeys() { FILENO = FILENO};
             return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
         protected override Simplog.Server.Infrastructure.EntityKeyFields GetKeys(CCUFILEM entityPOCO)
         {
-            return new CCUFILEMKeys() { FILENO = entityPOCO.FILENO, TENANT = entityPOCO.TENANT };
+            return new CCUFILEMKeys() { FILENO = entityPOCO.FILENO  };
         }
 
         public override void GetComposition(EntityKeyFields entityKeys, CCUFILEMPM entityPM)
@@ -68,57 +65,21 @@ namespace Unifreight.BL.EntityQueryServices
             base.GetComposition(entityKeys, entityPM);
         }
 
-        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO, int tenant)
+        public int? GetFILENOByCUSTOMFILENO(long lCUSTOMFILENO)
         {
-            return (this.Repository as CCUFILEMRepository).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, tenant);
+            return (this.Repository as CCUFILEMRepository).GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
         }
 
-        public int? GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO,int tenant)
+        public int? GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(long lCUSTOMFILENO)
         {
-			CustomsSettingRepository customsSettingRepository = new CustomsSettingRepository(tenant);
-			var mySetting = customsSettingRepository.GetSettingByTenantCache(tenant);
-		
-            if (mySetting.IsConnectedToUniFreight)
-            {
-                return (this.Repository as CCUFILEMRepository).LockByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, tenant);
-            }
-            return 0; 
+            return (this.Repository as CCUFILEMRepository).LockByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
         }
 
         //<--- Yuval Chalup 19.11.2015 TASK-17450        
-        public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber, int tenant)
+        public CCUFILEM GetCCUFILEMByRESHIMONNO(string reshimonNumber)
         {
-            return (this.Repository as CCUFILEMRepository).GetCCUFILEMByRESHIMONNO(reshimonNumber, tenant);
+            return (this.Repository as CCUFILEMRepository).GetCCUFILEMByRESHIMONNO(reshimonNumber);
         }
         //Yuval Chalup 19.11.2015 TASK-17450 --->
-
-        public void VirtualCCUQUELOCK_LockNOWAIT(int tenant, string declaration_CustomFileNo)
-        {
-            LogMessagingUtil.Instance.AppendLine("VirtualCCUQUELOCK_LockNOWAIT");
-
-            long lCUSTOMFILENO;
-            if (!long.TryParse(declaration_CustomFileNo, out lCUSTOMFILENO))
-            {
-                throw new BusinessErrorException("declaration_CustomFileNo could not convert to long ");
-            }
-            var myCCUFILEMRepository = new CCUFILEMRepository(tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, tenant);
-
-
-            var myCCUQUELOCKRepository = new CCUQUELOCKRepository(tenant);
-            try
-            {
-                var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
-
-            }
-            catch (System.Exception)
-            {
-
-                LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT(CCUFILEM, {ccufilem.ToString()}) ==> Already Lock => try later (*5) ");
-                throw;
-            }
-
-
-        }
     }
 }

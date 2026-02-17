@@ -35,7 +35,7 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARPaymentChequeStatusReplica GetARPaymentChequeStatusReplicaByCode(string Code,int Tenant, string ComputingPartnerName = "")
+		public ARPaymentChequeStatusReplica GetARPaymentChequeStatusReplicaByCode(string Code,int Tenant)
         { 
 		    try
             {
@@ -72,7 +72,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public ARPaymentChequeStatusReplicaPM ARPaymentChequeStatusReplicaDataMappingAndValidatin(ARPaymentChequeStatusReplica MyEntity,int Tenant,string ComputingPartnerName = "", bool IsUpdate = false)
+		public ARPaymentChequeStatusReplicaPM ARPaymentChequeStatusReplicaDataMappingAndValidatin(ARPaymentChequeStatusReplica MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {

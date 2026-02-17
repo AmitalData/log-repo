@@ -135,7 +135,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             ArrivalDate = a.ArrivalDate,
                             TimeOfArrivalInfo = a.TimeOfArrivalInfo,
                             TimeOfDepartureInfo = a.TimeOfDepartureInfo,
-                        }).OrderBy(a => a.Id);
+                        });
 
 
             return myResult;

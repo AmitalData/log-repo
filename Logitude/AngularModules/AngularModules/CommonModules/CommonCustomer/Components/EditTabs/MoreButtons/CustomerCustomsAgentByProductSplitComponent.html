@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td>
@@ -6,34 +6,30 @@
                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
 
                     <log-column [width]="'150'" [header]="'Product Type'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="true">
-                                {{item.ProductTypeName}}
-                            </log-cell-template>
-                        </ng-template>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                            {{item.ProductTypeName}}
+                        </log-cell-template>
                     </log-column>
 
                     <log-column [width]="'200'" [header]="'Customs Agent'">
-                        <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="true">
-                                <div *ngIf="IsDisabled || logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
-                                    {{item.PartnerName}}
-                                </div>
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
+                                {{item.PartnerName}}
+                            </div>
 
-                                <div *ngIf="!IsDisabled && logcelltemplate.IsEditMode">
-                                    <LogLov *ngIf="item.LOVIsVisible"
-                                            [FocusOnMe]="true"
-                                            [ObjectFieldName]="'PartnerId'"
-                                            [DisplayMemberPath]="'EnglishName'"
-                                            [DataContext]="item"
-                                            [HideColumns]="true"
-                                            (SelectedItemChanged)="item.Partner = $event"
-                                            [LookUpTableName]="'Card'"
-                                            [ObjectTableName]="'CustomerCustomsAgentByProduct'">
-                                    </LogLov>
-                                </div>
-                            </log-cell-template>
-                        </ng-template>
+                            <div *ngIf="logcelltemplate.IsEditMode">
+                                <LogLov *ngIf="item.LOVIsVisible"
+                                        [FocusOnMe]="true"
+                                        [ObjectFieldName]="'PartnerId'"
+                                        [DisplayMemberPath]="'EnglishName'"
+                                        [DataContext]="item"
+                                        [HideColumns]="true"
+                                        (SelectedItemChanged)="item.Partner = $event"
+                                        [LookUpTableName]="'Card'"
+                                        [ObjectTableName]="'CustomerCustomsAgentByProduct'">
+                                </LogLov>
+                            </div>
+                        </log-cell-template>
                     </log-column>
                 </logitude-edit-grid>
             </div>
@@ -57,7 +53,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button [disabled]="IsDisabled" class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -7,7 +7,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,7 +19,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DepositionRequestComponent.html',
 
 })
@@ -80,7 +80,7 @@ export class DepositionRequestComponent extends BaseComponent implements OnInit 
         if (!AppTool.IsNullOrEmpty(this.ShipmentId)) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
-            this.shipmentComputedFieldExtendedService.GetMarkCompleteDepositionRequest(this.ShipmentId, this.DirectionId , this.ForwardershipmentNumber , this.ForwarderPartnerId).subscribe((myResult:any) => {
+            this.shipmentComputedFieldExtendedService.GetMarkCompleteDepositionRequest(this.ShipmentId, this.DirectionId , this.ForwardershipmentNumber , this.ForwarderPartnerId).subscribe(myResult => {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 var pmResponse: ServiceResponse = myResult;
                 if (!pmResponse.HasError) {

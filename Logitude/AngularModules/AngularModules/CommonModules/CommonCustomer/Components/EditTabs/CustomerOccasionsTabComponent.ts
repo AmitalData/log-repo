@@ -7,7 +7,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerOccasionsTabComponent.html',
 })
 
@@ -21,7 +21,7 @@ export class CustomerOccasionsTabComponent {
 
         this.EntityPM = entityArgs.EntityPM;
 
-        entityResourceService.getEntityResourceByTableName("Occasion").subscribe((response: any) => {
+        entityResourceService.getEntityResourceByTableName("Occasion").subscribe(response => {
             this.IsResourcesReady = true;
             this.LoadOccasions();            
         });  

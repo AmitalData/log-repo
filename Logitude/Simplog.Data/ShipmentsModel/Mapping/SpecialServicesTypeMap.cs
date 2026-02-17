@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.HasKey(d => d.Id);
             this.Property(d => d.Id).HasMaxLength(15).IsRequired().IsUnicode(false);
             this.Property(d => d.Code).IsRequired().HasMaxLength(8).IsUnicode(false);
-            this.Property(d => d.EnglishName).HasMaxLength(100).IsRequired().IsUnicode(true);
+            this.Property(d => d.EnglishName).HasMaxLength(100).IsRequired().IsUnicode(false);
             this.Property(d => d.LocalName).HasMaxLength(100).IsUnicode(true);
             this.Property(d => d.SearchFields).HasMaxLength(1000).IsUnicode(true);
 

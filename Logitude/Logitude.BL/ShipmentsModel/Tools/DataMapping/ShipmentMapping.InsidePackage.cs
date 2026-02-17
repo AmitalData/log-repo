@@ -41,9 +41,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ChassisNumber = itemPM.ChassisNumber;
             itemPoco.RegistrationNumber = itemPM.RegistrationNumber;
             itemPoco.CountryId = itemPM.CountryId;
-            itemPoco.Harmonize = itemPM.Harmonize;
-            itemPoco.IsMultiHarmonize = itemPM.IsMultiHarmonize;
-            itemPoco.HorseId = itemPM.HorseId;
         }
     }
 }

@@ -7,7 +7,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
@@ -44,8 +44,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                    SecurityUtility.AuthenticateAccessibleAPI("Cancel ARPayment", authToken.Tenant);
-
                     ARPaymentCancellation = entity;
 
                     ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
@@ -67,8 +65,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception + ex.StackTrace , "ARPayment", null, "ARPayment API");
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception+";" + ex.StackTrace);
+                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
 
@@ -102,9 +100,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         public void CheckPaymentStatus(ARPaymentPM paymentPM)
         {
-            if(paymentPM.StatusCode != "AD" && paymentPM.StatusCode !="CL")
+            if(paymentPM.StatusCode != "AD")
             {
-                throw new Exception("Payment Status <> Approved/Closed - Cant Void");
+                throw new Exception("Payment Status <> Approved - Cant Void");
             }
         }
 

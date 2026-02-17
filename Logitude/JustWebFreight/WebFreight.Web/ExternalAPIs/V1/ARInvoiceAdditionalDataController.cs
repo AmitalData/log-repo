@@ -11,11 +11,10 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -49,8 +48,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                        SecurityUtility.AuthenticateAccessibleAPI("ARInvoice Additional Data", authToken.Tenant);
-
                         if (invoiceAdditionalData != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoiceAdditionalData>(LogitudeXmlSerializer.SerializeObjectToXmlString(invoiceAdditionalData));
@@ -92,10 +89,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             IInvoiceContext MyContext = InvoiceContext.GetContext(invoice.Tenant);
             invoice.DocumentFilingId = invoiceAdditionalData.DocumentFilingId;
-            if (invoice.IsFullAccounting && invoice.IsExternalEntity && invoice.DocumentFilingId != null)
-            {
-                invoice.IsPrinted = true;
-            }
+
             ARInvoiceService service = new ARInvoiceService(MyContext, invoice.Tenant);
             service.Update(invoice, true);
         }

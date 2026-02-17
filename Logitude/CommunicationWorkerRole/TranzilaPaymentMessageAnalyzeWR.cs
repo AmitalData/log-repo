@@ -17,13 +17,13 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Azure;
 using Microsoft.WindowsAzure.Storage;
 using WebFreight.Web.InfrastructureModel.DomainServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -39,7 +39,6 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Server.Infrastructure;
 
 namespace CommunicationWorkerRole
 {
@@ -52,7 +51,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
+                if (!General.IsUpdating())
                 {
                     try
                     {
@@ -65,20 +64,15 @@ namespace CommunicationWorkerRole
                             //analyzeQueue.Status = "In progress";
                             //analyzeQueueRepository.Update(analyzeQueue);
                             var MsgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
-                            AnalyzeMessage(analyzeQueue);
                             if (MsgBody.Contains("Response=000"))
                             {
-                            string ShipmentNumber = GetRelatedShipmentNumber(analyzeQueue);
-                            if (!string.IsNullOrEmpty(ShipmentNumber))
+                                AnalyzeMessage(analyzeQueue);
+                                analyzeQueue.Status = "D";
+                            }
+                            else
                             {
-                                UpdateShipmentAdditionalData(ShipmentNumber, analyzeQueue.Tenant);
+                                analyzeQueue.Status = "F";
                             }
-                            }
-                            analyzeQueue.Status = "D";
-                            //else
-                            //{
-                            //    analyzeQueue.Status = "F";
-                            //}
                             analyzeQueueRepository.Update(analyzeQueue);
                             analyzeQueueRepository.SubmitChanges();
                         }
@@ -103,48 +97,12 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private string GetRelatedShipmentNumber(AnalyzeQueue analyzeQueue)
-        {
-            string msgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
-            var MessageParameters = msgBody.Split('&');
-            var DCdisableParam = MessageParameters.Where(a => a.Contains("DCdisable")).FirstOrDefault();
-            if (DCdisableParam != null)
-            {
-                return !string.IsNullOrEmpty(DCdisableParam.Split('=')[1]) ? DCdisableParam.Split('=')[1].Split(',')[0] : null;
-           
-            }
-            return null;
-        }
-
-        private void UpdateShipmentAdditionalData(string shipmentNumber, int tenant)
-        {
-            ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-            ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(shipmentRepository.context);
-            string CurrentShipmentId = shipmentRepository.GetShipmentIdByShipmentNumber(shipmentNumber, tenant);
-            if (!string.IsNullOrEmpty(CurrentShipmentId))
-            {
-                ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(CurrentShipmentId, tenant);
-                if (shipmentAdditionalCloudData != null)
-                {
-                    shipmentAdditionalCloudData.IsPaymentRequired = false;
-                    shipmentAdditionalCloudData.PaymentDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
-                    shipmentAdditionalCloudDataRepository.SubmitChanges();
-
-                }
-
-            }
-
-        }
-
         private void AnalyzeMessage(AnalyzeQueue analyzeQueue)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(analyzeQueue.Tenant);
             CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
             DocumentRepository documentrepository = new DocumentRepository(commonContext);
-            var MsgBody = Encoding.UTF8.GetString(Encoding.Convert(
-             Encoding.Default, Encoding.UTF8, analyzeQueue.MessageBody.Where(b => b != '\n').ToArray())
-            );
+            var MsgBody = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
             List<QueueTask> tasks = new List<QueueTask>();
             //&AnalyzeQueueDateTime=0103191133
             var AnalyzeQueueCreateDate = analyzeQueue.CreateDate.ToString("ddMMyyhhmm");
@@ -219,7 +177,7 @@ namespace CommunicationWorkerRole
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
             }
             catch (Exception ex)
             {

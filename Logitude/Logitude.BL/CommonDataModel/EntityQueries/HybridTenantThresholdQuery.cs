@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         HybridTenantThresholdRepository repository;
 
- 
+        public  HybridTenantThresholdQuery()
+        {
+               repository = new  HybridTenantThresholdRepository(); 
+        }
 
         public  HybridTenantThresholdQuery(int tenant)
         {
@@ -39,25 +42,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
-                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
         }
 
 
-        public HybridTenantThresholdPM GetSinglePM(int tenant, int typoecode)
+        public HybridTenantThresholdPM GetSinglePM(int tenant2, int tenant)
         {
 
             var query = (from a in repository.context.HybridTenantThresholds
-                         where a.Tenant == tenant && a.TypeCode== typoecode
+                         where a.Tenant == tenant
                          select new HybridTenantThresholdPM()
                          {
 
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
-                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -77,7 +78,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
-                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -95,7 +95,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
-                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -110,7 +109,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
-                             TypeCode = a.TypeCode,
                          });
 
             return query;

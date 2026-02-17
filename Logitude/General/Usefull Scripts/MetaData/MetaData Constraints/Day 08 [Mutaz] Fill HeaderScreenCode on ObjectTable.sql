@@ -1,1 +1,0 @@
-update ObjectTables set HeaderScreenCode =(select Screens.Code from Screens where Id=ObjectTables.HeaderScreenId)

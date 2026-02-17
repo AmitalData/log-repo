@@ -14,11 +14,11 @@ using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -79,7 +79,7 @@ namespace CommunicationWorkerRole
         }
 
         string Token;
-        public override void Run()
+        public override async void AsyncRun()
         {
             try
             {
@@ -95,9 +95,8 @@ namespace CommunicationWorkerRole
                     string AuthURI = URI + "APIAuthentication";
                     var serializedObject = JsonConvert.SerializeObject(APICredentialsParam);
                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                    var result = client.PostAsync(AuthURI, content);
-                    result.Wait();
-                    var tempUser = result.Result.Content.ReadAsStringAsync().Result;
+                    var result = await client.PostAsync(AuthURI, content);
+                    var tempUser = result.Content.ReadAsStringAsync().Result;
                     ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                     Token = User.Token;
                 }
@@ -119,7 +118,7 @@ namespace CommunicationWorkerRole
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             int.TryParse(response.MessageValues["ImporterTenant"], out ImporterTenant);
-                            string CorrelationId = response.MessageId;
+                            string CorrelationId = response.MessageValues["CorrelationId"].ToString();
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                             APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
@@ -192,15 +191,11 @@ namespace CommunicationWorkerRole
                                     var msg = "Start Sending Declaration Approval Request To Importer Tenant " + DateTime.Now;
                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(ApprovalRequestPM), null, null, "");
                                     var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                    var result = client.PutAsync(URI + "DeclarationApprovalRequest", content);
-                                    result.Wait();
-                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                                    var result = await client.PutAsync(URI + "DeclarationApprovalRequest", content);
+                                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
                                     {
                                         // VDK Logic
-                                        //if (!ShipmentPm.IsImporterApprovalRequired)
-                                        //{
-                                        //    AddVDKExternalTaskQueue(ApprovalRequestPM, tenant);
-                                        //} 
+                                        AddVDKExternalTaskQueue(ApprovalRequestPM, tenant);
                                         //var ResponseData = result.Content.ReadAsStringAsync().Result;
                                         var Donemsg = "Declaration Approval Request Sent To Importer Successfully, Start Sending VDK to Unif. " + DateTime.Now;
                                         APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, "VDK", null, "");
@@ -208,7 +203,7 @@ namespace CommunicationWorkerRole
                                     }
                                     else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
                                     {
-                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
+                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Content.ReadAsStringAsync().Result);
                                         if (EXC != null)
                                         {
                                             var Failmsg = EXC.ErrorType + " Fail To Send Declaration Approval Request To Importer Tenant " + DateTime.Now;
@@ -392,7 +387,7 @@ namespace CommunicationWorkerRole
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
 
             }
             catch (Exception ex)

@@ -14,18 +14,11 @@ import {EntityResourceService} from '../../../../Infrastructure/Services/EntityR
 
 @Component({
     selector: 'OverviewTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './OverviewTabComponent.html',
 })
 
 export class OverviewTabComponent {
-  public Transshipment2CarriageCarrierName: any;
-  public Transshipment2CarriageFlightNumber: any;
-  public Transshipment2CarriageETD: any;
-  public Transshipment2CarriageSpaceAllocationCode: any;
-  public Transshipment2CarriageAllotmentId: any;
-
-
     public Wizard: BookingWizardComponent;
     public EntityPM: BookingPM;
     public ObjectTableName: string;
@@ -358,7 +351,7 @@ export class OverviewTabComponent {
     private LoadAnswers() {
         var myBookingDomainService: BookingDomainService = new BookingDomainService();
 
-        myBookingDomainService.GetBookingAnswerPMs(this.EntityPM.Id).subscribe((myResult:any) => {
+        myBookingDomainService.GetBookingAnswerPMs(this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {
@@ -455,7 +448,7 @@ export class OverviewTabComponent {
     private LoadBooking() {
         var myService: BookingPMService = new BookingPMService();
 
-        myService.get(this.EntityPM.Id).subscribe((myResult:any) => {
+        myService.get(this.EntityPM.Id).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
 
             if (!myResponse.HasError) {

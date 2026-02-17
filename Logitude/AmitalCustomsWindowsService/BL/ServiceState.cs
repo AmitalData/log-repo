@@ -1,8 +1,6 @@
 ﻿using AmitalCustomsWindowsService.Utils;
 using CustomsWorkerRole.Test;
-using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Utils;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +22,7 @@ namespace AmitalCustomsWindowsService.BL
         public static DateTime ServiceStartAt = DateTime.Now;
         public static DateTime CurrentDate = DateTime.Now.Date;
         static DateTime LastSuccessResponseAt = DateTime.MinValue;
-        static DateTime LastRequestAt =  DateTime.MinValue;
+        static DateTime LastRequestAt = DateTime.MinValue;
         static string LastError = "";
         static long Requested = 0;
         static long RequestedToday = 0;
@@ -101,7 +99,7 @@ LastError:{4}",
                         _LastGetServiceBusStateAt = DateTime.Now;
                         _AllQ = CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll();
                         _AllQ = "Retrieve ServiceBus at " + DateTime.Now.ToString() + " :" + _AllQ;
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_AllQ);
+                        Debug.WriteLine(_AllQ);
                     }
 
 
@@ -109,11 +107,32 @@ LastError:{4}",
                 catch (Exception eee)
                 {
                     _AllQ = "CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString();
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_AllQ);
+                    Debug.WriteLine(_AllQ);
                 }
 
-                //SendReqSheetStatistic();
-                var myQueueThreadState= QueueThreadStateService.GetState();
+                ReqSheetStatisticClass.DoIt(
+                (emailbody, subj) =>
+                {
+                    var parameters = new CommunicationWorkerRole.EmailParameters()
+                    {
+                        From = "admin@fnarsoft.com",
+                        SwitchFromWithUserNameIfValid = true,
+                        To = "itzik@amital.co.il;YaronC@AMITAL.CO.IL;bbwrweim@mailparser.io",
+                        Cc = "",
+                        Bcc = "",
+                        Subject = subj,
+                        Body =
+                        "ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +
+                        emailbody,
+                    };
+                    //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
+                    //parameters.Tenant = 92;
+                    Debug.WriteLine(parameters.To);
+                    CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
+                });
+
+
+
                 string bad = "bgcolor=red";
                 string Good = "bgcolor=Green";
                 return string.Format(
@@ -144,12 +163,7 @@ LastError:{4}",
             "LastGetServiceBusStateAt :" + _LastGetServiceBusStateAt.ToString() + Environment.NewLine + _AllQ,
             "LastClacReqSheetStatistic At:" + ReqSheetStatisticClass._LastSendReqSheetStatistic.ToString() + Environment.NewLine + ReqSheetStatisticClass.MySheetStatistic
 
-            ) + 
-            Environment.NewLine +
-            myQueueThreadState;
-
-                    
-                    ;
+            );
             }
             catch (Exception e)
             {
@@ -158,30 +172,6 @@ LastError:{4}",
                 //throw;
             }
         }
-
-        private static void SendReqSheetStatistic()
-        {
-            return;
-            ReqSheetStatisticClass.DoIt(
-                            (emailbody, subj) =>
-                            {
-                                var parameters = new CommunicationWorkerRole.EmailParameters()
-                                {
-                                    From = SettingUtil.Emails.FromNoReply,
-                                    SwitchFromWithUserNameIfValid = true,
-                                    To = SettingUtil.Emails.DevTeamManagers,
-                                    Subject = subj,
-                                    Body =
-                                    "ReqSheetStatistic " + Environment.MachineName + "/ " + Environment.UserDomainName +
-                                    emailbody,
-                                };
-                    //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
-                    //parameters.Tenant = 92;
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
-                                CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
-                            });
-        }
-
         internal static void RaiseAnotherDay()
         {
             try
@@ -202,27 +192,26 @@ LastError:{4}",
         {
             try
             {
-                //todo:elisheva check
-                //string Source = SandBoxDir();
-                //DirectoryInfo DirectoryInfo1 = new DirectoryInfo(Source);
-                //if (!DirectoryInfo1.Exists)
-                //    DirectoryInfo1.Create();
-                //else
-                //{
-                //    DirectoryInfo1.Delete(true);
-                //    DirectoryInfo1.Create();
-                //}
+                string Source = SandBoxDir();
+                DirectoryInfo DirectoryInfo1 = new DirectoryInfo(Source);
+                if (!DirectoryInfo1.Exists)
+                    DirectoryInfo1.Create();
+                else
+                {
+                    DirectoryInfo1.Delete(true);
+                    DirectoryInfo1.Create();
+                }
             }
             catch (Exception e)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                Logger.LogMe(e.ToString(), true);
             }
         }
 
-        //internal static string SandBoxDir()
-        //{
-        //    return Logger.WorkingDir + @"..\SandBox\";
-        //}
+        internal static string SandBoxDir()
+        {
+            return Logger.WorkingDir + @"..\SandBox\";
+        }
 
 
 

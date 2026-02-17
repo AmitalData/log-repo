@@ -1,9 +1,7 @@
-﻿using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityKeys;
+﻿using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +25,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return EntityPM;
         }
-        public override void GetComposition(EntityKeyFields entityKeys, BankAccountPM entityPM)
-        {
-            IAccountingContext context = MainContext as IAccountingContext;
-            BankAccountKeys bankAccountKeys = entityKeys as BankAccountKeys;
-            ChequeCounterSerialQueryService queryService = new ChequeCounterSerialQueryService(context);
-            entityPM.ChequeCounterSerials = queryService.GetMulti(bankAccountKeys, true);
-        }
         public BankAccountPM GetByAccountNumber(string number, int tenant)
         {
             BankAccount bankAccount = this.repository.GetBankAccountByNumber(number, tenant);
@@ -49,14 +40,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
-
-        public BankAccountPM GetByAccountDisplay(string number, int tenant)
-        {
-            BankAccount bankAccount = this.repository.GetBankAccountByDisplay(number, tenant);
-            return this.GetEntityPM(bankAccount);
-        }
-
-
         public BankAccountPM GetBankAccountByTransferGLAcccountId(string transferGLAcccountId, int tenant)
         {
             BankAccount bankAccount = this.repository.GetBankAccountByTransferGLAcccountId(transferGLAcccountId, tenant);
@@ -69,11 +52,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return null;
         }
 
-        public List<BankAccountPM> GetBankAccountListByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
+        public BankAccountPM GetBankAccountByBankIdAccNumber(string BankId, string AccountNumber, int tenant)
         {
-            var pocos = this.repository.GetBankAccountListByBankIdAccNumber(BankId, AccountNumber, tenant);
+            BankAccount poco = this.repository.GetBankAccountByBankIdAccNumber(BankId, AccountNumber, tenant);
 
-            return pocos.Select(poco => this.GetEntityPM(poco)).ToList();
+            return this.GetEntityPM(poco);
 
         }
 
@@ -93,23 +76,5 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return EntityPM;
         }
 
-
-        public BankAccountPM GetLightBankAccount(string id, int tenant)
-        {
-            BankAccount bankAccount = repository.GetSingleBankAccount(id, tenant);
-
-            if (bankAccount != null)
-            {
-                EntityPM = new BankAccountPM();
-                mapping.POCOToPM(EntityPM, bankAccount);
-            }
-
-            return EntityPM;
-        }
-
-        public List<BankAccount> GetFactoringBankAccounts(int tenant)
-        {
-            return repository.GetFactoringBankAccounts(tenant);
-          }
     }
 }

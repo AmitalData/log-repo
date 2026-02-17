@@ -46,8 +46,6 @@ declare @ImportManifest as varchar(50)
 declare @BookingConfirmationNumber as varchar(25)
 declare @CarrierTransportDocumentNumber as varchar(50)
 declare @ProjectNumber as varchar(100)
-declare @AMSBL as nvarchar(17)
-declare @WarehouseLegReference as nvarchar(50)
 END
 
 -- Ports Firlds
@@ -178,8 +176,7 @@ BEGIN
 		ConsolidatorId, ConsolidatorReference,
 		Field1, Field2, Field3, Field4, Field5, Field6, Field7, Field8, Field9, Field10,
 		CustomsDeclarationNumber, ForwarderShipmentNumber, TransportDocumentNumber,
-		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber,
-		AMSBL, WarehouseLegReference
+		ReleasingAgentId, ReleasingAgentReference1 , ReleasingAgentReference2,ProjectNumber
 		
 		FROM Shipments --where Tenant = 1435
 
@@ -206,10 +203,7 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-		@AMSBL, @WarehouseLegReference
-
-		
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
 		WHILE @@FETCH_STATUS = 0
 		BEGIN
 			
@@ -443,19 +437,6 @@ BEGIN
 					else set @MySearchFields = @MySearchFields + ',' + @SalesmanUserName	
 				end
 			end
-
-			if (@AMSBL is not null AND @AMSBL <> '')
-			begin
-				if (@MySearchFields = '') set @MySearchFields = @AMSBL
-				else set @MySearchFields = @MySearchFields + ',' + @AMSBL	
-			end
-
-			if (@WarehouseLegReference is not null AND @WarehouseLegReference <> '')
-			begin
-				if (@MySearchFields = '') set @MySearchFields = @WarehouseLegReference
-				else set @MySearchFields = @MySearchFields + ',' + @WarehouseLegReference	
-			end
-
 			END
 
 			-- Ports
@@ -1806,8 +1787,7 @@ BEGIN
 		@ConsolidatorId, @ConsolidatorReference,
 		@Field1, @Field2, @Field3, @Field4, @Field5, @Field6, @Field7, @Field8, @Field9, @Field10,
 		@CustomsDeclarationNumber, @ForwarderShipmentNumber, @TransportDocumentNumber,
-		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber,
-		@AMSBL, @WarehouseLegReference
+		@ReleasingAgentId, @ReleasingAgentReference1 , @ReleasingAgentReference2, @ProjectNumber
 		END				
 		CLOSE ShipmentsCursor
 		DEALLOCATE ShipmentsCursor

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -23,28 +23,19 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     VisibilityDefaultValue = tipDetails.VisibilityDefaultValue,
 
                 };
-                if (!tenantZeroTextCodes.Keys.Contains(tipDetails.ShortTextCodeCode + tipDetails.Tenant + tipDetails.ObjectTableId))
-                {
-                    if (tipDetails.ShortTextCodeDefaultText != null)
-                    {
-                        TextCode tipTextCode = new TextCode();
-                        tipTextCode.Id = IdCounter.GetNumber("TextCode", tipDetails.Tenant).ToString();
-                        tipTextCode.ObjectTableId = tipDetails.ObjectTableId;
-                        tipTextCode.Code = tipDetails.ShortTextCodeCode;
-                        tipTextCode.DefaultText = tipDetails.ShortTextCodeDefaultText;
 
-                        tipTextCode.Tenant = 0;
-                        tipTextCode.TextCodeTypeCode = "TIP";
-                        textCodeRepository.Add(tipTextCode);
-                        tip.ShortTextCode = tipTextCode.Id;
-                        tip.ShortTextCodeCode = tipTextCode.Code;
-                    }
-                }
-                else
+                if (tipDetails.ShortTextCodeDefaultText != null)
                 {
-                    TextCode tipTextCode = tenantZeroTextCodes[tipDetails.ShortTextCodeCode + tipDetails.Tenant + tipDetails.ObjectTableId];
+                    TextCode tipTextCode = new TextCode();
+                    tipTextCode.Id = IdCounter.GetNumber("TextCode",tipDetails.Tenant).ToString();
+                    tipTextCode.ObjectTableId = tipDetails.ObjectTableId;
+                    tipTextCode.Code = tipDetails.ShortTextCode;
+                    tipTextCode.DefaultText = tipDetails.ShortTextCodeDefaultText;
+
+                    tipTextCode.Tenant = 0;
+                    tipTextCode.TextCodeTypeCode = "TIP";
+                    textCodeRepository.Add(tipTextCode);
                     tip.ShortTextCode = tipTextCode.Id;
-                    tip.ShortTextCodeCode = tipTextCode.Code;
                 }
 
 
@@ -63,9 +54,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 if (tipDetails.ShortTextCodeDefaultText != null)
                 {
                     TextCode tipTextCode = null;
-                    if (tenantZeroTextCodes.Keys.Contains(tipDetails.ShortTextCodeCode + tipDetails.Tenant + tipDetails.ObjectTableId))
+                    if (tenantZeroTextCodes.Keys.Contains(tipDetails.ShortTextCode + tipDetails.Tenant + tipDetails.ObjectTableId))
                     {
-                        tipTextCode = tenantZeroTextCodes[tipDetails.ShortTextCodeCode + tipDetails.Tenant + tipDetails.ObjectTableId];
+                        tipTextCode = tenantZeroTextCodes[tipDetails.ShortTextCode + tipDetails.Tenant + tipDetails.ObjectTableId];
                         if (!tipTextCode.IsSpellChecked)
                         {
                             tipTextCode.DefaultText = tipDetails.ShortTextCodeDefaultText;
@@ -79,14 +70,13 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         tipTextCode = new TextCode();
                         tipTextCode.Id = IdCounter.GetNumber("TextCode",0).ToString();
                         tipTextCode.ObjectTableId = tipDetails.ObjectTableId;
-                        tipTextCode.Code = tipDetails.ShortTextCodeCode;
+                        tipTextCode.Code = tipDetails.ShortTextCode;
                         tipTextCode.DefaultText = tipDetails.ShortTextCodeDefaultText;
 
                         tipTextCode.Tenant = 0;
                         tipTextCode.TextCodeTypeCode = "TIP";
                         textCodeRepository.Add(tipTextCode);
                         updatedTip.ShortTextCode = tipTextCode.Id;
-                        updatedTip.ShortTextCodeCode = tipTextCode.Code;
 
                     }
                 }

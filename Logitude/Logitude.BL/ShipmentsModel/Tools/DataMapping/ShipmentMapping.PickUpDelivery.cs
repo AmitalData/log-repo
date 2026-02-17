@@ -5,15 +5,13 @@ using System.Web;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel;
-using System.Runtime.CompilerServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 {
     public partial class ShipmentMapping
     {
-        public static void MapPickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPoco, ICommonDataContext commonContext, bool isNewEntity)
+        public static void MapPickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPoco, bool isNewEntity)
         {
             if (isNewEntity)
             {
@@ -21,7 +19,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 itemPoco.ShipmentId = itemPM.ShipmentId;
             }
 
-            SetPickupAddress(itemPM, commonContext);
+            PortRepository portRepository = new PortRepository(itemPM.Tenant);
+
+            if (!string.IsNullOrEmpty(itemPM.FromPortId))
+            {
+                Port port = portRepository.GetSinglePort(itemPM.Tenant, itemPM.FromPortId);
+                if (port != null)
+                {
+                    itemPM.FromAddress = "Port Of: " + port.EnglishName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(itemPM.ToPortId))
+            {
+                Port port = portRepository.GetSinglePort(itemPM.Tenant, itemPM.ToPortId);
+                if (port != null)
+                {
+                    itemPM.ToAddress = "Port Of: " + port.EnglishName;
+                }
+            }
 
             itemPoco.ATD = itemPM.ATD;
             itemPoco.ATA = itemPM.ATA;
@@ -57,13 +73,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.EmptyDeliveryContainerPartnerId = itemPM.EmptyDeliveryContainerPartnerId;
             itemPoco.EmptyDeliveryDepotReference = itemPM.EmptyDeliveryDepotReference;
             itemPoco.TransportModeCode = itemPM.TransportModeCode;
-            itemPoco.ParentPickUpDeliveryId = itemPM.ParentPickUpDeliveryId;
-            itemPoco.ChildPickUpIndex = itemPM.ChildPickUpIndex;
-            itemPoco.StandaloneShipmentId = itemPM.StandaloneShipmentId;
-            itemPoco.StandaloneShipmentNumber = itemPM.StandaloneShipmentNumber;
         }
 
-        public static void MapDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPoco, ICommonDataContext commonContext, bool isNewEntity)
+        public static void MapDelivery(ShipmentDeliveryPM itemPM, ShipmentPickUpDelivery itemPoco, bool isNewEntity)
         {
             if (isNewEntity)
             {
@@ -71,7 +83,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 itemPoco.ShipmentId = itemPM.ShipmentId;
             }
 
-            SetDeliveryAddress(itemPM, commonContext);
+            PortRepository portRepository = new PortRepository(itemPM.Tenant);
+
+            if (!string.IsNullOrEmpty(itemPM.FromPortId))
+            {
+                Port port = portRepository.GetSinglePort(itemPM.Tenant, itemPM.FromPortId);
+                if (port != null)
+                {
+                    itemPM.FromAddress = "Port Of: " + port.EnglishName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(itemPM.ToPortId))
+            {
+                Port port = portRepository.GetSinglePort(itemPM.Tenant, itemPM.ToPortId);
+                if (port != null)
+                {
+                    itemPM.ToAddress = "Port Of: " + port.EnglishName;
+                }
+            }
 
             itemPoco.ATD = itemPM.ATD;
             itemPoco.ATA = itemPM.ATA;
@@ -95,12 +125,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.PickUpDeliveryFromTypeCode = itemPM.PickUpDeliveryFromTypeCode;
             itemPoco.PickUpDeliveryTypeCode = itemPM.PickUpDeliveryTypeCode;
             itemPoco.FromAddressId = itemPM.FromAddressId;
-            itemPoco.FromAddressCityId = itemPM.FromAddressCityId;
             itemPoco.FromAddressCity = itemPM.FromAddressCity;
             itemPoco.FromAddressZipCode = itemPM.FromAddressZipCode;
             itemPoco.FromAddressCountryId = itemPM.FromAddressCountryId;
             itemPoco.ToAddressId = itemPM.ToAddressId;
-            itemPoco.ToAddressCityId = itemPM.ToAddressCityId;
             itemPoco.ToAddressCity = itemPM.ToAddressCity;
             itemPoco.ToAddressZipCode = itemPM.ToAddressZipCode;
             itemPoco.ToAddressCountryId = itemPM.ToAddressCountryId;
@@ -109,109 +137,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.EmptyDeliveryContainerPartnerId = itemPM.EmptyDeliveryContainerPartnerId;
             itemPoco.EmptyDeliveryDepotReference = itemPM.EmptyDeliveryDepotReference;
             itemPoco.TransportModeCode = itemPM.TransportModeCode;
-            itemPoco.ParentPickUpDeliveryId = itemPM.ParentPickUpDeliveryId;
-            itemPoco.ChildDeliveryIndex = itemPM.ChildDeliveryIndex;
-            itemPoco.StandaloneShipmentId = itemPM.StandaloneShipmentId;
-            itemPoco.StandaloneShipmentNumber = itemPM.StandaloneShipmentNumber;
-            itemPoco.DeliveryContact = itemPM.DeliveryContact;
-            itemPoco.ResponsibilityCode = itemPM.ResponsibilityCode;
-            itemPoco.PackageTypeCode = itemPM.PackageTypeCode;
-            itemPoco.Quantity = itemPM.Quantity;
-            itemPoco.GrossWeight = itemPM.GrossWeight;
-            itemPoco.Volume = itemPM.Volume;
-            itemPoco.CustomerChargeableWeight = itemPM.CustomerChargeableWeight;
-            itemPoco.TruckerChargeableWeight = itemPM.TruckerChargeableWeight;
-            itemPoco.DescriptionOfGoods = itemPM.DescriptionOfGoods;
-            itemPoco.Commodity = itemPM.Commodity;
-        }
-
-        private static void SetPickupAddress(ShipmentPickUpPM itemPM, ICommonDataContext commonContext)
-        {
-            if (itemPM.FromPartnerCardId != null && itemPM.FromAddressId == null)
-            {
-                itemPM.FromAddressId = GetPartnerAddress(itemPM.FromPartnerCardId, itemPM.Tenant, commonContext);
-            }
-
-            else if (itemPM.FromPortId != null && itemPM.FromAddress == null)
-            {
-                itemPM.FromAddress = GetPortAddress(itemPM.FromPortId, itemPM.Tenant, commonContext);
-            }
-
-            if (itemPM.ToPartnerCardId != null && itemPM.ToAddressId == null)
-            {
-                itemPM.ToAddressId = GetPartnerAddress(itemPM.ToPartnerCardId, itemPM.Tenant, commonContext);
-            }
-
-            else if (itemPM.ToPortId != null && itemPM.ToAddress == null)
-            {
-                itemPM.ToAddress = GetPortAddress(itemPM.ToPortId, itemPM.Tenant, commonContext);
-            }
-        }
-
-        private static void SetDeliveryAddress(ShipmentDeliveryPM itemPM, ICommonDataContext commonContext)
-        {
-            if (itemPM.FromPartnerCardId != null && itemPM.FromAddressId == null)
-            {
-                itemPM.FromAddressId = GetPartnerAddress(itemPM.FromPartnerCardId, itemPM.Tenant, commonContext);
-            }
-
-            else if (itemPM.FromPortId != null && itemPM.FromAddress == null)
-            {
-                itemPM.FromAddress = GetPortAddress(itemPM.FromPortId, itemPM.Tenant, commonContext);
-            }
-
-            if (itemPM.ToPartnerCardId != null && itemPM.ToAddressId == null)
-            {
-                itemPM.ToAddressId = GetPartnerAddress(itemPM.ToPartnerCardId, itemPM.Tenant, commonContext);
-            }
-
-            else if (itemPM.ToPortId != null && itemPM.ToAddress == null)
-            {
-                itemPM.ToAddress = GetPortAddress(itemPM.ToPortId, itemPM.Tenant, commonContext);
-            }
-        }
-
-        private static string GetPartnerAddress(string cardId, int tenant, ICommonDataContext context)
-        {
-            string output = null;
-
-            output = (from d in context.Addresses
-                      where
-                      d.CardId == cardId
-                      && d.Tenant == tenant
-                      && d.AddressTypeId == "P"
-                      select d.Id).FirstOrDefault();
-
-
-            if (output == null)
-            {
-                output = (from d in context.Addresses
-                          where
-                          d.CardId == cardId
-                          && d.Tenant == tenant
-                          && d.AddressTypeId == "M"
-                          select d.Id).FirstOrDefault();
-            }
-
-            return output;
-        }
-
-        private static string GetPortAddress(string portId, int tenant, ICommonDataContext context)
-        {
-            string output = null;
-
-            string englishName = (from d in context.Ports
-                                  where
-                                  d.Id == portId
-                                  && d.Tenant == tenant
-                                  select d.EnglishName).FirstOrDefault();
-
-            if (englishName != null)
-            {
-                output = "Port Of: " + englishName;
-            }
-
-            return output;
         }
     }
 }

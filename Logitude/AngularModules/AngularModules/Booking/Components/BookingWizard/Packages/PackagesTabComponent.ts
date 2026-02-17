@@ -15,7 +15,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 @Component({
     selector: 'PackagesTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './PackagesTabComponent.html',
 })
 

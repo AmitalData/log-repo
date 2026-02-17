@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
         public IQueryable<QueueMessageMoreDetails> GetQueueMessageMoreDetails()
         {
-            return context.QueueMessageMoreDetails.Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue" || a.QueueDefinitionCode == "ImportersShipmentDocumentsBatchQueue");
+            return context.QueueMessageMoreDetails;
         }
         public IQueryable<QueueMessageMoreDetails> GetQueueMessageMoreDetails(DateTime BeforeDate)
         {

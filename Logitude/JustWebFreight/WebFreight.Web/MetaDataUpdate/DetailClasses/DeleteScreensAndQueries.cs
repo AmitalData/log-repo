@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.DetailClasses

@@ -1,5 +1,6 @@
 
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
 
 import {AutomationCondition} from '../../../../Infrastructure/DataContracts/AutomationCondition';
@@ -11,7 +12,7 @@ import {AddEditAutomationsComponent} from '../../../../Infrastructure/Components
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 @Component({
-    
+    moduleId: module.id,
     selector: 'DelayAutomationconditionsComponent',
     templateUrl: './DelayAutomationconditionsComponent.html',
 
@@ -111,7 +112,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
         automationConditionPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.OperatorCode = "Equals";
-        automationConditionPM.ObjectFieldCode = "";
+        automationConditionPM.ObjectFieldId = "";
 
 
         if (conditionType == "And") {

@@ -6,10 +6,10 @@ using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -28,7 +28,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
     public partial class CommonDataDomainService
     {
 
-        public void UpdateHybridPartnerList(HybridPartnerList currentEntity, int tenant)
+        public void UpdateHybridPartnerList(HybridPartnerList currentEntity)
         {
         }
 
@@ -245,14 +245,14 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return count;
         }
   
-        public void InsertHybridPartnerPM(HybridPartnerPM entityPM, int tenant)
+        public void InsertHybridPartnerPM(HybridPartnerPM entityPM)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            SecurityUtility.CheckContactFeature("HybridPartner", "NEW", tenant);
+            SecurityUtility.AuthenticationOnTenant(0);
+            SecurityUtility.CheckContactFeature("HybridPartner", "NEW", 0);
 
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(tenant);
+                objectContext = CommonDataContext.GetContext(0);
             }
            
             hybridPartnerRepository = new HybridPartnerRepository(objectContext);
@@ -273,7 +273,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 throw new Exception(msg);
             }
 
-            //IWebFreightContext webfreightcontext = WebFreightContext.GetContext(tenant);
+            //IWebFreightContext webfreightcontext = WebFreightContext.GetContext(0);
             //TableLastUpdateClass.UpdateTableHistory(0, "HybridPartner", webfreightcontext);
         }
 
@@ -281,21 +281,21 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
          
   
 
-        public void UpdateHybridPartner(HybridPartnerPM entityPM, int tenant)
+        public void UpdateHybridPartner(HybridPartnerPM entityPM)
         {
             SecurityUtility.AuthenticationOnTenant(0);
             SecurityUtility.CheckContactFeature("HybridPartner", "UPDATE", 0);
 
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(tenant);
+                objectContext = CommonDataContext.GetContext(0);
             }
 
             HybridPartnerService service = new HybridPartnerService(objectContext);
 
             service.Update(entityPM);
 
-            IWebFreightContext webfreightcontext = WebFreightContext.GetContext(tenant);
+            IWebFreightContext webfreightcontext = WebFreightContext.GetContext(0);
             TableLastUpdateClass.UpdateTableHistory(0, "HybridPartner", webfreightcontext);
         }
     }

@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VatTypeRepository repository;
 
- 
+        public VatTypeQuery()
+        {
+            repository = new VatTypeRepository(); 
+        }
         public VatTypeQuery(int tenant)
         {
             repository = new VatTypeRepository(tenant);
@@ -44,7 +47,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         VatTypeId = resultItem.VatTypeId,
                         FromDate = resultItem.FromDate,
                         Percentage = resultItem.Percentage,
-                      
                        
                     });
                 }
@@ -72,16 +74,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                 Description = a.Description,
                                 LocalDescription = a.LocalDescription,
                                 ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-
-                                ReceivablesExternalId = a.ReceivablesExternalId,
-                                PayablesExternalId=a.PayablesExternalId,
-
-                             
-
+                                ExternalVATCard = a.ExternalVATCard,
                                 ExternalTAXItemId = a.ExternalTAXItemId,
                                 IsMultiPercentage = a.IsMultiPercentage,
                                 RecognizedPercentage = a.RecognizedPercentage,
-                                IsRegionalTax = a.IsRegionalTax,
                            }).FirstOrDefault();
 
             if (entityPM != null)
@@ -119,12 +115,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                Description = a.Description,
                                LocalDescription = a.LocalDescription,
                                ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                               ReceivablesExternalId = a.ReceivablesExternalId,
-                               PayablesExternalId = a.PayablesExternalId,
+                               ExternalVATCard = a.ExternalVATCard,
                                ExternalTAXItemId = a.ExternalTAXItemId,
                                IsMultiPercentage = a.IsMultiPercentage,
                                RecognizedPercentage= a.RecognizedPercentage,
-                               IsRegionalTax= a.IsRegionalTax,
 
                            }).FirstOrDefault();
 
@@ -163,12 +157,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  Description = a.Description,
                                                  LocalDescription = a.LocalDescription,
                                                  ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                                 ReceivablesExternalId = a.ReceivablesExternalId,
-                                                 PayablesExternalId = a.PayablesExternalId,
+                                                 ExternalVATCard = a.ExternalVATCard,
                                                  ExternalTAXItemId = a.ExternalTAXItemId,
                                                  IsMultiPercentage = a.IsMultiPercentage,
                                                  RecognizedPercentage= a.RecognizedPercentage,
-                                                 IsRegionalTax = a.IsRegionalTax,
+
                                              };
             return vatTypes;
         }
@@ -189,12 +182,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Tenant = f.Tenant,
                                                     Description = f.Description,
                                                     LocalDescription = f.LocalDescription,
-                                                    ReceivablesExternalId = f.ReceivablesExternalId,
-                                                    PayablesExternalId = f.PayablesExternalId,
+                                                    ExternalVATCard = f.ExternalVATCard,
                                                     ExternalTAXItemId = f.ExternalTAXItemId,
                                                     IsMultiPercentage = f.IsMultiPercentage,
-                                                    RecognizedPercentage= f.RecognizedPercentage,
-                                                    IsRegionalTax = f.IsRegionalTax,
+                                                    RecognizedPercentage= f.RecognizedPercentage
                                                 });
 
             //IQueryable<VatTypeList> myResult = (from f in iQueryable

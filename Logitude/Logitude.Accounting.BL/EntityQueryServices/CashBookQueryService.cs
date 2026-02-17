@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.BL.DataContract;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -48,13 +47,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return EntityPM;
         }
-
-        public bool CheckIfCashbookLineCreatedForPaymentCheque(string cashBookId, string paymentChequeId, int tenant)
-        {
-            CashBookRepository cashBookRepo = new CashBookRepository(tenant);
-          return cashBookRepo.CheckIfCashbookLinereateForPaymentCheque(cashBookId, paymentChequeId, tenant);
-
-        }
         public CashBookPM GetByPaymentAndCurrencyAndBranch(string currency, string paymentMethod,string branch, int tenant)
         {
             CashBookRepository cashBookQuery = new CashBookRepository(tenant);
@@ -76,61 +68,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return cashBook.Select(rec => this.GetEntityPM(rec)).ToList();
         }
 
-        public CashbookChequesCounter GetCashbookChequesCounter(string cashbookId, int tenant)
-        {
-            CashBookRepository cashBookQuery = new CashBookRepository(tenant);
-            CashbookChequesCounter chequesCounters = new CashbookChequesCounter();
-
-            chequesCounters.CashChequesCount = cashBookQuery.GetCashChequesTotalsForCashbook(cashbookId, tenant);
-            chequesCounters.PostdatedChequesCount = cashBookQuery.GetPostdatedChequesTotalsForCashbook(cashbookId, tenant);
-
-            return chequesCounters;
-        }
-        public int GetUndepositedChequesCount(string cashbookId, int tenant)
-        {
-            CashBookRepository cashBookQuery = new CashBookRepository(tenant);
-            return cashBookQuery.GetUndepositedChequesCount(cashbookId, tenant);
-        }
-        public decimal GetCashbookChequesTotal(string cashbookId, string chequeFilterType, int tenant)
-        {
-            CashBookRepository cashBookQuery = new CashBookRepository(tenant);
-            return cashBookQuery.GetChequesTotal(cashbookId, chequeFilterType, tenant);
-        }
-
-
         public List<CashBookPM> GetAll(int tenant)
         {
             CashBookRepository repo = new CashBookRepository(tenant);
             List<CashBook> cashBook = repo.GetAll(tenant).ToList();
             return cashBook.Select(rec => GetEntityPM(rec,true, new CashBookKeys() { Id=rec.Id})).ToList();
         }
-
-
-        public CashBookPM GetLightCashbook(string id, int tenant)
-        {
-            CashBook cashBook = repository.GetSingle(id, tenant);
-            CashBookPM entityPM = new CashBookPM();
-
-            if (cashBook != null)
-            {
-                mapping.POCOToPM(entityPM, cashBook);
-            }
-
-            return entityPM;
-        }
-
-        public CashBookPM GetCashbookByAccountId(string accountId, int tenant)
-        {
-            CashBook cashBook = repository.GetCashbookByAccountId(accountId, tenant);
-            CashBookPM entityPM = new CashBookPM();
-
-            if (cashBook != null)
-            {
-                mapping.POCOToPM(entityPM, cashBook);
-            }
-
-            return entityPM;
-        }
     }
-
 }

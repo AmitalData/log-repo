@@ -8,14 +8,8 @@ using Logitude.Accounting.BL.Utils;
 using System.Net;
 using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.BL.CoreBL.Batch;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using WebFreight.Web.Security;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace WebFreight.Web.Controllers.AccountingModel
 {
     //[RoutePrefix("api/ReconciliationStageB")]
     public class ReconciliationStageBController : ApiController
@@ -27,134 +21,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         public HttpResponseMessage GetReconciliationStageB(int tenant)
         {
-            bool retry = true;
-            int timeoutinmin = 10; try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                bool batchIt = true;
-                if (batchIt)
-                {
-                    var accountingContext = AccountingContext.GetContext(tenant);
-
-                    var myBatchReconciliationStageBTask = new BatchReconciliationStageBTask(null);
-                    string subj = $"Reconciliation Stage B";
-                    var batchTaskId = myBatchReconciliationStageBTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
-                        new ReconciliationStageBArg()
-                        {
-                            Tenant = tenant,
-                            GLAccountId = "",
-                        }, tenant, subj, false);
-
-
-                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
-                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
-                }
-                else
-                {
-                    ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
-                    retry = true;
-                    while (retry)
-                    {
-                        retry = false;
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
-                        {
-
-                            try
-                            {
-                                ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
-                                {
-                                    Tenant = tenant,
-                                    GLAccountId = "",
-                                };
-                                reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg, timeoutinmin - 1, ref retry);
-                                scope.Complete();
-                            }
-                            catch (Exception e)
-                            {
-                                throw;
-                            }
-                        }
-                    }
-                    string responseText = reconciliationStageBBatch.ResponseText();
-                    HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
-                    var res1 = new { Success = true, Message = responseText };
-
-                    return Request.CreateResponse(StatusCode, res1);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetReconciliationStageBNoBatch(int tenant, int noBatch)
-        {
             try
             {
-                bool retry = true;
-                int timeoutinmin = 10; 
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                bool batchIt = true;
-                if (noBatch == 1) batchIt = false;
-                if (batchIt)
-                {
-                    var accountingContext = AccountingContext.GetContext(tenant);
 
-                    var myBatchReconciliationStageBTask = new BatchReconciliationStageBTask(null);
-                    string subj = $"Reconciliation Stage B";
-                    var batchTaskId = myBatchReconciliationStageBTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
-                        new ReconciliationStageBArg()
-                        {
-                            Tenant = tenant,
-                            GLAccountId = "",
-                        }, tenant, subj, false);
+                ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
+                reconciliationStageBBatch.RunReconciliationStageB(tenant);
+                string responseText = reconciliationStageBBatch.ResponseText();
+                HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
+                var res1 = new { Success = true, Message = responseText };
 
+                return Request.CreateResponse(StatusCode, res1);
 
-                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
-                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
-                }
-                else
-                {
-                    ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
-                    retry = true;
-                    while (retry)
-                    {
-                        retry = false;
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
-                        {
-
-                            try
-                            {
-                                ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
-                                {
-                                    Tenant = tenant,
-                                    GLAccountId = "",
-                                };
-                                reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg, timeoutinmin - 1, ref retry);
-                                scope.Complete();
-                            }
-                            catch (Exception e)
-                            {
-                                throw;
-                            }
-                        }
-                    }
-
-                    string responseText = reconciliationStageBBatch.ResponseText();
-                    HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
-                    var res1 = new { Success = true, Message = responseText };
-
-                    return Request.CreateResponse(StatusCode, res1);
-
-                }
             }
             catch (Exception ex)
             {
@@ -162,76 +40,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
-        public HttpResponseMessage GetReconciliationStageBNoBatchGLAcc(int tenant, string gLAccountId, int noBatch)
-        {
-            try
-            {
-                bool retry = true;
-                int timeoutinmin = 10; 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                bool batchIt = true;
-                if (noBatch == 1) batchIt = false;
-                if (batchIt)
-                {
-                    var accountingContext = AccountingContext.GetContext(tenant);
-
-                    var myBatchReconciliationStageBTask = new BatchReconciliationStageBTask(null);
-                    string subj = $"Reconciliation Stage B";
-                    var batchTaskId = myBatchReconciliationStageBTask.CreateQBatchTaskExecution<ReconciliationStageBArg>(
-                        new ReconciliationStageBArg()
-                        {
-                            Tenant = tenant,
-                            GLAccountId = gLAccountId,
-                        }, tenant, subj, false);
-
-
-                    var res1 = new { Success = true, Message = $"Send to Batch Task {batchTaskId}" };
-                    return Request.CreateResponse(HttpStatusCode.Accepted, res1);
-                }
-                else
-                {
-                    ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
-                    retry = true;
-                    while (retry)
-                    {
-                        retry = false;
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
-                        {
-
-                            try
-                            {
-                                ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
-                                {
-                                    Tenant = tenant,
-                                    GLAccountId = gLAccountId,
-                                };
-                                reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg, timeoutinmin - 1, ref retry);
-                                scope.Complete();
-                            }
-                            catch (Exception e)
-                            {
-                                throw;
-                            }
-                        }
-                    }
-
-                    string responseText = reconciliationStageBBatch.ResponseText();
-                    HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
-                    var res1 = new { Success = true, Message = responseText };
-
-                    return Request.CreateResponse(StatusCode, res1);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
+  
 
     }
 }

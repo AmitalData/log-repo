@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -48,11 +48,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          TaxYear = a.TaxYear,
 					
 					                          Email = a.Email,
-											  ByMonth = a.ByMonth,
-											  Month = a.Month,
-											  FromMonth = a.FromMonth,
-											   
-					       					 ErrorMessage = a.ErrorMessage,
+					
+					                          ErrorMessage = a.ErrorMessage,
                                               Status = a.TaxDeductionReportStatus != null? a.TaxDeductionReportStatus.EnglishName: null, 
                                               CreatedByUser= a.CreatedByUser != null? a.CreatedByUser.Contact.LocalName : null,
                                              StatusLocalName = a.TaxDeductionReportStatus != null ? a.TaxDeductionReportStatus.LocalName : null,

@@ -16,19 +16,6 @@
         background-size: contain;
         cursor: pointer;
     }
-
-    .Link:hover {
-        cursor: pointer;
-        color: #1C59FC;
-    }
-
-    .Link {
-        cursor: pointer;
-        font-size: 13px;
-        color: #0094ff;
-        height: 21px;
-        white-space: nowrap;
-    }
 </style>
 
 <table>
@@ -42,28 +29,10 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width:1px;">{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
-
-                                    <td style="width:10px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:340px;" *ngIf="EntityPM.IsMultipleCommodities">
-                                        <div class="MediaFill">
-                                            <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
-                                                <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">
-                                                    Shipment is multi commodity, to edit please open the wizard
-                                                </div>                                               
-                                            </div>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div></div>
-                                    </td>
+                                    <td>{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
 
                                     <td style="width: 90px">
-                                        <button id="{{ 'AddPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
+                                        <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsFCLEntity">
@@ -71,7 +40,7 @@
                                     </td>
 
                                     <td style="width: 120px" *ngIf="IsInsideButtonVisible">
-                                        <button id="{{ 'AddInsidePackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddInsidePackage' | IdGeneratorPipe}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;">
@@ -79,7 +48,7 @@
                                     </td>
 
                                     <td style="width: 1px">
-                                        <IconButton id="{{ 'PackageSettings' | IdGeneratorAsyncPipe | async}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                                        <IconButton id="{{ 'PackageSettings' | IdGeneratorPipe}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsRebuildButtonVisible">
@@ -87,7 +56,7 @@
                                     </td>
 
                                     <td style="width: 1px" *ngIf="IsRebuildButtonVisible">
-                                        <button id="{{ 'ReBuildPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'ReBuildPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsDeletePackagesButtonVisible">
@@ -95,7 +64,7 @@
                                     </td>
 
                                     <td style="width: 1px" *ngIf="IsDeletePackagesButtonVisible">
-                                        <button id="{{ 'DeletePackages' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="DeletePackagesButtonClicked()">{{'Shipment.B.Packages.DeletePackages' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'DeletePackages' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="DeletePackagesButtonClicked()">{{'Shipment.B.Packages.DeletePackages' | TextCodeTranslationPipe}}</button>
                                     </td>
 
 
@@ -180,7 +149,7 @@
                                             </LogLov>
                                         </div>
 
-                                        <div style="width: 80px; display: block; float:left; margin-left: 15px;">
+                                        <div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                             <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
                                         </div>
@@ -207,171 +176,120 @@
                             <div class="MediaFill">
 
                                 <!-- Airline -->
-                                <logitude-edit-grid *ngIf="TransportModeId == 'A'" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow"
-                                                    [UseVirtuallization]="IsUsingVirtuallization">
+                                <logitude-edit-grid *ngIf="TransportModeId == 'A'" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Quantity -->
                                     <log-column [width]="'100'" [header]="'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="IsEditingEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsEditingEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                                                    {{item.Quantity}}
-                                                </div>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                                {{item.Quantity}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Dimensions -->
                                     <log-column [width]="'230'" [header]="DimensionsColumnHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                                {{item.Dimensions}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                            {{item.Dimensions}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Volume -->
                                     <log-column [width]="'120'" [header]="VolumeColumnHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                                                    {{item.Volume | NumbersPipe:'N3'}}
-                                                </div>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                                {{item.Volume | NumbersPipe:'N3'}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- VolumetricWeight -->
                                     <log-column [width]="'160'" [header]="VolumetricWeightColumnHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                                {{item.VolumetricWeight | NumbersPipe:'N3'}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                            {{item.VolumetricWeight | NumbersPipe:'N3'}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Gross Weight -->
                                     <log-column [width]="'120'" [header]="WeightColumnHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="IsEditingEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsEditingEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
-                                                    {{item.Weight | NumbersPipe:'N3'}}
-                                                </div>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;">
+                                                {{item.Weight | NumbersPipe:'N3'}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox (LostFocus)="item.OnGrossWeightLostFocus($event)" [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Commodity No-->
                                     <log-column [width]="'140'" [header]="'Commodity #'" *ngIf="IsCommodityNumberVisible">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.CommodityNumber}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.CommodityNumber}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Commodity Name-->
                                     <log-column [width]="'150'" [header]="'Commodity Name'" *ngIf="IsCommodityNameVisible">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.CommodityName}}
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- Horse Name-->
-                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.HorseId' | TextCodeTranslationPipe" *ngIf="HorseFieldIsVisible">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.HorseName}}
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- WarehouseReleaseNumber-->
-                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'100'" [header]="'Release #'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                <span *ngIf="item.IsShowReleaseNumber">
-                                                    {{item.WarehouseReleaseNumber}}
-                                                </span>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.CommodityName}}
+                                        </log-cell-template>
+                                    </log-column>                                    
 
                                     <!-- Buttons -->
                                     <log-column [width]="'100'">
-                                        <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <div class="LeftCenter" style="height: 20px;">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 4px;">
-                                                                    <span class="CellSeparator"></span>
-                                                                </td>
+                                        <log-cell-template template="let item" [TabIndex]="-1">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <div class="LeftCenter" style="height: 20px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 4px;">
+                                                                <span class="CellSeparator"></span>
+                                                            </td>
 
-                                                                <td style="width: 16px;">
-                                                                    <div class="MediaFill">
-                                                                        <div style="width: 16px; height: 16px;" class="CenterCenter">
-                                                                            <img style="vertical-align: middle; display: block;" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" />
-                                                                            <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentPackage.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
-                                                                        </div>
+                                                            <td style="width: 16px;">
+                                                                <div class="MediaFill">
+                                                                    <div style="width: 16px; height: 16px;" class="CenterCenter">
+                                                                        <img style="vertical-align: middle; display: block;" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" />
+                                                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentPackage.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
                                                                     </div>
-                                                                </td>
+                                                                </div>
+                                                            </td>
 
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
+                                                            <td style="width: 5px;">
+                                                                <div></div>
+                                                            </td>
 
-                                                                <td>
-                                                                    <span class="CellSeparator"></span>
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
-                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [IsEnabled]="item.IsEditingEnabled"></IconButton>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+                                                            <td>
+                                                                <span class="CellSeparator"></span>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [IsEnabled]="item.IsEditingEnabled"></IconButton>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
-                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'150'">
-                                        <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <div *ngIf="item.IsShowReleaseNumber" class="LeftCenter">
-                                                        <a class="Link" style="font-size:13px;" (click)="DisconnectWarehouseReleasePackageButtonClick(item)">Disconnect Release</a>
-
-                                                    </div>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
                                 </logitude-edit-grid>
 
                                 <!-- Ocean -->
@@ -384,427 +302,341 @@
                                                     [SelectedRow]="SelectedRow"
                                                     (MouseOverChanged)="SetMouseHoverRow($event, true)"
                                                     (MouseleaveChanged)="SetMouseHoverRow($event, false)"
-                                                    [EnableExpandCollapseAll]="IsFCLEntity" [UseVirtuallization]="IsUsingVirtuallization">
+                                                    [EnableExpandCollapseAll]="IsFCLEntity">
 
                                     <log-row-details>
-                                        <row-template>
-                                            <ng-template let-item>
-                                                <div style="min-height: 80px; width: 100%; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
-                                                    <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
-                                                        <div class="SimpleGridView" style="background: none; border: 1px solid #85CBED;">
-                                                            <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
-                                                                <table>
-                                                                    <tr>
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <div></div>
-                                                                        </td>
-                                                                        <td style="width: 150px; min-width: 150px; max-width: 150px; color : #6E7172;">{{'InsideShipmentPackage.F.PackageTypeId' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'InsideShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
-                                                                        <td style="width: 160px; min-width: 160px; max-width: 160px; color : #6E7172;">{{DimensionsColumnHeader}}</td>
-                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{VolumeColumnHeader}}</td>
-                                                                        <td style="width: 160px; min-width: 160px; max-width: 160px; color : #6E7172;">{{VolumetricWeightColumnHeader}}</td>
-                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{WeightColumnHeader}}</td>
-                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNumberVisible">Commodity #</td>
-                                                                        <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNameVisible">Commodity Name</td>
-                                                                        <td *ngIf="HorseFieldIsVisible" style="width: 150px; min-width: 150px; max-width: 150px; color: #6E7172;">Horse</td>
-                                                                        <td class="LastChild" style="min-width: 50px;">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                        <row-template template="let item">
+                                            <div style="min-height: 80px; width: 100%; background: #E8F7FF; position: relative;" [style.height.px]="item.RowDetailsHeights">
+                                                <div style="position: absolute; top: 10px; right: 10px; bottom: 10px; left: 10px;">
+                                                    <div class="SimpleGridView" style="background: none; border: 1px solid #85CBED;">
+                                                        <div class="SimpleGridViewHeader" style="background: none; border: none; border-bottom: 1px solid #85CBED;">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                    <td style="width: 150px; min-width: 150px; max-width: 150px; color : #6E7172;">{{'InsideShipmentPackage.F.PackageTypeId' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 100px; min-width: 100px; max-width: 100px; color : #6E7172;">{{'InsideShipmentPackage.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                                    <td style="width: 160px; min-width: 160px; max-width: 160px; color : #6E7172;">{{DimensionsColumnHeader}}</td>
+                                                                    <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{VolumeColumnHeader}}</td>
+                                                                    <td style="width: 160px; min-width: 160px; max-width: 160px; color : #6E7172;">{{VolumetricWeightColumnHeader}}</td>
+                                                                    <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;">{{WeightColumnHeader}}</td>
+                                                                    <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNumberVisible">Commodity #</td>
+                                                                    <td style="width: 120px; min-width: 120px; max-width: 120px; color : #6E7172;" *ngIf="item.IsCommodityNameVisible">Commodity Name</td>
+                                                                    <td class="LastChild" style="min-width: 50px;">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
 
-                                                            <div class="SimpleGridViewBody">
-                                                                <table>
-                                                                    <tr class="SimpleGridViewRow" *ngFor="let insideItem of item.InsideItemsSource">
-                                                                        <td style="width: 25px; min-width: 25px; max-width: 25px;">
-                                                                            <div style="height: 100%; width: 100%; position: relative;">
-                                                                                <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
-                                                                            </div>
-                                                                        </td>
+                                                        <div class="SimpleGridViewBody">
+                                                            <table>
+                                                                <tr class="SimpleGridViewRow" *ngFor="let insideItem of item.InsideItemsSource">
+                                                                    <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                                                        <div style="height: 100%; width: 100%; position: relative;">
+                                                                            <img src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                                                        </div>
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
-                                                                            {{insideItem.PackageTypeName}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
+                                                                        {{insideItem.PackageTypeName}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
-                                                                            {{insideItem.Quantity}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 100px; min-width: 100px; max-width: 100px; text-align: right;">
+                                                                        {{insideItem.Quantity}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
-                                                                            {{insideItem.Dimensions}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
+                                                                        {{insideItem.Dimensions}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
-                                                                            {{insideItem.Volume | NumbersPipe:'N3'}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                        {{insideItem.Volume | NumbersPipe:'N3'}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
-                                                                            {{insideItem.VolumetricWeight | NumbersPipe:'N3'}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px; text-align: right;">
+                                                                        {{insideItem.VolumetricWeight | NumbersPipe:'N3'}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
-                                                                            {{insideItem.Weight | NumbersPipe:'N3'}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px; text-align: right;">
+                                                                        {{insideItem.Weight | NumbersPipe:'N3'}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;" *ngIf="item.IsCommodityNumberVisible">
-                                                                            {{insideItem.CommodityNumber}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;" *ngIf="item.IsCommodityNumberVisible">
+                                                                        {{insideItem.CommodityNumber}}
+                                                                    </td>
 
-                                                                        <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;" *ngIf="item.IsCommodityNameVisible">
-                                                                            {{insideItem.CommodityName}}
-                                                                        </td>
+                                                                    <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;" *ngIf="item.IsCommodityNameVisible">
+                                                                        {{insideItem.CommodityName}}
+                                                                    </td>
 
-                                                                        <td *ngIf="HorseFieldIsVisible" class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px;">
-                                                                            {{insideItem.HorseName}}
-                                                                        </td>
+                                                                    <td class="CellTools" style="min-width: 50px;">
+                                                                        <span class="CellSeparator"></span>
+                                                                        <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditInsideButtonClicked(insideItem)"></IconButton>
+                                                                        <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteInsideButtonClicked(insideItem)" [IsEnabled]="insideItem.IsEditingEnabled"></IconButton>
+                                                                    </td>
+                                                                </tr>
 
-                                                                        <td class="CellTools" style="min-width: 50px;">
-                                                                            <span class="CellSeparator"></span>
-                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditInsideButtonClicked(insideItem)"></IconButton>
-                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteInsideButtonClicked(insideItem)" [IsEnabled]="insideItem.IsEditingEnabled"></IconButton>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td colspan="10">
-                                                                            <div></div>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
+                                                                <tr>
+                                                                    <td colspan="10">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </ng-template>
+                                            </div>
                                         </row-template>
                                     </log-row-details>
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1" [IsFilled]="true">
-                                                <img *ngIf="IsLCLEntity" src="./Images/CellIcons/Package.png" class="CenterCenter" />
-                                                <img *ngIf="IsFCLEntity" src="./Images/CellIcons/Container.png" class="CenterCenter" />
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1" [IsFilled]="true">
+                                            <img *ngIf="IsLCLEntity" src="./Images/CellIcons/Package.png" class="CenterCenter" />
+                                            <img *ngIf="IsFCLEntity" src="./Images/CellIcons/Container.png" class="CenterCenter" />
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- PackageTypeName -->
                                     <log-column [width]="'200'" [header]="PackageTypeColumnHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.PackageTypeName}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.PackageTypeName}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Quantity -->
                                     <log-column [width]="'60'" [header]="'ShipmentPackage.F.Quantity' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                                {{item.Quantity}}
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- Dimensions -->
-                                    <log-column [width]="'230'" [header]="DimensionsColumnHeader" *ngIf="IsLCLEntity">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
-                                                {{item.Dimensions}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                            {{item.Quantity}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Container# -->
                                     <log-column [width]="'100'" [header]="'ShipmentPackage.F.ContainerNumber.Short' | TextCodeTranslationPipe">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditingFieldsEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditingFieldsEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.ContainerNumber">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
-                                                                <img [attr.title]="item.ContainerNumberWarning" src="./Images/WarningIcon.png" style="vertical-align: middle; display: block; margin:auto;" />
-                                                            </td>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.ContainerNumber">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 15px;" *ngIf="item.ContainerNumberWarning">
+                                                            <img [attr.title]="item.ContainerNumberWarning" src="./Images/WarningIcon.png" style="vertical-align: middle; display: block; margin:auto;" />
+                                                        </td>
 
-                                                            <td style="width: 5px;" *ngIf="item.ContainerNumberWarning">
-                                                                <div></div>
-                                                            </td>
+                                                        <td style="width: 5px;" *ngIf="item.ContainerNumberWarning">
+                                                            <div></div>
+                                                        </td>
 
-                                                            <td>{{item.ContainerNumber}}</td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
+                                                        <td>{{item.ContainerNumber}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ContainerNumber'" [Text]="item.ContainerNumber" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ContainerNumber'" [Text]="item.ContainerNumber" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- ShipperSeal -->
                                     <log-column [width]="'100'" [header]="'ShipmentPackage.F.ShipperSeal' | TextCodeTranslationPipe" *ngIf="IsFCLEntity">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditingFieldsEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditingFieldsEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.ShipperSeal">
-                                                    {{item.ShipperSeal}}
-                                                </div>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming" [attr.title]="item.ShipperSeal">
+                                                {{item.ShipperSeal}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ShipperSeal'" [Text]="item.ShipperSeal" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ShipperSeal'" [Text]="item.ShipperSeal" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Volume -->
                                     <log-column [width]="'100'" [header]="VolumeColumnHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsVolumeEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Volume | NumbersPipe:'N3'">
-                                                    {{item.Volume | NumbersPipe:'N3'}}
-                                                </div>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Volume | NumbersPipe:'N3'">
+                                                {{item.Volume | NumbersPipe:'N3'}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Volume'" [Text]="item.Volume" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Gross Weight -->
                                     <log-column [width]="'120'" [header]="WeightColumnHeader">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsEditingFieldsEnabled">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditingFieldsEnabled">
 
-                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Weight | NumbersPipe:'N3'">
-                                                    {{item.Weight | NumbersPipe:'N3'}}
-                                                </div>
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.Weight | NumbersPipe:'N3'">
+                                                {{item.Weight | NumbersPipe:'N3'}}
+                                            </div>
 
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Weight'" [Text]="item.Weight" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Commodity No-->
                                     <log-column [width]="'100'" [header]="'Commodity #'" *ngIf="IsCommodityNumberVisible">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.CommodityNumber}}
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.CommodityNumber}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Commodity Name-->
                                     <log-column [width]="'130'" [header]="'Commodity Name'" *ngIf="IsCommodityNameVisible">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.CommodityName}}
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <!-- Horse Name-->
-                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.HorseId' | TextCodeTranslationPipe" *ngIf="(HorseFieldIsVisible && !IsFCLEntity)">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IsEnabled]="false">
-                                                {{item.HorseName}}
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'100'" [header]="'Release #'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate>
-                                                <span *ngIf="item.IsShowReleaseNumber"> {{item.WarehouseReleaseNumber}} </span>
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            {{item.CommodityName}}
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Last Status -->
-                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsLastStatusVisible">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div style="height: 100%; width: 100%;">
-                                                    <Hyperlink *ngIf="item.ContainerStatusName" (click)="ViewContainerEntity(item)">{{item.ContainerStatusName}}</Hyperlink>
-                                                    <Hyperlink *ngIf="item.LastStatusName && item.ContainerStatusSourceCode == 'INT'" (click)="ViewStatusesClicked(item)">{{item.LastStatusName}}</Hyperlink>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsShippingInstructionsVisible">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <div style="height: 100%; width: 100%;">
+                                                <Hyperlink *ngIf="item.LastStatusName" (click)="ViewStatusesClicked(item)">{{item.LastStatusName}}</Hyperlink>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Icon:HasContainerException -->
-                                    <log-column [width]="'25'" *ngIf="IsLastStatusVisible">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <img *ngIf="item.HasContainerException" src="./Images/WarningIcon.png" class="CenterCenter" title="In a different voyage than the other containers" />
-                                            </log-cell-template>
-                                        </ng-template>
+                                    <log-column [width]="'25'" *ngIf="IsShippingInstructionsVisible">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <img *ngIf="item.HasContainerException" src="./Images/WarningIcon.png" class="CenterCenter" title="In a different voyage than the other containers"/>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Icon:IsDanger -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <img src="./Images/Nuke.png" class="CenterCenter" *ngIf="item.IsDangerous" />
-                                            </log-cell-template>
-                                        </ng-template>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <img src="./Images/Nuke.png" class="CenterCenter" *ngIf="item.IsDangerous" />
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Icon:MarksAndNumbers -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div style="height: 100%; width: 100%; position: relative;">
-                                                    <div class="CenterCenter" style="height: 20px;">
-                                                        <CellTooltip *ngIf="item.MarksAndNumbers" [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'ShipmentPackage.F.MarksAndNumbers' | TextCodeTranslationPipe" [Body]="item.MarksAndNumbers"></CellTooltip>
-                                                    </div>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <div style="height: 100%; width: 100%; position: relative;">
+                                                <div class="CenterCenter" style="height: 20px;">
+                                                    <CellTooltip *ngIf="item.MarksAndNumbers" [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'ShipmentPackage.F.MarksAndNumbers' | TextCodeTranslationPipe" [Body]="item.MarksAndNumbers"></CellTooltip>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Icon:Description -->
                                     <log-column [width]="'25'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div style="height: 100%; width: 100%; position: relative;">
-                                                    <div class="CenterCenter" style="height: 20px;">
-                                                        <CellTooltip *ngIf="item.Description" [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'ShipmentPackage.F.Description' | TextCodeTranslationPipe" [Body]="item.Description"></CellTooltip>
-                                                    </div>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <div style="height: 100%; width: 100%; position: relative;">
+                                                <div class="CenterCenter" style="height: 20px;">
+                                                    <CellTooltip *ngIf="item.Description" [IconPath]="'./Images/CellIcons/Info_Blue.png'" [Head]="'ShipmentPackage.F.Description' | TextCodeTranslationPipe" [Body]="item.Description"></CellTooltip>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Icon:DeliveryId -->
                                     <log-column [width]="'25'" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I'">
-                                        <ng-template let-item>
-                                            <log-header-template>
-                                                <div class="GridHeaderCellTemplateFilled">
-                                                    <img src="./Images/CellIcons/Trucker_gray.png" class="CenterCenter" [attr.title]="'Shipment.O.Routings.Delivery' | TextCodeTranslationPipe" />
-                                                </div>
-                                            </log-header-template>
-                                        </ng-template>
+                                        <log-header-template template="let item">
+                                            <div class="GridHeaderCellTemplateFilled">
+                                                <img src="./Images/CellIcons/Trucker_gray.png" class="CenterCenter" [attr.title]="'Shipment.O.Routings.Delivery' | TextCodeTranslationPipe" />
+                                            </div>
+                                        </log-header-template>
 
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div class="MediaFillRelative">
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <div class="MediaFillRelative">
 
-                                                    <div class="MediaFillRelative" *ngIf="!item.DeliveryId && !item.IsDeliveryFU && IsEditingEnabled" (mousedown)="item.DeliveryIconClicked()" style="cursor: pointer;">
-                                                        <div attr.data-cy="{{'AddContainerDelivery_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" class="CenterCenter" style="width: 12px; height: 12px;">
-                                                            <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
-                                                        </div>
+                                                <div class="MediaFillRelative" *ngIf="!item.DeliveryId && !item.IsDeliveryFU && IsEditingEnabled" (mousedown)="item.DeliveryIconClicked()" style="cursor: pointer;">
+                                                    <div class="CenterCenter" style="width: 12px; height: 12px;">
+                                                        <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
                                                     </div>
-
-                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="!item.DeliveryId && item.IsDeliveryFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.DeliveryIconClicked()" />
-                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
-
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+
+                                                <img *ngIf="!item.DeliveryId && item.IsDeliveryFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.DeliveryIconClicked()" />
+                                                <img *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
+
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Icon:ContainerReturnId -->
                                     <log-column [width]="'27'" *ngIf="IsFCLEntity && IsContainersFUVisible && DirectionId == 'I'">
-                                        <ng-template let-item>
-                                            <log-header-template>
-                                                <div class="GridHeaderCellTemplateFilled">
-                                                    <img src="./Images/CellIcons/Container_gray.png" class="CenterCenter" [attr.title]="'Shipment.O.Routings.EmptyCR' | TextCodeTranslationPipe" />
-                                                </div>
-                                            </log-header-template>
-                                        </ng-template>
+                                        <log-header-template template="let item">
+                                            <div class="GridHeaderCellTemplateFilled">
+                                                <img src="./Images/CellIcons/Container_gray.png" class="CenterCenter" [attr.title]="'Shipment.O.Routings.EmptyCR' | TextCodeTranslationPipe" />
+                                            </div>
+                                        </log-header-template>
 
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [TabIndex]="-1">
-                                                <div class="MediaFillRelative">
-                                                    <div class="MediaFillRelative" *ngIf="!item.EmptyContainerReturnId && !item.IsEmptyContainerReturnFU && IsEditingEnabled" (mousedown)="item.EmptyContainerIconClicked()" style="cursor: pointer;">
-                                                        <div attr.data-cy="{{'AddContainerReturn_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" class="CenterCenter" style="width: 12px; height: 12px;">
-                                                            <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
-                                                        </div>
+                                        <log-cell-template template="let item" #logcelltemplate [TabIndex]="-1">
+                                            <div class="MediaFillRelative">
+
+                                                <div class="MediaFillRelative" *ngIf="!item.EmptyContainerReturnId && !item.IsEmptyContainerReturnFU && IsEditingEnabled" (mousedown)="item.EmptyContainerIconClicked()" style="cursor: pointer;">
+                                                    <div class="CenterCenter" style="width: 12px; height: 12px;">
+                                                        <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
                                                     </div>
-
-                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
-                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+
+                                                <img *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                <img *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
+
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
 
                                     <!-- Buttons -->
-                                    <log-column [width]="'200'">
-                                        <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <div class="LeftCenter" style="height: 20px;">
-                                                        <table>
-                                                            <tr>
-                                                                <td style="width: 4px;">
-                                                                    <span class="CellSeparator"></span>
-                                                                </td>
+                                    <log-column [width]="'100'">
+                                        <log-cell-template template="let item" [TabIndex]="-1">
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <div class="LeftCenter" style="height: 20px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 4px;">
+                                                                <span class="CellSeparator"></span>
+                                                            </td>
 
-                                                                <td style="width: 16px;">
-                                                                    <div class="MediaFill">
-                                                                        <div style="width: 16px; height: 16px;" class="CenterCenter">
-                                                                            <img style="vertical-align: middle; display: block;" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" />
-                                                                            <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentPackage.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
-                                                                        </div>
+                                                            <td style="width: 16px;">
+                                                                <div class="MediaFill">
+                                                                    <div style="width: 16px; height: 16px;" class="CenterCenter">
+                                                                        <img style="vertical-align: middle; display: block;" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" />
+                                                                        <CellTooltip *ngIf="item.Notes" [IconPath]="'./Images/Notes_exists.png'" [Head]="'ShipmentPackage.F.Notes' | TextCodeTranslationPipe" [Body]="item.Notes"></CellTooltip>
                                                                     </div>
-                                                                </td>
+                                                                </div>
+                                                            </td>
 
-                                                                <td style="width: 5px;">
-                                                                    <div></div>
-                                                                </td>
+                                                            <td style="width: 5px;">
+                                                                <div></div>
+                                                            </td>
 
-
-                                                                <td>
-                                                                    <span class="CellSeparator"></span>
-                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
-                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [IsEnabled]="item.IsEditingEnabled" [hidden]="item.IsConnectedToRouting"></IconButton>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+                                                            <td>
+                                                                <span class="CellSeparator"></span>
+                                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditPackageClicked(item)"></IconButton>
+                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeletePackageClicked(item)" [IsEnabled]="item.IsEditingEnabled" [hidden]="item.IsConnectedToRouting"></IconButton>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
-                                            </log-cell-template>
-                                        </ng-template>
+                                            </div>
+                                        </log-cell-template>
                                     </log-column>
-
-                                    <log-column *ngIf="IsShowReleaseNumber" [width]="'150'">
-                                        <ng-template let-item>
-                                            <log-cell-template [TabIndex]="-1">
-                                                <div style="width: 100%; height: 100%; position: relative;">
-                                                    <div *ngIf="item.IsShowReleaseNumber" class="LeftCenter">
-                                                        <a class="Link" style="font-size:13px;" (click)="DisconnectWarehouseReleasePackageButtonClick(item)">Disconnect Release</a>
-
-                                                    </div>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
-
-
 
                                 </logitude-edit-grid>
 
                                 <div class="GenerateArea" *ngIf="IsGenerateControlVisible">
                                     <div class="GenerateLinks">
-                                        <Hyperlink id="{{ 'GenerateBTN' | IdGeneratorAsyncPipe | async}}" [IsEnabled]="IsGenerateButtonEnabled" *ngIf="IsGenerateButtonVisible" (click)="GenerateButtonClicked()">{{GenerateButtonLabel}}</Hyperlink>
+                                        <Hyperlink id="{{ 'GenerateBTN' | IdGeneratorPipe}}"  [IsEnabled]="IsGenerateButtonEnabled" *ngIf="IsGenerateButtonVisible" (click)="GenerateButtonClicked()">{{GenerateButtonLabel}}</Hyperlink>
 
-                                        <div *ngIf="IsBuildButtonVisible ">
-                                            <Hyperlink id="{{ 'ShipmentPackage.M.ContainNoPackages' | IdGeneratorAsyncPipe | async}}" [IsEnabled]="IsBuildButtonEnabled" (click)="BuildButtonClicked()">{{BuildButtonLabel}}</Hyperlink>
+                                        <div *ngIf="IsBuildButtonVisible">
+                                            <Hyperlink  id="{{ 'ShipmentPackage.M.ContainNoPackages' | IdGeneratorPipe}}" [IsEnabled]="IsBuildButtonEnabled" (click)="BuildButtonClicked()">{{BuildButtonLabel}}</Hyperlink>
                                             <span style="font-style:italic; color: gray; margin-left: 5px;" *ngIf="IsNoPackagesLoadedTextVisible">{{'ShipmentPackage.M.ContainNoPackages' | TextCodeTranslationPipe}}</span>
                                         </div>
 
                                         <div *ngIf="IsGeneratePackagesfromCrossDockReleasesButtonVisible">
-                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorAsyncPipe | async}}" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
+                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorPipe}}" [IsEnabled]="IsGeneratePackagesfromCrossDockReleasesButtonEnabled" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
                                         </div>
                                     </div>
                                 </div>
@@ -876,13 +708,8 @@
                                     </td>
 
                                     <td style="width: 20px; padding-left: 4px;">
-                                        <span *ngIf="!EntityPM.IsMultipleCommodities" class="hyperlink" [class.HyperlinkDisabled]="!IsTotalsFieldEnabled" (click)="ChooseCommodityClicked()">
+                                        <span class="hyperlink" [class.HyperlinkDisabled]="!IsTotalsFieldEnabled" (click)="ChooseCommodityClicked()">
                                             <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                                        </span>
-
-                                        <span *ngIf="EntityPM.IsMultipleCommodities">
-                                            <!--<img title="This shipment is marked as multi commodity" class="CenterCenter" src="./Images/Info.png" />-->
-                                            <HelpIcon [HideHeader]="true" [Text]="'This shipment is marked as multi commodity'" class="BottomCenter"></HelpIcon>
                                         </span>
                                     </td>
                                 </tr>
@@ -908,7 +735,7 @@
                                                 </td>
 
                                                 <td style="width: 35px;">
-                                                    <Hyperlink [IsEnabled]="IsTotalsFieldEnabled" (click)="EditDangerouseClicked()">{{'Shipment.B.Packages.DangerouseGoodsDetails' | TextCodeTranslationPipe}}</Hyperlink>
+                                                    <Hyperlink [IsEnabled]="IsTotalsFieldEnabled" (click)="EditDangerouseClicked('P')">{{'Shipment.B.Packages.DangerouseGoodsDetails' | TextCodeTranslationPipe}}</Hyperlink>
                                                 </td>
                                             </tr>
                                         </table>
@@ -1055,7 +882,7 @@
                                                 </td>
 
                                                 <td style="width: 35px;">
-                                                    <Hyperlink [IsEnabled]="IsTotalsFieldEnabled" (click)="EditDangerouseClicked()">{{'Shipment.B.Packages.DangerouseGoodsDetails' | TextCodeTranslationPipe}}</Hyperlink>
+                                                    <Hyperlink [IsEnabled]="IsTotalsFieldEnabled" (click)="EditDangerouseClicked('P')">{{'Shipment.B.Packages.DangerouseGoodsDetails' | TextCodeTranslationPipe}}</Hyperlink>
                                                 </td>
                                             </tr>
                                         </table>

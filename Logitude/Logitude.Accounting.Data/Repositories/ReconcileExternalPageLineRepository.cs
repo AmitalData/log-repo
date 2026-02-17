@@ -31,13 +31,5 @@ namespace Logitude.Accounting.Data.Repositories
                                                      select a).ToList();
             return POCOs;
         }
-        public List<ReconcileExternalPageLine> GetPageLines(string pageId, int tenant)
-        {
-            IQueryable<ReconcileExternalPageLine> pageLineQuery = (from a in context.ReconcileExternalPageLines
-                                                                   where a.ReconcileExternalPageId == pageId && a.Tenant == tenant
-                                                                   select a);
-
-            return pageLineQuery.ToList();
-        }
     }
 }

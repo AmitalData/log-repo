@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -26,12 +26,10 @@
 
                     <td style="width: 45px; vertical-align:middle; font-size:11px; color : #6E7172;">{{'Accounting.General.O.Search' | TextCodeTranslationPipe}}:</td>
 
-                    <td style="width: 300px;" *ngIf="enableFastSearch">
-                        <SearchTextBox  [AutoComplete]="'off'" (optionSelected)="searchDropdownSelected($event)" (click)="showRecentSearches()" (ItemClicked)="EditJournal($event)"  [appSearchListDDL]="searchDropdownOptions" [DDLsettings]="fastSearchSettings" [SearchText]="searchFields" [ObjectTableName]="'Journal'"  (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
-                    </td>
-                    <td style="width: 300px;" *ngIf="!enableFastSearch">
+                    <td style="width: 300px;">
                         <SearchBox [ObjectTableName]="'Journal'" [IsQuickSearch]="true" (ItemClicked)="EditJournal($event)"></SearchBox>
                     </td>
+
                     <td>
                         <div></div>
                     </td>
@@ -68,13 +66,13 @@
                                 <td>
                                     <div class="ScrollViewer">
                                         <div class="ScrollContent">
-                                            
-                                            
+
+
                                             <!-- Manual Journals -->
                                             <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.Journals' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button id="{{'NewJournal' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewJournalWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button class="Button" (click)="RunNewJournalWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -126,20 +124,6 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Ledger Transactions -->
-                                            <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;margin-top: 30px;">
-                                                <div>{{'Accounting.General.O.LedgerTransactions' | TextCodeTranslationPipe}}</div>
-                                                <div>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:190px;">
-                                                                <p class="QueryLink" (click)="ViewLedgerTransactionsQuery()">{{'Accounting.General.O.LedgerTransactions' | TextCodeTranslationPipe}}</p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-
                                             <!-- Manual Journals -->
                                             <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;margin-top: 30px;">
                                                 <div>{{'Journal.O.Revelations' | TextCodeTranslationPipe}}</div>
@@ -153,18 +137,7 @@
                                                                 <p class="QueryLink" (click)="ViewRevaluationQuery()">{{'Revaluation.Q.AllRevaluations' | TextCodeTranslationPipe}}</p>
                                                             </td>
                                                         </tr>
-                                                        <tr *ngIf="LoadCVS_JournalsVisibility">
-                                                            <td style="width:190px;" (click)="LoadJournalFromFile()">
-                                                                <span class="QueryLink" >{{'Journal.Features.LOADJOURNALCSV' | TextCodeTranslationPipe}}</span><span><img src="./Images/Buttons/excelicon.png" /></span>
-                                                                
-                                                            </td>
-                                                        </tr>
-                                                        <tr *ngIf="LoadMichpal_JournalsVisibility">
-                                                            <td style="width:190px;" (click)="LoadJournalFromMichpalFile()">
-                                                                <span class="QueryLink" >{{'Journal.Features.LOADJOURNALMICHPAL' | TextCodeTranslationPipe}}</span><span><img src="./Images/Buttons/Notepad.png" /></span>
-                                                                
-                                                            </td>
-                                                        </tr>
+
                                                     </table>
                                                 </div>
                                             </div>

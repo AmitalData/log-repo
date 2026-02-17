@@ -162,7 +162,7 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="width: 110px;min-width:110px; font-size: 11px;" class="Label">Status:</td>
-                                                                                <td style="font-size: 11px;float:left;" class="Value" data-cy="INTTRABookingStatus">{{INTTRABookingStatusName}}</td>
+                                                                                <td style="font-size: 11px;float:left;" class="Value">{{INTTRABookingStatusName}}</td>
                                                                                 <td>
                                                                                     <div></div>
                                                                                 </td>
@@ -807,8 +807,8 @@
                                                                                                                         <td style="width: 75px; font-size: 10px;" class="Label">Vessel:</td>
 
                                                                                                                         <td style="width: 90px;">
-                                                                                                                            <div [ngStyle]="{color: INTTRABookingResponse_VesselColor}" style="width: 90px;max-width: 90px; font-size: 11px;" class="Value TextTrimming">
-                                                                                                                                {{INTTRABookingResponse_Vessel}}
+                                                                                                                            <div style="width: 90px;max-width: 90px; font-size: 11px;" class="Value TextTrimming">
+                                                                                                                               
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                     </tr>
@@ -945,7 +945,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

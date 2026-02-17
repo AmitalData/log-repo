@@ -1,7 +1,7 @@
 ﻿using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using System;
@@ -16,7 +16,7 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
     {
         private int myCurrentTenant;
         private string loggedUserEmail;
-        public User loggedUser;
+        private User loggedUser;
         public QuoteBusinessUnitFilter(int tenant)
         {
             this.myCurrentTenant = tenant;
@@ -28,9 +28,8 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
 
         public IQueryable<Quote> RunFilter(IQueryable<Quote> iQueryableData)
         {
-            if (loggedUser == null) return iQueryableData;
             List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
-    
+
             if (myFeatureRoles.Count > 0)
             {
                 if (!myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "OR").Any())
@@ -185,11 +184,11 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
             return null;
         }
 
-        public List<RoleFeature> GetFeaturesRoles()
+        private List<RoleFeature> GetFeaturesRoles()
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 
-            if (loggedUserEmail != "support@amital.co.il")
+            if (loggedUserEmail != "admin@fnarsoft.com")
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(myCurrentTenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Quote", 0, true);

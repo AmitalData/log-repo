@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Server.Infrastructure.Helpers;
+
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
@@ -38,7 +38,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<ARInvoicePayment> GetARInvoicePaymentByPaymentId(string paymentid, int tenant)
         {
-            return (from a in context.ARInvoicePayments.Include("ARInvoice") where a.ARPaymentId == paymentid && a.Tenant == tenant select a);
+            return (from a in context.ARInvoicePayments where a.ARPaymentId == paymentid && a.Tenant == tenant select a);
         }
 
         public IQueryable<ARInvoicePayment> GetARInvoicePaymentByInvoiceId(string invoiceId, int tenant)

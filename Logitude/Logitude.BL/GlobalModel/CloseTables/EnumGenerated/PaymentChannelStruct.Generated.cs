@@ -12,7 +12,6 @@ namespace Logitude.BL.GlobalModel.CloseTables
     {   
        public const string Bluesnap = "PL";  
        public const string Direct = "DI";  
-       public const string Chargify = "CY";  
     }
 }
 

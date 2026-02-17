@@ -1,4 +1,4 @@
-
+﻿
 <style>
 
 </style>
@@ -27,7 +27,7 @@
                         <td class="tbl1Col1">
 
                             <LogTextBox [ObjectFieldName]="'CustomsAgentId'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
@@ -59,7 +59,7 @@
                         <td class="tbl1Col1">
 
                             <LogTextBox [ObjectFieldName]="'DCAPartnerVault'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
@@ -178,10 +178,7 @@
                                          [Checked]="AutoFillAccountType"></LogCheckBox>
                         </td>
 
-                        <td class="tbl1LastCol">
-                            <div>
-                            </div>
-                        </td>
+                        <td class="tbl1LastCol"><div></div></td>
 
                     </tr>
 
@@ -207,35 +204,8 @@
                         <td class="tbl1LastCol"><div></div></td>
 
                     </tr>
-                    
-                    <!-- StandAlone  -->
-                    <tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <LogLabel [ObjectFieldName]="'StandAlone'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
 
-                            </LogLabel>
-                        </td>
-                        <td class="tbl1Col0"></td>
-
-                        <td colspan="2" style="padding-right: 15px;text-align:left">
-
-
-                            <LogCheckBox [NoObjectField]="true"
-                                         [ObjectFieldName]="'StandAlone'"
-                                         [ObjectTableName]="ObjectTableName"
-                                         [DataContext]="DataContext"
-                                         [Checked]="StandAlone"></LogCheckBox>
-
-                        </td>
-
-
-
-                        <td class="tbl1LastCol"><div></div></td>
-
-                    </tr>
-
+                    <tr></tr>
 
                 </table>
             </td>
@@ -349,7 +319,7 @@
                         <td class="tbl1Col1">
 
                             <LogTextBox [ObjectFieldName]="'PaymentOrderAccCard'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
@@ -364,155 +334,17 @@
 
                     </tr>
 
-
-
-
-                    <!--CompanyType-->
-
-                    <tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <LogLabel [Text]="'סוג חברה'"
-                                      [NoObjectField]="true"
-                                      [ObjectFieldName]="'CompanyType1'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
-
-                            </LogLabel>
-                        </td>
-                        <td class="tbl1Col0"></td>
-
-                        <td class="tbl1Col1">
-
-                            <ComboBox [ItemsSource]="CompanyTypeList" [Binding]="'Name'" [SelectedItem]="SelectedCompanyType" (SelectedItemChanged)="SelectedCompanyType = $event"></ComboBox>
-
-
-                        </td>
-
-                        <td><div></div></td>
-
-                        <td class="tbl1LastCol"><div></div></td>
-
-                    </tr>
-
-
-                    <tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <LogLabel [NoObjectField]="true"
-                                      [ObjectFieldName]="'IsMessagesPending'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
-
-                            </LogLabel>
-                        </td>
-                        <td class="tbl1Col0"></td>
-
-                        <td class="tbl1Col1">
-
-                            <LogCheckBox [NoObjectField]="true"
-                                         [ObjectFieldName]="'IsMessagesPending'"
-                                         [ObjectTableName]="ObjectTableName"
-                                         [DataContext]="DataContext"
-                                         [Checked]="IsMessagesPending"></LogCheckBox>
-
-                        </td>
-
-                        <td><div></div></td>
-
-                        <td class="tbl1LastCol"><div></div></td>
-
-                    </tr>
-
-
-
-                    <tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <LogLabel [NoObjectField]="true"
-                                      [ObjectFieldName]="'QtyFeedbackInPendingMessage'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
-
-                            </LogLabel>
-                        </td>
-                        <td class="tbl1Col0"></td>
-
-                        <td class="tbl1Col1">
-
-                            <LogTextBox [ObjectFieldName]="'QtyFeedbackInPendingMessage'"
-                                        [InputType]="'text'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [Text]="QtyFeedbackInPendingMessage"></LogTextBox>
-
-                        </td>
-
-                        <td><div></div></td>
-
-                        <td class="tbl1LastCol"><div></div></td>
-
-                    </tr>
-                    <tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <LogLabel [NoObjectField]="true"
-                                      [ObjectFieldName]="'MaxItemsSendInteractive'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
-
-                            </LogLabel>
-                        </td>
-                        <td class="tbl1Col0"></td>
-
-                        <td class="tbl1Col1">
-
-                            <LogTextBox [ObjectFieldName]="'MaxItemsSendInteractive'"
-                                        [InputType]="'text'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [Text]="MaxItemsSendInteractive"></LogTextBox>
-
-                        </td>
-
-                        <td><div></div></td>
-
-                        <td class="tbl1LastCol"><div></div></td>
-
-                    </tr>
-                    <tr class="FormFieldRow">
-                        <td class="tbl1Label">
-                            <LogLabel [NoObjectField]="true"
-                                      [ObjectFieldName]="'MaxSISendInteractive'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext">
-
-                            </LogLabel>
-                        </td>
-                        <td class="tbl1Col0"></td>
-
-                        <td class="tbl1Col1">
-
-                            <LogTextBox [ObjectFieldName]="'MaxSISendInteractive'"
-                                        [InputType]="'text'"
-                                        [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true"
-                                        [Text]="MaxSISendInteractive"></LogTextBox>
-
-                        </td>
-
-                        <td><div></div></td>
-
-                        <td class="tbl1LastCol"><div></div></td>
-
-                    </tr>
                     <!--placeholder-->
-                    <!--<tr class="FormFieldRow"></tr>-->
+                    <tr class="FormFieldRow"></tr>
 
                     <tr></tr>
                 </table>
             </td>
             <td></td>
         </tr>
+
+        <!--split Zones-->
+        <tr class="FormFieldRow"></tr>
 
         <tr>
             <td colspan="3">
@@ -550,7 +382,7 @@
                         <!--SignServiceAddress-->
                         <td style="padding:2px;">
                             <LogTextBox [ObjectFieldName]="'SignServiceAddress'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
@@ -561,7 +393,7 @@
                         <!--DCAServiceAddress-->
                         <td style="padding:2px;">
                             <LogTextBox [ObjectFieldName]="'DCAServiceAddress'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
@@ -572,7 +404,7 @@
                         <!--UnfConnectionString-->
                         <td style="padding:2px;">
                             <LogTextBox [ObjectFieldName]="'UnfConnectionString'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
@@ -583,65 +415,10 @@
 
 
 
-                    <tr>
-                        <td style="padding:2px;">
-                        </td>
 
-                        <td style="padding-top:7px;" width="250px">
-                            <table>
-                                <tr>
-                                    <td stye=" width: 70px">
-                                        <LogLabel [ObjectFieldName]="'LastRunningDCAWS'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'LastRunningDCAWS'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [Text]="LastRunningDCAWS"></LogTextBox>
-                                    </td>
-                                </tr>
-                            </table>
-
-
-
-                        </td>
-
-                        <!--UnfConnectionString-->
-                        <td style=" padding-top:7px;" width="250px">
-                            <table>
-                                <tr>
-                                    <td stye=" width: 70px">
-                                        <LogLabel [ObjectFieldName]="'LastNumOfMessagesDCAWS'"
-                                                  [ObjectTableName]="ObjectTableName"
-                                                  [DataContext]="DataContext">
-
-                                        </LogLabel>
-                                    </td>
-                                    <td>
-                                        <LogTextBox [ObjectFieldName]="'LastNumOfMessagesDCAWS'"
-                                                    [InputType]="'text'"
-                                                    [DataContext]="DataContext"
-                                                    [ObjectTableName]="ObjectTableName"
-                                                    [HideColumns]="true"
-                                                    [Text]="LastNumOfMessagesDCAWS"></LogTextBox>
-                                    </td>
-                                </tr>
-                            </table>
-
-
-
-                        </td>
-
-                    </tr>
 
                     <tr>
-
+                        
 
                         <!--IIGServiceAddress-->
                         <td style="padding:2px;">
@@ -657,31 +434,23 @@
                         <td style="padding:2px;">
                             <LogLabel [ObjectFieldName]="'UServerServiceAddress'"
                                       [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"
-                                      
-                                      >
+                                      [DataContext]="DataContext">
 
                             </LogLabel>
                         </td>
-                        <!--ForbiddenSigns-->
+                        <!--UServerServiceAddress-->
                         <td style="padding:2px;">
-                            <LogLabel [ObjectFieldName]="'ForbiddenSigns'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"
-                                      [Text]="'תווים אסורים בשימוש'">
-                            </LogLabel>
-                        </td>
-                        <td style="padding:2px;">
+
                         </td>
                     </tr>
 
                     <tr>
-
+                       
 
                         <!--IIGServiceAddress-->
                         <td style="padding:2px;">
                             <LogTextBox [ObjectFieldName]="'IIGServiceAddress'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
@@ -692,28 +461,17 @@
                         <!--UServerServiceAddress-->
                         <td style="padding:2px;">
                             <LogTextBox [ObjectFieldName]="'UServerServiceAddress'"
-                                        [InputType]="'text'"
+                                        [InputType]="text"
                                         [DataContext]="DataContext"
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
                                         [Text]="UServerServiceAddress"
                                         [IsMultiline]="true"></LogTextBox>
                         </td>
-                        <!--ForbiddenSigns-->
-                        <td style="padding:2px;">
-                            <LogTextBox #ForbiddenSignsTextBox
-                                    [ObjectFieldName]="'ForbiddenSigns'"
-                                    [InputType]="'nText'"
-                                    [DataContext]="DataContext"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [HideColumns]="true"
-                                    [IsMultiline]="true"
-                                    [Text]="ForbiddenSigns">
-                                </LogTextBox>
-                        </td>
 
                         <!---->
                         <td style="padding:2px;">
+
                         </td>
                     </tr>
 
@@ -722,207 +480,8 @@
         </tr>
 
 
-        <!--split Zones-->
-        <tr class="FormFieldRow" >
-            <td colspan="4"  style="border: 1px solid rgba(59, 179, 226, 0);  ">
-                <table>
-                    <!--<tr><td colspan="3" >המסרים למכס מושבתים</td><td></td></tr>-->
-                    <tr>
-                        <td style=" width: 155px">
-                            <LogLabel [ObjectFieldName]="'SuppressIIGMessageFromDate'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"
-                                      [Text]="'המסרים למכס מושבתים מתאריך'">
 
-                            </LogLabel>
-                        </td>
-                        <!--(ValueChanged)="SuppressIIGMessageFromDateOnBlur($event)"-->
-                        <td style="padding-right: 10px;width: 100px">
-                            <LogDatePicker [ObjectFieldName]="'SuppressIIGMessageFromDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true"
-                                           [SelectedDateValue]="SuppressIIGMessageFromDate"></LogDatePicker>
-                        </td>
-                        <!--(ValueChanged)="SuppressIIGMessageFromTimeOnBlur($event)"-->
-                        <td style="padding-right: 10px;;width: 80px">
-                            <LogDatePicker [ObjectFieldName]="'SuppressIIGMessageFromDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true" [ForceSubscribe]="true"
-                                           [SelectedDateValue]="SuppressIIGMessageFromDate" [InputType]="'time'"
-                                           [TimeMode]="24"></LogDatePicker>
-                        </td>
-
-
-
-                        <td style=" width: 40px">
-                            <LogLabel [ObjectFieldName]="'SuppressIIGMessageToDate'"
-                                      [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"
-                                      [Text]="'ועד '">
-
-                            </LogLabel>
-                        </td>
-                        
-
-                        <td style="padding-right: 10px;width: 100px">
-                            <LogDatePicker [ObjectFieldName]="'SuppressIIGMessageToDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true"
-                                           [SelectedDateValue]="SuppressIIGMessageToDate"></LogDatePicker>
-                        </td>
-                        <!--(ValueChanged)="SuppressIIGMessageFromTimeOnBlur($event)"-->
-                        <td style="padding-right: 10px;;width: 80px">
-                            <LogDatePicker [ObjectFieldName]="'SuppressIIGMessageToDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true" [ForceSubscribe]="true"
-                                           [SelectedDateValue]="SuppressIIGMessageToDate" [InputType]="'time'"
-                                           [TimeMode]="24"></LogDatePicker>
-                        </td>
-                        <td></td>
-                    </tr>
-
-                </table>
-
-                
-            </td> </tr>
-
-            <!-- HSM -->
-            <tr class="FormFieldRow" >
-                <td colspan="4"  style="border: 1px solid rgba(59, 179, 226, 0);  ">
-                    <table>
-                        <tr>
-                            <td class="tbl1Label" style="width: 90px; " >
-                                <LogLabel [NoObjectField]="true"
-                                          [ObjectFieldName]="'HSMCompanyId'"
-                                          [ObjectTableName]="ObjectTableName"
-                                          [DataContext]="DataContext"
-                                          [Text]="'קוד חברה HSM'"
-                                          >
-    
-                                </LogLabel>
-                            </td>
-                            <td class="tbl1Col0"></td>
-    
-                            <td class="tbl1Col1" style="width: 70px; ">
-    
-                                <LogTextBox [ObjectFieldName]="'HSMCompanyId'"
-                                            [InputType]="'text'"
-                                            [DataContext]="DataContext"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [HideColumns]="true"
-                                            [Text]="HSMCompanyId"></LogTextBox>
-    
-    
-                            </td>
-    
-                            
-                            <td></td>
-                            <td class="tbl1Label" style="width: 90px; ">
-                                <LogLabel [NoObjectField]="true"
-                                          [ObjectFieldName]="'HSMToken'"
-                                          [ObjectTableName]="ObjectTableName"
-                                          [DataContext]="DataContext"
-                                          
-                                          >
-    
-                                </LogLabel>
-                            </td>
-                            <td class="tbl1Col0"></td>
-    
-                            <td class="tbl1Col1">
-    
-                                <LogTextBox [ObjectFieldName]="'HSMToken'"
-                                            [InputType]="'text'"
-                                            [DataContext]="DataContext"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [HideColumns]="true"
-                                            [Text]="HSMToken"></LogTextBox>
-    
-    
-    
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-              <!-- OCR -->
-              <tr class="FormFieldRow" >
-                <td colspan="4"  style="border: 1px solid rgba(59, 179, 226, 0);  ">
-                    <table>
-                        <tr>
-                            <td class="tbl1Label" style="width: 90px; ">
-                                <LogLabel [NoObjectField]="true"
-                                          [ObjectFieldName]="'OcrToken'"
-                                          [ObjectTableName]="ObjectTableName"
-                                          [DataContext]="DataContext"
-                                          
-                                          >
-    
-                                </LogLabel>
-                            </td>
-    
-                            <td class="tbl1Col1" style="width: 300px; ">
-    
-                                <LogTextBox [ObjectFieldName]="'OcrToken'"
-                                            [InputType]="'text'"
-                                            [DataContext]="DataContext"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [HideColumns]="true"
-                                            [Text]="OcrToken"></LogTextBox>
-    
-    
-    
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <!-- Courier Document -->
-            <tr class="FormFieldRow" >
-                <td colspan="4"  style="border: 1px solid rgb(59, 179, 226);  ">
-                    <table>
-                        <tr>
-                            <td class="tbl1Label" style="width: 90px; ">
-                                <LogLabel [NoObjectField]="true"
-                                          [ObjectFieldName]="'CourierDocToken'"
-                                          [ObjectTableName]="ObjectTableName"
-                                          [DataContext]="DataContext"
-                                          
-                                          >
-        
-                                </LogLabel>
-                            </td>
-        
-                            <td class="tbl1Col1" style="width: 300px; ">
-        
-                                <LogTextBox [ObjectFieldName]="'CourierDocToken'"
-                                            [InputType]="'text'"
-                                            [DataContext]="DataContext"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [HideColumns]="true"
-                                            [Text]="CourierDocToken"></LogTextBox>
-        
-        
-        
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
         <tr class="FormFieldRow">
-            <td colspan="3"></td>
-        </tr>
-        <tr class="FormFieldRow">
-            <td colspan="3"></td>
-        </tr>
-        <tr class="FormFieldRow">
-            <td colspan="3"></td>
-        </tr>
-        <tr class="FormFieldRow">
-            <td colspan="3"></td>
-        </tr>
-
-        <tr >
             <td colspan="3"></td>
         </tr>
         <!-- footer -->
@@ -932,46 +491,17 @@
                     <tr>
                         <td></td>
                         <td style="width: 57px;">
-                            <button class="Button" (click)="EventsButtonClicked()">{{'General.O.Events' | TextCodeTranslationPipe}}</button>
-                        </td>
-
-                        <td style="width: 5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 57px;">
-                            
-                            <!-- 'Customs.CustomsSetting.F.ServiceScript' |TextCodeTranslationPipe -->
-                            <button class="Button" (click)="ClearCache()">Clear Cache</button>
-                        </td>
-
-                        
-                        <td style="width: 5px;">
-                            <div></div>
-                        </td>
-                        <td style="width: 57px;">
-                            
-                            <!-- 'Customs.CustomsSetting.F.ServiceScript' |TextCodeTranslationPipe -->
-                            <button class="Button" (click)="ShowRestartServiceScript()">אתחול סרוויסים</button>
-                        </td>
-
-                        
-                        <td style="width: 5px;">
-                            <div></div>
-                        </td>
-                        
-                        <td style="width: 57px;">
                             <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
                         </td>
 
-
+                        
 
                         <td style="width: 5px;">
                             <div></div>
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                            <button class="RedButton"  (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>

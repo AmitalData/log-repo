@@ -6,10 +6,9 @@ import {QueryFilterItem} from '../../Components/Filters/QueryFilterItem';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Component, OnInit, Output, ElementRef}  from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AgedAccountsReceivableFilterComponent',
     templateUrl: './AgedAccountsReceivableFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -79,7 +78,7 @@ public selectedCurrency: string = this.LocalCurrencyCode;
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-        //this.RunReport(false);
+        this.RunReport(false);
     }
         
     ngOnInit() {
@@ -92,62 +91,8 @@ public selectedCurrency: string = this.LocalCurrencyCode;
 
         //this.RunReport(false);
     }
-     public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "InvoiceType":
-                    this.ShipmentTypeRadio = queryFilterItem.FieldValue;
-                    break;
-                case "CurrencyType":
-                    this.SelectedCurrency =queryFilterItem.FieldValue;
-                    break;
-                
-               
-            }
-   
-           
-    
-        }
-    }
-
-    ValidateSelectedFilters() {
-         return true;
-    }
     
     RunReport(isloading: boolean) {
-        
-        this.reportFliter = new ReportFliter();
-        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
-        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-                
-        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-        this.reportFliter.NumberOfPage = 1;
-        this.reportFliter.ProcessType = "GenerateReport";
-
-        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
-    }
-    GetQueryFilterItems() {
         this.queryFilterItems = new Array<QueryFilterItem>();
 
         this.queryFilterItem = new QueryFilterItem();
@@ -170,6 +115,17 @@ public selectedCurrency: string = this.LocalCurrencyCode;
         this.queryFilterItem.Operator = "Equals";
         this.queryFilterItems.push(this.queryFilterItem);
               
-        return this.queryFilterItems;
+
+        this.reportFliter = new ReportFliter();
+        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+                
+        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        this.reportFliter.NumberOfPage = 1;
+        this.reportFliter.ProcessType = "GenerateReport";
+
+        this.ReportsPreview.GenerateReport(this.reportFliter, isloading);
     }
 }

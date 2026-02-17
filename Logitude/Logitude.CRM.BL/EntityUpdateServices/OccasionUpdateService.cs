@@ -6,7 +6,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using System;
@@ -29,8 +29,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM)
         {
             DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            var isAllAdded = entityPM.IsAllAdded;
-            var test = entityPM.RemovedOccasionInvitees;
+
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(entityPM.Tenant), entityPM.Tenant);
@@ -50,7 +49,6 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 }
             }       
         }
-
 
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM, Occasion entityPOCO)
         {

@@ -11,15 +11,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     public class CustomerCompetitorProduct
     {
         [Key]
-        [Column("CustomerId", Order = 1)]
         public string CustomerId { get; set; }
 
         [Key]
-        [Column("CompetitorId", Order = 2)]
         public string CompetitorId { get; set; }
 
         [Key]
-        [Column("ProductTypeCode", Order = 3)]
         public string ProductTypeCode { get; set; }
 
         public int Tenant { get; set; }

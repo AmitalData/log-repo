@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
@@ -7,11 +6,9 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -51,7 +48,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.Poco = new Port();
                 this.Poco.Id = this.entityPM.Id;
-                this.entityPM.AddedManually = true;
 
                 if (!string.IsNullOrEmpty(entityPM.StateId))
                 {
@@ -60,18 +56,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (state != null)
                     {
                         entityPM.StateName = state.EnglishName;
-                        entityPM.StateCode = state.Code;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(entityPM.CountryId))
-                {
-                    CountryRepository countryRepository = new CountryRepository(objectContext);
-                    Country country = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
-                    if (country != null)
-                    {
-                        entityPM.CountryName = country.EnglishName;
-                        entityPM.CountryCode = country.Code;
                     }
                 }
 
@@ -85,7 +69,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
-                AddQueueMessages();
             }
 
             else
@@ -124,21 +107,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (state != null)
                     {
                         entityPM.StateName = state.EnglishName;
-                        entityPM.StateCode = state.Code;
-                    }
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.CountryId))
-            {
-                if (entityPM.CountryId != Poco.CountryId)
-                {
-                    CountryRepository countryRepository = new CountryRepository(objectContext);
-                    Country country = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
-                    if (country != null)
-                    {
-                        entityPM.CountryName = country.EnglishName;
-                        entityPM.CountryCode = country.Code;
                     }
                 }
             }
@@ -149,78 +117,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 PortTracing.Trace(theEntityPm, Poco, isNewEntity);
             }
 
-            bool updateTimeZone = this.CheckUpdatingTenantsPortsTimeZones();
             PortMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-            AddQueueMessages();
-            
-            if (updateTimeZone)
-            {
-                this.CreatePortTimeZoneQueueMessage();
-            }
-        }
-
-        private void AddQueueMessages()
-        {
-            if (entityPM.IsFromWorkerRole) return;
-            AddPortKafkaQueueMessage();
-            AddImporterPortQueueMessage();
-        }
-        private void AddImporterPortQueueMessage()
-        {
-            if (tenant != 0) return;
-            if (!IsCloudEnvironment() && ! SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) ) return;
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("ImporterPortsQueue", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "PortId", entityPM.Id },
-                { "Tenant", tenant.ToString()}
-            };
-            queueservice.Send(queueMessage, tenant);
-        }
-        private bool IsCloudEnvironment()
-        {
-            string workEnvironment = Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment;
-            return workEnvironment == "cloud";
-        }
-        private void AddPortKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Port" },
-                { "EntityId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
-        }
-
-        private bool CheckUpdatingTenantsPortsTimeZones()
-        {
-            if(entityPM.PortTimeZoneCode != Poco.PortTimeZoneCode && tenant == 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
-        private void CreatePortTimeZoneQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("UpdatePortTimeZone", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "PortId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
         }
     }
 }

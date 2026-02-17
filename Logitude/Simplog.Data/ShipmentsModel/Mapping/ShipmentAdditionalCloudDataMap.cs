@@ -31,16 +31,12 @@ namespace Simplog.Data.ShipmentsModel.Mapping
                .HasMaxLength(200)
                .IsUnicode(true);
 
-            this.Property(t => t.DocumentsApprovedByUserName)
-               .HasMaxLength(200)
-               .IsUnicode(true);
-
             this.Property(t => t.VersionApproved).HasMaxLength(10)
               .IsUnicode(true);
 
             this.Property(t => t.DeclarationXmlData).IsMaxLength();
-            this.Property(t => t.DenyReason).HasMaxLength(1024);
-            this.Property(t => t.ShipmentAddtionalDataXML);
+            this.Property(t => t.DenyReason).HasColumnType("nvarchar").HasMaxLength(1024);
+            this.Property(t => t.ShipmentAddtionalDataXML).HasColumnType("nvarchar");
 
             this.Property(t => t.PaymentRequestXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.IsPaymentRequired).IsRequired();
@@ -54,7 +50,6 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.ApproveDateTime).HasColumnName("ApproveDateTime");
             this.Property(t => t.ApprovedByUserName).HasColumnName("ApprovedByUserName");
-            this.Property(t => t.DocumentsApprovedByUserName).HasColumnName("DocumentsApprovedByUserName");
             this.Property(t => t.DeclarationXmlData).HasColumnName("DeclarationXmlData");
             this.Property(t => t.DeclarationWCOXml).HasColumnName("DeclarationWCOXml");
             this.Property(t => t.IsImporterApprovalRequried).HasColumnName("IsImporterApprovalRequried");
@@ -72,15 +67,8 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.UserIdNumberXMLData).HasColumnName("UserIdNumberXMLData");
             this.Property(t => t.UserIdNumber).HasColumnName("UserIdNumber");
 
-            this.Property(t => t.DocumentInspection).HasColumnName("DocumentInspection");
-            this.Property(t => t.GatepassDocumentsReady).HasColumnName("GatepassDocumentsReady");
-            this.Property(t => t.GoodsClassification).HasColumnName("GoodsClassification");
-
-            this.Property(t => t.PaymentRequestDateTime).HasColumnName("PaymentRequestDateTime");
-            this.Property(t => t.InvoiceIssuedDate).HasColumnName("InvoiceIssuedDate");
-            this.Property(t => t.UserAcceptSaveID).HasColumnName("UserAcceptSaveID");
             this.HasRequired(t => t.Shipment);
-              
+
         }
     }
 }

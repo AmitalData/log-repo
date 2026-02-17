@@ -1,5 +1,4 @@
-﻿using Simplog.Server.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -49,33 +48,33 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         [DataMember]
         public bool IsSundayEnabeled { get; set; }
         [DataMember]
-        public TimeSpan?  MondayFromHour { get; set; }
+        public TimeSpan MondayFromHour { get; set; }
         [DataMember]
-        public TimeSpan?  TuesdayFromHour { get; set; }
+        public TimeSpan TuesdayFromHour { get; set; }
         [DataMember]
-        public TimeSpan?  WednesdayFromHour { get; set; }
+        public TimeSpan WednesdayFromHour { get; set; }
         [DataMember]
-        public TimeSpan?  ThursdayFromHour { get; set; }
+        public TimeSpan ThursdayFromHour { get; set; }
         [DataMember]
-        public TimeSpan?  FridayFromHour { get; set; }
+        public TimeSpan FridayFromHour { get; set; }
         [DataMember]
-        public TimeSpan?  SaturdayFromHour { get; set; }
+        public TimeSpan SaturdayFromHour { get; set; }
         [DataMember]
-        public TimeSpan?  SundayFromHour { get; set; }
+        public TimeSpan SundayFromHour { get; set; }
         [DataMember]
-        public TimeSpan?  MondayToHour { get; set; }
+        public TimeSpan MondayToHour { get; set; }
         [DataMember]
-        public TimeSpan?  TuesdayToHour { get; set; }
+        public TimeSpan TuesdayToHour { get; set; }
         [DataMember]
-        public TimeSpan?  WednesdayToHour { get; set; }
+        public TimeSpan WednesdayToHour { get; set; }
         [DataMember]
-        public TimeSpan?  ThursdayToHour { get; set; }
+        public TimeSpan ThursdayToHour { get; set; }
         [DataMember]
-        public TimeSpan?  FridayToHour { get; set; }
+        public TimeSpan FridayToHour { get; set; }
         [DataMember]
-        public TimeSpan?  SaturdayToHour { get; set; }
+        public TimeSpan SaturdayToHour { get; set; }
         [DataMember]
-        public TimeSpan?  SundayToHour { get; set; }
+        public TimeSpan SundayToHour { get; set; }
 
         private List<BusinessHoursHolidayPM> businessHoursHolidays;
         [Include]
@@ -105,33 +104,32 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string SearchFields { get; set; }
 
         [DataMember]
-        public DateTime?  MondayFromHourDate { get; set; }
+        public DateTime MondayFromHourDate { get; set; }
         [DataMember]
-        public DateTime?  TuesdayFromHourDate { get; set; }
+        public DateTime TuesdayFromHourDate { get; set; }
         [DataMember]
-        public DateTime?  WednesdayFromHourDate { get; set; }
+        public DateTime WednesdayFromHourDate { get; set; }
         [DataMember]
-        public DateTime?  ThursdayFromHourDate { get; set; }
+        public DateTime ThursdayFromHourDate { get; set; }
         [DataMember]
-        public DateTime?  FridayFromHourDate { get; set; }
+        public DateTime FridayFromHourDate { get; set; }
         [DataMember]
-        public DateTime?  SaturdayFromHourDate { get; set; }
+        public DateTime SaturdayFromHourDate { get; set; }
         [DataMember]
-        public DateTime?  SundayFromHourDate { get; set; }
+        public DateTime SundayFromHourDate { get; set; }
         [DataMember]
-        public DateTime?  MondayToHourDate { get; set; }
+        public DateTime MondayToHourDate { get; set; }
         [DataMember]
-        public DateTime?  TuesdayToHourDate { get; set; }
+        public DateTime TuesdayToHourDate { get; set; }
         [DataMember]
-        public DateTime?  WednesdayToHourDate { get; set; }
+        public DateTime WednesdayToHourDate { get; set; }
         [DataMember]
-        public DateTime?  ThursdayToHourDate { get; set; }
+        public DateTime ThursdayToHourDate { get; set; }
         [DataMember]
-        public DateTime?  FridayToHourDate { get; set; }
+        public DateTime FridayToHourDate { get; set; }
         [DataMember]
-        public DateTime?  SaturdayToHourDate { get; set; }
+        public DateTime SaturdayToHourDate { get; set; }
         [DataMember]
-        public DateTime?  SundayToHourDate { get; set; }
-        public ChangeSetOperation ChangeSetOp { get; set; }
+        public DateTime SundayToHourDate { get; set; }
     }
 }

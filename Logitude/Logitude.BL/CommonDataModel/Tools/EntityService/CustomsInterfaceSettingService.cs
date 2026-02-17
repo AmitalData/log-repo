@@ -3,7 +3,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -41,16 +41,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.fTPDetailRepository = new FTPDetailRepository(objectContext);
 
             this.GetLoggedData();
-        }
-
-        public CustomsInterfaceSettingService(ICommonDataContext objectContext, int tenant, string loggedContactId)
-        {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            this.tenant = tenant;
-            this.ObjectContext = objectContext;
-            this.entityRepository = new CustomsInterfaceSettingRepository(objectContext);
-            this.fTPDetailRepository = new FTPDetailRepository(objectContext);
-            this.loggedContact = contactQuery.GetSinglePM(loggedContactId, tenant);
         }
 
         private void GetLoggedData()

@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -25,11 +25,7 @@ namespace Logitude.Social.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<ConversationHeaderList> GetList(QueryOperations queryOperations, int tenant ){
-		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
-		 }
-
-        public List<ConversationHeaderList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
+        public List<ConversationHeaderList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -41,9 +37,9 @@ namespace Logitude.Social.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             iQueryable = filter.GetFilteredQuery<ConversationHeader>(nonListQueryOperation, iQueryable);
 
@@ -52,7 +48,6 @@ namespace Logitude.Social.Data.EntityListQueryServices
             IQueryable<ConversationHeaderList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<ConversationHeaderList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<ConversationHeaderList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -149,14 +144,7 @@ namespace Logitude.Social.Data.EntityListQueryServices
            
         }
 
-
-		
-        public int GetListCount(QueryOperations queryOperations, int tenant ){
-		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
-
-		 }
-
-        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
+        public int GetListCount(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -168,24 +156,20 @@ namespace Logitude.Social.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
 			iQueryable = filter.GetFilteredQuery<ConversationHeader>(nonListQueryOperation, iQueryable);
-
-
 
             IQueryable<ConversationHeaderList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<ConversationHeaderList>(listQueryOperation, query2);
-		    query2 = InjectionUtil.Instance.ApplyTreeFilter<ConversationHeaderList>(query2, treeFilterQueryArgs);
-
             int count = query2.Count();
             return count;
         }
 
-
+      
     }
 }
 	 

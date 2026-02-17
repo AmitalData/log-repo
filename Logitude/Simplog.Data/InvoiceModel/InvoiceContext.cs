@@ -1,6 +1,10 @@
+using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlClient;
+using System.Transactions;
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -10,11 +14,13 @@ using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
+using System;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 
 namespace Simplog.Data.InvoiceModel
 {
-    public class InvoiceContext : DbContextBase, IInvoiceContext
+    public class InvoiceContext : DbContextBase,IInvoiceContext
     {
         public InvoiceContext()
             : base("LogitudeStr")
@@ -24,54 +30,51 @@ namespace Simplog.Data.InvoiceModel
         }
 
         public InvoiceContext(DbConnection conn)
-            : base(conn, true)
+            : base(conn,true)
         {
-            Configuration.LazyLoadingEnabled = false;
-            Configuration.AutoDetectChangesEnabled = false;
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
             Database.SetInitializer<InvoiceContext>(null);
         }
 
         public void SetAsModified(object entity)
         {
-            Entry(entity).State = EntityState.Modified;
-        }
-
-        public static IInvoiceContext GetSecContext(int tenant)
-        {
-            GlobalDB currentDb;
-            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
-            InvoiceContext context = new InvoiceContext(connection);
-            return context;
+            this.Entry(entity).State = EntityState.Modified;
         }
 
         public static IInvoiceContext GetContext(int tenant)
-        {
+        {            
             GlobalDB currentDb;
-            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            string dbConnectionInfo = currentDb.DBConnection;
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{              
+                currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            //}
+            string dbConnectionInfo = currentDb.DBConnection;/*"Logitude2-4_Main,sa,Saas256,.";*/
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            InvoiceContext context = new InvoiceContext(connection);
-            return context;
-        }
 
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            InvoiceContext context = new InvoiceContext(connection);
+            return context;            
+        }
         public override LogitudeDBSchema LogitudeDBSchema
         {
-            get { return LogitudeDBSchema.LOGITUDE_MAIN; }
+            get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
+                //config.QueryOptions.CaseInsensitiveComparison = true;
+                //config.QueryOptions.CaseInsensitiveLike = true;
+                //modelBuilder.SetDefaultSchema("LOGITUDE_MAIN");
             }
 
             Database.SetInitializer<InvoiceContext>(null);
+            //string databasename = DatabaseInitializer.GetDatabaseName();
+            //Database.DefaultConnectionFactory.CreateConnection(databasename);
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -89,6 +92,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new APInvoiceStatuMap());
             modelBuilder.Configurations.Add(new APInvoiceTotalVATMap());
             modelBuilder.Configurations.Add(new APInvoiceTypeMap());
+            modelBuilder.Configurations.Add(new APPaymentMethodMap());
             modelBuilder.Configurations.Add(new APPaymentMap());
             modelBuilder.Configurations.Add(new APPaymentStatuMap());
             modelBuilder.Configurations.Add(new ARInvoiceEntityMap());
@@ -107,11 +111,12 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new APPaymentTransferStatusMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
-            modelBuilder.Configurations.Add(new ARInvoicesSignedStatusMap());
-            modelBuilder.Configurations.Add(new ARPaymentBankTranferMap());
+
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
             modelBuilder.Configurations.Add(new AWBStatuMap());
+            //modelBuilder.Configurations.Add(new BlobMap());
+            //modelBuilder.Configurations.Add(new BlobTypeMap());
             modelBuilder.Configurations.Add(new BranchMap());
             modelBuilder.Configurations.Add(new CardContactMap());
             modelBuilder.Configurations.Add(new CardMap());
@@ -142,6 +147,10 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new DescriptionOfGoodMap());
             modelBuilder.Configurations.Add(new DimensionsUnitMap());
             modelBuilder.Configurations.Add(new DirectionMap());
+            //modelBuilder.Configurations.Add(new DocPrintCopyMap());
+            //modelBuilder.Configurations.Add(new DocPrintMap());
+            //modelBuilder.Configurations.Add(new DocTypeMap());
+            //modelBuilder.Configurations.Add(new DocumentInMap());
             modelBuilder.Configurations.Add(new DocumentsFilingMap());
             modelBuilder.Configurations.Add(new DocumentOutCopyMap());
             modelBuilder.Configurations.Add(new DocumentOutMap());
@@ -169,7 +178,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ImageDetailMap());
             modelBuilder.Configurations.Add(new IncotermMap());
             modelBuilder.Configurations.Add(new InsideShipmentPackageMap());
-
+         
             modelBuilder.Configurations.Add(new MarkUpTypeMap());
             modelBuilder.Configurations.Add(new MAWBStackMap());
             modelBuilder.Configurations.Add(new MeasurementMap());
@@ -193,13 +202,19 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new PackageTypeMap());
             modelBuilder.Configurations.Add(new PartnerTypeMap());
             modelBuilder.Configurations.Add(new PasswordPolicyMap());
-
+           
             modelBuilder.Configurations.Add(new PaymentTermMap());
             modelBuilder.Configurations.Add(new PermissionTypeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryFromToTypeMap());
             modelBuilder.Configurations.Add(new PickUpDeliveryTypeMap());
             modelBuilder.Configurations.Add(new PortMap());
             modelBuilder.Configurations.Add(new PrepaidCollectMap());
+            //modelBuilder.Configurations.Add(new PrintTemplateCopyMap());
+            //modelBuilder.Configurations.Add(new PrintTemplateCustomFieldMap());
+            //modelBuilder.Configurations.Add(new PrintTemplateFormCustomFieldMap());
+            //modelBuilder.Configurations.Add(new PrintTemplateOptionMap());
+            //modelBuilder.Configurations.Add(new PrintTemplateMap());
+            //modelBuilder.Configurations.Add(new PrintTemplateVersionMap());
             modelBuilder.Configurations.Add(new QueryMap());
             modelBuilder.Configurations.Add(new QueryColumnMap());
             modelBuilder.Configurations.Add(new QueryGroupMap());
@@ -286,6 +301,10 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new SharedLogisticsContactLastLoginMap());
             modelBuilder.Configurations.Add(new SmallDocumentMap());
             modelBuilder.Configurations.Add(new CommunicationLogStepMap());
+            //modelBuilder.Configurations.Add(new AgingReportInvoiceDataViewMap());
+            //modelBuilder.Configurations.Add(new APAgingReportDataViewMap());
+            //modelBuilder.Configurations.Add(new ShipmentDataViewMap());
+            //modelBuilder.Configurations.Add(new ShipmentFollowUpDataViewMap());
             modelBuilder.Configurations.Add(new SharedLogisticsInvitationStatusMap());
             modelBuilder.Configurations.Add(new IndustryMap());
             modelBuilder.Configurations.Add(new LeadSourceMap());
@@ -303,6 +322,7 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new QuotePackageMap());
             modelBuilder.Configurations.Add(new ExternalSystemsTablesCodeMap());
             modelBuilder.Configurations.Add(new QuoteClosingReasonMap());
+            //modelBuilder.Configurations.Add(new ExternalSystemsMissingTranslationMap());
             modelBuilder.Configurations.Add(new ExternalSystemsSyncStatusMap());
             modelBuilder.Configurations.Add(new ExternalSystemsMissingTranslationMap());
             modelBuilder.Configurations.Add(new AccountingSystemsSettingMap());
@@ -317,19 +337,11 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new SATPaymentMethodMap());
             modelBuilder.Configurations.Add(new BankAccountLiteMap());
             modelBuilder.Configurations.Add(new SATTransferStatusMap());
-            modelBuilder.Configurations.Add(new QBOGlobalTaxCalculationMap());
             modelBuilder.Configurations.Add(new SATInvoiceStatusMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new ARPaymentChequeReplicaMap());
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusReplicaMap());
-            modelBuilder.Configurations.Add(new DigitalInvoicesCounterDataViewMap());
-            modelBuilder.Configurations.Add(new ControlForInvoiceLinesDataViewMap());
-            modelBuilder.Configurations.Add(new ConfirmationNumberStatusMap());
-            modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
-            modelBuilder.Configurations.Add(new ExpenseAllocationSettingMap());
-            modelBuilder.Configurations.Add(new ExpenseAllocationFlowMap());
-            modelBuilder.Configurations.Add(new MasavInterfaceMap());
-            modelBuilder.Configurations.Add(new MasavInterfaceStatusMap());
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -338,12 +350,10 @@ namespace Simplog.Data.InvoiceModel
         {
             get; set;
         }
-
         public IDbSet<ARInvoiceLine> ARInvoiceLines
         {
             get; set;
         }
-
         public IDbSet<ARInvoiceType> ARInvoiceTypes
         {
             get; set;
@@ -393,10 +403,7 @@ namespace Simplog.Data.InvoiceModel
             get; set;
         }
 
-        public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses
-        {
-            get; set;
-        }
+       
 
         public IDbSet<APInvoice> APInvoices
         {
@@ -433,6 +440,11 @@ namespace Simplog.Data.InvoiceModel
             get; set;
         }
 
+        public IDbSet<APPaymentMethod> APPaymentMethods
+        {
+            get; set;
+        }
+
         public IDbSet<APPaymentStatus> APPaymentStatus
         {
             get; set;
@@ -456,59 +468,59 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<ExternalSystemsTablesCode> ExternalSystemsTablesCodes { get; set; }
         public IDbSet<ExternalSystemsMissingTranslation> ExternalSystemsMissingTranslations { get; set; }
         public IDbSet<ExternalSystemsSyncStatus> ExternalSystemsSyncStatuses { get; set; }
-        public IDbSet<ExpenseAllocationSetting> ExpenseAllocationSettings { get; set; }
-        public IDbSet<ExpenseAllocationFlow> ExpenseAllocationFlows { get; set; }
-
         public IDbSet<AccountingSystemsSetting> AccountingSystemsSettings { get; set; }
         public IDbSet<AccountingSystemsSyncStatus> AccountingSystemsSyncStatuses { get; set; }
         public IDbSet<QuickbooksSyncRequestTicket> QuickbooksSyncRequestTickets { get; set; }
         public IDbSet<ARInvoiceLineAction> ARInvoiceLineActions { get; set; }
         public IDbSet<ARPaymentTransferStatus> ARPaymentTransferStatuses { get; set; }
         public IDbSet<APPaymentTransferStatus> APPaymentTransferStatuses { get; set; }
+
         public IDbSet<SATInterface> SATInterfaces { get; set; }
+
         public IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; set; }
+
         public IDbSet<SATPaymentMethod> SATPaymentMethods { get; set; }
+
         public IDbSet<BankAccountLite> BankAccountLites { get; set; }
+
         public IDbSet<SATTransferStatus> SATTransferStatus { get; set; }
+
         public IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; set; }
+
         public IDbSet<ARInvoiceStocksStatus> ARInvoiceStocksStatus { get; set; }
+
         public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
         public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; set; }
-        public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
-        public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints { get; set; }
-        public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations { get; set; }
-        public IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers { get; set; }
-
-        public IDbSet<ARInvoiceAnalytic> ARInvoiceAnalytics { get; set; }
-
-        public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
-        public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; set; }
-        public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; set; }
-        public IDbSet<BankAccountView> BankAccountView { get; set; }
-        public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; set; }
-        public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; set; }
-        public IDbSet<MasavInterface> MasavInterfaces { get; set; }
-        public IDbSet<MasavInterfaceStatus> MasavInterfaceStatuses { get; set; }
+       public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; set; }
         public void DetectChanges()
         {
-            ChangeTracker.DetectChanges();
+            this.ChangeTracker.DetectChanges();
         }
 
         public int SaveChanges()
         {
             DetectChanges();
+            //try
+            //{
             return base.SaveChanges();
+        //}
+        //    catch (Exception e)
+        //    {
+        //        throw;
+        //    }
+            
         }
-
         public DbConnection GetConnection()
         {
             return this.Database.Connection;
         }
-
         public DbContext GetActiveDbContext()
         {
             return this;
         }
+
+
+      
     }
 }

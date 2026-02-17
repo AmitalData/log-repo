@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
-    public class QueueMessageRepository : IRepository<QueueMessage>
+    public class QueueMessageRepository:IRepository<QueueMessage>
     {
 
         IWebFreightContext webFreightContext;
@@ -30,37 +30,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.QueueMessages;
         }
 
-        //public IQueryable<QueueMessage> GetQueueMessage()
-        //{
-        //    return context.QueueMessages.Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue" || a.QueueDefinitionCode == "ImportersShipmentDocumentsBatchQueue");
-        //}
-
-        public QueueMessage GetSingleQueueMessage(string id)
-        {
-            long? longId = null;
-            if (id != null)
-            {
-                longId = long.Parse(id);
-            }
-            return (from a in context.QueueMessages
-                    where a.Id == longId
-                    select a).FirstOrDefault();
-        }
-        public QueueMessage GetSingleQueueMessage(string entityId,string entityCode)
+        public QueueMessage GetSingleQueueMessage(long id)
         {
             return (from a in context.QueueMessages
-                    where a.EntityId == entityId && a.EntityCode == entityCode
+                    where a.Id == id
                     select a).FirstOrDefault();
         }
 
-        public QueueMessage GetSingleQueueMessageByReportId(string reportId, int tenant)
-        {
-            return (from a in context.QueueMessages
-                    where a.Tenant == tenant &&
-                    a.MessageBody.Contains(reportId) &&
-                    a.QueueDefinitionCode == "ReportExecutionLogQueue"
-                    select a).FirstOrDefault();
-        }
         public void Add(QueueMessage entity)
         {
             context.QueueMessages.Add(entity);
@@ -102,15 +78,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public QueueMessage GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-
-        public List<QueueMessage> GetWaitingForHybridAndFailds(int workerStatus)
-        {
-            var q = from a in context.QueueMessages                                        
-                    where (a.QueueDefinitionCode == "externaltasksqueue" + a.Tenant + "1" || a.QueueDefinitionCode == "externaltasksqueue" + a.Tenant + "2") &&
-                    ((a.RetryNumber < 4 && a.Status == workerStatus) || a.Status == -1)
-                    select a;
-            return q.ToList();
         }
     }
 }

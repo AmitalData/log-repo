@@ -20,12 +20,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
         {
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Code);
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPOCO.Code = entityPM.Code;
-                entityPOCO.Id = entityPM.Id;
             }
             entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.Code;
         }

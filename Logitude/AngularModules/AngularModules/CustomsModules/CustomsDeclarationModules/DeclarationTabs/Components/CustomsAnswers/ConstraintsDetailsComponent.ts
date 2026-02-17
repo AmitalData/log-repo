@@ -28,7 +28,7 @@ import { CustomMessageProgressComponent } from '../../../../../CustomsModules/Cu
 import {DeclarationMessagesService} from '../../../../../Customs/Services/WebServices/DeclarationMessagesService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ConstraintsDetailsComponent.html',
 })
 

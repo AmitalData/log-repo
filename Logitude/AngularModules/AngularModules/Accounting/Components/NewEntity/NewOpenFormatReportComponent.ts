@@ -11,7 +11,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
-//import { error } from 'util';
+import { error } from 'util';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 declare var window: any;
 
@@ -20,7 +20,7 @@ declare var window: any;
 
 @Component({
     selector: 'NewOpenFormatReportComponent',
-    
+    moduleId: module.id,
 
     templateUrl: './NewOpenFormatReportComponent.html',
 })
@@ -103,7 +103,7 @@ export class NewOpenFormatReportComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("");
-            this.OpenFormatReportPMService.insert(this.entityPM).subscribe((myResult:any) => {
+            this.OpenFormatReportPMService.insert(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

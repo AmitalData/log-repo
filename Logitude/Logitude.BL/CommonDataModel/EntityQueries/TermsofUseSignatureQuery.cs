@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TermsofUseSignatureRepository repository;
 
-
+        public TermsofUseSignatureQuery()
+        {
+            repository = new TermsofUseSignatureRepository(); 
+        }
 
         public TermsofUseSignatureQuery(int tenant)
         {
@@ -30,7 +33,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public TermsofUseSignaturePM GetSinglePM(string id, int tenant)
         {
-            TermsofUseSignaturePM termsofUseSignatures = (from a in repository.context.TermsofUseSignatures.Include("TermsofUse")
+            TermsofUseSignaturePM termsofUseSignatures = (from a in repository.context.TermsofUseSignatures
                                                           where a.Id == id
                                                           && a.Tenant == tenant
                                                           select new TermsofUseSignaturePM()
@@ -39,16 +42,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               SignedDatetime = a.SignedDatetime,
                                                               Tenant = a.Tenant,
                                                               ContactId = a.ContactId,
-                                                              TermsofUseId = a.TermsofUseId,
-                                                              VersionNumber = a.TermsofUse.VersionNumber, 
-                                                              VersionDocumentId = a.TermsofUse.VersionDocumentId,
+                                                              TermsofUseVersion = a.TermsofUseVersion,
                                                           }).FirstOrDefault();
             return termsofUseSignatures;
         }
 
         public IQueryable<TermsofUseSignaturePM> GetTermsofUseSignaturesByTenant(int tenant, string contactId)
         {
-            IQueryable<TermsofUseSignaturePM> termsofUseSignatures = (from a in repository.context.TermsofUseSignatures.Include("TermsofUse")
+            IQueryable<TermsofUseSignaturePM> termsofUseSignatures = (from a in repository.context.TermsofUseSignatures
                                                                       where a.Tenant == tenant && a.ContactId == contactId
                                                                       select new TermsofUseSignaturePM()
                                                                       {
@@ -56,16 +57,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                           SignedDatetime = a.SignedDatetime,
                                                                           Tenant = a.Tenant,
                                                                           ContactId = a.ContactId,
-                                                                          TermsofUseId = a.TermsofUseId,
-                                                                          VersionNumber = a.TermsofUse.VersionNumber,
-                                                                          VersionDocumentId = a.TermsofUse.VersionDocumentId,
+                                                                          TermsofUseVersion = a.TermsofUseVersion,
                                                                       });
             return termsofUseSignatures;
         }
 
         public IQueryable<TermsofUseSignaturePM> GetTermsofUseSignatureByTenant(string id, int tenant)
         {
-            IQueryable<TermsofUseSignaturePM> result = (from a in repository.context.TermsofUseSignatures.Include("TermsofUse")
+            IQueryable<TermsofUseSignaturePM> result = (from a in repository.context.TermsofUseSignatures
                                                         where a.Tenant == tenant && a.Id == id
                                                         select new TermsofUseSignaturePM()
                                                         {
@@ -73,9 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             SignedDatetime = a.SignedDatetime,
                                                             Tenant = a.Tenant,
                                                             ContactId = a.ContactId,
-                                                            TermsofUseId = a.TermsofUseId,
-                                                            VersionNumber = a.TermsofUse.VersionNumber, 
-                                                            VersionDocumentId = a.TermsofUse.VersionDocumentId,
+                                                            TermsofUseVersion = a.TermsofUseVersion,
                                                         }
                                            );
             return result;
@@ -90,27 +87,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Tenant = entity.Tenant,
                                                              SignedDatetime = entity.SignedDatetime,
                                                              ContactId = entity.ContactId,
-                                                             TermsofUseId = entity.TermsofUseId,
-                                                             VersionNumber = entity.TermsofUse.VersionNumber, 
-                                                             VersionDocumentId = entity.TermsofUse.VersionDocumentId,
+                                                             TermsofUseVersion = entity.TermsofUseVersion,
                                                          };
             return result;
         }
-        //// Get By Tenant, Last Version, and ContatId
-        public TermsofUseSignaturePM GetByIdAndContactId(int termsofUseId, string userId, int tenant)
+
+        public TermsofUseSignaturePM GetTermsofUseSignatureByContactIdAndVersion(int version, string userId ,int  tenant)
         {
             TermsofUseSignaturePM termsofUseSignatures = (from a in repository.context.TermsofUseSignatures
                                                           where a.ContactId == userId && a.Tenant == tenant
-                                                          && a.TermsofUseId == termsofUseId
+                                                          && a.TermsofUseVersion == version
                                                           select new TermsofUseSignaturePM()
                                                           {
                                                               Id = a.Id,
                                                               SignedDatetime = a.SignedDatetime,
                                                               Tenant = a.Tenant,
                                                               ContactId = a.ContactId,
-                                                              TermsofUseId = a.TermsofUseId,
-                                                              VersionNumber = a.TermsofUse.VersionNumber, 
-                                                              VersionDocumentId = a.TermsofUse.VersionDocumentId,
+                                                              TermsofUseVersion = a.TermsofUseVersion,
                                                           }).FirstOrDefault();
 
             return termsofUseSignatures;

@@ -10,7 +10,7 @@ import {Validator} from '../../../Infrastructure/Validators/Validator';
 
 @Component({
     selector: 'NewOfficeHourComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewOfficeHourComponent.html',
 })
 

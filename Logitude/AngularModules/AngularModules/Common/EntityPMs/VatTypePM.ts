@@ -24,7 +24,7 @@ export class VatTypePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -102,16 +102,6 @@ export class VatTypePM {
     private externalVATCard: string;
     public get ExternalVATCard() { return this.externalVATCard; }
     public set ExternalVATCard(newValue: string) { if (this.externalVATCard != newValue) { this.externalVATCard = newValue; this.MarkAsDirty("ExternalVATCard"); } }
-       
-	 
-    private payablesExternalId: string;
-    public get PayablesExternalId() { return this.payablesExternalId; }
-    public set PayablesExternalId(newValue: string) { if (this.payablesExternalId != newValue) { this.payablesExternalId = newValue; this.MarkAsDirty("PayablesExternalId"); } }
-       
-	 
-    private receivablesExternalId: string;
-    public get ReceivablesExternalId() { return this.receivablesExternalId; }
-    public set ReceivablesExternalId(newValue: string) { if (this.receivablesExternalId != newValue) { this.receivablesExternalId = newValue; this.MarkAsDirty("ReceivablesExternalId"); } }
        
 	 
     private externalTAXItemId: string;
@@ -211,19 +201,11 @@ export class VatTypePM {
         }
     }
 	    //public VatTypeGroups: Array<VATTypesGroupPMPM>= [];
-     private isRegionalTax: boolean;
-    public get IsRegionalTax() { return this.isRegionalTax; }
-    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
-       
-	 
-
+ 
     public OldEntityPM: VatTypePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -231,7 +213,6 @@ export class VatTypePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "VatType");
            
         }
-	 }
     }
     private MyClone: VatTypePM;
 

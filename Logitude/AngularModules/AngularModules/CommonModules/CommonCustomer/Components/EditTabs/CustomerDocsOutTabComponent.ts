@@ -4,7 +4,7 @@ import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomerDocsOutTabComponent.html',
 })
 

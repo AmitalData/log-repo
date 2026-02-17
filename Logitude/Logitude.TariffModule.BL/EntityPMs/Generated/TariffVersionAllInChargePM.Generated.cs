@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -177,29 +177,6 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffId",OldValue=tariffId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   tariffId=value;
-		   }
-			
-		 }
-	   }
-	  private string chargesTypeCode ;
-	  	  
-       
-	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string ChargesTypeCode  
-	   {
-	    
-	     get
-		{
-		   return chargesTypeCode;
-		 }
-		 set
-		 {
-		   if(chargesTypeCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeCode",OldValue=chargesTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   chargesTypeCode=value;
 		   }
 			
 		 }

@@ -15,7 +15,7 @@ import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
     selector: 'CustomerActivationSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './CustomerActivationSettingsComponent.html',
 })
 

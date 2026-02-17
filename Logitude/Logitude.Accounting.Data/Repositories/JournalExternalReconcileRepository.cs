@@ -25,15 +25,7 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).ToList();
         }
 
-        public List<JournalExternalReconcile> GetJournalExternalReconcilesByLedgerTransactionsIds(List<string> ledgerTransactionsIds)
-        {
-
-            return (from a in context.JournalExternalReconciles
-                    join jr in context.Journals on a.JournalId equals jr.Id
-                    where ledgerTransactionsIds.Contains(a.LedgerTransactionId) && jr.StatusCode != "3"
-                    select a).ToList();
-        }
-    }
+   }
 
 }
    

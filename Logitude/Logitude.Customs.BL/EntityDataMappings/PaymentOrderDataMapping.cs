@@ -12,7 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -88,12 +88,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 }
             }
-
-            if (result.Length > 2000 && System.Configuration.ConfigurationManager.AppSettings.Get("DBMS") == "oracle")
-            {
-                result = result.Substring(0, 2000);
-            }
-
             entityPM.SearchFields = result.ToLower();
             entityPOCO.SearchFields = entityPM.SearchFields;
         }

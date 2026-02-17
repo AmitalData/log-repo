@@ -1,17 +1,25 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.Customs.BL.EntityQueryServiceExt;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
-//using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.Practices.Unity;
+using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using WebFreight.Web;
 
 namespace CustomsWorkerRole
 {
@@ -21,7 +29,7 @@ namespace CustomsWorkerRole
         List<WorkerEntryPoint> workers;
         protected EventWaitHandle EventWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog
-        
+
         public override void Run()
         {
             foreach (WorkerEntryPoint worker in workers)
@@ -59,15 +67,9 @@ namespace CustomsWorkerRole
 
         public override bool OnStart()
         {
-            throw new Exception("how use this ?");
-
             StartStatic();
-#if false //"how use this ?"
-
-
             workers = //new List<WorkerEntryPoint>();
              GetAllWorkerEntryPointType();
-#endif
 
 #if false
             {
@@ -84,16 +86,11 @@ namespace CustomsWorkerRole
             foreach (WorkerEntryPoint worker in workers)
                 worker.OnStart();
 
-        
-
-     
-
             return base.OnStart();
 
         }
 
-#if false
-        public static List<Logitude.Server.Tools.WorkerEntryPoint> GetAllWorkerEntryPointType()
+        public static List<WorkerEntryPoint> GetAllWorkerEntryPointType()
         //where TWorker :WorkerEntryPoint,new() 
         {
 #if false
@@ -147,7 +144,7 @@ namespace CustomsWorkerRole
 
 
 #endif
-            
+
 
             return new WorkerEntryPoint[] {
                 new   SendDataToExternalServicesWR() ,
@@ -165,15 +162,13 @@ namespace CustomsWorkerRole
         }
 
 
-#endif
-
 
         private void AddWorker<T1>()
         {
             throw new NotImplementedException();
         }
 
-        public static void StartStatic(Action<bool, bool,int> BuildObjectTablesZipFilesDataAction=null,string ProductInfo=null)
+        public static void StartStatic(Action<bool, bool> BuildObjectTablesZipFilesDataAction=null,string ProductInfo=null)
         {
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
@@ -224,10 +219,6 @@ namespace CustomsWorkerRole
 
                 
             }
-
-           //  CommunicationWorkerRole.ThreadedRoleEntryPoint.SetWorkerRoleName();
-
- 
             if (LogitudeSettings.IsCostomsDeploy)
             {
                 LogitudeSettings.ProductInfo = ProductInfo;
@@ -237,30 +228,19 @@ namespace CustomsWorkerRole
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
                 
+                LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+                {
+                    if (DateTime.Now > stopLogAt) return;
+                    Logger.LogMe(mess, err, suffix);
+                });
 
-
-                LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
-
-                LogitudeSettings.WorkerRoleName = LogitudeSettings.WorkerRoleName ?? "production";
+                
             }
            // string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
             ContainerAccessor.InitContainer();
-           
-            // logging
 
-            // logging
-            LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
-            {
-                if (DateTime.Now > stopLogAt) return;
-                if (err)
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + ":" + suffix);
-                else
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess + ":" + suffix);
-                
-            });
-
-
+            
         }
 
         public override void OnStop()
@@ -291,25 +271,49 @@ namespace CustomsWorkerRole
         /// <returns></returns>
         public static string GetQueueByEnviroment(string queueName)
         {
+
             return Simplog.Server.Infrastructure.WebFreightEntryPoint.GetQueueByEnviroment(queueName);
-        }
-    }
+#if false
+               var save_queueName = queueName;
+            if (LogitudeSettings.DeploymentStage == "Dev")
+            {
+                queueName = Environment.MachineName + "_" + queueName;
+            }
+            else if (LogitudeSettings.DeploymentStage == "customs")
+            {
+                queueName = "customs" + "_" + queueName;
+            }
+            else if (LogitudeSettings.DeploymentStage == "Simplog")
+            {
+                queueName = "Production" + "_" + queueName;
+            }
+            else
+            {
+                queueName = "Test" + "_" + queueName;
+            }
+            var customsDeploymentStage = SettingUtil.GetCustomsDeploymentStage();
+            switch (customsDeploymentStage)
+            {
+                case SettingUtil.CustomsDeploymentStage.Test:
+                case SettingUtil.CustomsDeploymentStage.Pilot:
 
+                    var uri = new Uri(LogitudeSettings.LogitudeURL);
+                    var branch = uri.LocalPath.Trim(@"\"[0]).Trim(@"/"[0]);
+                    queueName = LogitudeSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + branch + "_" + save_queueName;
+                    break;
+                case SettingUtil.CustomsDeploymentStage.Production:
+                    //queueName = "Customs" + customsDeploymentStage.ToString() + "_" + save_queueName;
+                    queueName = LogitudeSettings.StorageAccountName + "_Customs" + customsDeploymentStage.ToString() + "_" + save_queueName;
+                    break;
+             
+                default:
+                    break;
+            }
 
-    public abstract class RoleEntryPoint
-    {
-        public virtual bool OnStart()
-        {
-            return true;
-        }
+ 
+            return queueName;
+#endif
 
-        public virtual void Run()
-        {
-            Thread.Sleep(-1);
-        }
-
-        public virtual void OnStop()
-        {
         }
     }
 

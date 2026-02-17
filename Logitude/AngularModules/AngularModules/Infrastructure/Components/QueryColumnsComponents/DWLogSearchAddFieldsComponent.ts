@@ -12,7 +12,7 @@ import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFil
 
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'DWLogSearchAddFieldsComponent',
     templateUrl: './DWLogSearchAddFieldsComponent.html',
@@ -47,15 +47,7 @@ export class DWLogSearchAddFieldsComponent implements OnInit {
             this.Destroyed();
             this.CurrentSession.SessionEvent.emit({ Item: item, ComponentName: "DWLogSearchAddFieldsComponent", IsFirstRequest:true });
         }
-    }
-
-    ChooseField(item: any) {
-        if (!item) {
-            return;
-        }
-        this.Destroyed();
-        this.CurrentSession.SessionEvent.emit({ Item: item, ComponentName: "DWLogSearchAddFieldsComponent", IsFirstRequest: true, ChooseOne: true });
-    }
+    } 
 
     Destroyed() {
         var isDestroyed: boolean = this.cd['destroyed'];

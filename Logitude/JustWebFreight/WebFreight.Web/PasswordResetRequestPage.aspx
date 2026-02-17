@@ -5,29 +5,135 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <link id="logolink" rel="shortcut icon" />
+   <%-- <style type="text/css">
+        p
+        {
+            color:#4B4A4A;
+            font-size:12px;
+            font-family:Arial
+        }
+    </style>--%>
 
+
+    <style type="text/css">
+        body, html
+        {
+            padding:0;
+            margin:0;
+            border:0;
+            height:100%;
+        }
+        
+        body
+        {
+            min-width: 980px;
+            background:url("images/LoginScreen/map.png") no-repeat 50% 180px;
+        }
+
+        #mapBackground
+        {
+            background-image: url(images/LoginScreen/map.png);            
+            text-align:center;
+            background-repeat: no-repeat;            
+            background-size: 100%;
+            width: 907px;
+            height: 466px;
+            margin-top: 15px;
+            background-position:center; 
+        }
+
+
+
+        .auto-style1
+        {
+   background: #dbdbdb; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2RiZGJkYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjI4JSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  #dbdbdb 0%, #f2f2f2 28%, #ffffff 41%, #ffffff 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(28%,#f2f2f2), color-stop(41%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #dbdbdb 0%,#f2f2f2 28%,#ffffff 41%,#ffffff 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbdbdb', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+
+
+
+
+
+            font-family: tahoma, arial, sans-serif;
+            width: 260px;
+            height: 25px;
+            font-size: 13px;
+        }
+
+        .column1
+        {
+            text-align:left;
+            width:300px;
+           font-family:"Myriad Pro";
+           font-size:14px;
+           color:#4B4A4A;
+        }
+
+        
+.cmdSubmit {
+	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+	box-shadow:inset 0px 1px 0px 0px #caefab;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #77d42a), color-stop(1, #5cb811) );
+	background:-moz-linear-gradient( center top, #77d42a 5%, #5cb811 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77d42a', endColorstr='#5cb811');
+	background-color:#77d42a;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #268a16;
+	display:inline-block;
+	 color: #ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #aade7c;
+     width: 100px;
+     margin-top:2px;
+}.cmdSubmit:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
+	background:-moz-linear-gradient( center top, #5cb811 5%, #77d42a 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a');
+	background-color:#5cb811;
+}.cmdSubmit:active {
+	position:relative;
+	top:1px;
+}
+ 
+     
+    </style>
 
     <title></title>
-
-    <link href="css/asp.css" rel="stylesheet" type="text/css"/>
-    <link href="css/kendo.common.min.css" rel="stylesheet" type="text/css"/>
-    <link href="css/kendo.default.min.css" rel="stylesheet" type="text/css"/>
-    <script src="js/jquery-3.5.1.min.js" type="text/javascript"></script>
-    <script src="js/kendo.all.min.js" type="text/javascript"></script>
-    <script src="js/knockout-3.5.1.js" type="text/javascript"></script>
-    <script src="js/knockout-kendo.min.js" type="text/javascript"></script>
 
     <link href="HtmlHelpers/CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>    
     <link href="HtmlHelpers/CSS/sunburst.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/app.css" rel="stylesheet" type="text/css"/>
+    <link href="HtmlHelpers/CSS/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
+    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.common.min.css" rel="stylesheet" type="text/css"/>
+    <link href="HtmlHelpers/Kendo.2013.2.918/kendo.default.min.css" rel="stylesheet" type="text/css"/>
     <link href="HtmlHelpers/CSS/LogitudeMainCss.css" rel="stylesheet" type="text/css"/>
-    <script src="HtmlHelpers/JS/LogitudeTools.js" type="text/javascript"></script>
-    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
-</head>
 
+    <script src="HtmlHelpers/JS/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/jquery.dateFormat-1.0.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/Kendo.2013.2.918/kendo.all.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/Logitude.Tools.js" type="text/javascript"></script>
+</head>
 <body>
-   
+
+    
+    <script src="HtmlHelpers/JS/knockout-2.2.0.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/knockout-kendo.min.js" type="text/javascript"></script>
+    <script src="HtmlHelpers/JS/highlight.pack.js" type="text/javascript"></script>
     <script src="HtmlHelpers/JS/app.js" type="text/javascript"></script>
 
      <div id="Container">
@@ -135,7 +241,7 @@
 
                                                 
                                      
-                                                  <tr id="Areacaptcha" style ="height:70px;margin-top:3px;display:none;">
+                                                  <tr id="Areacaptcha" style ="height:30px;margin-top:3px;display:none;">
                                                  <td>
                                               <img id="CaptchaImage" style="height:auto;width:auto;float:left;" />
                                                 <input oninput="onCaptchaInPutChanged()" style="height:19px;width:260px;margin-bottom:5px;margin-top:5px;float:left;" type="text" placeholder="type the text you see" id="captchaTextBox"/>
@@ -162,10 +268,13 @@
                                                              <td >
                                                                   <p id="HavingtroubleId" style="font-family:Arial; font-size:12px;height:12px; color:#4B4A4A" class="column1"> 
                                                                          Having trouble logging in? 
-                                                                         <a id="DefaultContactUs" href="mailto:support@amital.co.il" >Contact us</a>  
+                                                                         <a id="DefaultContactUs" href="mailto:info@logitudeworld.com" >Contact us</a>  
                                                                          <a id="LogBoxContactUs" style="display:none" href="mailto:sales@logbox.co.il" >Contact us</a>  
-                                                                        <a id="BrandingContactUs"  style="display:none"   >Contact us</a> 
-                                                                        <a id="CloudContactUs"  style="display:none" href="mailto:support@amital.co.il"  >Contact us</a> 
+                                                                         <a id="AerolineasContactUs"  style="display:none" href="mailto:Leandro.Martinez@aerolineas.com.ar"  >Contact us</a> 
+                                                                         <a id="AtlasContactUs"  style="display:none" href="mailto:Mirjam.Schubert@champ.aero"  >Contact us</a> 
+                                                                         <a id="BrandingContactUs"  style="display:none"   >Contact us</a> 
+                                                                        <a id="ConnectaContactUs"  style="display:none" href="mailto:admin@pangea-network.com" >Contact us</a> 
+                                                                        <a id="PangeaContactUs"  style="display:none" href="mailto:admin@pangea-network.com"  >Contact us</a> 
  
                                                                      
                                                                   </p>
@@ -601,9 +710,7 @@
             //     $("#loginlogo").attr("src", "images/LoginScreen/header.jpg");
             // }
 
-            var bindingNode = document.getElementById('Container');
-            ko.cleanNode(bindingNode);
-            ko.applyBindings(new viewModel(), bindingNode);
+            ko.applyBindings(new viewModel());
         });
 
 
@@ -619,13 +726,28 @@
 
             var myCode = document.getElementById('PartnerEnvironmentInput').value;
            
-          
+            $("#AerolineasContactUs").css("display", "none");
             $("#DefaultContactUs").css("display", "none");
             $("#LogBoxContactUs").css("display", "none");
             $("#BrandingContactUs").css("display", "none");
-        
-            if (myCode == "cloud") {
-                $("#CloudContactUs").css("display", "inline");
+            $("#AtlasContactUs").css("display", "none");
+            
+            if (myCode == "aerolineas") {
+                $("#AerolineasContactUs").css("display", "inline");
+                $("#Image2Link").attr("href", "http://www.aerolineas.com.ar/Welcome");
+            }
+            else if (myCode == "atlas") {
+                $("#AtlasContactUs").css("display", "inline");
+                $("#Image2Link").attr("href", "http://www.atlas.com/Welcome");
+            }
+            else if (myCode == "connecta") {
+                $("#ConnectaContactUs").css("display", "inline");
+                $("#Image2Link").attr("href", "https://www.logitudeworld.com/demo-evn/");
+            }
+
+            else if (myCode == "pangea") {
+                $("#PangeaContactUs").css("display", "inline");
+                $("#Image3Link").attr("href", "https://www.logitudeworld.com/demo-evn/");
             }
             if (myCode != "pangea" && myCode != "connecta" && myCode != "aerolineas" && myCode != "atlas")
              {
@@ -646,7 +768,7 @@
                     if (myCode == "logbox") {
                         $("#LogBoxContactUs").css("display", "inline");
                     }
-                    else if (myCode != "cloud"){
+                    else {
                         $("#DefaultContactUs").css("display", "inline");
                     }
 

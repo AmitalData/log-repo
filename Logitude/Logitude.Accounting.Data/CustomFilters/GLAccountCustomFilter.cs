@@ -1,7 +1,5 @@
-﻿using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -27,7 +25,7 @@ namespace Logitude.Accounting.Data.CustomFilters
 
 
 
-        public IQueryable<GLAccount> GetFilteredQuery(QueryOperations operations, IQueryable<GLAccount> queryableData, IAccountingContext context)
+        public IQueryable<GLAccount> GetFilteredQuery(QueryOperations operations, IQueryable<GLAccount> queryableData)
         {
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
 
@@ -45,43 +43,9 @@ namespace Logitude.Accounting.Data.CustomFilters
                             queryableData = queryableData.Where(c => c.EnglishName.StartsWith(tString) || c.LocalName.StartsWith(tString));
                         }
                     }
-                    queryableData = FilterByReceivableCredit(queryableData, item);
+                    queryableData = UseReceivableCreditFilter(queryableData, item);
 
-                    queryableData = FilterByPayableDebit(queryableData, item);
-
-                    queryableData = FilterByGLAccountCurrency(queryableData, item);
-
-                    if (item.FieldName == "ConnectedToSalesmanId")
-                    {
-
-                        string salesManId = item.FieldValue as string;
-
-                        queryableData = (from a in queryableData
-                                         join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
-                                         
-                                         join card in context.Cards on a.Id equals card.GLAccountId
-                                         into cardjoin from card in cardjoin.DefaultIfEmpty()
-
-                                         where card.SalesmanUserId == salesManId
-
-                                         select a);
-
-
-                        List<string> salesmanParentAccounts = queryableData.Select(s => s.Id).ToList();
-
-                        var splittedAccounts = (from a in context.GLAccounts
-                                                join c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
-
-                                                where salesmanParentAccounts.Contains(c.MainGLAccountId)
-                                                select c.GLAccount);
-
-                        List<string> splittedAccountsIds =  splittedAccounts.Select(s => s.Id).ToList();
-
-                        queryableData = (from a in context.GLAccounts where (salesmanParentAccounts.Contains(a.Id) || splittedAccountsIds.Contains(a.Id)) select a);
-
-
-
-                    }
+                    queryableData = UsePayableDebitFilter(queryableData, item);
 
                     if (item.FieldName == "BalanceInLocalCurrencyNotNull")
                     {
@@ -134,7 +98,7 @@ namespace Logitude.Accounting.Data.CustomFilters
             return queryableData;
         }
 
-        private IQueryable<GLAccount> FilterByReceivableCredit(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        private IQueryable<GLAccount> UseReceivableCreditFilter(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
         {
             if (queryFilterItem.FieldName == "ReceivableCreditFilter")
             {
@@ -145,19 +109,7 @@ namespace Logitude.Accounting.Data.CustomFilters
             return queryableData;
 
         }
-        private IQueryable<GLAccount> FilterByGLAccountCurrency(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
-        {
-            if (queryFilterItem.FieldName == "GLAccountCurrencyFilter")
-            {
-                GLAccountCurrencyRepository gLAccountCurrencyRepository = new GLAccountCurrencyRepository(tenant);
-                List<String> GLAccountCurrencyIds = gLAccountCurrencyRepository.GetAll(tenant).Select(s=>s.GLAccountId).ToList();
-                queryableData = queryableData.Where(c => GLAccountCurrencyIds.Contains(c.Id) == false  && c.IsMultiCurrency ==false );
-
-            }
-            return queryableData;
-
-        }
-        private IQueryable<GLAccount> FilterByPayableDebit(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
+        private IQueryable<GLAccount> UsePayableDebitFilter(IQueryable<GLAccount> queryableData, QueryFilterItem queryFilterItem)
         {
             if (queryFilterItem.FieldName == "PayableDebitFilter")
             {

@@ -235,15 +235,6 @@ var CustomsSettingPM = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(CustomsSettingPM.prototype, "ForbiddenSigns", {
-        get: function () { return this.ForbiddenSigns; },
-        set: function (newValue) { if (this.ForbiddenSigns != newValue) {
-            this.ForbiddenSigns = newValue;
-            this.MarkAsDirty("ForbiddenSigns");
-        } },
-        enumerable: true,
-        configurable: true
-    });
     CustomsSettingPM.prototype.MarkAsDirty = function (propertyName) {
         if (propertyName === void 0) { propertyName = null; }
         this.IsDirty = true;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
@@ -18,6 +18,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
+        public UserPermittedBranchRepository()
+        {
+            commonDataContext = new CommonDataContext();
+
+        }
 
         public UserPermittedBranchRepository(int tenant)
         {
@@ -92,11 +97,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public UserPermittedBranch GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
-        }
-
-        public List<string> GetUserPermittedBranchesIdsByUserId(string userId, int tenant)
-        {
-            return (from record in context.UserPermittedBranches where record.UserId == userId && record.Tenant == tenant select record.BranchId).ToList();
         }
     }
 }

@@ -9,7 +9,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './PointersFromClaimRelatedEntitiesSelectionComponent.html',
 })
 
@@ -37,7 +37,7 @@ export class PointersFromClaimRelatedEntitiesSelectionComponent {
         this.BuildClaimsRelatedEntitiesList();
         if (this.CustomsDocumentsTicket.RequestedCustomsDocId) {
             this.IsDisplayOnly = true;
-            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.General.O.DocumentDisplayOnly");
+            this.DisplayOnlyMessage = "מסמך לתצוגה בלבד";
         }
         else {
             this.IsDisplayOnly = false;

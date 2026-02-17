@@ -12,8 +12,7 @@ export class EditChartOfAccount {
 
     EditChartOfAccount( Code: string) {
         this.Helper.WaitByIdAndFill('SearchFieldsId_0_0', Code);
-        this.Helper.WaitElementToBeDisplayedInTheList('.TextTrimming', Code);
-        //this.Helper.ItemsPresent('ListDataLoaded');
+        this.Helper.ItemsPresent('ListDataLoaded');
         this.Helper.WaitByIdAndClick('row0col0');
         this.Helper.WaitBusyIndicator();
         //this.Helper.WaitByIdAndFill('ChartOfAccount_Code',ChartOfAccountNo);

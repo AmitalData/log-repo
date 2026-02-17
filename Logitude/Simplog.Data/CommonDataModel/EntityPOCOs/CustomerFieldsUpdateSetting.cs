@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,9 +16,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int Tenant { get; set; }
         public string ObjectFieldId { get; set; }
         public string UpdateDirection { get; set; }
-        public string ObjectFieldCode { get; set; }
-
-        public string SearchFields { get; set; }
 
 
         [ForeignKey("ObjectFieldId")]

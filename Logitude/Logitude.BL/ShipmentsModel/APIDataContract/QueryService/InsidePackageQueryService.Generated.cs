@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -48,13 +46,11 @@ using Simplog.Data.ShipmentsModel;
 				{
 				   
 				   var temp = new InsidePackage(); 
-				   temp.Id = item.Id; 
-
-			  
+				   temp.Id = item.Id;			  
 				   if(item.PackageTypeId != null)
 				   {
 					   PackageTypeQueryService PackageTypeService0 = new PackageTypeQueryService(Tenant);
-					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant,ComputingPartnerName); 
+					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant); 
 			       
 					   				   }
 				   
@@ -82,7 +78,7 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<InsideShipmentPackagePM> InsidePackageDataMappingAndValidatin(List<InsidePackage> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<InsideShipmentPackagePM> InsidePackageDataMappingAndValidatin(List<InsidePackage> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -95,14 +91,11 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("InsideShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -115,131 +108,36 @@ using Simplog.Data.ShipmentsModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//} 
-
-						
+						//}
 					}
 					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
 					if(item.PackageType != null)
 					{
-						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myPackageTypePM != null)
-						{ 
-
+						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName);
+												if(myPackageTypePM != null)
+						{
+							temp.PackageTypeId = myPackageTypePM.Id;
+						}
 						 
-							if(!IsUpdate)
-							{								
-								temp.PackageTypeId = myPackageTypePM.Id;
-						  
-							}  
-
-							
-						} 
-
 					}
 			
 					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Quantity = item.Quantity;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Width = item.Width;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Length = item.Length;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Height = item.Height;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Volume = item.Volume;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Weight = item.GrossWeight;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.CommodityNumber = item.Commodity;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Reference1 = item.Reference1;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Reference2 = item.Reference2;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Reference3 = item.Reference3;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Reference4 = item.Reference4;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.Description = item.Description;
-
-										}  
-
-										   
+					temp.Quantity = item.Quantity;
+					temp.Width = item.Width;
+					temp.Length = item.Length;
+					temp.Height = item.Height;
+					temp.Volume = item.Volume;
+					temp.Weight = item.GrossWeight;
+					temp.CommodityNumber = item.Commodity;
+					temp.Reference1 = item.Reference1;
+					temp.Reference2 = item.Reference2;
+					temp.Reference3 = item.Reference3;
+					temp.Reference4 = item.Reference4;
+					temp.Description = item.Description;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -247,8 +145,6 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

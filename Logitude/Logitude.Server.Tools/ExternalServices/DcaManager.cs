@@ -116,7 +116,7 @@ namespace Logitude.Server.Tools.ExternalServices
                         out UnifreightQueueOutStatus,
                         ref MoreParams, out MessageLog);
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UnifreightQueueOutStatus=" + UnifreightQueueOutStatus);
+                Debug.WriteLine("UnifreightQueueOutStatus=" + UnifreightQueueOutStatus);
 
                 MessageOut = MessageLog;
 
@@ -188,7 +188,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     }
                 }
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SubmitFileOutgoingQueue():ServerJobID=" + ServerJobID);
+                Debug.WriteLine("SubmitFileOutgoingQueue():ServerJobID=" + ServerJobID);
 
                 MessageOut = MessageLog;
 
@@ -238,7 +238,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     return null;
                 }
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LastDateTime =" + LastDateTime.ToString());
+                Debug.WriteLine("LastDateTime =" + LastDateTime.ToString());
                 ErrorOccurred = false;
 
             }
@@ -300,7 +300,7 @@ namespace Logitude.Server.Tools.ExternalServices
                 var myList = listFileInLines
                     .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
                     .ToList();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("listFileInLines=" + myList.Count());
+                Debug.WriteLine("listFileInLines=" + myList.Count());
                 ErrorOccurred = false;
                 return myList;
             }
@@ -452,9 +452,9 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
                 }
                 else
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SuppressDCAZIPResponse");
+                    Debug.WriteLine("SuppressDCAZIPResponse");
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("fileContentsBASE64.Length=" + fileContentsBASE64.Length);
+                Debug.WriteLine("fileContentsBASE64.Length=" + fileContentsBASE64.Length);
                 errorOccurred = false;
                 return fileContentsBASE64;
             }
@@ -519,7 +519,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
                 return ms.ToArray();
             }
         }
-        public void MoveIncomeFileToDir(
+        public void MoveIncomeFileTorDir(
         string Filename, string RenameFilename,
         string appendToDownloadFolderName,
         string MoveUnUseDCAFilesToDIr,
@@ -558,7 +558,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
                         out sErrorOccurred,
                         ref MoreParams, out MessageLog);
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RenameIncomeFile=" + (!sErrorOccurred.ToBoolAmitalFormart()).ToString());
+                Debug.WriteLine("RenameIncomeFile=" + (!sErrorOccurred.ToBoolAmitalFormart()).ToString());
                 if (sErrorOccurred.ToBoolAmitalFormart())
                 {
                     throw new FaultException<UnifreightIIGFault>(UnifreightIIGFault.GetUnifreightValidation(MessageLog));
@@ -621,7 +621,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
                         out sErrorOccurred,
                         ref MoreParams, out MessageLog);
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RenameIncomeFile=" + (!sErrorOccurred.ToBoolAmitalFormart()).ToString());
+                Debug.WriteLine("RenameIncomeFile=" + (!sErrorOccurred.ToBoolAmitalFormart()).ToString());
                 if (sErrorOccurred.ToBoolAmitalFormart())
                 {
                     throw new FaultException<UnifreightIIGFault>(UnifreightIIGFault.GetUnifreightValidation(MessageLog));
@@ -682,7 +682,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
                         out sErrorOccurred,
                         ref MoreParams, out MessageLog);
                 }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DeleteIncomeFile=" + (!sErrorOccurred.ToBoolAmitalFormart()).ToString());
+                Debug.WriteLine("DeleteIncomeFile=" + (!sErrorOccurred.ToBoolAmitalFormart()).ToString());
                 if (sErrorOccurred.ToBoolAmitalFormart())
                 {
                     throw new FaultException<UnifreightIIGFault>(UnifreightIIGFault.GetUnifreightValidation(MessageLog));

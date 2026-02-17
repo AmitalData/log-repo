@@ -7,7 +7,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -71,12 +71,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                         var us = new GovernmentProcedureTypeUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), authToken.Tenant);
-                        UserRepository userRepository = new UserRepository(authToken.Tenant);
-                        if (authToken != null)
-                        {
-                            User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, authToken.Email, authToken.Tenant, true);
-                            us.userId = loggedUser.Id;
-                        }
+
                         entityPM.ChangeSetOp = ChangeSetOperation.Update;// why client not change that ???
                         us.Update(entityPM,true);
 

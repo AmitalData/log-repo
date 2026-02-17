@@ -1,4 +1,4 @@
-import { CustomsRequestsSheetsComponent } from './Components/CustomsRequestsSheetsComponent';
+﻿import { CustomsRequestsSheetsComponent } from './Components/CustomsRequestsSheetsComponent';
 import { CustomsErrorsComponent } from './Components/CustomsErrorsComponent';
 import { CustomSendOptionsComponent } from './Components/CustomSendOptionsComponent';
 import { DropdownButtonComponent } from './Components/DropdownButtonComponent';
@@ -6,8 +6,6 @@ import { CustomMessageWrapperComponent } from './Components/CustomMessageWrapper
 import { CustomMessageProgressComponent } from './Components/CustomMessageProgressComponent';
 import { NotificationComponent } from './Components/NotificationComponent';
 import { ObjectViewerComponent } from './Components/ObjectViewerComponent';
-import { SendDeclarationTastCaseComponent } from './Components/TestCase/SendDeclarationTastCaseComponent';
-import { RemarksPopUp } from './Components/RemarksPopUp';
 
 export const Components =
     [
@@ -19,8 +17,7 @@ export const Components =
         CustomMessageProgressComponent,
         NotificationComponent,
         ObjectViewerComponent,
-        SendDeclarationTastCaseComponent,
-        RemarksPopUp,
+
     ];
 
 export class ModuleDeclarations {
@@ -37,9 +34,6 @@ export class ModuleDeclarations {
             case "CustomMessageProgressComponent": { myResult = CustomMessageProgressComponent; break; }
             case "NotificationComponent": { myResult = NotificationComponent; break; }
             case "ObjectViewerComponent": { myResult = ObjectViewerComponent; break; }
-            case "SendDeclarationTastCaseComponent": { myResult = SendDeclarationTastCaseComponent; break; }
-            case "RemarksPopUp": { myResult = RemarksPopUp; break; }
-
         }
 
         return myResult;

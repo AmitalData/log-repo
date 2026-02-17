@@ -52,9 +52,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         ChassisNumber, 
 	         RegistrationNumber, 
 	         CountryId, 
-	         CommodityNumber, 
-	         ShipmentPackageId, 
-	         OverManifest,
+	         CommodityNumber,
 	      }
 
 
@@ -109,11 +107,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 	         RegistrationNumber, 
 	         CountryId, 
 	         CommodityNumber, 
-	         ReleasesNumber, 
-	         WarehouseEntryNumber, 
-	         ShipmentPackageId, 
-	         OverManifest, 
-	         OldQuantity,
+	         ReleasesNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -270,16 +264,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
             {
 				entityPOCO.CommodityNumber = entityPM.CommodityNumber;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentPackageId))
-            {
-				entityPOCO.ShipmentPackageId = entityPM.ShipmentPackageId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OverManifest))
-            {
-				entityPOCO.OverManifest = entityPM.OverManifest;
 			}
 			}
 
@@ -441,16 +425,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 					entityPM.CommodityNumber = entityPOCO.CommodityNumber;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ShipmentPackageId))
-            {
-					entityPM.ShipmentPackageId = entityPOCO.ShipmentPackageId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OverManifest))
-            {
-					entityPM.OverManifest = entityPOCO.OverManifest;
-            }
-
 		}
 
 		public void PMToOldPM(WarehouseEntryPackagePM entityPM, WarehouseEntryPackagePM oldEntityPM)
@@ -605,16 +579,6 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommodityNumber))
             {
                 oldEntityPM.CommodityNumber = entityPM.CommodityNumber;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ShipmentPackageId))
-            {
-                oldEntityPM.ShipmentPackageId = entityPM.ShipmentPackageId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OverManifest))
-            {
-                oldEntityPM.OverManifest = entityPM.OverManifest;
             }
 			
 		}

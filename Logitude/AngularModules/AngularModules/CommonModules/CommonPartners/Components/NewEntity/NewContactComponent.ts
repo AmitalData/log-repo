@@ -7,7 +7,7 @@ import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs'
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NewContactComponent.html',
 })
 
@@ -15,7 +15,7 @@ export class NewContactComponent {
     public EntityPM: ContactPM;
     public ValidationErrorsList: string[] = [];
     private myService: ContactPMService;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.EntityPM = new ContactPM();
@@ -56,7 +56,7 @@ export class NewContactComponent {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }

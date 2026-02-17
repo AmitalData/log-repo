@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping

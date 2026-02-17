@@ -78,7 +78,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for CREATEDATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.DateTime? CREATEDATE
+        public virtual global::System.Nullable<System.DateTime> CREATEDATE
         {
             get
             {
@@ -93,14 +93,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.DateTime? _CREATEDATE;
+        private global::System.Nullable<System.DateTime> _CREATEDATE;
 
 
         /// <summary>
         /// There are no comments for UPDATEDATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.DateTime? UPDATEDATE
+        public virtual global::System.Nullable<System.DateTime> UPDATEDATE
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.DateTime? _UPDATEDATE;
+        private global::System.Nullable<System.DateTime> _UPDATEDATE;
 
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for STATUS in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual short? STATUS
+        public virtual global::System.Nullable<short> STATUS
         {
             get
             {
@@ -181,7 +181,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private short? _STATUS;
+        private global::System.Nullable<short> _STATUS;
 
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TOTALPAGES in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual int? TOTALPAGES
+        public virtual global::System.Nullable<int> TOTALPAGES
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private int? _TOTALPAGES;
+        private global::System.Nullable<int> _TOTALPAGES;
 
 
         /// <summary>
@@ -250,398 +250,6 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         private string _CUSTOMERID;
 
 
-        /// <summary>
-        /// There are no comments for HASCHANGED in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual short? HASCHANGED
-        {
-            get
-            {
-                return _HASCHANGED;
-            }
-            set
-            {
-                if (_HASCHANGED != value)
-                {
-                    _HASCHANGED = value;
-                    OnPropertyChanged("HASCHANGED");
-                }
-            }
-        }
-        private short? _HASCHANGED;
-
-
-        /// <summary>
-        /// There are no comments for QUETYPE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string QUETYPE
-        {
-            get
-            {
-                return _QUETYPE;
-            }
-            set
-            {
-                if (_QUETYPE != value)
-                {
-                    _QUETYPE = value;
-                    OnPropertyChanged("QUETYPE");
-                }
-            }
-        }
-        private string _QUETYPE;
-
-
-        /// <summary>
-        /// There are no comments for GSTRING1 in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string GSTRING1
-        {
-            get
-            {
-                return _GSTRING1;
-            }
-            set
-            {
-                if (_GSTRING1 != value)
-                {
-                    _GSTRING1 = value;
-                    OnPropertyChanged("GSTRING1");
-                }
-            }
-        }
-        private string _GSTRING1;
-
-
-        /// <summary>
-        /// There are no comments for GSTRING2 in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string GSTRING2
-        {
-            get
-            {
-                return _GSTRING2;
-            }
-            set
-            {
-                if (_GSTRING2 != value)
-                {
-                    _GSTRING2 = value;
-                    OnPropertyChanged("GSTRING2");
-                }
-            }
-        }
-        private string _GSTRING2;
-
-
-        /// <summary>
-        /// There are no comments for GSTRING3 in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string GSTRING3
-        {
-            get
-            {
-                return _GSTRING3;
-            }
-            set
-            {
-                if (_GSTRING3 != value)
-                {
-                    _GSTRING3 = value;
-                    OnPropertyChanged("GSTRING3");
-                }
-            }
-        }
-        private string _GSTRING3;
-
-
-        /// <summary>
-        /// There are no comments for INVOICEDATE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual global::System.DateTime? INVOICEDATE
-        {
-            get
-            {
-                return _INVOICEDATE;
-            }
-            set
-            {
-                if (_INVOICEDATE != value)
-                {
-                    _INVOICEDATE = value;
-                    OnPropertyChanged("INVOICEDATE");
-                }
-            }
-        }
-        private global::System.DateTime? _INVOICEDATE;
-
-
-        /// <summary>
-        /// There are no comments for INVOICEAMOUNT in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual decimal? INVOICEAMOUNT
-        {
-            get
-            {
-                return _INVOICEAMOUNT;
-            }
-            set
-            {
-                if (_INVOICEAMOUNT != value)
-                {
-                    _INVOICEAMOUNT = value;
-                    OnPropertyChanged("INVOICEAMOUNT");
-                }
-            }
-        }
-        private decimal? _INVOICEAMOUNT;
-
-
-        /// <summary>
-        /// There are no comments for CURRENCYID in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string CURRENCYID
-        {
-            get
-            {
-                return _CURRENCYID;
-            }
-            set
-            {
-                if (_CURRENCYID != value)
-                {
-                    _CURRENCYID = value;
-                    OnPropertyChanged("CURRENCYID");
-                }
-            }
-        }
-        private string _CURRENCYID;
-
-
-        /// <summary>
-        /// There are no comments for CUSTOMSSUPPLIERID in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string CUSTOMSSUPPLIERID
-        {
-            get
-            {
-                return _CUSTOMSSUPPLIERID;
-            }
-            set
-            {
-                if (_CUSTOMSSUPPLIERID != value)
-                {
-                    _CUSTOMSSUPPLIERID = value;
-                    OnPropertyChanged("CUSTOMSSUPPLIERID");
-                }
-            }
-        }
-        private string _CUSTOMSSUPPLIERID;
-
-
-        /// <summary>
-        /// There are no comments for INCOTERMS in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string INCOTERMS
-        {
-            get
-            {
-                return _INCOTERMS;
-            }
-            set
-            {
-                if (_INCOTERMS != value)
-                {
-                    _INCOTERMS = value;
-                    OnPropertyChanged("INCOTERMS");
-                }
-            }
-        }
-        private string _INCOTERMS;
-
-
-        /// <summary>
-        /// There are no comments for TAX in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual decimal? TAX
-        {
-            get
-            {
-                return _TAX;
-            }
-            set
-            {
-                if (_TAX != value)
-                {
-                    _TAX = value;
-                    OnPropertyChanged("TAX");
-                }
-            }
-        }
-        private decimal? _TAX;
-
-
-        /// <summary>
-        /// There are no comments for DISCOUNT in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual decimal? DISCOUNT
-        {
-            get
-            {
-                return _DISCOUNT;
-            }
-            set
-            {
-                if (_DISCOUNT != value)
-                {
-                    _DISCOUNT = value;
-                    OnPropertyChanged("DISCOUNT");
-                }
-            }
-        }
-        private decimal? _DISCOUNT;
-
-
-        /// <summary>
-        /// There are no comments for ORIGINID in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string ORIGINID
-        {
-            get
-            {
-                return _ORIGINID;
-            }
-            set
-            {
-                if (_ORIGINID != value)
-                {
-                    _ORIGINID = value;
-                    OnPropertyChanged("ORIGINID");
-                }
-            }
-        }
-        private string _ORIGINID;
-
-
-        /// <summary>
-        /// There are no comments for MORE in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string MORE
-        {
-            get
-            {
-                return _MORE;
-            }
-            set
-            {
-                if (_MORE != value)
-                {
-                    _MORE = value;
-                    OnPropertyChanged("MORE");
-                }
-            }
-        }
-        private string _MORE;
-
-
-        /// <summary>
-        /// There are no comments for ADDITIONAL in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual decimal? ADDITIONAL
-        {
-            get
-            {
-                return _ADDITIONAL;
-            }
-            set
-            {
-                if (_ADDITIONAL != value)
-                {
-                    _ADDITIONAL = value;
-                    OnPropertyChanged("ADDITIONAL");
-                }
-            }
-        }
-        private decimal? _ADDITIONAL;
-
-
-        /// <summary>
-        /// There are no comments for INVOICENO in the schema.
-        /// </summary>
-        [System.Runtime.Serialization.DataMember]
-        public virtual string INVOICENO
-        {
-            get
-            {
-                return _INVOICENO;
-            }
-            set
-            {
-                if (_INVOICENO != value)
-                {
-                    _INVOICENO = value;
-                    OnPropertyChanged("INVOICENO");
-                }
-            }
-        }
-        private string _INVOICENO;
-
-        [System.Runtime.Serialization.DataMember]
-        public virtual string SELLERID
-        {
-            get
-            {
-                return _SELLERID;
-            }
-            set
-            {
-                if (_SELLERID != value)
-                {
-                    _SELLERID = value;
-                    OnPropertyChanged("SELLERID");
-                }
-            }
-        }
-        private string _SELLERID;
-
-        [System.Runtime.Serialization.DataMember]
-        public virtual string SELLERNAME
-        {
-            get
-            {
-                return _SELLERNAME;
-            }
-            set
-            {
-                if (_SELLERNAME != value)
-                {
-                    _SELLERNAME = value;
-                    OnPropertyChanged("SELLERNAME");
-                }
-            }
-        }
-        private string _SELLERNAME;
-
-
-        #endregion
-
-        #region Extensibility Method Definitions
-        partial void OnCreated();
         #endregion
 
         #region INotifyPropertyChanged Members

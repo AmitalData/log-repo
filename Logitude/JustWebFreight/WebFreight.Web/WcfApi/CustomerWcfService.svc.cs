@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Validators;
@@ -22,7 +22,7 @@ using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL.EntityQueryServices;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.SystemLogs;
 using System.Web;
 using System.Threading;
@@ -31,7 +31,6 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -58,11 +57,6 @@ namespace WebFreight.Web.WcfApi
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
-                    //if (string.IsNullOrEmpty(entityPM.PaymentTermId))
-                    //{
-                    //    entityPM.PaymentTermId = "--";
-                    //}
-                   
                     ClassLevelValidator validationClass = new ClassLevelValidator("Customer", entityPM.Tenant) { IsHybrid = true };
                     if (!validationClass.IsValid(entityPM, entityPM, null))
                     {
@@ -85,7 +79,6 @@ namespace WebFreight.Web.WcfApi
                     ContactRepository contactRepository = new ContactRepository(objectContext);
                     RankRepository rankRepository = new RankRepository(objectContext);
                     Tenant tenantEntity = tenantRepository.GetSingleTenantOnly(entityPM.Tenant);
-                    PaymentTermRepository paymentTermRepository = new PaymentTermRepository(entityPM.Tenant);
 
                     CustomerService service = new CustomerService(objectContext, entityPM);
 
@@ -222,7 +215,7 @@ namespace WebFreight.Web.WcfApi
                         }
                         else
                         {
-                            // response.HasError = true;
+                           // response.HasError = true;
                             //response.ErrorMessage = "PrimaryContactId field doesn't exist in the database,Upsert this entity before using it.";
                             //return response;
                             //response.HasError = true;
@@ -247,23 +240,6 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
-
-                    if (entityPM.PaymentTermId != null)
-                    {
-                        var paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
-                        if (paymentTerm != null)
-                        {
-                            entityPM.PaymentTermId = paymentTerm.Id;
-                        }
-                        else
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
-                            return response;
-                        }
-                    }
-                   
-
 
 
 
@@ -299,7 +275,39 @@ namespace WebFreight.Web.WcfApi
 
                     }
 
-                    FillSalesman(entityPM);
+
+                    bool clearCustomerSalesmanByProducts = false;
+                    if (entityPM.CustomerSalesmanByProducts.Count() > 1)
+                    {
+                        if (entityPM.SalesmanUserId == null)
+                        {
+
+                            CustomerSalesmanByProductPM salesmanUser = entityPM.CustomerSalesmanByProducts.Where(d => d.SalesmanUserId != null).FirstOrDefault();
+                            string salesManId = salesmanUser.SalesmanUserId;
+                            bool sameUser = true;
+                            foreach (CustomerSalesmanByProductPM salesman in entityPM.CustomerSalesmanByProducts)
+                            {
+                                if (salesman.SalesmanUserId != salesManId)
+                                {
+                                    sameUser = false;
+                                }
+
+                            }
+                            if (sameUser)
+                            {
+                                entityPM.SalesmanUserId = salesManId;//user.Id;
+                                clearCustomerSalesmanByProducts = true;
+
+                            }
+                        }
+
+                        if (clearCustomerSalesmanByProducts)
+                        {
+                            entityPM.CustomerSalesmanByProducts.Clear();
+                        }
+
+                    }
+
 
                     #endregion
 
@@ -433,71 +441,74 @@ namespace WebFreight.Web.WcfApi
 
                     if (entity == null)
                     {
-                        bool isPotentialCustomerReceived = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
-                        List<Customer> varCustomers = customerRepository.GetCustomersByVat(entityPM.VatNumber, entityPM.Tenant);
-                        Customer cloudPotentailCustomer = varCustomers.FirstOrDefault(c => c.CustomerStatusCode == "WAC" || c.CustomerStatusCode == "POT");//customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                        if (cloudPotentailCustomer != null && isPotentialCustomerReceived) //merge only potential customer with potentials item#75761
+                        if (!string.IsNullOrEmpty(entityPM.VatNumber))
                         {
-                            entity = cloudPotentailCustomer;
+                            Customer customer = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                            if (customer != null && (customer.CustomerStatusCode == "WAC" || customer.CustomerStatusCode == "POT"))
+                            {
+                                entity = customer;
+                            }
+                            else
+                            {
+                                if (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady)
+                                {
+                                    entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                                }
+                                else
+                                {
+                                    if (tenantEntity.VatUniqueTypeCode == "UFA")
+                                    {
+                                        entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                                    }
+                                    else if (tenantEntity.VatUniqueTypeCode == "USC")
+                                    {
+                                        Country customerCountry = countryRepository.GetSingleCountryByCode(entityPM.CountryCode, entityPM.Tenant);
+                                        if (customerCountry != null && tenantEntity.VatMandatoryCountryId == customerCountry.Id)
+                                        {
+                                            entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
+                                        }
+                                    }
+
+                                }
+
+                            }
                         }
-                        else
-                           ValidateCustomerByVatNumber(entityPM, customerRepository, countryRepository, tenantEntity);
+
+
                     }
 
                     if (entity == null)
                     {
-                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CustomerProductItems);
+                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies);
                         service.Create();
                     }
                     else
                     {
                         entityPM.Id = entity.Id;
-                        bool exist = SecurityUtility.CheckFeature("Customer", "EDITCREDITAMOUNT", entity.Tenant);
-                        if (exist)
-                        {
-                            entityPM.CreditLimitAmount = entity.CreditLimitAmount;
-                        }
-                        if(entity.Card != null && (entity.Card.EmailForSendingSingArinvoice != null || entity.Card.SendingInterestReport))
-                        {
-                            entityPM.Card.EmailForSendingSingArinvoice = entity.Card.EmailForSendingSingArinvoice;
-                            entityPM.Card.SendingInterestReport = entity.Card.SendingInterestReport;
-                        }
-                        if (IsPrivateLabelFieldChanged(entityPM, entity, "cloud"))
-                        {
-                            return GetIsPrivateLabelFieldErrorResponse(response);
-                        }
-
-                        if (LogitudeSettings.WorkEnvironment == "cloud" && (entity.LogBoxActivated != entityPM.LogBoxActivated))
-                        {
-                            response.HasError = true;
-                            response.ErrorMessage = "Sorry you can't update LogBoxActivated field";
-                            return response;
-                        }
-
-
+                       
                         CustomerFieldsUpdateSettingQuery customerFieldsUpdateSettingQuery = new CustomerFieldsUpdateSettingQuery(entityPM.Tenant);
                         List<CustomerFieldsUpdateSettingPM> settings = customerFieldsUpdateSettingQuery.GetCustomerFieldsUpdateSettingPMsByTenant(entityPM.Tenant).ToList();
                         var salesManSettings = settings.FirstOrDefault(s => s.ObjectFieldName == "SalesmanUserId");
                         if (salesManSettings != null && salesManSettings.UpdateDirection == "NOUP")
                         {
                             entityPM.SalesmanUserId = entity.SalesmanUserId;
-                            //entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
+                            entityPM.CustomerSalesmanByProducts = new List<CustomerSalesmanByProductPM>();
                         }
-                        //else
-                        //{
-                        CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
-                        List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
-                        foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
+                        else
                         {
-                            salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
-                            entityPM.CustomerSalesmanByProducts.Add(salesman);
+                            CustomerSalesmanByProductQuery customerSalesmanByProductQuery = new CustomerSalesmanByProductQuery(customerSalesmanByProductRepository);
+                            List<CustomerSalesmanByProductPM> CustomerSalesmanByProducts = customerSalesmanByProductQuery.GetCustomerSalesmanByProductPMs(entity.Tenant, entity.Id);
+                            foreach (CustomerSalesmanByProductPM salesman in CustomerSalesmanByProducts)
+                            {
+                                salesman.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Delete;
+                                entityPM.CustomerSalesmanByProducts.Add(salesman);
 
 
+                            }
                         }
-                        //}
 
-
-
+                        
+                       
 
                         CustomerAccountManagerByProductQuery customerAccountManagerByProductQuery = new CustomerAccountManagerByProductQuery(customerAccountManagerByProductRepository);
                         List<CustomerAccountManagerByProductPM> CustomerAccountManagerByProducts = customerAccountManagerByProductQuery.GetCustomerAccountManagerByProductPMs(entity.Tenant, entity.Id);
@@ -533,19 +544,14 @@ namespace WebFreight.Web.WcfApi
                             entityPM.CustomerMediatorByProducts.Add(madiator);
 
                         }
-                        if (String.IsNullOrEmpty(entityPM.ContactForAccounting))
-                        {
-                            entityPM.ContactForAccounting = CustomerService.DONT_CARE;
-                        }
 
-                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CustomerProductItems);
+                        service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies);
                         service.Update();
                     }
-					CardGLAccountConnectBatch CardGLAccountConnectBatch = new CardGLAccountConnectBatch();
-					CardGLAccountConnectBatch.ConnectSingleCardToGLAccountInBatch(entityPM.Tenant, entityPM.Id);
 
 
-					response.Result = entityPM.Id;
+
+                    response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
                 }
@@ -571,13 +577,6 @@ namespace WebFreight.Web.WcfApi
 
                 return response;
             }
-            catch (ApplicationException ex)
-            {
-                response.HasError = true;
-                response.ErrorMessage = ex.Message;
-                response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
-                return response;
-            }
             catch (Exception ex)
             {
                 response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
@@ -591,83 +590,10 @@ namespace WebFreight.Web.WcfApi
                 return response;
             }
 
-
-
         }
 
-        private static void FillSalesman(CustomerPM entityPM)
-        {
-            if (entityPM.SalesmanUserId != null) return;
-            if (entityPM.CustomerSalesmanByProducts.Count() == 0) return;
 
-            CustomerSalesmanByProductPM customerSalesmanByProductPM = entityPM.CustomerSalesmanByProducts.Where(d => d.SalesmanUserId != null).FirstOrDefault();
-            if (customerSalesmanByProductPM != null)
-            {
-                entityPM.SalesmanUserId = customerSalesmanByProductPM.SalesmanUserId;
-            }
-        }
 
-        private bool IsPrivateLabelFieldChanged(CustomerPM customerPM, Customer customer, string workEnvironemnt)
-        {
-            return LogitudeSettings.WorkEnvironment == workEnvironemnt && (customer.IsPrivateLabelCustomer != customerPM.IsPrivateLabelCustomer);
-        }
-
-        private Response GetIsPrivateLabelFieldErrorResponse(Response response)
-        {
-            response.HasError = true;
-            response.ErrorMessage = "Sorry you can't update IsPrivateLabelCustomer field";
-            return response;
-        }
-
-        private void ValidateCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
-        {
-            Customer entity = null;
-            if (tenantEntity.VatUniqueTypeCode == "UFA")
-            {
-                entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
-            }
-            if (tenantEntity.VatUniqueTypeCode == "USC")
-            {
-                Country customerCountry = countryRepository.GetSingleCountryByCode(entityPM.CountryCode, entityPM.Tenant);
-                if (customerCountry != null && tenantEntity.VatUniqueCountryId == customerCountry.Id)
-                {
-                    entity = GetCustomerByVatUniquePartnerType(entityPM, customerRepository, tenantEntity);
-                }
-            }
-            if (entity != null && (entity.Card.Code != entityPM.Code))
-            {
-                throw new ApplicationException("A customer with the same vat and different code already exists.");
-            }
-        }
-
-        private Customer GetCustomerByVatUniquePartnerType(CustomerPM entityPM, CustomerRepository customerRepository, Tenant tenantEntity)
-        {
-            Customer entity = null;
-            bool isPotentialCustomer = (entityPM.CustomerStatusCode == "POT" || entityPM.CustomerStatusCode == "WAC" || entityPM.SetReady);
-            if (tenantEntity.VatUniquePartnerTypeCode == "ALL" || string.IsNullOrEmpty(tenantEntity.VatUniquePartnerTypeCode))
-            {
-                if (isPotentialCustomer)
-                {
-                    entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-                }
-                else
-                {
-                    entity = customerRepository.GetSingleCustomerByVatAndStatusForHybrid(entityPM.VatNumber, "ACT", entityPM.Tenant, false);
-                }
-            }
-            else if (tenantEntity.VatUniquePartnerTypeCode == "CS" && (entityPM.CustomerStatusCode == "ACT" || entityPM.SetActivated))
-            {
-                entity = customerRepository.GetSingleCustomerByVatAndStatusForHybrid(entityPM.VatNumber, "ACT", entityPM.Tenant, false);
-            }
-            else if (tenantEntity.VatUniquePartnerTypeCode == "POT" && isPotentialCustomer)
-            {
-                entity = customerRepository.GetSingleCustomerByVatForHybrid(entityPM.VatNumber, entityPM.Tenant, false);
-
-            }
-
-            return entity;
-        }
-        
         public List<CustomerList> GetCustomerList(string searchText, string email, bool myCustomer, int tenant, int skip, int take, ref Response response)
         {
             if (CacheManager.CacheWrapper == null)
@@ -754,7 +680,7 @@ namespace WebFreight.Web.WcfApi
                             if (!result.Where(c => c.Id == card.Id && c.Tenant == card.Tenant).Any())
                             {
                                 CustomerList customerList = (from customer in commoncontext.Customers.Include("Rank")//.Include("AccountManagerUser.Contact").Include("SalesmanUser.Contact").Include("Card.SharedLogisticsInvitationStatus")
-                                                             where customer.Tenant == tenant && customer.Id == card.Id
+															 where customer.Tenant == tenant && customer.Id == card.Id
                                                              select new CustomerList()
                                                              {
                                                                  Code = customer.Card.Code,
@@ -764,6 +690,7 @@ namespace WebFreight.Web.WcfApi
                                                                  PayablesAccountingCard = card.PayablesAccountingCard,
                                                                  InActive = customer.Card.InActive,
                                                                  Notes = customer.Card.Notes,
+                                                                 BillToId = customer.BillToId,
                                                                  Website = customer.Card.Website,
                                                                  SalesmanUserId = customer.SalesmanUserId,
                                                                  Id = customer.Id,
@@ -781,6 +708,7 @@ namespace WebFreight.Web.WcfApi
                                                                  //SalesmanUserEnglishName = customer.SalesmanUser == null ? null : (customer.SalesmanUser.Contact == null ? null : customer.SalesmanUser.Contact.EnglishName),
                                                                  CityName = customer.Card.CityName,
                                                                  VatTypeId = customer.Card.VatTypeId,
+                                                                 BillToName = customer.BillToCard.EnglishName,
                                                                  Field1 = customer.Field1,
                                                                  Field2 = customer.Field2,
                                                                  Field3 = customer.Field3,
@@ -796,8 +724,6 @@ namespace WebFreight.Web.WcfApi
                                                                  //SharedLogisticsInvitationStatusName = customer.Card.SharedLogisticsInvitationStatus != null ? customer.Card.SharedLogisticsInvitationStatus.Name : null,
                                                                  LastLoginDate = customer.Card.LastLoginDate,
                                                                  InvitationDate = customer.Card.InvitationDate,
-                                                                 CargoTrackingInvitationDate = customer.Card.CargoTrackingInvitationDate,
-                                                                 IsAutonomy = customer.Card.IsAutonomy,
                                                              }).FirstOrDefault();
 
 
@@ -858,10 +784,10 @@ namespace WebFreight.Web.WcfApi
 
             }
         }
-        
+
         public CustomerPM GetCustomerPM(DataContracts.CustomerApiFilters filters, int tenant, ref Response response)
         {
-            // return null;
+           // return null;
             //throw new Exception("not WOrk at 17r02 ");
             try
             {
@@ -880,7 +806,6 @@ namespace WebFreight.Web.WcfApi
                 ContactRepository contactRepository = new ContactRepository(objectContext);
                 CountryRepository countryRepository = new CountryRepository(objectContext);
                 RankRepository rankRepository = new RankRepository(objectContext);
-                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(objectContext);
                 CustomerQuery query = new CustomerQuery(tenant);
                 if (filters.ById)
                 {
@@ -1002,16 +927,6 @@ namespace WebFreight.Web.WcfApi
                         {
                             entityPM.RankCode = rank.Code;
                             entityPM.RankName = rank.Name;
-                        }
-                    }
-
-                    if (entityPM.PaymentTermId != null)
-                    {
-                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId, entityPM.Tenant);
-                        if (paymentTerm != null)
-                        {
-                            entityPM.PaymentTermId = paymentTerm.Code;
-                            
                         }
                     }
 
@@ -1291,7 +1206,7 @@ namespace WebFreight.Web.WcfApi
                     {
                         currentIP = HttpContext.Current.Request.UserHostAddress;
                     }
-
+                    
                     AzureLog.SaveLogsInStorage("Message retreived from activation queue (Tenant:" + tenant + ")", "L", DateTime.Now, "", "", 0, loggedContact.Id, loggedContact.EnglishName, currentIP);
 
                     if (message.Properties["CustomerId"] != null)
@@ -1548,7 +1463,7 @@ namespace WebFreight.Web.WcfApi
                     currentIP = HttpContext.Current.Request.UserHostAddress;
                 }
 
-                AzureLog.SaveLogsInStorage("Error while getting customer from activation queue (Tenant:" + tenant + ")", "E", DateTime.Now, ex.Message, ex.StackTrace, 0, loggedContact.Id, loggedContact.EnglishName, currentIP);
+                AzureLog.SaveLogsInStorage("Error while getting customer from activation queue (Tenant:" + tenant + ")", "E", DateTime.Now, ex.Message, ex.StackTrace, 0, loggedContact.Id, loggedContact.EnglishName,currentIP );
 
                 response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
                 response.HasError = true;
@@ -1613,7 +1528,7 @@ namespace WebFreight.Web.WcfApi
 
 
 
-        public string GetActivationQuestionnaireAnswers(string QuestionnaireId, int tenant, string tableId, string entityId, string customername)
+        public string GetActivationQuestionnaireAnswers(string QuestionnaireId, int tenant, string tableId, string entityId,string customername)
         {
             StringBuilder HtmlTemplate = new StringBuilder();
             ICRMContext context = CRMContext.GetContext(tenant);
@@ -1650,10 +1565,10 @@ namespace WebFreight.Web.WcfApi
                     {
 
 
-                        if (entityPM.RightToLeft) HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
+                        if (entityPM.RightToLeft)  HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
 
                         else HtmlTemplate.Append("<div style ='margin-left:2%; margin-right:2%;'>");
-
+                    
                         HtmlTemplate.Append("<div style ='width:100%'>");
 
                         HtmlTemplate.Append("<Div  style='font-weight:bold;margin-top:10px;margin-bottom:20px;height:auto;display:block;font-size:20px;'" + " width='auto%' " + ">"); HtmlTemplate.Append("Customer : " + customername + "</Div>");
@@ -1685,10 +1600,10 @@ namespace WebFreight.Web.WcfApi
                     {
                         //HasTwoColumn
 
-                        if (entityPM.RightToLeft) HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
-
-                        else HtmlTemplate.Append("<div style ='margin-left:2%; margin-right:2%;'>");
-
+                        if (entityPM.RightToLeft)  HtmlTemplate.Append("<div  dir='rtl'  style ='margin-left:2%; margin-right:2%;'>");
+                
+                        else  HtmlTemplate.Append("<div style ='margin-left:2%; margin-right:2%;'>");
+                   
                         HtmlTemplate.Append("<Div  style='font-weight:bold;margin-top:10px;margin-bottom:20px;height:auto;display:block;font-size:20px;'" + " width='auto%' " + ">"); HtmlTemplate.Append("Customer : " + customername + "</Div>");
 
 
@@ -1727,7 +1642,7 @@ namespace WebFreight.Web.WcfApi
                                     }
 
                                     foreach (QuestionnaireQuestionPM item in QuestionnaireQuestionsList2) QuestionnaireQuestionsList1.Remove(item);
-
+                                 
                                     HtmlTemplate.Append("</tr>");
                                 }
 

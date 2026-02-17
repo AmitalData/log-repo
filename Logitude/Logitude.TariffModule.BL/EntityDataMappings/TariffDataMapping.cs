@@ -13,9 +13,7 @@ using Logitude.TariffModule.Data;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.TariffModule.Data.Repositories;
-using Logitude.TariffModule.Data.EntityKeys;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
@@ -38,26 +36,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 }
             }
 
-            if (!string.IsNullOrEmpty(entityPM.SellerId))
-            {
-                Card seller = CardRepository.GetSingleCard(entityPM.SellerId, entityPM.Tenant, true);
-                if (seller != null)
-                {
-                    entityPM.SellerPartnerTypeId = seller.PartnerTypeId;
-                    entityPOCO.SellerPartnerTypeId = seller.PartnerTypeId;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.CustomsBrokerId))
-            {
-                Card broker = CardRepository.GetSingleCard(entityPM.CustomsBrokerId, entityPM.Tenant, true);
-                if (broker != null)
-                {
-                    entityPM.CustomsBrokerPartnerTypeId = broker.PartnerTypeId;
-                    entityPOCO.CustomsBrokerPartnerTypeId = broker.PartnerTypeId;
-                }
-            }
-
             entityPOCO.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
             entityPM.SetAsInActive = false;
@@ -73,50 +51,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
         public void CustomPOCOToPM(TariffPM entityPM, Tariff entityPOCO)
         {
             entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
-            this.CustomMappedPMProperties.Add(PMPropertyNames.SellerName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.SellerPartnerTypeId);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.TypeName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.CustomsBrokerName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.CustomsBrokerPartnerTypeId);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.CustomerGroupName);
-
-            if (!string.IsNullOrEmpty(entityPOCO.SellerId))
-            {
-                Card seller = CardRepository.GetSingleCard(entityPOCO.SellerId, entityPOCO.Tenant, true);
-                if (seller != null)
-                {
-                    entityPM.SellerName = seller.EnglishName;
-                    entityPM.SellerPartnerTypeId = seller.PartnerTypeId;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityPOCO.CustomerGroupId))
-            {
-                CustomerGroupRepository customerGroupRepository = new CustomerGroupRepository(entityPOCO.Tenant);
-                CustomerGroup customerGroup = customerGroupRepository.GetSingleCustomerGroup(entityPOCO.CustomerGroupId, entityPOCO.Tenant);
-                if (customerGroup != null)
-                {
-                    entityPM.CustomerGroupName = customerGroup.Name;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityPOCO.CustomsBrokerId))
-            {
-                Card broker = CardRepository.GetSingleCard(entityPOCO.CustomsBrokerId, entityPOCO.Tenant, true);
-                if (broker != null)
-                {
-                    entityPM.CustomsBrokerName = broker.EnglishName;
-                    entityPM.CustomsBrokerPartnerTypeId = broker.PartnerTypeId;
-                }
-            }
-
-            TariffTypeRepository tariffTypeRepository = new TariffTypeRepository(entityPOCO.Tenant);
-            TariffTypeKeys tariffTypetKeys = new TariffTypeKeys() { Code = entityPOCO.TypeCode };
-            TariffType tariffType = tariffTypeRepository.GetSingle(tariffTypetKeys);
-            if (tariffType != null)
-            {
-                entityPM.TypeName = tariffType.Name;
-            }
         }
 
         private void BuildSearchFields(TariffPM entityPM, Tariff entityPOCO, bool isNewEntity)
@@ -134,15 +68,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             if (!string.IsNullOrEmpty(entityPM.SellerId))
             {
                 Card iCard = CardRepository.GetSingleCard(entityPM.SellerId, entityPM.Tenant, true);
-                if (iCard != null)
-                {
-                    MethodHelper.AddToSearchFields(ref mySearchFields, iCard.EnglishName);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(entityPM.CustomsBrokerId))
-            {
-                Card iCard = CardRepository.GetSingleCard(entityPM.CustomsBrokerId, entityPM.Tenant, true);
                 if (iCard != null)
                 {
                     MethodHelper.AddToSearchFields(ref mySearchFields, iCard.EnglishName);

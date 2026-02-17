@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, Input, OnInit, ViewChild, AfterViewInit, AfterContentInit, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
@@ -11,7 +11,6 @@ import { CustomSendOptionsComponent } from './CustomSendOptionsComponent'
 //import { CustomSendOptionsComponent } from './CustomSendOptionsComponent'
 
 import { CommunicationLogStepListService } from '../../../Common/Services/ExtendedLists/CommunicationLogStepListService';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
 
 
 
@@ -24,7 +23,7 @@ export interface IMassagingViewModel {
 }
 @Component({
     selector: 'custom-message-wrapper',
-    
+    moduleId: module.id,
     templateUrl: '././CustomMessageWrapperComponent.html',
 })
 
@@ -35,7 +34,6 @@ export class CustomMessageWrapperComponent
 {
     
     private _ValidationErrorsList: string[] = [];
-    public MyGuid: string;
     @Input() get ValidationErrorsList() { return this._ValidationErrorsList; }
     set ValidationErrorsList(newValue: string[]) {
         this._ValidationErrorsList = newValue;
@@ -43,15 +41,6 @@ export class CustomMessageWrapperComponent
     }
     @Input()
     public CustomSendOptionsButtonCanForcePersonalSign: boolean = false;
-
-    @Input()
-    get CustomSendOptionsButtonAvoidDoubleClick() { return this.MyCustomSendOptionsComponent ? this.MyCustomSendOptionsComponent.AvoidDoubleClick : null; }
-    set CustomSendOptionsButtonAvoidDoubleClick(newValue: boolean) {
-        this.MyCustomSendOptionsComponent.AvoidDoubleClick = newValue;
-    }
-    @Input()
-    public IsResponseContentDisabled: boolean;
-
     @Input()
     public IsShowCustomResponseContent: boolean = true;
     @Input()
@@ -65,8 +54,8 @@ export class CustomMessageWrapperComponent
     set CustomSendOptionsButtonIsDisable(newValue: boolean) {
         this.MyCustomSendOptionsComponent.IsDisabled= newValue;
     }
-
-    @Input()
+    
+    
     public  CustomRequestContentIsDisable: boolean;
     
     public  CustomResponseContentIsDisable: boolean;
@@ -89,8 +78,6 @@ export class CustomMessageWrapperComponent
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.MyGuid = Guid.newGuid();
-        console.log("CustomMessageWrapperComponent:" + this.MyGuid);
     }
     _AfterContentInit: boolean = false;
     ngAfterContentInit() {
@@ -105,7 +92,7 @@ export class CustomMessageWrapperComponent
         }
     }
 
-     
+
     private _IsDisableToggle: boolean = false;
     MessageDisplayIsDisableToggle() {
         this._IsDisableToggle = !this._IsDisableToggle;
@@ -154,13 +141,6 @@ export class CustomMessageWrapperComponent
     public set ShowCustomResponseContent(newValue: boolean) {
         if (this.IsShowCustomResponseContent != newValue) {
             this.IsShowCustomResponseContent = newValue;
-        }
-    }
-
-    public get ResponseContentDisabled() {return this.IsResponseContentDisabled; }
-    public set ResponseContentDisabled(newValue: boolean) {
-        if (this.IsResponseContentDisabled != newValue) {
-            this.IsResponseContentDisabled = newValue;
         }
     }
 

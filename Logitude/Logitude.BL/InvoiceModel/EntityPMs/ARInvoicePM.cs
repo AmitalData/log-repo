@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.EntityPMs
 {
@@ -17,33 +18,22 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string AutoCreditByARInvoiceNumber { get; set; }
 
         public string AutoCreditedByARInvoiceId { get; set; }
-        public bool IsApprovalFailed { get; set; }
-        public bool ApprovalInProgress { get; set; }
         public string AutoCreditedByARInvoiceNumber { get; set; }
 
         public string InvoiceNumber { get; set; }
         public string ARInvoiceTypeCode { get; set; }
-        public string ARInvoiceTypeName { get; set; }
-        public string SequenceStatus { get; set; }
-        public string InvoiceNumberPart { get; set; }
-        public string InvoiceSeries { get; set; }
-
-
+        
         public string MainEntityStatus { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToId { get; set; }
         public string BillToName { get; set; }
         public string BillToLocalName { get; set; }
-        public string BillToDisplayNumber { get; set; }
-
         public string BillToType { get; set; }
         public string BillToPartnerTypeId { get; set; }
         public string BillToCode { get; set; }
         public string BillToAccountManagerName { get; set; }
-        public string BillToContactId { get; set; }
 
-        
         public bool BillToIsCreditLimitEnabled { get; set; }
         public double? BillToCreditLimitAmount { get; set; }
         public double? BillToCreditLimitOpenBalance { get; set; }
@@ -52,10 +42,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? BillToCreditLimitActualBalance { get; set; }
         public bool BillToBlockNewInvoiceCreation { get; set; }
         public bool HasCreditLimitOverrideFeature { get; set; }
-        public bool HasInterestFeature { get; set; }
-        public bool IsFromInterestBatchInvoice { get; set; }
-        public bool HasDoc { get; set; }
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BillToAddressId { get; set; }
@@ -71,13 +57,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PrintByUserId { get; set; }
         public string PrintByUserName { get; set; }
         public string IssuedByUserId { get; set; }
-        public string ConfirmationNumberStatus { get; set; }
-        public string ConfirmationNumberStatusName { get; set; }
-        public string APIResponseToConfirmation { get; set; }
-
-        public string IsSigned { get; set; }
-        public string ConfirmationNumber { get; set; }
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceCurrencyId { get; set; }
@@ -110,13 +89,11 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SearchFields { get; set; }
 
         public string MainEntityId { get; set; }
-        public string MasterEntityId { get; set; }
         public string MainEntityReference { get; set; }
         public double? AmountDue { get; set; }
 
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
-        public string MainEntityMasterShipmentNumbers { get; set; }
         public string Description { get; set; }
         public bool IsClosed { get; set; }
         public string ProfitCurrencyId { get; set; }
@@ -134,44 +111,16 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BranchName { get; set; }
 
         public bool IsPrinted { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConnectedEntityReferences { get; set; }
         public CustomFieldClass Field1 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field2 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field3 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field4 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field5 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field6 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field7 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field8 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field9 { get; set; }
-
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field10 { get; set; }
 
         public string DebitAccount { get; set; }       
@@ -195,9 +144,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ApprovedByUserId { get; set; }
         public string ApprovedByUserName { get; set; }
 
-        public string AutoCreditedByInvoiceTypeCode { get; set; }
-
-
         public string CreditedByARInvoiceId { get; set; }
 
         public string ExternalAccountingEntityId { get; set; }
@@ -209,7 +155,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? OperationalDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? DateForInterest { get; set; }
+        public DateTime? DateForVATInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }
         public bool IsExternalEntity { get; set; }
         public string SATXML { get; set; }
@@ -226,10 +172,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public DateTime? SATApprovalDate { get; set; }
         public bool IsShowAmountLocalCurrencyColumnInSharedLogistics { get; set; }
 
-        public string ShipmentsNumbers { get; set; }
-        public string MasterNumbers { get; set; }
-        public string MasterShipmentNumbers { get; set; }
-        public string HouseNumbers { get; set; }
+        
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }
@@ -376,7 +319,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool SetVoided { get; set; }
         public bool SetAsSent { get; set; }
         public bool SetApproved { get; set; }
-        public bool SetApprovedAutoCredit { get; set; }
         public bool SetReTransfer { get; set; }
         public bool SetCancelDraft { get; set; }
         public bool IsExternalAPI { get; set; }
@@ -394,8 +336,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATAdditionalFieldsXML { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
-        public string PeriodCode { get; set; }
-        public string RegimenFiscalCode { get; set; }
         public bool IsDraft { get; set; }
 
         public bool IsMultiCurrency { get; set; }
@@ -421,44 +361,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
         public string CreatedByPartner { get; set; }
-        public string BillToGLAccountId { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string RegionalTaxId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public double? RegionalTaxPercentage { get; set; }
-
-        public string PaidStatus { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public DateTime? PaidDate { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PartnerId { get; set; }
-        public string GlobalTaxCalculation { get; set; }
-        public string InterestReportNumber { get; set; }
-        public string InterestReportId { get;  set; }
-        public string PaymentReferences { get; set; }
-
-        public string AgentReference1 { get; set; }
-        public string AgentReference2 { get; set; }
-        public bool BillToIsCustomer { get; set; }
-        public bool ResendToSAT { get; set; }
-        public string SATCancelReasonCode { get; set; }
-
-        public bool IsDigitalDueDateColorRed { get; set; }
-        public string TotalEquation { get; set; }
-        public bool IsFromAutomation { get; set; }
-        public string DocumentTemplateId { get; set; }
-
-        public bool IsUpdatedByQBO { get; set; }
-        public bool IsUpdatedBySAT { get; set; }
-        public bool IsUpdatedByPrint { get; set; }
-        public string TransferStatusCode_Original { get; set; }
-        public bool IsTransferStarted_Original { get; set; }
-        public string TransferError_Original { get; set; }
-        public bool VatsAmountsManulAdjuested { get; set; }
-        public DateTime? ReferenceDate { get; set; }
     }
 }

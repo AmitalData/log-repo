@@ -148,25 +148,21 @@
                                         <!-- EntityTypeName -->
                                         <log-column [header]="'סוג ישות'"
                                                     [binding]="'EntityTypeName'" [width]="'100'" [Alignment]="'right'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming" style="text-align:right">
                                                     <span>{{item.EntityTypeName}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- EntityNumber -->
                                         <log-column [header]="'מספר ישות'"
                                                     [binding]="'EntityNumber'" [width]="'150'" [Alignment]="'right'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="TextTrimming" style="text-align:right">
                                                     <span>{{item.EntityNumber}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
 

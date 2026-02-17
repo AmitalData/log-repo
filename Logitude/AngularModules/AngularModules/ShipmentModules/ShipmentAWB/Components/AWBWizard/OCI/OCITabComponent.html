@@ -14,7 +14,7 @@
                                         </td>
 
                                         <td style="width: 60px;">
-                                            <button id="{{'BtnAddLineOCI' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="Add()" [disabled]="!IsEditingEnabled">Add line</button>
+                                            <button id="{{'BtnAddLineOCI' | IdGeneratorPipe}}" class="Button" (click)="Add()" [disabled]="!IsEditingEnabled">Add line</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -28,10 +28,10 @@
                                         <div class="SimpleGridViewHeader">
                                             <table>
                                                 <tr>
-                                                    <td style="width: 250px;">{{'AWBOCI.CH.CountryIdListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 150px;">{{'AWBOCI.CH.AWBInformationCodeListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 150px;">{{'AWBOCI.CH.AWBCustomsInformationCodeListLable' | TextCodeTranslationPipe}}</td>
-                                                    <td style="width: 250px;">{{'AWBOCI.CH.SupplementaryCustomsInfoListLable' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 250px;">{{'AWBOCI.CH.CountryId' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 150px;">{{'AWBOCI.CH.AWBInformationCode' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 150px;">{{'AWBOCI.CH.AWBCustomsInformationCode' | TextCodeTranslationPipe}}</td>
+                                                    <td style="width: 250px;">{{'AWBOCI.CH.SupplementaryCustomsInfo' | TextCodeTranslationPipe}}</td>
                                                     <td class="LastChild">
                                                         <div></div>
                                                     </td>

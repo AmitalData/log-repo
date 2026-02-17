@@ -6,7 +6,7 @@ using Logitude.BL.InvoiceModel.Tools.DataMapping;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
@@ -23,8 +23,6 @@ using System.Threading.Tasks;
 using System.Web;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.ShipmentsModel;
-using Logitude.BL.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -35,7 +33,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public APInvoice invoice { get; set; }
         private APInvoiceMultipleShortPM entityPM;
         private ICommonDataContext myCommonContext;
-        private IShipmentsContext shipmentsContext;
         private string loggedContactId;
         private AccountingSetting accountingSetting;
         private IInvoiceContext objectContext;
@@ -44,7 +41,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private APInvoiceTotalVATRepository invoiceTotalVatRepository;
         private List<ShipmentPayable> allPayables;
         private ShipmentPayableRepository shipmentPayableRepository;
-        private PayableProratedAmountRepository payableProratedAmountRepository;
         private DateTime todayDateTime;
         public APInvoiceMultipleShortService(IInvoiceContext objectContext, APInvoiceMultipleShortPM entityPM)
         {
@@ -52,14 +48,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPM = entityPM;
             this.objectContext = objectContext;
             this.myCommonContext = CommonDataContext.GetContext(tenant);
-            this.shipmentsContext = ShipmentsContext.GetContext(tenant);
             this.invoiceRepository = new APInvoiceRepository(objectContext);
             this.invoiceLineRepository = new APInvoiceLineRepository(objectContext);
             this.invoiceTotalVatRepository = new APInvoiceTotalVATRepository(objectContext);
-            this.shipmentPayableRepository = new ShipmentPayableRepository(shipmentsContext);
-            this.payableProratedAmountRepository = new PayableProratedAmountRepository(shipmentsContext);
-            this.todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             this.allPayables = new List<ShipmentPayable>();
+            this.shipmentPayableRepository = new ShipmentPayableRepository(tenant);
+            this.todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             this.GetLoggedContact();
 
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
@@ -89,28 +83,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public void Update(List<APInvoiceLinePM> invoiceLinesChangeSet)
         {
             this.invoiceLinesChangeSet = invoiceLinesChangeSet;
-
             this.invoice = invoiceRepository.GetSingleAPInvoice(entityPM.Id, tenant);
-            this.invoice.UpdateDate = todayDateTime;
-            this.invoice.UpdatedByUserId = loggedContactId;
-
+            
             this.BuildUnexpectedPayables();
             this.GetShipmentsData();
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
 
+            this.MapEntity();
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
             this.UpdateAllPayablesAccountedAmountAndStatus();
             this.shipmentPayableRepository.SubmitChanges();
-
-            PayablesLinesVatAmounts payablesLinesVatAmounts = new PayablesLinesVatAmounts(allPayables, tenant, shipmentPayableRepository);
-            payablesLinesVatAmounts.UpdateAllPayablesVatAmount();
-
             this.RunStoredProcedures();
         }
 
+        #region BuildUnexpectedPayables
         private void BuildUnexpectedPayables()
         {
             if (entityPM.InvoiceLines.Where(d => d.EntityPayableId == null).Any())
@@ -146,23 +135,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentPayableRepository.SubmitChanges();
             }
         }
+        #endregion
 
+        #region GetShipmentsData
         private void GetShipmentsData()
         {
-            if (invoiceLinesChangeSet.Count > 0)
-            {
-                List<APInvoiceLinePM> activeLines = invoiceLinesChangeSet.Where(d => d.ChangeSetOp != ChangeSetOperation.None).ToList();
+            this.allPayables = shipmentPayableRepository.GetShipemntPayablesByShipmentId(entityPM.ShipmentId, tenant);
+        }
+        #endregion
 
-                if (activeLines.Count > 0)
-                {
-                    List<string> allPayablesIds = activeLines.Select(s => s.EntityPayableId).ToList();
-
-                    allPayables = (from d in shipmentsContext.ShipmentPayables
-                                   where allPayablesIds.Contains(d.Id)
-                                   select d).ToList();
-
-                }
-            }
+        private void MapEntity()
+        {
+            invoice.UpdateDate = todayDateTime;
+            invoice.UpdatedByUserId = loggedContactId;
+            invoice.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
+            invoice.SubTotalInInvoiceCurrency = entityPM.SubTotalInInvoiceCurrency;
         }
 
         #region InvoiceLines
@@ -375,7 +362,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             Tenant = entityPM.Tenant,
                             APInvoiceId = entityPM.Id,
                             VatTypeId = item.Id,
-                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 3),
+                            VatPercent = MethodHelper.Roundd(item.VatTypePercentage, 2),
                             LocalVatableAmount = MethodHelper.Roundd(item.LocalCurrencyAmount, 2),
                             InvoiceCurrencyVatableAmount = MethodHelper.Roundd(item.InvoiceCurrencyAmount, 2),
                             ProfitVatableAmount = MethodHelper.Round(item.ProfitCurrencyAmount, 2),
@@ -410,8 +397,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 entityPM.SubTotalInInvoiceCurrency = subTotal;
                 entityPM.SubTotalInLocalCurrency = subTotal_Local;
-                invoice.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
-                invoice.SubTotalInInvoiceCurrency = entityPM.SubTotalInInvoiceCurrency;
             }
         }
         #endregion
@@ -452,14 +437,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (myPayable.ShipmentPayableAmountTypeCode == "NEXP")
                 {
                     List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(myPayable.Id, tenant);
-                    List<string> payablesId = ChildPayables.Select(s => s.Id).ToList();
-
-                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
-                    foreach (PayableProratedAmount item in payableProratedAmounts)
-                    {
-                        payableProratedAmountRepository.Remove(item);
-                    }
-
                     foreach (ShipmentPayable myChild in ChildPayables)
                     {
                         shipmentPayableRepository.Remove(myChild);
@@ -521,14 +498,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
 
                     List<ShipmentPayable> ChildPayables = shipmentPayableRepository.GetChildPayablesByParentPayable(payable.Id, tenant);
-                    List<string> payablesId = ChildPayables.Select(s => s.Id).ToList();
-
-                    List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
-                    foreach (PayableProratedAmount item in payableProratedAmounts)
-                    {
-                        payableProratedAmountRepository.Remove(item);
-                    }
-
                     foreach (ShipmentPayable myChild in ChildPayables)
                     {
                         myChild.ShipmentPayableLineStatusCode = payable.ShipmentPayableLineStatusCode;
@@ -588,7 +557,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.ShipmentId != null)
                 {
-                    UpdateShipmentProfitClass.UpdatePayables(entityPM.ShipmentId, entityPM.Tenant,true, entityPM.Id);
+                    UpdateShipmentProfitClass.UpdatePayables(entityPM.ShipmentId, entityPM.Tenant,true);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.ShipmentId, entityPM.Tenant);
                 }
             }

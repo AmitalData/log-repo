@@ -7,17 +7,13 @@ using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Linq;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.QueueService;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -35,22 +31,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardQuery cardQuery;
         private ContactRepository contactRepository;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-
-        public ShippingLineService(ICommonDataContext objectContext, ShippingLinePM entityPM, string loggedContactId)
+        public ShippingLineService(ICommonDataContext objectContext,int tenant)
         {
-            this.entityPM = entityPM;
-            this.tenant = entityPM.Tenant;
-            this.objectContext = objectContext;
-            this.entityRepository = new ShippingLineRepository(objectContext);
-            this.cardRepository = new CardRepository(objectContext);
-            this.contactRepository = new ContactRepository(objectContext);
-            this.cardQuery = new CardQuery(cardRepository);
-            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-        }
-        public ShippingLineService(ICommonDataContext objectContext, int tenant)
-        {
-
+            
             this.tenant = tenant;
             this.objectContext = objectContext;
             this.entityRepository = new ShippingLineRepository(objectContext);
@@ -86,9 +69,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "SL",
-                UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
-            
+
             this.entityPOCO = new ShippingLine()
             {
                 Id = entityPM.Id,
@@ -113,16 +95,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);            
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingLine", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingLinePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
-            AddCardKafkaQueueMessage();
         }
 
         public void Update(ShippingLinePM entityPM, bool mapComposition = false)
@@ -170,16 +145,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingLine", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingLinePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingLine");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Carrier");
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
-            AddCardKafkaQueueMessage();
         }
 
         private void InitializeComponent()
@@ -245,11 +213,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
-            entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
         }
 
         private void ComputeContactFields()
@@ -336,25 +299,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private void AddCardKafkaQueueMessage()
-        {
-            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
-            {
-                return;
-            }
-            AddKafkaQueueMessage();
-        }
-
-        private void AddKafkaQueueMessage()
-        {
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("CToolLookups", 0);
-            var queueMessage = new Dictionary<string, string>() {
-                { "Entity", "Card" },
-                { "EntityId", entityPM.Id },
-                { "Tenant", tenant.ToString()}};
-            queueservice.Send(queueMessage, tenant);
-        }
         public void Submit()
         {
             cardExternalCodeByCurrencyRepository.SubmitChanges();

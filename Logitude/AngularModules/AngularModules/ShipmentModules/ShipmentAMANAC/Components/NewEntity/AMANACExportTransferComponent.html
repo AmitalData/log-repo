@@ -11,7 +11,7 @@
                     <td style="width: 1px;">
                         <div *ngIf="IsExportingInProgress">
                             <div style="text-align: center;">
-                                <span class="Label" style="font-size: 13px;">Transfering  </span>
+                                <span class="Label" style="font-size: 13px;">Transfering</span>
                                 <span class="Value" style="font-size: 16px;">{{TransferredCount}}</span>
                                 <span class="Label" style="font-size: 13px;">{{TransferredEntityName}}</span>
                             </div>
@@ -22,18 +22,13 @@
                         <div *ngIf="!IsExportingInProgress">
 
                             <div *ngIf="IsExportingSuccess" style="text-align: center;">
-                                <div attr.data-cy="{{'ValidationMsg' | IdGeneratorAsyncPipe | async}}" class="ColorGreen" style="font-size: 13px;">Transferred Successfully</div>
+                                <div class="ColorGreen" style="font-size: 13px;">Transferred Successfully</div>
                                 <Hyperlink (click)="DownloadClicked()">{{'General.B.DownloadFile' | TextCodeTranslationPipe}}</Hyperlink>
                             </div>
 
                             <div *ngIf="IsExportingError" style="text-align: center;">
-                                <div class="ColorRed" style="font-size: 13px;">Transfer Error</div>
+                                <div class="ColorRed" style="font-size: 13px;">Transferred Error</div>
                                 <Hyperlink (click)="RetryClicked()">{{'General.B.Retry' | TextCodeTranslationPipe}}</Hyperlink>
-                            </div>
-
-                            <div *ngIf="IsValidated" style="text-align: center;">
-                                <div  attr.data-cy="{{'ValidationMsg' | IdGeneratorAsyncPipe | async}}" class="ColorBlack" style="font-size: 13px;">Please fill all the mandatory fields before exporting to AMANAC</div>
-                                <Hyperlink (click)="ViewErrorsClicked()">View</Hyperlink>
                             </div>
                         </div>
                     </td>
@@ -55,7 +50,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button attr.data-cy="{{'CloseExportingScreen' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()" [disabled]="IsExportingInProgress">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CloseButtonClicked()" [disabled]="IsExportingInProgress">Close</button>
                     </td>
                 </tr>
             </table>

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,8 +35,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string TimeOfArrivalInfo { get; set; }
         public string ContainerId { get; set; }
         public string ContainerNumber { get; set; }
-        public string StatusSource { get; set; }
-        public string ContainerStatusCode { get; set; }
 
         [ForeignKey("ShipmentId")]
         public virtual Shipment Shipment { get; set; }
@@ -55,12 +53,5 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         [ForeignKey("Location")]
         public virtual Port LocationPort { get; set; }
-
-        [ForeignKey("StatusSource")]
-        public virtual ContainerStatusSource ContainerStatusSource { get; set; }
-
-        [ForeignKey("ContainerStatusCode")]
-        public virtual ContainerStatus ContainerStatus { get; set; }
-
     }
 }

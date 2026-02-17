@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,16 +26,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
-using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
@@ -64,8 +62,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				UsoCFDIRepository  usoCFDIRepository = new UsoCFDIRepository(MyContext);
 				UsoCFDIList entityList = null;
 				UsoCFDI entityPoco = usoCFDIRepository.GetSingleUsoCFDI(code );
-                
-                if (entityPoco != null)
+
+				if (entityPoco != null)
 				{
 									List<UsoCFDI> singleEntityList = new List<UsoCFDI>();
 					singleEntityList.Add(entityPoco);
@@ -171,12 +169,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+							 queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
                     }
-					
+
 
 
                 }
@@ -200,7 +198,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
+							 queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                         }
                         else
                         {
@@ -212,18 +210,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                 { 
-                     AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "UsoCFDI",
-                     ParentEntityId = filters.ParentEntityId,
-                     ParentObjectTableName = filters.ParentObjectTableName, 
-                     Tenant = tenant ,
-                     ParentEntity = filters.ParentEntity
-                 };
 
-								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 UsoCFDIRepository  usoCFDIRepository = new UsoCFDIRepository(MyContext);
                 IQueryable<UsoCFDI> entityPocos = usoCFDIRepository.GetUsoCFDIs();
@@ -231,19 +218,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 UsoCFDIQuery usoCFDIQuery = new UsoCFDIQuery(usoCFDIRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 				
                 entityPocos = genericFilter.GetFilteredQuery<UsoCFDI>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<UsoCFDIList> entityLists = usoCFDIQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<UsoCFDIList>(listQueryOperation, entityLists);
-                entityLists = new TreeFilterQueryService().Apply<UsoCFDIList>(entityLists , treeFilterQueryArgs);
 
-		      
-			  								
+		 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                  {
                    PropertyInfo propInfo = typeof(UsoCFDIList).GetProperty(queryOperations.SortByColumnName);
@@ -307,18 +292,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 				 }
                 }
-            }					  						
-	       else
+            }
+		    else
             {
                 entityLists = entityLists.OrderBy(d => d.Code);
-            } 
+            }
 
 			ServiceResponse response = new ServiceResponse();
 			
 			if (filters.GetCount)
               {
 					response.Count = entityLists.Count();
-    		  }
+			  }
 			  	if(!queryOperations.GetAll)
 				 {
 

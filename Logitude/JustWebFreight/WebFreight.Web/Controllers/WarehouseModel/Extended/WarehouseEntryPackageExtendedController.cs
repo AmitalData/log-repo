@@ -1,7 +1,7 @@
 ﻿using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -24,9 +24,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
+            
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryPackageQueryService warehouseEntryPackageQuery = new WarehouseEntryPackageQueryService(MyContext);
                 List<WarehouseEntryPackagePM> warehouseEntryPackagePMLists = warehouseEntryPackageQuery.GetWarehouseEntryPackagePMListsByCustomerIdIdAndWarehouseId(customerId, warehouseId, tenant);
@@ -46,9 +44,6 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryPackageQueryService warehouseEntryPackageQuery = new WarehouseEntryPackageQueryService(MyContext);
                  List<WarehouseEntryPackagePM> warehouseEntryPackagePMLists = warehouseEntryPackageQuery.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(warehouseId, customerId , shipmentId, tenant);

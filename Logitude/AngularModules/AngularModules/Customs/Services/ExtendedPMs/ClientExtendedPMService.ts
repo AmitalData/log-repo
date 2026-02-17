@@ -1,22 +1,21 @@
 ﻿
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ClientPM } from '../../EntityPMs/ClientPM';
 
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 
 @Injectable()
 
 export class ClientExtendedPMService {
-    private _http: HttpClient
+    private _http: Http
     private _apiUrl: string;
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Client';
     }
 
@@ -24,12 +23,12 @@ export class ClientExtendedPMService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSingleClientPMByCode?code=' + code + '&tenant=' + tenant.toString(), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSingleClientPMByCode?code=' + code + '&tenant=' + tenant.toString(), { headers: authHeader }).map(response => {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-               // serviceResponse.Result = response;
+               // serviceResponse.Result = response.json();
 
-                var pm = response;
+                var pm = response.json();
 
                 var entity: ClientPM;
                 if (pm) {
@@ -41,7 +40,7 @@ export class ClientExtendedPMService {
                 serviceResponse.Result = entity;
                 return serviceResponse;
 
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
 
     }

@@ -4,12 +4,8 @@ using System.Linq;
 using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.CustomsMessaging.Common.Gen;
-using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -17,15 +13,11 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
     {
         public static void Validate(EntityPMs.TruckerPM entityPM, Card Card, ICommonDataContext myContext, bool isNewEntity)
         {
-
-            // ValidateVatNumber(entityPM);
-            if (!isNewEntity) ValidateCode(myContext, Card);
-
             TenantRepository tenantRepository = new TenantRepository(myContext);
             Tenant myTenant = tenantRepository.GetSingleTenantOnly(entityPM.Tenant);
             CardValidating.ValidateCode_Unique(Card, myContext);
 
-
+            
 
             if (myTenant.ApplyVATForAllPartners)
             {
@@ -41,35 +33,6 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
             {
                 AddressValidating.Validate(itemPM);
             }
-        }
-
-        private static void ValidateCode(ICommonDataContext myContext, Card card)
-        {
-            if (string.IsNullOrEmpty(card.Code) || card.Code.Length < 0 || card.Code.Length >= 7)
-                throw new ApplicationException("Code field must be less than 7 and more than 0");
-
-            var codeExists = myContext.Cards.Any(x => x.Id != card.Id && x.Code == card.Code && x.Tenant == card.Tenant && x.PartnerTypeId == "TR");
-            if (codeExists) throw new ApplicationException("This trucker already exists");
-        }
-
-        private static void ValidateVatNumber(TruckerPM entityPM)
-        {
-            bool isAccountingActivated = CheckFullAccountingActivated(entityPM.Tenant);
-
-            if (isAccountingActivated && !string.IsNullOrEmpty(entityPM.VatNumber))
-            {
-                var isValid = LuhnAlgorithm.IsVatNumberValid(entityPM.VatNumber);
-                var isZeros = Int32.Parse(entityPM.VatNumber) == 0;
-                if (!isValid || isZeros)
-                    throw new ApplicationException(TranslateTextsClass.Translate("General.O.WrongVatNumber", entityPM.Tenant));
-            }
-        }
-
-        private static bool CheckFullAccountingActivated(int tenantNumber)
-        {
-            var tenant = TenantQuery.GetSingleTenantPM(tenantNumber);
-            var isAccountingActivated = tenant.AccountingActivated;
-            return isAccountingActivated;
         }
     }
 }

@@ -68,7 +68,7 @@
                     </td>
 
                     <td style="width:80px;">
-                        <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
                     </td>
 
                     <td></td>
@@ -201,24 +201,13 @@
                             </tr>
                         </table>
                     </td>
-
                     <td style="width:10px;">
                         <div></div>
                     </td>
 
                     <!--Directions Filter-->
                     <td style="width:150px">
-                        <DirectionsFilter  [SelectedValue]="MySelectedDirectionFilter" (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
-                    </td>
-
-                    <td style="width:10px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width:100px;">Transport Mode</td>
-
-                    <td style="width:117px;">
-                        <TransportsFilter [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                        <DirectionsFilter (SelectedValueChanged)="MySelectedDirectionFilter = $event"></DirectionsFilter>
                     </td>
 
                     <td>

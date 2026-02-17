@@ -23,17 +23,10 @@ declare var window: any;
 declare var insertAtSubject;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditRuleComponent.html',
 })
 export class AddEditRuleComponent extends BaseComponent {
-  public ObjectTableName: string = null;
-  public CurrentObjectTable: string = null;
-  //public ActiveForNew: boolean = false;
-  //public ActiveForUpdate: boolean = false;
-  public AdvancedCondition: boolean = false;
-  public InActive: boolean = false;
-
     FieldsLovQueryFilters: ApiQueryFilters;
     public DataContext: ObjectTableRulePM;
     public ValidationErrorsList: string[] = [];
@@ -43,7 +36,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
     public IsResourcesReady: boolean = false;
     private ObjectTableId: string;
-    IsNewEntity: boolean = false;
+    private IsNewEntity: boolean = false;
     private IsCopyFromSystemRule: boolean = false;
     public ConditionTXTAreaId: string;
 
@@ -172,7 +165,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
         for (var k in this.DataContext.RuleConditionFields) {
             var field = this.DataContext.RuleConditionFields[k];
-            var objectField: ObjectFieldPM = this.ObjectFields.filter(f => f.FieldCode == field.ObjectFieldCode)[0];
+            var objectField: ObjectFieldPM = this.ObjectFields.filter(f => f.Id == field.ObjectFieldId)[0];
             if (objectField) {
                 var mappedField = this.MapJsonToEntityPM(objectField);
                 this.AddFilterField(mappedField);
@@ -187,12 +180,10 @@ export class AddEditRuleComponent extends BaseComponent {
         this.IsCopyFromSystemRule = true;
         let tenantLevelRule: ObjectTableRulePM = new ObjectTableRulePM();
         tenantLevelRule.RuleTypeCode = systemLevelRule.RuleTypeCode;
-        tenantLevelRule.IsCreatedFromSystemRule = true;
         tenantLevelRule.RuleCode = systemLevelRule.RuleCode;
         tenantLevelRule.RuleNotificationTypeCode = systemLevelRule.RuleNotificationTypeCode;
         tenantLevelRule.TriggerTypeCode = systemLevelRule.TriggerTypeCode;
         tenantLevelRule.TriggerFieldId = systemLevelRule.TriggerFieldId;
-        tenantLevelRule.TriggerFieldCode = systemLevelRule.TriggerFieldCode;
         tenantLevelRule.ActiveForNew = systemLevelRule.ActiveForNew;
         tenantLevelRule.ActiveForUpdate = systemLevelRule.ActiveForUpdate;
         tenantLevelRule.AdvancedCondition = systemLevelRule.AdvancedCondition;
@@ -205,7 +196,6 @@ export class AddEditRuleComponent extends BaseComponent {
         systemLevelRule.RuleConditionFields.forEach(item => {
             var newField: RuleConditionFieldPM = new RuleConditionFieldPM(tenantLevelRule);
             newField.ObjectFieldId = item.ObjectFieldId;
-            newField.ObjectFieldCode = item.ObjectFieldCode;
             newField.ObjectFieldName = item.ObjectFieldName;
             newField.Operator = item.Operator;
             newField.Value = item.Value;
@@ -219,7 +209,6 @@ export class AddEditRuleComponent extends BaseComponent {
             let ruleField: ObjectTableRuleFieldPM = new ObjectTableRuleFieldPM();
             ruleField.Id = 'New';
             ruleField.ObjectFieldId = item.ObjectFieldId;
-            ruleField.ObjectFieldCode = item.ObjectFieldCode;
             ruleField.ObjectTableRuleId = tenantLevelRule.Id;
             ruleField.SystemLevel = false;
             ruleField.Tenant = SessionLocator.Tenant;
@@ -267,7 +256,7 @@ export class AddEditRuleComponent extends BaseComponent {
         if (this.SelectedConditionObjectFields == undefined) {
             this.SelectedConditionObjectFields = [];
         }
-        var conditionField = this.DataContext.RuleConditionFields.filter(d => d.ObjectFieldCode == field.FieldCode)[0];
+        var conditionField = this.DataContext.RuleConditionFields.filter(d => d.ObjectFieldId == field.Id)[0];
         if (conditionField) {
             var value = conditionField.Value;
             this.FieldsValues.SetFieldValue(field.Id, value);
@@ -386,10 +375,10 @@ export class AddEditRuleComponent extends BaseComponent {
         var table = window.ObjectTables.filter(d => d.Id == tableId)[0];
         if (table) tableName = table.Name;
 
-        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe(response => {
 
-            if (table && !table.IsCustom) {
-                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
+            if (table) {
+                this._entityResourceService.getEntityResourceByTableName(tableName).subscribe(response => {
                     this.ViewDataField(tableId);
                 });
             }
@@ -444,10 +433,6 @@ export class AddEditRuleComponent extends BaseComponent {
             }
         }
 
-        if(this.DataContext.RuleTypeCode == "EVAL" && AppTool.IsNullOrEmpty(this.DataContext.OutputMessage)){
-            this.ValidationErrorsList.push("Output Message field is required");
-        }
-
         if (AppTool.IsNullOrEmpty(this.DataContext.RuleCode)) {
             this.ValidationErrorsList.push("Code field is required");
         }
@@ -461,7 +446,7 @@ export class AddEditRuleComponent extends BaseComponent {
         }
 
         if (this.DataContext.TriggerTypeCode == "FLDC") {
-            if (AppTool.IsNullOrEmpty(this.DataContext.TriggerFieldCode)) {
+            if (AppTool.IsNullOrEmpty(this.DataContext.TriggerFieldId)) {
                 this.ValidationErrorsList.push("Trigger Field is required");
             }
         }
@@ -499,7 +484,6 @@ export class AddEditRuleComponent extends BaseComponent {
                 var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
                 var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
                 newField.ObjectFieldId = item.ObjectField.Id;
-                newField.ObjectFieldCode = item.ObjectField.FieldCode;
                 newField.ObjectFieldName = item.ObjectField.FieldName;
                 newField.Operator = item.Operation.Code;
                 newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
@@ -515,7 +499,7 @@ export class AddEditRuleComponent extends BaseComponent {
             }
         });
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this._objectTableRulePMService.update(this.DataContext).subscribe((resp:any) => {
+        this._objectTableRulePMService.update(this.DataContext).subscribe(resp => {
             if (!resp.HasError) {
                 var ruleFields: ObjectTableRuleFieldPM[] = [];
                 this.RuleFields.forEach(r => {
@@ -552,7 +536,6 @@ export class AddEditRuleComponent extends BaseComponent {
                 var ruleConditionField = new RuleConditionFieldPM(this.DataContext);
                 var newField: RuleConditionFieldPM = new RuleConditionFieldPM(this.DataContext);
                 newField.ObjectFieldId = item.ObjectField.Id;
-                newField.ObjectFieldCode = item.ObjectField.FieldCode;
                 newField.ObjectFieldName = item.ObjectField.FieldName;
                 newField.Operator = item.Operation.Code;
                 newField.Value = FieldValueResolver.GetFieldStringValue(item.ObjectField, item.TextValue);
@@ -563,7 +546,7 @@ export class AddEditRuleComponent extends BaseComponent {
             }
         });
         this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this._objectTableRulePMService.insert(this.DataContext).subscribe((resp:any) => {
+        this._objectTableRulePMService.insert(this.DataContext).subscribe(resp => {
             if (!resp.HasError && resp.Result) {
                 var ruleFields: ObjectTableRuleFieldPM[] = [];
                 this.RuleFields.forEach(r => {
@@ -626,25 +609,24 @@ export class AddEditRuleComponent extends BaseComponent {
             if ($event) {
 
                 var expression = null;
-                var objectFieldCode = $event;
+                var objectFieldId = $event;
                 if (this.DataContext.RuleTypeCode == 'SETV') {
-                    objectFieldCode = $event.split(',')[0];
+                    objectFieldId = $event.split(',')[0];
                     if ($event.split(',').length > 1) {
                         expression = $event.split(',')[1];
                     }
                 }
-                var selectedField: ObjectFieldPM = this.ObjectFields.filter(f => f.FieldCode == objectFieldCode)[0];
+                var selectedField: ObjectFieldPM = this.ObjectFields.filter(f => f.Id == objectFieldId)[0];
 
                 if (selectedField) {
-                    if (!this.currentRuleFields.filter(f => f.ObjectFieldCode == selectedField.FieldCode)[0]) {
+                    if (!this.currentRuleFields.filter(f => f.ObjectFieldId == selectedField.Id)[0]) {
                         var ruleField: ObjectTableRuleFieldPM = null;
 
-                        if (!this.removedFields.filter(f => f.ObjectFieldCode == selectedField.FieldCode)[0]) {
+                        if (!this.removedFields.filter(f => f.ObjectFieldId == selectedField.Id)[0]) {
                            
                             ruleField = new ObjectTableRuleFieldPM();
                             ruleField.Id = 'New';
                             ruleField.ObjectFieldId = selectedField.Id;
-                            ruleField.ObjectFieldCode = selectedField.FieldCode;
                             ruleField.ObjectTableRuleId = this.DataContext.Id;
                             ruleField.SystemLevel = false;
                             ruleField.Tenant = SessionLocator.Tenant;
@@ -660,7 +642,7 @@ export class AddEditRuleComponent extends BaseComponent {
                         }
 
                         else {
-                            ruleField = this.removedFields.filter(f => f.ObjectFieldCode == selectedField.FieldCode)[0];
+                            ruleField = this.removedFields.filter(f => f.ObjectFieldId == selectedField.Id)[0];
                             ruleField.Expression = expression;
                             var index = this.removedFields.indexOf(ruleField);
                             if (index > -1) {
@@ -759,7 +741,7 @@ export class AddEditRuleComponent extends BaseComponent {
         //    var advanceFilter = this.AdvancedQueryFilterPMs.filter(f => f.ObjectFieldId == field.ObjectField.Id && f.QueryId == this.QueryId)[0];
         //var myService: AdvancedQueryFiltersPMService = new AdvancedQueryFiltersPMService();
         //myService.setServiceArgs(this.serviceArgs);
-        //myService.delete(advanceFilter).subscribe((myResult:any) => {
+        //myService.delete(advanceFilter).subscribe(myResult => {
         if (this.SelectedConditionObjectFields != null) {
             var filter: ConditionFilterField = this.SelectedConditionObjectFields.filter(a => a.ObjectField.Id == field.ObjectField.Id)[0];
             if (filter) {

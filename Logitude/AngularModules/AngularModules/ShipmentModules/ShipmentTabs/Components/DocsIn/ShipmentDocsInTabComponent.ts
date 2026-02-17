@@ -10,7 +10,7 @@ import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './ShipmentDocsInTabComponent.html',
   

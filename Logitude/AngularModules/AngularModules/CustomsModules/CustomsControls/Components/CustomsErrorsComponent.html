@@ -1,11 +1,11 @@
 ﻿<style>
-    .ErrorsDiv {
-        background: #F7E3E3;
+    .ErrorsDiv{
+        background:#F7E3E3;
         border: solid 1px #DA6F6F;
         width: 100%;
-
-        border-radius: 7px;
-        overflow: auto;
+        
+        border-radius:7px;
+        overflow:auto;
     }
 </style>
 
@@ -14,17 +14,12 @@
         {{ErrorsCount}}
     </div>
 
-    <div *ngFor="let error of Errors">
-        <img src="./Images/ValidationError.png" style="width:17px;margin-right:3px;margin-top:3px;" />
-        <span style="color: #444444;">{{error}}</span>
-
-    </div>
-    <div *ngFor="let warning of Warning">
-        <img src="./Images/WarningIcon.png" style="width:17px;margin-right:3px;margin-top:3px;" />
-        <span style="color: #444444;">{{warning}}</span>
-
-    </div>
-
+   <div *ngFor="let error of Errors">
+       <img src="./Images/ValidationError.png" style="width:17px;margin-right:3px;margin-top:3px;"/>
+       <span style="color: #444444;">{{error}}</span>
+       
+   </div>
+    
 </div>
 
 <table style="float: left; vertical-align: bottom; margin-top: 8px; height:23px;">
@@ -36,9 +31,6 @@
         <td *ngIf="CancelButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
             <button class="Button" (click)="CancelButtonClicked()">{{CancelButtonText}}</button>
         </td>
-        <td *ngIf="CloseButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
-            <button class="Button" (click)="CloseButtonClicked()">{{CloseButtonText}}</button>
-        </td>
 
         <td *ngIf="NoButtonVisibility" style="width: 57px;vertical-align: bottom;padding-left:5px">
             <button class="Button" (click)="NoButtonClicked()">{{NoButtonText}}</button>
@@ -47,7 +39,8 @@
         <td style="width: 57px;vertical-align: bottom; padding-left:5px">
             <button class="RedButton" (click)="OkButtonClicked()">{{SaveButtonText}}</button>
         </td>
-
+       
 
     </tr>
 </table>
+

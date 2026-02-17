@@ -167,16 +167,16 @@
                                     <div class="QueriesSection">
                                         <div>Views</div>
                                         <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
-                                            <button  id="{{'NewCustomer' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="NewCustomerClicked()">New</button>
+                                            <button  id="{{'NewCustomer' | IdGeneratorPipe}}" class="Button" (click)="NewCustomerClicked()">New</button>
                                         </div>
                                         <div>
-                                            <p *ngIf="IsMyCustomersSalesmanQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('My')">My Customers (as Salesman) ({{Customers_My}})</p>
-                                            <p *ngIf="IsMyCustomersAccontManagerQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('AccontManager')">My Customers (as Account Manager) ({{Customers_AccontManager}})</p>
-                                            <p *ngIf="IsWaitingForActivationQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('ReadyCustomers')">Waiting for Activation ({{Customers_Waiting}})</p>
-                                            <p *ngIf="IsPotentialCustomersQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('PotentialCustomers')">Potential Customers ({{Customers_Potential}})</p>
-                                            <p *ngIf="IsActiveCustomersQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('ActiveCustomers')">Active Customers ({{Customers_Active}})</p>
-                                            <p *ngIf="IsInactiveCustomersQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('InactiveCustomers')">Inactive Customers ({{Customers_Inactive}})</p>
-                                            <p *ngIf="IsAllCustomersQueryVisible" class="QueryLink" (click)="ViewCustomerQuery('All')">All Customers</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('My')">My Customers (as Salesman) ({{Customers_My}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('AccontManager')">My Customers (as Account Manager) ({{Customers_AccontManager}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('ReadyCustomers')">Waiting for Activation ({{Customers_Waiting}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('PotentialCustomers')">Potential Customers ({{Customers_Potential}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('ActiveCustomers')">Active Customers ({{Customers_Active}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('InactiveCustomers')">Inactive Customers ({{Customers_Inactive}})</p>
+                                            <p class="QueryLink" (click)="ViewCustomerQuery('All')">All Customers</p>
                                         </div>
                                     </div>
 

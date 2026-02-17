@@ -21,7 +21,7 @@ describe('APInvoice Module', function () {
 
     browser.ignoreSynchronization = true;
 
-    Helper.GoToMainMenu2('General.MH.FullAccounting');
+    Helper.GoToMainMenu('General.MH.FullAccounting');
     F.WaitByIdAndClick('FAVND');
     var NUM= Helper.RandomNum();
     appayment.CreateNewAPPayment('Test Customer GLAccount');

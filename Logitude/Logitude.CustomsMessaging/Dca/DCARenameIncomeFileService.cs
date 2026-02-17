@@ -1,5 +1,4 @@
-﻿using Logitude.Server.Tools.ExternalServices;
-using Logitude.Server.Tools.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
 using System;
 using System.Collections.Generic;
@@ -10,15 +9,17 @@ namespace Logitude.CustomsMessaging.Dca
 {
     class DCARenameIncomeFileService : IDisposable
     {
-        private IDcaManagerShim _dca;
-        public DCARenameIncomeFileService(IDcaManagerShim dca)
+        private Server.Tools.ExternalServices.DcaManager _DcaManager;
+
+        public DCARenameIncomeFileService(Server.Tools.ExternalServices.DcaManager _DcaManager)
         {
-            _dca = dca;
+            // TODO: Complete member initialization
+            this._DcaManager = _DcaManager;
         }
 
         public void Dispose()
         {
-            this._dca = null;
+            this._DcaManager = null;
         }
 
         internal bool RenameIt(Customs.Def.EntityPMs.InterfaceTenantDefinitionManagementPM messageDCA, Customs.BL.Utils.DCAFileModel dcaFile, string _AppendToDownloadFolderName)
@@ -57,7 +58,7 @@ namespace Logitude.CustomsMessaging.Dca
                 LogMessagingUtil.Instance.AppendLine("newFileName=" + newFileName);
                 bool errorOccurred=false;string MessageLog="";
                 string MoreParams = "";
-                _dca.RenameIncomeFile(dcaFile.SelectedFileDownload, newFileName, _AppendToDownloadFolderName, ref MoreParams,
+                _DcaManager.RenameIncomeFile(dcaFile.SelectedFileDownload, newFileName, _AppendToDownloadFolderName, ref MoreParams,
                     out errorOccurred, out MessageLog);
                 if (errorOccurred)
                 {

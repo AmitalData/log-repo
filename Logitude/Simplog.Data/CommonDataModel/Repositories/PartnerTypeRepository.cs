@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public PartnerTypeRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public PartnerTypeRepository(ICommonDataContext context)
         {
@@ -38,13 +41,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from a in context.PartnerTypes
                     where a.Id == id
-                    select a).FirstOrDefault();
-        }
-
-        public PartnerType GetSinglePartnerTypeByName(string name)
-        {
-            return (from a in context.PartnerTypes
-                    where a.Name == name
                     select a).FirstOrDefault();
         }
 

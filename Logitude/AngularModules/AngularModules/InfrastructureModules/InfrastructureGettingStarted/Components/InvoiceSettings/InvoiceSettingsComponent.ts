@@ -13,7 +13,7 @@ import {ObjectsUpdater} from '../../../../Infrastructure/Locators/ObjectsUpdater
 
 @Component({
     selector: 'InvoiceSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './InvoiceSettingsComponent.html',
 })
 
@@ -78,19 +78,14 @@ export class InvoiceSettingsComponent extends BaseComponent implements OnInit {
         this.accountingSettings.AllowVoidARI = value;
     }
 
-    get AllowManualInvoiceNumber() {        return this.accountingSettings.AllowManualInvoiceNumber;    }
+    get AllowManualInvoiceNumber() {
+        return this.accountingSettings.AllowManualInvoiceNumber;
+    }
     set AllowManualInvoiceNumber(value: boolean) {
         this.accountingSettings.AllowManualInvoiceNumber = value;
 
         if (value) {
             this.IsARInvoiceChronologicalDates = false;
-        }
-    }
-
-    get AllowManualARPaymentNumber() { return this.accountingSettings.AllowManualARPaymentNumber; }
-    set AllowManualARPaymentNumber(value: boolean) {
-        if (this.accountingSettings.AllowManualARPaymentNumber != value) {
-            this.accountingSettings.AllowManualARPaymentNumber = value;
         }
     }
 

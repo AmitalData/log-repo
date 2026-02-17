@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Linq;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
+
+//using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 
 namespace Simplog.Data.InfrastructureModel
@@ -19,10 +21,17 @@ namespace Simplog.Data.InfrastructureModel
         public MockObjectSet<Country> CountriesList;
         public MockObjectSet<GlobalZone> GlobalZonesList;
         private MockObjectSet<User> usersList;
+        //private MockObjectSet<Contact> contactsList;
+        //private MockObjectSet<ContactTenant> contactTenantsList;
+        //private MockObjectSet<Tenant> tenantList;
+        //private MockObjectSet<ContactTenantRole> contactTenantRolesList;
+        //private MockObjectSet<Role> rolesList;
         private MockObjectSet<TransportMode> transportModeList;
         private MockObjectSet<EntityStatus> entityStatusList;
         private MockObjectSet<FollowUp> followUpList;
         private MockObjectSet<Counter> counterList;
+        //private MockObjectSet<EventType> eventTypeList;
+        //private MockObjectSet<ObjectTable> objectTableList;
 
         #region IWebFreightContext Members
 
@@ -89,10 +98,7 @@ namespace Simplog.Data.InfrastructureModel
 
         #endregion
 
-        public DbContextTransaction GetSnapshotTransaction()
-        {
-            throw new NotImplementedException();
-        }
+
         public IDbSet<User> Users
         {
             get
@@ -364,10 +370,7 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<EntityStatusType> EntityStatusTypes
-        {
-            get { throw new NotImplementedException(); }
-        }
+
 
         public IDbSet<SpecialService> SpecialServices
         {
@@ -1198,16 +1201,6 @@ namespace Simplog.Data.InfrastructureModel
             }
         }
 
-        public IDbSet<AdditionalCurrencyRate> AdditionalCurrencyRates
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IDbSet<CurrencyRate> CurrencyRates
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         List<EventType> eventTypes;
         MockObjectSet<EventType> eventTypesObjectSet;
         public IDbSet<EventType> EventType
@@ -1476,21 +1469,6 @@ namespace Simplog.Data.InfrastructureModel
                 chargesGroupList.AddObject(chargesGroup1);
           
                 return chargesGroupList;
-            }
-        }
-
-        private MockObjectSet<QuoteChargesGroup> quoteChargesGroupList;
-        public IDbSet<QuoteChargesGroup> QuoteChargesGroups
-        {
-            get
-            {
-                quoteChargesGroupList = new MockObjectSet<QuoteChargesGroup>();
-                QuoteChargesGroup chargesGroup1 = new QuoteChargesGroup() { Code = "CG" };
-
-
-                quoteChargesGroupList.AddObject(chargesGroup1);
-
-                return quoteChargesGroupList;
             }
         }
 
@@ -1797,7 +1775,7 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<ImageLibrary> ImageLibraries
+        public IDbSet<ImageLibrary> ImageLibrarys
         {
             get { throw new NotImplementedException(); }
         }
@@ -1928,6 +1906,7 @@ namespace Simplog.Data.InfrastructureModel
         {
             throw new NotImplementedException();
         }
+
 
         public IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates
         {
@@ -2088,39 +2067,5 @@ namespace Simplog.Data.InfrastructureModel
         {
             get { throw new NotImplementedException(); }
         }
-
-        public IDbSet<RuleUpdateHistory> RuleUpdateHistories => throw new NotImplementedException();
-
-        IQueryable<ObjectField> IWebFreightContext.ObjectFields => throw new NotImplementedException();
-
-        DbSet<TextCode> IWebFreightContext.TextCodes => throw new NotImplementedException();
-
-        public IDbSet<WorkerRoleName> WorkerRoleNames => throw new NotImplementedException();
-
-        public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs => throw new NotImplementedException();
-
-        public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs => throw new NotImplementedException();
-
-        public IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields => throw new NotImplementedException();
-
-        public IDbSet<ScreenSection> ScreenSections => throw new NotImplementedException();
-
-        public IDbSet<TabModification> TabsModifications
-        {
-            get;
-            set;
-        }
-
-        public DbSet<ObjectField> ObjectFieldsDbSet => throw new NotImplementedException();
-        public IDbSet<CustomChildObject> CustomChildObjects => throw new NotImplementedException();
-        public IDbSet<DataCustomObject> DataCustomObjects => throw new NotImplementedException();
-        public IDbSet<ReferenceCustomObject> ReferenceCustomObjects => throw new NotImplementedException();
-        public IDbSet<DeploymentPackage> DeploymentPackages => throw new NotImplementedException();
-        public IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions => throw new NotImplementedException();
-        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects => throw new NotImplementedException();
-        public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs => throw new NotImplementedException();
-        public IDbSet<EventRemark> EventRemarks => throw new NotImplementedException();
-        public IDbSet<SearchIndex> SearchIndexes => throw new NotImplementedException();
-        public IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories => throw new NotImplementedException();
     }
 }

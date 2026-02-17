@@ -20,7 +20,7 @@ export class TasksSchedulerPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -185,16 +185,6 @@ export class TasksSchedulerPM {
     public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
        
 	 
-    private entityId: string;
-    public get EntityId() { return this.entityId; }
-    public set EntityId(newValue: string) { if (this.entityId != newValue) { this.entityId = newValue; this.MarkAsDirty("EntityId"); } }
-       
-	 
-    private recepients: string;
-    public get Recepients() { return this.recepients; }
-    public set Recepients(newValue: string) { if (this.recepients != newValue) { this.recepients = newValue; this.MarkAsDirty("Recepients"); } }
-       
-	 
     private lastRunEndTime: Date;
     public get LastRunEndTime() { return this.lastRunEndTime; }
     public set LastRunEndTime(newValue: Date) { if (this.lastRunEndTime != newValue) { this.lastRunEndTime = newValue; this.MarkAsDirty("LastRunEndTime"); } }
@@ -220,41 +210,16 @@ export class TasksSchedulerPM {
     public set AverageRunTime(newValue: number) { if (this.averageRunTime != newValue) { this.averageRunTime = newValue; this.MarkAsDirty("AverageRunTime"); } }
        
 	 
-    private resultType: string;
-    public get ResultType() { return this.resultType; }
-    public set ResultType(newValue: string) { if (this.resultType != newValue) { this.resultType = newValue; this.MarkAsDirty("ResultType"); } }
-       
-	 
-    private format: string;
-    public get Format() { return this.format; }
-    public set Format(newValue: string) { if (this.format != newValue) { this.format = newValue; this.MarkAsDirty("Format"); } }
-       
-	 
-    private advancedFormat: string;
-    public get AdvancedFormat() { return this.advancedFormat; }
-    public set AdvancedFormat(newValue: string) { if (this.advancedFormat != newValue) { this.advancedFormat = newValue; this.MarkAsDirty("AdvancedFormat"); } }
-       
-	 
-    private executedByServerName: string;
-    public get ExecutedByServerName() { return this.executedByServerName; }
-    public set ExecutedByServerName(newValue: string) { if (this.executedByServerName != newValue) { this.executedByServerName = newValue; this.MarkAsDirty("ExecutedByServerName"); } }
-       
-	 
     private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
        
 	 
 
-    public DocumentTypeTemplateIds: Array<string>= [];
-		 
     public OldEntityPM: TasksSchedulerPM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -262,7 +227,6 @@ export class TasksSchedulerPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TasksScheduler");
            
         }
-	 }
     }
     private MyClone: TasksSchedulerPM;
 

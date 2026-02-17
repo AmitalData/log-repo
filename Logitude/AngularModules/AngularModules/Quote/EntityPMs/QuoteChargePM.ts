@@ -23,10 +23,10 @@ export class QuoteChargePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -78,16 +78,6 @@ export class QuoteChargePM {
     private viewOrder: number;
     public get ViewOrder() { return this.viewOrder; }
     public set ViewOrder(newValue: number) { if (this.viewOrder != newValue) { this.viewOrder = newValue; this.MarkAsDirty("ViewOrder"); } }
-       
-	 
-    private saleRatio: number;
-    public get SaleRatio() { return this.saleRatio; }
-    public set SaleRatio(newValue: number) { if (this.saleRatio != newValue) { this.saleRatio = newValue; this.MarkAsDirty("SaleRatio"); } }
-       
-	 
-    private costRatio: number;
-    public get CostRatio() { return this.costRatio; }
-    public set CostRatio(newValue: number) { if (this.costRatio != newValue) { this.costRatio = newValue; this.MarkAsDirty("CostRatio"); } }
        
 	 
     private quoteTypeCode: string;
@@ -153,11 +143,6 @@ export class QuoteChargePM {
     private vendorName: string;
     public get VendorName() { return this.vendorName; }
     public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
-       
-	 
-    private vendorCode: string;
-    public get VendorCode() { return this.vendorCode; }
-    public set VendorCode(newValue: string) { if (this.vendorCode != newValue) { this.vendorCode = newValue; this.MarkAsDirty("VendorCode"); } }
        
 	 
     private costMeasurementId: string;
@@ -235,11 +220,6 @@ export class QuoteChargePM {
     public set CostTotalAmountLocal(newValue: number) { if (this.costTotalAmountLocal != newValue) { this.costTotalAmountLocal = newValue; this.MarkAsDirty("CostTotalAmountLocal"); } }
        
 	 
-    private costAmountInSaleCurrency: number;
-    public get CostAmountInSaleCurrency() { return this.costAmountInSaleCurrency; }
-    public set CostAmountInSaleCurrency(newValue: number) { if (this.costAmountInSaleCurrency != newValue) { this.costAmountInSaleCurrency = newValue; this.MarkAsDirty("CostAmountInSaleCurrency"); } }
-       
-	 
     private saleCurrencyId: string;
     public get SaleCurrencyId() { return this.saleCurrencyId; }
     public set SaleCurrencyId(newValue: string) { if (this.saleCurrencyId != newValue) { this.saleCurrencyId = newValue; this.MarkAsDirty("SaleCurrencyId"); } }
@@ -278,11 +258,6 @@ export class QuoteChargePM {
     private saleTotalAmountLocal: number;
     public get SaleTotalAmountLocal() { return this.saleTotalAmountLocal; }
     public set SaleTotalAmountLocal(newValue: number) { if (this.saleTotalAmountLocal != newValue) { this.saleTotalAmountLocal = newValue; this.MarkAsDirty("SaleTotalAmountLocal"); } }
-       
-	 
-    private markUpCurrencyId: string;
-    public get MarkUpCurrencyId() { return this.markUpCurrencyId; }
-    public set MarkUpCurrencyId(newValue: string) { if (this.markUpCurrencyId != newValue) { this.markUpCurrencyId = newValue; this.MarkAsDirty("MarkUpCurrencyId"); } }
        
 	 
     private markUpTypeCode: string;
@@ -495,6 +470,11 @@ export class QuoteChargePM {
     public set CostUnitPrice5InSaleCurrency(newValue: number) { if (this.costUnitPrice5InSaleCurrency != newValue) { this.costUnitPrice5InSaleCurrency = newValue; this.MarkAsDirty("CostUnitPrice5InSaleCurrency"); } }
        
 	 
+    private costAmountInSaleCurrency: number;
+    public get CostAmountInSaleCurrency() { return this.costAmountInSaleCurrency; }
+    public set CostAmountInSaleCurrency(newValue: number) { if (this.costAmountInSaleCurrency != newValue) { this.costAmountInSaleCurrency = newValue; this.MarkAsDirty("CostAmountInSaleCurrency"); } }
+       
+	 
     private isBackToBack: boolean;
     public get IsBackToBack() { return this.isBackToBack; }
     public set IsBackToBack(newValue: boolean) { if (this.isBackToBack != newValue) { this.isBackToBack = newValue; this.MarkAsDirty("IsBackToBack"); } }
@@ -573,102 +553,7 @@ export class QuoteChargePM {
 	    //public QuoteChargePriceSteps: Array<QuotePriceStepsPMPM>= [];
  
     public QuoteChargePriceStepsChangeSet: Array<QuotePriceStepsPM>= [];
-		     private isCostAllIn: boolean;
-    public get IsCostAllIn() { return this.isCostAllIn; }
-    public set IsCostAllIn(newValue: boolean) { if (this.isCostAllIn != newValue) { this.isCostAllIn = newValue; this.MarkAsDirty("IsCostAllIn"); } }
-       
-	 
-    private tariffId: string;
-    public get TariffId() { return this.tariffId; }
-    public set TariffId(newValue: string) { if (this.tariffId != newValue) { this.tariffId = newValue; this.MarkAsDirty("TariffId"); } }
-       
-	 
-    private tariffNumber: string;
-    public get TariffNumber() { return this.tariffNumber; }
-    public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
-       
-	 
-    private tariffLineId: string;
-    public get TariffLineId() { return this.tariffLineId; }
-    public set TariffLineId(newValue: string) { if (this.tariffLineId != newValue) { this.tariffLineId = newValue; this.MarkAsDirty("TariffLineId"); } }
-       
-	 
-    private tariffVersion: number;
-    public get TariffVersion() { return this.tariffVersion; }
-    public set TariffVersion(newValue: number) { if (this.tariffVersion != newValue) { this.tariffVersion = newValue; this.MarkAsDirty("TariffVersion"); } }
-       
-	 
-    private saleTariffId: string;
-    public get SaleTariffId() { return this.saleTariffId; }
-    public set SaleTariffId(newValue: string) { if (this.saleTariffId != newValue) { this.saleTariffId = newValue; this.MarkAsDirty("SaleTariffId"); } }
-       
-	 
-    private saleTariffNumber: string;
-    public get SaleTariffNumber() { return this.saleTariffNumber; }
-    public set SaleTariffNumber(newValue: string) { if (this.saleTariffNumber != newValue) { this.saleTariffNumber = newValue; this.MarkAsDirty("SaleTariffNumber"); } }
-       
-	 
-    private saleTariffLineId: string;
-    public get SaleTariffLineId() { return this.saleTariffLineId; }
-    public set SaleTariffLineId(newValue: string) { if (this.saleTariffLineId != newValue) { this.saleTariffLineId = newValue; this.MarkAsDirty("SaleTariffLineId"); } }
-       
-	 
-    private saleTariffVersion: number;
-    public get SaleTariffVersion() { return this.saleTariffVersion; }
-    public set SaleTariffVersion(newValue: number) { if (this.saleTariffVersion != newValue) { this.saleTariffVersion = newValue; this.MarkAsDirty("SaleTariffVersion"); } }
-       
-	 
-    private hasPickup: boolean;
-    public get HasPickup() { return this.hasPickup; }
-    public set HasPickup(newValue: boolean) { if (this.hasPickup != newValue) { this.hasPickup = newValue; this.MarkAsDirty("HasPickup"); } }
-       
-	 
-    private hasDelivery: boolean;
-    public get HasDelivery() { return this.hasDelivery; }
-    public set HasDelivery(newValue: boolean) { if (this.hasDelivery != newValue) { this.hasDelivery = newValue; this.MarkAsDirty("HasDelivery"); } }
-       
-	 
-    private isRegionalTax: boolean;
-    public get IsRegionalTax() { return this.isRegionalTax; }
-    public set IsRegionalTax(newValue: boolean) { if (this.isRegionalTax != newValue) { this.isRegionalTax = newValue; this.MarkAsDirty("IsRegionalTax"); } }
-       
-	 
-    private quoteChargesGroupCode: string;
-    public get QuoteChargesGroupCode() { return this.quoteChargesGroupCode; }
-    public set QuoteChargesGroupCode(newValue: string) { if (this.quoteChargesGroupCode != newValue) { this.quoteChargesGroupCode = newValue; this.MarkAsDirty("QuoteChargesGroupCode"); } }
-       
-	 
-    private vATAmountInLocalCurrency: number;
-    public get VATAmountInLocalCurrency() { return this.vATAmountInLocalCurrency; }
-    public set VATAmountInLocalCurrency(newValue: number) { if (this.vATAmountInLocalCurrency != newValue) { this.vATAmountInLocalCurrency = newValue; this.MarkAsDirty("VATAmountInLocalCurrency"); } }
-       
-	 
-    private vATAmountInQuoteSaleCurrency: number;
-    public get VATAmountInQuoteSaleCurrency() { return this.vATAmountInQuoteSaleCurrency; }
-    public set VATAmountInQuoteSaleCurrency(newValue: number) { if (this.vATAmountInQuoteSaleCurrency != newValue) { this.vATAmountInQuoteSaleCurrency = newValue; this.MarkAsDirty("VATAmountInQuoteSaleCurrency"); } }
-       
-	 
-    private vATAmountInLineSaleCurrency: number;
-    public get VATAmountInLineSaleCurrency() { return this.vATAmountInLineSaleCurrency; }
-    public set VATAmountInLineSaleCurrency(newValue: number) { if (this.vATAmountInLineSaleCurrency != newValue) { this.vATAmountInLineSaleCurrency = newValue; this.MarkAsDirty("VATAmountInLineSaleCurrency"); } }
-       
-	 
-    private saleTotalAmountLocalIncludingVAT: number;
-    public get SaleTotalAmountLocalIncludingVAT() { return this.saleTotalAmountLocalIncludingVAT; }
-    public set SaleTotalAmountLocalIncludingVAT(newValue: number) { if (this.saleTotalAmountLocalIncludingVAT != newValue) { this.saleTotalAmountLocalIncludingVAT = newValue; this.MarkAsDirty("SaleTotalAmountLocalIncludingVAT"); } }
-       
-	 
-    private saleAmountInSaleCurrencyIncludingVAT: number;
-    public get SaleAmountInSaleCurrencyIncludingVAT() { return this.saleAmountInSaleCurrencyIncludingVAT; }
-    public set SaleAmountInSaleCurrencyIncludingVAT(newValue: number) { if (this.saleAmountInSaleCurrencyIncludingVAT != newValue) { this.saleAmountInSaleCurrencyIncludingVAT = newValue; this.MarkAsDirty("SaleAmountInSaleCurrencyIncludingVAT"); } }
-       
-	 
-    private saleTotalAmountIncludingVAT: number;
-    public get SaleTotalAmountIncludingVAT() { return this.saleTotalAmountIncludingVAT; }
-    public set SaleTotalAmountIncludingVAT(newValue: number) { if (this.saleTotalAmountIncludingVAT != newValue) { this.saleTotalAmountIncludingVAT = newValue; this.MarkAsDirty("SaleTotalAmountIncludingVAT"); } }
-       
-	 
-
+		 
     public OldEntityPM: QuoteChargePM;
 	    
 	private entityParentPM: any;
@@ -678,10 +563,7 @@ export class QuoteChargePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -691,7 +573,6 @@ export class QuoteChargePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuoteCharge");
            
         }
-	 }
     }
     private MyClone: QuoteChargePM;
 

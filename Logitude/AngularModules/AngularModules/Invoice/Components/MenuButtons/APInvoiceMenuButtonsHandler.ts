@@ -1,29 +1,24 @@
 declare var window: any;
-import { APInvoicePM } from '../../EntityPMs/APInvoicePM';
-import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM'
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-import { AppTool } from '../../../Infrastructure/Tools';
-import { APInvoiceValidator } from '../../Validators/APInvoiceValidator';
-import { InvoiceDomainService } from '../../Services/InvoiceDomainService';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
-import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
-import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { Alert } from 'selenium-webdriver';
+import {APInvoicePM} from '../../EntityPMs/APInvoicePM';
+import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import {AppTool} from '../../../Infrastructure/Tools';
+import {APInvoiceValidator}  from '../../Validators/APInvoiceValidator';
+import {InvoiceDomainService} from '../../Services/InvoiceDomainService';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
+import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
+import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 
 export class APInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: APInvoicePM;
     public entityArgs: EntityArgs
     isFullAccounting: boolean = false;
-    public approvedStatusCode: string = "AD";
-    public VoidStatusCode: string = "VD";
-
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -41,132 +36,124 @@ export class APInvoiceMenuButtonsHandler {
                     var myButtonIsDisabled = false;
 
                     switch (button.EventCode) {
-                        case "SaveAPInvoice": {
-                            // display always the save button
-                            break;
-                        }
-
-                        case "ApproveAPInvoice": {
-                            myButtonIsDisabled = true;
-
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
-                                myButtonIsDisabled = false;
-                            }
-
-                            break;
-                        }
-
-                        case "CancelApproval": {
-                            if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                button.IsHidden = true;
-                            }
-                            else {
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
-                                }
-
-                                else if (this.EntityPM.TransferStatusCode == "TR") {
-                                    myButtonIsDisabled = true;
-                                }
-
-                                else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || this.EntityPM.StatusCode == "VD") {
-                                    myButtonIsDisabled = true;
-                                }
-                            }
-
-                            break;
-                        }
-
-                        case "VoidAPInvoice": {
-                            if (SessionLocator.TenantPM.AccountingActivated == true) {
-                                if ((this.EntityPM != null && this.EntityPM.IsExternalEntity) || this.EntityPM.StatusCode == this.VoidStatusCode) {
-                                    myButtonIsDisabled = true;
-                                }
-                            }
-                            else {
-                                if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                    myButtonIsDisabled = true;
-                                }
-
-                                else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "VD") {
-                                    myButtonIsDisabled = true;
-                                }
-
-                            }
-                            break;
-                        }
-
-                        case "ReTransfer": {
-                            if (this.isFullAccounting) {
-                                button.IsHidden = true;
-                            }
-
-                            else {
-
+                        case "SaveAPInvoice":
+                            {
                                 myButtonIsDisabled = true;
 
-                                if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
-                                        if (this.EntityPM.TransferStatusCode == "TR") {
-                                            myButtonIsDisabled = false;
-                                        }
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
+                                    myButtonIsDisabled = false;
+                                }
+
+                                break;
+                            }
+
+                        case "ApproveAPInvoice":
+                            {
+                                myButtonIsDisabled = true;
+
+                                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA") {
+                                    myButtonIsDisabled = false;
+                                }
+
+                                break;
+                            }
+
+                        case "CancelApproval":
+                            {
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    button.IsHidden = true;
+                                }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    else if (this.EntityPM.TransferStatusCode == "TR") {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || this.EntityPM.StatusCode == "VD") {
+                                        myButtonIsDisabled = true;
                                     }
                                 }
 
-                            }
-                            break;
-                        }
-
-                        case "PrintAPInvoice": {
-                            myButtonIsDisabled = true;
-                            if (this.EntityPM.Id != null) {
-                                myButtonIsDisabled = false;
-                            }
-                            break;
-                        }
-
-                        case "SendToQBO": {
-                            if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
-                                button.IsHidden = false;
-                            }
-                            else {
-                                button.IsHidden = true;
-                            }
-                            if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
-                                button.DisplayText = "Send to QBO";
-                            }
-                            else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
-                                button.LabelTextCodeCode = null;
-                                button.DisplayText = "Resend to QBO";
-                            }
-                            if (this.EntityPM.ApprovedDate == null) {
-                                myButtonIsDisabled = true;
-                            }
-                            else {
-                                myButtonIsDisabled = false;
+                                break;
                             }
 
-                            break;
-                        }
-
-                        case "BlockFromTransfer": {
-                            var isHidden: boolean = true;
-
-                            if (this.EntityPM.TransferStatusCode == "ET") {
-                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
-                                    isHidden = false;
+                        case "VoidAPInvoice":
+                            {
+                                if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                    if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
+                                        myButtonIsDisabled = true;
+                                    }
                                 }
+                                else {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                    else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "VD") {
+                                        myButtonIsDisabled = true;
+                                    }
+
+                                }
+                                break;
                             }
 
-                            button.IsHidden = isHidden;
-                            break;
-                        }
+                        case "ReTransfer":
+                            {
+                                if (this.isFullAccounting) {
+                                    button.IsHidden = true;
+                                } else {
 
-                        case "CopyInvoice": {
-                            button.IsHidden = !SessionLocator.TenantPM.AccountingActivated;
-                            myButtonIsDisabled = this.SetEnableForCopyInvoiceButton(myButtonIsDisabled);
-                            break;
-                        }
+                                    myButtonIsDisabled = true;
+
+                                    if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
+                                        if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                            if (this.EntityPM.TransferStatusCode == "TR") {
+                                                myButtonIsDisabled = false;
+                                            }
+                                        }
+                                    }
+
+                                }
+                                break;
+                            }
+
+                        case "PrintAPInvoice":
+                            {
+                                myButtonIsDisabled = true;
+                                if (this.EntityPM.Id != null) {
+                                    myButtonIsDisabled = false;
+                                }
+                                break;
+                            }
+
+
+                        case "SendToQBO":
+                            {
+                                if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+                                    button.IsHidden = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                                if (this.EntityPM.TransferStatusCode == "RD" || this.EntityPM.TransferStatusCode == "NR") {
+                                    button.DisplayText = "Send to QBO";
+                                }
+                                else if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
+                                    button.LabelTextCodeCode = null;
+                                    button.DisplayText = "Resend to QBO";
+                                }
+                                if (this.EntityPM.ApprovedDate == null) {
+                                    myButtonIsDisabled = true;
+                                }
+                                else {
+                                    myButtonIsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
 
                     button.IsDisabled = myButtonIsDisabled;
@@ -175,13 +162,6 @@ export class APInvoiceMenuButtonsHandler {
             }
         }
     }
-    private SetEnableForCopyInvoiceButton(myButtonIsDisabled: boolean) {
-        if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
-            myButtonIsDisabled = true;
-        }
-        return myButtonIsDisabled;
-    }
-
     public MenuButtonClick(menuButton: MenuButtonPM) {
         if (!this.isButtonClicked) {
 
@@ -191,64 +171,62 @@ export class APInvoiceMenuButtonsHandler {
             this.ClickedButtonCode = menuButton.EventCode;
 
             switch (menuButton.EventCode) {
-                case "SaveAPInvoice": {
-                    this.SaveAPInvoiceClicked();
-                    break;
-                }
+                case "SaveAPInvoice":
+                    {
+                        this.SaveAPInvoiceClicked();
+                        break;
+                    }
 
-                case "ApproveAPInvoice": {
-                    this.ApproveClicked();
-                    break;
-                }
+                case "ApproveAPInvoice":
+                    {
+                        this.ApproveClicked();
+                        break;
+                    }
 
-                case "CancelApproval": {
-                    this.CancelApprovalClicked();
-                    break;
-                }
+                case "CancelApproval":
+                    {
+                        this.CancelApprovalClicked();
+                        break;
+                    }
 
-                case "VoidAPInvoice": {
-                    this.VoidClicked();
-                    break;
-                }
+                case "VoidAPInvoice":
+                    {
+                        this.VoidClicked();
+                        break;
+                    }
 
-                case "ReTransfer": {
-                    this.EnableReTransferClicked();
-                    break;
-                }
+                case "ReTransfer":
+                    {
+                        this.EnableReTransferClicked();
+                        break;
+                    }
 
-                case "PrintAPInvoice": {
-                    this.PrintClicked();
+                case "PrintAPInvoice":
+                    {
+                        this.PrintClicked();
 
-                    break;
-                }
+                        break;
+                    }
 
-                case "SendToQBO": {
-                    this.SendToQBO();
-                    break;
-                }
-
-                case "BlockFromTransfer": {
-                    this.BlockFromTransferToQBO();
-                    break;
-                }
-
-                case "CopyInvoice": {
-                    this.OpenCopyInvoiceScreen();
-                    break;
-                }
+                case "SendToQBO":
+                    {
+                        this.SendToQBO();
+                        break;
+                    }
 
                 default: {
                     this.StopFlags();
                     break;
                 }
             }
+
         }
     }
 
 
     SendToQBO() {
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.getConnectedAPPayments(this.EntityPM.Id).subscribe((response: any) => {
+        invoiceDomainService.getConnectedAPPayments(this.EntityPM.Id).subscribe(response => {
             if (!response.HasError) {
 
                 if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
@@ -375,7 +353,7 @@ export class APInvoiceMenuButtonsHandler {
 
         if (this.isValid) {
             this.ValidateInvoiceDate();
-
+          
         }
 
         else {
@@ -392,44 +370,21 @@ export class APInvoiceMenuButtonsHandler {
         service.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
 
 
-            if (response != null) {
-                this.CurrentSession.StopBusyIndicator();
+if (response != null) {
+ this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError) {
                     if (response.Result != null) {
                         this.ShowConfirmWindow(response.Result);
                     }
                     else {
-                        if (this.EntityPM.ConfirmationNumber == null) {
-                            this.entityArgs.EditComponent.StartBusyIndicatorLoading();
-                                                     
-                            service.ValidateConfirmationNumber(this.EntityPM.TotalVATs[0]?.LocalVATAmount.toString(),this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
-                                if (response != null) {
-                                    this.CurrentSession.StopBusyIndicator();
-                                    if (!response.HasError) {
-                                        if (response.Result != null) {
-                                            this.ShowConfirmWindow(response.Result);
-                                        }
-                                        else {
-                                            this.CheckDuplication();
-                                        }
-                                    }
-                                }
-                                else {
-                                    this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
-                                }
-
-                            })
-                        }
-                        else {
-                            this.CheckDuplication();
-                        }
+                        this.CheckDuplication();
                     }
                 }
                 else {
-                    this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+                    this.entityArgs.EditComponent.ValidationErrorsList  = response.ErrorsArray;
                 }
             }
-
+           
         });
 
     }
@@ -438,7 +393,7 @@ export class APInvoiceMenuButtonsHandler {
 
         let confirmWindow = new ConfirmWindow();
         confirmWindow.ShowWarningImage = true;
-
+   
         confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
         confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
         confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -454,7 +409,6 @@ export class APInvoiceMenuButtonsHandler {
     }
 
     CheckDuplication() {
-        
         var service: InvoiceDomainService = new InvoiceDomainService();
         service.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) {
@@ -463,32 +417,32 @@ export class APInvoiceMenuButtonsHandler {
             }
 
             else {
-                var isDuplicated: boolean = myResponse.Result;
-                if (isDuplicated) {
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Title = "Warning";
-                    confirmWindow.Width = 450;
-                    confirmWindow.Height = 190;
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
-                    confirmWindow.ShowCancelButton = false;
-                        confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber")+": "+this.EntityPM.InvoiceNumber);
+                    var isDuplicated: boolean = myResponse.Result;
+                    if (isDuplicated) {
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.Title = "Warning";
+                        confirmWindow.Width = 450;
+                        confirmWindow.Height = 190;
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+                        confirmWindow.ShowCancelButton = false;
+                        confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
 
-                    confirmWindow.WindowClosed.subscribe(c => {
-                        if (confirmWindow.Yes) {
-                            this.ContinueSaving();
-                        }
+                        confirmWindow.WindowClosed.subscribe(c => {
+                            if (confirmWindow.Yes) {
+                                this.ContinueSaving();
+                            }
 
-                        if (confirmWindow.No) {
-                            this.StopFlags();
-                        }
-                    });
+                            if (confirmWindow.No) {
+                                this.StopFlags();
+                            }
+                        });
+                    }
+
+                    else {
+                        this.ContinueSaving();
+                    }
                 }
-
-                else {
-                    this.ContinueSaving();
-                }
-            }
 
         });
     }
@@ -536,7 +490,6 @@ export class APInvoiceMenuButtonsHandler {
             messageWindow.Height = 190;
             messageWindow.Title = "Logitude Message";
             messageWindow.Show(messageText);
-            this.StopFlags();
         }
 
         else {
@@ -582,6 +535,10 @@ export class APInvoiceMenuButtonsHandler {
         }
     }
 
+
+
+
+
     CancelApprovalClickedProccess() {
         this.EntityPM.SetVoided = false;
         this.EntityPM.SetApproved = false;
@@ -591,23 +548,7 @@ export class APInvoiceMenuButtonsHandler {
     }
 
     VoidClicked() {
-        var isQuickBooks: boolean = false;
-        var isTransferingToQuickBooks: boolean = false;
-
         if (SessionLocator.AccountingSystemPM.Code == "QBO" || SessionLocator.AccountingSystemPM.Code == "QBOG") {
-            isQuickBooks = true;
-            isTransferingToQuickBooks = true;
-
-            if (this.EntityPM.StatusCode == null || this.EntityPM.StatusCode == "WA") {
-                isTransferingToQuickBooks = false;
-            }
-
-            else if (this.EntityPM.TransferStatusCode == "ET") {
-                isTransferingToQuickBooks = false;
-            }
-        }
-
-        if (isQuickBooks && isTransferingToQuickBooks) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("Please notice that QBO are not supporting void transmission for the APInvoice, you can void it manually from QBO");
             messageWindow.WindowClosed.subscribe(p => {
@@ -770,41 +711,5 @@ export class APInvoiceMenuButtonsHandler {
             ServiceLocator.SendTotangoUserActivity("APInvoice", "PrintInvoice");
             myPrintHelper.ShowPrintControl();
         }
-    }
-
-    BlockFromTransferToQBO() {
-
-        this.Validate();
-
-        if (this.isValid) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 400;
-            confirmWindow.Show("Please make sure that you've created the record manually at QBO online before marking as 'blocked for transfer', it is recommended to fix any issues and resend from the communication log rather than marking as blocked");
-            confirmWindow.WindowClosed.subscribe(s => {
-
-                this.StopFlags();
-
-                if (confirmWindow.Yes) {
-                    this.EntityPM.TransferStatusCode = "BL";
-                    this.EntityPM.TransferStatusName = "Blocked";
-                    this.entityArgs.EditComponent.SaveChanges("Blocking...");
-                }
-            });
-        }
-    }
-
-    OpenCopyInvoiceScreen() {
-        var windowTitle = TextCodeTranslator.Translate("APInvoice.O.CopyInvoice");
-        var windowArgs: any = {};
-        windowArgs.APInvoicePM = this.EntityPM;
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 700;
-        logWindow.Height = 610;
-        logWindow.Title = windowTitle;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        });
-        logWindow.Show('./Accounting/Components/Others/CopyInvoiceComponent');
     }
 }

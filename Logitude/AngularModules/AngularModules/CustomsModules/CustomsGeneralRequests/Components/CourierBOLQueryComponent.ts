@@ -19,7 +19,7 @@ import { DeclarationExtendedListService } from '../../../Customs/Services/Extend
 
 @Component({
     selector: 'CourierBOLQueryComponent',
-    
+    moduleId: module.id,
     templateUrl: './CourierBOLQueryComponent.html',
 })
 
@@ -203,7 +203,7 @@ export class CourierBOLQueryComponent
         currRequestParams.CustomFileNo = this.CustomFileNo;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשטרי מטען בלדר", true)
+            .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשטרי מטען בלדר", true)
             .then((res) => {
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();

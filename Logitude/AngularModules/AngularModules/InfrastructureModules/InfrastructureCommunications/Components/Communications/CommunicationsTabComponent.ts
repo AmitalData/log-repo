@@ -11,7 +11,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CommunicationsTabComponent.html',
 })
 
@@ -22,21 +22,17 @@ export class CommunicationsTabComponent implements OnDestroy {
     public IsTitleHidden: boolean = false;
     public IsForINTTRA: boolean = false;
     public ItemsSource: Array<CommunicationLogList>;
-    public EntityPM: any;
+    private EntityPM: any;
     public IsResourcesReady: boolean = false;
     public TabHeaderTextCode: string;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsShowWasAnalyzed = false;
-    private allCommunicationLogs: CommunicationLogList[];
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.ItemsSource = [];
-        this.allCommunicationLogs = [];
 
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.IsResourcesReady = true;
             this.Listen();
             this.InitTab();
-            this.SetIsShowWasAnalyzed();
         });
     }
 
@@ -64,17 +60,15 @@ export class CommunicationsTabComponent implements OnDestroy {
             this.ObjectTableName = "Shipment";
         }
 
+        // Ayman:
+        // we need this for Translation
+        // Please don't remove it
         this.TabHeaderTextCode = this.ObjectTableName + ".TH.Communications";
+
         this.ObjectTableId = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0].Id;
         this.LoadData();
     }
 
-    private SetIsShowWasAnalyzed() {
-        this.IsShowWasAnalyzed = false; 
-        if (this.ObjectTableName == 'Container')
-            this.IsShowWasAnalyzed = true;
-    }
-        
     private myService: CommunicationLogListService;
     private LoadData() {
         if (this.EntityId != null && this.ObjectTableId != null) {
@@ -106,46 +100,15 @@ export class CommunicationsTabComponent implements OnDestroy {
                 }
 
                 else {
-                    this.allCommunicationLogs = myResponse.Result;
-                    this.BuildItemsSource();                   
+                    this.ItemsSource = myResponse.Result;
                 }
             });
         }
     }
 
-    private BuildItemsSource() {
-        this.ItemsSource = [];
-
-        if (this.allCommunicationLogs != null) {
-            if (this.ObjectTableName == 'Container') {
-                if (this.IncludeNotAnalyzed) {
-                    this.ItemsSource = this.allCommunicationLogs;
-                }
-                else {
-                    this.ItemsSource = this.allCommunicationLogs.filter(d => d.WasAnalyzed || d.InOut == 'Out');
-                }
-            }
-
-            else {
-                this.ItemsSource = this.allCommunicationLogs;
-            }
-        }        
-    }
-
     RefreshButtonClicked() {
         this.LoadData();
     }
-
-    private includeNotAnalyzed: boolean = false;
-    get IncludeNotAnalyzed() { return this.includeNotAnalyzed; }
-    set IncludeNotAnalyzed(newValue: boolean) {
-        if (this.includeNotAnalyzed != newValue) {
-            this.includeNotAnalyzed = newValue;
-            this.BuildItemsSource();
-        }
-    }
-
-
 
     ViewXMLClicked(item: CommunicationLogList) {
         DownloadManager.DownloadCommunicationLogXML(item);

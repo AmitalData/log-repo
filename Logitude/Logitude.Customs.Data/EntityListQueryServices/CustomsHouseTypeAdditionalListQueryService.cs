@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomsHouseTypeAdditionalList> GetIqueryableList(IQueryable<CustomsHouseTypeAdditional> iQueryable)
         {
-            IQueryable<CustomsHouseTypeAdditionalList> query = (from a in iQueryable.Include("CustomsHouseType").Include("TransportMode").Include("UnloadingSiteType")
+            IQueryable<CustomsHouseTypeAdditionalList> query = (from a in iQueryable.Include("CustomsHouseType").Include("CustomsTransportMode").Include("UnloadingSiteType")
                                                                 select new CustomsHouseTypeAdditionalList()
                                                     {
                                                         Code = a.Code,
@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        Tenant = a.Tenant,
                                                         Name = a.CustomsHouseType != null ? a.CustomsHouseType.LocalName : null,
                                                        TransportModeId = a.TransportModeId,
-                                                       TransportModeName = a.TransportMode != null? a.TransportMode.LocalName: null,
+                                                       TransportModeName = a.CustomsTransportMode != null? a.CustomsTransportMode.LocalName: null,
                                                        UnloadPortCode = a.UnloadPortCode,
                                                        UnloadPortName = a.UnloadingSiteType != null? a.UnloadingSiteType.LocalName: null,
                                                         SearchFields = a.SearchFields,

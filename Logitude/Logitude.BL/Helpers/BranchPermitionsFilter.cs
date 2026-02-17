@@ -3,7 +3,6 @@ using System.Linq;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
-using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -18,7 +17,7 @@ namespace Logitude.BL.Helpers
                 ContactQuery contactRep = new ContactQuery(tenant);
                 UserQuery userQuery = new UserQuery(tenant);
 
-                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, false);
                 UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
                 if (user != null && user.IsBranchRestricted)
                 {
@@ -44,9 +43,9 @@ namespace Logitude.BL.Helpers
             {
                 ContactQuery contactRep = new ContactQuery(tenant);
                 UserQuery userQuery = new UserQuery(tenant);
-                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+
+                ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, false);
                 UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
-                
                 if (user != null && user.IsBranchRestricted)
                 {
                     string values = "";
@@ -81,7 +80,7 @@ namespace Logitude.BL.Helpers
                     ContactQuery contactRep = new ContactQuery(tenant);
                     UserQuery userQuery = new UserQuery(tenant);
 
-                    ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                    ContactPM contact = contactRep.GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, false);
                     UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
                     if (user != null && user.IsBranchRestricted)
                     {
@@ -110,15 +109,6 @@ namespace Logitude.BL.Helpers
             {
                 return entity;
             }
-        }
-
-        public static List<string> GetAllowedLoggedUserBranches(int tenant)
-        {
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            UserPermittedBranchRepository userPermittedBranchRepository = new UserPermittedBranchRepository(tenant);
-
-            string loggedContactId = contactRepository.GetConactIdByemail(SecurityUtility.GetAuthenticatedWorkWebUser(), tenant);
-            return userPermittedBranchRepository.GetUserPermittedBranchesIdsByUserId(loggedContactId, tenant).ToList();
         }
     }
 }

@@ -20,7 +20,7 @@ describe('PaymentCheque Module', function () {
 
       console.log('Khawlaaa check ')
     browser.ignoreSynchronization = true;
-    gn1.GoToMainMenu2('General.MH.FullAccounting');
+    gn1.GoToMainMenu('General.MH.FullAccounting');
     h.WaitByIdAndClick('FABNKS');
     PYC.CreateNewPaymentCheque();
     PYCE.EditPaymentCheque();

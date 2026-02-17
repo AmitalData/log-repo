@@ -16,12 +16,10 @@ import {EventTypeListService} from '../../../Services/StandardLists/EventTypeLis
 import {EntityResourceService} from '../../../Services/EntityResourceService';
 import {Cloner} from '../../../Utilities/Cloner';
 import {EntityArgs} from '../../../DataContracts/EntityArgs';
-import { EventTypeExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/EventTypeExtendedPMService';
-import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 @Component({
     selector: "HelperFollowups",
-    
+    moduleId: module.id,
     templateUrl: './HelperFollowups.html',
     inputs: ['QuotePM', 'ShipmentPM', 'IsEnabled'],
 })
@@ -35,15 +33,16 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
     public Width: number = 350;
     public Height: number = 130;
     public QuotePM: QuotePM = null;
+    public ShipmentPM: ShipmentPM = null;
     public DataContext = this;
     public AddDataContext: AddDataContext;
     public EditDataContext: EditDataContext;
     public ObjectTableName: string = "FollowUp";
     public ItemsSource: HelperFollowup[] = [];
+    public EventTypes: EventTypeList[] = [];
     public IsResourcesReady: boolean = false;
     public IsComponentVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ObjectTableId: string;
     constructor(private entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         var idIndex = this.CurrentSession.GetNewId("HelperFollowups");
@@ -66,36 +65,19 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
         if (this.entityArgs) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
+                    if (this.QuotePM) {
+                        this.QuotePM = this.entityArgs.EditComponent.EntityPM;
+                    }
+
+                    else {
+                        this.ShipmentPM = this.entityArgs.EditComponent.EntityPM;
+                    }
+
                     this.BuildItemsSource();
                 }
             });
         }
     }
-
-
-    RefreshEntity() {
-        if (this.entityArgs.EditComponent && this.entityArgs.EditComponent.EntityPM) {
-            if (this.QuotePM) {
-                this.QuotePM = this.entityArgs.EditComponent.EntityPM;
-            }
-
-            else {
-                this.ShipmentPM = this.entityArgs.EditComponent.EntityPM;
-            }
-        }
-    }
-
-
-    private shipmentPM: ShipmentPM = null;
-    get ShipmentPM() {
-        return this.shipmentPM;
-    }
-    set ShipmentPM(value: ShipmentPM) {
-        this.shipmentPM = value;
-    }
-
-
-
 
     ngOnInit() {
         if (this.QuotePM != null) {
@@ -120,18 +102,32 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
 
                 this.IsResourcesReady = true;
 
+                var entityId: string = null;
+                var entityObjectTableId: string = null;
                 var entityObjectTableName: string = null;
                 if (this.QuotePM != null) {
+                    entityId = this.QuotePM.Id;
                     entityObjectTableName = "Quote";
                 }
+
                 else if (this.ShipmentPM != null) {
+                    entityId = this.ShipmentPM.Id;
                     entityObjectTableName = this.ShipmentPM.ShipmentLevelCode == "C" ? "Master" : "Shipment";
                 }
 
                 if (!AppTool.IsNullOrEmpty(entityObjectTableName)) {
                     var ObjectTable = window.ObjectTables.filter(x => x.Name === entityObjectTableName)[0];
+
                     if (ObjectTable) {
-                        this.ObjectTableId = ObjectTable.Id;
+                        entityObjectTableId = ObjectTable.Id;
+
+                        var myService = new EventTypeListService();
+                        myService.getAll().subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                var lists: EventTypeList[] = myResponse.Result;
+                                this.EventTypes = lists.filter(f => f.ObjectTableId == entityObjectTableId && f.ManualActivatedFollowUp == true);
+                            }
+                        });
                     }
                 }
             });
@@ -167,11 +163,11 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
         var PopupHeight = 130;
 
         if (this.IsAddViewVisible) {
-            PopupHeight = 270;
+            PopupHeight = 230;
         }
 
         else if (this.IsEditViewVisible) {
-            PopupHeight = 245;
+            PopupHeight = 205;
         }
 
         else {
@@ -285,6 +281,20 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
                 this.IsOpened = false;
             }
         }
+
+        //if (this.IsInputBoxFocused) {
+        //    this.IsInputBoxFocused = false;
+
+        //    if (!this.IsMouseOverButton) {
+        //        if (this.IsMouseOver) {
+        //            document.getElementById(this.ComponentButtonId).focus();
+        //        }
+
+        //        else {
+        //            this.IsOpened = false;
+        //        }
+        //    }
+        //}
     }
 
     public IsAddViewVisible: boolean = false;
@@ -297,8 +307,6 @@ export class HelperFollowups extends BaseComponent implements OnInit, OnDestroy 
     }
 
     BuildItemsSource() {
-        this.RefreshEntity();
-
         this.ItemsSource = [];
 
         if (this.QuotePM) {
@@ -364,11 +372,11 @@ export class HelperFollowup {
         this.Done = entityPM.Done;
         this.Date = entityPM.Date;
         this.Name = entityPM.EventTypeFollowUpName;
-        this.Notes = entityPM.Notes;
+        this.Notes = entityPM.Note;
         this.TextColor = this.Done ? '#8F9293' : '#292E30';
 
         if (this.Date) {
-            if (DateTool.GetDateParts(this.Date).DateTicks < DateTool.GetCurrentDateTimeAsUtc().valueOf()) {
+            if (DateTool.GetDateParts(this.Date).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
                 this.IsOld = true;
                 this.Background = "#F7E3E3";
             }
@@ -417,7 +425,6 @@ export class AddDataContext extends BaseComponent {
     public EntityPM: FollowUpPM;
     public ObjectTableName: string = "FollowUp";
     private CurrentSession = SessionLocator.SelectedSession;
-    public EventTypeFollowUpName : string;
     constructor(private father: HelperFollowups) {
         super();
         this.EntityPM = new FollowUpPM();
@@ -426,24 +433,30 @@ export class AddDataContext extends BaseComponent {
         this.EntityPM.Done = false;
         this.EntityPM.IsNew = true;
         this.EntityPM.Deleted = false;
-        this.GetDefaultEventType();
-        // this.SelectedEventType = this.father.EventTypes.filter(f => f.Code == "REMF")[0];
-        // if (this.SelectedEventType) {
-        //     this.ManualActivatedFollowUp = false;
-        // }
+
+        this.SelectedEventType = this.father.EventTypes.filter(f => f.Code == "REMF")[0];
+        if (this.SelectedEventType) {
+            this.ManualActivatedFollowUp = false;
+        }
     }
 
-    GetDefaultEventType() {
-        new EventTypeExtendedPMService().GetEventTypeByCode("REMF", SessionInfo.LoggedUserTenant).subscribe((res: ServiceResponse) => {
-            var pmResponse: ServiceResponse = res;
-            if (pmResponse.HasError || !pmResponse.Result) return;
-            this.EventTypeId = pmResponse.Result.Id;
-            this.EventTypeFollowUpName = pmResponse.Result.EnglishName;
-        });
-    }
+    private selectedEventType: EventTypeList;
+    get SelectedEventType() { return this.selectedEventType; }
+    set SelectedEventType(value: EventTypeList) {
+        if (this.selectedEventType != value) {
+            this.selectedEventType = value;
 
-    public EventTypeChange(eventType:any){
-        this.EventTypeFollowUpName = eventType?.EnglishName;
+            var eventTypeId: string = null;
+            var eventTypeName: string = null;
+
+            if (value) {
+                eventTypeId = value.Id;
+                eventTypeName = value.EnglishName;
+            }
+
+            this.EventTypeId = eventTypeId
+            this.EventTypeFollowUpName = eventTypeName;
+        }
     }
 
     get EventTypeId() { return this.EntityPM.EventTypeId; }
@@ -451,6 +464,13 @@ export class AddDataContext extends BaseComponent {
         if (this.EntityPM.EventTypeId != value) {
             this.EntityPM.EventTypeId = value;
             this.UIProperties.SetRequired("EventTypeId", this.ObjectTableName, AppTool.IsNullOrEmpty(value) ? true : false);
+        }
+    }
+
+    get EventTypeFollowUpName() { return this.EntityPM.EventTypeFollowUpName; }
+    set EventTypeFollowUpName(value: string) {
+        if (this.EntityPM.EventTypeFollowUpName != value) {
+            this.EntityPM.EventTypeFollowUpName = value;
         }
     }
 
@@ -484,7 +504,7 @@ export class AddDataContext extends BaseComponent {
 
     NumericButtonClicked(isIncreas: boolean) {
         if (this.Date == null) {
-            this.Date = DateTool.GetCurrentDateTimeAsUtc();
+            this.Date = DateTool.GetCurrentDateAsUtc();
         }
 
         else {
@@ -522,7 +542,7 @@ export class AddDataContext extends BaseComponent {
                 myQuoteFollowUpPM.ManualActivatedFollowUp = this.ManualActivatedFollowUp;
                 myQuoteFollowUpPM.Date = this.Date;
                 myQuoteFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myQuoteFollowUpPM.Notes = this.Notes;
+                myQuoteFollowUpPM.Note = this.Notes;
                 myQuoteFollowUpPM.Done = this.EntityPM.Done;
                 myQuoteFollowUpPM.IsNew = this.EntityPM.IsNew;
                 this.father.QuotePM.AddQuoteFollowUpPM(myQuoteFollowUpPM);
@@ -537,7 +557,7 @@ export class AddDataContext extends BaseComponent {
                 myShipmentFollowUpPM.ManualActivatedFollowUp = this.ManualActivatedFollowUp;
                 myShipmentFollowUpPM.Date = this.Date;
                 myShipmentFollowUpPM.OwnerUserId = this.OwnerUserId;
-                myShipmentFollowUpPM.Notes = this.Notes;
+                myShipmentFollowUpPM.Note = this.Notes;
                 myShipmentFollowUpPM.Done = this.EntityPM.Done;
                 myShipmentFollowUpPM.IsNew = this.EntityPM.IsNew;
                 this.father.ShipmentPM.AddShipmentFollowUp(myShipmentFollowUpPM);
@@ -576,10 +596,10 @@ export class EditDataContext extends BaseComponent {
         }
     }
 
-    get Notes() { return this.EntityPM.Notes; }
+    get Notes() { return this.EntityPM.Note; }
     set Notes(value: string) {
-        if (this.EntityPM.Notes != value) {
-            this.EntityPM.Notes = value;
+        if (this.EntityPM.Note != value) {
+            this.EntityPM.Note = value;
         }
     }
 
@@ -637,7 +657,7 @@ export class EditDataContext extends BaseComponent {
 
     DateNumericButtonClicked(isIncreas: boolean) {
         if (this.Date == null) {
-            this.Date = DateTool.GetCurrentDateTimeAsUtc();
+            this.Date = DateTool.GetCurrentDateAsUtc();
         }
 
         else {
@@ -659,7 +679,7 @@ export class EditDataContext extends BaseComponent {
     }
     DoneDateNumericButtonClicked(isIncreas: boolean) {
         if (this.DoneDateTime == null) {
-            this.DoneDateTime = DateTool.GetCurrentDateTimeAsUtc();
+            this.DoneDateTime = DateTool.GetCurrentDateAsUtc();
         }
 
         else {

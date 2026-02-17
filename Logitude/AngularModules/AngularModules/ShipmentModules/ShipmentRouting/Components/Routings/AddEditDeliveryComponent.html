@@ -1,91 +1,4 @@
-<style>
-     .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        padding: 2px 10px;
-        margin: 5px;
-        color: gray;
-        font-family: sans-serif;
-     }
-
-     .x-split-button {
-        position: relative;
-        display: inline-block;
-        text-align: left;
-     }
-
-     .x-button {
-        width: initial !important;
-        position: relative;
-        margin: 0;
-        height: 22px;
-        float: left;
-        outline: none;
-        line-height: 21px;
-        border: 1px solid #6A8299;
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
-        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
-     }
-
-     .x-button:disabled {
-        opacity: 0.5;
-        pointer-events: none;
-     }
-
-     .x-button:hover {
-        cursor: pointer;
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
-        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
-     }
-
-     .x-button:active {
-        background: #F2F2F2;
-     }
-
-     .x-button.x-button-drop {
-        border-right: 0;
-        height: 22px;
-     }
-
-    .x-button-drop-menu {
-        position: absolute;
-        top: 22px;
-        right: 0;
-        z-index: 1000;
-        text-align: right;
-        float: left;
-        min-width: 130px;
-        font-size: 15px;
-        list-style: none;
-        background-color: #F2F2F2;
-        background-clip: padding-box;
-        border: .5px solid #45494A;
-        box-shadow: .5px .5px 2px #6A8299;
-    }
-
-    .x-button-drop-menu li span {
-        display: block;
-        padding: 3px 20px;
-        clear: both;
-        font-family: arial;
-        color: #444;
-        text-decoration: none;
-        height: 22px;
-    }
-
-    .x-button-drop-menu li span:hover {
-       background: #D3D3D3;
-       cursor: pointer;
-    }
-</style>
+﻿
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
@@ -93,19 +6,10 @@
         </td>
     </tr>
 
-    <tr style="height: 1px;" *ngIf="EntityPM.StandaloneShipmentId">
-        <td>
-            <div class="OrangeInfo" style="margin: 5px;">
-                <span>This delivery is connected to a standalone shipment and can only be updated from there  </span>
-                <Hyperlink style="left:5px;" (click)="ViewStandaloneShipmentClicked()">{{EntityPM.StandaloneShipmentNumber}}</Hyperlink>
-            </div>
-        </td>
-    </tr>
-
     <tr>
         <td class="CellStretch">
             <div class="Stretch CurvedEditArea">
-                <table>
+                <table *ngIf="IsResourcesReady">
                     <tr>
                         <td class="CellStretch" style="width: 100px;">
                             <div class="Stretch AppLeftMenuBackground">
@@ -118,8 +22,8 @@
 
                                     <tr>
                                         <td style="vertical-align: top;">
-                                            <ul *ngIf="IsResourcesReady">
-                                                <li id="{{ item.TextCode | IdGeneratorAsyncPipe | async}}" class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.Code" [class.SelectedMenuItem]="item.Code === SelectedTabCode" [class.DisabledTabItem]="item.IsDisabled == true">
+                                            <ul>
+                                                <li id="{{ item.TextCode | IdGeneratorPipe}}" class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.Code" [class.SelectedMenuItem]="item.Code === SelectedTabCode" [class.DisabledTabItem]="item.IsDisabled == true">
                                                     <div>{{item.TextCode | TextCodeTranslationPipe}}</div>
                                                     <img class="RightCenter" *ngIf="item == SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
                                                 </li>
@@ -170,7 +74,7 @@
                     </td>
 
                     <td *ngIf="IsShowNewWarehouseReleaseButton" style="width: 140px;">
-                        <button [disabled]="DisableNewWarehouseReleaseButton" style="width:140px;float:right;" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
+                        <button style="width:140px;float:right;" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
                     </td>
 
 
@@ -178,74 +82,28 @@
                         <div></div>
                     </td>
 
-                    <td style="width:220px" *ngIf="IsAddingStandaloneShipmentVisible && !EntityPM.StandaloneShipmentId">
-                        <div [attr.id]="'printbutton'">
-                            <span style="display:inline" class="x-split-button">
-                                <button (click)="StandAloneShipmentButtonClicked('CreateStandalone')"
-                                        class="RedButton"
-                                        [disabled]="!IsCreateStandaloneShipmentEnabled"
-                                        style="width:190px;border-radius: 0px 5px 5px 0px;float:right">
-                                    Create Standalone Shipment
-                                </button>
-                                <button [attr.id]="'arrow'" class="x-button x-button-drop"
-                                        style="width: 20px;border-radius: 5px 0px 0px 5px;color:gray;float:right"
-                                        [disabled]="!IsCreateStandaloneShipmentEnabled"
-                                        (click)="DropdowndisplayToggle()">
-                                    &#9660;
-                                </button>
-                                <div [attr.id]="'dropdowmenu'" [ngStyle]="{'display': dropdownDisplay  }"
-                                     style="position: fixed;z-index:1 ;background-color : whitesmoke;width:220px; ">
-                                    <div>
-                                        <ul class="x-button-drop-menu">
-                                            <li>
-                                                <span style="width: 220px" (click)="StandAloneShipmentButtonClicked('ConnectStandalone')">Connect leg to an existing shipment</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </span>
-                        </div>
-                    </td>
-
-                    <td style="width: 5px;" *ngIf="IsAddingStandaloneShipmentVisible">
-                        <div></div>
-                    </td>
-
                     <td style="width: 57px;">
-                        <button id="{{ 'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="CloseClicked()">Close</button>
                     </td>
 
                     <td style="width: 5px;">
                         <div></div>
                     </td>
+
+                    <!--<td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                    </td>-->
 
                     <!-- Save -->
                     <td style="width: 57px;">
-                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button">
+                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}"   *ngIf="!EntityPM.IsDirty" class="Button">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
                         </button>
 
-                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()">
+                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}"  *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()" >
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
-                        </button>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <!-- Save & Close -->
-                    <td style="width: 25px;">
-                        <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
-                            <img class="CenterCenter" src="./Images/Buttons/Save.png" />
-                            <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
-                        </button>
-
-                        <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
-                            <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
-                            <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
                         </button>
                     </td>
                 </tr>

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Transactions;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -24,16 +27,16 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityPOCOs;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
-using Logitude.TariffModule.Data.Repositories;
-using Logitude.TariffModule.Data.EntityPOCOs;
 
 namespace CommunicationWorkerRole
 {
     public class TenantStatisticsWorkerRole : WorkerEntryPoint
     {
+
         private bool serviceStarted = true;
         private int interval = 1;
         private int systemErrorCount = 0;
@@ -42,6 +45,7 @@ namespace CommunicationWorkerRole
        
         public override void Run()
         {
+
             while (IsRunning)
             {
                 if (!General.IsUpdating())
@@ -59,7 +63,12 @@ namespace CommunicationWorkerRole
                         {
                             total = (DateTime.Now - oldestDate.Value).TotalHours;
                         }
-
+                        //else
+                        //{
+                        //    total = 24;
+                        //}
+                        // refresh for all tenants
+                        //
                         string hour = DateTime.Now.ToString("HH");
                         if (hour == "00" && total >= 24)
                         {
@@ -86,19 +95,25 @@ namespace CommunicationWorkerRole
                         {
                             Thread.Sleep(60000);
                         }
+
                     }
+
                     catch (Exception ex)
                     {
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "tenant statistics worker role start", null, null);
                         Thread.Sleep(10000);
                     }
                 }
+
                 else
                 {
                     Thread.Sleep(60000);
                 }
             }
         }
+
+
+
 
         public void RefreshTenantStatistics(TenantManagement tenantManagement)
         {
@@ -113,7 +128,7 @@ namespace CommunicationWorkerRole
             {
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenantManagement.Id);
                 QuoteRepository quoteRepository = new QuoteRepository(tenantManagement.Id);
-                CardRepository cardRepository = new CardRepository(tenantManagement.Id);
+                CustomerRepository customerRepository = new CustomerRepository(tenantManagement.Id);
                 ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenantManagement.Id);
                 APInvoiceRepository apInvoiceRepository = new APInvoiceRepository(tenantManagement.Id);
                 TenantRepository tenantRepository = new TenantRepository(tenantManagement.Id);
@@ -122,8 +137,6 @@ namespace CommunicationWorkerRole
                 OpportunityRepository myOpportunityRepository = new OpportunityRepository(tenantManagement.Id);
                 CommunicationLogRepository myCommunicationLogRepository = new CommunicationLogRepository(tenantManagement.Id);
                 ContactActivityLogRepository contactActivityLogRepository;
-                TariffRepository tariffsRepository = new TariffRepository(tenantManagement.Id);
-
                 Tenant tenant = tenantRepository.GetSingleTenant(tenantManagement.Id);
                 if (tenant != null && tenant.Address != null)
                 {
@@ -151,23 +164,21 @@ namespace CommunicationWorkerRole
                 IQueryable<Quote> quotes = quoteRepository.GetQuotes(tenantManagement.Id);
                 IQueryable<ARInvoice> arInvoices = arInvoiceRepository.GetIQueryableInvoices(tenantManagement.Id);
                 IQueryable<APInvoice> apInvoices = apInvoiceRepository.GetIQueryableInvoices(tenantManagement.Id);
-                IQueryable<Card> customers = cardRepository.GetCustomerCards(tenantManagement.Id);
+                IQueryable<Customer> customers = customerRepository.GetCustomers(tenantManagement.Id);
                 IQueryable<Booking> bookings = bookingRepository.GetAll(tenantManagement.Id);
                 IQueryable<Activity> myActivities = myActivityRepository.GetAll(tenantManagement.Id);
                 IQueryable<Opportunity> myOpportunities = myOpportunityRepository.GetAll(tenantManagement.Id);
                 IQueryable<CommunicationLog> myCommunicationLogs = myCommunicationLogRepository.GetCommunicationLogsByTenant(tenantManagement.Id);
-                IQueryable<Tariff> tariffs = tariffsRepository.GetAll(tenantManagement.Id);
 
-                if (shipments.Any())
+                if (shipments.Count() > 0)
                 {
                     if (tenantManagement.ShipmentLastDate == null)
                     {
-                        tenantManagement.ShipmentLastDate = shipments.Max(s => (DateTime?)s.CreateDateTime);
+                        tenantManagement.ShipmentLastDate = shipments.Max(s => s.CreateDateTime);
                     }
                     else
                     {
-                        tenantManagement.ShipmentLastDate = shipments.Where(d => d.CreateDateTime >= tenantManagement.ShipmentLastDate)
-                                                                     .Max(s => (DateTime?)s.CreateDateTime);
+                        tenantManagement.ShipmentLastDate = shipments.Where(d => d.CreateDateTime >= tenantManagement.ShipmentLastDate).Max(s => s.CreateDateTime);
                     }
 
                     if (tenantManagement.LastFHLSentDate == null)
@@ -176,20 +187,16 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        tenantManagement.LastFHLSentDate = shipments.Where(d => d.FHLStatusDate >= tenantManagement.LastFHLSentDate)
-                                                                    .Max(s => s.FHLStatusDate);
+                        tenantManagement.LastFHLSentDate = shipments.Where(d => d.FHLStatusDate >= tenantManagement.LastFHLSentDate).Max(s => s.FHLStatusDate);
                     }
 
                     if (tenantManagement.LastFWBSentDate == null)
                     {
-                        tenantManagement.LastFWBSentDate = shipments.Where(d => d.ShipmentMasterData != null)
-                                                                    .Max(s => s.ShipmentMasterData.FWBStatusDate);
+                        tenantManagement.LastFWBSentDate = shipments.Where(d => d.ShipmentMasterData != null).Max(s => s.ShipmentMasterData.FWBStatusDate);
                     }
                     else
                     {
-                        tenantManagement.LastFWBSentDate = shipments.Where(d => d.ShipmentMasterData != null 
-                                                                                && d.ShipmentMasterData.FWBStatusDate >= tenantManagement.LastFWBSentDate)
-                                                                    .Max(s => s.ShipmentMasterData.FWBStatusDate);
+                        tenantManagement.LastFWBSentDate = shipments.Where(d => d.ShipmentMasterData != null && d.ShipmentMasterData.FWBStatusDate >= tenantManagement.LastFWBSentDate).Max(s => s.ShipmentMasterData.FWBStatusDate);
                     }
 
                     if (tenantManagement.LastFHLCargonautSentDate == null)
@@ -198,55 +205,38 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        tenantManagement.LastFHLCargonautSentDate = shipments.Where(d => d.CargonautFHLStatusDate >= tenantManagement.LastFHLCargonautSentDate)
-                                                                             .Max(s => s.CargonautFHLStatusDate);
+                        tenantManagement.LastFHLCargonautSentDate = shipments.Where(d => d.CargonautFHLStatusDate >= tenantManagement.LastFHLCargonautSentDate).Max(s => s.CargonautFHLStatusDate);
                     }
 
                     if (tenantManagement.LastFWBCargonautSentDate == null)
                     {
-                        tenantManagement.LastFWBCargonautSentDate = shipments.Where(d => d.ShipmentMasterData != null)
-                                                                             .Max(s => s.ShipmentMasterData.CargonautFWBStatusDate);
+                        tenantManagement.LastFWBCargonautSentDate = shipments.Where(d => d.ShipmentMasterData != null).Max(s => s.ShipmentMasterData.CargonautFWBStatusDate);
                     }
                     else
                     {
-                        tenantManagement.LastFWBCargonautSentDate = shipments.Where(d => d.ShipmentMasterData != null 
-                                                                                         && d.ShipmentMasterData.CargonautFWBStatusDate >= tenantManagement.LastFWBCargonautSentDate)
-                                                                             .Max(s => s.ShipmentMasterData.CargonautFWBStatusDate);
+                        tenantManagement.LastFWBCargonautSentDate = shipments.Where(d => d.ShipmentMasterData != null && d.ShipmentMasterData.CargonautFWBStatusDate >= tenantManagement.LastFWBCargonautSentDate).Max(s => s.ShipmentMasterData.CargonautFWBStatusDate);
                     }
 
-                    tenantManagement.ShipmentTotalLastWeek = shipments.Count(s => s.CreateDateTime >= lastweek);
-                    tenantManagement.ShipmentTotalLastMonth = shipments.Count(s => s.CreateDateTime >= lastmonth);
-
-                    tenantManagement.LastEbookingSentDate = shipments.Max(s => s.INTTRALastEBbookingSendDate);
-                    tenantManagement.LastSISentDate = shipments.Max(s => s.INTTRASIStatusDate);
-                    tenantManagement.NumberOfBookingSentLastWeek = shipments.Count(s => s.INTTRABookingStatusCode != "NS" 
-                                                                                        && s.INTTRALastEBbookingSendDate >= lastweek);
-
-                    tenantManagement.NumberOfSISentLastWeek = shipments.Count(d => d.INTTRASIStatusCode != "NSEN" 
-                                                                                   && (d.INTTRASIStatusDate >= lastweek 
-                                                                                        || d.INTTRALastStatusDate >= lastweek));
-
-                    tenantManagement.LastContainerStatusReceived = shipments.Where(d => d.INTTRASIStatusCode != "NSEN")
-                                                                            .Max(d=>d.INTTRALastStatusDate);
+                    tenantManagement.ShipmentTotalLastWeek = shipments.Where(s => s.CreateDateTime >= lastweek).Count();
+                    tenantManagement.ShipmentTotalLastMonth = shipments.Where(s => s.CreateDateTime >= lastmonth).Count();
                 }
 
-                if (quotes.Any())
+                if (quotes.Count() > 0)
                 {
                     if (tenantManagement.QuoteLastDate == null)
                     {
-                        tenantManagement.QuoteLastDate = quotes.Max(s => (DateTime?)s.OpenDate);
+                        tenantManagement.QuoteLastDate = quotes.Max(s => s.OpenDate);
                     }
                     else
                     {
-                        tenantManagement.QuoteLastDate = quotes.Where(d => d.OpenDate >= tenantManagement.QuoteLastDate)
-                                                               .Max(s => (DateTime?)s.OpenDate);
+                        tenantManagement.QuoteLastDate = quotes.Where(d => d.OpenDate >= tenantManagement.QuoteLastDate).Max(s => s.OpenDate);
                     }
 
-                    tenantManagement.QuoteTotalLastWeek = quotes.Count(s => s.OpenDate >= lastweek);
-                    tenantManagement.QuoteTotalLastMonth = quotes.Count(s => s.OpenDate >= lastmonth);
+                    tenantManagement.QuoteTotalLastWeek = quotes.Where(s => s.OpenDate >= lastweek).Count();
+                    tenantManagement.QuoteTotalLastMonth = quotes.Where(s => s.OpenDate >= lastmonth).Count();
                 }
 
-                if (arInvoices.Any())
+                if (arInvoices.Count() > 0)
                 {
                     if (tenantManagement.ARInvoiceLastDate == null)
                     {
@@ -254,15 +244,14 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        tenantManagement.ARInvoiceLastDate = arInvoices.Where(d => d.CreateDate >= tenantManagement.ARInvoiceLastDate)
-                                                                       .Max(s => s.CreateDate);
+                        tenantManagement.ARInvoiceLastDate = arInvoices.Where(d => d.CreateDate >= tenantManagement.ARInvoiceLastDate).Max(s => s.CreateDate);
                     }
 
-                    tenantManagement.ARInvoiceTotalLastWeek = arInvoices.Count(s => s.CreateDate >= lastweek);
-                    tenantManagement.ARInvoiceTotalLastMonth = arInvoices.Count(s => s.CreateDate >= lastmonth);
+                    tenantManagement.ARInvoiceTotalLastWeek = arInvoices.Where(s => s.CreateDate >= lastweek).Count();
+                    tenantManagement.ARInvoiceTotalLastMonth = arInvoices.Where(s => s.CreateDate >= lastmonth).Count();
                 }
 
-                if (apInvoices.Any())
+                if (apInvoices.Count() > 0)
                 {
                     if (tenantManagement.APInvoiceLastDate == null)
                     {
@@ -270,60 +259,57 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        tenantManagement.APInvoiceLastDate = apInvoices.Where(d => d.CreateDate >= tenantManagement.APInvoiceLastDate)
-                                                                       .Max(s => s.CreateDate);
+                        tenantManagement.APInvoiceLastDate = apInvoices.Where(d => d.CreateDate >= tenantManagement.APInvoiceLastDate).Max(s => s.CreateDate);
                     }
 
-                    tenantManagement.APInvoiceTotalLastWeek = apInvoices.Count(s => s.CreateDate >= lastweek);
-                    tenantManagement.APInvoiceTotalLastMonth = apInvoices.Count(s => s.CreateDate >= lastmonth);
+                    tenantManagement.APInvoiceTotalLastWeek = apInvoices.Where(s => s.CreateDate >= lastweek).Count();
+                    tenantManagement.APInvoiceTotalLastMonth = apInvoices.Where(s => s.CreateDate >= lastmonth).Count();
                 }
 
-                if (customers.Any())
+                if (customers.Count() > 0)
                 {
                     if (tenantManagement.CustomerLastDate == null)
                     {
-                        tenantManagement.CustomerLastDate = customers.Max(s => s.CreateDate);
+                        tenantManagement.CustomerLastDate = customers.Max(s => s.Card.CreateDate);
                     }
                     else
                     {
-                        tenantManagement.CustomerLastDate = customers.Where(d => d.CreateDate >= tenantManagement.CustomerLastDate)
-                                                                     .Max(s => s.CreateDate);
+                        tenantManagement.CustomerLastDate = customers.Where(d => d.Card.CreateDate >= tenantManagement.CustomerLastDate).Max(s => s.Card.CreateDate);
                     }
 
-                    tenantManagement.CustomerTotalLastWeek = customers.Count(s => s.CreateDate >= lastweek);
-                    tenantManagement.CustomerTotalLastMonth = customers.Count(s => s.CreateDate >= lastmonth);
+                    tenantManagement.CustomerTotalLastWeek = customers.Where(s => s.Card.CreateDate >= lastweek).Count();
+                    tenantManagement.CustomerTotalLastMonth = customers.Where(s => s.Card.CreateDate >= lastmonth).Count();
                 }
 
-                if (bookings.Any())
+                if (bookings.Count() > 0)
                 {
                     if (tenantManagement.LastFFRSentDate == null)
                     {
                         tenantManagement.LastFFRSentDate = bookings.Max(s => s.FFRStatusDate);
                     }
+
                     else
                     {
-                        tenantManagement.LastFFRSentDate = bookings.Where(d => d.FFRStatusDate >= tenantManagement.LastFFRSentDate)
-                                                                   .Max(s => s.FFRStatusDate);
+                        tenantManagement.LastFFRSentDate = bookings.Where(d => d.FFRStatusDate >= tenantManagement.LastFFRSentDate).Max(s => s.FFRStatusDate);
                     }
                 }
 
-                if (myActivities.Any())
+                if (myActivities.Count() > 0)
                 {
                     if (tenantManagement.ActivityLastDate == null)
                     {
-                        tenantManagement.ActivityLastDate = myActivities.Max(s => (DateTime?)s.CreateDate);
+                        tenantManagement.ActivityLastDate = myActivities.Max(s => s.CreateDate);
                     }
                     else
                     {
-                        tenantManagement.ActivityLastDate = myActivities.Where(d => d.CreateDate >= tenantManagement.ActivityLastDate)
-                                                                        .Max(s => (DateTime?)s.CreateDate);
+                        tenantManagement.ActivityLastDate = myActivities.Where(d => d.CreateDate >= tenantManagement.ActivityLastDate).Max(s => s.CreateDate);
                     }
 
-                    tenantManagement.ActivityTotalLastWeek = myActivities.Count(s => s.CreateDate >= lastweek);
-                    tenantManagement.ActivityTotalLastMonth = myActivities.Count(s => s.CreateDate >= lastmonth);
+                    tenantManagement.ActivityTotalLastWeek = myActivities.Where(s => s.CreateDate >= lastweek).Count();
+                    tenantManagement.ActivityTotalLastMonth = myActivities.Where(s => s.CreateDate >= lastmonth).Count();
                 }
 
-                if (myOpportunities.Any())
+                if (myOpportunities.Count() > 0)
                 {
                     if (tenantManagement.OpportunityLastDate == null)
                     {
@@ -331,15 +317,14 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        tenantManagement.OpportunityLastDate = myOpportunities.Where(d => d.CreateDate >= tenantManagement.OpportunityLastDate)
-                                                                              .Max(s => s.CreateDate);
+                        tenantManagement.OpportunityLastDate = myOpportunities.Where(d => d.CreateDate >= tenantManagement.OpportunityLastDate).Max(s => s.CreateDate);
                     }
 
-                    tenantManagement.OpportunityTotalLastWeek = myOpportunities.Count(s => s.CreateDate >= lastweek);
-                    tenantManagement.OpportunityTotalLastMonth = myOpportunities.Count(s => s.CreateDate >= lastmonth);
+                    tenantManagement.OpportunityTotalLastWeek = myOpportunities.Where(s => s.CreateDate >= lastweek).Count();
+                    tenantManagement.OpportunityTotalLastMonth = myOpportunities.Where(s => s.CreateDate >= lastmonth).Count();
                 }
 
-                if (sharingShipments.Any())
+                if (sharingShipments.Count() > 0)
                 {
                     if (tenantManagement.AgentSharedLogisticsStatisticsLastDate == null)
                     {
@@ -347,28 +332,25 @@ namespace CommunicationWorkerRole
                     }
                     else
                     {
-                        tenantManagement.AgentSharedLogisticsStatisticsLastDate = sharingShipments.Where(d => d.ManifestLastSharingDate >= tenantManagement.AgentSharedLogisticsStatisticsLastDate)
-                                                                                                  .Max(s => s.ManifestLastSharingDate);
+                        tenantManagement.AgentSharedLogisticsStatisticsLastDate = sharingShipments.Where(d => d.ManifestLastSharingDate >= tenantManagement.AgentSharedLogisticsStatisticsLastDate).Max(s => s.ManifestLastSharingDate);
                     }
 
-                    tenantManagement.AgentSharedLogisticsStatisticsLastWeek = sharingShipments.Count(s => s.ManifestLastSharingDate >= lastweek);
-                    tenantManagement.AgentSharedLogisticsStatisticsLastMonth = sharingShipments.Count(s => s.ManifestLastSharingDate >= lastmonth);
+                    tenantManagement.AgentSharedLogisticsStatisticsLastWeek = sharingShipments.Where(s => s.ManifestLastSharingDate >= lastweek).Count();
+                    tenantManagement.AgentSharedLogisticsStatisticsLastMonth = sharingShipments.Where(s => s.ManifestLastSharingDate >= lastmonth).Count();
                 }
 
-                if (myCommunicationLogs.Any())
+                if (myCommunicationLogs.Count() > 0)
                 {
                     if (myCommunicationLogs.Where(s => s.Subject == "FSR").Any())
                     {
                         if (tenantManagement.FSRLastSentDate == null)
                         {
-                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR")
-                                                                                  .Max(s => (DateTime?)s.CreateDate);
+                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR").Max(s => s.CreateDate);
                         }
+
                         else
                         {
-                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR" 
-                                                                                              && d.CreateDate >= tenantManagement.FSRLastSentDate)
-                                                                                  .Max(s => (DateTime?)s.CreateDate);
+                            tenantManagement.FSRLastSentDate = myCommunicationLogs.Where(d => d.Subject == "FSR" && d.CreateDate >= tenantManagement.FSRLastSentDate).Max(s => s.CreateDate);
                         }
                     }
 
@@ -376,14 +358,12 @@ namespace CommunicationWorkerRole
                     {
                         if (tenantManagement.FSULastReceivedDate == null)
                         {
-                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU")
-                                                                                      .Max(s => (DateTime?)s.CreateDate);
+                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU").Max(s => s.CreateDate);
                         }
+
                         else
                         {
-                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU" 
-                                                                                                  && d.CreateDate >= tenantManagement.FSULastReceivedDate)
-                                                                                      .Max(s => (DateTime?)s.CreateDate);
+                            tenantManagement.FSULastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSU" && d.CreateDate >= tenantManagement.FSULastReceivedDate).Max(s => s.CreateDate);
                         }
                     }
 
@@ -391,24 +371,14 @@ namespace CommunicationWorkerRole
                     {
                         if (tenantManagement.FSALastReceivedDate == null)
                         {
-                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA")
-                                                                                      .Max(s => (DateTime?)s.CreateDate);
+                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA").Max(s => s.CreateDate);
                         }
+
                         else
                         {
-                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA" 
-                                                                                                  && d.CreateDate >= tenantManagement.FSALastReceivedDate)
-                                                                                      .Max(s => (DateTime?)s.CreateDate);
+                            tenantManagement.FSALastReceivedDate = myCommunicationLogs.Where(d => d.Subject == "FSA" && d.CreateDate >= tenantManagement.FSALastReceivedDate).Max(s => s.CreateDate);
                         }
                     }
-                }
-
-                if (tariffs.Any())
-                {
-                    tenantManagement.LastTariffUpdateDate = tariffs.Max(s => (DateTime?)s.UpdateDate);
-                    tenantManagement.LastTariffUsageDate = tariffs.Max(s => s.LastUsedDate);
-                    tenantManagement.LastWeekCreatedTariffs = tariffs.Count(s => s.CreateDate >= lastweek);
-                    tenantManagement.LastMonthCreatedTariffs = tariffs.Count(s => s.CreateDate >= lastmonth);
                 }
 
                 try
@@ -416,91 +386,52 @@ namespace CommunicationWorkerRole
                     using (TransactionScope scope2 = TransactionFactory.GetNewTransaction())
                     {
                         contactActivityLogRepository = new ContactActivityLogRepository();
-                        IQueryable<ContactActivityLog> contactActivityLogIn = contactActivityLogRepository.GetContactActivityLogsInLogin(tenantManagement.Id);
-                        IQueryable<ContactActivityLog> digitalActivity = contactActivityLogRepository.GetContactActivityLogs(tenantManagement.Id);
+                        IQueryable<ContactActivityLog> contactActivityLogs = contactActivityLogRepository.GetContactActivityLogsInLogin(tenantManagement.Id);
 
-                        if (contactActivityLogIn.Any())
+                        if (contactActivityLogs.Count() > 0)
                         {
-                            IQueryable<ContactActivityLog> MobileContactActivityLogs = contactActivityLogIn.Where(d => d.Via == "Mobile");
-                            IQueryable<ContactActivityLog> ShardContactActivityLogs = contactActivityLogIn.Where(d => d.Via == "PC");
+                            IQueryable<ContactActivityLog> MobilecontactActivityLogs = contactActivityLogs.Where(d => d.Via == "Mobile");
+                            IQueryable<ContactActivityLog> ShardcontactActivityLogs = contactActivityLogs.Where(d => d.Via == "PC");
 
-                            if (MobileContactActivityLogs.Any())
+                            if (MobilecontactActivityLogs.Count() > 0)
                             {
                                 if (tenantManagement.MobileLastDate == null)
                                 {
-                                    tenantManagement.MobileLastDate = MobileContactActivityLogs.Max(s => (DateTime?)s.LogDateTime);
+                                    tenantManagement.MobileLastDate = MobilecontactActivityLogs.Max(s => s.LogDateTime);
                                 }
                                 else
                                 {
-                                    tenantManagement.MobileLastDate = MobileContactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.MobileLastDate)
-                                                                                               .Max(s => (DateTime?)s.LogDateTime);
+                                    tenantManagement.MobileLastDate = MobilecontactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.MobileLastDate).Max(s => s.LogDateTime);
                                 }
 
-                                tenantManagement.MobileTotalLastWeek = MobileContactActivityLogs.Count(s => s.LogDateTime >= lastweek);
-                                tenantManagement.MobileTotalLastMonth = MobileContactActivityLogs.Count(s => s.LogDateTime >= lastmonth);
+                                tenantManagement.MobileTotalLastWeek = MobilecontactActivityLogs.Where(s => s.LogDateTime >= lastweek).Count();
+                                tenantManagement.MobileTotalLastMonth = MobilecontactActivityLogs.Where(s => s.LogDateTime >= lastmonth).Count();
                             }
 
-                            if (ShardContactActivityLogs.Any())
+                            if (ShardcontactActivityLogs.Count() > 0)
                             {
                                 if (tenantManagement.ShardLogisticLastDate == null)
                                 {
-                                    tenantManagement.ShardLogisticLastDate = ShardContactActivityLogs.Max(s => (DateTime?)s.LogDateTime);
+                                    tenantManagement.ShardLogisticLastDate = ShardcontactActivityLogs.Max(s => s.LogDateTime);
                                 }
                                 else
                                 {
-                                    tenantManagement.ShardLogisticLastDate = ShardContactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.ShardLogisticLastDate)
-                                                                                                     .Max(s => (DateTime?)s.LogDateTime);
+                                    tenantManagement.ShardLogisticLastDate = ShardcontactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.ShardLogisticLastDate).Max(s => s.LogDateTime);
                                 }
 
-                                tenantManagement.ShardLogisticTotalLastWeek = ShardContactActivityLogs.Count(s => s.LogDateTime >= lastweek);
-                                tenantManagement.ShardLogisticTotalLastMonth = ShardContactActivityLogs.Count(s => s.LogDateTime >= lastmonth);
-                            }
-
-                            IQueryable<ContactActivityLog> DigitalPortalMobileContactActivityLogs = digitalActivity.Where(d => d.Module
-                                                                                                                                .Equals("Digital Portal")
-                                                                                                                               && d.Via == "Mobile");
-                            IQueryable<ContactActivityLog> DigitalPortalActivityLogs = digitalActivity.Where(d => d.Module
-                                                                                                                   .Equals("Digital Portal")
-                                                                                                                  && d.Via == "PC");
-                            if (DigitalPortalMobileContactActivityLogs.Any())
-                            {
-                                if (tenantManagement.DigitalPortalMobileLastDate == null)
-                                {
-                                    tenantManagement.DigitalPortalMobileLastDate = DigitalPortalMobileContactActivityLogs.Max(s => (DateTime?)s.LogDateTime);
-                                }
-                                else
-                                {
-                                    tenantManagement.DigitalPortalMobileLastDate = DigitalPortalMobileContactActivityLogs.Where(d => d.LogDateTime >= tenantManagement.DigitalPortalMobileLastDate)
-                                                                                                                         .Max(s => (DateTime?)s.LogDateTime);
-                                }
-
-                                tenantManagement.DigitalPortalMobTotalLastWeek = DigitalPortalMobileContactActivityLogs.Count(s => s.LogDateTime >= lastweek);
-                                tenantManagement.DigitalPortalMobTotalLastMonth = DigitalPortalMobileContactActivityLogs.Count(s => s.LogDateTime >= lastmonth);
-                            }
-
-                            if (DigitalPortalActivityLogs.Any())
-                            {
-                                if (tenantManagement.DigitalPortalLastDate == null)
-                                {
-                                    tenantManagement.DigitalPortalLastDate = DigitalPortalActivityLogs.Max(s => (DateTime?)s.LogDateTime);
-                                }
-                                else
-                                {
-                                    tenantManagement.DigitalPortalLastDate = DigitalPortalActivityLogs.Where(d => d.LogDateTime >= tenantManagement.DigitalPortalLastDate)
-                                                                                                      .Max(s => (DateTime?)s.LogDateTime);
-                                }
-
-                                tenantManagement.DigitalPortalTotalLastWeek = DigitalPortalActivityLogs.Count(s => s.LogDateTime >= lastweek);
-                                tenantManagement.DigitalPortalTotalLastMonth = DigitalPortalActivityLogs.Count(s => s.LogDateTime >= lastmonth);
+                                tenantManagement.ShardLogisticTotalLastWeek = ShardcontactActivityLogs.Where(s => s.LogDateTime >= lastweek).Count();
+                                tenantManagement.ShardLogisticTotalLastMonth = ShardcontactActivityLogs.Where(s => s.LogDateTime >= lastmonth).Count();
                             }
                         }
 
                         scope2.Complete();
                     }
                 }
+
                 catch (Exception ex)
                 {
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "tenant statistics worker" + ex.Message, null, null);
+
                 }
 
                 scope.Complete();
@@ -515,13 +446,16 @@ namespace CommunicationWorkerRole
 
             try
             {
+
                 string emailQueueName = ThreadedRoleEntryPoint.GetQueueByEnviroment("TenantStatisticsdataqueue");
+
 
                 if (!StorageAcountDetails.NameSpaceManager.QueueExists(emailQueueName))
                 {
                     queueDescription = new QueueDescription(emailQueueName);
                     queueDescription.MaxSizeInMegabytes = 5120;
                     // queueDescription.DefaultMessageTimeToLive = new TimeSpan(3, 1, 0);
+
                     StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
                 }
 
@@ -546,9 +480,11 @@ namespace CommunicationWorkerRole
 
         private void RoleEnvironmentChanging(object sender, RoleEnvironmentChangingEventArgs e)
         {
+
             // If a configuration setting is changing
             if (e.Changes.Any(change => change is RoleEnvironmentConfigurationSettingChange))
             {
+
                 // Set e.Cancel to true to restart this role instance
                 e.Cancel = true;
             }

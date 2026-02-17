@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -42,21 +40,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public CreditCardType GetCreditCardTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
+		public CreditCardType GetCreditCardTypeById(string Id,int Tenant)
         { 
 		    try
             {
-				 
+
 				
-				var temp = query.GetSinglePM(Id, Tenant);				
+				var temp = query.GetSinglePM(Id,Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("CreditCardType with Id " + Id + " doesn't exist");
 
-				return CreditCardTypeDataMapping(temp,Tenant,ComputingPartnerName);
+				return CreditCardTypeDataMapping(temp,Tenant);
 			}
-
             catch (Exception ex)
             {
+
                 throw ex;
             }
         }
@@ -80,7 +78,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public CreditCardTypePM CreditCardTypeDataMappingAndValidatin(CreditCardType MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public CreditCardTypePM CreditCardTypeDataMappingAndValidatin(CreditCardType MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -89,14 +87,11 @@ using Simplog.Data.InvoiceModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("CreditCardType with Id " + MyEntity.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -109,40 +104,16 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = MyEntity.Id;
 
-						//} 
-
-						
+						//}
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Tenant = MyEntity.Tenant;
-
-										}  
-
-					
+					temp.Tenant = MyEntity.Tenant;
 					if(string.IsNullOrEmpty(temp.Code))
 					{
 					   
-						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LogitudeCode))
-						{								
-							temp.Code = MyEntity.LogitudeCode;
-								
-						
-						}  
-
-						
+						temp.Code = MyEntity.LogitudeCode;
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Name = MyEntity.Name;
-
-										}  
-
-										   
-					return temp;
+					temp.Name = MyEntity.Name;					   
+					   return temp;
 		    }
             catch (Exception ex)
             {
@@ -150,8 +121,6 @@ using Simplog.Data.InvoiceModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

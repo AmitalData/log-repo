@@ -1,14 +1,13 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage.Queue;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -223,8 +222,9 @@ namespace CommunicationWorkerRole
 
             if (myLog != null)
             {
-                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = myLog, ProcessType = "OnCreate", ObjectTableName = "LogitudeMessagesTransmissionLog", EntityId = myLog.Id, Tenant = tenant, EntityReference = myLog.AWBNumber});
-                mainEntityChangeService.AddEntityChange();
+                EntityChangeHelper entityChangeHelper = new EntityChangeHelper();
+
+                entityChangeHelper.AddEntityChange(myLog, null, "OnCreate", "", "LogitudeMessagesTransmissionLog");
             }
         }
     }

@@ -1,5 +1,5 @@
  declare var window: any;
-import { Directive, ChangeDetectorRef , Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
+import { Directive, ChangeDetectorRef , Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit } from '@angular/core';
 
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -18,7 +18,7 @@ import { CommunicationLogList } from '../../../../Common/EntityLists/Communicati
 
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'communication-steps',
     templateUrl: './CommunicationMoreComponent.html',
@@ -82,7 +82,7 @@ export class CommunicationMoreComponent
     }
     LoadCommunicationLog() {
 
-        this._CommunicationLogListService.getSingle(this.EntityPM.Id).subscribe((res:any) => {
+        this._CommunicationLogListService.getSingle(this.EntityPM.Id).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {

@@ -26,34 +26,9 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
         public string WarningMessage { get; set; } 
         public string HandeledWroker { get; set; }
 
-
         public List<AvailabiltyLogDeclarationCargoQuantities> AvailabiltyQuantitiesList { get; set; }
-        public List<MultiDeclaration> MultiDeclarations { get; set; }
-
-
-        // public List<AvailabiltyLogDeclarationCargoQuantities> AvailabiltyQuantitiesList { get; set; }
-
     }
-    public class MultiDeclaration
-    {
-        public string ResponseStatusXML { get; set; }
-        public string DeclarationID { get; set; }
-        public string DeclarationStatusColor { get; set; }
-        public string DeclarationVersion { get; set; }
-        public string DeclarationStatusCode { get; set; }
-        public string DeclarationStatusText { get; set; }
-        public string LogisticStatusCode { get; set; }
-        public string LogisticStatusText { get; set; }
-        public string TaxationDateTime { get; set; }
-        public string ReleaseDateTime { get; set; }
-        public string DeclarationOfficeID { get; set; }
-        public string DeclarationOfficeText { get; set; }
-        public string FinancialStatusCode { get; set; }
-        public string FinancialStatusText { get; set; }
-        public string SubmitDateTime { get; set; }
-        public string WarningMessage { get; set; }
-        public string HandeledWroker { get; set; }
-    }
+
     public class AvailabiltyLogDeclarationCargoQuantities
     {
         public string CargoIdentifierTypeCode { get; set; }

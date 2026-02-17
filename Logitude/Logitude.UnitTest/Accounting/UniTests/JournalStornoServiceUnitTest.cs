@@ -105,7 +105,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             Assert.AreEqual(defaultJournal.Id, baseJournal.Id);
             Assert.AreEqual(defaultJournal.OriginalJournalId, baseJournal.OriginalJournalId);
-            Assert.AreEqual("6", baseJournal.StatusCode);
+            Assert.AreEqual("2", baseJournal.StatusCode);
 
 
             Assert.AreEqual(defaultJournal.QueueId, baseJournal.QueueId);
@@ -369,7 +369,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         
                       AccountingDate = j.AccountingDate,
                       //ActionName = "1", 
-                      ActionTypeCodeEnum= JournalActionTypeEnum.Credit,
+                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Credit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert, 
                       CreditAccountId = "GetCreditAccountId()",
                       //DebitAccountId = "35",
@@ -394,7 +394,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     {
                       AccountingDate = j.AccountingDate,
                       //ActionName = "2", 
-                      ActionTypeCodeEnum= JournalActionTypeEnum.Debit,
+                      ActionTypeCodeEnum= MyJournalActionTypeEnum.Debit,
                       ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert, 
                       //CreditAccountId = "35", 
                       CurrencyId =("USD"),

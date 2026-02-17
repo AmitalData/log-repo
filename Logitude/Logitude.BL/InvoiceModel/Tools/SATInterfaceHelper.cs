@@ -15,10 +15,10 @@ using Logitude.SystemLogs;
 //using Profact.TimbraCFDI;
 //using Profact.TimbraCFDI;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -37,19 +37,15 @@ using System.Xml.Serialization;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.Resolvers;
-using Logitude.BL.InvoiceModel.Tools.ExternalService.SATProfact40;
-using Profact.TimbraCFDI33.Complementos.Pagos10;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
     public class SATInterfaceHelper
     {
         ARInvoicePM EntityPM;
-        private int tenant { get; set; }
         public void SendSATRequestFile(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
             this.EntityPM = entityPM;
-            this.tenant = entityPM.Tenant;
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
             if (satSetting != null)
@@ -65,9 +61,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     case "PROF33":
                         SendProfactoXML33(entityPM, entityPoco, satSetting);
                         break;
-                    case "PROF40":
-                        SendProfactoXML40(entityPM, entityPoco, satSetting);
-                        break;
+
                     case "CONT":
                         SendContpaqFile(entityPM);
                         break;
@@ -370,19 +364,12 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
         #region SendInvoiceProfactoXML
-        private void SendProfactoXML40(ARInvoicePM arInvoicePM, ARInvoice arInvoice, SATInterfaceSetting satSetting)
-        {
-            if (!satSetting.IsARInvoiceTransferEnabled && FeatureToggleHelper.HasFeatureToggle("CPT", arInvoicePM.Tenant))
-                return;
 
-            SATInvoiceProfact40Service sATInvoiceProfact40Service = new SATInvoiceProfact40Service(arInvoicePM, arInvoice, satSetting);
-            sATInvoiceProfact40Service.BuildProfactoXML(new InvoiceComprobanteBuilderArgs { });
-        }
+
         private void SendProfactoXML33(ARInvoicePM entityPM, ARInvoice entityPoco, SATInterfaceSetting satSetting)
         {
 
-            if (!satSetting.IsARInvoiceTransferEnabled && FeatureToggleHelper.HasFeatureToggle("CPT", entityPM.Tenant))
-                return;
+
 
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(entityPM.Tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
@@ -394,7 +381,6 @@ namespace Logitude.BL.InvoiceModel.Tools
             MeasurementRepository measurementRepository = new MeasurementRepository(commonContext);
             ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(commonContext);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(commonContext);
-            PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commonContext);
 
 
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(entityPM.Tenant);
@@ -425,8 +411,6 @@ namespace Logitude.BL.InvoiceModel.Tools
             Address branchAddress = null;
             Address mainAddress = null;
             Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
-            PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(entityPM.PaymentTermId);
-
             if (!string.IsNullOrEmpty(entityPM.BranchId))
             {
                 Branch branch = branchRepository.GetSingleBranch(entityPM.BranchId, entityPM.Tenant);
@@ -635,14 +619,6 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 comprobante.TipoDeComprobante = "I";//Profact.TimbraCFDI33.ComprobanteTipoDeComprobante.ingreso;
             }
-            if (paymentTerm.LocalName != null)
-            {
-                comprobante.CondicionesDePago = paymentTerm.LocalName;
-            }
-            else
-            {
-                comprobante.CondicionesDePago = paymentTerm.EnglishName;
-            }
             BuildRelatedInvoiceTag(entityPM, invoiceCotnext, comprobante);
 
             if (branchAddress != null && !string.IsNullOrEmpty(branchAddress.ZipCode))
@@ -651,7 +627,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
             else
                 comprobante.LugarExpedicion = currentTenant.Address.ZipCode;
-           
+
 
 
             //Llenamos los conceptos
@@ -743,8 +719,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                 comprobante.Total = Math.Abs((decimal)total);
                 //comprobante.Total = Math.Abs((decimal)total);
             }
-          
-            
+
+
             foreach (ARInvoiceTotalVATPM totalVat in arTotalVats)
             {
                 if (totalVat.VATPercent >= 0)
@@ -754,9 +730,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     TotalImpuestosTrasladados += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0));
                     string _totaltipoFactor = (totalVat.VATPercent == 0 && totalVatVatType.Code == "EXMPT" ? "Exento" : "Tasa");
                     string total_tasaOCuota = totalVat.VATPercent != 0 ? (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000";
-
-                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = GetComprobanteImpuestosTraslado(trasladoList, _totaltipoFactor, total_tasaOCuota);
-
+                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);//&& (totalVat.VATPercent != 0)
                     if (traslado == null
                         || (traslado != null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000")
                         || (totalVat.VATPercent == 0 && traslado.TasaOCuota != "0.000000")))
@@ -785,11 +759,14 @@ namespace Logitude.BL.InvoiceModel.Tools
                         }
                         //}
                     }
-                    else if (traslado.TipoFactor == "Tasa")
+                    else
                     {
-                        traslado.Importe =  GetComprobanteImpuestosTrasladoImporte(TotalImpuestosTrasladados, totalVat, traslado);
-
+                        if (traslado.TipoFactor == "Tasa")
+                        {
+                            traslado.Importe = GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
+                        }
                     }
+
 
                 }
                 else
@@ -856,32 +833,20 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").Any())
                     {
-                        if (FeatureToggleHelper.HasFeatureToggle("TTS", entityPM.Tenant))
+                        Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault();
+                        if (comprobante.Impuestos.Traslados.Count() > 1)
                         {
-                            if (comprobante.Impuestos.Traslados.Sum(x => x.Importe) != GetDecimalWith2DigitsAfterPoint(totalTraslados))
-                            {
-                                decimal precentage = (decimal.Parse(comprobante.Impuestos.Traslados.First().TasaOCuota.TrimEnd('0')) * 100);
-                                throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + totalTraslados + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
-                            }
+                            traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa" && t.TasaOCuota != "0.000000").FirstOrDefault();
                         }
-                        else
+
+                        if (traslado.Importe != GetDecimalWith2DigitsAfterPoint(totalTraslados))
                         {
-
-                            Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault();
-                            if (comprobante.Impuestos.Traslados.Count() > 1)
-                            {
-                                traslado = comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa" && t.TasaOCuota != "0.000000").FirstOrDefault();
-                            }
-
-                            if (traslado.Importe != GetDecimalWith2DigitsAfterPoint(totalTraslados))
-                            {
-                                decimal precentage = (decimal.Parse(traslado.TasaOCuota.TrimEnd('0')) * 100);
-                                throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + totalTraslados + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
-                            }
-
-                            //comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault().Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
-                            traslado.Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
+                            decimal precentage = (decimal.Parse(traslado.TasaOCuota.TrimEnd('0')) * 100);
+                            throw new Exception("Due to the SAT Invoice Transmission we calculate the VAT amount per line. There is a difference between the lines VAT sum and the total VAT (" + totalTraslados + ") at the invoice level. You are not allowed to approve the invoice unless you adjust the lines with the following VAT : " + precentage.ToString().TrimEnd('0').TrimEnd('.') + "%");
                         }
+
+                        //comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Tasa").FirstOrDefault().Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
+                        traslado.Importe = GetDecimalWith2DigitsAfterPoint(totalTraslados);
                     }
 
                     if (comprobante.Impuestos.Traslados.Where(t => t.TipoFactor == "Exento").Any())
@@ -930,30 +895,6 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
 
-        }
-
-        private decimal GetComprobanteImpuestosTrasladoImporte( decimal TotalImpuestosTrasladados, ARInvoiceTotalVATPM totalVat, Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado)
-        {
-            if (FeatureToggleHelper.HasFeatureToggle("TTS", tenant))
-            {
-                return traslado.Importe + GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0)));
-            }
-            return  GetDecimalWith2DigitsAfterPoint(TotalImpuestosTrasladados);
-        }
-
-        private  Profact.TimbraCFDI33.ComprobanteImpuestosTraslado GetComprobanteImpuestosTraslado( List<Profact.TimbraCFDI33.ComprobanteImpuestosTraslado> trasladoList, string _totaltipoFactor, string total_tasaOCuota)
-        {
-            Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado;
-            if (FeatureToggleHelper.HasFeatureToggle("TTS", tenant))
-            {
-                traslado = trasladoList.FirstOrDefault(t => t.TasaOCuota == total_tasaOCuota);
-            }
-            else
-            {
-                traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);
-            }
-
-            return traslado;
         }
 
         private void CalucalteLineTotals(ARInvoiceLinePM line, Profact.TimbraCFDI33.ComprobanteConcepto concepto,
@@ -1027,7 +968,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                     if (vatType != null)
                     {
-                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+                        newItem.ExternalVatCard = vatType.ExternalVATCard;
                         newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                     }
 
@@ -1239,7 +1180,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                     if (vatType != null)
                     {
-                        newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+                        newItem.ExternalVatCard = vatType.ExternalVATCard;
                         newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                     }
 
@@ -1372,13 +1313,18 @@ namespace Logitude.BL.InvoiceModel.Tools
                                   select a).FirstOrDefault();
             }
 
+            if (relatedInvoice != null && relatedInvoice.SATTransferStatusCode == "TD" && relatedInvoice.StatusCode == "VD")
+            {
+                return;
+            }
+
             if (relatedInvoice != null && !string.IsNullOrEmpty(relatedInvoice.SATXML))
             {
-                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(relatedInvoice.SATXML);
+                Profact.TimbraCFDI33.Comprobante oldComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(relatedInvoice.SATXML);
 
-                if (invoiceComprobanteDetails.ComplementoAny != null)
+                if (oldComprobante.Complemento.Any != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = oldComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -1392,7 +1338,6 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 tipoRelacion = "01";
             }
-            else if (relatedInvoice !=null && relatedInvoice.StatusCode == SATData.VoidedInvoiceStatusCode && (relatedInvoice.SATTransferStatusCode == SATData.CanceledSATTransferStatusCode || relatedInvoice.SATTransferStatusCode == SATData.TransferedSATTransferStatusCode)) tipoRelacion = "04";
             else
             {
                 List<ARInvoice> shipmentInvoices = (from a in invoiceCotnext.ARInvoiceEntities
@@ -1427,7 +1372,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
 
-        public void HandleInvoiceSATCancellation(ARInvoicePM entityPM, ARInvoice entityPoco)
+        public void SendSATCancellationRequest(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
@@ -1437,10 +1382,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 {
                     case "PROF":
                     case "PROF33":
-                        HandleProfactInvoiceCancellation(entityPM, entityPoco);
-                        break;
-                    case "PROF40":
-                        HandleProfact40InvoiceCancellation(entityPM, entityPoco);
+                        SendProfactoCancellationRequest33(entityPM, entityPoco);
                         break;
                     case "CONT":
                         //SendContpaqCancellation(entityPM);
@@ -1451,44 +1393,27 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
         }
 
-        private void HandleProfact40InvoiceCancellation(ARInvoicePM aRInvoicePM, ARInvoice aRInvoice)
-        {
-            SATCancelInvoiceProfact40Service saTCancelInvoiceProfact40Service = new SATCancelInvoiceProfact40Service(aRInvoicePM,  aRInvoice);
-            saTCancelInvoiceProfact40Service.SendRequest();
-        }
 
-        private void HandleProfactInvoiceCancellation(ARInvoicePM entityPM, ARInvoice entityPoco)
+        private void SendProfactoCancellationRequest33(ARInvoicePM entityPM, ARInvoice entityPoco)
         {
-            if (entityPoco.SATTransferStatusCode == "TG")
-                throw new ApplicationException("You are not allowed to void the invoice while its status is Transferring to SAT");
-
             if (!string.IsNullOrEmpty(entityPoco.SATXML))
             {
-                SendARInvoiceSATCancellationRequest(entityPM, entityPoco);
+                Encoding encoding = Encoding.UTF8;
+                byte[] profactoXMLData = encoding.GetBytes(entityPoco.SATXML);
+
+                Profact.TimbraCFDI33.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
+
+                this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.InvoiceNumber.ToString(), true);
+
                 entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
-            }
-            else
-            {
-                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
-                //entityPoco.TransmissionError = entityPM.TransmissionError = null;
+
             }
         }
 
-        private void SendARInvoiceSATCancellationRequest(ARInvoicePM entityPM, ARInvoice entityPoco)
-        {
-            Encoding encoding = Encoding.UTF8;
-            byte[] profactoXMLData = encoding.GetBytes(entityPoco.SATXML);
-
-            object comprobante = GetComprobante(profactoXMLData);
-
-            this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.InvoiceNumber.ToString(), true);
-        }
-
-        private void BuildProfactCommunicationLog33(object comprobante, int tenant, string entityId, string entityReference, bool isCancellation = false, bool isPayment = false)
+        private void BuildProfactCommunicationLog33(Profact.TimbraCFDI33.Comprobante comprobante, int tenant, string entityId, string entityReference, bool isCancellation = false, bool isPayment = false)
         {
             byte[] profactoXmlData = { };
 
-            InvoiceComprobanteShortDetails invoiceComprobanteShortDetails = GetInvoiceComprobanteShortDetails(comprobante);
 
             string logSubject = "SAT Interface";
             if (isCancellation)
@@ -1499,16 +1424,16 @@ namespace Logitude.BL.InvoiceModel.Tools
                     logSubject = "Payment SAT Interface Cancellation";
                 }
 
-                if (invoiceComprobanteShortDetails.ComplementoAny != null)
+                if (comprobante.Complemento.Any != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteShortDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
                         Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
 
                         //Rfc Emisor
-                        string rfcEmisor = invoiceComprobanteShortDetails.EmisorRfc.Trim();
+                        string rfcEmisor = comprobante.Emisor.Rfc.Trim();
 
                         //Folio Fiscal - UUID
                         string folioFiscal = digitalTi.UUID.Trim();
@@ -1524,10 +1449,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                 {
                     logSubject = "Payment SAT Interface";
                 }
-                if(invoiceComprobanteShortDetails.V3Comprobante != null)
-                    profactoXmlData = LogitudeXmlSerializer.SerializeObject<Profact.TimbraCFDI33.Comprobante>(invoiceComprobanteShortDetails.V3Comprobante);
-                else
-                    profactoXmlData = LogitudeXmlSerializer.SerializeObject<Profact.TimbraCFDI40.Comprobante>(invoiceComprobanteShortDetails.V4Comprobante);
+
+                profactoXmlData = LogitudeXmlSerializer.SerializeObject<Profact.TimbraCFDI33.Comprobante>(comprobante);
             }
 
 
@@ -1617,7 +1540,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             DbQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("SATInterface", 0);
             Dictionary<string, string> param = new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", tenant.ToString() }, { "CancellationRequest", isCancellation.ToString() } };
-            queueservice.Send(param, tenant);
+            queueservice.Send(param);
 
             if (!isCancellation)
             {
@@ -1636,37 +1559,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                 });
             }
         }
-        private object GetComprobante(byte[] profactoXMLData)
-        {
-            try
-            {
-                return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
-            }
-            catch(Exception ex) {
-                return LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(profactoXMLData);
-            }
-        }
-        
-        private InvoiceComprobanteShortDetails GetInvoiceComprobanteShortDetails(object comprobante)
-        {
-            InvoiceComprobanteShortDetails invoiceComprobanteShortDetails = new InvoiceComprobanteShortDetails();
-            try
-            {
-                Profact.TimbraCFDI33.Comprobante invoiceComprobanteV3 = ((Profact.TimbraCFDI33.Comprobante)comprobante);
-                invoiceComprobanteShortDetails.V3Comprobante = invoiceComprobanteV3;
-                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV3.Emisor?.Rfc;
-                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV3.Complemento?.Any;
-            }
-            catch (Exception ex)
-            {
-                Profact.TimbraCFDI40.Comprobante invoiceComprobanteV4 = ((Profact.TimbraCFDI40.Comprobante)comprobante);
-                invoiceComprobanteShortDetails.V4Comprobante = invoiceComprobanteV4;
-                invoiceComprobanteShortDetails.EmisorRfc = invoiceComprobanteV4.Emisor?.Rfc;
-                invoiceComprobanteShortDetails.ComplementoAny = invoiceComprobanteV4.Complemento?.Any;
-            }
 
-            return invoiceComprobanteShortDetails;
-        }
+
 
         private List<ARInvoiceTotalVATPM> CalculateNoneExpenseTotalVats(ARInvoicePM entityPM,
             List<VatType> allVatTypes, List<VatTypePercentagePM> allVatPercentages, List<VATTypesGroup> allVatGroups, List<ChargesType> chargesTypes)
@@ -1697,7 +1591,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 LocalCurrencyAmount = item.LocalCurrencyAmount,
                                 InvoiceCurrencyAmount = item.InvoiceCurrencyAmount,
                                 ProfitCurrencyAmount = item.ProfitCurrencyAmount,
-                                ExternalVatCard = lineVatType.ReceivablesExternalId,
+                                ExternalVatCard = lineVatType.ExternalVATCard,
                                 ExternalTAXItemId = lineVatType.ExternalTAXItemId,
                             };
 
@@ -1721,7 +1615,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 VatType vatType = allVatTypes.Where(d => d.Id == itemGroup.SingleVATTypeId).FirstOrDefault();
                                 if (vatType != null)
                                 {
-                                    newItem.ExternalVatCard = vatType.ReceivablesExternalId;
+                                    newItem.ExternalVatCard = vatType.ExternalVATCard;
                                     newItem.ExternalTAXItemId = vatType.ExternalTAXItemId;
                                 }
 
@@ -1808,14 +1702,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         public void SendPaymentProfactoXML(string paymentId, int tenant)
         {
-            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
-            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
-            {
-                SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(paymentId, tenant);
-                sATPaymentProfact40Service.SendRequest(satSetting);
-                return;
-            }
+
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             TenantRepository tenantRepository = new TenantRepository(commonContext);
@@ -1950,11 +1837,10 @@ namespace Logitude.BL.InvoiceModel.Tools
             Profact.TimbraCFDI33.Comprobante comprobante = new Profact.TimbraCFDI33.Comprobante();
             if (!string.IsNullOrEmpty(entityPM.SATXML))
             {
-                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(entityPM.SATXML);
-                
-                if (invoiceComprobanteDetails.ComplementoAny != null)
+                Profact.TimbraCFDI33.Comprobante paymentComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(entityPM.SATXML);
+                if (paymentComprobante.Complemento.Any != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = paymentComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -2090,8 +1976,6 @@ namespace Logitude.BL.InvoiceModel.Tools
             int number = 1;
             paymentARInvoices.ForEach(invoice =>
             {
-                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(invoice.SATXML);
-
                 List<ARInvoicePayment> allInvoicePayments = (from a in invoiceContext.ARInvoicePayments.Include("ARPayment")
                                                              where a.ARInvoiceId == invoice.Id && a.Tenant == invoice.Tenant
                                                              select a).ToList();
@@ -2104,7 +1988,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 ARInvoicePayment currentARInvoicePayment = allInvoicePayments.FirstOrDefault(p => p.ARPaymentId == entityPM.Id);
                 decimal previouslySentPaymentsTotal = 0;
-                decimal invoiceAmount = (decimal)invoiceComprobanteDetails.Total;//invoice.AmountInInvoiceCurrency.Value; // 
+                decimal invoiceAmount = (decimal)invoice.AmountInInvoiceCurrency.Value;
                 decimal currentPaymentAmount = (decimal)currentARInvoicePayment.ForeignAmount;
 
                 if (entityPM.AmountInPaymentCurrency == invoice.AmountInInvoiceCurrency) // one payment
@@ -2134,7 +2018,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 }
 
-                 
+
                 decimal imSaldoAnt = (invoiceAmount - previouslySentPaymentsTotal);
                 doctoItem.ImpSaldoAnt = GetDecimalWith2DigitsAfterPoint((invoiceAmount - previouslySentPaymentsTotal)); // previous amount (not sent to profact amount)
                 doctoItem.ImpSaldoAntSpecified = true;
@@ -2160,10 +2044,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     doctoItem.TipoCambioDRSpecified = true;
                 }
 
+                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
 
-                if (invoiceComprobanteDetails.ComplementoAny != null)
+                if (invoiceComprobante.Complemento.Any != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -2172,9 +2057,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     }
                 }
 
-                doctoItem.Serie = invoiceComprobanteDetails.Serie;
-                doctoItem.Folio = invoiceComprobanteDetails.Folio;
-                doctoItem.MetodoDePagoDR = invoiceComprobanteDetails.MetodoPago;
+                doctoItem.Serie = invoiceComprobante.Serie;
+                doctoItem.Folio = invoiceComprobante.Folio;
+                doctoItem.MetodoDePagoDR = invoiceComprobante.MetodoPago;
 
                 doctos.Add(doctoItem);
 
@@ -2216,7 +2101,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         }
 
-        public void HandlePaymentSATCancellation(ARPaymentPM entityPM, ARPayment entityPoco)
+        public void SendPaymentSATCancellationRequest(ARPaymentPM entityPM, ARPayment entityPoco)
         {
             SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(entityPM.Tenant);
             SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(entityPM.Tenant);
@@ -2226,10 +2111,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 {
                     case "PROF":
                     case "PROF33":
-                        HandleProfactPaymentCancellation(entityPM, entityPoco);
-                        break;
-                    case "PROF40":
-                        HandleProfact40PaymentCancellation(entityPM, entityPoco);
+                        SendPaymetProfactCancellationRequest(entityPM, entityPoco);
                         break;
                     case "CONT":
                         //SendContpaqCancellation(entityPM);
@@ -2240,53 +2122,34 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
         }
 
-        private void HandleProfact40PaymentCancellation(ARPaymentPM aRPaymentPM, ARPayment aRPayment)
-        {
-            SATCancelPaymentProfact40Service saTCancelPaymentProfact40Service = new SATCancelPaymentProfact40Service(aRPaymentPM, aRPayment);
-            saTCancelPaymentProfact40Service.SendRequest();
-        }
-
-        private void HandleProfactPaymentCancellation(ARPaymentPM entityPM, ARPayment entityPoco)
+        private void SendPaymetProfactCancellationRequest(ARPaymentPM entityPM, ARPayment entityPoco)
         {
             if (!string.IsNullOrEmpty(entityPoco.SATXML))
             {
                 Encoding encoding = Encoding.UTF8;
                 byte[] profactoXMLData = encoding.GetBytes(entityPoco.SATXML);
 
-                object comprobante = GetComprobante(profactoXMLData);
+                Profact.TimbraCFDI33.Comprobante comprobante = LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(profactoXMLData);
 
                 this.BuildProfactCommunicationLog33(comprobante, entityPM.Tenant, entityPM.Id, entityPM.PaymentNo.ToString(), true, true);
                 entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "TG";
-            }
-            else
-            {
-                entityPoco.SATTransferStatusCode = entityPM.SATTransferStatusCode = "ND";
-                //entityPoco.TransmissionError = entityPM.TransmissionError = null;
             }
         }
 
 
         public static Profact.TimbraCFDI.ResultadoConsultaEstatusSAT GetSATStatus(int tenant, string entitySATXML)
         {
-            if (string.IsNullOrEmpty(entitySATXML)) return null;
-            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
-            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
-            {
-                return SATBaseProfact40Service.GetSATStatus(tenant, entitySATXML);
-            }
-
             Profact.TimbraCFDI.ResultadoConsultaEstatusSAT resultadoConsultaEstatusSAT = null;
             Profact.TimbraCFDI33.Conector conector = GetProfactConnector(tenant);
-            InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(entitySATXML);
-            if (invoiceComprobanteDetails.ComplementoAny != null)
+            Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(entitySATXML);
+            if (comprobante.Complemento.Any != null)
             {
-                List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
+                List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
                 var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                 if (timbreFiscalDigitalElement != null)
                 {
                     Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
-                    string rfcEmisor = invoiceComprobanteDetails.EmisorRfc.Trim();
+                    string rfcEmisor = comprobante.Emisor.Rfc.Trim();
                     //Folio Fiscal - UUID
                     string uuID = digitalTi.UUID.Trim();
 
@@ -2348,20 +2211,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
         #endregion
 
-        public void UpdatePaymentInvoicesSATStatus(string paymentId, int tenant, XmlElement comprobanteXmlPagos, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
+        public void UpdatePaymentInvoicesSATStatus(ARPayment payment, Profact.TimbraCFDI33.Comprobante paymentComprobante, ARInvoiceRepository arinvoiceRep, ARPaymentRepository arpaymentRep)
         {
+            int tenant = payment.Tenant;
             ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
-            ARPaymentPM entityPM = paymentQuery.GetSinglePM(paymentId, tenant);
-
-            SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
-            SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
-            if (satSetting != null && satSetting.SATInterfaceCode == "PROF40")
-            {
-                SATPaymentProfact40Service sATPaymentProfact40Service = new SATPaymentProfact40Service(entityPM, comprobanteXmlPagos, arinvoiceRep);
-                sATPaymentProfact40Service.UpdateStatus();
-                return;
-            }
-            
+            ARPaymentPM entityPM = paymentQuery.GetSinglePM(payment.Id, tenant);
 
             List<string> invoiceIds = entityPM.PaymentInvoices.Select(f => f.ARInvoiceId).ToList();
 
@@ -2370,15 +2224,10 @@ namespace Logitude.BL.InvoiceModel.Tools
                                                         select a).ToList();
 
             List<ARInvoiceSATDetails> currentPaymentInvoiceDetails = GetCurrentPaymentInvoicesDetails(currentPaymentARInvoices);
-            List<PagosPagoDoctoRelacionado> doctos;
-            try
-            {
-                doctos = GetPagosPagoDoctoRelacionados(comprobanteXmlPagos);
-            }
-            catch (Exception ex)
-            {
-                doctos = GetNewInstancePagosPago10DoctoRelacionados(comprobanteXmlPagos);
-            }
+            XmlElement xmlPagos = paymentComprobante.Complemento.Any[0];
+            Profact.TimbraCFDI33.Complementos.Pagos10.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI33.Complementos.Pagos10.Pagos>(xmlPagos.OuterXml);
+            Profact.TimbraCFDI33.Complementos.Pagos10.PagosPago pagoItem = pagos.Pago[0];
+            List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
             foreach (Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado doctoItem in doctos)
             {
                 ARInvoiceSATDetails relatedInvoice = currentPaymentInvoiceDetails.FirstOrDefault(d => d.UUID == doctoItem.IdDocumento);
@@ -2431,40 +2280,16 @@ namespace Logitude.BL.InvoiceModel.Tools
             arinvoiceRep.SubmitChanges();
         }
 
-        private static List<PagosPagoDoctoRelacionado> GetPagosPagoDoctoRelacionados(XmlElement comprobanteXmlPagos)
-        {
-            XmlElement xmlPagos = comprobanteXmlPagos;
-            Profact.TimbraCFDI33.Complementos.Pagos10.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI33.Complementos.Pagos10.Pagos>(xmlPagos.OuterXml);
-            Profact.TimbraCFDI33.Complementos.Pagos10.PagosPago pagoItem = pagos.Pago[0];
-            List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
-            return doctos;
-        }
-
-        private static List<PagosPagoDoctoRelacionado> GetNewInstancePagosPago10DoctoRelacionados(XmlElement comprobanteXmlPagos)
-        {
-            XmlElement xmlPagos = comprobanteXmlPagos;
-            Profact.TimbraCFDI40.Complementos.Pagos20.Pagos pagos = Profact.TimbraCFDI.XMLUtilerias.DeserializaObjeto<Profact.TimbraCFDI40.Complementos.Pagos20.Pagos>(xmlPagos.OuterXml);
-            Profact.TimbraCFDI40.Complementos.Pagos20.PagosPago pagoItem = pagos.Pago[0];
-            List<Profact.TimbraCFDI40.Complementos.Pagos20.PagosPagoDoctoRelacionado> doctos = pagoItem.DoctoRelacionado.ToList();
-
-            List<PagosPagoDoctoRelacionado> pagosPagoDoctoRelacionados = new List<PagosPagoDoctoRelacionado>();
-            doctos.ForEach(docto => {
-                pagosPagoDoctoRelacionados.Add(new PagosPagoDoctoRelacionado { IdDocumento = docto.IdDocumento });
-            });
-
-            return pagosPagoDoctoRelacionados;
-        }
-
         private List<ARInvoiceSATDetails> GetCurrentPaymentInvoicesDetails(List<ARInvoice> currentPaymentARInvoices)
         {
             List<ARInvoiceSATDetails> paymentInvoicesDetails = new List<ARInvoiceSATDetails>();
             foreach (ARInvoice invoice in currentPaymentARInvoices)
             {
-                InvoiceComprobanteDetails invoiceComprobanteDetails = GetInvoiceComprobanteDetails(invoice.SATXML);
+                Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
 
-                if (invoiceComprobanteDetails.ComplementoAny != null)
+                if (invoiceComprobante.Complemento.Any != null)
                 {
-                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
+                    List<System.Xml.XmlElement> myLXmlComplementos = invoiceComprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
                     var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
                     if (timbreFiscalDigitalElement != null)
                     {
@@ -2479,32 +2304,6 @@ namespace Logitude.BL.InvoiceModel.Tools
             return paymentInvoicesDetails;
         }
 
-        public static InvoiceComprobanteDetails GetInvoiceComprobanteDetails(string invoiceSATXML)
-        {
-            InvoiceComprobanteDetails invoiceComprobanteDetails = new InvoiceComprobanteDetails();
-            try
-            {
-                Profact.TimbraCFDI33.Comprobante invoiceComprobanteV3 = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoiceSATXML);
-                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV3.Complemento?.Any;
-                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV3.Emisor?.Rfc;
-                invoiceComprobanteDetails.Total = invoiceComprobanteV3.Total;
-                invoiceComprobanteDetails.Serie = invoiceComprobanteV3.Serie;
-                invoiceComprobanteDetails.Folio = invoiceComprobanteV3.Folio;
-                invoiceComprobanteDetails.MetodoPago = invoiceComprobanteV3.MetodoPago;
-            }
-            catch (Exception ex)
-            {
-                Profact.TimbraCFDI40.Comprobante invoiceComprobanteV4 = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(invoiceSATXML);
-                invoiceComprobanteDetails.ComplementoAny = invoiceComprobanteV4.Complemento?.Any;
-                invoiceComprobanteDetails.EmisorRfc = invoiceComprobanteV4.Emisor?.Rfc;
-                invoiceComprobanteDetails.Total = invoiceComprobanteV4.Total;
-                invoiceComprobanteDetails.Serie = invoiceComprobanteV4.Serie;
-                invoiceComprobanteDetails.Folio = invoiceComprobanteV4.Folio;
-                invoiceComprobanteDetails.MetodoPago = invoiceComprobanteV4.MetodoPago;
-            }
-
-            return invoiceComprobanteDetails;
-        }
 
         private decimal GetDecimalWith3DigitsAfterPointIfZero(decimal dNumber)
         {
@@ -2529,8 +2328,6 @@ namespace Logitude.BL.InvoiceModel.Tools
     {
         public string rfcEmisor { get; set; }
         public string folioFiscal { get; set; }
-        public string motivoCancelacion { get; set; }
-        public string folioSustitucion { get; set; }
     }
 
     public class ARInvoiceSATDetails
@@ -2539,23 +2336,6 @@ namespace Logitude.BL.InvoiceModel.Tools
         public ARInvoice Invoice { get; set; }
     }
 
-    public class InvoiceComprobanteDetails
-    {
-        public XmlElement[] ComplementoAny { get; set; }
-        public string EmisorRfc { get; set; }
-        public decimal Total { get; set; }
-        public string Serie { get; set; }
-        public string Folio { get; set; }
-        public string MetodoPago { get; set; }
 
-    }
-
-    public class InvoiceComprobanteShortDetails
-    {
-        public XmlElement[] ComplementoAny { get; set; }
-        public string EmisorRfc { get; set; }
-        public Profact.TimbraCFDI33.Comprobante V3Comprobante { get; set; }
-        public Profact.TimbraCFDI40.Comprobante V4Comprobante { get; set; }
-    }
 
 }

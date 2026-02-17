@@ -8,7 +8,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (bankAccount.ChequeCounter == null)
                     {
-                        throw new ApplicationException("The cheque counter did not defined for the choosen bank");
+                        throw new Exception("The cheque counter did not defined for the choosen bank");
                     }
                     else
                     {
@@ -109,7 +109,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 CreateDate = entityPM.CreateDate,
                 TypeCode = "0",
-                StatusCode = "6",
+                StatusCode = "2",
                 CreatedByUserId = entityPM.CreatedByUserId,
                 AccountingEntityCode = "9",
                 AccountingEntityId = entityPM.Id,

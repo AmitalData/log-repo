@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -54,7 +54,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 QuoteTemplateHeaderFieldQuery quoteTemplateHeaderFieldQuery = new QuoteTemplateHeaderFieldQuery(tenant);
                 List<QuoteTemplateHeaderFieldPM> quoteTemplateHeaderFieldPMLists = quoteTemplateHeaderFieldQuery.GetQuoteTemplateHeaderFieldPMsByQuotetemplateId(tenant, quoteTemplateId).ToList();
 
@@ -79,8 +79,6 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 QuoteTemplateHeaderFieldService quoteTemplateHeaderFieldService = new QuoteTemplateHeaderFieldService(objectContext, authToken.Tenant);
                 foreach (QuoteTemplateHeaderFieldPM headerField in quoteTemplateHeaderFields)
                 {
-                    SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplateHeaderField", headerField.Tenant, authToken.Tenant);
-
                     if (headerField.IsEdit)
                     {
                         quoteTemplateHeaderFieldService.Update(headerField);

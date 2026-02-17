@@ -14,20 +14,19 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
-    public abstract class TrailReportBase : Logitude.Accounting.BL.CoreBL.Reports.ITrailReportBase
+    public abstract class TrailReportBase :Logitude.Accounting.BL.CoreBL.Reports.ITrailReportBase
     {
         protected TrailReportParam _TrailReportParam = null;
         protected readonly int __TimeOutInMinutes = 129;
-        //private System.Transactions.TransactionScope _TransactionScope;
+        private System.Transactions.TransactionScope _TransactionScope;
         protected IAccountingContext _AccountingContext;
         private FullAccountingSettingPM _FullAccountingSetting;
-        protected string _AccountingCurrencyId;
         protected IQueryable<AccountCOAM> QBaseAllCardsAndDetailsAccType;
         private IQueryable<ChartOfAccount5LevelM> _QAllChartOfAccountFlattenBy5LevelofHierarchy;
 
         protected IEnumerable //IQueryable
-            <TrailReportM> _QBaseTrailReportFull = null;
-        //protected DbContextBase.IDbContextLogger _DbLogger;
+            <TrailReportM> _QBaseTrailReportFull=null;
+        protected DbContextBase.IDbContextLogger _DbLogger;
 
 
 
@@ -36,7 +35,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         DateTime _ToBeginOfMonth;
 
-        protected IQueryable<GLAccountTotalByMonthsDTO>
+        protected IQueryable<GLAccountTotalByMonthsDTO> 
             //מצטברים מתחילת חיי הכרטיסים עד תחילת החודש של FROMDATE לא כולל
             QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate;
 
@@ -53,7 +52,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde;
 
         protected IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy;
-
+        
 
         public TrailReportBase(TrailReportParam trailReportParam, int timeOutInMinutes)
         {
@@ -62,7 +61,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         }
 
-
+   
         public List<TrailReportM> Execute()
         {
             _TrailReportParam.FromDate = _TrailReportParam.FromDate.Date;
@@ -70,76 +69,62 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _FromBeginOfMonth = new DateTime(_TrailReportParam.FromDate.Year, _TrailReportParam.FromDate.Month, 1);
 
             _ToBeginOfMonth = new DateTime(_TrailReportParam.ToDate.Year, _TrailReportParam.ToDate.Month, 1);
-            using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
-                )
+            _TransactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)); //snapshot isolation performance
+
+            _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
+            _DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
+
+            _FullAccountingSetting = //Hope From Cache
+                FullAccountingSettingQueryService
+                .Get(_TrailReportParam.Tenant);
+
+
+            GetGLAccountCardPopulationByParam();
+
+            Create4MainQueriesPeriod();
+
+            CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy();
+
+            AdjustTrailReportFull();
+
+            if (_QBaseTrailReportFull == null)
             {
-
-
-
-
-                _AccountingContext = AccountingContext.GetContext(_TrailReportParam.Tenant);
-                //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
-
-                _FullAccountingSetting = //Hope From Cache
-                    FullAccountingSettingQueryService
-                    .Get(_TrailReportParam.Tenant);
-
-                _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_TrailReportParam.Tenant);
-
-                var level = _TrailReportParam.MyTrailReportLevel;
-                if (level == ReportLevel.ChartofaccountType || level == ReportLevel.Chartofaccount)
-                {
-                    GetGLAccountCardPopulationByParam_Upper();
-                }
-                else
-                {
-                    GetGLAccountCardPopulationByParam_Lower();
-                }
-
-                Create4MainQueriesPeriod();
-
-                CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy();
-
-                AdjustTrailReportFull();
-
-                if (_QBaseTrailReportFull == null)
-                {
-                    throw new Exception("(_QBaseTrailReportFull==null)");
-                }
-                var myOutputReport = _QBaseTrailReportFull.ToList();
-                var myTotalRow =
-                    (from r in
-                         myOutputReport
-                     group r by 1 into g
-                     select new TrailReportM()
-                     {
-                         ChartOfAcount1 = "Total",
-                         LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
-                         LocalDebit = g.Sum(r => r.LocalDebit),
-                         LocalCredit = g.Sum(r => r.LocalCredit),
-                         LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
-
-
-                         ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
-                         ForeignDebit = g.Sum(r => r.ForeignDebit),
-                         ForeignCredit = g.Sum(r => r.ForeignCredit),
-                         ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
-
-                     }).FirstOrDefault();
-
-                myOutputReport.Add(myTotalRow);
-
-
-                DbLog = "";// _DbLogger.ToString();
-                return myOutputReport;
+                throw new Exception("(_QBaseTrailReportFull==null)");
             }
+            var myOutputReport = _QBaseTrailReportFull.ToList();
+            var myTotalRow =
+                (from r in
+                     myOutputReport
+                 group r by 1 into g
+                 select new TrailReportM()
+                 {
+                     ChartOfAcount1 = "Total",
+                     LocalOpenBalance = g.Sum(r => r.LocalOpenBalance),
+                     LocalDebit = g.Sum(r => r.LocalDebit),
+                     LocalCredit = g.Sum(r => r.LocalCredit),
+                     LocalCloseBalance = g.Sum(r => r.LocalCloseBalance),
+
+
+                     ForeignOpenBalance = g.Sum(r => r.ForeignOpenBalance),
+                     ForeignDebit = g.Sum(r => r.ForeignDebit),
+                     ForeignCredit = g.Sum(r => r.ForeignCredit),
+                     ForeignCloseBalance = g.Sum(r => r.ForeignCloseBalance),
+
+                 }).FirstOrDefault();
+
+            myOutputReport.Add(myTotalRow);
+
+
+            DbLog = _DbLogger.ToString();
+            return myOutputReport;
         }
+
         private void CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy()
         {
             var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
             _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
                 qsChartOfAccount
-                .GetQChartOfAccount5LevelM(_TrailReportParam.Tenant, _TrailReportParam.ChartOfAccountsTypeCodeList, _TrailReportParam.ChartOfAccountsIdList
+                .GetQChartOfAccount5LevelM(_TrailReportParam.Tenant, null
                 ///,_TrailReportParam.MyTrailReportLevel == TrailReportLevel.ChartofaccountType
                 );
             QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
@@ -151,7 +136,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<LedgerTransaction> qYearTransferLedgerTransaction = Enumerable.Empty<LedgerTransaction>().AsQueryable();
             if (_FromBeginOfMonth.Month == 1 && _FromBeginOfMonth.Day == 1)
             {
-
+                
                 var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
                 qYearTransferLedgerTransaction = myLedgerTransactionRepository
                     .GetYearTransferLedgerTransaction(null, _FromBeginOfMonth.Year, _TrailReportParam.Tenant);
@@ -171,12 +156,12 @@ into groupBy_currency
  {
      Tenant = _TrailReportParam.Tenant,
      AccountId = groupBy_currency.Key.AccountId,
-
+     
      CurrencyId = groupBy_currency.Key.CurrencyId,
 
      Year = _FromBeginOfMonth.Year,
      Month = _FromBeginOfMonth.Month,
-
+     
 
 
      LocalAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountDebit),
@@ -185,15 +170,15 @@ into groupBy_currency
      ForeignAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountDebit),
      ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit),
 
-     CHANGE_TYPE = "",
-     DateTypeValue = GLAccountTotalDateTypeValues.AccountingDate,
+     CHANGE_TYPE="",
+     DateTypeValue = GLAccountTotalDateTypeValues.Accountingdate,
  });
 
 
-
+            
 
             QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate =
-                 (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
+                 (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
                   where tot.Tenant == _TrailReportParam.Tenant
                   where tot.Year < _FromBeginOfMonth.Year ||
                   (tot.Year == _FromBeginOfMonth.Year &&
@@ -220,73 +205,73 @@ into groupBy_currency
                       DateTypeValue = tot.DateTypeCode
                   }
                      );
-            QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate =
-                (from a in
+            QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate = 
+                ( from a in 
                       QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate.Concat(qYearTransferLedgerTransactionTotByMonth)
-                 group a by new { a.Tenant, a.AccountId, a.DateTypeValue, a.Year, a.Month, a.CurrencyId }
+                  group a by new { a.Tenant, a.AccountId, a.DateTypeValue, a.Year,  a.Month, a.CurrencyId }
                   into groupBy_currency
-                 select new GLAccountTotalByMonthsDTO()
-                 {
-                     Tenant = groupBy_currency.Key.Tenant,
-                     AccountId = groupBy_currency.Key.AccountId,
-                     CurrencyId = groupBy_currency.Key.CurrencyId,
+                  select new GLAccountTotalByMonthsDTO()
+                  {
+                      Tenant = groupBy_currency.Key.Tenant,
+                      AccountId = groupBy_currency.Key.AccountId,
+                      CurrencyId = groupBy_currency.Key.CurrencyId,
 
-                     Year = groupBy_currency.Key.Year,
-                     Month = groupBy_currency.Key.Month,
+                      Year = groupBy_currency.Key.Year,
+                      Month = groupBy_currency.Key.Month,
+                      
 
 
+                      LocalAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountDebit),
+                      LocalAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountCredit),
 
-                     LocalAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountDebit),
-                     LocalAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountCredit),
+                      ForeignAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountDebit),
+                      ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit),
 
-                     ForeignAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountDebit),
-                     ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit),
-
-                     CHANGE_TYPE = "",
-                     DateTypeValue = groupBy_currency.Key.DateTypeValue,
-                 }
+                      CHANGE_TYPE="",
+                      DateTypeValue = groupBy_currency.Key.DateTypeValue,
+                  }
                   );
 
-            bool testIt = false;
+            bool testIt = true;
             if (testIt)
             {
                 var res = QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate.ToList();
             }
 
 
-            QBasePeriodGLATotalByMonths_TotalDelta2End_FromBeginOfMonthFromDate_Til_BeginOfMonthToDate =
-            (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
-             where tot.Tenant == _TrailReportParam.Tenant
+                QBasePeriodGLATotalByMonths_TotalDelta2End_FromBeginOfMonthFromDate_Til_BeginOfMonthToDate =
+                (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                 where tot.Tenant == _TrailReportParam.Tenant
 
 
-             where tot.Year > _FromBeginOfMonth.Year ||
-         //(tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
-         (tot.Year == _FromBeginOfMonth.Year && tot.Month >= _FromBeginOfMonth.Month)
+                 where tot.Year > _FromBeginOfMonth.Year ||
+             //(tot.Year == _FromBeginOfMonth.Year && tot.Month > _FromBeginOfMonth.Month)
+             (tot.Year == _FromBeginOfMonth.Year && tot.Month >= _FromBeginOfMonth.Month)
 
-             where tot.Year < _ToBeginOfMonth.Year ||
-             (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
-             select
-             new GLAccountTotalByMonthsDTO()
-             {
-                 Tenant = tot.Tenant,
+                 where tot.Year < _ToBeginOfMonth.Year ||
+                 (tot.Year == _ToBeginOfMonth.Year && tot.Month < _ToBeginOfMonth.Month)
+                 select
+                 new GLAccountTotalByMonthsDTO()
+                 {
+                     Tenant = tot.Tenant,
 
-                 AccountId = tot.AccountId,
-                 CurrencyId = tot.CurrencyId,
+                     AccountId = tot.AccountId,
+                     CurrencyId = tot.CurrencyId,
 
-                 Year = tot.Year,
-                 Month = tot.Month,
+                     Year = tot.Year,
+                     Month = tot.Month,
 
 
-                 LocalAmountDebit = tot.LocalAmountDebit,
-                 LocalAmountCredit = tot.LocalAmountCredit,
+                     LocalAmountDebit = tot.LocalAmountDebit,
+                     LocalAmountCredit = tot.LocalAmountCredit,
 
-                 ForeignAmountDebit = tot.ForeignAmountDebit,
-                 ForeignAmountCredit = tot.ForeignAmountCredit,
+                     ForeignAmountDebit = tot.ForeignAmountDebit,
+                     ForeignAmountCredit = tot.ForeignAmountCredit,
 
-                 CHANGE_TYPE = "",
-                 DateTypeValue = tot.DateTypeCode
-             }
-             );
+                     CHANGE_TYPE = "",
+                     DateTypeValue = tot.DateTypeCode
+                 }
+                 );
 
             var qYearTransferLedgerMinus_4TotalDelta2End =
          qYearTransferLedgerTransactionTotByMonth.Select(r => new GLAccountTotalByMonthsDTO()
@@ -352,7 +337,7 @@ into groupBy_currency
                 select trans
                    );
 
-
+          
 
 
             var toDateAdd1Day = _TrailReportParam.ToDate.AddDays(1);//INclude //
@@ -393,123 +378,23 @@ into groupBy_currency
             };
         }
 
-
-
-        private void GetGLAccountCardPopulationByParam_Upper()
+        private void GetGLAccountCardPopulationByParam()
         {
             var repoGLAccount = new GLAccountRepository(_AccountingContext);
             var myQBaseAllCardsAndDetailsAccType = //Get The Account List
                 repoGLAccount.
-                GetQAllCardsAndDetailsAccType_Upper(
-                _TrailReportParam.Tenant,
-                null, //GetClientContolAcc(_FullAccountingSetting),
-                null, //GetVendorContolAcc(_FullAccountingSetting),
-                null, //GetJobContolAcc(_FullAccountingSetting),
-                null)//GetFileContolAcc(_FullAccountingSetting))
-                     //.Where(a => !a.Inactive)
-                ;
-            if (_TrailReportParam.ChartOfAccountsIdList.Count > 0)
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(r => _TrailReportParam.ChartOfAccountsIdList.Contains(r.ChartOfAccountsId));
-            }
-            if (_TrailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(r => _TrailReportParam.ChartOfAccountsTypeCodeList.Contains(r.ChartOfAccountsTypeCode));
-            }
-
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category1Id == _TrailReportParam.Category1);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category2))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category2Id == _TrailReportParam.Category2);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category3))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category3Id == _TrailReportParam.Category3);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category4))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category4Id == _TrailReportParam.Category4);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category5Id == _TrailReportParam.Category5);
-            }
-
-
-            QBaseAllCardsAndDetailsAccType = (
-                from a in myQBaseAllCardsAndDetailsAccType
-                select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
-                {
-                    Id = a.Id,
-                    Tenant = a.Tenant,
-                    AccountTypeCode = a.AccountTypeCode,
-                    EnglishName = a.EnglishName,
-                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
-                    ChartOfAccountsId = a.ChartOfAccountsId,
-                    IsControlAccount = a.IsControlAccount,
-                    ParentId = a.ParentAccountId,
-                    DisplayNumber = a.DisplayNumber,
-                    LocalName = a.LocalName,
-                    CurrencyId = a.CurrencyId,
-                    IsMultiCurrency = a.IsMultiCurrency,
-
-                }
-                );
-        }
-
-        private void GetGLAccountCardPopulationByParam_Lower()
-        {
-            var repoGLAccount = new GLAccountRepository(_AccountingContext);
-            var myQBaseAllCardsAndDetailsAccType = //Get The Account List
-                repoGLAccount.
-                GetQAllCardsAndDetailsAccType_Lower(
+                GetQAllCardsAndDetailsAccType(
                 _TrailReportParam.Tenant,
                 GetClientContolAcc(_FullAccountingSetting),
                 GetVendorContolAcc(_FullAccountingSetting),
-                GetJobContolAcc(_FullAccountingSetting),
+                "",
                 GetFileContolAcc(_FullAccountingSetting))
                 //.Where(a => !a.Inactive)
                 ;
-            if (_TrailReportParam.ChartOfAccountsIdList.Count > 0)
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(r => _TrailReportParam.ChartOfAccountsIdList.Contains(r.ChartOfAccountsId));
-            }
-            if (_TrailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(r => _TrailReportParam.ChartOfAccountsTypeCodeList.Contains(r.ChartOfAccountsTypeCode));
-            }
-
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
             {
                 myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
                     .Where(a => a.Category1Id == _TrailReportParam.Category1);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category2))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category2Id == _TrailReportParam.Category2);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category3))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category3Id == _TrailReportParam.Category3);
-            }
-            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category4))
-            {
-                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
-                    .Where(a => a.Category4Id == _TrailReportParam.Category4);
             }
             if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
             {
@@ -532,9 +417,6 @@ into groupBy_currency
                     ParentId = a.ParentAccountId,
                     DisplayNumber = a.DisplayNumber,
                     LocalName = a.LocalName,
-                    CurrencyId = a.CurrencyId,
-                    IsMultiCurrency = a.IsMultiCurrency,
-
                 }
                 );
         }
@@ -545,7 +427,7 @@ into groupBy_currency
         private IQueryable<ChartOfAccount5LevelM> JoinEachAccountWithHisChartOfAccount5hierarchy(IQueryable<AccountCOAM> qAllCardsAndDetialsAccType)
         {
             IQueryable<ChartOfAccount5LevelM> qAllCardsAndDetialsAccTypeBy5LevelHierarchy =
-            //Join Each Account With is ChartOfAccount 5 hierarchy
+                //Join Each Account With is ChartOfAccount 5 hierarchy
             (from aGL in qAllCardsAndDetialsAccType
              join chart in _QAllChartOfAccountFlattenBy5LevelofHierarchy
              on aGL.ChartOfAccountsId  //ChartOfAccountsId  is must (not null)
@@ -558,45 +440,35 @@ into groupBy_currency
 
                  Level1Id = chart.Level1Id,
                  Level1Name = chart.Level1Name,
-                 Level1Code = chart.Level1Code,
-                 Level1English = chart.Level1English,
-
+                 Level1Code =  chart.Level1Code,
 
                  Level2Id = chart.Level2Id,
                  Level2Name = chart.Level2Name,
                  Level2Code = chart.Level2Code,
-                 Level2English = chart.Level2English,
 
                  Level3Id = chart.Level3Id,
                  Level3Name = chart.Level3Name,
-                 Level3Code = chart.Level3Code,
-                 Level3English = chart.Level3English,
+                 Level3Code = chart .Level3Code,
 
                  Level4Id = chart.Level4Id,
                  Level4Name = chart.Level4Name,
                  Level4Code = chart.Level4Code,
-                 Level4English = chart.Level4English,
 
                  Level5Id = chart.Level5Id,
                  Level5Name = chart.Level5Name,
-                 Level5Code = chart.Level5Code,
-                 Level5English = chart.Level5English,
+                 Level5Code  = chart.Level5Code,
 
 
                  GLAccountId = aGL.Id,
                  GLAccountName = aGL.LocalName,
                  GLAccountNumber = aGL.DisplayNumber,
-
-                 ChartOfAccountId = aGL.ChartOfAccountsId,
+               
+                 ChartOfAccountId=aGL.ChartOfAccountsId,
                  ChartOfAccountTypeCode = //aGL.AccountTypeCode,
                  aGL.ChartOfAccountsTypeCode,
-
-                 ChartOfAccountsTypeEnglish = chart.ChartOfAccountsTypeEnglish,
-                 ChartOfAccountsEnglish = chart.ChartOfAccountsEnglish,
-                 GLAccountEnglish = aGL.EnglishName,
-
+               
                  LeafId = chart.LeafId,
-
+                
 
              }
                  );
@@ -631,32 +503,6 @@ into groupBy_currency
             return vendorControlAccountId;
         }
 
-        protected List<string> GetJobContolAcc(FullAccountingSettingPM fullAccountingSetting)
-        {
-            List<string> controlAccountId_list = new List<string>();
-            if (_TrailReportParam.DetailedControlJob)
-            {
-                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.AirExportJobControlAccountId))
-                {
-                    controlAccountId_list.Add(fullAccountingSetting.AirExportJobControlAccountId);
-                }
-                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.AirImportJobControlAccountId))
-                {
-                    controlAccountId_list.Add(fullAccountingSetting.AirImportJobControlAccountId);
-                }
-                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.OceanExportJobControlAccountId))
-                {
-                    controlAccountId_list.Add(fullAccountingSetting.OceanExportJobControlAccountId);
-                }
-
-                if (!String.IsNullOrWhiteSpace(fullAccountingSetting.OceanImportJobControlAccountId))
-                {
-                    controlAccountId_list.Add(fullAccountingSetting.OceanImportJobControlAccountId);
-                }
-
-            }
-            return controlAccountId_list;
-        }
 
         private string GetFileContolAcc(FullAccountingSettingPM fullAccountingSetting)
         {
@@ -674,18 +520,18 @@ into groupBy_currency
 
 
 
-        //public void Dispose()
-        //{
-        //    //_DbLogger.Dispose();
-        //    //_TransactionScope.Dispose();
-        //}
+        public void Dispose()
+        {
+            _DbLogger.Dispose();
+            _TransactionScope.Dispose();
+        }
 
         public string DbLog { get; set; }
 
         internal bool NotUsingControlAccount()
         {
             return (
-                _TrailReportParam.DetailedControlClients == true &&
+                _TrailReportParam.DetailedControlClients==true &&
                 _TrailReportParam.DetailedControlFile == true &&
                 _TrailReportParam.DetailedControlJob == true &&
                 _TrailReportParam.DetailedControlVendors == true
@@ -697,45 +543,33 @@ into groupBy_currency
     {
         public static ITrailReportBase CreateNew(TrailReportParam trailReportParam)
         {
+           
 
-
-
-
-            if (
-trailReportParam.ChartOfAccountsIdList.Count > 0
-&&
-trailReportParam.ChartOfAccountsTypeCodeList.Count > 0
-)
+            if (ReportLevel.GLAccount != trailReportParam.MyTrailReportLevel && ! trailReportParam.Skip)
             {
-                throw new Exception("אנחנו נאפשר למשתמש להשתמש רק באחד מבין 2 הפילטרים החדשים!!!"
-                    + Environment.NewLine
-                    + " ChartOfAccountsIdList/ChartOfAccountsTypeCodeList "
-                    );
-            }
+                if (trailReportParam.DetailedControlClients
+                    ||
+                    trailReportParam.DetailedControlFile
+                    ||
+                    trailReportParam.DetailedControlJob
+                    ||
+                    trailReportParam.DetailedControlVendors
+                    ||
+                    trailReportParam.Suppress_DoNotShowCardWithoutActivity
+                    )
+                {
+                    throw new Exception("Only in TrailReportLevel.GLAccount DetailedControl is allowed !!!");
+                }
+                if (!string.IsNullOrWhiteSpace(trailReportParam.Category1)
+                    ||
 
-            switch (trailReportParam.MyTrailReportLevel)
-            {
-                case ReportLevel.ChartofaccountType:
-                    if (trailReportParam.ChartOfAccountsIdList.Count > 0)
-                    {
-                        // throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
-                    }
-                    if (trailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
-                    {
-                        // throw new Exception("in  ChartofaccountType level - ChartOfAccountsTypeCodeList  is not  allowed !!!");
-                    }
+                    !string.IsNullOrWhiteSpace(trailReportParam.Category5)
 
-                    break;
-                case ReportLevel.Chartofaccount:
-                    if (trailReportParam.ChartOfAccountsIdList.Count > 0)
-                    {
-                        ///throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
-                    }
-
-                    break;
-                case ReportLevel.GLAccount:
-                default:
-                    break;
+                    )
+                {
+                    throw new Exception("Only in TrailReportLevel.GLAccount Fillter by Category is allowed !!!");
+                }
+                
             }
 
             switch (trailReportParam.MyTrailReportLevel)
@@ -775,7 +609,7 @@ trailReportParam.ChartOfAccountsTypeCodeList.Count > 0
                         return new TrailReportGLAccount(trailReportParam, 130);
                     }
                     break;
-
+                
                     break;
             }
 
@@ -800,7 +634,5 @@ trailReportParam.ChartOfAccountsTypeCodeList.Count > 0
         public bool? IsControlAccount { get; set; }
         public string DisplayNumber { get; set; }
         public string ParentId { get; set; }
-        public string CurrencyId { get; set; }
-        public bool? IsMultiCurrency { get; set; }
     }
 }

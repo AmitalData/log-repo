@@ -13,8 +13,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         [Key]
         public string Code { get; set; }
         public string Name { get; set; }
-        public DateTime? CreateDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string Language { get; set; }
         public string Type { get; set; }
         public string Category { get; set; }
@@ -24,8 +24,5 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string SearchFields { get; set; }
         public bool IsNew { get; set; }
         public string FeatureCode { get; set; }
-        public int Tenant { get; set; }
-
-        public bool Inactive { get; set; }
     }
 }

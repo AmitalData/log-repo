@@ -12,7 +12,7 @@ import {CustomerProductExtendedService} from '../../Common/Services/ExtendedPMs/
 import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
 import {CustomerProductPM} from '../../Common/EntityPMs/CustomerProductPM';
 @Component({
-    
+    moduleId: module.id,
     selector: 'ViewBlocedCustomerComponent',
     templateUrl: './ViewBlocedCustomerComponent.html',
     providers: [CustomerProductExtendedService],
@@ -89,7 +89,7 @@ export class ViewBlocedCustomerComponent implements OnInit {
     LoadData() {
         this.ProductsObslist = [];
     
-        this._customerProductExtendedService.GetCustomerProducts(this.entityPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._customerProductExtendedService.GetCustomerProducts(this.entityPM.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!pmResponse.HasError) {

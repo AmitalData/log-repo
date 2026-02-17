@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -12,11 +12,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
     public class User
     {
-
-        [Key]
-        public string Id { get; set; }
+       
+        [Key]        
+        public string Id { get; set; }       
         public int Tenant { get; set; }
-        public string Code { get; set; }
+        public string Code { get; set; }                
         public string Notes { get; set; }
         public string SearchFields { get; set; }
         public bool IsBranchRestricted { get; set; }
@@ -30,7 +30,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsShowContactDetailsInTheMobileApp { get; set; }
         public bool SetAngularAsDefault { get; set; }
         public bool IsTwoFactorAuthenticationEnabled { get; set; }
-
+        
         public bool IsProductRestricted { get; set; }
         public bool IsDistributor { get; set; }
         public string DistributorCode { get; set; }
@@ -53,7 +53,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual Department Department { get; set; }
-
+             
         public string FreelancerId { get; set; }
         [ForeignKey("FreelancerId")]
         public virtual Card Freelancer { get; set; }
@@ -67,12 +67,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool ShowLocalNameInLOV { get; set; }
         public string UserRoles { get; set; }
         public bool AdditionalPackagesOnly { get; set; }
-        public int? SecurityLevel { get; set; }
-
-        public DateTime? AutomaticLastUpdateDate { get; set; }
-
-        public string LayoutDirection { get; set; }
-
-        public string SignatureImageId { get; set; }
     }
 }

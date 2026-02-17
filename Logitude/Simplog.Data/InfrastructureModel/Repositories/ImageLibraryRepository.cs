@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System;
-using System.Data.Entity;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -23,24 +21,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             webFreightContext = context;
         }
-        public ImageLibrary GetSingleImageLibrary(string id, int tenant)
+        public ImageLibrary GetSingleImageLibrary(string id)
         {
-            return (from a in context.ImageLibraries
-                    where a.Id == id && a.Tenant == tenant
+            return (from a in context.ImageLibrarys
+                    where a.Id == id
                     select a).FirstOrDefault();
         }
 
         public string GetDocumentIdByImageLibraryId(string id)
         {
-            return (from a in context.ImageLibraries
+            return (from a in context.ImageLibrarys
                     where a.Id == id
-                    select a.ImageDetailId).FirstOrDefault();
+                    select a.DocumentId).FirstOrDefault();
         }
 
 
         public List<ImageLibrary> GetImageLibraryListsByTenant(int tenant)
         {
-            return (from a in context.ImageLibraries
+            return (from a in context.ImageLibrarys
                     where a.Tenant == tenant
                     select a).ToList();
         }
@@ -50,24 +48,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Add(ImageLibrary entity)
         {
-            context.ImageLibraries.Add(entity);
+            context.ImageLibrarys.Add(entity);
         }
 
         public void Remove(ImageLibrary entity)
         {
-            context.ImageLibraries.Attach(entity);
-            context.ImageLibraries.Remove(entity);
+            context.ImageLibrarys.Attach(entity);
+            context.ImageLibrarys.Remove(entity);
         }
 
         public void Update(ImageLibrary entity)
         {
-            context.ImageLibraries.Attach(entity);
+            context.ImageLibrarys.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<ImageLibrary> All()
         {
-            return context.ImageLibraries.ToList();
+            return context.ImageLibrarys.ToList();
         }
 
         public IWebFreightContext context
@@ -89,18 +87,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public ImageLibrary GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
-        }
-
-        public ImageLibrary GetSingleBySecurityIdAndTenant(string securityId, int tenant)
-        {
-            return (from a in context.ImageLibraries.Include("ImageDetail")
-                    where a.SecurityId == securityId && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
-
-        public IQueryable<ImageLibrary> GetImageLibraries(int tenant)
-        {
-            return (from record in webFreightContext.ImageLibraries where record.Tenant == tenant select record);
         }
     }
 }

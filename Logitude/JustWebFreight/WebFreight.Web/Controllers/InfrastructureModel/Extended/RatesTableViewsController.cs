@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,14 +19,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel;
@@ -34,8 +34,6 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
-using WebFreight.Web.Helpers.APIHelpers;
-
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControllers
 { 
 
@@ -44,14 +42,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
     {
         public HttpResponseMessage GetClosestRate(string baseCurrenyId, string foreignCurrencyId)
         {
-            try
+		  try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-                RatesTableRepository ratesTableRepository = new RatesTableRepository(MyContext);
+				
+		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+				RatesTableRepository  ratesTableRepository = new RatesTableRepository(MyContext);
                 RatesTable entityPoco = ratesTableRepository.GetClosestRate(baseCurrenyId, foreignCurrencyId, authToken.Tenant);
 
 
@@ -61,30 +59,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
-        }
-
-        public HttpResponseMessage GetExchageRateByValueAndDate(string baseCurrenyId, string foreignCurrencyId, string dateString)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
-                RatesTableRepository ratesTableRepository = new RatesTableRepository(MyContext);
-                DateTime? date = DateHelper.GetDate(dateString);
-                RatesTable entityPoco = ratesTableRepository.GetExchageRateByValueAndDate(baseCurrenyId, foreignCurrencyId, date, authToken.Tenant);
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, entityPoco);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
+           
         }
     }
 }

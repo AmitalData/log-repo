@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -161,86 +161,6 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public decimal? Surcharge10MinPrice { get; set; }
         [Column("CurrencyId")]
 	    public string CurrencyId { get; set; }
-        [Column("TransitTime")]
-	    public string TransitTime { get; set; }
-        [Column("IsDifferentCurrenciesPerCharge")]
-	    public bool IsDifferentCurrenciesPerCharge { get; set; }
-        [ForeignKey("Surcharge1Currency")]
-        [Column("Surcharge1CurrencyId")]
-	    public string Surcharge1CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge1Currency { get; set; }
-        [ForeignKey("Surcharge2Currency")]
-        [Column("Surcharge2CurrencyId")]
-	    public string Surcharge2CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge2Currency { get; set; }
-        [ForeignKey("Surcharge3Currency")]
-        [Column("Surcharge3CurrencyId")]
-	    public string Surcharge3CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge3Currency { get; set; }
-        [ForeignKey("Surcharge4Currency")]
-        [Column("Surcharge4CurrencyId")]
-	    public string Surcharge4CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge4Currency { get; set; }
-        [ForeignKey("Surcharge5Currency")]
-        [Column("Surcharge5CurrencyId")]
-	    public string Surcharge5CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge5Currency { get; set; }
-        [ForeignKey("Surcharge6Currency")]
-        [Column("Surcharge6CurrencyId")]
-	    public string Surcharge6CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge6Currency { get; set; }
-        [ForeignKey("Surcharge7Currency")]
-        [Column("Surcharge7CurrencyId")]
-	    public string Surcharge7CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge7Currency { get; set; }
-        [ForeignKey("Surcharge8Currency")]
-        [Column("Surcharge8CurrencyId")]
-	    public string Surcharge8CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge8Currency { get; set; }
-        [ForeignKey("Surcharge9Currency")]
-        [Column("Surcharge9CurrencyId")]
-	    public string Surcharge9CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge9Currency { get; set; }
-        [ForeignKey("Surcharge10Currency")]
-        [Column("Surcharge10CurrencyId")]
-	    public string Surcharge10CurrencyId { get; set; }
-	      
-        public virtual Currency Surcharge10Currency { get; set; }
-        [ForeignKey("ViaPort")]
-        [Column("ViaPortId")]
-	    public string ViaPortId { get; set; }
-	      
-        public virtual Port ViaPort { get; set; }
-        [Column("ViaPortText")]
-	    public string ViaPortText { get; set; }
-        [ForeignKey("FromCountry")]
-        [Column("FromCountryId")]
-	    public string FromCountryId { get; set; }
-	      
-        public virtual Country FromCountry { get; set; }
-        [ForeignKey("ToCountry")]
-        [Column("ToCountryId")]
-	    public string ToCountryId { get; set; }
-	      
-        public virtual Country ToCountry { get; set; }
-        [Column("IsFromAllOtherCountries")]
-	    public bool IsFromAllOtherCountries { get; set; }
-        [Column("IsToAllOtherCountries")]
-	    public bool IsToAllOtherCountries { get; set; }
-        [ForeignKey("UnitOfMeasurement")]
-        [Column("UnitOfMeasurementCode")]
-	    public string UnitOfMeasurementCode { get; set; }
-	      
-        public virtual WeightUnit UnitOfMeasurement { get; set; }
     }
 }
 	 

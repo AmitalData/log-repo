@@ -34,7 +34,7 @@ namespace Unifreight.BL.EntityQueryServices
             return new CFIPACKKeys() { FILENO = entityPOCO.FILENO, LINENO = entityPOCO.LINENO };
         }
 
-        public List<CFIPACKPM> GetMulti(long FILENO, AmitalContext context)
+        public List<CFIPACKPM> GetMulti(int FILENO, AmitalContext context)
         {
             List<CFIPACKPM> entityPMs = new List<CFIPACKPM>();
             List<CFIPACK> entityPOCOs = (this.Repository as CFIPACKRepository).GetMulti(FILENO);

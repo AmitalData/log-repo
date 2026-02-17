@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool, DateTool } from '../../../../../Infrastructure/Tools';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { DeclarationPM } from '../../../../../Customs/EntityPMs/DeclarationPM';
 import { NotificationReplyPM } from '../../../../../Customs/EntityPMs/NotificationReplyPM';
@@ -9,19 +11,22 @@ import { NotificationPM } from '../../../../../Customs/EntityPMs/NotificationPM'
 import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPMService';
 import { MessageToAgentRequestParams } from '../../../../../Customs/DataContract/RequestParams/MessageToAgentRequestParams';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ObservableCollection } from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectTablePM } from '../../../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { NotificationListService } from '../../../../../Customs/Services/StandardLists/NotificationListService';
 import { NotificationPMService } from '../../../../../Customs/Services/StandardPMs/NotificationPMService';
 import { NotificationList } from '../../../../../Customs/EntityLists/NotificationList';
 import { NotificationWebService } from '../../../../../Customs/Services/WebServices/NotificationWebService';
 import { CustomSendOptionsArgs } from '../../../../../Customs/DataContract/RequestParams/RequestParamsBase';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { GroupByPipe } from '../../../../../Infrastructure/Pipes/GroupByPipe';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './NotificationReplyTabComponent.html',
     selector: 'NotificationReplyTabComponent',
 })
@@ -32,7 +37,7 @@ export class NotificationReplyTabComponent extends BaseComponent {
     public DataContext: this;
     public ObjectTableId: string;
     public CurrentEditComponentId: string;
-    public messageBorderText: string = TextCodeTranslator.Translate("Customs.Declaration.O.NoNotificationsReceived");
+    public messageBorderText: string = "לא התקבלו הודעות מהמכס עבור הצהרה זו";
 
     public entityList: NotificationList;
     public declarationPM: DeclarationPM = null;
@@ -46,7 +51,7 @@ export class NotificationReplyTabComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        
+
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe((response: any) => {
@@ -89,13 +94,6 @@ export class NotificationReplyTabComponent extends BaseComponent {
                     }
                 })
             );
-            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((tabCode: string) => {
-                            this.LoadNotificationReplies();
-                      
-                })
-            );
-  
         }
     }
 
@@ -137,12 +135,8 @@ export class NotificationReplyTabComponent extends BaseComponent {
             });
 
             //Order list by CreateDate
-            this.NotificationsGroupsList.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime())
-
-
-
-            // this.NotificationsGroupsList.sort(
-            //     (a, b) => { return (DateTool.GetDateFromDate(a.CreateDate) === DateTool.GetDateFromDate(b.CreateDate)) ? 0 : (DateTool.GetDateFromDate(a.CreateDate) < DateTool.GetDateFromDate(b.CreateDate)) ? -1 : 1 });
+            this.NotificationsGroupsList.sort(
+                (a, b) => { return (DateTool.GetDateFromDate(a.CreateDate) === DateTool.GetDateFromDate(b.CreateDate)) ? 0 : (DateTool.GetDateFromDate(a.CreateDate) < DateTool.GetDateFromDate(b.CreateDate)) ? -1 : 1 });
         }
     }
 
@@ -161,7 +155,6 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
     public parent: NotificationReplyTabComponent;
     public ResponseList: NotificationReplyPM[] = [];
     public notificationData: string;
-    public senderName: string;
     public notificationReply: string;
     public withAnswerGridVisibility: boolean = false;
 
@@ -172,10 +165,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
 
         this.entityPM = notificationPM;
         this.parent = trigger;
-        this.NotificationData = this.entityPM.Description;// + Environment.NewLine;        
-        let senderName = this.entityPM?.SenderName?.trim();
-        this.SenderName = senderName? `${TextCodeTranslator.Translate('Customs.Notification.O.PrivateName')} ${senderName}`:'';
-
+        this.NotificationData = this.entityPM.Description;// + Environment.NewLine;
 
         if (this.entityPM.NotificationRplies.length == 0) {
             this.WithAnswerGridVisibility = false;
@@ -194,9 +184,6 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
 
     public get NotificationData() { return this.notificationData; }
     public set NotificationData(newValue: string) { this.notificationData = newValue; }
-
-    public get SenderName() { return this.senderName; }
-    public set SenderName(newValue: string) { this.senderName = newValue; }
 
     public get NotificationReply() { return this.notificationReply; }
     public set NotificationReply(newValue: string) { this.notificationReply = newValue; }
@@ -218,7 +205,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Notification.O.NotificationReplySendErrors");
             logWindow.ShowCloseButton = false;
             logWindow.WindowArgs = windowArgs;
-            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+            logWindow.Show('./CustomsModules/CustomControls/Components/CustomsErrorsComponent');
             return;
         }
 
@@ -267,8 +254,8 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
         currRequestParams.DeclarationId = this.parent.declarationPM.Id;
 
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,currRequestParams.PBId,
-                TextCodeTranslator.Translate("Customs.Declaration.O.SendReplyMessage"), true)
+            .ShowProgressBar(currRequestParams.PBId,
+            "שליחת תשובה להודעה", true)
             .then((res) => {
                 //this.responseData = res;
                 //this.OnMassageDisplayMethod();

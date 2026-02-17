@@ -4,7 +4,7 @@ using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -101,7 +101,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
             entityGITITEMPM.ORIGINCOUNTRY = entityPM.ORIGINCOUNTRY;
             entityGITITEMPM.UNITID = entityPM.UNITID;
-            entityGITITEMPM.TARIFFID = entityPM.TARIFFID;
 
             return entityGITITEMPM;
         }

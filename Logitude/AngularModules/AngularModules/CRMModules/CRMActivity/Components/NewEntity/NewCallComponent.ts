@@ -4,7 +4,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 
 @Component({
     selector: 'NewCallComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewCallComponent.html',
 })
 

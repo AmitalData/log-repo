@@ -1,5 +1,4 @@
-import { AutomationCondition } from '../../Infrastructure/DataContracts/AutomationCondition';
-
+﻿
 export class EntityChangeAutomation {
     public Id: string;
     public AutomationId: string;
@@ -16,8 +15,7 @@ export class EntityChangeAutomation {
     public type: string;
 
     public ExecutionTime: number;
-
-    public ConditionsList: AutomationCondition[];
+   
 
 }
 

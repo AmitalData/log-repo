@@ -9,12 +9,9 @@ import {LoginComponents} from './ModuleDeclarations';
 import {ErrorHandler} from '@angular/core';
 import {LoginService} from './LoginService';
 import {PasswordChangeService} from './PasswordChangeService';
-import { PrivateLabelsBrandingDataService } from './PrivateLabels/Services/PrivateLabelsBrandingDataService';
-import { BrandingDataService } from './PrivateLabels/Services/BrandingDataService';
-import { CommonModule } from '@angular/common';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule, CommonModule],
+    imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpModule],
 
     declarations:
     [
@@ -34,9 +31,7 @@ import { CommonModule } from '@angular/common';
     providers:
     [
         LoginService,
-            PasswordChangeService,
-            PrivateLabelsBrandingDataService,
-            BrandingDataService
+        PasswordChangeService
     ],
 
     bootstrap: [RootComponent]

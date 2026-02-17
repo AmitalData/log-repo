@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -36,9 +36,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.VatTypeId = entityPM.VatTypeId;
             entityPOCO.InvoiceCurrencyId = entityPM.InvoiceCurrencyId;
             entityPOCO.InvitationDate = entityPM.InvitationDate;
-            entityPOCO.CargoTrackingInvitationDate = entityPM.CargoTrackingInvitationDate;
             entityPOCO.SharedLogisticsInvitationStatusCode = entityPM.SharedLogisticsInvitationStatusCode;
-            entityPOCO.CargoTrackingInvitationStatusCode = entityPM.CargoTrackingInvitationStatusCode;
             entityPOCO.LastLoginDate = entityPM.LastLoginDate;
             entityPOCO.ClassifierId = entityPM.ClassifierId;
             entityPOCO.CollectorId = entityPM.CollectorId;
@@ -46,8 +44,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsCustomer = entityPM.IsCustomer;
             entityPOCO.EnableConsolidationInvoices = entityPM.EnableConsolidationInvoices;
             entityPOCO.CityName = entityPM.CityName;
-            entityPOCO.Address1 = entityPM.Address1;
-            entityPOCO.Address2 = entityPM.Address2;
             entityPOCO.CountryId = entityPM.CountryId;
             entityPOCO.CountryName = entityPM.CountryName;
             entityPOCO.IsActiveForMobile = entityPM.IsActiveForMobile;
@@ -61,26 +57,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SATForeignRFC = entityPM.SATForeignRFC;
             entityPOCO.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityPOCO.UsoCFDICode = entityPM.UsoCFDICode;
-            entityPOCO.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entityPOCO.UsoCFDICode = entityPM.UsoCFDICode;
             entityPOCO.StateName = entityPM.StateName;
             entityPOCO.IsInternationalPartner = entityPM.IsInternationalPartner;
             entityPOCO.IsAutonomy = entityPM.IsAutonomy;
             entityPOCO.CreatedByPartner = entityPM.CreatedByPartner;
-            entityPOCO.AccountingVATSplit = entityPM.AccountingVATSplit;
-            entityPOCO.GLAccountDisplayNumber = entityPM.GLAccountDisplayNumber;
-            entityPOCO.BillToId = entityPM.BillToId;
-            entityPOCO.SATCustomerName = entityPM.SATCustomerName;
-            entityPOCO.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
-            entityPOCO.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
-            entityPOCO.SingleInvoiceTemplateId = entityPM.SingleInvoiceTemplateId;
-            entityPOCO.CustomsInvoiceTemplateId = entityPM.CustomsInvoiceTemplateId;
-            entityPOCO.ConsolidationInvoiceTemplateId = entityPM.ConsolidationInvoiceTemplateId;
-            entityPOCO.ManifestInvoiceTemplateId = entityPM.ManifestInvoiceTemplateId;
-            entityPOCO.EmailForSendingSingArinvoice = entityPM.EmailForSendingSingArinvoice;
-            entityPOCO.SendingInterestReport = entityPM.SendingInterestReport;
-            entityPOCO.ExternalSystem = entityPM.ExternalSystem;
-            entityPOCO.BankCodeId = entityPM.BankCodeId;
-            entityPOCO.BankBranch  = entityPM.BankBranch;
+
             BuildSearchFields(entityPM, entityPOCO);
         }
 
@@ -96,7 +78,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.PayablesAccountingCard);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPOCO.CityName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPOCO.CountryName);
-            MethodHelper.AddToSearchFields(ref mySearchFields, entityPOCO.GLAccountDisplayNumber);
 
             if (mySearchFields.Length > 1000)
             {

@@ -6,7 +6,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './OccasionGeneralTabComponent.html',
 })
 

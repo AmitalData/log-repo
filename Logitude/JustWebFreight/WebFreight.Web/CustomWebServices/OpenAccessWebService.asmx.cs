@@ -13,7 +13,7 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -22,7 +22,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 using System.Web.Services;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -125,6 +124,7 @@ namespace WebFreight.Web.CustomWebServices
             return true;
         }
 
+
         [WebMethod]
         public bool SendSignedDeclaration(string customFileNo, int tenant, string user, string personId, out string errMessage)
         {
@@ -183,27 +183,15 @@ namespace WebFreight.Web.CustomWebServices
                 LoggingEnabled = true,
                 ForcePersonalSign = true,
                 UnifreightListOnServerOnly = unifreightListOnServerOnly,
-                HsmStationContext = GetHsmStationContext(declarationPM),
             };
-            var signQueueHSMService = new SignQueueHSMService();
-            var dbSignQueueService = new SignQueueHybridDbService();
-            SignMethodByQueueEnum signMethodByQueueEnum = SignMethodByQueueEnum.None;
-            string availableSignServer = null;
 
-            var IsCloud = !CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
-            if (signQueueHSMService.IsHSMSign_IsOn(tenant, GetHsmStationContext(declarationPM)) || IsCloud)
+            //CheckParamValid();
+            //CheckLock();
+
+            if (!CheckSignServerOn(tenant, personId))
             {
-                (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
-                    .GetAvailableSignServer(tenant, SignQueueByType.SignQueueByPersonId, personId, hsmStationContext:genericRequestParams.HsmStationContext);
-            }
-            if (string.IsNullOrEmpty(availableSignServer))
-            {
-                if (!CheckSignServerOn(tenant, personId))
-                {
-                    errMessage = ("Sign server not available");
-                    return false;
-                }
-                            
+                errMessage = ("Sign server not available");
+                return false;
             }
             INF_MSG_GenericResponseData responseData;
             var myDF_MSG10000_ImportDeclarationMessagingService = new DF_MSG10000_ImportDeclarationMessagingService();
@@ -223,21 +211,6 @@ namespace WebFreight.Web.CustomWebServices
             //var availableSignServer = SignQueue.Instance.GetAvailableSignServer(tenant, Server.Tools.ExternalServices.SignQueueByType.SignQueueByPersonId, personId);
             var availableSignServer = SignQueue.Instance.GetAvailableSignServer(tenant, SignQueueByType.SignQueueByPersonId, personId);
             return !String.IsNullOrWhiteSpace(availableSignServer);
-        }
-
-        private string GetHsmStationContext(DeclarationPM declarationPM)
-        {
-            if (declarationPM != null && declarationPM.IsCourierDeclaration == true)
-            {
-                return "Ecom";
-            }
-
-            if (declarationPM != null && string.Equals(declarationPM.Direction, "E", StringComparison.OrdinalIgnoreCase))
-            {
-                return "MehesExport";
-            }
-
-            return "Customs";
         }
 
     }

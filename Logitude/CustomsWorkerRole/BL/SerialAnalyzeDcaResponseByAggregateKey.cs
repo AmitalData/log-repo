@@ -30,7 +30,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using CustomsWorkerRole.BL;
 using Logitude.Customs.Data;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System.Globalization;
 using Logitude.Customs.Def.ClosedTable;

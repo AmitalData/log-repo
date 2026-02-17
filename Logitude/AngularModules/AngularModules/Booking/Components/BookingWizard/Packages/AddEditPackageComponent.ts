@@ -8,7 +8,7 @@ import {BookingWizardPackageItem} from './PackagesTabComponent';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditPackageComponent.html',
 })
 

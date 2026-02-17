@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "d7063d7d-1e6f-47c5-9e92-f8f0562b5f4d",
-		"name": "PrepareFullAccountingVars",
+		"_postman_id": "f41d1d0c-7849-4b33-ba6c-f40c64c93635",
+		"name": "PrepareFullAccountingVars copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,42 +11,19 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "a918d90f-384d-49bc-8fb2-10ac0a489b87",
 						"exec": [
-							"",
-							"",
-							"",
-							"    var expectedHttpStatus = 200;",
-							"    var maxNumberOfTries = 10;",
-							"    var numberOfRetries = 5;",
-							"    var retries = \"{{RetriesNumber}}\";",
-							"    var Retries = pm.globals.get(\"Retries\");",
-							"    var sleepBetweenTries =  60000;",
-							"",
-							"",
-							"",
-							"    if ((responseCode.code !== expectedHttpStatus) & (pm.globals.get(\"Retries\") < maxNumberOfTries)) {",
-							"         pm.globals.set(\"Retries\", ++Retries);",
-							"         ",
-							"        setTimeout(function() {}, sleepBetweenTries);",
-							"        ",
-							"        postman.setNextRequest(\"Authentication\"); ",
-							"    }",
-							"       else {",
-							"     pm.globals.set(\"Retries\",1); ",
-							"     ",
 							"",
 							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
 							"    pm.response.to.have.status(200);",
 							"    ",
-							"          ",
-							"    var date = new Date();",
-							"    var CurrentYear = date.getFullYear();",
+							"   ",
 							"    var idvalue1 = (pm.response.json().Token);",
 							"    var idvalue2 = (pm.response.json().CurrentTenant);",
 							"    var idvalue3 = (pm.response.json().UserId);",
 							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
 							"    var idvalue5 = (pm.response.json().InvalidDocumentToken);",
-							" var idvalue6=CurrentYear;",
+							"    ",
 							"    var id1exist = idvalue1 !== null;",
 							"    var id2exist = idvalue2 !== null;",
 							"    var id3exist = idvalue3 !== null;",
@@ -63,16 +40,14 @@
 							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
 							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
 							"    pm.globals.set(\"InvalidDocumentToken\",idvalue5);",
-							"    pm.globals.set(\"CurrentYear\",idvalue6);",
+							"    ",
 							"    pm.environment.set(\"RandomNum\", _.random(1,50));",
 							"      ",
 							"      ",
 							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
 							"    postman.setNextRequest(\"GetFullAccountingSettings\");",
 							"",
-							"});",
-							"}",
-							""
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -116,6 +91,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "f529b3c2-48c3-45f5-9020-011c24d621b3",
 						"exec": [
 							"pm.test(\"GetFullAccountingSettings\", function () {",
 							"  pm.response.to.have.status(200);",
@@ -309,6 +285,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "7def5c7a-3dfe-4880-bb6e-232afd2c1ef0",
 						"exec": [
 							"",
 							"pm.test(\"Get Chreonological Settings\", function () {",
@@ -327,7 +304,7 @@
 							"  if (!id1exist4 && !id1exist3 ){",
 							"       //throw new Error('NOt FUll Accounting Tenant');",
 							"         tests[\"Chronolical check activated  :\" + false] = ( true );",
-							"         postman.setNextRequest(\"GetYearAccountingPeriods\");",
+							"         postman.setNextRequest(\"GEtAccounntingPeriods\");",
 							"        ",
 							" ",
 							"         ",
@@ -337,7 +314,7 @@
 							"  else{",
 							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
 							"  tests[\"Chronolical check activated :\" +  true] = ( true );",
-							"   postman.setNextRequest(\"GetYearAccountingPeriods\");",
+							"   postman.setNextRequest(\"GEtAccounntingPeriods\");",
 							" ",
 							"}",
 							"});",
@@ -385,163 +362,12 @@
 			"response": []
 		},
 		{
-			"name": "GetYearAccountingPeriods",
+			"name": "GEtAccounntingPeriods",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"exec": [
-							" pm.test(\"Current Year has Accounting Periods \", function () {\r",
-							"\r",
-							"\r",
-							" if(pm.response.json().Result.length < 1 ){\r",
-							"     \r",
-							" tests[\"Current Year has Accounting Periods   : \" + false ] = ( true );\r",
-							"           \r",
-							"            postman.setNextRequest(\"CreatAccountingPeriods\");}\r",
-							"      \r",
-							" else {\r",
-							"\r",
-							" tests[\"Current Year has Accounting Periods   : \" + true ] = ( true );\r",
-							"           postman.setNextRequest(\"GetCurrentMonth'sAccountingPeriods\");  \r",
-							" \r",
-							" }\r",
-							" \r",
-							"});\r",
-							"\r",
-							" \r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=false&GetAll=true&AdditionalFilters=[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"accountingperiodviews",
-						"getbyfilters"
-					],
-					"query": [
-						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": "ForceCacheRefresh",
-							"value": "false"
-						},
-						{
-							"key": "DontApplyVirtualization",
-							"value": "false"
-						},
-						{
-							"key": "GetAll",
-							"value": "true"
-						},
-						{
-							"key": "AdditionalFilters",
-							"value": "[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreatAccountingPeriods",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Current year accounting periods created  \", function () {\r",
-							"    \r",
-							"    pm.response.to.have.status(200);\r",
-							"     \r",
-							"    postman.setNextRequest(\"GetCurrentMonth'sAccountingPeriods\");  \r",
-							"  \r",
-							" \r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "[{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"1\",\"PeriodTypeName\":\"Accounting\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"2\",\"PeriodTypeName\":\"Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null},{\"Tenant\":{{Tenant}},\"Year\":{{CurrentYear}},\"PeriodTypeCode\":\"3\",\"PeriodTypeName\":\"Interest Invoice\",\"OpenMonth\":1,\"ClosedMonth\":null}]"
-				},
-				"url": {
-					"raw": "{{URL}}/api/accountingPeriods/PostCreatePeriodsForYear?year={{CurrentYear}}",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"accountingPeriods",
-						"PostCreatePeriodsForYear"
-					],
-					"query": [
-						{
-							"key": "year",
-							"value": "{{CurrentYear}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetCurrentMonth'sAccountingPeriods",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
+						"id": "6e39d185-098e-4173-8311-72657d1b50e8",
 						"exec": [
 							"pm.test(\"Get Accounting Periods\", function () {",
 							"    ",
@@ -550,39 +376,35 @@
 							"    var date = new Date();",
 							"    var month = date.getMonth()+1;",
 							"    pm.environment.set(\"CurrentMonth\",month);",
+							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);",
+							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
+							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
+							"    var idvalue2 = (pm.response.json().Result[pm.response.json().Result.length-2].Tenant);",
+							"    var idvalue3 = (pm.response.json().Result[pm.response.json().Result.length-2].Year);",
+							"    var idvalue4 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeCode);",
+							"    var idvalue5 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeName);",
+							"    var idvalue6 = (pm.response.json().Result[pm.response.json().Result.length-2].ClosedMonth);",
+							"    ",
+							"    pm.environment.set(\"AcocuntingPeriodsId\",idvalue1);",
+							"    pm.environment.set(\"AcocuntingPeriodsTenant\",idvalue2);",
+							"    pm.environment.set(\"AcocuntingPeriodsYear\",idvalue3);",
+							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeCode\",idvalue4);",
+							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeName\",idvalue5);",
+							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);",
 							"",
-							"  var idvalue1;",
 							"",
-							"",
-							"",
-							" for (var i = 0; i< pm.response.json().Result.length ;i++){",
-							"     if ( pm.response.json().Result[i].PeriodTypeCode == '1' )",
-							"     {",
-							"        pm.globals.set(\"AcocuntingPeriodsId\",pm.response.json().Result[i].Id);  ",
-							"        idvalue1=pm.response.json().Result[i].OpenMonth; ",
-							"",
-							"     }",
-							"    else if ( pm.response.json().Result[i].PeriodTypeCode == '2' )",
-							"    {",
-							"        pm.globals.set(\"AcocuntingPeriodsInvoiceId\",pm.response.json().Result[i].Id);  ",
-							"      ",
-							"    }",
-							"",
-							" }",
-							"",
-							"      if (idvalue1 < month)",
+							"      if (idvalue7 < month)",
 							"      {",
 							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
 							"           ",
 							"            postman.setNextRequest(\"OpenCurrentMonth\");",
 							"      }",
 							"      ",
-							"     else",
-							"      {",
+							"        else {",
 							"  ",
-							"             tests[\"Current Month Opened  : \" + true ] = ( true );",
+							"   tests[\"Current Month Opened  : \" + true ] = ( true );",
 							"           postman.setNextRequest(\"GetAccountingCurriency\");  ",
-							"      }",
+							"        }",
 							"  ",
 							" ",
 							"});",
@@ -599,17 +421,17 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					},
 					{
 						"key": "token",
-						"type": "text",
-						"value": "{{Token}}"
+						"value": "{{Token}}",
+						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?&&ForceCacheRefresh=false&DontApplyVirtualization=false&GetAll=true&AdditionalFilters=[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]",
+					"raw": "{{URL}}/api/accountingperiodviews/getbyfilters?GetAll=true",
 					"host": [
 						"{{URL}}"
 					],
@@ -620,28 +442,23 @@
 					],
 					"query": [
 						{
-							"key": null,
-							"value": null
-						},
-						{
-							"key": null,
-							"value": null
-						},
-						{
 							"key": "ForceCacheRefresh",
-							"value": "false"
-						},
-						{
-							"key": "DontApplyVirtualization",
-							"value": "false"
+							"value": "ture",
+							"disabled": true
 						},
 						{
 							"key": "GetAll",
 							"value": "true"
 						},
 						{
-							"key": "AdditionalFilters",
-							"value": "[{%22FieldName%22:%22Year%22,%22FieldValue%22:{{CurrentYear}},%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Equal%22,%22IsCustom%22:false,%22DisplayInList%22:false,%22IsCustomField%22:false,%22FieldDataType%22:%22number%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false,%22IsLookUpfilter%22:false}]"
+							"key": null,
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": null,
+							"value": null,
+							"disabled": true
 						}
 					]
 				}
@@ -654,13 +471,14 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "aaa5876d-4629-4a6d-9ac8-be0e6a7b3b4f",
 						"exec": [
 							"pm.test(\"Current month opened \", function () {",
 							"    ",
 							"    pm.response.to.have.status(200);",
 							"   ",
-							"      var idvalue1 = (pm.response.json().Id);",
-							"    postman.setNextRequest(\"OpenIvoiceMonth\");  ",
+							"      var idvalue1 = (pm.response.json().Result.Id);",
+							"   postman.setNextRequest(\"GetAccountingCurriency\");  ",
 							"  ",
 							" ",
 							"});",
@@ -689,7 +507,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{Tenant}},\r\n\"Year\": {{CurrentYear}}\r\n}\r\n",
+					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":{{AcocuntingPeriodsClosedMonth}} ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"1\",\r\n\"PeriodTypeName\": \"Accounting\",\r\n\"Tenant\": {{AcocuntingPeriodsTenant}},\r\n\"Year\": {{AcocuntingPeriodsYear}}\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -697,66 +515,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/api/accountingperiods",
+					"raw": "https://test.logitudeworld.com/TEST/api/accountingperiods",
+					"protocol": "https",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
-						"api",
-						"accountingperiods"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "OpenIvoiceMonth",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Current month opened \", function () {\r",
-							"    \r",
-							"    pm.response.to.have.status(200);\r",
-							"   \r",
-							"      var idvalue1 = (pm.response.json().Id);\r",
-							"   postman.setNextRequest(\"GetAccountingCurriency\");  \r",
-							"  \r",
-							" \r",
-							"});\r",
-							"\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \r\n\"ChangeSetOp\": 2,\r\n\"ClosedMonth\":null ,\r\n\"EncodeBase64NVARCHARFieldsBy\": null,\r\n\"Id\": \"{{AcocuntingPeriodsInvoiceId}}\",\r\n\"OpenMonth\":{{CurrentMonth}},\r\n\"PeriodTypeCode\": \"2\",\r\n\"PeriodTypeName\": \"Invoice\",\r\n\"Tenant\": {{Tenant}},\r\n\"Year\": {{CurrentYear}}\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{URL}}/api/accountingperiods",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
+						"TEST",
 						"api",
 						"accountingperiods"
 					]
@@ -770,6 +537,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "a0e2c436-b3dd-43cf-a794-48337972bf52",
 						"exec": [
 							"",
 							"pm.test(\"GetAccountingCurriency\", function () {",
@@ -830,6 +598,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "0fead3e4-e27f-4a28-9b98-9b7539824f0f",
 						"exec": [
 							"pm.test(\"GetTenantCurriencies\", function () {",
 							"  pm.response.to.have.status(200);",
@@ -860,7 +629,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23&=&=",
+					"raw": "{{URL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
 						"{{URL}}"
 					],
@@ -892,11 +661,11 @@
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						}
 					]
 				}
@@ -909,6 +678,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "3a39dd00-2f84-417e-89b1-8972728aa588",
 						"exec": [
 							"pm.test(\"GetCountryAX\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -946,7 +716,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
+					"raw": "{{URL}}/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22",
 					"host": [
 						"{{URL}}"
 					],
@@ -983,6 +753,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "30d1e618-96cf-4f8e-a6a9-e3e32654acf3",
 						"exec": [
 							"pm.test(\"GetVatTypeExempt\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1019,7 +790,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&=&=&Filter1Value=EXMPT",
+					"raw": "{{URL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&Filter1Value=EXMPT",
 					"host": [
 						"{{URL}}"
 					],
@@ -1071,11 +842,11 @@
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": "Filter1Value",
@@ -1092,6 +863,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "1682d7af-25ea-487d-8543-53b06de86ddb",
 						"exec": [
 							"pm.test(\"Create Vat Type Exempt\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1153,6 +925,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "ad0de5f5-52c5-4672-9fa8-d0f0db6e867f",
 						"exec": [
 							"pm.test(\"GetPaymentTermCash\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1230,6 +1003,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "16412c84-d88b-45a5-8e6b-354a18696dac",
 						"exec": [
 							"pm.test(\"Create Payment Term Cash\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1291,6 +1065,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "669d741e-9c26-4643-a96f-85649c98462d",
 						"exec": [
 							"pm.test(\"GetPaymentMethodCash\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1326,7 +1101,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n&=&=",
+					"raw": "{{URL}}/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
 						"{{URL}}"
 					],
@@ -1362,11 +1137,11 @@
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						}
 					]
 				}
@@ -1379,6 +1154,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "f535cde3-eebf-40c4-9915-e39cd2313d41",
 						"exec": [
 							"pm.test(\"CreatePayment Method Cash \", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1453,6 +1229,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "50a546d2-2d18-4735-bee8-709082bda3cd",
 						"exec": [
 							"pm.test(\"GetBranchMainOffice\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1501,7 +1278,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n&=&=",
+					"raw": "{{URL}}/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
 					"host": [
 						"{{URL}}"
 					],
@@ -1557,11 +1334,11 @@
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						}
 					]
 				}
@@ -1574,6 +1351,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "fb3f1fdc-9c1d-4c3c-8775-b5c141007f7e",
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1631,6 +1409,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "f4583b08-3ef7-4750-8296-fdcfaf044a40",
 						"exec": [
 							"pm.test(\"Get Charge Type AirFreight\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1667,7 +1446,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23&=",
+					"raw": "{{URL}}/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
 					"host": [
 						"{{URL}}"
 					],
@@ -1703,7 +1482,7 @@
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						}
 					]
 				}
@@ -1716,6 +1495,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "95d498d4-cbbf-4a38-b7fb-f0747f588e36",
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1777,6 +1557,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6c0443e4-c8bb-4e1e-9f7d-ff352da2fb2d",
 						"exec": [
 							"pm.test(\"GetChartOfAccountVend1\", function () {\r",
 							"   pm.response.to.have.status(200);\r",
@@ -1841,7 +1622,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23 ",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=1PMCF&PageSize=23",
 					"host": [
 						"{{URL}}"
 					],
@@ -1878,6 +1659,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "acc1d4e1-7c34-4550-93c8-876b886c9ec1",
 						"exec": [
 							"pm.test(\"CreateChartOfAccountVend\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -1962,6 +1744,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "c664975a-4f3a-44c4-8814-db7192e38b0b",
 						"exec": [
 							"pm.test(\"GetCustomerTestGlCust\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -1997,7 +1780,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&=&Filter1Value=12PMCS",
+					"raw": "{{URL}}/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&Filter1Value=12PMCS",
 					"host": [
 						"{{URL}}"
 					],
@@ -2033,7 +1816,7 @@
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": "Filter1Value",
@@ -2050,6 +1833,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "147dab07-22e8-4497-97aa-4b67b53f0aa7",
 						"exec": [
 							"pm.test(\"CreateCustomerTest\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -2116,6 +1900,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "c97346e7-e9b1-40b3-932a-98b52dba6c26",
 						"exec": [
 							"pm.test(\"GetVendorTestGlVend\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -2150,7 +1935,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&=&=&Filter1Value=1s5PMV2",
+					"raw": "{{URL}}/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&GetCount=true&PageIndex=0&PageSize=22\n&Filter1Value=1s5PMV2",
 					"host": [
 						"{{URL}}"
 					],
@@ -2186,11 +1971,11 @@
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": null,
-							"value": ""
+							"value": null
 						},
 						{
 							"key": "Filter1Value",
@@ -2207,6 +1992,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "147dab07-22e8-4497-97aa-4b67b53f0aa7",
 						"exec": [
 							"pm.test(\"CreateVendorTest\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -2276,6 +2062,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "ae06fbdb-80b9-455b-b584-2c8b6e0d5d8b",
 						"exec": [
 							"pm.test(\"GetCustomerGlAccountIdCustGL\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -2353,6 +2140,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6c0443e4-c8bb-4e1e-9f7d-ff352da2fb2d",
 						"exec": [
 							"pm.test(\"GetChartOfAccountCust1\", function () {\r",
 							"   pm.response.to.have.status(200);\r",
@@ -2418,7 +2206,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23 ",
+					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=15CFC&PageSize=23",
 					"host": [
 						"{{URL}}"
 					],
@@ -2455,6 +2243,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "acc1d4e1-7c34-4550-93c8-876b886c9ec1",
 						"exec": [
 							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -2539,6 +2328,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "90cec87d-391d-44af-a787-c761323f084f",
 						"exec": [
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -2604,6 +2394,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "1c5e3b43-19fc-4816-9f8f-e7dec3f51fa9",
 						"exec": [
 							"pm.test(\"Get Vendor GlAccount VendorGL\", function () {",
 							"   pm.response.to.have.status(200);",
@@ -2690,6 +2481,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "a803d3ff-7397-4aa9-94ac-374a1f66969f",
 						"exec": [
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -2760,6 +2552,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6b703704-e2de-4d97-b3c5-ff7986f1f8d9",
 						"exec": [
 							"",
 							"",
@@ -2795,7 +2588,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/cardviews/getsingle/?id={{CustomerId}}\n",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{CustomerId}}",
 					"host": [
 						"{{URL}}"
 					],
@@ -2821,6 +2614,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "6b703704-e2de-4d97-b3c5-ff7986f1f8d9",
 						"exec": [
 							"",
 							"",
@@ -2857,7 +2651,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}\n",
+					"raw": "{{URL}}/api/cardviews/getsingle/?id={{VendorId}}",
 					"host": [
 						"{{URL}}"
 					],
@@ -2883,6 +2677,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "4191ebb7-d81a-447b-9b89-e9e852a9afa2",
 						"exec": [
 							"pm.test(\"GetChartOfAccountBank BK771 Successfully Done\", function () {\r",
 							"   pm.response.to.have.status(200);\r",
@@ -2922,11 +2717,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{URL}}/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23 ",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK771&PageSize=23",
+					"protocol": "http",
 					"host": [
-						"{{URL}}"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"
@@ -2959,6 +2758,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "c44706c0-d74d-45f6-878b-a3adbc457c6f",
 						"exec": [
 							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -3015,6 +2815,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "75bc44b6-854d-43e1-b0e2-62f8b247eef2",
 						"exec": [
 							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
 							"    pm.response.to.have.status(200);",
@@ -3024,7 +2825,7 @@
 							"if (id1exist)  {",
 							"   pm.environment.set(\"BankGLAccountId\",idvalue1); ",
 							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
-							"   postman.setNextRequest(\"GetBankCode\");",
+							"   postman.setNextRequest(\"CreateBankCode\");",
 							" ",
 							"}});"
 						],
@@ -3064,159 +2865,12 @@
 			"response": []
 		},
 		{
-			"name": "GetBankCode",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"",
-							"pm.test(\"GetBankCode\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   if(pm.response.json().Result.length < 1 ){",
-							"     tests[\"CoderExsits : \" + false] = (true);",
-							"        postman.setNextRequest(\"CreateBankCode\");   ",
-							"   }",
-							"   else {",
-							"    ",
-							"var idvalue=pm.response.json().Result[0].Id;",
-							"     pm.environment.set(\"CodeId\",idvalue);",
-							"     tests[\"CoderExsits : \" + true ] = (true);",
-							"     postman.setNextRequest(\"CreateBranchCashBook\");",
-							"    }",
-							"   ",
-							"    ",
-							"});",
-							" ",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "authority",
-						"value": "staging.amital.co.il"
-					},
-					{
-						"key": "pragma",
-						"value": "no-cache"
-					},
-					{
-						"key": "cache-control",
-						"value": "no-cache"
-					},
-					{
-						"key": "accept",
-						"value": "application/json, text/plain, */*"
-					},
-					{
-						"key": "user-agent",
-						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36"
-					},
-					{
-						"key": "token",
-						"value": "{{Token}}"
-					},
-					{
-						"key": "sec-fetch-site",
-						"value": "same-origin"
-					},
-					{
-						"key": "sec-fetch-mode",
-						"value": "cors"
-					},
-					{
-						"key": "referer",
-						"value": "https://staging.amital.co.il/Angular19171210/index.html"
-					},
-					{
-						"key": "accept-encoding",
-						"value": "gzip, deflate, br"
-					},
-					{
-						"key": "accept-language",
-						"value": "en-US,en;q=0.9"
-					},
-					{
-						"key": "cookie",
-						"value": "__utmz=22491179.1569324975.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utma=22491179.2130097536.1569324975.1571736495.1574855059.9; email_cookie=khawla@logitudeworld.com"
-					}
-				],
-				"url": {
-					"raw": "{{URL}}/api/bankcodeviews/getbyfilters?ForceCacheRefresh=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=BK14&PageIndex=0&PageSize=12",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"bankcodeviews",
-						"getbyfilters"
-					],
-					"query": [
-						{
-							"key": "ForceCacheRefresh",
-							"value": "false"
-						},
-						{
-							"key": "GetAll",
-							"value": "false",
-							"disabled": true
-						},
-						{
-							"key": "Filter1Name",
-							"value": "SearchFields"
-						},
-						{
-							"key": "Filter1Operator",
-							"value": "Contains"
-						},
-						{
-							"key": "Filter1Value",
-							"value": "BK14"
-						},
-						{
-							"key": "GetCount",
-							"value": "true",
-							"disabled": true
-						},
-						{
-							"key": "PageIndex",
-							"value": "0"
-						},
-						{
-							"key": "PageSize",
-							"value": "12"
-						},
-						{
-							"key": "SortBy",
-							"value": "Code",
-							"disabled": true
-						},
-						{
-							"key": "SortDirection",
-							"value": "Ascending",
-							"disabled": true
-						},
-						{
-							"key": "AdditionalFilters",
-							"value": "\\[\\{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22BK14%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false\\}\\]",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "CreateBankCode",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "998d5990-60ca-4f9f-9f4b-f4e1dc495c1f",
 						"exec": [
 							"pm.test(\"CreateBankCode\", function () {",
 							"    pm.response.to.have.status(200);",
@@ -3317,6 +2971,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "5267272b-0cd9-4f05-ac44-053c6531f189",
 						"exec": [
 							"pm.test(\"Create Branch Main Office\", function () {\r",
 							" pm.response.to.have.status(200);\r",
@@ -3370,5 +3025,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .active {
         background: #cfcbcb;
         color: rgb(103, 103, 103);
@@ -94,10 +94,10 @@
         <!--(mousemove)="OnMyMouseMove($event)"-->
         <div class="EditableGridHeader" [class.darkHeader]="IsDarkHeader" [id]="LogGridColumnsId" *ngIf="cols" [ngStyle]="headerStyle" style="position:relative;">
             <!--<div class="ag-header-cell" *ngIf="groupby" style="width:15px;float:left;"></div>-->
-            <div *ngIf="EnableExpandCollapseAll == true" style="position: absolute;display: inline-block;min-width:25px; ">
+            <div *ngIf="EnableExpandCollapseAll == true" style="position: absolute;display: inline-block;min-width:25px;">
                 <div [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block;">
                     <div [style.lineHeight.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" [style.height.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" style="overflow: hidden; text-overflow: ellipsis;">
-                        <img *ngIf="ShowCollapseAllIcon == true" src="./Images/CustomtreeIcon2.png" (click)="OnCollapseAllClick()" style="width:11px;height:11px;cursor:pointer;margin-left:6px;" title="Collapse All" />
+                        <img *ngIf="ShowCollapseAllIcon == true" src="./Images/CustomTreeIcon2.png" (click)="OnCollapseAllClick()" style="width:11px;height:11px;cursor:pointer;margin-left:6px;" title="Collapse All" />
                         <img *ngIf="ShowCollapseAllIcon == false" src="./Images/CustomTreeIcon.png" (click)="OnExpandAllClick()" style="width:11px;height:11px;cursor:pointer;margin-left:6px;" title="Expand All"/>
                     </div>
                 </div>
@@ -109,18 +109,18 @@
                  style="position: absolute;display: inline-block;min-width:25px;">
                 <div [id]="'HeaderTemplateDiv' + i" [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block; width: calc(100% - 5px);" (mousedown)="ServerSort(col, i)">
                     <!--<list-header-template *ngIf="col.ColumnHeaderTemplateName" [colDef]="col"></list-header-template>-->
-                    <ng-template *ngIf="col.hasHeadertemplate" ngFor [ngForOf]="[col.header]"
+                    <template *ngIf="col.hasHeadertemplate" ngFor [ngForOf]="[col.header]"
                               [ngForTemplate]="col.innerContentTpl[0]">
-                    </ng-template>
+                    </template>
                     <div *ngIf="!col.hasHeadertemplate" [style.lineHeight.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" [style.height.px]="HeaderHeight <= 27 ? 26 : HeaderHeight" style="overflow: hidden; text-overflow: ellipsis;">{{col.header}}</div>
 
-                    <svg class="svg-triangle sorting-img" *ngIf="sortingDir === 'Ascending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
+                    <svg class="svg-triangle sorting-img" *ngIf="sortingDir === 'Descending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
                         <polygon points="0,0 6,0 3,5" />
                     </svg>
                     <!--</span>-->
                     <!--<span class="sorting-img" *ngIf="sortingDir === 'Ascending' && sortingCol === col.FieldName">-->
                     <!--<img src="./Images/ToggleIcon.png" alt="Ascending" style="transform: rotate(180deg);" />-->
-                    <svg class="svg-triangle sorting-img" style="transform: rotate(180deg);" *ngIf="sortingDir === 'Descending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
+                    <svg class="svg-triangle sorting-img" style="transform: rotate(180deg);" *ngIf="sortingDir === 'Ascending' && (col.SortFieldName ? ( sortingCol === col.SortFieldName) : (sortingCol === col.SortFieldName) )">
                         <polygon points="0,0 6,0 3,5" />
                     </svg>
 
@@ -134,7 +134,7 @@
 
         <div [id]="LogGridRowsId" class="EditableGridBody" (scroll)="onScroll()" style="position:absolute;overflow:auto;min-height: 50px;" [style.top.px]="BodyTop" [style.bottom.px]="ShowFooter == true ? BodyTop : 0">
             <div [ngStyle]="canvasHeight" style="position: absolute;top: 0;bottom: 0;left: 0;right: 0;">
-                <div *ngFor="let row of rows; let rowIndex = index" >
+                <div *ngFor="let row of rows; let rowIndex = index">
                     <div *ngIf="groupby && row && row.Type == 'Head'" (click)="OnGroupClick(row)" [ngStyle]="row.styles" [style.paddingLeft.px]="RTL == true ? 0 : 15" [style.paddingRight.px]="RTL == true ? 15 : 0" style="position:absolute;background-color: #E4E4E4;border-bottom: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
                         <img [src]="row.DetailsIcon" style="margin-top:5px;" [style.marginLeft.px]="RTL == true ? 0 : -10" [style.marginRight.px]="RTL == true ? -10 : 0" [style.float]="RTL == true ? 'right' : 'left'" />
                         <span style="margin-top:5px;cursor:default;" [style.float]="RTL == true ? 'right' : 'left'">
@@ -145,16 +145,16 @@
                         </span>
                     </div>
                     <div *ngIf="row && row.Type != 'Head' && row.IsGroupOpened" class="ag-row Row" [class.Selected]="(SelectedRow == row.rowData || row.IsSelected == true)" (mouseleave)="OnMouseleave(row)" (mouseover)="OnMouseOver(row)" (click)="onRowSelected(row.rowData)" (dblclick)="OnRowDoubleClick(row.rowData)" [ngStyle]="row.styles" tabindex="-1" [id]="'row'+ row.rowIndex"
-                    [style.background-color]="row.rowData[ColumnName] ==Condition? '#f1f1f1': ''"   style="width:100%;line-height: 25px; position: absolute; height: 27px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; margin-left:0px; max-height: 27px; display: flex; border: 1px solid #DDDDDD; border-top: 1px solid transparent;border-left: 0px;border-right: 0px;"  >
-                        <div *ngIf="groupby" style="width: 15px; background-color:#E4E4E4; margin-top: -2px; margin-left: -1px; margin-bottom: -1px; " [style.marginRight.px]="RTL == true ? 0 : 5"></div>
+                         style="width:100%;line-height: 25px; position: absolute; height: 27px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; margin-left:0px; max-height: 27px; display: flex; border: 1px solid #DDDDDD; border-top: 1px solid transparent;border-left: 0px;border-right: 0px;">
+                        <div *ngIf="groupby" style="width:15px;background-color:#E4E4E4;margin-top: -2px;margin-left:-1px;margin-bottom: -1px;" [style.marginRight.px]="RTL == true ? 0 : 5"></div>
                         <img [src]="row.DetailsIcon" *ngIf="DetailButtonVisibile && row.IsExpandable" (click)="OnPlusClick(row)" style="width:11px;height:11px;margin: 7px;" />
                         <!--<button *ngIf="DetailButtonVisibile" (click)="OnPlusClick(row)" style="width:20px;">{{row.DetailsIcon}}</button>-->
                         <div *ngFor="let col of customcolumns; let colIndex = index" [class.DisabledCell]="Disabled || (AllowDisableCells && !col.AllowDisableCells && (row.rowData[DisableRowByFieldName] == DisableRowByFieldValue)) || (col.Disabled)" [tabindex]="(AllowDisableCells && !col.AllowDisableCells && (row.rowData[DisableRowByFieldName] == DisableRowByFieldValue)) || (col.Disabled) ? -1 : 1" style="display: block;position: absolute;" [ngStyle]="col.Style">
-                            <div [ngStyle]="{background: row.rowData.CellBackground}" [style.height.px]="rowHeight">
+                            <div [ngStyle]="{background: row.rowData.CellBackground}">
                                 <!--<div style="position:relative;">-->
-                                <ng-template *ngIf="col.hastemplate" ngFor [ngForOf]="[row.rowData]"
+                                <template *ngIf="col.hastemplate" ngFor [ngForOf]="[row.rowData]"
                                           [ngForTemplate]="col.innerContentTpl.length == 2 ?col.innerContentTpl[1] :col.innerContentTpl[0] ">
-                                </ng-template>
+                                </template>
                                 <!--</div>-->
                                 <edit-list-template *ngIf="!col.hastemplate" [editable]="col.Editable" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;" [TabIndex]="(col.Disabled) ? -1 : 1"
                                                     [rowData]="row.rowData" [Alignment]="col.Alignment" [width]="col.width" [required]="col.required"
@@ -170,16 +170,11 @@
                     </div>
                     <div *ngIf="row && row.Type != 'Head' && RowDetail" [id]="DetailsDivId + 'DetailsDiv' + row.rowIndex" style="position: absolute;width:100%;" [ngStyle]="row.Detailsstyles">
                         <div *ngIf="row.IsDetailesOpened" [ngStyle]="RTL == false && groupby ? {'border-left':'15px solid #E4E4E4'} : (RTL == true && groupby ? {'border-right':'15px solid #E4E4E4'} : {})">
-                            <ng-template ngFor [ngForOf]="[row.rowData]"
+                            <template ngFor [ngForOf]="[row.rowData]"
                                       [ngForTemplate]="RowDetail.innerContentTpl.toArray()[0]">
-                            </ng-template>
+                            </template>
                         </div>
                     </div>
-                </div>
-                <div *ngIf="ShowNoDataFoundText && rows && rows.length == 0" style="width:100%;top:10px;position: relative;">
-                    <label style="text-align:center;font-size:18px;color:gray" class="CenterCenter">
-                        {{'General.O.NoDataFound' | TextCodeTranslationPipe}}
-                    </label>
                 </div>
             </div>
         </div>
@@ -187,14 +182,14 @@
 
         <div class="EditableGridHeader" *ngIf="cols && ShowFooter == true && rows.length > 0" [ngStyle]="headerStyle" [style.top]="FooterTop > 0 ? (FooterTop + 'px') : 'calc(100%-27px)'" style="position:absolute;">
             <div class="ag-header-cell"
-                 *ngFor="let col of customcolumns; let i = index" [attr.ColId]="col.ColId" [attr.LogGridId]="LogGridId"
+                 *ngFor="let col of customcolumns; let i = index" [attr.ColId]="col.ColId"
                  [id]="ColumnId + 'resizable-column-,' + i"
                  [ngStyle]="col.HeaderStyle"
                  style="position: absolute;display: inline-block;min-width:25px;">
-                <div [id]="'FooterTemplateDiv' + i" [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block; width: calc(100% - 5px);" >
-                    <ng-template *ngIf="col.hasFootertemplate" ngFor [ngForOf]="[col.footer]"
+                <div [id]="'FooterTemplateDiv' + i" [style.float]="RTL == true ? 'right' : 'left'" style="display: inline-block; width: calc(100% - 5px);">
+                    <template *ngIf="col.hasFootertemplate" ngFor [ngForOf]="[col.footer]"
                               [ngForTemplate]="col.FooterContentTemplate">
-                    </ng-template>
+                    </template>
                 </div>
             </div>
         </div>

@@ -11,10 +11,10 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             additionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
 
             SetLastPageFieldsForAdditionalData(lastPagePM, additionalDataPM);
-            SubmitAdditionalData(additionalDataPM, additionalDataPM.Tenant);
+            SubmitAdditionalData(additionalDataPM, lastPagePM.Tenant);
         }
 
         private ExternalPageAdditionalDataPM GetOrCreateEntityAdditionalData(ReconcileExternalPagePM pagePM)
@@ -232,18 +232,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "3" && pagePOCO.StatusCode != "3"))
             {
                 OnPageCanceled(pagePM, pagePOCO);
-            } 
-            else if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
+            }
+
+            if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
             {
                 OnPageRestored(pagePM);
             }
-            else
-            {
-                UpdatePaymentCheques(pagePM);
 
-                ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
-                UpdateAdditionalDataLastPage(pagePM, additionalData);
-            }
+            UpdatePaymentCheques(pagePM);
+
         }
 
         private void OnPageRestored(ReconcileExternalPagePM pagePM)
@@ -254,10 +251,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void OnPageCanceled(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO)
         {
-            ObjectTable objectTable = GetObjectTable(pagePM.ObjectTableId, pagePM.Tenant);
-            CheckIfLastApprovedPage(pagePM, objectTable);
-
             pagePM.ReconcileExternalPageLines.ForEach(a => { a.ChangeSetOp = ChangeSetOperation.None; });
+            ObjectTable objectTable = GetObjectTable(pagePM.ObjectTableId, pagePM.Tenant);
 
             ReconcileExternalPagePM prevPage = GetPreviousPage(pagePM, pagePOCO, objectTable);
 
@@ -265,15 +260,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             UpdateAdditionalDataLastPage(prevPage, additionalData);
 
             CreatePageCanceledEvent(pagePM, pagePOCO);
-        }
-
-        private static void CheckIfLastApprovedPage(ReconcileExternalPagePM pagePM, ObjectTable objectTable)
-        {
-            ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(pagePM.Tenant);
-            ReconcileExternalPagePM reconcileExternalPage = reconcileExternalPageQueryService.GetSingle(pagePM.Id, false, false);
-            bool islastAppprovedPage = reconcileExternalPageQueryService.CheckLastApprovedPage(reconcileExternalPage, objectTable.Name, pagePM.Tenant);
-            if (!islastAppprovedPage)
-                throw new ApplicationException(TextCodesTranslator.TranslateText("BankAccounts.O.CantCancelItsNotLastApproved", pagePM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(pagePM.Tenant)));
         }
 
         private ReconcileExternalPagePM GetPreviousPage(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO, ObjectTable objectTable)

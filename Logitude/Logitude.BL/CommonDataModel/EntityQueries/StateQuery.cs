@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         StateRepository repository;
 
-
+        public StateQuery()
+        {
+            repository = new StateRepository(); 
+        }
 
         public StateQuery(int tenant)
         {
@@ -46,33 +49,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  CountryCode = a.Country.Code,
                                  SearchFields = a.SearchFields,
                                  QBOTransactionLocationCode=a.QBOTransactionLocationCode,
-                                 ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                             }).FirstOrDefault();
-
-            StatePM securedPm = new StatePM();
-            SecuredMapping.GetMappedPM(state, securedPm, "State", tenant);
-
-            return securedPm;
-        }
-
-        public StatePM GetSinglePMByCode(string code, int tenant)
-        {
-            StatePM state = (from a in repository.context.States.Include("Country")
-                             where a.Tenant == tenant && a.Code == code
-                             select new StatePM()
-                             {
-                                 AddedManually = a.AddedManually,
-                                 Code = a.Code,
-                                 CountryId = a.CountryId,
-                                 EnglishName = a.EnglishName,
-                                 Id = a.Id,
-                                 InActive = a.InActive,
-                                 LocalName = a.LocalName,
-                                 Notes = a.Notes,
-                                 Tenant = a.Tenant,
-                                 CountryCode = a.Country.Code,
-                                 SearchFields = a.SearchFields,
-                                 QBOTransactionLocationCode = a.QBOTransactionLocationCode,
                                  ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
                              }).FirstOrDefault();
 

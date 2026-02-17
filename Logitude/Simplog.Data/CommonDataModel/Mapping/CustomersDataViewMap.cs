@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,7 +25,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReadyForActivationDate).HasColumnName("ReadyForActivationDate");
             this.Property(t => t.PayablesAccountingCard).HasColumnName("PayablesAccountingCard");
             this.Property(t => t.AccountManagerUserEnglishName).HasColumnName("AccountManagerUserEnglishName");
-            this.Property(t => t.BeforeDeactiveStatusCode).HasColumnName("BeforeDeactiveStatusCode");          
+            this.Property(t => t.BeforeDeactiveStatusCode).HasColumnName("BeforeDeactiveStatusCode");
+            this.Property(t => t.BillToId).HasColumnName("BillToId");
+            this.Property(t => t.BillToName).HasColumnName("BillToName");            
             this.Property(t => t.ClassifierId).HasColumnName("ClassifierId");
             this.Property(t => t.ClassifierName).HasColumnName("ClassifierName");
             this.Property(t => t.Code).HasColumnName("Code");
@@ -56,12 +58,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.IndustryName).HasColumnName("IndustryName");
             this.Property(t => t.InvitationDate).HasColumnName("InvitationDate");
-            this.Property(t => t.CargoTrackingInvitationDate).HasColumnName("CargoTrackingInvitationDate");
             this.Property(t => t.InvoiceCurrencyId).HasColumnName("InvoiceCurrencyId");
             this.Property(t => t.IsCustomer).HasColumnName("IsCustomer");
             this.Property(t => t.LastLoginDate).HasColumnName("LastLoginDate");
-            this.Property(t => t.LastLoginDateViaPC).HasColumnName("LastLoginDateViaPC");
-            this.Property(t => t.LastLoginDateViaMobile).HasColumnName("LastLoginDateViaMobile");
             this.Property(t => t.LastShipmentDate).HasColumnName("LastShipmentDate");
             this.Property(t => t.LeadDescription).HasColumnName("LeadDescription");
             this.Property(t => t.LocalName).HasColumnName("LocalName");
@@ -80,7 +79,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.SalesmanUserEnglishName).HasColumnName("SalesmanUserEnglishName");
             this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
-          
+            this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogisticsInvitationStatusName");
+            this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
             this.Property(t => t.StartWorkingDate).HasColumnName("StartWorkingDate");
             this.Property(t => t.StartWorkingManuallySet).HasColumnName("StartWorkingManuallySet");
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
@@ -98,8 +98,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivityWatch).HasColumnName("ActivityWatch");
             this.Property(t => t.PrimaryContactEmail).HasColumnName("PrimaryContactEmail");
             this.Property(t => t.RankId).HasColumnName("RankId");
-            this.Property(t => t.TeamId).HasColumnName("TeamId");
-            this.Property(t => t.TeamName).HasColumnName("TeamName");
             this.Property(t => t.IndustryId).HasColumnName("IndustryId");
             this.Property(t => t.LeadSourceId).HasColumnName("LeadSourceId");
             this.Property(t => t.LastQuoteDate).HasColumnName("LastQuoteDate");
@@ -124,28 +122,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivatedByUserName).HasColumnName("ActivatedByUserName");
             this.Property(t => t.SetAsInactiveByName).HasColumnName("SetAsInactiveByName");
             this.Property(t => t.ActivationRequestedByUserName).HasColumnName("ActivationRequestedByUserName");
-            this.Property(t => t.BillToId).HasColumnName("BillToId");
-            this.Property(t => t.BillToName).HasColumnName("BillToName");
-
-            //#if ORACLE_DB
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogsInvitationStatusName");
-                this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogInvitationStatCode");
-                this.Property(t => t.CargoTrackingInvitationStatusName).HasColumnName("CargoTracInvitationStatName");
-                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTracInvitationStatCode");
-            }
-            //#elseelse
-            else
-            {
-                this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogisticsInvitationStatusName");
-                this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
-                this.Property(t => t.CargoTrackingInvitationStatusName).HasColumnName("CargoTrackingInvitationStatusName");
-                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTrackingInvitationStatusCode");
-
-            }
-            //#endif
         }
     }
 }

@@ -13,7 +13,7 @@ using System.Web;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Counters;
@@ -28,15 +28,13 @@ using Logitude.BL.CommonDataModel.CodePropertiesMapping;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Newtonsoft.Json;
 using WebFreight.Web.Helpers;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using System.Transactions;
-using Simplog.Data.Helpers;
-using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
@@ -182,12 +180,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         string systemEmail = "system@tenant" + ImporterShipment.Tenant + ".com";
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         ImporterShipment.DontAddToImportersQueue = true;
-                        ImporterShipment.SendUpdatesToAgentEnabled = false;
-                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
+                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>());
                         shipmentService.Create();
                         var ResponseData = JsonConvert.SerializeObject(ImporterShipment.Id);
                         var Donemsg = "Shipment Added To Importer Tenant Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
@@ -341,11 +338,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         string systemEmail = "system@tenant" + Shipment.ImporterTenant + ".com";
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         ImporterShipment.DontAddToImportersQueue = true;
-                        ImporterShipment.SendUpdatesToAgentEnabled = false;
-                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(),new List<ShipmentUnassignedFieldPM>());
+                        shipmentService.SetChangeSet(ImporterShipment.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>());
                         shipmentService.Update();
                         var Donemsg = "Shipment Updated Successfully " + DateTime.Now;
-                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ImporterShipment.Id, null, "");
+                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, LogPM.Tenant, "D", 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, null, null, "");
                         return Request.CreateResponse(HttpStatusCode.OK, new List<string>() { ImporterShipment.Id, ImporterShipment.ShipmentNumber });
                     }
                     else
@@ -413,8 +409,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             if (!string.IsNullOrEmpty(entityAM.ForwardingPartnerTenant))
             {
                 int ForwardingPartnerTenant = int.Parse(entityAM.ForwardingPartnerTenant);
-
-                HybridPartnerPM ForwardingPartner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(ForwardingPartnerTenant);
+               
+               HybridPartnerPM ForwardingPartner = HybridPartnerQuerey.GetSinglePMByPartnerTenant(ForwardingPartnerTenant);
                 if (ForwardingPartner != null)
                 {
                     entityPM.ForwardingPartnerId = ForwardingPartner.Id;
@@ -654,10 +650,17 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             //}
 
 
-            entityPM.MainCarriageETA = entityAM.MainCarriageETA;
-            entityPM.MainCarriageATA = entityAM.MainCarriageATA;
+            if (entityAM.MainCarriageETA != null)
+            {
+                entityPM.MainCarriageETA = entityAM.MainCarriageETA;
+            }
+
+            if (entityAM.MainCarriageATA != null)
+            {
+                entityPM.MainCarriageATA = entityAM.MainCarriageATA;
+            }
+
             entityPM.MainCarriageATD = entityAM.MainCarriageATD;
-            entityPM.MainCarriageETD = entityAM.MainCarriageETD;
             entityPM.OnCarriageATA = entityAM.OnCarriageATA;
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;
             entityPM.PreCarriageATA = entityAM.PreCarriageATA;
@@ -669,9 +672,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.GrossWeightUnitCode = entityAM.GrossWeightUnitCode;
             entityPM.ChargeableWeightUnitCode = entityAM.ChargeableWeightUnitCode;
             entityPM.VolumeUnitCode = entityAM.VolumeUnitCode;
-            entityPM.OrderIsDangerouseGoods = entityAM.IsDangerouseOfGoods;
-            entityPM.PrivateLabelAgentName = entityAM.AgentName;
-            entityPM.IsShipmentOrder = entityAM.IsShipmentOrder;
 
             if (!string.IsNullOrEmpty(entityAM.DeclarationXMLData))
             {
@@ -685,36 +685,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.ApproveDateTime = entityAM.ApproveDateTime;
             }
-            if (entityAM.IsOperationalClosed == false && entityAM.CustomsClearanceDate != null && entityAM.StatusCode.ToLower() == "ccd")
-            {
-                entityPM.IsShipmentComputedFieldChange = true;
-                entityPM.IsRequestedDocuments = false;
-                entityPM.RequestedDocumentsCount = 0;
-                entityPM.MissingDocumentsCount = 0;
-                entityPM.IsMissingDocument = false;
-
-
-            }
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
-            entityPM.IsOperationalClosed = GetIsOperationalClosed(entityAM, entityPM, currentTenant);
-
-            if (entityPM.CustomsClearanceDate == null)
+            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.StatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityAM.IsOperationalClosed == false)
             {
-                entityPM.ExceptionDate = entityAM.ExceptionDate;
-                entityPM.ExceptionDescription = entityAM.ExceptionDescription;
-                entityPM.HasException = entityAM.HasException;
+                entityPM.IsOperationalClosed = true;
             }
-
-            HandleRemoveExceptionDetails(entityAM, entityPM);
-
-            if (entityAM.CustomsClearanceDate != null && entityAM.IsImporterApprovalRequired && entityPM.ApproveDateTime == null && string.IsNullOrEmpty(entityPM.ApprovedBy))
-            {
-                entityPM.ApprovedBy = "System";
-                entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                entityPM.VersionApproved = entityAM.VersionApproved;
-            }
-
-            entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
 
             if (Partner != null)
             {
@@ -772,7 +747,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     else
                     {
                         Responce.ErrorType = "Validation Error";
-                        Responce.ErrorMessage = $"StatusId value doesn't exist in the database, insert this entity before using it. Tenant:[{entityAM.Tenant}];StatusCode:[{entityAM.OriginalStatusCode}]";
+                        Responce.ErrorMessage = "StatusId field doesn't exist in the database, insert this entity before using it.";
                         return Responce;
                     }
 
@@ -798,7 +773,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         else
                         {
                             Responce.ErrorType = "Validation Error";
-                            Responce.ErrorMessage = $"StatusId value doesn't exist in the database, insert this entity before using it. Tenant:[{entityAM.Tenant}];StatusCode:[{entityAM.StatusCode}]";
+                            Responce.ErrorMessage = "StatusId field doesn't exist in the database, insert this entity before using it.";
                             return Responce;
                         }
                     }
@@ -840,17 +815,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             {
                 entityPM.CustomerReference1 = entityAM.CustomerReference1;
             }
-            if (!string.IsNullOrEmpty(entityAM.ConsigneeReference2) && string.IsNullOrEmpty(entityPM.ConsigneeReference2))
+            if (!string.IsNullOrEmpty(entityAM.ConsigneeReference2))
             {
                 entityPM.ConsigneeReference2 = entityAM.ConsigneeReference2;
             }
             if (!string.IsNullOrEmpty(entityAM.CustomerReference2) && string.IsNullOrEmpty(entityPM.CustomerReference2))
             {
                 entityPM.CustomerReference2 = entityAM.CustomerReference2;
-            }
-            if (!string.IsNullOrEmpty(entityAM.CustomerReference3))
-            {
-                entityPM.CustomerReference3 = entityAM.CustomerReference3;
             }
             if (!string.IsNullOrEmpty(entityAM.Master))
             {
@@ -861,15 +832,11 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ShipmentCustomerTypeCode = entityAM.ShipmentCustomerTypeCode;
             }
 
-			entityPM.IsCancelled = entityAM.IsCancelled ? true : false;
+            entityPM.IsCancelled = entityAM.IsCancelled;
 
-			if (!string.IsNullOrEmpty(entityAM.ShipperName))
+            if (!string.IsNullOrEmpty(entityAM.ShipperName))
             {
                 entityPM.ShipperName = entityAM.ShipperName;
-            }
-            if (!string.IsNullOrEmpty(entityAM.ConsigneeName))
-            {
-                entityPM.ConsigneeName = entityAM.ConsigneeName;
             }
             if (!string.IsNullOrEmpty(entityAM.CarrierTransportDocumentNumber))
             {
@@ -985,7 +952,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                             return Responce;
                         }
                     }
-                    else if (entityAM.TransportModeId != "A")
+                    else
                     {
                         Responce.ErrorType = "Validation Error";
                         Responce.ErrorMessage = "PackageTypeCode field is required.";
@@ -1020,83 +987,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
             return null;
         }
-        private static bool IsRemoveExceptionLogicEnabled(int tenant)
-        {
-            if (FeatureToggleHelper.HasFeatureToggle("REL", tenant))
-                return true;
-            return false;
-        }
-        private static void HandleRemoveExceptionDetails(ShipmentAM entityAM, ShipmentPM entityPM)
-        {
-            if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true && entityPM.DirectionId != "E")
-            {
-                RemoveExceptionDetails(entityPM, "Customs Clearance");
-            }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && entityAM.StatusCode == "ARR" && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
-            {
-                RemoveExceptionDetails(entityPM, "Shipment Already arrived");
-            }
-            else if (entityPM.DirectionId == "E" && entityAM.HasException && IsRemoveExceptionLogicEnabled(entityAM.ImporterTenant))
-            {
-                HandleRemoveExceptionDetailsByEntityStatusWeight(entityAM, entityPM);
-            }
-        }
 
-        private static void HandleRemoveExceptionDetailsByEntityStatusWeight(ShipmentAM entityAM, ShipmentPM entityPM)
-        {
-            EntityStatus shipmentStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityPM.StatusCode, entityPM.Tenant, true);
-            EntityStatus arrivedStatus = EntityStatusRepository.GetSingleEntityStatusByCode(entityAM.StatusCode, entityPM.Tenant, true);
-            if (shipmentStatus == null || arrivedStatus == null) return;
-            int shipmentStatusWeight = shipmentStatus.StatusLocalWeight != null ? (int)shipmentStatus.StatusLocalWeight : shipmentStatus.StatusWeight;
-            int arrivedStatusWeight = arrivedStatus.StatusLocalWeight != null ? (int)arrivedStatus.StatusLocalWeight : arrivedStatus.StatusWeight;
-            if (shipmentStatusWeight < arrivedStatusWeight) return;
-            RemoveExceptionDetails(entityPM, "Shipment Already arrived");
-        }
-        private static void RemoveExceptionDetails(ShipmentPM entityPM, string exceptionResolvedDescription)
-        {
-            entityPM.HasException = false;
-            entityPM.ExceptionDate = null;
-            entityPM.ExceptionDescription = null;
-            entityPM.ExceptionResolvedDescription = exceptionResolvedDescription;
-        }
-
-        private static bool GetIsOperationalClosed(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
-        {
-            if (entityPM.IsOperationalClosed) return true;
-
-            if (IsAutoCustomArchiveShipment(entityAM, entityPM, currentTenant))
-            {
-                return true;
-            }
-            if (IsAutoExportArchiveShipment(entityAM, entityPM, currentTenant))
-            {
-                return true;
-            }
-
-            return entityPM.IsOperationalClosed;
-        }
-
-        private static bool IsAutoCustomArchiveShipment(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
-        {
-            if (currentTenant.AutoArchiveOnInvoice == false) return false;
-            if (entityAM.CustomsClearanceDate == null) return false;
-            const string inProgressStatusCode = "INPR";
-            if (entityAM.OriginalStatusCode != inProgressStatusCode) return false;
-            const string customsDirectionId = "C";
-            if (entityPM.DirectionId != customsDirectionId) return false;
-
-            return true;
-        }
-
-        private static bool IsAutoExportArchiveShipment(ShipmentAM entityAM, ShipmentPM entityPM, TenantPM currentTenant)
-        {
-            if (currentTenant.AutoArchiveOnPODExport == false) return false;
-            const string inProgressStatusCode = "PIOD";
-            if (entityAM.OriginalStatusCode != inProgressStatusCode) return false;
-            const string exportDirectionId = "E";
-            if (entityPM.DirectionId != exportDirectionId) return false;
-
-            return true;
-        }
     }
 }

@@ -10,8 +10,6 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -57,16 +55,7 @@ using Simplog.Data.InvoiceModel;
 				   temp.ForeignAmount = item.ForeignAmount;
 				   temp.BankBranch = item.BankBranch;
 				   temp.BankAccount = item.BankAccount;
-				   temp.Bank = item.BankId; 
-
-			  
-				   if(item.StatusCode != null)
-				   {
-					   ARPaymentChequeStatusReplicaQueryService ARPaymentChequeStatusReplicaService0 = new ARPaymentChequeStatusReplicaQueryService(Tenant);
-					   					   temp.ChequeStatus = ARPaymentChequeStatusReplicaService0.GetARPaymentChequeStatusReplicaByCode(item.StatusCode,Tenant,ComputingPartnerName); 
-			       
-					   				   }
-				   					
+				   temp.Bank = item.BankId;					
 					MyList.Add(temp);
 				}
 					
@@ -79,7 +68,7 @@ using Simplog.Data.InvoiceModel;
             }
         } 
 
-		public List<ARPaymentChequeReplicaPM> ARPaymentChequeDataMappingAndValidatin(List<ARPaymentCheque> MyEntity,int Tenant,string ComputingPartnerName = "",bool IsUpdate = false)
+		public List<ARPaymentChequeReplicaPM> ARPaymentChequeDataMappingAndValidatin(List<ARPaymentCheque> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
@@ -92,14 +81,11 @@ using Simplog.Data.InvoiceModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-					
-					
-			  	   if(temp == null)
+										   
+					if(temp == null)
 					{   
 					    throw new ApplicationException("ARPaymentChequeReplica with Id " + item.Id + " doesn't exist");
 					} 
-				 
-					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 					   
@@ -112,107 +98,21 @@ using Simplog.Data.InvoiceModel;
 						//{
 						//    temp.Id = item.Id;
 
-						//} 
-
-						
+						//}
 					}
-                    
-					if(!IsUpdate)
-					{							
-						temp.Tenant = item.Tenant;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LineNumber = item.LineNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ChequeNumber = item.ChequeNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ValueDate = item.ValueDate;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.LocalAmount = item.LocalAmount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.ForeignAmount = item.ForeignAmount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.BankBranch = item.BankBranch;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.BankAccount = item.BankAccount;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.BankId = item.Bank;
-
-										}  
-
-					
-					ARPaymentChequeStatusReplicaQueryService ChequeStatusARPaymentChequeStatusReplicaService = new ARPaymentChequeStatusReplicaQueryService(Tenant);
-					if(item.ChequeStatus != null)
-					{
-						var myChequeStatusPM = ChequeStatusARPaymentChequeStatusReplicaService.ARPaymentChequeStatusReplicaDataMappingAndValidatin(item.ChequeStatus,Tenant,ComputingPartnerName,IsUpdate);
-						
-						if(myChequeStatusPM != null)
-						{ 
-
-						 
-							if(!IsUpdate)
-							{								
-								temp.StatusCode = myChequeStatusPM.Code;
-						  
-							}  
-
-							
-						} 
-
-					}
-			
-										   
+					temp.Tenant = item.Tenant;
+					temp.LineNumber = item.LineNumber;
+					temp.ChequeNumber = item.ChequeNumber;
+					temp.ValueDate = item.ValueDate;
+					temp.LocalAmount = item.LocalAmount;
+					temp.ForeignAmount = item.ForeignAmount;
+					temp.BankBranch = item.BankBranch;
+					temp.BankAccount = item.BankAccount;
+					temp.BankId = item.Bank;					   
 						MyList.Add(temp);
 					}
 						
-					return MyList;
+					   return MyList;
 		    }
             catch (Exception ex)
             {
@@ -220,8 +120,6 @@ using Simplog.Data.InvoiceModel;
                 throw ex;
             } 
         }
-
-
-						   
+		 
    }
 }

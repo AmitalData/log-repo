@@ -12,7 +12,7 @@ import { JournalExtendedPMService } from '../../Services/ExtendedPMs/JournalExte
 
 @Component({
     selector: 'CancelChequeComponent',
-    
+    moduleId: module.id,
     templateUrl: './CancelChequeComponent.html',
 })
 export class CancelChequeComponent extends BaseComponent {
@@ -74,7 +74,7 @@ export class CancelChequeComponent extends BaseComponent {
             this.entityPM.PaymentChequeStatusCode = "4";
             this.entityPM.CancelledByUserId = SessionLocator.LoggedUserId;
             this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-            this.paymentChequePMService.update(this.entityPM).subscribe((myResult:any) => {
+            this.paymentChequePMService.update(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {

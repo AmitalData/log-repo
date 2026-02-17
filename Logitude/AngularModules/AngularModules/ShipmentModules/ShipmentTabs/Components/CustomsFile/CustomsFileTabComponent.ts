@@ -4,7 +4,7 @@ import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './CustomsFileTabComponent.html',
 })

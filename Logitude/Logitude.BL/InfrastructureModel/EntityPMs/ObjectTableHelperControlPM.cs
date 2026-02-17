@@ -12,7 +12,5 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableId { get; set; }
         public string ObjectTableName { get; set; }
         public string FeatureId { get; set; }
-        public string FeatureUniqeCode { get; set; }
-
     }
 }

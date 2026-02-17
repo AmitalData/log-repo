@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit}  from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -12,20 +12,20 @@ import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomai
 import {ShipmentCustomsTransmissionPM} from  '../../../../Shipment/EntityPMs/ShipmentCustomsTransmissionPM';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ChildDirective } from '../../../../Controls/Directives/ChildDirective';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './CustomsTabComponent.html',
 })
 
-export class CustomsTabComponent extends BaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CustomsTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: ShipmentPM = null;
     public ObjectTableName: string = null;
     public DataContext: CustomsTabComponent = this;
     public IsSendToAESButtonVisible: boolean = false;
     public DeclarationNumberLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationNumber");
     public DeclarationDateLabel: string = TextCodeTranslator.Translate("Shipment.F.DeclarationDate");
-    @ViewChild(ChildDirective) Child: ChildDirective;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -43,23 +43,53 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
             this.DeclarationNumberLabel = "Entry Summary";
             this.DeclarationDateLabel = "Entry Summary Date";
         }
+
+      this.BuildAdditionalFields();
     }
 
-    ngAfterViewInit() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.Child.Location)
-            .then(cmpRef => {
-
-                //this.GeneratedComponent = cmpRef.instance;
-
-                cmpRef.instance.LoadCompleted.subscribe(s => {
-
-                });
-
-                var screenCode = "Shipment.CustomsAdditionalFields";
-                //cmpRef.instance.LabelWidth = 110;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-            });
+  // Additional Fields
+  private Retries: number = 0;
+  private timerToken: any;
+  private GeneratedComponent: any;
+  BuildAdditionalFields() {
+    this.RunComponent();
+  }
+  RunComponent() {
+    if (this.viewContainerRef) {
+      this.LoadChildComponent();
     }
+
+    else {
+      this.RunComponentTimer();
+    }
+  }
+  RunComponentTimer() {
+    this.Retries++;
+
+    if (this.timerToken) {
+      clearTimeout(this.timerToken);
+    }
+
+    if (this.Retries < 3) {
+      this.timerToken = setTimeout(() => this.RunComponent(), 1);
+    }
+  }
+
+  LoadChildComponent() { 
+    SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+      .then(cmpRef => {
+
+        //this.GeneratedComponent = cmpRef.instance;
+
+        cmpRef.instance.LoadCompleted.subscribe(s => {
+          
+        });
+
+        var screenCode = "Shipment.CustomsAdditionalFields";
+        //cmpRef.instance.LabelWidth = 110;
+        cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+      });
+  }
 
     public IsTenantUS: boolean = false;
     public IsOceanOrAir: boolean = false;
@@ -164,9 +194,9 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
         }
 
         this.UIProperties.SetEnabled("IncludesCustoms", this.ObjectTableName, isEditingEnabled);
-        //this.UIProperties.SetEnabled("DeclarationNumber", this.ObjectTableName, isIncludeFieldsEnabled);
-        //this.UIProperties.SetEnabled("DeclarationDate", this.ObjectTableName, isIncludeFieldsEnabled);
-        //this.UIProperties.SetEnabled("CustomsClearanceDate", this.ObjectTableName, isIncludeFieldsEnabled);
+        this.UIProperties.SetEnabled("DeclarationNumber", this.ObjectTableName, isIncludeFieldsEnabled);
+        this.UIProperties.SetEnabled("DeclarationDate", this.ObjectTableName, isIncludeFieldsEnabled);
+        this.UIProperties.SetEnabled("CustomsClearanceDate", this.ObjectTableName, isIncludeFieldsEnabled);
 
         this.UIProperties.SetEnabled("FreightRelease", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("TerminalAvailable", this.ObjectTableName, isEditingEnabled);
@@ -189,20 +219,16 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
         this.IsEditingEnabled = isEditingEnabled;
     }
 
-    MarkIncludesCustoms(value) {
-        if (value) this.IncludesCustoms = true;
-    }
-
     get IncludesCustoms() { return this.EntityPM.IncludesCustoms; }
     set IncludesCustoms(newValue: boolean) {
         if (this.EntityPM.IncludesCustoms != newValue) {
             this.EntityPM.IncludesCustoms = newValue;
 
-            //if (!newValue) {
-            //    this.DeclarationNumber = null;
-            //    this.DeclarationDate = null;
-            //    this.CustomsClearanceDate = null;
-            //}
+            if (!newValue) {
+                this.DeclarationNumber = null;
+                this.DeclarationDate = null;
+                this.CustomsClearanceDate = null;
+            }
 
             this.SetUIProperties();
         }
@@ -212,7 +238,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     set DeclarationNumber(newValue: string) {
         if (this.EntityPM.DeclarationNumber != newValue) {
             this.EntityPM.DeclarationNumber = newValue;
-            this.MarkIncludesCustoms(newValue);
+
             this.SetUIProperties();
         }
     }
@@ -221,7 +247,7 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     set DeclarationDate(newValue: Date) {
         if (this.EntityPM.DeclarationDate != newValue) {
             this.EntityPM.DeclarationDate = newValue;
-            this.MarkIncludesCustoms(newValue);
+
             this.SetUIProperties();
         }
     }
@@ -230,7 +256,6 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     set CustomsClearanceDate(newValue: Date) {
         if (this.EntityPM.CustomsClearanceDate != newValue) {
             this.EntityPM.CustomsClearanceDate = newValue;
-            this.MarkIncludesCustoms(newValue);
         }
     }
 
@@ -314,32 +339,15 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
     private CheckLocalVisibility(): boolean {
         var visible: boolean = false;
 
-        if (this.EntityPM.ShipmentLevelCode != "C") {
-            if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
-                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "AMC") {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
+            if (this.EntityPM.ShipmentLevelCode != "C") {
+                if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+                    if (ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode == "ABM") {
                         visible = true;
-                    }
-
-                    else {
-                        if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
-                            visible = true;
-                        }
                     }
                 }
             }
         }
-
-
-        //if (FeatureLocator.HasFeaturePermession("Shipment", "SendToCustoms")) {
-        //    if (this.EntityPM.ShipmentLevelCode != "C") {
-        //        if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-        //            if (!AppTool.IsNullOrEmpty(ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode)) {
-        //                visible = true;
-        //            }
-        //        }
-        //    }
-        //}
 
         return visible;
     }
@@ -410,8 +418,8 @@ export class CustomsTabComponent extends BaseComponent implements OnInit, OnDest
 
         if (isLocalVisible) {
             var newItem: SummaryItem = new SummaryItem();
-            newItem.CustomsInterfaceName = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceName;
-            newItem.Code = ObjectsLocator.CustomsInterfaceSettingPM.LocalCustomsInterfaceCode;
+            newItem.CustomsInterfaceName = "ABM Customsware";
+            newItem.Code = "ABM";
             newItem.StatusName = !AppTool.IsNullOrEmpty(this.EntityPM.LocalCustomsTransmissionsStatusName) ? this.EntityPM.LocalCustomsTransmissionsStatusName : notSent;
             newItem.StatusDate = this.EntityPM.LocalCustomsTransmissionsStatusDate;
             newItem.StatusCode = this.EntityPM.LocalCustomsTransmissionsStatusCode;

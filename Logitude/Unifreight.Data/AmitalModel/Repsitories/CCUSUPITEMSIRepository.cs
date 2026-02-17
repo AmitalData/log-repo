@@ -24,10 +24,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
 
 
-        public CCUSUPITEMSI GetSingle(int FILENO, int LINENO, int ACCLINENO  , int? tenant)
+        public CCUSUPITEMSI GetSingle(int FILENO, int LINENO, int ACCLINENO)
         {
             return (from a in context.CCUSUPITEMSIs
-                    where a.FILENO == FILENO && a.LINENO == LINENO && a.ACCLINENO == ACCLINENO && a.TENANT == tenant
+                    where a.FILENO == FILENO && a.LINENO == LINENO && a.ACCLINENO == ACCLINENO
                     select a).FirstOrDefault();
         }
 
@@ -42,25 +42,25 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUSUPITEMSI entity)
         {
             context.CCUSUPITEMSIs.Add(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUSUPITEMSI entity)
         {
-             {
+            //if (entity.EntityState == System.Data.EntityState.Unchanged)
+            {
                 context.CCUSUPITEMSIs.Attach(entity);
             }
-             context.CCUSUPITEMSIs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+            //context.AddToCCUSUPITEMSIs 
+            context.CCUSUPITEMSIs.Remove(entity);
         }
 
         public void Update(CCUSUPITEMSI entity)
         {
-             {
+            //if (entity.EntityState == System.Data.EntityState.Unchanged)
+            {
                 context.CCUSUPITEMSIs.Attach(entity); context.SetAsModified(entity);
             }
 
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUSUPITEMSI> All()
@@ -84,20 +84,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             var keys = entityKeys as CCUACCSUPKeys;
             return (from a in context.CCUSUPITEMSIs
-                    where a.FILENO == keys.FILENO && a.ACCLINENO == keys.LINENO && a.TENANT == keys.Tenant
+                    where a.FILENO == keys.FILENO && a.ACCLINENO == keys.LINENO
                     select a).ToList();
         }
 
         public CCUSUPITEMSI GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CCUSUPITEMSIKeys;
-            return this.GetSingle(keys.FILENO, keys.LINENO, keys.ACCLINENO, keys.Tenant);
+            return this.GetSingle(keys.FILENO, keys.LINENO, keys.ACCLINENO);
         }
 
         public int FastDeleteMulti(EntityKeyFields parentEntityKeys)
         {
             var keys = parentEntityKeys as CCUFILEMKeys;
-            return context.DeleteWhere<CCUSUPITEMSI>(rec => rec.FILENO == keys.FILENO && rec.TENANT == keys.TENANT);
+            return context.DeleteWhere<CCUSUPITEMSI>(rec => rec.FILENO == keys.FILENO);
         }
     }
 }

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -57,7 +57,7 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
                                                   OccasionStatusId = a.OccasionStatusId,
 
-                                                  OwnerName = a.Owner == null ? null : a.Owner.Contact.EnglishName,
+                                                  OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
 
                                                   TypeName = a.OccasionType == null ? "" : a.OccasionType.Name,
 

@@ -18,14 +18,10 @@ import { SupplierInvoiceItemsTaxList } from '../../../../../Customs/EntityLists/
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
-import { SupplierInvoiceItemExtendedListService } from '../../../../../Customs/Services/ExtendedLists/SupplierInvoiceItemExtendedListService';
-import { SupplierInvoiceItemList } from '../../../../../Customs/EntityLists/Extended/SupplierInvoiceItemList';
-import { SupplierInvoiceItemPM } from '../../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
 
-    
+    moduleId: module.id,
     templateUrl: './ItemTaxesMoreFieldsComponent.html',
 })
 
@@ -34,34 +30,19 @@ export class ItemTaxesMoreFieldsComponent{// implements OnInit {
     public ObjectTableName = "Customs.SupplierInvoiceItemsTax";
     public DataContext: ItemTaxesMoreFieldsComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
-    private supplierInvoiceItemExtendedListService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
-    supplierinvoiceitem: SupplierInvoiceItemList;
-    constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
+    constructor(private entityArgs: EntityArgs) {
         
     }
 
     //ngOnInit() {
     //    this.EntityPM = this.entityArgs.EntityPM;
     //}
-    isExport: string;
+
     _IsVisible: boolean = false;
     public SetWindowArgs(windowArgs: SupplierInvoiceItemsTaxList) {
         ///console.warn(windowArgs);
         this.EntityPM = windowArgs;
-        this.EntityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-            this.isExport = this.CurrentSession.CurrentEditComponent.EntityPM.Direction;
-             if (this.isExport == 'E') {
-                this.supplierInvoiceItemExtendedListService.getSingle(this.EntityPM.DeclarationId, this.EntityPM["InvoiceCounterKey"], this.EntityPM.LineNumber).subscribe((response: any) => {
-                    this.supplierinvoiceitem = response.Result;
-                    this._IsVisible = true;
-
-                });
-            }
-            else {
-                this._IsVisible = true;
-
-            }
-        });
+        this._IsVisible = true;
     }
 
     RefreshEntity() {
@@ -76,8 +57,6 @@ export class ItemTaxesMoreFieldsComponent{// implements OnInit {
     get TradeLevyNumber() { return this.EntityPM == null ? null : this.EntityPM.TradeLevyNumber; }
     get MeasurementUnitCode() { return this.EntityPM == null ? null : this.EntityPM.MeasurementUnitCode; }
     get AlternateMeasurementUnitCode() { return this.EntityPM == null ? null : this.EntityPM.AlternateMeasurementUnitCode; }
-    get TotalBtlCoverageNIS() { return this.EntityPM == null ? null : this.EntityPM.TotalBtlCoverageNIS; }
-    get ItemFOBAmountForeign() { return this.EntityPM == null ? null : this.supplierinvoiceitem.ItemFOBAmountForeign; }            
-    get ItemFOBAmountNIS() { return this.EntityPM == null ? null : this.supplierinvoiceitem.ItemFOBAmountNIS; }            
+    get TotalBtlCoverageNIS() { return this.EntityPM == null ? null : this.EntityPM.TotalBtlCoverageNIS; }            
 
- }
+}

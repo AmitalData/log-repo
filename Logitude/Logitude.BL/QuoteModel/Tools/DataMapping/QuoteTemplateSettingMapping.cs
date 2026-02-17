@@ -39,7 +39,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.ShowContainerNameInsteadOfCodeContainers = itemPM.ShowContainerNameInsteadOfCodeContainers;
             itemPoco.ShowFixedPriceContainers = itemPM.ShowFixedPriceContainers;
             itemPoco.ShowTitleQuoteDetails = itemPM.ShowTitleQuoteDetails;
-            itemPoco.ShowUnitsContainers = itemPM.ShowUnitsContainers;
+            
 
             itemPoco.ShowSaleCurrencyColumnPackages = itemPM.ShowSaleCurrencyColumnPackages;
             itemPoco.ShowSaleCurrencyColumnContainers = itemPM.ShowSaleCurrencyColumnContainers;
@@ -64,10 +64,10 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
 
             itemPoco.DetailsSectionHasTwoColumns = itemPM.DetailsSectionHasTwoColumns;
 
-
+          
             itemPoco.HeaderTableDesignId = itemPM.HeaderTableDesignId;
 
-
+  
             itemPoco.HeaderSectionHasTwoColumns = itemPM.HeaderSectionHasTwoColumns;
 
 
@@ -104,153 +104,153 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.ShowDetailsDescriptionOfGoods = itemPM.ShowDetailsDescriptionOfGoods;
             itemPoco.ShowDetailsDangerousGoods = itemPM.ShowDetailsDangerousGoods;
             itemPoco.ShowDetailsCarrier = itemPM.ShowDetailsCarrier;
-            itemPoco.DetailsTitleDesignId = itemPM.DetailsTitleDesignId;
+          itemPoco.DetailsTitleDesignId = itemPM.DetailsTitleDesignId;
 
 
 
-            itemPoco.ShowDetailsCustomerName = itemPM.ShowDetailsCustomerName;
-            itemPoco.ShowDetailsCustomerAddress = itemPM.ShowDetailsCustomerAddress;
-            itemPoco.ShowDetailsCustomerContact = itemPM.ShowDetailsCustomerContact;
-            itemPoco.ShowDetailsCustomerReferences = itemPM.ShowDetailsCustomerReferences;
+          itemPoco.ShowDetailsCustomerName = itemPM.ShowDetailsCustomerName;
+          itemPoco.ShowDetailsCustomerAddress = itemPM.ShowDetailsCustomerAddress;
+          itemPoco.ShowDetailsCustomerContact = itemPM.ShowDetailsCustomerContact;
+          itemPoco.ShowDetailsCustomerReferences = itemPM.ShowDetailsCustomerReferences;
 
 
 
-            itemPoco.PageHeaderArea1Type = itemPM.PageHeaderArea1Type;
-            itemPoco.PageHeaderArea2Type = itemPM.PageHeaderArea2Type;
-            itemPoco.PageHeaderArea3Type = itemPM.PageHeaderArea3Type;
+          itemPoco.PageHeaderArea1Type = itemPM.PageHeaderArea1Type;
+          itemPoco.PageHeaderArea2Type = itemPM.PageHeaderArea2Type;
+          itemPoco.PageHeaderArea3Type = itemPM.PageHeaderArea3Type;
 
-            itemPoco.PageHeaderArea1ImageDetailId = itemPM.PageHeaderArea1ImageDetailId;
-            itemPoco.PageHeaderArea2ImageDetailId = itemPM.PageHeaderArea2ImageDetailId;
-            itemPoco.PageHeaderArea3ImageDetailId = itemPM.PageHeaderArea3ImageDetailId;
-
-
-            itemPoco.PageHeaderArea1FreeText = itemPM.PageHeaderArea1FreeText;
-            itemPoco.PageHeaderArea2FreeText = itemPM.PageHeaderArea2FreeText;
-            itemPoco.PageHeaderArea3FreeText = itemPM.PageHeaderArea3FreeText;
-
-            itemPoco.PageHeaderArea1FreeTextDesignId = itemPM.PageHeaderArea1FreeTextDesignId;
-            itemPoco.PageHeaderArea2FreeTextDesignId = itemPM.PageHeaderArea2FreeTextDesignId;
-            itemPoco.PageHeaderArea3FreeTextDesignId = itemPM.PageHeaderArea3FreeTextDesignId;
+          itemPoco.PageHeaderArea1ImageDetailId = itemPM.PageHeaderArea1ImageDetailId;
+          itemPoco.PageHeaderArea2ImageDetailId = itemPM.PageHeaderArea2ImageDetailId;
+          itemPoco.PageHeaderArea3ImageDetailId = itemPM.PageHeaderArea3ImageDetailId;
 
 
+          itemPoco.PageHeaderArea1FreeText = itemPM.PageHeaderArea1FreeText;
+          itemPoco.PageHeaderArea2FreeText = itemPM.PageHeaderArea2FreeText;
+          itemPoco.PageHeaderArea3FreeText = itemPM.PageHeaderArea3FreeText;
 
-            itemPoco.PageHeaderArea1Width = itemPM.PageHeaderArea1Width;
-            itemPoco.PageHeaderArea2Width = itemPM.PageHeaderArea2Width;
-            itemPoco.PageHeaderArea3Width = itemPM.PageHeaderArea3Width;
+          itemPoco.PageHeaderArea1FreeTextDesignId = itemPM.PageHeaderArea1FreeTextDesignId;
+          itemPoco.PageHeaderArea2FreeTextDesignId = itemPM.PageHeaderArea2FreeTextDesignId;
+          itemPoco.PageHeaderArea3FreeTextDesignId = itemPM.PageHeaderArea3FreeTextDesignId;
 
 
 
-            itemPoco.PageHeaderArea1Height = itemPM.PageHeaderArea1Height;
-            itemPoco.PageHeaderArea2Height = itemPM.PageHeaderArea2Height;
-
-            itemPoco.PageHeaderArea3Height = itemPM.PageHeaderArea3Height;
-
-
-            itemPoco.PageHeaderArea1ImageAlignment = itemPM.PageHeaderArea1ImageAlignment;
-            itemPoco.PageHeaderArea2ImageAlignment = itemPM.PageHeaderArea2ImageAlignment;
-            itemPoco.PageHeaderArea3ImageAlignment = itemPM.PageHeaderArea3ImageAlignment;
-
-            itemPoco.PageFooterArea1Type = itemPM.PageFooterArea1Type;
-            itemPoco.PageFooterArea2Type = itemPM.PageFooterArea2Type;
-            itemPoco.PageFooterArea3Type = itemPM.PageFooterArea3Type;
-
-            itemPoco.PageFooterArea1ImageDetailId = itemPM.PageFooterArea1ImageDetailId;
-            itemPoco.PageFooterArea2ImageDetailId = itemPM.PageFooterArea2ImageDetailId;
-            itemPoco.PageFooterArea3ImageDetailId = itemPM.PageFooterArea3ImageDetailId;
-
-
-            itemPoco.PageFooterArea1FreeText = itemPM.PageFooterArea1FreeText;
-            itemPoco.PageFooterArea2FreeText = itemPM.PageFooterArea2FreeText;
-            itemPoco.PageFooterArea3FreeText = itemPM.PageFooterArea3FreeText;
-
-            itemPoco.PageFooterArea1FreeTextDesignId = itemPM.PageFooterArea1FreeTextDesignId;
-            itemPoco.PageFooterArea2FreeTextDesignId = itemPM.PageFooterArea2FreeTextDesignId;
-            itemPoco.PageFooterArea3FreeTextDesignId = itemPM.PageFooterArea3FreeTextDesignId;
+          itemPoco.PageHeaderArea1Width = itemPM.PageHeaderArea1Width;
+          itemPoco.PageHeaderArea2Width = itemPM.PageHeaderArea2Width;
+          itemPoco.PageHeaderArea3Width = itemPM.PageHeaderArea3Width;
 
 
 
-            itemPoco.PageFooterArea1Width = itemPM.PageFooterArea1Width;
-            itemPoco.PageFooterArea2Width = itemPM.PageFooterArea2Width;
-            itemPoco.PageFooterArea3Width = itemPM.PageFooterArea3Width;
+          itemPoco.PageHeaderArea1Height = itemPM.PageHeaderArea1Height;
+          itemPoco.PageHeaderArea2Height = itemPM.PageHeaderArea2Height;
+
+          itemPoco.PageHeaderArea3Height = itemPM.PageHeaderArea3Height;
+
+
+          itemPoco.PageHeaderArea1ImageAlignment = itemPM.PageHeaderArea1ImageAlignment;
+          itemPoco.PageHeaderArea2ImageAlignment = itemPM.PageHeaderArea2ImageAlignment;
+          itemPoco.PageHeaderArea3ImageAlignment = itemPM.PageHeaderArea3ImageAlignment;
+
+          itemPoco.PageFooterArea1Type = itemPM.PageFooterArea1Type;
+          itemPoco.PageFooterArea2Type = itemPM.PageFooterArea2Type;
+          itemPoco.PageFooterArea3Type = itemPM.PageFooterArea3Type;
+
+          itemPoco.PageFooterArea1ImageDetailId = itemPM.PageFooterArea1ImageDetailId;
+          itemPoco.PageFooterArea2ImageDetailId = itemPM.PageFooterArea2ImageDetailId;
+          itemPoco.PageFooterArea3ImageDetailId = itemPM.PageFooterArea3ImageDetailId;
+
+
+          itemPoco.PageFooterArea1FreeText = itemPM.PageFooterArea1FreeText;
+          itemPoco.PageFooterArea2FreeText = itemPM.PageFooterArea2FreeText;
+          itemPoco.PageFooterArea3FreeText = itemPM.PageFooterArea3FreeText;
+
+          itemPoco.PageFooterArea1FreeTextDesignId = itemPM.PageFooterArea1FreeTextDesignId;
+          itemPoco.PageFooterArea2FreeTextDesignId = itemPM.PageFooterArea2FreeTextDesignId;
+          itemPoco.PageFooterArea3FreeTextDesignId = itemPM.PageFooterArea3FreeTextDesignId;
 
 
 
-            itemPoco.PageFooterArea1Height = itemPM.PageFooterArea1Height;
-            itemPoco.PageFooterArea2Height = itemPM.PageFooterArea2Height;
-
-            itemPoco.PageFooterArea3Height = itemPM.PageFooterArea3Height;
-
-
-            itemPoco.PageFooterArea1ImageAlignment = itemPM.PageFooterArea1ImageAlignment;
-            itemPoco.PageFooterArea2ImageAlignment = itemPM.PageFooterArea2ImageAlignment;
-            itemPoco.PageFooterArea3ImageAlignment = itemPM.PageFooterArea3ImageAlignment;
-
-            itemPoco.PricingPackagesTitleDesignId = itemPM.PricingPackagesTitleDesignId;
-            itemPoco.PricingContainsersTitleDesignId = itemPM.PricingContainsersTitleDesignId;
-            itemPoco.ShowTitlePricingPackages = itemPM.ShowTitlePricingPackages;
-            itemPoco.ShowTitlePricingContainsers = itemPM.ShowTitlePricingContainsers;
-            itemPoco.PageHeaderAreaHeight = itemPM.PageHeaderAreaHeight;
-            itemPoco.PageFooterAreaHeight = itemPM.PageFooterAreaHeight;
-            itemPoco.PageHeaderImage1Width = itemPM.PageHeaderImage1Width;
-
-            itemPoco.PageHeaderImage2Width = itemPM.PageHeaderImage2Width;
-            itemPoco.PageHeaderImage3Width = itemPM.PageHeaderImage3Width;
-            itemPoco.PageFooterImage1Width = itemPM.PageFooterImage1Width;
-            itemPoco.PageFooterImage2Width = itemPM.PageFooterImage2Width;
-
-            itemPoco.PageFooterImage3Width = itemPM.PageFooterImage3Width;
-
-
-            itemPoco.PageFooterBorderTypeCode = itemPM.PageFooterBorderTypeCode;
-            itemPoco.PageFooterBorderColor = itemPM.PageFooterBorderColor;
-            itemPoco.PageFooterBorderThickness = itemPM.PageFooterBorderThickness;
-
-
-            itemPoco.PageHeaderBorderTypeCode = itemPM.PageHeaderBorderTypeCode;
-            itemPoco.PageHeaderBorderColor = itemPM.PageHeaderBorderColor;
-            itemPoco.PageHeaderBorderThickness = itemPM.PageHeaderBorderThickness;
+          itemPoco.PageFooterArea1Width = itemPM.PageFooterArea1Width;
+          itemPoco.PageFooterArea2Width = itemPM.PageFooterArea2Width;
+          itemPoco.PageFooterArea3Width = itemPM.PageFooterArea3Width;
 
 
 
-            itemPoco.DetailsTableColumWidthType = itemPM.DetailsTableColumWidthType;
-            itemPoco.HeaderTableColumWidthType = itemPM.HeaderTableColumWidthType;
+          itemPoco.PageFooterArea1Height = itemPM.PageFooterArea1Height;
+          itemPoco.PageFooterArea2Height = itemPM.PageFooterArea2Height;
 
-            itemPoco.DetailsTableColumn1LabelWidth = itemPM.DetailsTableColumn1LabelWidth;
-            itemPoco.DetailsTableColumn1ValueWidth = itemPM.DetailsTableColumn1ValueWidth;
-            itemPoco.DetailsTableColumn2LabelWidth = itemPM.DetailsTableColumn2LabelWidth;
-            itemPoco.DetailsTableColumn2ValueWidth = itemPM.DetailsTableColumn2ValueWidth;
+          itemPoco.PageFooterArea3Height = itemPM.PageFooterArea3Height;
 
 
-            itemPoco.HeaderTableColumn1LabelWidth = itemPM.HeaderTableColumn1LabelWidth;
-            itemPoco.HeaderTableColumn1ValueWidth = itemPM.HeaderTableColumn1ValueWidth;
-            itemPoco.HeaderTableColumn2LabelWidth = itemPM.HeaderTableColumn2LabelWidth;
-            itemPoco.HeaderTableColumn2ValueWidth = itemPM.HeaderTableColumn2ValueWidth;
+          itemPoco.PageFooterArea1ImageAlignment = itemPM.PageFooterArea1ImageAlignment;
+          itemPoco.PageFooterArea2ImageAlignment = itemPM.PageFooterArea2ImageAlignment;
+          itemPoco.PageFooterArea3ImageAlignment = itemPM.PageFooterArea3ImageAlignment;
 
-            itemPoco.QuoteTemplatePDFMarginRight = itemPM.QuoteTemplatePDFMarginRight;
-            itemPoco.QuoteTemplatePDFMarginLeft = itemPM.QuoteTemplatePDFMarginLeft;
+          itemPoco.PricingPackagesTitleDesignId = itemPM.PricingPackagesTitleDesignId;
+          itemPoco.PricingContainsersTitleDesignId = itemPM.PricingContainsersTitleDesignId;
+          itemPoco.ShowTitlePricingPackages = itemPM.ShowTitlePricingPackages;
+          itemPoco.ShowTitlePricingContainsers = itemPM.ShowTitlePricingContainsers;
+          itemPoco.PageHeaderAreaHeight = itemPM.PageHeaderAreaHeight;
+          itemPoco.PageFooterAreaHeight = itemPM.PageFooterAreaHeight;
+          itemPoco.PageHeaderImage1Width = itemPM.PageHeaderImage1Width;
+
+          itemPoco.PageHeaderImage2Width = itemPM.PageHeaderImage2Width;
+          itemPoco.PageHeaderImage3Width = itemPM.PageHeaderImage3Width;
+          itemPoco.PageFooterImage1Width = itemPM.PageFooterImage1Width;
+          itemPoco.PageFooterImage2Width = itemPM.PageFooterImage2Width;
+
+          itemPoco.PageFooterImage3Width = itemPM.PageFooterImage3Width;
 
 
-            itemPoco.ShowPriceByContainerColumn = itemPM.ShowPriceByContainerColumn;
-            itemPoco.ShowCodeChargeSaleMinMaxContainers = itemPM.ShowCodeChargeSaleMinMaxContainers;
+          itemPoco.PageFooterBorderTypeCode = itemPM.PageFooterBorderTypeCode;
+          itemPoco.PageFooterBorderColor = itemPM.PageFooterBorderColor;
+          itemPoco.PageFooterBorderThickness = itemPM.PageFooterBorderThickness;
 
-            itemPoco.ShowCodeChargeSaleMinMaxPackages = itemPM.ShowCodeChargeSaleMinMaxPackages;
 
-            itemPoco.ShowChargeDescriptionContainers = itemPM.ShowChargeDescriptionContainers;
-            itemPoco.ShowChargeDescriptionPackages = itemPM.ShowChargeDescriptionPackages;
-            itemPoco.ShowTotalPerChargeGroupPackages = itemPM.ShowTotalPerChargeGroupPackages;
-            itemPoco.ShowTotalPerChargeGroupContainers = itemPM.ShowTotalPerChargeGroupContainers;
+          itemPoco.PageHeaderBorderTypeCode = itemPM.PageHeaderBorderTypeCode;
+          itemPoco.PageHeaderBorderColor = itemPM.PageHeaderBorderColor;
+          itemPoco.PageHeaderBorderThickness = itemPM.PageHeaderBorderThickness;
 
-            itemPoco.ShowPageBreakBeforeTotalPerContainersTable = itemPM.ShowPageBreakBeforeTotalPerContainersTable;
-            itemPoco.TotalPerContainersAdditionalTextDesignId = itemPM.TotalPerContainersAdditionalTextDesignId;
-            itemPoco.TotalPerContainersTableDesignId = itemPM.TotalPerContainersTableDesignId;
-            itemPoco.TotalPerContainersCurrencyType = itemPM.TotalPerContainersCurrencyType;
-            itemPoco.ShowTitleTotalPerContainersTable = itemPM.ShowTitleTotalPerContainersTable;
-            itemPoco.ShowChargeNotePackages = itemPM.ShowChargeNotePackages;
-            itemPoco.ShowChargeNoteContainers = itemPM.ShowChargeNoteContainers;
-            itemPoco.ShowSaleMaxMinAmountContainers = itemPM.ShowSaleMaxMinAmountContainers;
-            itemPoco.ShowSaleMaxMinAmountPackages = itemPM.ShowSaleMaxMinAmountPackages;
-            itemPoco.ShowHeaderLabelsContainers = itemPM.ShowHeaderLabelsContainers;
-            itemPoco.ShowHeaderLabelsPackages = itemPM.ShowHeaderLabelsPackages;
+
+
+          itemPoco.DetailsTableColumWidthType = itemPM.DetailsTableColumWidthType;
+          itemPoco.HeaderTableColumWidthType = itemPM.HeaderTableColumWidthType;
+
+          itemPoco.DetailsTableColumn1LabelWidth = itemPM.DetailsTableColumn1LabelWidth;
+          itemPoco.DetailsTableColumn1ValueWidth = itemPM.DetailsTableColumn1ValueWidth;
+          itemPoco.DetailsTableColumn2LabelWidth = itemPM.DetailsTableColumn2LabelWidth;
+          itemPoco.DetailsTableColumn2ValueWidth = itemPM.DetailsTableColumn2ValueWidth;
+
+
+          itemPoco.HeaderTableColumn1LabelWidth = itemPM.HeaderTableColumn1LabelWidth;
+          itemPoco.HeaderTableColumn1ValueWidth = itemPM.HeaderTableColumn1ValueWidth;
+          itemPoco.HeaderTableColumn2LabelWidth = itemPM.HeaderTableColumn2LabelWidth;
+          itemPoco.HeaderTableColumn2ValueWidth = itemPM.HeaderTableColumn2ValueWidth; 
+           
+          itemPoco.QuoteTemplatePDFMarginRight = itemPM.QuoteTemplatePDFMarginRight;
+          itemPoco.QuoteTemplatePDFMarginLeft = itemPM.QuoteTemplatePDFMarginLeft;
+
+
+          itemPoco.ShowPriceByContainerColumn = itemPM.ShowPriceByContainerColumn;
+          itemPoco.ShowCodeChargeSaleMinMaxContainers = itemPM.ShowCodeChargeSaleMinMaxContainers;
+
+          itemPoco.ShowCodeChargeSaleMinMaxPackages = itemPM.ShowCodeChargeSaleMinMaxPackages;
+
+          itemPoco.ShowChargeDescriptionContainers = itemPM.ShowChargeDescriptionContainers;
+          itemPoco.ShowChargeDescriptionPackages = itemPM.ShowChargeDescriptionPackages;
+          itemPoco.ShowTotalPerChargeGroupPackages = itemPM.ShowTotalPerChargeGroupPackages;
+          itemPoco.ShowTotalPerChargeGroupContainers = itemPM.ShowTotalPerChargeGroupContainers;
+
+          itemPoco.ShowPageBreakBeforeTotalPerContainersTable = itemPM.ShowPageBreakBeforeTotalPerContainersTable;
+          itemPoco.TotalPerContainersAdditionalTextDesignId = itemPM.TotalPerContainersAdditionalTextDesignId;
+          itemPoco.TotalPerContainersTableDesignId = itemPM.TotalPerContainersTableDesignId;
+          itemPoco.TotalPerContainersCurrencyType = itemPM.TotalPerContainersCurrencyType;
+          itemPoco.ShowTitleTotalPerContainersTable = itemPM.ShowTitleTotalPerContainersTable;
+          itemPoco.ShowChargeNotePackages = itemPM.ShowChargeNotePackages;
+          itemPoco.ShowChargeNoteContainers = itemPM.ShowChargeNoteContainers;
+          itemPoco.ShowSaleMaxMinAmountContainers = itemPM.ShowSaleMaxMinAmountContainers;
+          itemPoco.ShowSaleMaxMinAmountPackages = itemPM.ShowSaleMaxMinAmountPackages;
+          itemPoco.ShowHeaderLabelsContainers = itemPM.ShowHeaderLabelsContainers;
+          itemPoco.ShowHeaderLabelsPackages = itemPM.ShowHeaderLabelsPackages;
 
             itemPoco.SpaceLinesBeforeContainers = itemPM.SpaceLinesBeforeContainers;
             itemPoco.SpaceLinesBeforeFooters = itemPM.SpaceLinesBeforeFooters;
@@ -265,21 +265,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.ShowIncludedChargesPackages = itemPM.ShowIncludedChargesPackages;
             itemPoco.ShowIncludedChargesContainers = itemPM.ShowIncludedChargesContainers;
 
-
-            itemPoco.ShowVATPercentageContainers = itemPM.ShowVATPercentageContainers;
-            itemPoco.ShowVATPercentagePackages = itemPM.ShowVATPercentagePackages;
-            itemPoco.ShowVATTypeContainers = itemPM.ShowVATTypeContainers;
-            itemPoco.ShowVATTypePackages = itemPM.ShowVATTypePackages;
-            itemPoco.PageNumberingTextDesignId = itemPM.PageNumberingTextDesignId;
-            itemPoco.HidePageNumber = itemPM.HidePageNumber;
-            itemPoco.ShowRegionalTAXPackages = itemPM.ShowRegionalTAXPackages;
-            itemPoco.ShowRegionalTAXContainers = itemPM.ShowRegionalTAXContainers;
-            itemPoco.XMLData = itemPM.XMLData;
-
-            itemPoco.ShowSaleIncludingVATContainers = itemPM.ShowSaleIncludingVATContainers;
-            itemPoco.ShowSaleIncludingVATPackages = itemPM.ShowSaleIncludingVATPackages;
-            itemPoco.ShowLocalSaleIncludingVATContainers = itemPM.ShowLocalSaleIncludingVATContainers;
-            itemPoco.ShowLocalSaleIncludingVATPackages = itemPM.ShowLocalSaleIncludingVATPackages;
         }
     }
 }

@@ -11,29 +11,29 @@ cd C:\Program Files (x86)\Jenkins\workspace\Amital.DevOps\Logitude\AngularModule
 
 FOR /L %%A IN (1,1,1) DO (  
 
-call npm run e2e -- --params.Env="cloud" --params.Team="mohammadcloud" --suite=login,BankAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
+call npm run e2e -- --params.Env="cloud" --params.Team="mohammad" --suite=login,BankAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
 CALL :CheckError "Create BankAccount"
 
 
 
-call npm run e2e -- --params.Env="cloud" --params.Team="mohammadcloud" --suite=login,NewChartOfAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
+call npm run e2e -- --params.Env="cloud" --params.Team="mohammad" --suite=login,NewChartOfAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
 CALL :CheckError "Create NewChartOfAccount"
 
-call npm run e2e -- --params.Env="cloud" --params.Team="mohammadcloud" --suite=login,VendorGLAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
+call npm run e2e -- --params.Env="cloud" --params.Team="mohammad" --suite=login,VendorGLAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
 CALL :CheckError "Create VendorGLAccount"
 
-call npm run e2e -- --params.Env="cloud" --params.Team="mohammadcloud" --suite=login,CustomerGLAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
+call npm run e2e -- --params.Env="cloud" --params.Team="mohammad" --suite=login,CustomerGLAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
 CALL :CheckError "Create CustomerGLAccount"
 
-call npm run e2e -- --params.Env="cloud" --params.Team="mohammadcloud" --suite=login,ARPayment>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
+call npm run e2e -- --params.Env="cloud" --params.Team="mohammad" --suite=login,ARPayment>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
 CALL :CheckError "Create ARPayment"
 
 
 
-rem call npm run e2e -- --params.Env="cloud" --params.Team="mohammadcloud" --suite=login,RevGLAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
-rem CALL :CheckError "Create RevGLAccount"
+call npm run e2e -- --params.Env="cloud" --params.Team="mohammad" --suite=login,RevGLAccount>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
+CALL :CheckError "Create RevGLAccount"
 
-rem call npm run e2e -- --params.Env="cloud" --params.Team="mohammadcloud" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
+rem call npm run e2e -- --params.Env="cloud" --params.Team="mohammad" --suite=login,PaymentCheque>D:\TeamMohammadE2E\Cloud\prot.log 2>&1
 rem CALL :CheckError "Create PaymentCheque"
 
 
@@ -48,7 +48,7 @@ cd C:\Automation e2e\TeamMohammad\Cloud
 IF %NumberErrors% NEQ 0 ( 
   exit 1
 )
-
+Pause
 
 SETLOCAL
 :CheckError

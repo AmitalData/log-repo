@@ -34,6 +34,6 @@ namespace Logitude.BL.QuoteModel.EntityLists
 
         public bool IsCopiedAtSignup { get; set; }
         public bool IsEnabledForCustomers { get; set; }
-        public string TenantName { get; set; }
+
     }
 }

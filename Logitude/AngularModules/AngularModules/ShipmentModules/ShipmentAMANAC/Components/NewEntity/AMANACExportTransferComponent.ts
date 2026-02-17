@@ -4,11 +4,9 @@ import { CustomsTransferHeaderPM } from '../../../../Shipment/EntityPMs/CustomsT
 import { CustomsTransferHeaderPMService } from '../../../../Shipment/Services/StandardPMs/CustomsTransferHeaderPMService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
-import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AMANACExportTransferComponent.html',
 })
 
@@ -20,7 +18,6 @@ export class AMANACExportTransferComponent {
     public IsExportingInProgress: boolean = true;
     public IsExportingSuccess: boolean = false;
     public IsExportingError: boolean = false;
-    public IsValidated: boolean = false;
     private entityPMService: CustomsTransferHeaderPMService;
     private CurrentSession = SessionLocator.SelectedSession;
 
@@ -36,23 +33,6 @@ export class AMANACExportTransferComponent {
     }
 
     StartExporting() {
-        var shipmentService: ShipmentDomainService = new ShipmentDomainService();
-        shipmentService.ValidateAMANACShipmentsBeforeExporting(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            this.IsExportingInProgress = false;
-
-            if (!myResponse.HasError) {
-                if (this.EntityPM.CustomsTransferLines.filter(d => d.HasError).length > 0) {
-                    this.IsValidated = true;
-                }
-
-                else {
-                    this.Transfer();
-                }
-            }
-        });
-    }
-
-    Transfer() {
         this.IsExportingInProgress = true;
         this.IsExportingSuccess = false;
         this.IsExportingError = false;
@@ -66,9 +46,10 @@ export class AMANACExportTransferComponent {
 
             else {
                 this.IsExportingSuccess = true;
-                this.CurrentSession.FireEvent("TransferCompleted");
+                this.CurrentSession.FireEvent("TransferExportFirstTime");
             }
         });
+
     }
 
     RetryClicked() {
@@ -81,14 +62,5 @@ export class AMANACExportTransferComponent {
 
     CloseButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
-    }
-
-    ViewErrorsClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Errors";
-        logWindow.Width = 600;
-        logWindow.Height = 500;
-        logWindow.WindowArgs = this.EntityPM.CustomsTransferLines;
-        logWindow.Show('./ShipmentModules/ShipmentAMANAC/Components/NewEntity/AMANACValidationComponent');
     }
 }

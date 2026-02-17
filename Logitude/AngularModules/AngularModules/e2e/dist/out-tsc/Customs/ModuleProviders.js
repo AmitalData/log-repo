@@ -256,7 +256,7 @@ var VendorCommissionPMService_1 = require("./Services/StandardPMs/VendorCommissi
 var CouriersVatPMService_1 = require("./Services/StandardPMs/CouriersVatPMService");
 var CourierPendingReasonPMService_1 = require("./Services/StandardPMs/CourierPendingReasonPMService");
 var CourierMasterPMService_1 = require("./Services/StandardPMs/CourierMasterPMService");
-var InternalBorderSiteTypePMService_1 = require("./Services/StandardPMs/InternalBorderSiteTypePMService");
+var CustomDocumentTypePMService_1 = require("./Services/StandardPMs/CustomDocumentTypePMService");
 var UIMessagePMService_1 = require("./Services/StandardPMs/UIMessagePMService");
 var InternationalSitePMService_1 = require("./Services/StandardPMs/InternationalSitePMService");
 var DeclarationCargoSplitPMService_1 = require("./Services/StandardPMs/DeclarationCargoSplitPMService");
@@ -1335,10 +1335,6 @@ var ModuleProviders = /** @class */ (function () {
             }
             case "CustomDocumentTypePMService": {
                 myResult = new CustomDocumentTypePMService_1.CustomDocumentTypePMService();
-                break;
-            }
-            case "InternalBorderSiteTypePMService": {
-                myResult = new InternalBorderSiteTypePMService_1.custominternakl();
                 break;
             }
             case "UIMessagePMService": {

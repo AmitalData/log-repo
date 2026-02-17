@@ -8,7 +8,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Security;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityLists;
 using System.Transactions;
 using Logitude.Server.Tools.Helpers;

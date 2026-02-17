@@ -22,7 +22,7 @@ import {BankAccountPMService} from '../../../Services/StandardPMs/BankAccountPMS
 
 @Component({
     selector: 'PaymentChequeGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './PaymentChequeGeneralTabComponent.html',
 })
 
@@ -32,7 +32,6 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     DataContext: any = this;
     entityPM: PaymentChequePM;
     filterAgrs: ApiQueryFilters;
-    BankAccountFilter: ApiQueryFilters;
     public Lines: ObservableCollection = new ObservableCollection([]);
     DisableFieldsEvent: any = null;
     AddLineEnabled: boolean = true;
@@ -87,8 +86,6 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
         this.filterAgrs = new ApiQueryFilters();
         this.filterAgrs.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string");
 
-        this.BankAccountFilter = new ApiQueryFilters();
-        this.BankAccountFilter.addAdditionalFilter("TransferGLAcccountId", "", null, null, "IsNotNull", false, false, false, "string");
     }
     DisableFieldsMethod() {
        this.UIProperties.SetEnabled("PayToGLAccountId", "PaymentCheque", false);

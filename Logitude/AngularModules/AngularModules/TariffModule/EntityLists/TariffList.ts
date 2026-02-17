@@ -33,22 +33,6 @@ export class TariffList {
 	TariffNumber: string;
 	IsFromUpdateScreen: boolean;
 	IsFromCopy: boolean;
-	LastActivityTypeName: string;
-	LastActivityByUserName: string;
-	LastActivityDate: Date;
-	TransportModeCode: string;
-	TransportModeName: string;
-	SellerPartnerTypeId: string;
-	LastUsedDate: Date;
-	FreightChargeId: string;
-	CustomsBrokerId: string;
-	CustomsBrokerName: string;
-	CustomsBrokerPartnerTypeId: string;
-	DirectionCode: string;
-	DirectionName: string;
-	UnitOfMeasurementCode: string;
-	CustomerGroupId: string;
-	CustomerGroupName: string;
 	
 }
  

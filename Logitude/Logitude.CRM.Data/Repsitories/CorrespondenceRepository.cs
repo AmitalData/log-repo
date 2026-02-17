@@ -34,7 +34,7 @@ namespace Logitude.CRM.Data.Repsitories
                             select new InboundLineContactClass
                             {
                                 Id = d.Id,
-                                Name = d.CreatedByContact == null ? null : d.CreatedByContact.EnglishName,
+                                Name = d.CreatedByContact == null ? "" : d.CreatedByContact.EnglishName,
                                 IsInternal = d.IsInternal ,
                                 RightToLeft = d.RightToLeft,
                             }).ToList();

@@ -4,21 +4,18 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class ShippingLinePM : ObjectCustomFieldDataContractPM
+    public class ShippingLinePM
     {
         [Key]
         [DataMember]
         public string Id { get; set; }
-
         [DataMember]
         public int Tenant { get; set; }
-
         [DataMember]
         public bool IsSecured { get; set; }
 
@@ -213,7 +210,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [Include]
         [Association("ShippingLineCarrier", "Id", "Id")]
-        [DataMember]
         public virtual CardPM Card { get; set; }
         
         private List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencies;
@@ -266,10 +262,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ImageDetailId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CBSA { get; set; }
 
         [DataMember]
@@ -278,44 +270,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string GLAccountId { get; set; }
-
-        [DataMember]
-        public bool AccountingVATSplit { get; set; }
-
-        [DataMember]
-        public string UploadingUniqueKey { get; set; }
-
-        [DataMember]
-        public string GLAccountNumber { get; set; }
-        [DataMember]
-        public string BillToId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsSendingByContainer { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsSendingByBillOfLading { get; set; }
-        [DataMember]
-        public string RegimenFiscalCode { get; set; }
-        [DataMember]
-        public string SATReceptorName { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ImportLocalCustomerGroupId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ExportLocalCustomerGroupId { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsAutomaticRequestsSent { get; set; }
-
-        [DataMember]
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsSupportsContainerTracking { get; set; }
     }
 }

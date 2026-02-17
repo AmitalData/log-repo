@@ -6,10 +6,6 @@ import {APPaymentTransferTemplate} from './Components/NewEntity/APPaymentTransfe
 import {APEditMultiCurrency} from './Components/EditTabs/APEditMultiCurrency';
 import { EditPaymentChequeComponent } from './Components/EditTabs/EditPaymentChequeComponent';
 import { APPaymentGeneralTabComponent } from './Components/EditTabs/APPaymentGeneralTabComponent';
-import { APPaymentCancelationDetailsComponent } from './Components/EditTabs/APPaymentCancelationDetailsComponent';
-import { CancelAPPaymentComponent } from './Components/Other/CancelAPPaymentComponent';
-import { ExternalPaymentComponent } from './Components/Other/ExternalPaymentComponent';
-import { NewAPPaymentComponent } from './Components/NewEntity/NewAPPaymentComponent';
 
 export const Components =
     [
@@ -20,11 +16,7 @@ export const Components =
         APPaymentDocsOutTabComponent,
         APEditMultiCurrency,
         EditPaymentChequeComponent,
-        APPaymentGeneralTabComponent,
-        CancelAPPaymentComponent,
-        APPaymentCancelationDetailsComponent,
-        ExternalPaymentComponent,
-        NewAPPaymentComponent
+        APPaymentGeneralTabComponent
     ];
 
 export class ModuleDeclarations {
@@ -41,10 +33,8 @@ export class ModuleDeclarations {
             case "APEditMultiCurrency": { myResult = APEditMultiCurrency; break; }
             case "EditPaymentChequeComponent": { myResult = EditPaymentChequeComponent; break; }
             case "APPaymentGeneralTabComponent": { myResult = APPaymentGeneralTabComponent; break; }
-            case "CancelAPPaymentComponent": { myResult = CancelAPPaymentComponent; break; }
-            case "APPaymentCancelationDetailsComponent": { myResult = APPaymentCancelationDetailsComponent; break; }
-            case "ExternalPaymentComponent": { myResult = ExternalPaymentComponent; break; }
-            case "NewAPPaymentComponent": { myResult = NewAPPaymentComponent; break; }
+
+                
         }
 
         return myResult;

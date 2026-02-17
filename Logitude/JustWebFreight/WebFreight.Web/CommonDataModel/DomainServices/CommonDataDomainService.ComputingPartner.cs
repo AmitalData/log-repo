@@ -1,7 +1,7 @@
 ﻿using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -84,8 +84,8 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                         Name = entityPOCO.Name,
                         Remarks = entityPOCO.Remarks,
                         SearchFields = entityPOCO.SearchFields,
-                        CreatedByUserName = entityPOCO.CreatedByUser == null ? null : (entityPOCO.CreatedByUser.Contact == null ? null : entityPOCO.CreatedByUser.Contact.EnglishName),
-                        UpdatedByUserName = entityPOCO.UpdatedByUser == null ? null : (entityPOCO.UpdatedByUser.Contact == null ?null : entityPOCO.UpdatedByUser.Contact.EnglishName),
+                        CreatedByUserName = entityPOCO.CreatedByUser == null ? "" : (entityPOCO.CreatedByUser.Contact == null ? "" : entityPOCO.CreatedByUser.Contact.EnglishName),
+                        UpdatedByUserName = entityPOCO.UpdatedByUser == null ? "" : (entityPOCO.UpdatedByUser.Contact == null ? "" : entityPOCO.UpdatedByUser.Contact.EnglishName),
                         LoggedTenantId = tenant,
                         Code = entityPOCO.Code,
                         Tenant = entityPOCO.Tenant

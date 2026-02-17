@@ -55,7 +55,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string IncotermId { get; set; }
         public string IncotermCode { get; set; }
         public string CreatedByUserId { get; set; }
-        public string UpdatedByUserId { get; set; }
         public string DirectionId { get; set; }
         public string TransportModeId { get; set; }
         public bool IsDangerous { get; set; }
@@ -122,7 +121,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string BusinessUnitId { get; set; }
         public string BusinessUnitName { get; set; }
         public string SalesmanUserId { get; set; }
-        public string UpdatedByUser { get; set; }
+
         public string CreatedByUser { get; set; }
         public string FollowUpOwner { get; set; }
         public string QuoteTypeName { get; set; }

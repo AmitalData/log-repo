@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.QuoteModel.EntityLists;
@@ -18,7 +18,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ProductTypeRepository repository;
 
-
+        public ProductTypeQuery()
+        {
+            repository = new ProductTypeRepository();             
+        }
 
         public ProductTypeQuery(int tenant)
         {

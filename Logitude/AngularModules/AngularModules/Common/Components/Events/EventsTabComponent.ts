@@ -15,7 +15,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EventsTabComponent.html',
 })
 
@@ -37,7 +37,7 @@ export class EventsTabComponent implements OnDestroy {
     constructor(public entityArgs: EntityArgs) {
         this.TabHeaderTextCode = entityArgs.ObjectTableName + ".TH.Events";
 
-        this._entityResourceService.getEntityResourceByTableName("TraceEvent", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("TraceEvent", 0).subscribe(response => {
             this.IsVisibile = true;
             this.myDomainService = new WebFreightDomainService();
             this.ItemsSource = [];
@@ -49,14 +49,7 @@ export class EventsTabComponent implements OnDestroy {
     }
 
     InitTab() {
-        if (this.entityArgs.ObjectTableName == "HelpResource") {
-            this.EntityId = this.entityArgs.EntityPM.Code;
-        } else if (this.entityArgs.ObjectTableName == "DocumentsFiling") {
-            this.EntityId = this.entityArgs.EntityPM.DocumentId;
-        } else {
-            this.EntityId = this.entityArgs.EntityPM.Id;
-        }
-
+        this.EntityId = this.entityArgs.EntityPM.Id;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.ObjectTableId = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0].Id;
         this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
@@ -67,8 +60,6 @@ export class EventsTabComponent implements OnDestroy {
         this.LoadData();
     }
 
-    IsRefreshFollowUp: boolean = false;
-    IsOpenAddEditEventTypeComponent: boolean = false;
     public IsAddButtonEnabled: boolean = false;
     SetUIProperties() {
         var isEnabled = false
@@ -81,7 +72,6 @@ export class EventsTabComponent implements OnDestroy {
 
         this.IsAddButtonEnabled = isEnabled;
     }
-    private ReLoadEntityCompletedEvent: any = null;
 
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
@@ -103,32 +93,14 @@ export class EventsTabComponent implements OnDestroy {
                 }
             });
 
-            this.ReLoadEntityCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                if (this.IsRefreshFollowUp) {
-                    this.CurrentSession.FireEvent("FollowupsChanged");
-                    this.IsRefreshFollowUp = false;
-                }
-
-            });
-
+            if (!this.EntityId) {
                 this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        if (!this.EntityId) {
-                            this.EntityId = this.entityArgs.EditComponent.EntityPM.Id;
-                            this.SetUIProperties();
-                        }
-
-                        if (this.IsOpenAddEditEventTypeComponent) {
-                            if (this.SelectedEventTypeClass) {
-                                this.ShowAddEditEventWindow(this.SelectedEventTypeClass, this.SelectedEventTypeClass.Title);
-                            }
-                            this.IsOpenAddEditEventTypeComponent = false;
-                            this.SelectedEventTypeClass = null;
-
-                        }
+                        this.EntityId = this.entityArgs.EditComponent.EntityPM.Id;
+                        this.SetUIProperties();
                     }
                 });
-            
+            }
         }
     }
 
@@ -136,9 +108,6 @@ export class EventsTabComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
-        AppTool.KillEventEmitter(this.ReLoadEntityCompletedEvent);
-
-        
     }
 
     public PagesMenu: PageMenu[];
@@ -299,54 +268,19 @@ export class EventsTabComponent implements OnDestroy {
                     if (myResponse != null) {
                         if (!myResponse.HasError) {
                             this.LoadData();
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         }
                     }
                 });
             }
         });
     }
-    SelectedEventTypeClass: EventItemClass;
     RunAddEditWindow(item: EventItemClass, title: string) {
-
-        if (this.ObjectTableName == "Shipment" && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM) {
-            item.Title = title;
-            this.SelectedEventTypeClass = item;
-            this.IsOpenAddEditEventTypeComponent = true;
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
-        }
-        else {
-            this.ShowAddEditEventWindow(item, title);
-        }
-
-    }
-
-
-
-
-    ShowAddEditEventWindow(item: EventItemClass, title: string) {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
         logWindow.Height = 400;
         logWindow.WindowArgs = item
         logWindow.Title = title;
         logWindow.Show('./Common/Components/Events/AddEditEventComponent');
-        logWindow.WindowClosed.subscribe((event: any) => {
-            if (this.IsRefreshableTable() && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM && event != "Cancel") {
-                this.IsRefreshFollowUp = true;
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-
-            }
-
-            else if (this.ObjectTableName == "Container" && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM && event != "Cancel") {
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-        });
-
-    }
-
-    private IsRefreshableTable() {
-        return (this.ObjectTableName == "Shipment" || this.ObjectTableName == "Quote");
     }
 }
 
@@ -354,7 +288,6 @@ export class EventItemClass extends BaseComponent {
     public IsNewEntity: boolean = false;
     public EntityPM: TraceEventPM;
     public ObjectTableName = "TraceEvent";
-    Title: string;
     constructor(item: TraceEventPM, public father: EventsTabComponent) {
         super();
         this.EntityPM = item;

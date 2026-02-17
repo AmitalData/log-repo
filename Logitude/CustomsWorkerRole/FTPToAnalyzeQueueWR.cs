@@ -7,7 +7,7 @@ using Microsoft.ServiceBus.Messaging;
 //using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using System;
@@ -57,8 +57,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('D', 'Done')
 INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('F', 'Fail')
-INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
-
+INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
      */
 
     //public class SendWebAPI2MamanGWMessageECTHRDataWR
@@ -117,7 +116,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             {
                 if (_OnStartDone) return true;
                 _OnStartDone = true;
-                DoneItemsInRange = new Dictionary<DateTime, int>();
+
 
 
                 var myClass = this.GetType().Name;
@@ -166,27 +165,24 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 {
 
                     var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(_SeedTenant);
-                    var pmCustomsPartnerFtps = myCustomsPartnerFtpQueryService.GetAllTenantBy(ftpIncustomsPartnerFtpDetail.Code /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
+                    var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(_SeedTenant, ftpIncustomsPartnerFtpDetail.Code /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
                         ftpIncustomsPartnerFtpDetail.Partner,
                         ftpIncustomsPartnerFtpDetail.TypeCode);
 
 
-                    foreach (var pmCustomsPartnerFtp in pmCustomsPartnerFtps)
+
+                    if (pmCustomsPartnerFtp != null)
                     {
-                        //if (pmCustomsPartnerFtp != null)
+
+
+                        FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(_SeedTenant);
+                        FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(pmCustomsPartnerFtp.FtpDetailsId, pmCustomsPartnerFtp.Tenant);
+                        if (ftpDetail != null)
                         {
 
-
-                            FTPDetailRepository ftpDetailsRepository = new FTPDetailRepository(_SeedTenant);
-                            FTPDetail ftpDetail = ftpDetailsRepository.GetSingleFTPDetail(pmCustomsPartnerFtp.FtpDetailsId, pmCustomsPartnerFtp.Tenant);
-                            if (ftpDetail != null)
-                            {
-
-                                pmCustomsPartnerFtp.MyFtpDetail = ftpDetail;
-                                _FtpDefinitions.Add(pmCustomsPartnerFtp);
-                            }
+                            pmCustomsPartnerFtp.MyFtpDetail = ftpDetail;
+                            _FtpDefinitions.Add(pmCustomsPartnerFtp);
                         }
-
                     }
                 });
             }
@@ -213,31 +209,16 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
         }
 
-        
         private void WorkUntilQEmpty_Db()
         {
             CreateFtpDefinitionsEvery10Min();
 
-            while (!WorkerRoleServiceLocator.PleaseShutDown)
+            while (true)
             {
 
                 foreach (CustomsPartnerFtpPM ftpDef in _FtpDefinitions)
                 {
-
-                    QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), $"FtpHost:{ftpDef?.MyFtpDetail?.Host}@{ftpDef?.MyFtpDetail?.UserName}");
-                    LastActivity = DateTime.UtcNow;
-                    if (ftpDef.MyFtpDetail.UseSFTP)
-                    {
-                        DownloadSFTPFiles(ftpDef);
-                    }
-                    else
-                    {
-                        DownloadFTPFiles(ftpDef);
-                    }
-                    if (WorkerRoleServiceLocator.PleaseShutDown)
-                    {
-                        break;
-                    }
+                    DownloadFTPFiles(ftpDef);
                 }
 
 
@@ -249,205 +230,57 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
             }
         }
-        static List<string> _BadFileNamesCache = new List<string>();
-        static DateTime _LastClearCacheBadFileNames = DateTime.MinValue;
 
-        private void DownloadSFTPFiles(CustomsPartnerFtpPM customsPartnerFtpPM)
-        {
-            SFTPService sftpService = null;
-            try
-            {
-                if (DateTime.Now.Subtract(_LastClearCacheBadFileNames) > TimeSpan.FromHours(1))
-                {
-                    ClearBadFileNamesCache();
-                }
-                string p_message = "";
-                string p_status = "";
-                bool toDir= !String.IsNullOrWhiteSpace( System.Configuration.ConfigurationManager.AppSettings.Get("SftpToDir")); ;
-                var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-                var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
-                    .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName},T{customsPartnerFtpPM.Tenant})");
-                var ftpDetail = customsPartnerFtpPM.MyFtpDetail;
-
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
-                sftpService = new SFTPService();
-                sftpService.Logon(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password, "22", ftpDetail.Folder, out p_status, out p_message);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DirectoryListSimple({ftpDetail.Folder})");
-
-                
-                var directoryFiles = sftpService.DirList("*", true, false, out p_status, out p_message).ToList();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
-                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
-                {
-
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileExt})");
-                    directoryFiles = directoryFiles.Where(f => (
-                    Path.GetExtension(f)
-                    .Contains(customsPartnerFtpPM.FileExt)))
-                    .ToList();
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
-                }
-                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
-                {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileName})");
-                    directoryFiles = directoryFiles.Where(f => (
-                     Path.GetFileNameWithoutExtension(f)
-                    .Contains(customsPartnerFtpPM.FileName)))
-                    .ToList();
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
-                }
-                directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
-                directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();
-                foreach (string fileName in directoryFiles)
-                {
-                    if (_BadFileNamesCache.Contains(fileName))
-                    {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"continue>BadFileNamesCache({fileName})");
-                        continue;
-                    }
-
-                    var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Download({fileWithFolder})");
-                    byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message, toDir);
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveMessageToAnalyzeQueue");
-                    int tenant = customsPartnerFtpPM.Tenant;
-                    LastActivity = DateTime.UtcNow;
-                    try
-                    {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"fileData.Length == {fileData.Length}");
-                        if (fileData.Length > 0)
-                        {
-
-                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveAnalyzeQueue({defInterfaceDetails}, {fileName}, {fileData}, {tenant})");
-                            SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
-                        }
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Delete({fileName})");
-                        sftpService.DeleteFile(fileName, out p_status, out p_message, toDir);
-                        if (p_status=="-1")
-                        {
-                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Delete({fileName})");
-                            _BadFileNamesCache.Add(fileName);
-                        }
-                        
-                        LogDoneItemInMemory();
-
-                    }
-                    catch (Exception ex1)
-                    {
-                        _BadFileNamesCache.Add(fileName);
-                        ExceptionHandler.HandleException(ex1, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex1.Message, null);
-
-                    }
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex.Message, null);
-            }
-            finally
-            {
-                try
-                {
-                    
-                    string p_more1 = ""; string p_status1; string p_message1;
-                    if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
-                    {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Logoff");
-                        sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
-                    }
-                    sftpService.Dispose();
-
-                }
-                catch //(Exception)
-                {
-
-                    ///throw;
-                }
-
-            }
-        }
         private void DownloadFTPFiles(CustomsPartnerFtpPM customsPartnerFtpPM)
         {
 
             try
             {
-                if (DateTime.Now.Subtract( _LastClearCacheBadFileNames)> TimeSpan.FromHours(1))
-                {
-                    ClearBadFileNamesCache();
-                }
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName})");
+                Debug.WriteLine($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName})");
                 var ftpDetail = customsPartnerFtpPM.MyFtpDetail;
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
+                Debug.WriteLine($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
                 FTPService ftpService = new FTPService(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password);
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DirectoryListSimple({ftpDetail.Folder})");
+                Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
                 var directoryFiles = ftpService.DirectoryListSimple(ftpDetail.Folder).ToList();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
+
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
                 {
-
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileExt})");
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
-                    .Contains(customsPartnerFtpPM.FileExt)))
+                    .Equals(customsPartnerFtpPM.FileExt, StringComparison.CurrentCultureIgnoreCase)))
                     .ToList();
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 }
-                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
+                if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileName})");
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
-                    .Contains(customsPartnerFtpPM.FileName)))
+                    .Equals(customsPartnerFtpPM.FileName, StringComparison.CurrentCultureIgnoreCase)))
                     .ToList();
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
                 directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();
                 foreach (string fileName in directoryFiles)
                 {
-                    if (_BadFileNamesCache.Contains(fileName))
-                    {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"continue>BadFileNamesCache({fileName})");
-                        continue;
-                    }
 
-                    var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Download({fileWithFolder})");
+                    var fileWithFolder = ftpDetail.Folder + "/" + fileName;
+                    Debug.WriteLine($"ftpService.Download({fileWithFolder})");
 					string p_message = "";
 					byte[] fileData = ftpService.Download(fileWithFolder,out p_message);
 
 
 
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveMessageToAnalyzeQueue");
+                    Debug.WriteLine($"SaveMessageToAnalyzeQueue");
+                    var analyzeQueueUtil = new AnalyzeQueueUtil();
 
-                    int tenant = customsPartnerFtpPM.Tenant;
-                    LastActivity = DateTime.UtcNow;
-                    try
-                    {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"fileData.Length == {fileData.Length}");
-                        if (fileData.Length > 0)
-                        {
-                            
-                            SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
-                        }
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Delete({fileName})");
-                        ftpService.Delete(fileWithFolder);
-                        LogDoneItemInMemory();
+                    
+                    analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, customsPartnerFtpPM.Tenant, defInterfaceDetails);
 
-                    }
-                    catch (Exception ex1)
-                    {
-                        _BadFileNamesCache.Add(fileName);
-                        ExceptionHandler.HandleException(ex1, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex1.Message, null);
-
-                    }
+                    Debug.WriteLine($"ftpService.Delete({fileName})");
+                    ftpService.Delete(fileWithFolder);
                 }
 
             }
@@ -458,25 +291,6 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
             }
         }
 
-        public static void SaveAnalyzeQueue(InterfaceDetails defInterfaceDetails, string fileName, byte[] fileData, int tenant)
-        {
-            var analyzeQueueUtil = new AnalyzeQueueUtil();
-            analyzeQueueUtil.SaveMessageToAnalyzeQueue(fileName, fileData, tenant, "", defInterfaceDetails, null);
-        }
-
-        private void ClearBadFileNamesCache()
-        {
-            _LastClearCacheBadFileNames = DateTime.Now;
-            _BadFileNamesCache.Clear();
-        }
-
-        public static void SaveAnalyzeQueueFromCode(int tenant, string interfaceCode, string fileName, byte[] fileData)
-        {
-            var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
-                    .Where(r => r.Code == interfaceCode).First();
-            SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
-        }
     }
 
 

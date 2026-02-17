@@ -75,7 +75,7 @@
     }
 </style>
 
-<table [hidden]="!ScreenIsReady">
+<table *ngIf="ScreenIsReady">
     <tr>
         <td>
             <div class="FillParent CurvedArea">
@@ -139,19 +139,6 @@
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Shipment Sub Types -->
-                                        <div style="margin: 10px;" *ngIf="DirectionId && TransportModeId && ShipmentTypeId && SubTypeFeatureToggle">
-                                            <div style="font-size: 13px; color: #6E7172;">{{'Shipment.F.ShipmentSubTypeId' | TextCodeTranslationPipe}}:</div>
-                                            <div style="margin-top: -2px;">
-                                                <div class="RadioButton" *ngFor="let item of ShipmentSubTypesList" [attr.id]="'ShipmentSubTypeRadio_Div_' + SessionIndex + item.Code">
-                                                    <input [attr.id]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" [attr.name]="'ShipmentSubTypesRadio' + SessionIndex" type="radio" [checked]="ShipmentSubTypeId == item.Code" (click)="ShipmentSubTypeId = item.Code" [disabled]="!IsShipmentSubTypesListEnabled" />
-                                                    <label [attr.for]="'ShipmentSubTypeRadio_' + SessionIndex + item.Code" style="text-indent: 20px; font-size: 12px" [ngStyle]="{color: ShipmentSubTypeId == item.Code ? '#287828':'#282E30'}">
-                                                        {{item.Name}}
-                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -230,8 +217,6 @@
                                                         <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Routings' | TextCodeTranslationPipe}}</div>
                                                         <CheckBox [Top]="5" [IsChecked]="true" [Text]="'Shipment.S.NewShipment.MainCarriage' | TextCodeTranslationPipe" [IsEnabled]="false"></CheckBox>
                                                         <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyFlights" (Checked)="IsCopyFlights = $event" [Text]="'Include flights'"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyPreCarriage" (Checked)="IsCopyPreCarriage = $event" [Text]="'Pre carriage'"></CheckBox>
-                                                        <CheckBox [Top]="5" *ngIf="TransportModeId == 'A'" [IsChecked]="IsCopyOnCarriage" (Checked)="IsCopyOnCarriage = $event" [Text]="'On carriage'"></CheckBox>
                                                         <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                                                     </div>
 
@@ -320,7 +305,7 @@
                                                                         <td>
                                                                             <div style="margin-left: 2px;">
                                                                                 <!--<IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!AgentAddressId"></IconButton>
-            <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
+                                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
                                                                             </div>
                                                                         </td>
                                                                         <td [style.width.px]="LabelColumnWidth">
@@ -334,9 +319,6 @@
                                                                                     [LookUpTableName]="'Contact'"
                                                                                     [DependencyFilter1Value]="AgentId">
                                                                             </LogLov>
-                                                                        </td>
-                                                                        <td style="width: 20px;">
-                                                                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddContact(AgentId)"></IconButton>
                                                                         </td>
                                                                     </tr>
 
@@ -364,11 +346,6 @@
                                                                                 </p>
                                                                             </div>
                                                                         </td>
-
-
-                                                                        <td style="width: 20px;">
-                                                                            <div></div>
-                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow">
@@ -386,10 +363,6 @@
                                                                         </td>
                                                                         <td [style.width.px]="ControlColumnWidth">
                                                                             <LogTextBox [ObjectFieldName]="'AgentReference2'" [Text]="AgentReference2" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-
-                                                                        <td style="width: 20px;">
-                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -448,7 +421,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Carrier'"
-                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1" [ShowInActive]="CarrierDependencyProperty1=='SL'" [ShowInActivePopUpWindow]="'true'">
+                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -482,31 +455,14 @@
 
                                                                     <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
                                                                         <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'MainCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [ObjectFieldName]="'MainCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-
-                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="IsVesselFreeTextVisible">
-                                                                            <table>
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'MainCarriageVesselName'" [Text]="MainCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                                    </td>
-                                                                                    <td style="width: 20px; left:-15px;">
-                                                                                        <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsScreenEnabled" (click)="ChooseVesselClicked()">
-                                                                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
-                                                                                        </span>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-
-                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="!IsVesselFreeTextVisible">
+                                                                        <td [style.width.px]="ControlColumnWidth">
                                                                             <LogLov [ObjectFieldName]="'MainCarriageVesselId'"
                                                                                     [SelectedValue]="MainCarriageVesselId"
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'Vessel'"
-                                                                                    (SelectedItemChanged)="MainCarriageVessel = $event">
+                                                                                    [LookUpTableName]="'Vessel'">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -856,7 +812,7 @@
                                                         <tr>
                                                             <td>
                                                                 <div class="MediaFill">
-                                                                    <div class="LocationDirective" ChildDirective></div>
+                                                                    <div class="LocationDirective" #Child></div>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -883,7 +839,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'MasterCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'MasterCancelbtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -891,7 +847,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'MasterCreatebtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled">{{OkButtonLabel}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'MasterCreatebtn' | IdGeneratorPipe}}" [disabled]="!IsScreenEnabled">{{OkButtonLabel}}</button>
                     </td>
                 </tr>
             </table>

@@ -33,7 +33,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string Company { get; set; }  
         public int? IndexColor { get; set; }
         public string CompanyName { get; set; }
-        public string DigitalPortalLanguage { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
         

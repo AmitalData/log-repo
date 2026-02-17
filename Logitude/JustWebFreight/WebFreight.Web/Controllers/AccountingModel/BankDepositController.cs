@@ -1,4 +1,4 @@
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -91,6 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     int tenant = authToken.Tenant;
                     var accountingContext = AccountingContext.GetContext(tenant);
+
                     BankDepositQueryService query = new BankDepositQueryService(accountingContext);
                     query.CancelDeposit(bankDepositId, tenant);
 
@@ -105,37 +106,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
-        }
-        public HttpResponseMessage GetSingleWithoutLines(string id)
-        {
-            try
-            {
-                string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Cashbook", "READ", authToken.Tenant);
-
-                BankDepositPM bankDepositPM = GetBankDepositWithoutLines(id, authToken.Tenant);
-
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, bankDepositPM);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        private BankDepositPM GetBankDepositWithoutLines(string id, int tenant)
-        {
-            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            BankDepositQueryService query = new BankDepositQueryService(MyContext);
-            query.InitializeSettings();
-            BankDepositPM bankDepositPM = query.GetSingle(id, false, false);
-            return bankDepositPM;
         }
     }
 }

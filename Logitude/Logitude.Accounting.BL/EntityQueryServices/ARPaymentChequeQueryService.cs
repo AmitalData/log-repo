@@ -1,10 +1,7 @@
-﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,53 +29,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         StatusCode = a.StatusCode ,
                         LocalAmount = a.LocalAmount ,
                         ValueDate = a.ValueDate,
-                        ChequeNumber = a.ChequeNumber,
-                        PaymentId = a.PaymentId,
-                        CurrencyId = a.CurrencyId,
-
                     }).ToList();
 
 
-        }
-
-
-        public List<ARPaymentChequePM> GetARPaymentChequesBySinglePaymentId(string paymentId, int tenant)
-        {
-
-
-
-            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
-                                                    where paymentId == a.PaymentId && a.Tenant == tenant
-                                                    select a).ToList();
-
-            return (from a in paymentCheques
-                    select new ARPaymentChequePM()
-                    {
-                        Id = a.Id,
-                        Tenant = a.Tenant,
-                        StatusCode = a.StatusCode,
-                        LocalAmount = a.LocalAmount,
-                        ValueDate = a.ValueDate,
-                        ChequeNumber = a.ChequeNumber,
-                        PaymentId = a.PaymentId,
-                        BankAccount = a.BankAccount,
-                        BankBranch = a.BankBranch 
-                    }).ToList();
-
-
-        }
-
-
-
-        public int GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(List<string> paymentIds, int tenant)
-        {
-            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques.Include("Payment")
-                                                    where paymentIds.Contains(a.PaymentId) 
-                                                    && a.ValueDate > a.Payment.RegisterDate
-                                                    && a.Tenant == tenant 
-                                                    && a.StatusCode != PaymentChequeStatuses.Redeemed.ToString() && a.StatusCode != PaymentChequeStatuses.ReturnedToCustomer.ToString()
-                                                    select a).ToList();
-            return paymentCheques.Count();
         }
 
 
@@ -195,50 +148,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<ARPaymentChequePM> GetOpenARPaymentCheques( int tenant)
         {
             List<ARPaymentCheque> pocos = (from a in context.ARPaymentCheques
-                                    where  a.Tenant == tenant
+                                    where  a.Tenant == tenant && a.StatusCode != "5" && a.StatusCode != "6"
                                     
                                     select a).ToList();
 
             return pocos.Select(r => this.GetEntityPM(r)).ToList();
         }
-
-        public List<ARPaymentChequePM> GetChequesByIds(List<string> ids, int tenant)
-        {
-            List<ARPaymentCheque> cheques = (from a in context.ARPaymentCheques
-                                                    where ids.Contains(a.Id) && a.Tenant == tenant
-                                                    select a).ToList();
-
-            return cheques.Select(rec => GetEntityPM(rec)).ToList();
-        }
-
-        public string GetAccountIdForCheque(int tenant, string paymentId, int lineNumber)
-        {
-            return repository.GetAccountIdForCheque(tenant, paymentId, lineNumber);
-        }
-
-
-        public  int GetOpenChequesByBankAccount(string bankId, int tenant)
-        {
-
-            ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
-           return aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, tenant).Where(a=>a.ValueDate> DateTime.Now).Count();
-         
-        }
-        public string CheckARPaymentChequeAlreadyExists(string chequeOrPaymentRef,  string bank, string bankBranch, string bankAccount, int tenant, bool useLocal)
-        {
-       
-            ARPaymentChequeRepository arPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
-            return arPaymentChequeRepository.CheckARPaymentChequeAlreadyExists(chequeOrPaymentRef, bank, bankAccount, bankBranch, tenant, useLocal);
-
-        }
-
-
-        public List<ARPaymentChequePM> GetOpenChequesByBankAccountInThePast(string bankId, int tenant,DateTime valueDate)
-        {
-            ARPaymentChequeRepository aRPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
-            var cheques = aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, tenant).Where(a => a.ValueDate <= valueDate).ToList();
-            return cheques.Select(rec => GetEntityPM(rec)).ToList();
-         }
     }
 }
 

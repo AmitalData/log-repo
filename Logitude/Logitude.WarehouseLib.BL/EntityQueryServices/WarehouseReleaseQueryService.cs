@@ -10,9 +10,9 @@ using Logitude.WarehouseLib.Data.EntityKeys;
 using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -184,7 +184,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             CreateDate = warehouseRelease.CreateDate,
                             ActivityDate = activity.ActivityDate,
                             ActivityTypeName = activity.ActivityType != null ? activity.ActivityType.Name : "",
-                            ActivityByUserName = activity.User != null ? activity.User.Contact.EnglishName : null,
+                            ActivityByUserName = activity.User != null ? activity.User.Contact.EnglishName : "",
                             DirectionName = warehouseRelease.Direction != null ? warehouseRelease.Direction.Name : "",
                             TransportModeName = warehouseRelease.TransportMode != null ? warehouseRelease.TransportMode.Name : "",
 
@@ -261,45 +261,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
             return englishName;
         }
 
-        public int GetNumberofConnectedWarehouseReleasesByEntryId(string entryId, int tenant)
-        {
-            int numberofConnectedWarehouseReleasePackages = 0;
-            List<WarehouseReleaseList> warehouseReleaseLists = null;
-            List<string> warehouseEntryPackagesIds = (from a in context.WarehouseEntryPackages where a.Tenant == tenant && a.WarehouseEntryId == entryId select a.Id).ToList();
-            if (warehouseEntryPackagesIds.Count > 0)
-            {
-                numberofConnectedWarehouseReleasePackages = (from a in context.WarehouseEntryPackagesReleases where a.Tenant == tenant && a.IsCanceled == false && warehouseEntryPackagesIds.Contains(a.EntryPackageId) select a.ReleasePackageId).Count();
-            }
 
-            return numberofConnectedWarehouseReleasePackages;
-        }
-
-        public int GetNumberofConnectedWarehouseReleasesByChildEntityReference(string childEntityReference, int tenant)
-        {
-            WarehouseReleaseRepository repository = new WarehouseReleaseRepository(tenant);
-            int numberofConnectedWarehouse  = repository.GetNumberofConnectedWarehouseReleasesByChildEntityReference(childEntityReference, tenant);
-
-            return numberofConnectedWarehouse;
-        }
-
-        public List<WarehouseReleaseList> GetActiveWarehouseReleaseListsByshipmentId(string shipmentId, int tenant)
-        {
-
-            List<WarehouseReleaseList> myResult = (from a in context.WarehouseReleases.Include("WarehouseReleaseStatus")
-                                                   where a.ShipmentId == shipmentId && a.Tenant == tenant && a.StatusCode!= "CARE"
-                                                   select new WarehouseReleaseList()
-                                                   {
-                                                       Id = a.Id,
-                                                       ReleaseNumber = a.ReleaseNumber,
-                                                       ActualReleaseDate = a.ActualReleaseDate,
-                                                       ReleaseBy = a.ReleaseBy,
-                                                       StatusName = a.WarehouseReleaseStatus != null ? a.WarehouseReleaseStatus.Name : "",
-                                                       ExpectedReleaseDate = a.ExpectedReleaseDate,
-                                                       CreateDate = a.CreateDate,
-
-                                                   }).ToList();
-            return myResult;
-        }
 
         public List<WarehouseReleaseList> GetWarehouseReleasesByEntryId(string entityId, int tenant)
         {
@@ -336,32 +298,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
         }
 
 
-        public List<WarehouseReleasePM> GetWarehouseReleaseListsByCustomerIdAndWarehouseId(string customerId, string warehouseId, int tenant)
-        {
-            List<WarehouseReleasePM> myResult = (from a in context.WarehouseReleases.Include("ToPort").Include("ToAddress.Country").Include("ToAddressCountry")
-                                                 where a.WarehouseId == warehouseId && a.CustomerId == customerId && a.Tenant == tenant && !a.IsUsed && a.StatusCode == "CREA"
-                                                 select new WarehouseReleasePM()
-                                                 {
-                                                     Id = a.Id,
-                                                     ReleaseNumber = a.ReleaseNumber,
-                                                     ActualReleaseDate = a.ActualReleaseDate,
-                                                     ReleaseBy = a.ReleaseBy,
-                                                     StatusName = a.WarehouseReleaseStatus != null ? a.WarehouseReleaseStatus.Name : "",
-                                                     ExpectedReleaseDate = a.ExpectedReleaseDate,
-                                                     CreateDate = a.CreateDate,
-                                                     ShipmentId = a.ShipmentId,
-                                                     References = a.CustomerRef1 + (!string.IsNullOrEmpty(a.CustomerRef1) && !string.IsNullOrEmpty(a.CustomerRef1) ? "," : "") + a.CustomerRef2,
-                                                     Destination = a.ToTypeCode == "PORT" ? a.ToPort!=null? a.ToPort.Code:"" : a.ToTypeCode == "PART" ? (a.ToAddress!=null?a.ToAddress.City + " " :"") +  (a.ToAddress != null && a.ToAddress.Country!=null ? a.ToAddress.Country.EnglishName : "") : a.ToTypeCode == "CASL" ? (a.ToAddressCity) + " " + (a.ToAddressCountry != null ? a.ToAddressCountry.EnglishName : "") : "",
-                                                     ReleaseDate = a.ActualReleaseDate == null ? a.ExpectedReleaseDate : a.ActualReleaseDate
-                                                 }).ToList();
-            WarehouseReleasePackageQueryService warehouseReleasePackageQueryService = new WarehouseReleasePackageQueryService(tenant);
-            foreach (WarehouseReleasePM item in myResult)
-            {
-                item.WarehouseReleasePackages = warehouseReleasePackageQueryService.GetWarehouseReleasePackagePMListsByWarehouseReleaseId(item.Id, tenant);
-                
-            }
-            return myResult;
-        }
+
 
     }
 }

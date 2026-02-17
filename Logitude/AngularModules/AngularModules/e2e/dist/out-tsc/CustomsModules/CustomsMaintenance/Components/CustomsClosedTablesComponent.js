@@ -93,7 +93,7 @@ var CustomsClosedTablesComponent = /** @class */ (function () {
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsClosedTablesListTemplate',
             FieldName: 'Id',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator_1.TextCodeTranslator.Translate("Customs.CustomsClosedTable.O.Id"),
+            Display: TextCodeTranslator_1.TextCodeTranslator.Translate("Customs.CustomsClosedTable.F.Id"),
             Styles: { width: '75px' },
             IsCustomTemplate: true
         });

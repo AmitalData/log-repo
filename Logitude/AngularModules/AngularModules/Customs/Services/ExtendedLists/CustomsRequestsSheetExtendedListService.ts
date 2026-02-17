@@ -1,8 +1,7 @@
-
+﻿
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -15,11 +14,11 @@ import { CustomsRequestsSheetList } from '../../EntityLists/CustomsRequestsSheet
 @Injectable()
 
 export class CustomsRequestsSheetExtendedListService {
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     public static CachedData: Array<CustomsRequestsSheetList> = [];
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         //CustomsRequestsSheetViewsController
         //CustomsRequestsSheetViews
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestsSheetViews';
@@ -30,9 +29,9 @@ export class CustomsRequestsSheetExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'lineNumber=' + lineNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var list = response;
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle/?' + 'declarationid=' + declarationid + '&' + 'invoicecounterkey=' + invoicecounterkey + '&' + 'lineNumber=' + lineNumber, { headers: authHeader }).map(response => {
+                var list = response.json();
 
                 var entity: CustomsRequestsSheetList;
                 if (list) {
@@ -43,7 +42,7 @@ export class CustomsRequestsSheetExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -52,10 +51,10 @@ export class CustomsRequestsSheetExtendedListService {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
-        return defer(() => {
-            return this._http.get(this._apiUrl + '/getall', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/getall', { headers: authHeader }).map(response => {
 
-                var allLists = response;
+                var allLists = response.json();
                 var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
                 if (allLists) {
                     for (var key in allLists) {
@@ -69,7 +68,7 @@ export class CustomsRequestsSheetExtendedListService {
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
@@ -106,11 +105,13 @@ export class CustomsRequestsSheetExtendedListService {
         var callUrl = this._apiUrl.concat(urlparameters);//
 
 
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+        return Observable.defer(() => {
+            return this._http.get(callUrl, {
+                headers: authHeader
+            }).map(response => {
 
                 var serviceResponse: ServiceResponse;
-                serviceResponse = response;
+                serviceResponse = response.json();
                 var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -124,166 +125,10 @@ export class CustomsRequestsSheetExtendedListService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }
 
-
-    CancelByFilters(filters: ApiQueryFilters) {
-
-        var urlparameters = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended/CancelByFilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-
-
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = urlparameters;//this._apiUrl.concat(urlparameters);//
-
-
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
-                var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: CustomsRequestsSheetList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-
-        // return Observable.defer(() => {
-        //     return this._http.get(callUrl, {
-        //         headers: authHeader
-        //     }).map(response => {
-
-        //         var serviceResponse: ServiceResponse;
-        //         serviceResponse = response.json();
-        //         var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
-        //         if (serviceResponse.Result) {
-        //             for (var key in serviceResponse.Result) {
-
-        //                 var entity: CustomsRequestsSheetList;
-        //                 entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-        //                 _mappedListsArray.push(entity);
-
-        //             }
-        //         }
-
-        //         serviceResponse.Result = _mappedListsArray;
-        //         return serviceResponse;
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // });
-    }
-
-
-    ReAnalysisByFilters(filters: ApiQueryFilters) {
-
-        var urlparameters = ServiceHelper.GetLogitudeURL() + 'api/CustomsRequestSheetExtended/ReAnalysisByFilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
-
-            if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
-            }
-            if (!ignoreFilter) {
-                propValue = encodeURIComponent(propValue);
-                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-            }
-
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-
-
-        }
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
-
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-        var callUrl = urlparameters;//this._apiUrl.concat(urlparameters);//
-
-
-        return defer(() => {
-            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = response;
-                var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: CustomsRequestsSheetList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
-        });
-        // return Observable.defer(() => {
-        //     return this._http.get(callUrl, {
-        //         headers: authHeader
-        //     }).map(response => {
-
-        //         var serviceResponse: ServiceResponse;
-        //         serviceResponse = response.json();
-        //         var _mappedListsArray: Array<CustomsRequestsSheetList> = [];
-        //         if (serviceResponse.Result) {
-        //             for (var key in serviceResponse.Result) {
-
-        //                 var entity: CustomsRequestsSheetList;
-        //                 entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-        //                 _mappedListsArray.push(entity);
-
-        //             }
-        //         }
-
-        //         serviceResponse.Result = _mappedListsArray;
-        //         return serviceResponse;
-        //     }).catch(ServiceHelper.HandleServiceError);
-        // });
-    }
 
     MapJsonToEntityList(jsonList: any) {
 

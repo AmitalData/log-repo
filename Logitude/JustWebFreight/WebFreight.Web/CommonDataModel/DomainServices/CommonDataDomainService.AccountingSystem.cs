@@ -6,9 +6,9 @@ using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using System.Xml.Serialization;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -197,19 +197,19 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return count;
         }
 
-        public void UpdateAccountingSystem(AccountingSystemPM entityPM, int tenant)
+        public void UpdateAccountingSystem(AccountingSystemPM entityPM)
         {
-            SecurityUtility.CheckContactFeature("AccountingSystem", "UPDATE", tenant);
+            SecurityUtility.CheckContactFeature("AccountingSystem", "UPDATE", 0);
 
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(tenant);
+                objectContext = CommonDataContext.GetContext(0);
             }
 
-            AccountingSystemService service = new AccountingSystemService(objectContext, tenant);
+            AccountingSystemService service = new AccountingSystemService(objectContext, 0);
             service.Update(entityPM);
 
-            TableLastUpdateClass.UpdateTableHistory(tenant, "AccountingSystem");
+            TableLastUpdateClass.UpdateTableHistory(0, "AccountingSystem");
         }
 
         public void UpdateAccountingSystemList(AccountingSystemList currentEntity)

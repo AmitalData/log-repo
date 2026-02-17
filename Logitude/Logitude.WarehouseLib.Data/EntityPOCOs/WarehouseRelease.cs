@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
@@ -156,19 +156,6 @@ namespace Logitude.WarehouseLib.Data.EntityPOCOs
 	    public string ToAddressCountryId { get; set; }
 	      
         public virtual Country ToAddressCountry { get; set; }
-        [Column("IsUsed")]
-	    public bool IsUsed { get; set; }
-        [ForeignKey("Trucker")]
-        [Column("TruckerId")]
-	    public string TruckerId { get; set; }
-	      
-        public virtual Card Trucker { get; set; }
-        [Column("TruckerReference")]
-	    public string TruckerReference { get; set; }
-        [Column("ChildEntityReference")]
-	    public string ChildEntityReference { get; set; }
-        [Column("MasterShipmentNumber")]
-	    public string MasterShipmentNumber { get; set; }
     }
 }
 	 

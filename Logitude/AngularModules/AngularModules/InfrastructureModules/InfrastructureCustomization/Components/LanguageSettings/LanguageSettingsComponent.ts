@@ -8,10 +8,9 @@ import {CommonDomainService, TranslationHeader} from '../../../../Common/Service
 import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {TenantPMService} from '../../../../Common/Services/StandardPMs/TenantPMService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './LanguageSettingsComponent.html',
 })
 
@@ -21,7 +20,6 @@ export class LanguageSettingsComponent {
     public ValidationErrorsList: string[] = [];
     public TenantPM: TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsLanguageDisabled: boolean = false;
     constructor() {
         this.LoadTenantPMMethod();
     }
@@ -30,9 +28,6 @@ export class LanguageSettingsComponent {
         var myService: TenantPMService = new TenantPMService();
         myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
             this.TenantPM = response.Result;
-
-            this.IsLanguageDisabled = ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString());
-
             this.LoadLanguages();
             this.LoadFormat();
         });
@@ -63,7 +58,7 @@ export class LanguageSettingsComponent {
 
             else {
                 this.selectedLanguageCode = value.Code;
-                this.TenantPM.Language = value.Code;
+                this.TenantPM.Language = value.Description;
             }
         }
     }

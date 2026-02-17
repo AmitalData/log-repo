@@ -11,7 +11,7 @@ import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WebhookKeysComponent.html',
 })
 

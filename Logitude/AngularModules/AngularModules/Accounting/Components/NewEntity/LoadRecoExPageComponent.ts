@@ -30,7 +30,7 @@ declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
     selector: 'LoadRecoExPageComponent',
-    
+    moduleId: module.id,
     providers: [EntityListService],
     templateUrl: './LoadRecoExPageComponent.html',
 })
@@ -74,7 +74,7 @@ export class LoadRecoExPageComponent extends BaseComponent {
     IsShowProgressBar: boolean = false;
     IsUploadCanceled: boolean;
     IsUploadInProgress: boolean;
-    Placeholder: any='';
+    Placeholder: any;
 
     ResponseMessage: any;
     UploadButtonIsEnabled: boolean = true;

@@ -7,16 +7,16 @@
 //------------------------------------------------------------------------------
 
 export class BatchServicesLogList {
-   		Id: string;
-		BatchServiceCode: string;
-		LastActivity: Date;
-		CPU: number;
-		CreateDate: Date;
-		NumberOfDoneItems: number;
-		DoneItemsInOneHour: number;
-		DoneItemsInOneMinute: number;
-		DoneItemsInFiveMinutes: number;
-		WaitingItems: number;
-		FailedItems: number;
-	
+    Id: string;
+    BatchServiceCode: string;
+    LastActivity: Date;
+    CPU: number;
+    CreateDate: Date;
+    NumberOfDoneItems: number;
+    DoneItemsInOneHour: number;
+    DoneItemsInOneMinute: number;
+    DoneItemsInFiveMinutes: number;
+    WaitingItems: number;
+    FailedItems: number;
+
 }

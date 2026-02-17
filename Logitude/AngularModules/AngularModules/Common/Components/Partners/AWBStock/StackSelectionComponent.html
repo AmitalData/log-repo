@@ -11,7 +11,7 @@
         </td>
     </tr>
 
-    <tr id="{{'StockSelectionID' | IdGeneratorAsyncPipe | async}}">
+    <tr id="{{'StockSelectionID' | IdGeneratorPipe}}">
         <td>
             <div class="MediaFill">
                 <div class="SimpleGridView">
@@ -71,7 +71,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'CancelBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -79,7 +79,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OkBtn' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!SelectedItem">Ok</button>
+                        <button id="{{'OkBtn' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!SelectedItem">Ok</button>
                     </td>
                 </tr>
             </table>

@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using SilverlightExpressions;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Server.Infrastructure;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.Validators
 {
@@ -31,11 +30,11 @@ namespace Logitude.BL.Validators
 
         public ValidationFieldResult ValidateField(ObjectField field, object fieldValue, object entity,int tenant)
         {
-            if (SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox) || SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development))
+            if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev")
             {
                 return new ValidationFieldResult(true, "");
             }
-            List<ObjectFieldValidationPM> validations = objectFieldValidations.Where(f => f.ObjectFieldCode == field.FieldCode).ToList();
+            List<ObjectFieldValidationPM> validations = objectFieldValidations.Where(f => f.ObjectFieldId == field.Id).ToList();
             if (validations.Count > 0)
             {
             ExpressionValidation expressionValidation = null;

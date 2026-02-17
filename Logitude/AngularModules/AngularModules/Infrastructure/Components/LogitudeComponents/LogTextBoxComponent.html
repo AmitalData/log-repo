@@ -77,7 +77,7 @@
 
     .TextAreaDisabled {
         /*background:#e2e2e2 !important;*/
-        opacity: 1;
+        opacity: 0.5;
     }
 
     .ArialFont {
@@ -133,19 +133,6 @@
             padding-right: 3px;
             padding-left: 3px;
         }
- ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
- font-size: 11px;
-}
-::-moz-placeholder { /* Firefox 19+ */
-    font-size: 11px;
-}
-:-ms-input-placeholder { /* IE 10+ */
-    font-size: 11px;
-}
-:-moz-placeholder { /* Firefox 18- */
-    font-size: 11px;
-}
-
 </style>
 
 
@@ -179,7 +166,7 @@
                 [className]="IsRatioBox == true ? 'InputDivNoBorder' : 'InputDiv'" [id]="InputDivId"
                 (mouseover)="OnMouseOver()"
                 (mouseleave)="OnMouseLeave()">
-                    <input [attr.data-cy]="DataCy" [disabled]="IsDisabled" type="text" autocomplete="off"
+                    <input [disabled]="IsDisabled" type="text" autocomplete="off"
                            style="-moz-box-shadow: inset 0 0 3px #AAAAAA;
                                   -webkit-box-shadow: inset 0 0 3px #AAAAAA;
                                   box-shadow: inset 0 0 3px #AAAAAA;
@@ -203,7 +190,7 @@
                            [class.AlignRight]="AlignTextToRight"
                            [class.rtlTextBox]="IsRTLNumberText"
                            [id]="InputId" #input ondrop="return false"
-                           (paste)="OnPaste($event)" [readonly]="ForceDisable"/>
+                           (paste)="OnPaste($event)"/>
 
                             <div *ngIf="!IsDisabled && isMouseOver && (ObjectField?.EnableFullscreenTextBox)"
                             [class.collapse-btn]="isExpanded"
@@ -219,11 +206,11 @@
                      [id]="InputDivId"
                      class="InputDiv"
                      [ngStyle]="InputDivStyle"
-                     style="height: 100%; max-height:unset;"
+                     style="height: 100%; max-height:unset; margin-bottom: 5px;"
                      (mouseover)="OnMouseOver()"
                      (mouseleave)="OnMouseLeave()">
 
-                    <textarea [attr.data-cy]="DataCy" [readonly]="IsDisabled"
+                    <textarea [readonly]="IsDisabled"
                               wrap="hard"
                               [class.ArialFont]="UseArialFont == true"
                               [(ngModel)]="TextValue"

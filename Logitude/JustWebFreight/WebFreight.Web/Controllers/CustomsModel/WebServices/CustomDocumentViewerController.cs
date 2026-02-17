@@ -7,7 +7,6 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,39 +22,13 @@ using System.Web.Http;
 using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.WebServices;
-using System.Text;
-using ICSharpCode.SharpZipLib.Tar;
-using iTextSharp.text.pdf.qrcode;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class CustomDocumentViewerController : ApiController
     {
 
-        [HttpGet]
-        public HttpResponseMessage GetDocumentPageAsPdf(string documentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-                // todo: currently not implemented
-                // SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
-                var customsDocumentQueryService = new CustomsDocumentQueryService(customContext);
-                var attachment = customsDocumentQueryService.GetAttachment(documentId, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, attachment);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetDocumentPage(string documentId, int currPage, bool isConnectedToUni, int? angle = 0)
+        public HttpResponseMessage GetDocumentPage(string documentId, int currPage, bool isConnectedToUni)
         {
             string TiffPageLines;
             string ErrorMessage;
@@ -66,77 +39,52 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 int tenant = authToken.Tenant;
                 var pm = CustomsSettingQueryService.GetSettingByTenant(tenant);
 
-
                 var pageObj = new CustomDocumentPageObject();
                 if (isConnectedToUni || !String.IsNullOrWhiteSpace(pm.OnPremiseFillingService))
                 {
                     currPage = currPage + 1;
 
                     Uploader up = new Uploader();
-                    byte[] imageBytes = null;
-                    imageBytes = up.GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
-                    if (imageBytes != null)
+                    byte[] _DatainByte = null;
+                    _DatainByte = up.GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
+                    if (_DatainByte != null)
                     {
-                        Bitmap bmp = GetBitmap(imageBytes);
-                        RotateBitmap(bmp, angle);
 
-                        byte[] newBytes = GetImageBytes(bmp);
-                        pageObj.Page = Resize(new MemoryStream(newBytes));
+                        MemoryStream st = new MemoryStream(_DatainByte);
+                        Bitmap bmp = (Bitmap)Image.FromStream(st);
+                        //pageObj.Page = GetPageTiffAsB64FromTarByTenantComIdPage(documentId, tenant, currPage, out TiffPageLines, out ErrorMessage);
+                        pageObj.Page = //BinaryImageToSerializeListBytes(_DatainByte, 0);
+                            Resize(new MemoryStream(_DatainByte));
+
                         pageObj.TiffPageLines = TiffPageLines;
                         pageObj.ErrorMessage = ErrorMessage;
 
                         var TiffPages = new List<string>(TiffPageLines.Split(new char[] { '\n' }));
                         pageObj.Count = TiffPages.Count - 1;
                     }
-                    pageObj.ErrorMessage = ErrorMessage;
 
                 }
                 else
                 {
-                    currPage = currPage + 1;
                     Uploader up = new Uploader();
-                    byte[] tarBytes = null;
-                    var externalDocumentRepository = new DocumentsFilingRepository(tenant);
-                    DocumentRepository documentRepository = new DocumentRepository(tenant);
-                    var pdfDocumentFillingId = externalDocumentRepository.GetSingleDocumentsFilingIdByDocumentId(documentId, tenant);
-                    if (pdfDocumentFillingId != null)
-                    {
-                        var TarDocumentId = documentRepository.GetDocumentIdByFileName(pdfDocumentFillingId, "tar", tenant);
-                        if (TarDocumentId != null)
-                        {
-                            string documentExtension = up.GetFileExtension(TarDocumentId, tenant);
-                            var poco = externalDocumentRepository.GetSingleDocumentsFilingIdByDocumentId(TarDocumentId, tenant);
-                            {
-                                tarBytes = up.DownloadFile(TarDocumentId, documentExtension, "", tenant);
-                            }
-                            var byteArr = this.GetTiffPageFromTar(tarBytes, currPage, out string TiffList);
+                    byte[] _DatainByte = null;
+                    string documentExtension = up.GetFileExtension(documentId, tenant);
 
-                            if (tarBytes != null && byteArr != null)
-                            {
-                                //get multi pages tiff count
-                                Bitmap bmp = GetBitmap(byteArr);
-                                RotateBitmap(bmp, angle);
-                                byte[] newBytes = GetImageBytes(bmp);
-                                pageObj.Count = bmp.GetFrameCount(FrameDimension.Page);
-                                pageObj.Page = Resize(new MemoryStream(newBytes));
-                                pageObj.TiffPageLines = TiffList;
-                                var TiffPages = new List<string>(TiffList.Split(new char[] { '\n' }));
-                                pageObj.Count = TiffPages.Count - 1;
-                            }
-                        }
-                        else
-                        {
-                            ErrorMessage = "document is not found by filename";
-                            pageObj.ErrorMessage = ErrorMessage;
-                        }
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(documentExtension) && (documentExtension == "tiff" || documentExtension == "tif"))
                     {
-                        ErrorMessage = "document is not found";
-                        pageObj.ErrorMessage = ErrorMessage;
+                        _DatainByte = up.DownloadFile(documentId, documentExtension, "", tenant);
+                    }
+                    if (_DatainByte != null)
+                    {
+                        //get multi pages tiff count
+                        MemoryStream st = new MemoryStream(_DatainByte);
+                        Bitmap bmp = (Bitmap)Image.FromStream(st);
+                        pageObj.Count = bmp.GetFrameCount(FrameDimension.Page);
+                        pageObj.Page = BinaryImageToSerializeListBytes(_DatainByte, currPage);
                     }
 
                 }
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, pageObj);
             }
@@ -144,95 +92,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-        }
-        public byte[] GetTiffPageFromTar(byte[] tarBytes, int pageRequest, out string TiffList)
-        {
-            StringBuilder sbTiffList = new StringBuilder();
-            byte[] byteArr = null;
-
-            try
-            {
-                using (MemoryStream tarMemoryStream = new MemoryStream(tarBytes))
-                using (TarInputStream tarIn = new TarInputStream(tarMemoryStream))
-                {
-                    TarEntry tarEntry;
-                    int i = 1;
-
-
-                    while ((tarEntry = tarIn.GetNextEntry()) != null)
-                    {
-
-                        if (tarEntry.IsDirectory)
-                        {
-                            continue;
-                        }
-                        string name = tarEntry.Name.Replace('/', Path.DirectorySeparatorChar);
-
-                        if (Path.IsPathRooted(name))
-                        {
-                            name = name.Substring(Path.GetPathRoot(name).Length);
-                        }
-                        var fi = new FileInfo(name);
-                        if (fi.Extension.Equals(".tiff", StringComparison.OrdinalIgnoreCase) || fi.Extension.Equals(".tif", StringComparison.OrdinalIgnoreCase))
-                        {
-                            sbTiffList.AppendLine(fi.Name);
-                            if (pageRequest == i)
-                            {
-                                using (MemoryStream ms = new MemoryStream())
-                                {
-                                    tarIn.CopyEntryContents(ms);
-                                    byteArr = ms.ToArray();
-                                }
-                            }
-
-                            i++;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while processing TAR file: {ex.Message}");
-                byteArr = null;  // Ensure byteArr is null if an error occurs
-            }
-
-            TiffList = sbTiffList.ToString();
-            return byteArr;
-        }
-
-        private static Bitmap RotateBitmap(Bitmap bmp, int? angle)
-        {
-            switch (angle)
-            {
-                case 90:
-                    bmp.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    break;
-                case 180:
-                    bmp.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                    break;
-                case 270:
-                    bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                    break;
-                default:
-                    bmp.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-                    break;
-            }
-            return bmp;
-        }
-
-        public byte[] GetImageBytes(Bitmap img)
-        {
-            using (var stream = new MemoryStream())
-            {
-                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                return stream.ToArray();
-            }
-        }
-        public Bitmap GetBitmap(byte[] imageBytes)
-        {
-            MemoryStream st = new MemoryStream(imageBytes);
-            Bitmap bmp = (Bitmap)Image.FromStream(st);
-            return bmp;
         }
 
         // Service Methods:
@@ -281,7 +140,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                 }
 
-                if (scaleFactor != 1 && (scaleFactor < .6 || scaleFactor > 1.4))
+                if (scaleFactor != 1 && (scaleFactor < .6 || scaleFactor > 1.4) )
                 {
                     var newWidth = (int)(srcImage.Width * scaleFactor);
                     var newHeight = (int)(srcImage.Height * scaleFactor);
@@ -361,8 +220,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
             return image;
         }
-
-
     }
 
 

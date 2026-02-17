@@ -31,7 +31,6 @@ namespace Logitude.CustomsMessaging.Common.ResponseData
             public string TransactionAmount { get; set; }
             public string TransactionType { get; set; }
             public string UpdateUser { get; set; }
-            public string CustomFileNo { get; set; }
         }
     }
 }

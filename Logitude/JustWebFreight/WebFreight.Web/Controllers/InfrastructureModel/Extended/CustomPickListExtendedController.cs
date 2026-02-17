@@ -2,10 +2,10 @@
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -32,9 +32,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
 
-
+               
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                 CustomPickListRepository customPickListsRepository = new CustomPickListRepository(objectContext);
                 CustomPickListQuery customPickListQuery = new CustomPickListQuery(customPickListsRepository);
@@ -72,9 +71,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 CustomPickListService customPickListService = new CustomPickListService(objectContext, authToken.Tenant);
                 foreach (CustomPickListPM customPickList in customPickListPMs)
                 {
-                    SecurityUtility.AuthenticationOnEntityTenant("CustomPickList", customPickList.Tenant, authToken.Tenant);
-
-
                     if (!customPickList.IsDirty)
                     {
                         //Add & Edit

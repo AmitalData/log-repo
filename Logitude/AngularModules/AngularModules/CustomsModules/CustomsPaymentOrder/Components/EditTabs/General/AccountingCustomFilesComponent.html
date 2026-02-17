@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .CustomMultiLinesText {
         width: 270px;
         height: 300px;
@@ -33,14 +33,7 @@
                             <tr class="FormFieldRow" *ngFor="let customFileItem of AccountingCustomFilesList">
                                 <td>
                                     <div>
-                                        <span *ngIf="!IsFromDeclarationData" style="cursor: pointer;" (click)="OnSelectedFile(customFileItem)">{{customFileItem}}</span>
-                                        <span *ngIf="IsFromDeclarationData" style="cursor: pointer;" (click)="OnSelectedFile(customFileItem.ItemGovernmentProcedureType)">{{customFileItem.ItemGovernmentProcedureType}}</span>
-
-                                    </div>
-                                </td>
-                                <td *ngIf="IsFromDeclarationData">
-                                    <div>
-                                        <span style="cursor: pointer;" >{{customFileItem.ItemGovernmentProcedureName}}</span>
+                                        <span (click)="OnSelectedFile(customFileItem)">{{customFileItem}}</span>
                                         
                                     </div>
                                 </td>

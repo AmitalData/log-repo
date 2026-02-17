@@ -21,10 +21,10 @@ export class ARPaymentChequeReplicaPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -118,11 +118,6 @@ export class ARPaymentChequeReplicaPM {
     public set BankAccount(newValue: string) { if (this.bankAccount != newValue) { this.bankAccount = newValue; this.MarkAsDirty("BankAccount"); } }
        
 	 
-    private statusName: string;
-    public get StatusName() { return this.statusName; }
-    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
-       
-	 
     private statusCode: string;
     public get StatusCode() { return this.statusCode; }
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
@@ -148,10 +143,7 @@ export class ARPaymentChequeReplicaPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -161,7 +153,6 @@ export class ARPaymentChequeReplicaPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARPaymentChequeReplica");
            
         }
-	 }
     }
     private MyClone: ARPaymentChequeReplicaPM;
 

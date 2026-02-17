@@ -123,9 +123,7 @@
                                             [QueryFilterItems]="GLAccountsFilterItems"
                                             (SelectedItemChanged)="GLAccount = $event"
                                             [ForceShowAddLink]="true"
-                                            [HideColumns]="false"
-                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [HideColumns]="false">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>
@@ -148,9 +146,7 @@
                                             [SelectedValue]="DeferredGLAccountId"
                                             (SelectedItemChanged)="DeferredGLAccount = $event"
                                             [ForceShowAddLink]="true"
-                                            [HideColumns]="false"
-                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [HideColumns]="false">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>
@@ -173,9 +169,7 @@
                                             [SelectedValue]="TransferGLAcccountId"
                                             (SelectedItemChanged)="TransferGLAcccount = $event"
                                             [ForceShowAddLink]="true"
-                                            [HideColumns]="false"
-                                            [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [HideColumns]="false">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>
@@ -215,7 +209,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button  id="{{'CANCELBUTTON' | IdGeneratorAsyncPipe | async}}"class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button  id="{{'CANCELBUTTON' | IdGeneratorPipe}}"class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -223,7 +217,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OKBUTTON' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'OKBUTTON' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

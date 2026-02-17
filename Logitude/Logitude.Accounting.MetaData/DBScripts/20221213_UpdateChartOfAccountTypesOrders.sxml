@@ -1,7 +1,0 @@
-﻿<Script DBType="Main" Module="Accounting" AOT="false">
-  <Sql Version="1">
-    <![CDATA[
-	  Update ChartOfAccountsTypes set [Order] = Code
-     ]]>
- </Sql>
-</Script>

@@ -6,7 +6,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.DataContracts;
 using Logitude.SystemLogs.Repositories;
 using Logitude.SystemLogs.POCOs;
@@ -384,7 +384,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                         CardId = log.CardId,
                         CardName = card != null ? card.EnglishName : "",
                         ContactId = log.ContactId,
-                        ContactName = contact != null ? contact.EnglishName : null,
+                        ContactName = contact != null ? contact.EnglishName : "",
                         PartnerTypeName = card == null ? "" : (card.PartnerType == null ? "" : card.PartnerType.Name),
                         LastAccess = log.GMTLogDateTime,
                         Via = log.Via,

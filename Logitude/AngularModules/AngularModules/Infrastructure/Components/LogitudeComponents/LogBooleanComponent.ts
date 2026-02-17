@@ -6,7 +6,7 @@ import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
 
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'LogBoolean',
     templateUrl: './LogBooleanComponent.html',

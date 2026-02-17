@@ -319,7 +319,6 @@
                 PartnersList.push(item);
             });
 
-            $("#PartnersListBox").html("");
             $("#PartnersListBox").kendoListView(
                    {
                        dataSource: { data: PartnersList },
@@ -356,7 +355,11 @@
                     //});
 
                     BuildPartnersList(result);
-
+                    //$("#PartnersListBox").kendoListView(
+                    //{
+                    //    dataSource: { data: result },
+                    //    template: kendo.template($("#PartnersItemTemplate").html())
+                    //});
 
                     $.Application.hideLoading();
                 },
@@ -376,8 +379,6 @@
             scroller.reset();
 
             ko.applyBindings($.CurrentEntityList);
-
-            $("#PartnersListBox").html("");
             $("#PartnersListBox").kendoListView(
                {
                    dataSource: { data: [] },

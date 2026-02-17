@@ -7,7 +7,7 @@ import {TenantAddOnPM} from '../../../../Infrastructure/EntityPMs/TenantAddOnPM'
 import {AddOnItem} from './TenantManagementGeneralTabComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAddOnComponent.html',
 })
 
@@ -31,8 +31,8 @@ export class AddEditAddOnComponent {
     }
     
     CancelButtonClicked() {
-        //this.DataContext.ResetOldData();
-        this.RejectChanges();
+        this.DataContext.ResetOldData();
+
         this.CurrentSession.CloseCurrentWindow();
     }
 

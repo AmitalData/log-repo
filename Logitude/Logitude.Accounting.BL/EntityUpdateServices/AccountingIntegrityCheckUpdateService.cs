@@ -11,7 +11,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Web;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
@@ -30,7 +30,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
    public partial class AccountingIntegrityCheckUpdateService
    {
-        public double DelayQueueInMinutes { get;  set; }
 
         protected override void OnCreating(AccountingIntegrityCheckPM entityPM, EntityPM entityParentPM)
         {
@@ -92,7 +91,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", entityPM.Tenant.ToString() }
-                }, Tenant, TimeSpan.FromMinutes(this.DelayQueueInMinutes));
+                });
         }
 
 

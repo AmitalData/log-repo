@@ -4,34 +4,6 @@
         <td>
             <div class="MediaFill">
 
-                <!--NextActivityDate -->
-                <div *ngIf="FieldName == 'NextActivityDate'">
-                    <div>
-                        <table>
-                            <tr>
-                                <td style="width:80px;">
-                                    {{Entity[FieldName] | DateTimePipe:'D'}}
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- NextActivityTypeCode -->
-                <div *ngIf="FieldName == 'NextActivityTypeCode'">
-                    <img [title]="Entity.NextActivityTypeName" [attr.src]="ImageSrc" style="width:16px;height:16px" />
-                    {{Entity['NextActivitySubject']}}
-                </div>
-
-                <!-- LastActivityTypeCode -->
-                <div *ngIf="FieldName == 'LastActivityTypeCode'">
-                    <img [title]="Entity.LastActivityTypeName" [attr.src]="ImageSrc" style="width:16px;height:16px" />
-                    {{Entity['LastActivitySubject']}}
-                </div>
-
                 <div *ngIf="FieldName == 'FollowUpDate'" [ngStyle]="{color: FieldValue | FollowUpDatePipe:'F'}">{{FieldValue | DateTimeToDatePipe}}</div>
                 <div *ngIf="FieldName == 'AcceptedDate'">{{FieldValue | DateTimePipe :'DT'}}</div>
 
@@ -83,7 +55,7 @@
                             <div></div>
                         </td>
                         <td style="width: 15px; min-width: 15px; max-width: 15px; text-indent:0; padding:0;">
-                            <img [attr.src]="'./Images/Directions/' + FieldValue + '.png'" [title]="Entity.DirectionName" style="margin:0; padding:0; vertical-align: middle;" />
+                            <img [attr.src]="'./Images/Directions/' + FieldValue + '.png'" title="Entity.DirectionName" style="margin:0; padding:0; vertical-align: middle;" />
                         </td>
                         <td>
                             <div></div>
@@ -97,7 +69,7 @@
                             <div></div>
                         </td>
                         <td style="width: 15px; min-width: 15px; max-width: 15px; text-indent:0; padding:0;">
-                            <img [attr.src]="'./Images/Icons/' + FieldValue + '.png'" [title]="Entity.TransportModeName" style="margin:0; padding:0; vertical-align: middle;" />
+                            <img [attr.src]="'./Images/Icons/' + FieldValue + '.png'" title="Entity.TransportModeName" style="margin:0; padding:0; vertical-align: middle;" />
                         </td>
                         <td>
                             <div></div>
@@ -106,7 +78,7 @@
                 </table>
 
                 <div *ngIf="FieldName == 'GrossWeight'|| FieldName == 'GrossWeightInKG' || FieldName == 'GrossWeightPerTon' || FieldName == 'VolumeInCBM'" class="TemplateTrimming">
-                    <div class="TemplateTrimmingChild TextRight" [style.padding-right]="NumberFieldRightPadding">{{FieldValue | NumbersPipe:'N2'}}</div>
+                    <div class="TemplateTrimmingChild TextRight">{{FieldValue | NumbersPipe:'N2'}}</div>
                 </div>
 
                 <div *ngIf="FieldName == 'SentDate'" class="TemplateTrimming">

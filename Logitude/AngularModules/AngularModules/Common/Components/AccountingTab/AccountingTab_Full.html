@@ -19,10 +19,10 @@
         <div class="promptBox CenterCenter" style="text-align: center;">
             {{'Accounting.O.ClientActivationMSG' | TextCodeTranslationPipe}}
             <br><br>
-            <a class="lnk" id="{{'Activate' | IdGeneratorAsyncPipe | async}}" (click)="FullAccountingClicked()">
+            <a class="lnk" id="{{'Activate' | IdGeneratorPipe}}" (click)="FullAccountingClicked()">
                 {{'Accounting.O.ClientActivationBTN' | TextCodeTranslationPipe}}
             </a>
-            <a *ngIf="ShowConnectToCardButton" class="lnk" id="{{'Connect2ExistCard' | IdGeneratorAsyncPipe | async}}" (click)="Connect2ExistCard()">
+            <a *ngIf="ShowConnectToCardButton" class="lnk" id="{{'Connect2ExistCard' | IdGeneratorPipe}}" (click)="Connect2ExistCard()">
                     {{'GLAccount.O.Connect2ExistingCard' | TextCodeTranslationPipe}}
             </a>
         </div>

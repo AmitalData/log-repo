@@ -68,15 +68,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ContainerType2Id, 
 	         ContainerType3Id, 
 	         ContainerType4Id, 
-	         ContainerType5Id, 
-	         TariffProductId, 
-	         SellerPartnerTypeId, 
-	         LastUsedDate, 
-	         FreightChargeId, 
-	         CustomsBrokerId, 
-	         CustomsBrokerPartnerTypeId, 
-	         UnitOfMeasurementCode, 
-	         CustomerGroupId,
+	         ContainerType5Id,
 	      }
 
 
@@ -104,7 +96,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LastStartDate, 
 	         LastVersion, 
 	         ContractNumber, 
-	         SellerName, 
 	         SetAsInActive, 
 	         SetAsReActive, 
 	         TariffNumber, 
@@ -143,20 +134,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ContainerType2Id, 
 	         ContainerType3Id, 
 	         ContainerType4Id, 
-	         ContainerType5Id, 
-	         TransportModeCode, 
-	         TransportModeName, 
-	         TariffProductId, 
-	         SellerPartnerTypeId, 
-	         IsRefreshTranslations, 
-	         LastUsedDate, 
-	         FreightChargeId, 
-	         CustomsBrokerId, 
-	         CustomsBrokerName, 
-	         CustomsBrokerPartnerTypeId, 
-	         UnitOfMeasurementCode, 
-	         CustomerGroupId, 
-	         CustomerGroupName,
+	         ContainerType5Id,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -393,46 +371,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
             {
 				entityPOCO.ContainerType5Id = entityPM.ContainerType5Id;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffProductId))
-            {
-				entityPOCO.TariffProductId = entityPM.TariffProductId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerPartnerTypeId))
-            {
-				entityPOCO.SellerPartnerTypeId = entityPM.SellerPartnerTypeId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUsedDate))
-            {
-				entityPOCO.LastUsedDate = entityPM.LastUsedDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
-            {
-				entityPOCO.FreightChargeId = entityPM.FreightChargeId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerId))
-            {
-				entityPOCO.CustomsBrokerId = entityPM.CustomsBrokerId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
-            {
-				entityPOCO.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
-            {
-				entityPOCO.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerGroupId))
-            {
-				entityPOCO.CustomerGroupId = entityPM.CustomerGroupId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -676,46 +614,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ContainerType5Id = entityPOCO.ContainerType5Id;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffProductId))
-            {
-					entityPM.TariffProductId = entityPOCO.TariffProductId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SellerPartnerTypeId))
-            {
-					entityPM.SellerPartnerTypeId = entityPOCO.SellerPartnerTypeId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastUsedDate))
-            {
-					entityPM.LastUsedDate = entityPOCO.LastUsedDate;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FreightChargeId))
-            {
-					entityPM.FreightChargeId = entityPOCO.FreightChargeId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBrokerId))
-            {
-					entityPM.CustomsBrokerId = entityPOCO.CustomsBrokerId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsBrokerPartnerTypeId))
-            {
-					entityPM.CustomsBrokerPartnerTypeId = entityPOCO.CustomsBrokerPartnerTypeId;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnitOfMeasurementCode))
-            {
-					entityPM.UnitOfMeasurementCode = entityPOCO.UnitOfMeasurementCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomerGroupId))
-            {
-					entityPM.CustomerGroupId = entityPOCO.CustomerGroupId;
-            }
-
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -950,46 +848,6 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerType5Id))
             {
                 oldEntityPM.ContainerType5Id = entityPM.ContainerType5Id;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffProductId))
-            {
-                oldEntityPM.TariffProductId = entityPM.TariffProductId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SellerPartnerTypeId))
-            {
-                oldEntityPM.SellerPartnerTypeId = entityPM.SellerPartnerTypeId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUsedDate))
-            {
-                oldEntityPM.LastUsedDate = entityPM.LastUsedDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FreightChargeId))
-            {
-                oldEntityPM.FreightChargeId = entityPM.FreightChargeId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerId))
-            {
-                oldEntityPM.CustomsBrokerId = entityPM.CustomsBrokerId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBrokerPartnerTypeId))
-            {
-                oldEntityPM.CustomsBrokerPartnerTypeId = entityPM.CustomsBrokerPartnerTypeId;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnitOfMeasurementCode))
-            {
-                oldEntityPM.UnitOfMeasurementCode = entityPM.UnitOfMeasurementCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomerGroupId))
-            {
-                oldEntityPM.CustomerGroupId = entityPM.CustomerGroupId;
             }
 			
 		}

@@ -6,6 +6,7 @@ import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionL
 import { LogTab } from '../../../../../Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../../Customs/EntityPMs/ClaimPM';
+import { ClientAddressPM } from '../../../../../Customs/EntityPMs/ClientAddressPM';
 import { ClaimsRelatedEntityPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntityPM';
 import { ClaimsRelatedEntitiesAmountPM } from '../../../../../Customs/EntityPMs/ClaimsRelatedEntitiesAmountPM';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -13,20 +14,21 @@ import { ObservableCollection } from '../../../../../Infrastructure/Utilities/Ob
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomsSettingListService } from '../../../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { ClientList } from '../../../../../Customs/EntityLists/ClientList';
+import { ClientsAddressCommTypePM } from '../../../../../Customs/EntityPMs/ClientsAddressCommTypePM';
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { ClientMessagesService } from '../../../../../Customs/Services/WebServices/ClientMessagesService';
+import { ClientPMService } from '../../../../../Customs/Services/StandardPMs/ClientPMService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ClaimRelatedEntityGeneralTabComponent.html',
 })
 
 export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
-  public IsDisplayOnly: boolean = false;
-
     public DataContext: ClaimRelatedEntityGeneralTabComponent = this;
     public EntityPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null); // added null because it demands a parameter parent.
     public ClaimPM: ClaimPM = new ClaimPM();
@@ -72,7 +74,7 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                        if (tabCode == "CLMG" && !this.CurrentSession.CurrentEditComponent.EntityPM.notSavedEntity) {
+                        if (tabCode == "CLMG") {
                             this.RefreshEntity();
                             this.BuildPaymentAmountList();
                         }
@@ -88,9 +90,9 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
         this.ClaimPM = claimPM;
         this.isControlEnabled = isEnable;
 
-        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => {
-            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe((response:any) => {
-                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesAmount").subscribe((response:any) => {
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe(response => {
+            this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntity").subscribe(response => {
+                this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimsRelatedEntitiesAmount").subscribe(response => {
                     this.BuildPaymentAmountList();
                     this.Listen();
                 });
@@ -216,7 +218,7 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
         rfundDemandUncheckedWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         rfundDemandUncheckedWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
         rfundDemandUncheckedWindow.ShowCancelButton = false;
-        rfundDemandUncheckedWindow.Show(TextCodeTranslator.Translate("Customs.General.O.BillingItemsDeleted"));
+        rfundDemandUncheckedWindow.Show("בפעולה זו ימחקו כל סעיפי החיוב, האם להמשיך?");
         rfundDemandUncheckedWindow.WindowClosed.subscribe((event: any) => {
             if (rfundDemandUncheckedWindow.Yes) {
                 this.DeletePaymentAmoutLines();

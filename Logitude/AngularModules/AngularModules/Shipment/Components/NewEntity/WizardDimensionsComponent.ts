@@ -14,7 +14,7 @@ import {PackageTypeListService} from '../../../Common/Services/StandardLists/Pac
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WizardDimensionsComponent.html',
 })
 
@@ -35,7 +35,7 @@ export class WizardDimensionsComponent {
         this.EntityPM = entityPM;
         this.IsPackageTypeVisible = this.EntityPM.TransportModeId == "A" ? false : true;
 
-        this.entityResourceService.getEntityResourceByTableName("ShipmentOrderPackage").subscribe((response:any) => {
+        this.entityResourceService.getEntityResourceByTableName("ShipmentOrderPackage").subscribe(response => {
             this.IsResourcesReady = true;
             this.SaveData();            
             this.SetLabels();

@@ -26,7 +26,7 @@ export class NewQuote {
     }
 
     DoQuoteActions() {
-        this.Quotes.GoToMainMenu2('General.MH.CRM');
+        this.Quotes.GoToMainMenu('General.MH.CRM');
         this.Quotes.SelectMenuWorkSpaceTabs('CRMQUT');
         return this.CreateQuote(browser.params.QuoteParams.Direction, browser.params.QuoteParams.TransportMode, browser.params.QuoteParams.ShipmentType, browser.params.QuoteParams.QuoteType);
 
@@ -44,7 +44,7 @@ export class NewQuote {
     }
     CreateQuote(Direction: string, TransportMode: string, ShipmentType: string, QuoteType: string) {
         var EC = protractor.ExpectedConditions;
-        //this.QuoteHepler.CreateAndCloseNewQuote(Direction, TransportMode, ShipmentType);
+        this.QuoteHepler.CreateAndCloseNewQuote(Direction, TransportMode, ShipmentType);
         this.Helper.WaitByIdAndClick('NewQuote');
         this.QuoteHepler.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
         // if (TransportMode == 'A') {

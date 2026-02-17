@@ -45,7 +45,8 @@ export class CustomerLineViewModel {
     }
     public set InternetAccess(value: boolean) {
         if (this.entityPM != null) {
-            this.entityPM.InternetAccess = value;       
+            this.entityPM.InternetAccess = value;
+            this.Trigger.SaveChanges(this.entityPM);       
         }
 
     }
@@ -178,7 +179,7 @@ export class CustomerLineViewModel {
         }
 
 
-        this.contactPMService.get(this.entityPM.ContactId).subscribe((res:any)=> {
+        this.contactPMService.get(this.entityPM.ContactId).subscribe(res=> {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -203,7 +204,7 @@ export class CustomerLineViewModel {
 
         }
         else {
-            this.Trigger.SaveChanges(this.entityPM, true);
+            this.InternetAccess = true;
         }
 
     }
@@ -215,7 +216,7 @@ export class CustomerLineViewModel {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 ServiceLocator.SendTotangoUserActivity("Contact", "Mobile blocked");
-                this.Trigger.SaveChanges(this.entityPM, false);
+                this.InternetAccess = false;
             }
         });
     }

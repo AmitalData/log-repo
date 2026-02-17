@@ -30,10 +30,7 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
             entityPOCO.Id = entityPM.Id;
             entityPOCO.Tenant = entityPM.Tenant;
-            if (entityPM.ErrorLog != null && entityPM.ErrorLog.Length > 4000)
-            {
-                entityPOCO.ErrorLog = entityPM.ErrorLog = entityPM.ErrorLog.Substring(0, 3998);
-            }
+
             BuildSearchFields(entityPM, entityPOCO, false);
         }
 

@@ -60,10 +60,6 @@
 
 </style>
 <div>
-    <!-- Line -->
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'Line'">{{ rowData[fieldName]}}</div>
-    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'LineTypeCode'">{{ rowData[fieldName] }}</div>
-    
     <!-- ReferenceDate -->
     <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'ReferenceDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
     <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'VatNumber'">{{ rowData[fieldName] }}</div>
@@ -73,22 +69,15 @@
     <!-- TransmitStatusCode -->
     <div class="TextTrimming" style="text-align: center;" *ngIf="fieldName == 'TransmitStatusCode'">
         <div [ngSwitch]="rowData.TransmitStatusCode" class="TextTrimming" style="text-align: center;">
-            <div *ngSwitchCase="'1'" class="aboodV" [style.right.px]="isRTL ? '30' : '15'"></div>
-            <div *ngSwitchCase="'4'" class="aboodV" [style.right.px]="isRTL ? '30' : '15'"></div>
-            <div *ngSwitchCase="'2'" class="aboodX orange"></div>
-            <div *ngSwitchCase="'3'" class="aboodX red"></div>
+            <div *ngSwitchCase="'1'" class="aboodV" [style.right.px]="isRTL ? '30' : '15'" ></div>
+            <div *ngSwitchCase="'2'" class="aboodX orange" ></div>
+            <div *ngSwitchCase="'3'" class="aboodX red" ></div>
         </div>
     </div>
 
-    <!-- TotalInvoiceAmount  -->
-    <div class="TextTrimming" *ngIf="fieldName == 'TotalInvoiceAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["TotalInvoiceAmount"]<0'>
-        {{ rowData["TotalInvoiceAmount"] | NumbersPipe:'N2' }}
-    </div>
-
-     <!-- SubTotalInLocalCurrency  -->
-     <div class="TextTrimming" *ngIf="fieldName == 'SubTotalInLocalCurrency'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["SubTotalInLocalCurrency"]<0'>
-        {{ rowData["SubTotalInLocalCurrency"] | NumbersPipe:'N2' }}
-
+    <!-- VatableInvoiceAmount -->
+    <div class="TextTrimming" *ngIf="fieldName == 'VatableInvoiceAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["VatableInvoiceAmount"]<0'>
+        {{ rowData["VatableInvoiceAmount"] | NumbersPipe:'N2' }}
     </div>
 
     <!-- VatAmount -->
@@ -111,25 +100,10 @@
             {{ rowData['JournalNumber'] }}
         </a>
     </div>
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ConfirmationNumber'">
-            {{ rowData['ConfirmationNumber'] }}
-    </div>
-    <!-- IsExternal -->
-    <div *ngIf="fieldName == 'IsExternalLine'">
-        <div style="text-align: center;" *ngIf="rowData['IsExternalLine']" title="{{'TaxReportLine.O.ExternalTooltip' | TextCodeTranslationPipe}}">
-            <img src="./Images/External.png" />
-        </div>
-    </div>
-    <!-- IsExternal -->
-    <div *ngIf="fieldName == 'IsManuallyChanged'">
-        <div style="text-align: center;"  *ngIf="rowData['IsManuallyChanged']"   title="{{GetUpdateMessage()}}">
-            <img src="./Images/favicon.png" />
-        </div>      
-    </div>
 
     <!-- Buttons -->
     <div *ngIf="fieldName == 'Buttons'" class="TextTrimming" style="padding: 3px 3px;">
-        <IconButton [IsEnabled]=" (taxReportStatusCode == 'E' || taxReportStatusCode == 'D')" [IsSmall]="true" [Name]="'Edit'" (click)="EditLine()"></IconButton>
+        <IconButton [IsEnabled]="taxReportStatusCode == 'E' || taxReportStatusCode == 'D'" [IsSmall]="true" [Name]="'Edit'" (click)="EditLine()"></IconButton>
     </div>
 
 </div>

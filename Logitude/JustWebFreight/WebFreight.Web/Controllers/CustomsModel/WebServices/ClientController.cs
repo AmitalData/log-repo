@@ -4,7 +4,7 @@ using Logitude.Customs.Data;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -154,33 +154,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-        public HttpResponseMessage GetSingleClientPMByPassportNumberOrCountry(string passportNumber, string passportCountryCode)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                ClientPM client = new ClientPM();
-
-                ICustomContext customContext = CustomContext.GetContext(tenant);
-                customContext = CustomContext.GetContext(tenant);
-                ClientQueryService clientQuery = new ClientQueryService(customContext);
-                string clientId = clientQuery.GetIdByPassportNumberOrCountry(passportNumber, passportCountryCode, tenant);
-                if (clientId != null)
-                {
-                    client = clientQuery.GetSingle(clientId, true, false);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, client);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PutRecallClientsForCutomsRequest(ImageParameter fileUploadParamerter, bool isForCardsTable)
+        public HttpResponseMessage PutRecallClientsForCutomsRequest(ImageParameter fileUploadParamerter)
         {
             try
             {
@@ -190,29 +164,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 if (fileUploadParamerter != null)
                 {
                     ClientWebService clientWebService = new ClientWebService();
-                    message = clientWebService.RecallClientsForCutomsRequest(fileUploadParamerter.Key, fileUploadParamerter.Tenant, isForCardsTable);
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, message);
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage PutRecallClientsConcurrencyGUIDForCutomsRequest(ImageParameter fileUploadParamerter)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string message = "";
-                if (fileUploadParamerter != null)
-                {
-                    ClientWebService clientWebService = new ClientWebService();
-                    message = clientWebService.RecallClientsConcurrencyGUIDForCutomsRequest(fileUploadParamerter.Key, fileUploadParamerter.Tenant);
+                    message = clientWebService.RecallClientsForCutomsRequest(fileUploadParamerter.Key, fileUploadParamerter.Tenant);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, message);

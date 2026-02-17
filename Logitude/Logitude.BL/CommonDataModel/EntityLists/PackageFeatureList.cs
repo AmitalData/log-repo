@@ -10,7 +10,5 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int Tenant { get; set; }
         public string PackageCode { get; set; }
         public string FeatureId { get; set; }
-        public string FeatureUniqeCode { get; set; }
-
     }
 }

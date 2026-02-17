@@ -1,8 +1,8 @@
 <table>
     <tr>
         <td>
-            <div *ngIf="LastLoginData" style="font-size:10px" class="Label">
-                {{'General.O.LastLogin' | TextCodeTranslationPipe}} : <span class="Label" style="font-size:10px"> {{LastLoginData | DateTimeToDatePipe}} {{LastLoginData | DateTimeToTimePipe}} </span>
+            <div *ngIf="LastLoginData" style="font-size:10px" class="Label" >
+                Last login : <span  class="Label"  style="font-size:10px"> {{LastLoginData | DateTimeToDatePipe}} {{LastLoginData | DateTimeToTimePipe}} </span>
             </div>
         </td>
 

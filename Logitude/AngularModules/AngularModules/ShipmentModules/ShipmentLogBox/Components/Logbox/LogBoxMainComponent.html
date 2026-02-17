@@ -4,10 +4,10 @@
         color: #909293;
         text-align: center;
         cursor: default;
-        margin-left: 8px;
-        margin-right: 8px;
-        height: 90px;
-        width: 125px;
+        margin-left:8px;
+        margin-right:8px;
+        height:90px;
+        width:125px;
     }
 
     .MenuFiltersCustom {
@@ -16,22 +16,11 @@
         cursor: default;
     }
 
-    /*   .MenuFilters:hover {
+    .MenuFilters:hover {
         text-align: center;
         background-image: url('./Images/LogBox/FilterHover.png');
         background-repeat: no-repeat;
-    }*/
-
-    .LogboxMenuFilters {
     }
-
-
-        .LogboxMenuFilters:hover {
-            text-align: center;
-            background-image: url('./Images/LogBox/FilterHover.png');
-            background-repeat: no-repeat;
-        }
-
 
     .Selected {
         color: white;
@@ -54,70 +43,28 @@
     .MenuFilters .MenuFiltersName {
         font-size: 13px;
     }
-
-    .ShortName {
-        font-size: 13px;
-    }
-
-    .LongName {
-        white-space: initial;
-        font-size: 11px;
-        position: relative;
-        bottom: 13px;
-        white-space: pre-line;
-    }
-
-    .QueryFiltersHighlightColor {
-        /*background-color: red;*/
-        height: 87px;
-        width: 124px;
-        clip-path: polygon(0% 0%, 100% 0, 100% 80%, 50% 100%, 0 80%);
-    }
-
-/*        .QueryFiltersHighlightColor:hover {
-            opacity: 0.7;
-        }
- */
-
-    .PrivateLabelMenuFilters:hover {
-        text-align: center;
-        clip-path: polygon(0% 0%, 100% 0, 100% 80%, 50% 100%, 0 80%);
-        opacity: 0.3; /*
-        background-color: red;*/
-    }
-
-    .PLText {
-        color: #909293;
-        text-align: center;
-        cursor: default;
-        margin-left: 8px;
-        margin-right: 8px;
-        height: 90px;
-        width: 125px;
-    }
 </style>
 
- 
 <table style="overflow-x:auto;overflow-y:hidden;">
-    <tr style="height: 62px;" [ngStyle]="SecondaryColor != null ? {'background-color': SecondaryColor} : {}">
+    <tr style="height: 62px;" [style.background]="isPrivateLabel == true ? '#212E63' : 'transparent'">
         <!--background: #212E63;-->
         <td>
             <table>
                 <tr>
                     <td>
                         <table>
-                            <tr style="height: 21px;">
+                            <tr *ngIf="!DontShowLogboxToolTip" style="height: 21px;">
                                 <td style="height: 21px;">
                                     <table>
                                         <tr>
                                             <td style="vertical-align: middle;width:310px;">
-                                                <span class="Counter" *ngIf="DataSource.rowCount > 1000" style="font-size: 18px; font-weight: bold;" [ngStyle]="MainColor != null ? {'color': MainColor} : {}">1000+ {{SelectedFilter}}</span>
-                                                <span class="Counter" *ngIf="DataSource.rowCount <= 1000" style="font-size: 18px; font-weight: bold;" [ngStyle]="MainColor != null ? {'color': MainColor} : {}">{{DataSource.rowCount}} {{SelectedFilter}}</span>
+                                                <span class="Counter" *ngIf="DataSource.rowCount > 1000" style="font-size: 18px; font-weight: bold;" [style.color]="isPrivateLabel == true ?  'white' : '#1B90CB'">1000+ {{SelectedFilter}}</span>
+                                                <span class="Counter" *ngIf="DataSource.rowCount <= 1000" style="font-size: 18px; font-weight: bold;" [style.color]="isPrivateLabel == true ?  'white' : '#1B90CB'">{{DataSource.rowCount}} {{SelectedFilter}}</span>
                                             </td>
-                                            <td *ngIf="!DontShowLogboxToolTip" style="width: 30px; vertical-align: top;">
+                                            <td style="width: 30px; vertical-align: top;">
                                                 <img style="height:30px;width:30px;margin-right:8px;margin-top:-5px;" src="./Images/lightbulb.png" />
                                             </td>
-                                            <td *ngIf="!DontShowLogboxToolTip" style="vertical-align: middle;width:620px;">
+                                            <td  style="vertical-align: middle;width:620px;">
                                                 <div [style.height.px]="21" style="background-color:#FFF9BA; border:1px solid #FEAC10;  border-radius:3px; -webkit-border-radius:3px; width:calc(100%-2px);">
                                                     <table>
                                                         <!--<tr style="height:5px"><td colspan="2"></td>  </tr>
@@ -130,7 +77,7 @@
 
                                                                 <table style="width:170px;height:22px;margin-left:8px;display:inline;">
                                                                     <tr *ngIf="isPrivateLabel == true">
-                                                                        <td style="width:130px;vertical-align:top">
+                                                                        <td style="width:130px;vertical-align:top"> 
                                                                             You can now define what document types will create a digital sign task for you -
                                                                         </td>
                                                                         <td style="width:40px;vertical-align:top">
@@ -180,24 +127,12 @@
                                                 <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
                                             </td>
 
-
-                                            <td style="width: 5px;">
-                                                <div></div>
-                                            </td>
-
-                                            <td style="width: 21px;">
-                                                <button class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
-                                            </td>
-
-
-
-
                                             <td style="width: 5px;">
                                                 <div></div>
                                             </td>
 
                                             <td style="width: 1px;">
-                                                <button id="{{'LogBoxNEWSHIP' | IdGeneratorAsyncPipe | async}}" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">New Shipment</button>
+                                                <button id="{{'LogBoxNEWSHIP' | IdGeneratorPipe}}" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">New Shipment</button>
                                             </td>
 
                                             <td style="width: 5px;">
@@ -212,15 +147,11 @@
                                                 <SearchTextBox [ObjectTableName]="'Shipment'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [SearchText]="SearchFilter" [PlaceHolder]="'Search Shipments And Documents ...'"></SearchTextBox>
                                             </td>
 
-                                            <td style="width: 10px;">
+                                            <td *ngIf="ToggleIsExportShipments" style="width: 10px;">
                                                 <div></div>
                                             </td>
-                                            <td style="width: 63px; vertical-align: middle; position:relative;">
-                                                <DirectionsFilter *ngIf="ShowDirectionFilters  && !isLogbox" [HideExport]="isLogbox || !IsExportActivated" [ShowCustomFilter]="isLogbox|| IsCustomsActivated" [HideImportDomistic]="isLogbox|| isPrivateLabel" [HideAMANACFilters]="true" [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
-                                            </td>
-
-                                            <td style="width: 7px;">
-                                                <div></div>
+                                            <td *ngIf="ToggleIsExportShipments" style="width: 117px; vertical-align: middle; position:relative;"> 
+                                                <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" [HideImportDomistic]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
                                             </td>
 
                                             <td style="width: 3px;">
@@ -285,7 +216,6 @@
                     <table>
                         <tr>
 
-
                             <td style="min-width: 500px;width:60%; border-right:1px solid #cccccc;">
                                 <table>
                                     <tr style="height:120px;">
@@ -294,18 +224,15 @@
                                                 <tr>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div (mouseenter)="onMouseEnter(AgentShipmentsLabel, 'agent')" (mouseleave)="onMouseLeave(AgentShipmentsLabel, 'agent')"  id="agent" class="MenuFilters" (click)="MenuFiltersClicked(AgentShipmentsLabel,'agent')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == AgentShipmentsLabel) ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == AgentShipmentsLabel) && this.HasQueryFiltersHighlightColor,
-                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor, 'PrivateLabelMenuFilters': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == AgentShipmentsLabel) && !this.HasQueryFiltersHighlightColor">
-                                                                <div  class="MenuFiltersCount">{{AgentShipmentsCount}}</div>
-                                                                <div   [ngClass]="AgentLabelClass">{{AgentShipmentsLabel}}</div>
+                                                            <div class="MenuFilters" (click)="MenuFiltersClicked(AgentShipmentsLabel)" [class.Selected]="SelectedFilter == AgentShipmentsLabel">
+                                                                <div class="MenuFiltersCount">{{AgentShipmentsCount}}</div>
+                                                                <div class="MenuFiltersName">{{AgentShipmentsLabel}}</div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters" (mouseenter)="onMouseEnter('My Shipments', 'myShipment')" (mouseleave)="onMouseLeave('My Shipments', 'myShipment')" id="myShipment" (click)="MenuFiltersClicked('My Shipments','myShipment')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'My Shipments')? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'My Shipments') && this.HasQueryFiltersHighlightColor,
-                                                                 'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters': this.HasQueryFiltersHighlightColor}"
-                                                                 [class.Selected]="(SelectedFilter == 'My Shipments') && !this.HasQueryFiltersHighlightColor">
+                                                            <div class="MenuFilters" (click)="MenuFiltersClicked('My Shipments')" [class.Selected]="SelectedFilter == 'My Shipments'">
                                                                 <div class="MenuFiltersCount">{{MyShipmentsCount}}</div>
                                                                 <div class="MenuFiltersName">My Shipments</div>
                                                             </div>
@@ -313,8 +240,7 @@
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters" (mouseenter)="onMouseEnter('Recent', 'recent')" (mouseleave)="onMouseLeave('Recent', 'recent')" id="recent"  (click)="MenuFiltersClicked('Recent','recent')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'Recent') ? {'background-color': QueryFiltersHighlightColor} : {}" [ngClass]="{'QueryFiltersHighlightColor': (SelectedFilter == 'Recent') && this.HasQueryFiltersHighlightColor,
-                                                                   'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'PrivateLabelMenuFilters': this.HasQueryFiltersHighlightColor}" [class.Selected]="(SelectedFilter == 'Recent') && !this.HasQueryFiltersHighlightColor">
+                                                            <div class="MenuFilters" (click)="MenuFiltersClicked('Recent')" [class.Selected]="SelectedFilter == 'Recent'">
                                                                 <img src="{{RecentImg}}" />
                                                                 <div style="margin-top:3px;" class="MenuFiltersName">Recent</div>
                                                             </div>
@@ -322,8 +248,7 @@
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters"  id="requested" (mouseenter)="onMouseEnter(RequestedDocsLable, 'requested')" (mouseleave)="onMouseLeave(RequestedDocsLable, 'requested')" (click)="MenuFiltersClicked(RequestedDocsLable,'requested')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == RequestedDocsLable) ? {'background-color': QueryFiltersHighlightColor} : {}" [class.Selected]="(SelectedFilter == RequestedDocsLable) && !this.HasQueryFiltersHighlightColor"
-                                                                 [ngClass]="{'PrivateLabelMenuFilters':  this.HasQueryFiltersHighlightColor,'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor, 'QueryFiltersHighlightColor': (SelectedFilter == RequestedDocsLable) && this.HasQueryFiltersHighlightColor }">
+                                                            <div class="MenuFilters" (click)="MenuFiltersClicked(RequestedDocsLable)" [class.Selected]="SelectedFilter == RequestedDocsLable">
                                                                 <div class="MenuFiltersCount" [class.MenuFiltersCustom]="RequestedDocsLable == 'Action Required'">{{RequestedCount}}</div>
                                                                 <div class="MenuFiltersName">{{RequestedDocsLable}}</div>
                                                             </div>
@@ -331,8 +256,7 @@
                                                     </td>
                                                     <td style="width: 130px;">
                                                         <div style="margin-bottom:10px;margin-top:20px;border-right:1px solid #cccccc;">
-                                                            <div class="MenuFilters" id="allShipments" (mouseenter)="onMouseEnter('All Shipments', 'allShipments')" (mouseleave)="onMouseLeave('All Shipments', 'allShipments')"  (click)="MenuFiltersClicked('All Shipments','allShipments')" [ngStyle]="QueryFiltersHighlightColor != null && (SelectedFilter == 'All Shipments') ? {'background-color': QueryFiltersHighlightColor} : {}" [class.Selected]="(SelectedFilter == 'All Shipments') && !this.HasQueryFiltersHighlightColor"
-                                                                 [ngClass]="{'PLText':this.HasQueryFiltersHighlightColor ,'PrivateLabelMenuFilters':  this.HasQueryFiltersHighlightColor,'LogboxMenuFilters': !this.HasQueryFiltersHighlightColor,  'QueryFiltersHighlightColor': (SelectedFilter == 'All Shipments') && this.HasQueryFiltersHighlightColor }">
+                                                            <div class="MenuFilters" (click)="MenuFiltersClicked('All Shipments')" [class.Selected]="SelectedFilter == 'All Shipments'">
                                                                 <div class="MenuFiltersCount">{{AllShipmentsCount}}</div>
                                                                 <div class="MenuFiltersName">All Shipments</div>
                                                             </div>
@@ -348,10 +272,10 @@
                                     <tr>
                                         <td>
                                             <div style="height: Calc(100% - 1px);background-color:white;border-radius: 0 0 0 7px;">
-                                                <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
-                                                                  [columns]="columns" [autoLoad]="false" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)" (ColumnResisedevent)="ColumnResisedevent($event)"
-                                                                  [SearchFieldchangeevent]="SearchFieldchangeevent" [EnableRowHoverVisibility]="true" [RowHoverVisibilityQueryName]="SelectedFilter" (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)" [HoverTemplateIndex]="HoverTemplateIndex">
-                                                </logitude-grid-v2>
+                                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'Shipment'" [IgnoreRowHoverVisibilityQueryName]="true" [ShowArrow]="true" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                               [columns]="columns" [autoLoad]="true" [rows]="items" [CustomColumnsReady]="CustomColumnsReady" [SelectFirstRow]="true" (FirstRowSelected)="OnFirstRowSelected($event)"
+                                                               [SearchFieldchangeevent]="SearchFieldchangeevent" [EnableRowHoverVisibility]="true" [RowHoverVisibilityQueryName]="SelectedFilter" (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)" [HoverTemplateIndex]="HoverTemplateIndex">
+                                                </logitude-grid>
                                             </div>
                                         </td>
                                     </tr>
@@ -360,7 +284,7 @@
 
                             <td style="width: 35%; min-width: 415px; vertical-align: top;">
                                 <div class="MediaFill">
-                                    <LogBoxDocuments [IsExportActivated]="IsExportActivated" [ShipmentSelectedEvent]="ShipmentSelectedEvent" [OnImporterShipmentsFilterChanged]="OnImporterShipmentsFilterChanged" [SearchText]="SearchFilter" (ArchiveDone)="ArchiveDone($event)"></LogBoxDocuments>
+                                    <LogBoxDocuments [ShipmentSelectedEvent]="ShipmentSelectedEvent" [OnImporterShipmentsFilterChanged]="OnImporterShipmentsFilterChanged" [SearchText]="SearchFilter" (ArchiveDone)="ArchiveDone($event)"></LogBoxDocuments>
                                 </div>
                             </td>
                         </tr>

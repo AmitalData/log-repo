@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -12,13 +12,10 @@ import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
 import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {LastRate} from '../../../../../Common/Services/CurrencyRatesService';
-import {ShipmentGenerator} from '../../../../../Shipment/Tools';
-import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
-import { ShipmentDomainService } from '../../../../../Shipment/Services/ShipmentDomainService';
-import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
-import { ShipmentPMService } from '../../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import {ShipmentTool, ShipmentGenerator} from '../../../../../Shipment/Tools';
 
-@Component({    
+@Component({
+    moduleId: module.id,
     templateUrl: './QuotesComponent.html',
 })
 
@@ -30,36 +27,14 @@ export class QuotesComponent {
     public IsNoData: boolean = false;
     private myService: QuoteListService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private shipmentDomainService: ShipmentDomainService;
-    private EntityArgs: EntityArgs;
-    public ExpirationDateComparisonDate: Date;
     constructor() {
-        this.myService = new QuoteListService();
-        this.shipmentDomainService = new ShipmentDomainService();
+        this.myService = new QuoteListService();        
     }
 
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.AllRates = args['AllRates'];
-        this.EntityArgs = args['EntityArgs'];
-        this.SetExpirationDateComparisonDate();
-        this.LoadData();        
-    }
-    SetExpirationDateComparisonDate() {
-        var myExpiredDateFilter: Date;
-        if (this.EntityPM.MainCarriageATD != null) {
-            myExpiredDateFilter = this.EntityPM.MainCarriageATD;
-        }
-
-        else if (this.EntityPM.MainCarriageETD != null) {
-            myExpiredDateFilter = this.EntityPM.MainCarriageETD;
-        }
-
-        else {
-            myExpiredDateFilter = DateTool.GetCurrentDateAsUtc();
-        }
-
-        this.ExpirationDateComparisonDate = myExpiredDateFilter;
+        this.LoadData();
     }
 
     private selectedItem: QuoteItem = null;
@@ -75,15 +50,6 @@ export class QuotesComponent {
     set IsShowingUsedSpotRateQuotes(value: boolean) {
         if (this.isShowingUsedSpotRateQuotes != value) {
             this.isShowingUsedSpotRateQuotes = value;
-            this.LoadData();
-        }
-    }
-
-    private isShowingExpiredQuotes: boolean = false;
-    get IsShowingExpiredQuotes() { return this.isShowingExpiredQuotes; }
-    set IsShowingExpiredQuotes(value: boolean) {
-        if (this.isShowingExpiredQuotes != value) {
-            this.isShowingExpiredQuotes = value;
             this.LoadData();
         }
     }
@@ -107,8 +73,7 @@ export class QuotesComponent {
         filters.PageIndex = 0;
         filters.PageSize = 100;
         filters.SortBy = "OpenDate";
-        filters.SortDirection = "Descending";        
-
+        filters.SortDirection = "Descending";
         var myToDate: Date = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
         myToDate.setUTCHours(23);
         myToDate.setUTCMinutes(59);
@@ -122,11 +87,7 @@ export class QuotesComponent {
         filters.addAdditionalFilter("ToPortId", this.EntityPM.MainCarriageFinalDestinationPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("IsShowingUsedSpotRateQuotes", this.IsShowingUsedSpotRateQuotes, null, null, "Equals", true, false, false, "Boolean");
         filters.addAdditionalFilter("StartDate", myToDate, null, null, "LessThanOrEqual", false, false, false, "Date");
-        filters.addAdditionalFilter("IsShowingExpiredQuotes", this.IsShowingExpiredQuotes, null, null, "Equals", true, false, false, "Boolean");
 
-        if (!this.IsShowingExpiredQuotes) {
-            filters.addAdditionalFilter("ExpirationDate", this.ExpirationDateComparisonDate, null, null, "GreaterThanOrEqual", false, false, false, "Date");
-        }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
             filters.addAdditionalFilter("RoutingRatesAgentId", this.EntityPM.AgentId, null, null, "StartsWith", true, false, false, "string");
@@ -151,7 +112,7 @@ export class QuotesComponent {
                     }
 
                     list.forEach(item => {
-                        this.ItemsSource.push(new QuoteItem(item, this.EntityPM));
+                        this.ItemsSource.push(new QuoteItem(item, this.EntityPM.GrossWeight));
                     });
                 }
             }
@@ -188,73 +149,23 @@ export class QuotesComponent {
     }
 
     GenerateButtonClicked() {
-        if (this.SelectedItem == null) {
-            return;
-        }
+        if (this.SelectedItem) {
+            if (this.SelectedItem.StageName == "Used" || this.SelectedItem.StageName == "Accepted") {
+                this.LoadQuotePM(this.SelectedItem.Id);
+            }
 
-        if (this.SelectedItem.StageName != "Used" && this.SelectedItem.StageName != "Accepted") {
-            var messageWindow = new MessageWindow();
-            messageWindow.Height = 150;
-            messageWindow.Show(TextCodeTranslator.Translate("Shipment.M.GenerateIsAvailableAfterQuoteApproval"));
-            return;
-        }
-
-        var isPayablesConnectedToInvoice = this.EntityPM.ShipmentPayables.filter(f => (f.ShipmentPayableLineStatusCode == 'PACC' || f.ShipmentPayableLineStatusCode == 'ACCT') && f.QuoteChargeId != null).length > 0;
-        var isReceivablesConnectedToInvoice = this.EntityPM.ShipmentReceivables.filter(f => (f.ShipmentReceivableLineStatusCode == 'ACCT' || f.ShipmentReceivableLineStatusCode == 'DRFT') && f.QuoteChargeId != null).length > 0;
-         if (this.EntityPM.QuoteId != null) {
-            if (isPayablesConnectedToInvoice|| isReceivablesConnectedToInvoice) {
+            else {
                 var messageWindow = new MessageWindow();
-                messageWindow.Width = 450;
-                messageWindow.Show("You cannot connect a quote to this shipment while some Receivables/Payables generated from a different quote are connected to an invoice.");
-            }
-            else if (this.EntityPM.QuoteId != null) {
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Show("There is already a quote connected to this shipment. Connecting this new one will cause the previous quote to be disconnected. Please confirm.");
-                confirmWindow.Width = 450;
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.DisconnectQuote();
-                    }
-                });
+                messageWindow.Height = 150;
+                messageWindow.Show(TextCodeTranslator.Translate("Shipment.M.GenerateIsAvailableAfterQuoteApproval"));
             }
         }
-        else {
-            this.GenerateReceivablesPayables();
-        }
-    }
-
-    GenerateReceivablesPayables() {
-        this.LoadQuotePM(this.SelectedItem.Id);
-    }
-
-    DisconnectQuote() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-        this.shipmentDomainService.DisconnectQuote(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.ReloadShipment();
-                    this.CurrentSession.FireEvent("LoadConnectedShipments");
-                }
-                else {
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            }
-        });
-    }
-    
-    private ReloadShipment() {
-        var myService: ShipmentPMService = new ShipmentPMService();
-        myService.get(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                this.EntityPM = myResponse.Result;
-                this.EntityArgs.EditComponent.EntityPM = this.EntityPM;
-                this.GenerateReceivablesPayables();
-            }
-        });
     }
 
     LoadQuotePM(QuoteId: string) {
         if (!AppTool.IsNullOrEmpty(QuoteId)) {
+
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new QuotePMService();
             myService.get(QuoteId).subscribe((myResponse: ServiceResponse) => {
@@ -281,7 +192,6 @@ export class QuotesComponent {
         if (this.BaseQuote) {
 
             this.EntityPM.QuoteId = this.BaseQuote.Id;
-            this.EntityPM.QuoteNumber = this.BaseQuote.QuoteNumber;
 
             var Generator = new ShipmentGenerator(this.EntityPM, this.AllRates);
 
@@ -290,7 +200,7 @@ export class QuotesComponent {
             if (this.IsGeneratePayables) {
                 Generator.GeneratePayablesFromQuote(this.BaseQuote);                
             }
-            this.EntityArgs.EditComponent.SaveChanges();
+
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
@@ -298,14 +208,11 @@ export class QuotesComponent {
 class QuoteItem {
     public Entity: QuoteList = null;
     private shipmentGrossWeight: number = 0;
-    private shipmentPM: ShipmentPM;
-    constructor(entity: QuoteList, shipment: ShipmentPM) {
+    constructor(entity: QuoteList, shipmentGrossWeight: number) {
         this.Entity = entity;
-        this.shipmentPM = shipment;
-        this.shipmentGrossWeight = shipment.GrossWeight;
+        this.shipmentGrossWeight = shipmentGrossWeight;
         this.SetDiffernece();
         this.SetStageBackground();
-        this.SetValidByDate();
     }
 
     get Id() { return this.Entity.Id; }
@@ -314,28 +221,14 @@ class QuoteItem {
     get ExpirationDate() { return this.Entity.ExpirationDate; }
     get StageName() { return this.Entity.StageName; }
     get StartDate() { return this.Entity.StartDate; }
+
     get QuoteTypeName() { return this.Entity.QuoteTypeName; }
     get CarrierName() { return this.Entity.CarrierName; }
     get ChargeableWeight() { return this.Entity.ChargeableWeight; }
     get GrossWeight() { return this.Entity.GrossWeight; }
     get UsageCount() { return this.Entity.UsageCount == 0 ? null : this.Entity.UsageCount; }
+
     get Notes() { return this.Entity.Notes; }
-    get ValidBy() { return !AppTool.IsNullOrEmpty(this.Entity.ValidByTypeName) ? this.Entity.ValidByTypeName : "Today"; }
-
-    public ValidByDate: Date;
-    private SetValidByDate() {
-        if (this.shipmentPM.MainCarriageATD != null) {
-            this.ValidByDate = this.shipmentPM.MainCarriageATD;
-        }
-
-        else if (this.shipmentPM.MainCarriageETD != null) {
-            this.ValidByDate = this.shipmentPM.MainCarriageETD;
-        }
-
-        else {
-            this.ValidByDate = DateTool.GetDateParts(DateTool.GetCurrentDateAsUtc()).DateObject;
-        }
-    }    
 
     public WeightDiffernece: number = 0;
     SetDiffernece() {

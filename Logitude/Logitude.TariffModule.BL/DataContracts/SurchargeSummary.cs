@@ -22,12 +22,6 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string SellerId { get; set; }
         public string SellerName { get; set; }
         public decimal? MinPrice { get; set; }
-        public decimal? ActualMinPrice { get; set; }
         public bool IsMinIconVisible { get; set; }
-        public string LineId { get; set; }
-        public bool IsAllIn { get; set; }
-        public string CurrencySign { get; set; }
-        public bool IsDifferentCurrency { get; set; }
-        public List<ContainersPrice> ContainersPrices { get; set; }
     }
 }

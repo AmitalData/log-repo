@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -37,26 +36,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public Screen GetSingleScreen(string id)
         {
-            return (from a in context.Screens.Include("ObjectTable")
+            return (from a in context.Screens
                     where a.Id == id
                     select a).FirstOrDefault();
         }
 
-        public ScreenModification GetScreenModificationByScreen(string screenCode, int tenant)
+        public ScreenModification GetScreenModificationByScreen(string screenid, int tenant)
         {
             return (from a in context.ScreenModifications
-                    where a.ScreenCode == screenCode && a.Tenant == tenant
+                    where a.ScreenId == screenid && a.Tenant == tenant
                     select a).FirstOrDefault();
 
         }
 
-        public Screen GetByCode(string code, int tenant)
-        {
-            return (from a in context.Screens
-                    where a.Code == code && a.Tenant == tenant
-                    select a).FirstOrDefault();
-
-        }
+      
 
         public void Add(Screen entity)
         {

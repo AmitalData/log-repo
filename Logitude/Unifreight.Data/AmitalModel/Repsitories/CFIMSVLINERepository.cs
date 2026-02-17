@@ -22,10 +22,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public CFIMSVLINE GetSingle(long FILENO, string COMID, int PAGENUM, int LINENUM, string QUETYPE)
+        public CFIMSVLINE GetSingle(long FILENO, string COMID, int PAGENUM, int LINENUM)
         {
             return (from a in context.CFIMSVLINEs
-                    where a.FILENO == FILENO && a.COMID == COMID && a.PAGENUM == PAGENUM && a.LINENUM == LINENUM && a.QUETYPE == QUETYPE
+                    where a.FILENO == FILENO && a.COMID == COMID && a.PAGENUM == PAGENUM && a.LINENUM == LINENUM
                     select a).FirstOrDefault();
         }
 
@@ -81,7 +81,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public CFIMSVLINE GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as CFIMSVLINEKeys;
-            return this.GetSingle(keys.FILENO, keys.COMID, keys.PAGENUM, keys.LINENUM, keys.QUETYPE);
+            return this.GetSingle(keys.FILENO, keys.COMID, keys.PAGENUM, keys.LINENUM);
         }
 
     }

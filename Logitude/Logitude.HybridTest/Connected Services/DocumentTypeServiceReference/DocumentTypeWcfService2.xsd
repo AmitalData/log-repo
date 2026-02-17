@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9996/WcfApi/DocumentTypeWcfService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" />
+  <xs:complexType name="DocumentTypePM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AgentRoleId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomControl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerRoleId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentTypeCategoryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentTypeCategoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentTypeCopies" nillable="true" type="tns:ArrayOfDocumentTypeCopyPM" />
+      <xs:element minOccurs="0" name="DocumentTypeCustomFields" nillable="true" type="tns:ArrayOfDocumentTypeCustomFieldPM" />
+      <xs:element minOccurs="0" name="DocumentTypeDefaultEditorTool" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentTypeDefaultHTMLTemplateId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentTypeDefaultReportTemplateId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FollowUpTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FollowUpTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAgentSharedInDirect" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAgentSharedInHouse" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAgentSharedInMaster" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAgentView" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAir" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAirDigitalSignRequired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCopiedAtSignup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsCustomerView" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDirect" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDocIn" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDocOut" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDocumentOneTimePrintLimited" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsEnabledForCustomers" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsHouse" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInland" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInlandDigitalSignRequired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsMaster" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOcean" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOceanDigitalSignRequired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsReadOnly" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsSystemAdditionalPrintingFields" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LimitedPrintCopyId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ObjectTableId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ObjectTableName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderBy" type="xs:int" />
+      <xs:element minOccurs="0" name="PrintingFieldsScreenCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SharedDocumentTypeCopyId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TemplateFormatCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentTypePM" nillable="true" type="tns:DocumentTypePM" />
+  <xs:complexType name="ArrayOfDocumentTypeCopyPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentTypeCopyPM" nillable="true" type="tns:DocumentTypeCopyPM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentTypeCopyPM" nillable="true" type="tns:ArrayOfDocumentTypeCopyPM" />
+  <xs:complexType name="DocumentTypeCopyPM">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q1:ChangeSetOperation" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HasDocumentOutCopy" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IndexOrder" type="xs:int" />
+      <xs:element minOccurs="0" name="IsSelectedByDefault" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentTypeCopyPM" nillable="true" type="tns:DocumentTypeCopyPM" />
+  <xs:complexType name="ArrayOfDocumentTypeCustomFieldPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentTypeCustomFieldPM" nillable="true" type="tns:DocumentTypeCustomFieldPM" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentTypeCustomFieldPM" nillable="true" type="tns:ArrayOfDocumentTypeCustomFieldPM" />
+  <xs:complexType name="DocumentTypeCustomFieldPM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DefaultValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentTypeId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FieldCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FieldDataTypeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FieldValue" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IndexOrder" type="xs:int" />
+      <xs:element minOccurs="0" name="IsRequired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MultiLine" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tenant" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentTypeCustomFieldPM" nillable="true" type="tns:DocumentTypeCustomFieldPM" />
+</xs:schema>

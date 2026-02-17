@@ -8,118 +8,91 @@
 //------------------------------------------------------------------------------
 
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
-
-
 export class TextCodePM {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-		            this.UIProperties = new UIProperties(this); 
+          this.UIProperties = new UIProperties; 
           this.IsDirty = false;
       }
  	 
     
     private id: string;
     public get Id() { return this.id; }
-    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+    public set Id(newValue: string) { this.id = newValue; this.MarkAsDirty(); }
        
 	 
     private code: string;
     public get Code() { return this.code; }
-    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+    public set Code(newValue: string) { this.code = newValue; this.MarkAsDirty(); }
        
 	 
     private defaultText: string;
     public get DefaultText() { return this.defaultText; }
-    public set DefaultText(newValue: string) { if (this.defaultText != newValue) { this.defaultText = newValue; this.MarkAsDirty("DefaultText"); } }
+    public set DefaultText(newValue: string) { this.defaultText = newValue; this.MarkAsDirty(); }
        
 	 
     private objectTableId: string;
     public get ObjectTableId() { return this.objectTableId; }
-    public set ObjectTableId(newValue: string) { if (this.objectTableId != newValue) { this.objectTableId = newValue; this.MarkAsDirty("ObjectTableId"); } }
+    public set ObjectTableId(newValue: string) { this.objectTableId = newValue; this.MarkAsDirty(); }
        
 	 
     private textCodeTypeCode: string;
     public get TextCodeTypeCode() { return this.textCodeTypeCode; }
-    public set TextCodeTypeCode(newValue: string) { if (this.textCodeTypeCode != newValue) { this.textCodeTypeCode = newValue; this.MarkAsDirty("TextCodeTypeCode"); } }
+    public set TextCodeTypeCode(newValue: string) { this.textCodeTypeCode = newValue; this.MarkAsDirty(); }
        
 	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
-    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+    public set Tenant(newValue: number) { this.tenant = newValue; this.MarkAsDirty(); }
        
 	 
     private defaultTextPlural: string;
     public get DefaultTextPlural() { return this.defaultTextPlural; }
-    public set DefaultTextPlural(newValue: string) { if (this.defaultTextPlural != newValue) { this.defaultTextPlural = newValue; this.MarkAsDirty("DefaultTextPlural"); } }
+    public set DefaultTextPlural(newValue: string) { this.defaultTextPlural = newValue; this.MarkAsDirty(); }
        
 	 
     private objectTableName: string;
     public get ObjectTableName() { return this.objectTableName; }
-    public set ObjectTableName(newValue: string) { if (this.objectTableName != newValue) { this.objectTableName = newValue; this.MarkAsDirty("ObjectTableName"); } }
+    public set ObjectTableName(newValue: string) { this.objectTableName = newValue; this.MarkAsDirty(); }
        
 	 
     private isSpellChecked: boolean;
     public get IsSpellChecked() { return this.isSpellChecked; }
-    public set IsSpellChecked(newValue: boolean) { if (this.isSpellChecked != newValue) { this.isSpellChecked = newValue; this.MarkAsDirty("IsSpellChecked"); } }
+    public set IsSpellChecked(newValue: boolean) { this.isSpellChecked = newValue; this.MarkAsDirty(); }
        
 	 
     private spellCheckDate: Date;
     public get SpellCheckDate() { return this.spellCheckDate; }
-    public set SpellCheckDate(newValue: Date) { if (this.spellCheckDate != newValue) { this.spellCheckDate = newValue; this.MarkAsDirty("SpellCheckDate"); } }
+    public set SpellCheckDate(newValue: Date) { this.spellCheckDate = newValue; this.MarkAsDirty(); }
        
 	 
     private spellCheckedByUserId: string;
     public get SpellCheckedByUserId() { return this.spellCheckedByUserId; }
-    public set SpellCheckedByUserId(newValue: string) { if (this.spellCheckedByUserId != newValue) { this.spellCheckedByUserId = newValue; this.MarkAsDirty("SpellCheckedByUserId"); } }
+    public set SpellCheckedByUserId(newValue: string) { this.spellCheckedByUserId = newValue; this.MarkAsDirty(); }
        
 	 
     private spellCheckedByUserName: string;
     public get SpellCheckedByUserName() { return this.spellCheckedByUserName; }
-    public set SpellCheckedByUserName(newValue: string) { if (this.spellCheckedByUserName != newValue) { this.spellCheckedByUserName = newValue; this.MarkAsDirty("SpellCheckedByUserName"); } }
+    public set SpellCheckedByUserName(newValue: string) { this.spellCheckedByUserName = newValue; this.MarkAsDirty(); }
        
 	 
     private inActive: boolean;
     public get InActive() { return this.inActive; }
-    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+    public set InActive(newValue: boolean) { this.inActive = newValue; this.MarkAsDirty(); }
        
 	 
     private localDefaultText: string;
     public get LocalDefaultText() { return this.localDefaultText; }
-    public set LocalDefaultText(newValue: string) { if (this.localDefaultText != newValue) { this.localDefaultText = newValue; this.MarkAsDirty("LocalDefaultText"); } }
+    public set LocalDefaultText(newValue: string) { this.localDefaultText = newValue; this.MarkAsDirty(); }
        
 	 
 
     public OldEntityPM: TextCodePM;
 		
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
+    MarkAsDirty() {
         this.IsDirty = true;
 		  	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TextCode");
-           
-        }
-	 }
     }
-    private MyClone: TextCodePM;
-
-    public CloneMe() {
-        ServiceHelper.CloneEntityPM(this);
-    }
-
-    public RejectChanges() {
-        ServiceHelper.RejectEntityPMChanges(this);
-    }
-
 }

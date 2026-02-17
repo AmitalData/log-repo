@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WebFreight.Web.CustomWebServices.SignChunks.Common
 {
     [ServiceContract]
-    public interface IDowonloadChunksSignService
+    public interface IDowonloadChunksSignService 
     {
         [OperationContract]
         ResSignDataDownloader RegisterDownloadChunkOfBlobToSign(ReqSignData reqData);
@@ -22,8 +22,8 @@ namespace WebFreight.Web.CustomWebServices.SignChunks.Common
         //    );
 
     }
-
-
+    
+    
 
     [DataContract]
     public class ReqDataBase
@@ -31,7 +31,7 @@ namespace WebFreight.Web.CustomWebServices.SignChunks.Common
         [DataMember]
         public int? MaxChunkSize { get; set; }
     }
-
+    
     [DataContract]
     public class CreateUploadSignedBlobReq : BlobFile
     {
@@ -44,7 +44,7 @@ namespace WebFreight.Web.CustomWebServices.SignChunks.Common
         [DataMember]
         public int currTenant { get; set; }
 
-
+        
     }
 
     [DataContract]
@@ -96,54 +96,4 @@ namespace WebFreight.Web.CustomWebServices.SignChunks.Common
 
 
     }
-
-
-
-    [DataContract]
-    public class ExportReqSignData : ReqSignData
-    {
-        [DataMember]
-        public int Tenant { get; set; }
-
-
-        [DataMember]
-        public bool ToCheckSignCertificate { get; set; }
-
-    }
-
-    [DataContract]
-    public class ResponseExportSignTask : ReceiveBytesToSignResponse
-    {
-
-        [DataMember]
-        public string queueId { get; set; }
-
-
-        [DataMember]
-        public bool HasError { get; set; }
-        [DataMember]
-        public bool IsAuthenticationError { get; set; }
-        [DataMember]
-        public string ErrorMessage { get; set; }
-        [DataMember]
-        public string InnerErrorMessage { get; set; }
-
-
-        [DataMember]
-        public SignCertificateCheck ResultSignCertificateCheck { get; set; }
-
-
-
-    }
-
-    [DataContract]
-    public class SignCertificateCheck
-    {
-        [DataMember]
-        public bool isCompanySignOn { get; set; }
-        [DataMember]
-        public bool isPersonalSignOn { get; set; }
-
-    }
-
 }

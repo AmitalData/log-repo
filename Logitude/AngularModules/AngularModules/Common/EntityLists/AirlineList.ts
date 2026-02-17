@@ -80,9 +80,5 @@ export class AirlineList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
-		StateName: string;
-		GLAccountNumber: string;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
 	
 }

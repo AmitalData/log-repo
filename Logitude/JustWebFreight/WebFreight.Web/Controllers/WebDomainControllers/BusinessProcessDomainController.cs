@@ -1,9 +1,10 @@
-﻿using Logitude.CRM.Data.EntityPOCOs;
+﻿using Logitude.BL.Security;
+using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.Repsitories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -25,7 +25,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 int myTenant = authToken.Tenant;
 
                 IInfrastructureContext context = InfrastructureContext.GetContext(myTenant);
@@ -109,7 +108,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 LBPTeamMemberRepository LBPTeamMemberRepository = new LBPTeamMemberRepository(myTenant);
                 IQueryable<LBPTeamMember> members = LBPTeamMemberRepository.GetAll(myTenant).Where(d => d.MemberUserId != null && d.MemberUserId == loggedUserId);
 

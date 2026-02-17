@@ -1,7 +1,7 @@
 
 
 declare var window: any;
-import { Component, AfterViewInit, OnInit, ViewChildren, QueryList} from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList} from '@angular/core';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
@@ -66,13 +66,13 @@ import { ShipmentPickUpDeliverySL } from '../../../Common/DataContracts/Shipment
 import {CitySelectionArgs} from '../../../Common/Args';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'SharedManifestAdditionalComponent',
     templateUrl: './SharedManifestAdditionalComponent.html',
     providers: [SharedAgentManifestService, AgentSharedManifestPMService,EntityPMService],
 })
 
-export class SharedManifestAdditionalComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class SharedManifestAdditionalComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Shipment";
     public DataContext = this;
     private myAddressListService: AddressListService;
@@ -221,6 +221,16 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
     OurSideShipmentPickUp: ShipmentPickUpDeliverySL;
     OurSideShipmentDelivery: ShipmentPickUpDeliverySL;
 
+
+
+
+
+
+
+
+
+
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, public _agentSharedManifestPMService: AgentSharedManifestPMService, public entityPMService:EntityPMService) {
         super();
@@ -243,9 +253,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
     }
 
-    ngAfterViewInit() {
-        this.LoadChildComponent();
-    }
 
     //  Properites
 
@@ -1398,6 +1405,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         if (this.ManifestSL && this.CurrentEntity) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
+            this.RunComponent();
             this.FullShipmentProperites();
             this.BuildAgentSide();
             this.BuildAgentShipmentPickUpDelivey();
@@ -1848,7 +1856,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         if (this.AgentSideData.Shipper && !this.IsConsolShipment) {
             var ShipperTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.AgentSideData.Shipper.Code && f.ObjectTableName == "ShipperCard")[0];
             if (ShipperTranslation) {
-                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(ShipperTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(ShipperTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
             
                     if (!pmResponse.HasError) {
@@ -1873,7 +1881,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         if (this.AgentSideData.Consignee && !this.IsConsolShipment) {
             var consigneeTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.AgentSideData.Consignee.Code && f.ObjectTableName == "ConsigneeCard")[0];
             if (consigneeTranslation) {
-                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(consigneeTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(consigneeTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
          
                     if (!pmResponse.HasError) {
@@ -2066,7 +2074,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
            
             var carrierTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.AgentSideData.CarrierCode && f.ObjectTableName == "Carrier")[0];
             if (carrierTranslation) {
-                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(carrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(carrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
          
                     if (!pmResponse.HasError) {
@@ -2089,7 +2097,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
             var shipment1CarrierTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.Transshipment1CarrierCode && f.ObjectTableName == "Transshipment1Carrier")[0];
             if (shipment1CarrierTranslation) {
-                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipment1CarrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipment1CarrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
           
                     if (!pmResponse.HasError) {
@@ -2112,7 +2120,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
             var transshipment2CarrierTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.Transshipment2CarrierCode && f.ObjectTableName == "Transshipment2Carrier")[0];
             if (transshipment2CarrierTranslation) {
-                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(transshipment2CarrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(transshipment2CarrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
               
                     if (!pmResponse.HasError) {
@@ -2135,7 +2143,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
             var transshipment3CarrierTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.ManifestSL.Transshipment3CarrierCode && f.ObjectTableName == "Transshipment3Carrier")[0];
             if (transshipment3CarrierTranslation) {
-                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(transshipment3CarrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(transshipment3CarrierTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {
@@ -2395,7 +2403,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     var notify1Translation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == this.AgentSideData.Notify1.Code && f.ObjectTableName == "Notify1Card")[0];
                     if (notify1Translation) {
 
-                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(notify1Translation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(notify1Translation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                             var pmResponse: ServiceResponse = res;
  
                             if (!pmResponse.HasError) {
@@ -2990,7 +2998,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             title = "New Shipping Line";
         }
 
-        this._entityResourceService.getEntityResourceByTableName(objecttableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(objecttableName, 0).subscribe(response => {
 
             var windowArgs: any = {};
             windowArgs.DefaultValues = defaultValues;
@@ -3504,7 +3512,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
         this.EntityPM.IsCreatedFromAgentSharedManifest = true;
-        this.myShipmentPMService.insert(this.EntityPM).subscribe((res:any) => {
+        this.myShipmentPMService.insert(this.EntityPM).subscribe(res => {
        
             var shipResponse: ServiceResponse = res;
             if (!shipResponse.HasError) {
@@ -3514,7 +3522,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 }
          
 
-                this._agentSharedManifestPMService.update(this.CurrentEntity).subscribe((response:any) => {
+                this._agentSharedManifestPMService.update(this.CurrentEntity).subscribe(response => {
                     this.CurrentSession.StopBusyIndicator();
                   
                     if (!response.HasError) {
@@ -3742,7 +3750,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     // Shipper Translation
                     var shipmentPickUpFromPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentshipmentPickUpDelivery.FromPartner.Code && f.ObjectTableName == "Shipment" + entityName + "FromPartner")[0];
                     if (shipmentPickUpFromPartnerTranslation) {
-                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpFromPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpFromPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                             var pmResponse: ServiceResponse = res;
 
                             if (!pmResponse.HasError) {
@@ -3870,7 +3878,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     // Shipper Translation
                     var shipmentPickUpToPartnerTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentshipmentPickUpDelivery.ToPartner.Code && f.ObjectTableName == "Shipment" + entityName + "ToPartner")[0];
                     if (shipmentPickUpToPartnerTranslation) {
-                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpToPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                        this._sharedAgentManifestService.getSharedAgentManifestTransLateIdByCode(shipmentPickUpToPartnerTranslation.MyCode, SessionInfo.LoggedUserTenant).subscribe(res => {
                             var pmResponse: ServiceResponse = res;
 
                             if (!pmResponse.HasError) {
@@ -4035,9 +4043,27 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
 
-    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;   
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private timerToken: any;
+    private Retries: number = 0;
     private GeneratedComponent: any;
 
+    RunComponent() {
+        if (this.AllLocations) {
+
+            if (this.AllLocations.length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.LoadChildComponent();
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
     
     LoadChildComponent() {
         if (this.IsLoadAdditionalScreen) {
@@ -4072,6 +4098,19 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             }
         }
     }
+
+    RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
 
     StopBusyIndicator() {
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -34,8 +34,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             var query2 = from entity in iQueryable
                          select new TermsofUseList()
                          {
-                             Id = entity.Id,
-                             VersionNumber = entity.VersionNumber,
+                             Version = entity.Version,
                              Date = entity.Date,
                          };
             return query2;
@@ -53,14 +52,12 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             TermsofUsePM entityPm = termsofUseQuery.GetSinglePM(toudate, version);
             TermsofUseList entityList = new TermsofUseList()
             {
-                Id = entityPm.Id,
-                VersionNumber = entityPm.VersionNumber,
+                Version = entityPm.Version,
                 Date = entityPm.Date,
             };
             return entityList;
         }
 
-        // should be by Id now?
         public TermsofUsePM GetTermsofUseByVersion(int version)
         {
             termsofUseQuery = new TermsofUseQuery(version);
@@ -72,24 +69,23 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(termsofUse.Tenant);
+                objectContext = CommonDataContext.GetContext(termsofUse.Version);
             }
             termsofUseRepository = new TermsofUseRepository(objectContext);
             termsofUseQuery = new TermsofUseQuery(termsofUseRepository);
-            
-            bool exist = termsofUseQuery.GetSingleById(termsofUse.Id) != null ? true : false;
+
+            bool exist = termsofUseQuery.GetSinglePMByVersion(termsofUse.Version) != null ? true : false;
             if (!exist)
             {
                 TermsofUse newTermsofUse = new TermsofUse();
-                newTermsofUse.VersionNumber = termsofUse.VersionNumber;
-                newTermsofUse.Id = termsofUse.Id; 
+                newTermsofUse.Version = termsofUse.Version;
                 MapTermsofUseTermsofUsePM(termsofUse, newTermsofUse);
                 termsofUseRepository.Add(newTermsofUse);
             }
 
             else
-            { 
-                string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", termsofUse.Tenant);
+            {
+                string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", termsofUse.Version);
                 msg = msg.Replace("%Entity", "TermsofUse");
                 throw new Exception(msg);
             }
@@ -105,25 +101,25 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
            
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(currentTermsofUse.Tenant);
+                objectContext = CommonDataContext.GetContext(currentTermsofUse.Version);
             }
             termsofUseRepository = new TermsofUseRepository(objectContext);
 
-            bool exist = (from a in termsofUseRepository.GetTermsofUsesByVersion(currentTermsofUse.VersionNumber)
+            bool exist = (from a in termsofUseRepository.GetTermsofUsesByVersion(currentTermsofUse.Version)
                           where
                           a.Date == currentTermsofUse.Date
-                          && a.Id == currentTermsofUse.Id
+                          && a.Version == currentTermsofUse.Version
                           select a).Any();
 
             if (!exist)
             {
-                TermsofUse entity = termsofUseRepository.GetSingleTermsofUse(currentTermsofUse.Date, currentTermsofUse.VersionNumber);
+                TermsofUse entity = termsofUseRepository.GetSingleTermsofUse(currentTermsofUse.Date, currentTermsofUse.Version);
                 MapTermsofUseTermsofUsePM(currentTermsofUse, entity);
                 termsofUseRepository.Update(entity);
             }
             else
             {
-                string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", currentTermsofUse.Tenant);
+                string msg = TranslateTextsClass.Translate("General.M.EntityAlreadyExists", currentTermsofUse.Version);
                 msg = msg.Replace("%Entity", "TermsofUse");
                 throw new Exception(msg);
             }
@@ -133,10 +129,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(termsofUse.Tenant);
+                objectContext = CommonDataContext.GetContext(termsofUse.Version);
             }
             termsofUseRepository = new TermsofUseRepository(objectContext);
-            TermsofUse entity = termsofUseRepository.GetSingleTermsofUse(termsofUse.Date, termsofUse.VersionNumber);
+            TermsofUse entity = termsofUseRepository.GetSingleTermsofUse(termsofUse.Date, termsofUse.Version);
             termsofUseRepository.Remove(entity);
         }
     }

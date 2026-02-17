@@ -6,7 +6,7 @@ using Logitude.Server.Tools;
 using Logitude.SystemLogs;
 using Microsoft.AspNet.SignalR;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Stimulsoft.Report;
@@ -20,25 +20,14 @@ using System.Web.UI;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Stimulsoft.fonts;
-using WebFreight.Web.Helpers.StimulReportCustomizationDataProvider;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using WebFreight.Web.DataProviders;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using static WebFreight.Web.Helpers.ReportHelper;
-using NetCommonHelper.Logger;
 
 namespace WebFreight.Web.Stimulsoft
 {
     public partial class Designer : System.Web.UI.Page
     {
-        static private readonly DevLog logger = DevLog.Instance;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            StimulsoftFontsService.AddFonts();
             StiWebDesigner.CacheHelper = new StiMyCacheHelper();
             StiWebViewer.CacheHelper = new StiMyCacheHelper();
 
@@ -57,11 +46,9 @@ namespace WebFreight.Web.Stimulsoft
 
                 var templateId = Request.QueryString["templateId"];
                 var reportTemplateId = Request.QueryString["reportTemplateId"];
-                var reportsTemplateId = Request.QueryString["reportsTemplateId"];
                 var tenantPar = Request.QueryString["tenant"];
                 var token = Request.QueryString["token"];
                 var processType = Request.QueryString["processtype"];
-                var templateType = Request.QueryString["templateType"];
 
                 StiReport report = new StiReport();
                 #region Document Type Template
@@ -81,15 +68,8 @@ namespace WebFreight.Web.Stimulsoft
                             {
                                 logo.ValueObject = null;
                             }
-                        }
 
-                        List<StiBusinessObjectData> stiBusinessObjects = new StiBusinessObjectDataService().Get(documentTypeTemplatePM);
-                        if (stiBusinessObjects.Count > 0)
-                        {
-                            report.RegBusinessObject(stiBusinessObjects);
-                            report.Dictionary.SynchronizeBusinessObjects(stiBusinessObjects.Count());
                         }
-
                     }
                     #endregion
 
@@ -97,12 +77,12 @@ namespace WebFreight.Web.Stimulsoft
                     else if(!string.IsNullOrEmpty(reportTemplateId))
                     {
                         ReportHelper reportHelper = new ReportHelper();
-                        byte[] fileData = reportHelper.LoadDataToStimulReport(processType, reportTemplateId, tenant, reportsTemplateId, templateType);
+                        byte[] fileData = reportHelper.LoadDataToStimulReport(processType, reportTemplateId, tenant);
                         if (fileData != null)
                         {
                             report.Load(fileData);
                         }
-                        if (processType == "ReportPreview" || templateType == "E")
+                        if (processType == "ReportPreview")
                         {
                             LogitudeStiWebDesigner.ShowSaveButton = false;
                             LogitudeStiWebDesigner.ShowSaveDialog = false;
@@ -114,7 +94,6 @@ namespace WebFreight.Web.Stimulsoft
                             LogitudeStiWebDesigner.ShowFileMenu = false;
                             LogitudeStiWebDesigner.ShowInsertButton = false;
                             LogitudeStiWebDesigner.ShowLayoutButton = false;
-                            LogitudeStiWebDesigner.ShowPreviewButton = templateType != "E";
                             LogitudeStiWebDesigner.ViewStateMode = ViewStateMode.Disabled;
                             LogitudeStiWebDesigner.Enabled = false;
                             //  LogitudeStiWebDesigner.ShowPropertiesGrid = false;
@@ -122,9 +101,7 @@ namespace WebFreight.Web.Stimulsoft
                     }
                     #endregion
 
-                    ReFillBusinessObjects(report.Dictionary.BusinessObjects, tenant, reportTemplateId, templateId);
-                    LogitudeStiWebDesigner.ShowSaveDialog = false;
-                    LogitudeStiWebDesigner.Report = report;
+                LogitudeStiWebDesigner.Report = report;
 
                 }
                 
@@ -146,130 +123,13 @@ namespace WebFreight.Web.Stimulsoft
             }
         }
 
-        private void ReFillBusinessObjects(StiBusinessObjectsCollection bo, int tenant, string reportTemplateId, string templateId)
-        {
-            try
-            {
-                logger.WriteDebug($"ReFillBusinessObjects, reportTemplateId: {reportTemplateId}, templateId: {templateId}");
+        //protected void StiMobileDesigner1_SaveReport(object sender, StiMobileDesigner.StiSaveReportEventArgs e)
+        //{
 
-                string code = "";
-                string dpName = "";
-                ReportHelper reportHelper = new ReportHelper();
 
-                if (bo == null || tenant == null)
-                {
-                    logger.WriteError($"ReFillBusinessObjects, StiBusinessObjectsCollection or tenant empties");
-                    return;
-                }
 
-                if (!string.IsNullOrEmpty(reportTemplateId))
-                {
-                    ReportsTemplatesVersionPM reportsTemplatesVersionPM = new ReportsTemplatesVersionQuery(tenant).GetLastReportsTemplatesVersionPMByReportsTemplateId(reportTemplateId, tenant);
-                    if (reportsTemplatesVersionPM == null)
-                    {
-                        logger.WriteError($"ReFillBusinessObjects, reportsTemplatesVersionPM not found for reportTemplateId {reportTemplateId} and tenant {tenant}");
-                        return;
-                    }
+        //}
 
-                    code = new ReportQuery(tenant).GetReportCodeById(reportsTemplatesVersionPM.ReportId, tenant);
-                    if (string.IsNullOrEmpty(code))
-                    {
-                        logger.WriteError($"ReFillBusinessObjects, code not found for reportId {reportsTemplatesVersionPM.ReportId} and tenant {tenant}");
-                        return;
-                    }
-
-                    logger.WriteDebug($"dataProvider code: {code}, reportId: {reportsTemplatesVersionPM.ReportId}, tenatn: {tenant}");
-
-                    dpName = reportHelper.GetDataProviderName(code);
-                }
-                else if (!string.IsNullOrEmpty(templateId))
-                {
-                    DocumentTypeTemplatePM documentTypeTemplatePM = new DocumentTypeTemplateQuery(tenant).GetById(templateId, tenant);
-                    if (documentTypeTemplatePM == null)
-                    {
-                        logger.WriteError($"ReFillBusinessObjects, documentTypeTemplatePM not found for templateId {templateId} and tenant {tenant}");
-                        return;
-                    }
-
-                    DocumentDataProviderArgs documentDataProviderArgs = new StiBusinessObjectDataService().GetDocumentDataProviderArgs(documentTypeTemplatePM.DocumentTypeCode);
-                    if (documentDataProviderArgs == null)
-                    {
-                        logger.WriteError($"ReFillBusinessObjects, documentDataProviderArgs not found for DocumentTypeCode {documentTypeTemplatePM.DocumentTypeCode}");
-                        return;
-                    }
-
-                    dpName = documentDataProviderArgs.Type.FullName;
-                }
-                else
-                {
-                    logger.WriteError($"ReFillBusinessObjects, reportTemplateId and reportId empties");
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(dpName))
-                {
-                    logger.WriteError($"ReFillBusinessObjects, dpName empty");
-                    return;
-                }
-
-                List<ISlvLeaf> variablesList = reportHelper.GetPropertyNames(dpName, new List<ISlvLeaf>());
-                StiBusinessObject businessObject = null;
-
-                if (bo.Count == 0)
-                {
-                    string dpNameLastPart = dpName.Substring(dpName.LastIndexOf('.') + 1);
-                    businessObject = new StiBusinessObject(code, dpNameLastPart, dpNameLastPart, Guid.NewGuid().ToString("N"));
-                    bo.Add(businessObject);
-                }
-                else
-                    businessObject = bo[0];
-
-                CreateBusinessObject(businessObject, variablesList);
-            }
-            catch (Exception e)
-            {
-                logger.WriteFatal(e, $"error when try ReFillBusinessObjects, reportTemplateId: {reportTemplateId}, templateId: {templateId}, tenant: {tenant}");
-            }
-        }
-
-        private void CreateBusinessObject(StiBusinessObject businessObject, List<ISlvLeaf> variablesList)
-        {
-            variablesList.ForEach(variable =>
-            {
-                if (variable.expanded)
-                {
-                    StiBusinessObject child = businessObject.BusinessObjects.ToList().FirstOrDefault(childBo => childBo.Name == variable.content);
-                    if (child == null)
-                    {
-                        child = new StiBusinessObject("", variable.content, variable.content, Guid.NewGuid().ToString("N"));
-                        businessObject.BusinessObjects.Add(child);
-                    }
-
-                    CreateBusinessObject(child, variable.children);
-                }
-                else if (businessObject.Columns.ToList().Any(col => col.Name == variable.content) || variable.type.FullName.Contains("System.") == false)
-                    return;
-                else
-                    businessObject.Columns.Add(new StiDataColumn(variable.content, variable.type));
-            });            
-        }
-
-        public bool ByteArrayToFile(string fileName, byte[] byteArray)
-        {
-            try
-            {
-                using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-                {
-                    fs.Write(byteArray, 0, byteArray.Length);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception caught in process: {0}", ex);
-                return false;
-            }
-        }
         protected void LogitudeStiWebDesigner_SaveReport(object sender, StiSaveReportEventArgs e)
         {
             //try
@@ -325,13 +185,29 @@ namespace WebFreight.Web.Stimulsoft
                             ReportHelper reportHelper = new ReportHelper();
                             reportHelper.StimulReportSaved(processType, reportTemplateId, fileData, loggedUser.Id, tenant);
                             this.LogitudeStiWebDesigner.Visible = false;
-
+                            //SignalRHubMessageSender.SendSignalRMessage("StimulReportSaved", "User" + loggedUser.Id + tenant + sessionId, reportTemplateId);
                         }
 
                         #endregion
 
 
-                       
+                        //HubEventPublisher.PublishChannelEvent(new HubChannelEvent() { ChannelName = "Tenant" + tenant, EventName = "StimulSaved", Data = templateId });
+                        //String closeScript = "<script type='text/javascript'> window.parent.postMessage('true', '*');</script>";
+                        //ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
+
+                        //ClientScript.RegisterStartupScript(GetType(), "AutoPostBackScript",
+                        //                  "alert('hi');", true);
+
+                        //String closeScript = "<script type='text/javascript'> console.log('olaaaaaaaaaaaaaaaaa');  alert('Called!');</script>";
+                        // ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
+
+
+                        //String closeScript = "<script type='text/javascript'> window.sessionStorage.setItem('designerClosed','true')</script>";
+                        //ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
+
+                        //String closeScript = "<script type='text/javascript'>self.close();</script>";
+                        //String closeScript = "<script type='text/javascript'>window.stimulsoftDesignerComponentRef.zone.run(() => { window.stimulsoftDesignerComponentRef.component.stimuldesignerFinished('true'); })</script>";
+                        //String closeScript = "<script type='text/javascript'> window.parent.postMessage('true', '*');</script>";
 
                         String closeScript = "<script type='text/javascript'>self.close();</script>";
                         ScriptManager.RegisterClientScriptBlock(this.Page, this.Page.GetType(), "script", closeScript, false);
@@ -342,10 +218,25 @@ namespace WebFreight.Web.Stimulsoft
 
 
                 }
-               
+                //else
+                //{
+                //    HttpContext.Current.User = null;
+                //    Response.Output.Write("Sorry you’re not authenticated to view this document.");
+                //}
+            }
+            else
+            {
+                //Response.Output.Write("Sorry you’re not authenticated to view this document.");
             }
 
 
+            // }
+            //catch (Exception exception)
+            //{
+            //    string ErrorMessage = exception.Message;
+            //    Response.Clear();
+            //    Response.Output.Write(ErrorMessage);
+            //}
 
         }
 
@@ -354,7 +245,7 @@ namespace WebFreight.Web.Stimulsoft
 
     public class StiMyCacheHelper : StiCacheHelper
     {
-        public override StiReport GetReport(string guid)
+        public override StiReport GetReport(string guid, StiServerCacheMode mode, TimeSpan timeout, CacheItemPriority priority)
         {
             //string path = Path.Combine(HttpContext.Current.Server.MapPath(string.Empty), "CacheFiles", guid);
             //if (File.Exists(path))
@@ -388,7 +279,7 @@ namespace WebFreight.Web.Stimulsoft
             //return base.GetReport(guid, mode, timeout, priority);
         }
 
-        public override void SaveReport(StiReport report, string guid)
+        public override void SaveReport(StiReport report, string guid, StiServerCacheMode mode, TimeSpan timeout, CacheItemPriority priority)
         {
             string packedReport = guid.EndsWith("template") ? report.SavePackedReportToString() : report.SavePackedDocumentToString();
             //string path = Path.Combine(HttpContext.Current.Server.MapPath(string.Empty), "CacheFiles", guid);

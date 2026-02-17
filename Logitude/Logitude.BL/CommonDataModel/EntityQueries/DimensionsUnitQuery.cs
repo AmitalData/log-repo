@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -16,7 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DimensionsUnitRepository repository;
 
-
+        public DimensionsUnitQuery()
+        {
+            repository = new DimensionsUnitRepository(); 
+        }
 
         public DimensionsUnitQuery(int tenant)
         {
@@ -37,7 +40,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Code = a.Code,
                         Name = a.Name,
                         SearchFields = a.SearchFields,
-                        PrintAs = a.PrintAs
                     }).FirstOrDefault();
         }
 
@@ -49,7 +51,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        Code = a.Code,
                        Name = a.Name,
                        SearchFields = a.SearchFields,
-                       PrintAs = a.PrintAs
                    };
         }
 
@@ -61,7 +62,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         Name = entity.Name,
                                                         Code = entity.Code,
                                                         SearchFields = entity.SearchFields,
-                                                        PrintAs = entity.PrintAs
                                                     };
             return result;
         }
@@ -75,7 +75,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Code = a.Code,
                         Name = a.Name,
                         SearchFields = a.SearchFields,
-                        PrintAs = a.PrintAs
                     }).FirstOrDefault();
         }
     }

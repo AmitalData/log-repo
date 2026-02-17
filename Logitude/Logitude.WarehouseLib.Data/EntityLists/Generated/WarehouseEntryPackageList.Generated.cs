@@ -96,12 +96,6 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public string CountryId  { get; set; }
        [DataMember]
        public string ReleasesNumber  { get; set; }
-       [DataMember]
-       public string WarehouseEntryNumber  { get; set; }
-       [DataMember]
-       public int OverManifest  { get; set; }
-       [DataMember]
-       public int OldQuantity  { get; set; }
    }
 
 }

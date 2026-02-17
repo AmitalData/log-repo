@@ -9,7 +9,7 @@ import { AWBWizardArgs, FSRWizardArgs } from '../../../../Shipment/Args';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './SimulatorBookingLoadComponent.html',
 })
@@ -17,7 +17,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 export class SimulatorBookingLoadComponent implements AfterViewInit {
     public EntityId: string = null;
     public EntityPM: ShipmentPM;
-    @ViewChild('WizardView', { read: ViewContainerRef, static: false }) target: ViewContainerRef;
+    @ViewChild('WizardView', { read: ViewContainerRef }) target: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 

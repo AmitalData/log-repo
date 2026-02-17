@@ -6,14 +6,14 @@ using System.Reflection;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using WebFreight.Web.DataProviders;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.WebServices;
@@ -41,51 +41,55 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class AWBWebService : System.Web.Services.WebService
     {
-        private int tenant;
+        private int myTenant;
         private string myCCSTypeCode;
         private bool isRegulatedAgentActivated;
-        private string contactEmail;
-        private AWBDataProvider awbDp;
-        public ShipmentPM shipmentPM;
-        private IShipmentsContext shipmentsContext;
-        private ICommonDataContext commonContext;
-        private AddressRepository addressRepository;
-        private ContactRepository contactRepository;
-        private RoutingDataProvider routingDataProvider;
-        private CountryRepository countryRepository;
-        public byte[] StartLoadingDataToAWB(string shipmentId, int tenant, string documentTypeCopyId, bool isPrint)
-        {
-            this.tenant = tenant;
-            AWBDataProvider awbDp = LoadAWBDataProvider(shipmentId, documentTypeCopyId, isPrint);
-            XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
-            using (MemoryStream memstream = new MemoryStream())
-            {
-                serializer.Serialize(memstream, awbDp);
-                memstream.Seek(0, SeekOrigin.Begin);
-                byte[] bytearray = memstream.ToArray();
-                return bytearray;
-            }
-        }
-        private AWBDataProvider LoadAWBDataProvider(string shipmentId, string documentTypeCopyId, bool isPrint)
-        {
-            awbDp = new AWBDataProvider();
-            shipmentsContext = ShipmentsContext.GetContext(tenant);
-            commonContext = CommonDataContext.GetContext(tenant);
 
+        [WebMethod]
+        public int GetByte()
+        {
+            return 0;
+        }
+
+        [WebMethod]
+        public byte[] LoadDataToAWB(string shipmentId, int tenant,string documentTypeCopyId)
+        {
+            this.myTenant = tenant;
+            return StartLoadingDataToAWB(shipmentId, tenant, documentTypeCopyId,false);
+        }
+
+        public byte[] StartLoadingDataToAWB(string shipmentId, int tenant, string documentTypeCopyId,bool isPrint)
+        {
+            this.myTenant = tenant;
+            AWBDataProvider awbDp = LoadAWBDataProvider(shipmentId, tenant, documentTypeCopyId,isPrint);
+            XmlSerializer serializer = new XmlSerializer(typeof(AWBDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, awbDp);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+        private ICommonDataContext myCommonContext =null;
+        private AWBDataProvider LoadAWBDataProvider(string shipmentId, int tenant, string documentTypeCopyId,bool isPrint)
+        {
+            this.myTenant = tenant;
+            AWBDataProvider awbDp = new AWBDataProvider();
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            addressRepository = new AddressRepository(commonContext);
-            contactRepository = new ContactRepository(commonContext);
-            countryRepository = new CountryRepository(commonContext);
-            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
-            this.contactEmail = AuthenticationUtil.GetLoggedUserEmail(tenant);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);            
+            AddressRepository addressRepository = new AddressRepository(tenant);
+            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);            
+            WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
+
+            this.myCommonContext = CommonDataContext.GetContext(tenant);
 
             if (shipmentPM != null)
             {
-                this.routingDataProvider = new RoutingDataProvider(shipmentPM);
                 awbDp.AWBAccount = shipmentPM.AccountNumber == null ? "" : shipmentPM.AccountNumber;
                 awbDp.SCI = shipmentPM.SCI == null ? "" : shipmentPM.SCI;
-                awbDp.MainHarmonize = shipmentPM.MainHarmonize ?? "";
 
                 awbDp.AWBComments = shipmentPM.AWBComments == null ? "" : shipmentPM.AWBComments;
                 if (!string.IsNullOrEmpty(shipmentPM.AWBPrintingComments))
@@ -93,19 +97,13 @@ namespace WebFreight.Web.ReportsWebServices
                     awbDp.AWBComments = shipmentPM.AWBPrintingComments;
                 }
 
-                awbDp.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentId, shipmentPM.ShipmentLevelCode, shipmentPM.SecurityKey, tenant);
                 awbDp.AccountManagerName = shipmentPM.AccountManagerUserName;
+
                 awbDp.MAWBShort = shipmentPM.Master == null ? "" : shipmentPM.Master;
                 awbDp.HAWB = shipmentPM.House == null ? "" : shipmentPM.House;
                 awbDp.LeadingCurrency = shipmentPM.AWBCurrencyCode == null ? "" : shipmentPM.AWBCurrencyCode;
                 awbDp.Signature = shipmentPM.AWBSignature;
                 awbDp.ShipmentNumber = shipmentPM.ShipmentNumber;
-                if(shipmentPM.ShipmentLevelCode == "H")
-                    awbDp.MasterShipmentNumber = shipmentPM.MasterShipmentNumber;
-                else
-                    awbDp.MasterShipmentNumber = shipmentPM.ShipmentNumber;
-
-
                 awbDp.ChargesCode = shipmentPM.AWBChargesCodeCode;
                 awbDp.InsurrenceValue = !string.IsNullOrEmpty(shipmentPM.AWBInsurrenceValue) ? shipmentPM.AWBInsurrenceValue : "";
                 awbDp.DeclaredValueForCarriage = !string.IsNullOrEmpty(shipmentPM.AWBDeclaredValueForCarriage) ? shipmentPM.AWBDeclaredValueForCarriage : "";
@@ -126,44 +124,52 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 awbDp.ChargeableWeightEdited = shipmentPM.ChargeableWeightEdited;
                 awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
-                awbDp.AirlineLogo = DataProviders.General.GetCarrierLogo(shipmentPM.MainCarriageCarrierId, tenant);
-                awbDp.CustomerLogo = DataProviders.General.GetCarrierLogo(shipmentPM.CustomerId, tenant);
-                awbDp.UserSignatureImage = GetUserSignatureImage();
-                awbDp.Place = shipmentPM.AWBPlace;
-                awbDp.CustomsDeclarationNumber = shipmentPM.DeclarationNumber;
-                awbDp.WarehouseLegTerminalName = shipmentPM.WarehouseLegTerminalName;
 
-                this.GetBranchData();
-                this.GetLoggedTenantData();
-                this.GetLoggedContactData();
-                this.GetPortsData();
-                this.GetCarriersData();
-                this.GetShipperData();
-                this.GetConsigneeData();
-                this.GetFlightsNumberAndDate();
-                this.GetCompanyIATACode();
-                this.GetCompanyAddress();
-                this.GetMAWBOBLDate();
-                this.GetPrepaidCollectCharges();
-                this.GetHandlingAndAccountingData();
-                this.GetCopyNameData(documentTypeCopyId);
-                this.GetCommoditiesData();
-                this.GetCustomFieldsData();
-                this.GetAWBPrintingFields();
-                this.GetNotify1Data();
-                this.GetNotify2Data();
-                this.GetAgentData();
-                this.GetConsolidatorData();
-                this.GetOpenedByUser();
-                this.GetPlaceOfDelivery();
-                this.GetPreForwardingData();
-                this.GetOnForwardingData();
-                this.GetPreCarriageData();
-                this.GetOnCarriageData();
+                if (shipmentPM.BranchId != null)
+                {
+                    Branch myBranch = (from d in myCommonContext.Branches where d.Tenant == tenant && d.Id == shipmentPM.BranchId select d).FirstOrDefault();
+                    if (myBranch != null)
+                    {
+                        awbDp.BranchSignature = myBranch.Signature;
+                        awbDp.Branch = myBranch.EnglishName;
+                    }
+                }
+
+                this.GetLoggedTenantData(awbDp);
+                this.GetLoggedContactData(awbDp, tenant);
+                this.GetPortsData(awbDp, shipmentPM);
+                this.GetCarriersData(awbDp, shipmentPM, addressRepository);
+                this.GetShipperData(awbDp, shipmentPM, addressRepository);
+                this.GetConsigneeData(awbDp, shipmentPM, addressRepository);
+                this.GetFlightsNumberAndDate(awbDp, shipmentPM);
+                this.GetCompanyIATACode(awbDp, shipmentPM);
+                this.GetCompanyAddress(awbDp, shipmentPM, addressRepository);
+                this.GetMAWBOBLDate(awbDp, shipmentPM);
+                this.GetPrepaidCollectCharges(awbDp, shipmentPM, shipmentsContext);
+                this.GetHandlingAndAccountingData(awbDp, shipmentPM, addressRepository);                
+                this.GetCopyNameData(awbDp, documentTypeCopyId, tenant);
+                this.GetCommoditiesData(awbDp, shipmentPM);
+                this.GetCustomFieldsData(awbDp, shipmentPM);
+                this.GetAWBPrintingFields(awbDp, shipmentPM);
+                this.GetNotify1Data(awbDp, shipmentPM, addressRepository);
+                this.GetNotify2Data(awbDp, shipmentPM, addressRepository);
+                this.GetAgentData(awbDp, shipmentPM, addressRepository);
+                this.GetConsolidatorData(awbDp, shipmentPM);
+
+                #region PlaceOfDelivery
+
+                ShipmentPickUpDelivery myDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                                                     where d.ShipmentId == shipmentPM.Id && d.PickUpDeliveryTypeCode == "DELV"
+                                                     select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+                
+                awbDp.PlaceOfDelivery = myServiceHelper.GetPlaceOfDelivery(shipmentPM, myDelivery);
+
+                #endregion
 
                 if (isPrint)
-                {
+                {                    
                     Shipment shipmentEntity = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+
                     shipmentEntity.AWBPrint = true;
                     shipmentEntity.FNAReason = null;
                     shipmentRepository.Update(shipmentEntity);
@@ -192,33 +198,10 @@ namespace WebFreight.Web.ReportsWebServices
             return awbDp;
         }
 
-        private void GetBranchData()
+        private void GetLoggedTenantData(AWBDataProvider awbDp)
         {
-            if (shipmentPM.BranchId != null)
-            {
-                Branch myBranch = (from d in commonContext.Branches where d.Tenant == tenant && d.Id == shipmentPM.BranchId select d).FirstOrDefault();
-                if (myBranch != null)
-                {
-                    awbDp.BranchSignature = myBranch.Signature;
-                    awbDp.Branch = myBranch.EnglishName;
-                }
-            }
-        }
-        private void GetOpenedByUser()
-        {
-            if (!string.IsNullOrEmpty(shipmentPM.CreatedByUserId))
-            {
-                Contact createdByContact = contactRepository.GetSingleContact(shipmentPM.CreatedByUserId, tenant);
-                if (createdByContact != null)
-                {
-                    awbDp.OpenedBy = createdByContact.EnglishName;
-                }
-            }
-        }
-        private void GetLoggedTenantData()
-        {
-            TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant myLoggedTenant = tenantRepository.GetSingleTenant(tenant);
+            TenantRepository tenantRepository = new TenantRepository(myTenant);
+            Tenant myLoggedTenant = tenantRepository.GetSingleTenant(myTenant);
 
             if (myLoggedTenant != null)
             {
@@ -236,7 +219,7 @@ namespace WebFreight.Web.ReportsWebServices
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
-                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
+                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(myTenant);
 
                 if (tenantManagement != null)
                 {
@@ -246,8 +229,11 @@ namespace WebFreight.Web.ReportsWebServices
                 scope.Complete();
             }
         }
-        private void GetLoggedContactData()
+
+        private void GetLoggedContactData(AWBDataProvider awbDp, int tenant)
         {
+           string contactEmail =  AuthenticationUtil.GetLoggedUserEmail(tenant);
+
             if (!string.IsNullOrEmpty(contactEmail))
             {
                 ContactQuery contactQuery = new ContactQuery(tenant);
@@ -260,13 +246,17 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetPortsData()
+
+        private void GetPortsData(AWBDataProvider awbDp, ShipmentPM shipmentPM)
         {
+            int tenant = shipmentPM.Tenant;
             PortPM mainCarriageFromPort = null;
             PortPM mainCarriageToPort = null;
             PortPM transshipment1ToPort = null;
             PortPM transshipment2ToPort = null;
             PortPM transshipment3ToPort = null;
+
+            awbDp.Place = shipmentPM.AWBPlace;
 
             if (!string.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId))
             {
@@ -274,7 +264,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (mainCarriageFromPort != null)
                 {
                     awbDp.MainCarriageFromPortCode = mainCarriageFromPort.Code;
-                    awbDp.MainCarriageFromPortName = mainCarriageFromPort.EnglishName;
+                    awbDp.MainCarriageFromPortName = mainCarriageFromPort.EnglishName;                    
                 }
             }
 
@@ -309,12 +299,13 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 transshipment3ToPort = PortQuery.GetSinglePort(tenant, shipmentPM.Transshipment3ToPortId, false);
             }
+        
 
             if (shipmentPM.OnCarriageToPortId != null)
             {
                 if (shipmentPM.ShipmentLevelCode == "H")
                 {
-                    awbDp.LastToInMainCarriage = shipmentPM.OnForwardingToPortName;
+                    awbDp.LastToInMainCarriage = shipmentPM.OnCarriageToPortName;
                 }
             }
 
@@ -341,8 +332,11 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetCarriersData()
+
+        private void GetCarriersData(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
         {
+            int tenant = shipmentPM.Tenant;
+
             #region MainCarriageCarrier
             string mainCarrierPrefix = string.IsNullOrEmpty(shipmentPM.MainCarriageCarrierPrefix) ? "" : shipmentPM.MainCarriageCarrierPrefix.Trim();
 
@@ -350,7 +344,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 awbDp.MainCarriageCarrierCode = mainCarrierPrefix.ToUpper();
             }
-
+            
             if (!string.IsNullOrEmpty(shipmentPM.MainCarriageCarrierId))
             {
                 string mainCarrierNumber = string.IsNullOrEmpty(shipmentPM.MainCarriageCarrierNumber) ? "" : shipmentPM.MainCarriageCarrierNumber.Trim();
@@ -386,7 +380,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Transshipment1Carrier
             string prefix1 = string.IsNullOrEmpty(shipmentPM.Transshipment1CarrierPrefix) ? "" : shipmentPM.Transshipment1CarrierPrefix.Trim();
-
+          
             if (!string.IsNullOrEmpty(prefix1))
             {
                 awbDp.Transshipment1CarrierCode = prefix1.ToUpper();
@@ -450,11 +444,13 @@ namespace WebFreight.Web.ReportsWebServices
             }
             #endregion
         }
-        private void GetShipperData()
+
+        private void GetShipperData(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
         {
             int tenant = shipmentPM.Tenant;
             string shipperId = !string.IsNullOrEmpty(shipmentPM.ShipperNotExporterId) ? shipmentPM.ShipperNotExporterId : shipmentPM.ShipperId;
             string shipperAddressId = !string.IsNullOrEmpty(shipmentPM.ShipperNotExporterAddressId) ? shipmentPM.ShipperNotExporterAddressId : shipmentPM.ShipperAddressId;
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
 
             if (!string.IsNullOrEmpty(shipperId))
             {
@@ -499,7 +495,7 @@ namespace WebFreight.Web.ReportsWebServices
                             awbDp.ShipperAddress2 = shipperAddress.Address2 == null ? "" : shipperAddress.Address2;
                             awbDp.ShipperCity = shipperAddress.City == null ? "" : shipperAddress.City;
                             awbDp.ShipperCountry = shipperAddress.Country == null ? "" : shipperAddress.Country.EnglishName;
-                            awbDp.ShipperZipCode = shipperAddress.ZipCode == null ? "" : shipperAddress.ZipCode;
+                            awbDp.ShipperZipCode = shipperAddress.ZipCode == null ? "" : shipperAddress.ZipCode;                            
                         }
                     }
                 }
@@ -512,7 +508,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (actualShipperCard != null)
                 {
                     awbDp.ActualShipperNameAddress = actualShipperCard.EnglishName != null ? actualShipperCard.EnglishName + Environment.NewLine : "";
-
+                    
                     if (!string.IsNullOrEmpty(shipmentPM.ShipperAddressId))
                     {
                         Address actualShipperAddress = addressRepository.GetSingleAddress(shipmentPM.ShipperAddressId, tenant);
@@ -544,13 +540,13 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-                    if (!string.IsNullOrEmpty(actualShipperCard.PrimaryContactId))
+                    if(!string.IsNullOrEmpty(actualShipperCard.PrimaryContactId))
                     {
                         Contact primaryContact = contactRepository.GetSingleContact(actualShipperCard.PrimaryContactId, tenant);
                         if (primaryContact != null)
                         {
                             awbDp.ShipperPrimaryContactName = primaryContact.EnglishName;
-                            awbDp.ShipperPrimaryContactPhone = primaryContact.BusinessPhone;
+                            awbDp.ShipperPrimaryContactPhone = primaryContact.BusinessPhone;                            
                         }
                     }
                 }
@@ -572,7 +568,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             if (!string.IsNullOrEmpty(shipmentPM.ShipperNotExporterContactId))
-            {
+            {               
                 Contact contact = contactRepository.GetSingleContact(shipmentPM.ShipperNotExporterContactId, tenant);
                 if (contact != null)
                 {
@@ -636,11 +632,13 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetConsigneeData()
+
+        private void GetConsigneeData(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
         {
             int tenant = shipmentPM.Tenant;
             string consigneeId = !string.IsNullOrEmpty(shipmentPM.ConsigneeNotImporterId) ? shipmentPM.ConsigneeNotImporterId : shipmentPM.ConsigneeId;
             string consigneeAddressId = !string.IsNullOrEmpty(shipmentPM.ConsigneeNotImporterAddressId) ? shipmentPM.ConsigneeNotImporterAddressId : shipmentPM.ConsigneeAddressId;
+            ContactRepository contactRepository = new ContactRepository(myCommonContext);
 
             if (!string.IsNullOrEmpty(consigneeId))
             {
@@ -696,7 +694,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (actualConsigneeCard != null)
                 {
                     awbDp.ActualConsigneeNameAddress = actualConsigneeCard.EnglishName != null ? actualConsigneeCard.EnglishName + Environment.NewLine : "";
-
+                    
                     if (!string.IsNullOrEmpty(shipmentPM.ConsigneeAddressId))
                     {
                         Address actualConsigneeAddress = addressRepository.GetSingleAddress(shipmentPM.ConsigneeAddressId, tenant);
@@ -787,7 +785,8 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetFlightsNumberAndDate()
+
+        private void GetFlightsNumberAndDate(AWBDataProvider awbDp, ShipmentPM shipmentPM)
         {
             if (shipmentPM.MainCarriageETD != null)
             {
@@ -889,7 +888,8 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.Transshipment2FlightNumberAndDate = shipmentPM.Transshipment2CarrierNumber;
             }
         }
-        private void GetCompanyIATACode()
+
+        private void GetCompanyIATACode(AWBDataProvider awbDp, ShipmentPM shipmentPM)
         {
             awbDp.CompanyIATACode = shipmentPM.IssuingCarrierIATACode == null ? "" : shipmentPM.IssuingCarrierIATACode;
 
@@ -906,18 +906,18 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetCompanyAddress()
+
+        private void GetCompanyAddress(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
         {
             int tenant = shipmentPM.Tenant;
             Address issuingCarrierAddress = addressRepository.GetSingleAddress(shipmentPM.IssuingCarrierAddressId, tenant);
-            
             if (issuingCarrierAddress != null)
             {
                 awbDp.TenantCompanyNameAddress = issuingCarrierAddress.Name + Environment.NewLine + this.GetAddress(issuingCarrierAddress) + Environment.NewLine;
-                awbDp.TenantAddress_WithCountry = issuingCarrierAddress.Name + Environment.NewLine + this.GetAddress(issuingCarrierAddress, true) + Environment.NewLine; 
             }
         }
-        private void GetMAWBOBLDate()
+
+        private void GetMAWBOBLDate(AWBDataProvider awbDp, ShipmentPM shipmentPM)
         {
             if (shipmentPM.MAWBOBLDate != null)
             {
@@ -926,10 +926,11 @@ namespace WebFreight.Web.ReportsWebServices
 
             else
             {
-                awbDp.MAWBOBLDate = String.Format("{0:dd/MMM/yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
+                awbDp.MAWBOBLDate = String.Format("{0:dd/MMM/yyyy}", TenantServerConfigration.GetCurrentDateTime(shipmentPM.Tenant));
             }
         }
-        private void GetPrepaidCollectCharges()
+
+        private void GetPrepaidCollectCharges(AWBDataProvider awbDp, ShipmentPM shipmentPM, IShipmentsContext shipmentsContext)
         {
             int tenant = shipmentPM.Tenant;
 
@@ -951,7 +952,7 @@ namespace WebFreight.Web.ReportsWebServices
             else if (shipmentPM.FreightPrepaidCollectId == "C")
             {
                 awbDp.FreightCollect = "X";
-            }
+            } 
 
             awbDp.OtherCharges = "";
             awbDp.OtherCharges_ChargeEnglishName = "";
@@ -1077,7 +1078,7 @@ namespace WebFreight.Web.ReportsWebServices
                             else
                             {
                                 awbDp.OtherCharges = awbDp.OtherCharges + Environment.NewLine + " " + receivable.ChargesType.EnglishName + " " + String.Format("{0:#,0.00}", receivable.TotalAmount != null ? receivable.TotalAmount.Value : 0);
-                                awbDp.OtherCharges_ChargeEnglishName = awbDp.OtherCharges_ChargeEnglishName + Environment.NewLine + "  " + receivable.ChargesType.Code + (receivable.DueTypeCode == "CA" ? "C" : "A") + " " + receivable.ChargesType.EnglishName + " " + String.Format("{0:#,0.00}", receivable.TotalAmount != null ? receivable.TotalAmount.Value : 0);
+                                awbDp.OtherCharges_ChargeEnglishName = awbDp.OtherCharges_ChargeEnglishName +  Environment.NewLine + "  " + receivable.ChargesType.Code + (receivable.DueTypeCode == "CA" ? "C" : "A") + " " + receivable.ChargesType.EnglishName + " " + String.Format("{0:#,0.00}", receivable.TotalAmount != null ? receivable.TotalAmount.Value : 0);
                                 lineMemberCounter = 1;
                             }
 
@@ -1322,9 +1323,26 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                         lastIsIata = true;
                     }
+                    //else
+                    //{
+
+                    //    if (lineMemberCounter < 2)
+                    //    {
+                    //        awbDp.OtherCharges = awbDp.OtherCharges + "  " + printOnly.ChargesType.EnglishName + " " + String.Format("{0:#,0.00}", printOnly.Amount != null ? printOnly.Amount.Value : 0);
+                    //        lineMemberCounter++;
+                    //    }
+                    //    else
+                    //    {
+                    //        awbDp.OtherCharges = awbDp.OtherCharges + Environment.NewLine + " " + printOnly.ChargesType.EnglishName + " " + String.Format("{0:#,0.00}", printOnly.Amount != null ? printOnly.Amount.Value : 0);
+                    //        lineMemberCounter = 1;
+                    //    }
+                    //    lastIsIata = false;
+                    //    hasDescription = true;
+
+                    //}
                 }
 
-                if (printOnly.DueTypeCode.ToUpper() == "TX")
+                if (printOnly.DueTypeCode.ToUpper() == "TX"/*.Equals("TAX",StringComparison.OrdinalIgnoreCase)*/)
                 {
                     if (printOnly.PrepaidCollectId == "C")
                     {
@@ -1354,8 +1372,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             }
             #endregion
-
-            if (shipmentPM.AsAgreedOtherCharges)
+            
+            if(shipmentPM.AsAgreedOtherCharges)
             {
                 awbDp.OtherCharges_AsAgreed = "As Agreed";
             }
@@ -1597,12 +1615,13 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetHandlingAndAccountingData()
-        {
+
+        private void GetHandlingAndAccountingData(AWBDataProvider myDataProvider, ShipmentPM shipmentPM, AddressRepository addressRepository)
+        {           
             string myNotifyData = "";
             string myHandlingInformation = "";
             string myAccountingInformation = "";
-
+            
             List<string> myHandlingInformationList = new List<string>();
 
             if (!string.IsNullOrEmpty(shipmentPM.AWBHandlingInformation))
@@ -1687,19 +1706,19 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region Notify
             if (!string.IsNullOrEmpty(shipmentPM.Notify1Id))
-            {
-                CardRepository cardRepository = new CardRepository(tenant);
-                Card card = cardRepository.GetSingleCard(shipmentPM.Notify1Id, tenant);
-
+            {                
+                CardRepository cardRepository = new CardRepository(myTenant);
+                Card card = cardRepository.GetSingleCard(shipmentPM.Notify1Id, myTenant);
+               
                 if (card != null)
                 {
                     myNotifyData = "Notify:" + card.EnglishName;
-
+                   
                 }
 
                 if (!string.IsNullOrEmpty(shipmentPM.Notify1AddressId))
                 {
-                    Address notify1Address = addressRepository.GetSingleAddress(shipmentPM.Notify1AddressId, tenant);
+                    Address notify1Address = addressRepository.GetSingleAddress(shipmentPM.Notify1AddressId, myTenant);
 
                     if (notify1Address != null)
                     {
@@ -1751,7 +1770,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     //if (myHandlingInformationList.Count < 3)
                     //{
-                    myHandlingInformationList.Add(myNotifyData);
+                        myHandlingInformationList.Add(myNotifyData);
                     //}
 
                     //else
@@ -1773,11 +1792,14 @@ namespace WebFreight.Web.ReportsWebServices
             #region RAR-RA
             if (isRegulatedAgentActivated)
             {
-                if (!string.IsNullOrEmpty(shipmentPM.AWBPrintingRANumber))
-                {
-                    string myField = "RAR-RA" + shipmentPM.AWBPrintingRANumber;
-                    myHandlingInformationList.Add(myField);
-                }
+                //if (myHandlingInformationList.Count < 3)
+                //{
+                    if (!string.IsNullOrEmpty(shipmentPM.AWBPrintingRANumber))
+                    {
+                        string myField = "RAR-RA" + shipmentPM.AWBPrintingRANumber;
+                        myHandlingInformationList.Add(myField);
+                    }
+                //}
             }
             #endregion
 
@@ -1799,6 +1821,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             #region 1
             string myCodesText = "";
+
             List<string> mySpecialHandlingCodes = this.GetSpecialHandlingCodes(shipmentPM);
             if (mySpecialHandlingCodes.Count > 0)
             {
@@ -1815,6 +1838,53 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
             }
+            #endregion
+
+            #region 2
+            //string myReferenceText = "";
+
+            //string myReferenceField = "";
+            //myReferenceField = shipmentPM.ReferenceNumber;
+            //if (!string.IsNullOrEmpty(myReferenceField))
+            //{
+            //    if (string.IsNullOrEmpty(myReferenceText))
+            //    {
+            //        myReferenceText = myReferenceField;
+            //    }
+
+            //    else
+            //    {
+            //        myReferenceText += " " + myReferenceField;
+            //    }
+            //}
+
+            //myReferenceField = shipmentPM.SupplementaryShipmentInformation1;
+            //if (!string.IsNullOrEmpty(myReferenceField))
+            //{
+            //    if (string.IsNullOrEmpty(myReferenceText))
+            //    {
+            //        myReferenceText = myReferenceField;
+            //    }
+
+            //    else
+            //    {
+            //        myReferenceText += " " + myReferenceField;
+            //    }
+            //}
+
+            //myReferenceField = shipmentPM.SupplementaryShipmentInformation2;
+            //if (!string.IsNullOrEmpty(myReferenceField))
+            //{
+            //    if (string.IsNullOrEmpty(myReferenceText))
+            //    {
+            //        myReferenceText = myReferenceField;
+            //    }
+
+            //    else
+            //    {
+            //        myReferenceText += " " + myReferenceField;
+            //    }
+            //}
             #endregion
 
             #region 3
@@ -1884,6 +1954,21 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+            //if (!string.IsNullOrEmpty(shipmentPM.MainHarmonize))
+            //{
+            //    string myMainHarmonize = "HCC Code " + shipmentPM.MainHarmonize;
+
+            //    if (string.IsNullOrEmpty(myHandlingInformation))
+            //    {
+            //        myHandlingInformation = myMainHarmonize;
+            //    }
+
+            //    else
+            //    {
+            //        myHandlingInformation += Environment.NewLine + myMainHarmonize;
+            //    }
+            //}
+
             List<string> myHandlingInformationList0_3 = new List<string>();
             List<string> myHandlingInformationList3_X = new List<string>();
 
@@ -1913,9 +1998,9 @@ namespace WebFreight.Web.ReportsWebServices
 
             foreach (string item in myHandlingInformationList0_3)
             {
-                awbDp.HandlingInformation += item;
+                myDataProvider.HandlingInformation += item;
             }
-
+            
             if (myHandlingInformationList3_X.Count > 0)
             {
                 string str = "";
@@ -1924,69 +2009,122 @@ namespace WebFreight.Web.ReportsWebServices
                     str += item;
                 }
 
-                awbDp.AccountingInformation = myAccountingInformation + Environment.NewLine + str;
+                myDataProvider.AccountingInformation = myAccountingInformation + Environment.NewLine + str;
             }
 
             else
             {
-                awbDp.AccountingInformation = myAccountingInformation;
+                myDataProvider.AccountingInformation = myAccountingInformation;
             }
 
-            awbDp.HandlingInformationOnly = shipmentPM.AWBHandlingInformation;
-            awbDp.ReferenceNumber = string.IsNullOrEmpty(shipmentPM.ReferenceNumber) ? "" : shipmentPM.ReferenceNumber;
-            awbDp.SupplementaryInformation1 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation1) ? "" : shipmentPM.SupplementaryShipmentInformation1;
-            awbDp.SupplementaryInformation2 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation2) ? "" : shipmentPM.SupplementaryShipmentInformation2;
-            awbDp.HouseReferenceNumber = string.IsNullOrEmpty(shipmentPM.MasterShipmentNumber) ? "" : shipmentPM.MasterShipmentNumber;
-            this.SetSpecialHandlingCodes();
+            myDataProvider.HandlingInformationOnly = shipmentPM.AWBHandlingInformation;
+            myDataProvider.ReferenceNumber = string.IsNullOrEmpty(shipmentPM.ReferenceNumber) ? "" : shipmentPM.ReferenceNumber;
+            myDataProvider.SupplementaryInformation1 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation1) ? "" : shipmentPM.SupplementaryShipmentInformation1;
+            myDataProvider.SupplementaryInformation2 = string.IsNullOrEmpty(shipmentPM.SupplementaryShipmentInformation2) ? "" : shipmentPM.SupplementaryShipmentInformation2;
         }
-        private void SetSpecialHandlingCodes()
-        {
-            List<string> specialHandlingCodes = GetSpecialHandlingCodes(shipmentPM);
-            if (specialHandlingCodes != null && specialHandlingCodes.Count() > 0)
-            {
-                foreach (string code in specialHandlingCodes)
-                {
-                    this.AppendSpecialHandlingCodes(code);
-                }
-            }
-        }
-        private void AppendSpecialHandlingCodes(string specialHandlingCode)
-        {
-            if (string.IsNullOrEmpty(awbDp.SpecialHandlingCodes))
-            {
-                awbDp.SpecialHandlingCodes = specialHandlingCode;
-            }
-            else
-            {
-                awbDp.SpecialHandlingCodes += "/ " + specialHandlingCode;
-            }
-        }
-        private List<string> GetSpecialHandlingIds(ShipmentPM shipment)
-        {
-            List<string> specialHandlingIds = new List<string>();
-            for (int i = 1; i <= 9; i++)
-            {
-                var specialHandlingId = (string)shipment.GetType().GetProperty("AWBSpecialHandlingCodeId" + i).GetValue(shipment);
-                AppendSpecialHandlingIdIfNotNullAndNotExist(specialHandlingIds, specialHandlingId);
-            }
-            return specialHandlingIds;
-        }
-        private void AppendSpecialHandlingIdIfNotNullAndNotExist(List<string> specialHandlingIds, string specialHandlingId)
-        {
-            var isExist = specialHandlingIds.Where(a => a == specialHandlingId).Any();
-            if (!string.IsNullOrEmpty(specialHandlingId) && !isExist)
-            {
-                specialHandlingIds.Add(specialHandlingId);
-            }
-        }
+
         private List<string> GetSpecialHandlingCodes(ShipmentPM entityPM)
         {
+            List<string> myResult = new List<string>();
+
+            string myFieldId = null;
             AWBSpecialHandlingCodeRepository myRepository = new AWBSpecialHandlingCodeRepository(entityPM.Tenant);
-            List<string> specialHandlingIds = GetSpecialHandlingIds(entityPM);
-            List<string> myResult = myRepository.GetAWBHandlingCodesByIds(specialHandlingIds).ToList();
+            List<AWBSpecialHandlingCode> list = myRepository.GetAWBHandlingCodes().ToList();
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId1;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId2;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId3;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId4;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId5;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId6;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId7;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId8;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
+            myFieldId = entityPM.AWBSpecialHandlingCodeId9;
+            if (!string.IsNullOrEmpty(myFieldId))
+            {
+                AWBSpecialHandlingCode item = list.Where(d => d.Id == myFieldId).FirstOrDefault();
+                if (item != null)
+                {
+                    myResult.Add(item.Code);
+                }
+            }
+
             return myResult;
         }
-        private void GetCopyNameData(string documentTypeCopyId)
+
+        private void GetCopyNameData(AWBDataProvider awbDp, string documentTypeCopyId, int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies where copy.Id == documentTypeCopyId select copy).FirstOrDefault();
@@ -2015,7 +2153,8 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.CopyName = "Full Set";//"ELECTRONIC COPY";
             }
         }
-        private void GetCommoditiesData()
+
+        private void GetCommoditiesData(AWBDataProvider awbDp, ShipmentPM shipmentPM)
         {
             int tenant = shipmentPM.Tenant;
 
@@ -2030,38 +2169,11 @@ namespace WebFreight.Web.ReportsWebServices
 
             awbDp.CommoditiesLinesList = new List<CommodityLine>();
 
-            if (shipmentPM.GrossWeight != null)
-            {
-                awbDp.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
-            }
-
-            if (shipmentPM.GrossWeightInKG != null)
-            {
-                awbDp.GrossWeightInKG = String.Format("{0:#,0.00}", shipmentPM.GrossWeightInKG.Value);
-            }
-
-            if (shipmentPM.ChargeableWeight != null)
-            {
-                awbDp.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
-            }
-
-            if (shipmentPM.ChargeableWeightInKG != null)
-            {
-                awbDp.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
-            }
-
-            if (shipmentPM.NumberOfPackages != null)
-            {
-                awbDp.TotalQuantity = shipmentPM.NumberOfPackages.ToString();
-            }
-
             #region MultipleCommodities
             if (shipmentPM.IsMultipleCommodities)
-            {
+            {                
                 List<ShipmentCommodity> commodities = commoditiesRepository.GetCommoditiesbyShipmentId(shipmentPM.Id, tenant).ToList();
-
-                string commoditiesDescriptionOfGoods = "";
-                string commoditiesDimentions = "";
+                
                 foreach (ShipmentCommodity shipmentCommodity in commodities)
                 {
                     CommodityLine commodityLine = new CommodityLine();
@@ -2114,7 +2226,7 @@ namespace WebFreight.Web.ReportsWebServices
                             commodityLine.GrossWeightInKG = String.Format("{0:#,0.00}", varGrossWeightInKG.Value);
                         }
                     }
-
+                   
                     if (shipmentCommodity.ChargeableWeight != null)
                     {
                         commodityLine.ChargeableWeight = String.Format("{0:#,0.00}", shipmentCommodity.ChargeableWeight.Value);
@@ -2126,7 +2238,7 @@ namespace WebFreight.Web.ReportsWebServices
                         }
                     }
 
-
+                   
                     if (shipmentCommodity.NumberOfPackages != null)
                     {
                         commodityLine.TotalQuantity = shipmentCommodity.NumberOfPackages.ToString();
@@ -2152,98 +2264,21 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine;
-
-                        if (!string.IsNullOrEmpty(shipmentPM.SLAC))
-                        {
-                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + "SLAC: " + shipmentPM.SLAC + Environment.NewLine;
-                        }
-
                         commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + dimentions;
 
-                        if (!string.IsNullOrEmpty(grossWeightUnitCode))
+                        if(!string.IsNullOrEmpty(grossWeightUnitCode))
                         {
                             commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + volume + " " + shipmentCommodity.VolumetricWeight + " " + chargeableWeightUnitCode + "S" + " " + shipmentCommodity.Volume + " " + volumeUnitCode;
                         }
 
                         if (!string.IsNullOrEmpty(shipmentPM.ShipperReference1))
                         {
-                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine + shipmentPM.ShipperReference1;
+                            commodityLine.DescriptionOfGoods = commodityLine.DescriptionOfGoods + Environment.NewLine + "Inv.No:" + shipmentPM.ShipperReference1;
                         }
-
-                        if (!string.IsNullOrEmpty(dimentions))
-                        {
-                            if (string.IsNullOrEmpty(commoditiesDimentions)) commoditiesDimentions = dimentions;
-                            else commoditiesDimentions = commoditiesDimentions + Environment.NewLine + dimentions;
-                        }
-                    }
-
-                    if(!string.IsNullOrEmpty(shipmentCommodity.DescriptionOfGoods))
-                    {
-                        if (string.IsNullOrEmpty(commoditiesDescriptionOfGoods)) commoditiesDescriptionOfGoods = shipmentCommodity.DescriptionOfGoods;
-                        else commoditiesDescriptionOfGoods = commoditiesDescriptionOfGoods + Environment.NewLine + shipmentCommodity.DescriptionOfGoods;
                     }
 
                     awbDp.CommoditiesLinesList.Add(commodityLine);
                 }
-
-                string myDescriptionOfGoods = commoditiesDescriptionOfGoods;
-                awbDp.JustDescriptionofGoods = myDescriptionOfGoods;
-
-                if (!string.IsNullOrEmpty(shipmentPM.SLAC))
-                {
-                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
-                    {
-                        myDescriptionOfGoods += Environment.NewLine;
-                    }
-
-                    myDescriptionOfGoods += "SLAC: " + shipmentPM.SLAC;
-                }
-
-                if (!string.IsNullOrEmpty(commoditiesDimentions))
-                {
-                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
-                    {
-                        myDescriptionOfGoods += Environment.NewLine;
-                    }
-
-                    myDescriptionOfGoods += commoditiesDimentions;
-                }
-
-                if (shipmentPM.GrossWeightUnitCode != null)
-                {
-                    string volume = "AS VOL " + " " + shipmentPM.VolumetricWeight + " " + chargeableWeightUnitCode.ToUpper() + "S" + " " + shipmentPM.Volume + " " + volumeUnitCode.ToUpper();
-
-                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
-                    {
-                        myDescriptionOfGoods += Environment.NewLine;
-                    }
-
-                    myDescriptionOfGoods += volume;
-                }
-
-                if (!string.IsNullOrEmpty(shipmentPM.ShipperReference1))
-                {
-                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
-                    {
-                        myDescriptionOfGoods += Environment.NewLine;
-                    }
-
-                    myDescriptionOfGoods += shipmentPM.ShipperReference1;
-                }
-
-                if (!string.IsNullOrEmpty(shipmentPM.MainHarmonize))
-                {
-                    string myMainHarmonize = "HCC Code " + shipmentPM.MainHarmonize;
-
-                    if (!string.IsNullOrEmpty(myDescriptionOfGoods))
-                    {
-                        myDescriptionOfGoods += Environment.NewLine;
-                    }
-
-                    myDescriptionOfGoods += myMainHarmonize;
-                }
-
-                awbDp.DescriptionOfGoods = myDescriptionOfGoods;
             }
             #endregion
 
@@ -2294,26 +2329,32 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (shipmentPM.GrossWeight != null)
                 {
+                    awbDp.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
                     commodityLine.GrossWeight = String.Format("{0:#,0.00}", shipmentPM.GrossWeight.Value);
                 }
 
                 if (shipmentPM.GrossWeightInKG != null)
                 {
+                    awbDp.GrossWeightInKG = String.Format("{0:#,0.00}", shipmentPM.GrossWeightInKG.Value);
                     commodityLine.GrossWeightInKG = String.Format("{0:#,0.00}", shipmentPM.GrossWeightInKG.Value);
                 }
 
                 if (shipmentPM.ChargeableWeight != null)
                 {
+                    awbDp.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                     commodityLine.ChargeableWeight = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeight.Value);
                 }
 
                 if (shipmentPM.ChargeableWeightInKG != null)
                 {
+                    awbDp.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
                     commodityLine.ChargeableWeightInKG = String.Format("{0:#,0.00}", shipmentPM.ChargeableWeightInKG.Value);
                 }
 
+
                 if (shipmentPM.NumberOfPackages != null)
                 {
+                    awbDp.TotalQuantity = shipmentPM.NumberOfPackages.ToString();
                     commodityLine.TotalQuantity = shipmentPM.NumberOfPackages.ToString();
                 }
 
@@ -2349,16 +2390,6 @@ namespace WebFreight.Web.ReportsWebServices
                     string myDescriptionOfGoods = shipmentPM.DescriptionOfGoods == null ? "" : shipmentPM.DescriptionOfGoods;
                     awbDp.JustDescriptionofGoods = myDescriptionOfGoods;
 
-                    if (!string.IsNullOrEmpty(shipmentPM.SLAC))
-                    {
-                        if (!string.IsNullOrEmpty(myDescriptionOfGoods))
-                        {
-                            myDescriptionOfGoods += Environment.NewLine;
-                        }
-
-                        myDescriptionOfGoods += "SLAC: " + shipmentPM.SLAC;
-                    }
-
                     if (!string.IsNullOrEmpty(dimentions))
                     {
                         if (!string.IsNullOrEmpty(myDescriptionOfGoods))
@@ -2388,7 +2419,7 @@ namespace WebFreight.Web.ReportsWebServices
                             myDescriptionOfGoods += Environment.NewLine;
                         }
 
-                        myDescriptionOfGoods += shipmentPM.ShipperReference1;
+                        myDescriptionOfGoods += "Inv.No:" + shipmentPM.ShipperReference1;
                     }
 
                     if (!string.IsNullOrEmpty(shipmentPM.MainHarmonize))
@@ -2411,7 +2442,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
             #endregion
         }
-        
+
         private bool HasValue(object value)
         {
             bool hasValue = false;
@@ -2428,7 +2459,32 @@ namespace WebFreight.Web.ReportsWebServices
 
             return hasValue;
         }
-        private string GetAddress(Address address, bool isCountryName = false)
+
+        private string GetSCI(Port destinationport, Port departureport)
+        {
+            string sci="";
+            if (destinationport != null)
+            {
+                if (destinationport.Country.EC)
+                {
+                    if (departureport != null)
+                    {
+                        if (departureport.Country.EC)
+                        {
+                            sci = "C";
+                        }
+
+                        else
+                        {
+                            sci = "X";
+                        }
+                    }
+                }
+            }
+            return sci; 
+        }
+
+        private string GetAddress(Address address)
         {
             string resultAddress = "";
 
@@ -2451,18 +2507,18 @@ namespace WebFreight.Web.ReportsWebServices
             }
             if (address.Country != null)
             {
-                if (isCountryName) resultAddress = resultAddress + " " + address.Country.EnglishName;
-                else resultAddress = resultAddress + " " + address.Country.Code;
+                resultAddress = resultAddress + " " + address.Country.Code;
             }
 
             return resultAddress;
         }
-        private void GetCustomFieldsData()
+
+        private void GetCustomFieldsData(AWBDataProvider awbDp, ShipmentPM shipmentPM)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
 
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", shipmentPM.Tenant).ToList();
-
+                        
             foreach (ObjectField field in customFields)
             {
                 object value = customFieldResolver.GetFieldValue(shipmentPM, field, shipmentPM.Tenant);
@@ -2509,46 +2565,46 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         awbDp.ShipmentField10 = value.ToString();
                     }
-                    else if (field.FieldName == "Field11")
-                    {
-                        awbDp.ShipmentField11 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field12")
-                    {
-                        awbDp.ShipmentField12 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field13")
-                    {
-                        awbDp.ShipmentField13 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field14")
-                    {
-                        awbDp.ShipmentField14 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field15")
-                    {
-                        awbDp.ShipmentField15 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field16")
-                    {
-                        awbDp.ShipmentField16 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field17")
-                    {
-                        awbDp.ShipmentField17 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field18")
-                    {
-                        awbDp.ShipmentField18 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field19")
-                    {
-                        awbDp.ShipmentField19 = value.ToString();
-                    }
-                    else if (field.FieldName == "Field20")
-                    {
-                        awbDp.ShipmentField20 = value.ToString();
-                    }
+					else if (field.FieldName == "Field11")
+					{
+						awbDp.ShipmentField11 = value.ToString();
+					}
+					else if (field.FieldName == "Field12")
+					{
+						awbDp.ShipmentField12 = value.ToString();
+					}
+					else if (field.FieldName == "Field13")
+					{
+						awbDp.ShipmentField13 = value.ToString();
+					}
+					else if (field.FieldName == "Field14")
+					{
+						awbDp.ShipmentField14 = value.ToString();
+					}
+					else if (field.FieldName == "Field15")
+					{
+						awbDp.ShipmentField15 = value.ToString();
+					}
+					else if (field.FieldName == "Field16")
+					{
+						awbDp.ShipmentField16 = value.ToString();
+					}
+					else if (field.FieldName == "Field17")
+					{
+						awbDp.ShipmentField17 = value.ToString();
+					}
+					else if (field.FieldName == "Field18")
+					{
+						awbDp.ShipmentField18 = value.ToString();
+					}
+					else if (field.FieldName == "Field19")
+					{
+						awbDp.ShipmentField19 = value.ToString();
+					}
+					else if (field.FieldName == "Field20")
+					{
+						awbDp.ShipmentField20 = value.ToString();
+					}
                     else if (field.FieldName == "Field21")
                     {
                         awbDp.ShipmentField21 = value.ToString();
@@ -2629,34 +2685,21 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         awbDp.ShipmentField40 = value.ToString();
                     }
-                    else if (field.FieldName != null && field.FieldName.Contains("Field"))
-                    {
-                        SetPropertyValue(awbDp, "Shipment" + field.FieldName, value.ToString());
-                    }
                 }
             }
         }
 
-        private void SetPropertyValue(object obj, string property, object value)
-        {
-            var prop = obj.GetType().GetProperty(property);
-            if (prop != null)
-            {
-                prop.SetValue(obj, value, null);
-            }
-        }
-
-        private void GetAWBPrintingFields()
+        private void GetAWBPrintingFields(AWBDataProvider dataProvider, ShipmentPM shipmentPM)
         {
             if (isRegulatedAgentActivated)
             {
-                awbDp.IssuingShipperSignature = shipmentPM.AWBSignature;
-                awbDp.IssuingCarrierSignature = shipmentPM.AWBSignature;
+                dataProvider.IssuingShipperSignature = shipmentPM.AWBSignature;
+                dataProvider.IssuingCarrierSignature = shipmentPM.AWBSignature;
                 if (shipmentPM.ViaColoader)
                 {
                     if (!string.IsNullOrEmpty(shipmentPM.ColoaderId))
                     {
-                        awbDp.IssuingCarrierSignature = shipmentPM.ColoaderName;
+                        dataProvider.IssuingCarrierSignature = shipmentPM.ColoaderName;
                     }
                 }
 
@@ -2664,7 +2707,7 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     if (!string.IsNullOrEmpty(shipmentPM.ColoaderRANumber))
                     {
-                        awbDp.RA = "RAR-RA" + shipmentPM.AWBPrintingRANumber;
+                        dataProvider.RA = "RAR-RA" + shipmentPM.AWBPrintingRANumber;
 
                         if (!string.IsNullOrEmpty(shipmentPM.RegulatedAgentRANumber))
                         {
@@ -2679,7 +2722,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
-                            awbDp.IssuingShipperSecurityCode = myFieldCode;
+                            dataProvider.IssuingShipperSecurityCode = myFieldCode;
                         }
                     }
 
@@ -2687,7 +2730,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (!string.IsNullOrEmpty(shipmentPM.RegulatedAgentRANumber) && !string.IsNullOrEmpty(shipmentPM.KnownConsignorNumber))
                         {
-                            awbDp.RA = "RAR-RA" + shipmentPM.AWBPrintingRANumber;
+                            dataProvider.RA = "RAR-RA" + shipmentPM.AWBPrintingRANumber;
 
                             string myFieldCode = null;
                             if (!string.IsNullOrEmpty(shipmentPM.AWBPrintingSecurityStatusId))
@@ -2700,13 +2743,14 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                             }
 
-                            awbDp.IssuingCarrierSecurityCode = myFieldCode;
+                            dataProvider.IssuingCarrierSecurityCode = myFieldCode;
                         }
-                    }
+                    }                                    
                 }
             }
         }
-        private void GetNotify1Data()
+
+        private void GetNotify1Data(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
         {
             int tenant = shipmentPM.Tenant;
             string notify1Id = shipmentPM.Notify1Id;
@@ -2715,6 +2759,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(notify1Id))
             {
                 Card notify1Card = CardRepository.GetSingleCard(notify1Id, tenant, false);
+                ContactRepository contactRepository = new ContactRepository(myCommonContext);
 
                 if (notify1Card != null)
                 {
@@ -2741,7 +2786,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (!string.IsNullOrEmpty(shipmentPM.Notify1ContactId))
                     {
-                        Contact myContact = contactRepository.GetSingleContact(shipmentPM.Notify1ContactId, tenant);
+                        Contact myContact = contactRepository.GetSingleContact(shipmentPM.Notify1ContactId, myTenant);
 
                         if (myContact != null)
                         {
@@ -2775,7 +2820,8 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetNotify2Data()
+
+        private void GetNotify2Data(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
         {
             int tenant = shipmentPM.Tenant;
             string notify2Id = shipmentPM.Notify2Id;
@@ -2784,10 +2830,9 @@ namespace WebFreight.Web.ReportsWebServices
             if (!string.IsNullOrEmpty(notify2Id))
             {
                 Card notify2Card = CardRepository.GetSingleCard(notify2Id, tenant, false);
+                ContactRepository contactRepository = new ContactRepository(myCommonContext);
                 if (notify2Card != null)
                 {
-                    awbDp.Notify2NameAddress = notify2Card.EnglishName;
-
                     if (!string.IsNullOrEmpty(notify2AddressId))
                     {
                         Address notify2Address = addressRepository.GetSingleAddress(notify2AddressId, tenant);
@@ -2796,20 +2841,6 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             awbDp.NotifyAddress2_WithName = DataProviders.General.GetAddressWithName(notify2Address);
                             awbDp.Notify2ATTN = notify2Address.ATTN;
-
-                            if (notify2Address.IsLocalLanguage)
-                            {
-                                if (notify2Card != null && !string.IsNullOrEmpty(notify2Card.LocalName))
-                                {
-                                    awbDp.Notify2NameAddress = notify2Card.LocalName;
-                                }
-                            }
-
-                            awbDp.Notify2NameAddress = awbDp.Notify2NameAddress + Environment.NewLine + DataProviders.General.GetAddress(notify2Address);
-                            if (notify2Address.PhoneNumber != null || notify2Address.FaxNumber != null)
-                            {
-                                awbDp.Notify2NameAddress = awbDp.Notify2NameAddress + Environment.NewLine + (notify2Address.PhoneNumber != null ? "Tel: " + notify2Address.PhoneNumber + " " : "") + (notify2Address.FaxNumber != null ? "Fax: " + notify2Address.FaxNumber + " " : "");
-                            }
                         }
                     }
 
@@ -2848,7 +2879,8 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetAgentData()
+
+        private void GetAgentData(AWBDataProvider awbDp, ShipmentPM shipmentPM, AddressRepository addressRepository)
         {
             int tenant = shipmentPM.Tenant;
             string agentId = shipmentPM.AgentId;
@@ -2856,7 +2888,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (!string.IsNullOrEmpty(agentId))
             {
-                Card agentCard = (from a in commonContext.Cards
+                Card agentCard = (from a in myCommonContext.Cards
                                   where a.Id == agentId
                                   select a).FirstOrDefault();
 
@@ -2887,93 +2919,17 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
-        private void GetConsolidatorData()
+
+        private void GetConsolidatorData(AWBDataProvider awbDp, ShipmentPM shipmentPM)
         {
             if (!string.IsNullOrEmpty(shipmentPM.ConsolidatorId))
             {
-                Card card = CardRepository.GetSingleCard(shipmentPM.ConsolidatorId, tenant, false);
-                if (card != null)
+                Card card = CardRepository.GetSingleCard(shipmentPM.ConsolidatorId, shipmentPM.Tenant, false);
+                if(card != null)
                 {
                     awbDp.ConsolidatorName = card.EnglishName;
                 }
             }
-        }
-        private byte[] GetUserSignatureImage()
-        {
-            byte[] signatureImage = null;
-            if (!string.IsNullOrEmpty(contactEmail))
-            {
-                User currentUser = (from a in commonContext.Users
-                                    where a.Contact.Email == contactEmail && a.Tenant == tenant
-                                    select a).FirstOrDefault();
-
-                if (currentUser != null)
-                {
-                    signatureImage = DataProviders.General.GetUserSignatureImage(currentUser.SignatureImageId, tenant);
-                }
-            }
-            return signatureImage;
-        }
-        private void GetPlaceOfDelivery()
-        {
-            ShipmentPickUpDelivery myDelivery = (from d in shipmentsContext.ShipmentPickUpDeliveries
-                                                 where d.ShipmentId == shipmentPM.Id && d.PickUpDeliveryTypeCode == "DELV"
-                                                 select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
-
-            WebServiceHelper myServiceHelper = new WebServiceHelper(tenant);
-            awbDp.PlaceOfDelivery = myServiceHelper.GetPlaceOfDelivery(shipmentPM, myDelivery);
-        }
-        private void GetPreForwardingData()
-        {
-            awbDp.PreForwardingFrom = routingDataProvider.PreForwardingFrom;
-            awbDp.PreForwardingFromName = routingDataProvider.PreForwardingFromName;
-            awbDp.PreForwardingTo = routingDataProvider.PreForwardingTo;
-            awbDp.PreForwardingToName = routingDataProvider.PreForwardingToName;
-            awbDp.PreForwardingETD = routingDataProvider.PreForwardingETD;
-            awbDp.PreForwardingETA = routingDataProvider.PreForwardingETA;
-            awbDp.PreForwardingATD = routingDataProvider.PreForwardingATD;
-            awbDp.PreForwardingATA = routingDataProvider.PreForwardingATA;
-            awbDp.PreForwardingCarrierCode = routingDataProvider.PreForwardingCarrierCode;
-            awbDp.PreForwardingCarrierNumber = routingDataProvider.PreForwardingCarrierNumber;
-        }
-        private void GetOnForwardingData()
-        {
-            awbDp.OnForwardingFrom = routingDataProvider.OnForwardingFrom;
-            awbDp.OnForwardingFromName = routingDataProvider.OnForwardingFromName;
-            awbDp.OnForwardingTo = routingDataProvider.OnForwardingTo;
-            awbDp.OnForwardingToName = routingDataProvider.OnForwardingToName;
-            awbDp.OnForwardingETD = routingDataProvider.OnForwardingETD;
-            awbDp.OnForwardingETA = routingDataProvider.OnForwardingETA;
-            awbDp.OnForwardingATD = routingDataProvider.OnForwardingATD;
-            awbDp.OnForwardingATA = routingDataProvider.OnForwardingATA;
-            awbDp.OnForwardingCarrierCode = routingDataProvider.OnForwardingCarrierCode;
-            awbDp.OnForwardingCarrierNumber = routingDataProvider.OnForwardingCarrierNumber;
-        }
-        private void GetPreCarriageData()
-        {
-            awbDp.PreCarriageFrom = routingDataProvider.PreCarriageFrom;
-            awbDp.PreCarriageFromName = routingDataProvider.PreCarriageFromName;
-            awbDp.PreCarriageTo = routingDataProvider.PreCarriageTo;
-            awbDp.PreCarriageToName = routingDataProvider.PreCarriageToName;
-            awbDp.PreCarriageETD = routingDataProvider.PreCarriageETD;
-            awbDp.PreCarriageETA = routingDataProvider.PreCarriageETA;
-            awbDp.PreCarriageATD = routingDataProvider.PreCarriageATD;
-            awbDp.PreCarriageATA = routingDataProvider.PreCarriageATA;
-            awbDp.PreCarriageCarrierCode = routingDataProvider.PreCarriageCarrierCode;
-            awbDp.PreCarriageCarrierNumber = routingDataProvider.PreCarriageCarrierNumber;
-        }
-        private void GetOnCarriageData()
-        {
-            awbDp.OnCarriageFrom = routingDataProvider.OnCarriageFrom;
-            awbDp.OnCarriageFromName = routingDataProvider.OnCarriageFromName;
-            awbDp.OnCarriageTo = routingDataProvider.OnCarriageTo;
-            awbDp.OnCarriageToName = routingDataProvider.OnCarriageToName;
-            awbDp.OnCarriageETD = routingDataProvider.OnCarriageETD;
-            awbDp.OnCarriageETA = routingDataProvider.OnCarriageETA;
-            awbDp.OnCarriageATD = routingDataProvider.OnCarriageATD;
-            awbDp.OnCarriageATA = routingDataProvider.OnCarriageATA;
-            awbDp.OnCarriageCarrierCode = routingDataProvider.OnCarriageCarrierCode;
-            awbDp.OnCarriageCarrierNumber = routingDataProvider.OnCarriageCarrierNumber;
         }
     }
 }

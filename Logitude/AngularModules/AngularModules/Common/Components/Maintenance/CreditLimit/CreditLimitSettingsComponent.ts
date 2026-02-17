@@ -9,7 +9,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './CreditLimitSettingsComponent.html',
 })
 
@@ -23,8 +23,6 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
     private myService: CreditLimitSettingPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsPartnersRestrictionsTabVisible: boolean = false;
-    public IsShipmentCreationWarningHasFeatureToggle: boolean = false;
-
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new CreditLimitSettingPMService();
@@ -32,8 +30,6 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
         if (FeatureLocator.HasFeaturePermession("CreditLimitSetting", "PartnersRestrictions")) {
             this.IsPartnersRestrictionsTabVisible = true;
         }
-
-        this.CheckShipmentCreationWarningFeatureToggle();
     }
 
     ngOnInit() {
@@ -58,19 +54,10 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
         });
     }
 
-    private CheckShipmentCreationWarningFeatureToggle() {
-        this.IsShipmentCreationWarningHasFeatureToggle = false;
-        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SWC")[0];
-        if (featureToggle) {
-            this.IsShipmentCreationWarningHasFeatureToggle = true;
-        }
-    }
-
     SetUIProperties() {
         this.UIProperties.SetEnabled('InvoiceCreationBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
         this.UIProperties.SetEnabled('InvoiceCreationWarning', this.ObjectTableName, this.IsCreditLimitEnabled);
         this.UIProperties.SetEnabled('ShipmentCreationBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
-        this.UIProperties.SetEnabled('ShipmentCreationWarning', this.ObjectTableName, this.IsCreditLimitEnabled);
 
         this.UIProperties.SetEnabled('CustomersShipmentsBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
         this.UIProperties.SetEnabled('AgentsShipmentsBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
@@ -92,7 +79,7 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
         this.UIProperties.SetEnabled('ShippingLinesInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
         this.UIProperties.SetEnabled('TruckersInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
         this.UIProperties.SetEnabled('VendorsInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
-        this.UIProperties.SetEnabled('WarehousesInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled); 
+        this.UIProperties.SetEnabled('WarehousesInvoicesBlock', this.ObjectTableName, this.IsCreditLimitEnabled);
     }
 
     get IsCreditLimitEnabled() { return this.EntityPM.IsCreditLimitEnabled; }
@@ -121,13 +108,6 @@ export class CreditLimitSettingsComponent extends BaseComponent implements OnIni
     set ShipmentCreationBlock(value: boolean) {
         if (this.EntityPM.ShipmentCreationBlock != value) {
             this.EntityPM.ShipmentCreationBlock = value;
-        }
-    }
-
-    get ShipmentCreationWarning() { return this.EntityPM.ShipmentCreationWarning; }
-    set ShipmentCreationWarning(value: boolean) {
-        if (this.EntityPM.ShipmentCreationWarning != value) {
-            this.EntityPM.ShipmentCreationWarning = value;
         }
     }
 

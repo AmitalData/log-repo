@@ -10,7 +10,7 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 import { ShipmentDomainService } from '../../../Shipment/Services/ShipmentDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BlockedShipmentsComponent.html',
 })
 

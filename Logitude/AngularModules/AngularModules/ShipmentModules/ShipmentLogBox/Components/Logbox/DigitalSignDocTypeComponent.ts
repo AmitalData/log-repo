@@ -6,7 +6,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SearchTextBox} from '../../../../Controls/SearchTextBox';
 import {IconButton} from '../../../../Controls/IconButton';
 import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
+import {Http, Response} from '@angular/http';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -33,7 +33,7 @@ import {DocumentTypePMService} from '../../../../Common/Services/StandardPMs/Doc
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './DigitalSignDocTypeComponent.html'
 })
 
@@ -46,7 +46,6 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
     _DocumentTypeListService: DocumentTypePMExtendedService;
     _DocumentTypePMService: DocumentTypePMService
     private CurrentSession = SessionLocator.SelectedSession;
-    SystemName: string;
     constructor() {
         super();
         this._DocumentTypeListService = new DocumentTypePMExtendedService();
@@ -55,11 +54,10 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
     ngOnInit() {
 
         var objectTablePm = window.ObjectTables.filter(d => d.Name == "Shipment")[0];
-        this._DocumentTypeListService.GetDocumentTypesByObjectTableAndTenant(objectTablePm.Id,SessionLocator.Tenant).subscribe((res:any) => {
+        this._DocumentTypeListService.GetDocumentTypesByObjectTableAndTenant(objectTablePm.Id,SessionLocator.Tenant).subscribe(res => {
             this.DocTypes = res.Result;
             this.DocTypes = this.DocTypes.sort((a, b) => { return (a.OrderBy === b.OrderBy) ? 0 : (a.OrderBy < b.OrderBy) ? -1 : 1 });
         });
-        this.FillSystemName();
     }
     ngAfterViewInit() {
 
@@ -67,14 +65,6 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
     SetWindowArgs(args: any) {
         //this.AdditionalData = args.AdditionalData;
     } 
-
-    FillSystemName() {
-        if (SessionLocator.PrivateLableSettings) {
-            this.SystemName = SessionLocator.PrivateLableSettings.PrivateLabelName;
-            return;
-        }
-        this.SystemName = "Logbox";
-    }
 
     onCheckBoxChecked(Type: any) {
         if (this.UpdateDocTypes.filter(a => a.Id == Type.Id).length > 0) {
@@ -93,7 +83,7 @@ export class DigitalSignDocTypeComponent extends BaseComponent implements OnInit
         //var itemsProcessed = 0;
         //this.UpdateDocTypes.forEach((Type) => {
 
-            this._DocumentTypeListService.update(this.UpdateDocTypes).subscribe((myResult:any) => {
+            this._DocumentTypeListService.update(this.UpdateDocTypes).subscribe(myResult => {
                 //itemsProcessed++;
                 //if (itemsProcessed === this.UpdateDocTypes.length) {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();

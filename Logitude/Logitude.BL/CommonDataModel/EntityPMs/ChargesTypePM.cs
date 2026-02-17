@@ -4,12 +4,11 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class ChargesTypePM : ObjectCustomFieldPM
+    public class ChargesTypePM
     {
         [Key]
         public string Id { get; set; }
@@ -30,13 +29,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ChargesGroupId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string QuoteChargesGroupCode { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string QuoteChargesGroupId { get; set; }
-
+        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MeasurementId { get; set; }
 
@@ -100,9 +93,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string PayablesChargesTypeExternalCode { get; set; }        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PayableDebitAccountExternalId { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string QuoteGroupSectionID { get; set; }
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReceivableCreditAccountExternalId { get; set; }
@@ -132,8 +122,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReceivableCreditGLAccountId { get; set; }
-        public string RecCreditGLAcountLocalName { get; set; }
-        public string PayDebitGLAcountLocalName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsExpense { get; set; }
@@ -177,33 +165,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PayablesDefaultCurrencyId { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PayableDebitGLAcountLocalName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PayableDebitGLAcountNumber { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ReceivableCreditGLAcountLocalName { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ReceivableCreditGLAcountNumber { get; set; }
-        public bool ApplyRegionalTax { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool HasPickup { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool HasDelivery { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsDirectionRestricted { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsActiveInExport { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsActiveInImport { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsActiveInDomestic { get; set; }
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsActiveInDrop { get; set; }
     }
 }

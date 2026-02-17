@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
@@ -28,7 +28,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public APPayment GetSingleAPPayment(string id, int tenant)
         {
-            return (from a in context.APPayments.Include("LocalCurrency").Include("AccountingPaymentMethod").Include("PaymentCurrency").Include("VendorCard").Include("CreatedByUser.Contact").Include("Status").Include("Branch").Include("TransferStatus")
+            return (from a in context.APPayments.Include("LocalCurrency").Include("AccountingPaymentMethod").Include("PaymentCurrency").Include("VendorCard").Include("CreatedByUser.Contact").Include("Status").Include("Branch")
                     where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
@@ -59,7 +59,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<APPayment> GetOpenedAPPayments(int tenant)
         {
-            return ( from d in context.APPayments.Include("AccountingPaymentMethod").Include("Status")
+            return ( from d in context.APPayments.Include("PaymentMethod")
                      where d.Tenant == tenant && d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsClosed == false
                      select d);
         }
@@ -141,13 +141,6 @@ namespace Simplog.Data.InvoiceModel.Repositories
             }
 
             return list;
-        }
-
-        public List<APPayment> GetAPPaymentsByMasavInterfaceId(string masavInterfaceId, int tenant)
-        {
-            return (from a in context.APPayments
-                    where a.Tenant == tenant && a.MasavInterfaceId == masavInterfaceId
-                    select a).ToList();
         }
 
         public List<APPayment> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)

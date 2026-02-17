@@ -16,7 +16,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectFieldId { get; set; }
         public string Condition { get; set; }
         public string Code { get; set; }
-        public string ObjectFieldCode { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

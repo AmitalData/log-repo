@@ -13,7 +13,7 @@ import {BookingProductExtendedPMService} from '../../../../Booking/Services/Exte
 import {CommodityPMService} from '../../../../Common/Services/StandardPMs/CommodityPMService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditAirlineAdaptationItemComponent.html',
 })
 
@@ -83,7 +83,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
 
             if (this.IsNew) {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                this.myService.insert(this.EntityPM).subscribe((Result:any) => {
+                this.myService.insert(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {
@@ -100,7 +100,7 @@ export class AddEditAirlineAdaptationItemComponent extends BaseComponent {
 
             else {
                 this.CurrentSession.StartBusyIndicatorSaving();
-                this.myService.update(this.EntityPM).subscribe((Result:any) => {
+                this.myService.update(this.EntityPM).subscribe(Result => {
 
                     var mm: ServiceResponse = Result;
                     if (!mm.HasError) {

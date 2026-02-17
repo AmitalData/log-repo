@@ -1,17 +1,17 @@
-﻿using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Tools.DataMapping;
-using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Web;
+using System.Collections.Generic;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.Counters;
+using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -19,7 +19,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentsFilingMetaDataValueRepository repository;
 
-
+        public DocumentsFilingMetaDataValueQuery()
+        {
+            repository = new DocumentsFilingMetaDataValueRepository();
+        }
 
         public DocumentsFilingMetaDataValueQuery(ICommonDataContext context)
         {
@@ -47,86 +50,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
 
-        public static void UpSert_Del(DocumentsFilingPM documentsFilingPM, string MetaDataTypeCode, string MetaDataTypeValue)
-        {
-            string documentsMetaDataTypeId = null;
-            var commonDataContext = CommonDataContext.GetContext(documentsFilingPM.Tenant);
-            DocumentsMetaDataTypeRepository TypesRepo = new DocumentsMetaDataTypeRepository(commonDataContext);
-            var pocoMDType = TypesRepo.GetSingleDocumentsMetaDataTypeByCode(MetaDataTypeCode, documentsFilingPM.Tenant);
-            if (pocoMDType == null)
-            {
-                LogMessagingUtil.Instance.AppendLine("GetDocumentsMetaDataTypeVERId is null !!!!! UpSertVERValue - failed ");
-                return;
-            }
-            documentsMetaDataTypeId = pocoMDType.Id;
-
-            var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
-            var documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(commonDataContext);
-            var mydocumentsFilingMetaDataVERValueList = documentsFilingMetaDataValueQuery
-                .GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(documentsFilingPM.Id, documentsFilingPM.Tenant)
-                //.FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
-                .Where(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId)
-                .ToList();
-            DocumentsFilingMetaDataValuePM mydocumentsFilingMetaDataVERValuePM = null;
-            if (mydocumentsFilingMetaDataVERValueList.Count() > 1)
-            {
-                var listId=mydocumentsFilingMetaDataVERValueList.Select(r => r.Id);
-                var pocosDelete=repository.All().Where(r => listId.Contains(r.Id)).ToList();
-                pocosDelete.ForEach(itemPoco => { repository.Remove(itemPoco); });
-
-                LogMessagingUtil.Instance.AppendLine("UpSert_Del Del there is more then 1 (hd#353339)");
-
-                documentsFilingPM.DocumentsFilingMetaDataValues.Clear();
-            }
-            else if (mydocumentsFilingMetaDataVERValueList.Count() == 1)
-            {
-                mydocumentsFilingMetaDataVERValuePM = mydocumentsFilingMetaDataVERValueList.FirstOrDefault();
-            }
-            
-
-            if (mydocumentsFilingMetaDataVERValuePM != null)
-            {
-                if (mydocumentsFilingMetaDataVERValuePM.MetaDataValue == MetaDataTypeValue)
-                {
-                    LogMessagingUtil.Instance.AppendLine("mydocumentsFilingMetaDataVERValue.MetaDataValue == DeclarationNumber ");
-                    return;
-                }
-                var itemPoco = new DocumentsFilingMetaDataValue();
-
-                mydocumentsFilingMetaDataVERValuePM.MetaDataValue = MetaDataTypeValue;
-                DocumentsFilingMetaDataValueMapping.MapEntity(mydocumentsFilingMetaDataVERValuePM, itemPoco,true /*false - if false do not map keys !!*/ );
-                //var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
-                repository.Update(itemPoco);
-                var pmInMem = documentsFilingPM.DocumentsFilingMetaDataValues.FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
-                if (pmInMem != null)
-                {
-                    pmInMem.MetaDataValue = MetaDataTypeValue;
-                }
-                else
-                {
-                    LogMessagingUtil.Instance.AppendLine("documentsFilingPM.DocumentsFilingMetaDataValues.Add(mydocumentsFilingMetaDataVERValuePM);");//nir ask to delete 
-                    
-                }
-                
-            }
-            else
-            {
-                var temp = new DocumentsFilingMetaDataValuePM()
-                {
-                    DocumentsMetaDataTypeId = documentsMetaDataTypeId,
-                    MetaDataValue = MetaDataTypeValue,
-                    DocumentsMetaDataTypeCode = MetaDataTypeCode,
-
-                };
-                documentsFilingMetaDataValueQuery.Create(documentsFilingPM, temp);
-                documentsFilingPM.DocumentsFilingMetaDataValues.Add(temp);
-
-
-            }
-            commonDataContext.SaveChanges();
-        }
-
-        public static void UpSert_OLD_MOVE2DELSERT(DocumentsFilingPM documentsFilingPM, string MetaDataTypeCode, string MetaDataTypeValue)
+        public static void UpSert(DocumentsFilingPM documentsFilingPM, string MetaDataTypeCode, string MetaDataTypeValue)
         {
             string documentsMetaDataTypeId = null;
             var commonDataContext = CommonDataContext.GetContext(documentsFilingPM.Tenant);
@@ -154,7 +78,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 var itemPoco = new DocumentsFilingMetaDataValue();
 
                 mydocumentsFilingMetaDataVERValuePM.MetaDataValue = MetaDataTypeValue;
-                DocumentsFilingMetaDataValueMapping.MapEntity(mydocumentsFilingMetaDataVERValuePM, itemPoco, true /*false - if false do not map keys !!*/ );
+                DocumentsFilingMetaDataValueMapping.MapEntity(mydocumentsFilingMetaDataVERValuePM, itemPoco,true /*false - if false do not map keys !!*/ );
                 var repository = new DocumentsFilingMetaDataValueRepository(commonDataContext);
                 repository.Update(itemPoco);
                 var pmInMem = documentsFilingPM.DocumentsFilingMetaDataValues.FirstOrDefault(r => r.DocumentsMetaDataTypeId == documentsMetaDataTypeId);
@@ -166,7 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     documentsFilingPM.DocumentsFilingMetaDataValues.Add(mydocumentsFilingMetaDataVERValuePM);
                 }
-
+                
             }
             else
             {
@@ -184,7 +108,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             commonDataContext.SaveChanges();
         }
-
 
         public DocumentsFilingMetaDataValueQuery(DocumentsFilingMetaDataValueRepository documentsFilingMetaDataValueRepository)
         {
@@ -270,31 +193,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documents;
         }
 
-		public List<string> GetDocumentsFilingMetaDataValuesPMsByTenantMetaDataValueDocumentsMetaDataTypeId( int tenant, string  CARFI, string courierhawb, string INTGR_R, string integratorCode)
-		{
-			var documents = (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
-														where a.Tenant == tenant && ((a.DocumentsMetaDataType.Code == CARFI && a.MetaDataValue == courierhawb)|| (a.DocumentsMetaDataType.Code == INTGR_R && a.MetaDataValue == integratorCode))
-							                            orderby a.DocumentsFilingId
-							                            select a).GroupBy(p => p.DocumentsFilingId).Where(x => x.Count() == 2).Select(y => y.Key).ToList();
-			return documents;
-		}
-		public List<DocumentsFilingMetaDataValue> GetDocumentsFilingMetaDataValuesByCARFI(int tenant, string CARFI)
-		{
-	        var list = repository.context.DocumentsFilingMetaDataValues
-	               .Where(v =>
-	               	v.DocumentsMetaDataType.Tenant == tenant &&
-	               	v.DocumentsMetaDataType.Code == CARFI &&
-	               	v.DocumentsFiling.EntityId == null)
-	               .ToList();
-            return list;
-		}
-		public DocumentsFilingMetaDataValue GetDocumentsFilingMetaDataValueByINTGR_R(int tenant, string documentsFilingId, string INTGR_R)
-		{
-			return repository.context.DocumentsFilingMetaDataValues
-				   .Where(v =>
-					   v.DocumentsMetaDataType.Tenant == tenant && v.DocumentsFilingId == documentsFilingId &&
-					   v.DocumentsMetaDataType.Code == INTGR_R)
-				   .FirstOrDefault();
-		}
-	}
+
+
+    }
 }

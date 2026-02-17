@@ -31,22 +31,51 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
 
- 
+        //public IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>>
+        //    GetQGJournalLinesByExternalRecoFromTo(int tenant, string fromExtNum, string toExtNum)
+        //{
+
+        //    var q = (from jl in this.repository.GetAll(tenant)
+        //                 .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+        //                 && rec.ExternalReconcileNumber != "0"
+        //                 && rec.ExternalReconcileNumber != "0.00"
+        //                 && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
+        //                 && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
+        //             join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && r.IsReconciled == false)
+        //             on new { jl.JournalId, jl.Line }
+        //             equals new { trans.JournalId, Line = trans.JournalLineNumber }
+        //             into joinT
+        //             from joinr in joinT
+        //             select new JournalLineLedgerTransactionDTO
+        //             {
+        //                 JournalLine = jl,
+        //                 LedgerTransaction = joinr,
+        //             });
+        //    return q.OrderBy(rec => rec.JournalLine.ExternalReconcileNumber).GroupBy(rec => rec.JournalLine.ExternalReconcileNumber);
+
+        //}
+
+ //       public IQueryable<JournalLineLedgerTransactionDTO>
         public IEnumerable<JournalLineLedgerTransactionDTO>
             GetQGJournalLinesByExternalRecoFromTo(int tenant, string fromExtNum, string toExtNum)
         {
             var pre_q = from j_lines in this.repository.GetAll(tenant)
                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
                          && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999"
+                         && rec.ExternalReconcileNumber != "0.00"
                          && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
                          && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
                         select j_lines;
             List<JournalLine> jl_list = pre_q.ToList();
-            List<String> jL_Id_list = jl_list.Select(i => i.JournalId).ToList<String>();
 
+//            var q = (from jl in this.repository.GetAll(tenant)
             var q = (from jl in jl_list
-                     join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && jL_Id_list.Contains(r.JournalId) && r.IsReconciled == false)
+                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+                         && rec.ExternalReconcileNumber != "0"
+                         && rec.ExternalReconcileNumber != "0.00"
+                         && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
+                         && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
+                     join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && r.IsReconciled == false)
                      on new { jl.JournalId, jl.Line }
                      equals new { trans.JournalId, Line = trans.JournalLineNumber }
                      into joinT
@@ -56,80 +85,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                          JournalLine = jl,
                          LedgerTransaction = joinr,
                      });
-            return q;
+            return q;//.OrderBy(rec => rec.JournalLine.ExternalReconcileNumber).GroupBy(rec => rec.JournalLine.ExternalReconcileNumber);
 
         }
 
-
-        public string GetMaxExternalRecoNum(int tenant)
-        {
-            string rv;
-            var pre_q = this.repository.GetAll(tenant)
-                        .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
-                         && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999");
-            if (pre_q != null)
-            {
-                rv = pre_q.Max(i => i.ExternalReconcileNumber);
-            }
-            else
-            {
-                rv = "";
-            }
-            return rv;
-        }
-
-
-        //public string GetMaxExternalRecoNum(int tenant)
-        //{
-        //    string rv;
-        //    var pre_q = this.repository.GetAll(tenant)
-        //                .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
-        //                 && rec.ExternalReconcileNumber != "0"
-        //                 && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000");
-        //    if (pre_q != null)
-        //    {
-        //        rv = pre_q.Max(i => i.ExternalReconcileNumber);
-        //    }
-        //    else
-        //    {
-        //        rv = "";
-        //    }
-        //    return rv;
-        //}
-
-
-        public IQueryable<JournalLineLedgerTransactionAccDTO>
-            GetQJournalLinesByLTList(int tenant, List<LedgerTransaction> reconciableLT_List)
-        {
-            List<string> ltIdsList = reconciableLT_List.Select(item => item.Id).ToList();
-            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant)
-                                          join journals in (context as AccountingContext).Journals.Where(r => r.Tenant == tenant)
-                                          on jline.JournalId equals journals.Id
-                                          select jline);
-
-            IQueryable<JournalLineLedgerTransactionAccDTO> q = (from jl in q1
-                                                                join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && ltIdsList.Contains(r.Id))
-                                                                on new { jl.JournalId, jl.Line }
-                                                                equals new { trans.JournalId, Line = trans.JournalLineNumber }
-                                                                into joinT
-                                                                from joinr in joinT
-                                                                select new JournalLineLedgerTransactionAccDTO
-                                                                {
-                                                                    JournalLine = jl,
-                                                                    LedgerTransaction = joinr,
-                                                                    AccId = jl.ActionCode == "1" ? jl.CreditAccountId : (jl.ActionCode == "2" ? jl.DebitAccountId : joinr.AccountId),
-                                                                });
-            return q;
-        }
 
 
         public IQueryable<JournalLineLedgerTransactionAccDTO>
             GetQJournalLinesByExternalNo_NotReconciled(int tenant)
         {
-            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant).Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
-                         && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999")
+            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant)
                      join journals in (context as AccountingContext).Journals.Where(r => r.Tenant == tenant && r.ExternalNo != null)
                      on jline.JournalId equals journals.Id
                      select jline);
@@ -150,33 +115,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return q;
         }
 
-
-        public IQueryable<JournalLineLedgerTransactionAccDTO>
-            GetQJournalLinesByExternalNoGLAcc_NotReconciled(int tenant, string gLAccountId)
-        {
-            IQueryable<JournalLine> q1 = (from jline in this.repository.GetAll(tenant).Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
-                         && rec.ExternalReconcileNumber != "0"
-                         && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber != "000000000000000" && rec.ExternalReconcileNumber != "99999999"
-                         && (rec.ActionCode == "1" && rec.CreditAccountId == gLAccountId || rec.ActionCode != "1" && rec.DebitAccountId == gLAccountId))
-                                          join journals in (context as AccountingContext).Journals.Where(r => r.Tenant == tenant && r.ExternalNo != null)
-                                          on jline.JournalId equals journals.Id
-                                          select jline);
-
-            IQueryable<JournalLineLedgerTransactionAccDTO> q = (from jl in q1
-                         .Where(rec => rec.ExternalReconcileNumber != null)
-                                                                join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && r.IsReconciled == false)
-                                                                on new { jl.JournalId, jl.Line }
-                                                                equals new { trans.JournalId, Line = trans.JournalLineNumber }
-                                                                into joinT
-                                                                from joinr in joinT
-                                                                select new JournalLineLedgerTransactionAccDTO
-                                                                {
-                                                                    JournalLine = jl,
-                                                                    LedgerTransaction = joinr,
-                                                                    AccId = jl.ActionCode == "1" ? jl.CreditAccountId : jl.DebitAccountId,
-                                                                });
-            return q;
-        }
 
 
         public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransaction(DateTime fromTruncateTime, DateTime toTruncateTime, int tenant
@@ -262,12 +200,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         private static IQueryable<JournalLineLedgerDTO> GetJournalLineLedgerDTO(string myTaxCard, IOrderedQueryable<VatTypePercentageDTO> percentagesQueryOrderDescByFromDate, IQueryable<JournalLine> qJournalLineByAcountingDate)
         {
             var crditList = new List<string>(){
-        ((int)JournalActionTypeEnum.Credit).ToString(),
-        ((int)JournalActionTypeEnum.DebitAndCredit).ToString(),
-        ((int)JournalActionTypeEnum.DebitCreditAndVatdeduction).ToString(),
+        ((int)MyJournalActionTypeEnum.Credit).ToString(),
+        ((int)MyJournalActionTypeEnum.DebitAndCredit).ToString(),
+        ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString(),
         };
             var qJLCredit =
-                qJournalLineByAcountingDate.Where(rec => crditList.Contains(rec.ActionCode/*rec.JournalActionType.Code*/))
+                qJournalLineByAcountingDate.Where(rec => crditList.Contains(rec.JournalActionType.Code))
 
                 .Select(rec => new JournalLineLedgerDTO()
                 {
@@ -286,11 +224,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                 });
             var debitList = new List<string>(){
-        ((int)JournalActionTypeEnum.Debit).ToString(),
-        ((int)JournalActionTypeEnum.DebitAndCredit).ToString(),
+        ((int)MyJournalActionTypeEnum.Debit).ToString(),
+        ((int)MyJournalActionTypeEnum.DebitAndCredit).ToString(),
         };
             var qJLDebit =
-                 qJournalLineByAcountingDate.Where(rec => debitList.Contains(rec.ActionCode /*rec.JournalActionType.Code*/))
+                 qJournalLineByAcountingDate.Where(rec => debitList.Contains(rec.JournalActionType.Code))
                  .Select(rec => new JournalLineLedgerDTO()
                  {
                      CHANGE_TYPE = "",
@@ -308,112 +246,107 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                  });
 
-            if (false)
-            {
 
-                /*
-                 (No column name)	ActionCode
-                4531262	1
-                3489610	2
-                1366	3 
-                 */
-
-                var qJLDebitVat =
-                    (from jl in
-                         qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)JournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
-                     from vl in
-                         (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
-                          where v.FromDate <= jl.DocumentDate
-                          select v).Take(1)
-                     select new { jl, vl.myVat }
-                    )
-                    .Select(rec => new JournalLineLedgerDTO()
-                    {
-                        CHANGE_TYPE = "",
-                        JournalId = rec.jl.JournalId,
-                        JournalLineNumber = rec.jl.Line,
-                        AccountId = rec.jl.DebitAccountId,
-                        CurrencyId = rec.jl.CurrencyId,
-                        LocalAmountCredit = 0,
-                        LocalAmountDebit =
-                        Math.Round((double)((double)rec.jl.LocalAmount / (double)rec.myVat), 2),
+            var qJLDebitVat =
+                (from jl in
+                     qJournalLineByAcountingDate.Where(rec => rec.JournalActionType.Code == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                 from vl in
+                     (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
+                      where v.FromDate <= jl.DocumentDate
+                      select v).Take(1)
+                 select new { jl, vl.myVat }
+                )
+                .Select(rec => new JournalLineLedgerDTO()
+                {
+                    CHANGE_TYPE = "",
+                    JournalId = rec.jl.JournalId,
+                    JournalLineNumber = rec.jl.Line,
+                    AccountId = rec.jl.DebitAccountId,
+                    CurrencyId = rec.jl.CurrencyId,
+                    LocalAmountCredit = 0,
+                    LocalAmountDebit =
+                    Math.Round((double)((double)rec.jl.LocalAmount / (double)rec.myVat), 2),
                     //Math.Round(((rec.jl.LocalAmount / ((rec.Percentage + 100) / 100))), 2),
                     //rec.Percentage ==null ?  
                     //Math.Round(((double)(rec.jl.LocalAmount / (double)(( 200) / 100))), 2) :
                     //Math.Round(((double)(rec.jl.LocalAmount / (double)((rec.Percentage.GetValueOrDefault() + 100) / 100))), 2) 
 
                     ForeignAmountCredit = 0,
-                        ForeignAmountDebit =
-                        Math.Round((double)((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
-                        //Math.Round(((decimal)(rec.jl.ForeignAmount / (decimal)((rec.Percentage  + 100) / 100))), 2),
-                        //(decimal)Expression.Divide((decimal)rec.ForeignAmount, (decimal)myVat)
+                    ForeignAmountDebit =
+                    Math.Round((double)((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
+                    //Math.Round(((decimal)(rec.jl.ForeignAmount / (decimal)((rec.Percentage  + 100) / 100))), 2),
+                    //(decimal)Expression.Divide((decimal)rec.ForeignAmount, (decimal)myVat)
+                                        
+                    ,AccountingDate = rec.jl.AccountingDate,
+                    DueDate = rec.jl.DueDate,
+                    DocumentDate = rec.jl.DocumentDate,
 
-                        ,
-                        AccountingDate = rec.jl.AccountingDate,
-                        DueDate = rec.jl.DueDate,
-                        DocumentDate = rec.jl.DocumentDate,
+                });
 
-                    });
+            var qJLVat =
+                (
+                from jl in
+                    qJournalLineByAcountingDate.Where(rec => rec.JournalActionType.Code == ((int)MyJournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
+                from vl in
+                    (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
+                     where v.FromDate <= jl.DocumentDate
+                     select v).Take(1)
+                select new { jl, myVat = vl.myVat }
+                 )
+                 .Select(rec => new JournalLineLedgerDTO()
+                 {
+                     CHANGE_TYPE = "",
+                     JournalId = rec.jl.JournalId,
+                     JournalLineNumber = rec.jl.Line,
 
-                var qJLVat =
-                    (
-                    from jl in
-                        qJournalLineByAcountingDate.Where(rec => rec.ActionCode /*rec.JournalActionType.Code*/ == ((int)JournalActionTypeEnum.DebitCreditAndVatdeduction).ToString())
-                    from vl in
-                        (from v in percentagesQueryOrderDescByFromDate.OrderByDescending(r => r.FromDate)
-                         where v.FromDate <= jl.DocumentDate
-                         select v).Take(1)
-                    select new { jl, myVat = vl.myVat }
-                     )
-                     .Select(rec => new JournalLineLedgerDTO()
-                     {
-                         CHANGE_TYPE = "",
-                         JournalId = rec.jl.JournalId,
-                         JournalLineNumber = rec.jl.Line,
-
-                         AccountId = myTaxCard,//rec.CreditAccountId,
+                     AccountId = myTaxCard,//rec.CreditAccountId,
                      CurrencyId = rec.jl.CurrencyId,
 
-                         LocalAmountCredit = 0,
-                         LocalAmountDebit = Math.Round((double)rec.jl.LocalAmount - (1 * (double)rec.jl.LocalAmount / (double)rec.myVat), 2),
+                     LocalAmountCredit = 0,
+                     LocalAmountDebit = Math.Round((double)rec.jl.LocalAmount - (1 * (double)rec.jl.LocalAmount / (double)rec.myVat), 2),
 
-                         ForeignAmountCredit = 0,
-                         ForeignAmountDebit = Math.Round((double)rec.jl.ForeignAmount - 1 * ((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
-                                             //ForeignAmountDebit =
-                                             //Math.Truncate(
-                                             //Math.Truncate(
-                                             // (double)(
-                                             // (double)rec.jl.ForeignAmount - (1 * (double)rec.jl.ForeignAmount / (double)rec.myVat)
-                                             // )
-                                             // *1000
-                                             // )
-                                             // /100)
-                                             ,
-                         AccountingDate = rec.jl.AccountingDate,
-                         DueDate = rec.jl.DueDate,
-                         DocumentDate = rec.jl.DocumentDate,
+                     ForeignAmountCredit = 0,
+                     ForeignAmountDebit = Math.Round((double)rec.jl.ForeignAmount - 1 * ((double)rec.jl.ForeignAmount / (double)rec.myVat), 2)
+                     //ForeignAmountDebit =
+                     //Math.Truncate(
+                     //Math.Truncate(
+                     // (double)(
+                     // (double)rec.jl.ForeignAmount - (1 * (double)rec.jl.ForeignAmount / (double)rec.myVat)
+                     // )
+                     // *1000
+                     // )
+                     // /100)
+                                         ,
+                     AccountingDate = rec.jl.AccountingDate,
+                     DueDate = rec.jl.DueDate,
+                     DocumentDate = rec.jl.DocumentDate,
 
-                     });
-            }
+                 });
             //var qJLVat_260_3 = qJLVat.First(r => r.JournalId == "1-260" && r.JournalLineNumber == 3);
 
-            //var qJLAll = qJLCredit.Union(qJLDebit).Union(qJLDebitVat).Union(qJLVat);
-            //qJLAll.ToList();
-            //bool UnionreturnsDistinctvalues = true;
-            //if (UnionreturnsDistinctvalues)
+            var qJLAll = qJLCredit.Union(qJLDebit).Union(qJLDebitVat).Union(qJLVat);
+            bool UnionreturnsDistinctvalues = true;
+            if (UnionreturnsDistinctvalues)
             {
-                var qJLAll = qJLCredit.Concat(qJLDebit)/*.Concat(qJLDebitVat).Concat(qJLVat)*/;
-
-
-                return qJLAll;
+                qJLAll = qJLCredit.Concat(qJLDebit).Concat(qJLDebitVat).Concat(qJLVat);
             }
+                //qJLAll.ToList();
+                return qJLAll;
         }
 
-        public bool ExistsJournalLineByReferenceCreditAccountId(string reference1, string gLAccountId, int tenant)
-        {
-            return repository.ExistsJournalLineByReferenceCreditAccountId(reference1, gLAccountId, tenant);
-        }
-
+        //public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransactionByAccId(string glAccountId, int tenant)
+        //{
+        //    var journalRepository = new JournalRepository(this.MainContext as IAccountingContext);
+            
+        //    var qJournal = journalRepository.GetQueryablesApprovedStreamed(tenant);
+        //    var qLines = repository.GetQueryContainsAccId(new List<string>() { glAccountId }, tenant);
+        //    var qq = (from j in qJournal
+        //              join jl in qLines
+        //              on j.Id equals jl.JournalId
+        //              select jl
+        //              );
+        //    return GetJournalLineLedgerDTO(null,null,qq);
+        //}
 
 
         public List<JournalLinePM> GetJournalLinesByJournalId(string JournalId, int tenant)

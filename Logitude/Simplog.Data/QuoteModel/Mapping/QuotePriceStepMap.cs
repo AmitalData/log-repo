@@ -17,7 +17,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.SaleUnitPrice).HasColumnName("SaleUnitPrice");
-            this.Property(t => t.Step).HasColumnName("Step").IsRequired();
+            this.Property(t => t.Step).HasColumnName("Step");
             this.Property(t => t.CostUnitPrice).HasColumnName("CostUnitPrice");
             this.Property(t => t.MarkupValue).HasColumnName("MarkupValue");
             this.Property(t => t.QuoteId).HasColumnName("QuoteId");

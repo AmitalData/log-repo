@@ -23,7 +23,7 @@ import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper'
 declare var makeAmBarChart, BarClick, PieClick, makePieChart, ResetItem, ResetItemPie: any;
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ByCreateDateComponent.html',
     encapsulation: ViewEncapsulation.None,
 })
@@ -680,12 +680,12 @@ export class ByCreateDateComponent extends BaseComponent {
 
     LoadQuotesData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetQuotesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+            this.crmDomainService.GetQuotesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
                 this.FillQuotesData(result);
             });
         }
         else {
-            this.crmDomainService.GetQuotesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+            this.crmDomainService.GetQuotesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
                 this.FillQuotesData(result);
             });
         }
@@ -735,13 +735,13 @@ export class ByCreateDateComponent extends BaseComponent {
 
     LoadCustomersData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetCustomersGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetCustomersGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillCustomerData(result);
             });
         }
 
         else {
-            this.crmDomainService.GetCustomersGroupBySalesman(days, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe((result:any) => {
+            this.crmDomainService.GetCustomersGroupBySalesman(days, this.OwnerId, this.BusinessUnitId, this.fieldCode, true).subscribe(result => {
                 this.FillCustomerData(result);
             });
         }
@@ -875,12 +875,12 @@ export class ByCreateDateComponent extends BaseComponent {
     }
     LoadActivitiesData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetActivitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+            this.crmDomainService.GetActivitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
                 this.FillActivitiesData(result);
             });
         }
         else {
-            this.crmDomainService.GetActivitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+            this.crmDomainService.GetActivitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
                 this.FillActivitiesData(result);
             });
         }
@@ -1049,12 +1049,12 @@ export class ByCreateDateComponent extends BaseComponent {
     }
     LoadOpportunitiesData(days: number) {
         if (this.SelectedDateFilter.Code == "-2") {
-            this.crmDomainService.GetOpportunitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesGroupBySalesmanCustom(this.FromDate, this.ToDate, this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
                 this.FillOpportunitiesData(result);
             });
         }
         else {
-            this.crmDomainService.GetOpportunitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe((result:any) => {
+            this.crmDomainService.GetOpportunitiesGroupBySalesman(days + "", this.OwnerId, this.BusinessUnitId, this.fieldCode, false).subscribe(result => {
                 this.FillOpportunitiesData(result);
             });
         }

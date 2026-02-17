@@ -21,7 +21,7 @@ export class ReportGenerator {
         
         this.helper.WaitByIdAndClick('CheckBox_0_0_LBL');
         this.helper.WaitByIdAndClick('RunReportButton');
-        //this.helper.ItemsPresent(expectedId);
+        this.helper.ItemsPresent(expectedId);
         this.helper.WaitBusyIndicator();
 
 

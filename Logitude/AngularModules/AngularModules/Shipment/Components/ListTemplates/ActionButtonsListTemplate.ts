@@ -9,13 +9,13 @@ import {DocumentsFilingExtendedPMService} from '../../../Common/Services/Extende
 
 @Component({
 
-    template: `<table>
+    template: `<table *ngIf="ShowButtons == true">
                 <tr style="height:1px;"> 
                     <td>
                         <div style="height:30px;">
                             <button class="RedButton" (click)="CancelButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Cancel</button>
-                            <button *ngIf="ShowButtons == true && (!IsPrivateLabel || IsDSV)" class="Button" (click)="ConnectButtonClicked()" [style.width.px]="Width" style="float: right;margin:4px;">{{ConnectBtn}}</button>
-                            <button *ngIf="ShowButtons == true && ShowEditButton" class="Button" (click)="EditButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Edit</button>
+                            <button class="Button" (click)="ConnectButtonClicked()" [style.width.px]="Width" style="float: right;margin:4px;">{{ConnectBtn}}</button>
+                            <button class="Button" (click)="EditButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Edit</button>
                         </div>
                     </td>
                 </tr>
@@ -37,43 +37,35 @@ export class ActionButtonsListTemplate {
     public Width1: number = SessionLocator.PrivateLableSettings ? 70 : 57;
     public Width: number = 57;
     public ShowButtons: boolean = true;
-    public ShowEditButton: boolean = false;
     public HasSharedDocs: boolean = true;
     public _ShipmentPMService: ShipmentPMService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public IsDSV: boolean = false;
-    public IsPrivateLabel: boolean = false; 
     constructor(private CD: ChangeDetectorRef) {
         this._ShipmentPMService = new ShipmentPMService();
         if (SessionLocator.PrivateLableSettings) {
             this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
             this.Width = 80;
-            this.IsPrivateLabel = true; 
-            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1; 
             this.ConnectBtn = SessionLocator.PrivateLableSettings.PrivateLabelShortName + " Connect";
         }
     }
 
     setVariables(rowData: any, fieldName: string) {
-        this.rowData = rowData;
-        this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
-        let isExportShipment = this.rowData['DirectionId'] == 'E';
-        this.ShowEditButton = !isExportShipment || (isExportShipment && this.IsDSV);
+        this.rowData = rowData; 
         if (SessionLocator.PrivateLableSettings) {
-            this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res: any) => {
-                if (res.Result == false) {
-                    this.HasSharedDocs = false;
-                }
-            });
+            this.ShowButtons = this.rowData['StatusName'].toLowerCase() == "in progress" ? false : true;
+            if (SessionLocator.PrivateLableSettings) {
+                this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
+                    if (res.Result == false) {
+                        this.HasSharedDocs = false;
+                    }
+                });
+            }
         }
-
-     
-
         //this.fieldName = fieldName;
         //var myService: WebFreightDomainService = new WebFreightDomainService();
         //if (rowData['PartnerLogoId']){
-        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe((myResult:any) => {
+        //    myService.getHypridPartnerLogo(rowData['PartnerLogoId']).subscribe(myResult => {
         //        this.Source = "data:image/JPEG;base64," + myResult;
         //        this.CD.detectChanges(); 
         //    });
@@ -83,7 +75,7 @@ export class ActionButtonsListTemplate {
     CancelButtonClicked() {
         //this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.CurrentSession.StopBusyIndicator();
                 var confirmWindow = new ConfirmWindow();
@@ -93,7 +85,7 @@ export class ActionButtonsListTemplate {
                     if (confirmWindow.Yes) {
                         this.CurrentSession.StartBusyIndicator("Loading ..")
                         myResult.Result.IsCancelled = true;
-                        this._ShipmentPMService.update(myResult.Result).subscribe((myResult:any) => {
+                        this._ShipmentPMService.update(myResult.Result).subscribe(myResult => {
                             this.CurrentSession.StopBusyIndicator();
                             this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
                             this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
@@ -111,10 +103,10 @@ export class ActionButtonsListTemplate {
     ConnectButtonClicked() {
         //this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
         this.CurrentSession.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
                 if (SessionLocator.PrivateLableSettings) {
-                    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe((res:any) => {
+                    this._documentsFilingExtendedPMService.IsEntityHasSharedDocs(this.rowData['Id'], SessionLocator.Tenant).subscribe(res => {
                         if (res.Result == false) {
                             this.HasSharedDocs = false;
                         }
@@ -170,47 +162,34 @@ export class ActionButtonsListTemplate {
 
     EditButtonClicked() {
         this.CurrentSession.PseventRowSelectEvent.emit("PreventLogBoxSelect");
-        this.CurrentSession.StartBusyIndicator("Loading ..."); 
-        this._ShipmentPMService.get(this.rowData.Id).subscribe((myResult:any) => {
+        this.CurrentSession.StartBusyIndicator("Loading ...");
+        this._ShipmentPMService.get(this.rowData.Id).subscribe(myResult => {
             if (!myResult.HasError) {
-                this.EditShipmentProceed(myResult);
+                this.CurrentSession.StopBusyIndicator();
+                var newWindow = new LogitudeWindow();
+                newWindow.Width = 600;
+                newWindow.Height = 350;
+                newWindow.Title = "Edit Shipment";
+                var windowArgs: any = {};
+                windowArgs.IsNew = false;
+                windowArgs.EntityPM = myResult.Result
+                newWindow.WindowArgs = windowArgs;
+                //newWindow.Add(control);
+                if (SessionLocator.PrivateLableSettings) {
+                    newWindow.Height = 376;
+                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
+                }
+                else {
+                    newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
+                }
+                newWindow.WindowClosed.subscribe(($event: any) => {
+                    this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
+                    if ($event == "MyShipmentAdded") {
+                        this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
+                    }
+                });
             }
         });
     }
 
-    private EditShipmentProceed(myResult: any) {
-        this.CurrentSession.StopBusyIndicator();
-        var newWindow = new LogitudeWindow();
-        newWindow.Width = 600;
-        newWindow.Height = 350;
-        newWindow.Title = "Edit Shipment";
-        var windowArgs: any = {};
-        windowArgs.IsNew = false;
-        windowArgs.EntityPM = myResult.Result;
-        newWindow.WindowArgs = windowArgs;
-        this.ShowEditShipmentWindow(newWindow);
-        newWindow.WindowClosed.subscribe(($event: any) => {
-            this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
-            if ($event == "MyShipmentAdded") {
-                this.CurrentSession.FireEvent({ Name: 'ReloadShipments' });
-            }
-        });
-    }
-
-    private ShowEditShipmentWindow(newWindow: LogitudeWindow) {
-        if (!SessionLocator.PrivateLableSettings) {
-            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
-            return;
-        }
-
-        let isExportShipment = this.rowData['DirectionId'] == 'E';
-        newWindow.Height = isExportShipment ? 600 : this.IsDSV ? 376 : 420;
-        newWindow.Width = isExportShipment ? 960 : 600;
-        if (isExportShipment) {
-            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
-        }
-        else {
-            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelCustomsShipmentComponent');
-        }
-    }
 }

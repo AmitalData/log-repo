@@ -1,6 +1,4 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,13 +58,13 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
 
         
 
-        public Card CardCustomDataMapping(string Id, int Tenant, string ComputingPartnerName = "")
+        public Card CardCustomDataMapping(string Id, int Tenant)
         {
             try
             {
 
                 CardQueryService CardService0 = new CardQueryService(Tenant);
-                var ChargeType = CardService0.GetCardById(Id, Tenant,ComputingPartnerName);
+                var ChargeType = CardService0.GetCardById(Id, Tenant);
                 return ChargeType;
             }
             catch (Exception ex)
@@ -74,17 +72,6 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-
-        public List<ShortPartnersDetails> GetAllConnectedPartnersByGLAccountId(string glAccountId, int tenant)
-        {
-            CardQuery cardQuery = new CardQuery(tenant);
-            List<ShortPartnersDetails> shortConnectedPartnersDetails = cardQuery.GetConnectedPartnerIdsByGLAccountId(glAccountId, tenant);
-            return shortConnectedPartnersDetails;
-        }
-
-     
-
-
 
     }
 }

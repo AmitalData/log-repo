@@ -18,7 +18,7 @@ import {AppTool} from '../../../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'DocumentCustomFields',
     templateUrl: './DocumentCustomFieldsComponent.html',
     inputs: ['DocumentCustomArgs'],
@@ -56,7 +56,7 @@ export class DocumentCustomFieldsComponent extends BaseComponent implements OnIn
             this.DocumentTypeCustomFieldLists.push(new DocumentTypeCustomFieldPMViewModel(item,this));
         });
 
-        this._documentTypeCustomFieldService.getFormCustomFieldsByDocument(SessionInfo.LoggedUserTenant, this.DocumentCustomArgs.DocumentTypeId, this.DocumentCustomArgs.EntityId, this.DocumentCustomArgs.ObjectTableId).subscribe((res:any) => {
+        this._documentTypeCustomFieldService.getFormCustomFieldsByDocument(SessionInfo.LoggedUserTenant, this.DocumentCustomArgs.DocumentTypeId, this.DocumentCustomArgs.EntityId, this.DocumentCustomArgs.ObjectTableId).subscribe(res=> {
          
 
             var pmResponse: ServiceResponse = res;
@@ -204,8 +204,7 @@ export class DocumentCustomFieldsComponent extends BaseComponent implements OnIn
             this.DocumentCustomArgs.editDocumentComponent.ValidationErrorsList = [];
         }
 
-        item.ObjectTableId = this.DocumentCustomArgs.ObjectTableId;
-        this._documentTypeCustomFieldService.UpdateFormCustomField(item).subscribe((res:any) => {
+        this._documentTypeCustomFieldService.UpdateFormCustomField(item).subscribe(res=> {
             this.CurrentSession.StopBusyIndicator();
             if (res.HasError) {
                 if (this.DocumentCustomArgs.editDocumentComponent != null) {

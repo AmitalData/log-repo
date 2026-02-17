@@ -10,7 +10,6 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
-using Logitude.CustomsMessaging.Common.Gen;
 
 namespace Logitude.Customs.Def.Validators
 {
@@ -22,9 +21,8 @@ namespace Logitude.Customs.Def.Validators
            System.ComponentModel.DataAnnotations.ValidationContext context)
         {
             bool valid = true;
-           
-           if (declaration.Direction == "E") return null;
 
+            
             CustomsHouseTypePM houseType = GetHouseTypewithAdditional(declaration.DeclarationOfficeCode, declaration.Tenant);
 
             if (houseType != null && declaration.TransportModeId != null && houseType.TransportModeId != null && houseType.TransportModeId != declaration.TransportModeId)
@@ -42,7 +40,7 @@ namespace Logitude.Customs.Def.Validators
         {
             bool isValid = true;
 
-            if (!string.IsNullOrEmpty(declaration.ImporterCode))
+            if (declaration.ImporterCode != null )
             {
                 if (declaration.ImporterCode.Contains("P") || declaration.ImporterCode.Contains("F"))
                 {
@@ -57,24 +55,11 @@ namespace Logitude.Customs.Def.Validators
                         }
                     }
                 }
-                else if( declaration.ImporterCode.Length != 9)
+                else if( declaration.ImporterCode.Length > 9)
                 {
                     isValid = false;
-                    return new ValidationResult("מספר יבואן חייב להיות 9 תווים");
+                    return new ValidationResult(TranslateTextsClass.Translate("Customs.Declaration.O.TooLongCode", declaration.Tenant, true));
 
-                }
-                //Check Importer digit
-                else if (declaration.ImporterCode.Length == 9 && string.IsNullOrWhiteSpace(declaration.ImporterId))
-                {
-                    string digit = declaration.ImporterCode.Substring(8);
-                    int checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(declaration.ImporterCode.Substring(0,8));
-
-                    if (digit != checkDigit.ToString())
-                    {
-                        isValid = false;
-                        string errorText = TranslateTextsClass.Translate("Customs.Declaration.O.CorrectDigit", declaration.Tenant, true) + checkDigit.ToString();
-                        return new ValidationResult(errorText);
-                    }
                 }
             }
 
@@ -106,7 +91,7 @@ namespace Logitude.Customs.Def.Validators
                 if (additional != null)
                 {
                     houseType.TransportModeId = additional.TransportModeId;
-                    houseType.TransportModeName = additional.TransportMode != null ? additional.TransportMode.LocalName : null;
+                    houseType.TransportModeName = additional.CustomsTransportMode != null ? additional.CustomsTransportMode.LocalName : null;
                     houseType.UnloadPortCode = additional.UnloadPortCode;
                     houseType.UnloadPortName = additional.UnloadingSiteType != null ? additional.UnloadingSiteType.LocalName : null;
                 }

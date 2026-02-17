@@ -13,7 +13,6 @@ using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 using Simplog.Data.QuoteModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 {
@@ -57,11 +56,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string PrintNotes { get; set; }
     
     public User IssuedByUser { get; set; }
-
-        public ConfirmationNumberStatus Confirmation { get; set; }
-
-
-        public double? InvoiceCurrencyExchangeRate { get; set; }
+    
+    public double? InvoiceCurrencyExchangeRate { get; set; }
     
     public List<ARInvoiceLine> ARInvoiceLines { get; set; }
     
@@ -92,21 +88,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string CreditARInvoice { get; set; }
     
     public string ExternalAccountingEntityId { get; set; }
-    
-    public string BillToGLAccount { get; set; }
-    
-    public ARInvoiceStatus Status { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
-
-    public string ConfirmationNumber { get; set; }
-
-        public ConfirmationNumberStatus ConfirmationNumberStatus { get; set; }
-    public string MasterNumber { get; set; }
-
-    public string InternalNotes { get; set; }
-
-    public DateTime? ReferenceDate { get; set; }
 
     }
 } 

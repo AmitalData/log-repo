@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Accounting.BL.EntityUpdateServices;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -40,29 +39,5 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         SearchFields = a.SearchFields,
                     }).FirstOrDefault();
         }
-
-        public void CopyFromTenant0(int tenant, int tenatToCopy)
-        {
-            AutomaticReconcileMethodUpdateService service = new AutomaticReconcileMethodUpdateService(context, new Dictionary<string, IContext>(), tenatToCopy);
-            List<AutomaticReconcileMethod> pocos = repository.GetAll(tenant).Where(a => !a.Inactive).ToList();
-            foreach (var item in pocos)
-            {
-                AutomaticReconcileMethodPM automaticReconcileMethod = new AutomaticReconcileMethodPM();
-                automaticReconcileMethod.Tenant = tenatToCopy;
-                automaticReconcileMethod.Code =item.Code;
-                automaticReconcileMethod.AutomaticReconcile1 = item.AutomaticReconcile1;
-                automaticReconcileMethod.AutomaticReconcile2 = item.AutomaticReconcile2;
-                automaticReconcileMethod.AutomaticReconcile3 = item.AutomaticReconcile3;
-                                automaticReconcileMethod.Inactive = item.Inactive;
-
-                automaticReconcileMethod.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                service.Update(automaticReconcileMethod, true);
-
-            }
-            this.context.SaveChanges();
-
-        }
-
-
     }
 }

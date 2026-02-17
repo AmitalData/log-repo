@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Services.WebApi;
 using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
 using Microsoft.VisualStudio.Services.WebApi.Patch;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -22,10 +22,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -48,29 +44,19 @@ namespace WebFreight.Web.Helpers
             this.AnalyzeQueueId = AnalyzeQueueId;
             this.Tenant = tenant;
 
-            if (this.Details.Relations != null)
+            foreach (var item in this.Details.Relations)
             {
-                foreach (var item in this.Details.Relations)
-                {
-                    string url = item.Url;
+                string url = item.Url;
 
-                    if (item.Rel == "System.LinkTypes.Hierarchy-Reverse")
-                    {
-                        string last = url.Split('/').Last();
-                        projectNo = this.GetWorkItemById(Int32.Parse(last));
-                        this.Details.ProjectNumber = projectNo;
-                        this.CheckComputingPartners();
-                        break;
-                    }
+                if (item.Rel == "System.LinkTypes.Hierarchy-Reverse")
+                {
+                    string last = url.Split('/').Last();
+                    projectNo = this.GetWorkItemById(Int32.Parse(last));
+                    this.Details.ProjectNumber = projectNo;
+                    this.CheckComputingPartners();
+                    break;
                 }
             }
-            else
-            {
-                projectNo = this.GetWorkItemById(Int32.Parse(this.Details.WorkItemId));
-                this.Details.ProjectNumber = projectNo;
-                this.CheckComputingPartners();
-            }
-
         }
 
         bool isFirst = true;
@@ -78,7 +64,7 @@ namespace WebFreight.Web.Helpers
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = this.GetPersonalKey(); 
+            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
             int workItemId = wi;
 
             // new VssOAuthAccessTokenCredential(personalAccessToken)
@@ -130,24 +116,6 @@ namespace WebFreight.Web.Helpers
             return projectNo != null ? projectNo.ToString().Trim() : "";
         }
 
-        private string GetPersonalKey()
-        {
-            string personalAccessKey = "";
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            {
-                SettingRepository settingRepository = new SettingRepository();
-                Setting setting = settingRepository.GetSingleSetting("1");
-                if (setting != null)
-                {
-                    personalAccessKey = setting.TMPersonalAccessToken;
-                }
-
-                scope.Complete();
-            }
-
-            return personalAccessKey;
-        }
-
         private void CheckComputingPartners()
         {
             ICommonDataContext context = CommonDataContext.GetContext(Tenant); ;
@@ -159,6 +127,18 @@ namespace WebFreight.Web.Helpers
             ComputingPartner computingPartner = computingRepository.GetSingleComputingPartnerByCode("G-TFS"); // Computing Partner for TimeSheet = "TFS"
             if (computingPartner != null)
             {
+                //var objectTable = objectTableRepository.GetObjectTableByName("User", Tenant, false);
+                //ComputingPartnerTable computingTable = computingTableRepository.GetSingleComputingPartnerTable(Tenant, objectTable.Id, computingPartner.Id);
+                //if (computingTable != null)
+                //{
+                //    checkPartner = true;
+                //    this.InsertTMEmployeeTime(checkPartner);
+                //}
+                //else
+                //{
+                //    this.InsertTMEmployeeTime(checkPartner);
+                //}
+
                 this.InsertTMEmployeeTime(true);
             }
             else
@@ -213,10 +193,11 @@ namespace WebFreight.Web.Helpers
             var projectId = tmProjectRepository.GetTMActiveProjectByNumber(Details.ProjectNumber, Tenant);
             if (assignedToUser != null && updatedByUser != null)
             {
-                if (IsAddingNewTMEmployeeTimeLine(assignedToUser, updatedByUser))
+                if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
                 {
                     if (!CheckTMLineDuplication(this.Details.WorkItemId, Tenant)) {
                         var newItem = new TMEmployeeTimePM();
+                        //newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
                         newItem.Tenant = Tenant;
                         newItem.DateOfWork = this.Details.ChangedDate != null ? this.Details.ChangedDate.Date : this.Details.ChangedDate;
                         newItem.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
@@ -243,45 +224,6 @@ namespace WebFreight.Web.Helpers
             {
                 this.IsAnalyzeQueueFaild = true;
             }
-        }
-
-        private bool IsAddingNewTMEmployeeTimeLine(User assignedToUser, User updatedByUser)
-        {
-            if ((assignedToUser.Id == updatedByUser.Id) && ((Details.RemainingWork != null && IsVisualStudioValidStatus()) || IsMBItemIsMaintenanceBoardItem()))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsVisualStudioValidStatus()
-        {
-            if (Details.TaskState.ToLower() == "in progress")
-                return true;
-
-            if (Details.TaskState.ToLower() == "committed")
-                return true;
-
-            if (Details.TaskState.ToLower() == "done")
-                return true;
-
-            if (Details.TaskState.ToLower() == "ready for test")
-                return true;
-
-            return false;
-        }
-
-        private bool IsMBItemIsMaintenanceBoardItem()
-        {
-            if (Details.WorkItemType.ToLower() == "product backlog item"
-                && Details.TaskState.ToLower() == "committed"
-                && Details.Area != null
-                && Details.Area.Contains("MaintenanceBoard"))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public bool CheckTMLineDuplication(string workItemId, int tenant)
@@ -390,7 +332,7 @@ namespace WebFreight.Web.Helpers
                         { "CompletedWork", completedWork.ToString("0.##")},
                     };
 
-                    queueservice.Send(message, tenant);
+                    queueservice.Send(message);
                 }
                 catch (Exception ex)
                 {

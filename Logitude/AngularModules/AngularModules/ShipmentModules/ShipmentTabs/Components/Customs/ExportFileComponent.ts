@@ -5,7 +5,7 @@ import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadMana
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ExportFileComponent.html',
 })
 

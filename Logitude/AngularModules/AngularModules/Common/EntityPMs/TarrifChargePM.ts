@@ -21,10 +21,10 @@ export class TarrifChargePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	  		            this.EntityParentPM = _entityParentPM;
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-       }
+      }
 
 	 
     
@@ -113,10 +113,7 @@ export class TarrifChargePM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -126,7 +123,6 @@ export class TarrifChargePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "TarrifCharge");
            
         }
-	 }
     }
     private MyClone: TarrifChargePM;
 

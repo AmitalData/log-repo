@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -76,7 +76,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    ProcessStartDate = a.ProcessStartDate,
 
                                                    ProcessEndDate = a.ProcessEndDate,
-                                                   UpdatedByUserName = a.UpdatedByUser.Contact.LocalName != null ? a.UpdatedByUser.Contact.LocalName : a.UpdatedByUser.Contact.EnglishName,
+
                                                    ProcessProgress = a.ProcessProgress,
                                                    CreatedByUserName = a.CreatedByUser != null? a.CreatedByUser.Contact.LocalName : null,
 					

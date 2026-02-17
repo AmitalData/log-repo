@@ -79,18 +79,8 @@
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
-                                               <RowDefinition Height="28" />
-                                               <RowDefinition Height="28" />
-                                               <RowDefinition Height="28" />
-                                               <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="28" />
-                                            <RowDefinition Height="72" />
-                                                
-                                        </Grid.RowDefinitions>
+                                              
+                                            </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Code:" />
                                         <TextBox Grid.Row="0" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding Code, Mode=TwoWay}" />
 
@@ -105,52 +95,6 @@
 
                                         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Default Filter By:" />
                                         <TextBox Grid.Row="4" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DefaultFilterBy, Mode=TwoWay}" />
-
-                                        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Data View Name" />
-                                        <TextBox Grid.Row="5" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DataViewName, Mode=TwoWay}" />
-
-                                        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Has Pivot:" Visibility="{Binding IsFactTable}" />
-                                        <CheckBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasPivotColumn}" IsThreeState="False" Visibility="{Binding IsFactTable}" />
-                                       
-                                        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Pivot Field:" Visibility="{Binding PivotFieldCodeVisisbilty}" />
-                                        <TextBox Grid.Row="7" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding PivotFieldCode, Mode=TwoWay}" Visibility="{Binding PivotFieldCodeVisisbilty}" />
-
-
-                                        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Additional Fact:" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="8" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding AdditionalFactCode, Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-
-
-
-
-                                        <TextBlock Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Additional Fact Foreign Key:" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="9" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding AdditionalFactForeignKey, Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-                                        
-                                        <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Additional Fact Relation Type:" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="10" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding AdditionalFactRelationType, Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-
-                                        <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Parent Fact:" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="11" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding ParentFactCode, Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-
-                                        <TextBlock Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Record Type:" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="12" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding RecordType , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-
-                                        <TextBlock Grid.Row="13" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Display Name:" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="13" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DisplayName , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-
-                                        <TextBlock Grid.Row="14" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Has Custom Fields :" Visibility="{Binding IsFactTable}" />
-                                        <CheckBox Grid.Row="14" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields }" IsThreeState="False" Visibility="{Binding IsFactTable}" />
-
-                                        <TextBlock Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Object Table Name:" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="15" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding ObjectTableName , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-
-                                        <TextBlock Grid.Row="16" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Max Number Of Custom Fields :" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="16" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding MaxNumberOfCustomFields  , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-                                       
-                                        <TextBlock Grid.Row="17" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Additional Conditions :" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="17" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding AdditionalConditions  , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
-
-                                        <TextBlock Grid.Row="18" Grid.Column="0" VerticalAlignment="Top" FontWeight="Bold" Text="Description :" Visibility="{Binding IsFactTable}" />
-                                        <TextBox Grid.Row="18" Grid.Column="1" Height="66" VerticalAlignment="Center" Text="{Binding Description  , Mode=TwoWay}" Visibility="{Binding IsFactTable}" AcceptsReturn="True" TextWrapping="Wrap" />
 
                                     </Grid>
 

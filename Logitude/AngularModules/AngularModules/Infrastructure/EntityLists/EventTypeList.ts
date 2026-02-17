@@ -6,8 +6,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-import { EventRemarkPM } from "Infrastructure/EntityPMs/EventRemarkPM";
-
 export class EventTypeList {
    		Id: string;
 		Tenant: number;
@@ -33,9 +31,5 @@ export class EventTypeList {
 		IsSharedLogisticsEnabled: boolean;
 		EventDateTime: Date;
 		AllowedInAutomation: boolean;
-		CustomField: string;
-		EntityStatusWeight: number;
-		EventTrigger: string;
-		EventRemarks: Array<EventRemarkPM>;
-		Weight: number;
-}
+	
+}

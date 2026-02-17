@@ -8,49 +8,21 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {CardList} from '../../../Common/EntityLists/CardList';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: "./QuoteShortTitleComponent.html",
 })
 
 export class QuoteShortTitleComponent {
-  public CustomerRankName: any;
-
     public EntityPM: QuotePM;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
-        this.Listen();
+
         if (this.EntityPM != null) {
             this.BuildComponent();
         }
     }
-
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
-    private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-
-            if (!this.SaveCompletedEvent) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.BuildComponent();
-                    }
-                });
-            }
-
-            if (!this.LoadCompletedEvent) {
-                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                    if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                        this.BuildComponent();
-                    }
-                });
-            }
-        }
-    }
-
-
+    
     public DirectionImageSRC: string;
     public TransportModeImageSRC: string;
     public RankCode: string;

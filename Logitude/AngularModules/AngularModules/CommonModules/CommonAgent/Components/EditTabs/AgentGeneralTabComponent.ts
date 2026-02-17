@@ -7,7 +7,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AgentGeneralTabComponent.html',
 })
 
@@ -19,18 +19,11 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     public ControlColumnWidth: number = 200;
     public DataContext: AgentGeneralTabComponent = this;
     private ScreenCode: string = "Agent.AdditionalFields";
-    public ImageId: string = "";
-    public EntityId: string = "";
-    public EntityName: string = "";
-
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.TenantPM = SessionLocator.TenantPM;
-        this.EntityName = "Agent";
-        this.ImageId = this.EntityPM.ImageDetailId;
-        this.EntityId = this.EntityPM.Id;
         this.RunComponent();       
     }
 
@@ -81,7 +74,7 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
+        if (this.Retries < 3) {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
@@ -89,8 +82,6 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
-                cmpRef.instance.HideLastColumn = true;
-                cmpRef.instance.LabelWidth = 120;
                 cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
             });
     }
@@ -105,11 +96,6 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
         }
 
         this.UIProperties.SetVisibility("RegulatedAgentCode", this.ObjectTableName, this.isRAFieldsVisibile);
-    }
-
-    ImageUploadedCompleted(code) {
-        this.ImageId = code;
-        this.EntityPM.ImageDetailId = code;
     }
 
     // Properties 
@@ -148,13 +134,6 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
         }
     }
 
-    get EORInumber() { return this.EntityPM.EORInumber; }
-    set EORInumber(newValue: string) {
-        if (this.EntityPM.EORInumber != newValue) {
-            this.EntityPM.EORInumber = newValue;
-        }
-    }
-
     get RegulatedAgentCode() { return this.EntityPM.RegulatedAgentCode; }
     set RegulatedAgentCode(newValue: string) {
         if (this.EntityPM.RegulatedAgentCode != newValue) {
@@ -180,13 +159,6 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     set InActive(newValue: boolean) {
         if (this.EntityPM.InActive != newValue) {
             this.EntityPM.InActive = newValue;
-        }
-    }
-
-    get StorageFreeDays() { return this.EntityPM.StorageFreeDays; }
-    set StorageFreeDays(newValue: number) {
-        if (this.EntityPM.StorageFreeDays != newValue) {
-            this.EntityPM.StorageFreeDays = newValue;
         }
     }
 }

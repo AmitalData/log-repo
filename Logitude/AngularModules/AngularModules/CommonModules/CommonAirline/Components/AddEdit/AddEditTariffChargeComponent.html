@@ -1,176 +1,166 @@
-
+﻿
 <table>
 
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td>
-            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
-        </td>
-    </tr>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+            </td>
+        </tr>
 
-    <tr>
-        <td>
-            <table class="FixedTable">
-                <!-- Charges Type -->
-                <tr class="FormFieldRow">
-                    <td style="width: 110px;">
-                        <LogLabel [ObjectFieldName]="'ChargesTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        <tr>
+            <td>
+                <table class="FixedTable">
+                    <!-- Charges Type -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 110px;">
+                            <LogLabel [ObjectFieldName]="'ChargesTypeId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                    </td>
+                        </td>
 
-                    <td style="width: 230px;">
-                        <LogLov [ObjectFieldName]="'ChargesTypeId'"
-                                [ObjectTableName]="'TarrifCharge'"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'ChargesType'"
-                                [HideColumns]="false"
-                                [QueryFilterItems]="ChargeTypesQueryFilters"
-                                [SelectedValue]="ChargesTypeId">
-                        </LogLov>
-                    </td>
+                        <td style="width: 230px;">
+                            <LogLov  
+                                    [ObjectFieldName]="'ChargesTypeId'"
+                                    [ObjectTableName]="'TarrifCharge'"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'ChargesType'"
+                                    [HideColumns]="false"
+                                    [QueryFilterItems]="ChargeTypesQueryFilters"
+                                    [SelectedValue]="ChargesTypeId"
+                                    >
+                            </LogLov>
+                        </td>
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                        <td><div></div></td>
+                    </tr>
 
-                <!-- MeasurementId -->
-                <tr class="FormFieldRow">
-                    <td style="width: 110px;">
-                        <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    <!-- MeasurementId -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 110px;">
+                            <LogLabel [ObjectFieldName]="'MeasurementId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                    </td>
+                        </td>
 
-                    <td>
-                        <div style="width: 194px;">
-                            <LogLov [ObjectFieldName]="'MeasurementId'"
+                        <td >
+                            <div  style="width: 194px;">
+                            <LogLov  
+                                    [ObjectFieldName]="'MeasurementId'"
                                     [ObjectTableName]="'TarrifCharge'"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'Measurement'"
                                     [HideColumns]="true"
                                     [SelectedValue]="MeasurementId"
-                                    [QueryFilterItems]="MeasurementsQueryFilters">
+                                    
+                                    >
                             </LogLov>
-                        </div>
-                    </td>
+                                </div>
+                        </td>
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                        <td><div></div></td>
+                    </tr>
 
-                <!-- CurrencyId -->
-                <tr class="FormFieldRow">
-                    <td style="width: 110px;">
-                        <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    <!-- CurrencyId -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 110px;">
+                            <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                    </td>
+                        </td>
 
-                    <td style="width: 230px;">
-                        <div style="width: 194px;">
+                        <td style="width: 230px;">
+                            <div style="width: 194px;">
 
-                            <LogLov [ObjectFieldName]="'CurrencyId'"
-                                    [ObjectTableName]="'TarrifCharge'"
-                                    [DataContext]="DataContext"
-                                    [LookUpTableName]="'Currency'"
-                                    [HideColumns]="true"
-                                    [SelectedValue]="CurrencyId">
-                            </LogLov>
-                        </div>
-                    </td>
+                                <LogLov [ObjectFieldName]="'CurrencyId'"
+                                        [ObjectTableName]="'TarrifCharge'"
+                                        [DataContext]="DataContext"
+                                        [LookUpTableName]="'Currency'"
+                                        [HideColumns]="true"
+                                        [SelectedValue]="CurrencyId"
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                                        >
+                                </LogLov>
+                                </div>
+</td>
 
-                <!-- UnitPrice -->
-                <tr class="FormFieldRow">
-                    <td style="width: 110px;">
-                        <LogLabel [ObjectFieldName]="'UnitPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td><div></div></td>
+                    </tr>
 
-                    </td>
+                    <!-- UnitPrice -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 110px;">
+                            <LogLabel [ObjectFieldName]="'UnitPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                    <td style="width: 230px;">
-                        <div style="width: 194px;">
+                        </td>
 
-                            <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'double'" [HideColumns]="true"></LogTextBox>
-                        </div>
-                    </td>
+                        <td style="width: 230px;"> 
+                            <div style="width: 194px;">
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                                <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'double'" [HideColumns]="true"></LogTextBox>
+</div>
+</td>
 
-                <!-- MinPrice -->
-                <tr class="FormFieldRow">
-                    <td style="width: 110px;">
-                        <LogLabel [ObjectFieldName]="'MinPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td><div></div></td>
+                    </tr>
 
-                    </td>
+                    <!-- MinPrice -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 110px;">
+                            <LogLabel [ObjectFieldName]="'MinPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                    <td style="width: 230px;">
-                        <div style="width: 194px;">
+                        </td>
 
-                            <LogTextBox [ObjectFieldName]="'MinPrice'" [Text]="MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'double'" [HideColumns]="true"></LogTextBox>
-                        </div>
-                    </td>
+                        <td style="width: 230px;">
+                            <div style="width: 194px;">
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                                <LogTextBox [ObjectFieldName]="'MinPrice'" [Text]="MinPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'double'" [HideColumns]="true"></LogTextBox>
+</div>
+</td>
 
-                <!-- MaxPrice -->
-                <tr class="FormFieldRow">
-                    <td style="width: 110px;">
-                        <LogLabel [ObjectFieldName]="'MaxPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td><div></div></td>
+                    </tr>
 
-                    </td>
+                    <!-- MaxPrice -->
+                    <tr class="FormFieldRow">
+                        <td style="width: 110px;">
+                            <LogLabel [ObjectFieldName]="'MaxPrice'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
-                    <td style="width: 230px;">
-                        <div style="width: 194px;">
-                            <LogTextBox [ObjectFieldName]="'MaxPrice'" [Text]="MaxPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'double'" [HideColumns]="true"></LogTextBox>
-                        </div>
-                    </td>
+                        </td>
 
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+                        <td style="width: 230px;">
+                            <div style="width: 194px;">
+                                <LogTextBox [ObjectFieldName]="'MaxPrice'" [Text]="MaxPrice" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [InputType]="'double'" [HideColumns]="true"></LogTextBox>
+</div>
+</td>
 
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-            </table>
-        </td>
+                        <td><div></div></td>
+                    </tr>
 
-    </tr>
+                    <tr><td> <div></div></td> </tr>
+                </table>
+            </td>
 
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
+        </tr>
 
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
-                    </td>
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </td>
 
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-</table>
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>

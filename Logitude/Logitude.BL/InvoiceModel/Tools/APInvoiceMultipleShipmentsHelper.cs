@@ -10,10 +10,10 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -229,11 +229,9 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                                 }
                                 VatType myVatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, false);
+                                ExternalVatTypesCode.Add(myVatType.ExternalVATCard);
 
-                                ExternalVatTypesCode.Add(myVatType.ReceivablesExternalId);
-
-
-                            if (line.VatPercentage != 0)
+                                if (line.VatPercentage != 0)
                                 {
                                     if (AccountingSystemCode == "QBO")
                                     {
@@ -245,10 +243,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                                     }
 
 
-
-                                    if (FieldIsEmpty(myVatType.ReceivablesExternalId))
-                                {
-                                    vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";
+                                    if (FieldIsEmpty(myVatType.ExternalVATCard))
+                                    {
+                                        vatError = "VAT Type: " + myVatType.EnglishName + ". External ID is missing.";
                                         isReady = false;
                                         if (myError != null ? !myError.Contains(vatError) : true)
                                             myError = string.IsNullOrEmpty(myError) ? vatError : myError + ";" + vatError;
@@ -296,11 +293,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.DocNumber = invoice.InvoiceNumber;
                     QBOBill.Id = invoice.Id;
                     QBOBill.domain = invoice.ExternalAccountingEntityId;
-                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
-                    {
-                        QBOBill.GlobalTaxCalculationSpecified = true;
-                        QBOBill.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
-                    }
+
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string notes = "";
                     if (!String.IsNullOrEmpty(invoice.InternalNotes))
@@ -390,13 +383,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.TxnDate = invoice.InvoiceDate.Value;
                     QBOBill.TxnDateSpecified = true;
                     QBOBill.DocNumber = invoice.InvoiceNumber;
-                    QBOBill.Id = invoice.Id;
+                     QBOBill.Id = invoice.Id;
                     QBOBill.domain = invoice.ExternalAccountingEntityId;
-                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
-                    {
-                        QBOBill.GlobalTaxCalculationSpecified = true;
-                        QBOBill.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
-                    }
+
                     string notes = "";
                     if (!String.IsNullOrEmpty(invoice.InternalNotes))
                     {
@@ -405,12 +394,9 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.PrivateNote = notes;
 
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
-
-                    APInvoiceLineRepository APRepo = new APInvoiceLineRepository(this.objectContext);
-                    APInvoiceLineQuery APQuery = new APInvoiceLineQuery(APRepo);
                     List<APInvoiceLinePM> lines = new List<APInvoiceLinePM>();
-                    lines = APQuery.GetInvoiceLinesByInvoiceId(invoice.Id, tenant);
-
+                    lines = invoice.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                 
                     for (int i = 0; i < lines.Count; i++)
                     {
                         Line line = new Line();
@@ -534,7 +520,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "APInvoice" } };
-                queueservice.Send(param, tenant);
+                queueservice.Send(param);
                 queueservice.Complete();           
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
                 APInvoice invoice = repository.GetSingleAPInvoice(APInvoice.Id,tenant);
@@ -604,7 +590,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "VendorCredit" } };
-                queueservice.Send(param, tenant);
+                queueservice.Send(param);
                 queueservice.Complete();
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
                 APInvoice invoice = repository.GetSingleAPInvoice(APInvoice.Id, tenant);
@@ -685,21 +671,9 @@ namespace Logitude.BL.InvoiceModel.Tools
             communicationLogRepository.SubmitChanges();
         }
 
-        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string globalTaxCalculation)
-        {
-            if (globalTaxCalculation == "TE")
-            {
-                return GlobalTaxCalculationEnum.TaxExcluded;
-            }
-            else if (globalTaxCalculation == "TI")
-            {
-                return GlobalTaxCalculationEnum.TaxInclusive;
-            }
-            else
-            {
-                return GlobalTaxCalculationEnum.NotApplicable;
-            }
-        }
+
+
+
 
     }
 }

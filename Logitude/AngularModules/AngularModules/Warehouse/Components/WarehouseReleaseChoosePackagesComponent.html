@@ -1,4 +1,4 @@
-<table *ngIf="IsLoadPage">
+﻿<table *ngIf="IsLoadPage">
 
 
     <tr style="height:10px"><td colspan="3"><div></div></td></tr>
@@ -151,13 +151,11 @@
                                                         <td style="width: 135px; min-width: 135px;max-width: 135px;">{{VolumetricWeightLabel}}</td>
                                                         <td style="width: 110px;min-width: 110px;">{{GrossWeightLabel}}</td>
 
-                                                        <td style="width: 125px;min-width:125px;max-width: 125px;" [ngStyle]="IsContainerShipment ? {'min-width.px':190, 'max-width.px':190, 'width.px':190} : {}" >Description Of Goods</td>
+                                                        <td style="width: 125px;min-width:125px;max-width: 125px;">Description Of Goods</td>
                                                         <td style="width: 85px;min-width :85px">Release QTY</td>
-                                                        <td style="width: 60px;min-width :60px">Entry #</td>
                                                         <td style="width: 80px;min-width :80px">In Stock</td>
 
-                                                        <td *ngIf="!IsContainerShipment" style="width: 100%;min-width :100%;max-width:100%;"><span title="Connected To Shipment" class="LastChild">Connected</span></td>
-                                                        <td *ngIf="IsContainerShipment" style="width: 100%;min-width :100%;max-width:100%;" class="LastChild">Connected To Shipment</td>
+                                                        <td style="width: 100%;min-width :100%;max-width:100%;" class="LastChild">Connected To Shipment</td>
 
 
 
@@ -178,7 +176,7 @@
 
                                                                                 <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px; position: relative;vertical-align:central">
                                                                                     <div class="CheckBox">
-                                                                                        <input [(ngModel)]="item.IsSelected" class="LeftCenter" style="text-align:center" [attr.id]="item.IsSelectedKeyId" type="checkbox" attr.data-cy="{{'CheckBox_' + item.WarehouseEntryNumber  | IdGeneratorAsyncPipe | async}}" />
+                                                                                        <input [(ngModel)]="item.IsSelected" class="LeftCenter" style="text-align:center" [attr.id]="item.IsSelectedKeyId" type="checkbox" />
                                                                                         <label style="color:black;" class="LeftCenter" [attr.for]="item.IsSelectedKeyId"></label>
                                                                                     </div>
 
@@ -223,8 +221,8 @@
 
 
                                                                                 <!--<td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;text-align:right">
-        {{item.Dimensions}}
-    </td>-->
+                                                                                    {{item.Dimensions}}
+                                                                                </td>-->
 
                                                                                 <td *ngIf="!IsContainerShipment" class="GridViewCell" style="width: 75px; min-width: 75px; max-width: 75px;text-align:right">
                                                                                     {{item.Length}}
@@ -261,11 +259,11 @@
 
 
 
-                                                                                <td class="GridViewCell" style="width:125px; min-width: 125px; max-width: 125px; position: relative;" [ngStyle]="IsContainerShipment ? {'min-width.px':190, 'max-width.px':190, 'width.px':190} : {}">
+                                                                                <td class="GridViewCell" style="width:125px; min-width: 125px; max-width: 125px; position: relative;">
 
 
 
-                                                                                    <div style="width:125px;max-width:125px"  [ngStyle]="IsContainerShipment ? {'max-width.px':190, 'min-width.px':190, 'width.px':190} : {}" title={{item.Description}}>{{item.Description}}</div>
+                                                                                    <div style="width:125px;max-width:125px">{{item.Description}}</div>
 
 
 
@@ -275,17 +273,12 @@
                                                                                 <td class="GridViewCell" style="width: 85px; min-width: 85px; max-width: 85px;vertical-align:central">
 
                                                                                     <div style="width:85px">
-                                                                                        <input [attr.disabled]="IsCFSWarehouse ? '' : null" type="number" (blur)="item.ReleaseQTYLostFocusMethod($event)" [(ngModel)]="item.ReleaseQTY" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline">
+                                                                                        <input type="number" (blur)="item.ReleaseQTYLostFocusMethod($event)" [(ngModel)]="item.ReleaseQTY" style="height:22px;border-radius:3px;border:1px solid #a8a8a8;width:80px;float:left;color:gray;font-size:12px;display:inline">
                                                                                     </div>
 
 
                                                                                 </td>
 
-                                                                                <td class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;vertical-align:central;text-align:center">
-                                                                                    <a (click)="EditWarehouseReleases(item.EntityPM.WarehouseEntryId)">
-                                                                                        {{item.WarehouseEntryNumber}}
-                                                                                    </a>
-                                                                                </td>
 
                                                                                 <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;vertical-align:central;text-align:right">
 
@@ -295,9 +288,9 @@
 
 
                                                                                 <td class="CellStretched" style="width:  100%; min-width: 100%; max-width:  100%; position: relative;">
-                                                                                    <!--<div [style.width]="!IsContainerShipment ? '133px':'100%'">-->
+                                                                                    <div [style.width]="!IsContainerShipment ? '133px':'100%'">
                                                                                         <img class="CenterCenter" *ngIf="item.IsConnectedToShipment" style="width:20px;height:20px;" src="./Images/SimplogIcons/tick.png" />
-                                                                                    <!--</div>-->
+                                                                                    </div>
 
                                                                                 </td>
 

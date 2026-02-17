@@ -5,7 +5,6 @@ import {Components, ModuleDeclarations} from './ModuleDeclarations';
 @NgModule({
     imports: [InfrastructureModule],
     declarations: [...Components],
-    exports: [...Components],
     entryComponents: [...Components],
 })
 

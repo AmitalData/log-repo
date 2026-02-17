@@ -3,7 +3,7 @@ using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using System.Web;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -22,7 +21,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private int tenant;
         public APILogs Poco { get; set; }
         public APILogsData APILogsDataPoco { get; set; }
-
+        
 
         public IWebFreightContext ObjectContext
         {
@@ -52,7 +51,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 this.entityPm.Id = IdCounter.GetNumber("APILogs", tenant).ToString();
                 this.Poco = new APILogs();
                 this.Poco.Id = this.entityPm.Id;
-                APILogsDataPM EntityDataPM = new APILogsDataPM() { Id = entityPM.Id, Tenant = entityPM.Tenant };
+                APILogsDataPM EntityDataPM = new APILogsDataPM() { Id = entityPM.Id, Tenant = entityPM.Tenant }; 
                 APILogsMapping.MapEntity(entityPM, Poco, isNewEntity);
                 entityRepository.Add(Poco);
                 entityRepository.SubmitChanges();
@@ -102,7 +101,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.Poco = entityRepository.GetSingleAPILogs(entityPM.Id, entityPM.Tenant);
             APILogsDataPM EntityDataPM = new APILogsDataPM() { Id = entityPM.Id, Tenant = entityPM.Tenant, RequestData = entityPM.RequestData, ResponseData = entityPM.ResponseData, DiagnosticLog = entityPM.DiagnosticLog, ExceptionsMessage = entityPM.ExceptionsMessage };
             UpdateAPILogsData(EntityDataPM);
-            APILogsMapping.MapEntity(entityPM, Poco, isNewEntity);
+            APILogsMapping.MapEntity(entityPM, Poco, isNewEntity); 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
@@ -160,54 +159,5 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         //    BusinessHoursHoliday itemPoco = businessHoursHolidayRepository.GetSingleBusinessHoursHolidays(itemPM.Id, tenant);
         //    businessHoursHolidayRepository.Remove(itemPoco);
         //}
-
-        public APILogsPM GetAPILogsPMByCorrelationId(string subject, string objectTableName)
-        {
-            string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];
-            APILogs Log = entityRepository.GetSingleAPILogsByCorrelationId(CorrelationId, tenant);
-            if (Log != null)
-            {
-                return new APILogsPM()
-                {
-                    Subject = subject,
-                    Id = Log.Id,
-                    CorrelationId = Log.CorrelationId,
-                    CreateDate = Log.CreateDate,
-                    CreateDateUTC = Log.CreateDateUTC,
-                    Direction = Log.Direction,
-                    EntityId = Log.EntityId,
-                    LastUpdateDate = Log.LastUpdateDate,
-                    LastUpdateDateUTC = Log.LastUpdateDateUTC,
-                    NumberOfRetries = Log.NumberOfRetries++,
-                    ObjectTableId = Log.ObjectTableId,
-                    ExpirationDate = Log.ExpirationDate,
-                    Refrence = Log.Refrence,
-                    Status = "I",
-                    Tenant = Log.Tenant,
-                };
-            }
-
-            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
-            var Objecttable = objectTabelRepository.GetObjectTableByName(objectTableName, tenant, true);
-            APILogsPM LogPM = new APILogsPM()
-            {
-                Id = IdCounter.GetNumber("APILogs", tenant),
-                Subject = subject,
-                CorrelationId = CorrelationId,
-                CreateDate = DateTime.Now,
-                CreateDateUTC = DateTime.UtcNow,
-                Direction = "I",
-                LastUpdateDate = DateTime.Now,
-                LastUpdateDateUTC = DateTime.UtcNow,
-                NumberOfRetries = 1,
-                ObjectTableId = Objecttable.Id,
-                ExpirationDate = DateTime.Now.AddDays(90),
-                Status = "I",
-                Tenant = tenant
-            };
-            Create(LogPM);
-
-            return LogPM;
-        }
     }
 }

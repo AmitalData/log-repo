@@ -1,4 +1,4 @@
-
+﻿
 
 
 <div class="TableHolder">
@@ -8,11 +8,11 @@
         </tr>
 
         <tr>
-            <td style="width:400px">
+            <td style="width:330px">
                 <table>
 
                     <tr class="FormFieldRow" style="height:32px">
-                        <td style="width:200px">
+                        <td style="width:120px">
                             <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
                                       [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -64,18 +64,6 @@
                         </td>
                         <td><div></div></td>
                     </tr>
-                    <tr class="FormFieldRow">
-                        <td>
-                            <LogLabel [ObjectFieldName]="'DateFormat'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-                        </td>
-
-                        <td>
-                            <LogTextBox [ObjectFieldName]="'DateFormat'" [InputType]="'ntext'" [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
-                        </td>
-                        <td><div></div></td>
-                    </tr>
                     <tr></tr>
                 </table>
 
@@ -86,12 +74,6 @@
             <td>
                 <table>
                     <!-- Logo -->
-                    <!--<tr class="FormFieldRow"><td></td>
-                                             <td>
-                                                 <button class="Button" (click)="RetrieveDefaultClicked()">Retrieve Default</button>
-
-                                             </td>
-                    </tr>-->
                     <tr class="FormFieldRow">
                         <td style="width:70px; vertical-align:top">
                             <LogLabel [ObjectFieldName]="'LogoId'" [ObjectTableName]="ObjectTableName"
@@ -100,7 +82,7 @@
 
                         <td style="vertical-align:top">
                             <div style="width:100px;height:100px">
-                                <ImageComponent [WidthImage]="'95px'" [class.disabled]="true" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="ObjectTableName" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
+                                <ImageComponent [WidthImage]="'95px'" [HeightImage]="'95px'" [ImageId]="ImageId" [EntityId]="EntityId" [EntityName]="ObjectTableName" (UploadCompleted)="ImageUploadedCompleted($event)" style="height:72px;width:72px"> </ImageComponent>
                             </div>
                         </td>
 

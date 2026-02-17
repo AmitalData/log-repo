@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr>
         <td>
@@ -76,11 +76,11 @@
 
                                         <tr class="FormFieldRow">
                                             <td style="width: 13px; ">
-                                                <LogLabel [ObjectFieldName]="'AbandonmentDestructionReferenc'" [ObjectTableName]="ObjectTableName"
+                                                <LogLabel [ObjectFieldName]="'AbandonmentDestructionReference'" [ObjectTableName]="ObjectTableName"
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width: 130px;">
-                                                <LogTextBox [ObjectFieldName]="'AbandonmentDestructionReferenc'" [ObjectTableName]="ObjectTableName"
+                                                <LogTextBox [ObjectFieldName]="'AbandonmentDestructionReference'" [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext" [HideColumns]="true" [Text]="AbandonmentDestructionReference"></LogTextBox>
                                             </td>
 
@@ -146,8 +146,7 @@
                                                         <!-- ExportDeclarationNumber -->
                                                         <log-column [header]="'Customs.ClaimsRelatedEntsExpDeclar.F.ExportDeclarationNumber' | TextCodeTranslationPipe"
                                                                     [width]="'200'" [Alignment]="'right'" [binding]="'ExportDeclarationNumber'">
-                                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                                            <log-cell-template template="let item" #logcelltemplate>
                                                                 <div class="TextTrimming RightCenter" *ngIf="logcelltemplate.IsDisplayMode">
                                                                     <span>{{item.ExportDeclarationNumber}}</span>
                                                                 </div>
@@ -157,18 +156,15 @@
                                                                                 [Text]="item.Amount" [HideColumns]="true"></LogTextBox>
                                                                 </div>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                         <!-- Delete Button-->
                                                         <log-column [width]="'50'" [Alignment]="'right'">
-                                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
+                                                            <log-cell-template template="let item" [TabIndex]="-1" [IgnoreMods]="true">
                                                                 <IconButton [Name]="'Delete'" [IsSmall]="true" (click)="DeleteExportDeclarationCommand(item)"
                                                                             [IsEnabled]="!IsDisplayOnly"
                                                                             style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
                                                             </log-cell-template>
-</ng-template>
                                                         </log-column>
 
                                                     </logitude-edit-grid>

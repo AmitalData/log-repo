@@ -8,7 +8,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 
@@ -37,10 +37,7 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
                 myLoggedUserId = contact.Id;
             }
 
-            if (string.IsNullOrEmpty(entityPM.Id))
-            {
-                entityPM.Id = IdCounter.GetNumber("BatchTaskExecution", entityPM.Tenant);
-            }
+            entityPM.Id = IdCounter.GetNumber("BatchTaskExecution", entityPM.Tenant);
             entityPM.CreateDate= TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             entityPM.CreatedByUserId = myLoggedUserId;
             base.OnCreating(entityPM, entityParentPM);

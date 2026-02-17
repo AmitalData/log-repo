@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Unifreight.Data</RootNamespace>
     <AssemblyName>Unifreight.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -19,14 +18,12 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,14 +31,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Library\Bin\</OutputPath>
+    <OutputPath>bin\All Projects\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,133 +46,39 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>..\Library\Bin\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\All Projects\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
-    <OutputPath>bin\x64\None\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=5.0.2045.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Oracle.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\Library\EF6\Devart.Data.Oracle.Web.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevArt.9.6.621\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
-    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -183,14 +86,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmitalModel\AmitalContext.4Grant.cs" />
     <Compile Include="AmitalModel\AmitalContext.cs" />
-    <Compile Include="AmitalModel\AmitalContext.DbModelBuilder.cs" />
     <Compile Include="AmitalModel\AmitalContext.Template.cs" />
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
-      <Link>DependencyValidation1.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="AmitalModel\AmitalContext.Views.cs" />
     <Compile Include="AmitalModel\EntityKeys\ATBPTILKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CCUACCSUPKeys.cs" />
@@ -215,15 +112,12 @@
     <Compile Include="AmitalModel\EntityKeys\CCUCARSCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVDOCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVFILEKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\CFIMSVFLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVLINEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIMSVPAGEKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\CFIMSVREMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CFIPACKKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBAPPROVTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBBONDEDKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\CTBCARMODKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBCOUNTRYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBCURRENCYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBERRORKeys.cs" />
@@ -243,62 +137,33 @@
     <Compile Include="AmitalModel\EntityKeys\CTBTAXTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBTRANSPKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBTSRUFTYPEKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\EFIFILEMKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\EFIMMNKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\ESPSPEDKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\ETBAIRLINEKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\ETBPAYTRKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\ETBPORTKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\ETBSERLVKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\ETBVENDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GAQDOCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GAQFILEDATAKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GAQTEAMUSRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDFDATAKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMENTITYKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMFILEVERKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMFILINGKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMFLDRTRKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GDMLOCKKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GDMREFKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GGGHDAYKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\CFIMSVSTATLKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GITITEMAPKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GITITEMCRKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GGGQCKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GGGQKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GITITEMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GNDADRKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GNDCARDKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBDOCKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GTBFUSTATUKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBITEMKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBITMCNKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBMANDTKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GTBPTYPEKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTBREQCERT.cs" />
-    <Compile Include="AmitalModel\EntityKeys\GTBSERLVKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\GTRTRANKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\CTBUNLOADKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\ITBPCKTYKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\ITBPORTKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\LFIFILEMKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\MFIFILEMKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\MSPSPEDKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\MTBCARRKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\MTBPORTKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\RTBPORTKeys.cs" />
     <Compile Include="AmitalModel\EntityKeys\YCULTASKKeys.cs" />
-    <Compile Include="AmitalModel\EntityKeys\YTBTABLEKeys.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ATBPTIL.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUACCSUP.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCAR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCARL.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCRREQ.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCUSTITEM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQTEAM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGEXTSRVACT.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.UNIFBASICPOCO.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUFILEM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUMESSAGE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUMSHGR.cs" />
@@ -312,19 +177,14 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUTRANSPVAL.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUTSRUFOT.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFICONN.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIFILEM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIGOODDESC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVDOC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFILE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVFLINE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVPAGE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVREM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVSTATL.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIPACK.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROV.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBAPPROVTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBBONDED.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCARMOD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCOUNTRY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCURRENCY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBCUSTSUP.cs" />
@@ -343,78 +203,36 @@
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBSTORAGE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTARIFF.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTAXTYPE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTEAM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTRANSP.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBTSRUFTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBUNLOAD.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.DWGNDCARD.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.EFIFILEM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.EFIMMN.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ESPSPED.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBAIRLINE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBPAYTR.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBPORT.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBSERLV.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ETBVEND.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDATA.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDATALOAD.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDEF.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDLOAD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQDOC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQFILEDATA.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQMERGE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQQLOAD.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQREMARK.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQSTRUCTURE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQTEAMUSR.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GAQUSER.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GCBSCRNVWU.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDFDATA.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMENTITY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILEVER.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILING.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFILING.NO.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMFLDRTR.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMLOCK.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMQUEST.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GDMREF.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGHDAY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGQ.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GGGQC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEMAP.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GITITEMCR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDADR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GNDCARD.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GRTRATE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GSCUSR.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBDOC.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBDPTM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBFUSTATU.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITEM.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBITMCN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBMANDT.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBPTYPE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBREQCERT.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTBSERLV.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.GTRTRAN.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPCKTY.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.ITBPORT.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.LFIFILEM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MFIFILEM.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MSPSPED.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBCARR.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.MTBPORT.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.RTBPORT.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.VRELEASE2ENTRY.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULPROCESS.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YCULTASK.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YTBCUSTTB.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.YTBTABLE.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\Class1.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CCUCARSC.cs" />
     <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CFIMSVLINE.cs" />
-    <Compile Include="AmitalModel\EntityPOCOs\SyncRecord.cs" />
     <Compile Include="AmitalModel\ExtensionObjectContext.cs" />
     <Compile Include="AmitalModel\Repsitories\ATBPTILRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CCUACCSUPRepository.cs" />
@@ -435,20 +253,16 @@
     <Compile Include="AmitalModel\Repsitories\CCUTRANSPVALRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CCUTSRUFOTRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFICONNRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\CFIFILEMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIGOODDESCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CCUCARSCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVDOCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVFILERepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\CFIMSVFLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVLINERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIMSVPAGERepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\CFIMSVREMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CFIPACKRepository.cs.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBAPPROVTYPERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBBONDEDRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\CTBCARMODRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBCOUNTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBCURRENCYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBERRORRepository.cs" />
@@ -470,75 +284,36 @@
     <Compile Include="AmitalModel\Repsitories\CTBTSRUFTYPERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\CTBUNLOADRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\DualRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\EFIFILEMRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\EFIMMNRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\ESPSPEDRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\ETBAIRLINERepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\ETBPAYTRRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\ETBPORTRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\ETBSERLVRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\ETBVENDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GAQDOCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GAQFILEDATARepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GAQTEAMUSRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDFDATARepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMENTITYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMFILEVERRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMFILINGRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMFLDRTRRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GDMLOCKRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GDMREFRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\CFIMSVSTATLRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GITITEMAPRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GITITEMCRRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GGGHDAYRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GGGQCRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GGGQRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GITITEMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GNDADRRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GNDCARDRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBDOCRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GTBFUSTATURepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBITEMRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBITMCNRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBMANDTRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GTBPTYPERepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTBREQCERTRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\GTBSERLVRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\GTRTRANRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\ITBPCKTYRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\ITBPORTRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\LFIFILEMRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\MFIFILEMRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\MSPSPEDRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\MTBCARRRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\MTBPORTRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\RTBPORTRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\SyncRecordRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\VRELEASE2ENTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YCULTASKRepository.cs" />
-    <Compile Include="AmitalModel\Repsitories\YTBTABLERepository.cs" />
-    <Compile Include="AmitalModel\SyncRecordCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmitalModel\EntityPOCOs\AmitalDataModel.CTBFITYPE.cs" />
     <None Include="App.config" />
-    <None Include="Nlog.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logitude.Customs.Data\Logitude.Customs.Data.csproj">
-      <Project>{643F92C9-7CF1-4429-B79E-1E354B758ABF}</Project>
-      <Name>Logitude.Customs.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
-      <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>
-      <Name>Logitude.Server.Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Data.Global</Name>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -546,19 +321,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\unifreight.data.dll.licenses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

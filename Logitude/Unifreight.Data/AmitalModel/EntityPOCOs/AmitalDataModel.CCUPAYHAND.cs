@@ -19,16 +19,16 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 
     /// <summary>
     /// There are no comments for Unifreight.Data.AmitalModel.CCUPAYHAND in the schema.
-    /// </summary>f
+    /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUPAYHAND : UNIFBASICPOCO, INotifyPropertyChanged    {
+    public partial class CCUPAYHAND : INotifyPropertyChanged    {
 
         public CCUPAYHAND()
         {
         }
 
         #region Properties
-
+    
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for PAYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> PAYTAX
+        public virtual global::System.Nullable<double> PAYTAX
         {
             get
             {
@@ -92,14 +92,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _PAYTAX;
+        private global::System.Nullable<double> _PAYTAX;
 
     
         /// <summary>
         /// There are no comments for REJECTTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> REJECTTAX
+        public virtual global::System.Nullable<double> REJECTTAX
         {
             get
             {
@@ -114,14 +114,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _REJECTTAX;
+        private global::System.Nullable<double> _REJECTTAX;
 
     
         /// <summary>
         /// There are no comments for HANDTYPE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<int> HANDTYPE
+        public virtual global::System.Nullable<bool> HANDTYPE
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<int> _HANDTYPE;
+        private global::System.Nullable<bool> _HANDTYPE;
 
     
         /// <summary>
@@ -165,7 +165,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TOTALPAYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> TOTALPAYTAX
+        public virtual global::System.Nullable<double> TOTALPAYTAX
         {
             get
             {
@@ -180,14 +180,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _TOTALPAYTAX;
+        private global::System.Nullable<double> _TOTALPAYTAX;
 
     
         /// <summary>
         /// There are no comments for TOTALPAYDEPOSIT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> TOTALPAYDEPOSIT
+        public virtual global::System.Nullable<double> TOTALPAYDEPOSIT
         {
             get
             {
@@ -202,7 +202,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _TOTALPAYDEPOSIT;
+        private global::System.Nullable<double> _TOTALPAYDEPOSIT;
 
     
         /// <summary>

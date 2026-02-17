@@ -43,7 +43,7 @@ BEGIN
 		DECLARE gContactsCursor CURSOR READ_ONLY
 		FOR
 		SELECT Id,GlobalTenantId,IsUser
-		FROM [Global].[dbo].[GlobalContacts]
+		FROM [LogitudeGlobal-Test2].[dbo].[GlobalContacts]
 		where Email = @Email and GlobalTenantId =  @GlobalTenantId
 		order by IsUser desc 
     	OPEN gContactsCursor FETCH NEXT FROM gContactsCursor INTO @CurrentContactId,@InternalTenant,@IsUser	
@@ -56,8 +56,8 @@ BEGIN
 	    set @NewEmail = @emailSplit1 + CAST(@RowsCount as varchar) + @emailSplit2
 		 
 		
-		update [Global].[dbo].[GlobalContacts] set Email = @NewEmail where id = @CurrentContactId and GlobalTenantId = @InternalTenant
-		update [Main].[dbo].[Contacts] set Email = @NewEmail,ComputedKey= @NewEmail where id = @CurrentContactId and Tenant = @InternalTenant
+		update [LogitudeGlobal-Test2].[dbo].[GlobalContacts] set Email = @NewEmail where id = @CurrentContactId and GlobalTenantId = @InternalTenant
+		update [LogitudeMain-Test2].[dbo].[Contacts] set Email = @NewEmail where id = @CurrentContactId and Tenant = @InternalTenant
 		
 		print'This contact will be modified:' + @CurrentContactId + ' to Email:' +@NewEmail
 		

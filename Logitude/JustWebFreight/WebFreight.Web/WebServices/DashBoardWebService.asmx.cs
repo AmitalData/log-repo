@@ -15,7 +15,6 @@ using System.Web;
 using System.Web.Services;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Services;
 
 namespace WebFreight.Web.WebServices
 {
@@ -171,7 +170,14 @@ namespace WebFreight.Web.WebServices
         public byte[] LoadActivityStatusDetailsData(byte[] xmlFilters, int tenant)
         {
             DashBoardDataClass dataprovider = GetActivityStatusDetailsData(xmlFilters, tenant);
-            return new ReportMemoryStreamService().Convert(dataprovider, typeof(DashBoardDataClass), tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(DashBoardDataClass));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
         }
 
         private DashBoardDataClass GetActivityStatusDetailsData(byte[] xmlFilters, int tenant)

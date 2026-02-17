@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
@@ -15,8 +15,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Name { get; set; }
         public string SearchFields { get; set; }
         public int ViewOrder { get; set; }
-        public string QuoteGroupSectionID { get; set; }
-
 
         //  public List<ChargesType> ChargesTypes { get; set; }
         //public List<IATACode> IATACodes { get; set; }

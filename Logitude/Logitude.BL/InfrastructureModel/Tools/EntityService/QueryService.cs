@@ -8,7 +8,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
@@ -46,17 +46,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
-             theEntityPm.Code = this.entityPM.Id;
-            theEntityPm.UniqueCode = this.entityPM.UniqueCode;
-
+            this.entityPM.Id = IdCounter.GetNumber("Query", tenant).ToString();
+            this.entityPM.Code = this.entityPM.Id;
             this.Poco = new Query();
             this.Poco.Id = this.entityPM.Id;
             
             if (!string.IsNullOrEmpty(theEntityPm.NewViewName))
             {
                 ObjectTableRepository tableRep = new ObjectTableRepository(tenant);
-                int objectTableTenant = theEntityPm.IsFromCustomObjectTable ? theEntityPm.Tenant : 0;
-                ObjectTable table = tableRep.GetSingleObjectTable(theEntityPm.ObjectTableId, objectTableTenant, true);
+                ObjectTable table = tableRep.GetSingleObjectTable(theEntityPm.ObjectTableId,0,true);
                 TextCodeRepository textCodeRep = new TextCodeRepository(objectContext);
 
                 TextCode textCode = new TextCode()
@@ -76,12 +74,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 theEntityPm.NameTextCodeCode = textCode.Code;
 
                 string tenantCodesListName = "tenanttextcodes" + theEntityPm.Tenant;
+                string zeroCodeslistName = "tenantzerotextcodes";
 
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(tenantCodesListName) != null)
                     {
                         CacheManager.CacheWrapper.Invalidate(tenantCodesListName);
+                    }
+                    if (CacheManager.CacheWrapper.Get(zeroCodeslistName) != null)
+                    {
+                        CacheManager.CacheWrapper.Invalidate(zeroCodeslistName);
                     }
                 }
             }
@@ -94,7 +97,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             QueryValidating.Validate(theEntityPm);
             QueryTracing.Trace(theEntityPm, Poco, isNewEntity);
             QueryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            ChangeOldDefaultQuery(theEntityPm);
+
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
         }
@@ -114,7 +117,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             QueryTracing.Trace(theEntityPm, Poco, isNewEntity);
 
             TextCodeRepository textCodeRep = new TextCodeRepository(objectContext);
-            TextCode textCode = textCodeRep.GetSingleTextCodeByTenant(theEntityPm.NameTextCodeCode, theEntityPm.Tenant);
+            TextCode textCode = textCodeRep.GetSingleTextCodeByTenant(theEntityPm.NameTextCodeId, theEntityPm.Tenant);
             if (textCode != null && textCode.DefaultText != theEntityPm.NewViewName)
             {
                 textCode.DefaultText = theEntityPm.NewViewName;
@@ -125,6 +128,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 textCodeRep.SubmitChanges();
 
                 string tenantCodesListName = "tenanttextcodes" + theEntityPm.Tenant;
+                string zeroCodeslistName = "tenantzerotextcodes";
 
                 if (HttpContext.Current != null)
                 {
@@ -132,23 +136,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     {
                         CacheManager.CacheWrapper.Invalidate(tenantCodesListName);
                     }
+                    if (CacheManager.CacheWrapper.Get(zeroCodeslistName) != null)
+                    {
+                        CacheManager.CacheWrapper.Invalidate(zeroCodeslistName);
+                    }
                 }
             }
 
             QueryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            ChangeOldDefaultQuery(theEntityPm);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-        }
-
-        private void ChangeOldDefaultQuery(QueryPM theEntityPm)
-        {
-            if (!theEntityPm.IsDefault) return;
-            Query defaultQuery = entityRepository.GetDefaultQueryByObjectTableIdAndTenant(theEntityPm.ObjectTableId, theEntityPm.Tenant);
-            if (defaultQuery == null) return;
-            if (defaultQuery.UniqueCode == theEntityPm.UniqueCode) return;
-            defaultQuery.IsDefault = false;
-            entityRepository.Update(defaultQuery);
         }
 
         private void UpdateSharedUserQueriesCollection()
@@ -186,15 +183,12 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             itemPM.Id = IdCounter.GetNumber("SharedUserQuery", tenant).ToString();
             itemPM.QueryId = this.entityPM.Id;
-            itemPM.QueryCode = this.entityPM.UniqueCode;
-
             itemPM.Tenant = tenant;           
 
             SharedUserQuery itemPoco = new SharedUserQuery()
             {
                 Id = itemPM.Id,
                 QueryId = itemPM.QueryId,
-                QueryCode = itemPM.QueryCode,
                 Tenant = tenant
             };
 

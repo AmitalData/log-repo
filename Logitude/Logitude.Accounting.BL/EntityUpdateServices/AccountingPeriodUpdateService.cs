@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.ComponentModel.DataAnnotations;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data.Repositories;
@@ -46,50 +46,30 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 //check
                 JournalRepository repo = new JournalRepository(entityPM.Tenant);
-                List<string> exist = repo.CheckIfThereNonTranslatedJournalsByMonth(entityPM.Year, (entityPM.ClosedMonth == null ? 0 : entityPM.ClosedMonth.Value), entityPM.Tenant);
+                bool exist = repo.CheckIfThereNonTranslatedJournalsByMonth(entityPM.Year, (entityPM.ClosedMonth == null ? 0 : entityPM.ClosedMonth.Value), entityPM.Tenant);
 
-                if (exist.Count > 0)
+                if (exist)
                 {
-                    string existingJournals = string.Join(", ", exist);
-                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-
-                    throw new ApplicationException(TextCodesTranslator.TranslateText("AccountingPeriods.O.therearejournalsdidnottranslated", entityPM.Tenant, showLocal) + ": " + existingJournals);
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("AccountingPeriods.O.therearejournalsdidnottranslated", entityPM.Tenant));
                 }
             }
 
-            //if (entityPM.OpenMonth < entityPOCO.OpenMonth) // Open Month decremented
-            //{
-            //    LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(entityPM.Tenant);
-            //    for (int _month = entityPOCO.OpenMonth; _month >= entityPM.OpenMonth; _month--)
-            //    {
-            //        //IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, _month, entityPOCO.Tenant);
-
-            //        IQueryable<LedgerTransaction> monthTransactions = null;
-
-            //        switch (entityPM.PeriodTypeCode)
-            //        {
-            //            case "1": // Accounting
-            //                monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "!=2", "");
-            //                break;
-            //            case "2": // Invoice
-            //                monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "2", "!=IT");
-            //                break;
-            //            case "3": // Interest Invoice
-            //                monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "2", "IT");
-            //                break;
-            //            default:
-            //                break;
-            //        }
-            //        bool monthHasTransactions = monthTransactions.Any();
-            //        if (monthHasTransactions)
-            //        {
-            //            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-            //            string msg = TextCodesTranslator.TranslateText("AccountingPeriod.O.CantCancelOpenMonth", 0, showLocal);
-            //            throw new ApplicationException(msg);
-            //        }
-            //    }
+            if (entityPM.OpenMonth < entityPOCO.OpenMonth) // Open Month decremented
+            {
+                LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+                for (int _month = entityPOCO.OpenMonth; _month >= entityPM.OpenMonth; _month--)
+                {
+                    IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, _month, entityPOCO.Tenant);
+                    bool monthHasTransactions = monthTransactions.Any();
+                    if (monthHasTransactions)
+                    {
+                        bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                        string msg = TextCodesTranslator.TranslateText("AccountingPeriod.O.CantCancelOpenMonth", 0, showLocal);
+                        throw new ApplicationException(msg);
+                    }
+                }
                 
-            //}
+            }
         }
 
 

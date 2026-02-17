@@ -1,4 +1,4 @@
-<style>
+﻿<style>
     .DisbleBox {
         display: inline-block;
         border: 1px solid #ffd800;
@@ -29,7 +29,7 @@
 <table *ngIf="IsLoaded">
     <tr>
         <td>
-            
+            <fieldset [disabled]="!IsControlEnabled">
                 <div class="TableHolder">
                     <table style="width: 700px;height: 500px;padding-top: 10px;">
 
@@ -60,167 +60,165 @@
                         </tr>
                         <tr style="width: 100%; height:1px">
                             <td colspan="5" style="width: 100%;">
-                                <fieldset [disabled]="!IsControlEnabled">
-                                    <table style="width: 100%;">
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 140px;">
-                                                <LogLabel [ObjectFieldName]="'LeadingFileNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 150px;">
-                                                <LogTextBox [ObjectFieldName]="'LeadingFileNumber'" [Text]="LeadingFileNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                            </td>
-                                            <td style="width: 20px;"><div></div></td>
+                                <table style="width: 100%;">
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'LeadingFileNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 150px;">
+                                            <LogTextBox [ObjectFieldName]="'LeadingFileNumber'" [Text]="LeadingFileNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                        </td>
+                                        <td style="width: 20px;"><div></div></td>
 
-                                            <td style="width: 110px;">
-                                                <LogLabel [ObjectFieldName]="'DebtNotificationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 140px;">
-                                                <LogTextBox [ObjectFieldName]="'DebtNotificationNumber'" [Text]="DebtNotificationNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
+                                        <td style="width: 110px;">
+                                            <LogLabel [ObjectFieldName]="'DebtNotificationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 140px;">
+                                            <LogTextBox [ObjectFieldName]="'DebtNotificationNumber'" [Text]="DebtNotificationNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                        </td>
+                                        <td><div></div></td>
+                                    </tr>
 
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 140px;">
-                                                <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td colspan="2" style="width: 170px">
-                                                <LogLov [ObjectFieldName]="'CustomerId'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
-                                                        [SelectedValue]="CustomerId"
-                                                        [HideAddLink]="true"
-                                                        [LookUpTableName]="'Card'"
-                                                        [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
-                                                </LogLov>
-                                            </td>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td colspan="2" style="width: 170px">
+                                            <LogLov [ObjectFieldName]="'CustomerId'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [SelectedValue]="CustomerId"
+                                                    [HideAddLink]="true"
+                                                    [LookUpTableName]="'Card'"
+                                                    [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
+                                            </LogLov>
+                                        </td>
 
-                                            <td style="width: 110px;">
-                                                <LogLabel [ObjectFieldName]="'NotificationTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 140px;">
-                                                <LogLov [ObjectFieldName]="'NotificationTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.DebtNotificationType'"
-                                                        [HideColumns]="true"
-                                                        [SelectedValue]="NotificationTypeCode">
-                                                </LogLov>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
+                                        <td style="width: 110px;">
+                                            <LogLabel [ObjectFieldName]="'NotificationTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 140px;">
+                                            <LogLov [ObjectFieldName]="'NotificationTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.DebtNotificationType'"
+                                                    [HideColumns]="true"
+                                                    [SelectedValue]="NotificationTypeCode">
+                                            </LogLov>
+                                        </td>
+                                        <td><div></div></td>
+                                    </tr>
 
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 140px;">
-                                                <LogLabel [ObjectFieldName]="'ImporterId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 150px;">
-                                                <LogLov [ObjectFieldName]="'ImporterId'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.Client'"
-                                                        [HideColumns]="true"
-                                                        [SelectedValue]="ImporterId">
-                                                </LogLov>
-                                            </td>
-                                            <td style="width: 20px;"><div></div></td>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'ImporterId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 150px;">
+                                            <LogLov [ObjectFieldName]="'ImporterId'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.Client'"
+                                                    [HideColumns]="true"
+                                                    [SelectedValue]="ImporterId">
+                                            </LogLov>
+                                        </td>
+                                        <td style="width: 20px;"><div></div></td>
 
-                                            <td style="width: 110px;">
-                                                <LogLabel [ObjectFieldName]="'ProductionDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 140px;">
-                                                <LogDatePicker [ObjectFieldName]="'ProductionDate'" [ObjectTableName]="ObjectTableName"
-                                                               [DataContext]="DataContext" [HideColumns]="true"
-                                                               [SelectedDateValue]="ProductionDate"></LogDatePicker>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
+                                        <td style="width: 110px;">
+                                            <LogLabel [ObjectFieldName]="'ProductionDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 140px;">
+                                            <LogDatePicker [ObjectFieldName]="'ProductionDate'" [ObjectTableName]="ObjectTableName"
+                                                           [DataContext]="DataContext" [HideColumns]="true"
+                                                           [SelectedDateValue]="ProductionDate"></LogDatePicker>
+                                        </td>
+                                        <td><div></div></td>
+                                    </tr>
 
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 140px;">
-                                                <LogLabel [ObjectFieldName]="'CustomsBranchCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 150px;">
-                                                <LogLov [ObjectFieldName]="'CustomsBranchCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.CustomsHouseType'"
-                                                        [HideColumns]="true"
-                                                        [SelectedValue]="CustomsBranchCode">
-                                                </LogLov>
-                                            </td>
-                                            <td style="width: 20px;"><div></div></td>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'CustomsBranchCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 150px;">
+                                            <LogLov [ObjectFieldName]="'CustomsBranchCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.CustomsHouseType'"
+                                                    [HideColumns]="true"
+                                                    [SelectedValue]="CustomsBranchCode">
+                                            </LogLov>
+                                        </td>
+                                        <td style="width: 20px;"><div></div></td>
 
-                                            <td style="width: 110px;">
-                                                <LogLabel [ObjectFieldName]="'RealesGoodsDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 140px;">
-                                                <LogTextBox [ObjectFieldName]="'RealesGoodsDescription'" [Text]="RealesGoodsDescription" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
+                                        <td style="width: 110px;">
+                                            <LogLabel [ObjectFieldName]="'RealesGoodsDescription'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 140px;">
+                                            <LogTextBox [ObjectFieldName]="'RealesGoodsDescription'" [Text]="RealesGoodsDescription" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                        </td>
+                                        <td><div></div></td>
+                                    </tr>
 
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 140px;">
-                                                <LogLabel [ObjectFieldName]="'ProfessionUnitTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 150px;">
-                                                <LogLov [ObjectFieldName]="'ProfessionUnitTypeCode'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.OrganizationUnitType'"
-                                                        [HideColumns]="true"
-                                                        [SelectedValue]="ProfessionUnitTypeCode">
-                                                </LogLov>
-                                            </td>
-                                            <td style="width: 20px;"><div></div></td>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'ProfessionUnitTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 150px;">
+                                            <LogLov [ObjectFieldName]="'ProfessionUnitTypeCode'"
+                                                    [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"
+                                                    [LookUpTableName]="'Customs.OrganizationUnitType'"
+                                                    [HideColumns]="true"
+                                                    [SelectedValue]="ProfessionUnitTypeCode">
+                                            </LogLov>
+                                        </td>
+                                        <td style="width: 20px;"><div></div></td>
 
-                                            <td style="width: 110px;">
-                                                <LogLabel [ObjectFieldName]="'DebtNotificationReason'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td rowspan="3" style="width: 140px;height: 60px">
-                                                <!--<LogTextBox [ObjectFieldName]="'DebtNotificationReason'" [Text]="DebtNotificationReason" [DataContext]="DataContext" [HideColumns]="true" [IsMultiline]="true"> </LogTextBox>-->
-                                                <div class="CustomMultiLinesText">
-                                                    <div style="white-space: normal;word-wrap: break-word;margin-top:0px;margin-bottom:10px; margin-left:10px;margin-right:0px;">
-                                                        {{DebtNotificationReason}}
-                                                    </div>
+                                        <td style="width: 110px;">
+                                            <LogLabel [ObjectFieldName]="'DebtNotificationReason'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td rowspan="3" style="width: 140px;height: 60px">
+                                            <!--<LogTextBox [ObjectFieldName]="'DebtNotificationReason'" [Text]="DebtNotificationReason" [DataContext]="DataContext" [HideColumns]="true" [IsMultiline]="true"> </LogTextBox>-->
+                                            <div class="CustomMultiLinesText">
+                                                <div style="white-space: normal;word-wrap: break-word;margin-top:0px;margin-bottom:10px; margin-left:10px;margin-right:0px;">
+                                                    {{DebtNotificationReason}}
                                                 </div>
-                                            </td>
-                                            <td><div></div></td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                        <td><div></div></td>
+                                    </tr>
 
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 140px;">
-                                                <LogLabel [ObjectFieldName]="'PaymentOrderNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 150px;">
-                                                <LogTextBox [ObjectFieldName]="'PaymentOrderNumber'" [Text]="PaymentOrderNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
-                                            </td>
+                                    <tr class="FormFieldRow">                                    
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'PaymentOrderNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 150px;">
+                                            <LogTextBox [ObjectFieldName]="'PaymentOrderNumber'" [Text]="PaymentOrderNumber" [DataContext]="DataContext" [HideColumns]="true"> </LogTextBox>
+                                        </td>
 
-                                            <!--<td><div style="width:20px"></div></td>
-            <td><div style="width:110px"></div></td>
-            <td><div style="width:140px"></div></td>-->
-                                            <td><div></div></td>
-                                        </tr>
+                                        <!--<td><div style="width:20px"></div></td>
+                                        <td><div style="width:110px"></div></td>
+                                        <td><div style="width:140px"></div></td>-->
+                                        <td><div></div></td>
+                                    </tr>
 
-                                        <tr class="FormFieldRow">
-                                            <td style="width: 140px;">
-                                                <LogLabel [ObjectFieldName]="'ValidityDateTo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width: 120px;">
-                                                <LogDatePicker [ObjectFieldName]="'ValidityDateTo'" [ObjectTableName]="ObjectTableName"
-                                                               [DataContext]="DataContext" [HideColumns]="true"
-                                                               [SelectedDateValue]="ValidityDateTo"></LogDatePicker>
-                                            </td>
-                                            <!--<td><div style="width:20px"></div></td>
-            <td><div style="width:110px"></div></td>
-            <td><div style="width:140px"></div></td>-->
-                                            <td><div></div></td>
-                                        </tr>
+                                    <tr class="FormFieldRow">
+                                        <td style="width: 140px;">
+                                            <LogLabel [ObjectFieldName]="'ValidityDateTo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+                                        <td style="width: 120px;">
+                                            <LogDatePicker [ObjectFieldName]="'ValidityDateTo'" [ObjectTableName]="ObjectTableName"
+                                                           [DataContext]="DataContext" [HideColumns]="true"
+                                                           [SelectedDateValue]="ValidityDateTo"></LogDatePicker>
+                                        </td>
+                                        <!--<td><div style="width:20px"></div></td>
+                                        <td><div style="width:110px"></div></td>
+                                        <td><div style="width:140px"></div></td>-->
+                                        <td><div></div></td>
+                                    </tr>
 
-                                        <tr><td><div></div></td></tr>
-                                    </table>
-                                </fieldset>
+                                    <tr><td><div></div></td></tr>
+                                </table>
                             </td>
                         </tr>
 
@@ -239,80 +237,59 @@
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.F.CustomFileNo' | TextCodeTranslationPipe"
                                                     [binding]="'CustomFileNo'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
-                                                    <a (click)="NavigateToDeclarationButtonClicked(item.CustomFileNo)" href="#">{{item.CustomFileNo}}</a>
+                                                    <span>{{item.CustomFileNo}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- DeclarationNumber -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.F.DeclarationNumber' | TextCodeTranslationPipe"
                                                     [binding]="'DeclarationNumber'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.DeclarationNumber }}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- CustomsTapagNumeral -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.F.CustomsTapagNumeral' | TextCodeTranslationPipe"
                                                     [binding]="'CustomsTapagNumeral'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div class="RightCenter">
                                                     <span>{{item.CustomsTapagNumeral}}</span>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- PaymentDate -->
                                         <log-column [width]="'120'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.F.PaymentDate' | TextCodeTranslationPipe"
                                                     [binding]="'PaymentDate'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.PaymentDate | DateTimePipe:'DT'}}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                         <!-- TotalTax -->
                                         <log-column [width]="'100'" [Alignment]="'right'"
                                                     [header]="'Customs.Declaration.F.TotalTax' | TextCodeTranslationPipe"
                                                     [binding]="'TotalTax'">
-                                            <ng-template let-item>
-<log-cell-template  #logcelltemplate>
+                                            <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="width:100%;height:100%;">
                                                     <div class="RightCenter">
                                                         <span>{{item.TotalTax }}</span>
                                                     </div>
                                                 </div>
                                             </log-cell-template>
-</ng-template>
-                                        </log-column>
-
-                                        <!-- Deficit Decision Button-->
-                                        <log-column [width]="'100'" [Alignment]="'right'"
-                                                    [header]="'החלטת המכס'">
-                                            <ng-template let-item>
-<log-cell-template  [TabIndex]="-1" [IgnoreMods]="true">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DeficitDecisionButtonClicked(item)"
-                                                            style="display: block; float: right; margin-right:3px; margin-top:2px;"></IconButton>
-                                            </log-cell-template>
-</ng-template>
                                         </log-column>
 
                                     </logitude-edit-grid>
@@ -325,7 +302,7 @@
                         </tr>
                     </table>
                 </div>
-            
+            </fieldset>
         </td>
     </tr>
 

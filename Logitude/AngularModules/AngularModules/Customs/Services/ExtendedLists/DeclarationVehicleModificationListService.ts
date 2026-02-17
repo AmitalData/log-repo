@@ -1,7 +1,6 @@
 ﻿                                               import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
@@ -12,11 +11,11 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 
 export class DeclarationVehicleModificationListService{
 
-    private _http: HttpClient;
+    private _http: Http;
     private _apiUrl: string;
     
     constructor() {
-        this._http = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/DeclarationVehicleModification';
     }
 
@@ -32,18 +31,18 @@ export class DeclarationVehicleModificationListService{
 
         var url = this._apiUrl + '/GetDeclarationVehicleModification';
 
-        return defer(() => {
+        return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetDeclarationVehicleModification/?'
                 + '&declarationId=' + declarationId
                 + '&chassisNumber=' + chassisNumber
                 + '&adjustmentTypeCode=' + adjustmentTypeCode
                 + '&tenant=' + tenant.toString()
                 
-                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                , { headers: authHeader }).map(response => {
 
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
                 var _mappedListsArray: Array<DeclarationVehicleModificationList> = [];
                 if (serviceResponse.Result) {
                     for (var key in serviceResponse.Result) {
@@ -57,7 +56,7 @@ export class DeclarationVehicleModificationListService{
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).catch(ServiceHelper.HandleServiceError);
         });
     }  
 

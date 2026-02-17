@@ -1,12 +1,9 @@
-
-<table>
+﻿<table>
     <tr style="height:1px;">
         <td>
             <table>
                 <tr>
-                    <td>
-                        <div></div>
-                    </td>
+                    <td><div></div></td>
                     <td style="width: 130px;float:right;">
                         <table>
                             <tr>
@@ -20,13 +17,9 @@
                                         <img src="./Images/PagerIcons/previous.png" class="CenterCenter" style="height:10px; width:15px;" />
                                     </button>
                                 </td>
-                                <td style="width:2px;">
-                                    <div></div>
-                                </td>
+                                <td style="width:2px;"><div></div></td>
                                 <td> {{PageIndex}} of {{TotalPagesCount}} </td>
-                                <td style="width:2px;">
-                                    <div></div>
-                                </td>
+                                <td style="width:2px;"><div></div></td>
                                 <td style="width:20px;">
                                     <button (click)="NextPageClick()" class="Button" [disabled]="!IsHitState_NextButton" style="height:20px; width:20px;">
                                         <img src="./Images/PagerIcons/next.png" class="CenterCenter" style="height:10px; width:15px;" />
@@ -45,70 +38,49 @@
         </td>
     </tr>
 
-    <tr style="height:5px;">
-        <td>
-            <div></div>
-        </td>
-    </tr>
+    <tr style="height:5px;"><td><div></div></td></tr>
 
     <!-- Grid -->
     <tr>
         <td>
-            <div class="MediaFill">
-                <div class="SimpleGridView">
-                    <div class="SimpleGridViewHeader">
-                        <table>
-                            <tr>
-                                <td style="width: 55px;min-width: 55px">{{'RatesTable.F.ForeignCurrencyId.Short' | TextCodeTranslationPipe}}</td>
-                                <td style="width: 90px;min-width: 90px">{{'RatesTable.O.ExchangeDate' | TextCodeTranslationPipe}}</td>
-                                <td style="width: 80px;min-width: 80px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
-                                <td *ngFor="let type of CurrencyRateTypes" style="width: 70px;min-width: 70px">{{type.Name}}</td>
-
-                                <td style="width: 110px;min-width: 110px">{{'RatesTable.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="SimpleGridViewBody">
-                        <table>
-                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
-                                <td class="GridViewCell" style="width: 55px;min-width: 55px">
-                                    {{LastRate.ForeignCurrencyCode}}
-                                </td>
-
-                                <td class="GridViewCell" style="width: 90px;min-width: 90px">
-                                    {{item.ValueDate | DateTimeToDatePipe}}
-                                </td>
-
-                                <td class="GridViewCell" style="width: 80px;min-width: 80px">
-                                    {{item.Rate | RatesNumbersPipe:'N5'}}
-                                </td>
-                                <td *ngFor="let type of CurrencyRateTypes" class="GridViewCell" style="width: 70px; min-width: 70px; text-align: center;">
-                                    <ng-container *ngIf="GetFoundRate(item.CurrencyRates, type.Id) as foundRate">
-                                        {{foundRate?.Rate | RatesNumbersPipe:'N5'}}
-                                    </ng-container>
-                                </td>
-                                <td class="GridViewCell" style="width: 110px;min-width: 110px">
-                                    {{item.UpdatedByUserName}}
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="4">
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+            <div class="SimpleGridView">
+                <div class="SimpleGridViewHeader">
+                    <table>
+                        <tr>
+                            <td style="width: 55px;min-width: 55px">{{'RatesTable.F.ForeignCurrencyId.Short' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 90px;min-width: 90px">{{'RatesTable.O.ExchangeDate' | TextCodeTranslationPipe}}</td>
+                            <td style="width: 80px;min-width: 80px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
+                            <td><div></div></td>
+                        </tr>
+                    </table>
                 </div>
-            </div>            
+
+                <div class="SimpleGridViewBody">
+                    <table>
+                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource">
+                            <td class="GridViewCell" style="width: 55px;min-width: 55px">
+                                {{item.ForeignCurrencyCode}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 90px;min-width: 90px">
+                                {{item.ValueDate | DateTimeToDatePipe}}
+                            </td>
+
+                            <td class="GridViewCell" style="width: 80px;min-width: 80px">
+                                {{item.Rate | RatesNumbersPipe:'N5'}}
+                            </td>
+
+                           <td><div></div></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4">
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </td>
     </tr>
 

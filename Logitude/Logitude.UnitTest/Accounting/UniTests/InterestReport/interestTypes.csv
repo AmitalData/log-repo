@@ -1,4 +1,0 @@
-Id,Tenant,CreateDate,CreatedByUserId,UpdateDate,UpdatedByUserId,SearchFields,Code,LocalName,EnglishName,Description,InActive
-1-40,1071,2/11/2020 8:44,1-82241,2/14/2020 15:58,1-82241,"Exceptional interest ,Exceptional interest ,EXIN",EXIN,Exceptional interest,Exceptional interest,NULL,0
-1-39,1071,2/11/2020 8:43,1-82241,2/14/2020 15:57,1-82241,"standard interest ,standard interest ,STIN",STIN,standard interest,standard interest,NULL,0
-1-41,1071,2/11/2020 8:45,1-82241,2/14/2020 15:57,1-82241,"Credit interest ,Credit interest ,CRIN",CRIN,Credit interest,Credit interest,NULL,0

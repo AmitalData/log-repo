@@ -13,10 +13,9 @@ import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLoc
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
 import {DocumentTypeTemplatePM} from '../../../../../Common/EntityPMs/DocumentTypeTemplatePM';
-import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddDocumentTypeFromLibraryComponent.html',
     providers: [DocumentTypeTemplateListExtendedService, DocumentTypePMExtendedService, DocumentTypeListExtendedService]
 })
@@ -55,7 +54,7 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
     SetWindowArgs(args: any) {
 
 
-        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("DocumentTypeTemplate").subscribe(response => {
 
             this.DataViewModel = args.DataViewModel;
             this.ObjectTableId = args.ObjectTableId;
@@ -97,9 +96,8 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
     Load() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
-        //var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ?true:false;
-        var objectTableId = AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ObjectTableId : this.ChildObjectTableId;
-        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(objectTableId, SessionInfo.LoggedUserTenant, true, this.TransportModeId, this.ShipmentlevelCode).subscribe((res:any) => {
+        var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ?false:true;
+        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(this.ObjectTableId, SessionInfo.LoggedUserTenant, isfilter, this.TransportModeId, this.ShipmentlevelCode).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -144,11 +142,11 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
 
     CopyDocumentTypeAndTemplate() {
 
-        this._documentTypeTemplateListExtendedService.CopyDocumentTypeAndDocumentTypTemplate(this.DocumentTypeTemplateViewModelSelected.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._documentTypeTemplateListExtendedService.CopyDocumentTypeAndDocumentTypTemplate(this.DocumentTypeTemplateViewModelSelected.Id, SessionInfo.LoggedUserTenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var documenttypecode = pmResponse.Result;
-                this._documentTypeListExtendedService.getDocumentTypeListByCode(documenttypecode, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+                this._documentTypeListExtendedService.getDocumentTypeListByCode(documenttypecode, SessionInfo.LoggedUserTenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;

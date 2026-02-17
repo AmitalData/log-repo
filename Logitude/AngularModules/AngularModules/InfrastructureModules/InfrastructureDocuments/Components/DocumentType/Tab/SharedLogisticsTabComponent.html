@@ -4,7 +4,7 @@
     <tr style="height:20px"><td colspan="4"></td></tr>
     <tr style="vertical-align:top;height:33px">
         <td style="width:10px"><div></div></td>
-        <td style="width:200px;"><span style="font-size:11px;color:#6E7172">Enable for customer view:</span></td>
+        <td style="width:160px;"><span style="font-size:11px;color:#6E7172">Enable for customer view:</span></td>
         <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsCustomerView'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox></td>
         <td><div></div></td>
     </tr>
@@ -12,15 +12,8 @@
 
     <tr style="vertical-align:top;height:33px">
         <td style="width:10px"><div></div></td>
-        <td style="width:200px;font-size:11px;color:#6E7172"><span>Enable for agent view:</span></td>
+        <td style="width:160px;font-size:11px;color:#6E7172"><span>Enable for agent view:</span></td>
         <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsAgentView'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox></td>
-        <td><div></div></td>
-    </tr>
-
-    <tr style="vertical-align:top;height:33px" *ngIf="false">
-        <td style="width:10px"><div></div></td>
-        <td style="width:200px;font-size:11px;color:#6E7172"><span>Enable for customer upload:</span></td>
-        <td style="width:230px;text-align:left"><LogCheckBox [LogitudeForm]="myForm" [ObjectFieldName]="'IsCustomerUploadPermission'" [ObjectTableName]="'DocumentType'" [DataContext]="EntityPM"></LogCheckBox></td>
         <td><div></div></td>
     </tr>
 

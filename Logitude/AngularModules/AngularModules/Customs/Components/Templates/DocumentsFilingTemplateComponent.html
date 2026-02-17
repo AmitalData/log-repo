@@ -2,7 +2,7 @@
     <tr>
         <td class="MediaFillAbsolute" style="direction:rtl">
             <div (click)="FirePreventSelect()">
-                <img *ngIf="FieldName =='Extension'" [src]="rowData.Extension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px; margin-bottom: 5px; cursor:pointer;" (click)="DownloadDocumentFile(rowData)" />
+                <img *ngIf="FieldName =='Extension'" [src]="rowData.Extension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px; margin-bottom: 5px; cursor:pointer;" (click)="DownloadDocumentFile(rowData.Id)" />
             </div>
 
             <div *ngIf="FieldName == 'CreateDate'" style="text-align:right;">

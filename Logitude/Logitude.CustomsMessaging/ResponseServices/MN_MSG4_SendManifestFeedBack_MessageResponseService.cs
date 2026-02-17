@@ -22,7 +22,7 @@ using UnifreightIIG.Common.MessageLib.Storage;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.Docs;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.AmitalMessaging.Utils;
@@ -36,10 +36,6 @@ using UnifreightIIG.Common.FaultProceduralDetailsServiceReference;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer.DBWCO;
 using Logitude.Customs.BL.BL;
-using Logitude.Customs.BL.Messaging.Customs;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Server.Tools.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -60,12 +56,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (!String.IsNullOrWhiteSpace(requestParams.DeclarationId))
             {
-                CalculateDeclarationCourierStatus.UpdateCourierManifestStatusCode(requestParams.Tenant, requestParams.DeclarationId);
+                var customContext = CustomContext.GetContext(requestParams.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, false, false);
+                if (currentDeclarationCourierStatusPM != null)
+                {
+                    string prevVal = null;
+                    string currvVal = null;
+                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, requestParams.DeclarationId, requestParams.Tenant);
+                    prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                    calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                    currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+
+                    if (prevVal != currvVal)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
+                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                    }
+                }
             }
             base.OnRequestFail(customResponse, requestParams);
         }
 
-      
 
         public override void Update(MN_MSG4_SendManifestFeedBack_Message customResponse, MANIFESTRequestRequestParams requestParams)
         {
@@ -88,9 +101,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
-            var stopwatch = Stopwatch.StartNew();
             _MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.DeclarationId, true, false);
-            LogMessagingUtil.Instance.AppendLine("getsingle:Took:" + stopwatch.ElapsedMilliseconds);
 
             if (this._MyDeclarationPM == null)
             {
@@ -100,18 +111,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.HasException = true;
                 return;
             }
-            bool lockit = false;
-            string key = "";
-            if (_MyDeclarationPM.IsCourierDeclaration)
-            {
-                lockit = true;
-                key = ProcessLockTableUtil.Instance.GetKey4UpdateDeclarationCourier_DocumentStatusCode(_MyDeclarationPM.Id, requestParams.Tenant);
-            }
-            using (var processLockTableDisposable = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(requestParams.Tenant, lockit, key, "CRS:2715/UDLT"))
 
-            { 
-                //Checking foe Exceptions
-                if (customResponse.ResponseContentHeader.Exception != null || _ResponseHeaderExeption != null)
+
+            //Checking foe Exceptions
+            if (customResponse.ResponseContentHeader.Exception != null || _ResponseHeaderExeption != null)
             {
                 if (customResponse.ResponseContentHeader.Exception != null)
                 {
@@ -168,8 +171,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             //    //return;
             //}
 
-            
-            if (!(!string.IsNullOrWhiteSpace(this.MyResponseData.UserMessage) && customResponse.Response == null))
+            if (!string.IsNullOrWhiteSpace(this.MyResponseData.UserMessage) && customResponse.Response == null)
+            {
+                myEventContextTagModel = new EventContextTagModel()
+                {
+                    CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
+                    EventCode = "MNE",
+                    EventRemarks = this.MyResponseData.UserMessage,
+                    StatusDateTime = DateTime.Now,
+                };
+            }
+            else
             {
                 /*
                  if(customResponse.ResponseContentHeader.Exception != null)
@@ -334,107 +346,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
 " + customResponse.ResponseContentHeader.Remark;
                 }
                 
-                   
+                    switch (_MyDeclarationPM.ManifestCargoStatusCode)
+                {
+                    case "1":
+                    case "2":
+                        myEventContextTagModel = new EventContextTagModel()
+                        {
+                            CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
+                            EventCode = "MNC",
+                            EventRemarks = "Manifest Correct ",
+                            StatusDateTime = DateTime.Now,
+                        };
+                        if (!string.IsNullOrWhiteSpace(this.MyResponseData.UserMessage))
+                        {
+                            myEventContextTagModel.EventRemarks = myEventContextTagModel.EventRemarks + @"
+" + this.MyResponseData.UserMessage;
+                        }
+                        //this._MyDeclarationPM.CurrentContextTag = myEventContextTagModel;
+                        break;
+                    case "3":
+                        myEventContextTagModel = new EventContextTagModel()
+                        {
+                            CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
+                            EventCode = "MNE",
+                            EventRemarks = "Manifest Error " + this.MyResponseData.UserMessage,
+                            StatusDateTime = DateTime.Now,
+                        };
+                        //this._MyDeclarationPM.CurrentContextTag = myEventContextTagModel;
+                        break;
+                    default:
+
+                        break;
+                }
             }
 
-            
-                if (_MyDeclarationPM.ManifestCargoStatusCode=="1" || _MyDeclarationPM.ManifestCargoStatusCode=="2" && !_MyDeclarationPM.EffectiveFlight)//MNC its success !
-                {
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM declarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.DeclarationId, true, false);
-
-
-
-                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
-
-                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
-
-                    var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration");
-                   
-
-                        if ((declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "R" && feature != null) || (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == "V" && declarationCourierStatusPM.CourierPaymentStatusCode != "P" && declarationCourierStatusPM.CourierPaymentStatusCode != "O"))
-                    {
-                        LogMessagingUtil.Instance.AppendLine($"  if ((declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == 'R' && feature != null) || (declarationCourierStatusPM != null && declarationCourierStatusPM.CourierDeclarationStatusCode == 'V' && declarationCourierStatusPM.CourierPaymentStatusCode != 'P' && declarationCourierStatusPM.CourierPaymentStatusCode != 'O'))");
-                        if (_MyDeclarationPM.TaxationDateTime < DateTime.Now.Date)
-                        {
-                            _MyDeclarationPM.TaxationDateTime = DateTime.Now.Date;//לפני השליחה יש לעדכן את תאריך חישוב המיסים לתאריך נוכחי על מנת להמנע מטיוטה שגויה
-                        }
-                        using (var trans = TransactionFactory.GetNewTransaction())// I PREFERRED WITHOUT TRANS BUT  (TO 1345- 1415). .
-                        {
-                            var featuresList = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
-                            var isFeature = featuresList.Features.FirstOrDefault(x => x.Code == "ClassificationApprovedFromMasterCourier");
-
-                            if (isFeature != null)
-                            {
-                                if (declarationCourierStatusPM.ClassificationApproved)
-                                {
-                                    OnSucceededSendDeclarationDelay1Min(requestParams);
-                                }
-                            }
-                            else
-                            {
-                                OnSucceededSendDeclarationDelay1Min(requestParams);
-                            }
-                            trans.Complete();
-                        }
-                    }
-
-                   
-                
-
-                
+            if (!string.IsNullOrWhiteSpace(myEventContextTagModel.EventCode))
+            {
+                string loggingUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
+                RaiseEvent(_MyDeclarationPM, loggingUserId, myEventContextTagModel);
             }
 
             _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
-            
 
-    
             MyResponseData.ApplicationID = requestParams.ImportManifest;
             MyResponseData.Succeeded = true;
-
-
-            }
-        }
-
-        private void OnSucceededSendDeclarationDelay1Min(MANIFESTRequestRequestParams requestParams)
-        {
-
-            try
-            {
-                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-
-                var requestParams2750 = new GenericRequestParams()
-                {
-                    Tenant = requestParams.Tenant,
-                    //IsFakeResponse = true,
-                    //RequestName = requestName,
-                    //ResponseName = responseName,
-                    LoggingEnabled = true,
-                    LoggingObjectTableId = objectTableId,
-                    LoggingEntityId = _MyDeclarationPM.Id,
-                    //LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                    //LoggingEntityId2 = _CourierDeclarationPM,
-                    AppicationId = _MyDeclarationPM.Id,
-                    InterfaceTypeCode = "2750",
-
-                    //LoggingEntityReference = declarationNumber,
-                    LoggingUserId = requestParams.LoggingUserId,
-                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                   
-                };
-
-                SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false,DateTime.Now.AddMinutes(2));
-                LogMessagingUtil.Instance.AppendLine($" OnSucceededSendDeclarationDelay1Min SheetSBQ ({requestParams2750.PBId})");
-                
-
-            }
-            catch (System.Exception ee1)
-            {
-
-                LogMessagingUtil.Instance.AppendLine($"Exception!!!OnSucceededSendDeclarationDelay1Min({_MyDeclarationPM.Id}) : {ee1.Message}");
-                
-            }
         }
 
         private void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, EventContextTagModel myEventContextTagModel)

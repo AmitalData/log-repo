@@ -10,8 +10,7 @@ using System.Xml.Serialization;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
@@ -26,8 +25,6 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.CustomFilters;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.Accounting.BL;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
@@ -173,10 +170,9 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             accountingContext = AccountingContext.GetContext(tenant);
             GLAccountListQueryService listService = new GLAccountListQueryService(accountingContext);
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
-            //  return listService.GetList(queryOperations, tenant);
+          //  return listService.GetList(queryOperations, tenant);
             List<GLAccountList> list = listService.GetList(queryOperations, tenant);
-            List<GLAccountList> ActiveGLAccountList = list.Where(a => a.Inactive == false).ToList();
-            foreach (var gLAccountList in ActiveGLAccountList)
+            foreach (var gLAccountList in list)
             {
 
                 if (!String.IsNullOrEmpty(gLAccountList.CustomerGLAccountId))
@@ -198,7 +194,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                     }
                 }
             }
-            return ActiveGLAccountList;
+            return list;
 
         }
 
@@ -279,7 +275,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             GLAccountCustomFilter customfilters = new GLAccountCustomFilter(tenant);
 
-            gLAccounts = customfilters.GetFilteredQuery(queryOperations, gLAccounts, accountingContext);
+            gLAccounts = customfilters.GetFilteredQuery(queryOperations, gLAccounts);
             gLAccounts = filter.GetFilteredQuery<GLAccount>(nonListQueryOperation, gLAccounts);
 
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", tenant);
@@ -449,44 +445,47 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
         public GLAccountSummary GetGLAccountSummary(int tenant)
         {
-            GLAccountSummary summary = new GLAccountSummary();
-
             SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+            GLAccountSummary result = new GLAccountSummary();
+
             if (SecurityUtility.CheckTableContactFeature("GLAccount", "READ", tenant))
             {
-                IQueryable<GLAccountAndMoreDTO> glaccountsQuery = GetGLAccountQuery(tenant);
 
+                GLAccountRepository glAccountRepository = new GLAccountRepository(tenant);
+                var iQueryable_Data = 
+                    glAccountRepository.GetAllAsGLAccountAndMore(tenant);
 
-                IQueryable<GLAccountAndMoreDTO> allCustomers = glaccountsQuery.Where(d => d.AccountTypeCode == "2");
-                
-                summary.CollectorsCount = GetGlaccountsThatConnectedCardCollectorAsLoggedUser(tenant, allCustomers);
-                summary.DebitorsCount = glaccountsQuery.Where(d => d.AccountTypeCode == "2" && d.LocalBalanceInDue > 0).Count();
+                // Main GLAccounts
+                result.ActiveGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1" && d.Inactive == false).Count();
+                result.InactiveGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1" && d.Inactive == true).Count();
+                result.AllGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "1").Count();
+                result.OpenFilesCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5" && d.BalanceInLocalCurrency != 0).Count();
+                result.OpenMastersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "4" && d.BalanceInLocalCurrency != 0).Count();
+                result.ClosedFilesGLAccountCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5" && d.BalanceInLocalCurrency == 0).Count();
+                result.AllFilesCount = iQueryable_Data.Where(d => d.AccountTypeCode == "5").Count();
+                result.AllJobsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "4").Count();
+
+                // Customers GLAccounts
+                result.ActiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == false).Count();
+                result.InactiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == true).Count();
+                result.CollectorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
+                result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.LocalBalanceInDue > 0).Count();
+                result.AllCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
+
+                // Vendors GLAccounts
+                result.ActiveVendorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3" && d.Inactive == false).Count();
+                result.InactiveVendorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3" && d.Inactive == true).Count();
+                //result.CollectorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3").Count();
+                //result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3" && d.BalanceInLocalCurrency > 0).Count();
+                result.AllVendorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "3").Count();
+              
             }
 
-            return summary;
+            return result;
         }
 
-        private static IQueryable<GLAccountAndMoreDTO> GetGLAccountQuery(int tenant)
-        {
-            GLAccountRepository glAccountRepository = new GLAccountRepository(tenant);
-            var glaccountsQuery = glAccountRepository.GetAllAsGLAccountAndMore(tenant);
-            return glaccountsQuery;
-        }
-
-        private int GetGlaccountsThatConnectedCardCollectorAsLoggedUser(int tenant, IQueryable<GLAccountAndMoreDTO> allCustomers)
-        {
-            var loggedUserId = GetLoggedUser(tenant).Id;
-            var glaccountIds = allCustomers.Include("CardsData").Where(e => e.CardsData.CollectorUserId == loggedUserId).Count();
-            return glaccountIds;
-        }
-
-        private User GetLoggedUser(int tenant)
-        {
-            string email = AuthenticationUtil.GetLoggedUserEmail(tenant);
-            UserRepository userRepository = new UserRepository(tenant);
-            var loggedUser = userRepository.GetSingleUserByEmail(email, tenant, false);
-            return loggedUser;
-        }
         public JournalSummary GetJournalSummary(int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
@@ -499,11 +498,11 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 JournalRepository journalRepository = new JournalRepository(tenant);
                 IQueryable<Journal> iQueryable_Data = journalRepository.GetAll(tenant);
 
-                result.DraftJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "0" && d.AccountingEntityCode == "1").Count();
+                result.AllJournalsCount = iQueryable_Data.Count();
+                result.ApprovedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "2" && d.AccountingEntityCode == "1").Count();
                 result.WaitingJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "1" && d.AccountingEntityCode == "1").Count();
-                //result.AllJournalsCount = iQueryable_Data.Count();
-                //result.ApprovedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "2" && d.AccountingEntityCode == "1").Count();
-                //result.VoidedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "3" && d.AccountingEntityCode == "1").Count();
+                result.VoidedJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "3" && d.AccountingEntityCode == "1").Count();
+                result.DraftJournalsCount = iQueryable_Data.Where(d => d.StatusCode == "0" && d.AccountingEntityCode == "1").Count();
 
             }
 

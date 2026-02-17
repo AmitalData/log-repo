@@ -10,7 +10,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {QuoteDomainService} from '../../../../Quote/Services/QuoteDomainService';
 @Component({
     selector: 'QuotesWindowComponent',
-    
+    moduleId: module.id,
     templateUrl: './QuotesWindowComponent.html',
 })
 
@@ -51,7 +51,7 @@ export class QuotesWindowComponent extends BaseComponent {
             filters.addAdditionalFilter("NotConnectedOpportunity", true, null, null, "Equals", true, true, false, "string");
             filters.addAdditionalFilter("SearchFields", SearchedValue, null, null, "Contains", false, false, false, "string");
 
-            this.quoteListService.getByFilters(filters).subscribe((result:any) => {
+            this.quoteListService.getByFilters(filters).subscribe(result => {
                 var QuoteList: Array<QuoteList> = result.Result.reverse();
                 if (QuoteList.length == 0)
                     this.NoConnectedQuotes = true;

@@ -1,5 +1,5 @@
 ﻿using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ObjectTable APPaymentTable = ObjectContext.ObjectTables.Where(f => f.Name == "APPayment" && f.Tenant == 0).FirstOrDefault();
             ObjectTable CustomerTable = ObjectContext.ObjectTables.Where(f => f.Name == "Customer" && f.Tenant == 0).FirstOrDefault();
 
-            Dictionary<string, ObjectTableHelperControl> TenantHelpers = ObjectTableHelperControlsRepository.GetObjectTableHelperControlsByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+            Dictionary<string, ObjectTableHelperControl> TenantHelpers = ObjectTableHelperControlsRepository.GetObjectTableHelperControlsByTenant(0).ToDictionary(d => d.Code, a => a);
 
             AddObjectTableHelperControls.AddObjectTableHelperControl(new ObjectTableHelperControlDetails() { Code = "SHHC", ControlPath = "Simplog.ShipmentLib.Views.Helpers.HelperControl", ObjectTableId = ShipmentTable.Id, Tenant = 0 }, ObjectTableHelperControlsRepository, TenantHelpers);
             AddObjectTableHelperControls.AddObjectTableHelperControl(new ObjectTableHelperControlDetails() { Code = "JHHC", ControlPath = "Simplog.ShipmentLib.Views.Helpers.HelperControl", ObjectTableId = MasterTable.Id, Tenant = 0 }, ObjectTableHelperControlsRepository, TenantHelpers);

@@ -24,10 +24,10 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             currentContext = context;
         }
 
-        public YCULTASK GetSingle(string TASKID, int? tenant)
+        public YCULTASK GetSingle(string TASKID)
         {
             return (from a in context.YCULTASKs
-                    where a.TASKID == TASKID && a.TENANT == tenant
+                    where a.TASKID == TASKID
                     select a).FirstOrDefault();
         }
 
@@ -40,9 +40,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(YCULTASK entity)
         {
             context.YCULTASKs.Add(entity);
-            SyncRecordCache.ClearCacheLastSyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
-        
+
         public void Remove(YCULTASK entity)
         {
             //if (entity.EntityState == System.Data.EntityState.Unchanged)
@@ -51,7 +50,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToYCULTASKs 
             context.YCULTASKs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
 
         public void Update(YCULTASK entity)
@@ -60,7 +58,6 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.YCULTASKs.Attach(entity); context.SetAsModified(entity);
             }
-            SyncRecordCache.ClearCacheLastSyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
 
         public List<YCULTASK> All()
@@ -86,12 +83,12 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public YCULTASK GetSingle(EntityKeyFields entityKeys)
         {
             var keys = entityKeys as YCULTASKKeys;
-            return this.GetSingle(keys.TASKID , keys.Tenant);
+            return this.GetSingle(keys.TASKID);
         }
 
         public void GetStatisticWeekly(out int totalTasks, 
             //out int over30sectoanalyze, out int over30secfromlog2start, 
-            out int problemTasks, int tenant)
+            out int problemTasks)
         {
             int over30sectoanalyze, over30secfromlog2start;
             totalTasks = over30sectoanalyze = over30secfromlog2start = problemTasks = -1;
@@ -109,8 +106,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             var qWeekAgo =
                 (from tsk in context.YCULTASKs
-                 where tsk.TENANT == tenant &&
-                 tsk.LOGTIME >= weekAgo 
+                 where
+                 tsk.LOGTIME >= weekAgo
                  select tsk);
 
             var qq1 = (

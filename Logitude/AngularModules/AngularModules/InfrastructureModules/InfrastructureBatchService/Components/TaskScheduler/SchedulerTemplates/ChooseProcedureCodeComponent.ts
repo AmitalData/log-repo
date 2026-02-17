@@ -21,7 +21,7 @@ import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataC
 declare var window: any;
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'ChooseProcedureCodeComponent',
     templateUrl: './ChooseProcedureCodeComponent.html',

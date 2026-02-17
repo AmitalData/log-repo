@@ -240,7 +240,7 @@ private dynamic FromPMFile(string file)
                 result = "int";
             }
 
-            if (typecode == "Date" || typecode == "DateTime" || typecode == "DateTime2")
+            if (typecode == "Date" || typecode == "DateTime")
             {
                 result = "DateTime";
             }

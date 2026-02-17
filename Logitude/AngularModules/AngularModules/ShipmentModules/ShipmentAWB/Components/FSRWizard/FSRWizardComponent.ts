@@ -10,7 +10,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {FSRWizardArgs} from '../../../../Shipment/Args';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './FSRWizardComponent.html',
     providers: [EntityArgs],
 })

@@ -1,6 +1,5 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -9,129 +8,66 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class ARPaymentReconciliationService
     {
         IInvoiceContext _invoiceContext = null;
-        private string autoCreditedInvoiceStatusCode = "AR";
         public ARPaymentReconciliationService(int tenant)
         {
             _invoiceContext = InvoiceContext.GetContext(tenant);
 
         }
 
-
-
-        public void UpdatePaymentOpenAmountAndStatusForReconciliaitonLT(ReconciliationPM entityPM)
+        public void UpdatePaymentOpenAmountAndStatusForReconciliaiton(ReconciliationPM entityPM)
         {
-            LedgerTransactionJournalLineLT paymentTransaction = GetPaymentTransactionFromReconciliationLT(entityPM);
-            if (paymentTransaction != null)
-            {
+            LedgerTransactionPM paymentTransaction = GetPaymentTransactionFromReconciliation(entityPM);
 
+            if(paymentTransaction != null)
+            {
                 ARPaymentPM paymentPM = GetARPaymentPMById(paymentTransaction.SourceId, paymentTransaction.Tenant);
 
                 paymentPM.PaymentInvoices = new List<ARPaymentInvoicePM>(); // [!] payment invoices removed in order to avoid validation (CheckLinesAmountToReconcileTotal) in ARPayment service, in this block we only need to update open amount and status , WI 58101
-                if (paymentPM.GLAccountId == null) paymentPM.GLAccountId = entityPM.AccountId;
-                double? old_openAmount = paymentPM.OpenAmount;
-                CalculatePaymentOpenAmountLT(paymentPM);
 
-                string old_statusCode = paymentPM.StatusCode;
-                bool old_isClosed = paymentPM.IsClosed;
+                CalculatePaymentOpenAmount(paymentPM);
+
                 CalculatePaymentStatus(paymentPM);
-                if (paymentPM.IsClosed != old_isClosed || paymentPM.StatusCode != old_statusCode 
-                    || IsDifferent(paymentPM.OpenAmount, old_openAmount))
-                {
-                    ARPaymentService paymentService = new ARPaymentService(_invoiceContext, entityPM.Tenant);
-                    paymentPM.UpdateAmountAndStatuses = true;
-                    paymentService.Update(paymentPM);
-                }
+
+                ARPaymentService paymentService = new ARPaymentService(_invoiceContext, entityPM.Tenant);
+                paymentService.Update(paymentPM);
 
             }
 
         }
 
-
-
-        public void SubmitChangesToPayment(ARPaymentPM paymentPM)
-        {
-            ARPaymentService paymentService = new ARPaymentService(_invoiceContext, paymentPM.Tenant);
-            paymentService.Update(paymentPM);
-        }
-
-
-        private bool IsDifferent(double? left, double? right)
-        {
-            bool rv = false;
-            rv = (left.HasValue != right.HasValue)
-                     || (left.HasValue && right.HasValue && (Math.Abs(left.Value - right.Value) >= 0.005));
-            return rv;
-        }
-
-
-
-        public void UpdateConnectedInvoicesLT(ReconciliationPM entityPM)
+        public void UpdateConnectedInvoices(ReconciliationPM entityPM)
         {
             ARInvoiceService invoiceService = new ARInvoiceService(_invoiceContext, entityPM.Tenant);
-            LedgerTransactionJournalLineLT paymentTransaction = GetPaymentTransactionFromReconciliationLT(entityPM);
-            List<LedgerTransactionJournalLineLT> recoTransactions = GetReconciliationTransactionsLT(entityPM);
+            LedgerTransactionPM paymentTransaction = GetPaymentTransactionFromReconciliation(entityPM);
+            List<LedgerTransactionPM> recoTransactions  = GetReconciliationTransactions(entityPM);
 
             if (paymentTransaction != null)
             {
                 // get invoices
-                List<ARInvoicePM> paymentInvoices = GetPaymentInvoicesLT(entityPM, paymentTransaction);
+                List<ARInvoicePM> paymentInvoices = GetPaymentInvoices(entityPM, paymentTransaction);
 
-                foreach (ARInvoicePM invoice in paymentInvoices.Where(inv => inv.StatusCode != ARInvoiceStatusValues.Void))
+                foreach (ARInvoicePM invoice in paymentInvoices)
                 {
-                    LedgerTransactionJournalLineLT transaction = recoTransactions.Where(d => d.SourceId == invoice.Id).FirstOrDefault();
-                    double? old_amountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
-                    double? old_amountDue = invoice.AmountDue;
-                    double? old_amountDueInProfitCurrency = invoice.AmountDueInProfitCurrency;
-                    bool old_isClosed = invoice.IsClosed;
-                    string old_statusCode = invoice.StatusCode;
-                    CaclulateInvoiceAmountLT(invoice, transaction, entityPM);
-                    CaclulateInvoiceStatusLT(invoice, entityPM.AccountReconcileMethodCode, transaction);
-                    if (invoice.IsClosed != old_isClosed || invoice.StatusCode != old_statusCode
-                        || IsDifferent(invoice.AmountDueInLocalCurrency, old_amountDueInLocalCurrency)
-                        || IsDifferent(invoice.AmountDue, old_amountDue)
-                        || IsDifferent(invoice.AmountDueInProfitCurrency, old_amountDueInProfitCurrency))
-                    {
-                        if (FeatureToggleHelper.HasFeatureToggle("ILO", invoice.Tenant) && invoice.IsMultiCurrency)
-                        {
-                            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
-                            var arinvoiceTransactions = transQuery.GetByJournalIdAndForeignAmountDebitNotEqualZero(invoice.JournalId, invoice.Tenant).ToList();
-                            
-                            if (arinvoiceTransactions.All(x => x.OpenAmount == 0))
-                            {
-                                invoice.StatusCode = ARInvoiceStatusValues.Paid;
-                                invoice.IsClosed = true;
-                                if (invoice.PaidDate == null)
-                                {
-                                    invoice.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
-                                }
-                            }
-                            else if (arinvoiceTransactions.Any(x => x.ForeignAmountDebit != 0 && x.OpenAmount != x.ForeignAmountDebit))
-                            {
-                                invoice.IsClosed = false;
-                                invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-                            }
-                            else
-                            {
-                                invoice.IsClosed = false;
-                                invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-                            }
-                           
-                        }
-                    }
+                    LedgerTransactionPM transaction = recoTransactions.Where(d => d.SourceId == invoice.Id).FirstOrDefault();
+                    //decimal recoAmount = entityPM.ReconciliationLines.Where(d => d.TransactionId == transaction.Id).FirstOrDefault().ReconciliationAmount;
+
+                    CaclulateInvoiceAmount(invoice, transaction, entityPM);
+                    CaclulateInvoiceStatus(invoice, entityPM.AccountReconcileMethodCode);
+
                     invoiceService.Update(invoice);
                 }
 
@@ -139,31 +75,29 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private LedgerTransactionJournalLineLT GetPaymentTransactionFromReconciliationLT(ReconciliationPM entityPM)
+        // private methods
+        private LedgerTransactionPM GetPaymentTransactionFromReconciliation(ReconciliationPM entityPM)
         {
-            LedgerTransactionJournalLineLT paymentTransaction = null;
+            LedgerTransactionPM paymentTransaction = null;
 
-            List<LedgerTransactionJournalLineLT> ledgerTransactions = GetReconciliationTransactionsLT(entityPM);
+            List<LedgerTransactionPM> ledgerTransactions = GetReconciliationTransactions(entityPM);
 
             paymentTransaction = ledgerTransactions
-                                        .Where(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.ARPayment)
+                                        .Where(d => d.SourceTypeCode == AccountingEntityValues.ARPayment)
                                         .FirstOrDefault();
 
             return paymentTransaction;
         }
-
-
-        private List<LedgerTransactionJournalLineLT> GetReconciliationTransactionsLT(ReconciliationPM entityPM)
+        private List<LedgerTransactionPM> GetReconciliationTransactions(ReconciliationPM entityPM)
         {
             LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
 
             List<string> ledgerTransactionIds = entityPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(d => d.TransactionId).ToList();
 
-            List<LedgerTransactionJournalLineLT> ledgerTransactions = transQuery.GetLedgerTransactionJournalLineLTsByIdList(ledgerTransactionIds, entityPM.Tenant);
+            List<LedgerTransactionPM> ledgerTransactions = transQuery.GetLedgerTransactionPMsByIdList(ledgerTransactionIds, entityPM.Tenant);
 
             return ledgerTransactions;
         }
-
         private ARPaymentPM GetARPaymentPMById(string paymentId,int tenant)
         {
             ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
@@ -171,26 +105,22 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return paymentPM;
         }
-
-        private void CalculatePaymentOpenAmountLT(ARPaymentPM paymentPM)
+        private void CalculatePaymentOpenAmount(ARPaymentPM paymentPM)
         {
-            if (paymentPM != null && paymentPM.StatusCode != "VD")
-            {
-                LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(paymentPM.Tenant);
+            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(paymentPM.Tenant);
 
-                List<LedgerTransactionJournalLineLT> reconciledInvoicesTransactions
-                    = transQuery.GetReconciledInvoicesTransactionsForPaymentLT(paymentPM.Id, paymentPM.GLAccountId, paymentPM.Tenant);
+            List<LedgerTransactionPM> reconciledInvoicesTransactions
+                = transQuery.GetReconciledInvoicesTransactionsForPayment(paymentPM.Id, paymentPM.GLAccountId, paymentPM.Tenant);
 
-                decimal paymentReconciledInvoicesTotal = reconciledInvoicesTransactions.Sum(d => d.PaymentReconciledAmount).Value;
+            decimal paymentReconciledInvoicesTotal = reconciledInvoicesTransactions.Sum(d => d.PaymentReconciledAmount).Value;
 
-                // calculate open amount for payment
-                double openAmount = paymentPM.AmountInPaymentCurrency.Value - (double)paymentReconciledInvoicesTotal;
-                paymentPM.OpenAmount = MethodHelper.Round(openAmount, 2);
-            }
+            // calculate open amount for payment
+            double openAmount = paymentPM.AmountInPaymentCurrency.Value - (double)paymentReconciledInvoicesTotal;
+            paymentPM.OpenAmount = MethodHelper.Round(openAmount, 2);
         }
         private void CalculatePaymentStatus(ARPaymentPM paymentPM)
         {
-            if (paymentPM != null && paymentPM.StatusCode !="VD")
+            if (paymentPM != null)
             {
                 if (paymentPM.OpenAmount == 0)
                 {
@@ -206,7 +136,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private List<ARInvoicePM> GetPaymentInvoicesLT(ReconciliationPM entityPM, LedgerTransactionJournalLineLT paymentTransaction)
+        private List<ARInvoicePM> GetPaymentInvoices(ReconciliationPM entityPM, LedgerTransactionPM paymentTransaction)
         {
             ARInvoiceQuery invoicesQuery = new ARInvoiceQuery(entityPM.Tenant);
             LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
@@ -215,86 +145,38 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> invoicesTransactionIds = entityPM.ReconciliationLines
                                                     .Where(d => d.TransactionId != paymentTransaction.Id)
                                                     .Select(d => d.TransactionId).ToList();
-            List<LedgerTransactionJournalLineLT> invoicesTransactions = transQuery.GetLedgerTransactionJournalLineLTsByIdList(invoicesTransactionIds, entityPM.Tenant);
+            List<LedgerTransactionPM> invoicesTransactions = transQuery.GetLedgerTransactionPMsByIdList(invoicesTransactionIds, entityPM.Tenant);
             List<string> invoicesIds = invoicesTransactions.Select(d => d.SourceId).ToList();
 
             // get invoices
             List<ARInvoicePM> invoicesPM = invoicesQuery.GetARInvoicePMsByIdList(invoicesIds, entityPM.Tenant);
 
-            invoicesPM = ExcludeAutoCreditedInvoices(invoicesPM);
-
             return invoicesPM;
         }
-        private List<ARInvoicePM> ExcludeAutoCreditedInvoices(List<ARInvoicePM> invoicesPM)
-        {
-            return invoicesPM.Where(invoice => invoice.StatusCode != autoCreditedInvoiceStatusCode).ToList();
-        }
 
-
-        private void CaclulateInvoiceStatusLT(ARInvoicePM invoice, string reconcileMethodCode, LedgerTransactionJournalLineLT transaction)
+        private void CaclulateInvoiceStatus(ARInvoicePM invoice, string reconcileMethodCode)
         {
-            if (FeatureToggleHelper.HasFeatureToggle("ILO", transaction.Tenant))
+            
+            var invoiceAmount = invoice.AmountInInvoiceCurrency;
+
+            if (invoice.AmountDue <= 0)
             {
-                var transactionAmount = reconcileMethodCode == ReconcileMethodValues.LocalCurrency ? transaction.LocalAmountDebit : transaction.ForeignAmountDebit;
-                if (transaction.OpenAmount <= 0)
-                {
-                    invoice.IsClosed = true;
-                    invoice.StatusCode = ARInvoiceStatusValues.Paid;
-                    if (invoice.PaidDate == null)
-                    {
-                        invoice.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
-                    }
-                }
-                else if (transaction.OpenAmount < transactionAmount)
-                 {
-                    invoice.IsClosed = false;
-                    invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-                    invoice.PaidDate = null;
-                }
-                else
-                {
-                    invoice.IsClosed = false;
-                    if (invoice.StatusCode != ARInvoiceStatusValues.Draft)
-                        invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-                    invoice.PaidDate = null;
-                }
+                invoice.IsClosed = true;
+                invoice.StatusCode = ARInvoiceStatusValues.Paid;
+            }
+            else if (invoice.AmountDue < invoiceAmount)
+            {
+                invoice.IsClosed = false;
+                invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
             }
             else
             {
-                var invoiceAmount = invoice.AmountInInvoiceCurrency;
-                if (invoice.AmountDue <= 0)
-                {
-                    invoice.IsClosed = true;
-                    invoice.StatusCode = ARInvoiceStatusValues.Paid;
-                    if (invoice.PaidDate == null)
-                    {
-                        invoice.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
-                    }
-                }
-                else if (invoice.AmountDue < invoiceAmount)
-                {
-                    invoice.IsClosed = false;
-                    invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-                    invoice.PaidDate = null;
-                }
-                else
-                {
-                    invoice.IsClosed = false;
-                    if (invoice.StatusCode != ARInvoiceStatusValues.Draft)
-                        invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
-                    invoice.PaidDate = null;
+                invoice.IsClosed = false;
+                invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
 
-                }
             }
- 
- 
-
         }
-
-
-
-
-        private void CaclulateInvoiceAmountLT(ARInvoicePM invoice, LedgerTransactionJournalLineLT transaction, ReconciliationPM recoPM)
+        private void CaclulateInvoiceAmount(ARInvoicePM invoice, LedgerTransactionPM transaction, ReconciliationPM recoPM)
         {
             string tenantCurrencyId = GetTenantCurrencyId(transaction.Tenant);
 
@@ -305,12 +187,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
-                string currencyId = recoPM.AccountCurrencyId;
-                if (string.IsNullOrEmpty(recoPM.AccountCurrencyId))
-                {
-                    currencyId = recoPM.ReconciliationLines[0]?.CurrencyId;
-                }
-                double glaCurrencyRate = GetGLAccountCurrencyRate(currencyId, tenantCurrencyId, transaction.Tenant);
+                double glaCurrencyRate = GetGLAccountCurrencyRate(recoPM.AccountCurrencyId, tenantCurrencyId, transaction.Tenant);
 
                 invoice.AmountDueInLocalCurrency = GetLocal((double)transaction.OpenAmount, glaCurrencyRate);
                 invoice.AmountDue = GetForeign(invoice.AmountDueInLocalCurrency, invoice.InvoiceCurrencyExchangeRate);
@@ -322,20 +199,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private double GetGLAccountCurrencyRate(string accountCurrencyId, string tenantCurrencyId, int tenant)
         {
-            double rate = 1;
             RatesTableQuery rateQuery = new RatesTableQuery(tenant);
+            LastRate glaToLocalRate = rateQuery.GetLastRecord(tenant, accountCurrencyId, tenantCurrencyId);
 
-            if (accountCurrencyId == tenantCurrencyId)
-                rate = 1;
-            else
-            {
-                LastRate glaToLocalRate = rateQuery.GetLastRecord(tenant, accountCurrencyId, tenantCurrencyId);
-                if (glaToLocalRate == null) throw new ApplicationException("Account currency exchange rate does not exist");
+            if (glaToLocalRate == null) throw new ApplicationException("Account currency exchange rate does not exist");
 
-                rate = (double)glaToLocalRate.Rate;
-            }
-
-            return rate;
+            return (double)glaToLocalRate.Rate;
 
         }
 

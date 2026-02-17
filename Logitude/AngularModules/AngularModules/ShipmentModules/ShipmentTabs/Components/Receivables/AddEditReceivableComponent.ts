@@ -1,5 +1,5 @@
-import {Component, ViewChild, ViewContainerRef} from '@angular/core';
-import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {Component} from '@angular/core';
+import {AppTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentReceivablePM} from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
@@ -7,92 +7,27 @@ import {ShipmentReceivableItem} from './ReceivablesTabComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
-import { CommonTool } from '../../../../Common/Tools';
-import { ShipmentPayablePM } from '../../../../Shipment/EntityPMs/ShipmentPayablePM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './AddEditReceivableComponent.html',
 })
 
 export class AddEditReceivableComponent {
     public EntityPM: ShipmentReceivablePM;
-
     public DataContext: ShipmentReceivableItem;
     public ObjectTableName: string = "ShipmentReceivable";
     public ShipmentLevelCode: string = null;    
     public ValidationErrorsList: string[] = [];
     public ChargeTypesQueryFilters: ApiQueryFilters;
-    public MeasurementsQueryFilters: ApiQueryFilters;
     private CurrentSession = SessionLocator.SelectedSession;
-
-
-    @ViewChild('AdditionalFieldsArea', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    @ViewChild('ByContainerAdditionalFieldsArea', { read: ViewContainerRef, static: false }) byContainerViewContainerRef: ViewContainerRef;
-
     constructor() {
-        this.LoadAdditionalCustomFieldsArea();
+               
     }
-
-    public LoadAdditionalCustomFieldsArea() {
-
-        if (!this.viewContainerRef) {
-            this.RunComponentTimer("DefaultAdditionalCustomFields");
-            return;
-        }
-
-        this.LoadChildComponent(this.viewContainerRef);
-    }
-
-    IsByContainerAdditionalFieldsAreaLoaded: boolean = false;
-    public LoadByContainerAdditionalFieldsArea() {
-
-        if (this.IsByContainerAdditionalFieldsAreaLoaded) return;
-
-        this.Retries = 0;
-        if (!this.byContainerViewContainerRef) {
-            this.RunComponentTimer("ByContainerAdditionalCustomFields");
-            return;
-        }
-
-        this.LoadChildComponent(this.byContainerViewContainerRef);
-        this.IsByContainerAdditionalFieldsAreaLoaded = true;
-    }
-
-
-    private Retries: number = 0;
-    private timerToken: any;
-    private RunComponentTimer(componentName: String) {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 20) {
-
-            this.timerToken = componentName == "ByContainerAdditionalCustomFields" ? setTimeout(() => this.LoadByContainerAdditionalFieldsArea(), 1) : setTimeout(() => this.LoadAdditionalCustomFieldsArea(), 1);
-        }
-    }
-
-
-    LoadChildComponent(viewContainerRef) {
-        let screenCode: string = "ShipmentReceivable.AdditionalFields";
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.HideLastColumn = true;
-                cmpRef.instance.LabelWidth = 120;
-                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
-
-            });
-    }
-
-
 
     SetDataContext(dataContext: ShipmentReceivableItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        dataContext.AddEditReceivableComponent = this;
         this.ShipmentLevelCode = dataContext.ShipmentPM.ShipmentLevelCode;
         this.SetDependencies();
         this.BuildQueryFilters(); 
@@ -119,8 +54,6 @@ export class AddEditReceivableComponent {
     }
 
     private BuildQueryFilters() {
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -142,42 +75,36 @@ export class AddEditReceivableComponent {
                 break;
             }
         }
-
-        CommonTool.FilterChargeTypesByDirection(this.ChargeTypesQueryFilters, this.DataContext.ShipmentPM.DirectionId); 
     }
-
 
     CancelButtonClicked() {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    private errors: string[] = [];
     OkButtonClicked() {
-        this.errors = [];
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors);
+        var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (this.DataContext.IsByContainerType) {
             if (this.DataContext.ByContainersItemsSource.length == 0) {
-                this.errors.push(TextCodeTranslator.Translate("Shipment.M.Receivables.ShipmentDoesntContainContainers"));
+                errors.push(TextCodeTranslator.Translate("Shipment.M.Receivables.ShipmentDoesntContainContainers"));
             }
 
             else {
                 this.DataContext.ByContainersItemsSource.forEach(item => {
-                    Validator.TryValidateObject(item, this.ObjectTableName, this.errors);
+                    Validator.TryValidateObject(item, this.ObjectTableName, errors);
                 });
             }
         }
 
         if (this.EntityPM.TotalAmount != null && this.EntityPM.UnitPrice != null && this.EntityPM.Quantity != null) {
             if (this.EntityPM.Rate == null) {
-                this.errors.push(TextCodeTranslator.Translate("ShipmentReceivable.M.ExchangeRateIsRequired"));
+                errors.push(TextCodeTranslator.Translate("ShipmentReceivable.M.ExchangeRateIsRequired"));
             }
         }
 
-        this.ValidateAddingPFCLUOM();
-
-        this.ValidationErrorsList = this.errors;
+        this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
 
@@ -201,58 +128,10 @@ export class AddEditReceivableComponent {
                 }
 
                 this.DataContext.fatherComponent.ComputeShipmentFields();
-                this.AddExpensePayable();
             }
-
-            this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
 
             this.DataContext.IsNewEntity = false;
             this.CurrentSession.CloseCurrentWindowEmit("OK");
-        }
-    }
-    private AddExpensePayable() {
-        if (this.EntityPM.IsExpense && this.DataContext.IsPayableCharge && SessionLocator.TenantPM.CountryCode == "MX" && SessionLocator.SATInterfaceSettings.TransferExpenseCharges) {
-            var expensePayable: ShipmentPayablePM = new ShipmentPayablePM(this.DataContext.ShipmentPM);
-            expensePayable.ChargesTypeId = this.DataContext.ChargesTypeId;
-            expensePayable.IsExpenseCharge = this.DataContext.EntityPM.IsExpenseCharge;
-            expensePayable.CurrencyId = this.DataContext.CurrencyId;
-            expensePayable.CurrencyCode = this.DataContext.CurrencyCode;
-            expensePayable.Rate = this.DataContext.Rate;
-            expensePayable.MeasurementId = this.DataContext.MeasurementId;
-            expensePayable.MeasurementCode = this.DataContext.MeasurementCode;
-            expensePayable.VendorId = this.DataContext.PayableVendorId;
-            expensePayable.VendorName = this.DataContext.PayableVendorName;
-            expensePayable.ChargesTypeCode = this.DataContext.EntityPM.ChargesTypeCode;
-            expensePayable.ChargesTypeName = this.DataContext.ChargesTypeName;
-            expensePayable.ChargesGroupCode = this.DataContext.ChargesGroupCode;
-            expensePayable.DueTypeCode = this.DataContext.EntityPM.DueTypeCode;
-            expensePayable.DueTypeName = this.DataContext.EntityPM.DueTypeName;
-            expensePayable.VatTypeId = this.DataContext.VatTypeId;
-            expensePayable.IATACodeId = this.DataContext.EntityPM.IATACodeId;
-            expensePayable.Tenant = SessionLocator.Tenant;
-            expensePayable.ShipmentId = this.EntityPM.Id;
-            expensePayable.ShipmentNumber = this.EntityPM.ShipmentNumber;
-            expensePayable.CreateDate = DateTool.GetCurrentDateAsUtc();
-            expensePayable.UpdateDate = DateTool.GetCurrentDateAsUtc();
-            expensePayable.CreatedByUserId = SessionLocator.LoggedUserId;
-            expensePayable.UpdateByUserId = SessionLocator.LoggedUserId;
-            expensePayable.CreatedByUserName = SessionLocator.LoggedUserPM.EnglishName;
-            expensePayable.UpdateByUserName = SessionLocator.LoggedUserPM.EnglishName;
-            expensePayable.ShipmentPayableLineStatusCode = "EMPT";
-            expensePayable.ShipmentPayableAmountTypeCode = "ACCU";
-            expensePayable.ShipmentPayableAmountTypeName = "Accrual";
-            expensePayable.ProfitCurrencyExchangeRate = this.DataContext.ProfitCurrencyExchangeRate;
-            expensePayable.PrepaidCollectId = this.DataContext.PrepaidCollectId;
-            this.DataContext.ShipmentPM.AddPayable(expensePayable);
-            this.CurrentSession.FireEvent("ExpensePayableAdded");
-        }
-    }
-
-    ValidateAddingPFCLUOM() {
-        if (this.EntityPM.MeasurementCode == "PFCL") {
-            if (this.DataContext.ShipmentPM.ShipmentReceivables.filter(d => d.MeasurementCode == "PFCL" && d.Id != this.EntityPM.Id).length > 0) {
-                this.errors.push("Charge with Percent of foreign charges local amounts UOM already added");
-            }
         }
     }
 

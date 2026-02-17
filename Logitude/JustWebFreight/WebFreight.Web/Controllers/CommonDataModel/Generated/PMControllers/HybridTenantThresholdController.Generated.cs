@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,20 +26,19 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
-
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
@@ -49,7 +48,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(int tenant, int typecode)
+        public HttpResponseMessage GetSingle(int tenant)
         {
 		  try
             {
@@ -60,7 +59,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 
                 SecurityUtility.CheckContactFeature("HybridTenantThreshold", "READ", authToken.Tenant);
                 HybridTenantThresholdQuery hybridTenantThresholdQuery = new HybridTenantThresholdQuery(authToken.Tenant);
-                HybridTenantThresholdPM hybridTenantThresholdPM = hybridTenantThresholdQuery.GetSinglePM(tenant, typecode);
+                HybridTenantThresholdPM hybridTenantThresholdPM = hybridTenantThresholdQuery.GetSinglePM(tenant, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

@@ -55,7 +55,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     userMessage = userMessage + " " + claimsRelatedEntityItem.TPGIdentifier.fileNumber;
                     this.MyRequestSheetParam.EntityId1 = claimsRelatedEntityPM.ClaimId;
-                    this.MyRequestSheetParam.RequestDescription = "אישור/דחיה תביעה " + claimsRelatedEntityItem.TPGIdentifier.fileNumber;
+                    this.MyRequestSheetParam.RequestDescription = userMessage;
                     this.MyResponseData.UserMessage = userMessage;
 
                     string decisionTypeName = GetDecisionTypeName(customResponse.AcceptanceOrRejectionClaimMessage.decisionCode, requestParams.Tenant);

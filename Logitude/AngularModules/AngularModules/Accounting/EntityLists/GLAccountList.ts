@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 
 export class GLAccountList {
-
+   
 	Id: string;
 	Tenant: number;
 	InternalNumber: string;
@@ -31,9 +31,6 @@ export class GLAccountList {
 	CurrencyCode: string;
 	ReconcileMethodCode: string;
 	ReconcileMethodName: string;
-	ExchangeRateId: string;
-	ExchangeRateName: string;
-
 	ControlAccountId: string;
 	ControlAccountName: string;
 	ControlAccountNumber: string;
@@ -85,7 +82,6 @@ export class GLAccountList {
 	ConsolidationVat: string;
 	IsEquipmentVendor: boolean;
 	ExcludeFromDeductionReport: boolean;
-	Parent: string;
 	DeductionTypeName: string;
 	DeductionFileTypeCode: string;
 	DeductionFileTypeName: string;
@@ -105,75 +101,6 @@ export class GLAccountList {
 	CreatedByLocalName: string;
 	UpdatedByLocalName: string;
 	AllowEditChequePayToName: boolean;
-	ActiveForInterest: boolean;
-	InterestCalculationStartDate: Date;
-	ActiveForInterestCreditInvoice: boolean;
-	InterestCreditLimit: number;
-	InterestOpenBalance: number;
-	NameForPrintingCheques: string;
-	Smallcashbook: boolean;
-	MinimumInterestInvoiceBilling: number;
-	SalesmanName: string;
-	CollectorName: string;
-	SplitCurrencyAccount: string;
-	ParentName: string;
-	ParentCurrencyId: string;
-	ReportingAsAnotherDocument: boolean;
-	CreditAllotmentPercentage: number;
-	Category1LocalName: string;
-	Category2LocalName: string;
-	Category3LocalName: string;
-	Category4LocalName: string;
-	Category5LocalName: string;
-	RelatedGLAccount: string;
-	ChartOfAccountsEnglishName: string;
-	ChartOfAccountsTypeEnglishName: string;
-	ChartOfAccountsTypeLocalName: string;
-	ChartOfAccountsLocalName: string;
-	CardsDataId: string;
-	PaymentTermName: string;
-	Period0: number;
-	Period1: number;
-	Period2: number;
-	Period3: number;
-	Period4: number;
-	Period5: number;
-	PeriodPast: number;
-	PeriodFuture: number;
-	TotalOpenTransactions: number;
-	LastReconciledBy: string;
-	LastReconcileDate: Date;
-	CreditLimit: number;
-	PaymentTerm: string;
-	PaymentTerms: string;
-	TotalOpenShipments: number;
-	Phone: string;
-	Salesman: string;
-	Collector: string;
-	FollowupDate: Date;
-	FollowupNotes: string;
-	CalculatedAgingPeriod1: number;
-	CalculatedAgingPeriod2: number;
-	CalculatedAgingPeriod3: number;
-	FirstPeriodsMonths: string;
-	SecondPeriodsMonths: string;
-	ThirdPeriodsMonths: string;
-	InsuredCreditLimit: number;
-	PostponedChequesCommission: number;
-	BalanceInForeignCurrency: number;
-	ForeignBalanceInDue: number;
-	ChartOfAccountSecurityLevel: number;
 	
-    Access: boolean;
-	Obligo: number;
-	CreditUsed: number;
-	InsuredCreditPercentage: number;
-	DateFormat: string;
-	ContactId:string;
-	ContactName: string;
-	ContactEmail: string;
-	ContactPhone: string;
-	MarkDate: Date;
-	ForeignCurrencyInterest: boolean;
-
 }
+ 

@@ -15,11 +15,9 @@ import { InterfaceManagementList } from '../../../Customs/EntityLists/InterfaceM
 import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestParams/SystemTableRequestParams';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomMessageProgressComponent, CustomMessageProgressHelper } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './InterfaceManagementComponent.html',
 })
 
@@ -43,21 +41,16 @@ export class InterfaceManagementComponent implements OnInit {
     onQueryChangeEvent = new EventEmitter();
 
     private _entityListService: EntityListService;
-    private CurrentSession = SessionLocator.SelectedSession;
-    CurrentQueryFilters: ApiQueryFilters;
-    //entityPM: InterfaceManagementPM;
-
-
     constructor() {
         this._entityListService = new EntityListService();
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             
         });
     }
     _IsLoaded: boolean = false;
     ngOnInit() {
         
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
         
                 this._IsLoaded = true;
         
@@ -87,14 +80,8 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.Code"),
             Styles: { width: '75px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'Code'
+            IsCustomTemplate: true
         });
-
-
-       
-        
         this.columns.push({
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
@@ -103,9 +90,7 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.Description"),
             Styles: { width: '140px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'Description'
+            IsCustomTemplate: true
         });
         this.columns.push({
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
@@ -115,19 +100,15 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.InOut"),
             Styles: { width: '80px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'InOut'
+            IsCustomTemplate: true
         });
         this.columns.push({
 
-            FieldName: 'DefaultSendOptionName',
-            DataTypeCode: 'String',//'Number',
+            FieldName: 'SendOptionsCode',
+            DataTypeCode: 'Date',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.DefaultSendOptionsCode"),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'DefaultSendOptionName',
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
 
@@ -140,8 +121,6 @@ export class InterfaceManagementComponent implements OnInit {
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.DefaultPriority"),
             Styles: { width: '120px' },
             IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'DefaultPriority',
             HtmlListComponentName: 'InterfaceManagementsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
 
@@ -154,8 +133,6 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.HasDefinition"),
             Styles: { width: '80px' },
-            ServerSideSortable: true,
-            SortByName: 'HasDefinition',
             IsCustomTemplate: true
         });
 
@@ -166,46 +143,18 @@ export class InterfaceManagementComponent implements OnInit {
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.SignatureTypeName"),
             Styles: { width: '100px' },
-            IsCustomTemplate: true,
-            // ServerSideSortable: true,
-            // SortByName: 'SignatureTypeName'
+            IsCustomTemplate: true
         });
-        let textInterfaceTypeName = TextCodeTranslator.Translate("Customs.InterfaceManagement.F.InterfaceTypeName");
-        if (AppTool.IsNullOrEmpty(textInterfaceTypeName)) {
-            textInterfaceTypeName = "InterfaceTypeName";
-        }
-
-        this.columns.push({
-            HtmlListComponentName: 'InterfaceManagementsListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
-            FieldName: 'InterfaceTypeName',
-            DataTypeCode: 'String',//'Number',
-            Display: textInterfaceTypeName,
-            Styles: { width: '120px' },
-            IsCustomTemplate: true,
-            ServerSideSortable: true,
-            SortByName: 'InterfaceTypeName'
-        });
-        this.columns.push({
-            HtmlListComponentName: 'InterfaceManagementsListTemplate',
-            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
-            FieldName: 'EntityLockName',
-            DataTypeCode: 'String',//'Number',
-            Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.EntityLockName"),
-            Styles: { width: '100px' },
-            IsCustomTemplate: true,
-        });
+        
  
     }
-
-    
     DataSource = {
 
         pageSize: 10,
         rowCount: null,
-       // SortData("RequestCreateDate", "Descending", false, false),
-        sortingCol: "Code",// "Id",
-        sortingDir: "Descending",//"Descending",
+        //SortData("RequestCreateDate", "Descending", false, false);
+        sortingCol: "",// "Id",
+        sortingDir: "",//"Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
 
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -216,6 +165,8 @@ export class InterfaceManagementComponent implements OnInit {
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
+
+
         if (filters == null) {
             filters = new ApiQueryFilters();
         }
@@ -224,9 +175,13 @@ export class InterfaceManagementComponent implements OnInit {
         filters.PageIndex = skip;
         filters.GetAll = false;
         filters.GetCount = true;
-        filters.SortBy = sortingCol;
-        filters.SortDirection = sortingDir;
-        
+
+        filters.SortBy = "Code";
+        filters.SortDirection = "Ascending";//"Descending";
+
+        //filters.SortBy = "CustomsName";//"Id";
+        //filters.SortDirection = "Descending";//"Descending";
+
 
         
         if (!AppTool.IsNullOrEmpty(this._SearchText)) {
@@ -261,33 +216,17 @@ export class InterfaceManagementComponent implements OnInit {
     onRowSelected(selected) {
         let item: InterfaceManagementList = selected.rowData;
         let window = new LogitudeWindow();
-        let /*const*/ allowed = SessionLocator.LoggedUserPM.IsCustomerCare || (SessionLocator.LoggedUserPM.Code == "amital" || SessionLocator.LoggedUserPM.Code.startsWith("amital.")) ? true : false;
         
 
         let windowTitle = TextCodeTranslator.Translate("Customs.General.O.EditInterfaceManagement");
         let logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { SelectedItem: item };
         logWindow.Width = 750;
-        logWindow.Height = 550;
+        logWindow.Height = 500;
         logWindow.Title = windowTitle;
         logWindow.IsShowCloseButton = true;
         //logWindow.Show('./Customs/Components/Maintenance/AddEditInterfaceManagementComponent');
-        if (allowed) {
-            logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditInterfaceManagementComponent');
-            logWindow.WindowClosed.subscribe(event => {
-                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-
-            });
-        } else {
-            logWindow.Width = 400;
-            logWindow.Height = 250;
-            logWindow.Show('./CustomsModules/CustomsMaintenance/Components/InterfaceTenantPriorityComponent');
-            logWindow.WindowClosed.subscribe(event => {
-                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-
-            });
-        }
-        
+        logWindow.Show('./CustomsModules/CustomsMaintenance/Components/AddEditInterfaceManagementComponent');
 
     }
     RefreshBtnClick() {
@@ -297,18 +236,6 @@ export class InterfaceManagementComponent implements OnInit {
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }, 10);
     }
-
-    
-
-    Export2Excel() {
-        
-        var url = ServiceHelper.GetLogitudeURL() + 'api/InterfaceManagementListExtended/GetInterfaceManagement2Excel?'+ '&tenant=' +SessionLocator.Tenant;
-
-
-        window.open(url);
-
-    }
-
 
 
 }

@@ -13,7 +13,7 @@ import {EntityResourceService} from '../../../Infrastructure/Services/EntityReso
 import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'TenantImportComponent',
     templateUrl: './TenantImportComponent.html',
 })
@@ -243,7 +243,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
         var filters = new ApiQueryFilters();
         filters.GetAll = true;
         this._entityListService.getByFilters("Port", filters).then((res:any) => {
-            res.subscribe((resp:any) => {
+            res.subscribe(resp => {
                 if (resp.Data) {
                     this.PortsList = resp.Data;
                 }
@@ -260,7 +260,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
         filters.GetAll = true;
         filters.addAdditionalFilter("PartnerTypeId", "AL", null, null, "Equals", false, true, false, "Text");
         this._entityListService.getByFilters("Carrier", filters).then((res:any) => {
-            res.subscribe((resp:any) => {
+            res.subscribe(resp => {
                 if (resp.Data) {
                     this.AirLinesList = resp.Data;
                 }
@@ -277,7 +277,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
         filters.GetAll = true;
         filters.addAdditionalFilter("PartnerTypeId", "SL", null, null, "Equals", false, true, false, "Text");
         this._entityListService.getByFilters("Carrier", filters).then((res:any) => {
-            res.subscribe((resp:any) => {
+            res.subscribe(resp => {
                 if (resp.Data) {
                     this.ShippingLinesList = resp.Data;
                 }
@@ -294,7 +294,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
         filters.GetAll = true;
         filters.addAdditionalFilter("PartnerTypeId", "WH", null, null, "Equals", false, true, false, "Text");
         this._entityListService.getByFilters("Card", filters).then((res: any) => {
-            res.subscribe((resp:any) => {
+            res.subscribe(resp => {
                 if (resp.Data) {
                     this.AirLinesList = resp.Data;
                 }
@@ -317,7 +317,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
     }
 
     AddShippingLineButton() {
-        this._entityResourceService.getEntityResourceByTableName("ShippingLine", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("ShippingLine", 0).subscribe(response => {
             // Add Shipping Line
             var windowTitle = "New Shipping Line";
             var logWindow = new LogitudeWindow();
@@ -329,7 +329,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
     }
 
     AddNewEntityClicked() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
             this.CurrentSession.CloseCurrentWindow(); 
 
             var logWindow = new LogitudeWindow();

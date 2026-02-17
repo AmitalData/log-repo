@@ -1,7 +1,7 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.RequestServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -29,9 +29,6 @@ using Logitude.Server.Tools.Models;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.BL.BL;
-using System.Diagnostics;
-using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -50,22 +47,11 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
-        private ForbiddenSignsUtil _ForbiddenSignsUtil = new ForbiddenSignsUtil();
-        private string _forbiddenSigns = "";
-        public override void OnRequestFail(MANIFESTRequestRequestParams requestParams)
-        {
-            if (!String.IsNullOrWhiteSpace(requestParams.DeclarationId))
-            {
-                CalculateDeclarationCourierStatus.UpdateCourierManifestStatusCode(requestParams.Tenant, requestParams.DeclarationId);
-            }
 
-            base.OnRequestFail(requestParams);
-        }
+
 
         public override MN_MSG1_MANIFEST GetRequest(MANIFESTRequestRequestParams requestParams)
         {
-             _forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
-
             var myMN_MSG1_MANIFEST = new MN_MSG1_MANIFEST();
             _Context = CustomContext.GetContext(requestParams.Tenant);
             var myDeclarationUpdateService = new DeclarationUpdateService(_Context, new Dictionary<string, IContext>(), requestParams.Tenant);
@@ -73,47 +59,33 @@ namespace Logitude.CustomsMessaging.RequestServices
             //requestParams.Tenant = 1;
             //requestParams.ImportManifest = "1-1";
 
-            var stopwatch = Stopwatch.StartNew();
             TenantRepository tenantRepository = new TenantRepository(requestParams.Tenant);
             _Tenant = tenantRepository.GetSingleTenant(requestParams.Tenant);
-            LogMessagingUtil.Instance.AppendLine("GetSingleTenant:Elapsed:" + stopwatch.ElapsedMilliseconds);
             if (_Tenant == null)
             {
                 return myMN_MSG1_MANIFEST;
             }
 
             myMN_MSG1_MANIFEST.Declaration = BuildDeclaration(requestParams);
-           
+
             this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Shipment");
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
-            stopwatch = Stopwatch.StartNew();
-            FeatureQuery featureQuery = new FeatureQuery(_DeclarationPM.Tenant);
-            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant), _DeclarationPM.Tenant);
-            var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifestEvent");
-            LogMessagingUtil.Instance.AppendLine("GetAllowedFeaturesForLoggedUser:Elapsed:" + stopwatch.ElapsedMilliseconds);
-            if (feature != null)
+            EventContextTagModel myEventContextTagModel = new EventContextTagModel()
             {
-                EventContextTagModel myEventContextTagModel = new EventContextTagModel()
-                {
-                    CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
-                    EventCode = "MNS",
-                    EventRemarks = "Manifest Sent ",
-                    StatusDateTime = DateTime.Now,
-                };
-                string loggingUserId = AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant);
-                RaiseEvent(_DeclarationPM, loggingUserId, myEventContextTagModel);
-            }
-
-
-            stopwatch = Stopwatch.StartNew();
+                CallProccessID = EventContextTagModel.ProccessEnum.MN_MSG4_SendManifestFeedBack_MessageResponseService,
+                EventCode = "MNS",
+                EventRemarks = "Manifest Sent ",
+                StatusDateTime = DateTime.Now,
+            };
+            string loggingUserId = AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant);
+            RaiseEvent(_DeclarationPM, loggingUserId, myEventContextTagModel);
             //this._DeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
             _DeclarationPM.ManifestCargoStatusCode = "4";
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_DeclarationPM, true);
-            LogMessagingUtil.Instance.AppendLine("Update:Elapsed:" + stopwatch.ElapsedMilliseconds);
 
             //var xml=XmlGenericUtil<MN_MSG1_MANIFEST>.SerializeObject(myMN_MSG1_MANIFEST);
             return myMN_MSG1_MANIFEST;
@@ -163,7 +135,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration BuildDeclaration(MANIFESTRequestRequestParams requestParams)
         {
             UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration _DeclarationPM = new UnifreightIIG.Common.MANIFESTRequestServiceReference.Declaration();
-            DeclarationPM OrgDeclaration=null;
+
             //Get Declaration
             DeclarationQueryService myDeclarationQueryService = new DeclarationQueryService(_Context);
             this._DeclarationPM = myDeclarationQueryService.GetSingle(requestParams.DeclarationId, true, false);
@@ -172,21 +144,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                 return _DeclarationPM;
             }
             CheckLock(requestParams, this._DeclarationPM);
-
-            if(this._DeclarationPM.IsAmendment == true)
-            {
-                OrgDeclaration = myDeclarationQueryService.GetAcceptDeclarationAmendment(this._DeclarationPM.AmendmentOriginalDeclartation, this._DeclarationPM.Tenant);
-
-            }
-
-            string declarationId = this._DeclarationPM.Id;
-
-            if (OrgDeclaration!= null) {
-                declarationId = OrgDeclaration.Id;
-            }
             //Get CourierDeclaration
             CourierDeclarationQueryService myCourierDeclarationQueryService = new CourierDeclarationQueryService(_Context);
-            _CourierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationId, _Tenant.Id);
+            _CourierDeclarationPM = myCourierDeclarationQueryService.GetCourierDeclarationByDeclarationId(this._DeclarationPM.Id, _Tenant.Id);
             if (_CourierDeclarationPM == null)
             {
                 return _DeclarationPM;
@@ -194,7 +154,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //Get CourierMaster
             CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(_Context);
-            _CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, false, false);
+            _CourierMasterPM = myCourierMasterQueryService.GetSingle(_CourierDeclarationPM.CourierMasterId, false, true);
             if (_CourierMasterPM == null)
             {
                 return _DeclarationPM;
@@ -227,7 +187,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationCarrierList.Add(declarationCarrier);
                     _DeclarationPM.Carrier = declarationCarrierList.ToArray();
                 }
-
+                
             }
 
             _DeclarationPM.ID = new DeclarationIdentificationIDType() { Value = _CourierMasterPM.ManifestNumber };
@@ -239,13 +199,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 List<DeclarationConsignment> declarationConsignmentList = new List<DeclarationConsignment>();
                 foreach (ConsignmentPM consignment in this._DeclarationPM.Consignments)
                 {
-                    DeclarationConsignment declarationConsignment = BuildConsignment(consignment, this._DeclarationPM);
+                    DeclarationConsignment declarationConsignment = BuildConsignment(consignment);
                     declarationConsignmentList.Add(declarationConsignment);
                 }
                 _DeclarationPM.Consignment = declarationConsignmentList.ToArray();
             }
 
-           
             return _DeclarationPM;
         }
 
@@ -264,7 +223,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
             }
             var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
-            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO, declarationPM.Tenant);
+            var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
 
 
             var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);
@@ -282,9 +241,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         }
 
-        private DeclarationConsignment BuildConsignment(ConsignmentPM consignmentPM, DeclarationPM declarationPM)
+        private DeclarationConsignment BuildConsignment(ConsignmentPM consignmentPM)
         {
-            
             decimal decimalValue;
             DeclarationConsignment declarationConsignment = new DeclarationConsignment();
 
@@ -301,17 +259,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 foreach (ConsignmentPackagePM consignmentPackagePM in consignmentPM.ConsignmentPackages)
                 {
+                    DeclarationConsignmentConsignmentItem declarationConsignmentConsignmentItem = new DeclarationConsignmentConsignmentItem();
+                    declarationConsignmentConsignmentItem = BuildConsignmentItem(consignmentPM, consignmentPackagePM);
+                    declarationConsignmentConsignmentItem.SequenceNumeric = consignmentPackagePM.LineNumber;
+                    declarationConsignmentConsignmentItem.SequenceNumericSpecified = true;
+                    declarationConsignmentConsignmentItemList.Add(declarationConsignmentConsignmentItem);
+
                     if (consignmentPackagePM.PackageMeasureQualifierCode == "2")
                     {
-                        DeclarationConsignmentConsignmentItem declarationConsignmentConsignmentItem = new DeclarationConsignmentConsignmentItem();
-                        declarationConsignmentConsignmentItem = BuildConsignmentItem(consignmentPM, consignmentPackagePM);
-                        if(consignmentPackagePM.SequenceNumeric != null && consignmentPackagePM.SequenceNumeric.HasValue)
-                        {
-                            declarationConsignmentConsignmentItem.SequenceNumeric = 1;//consignmentPackagePM.SequenceNumeric.Value;
-                            declarationConsignmentConsignmentItem.SequenceNumericSpecified = true;
-                        }
-                        declarationConsignmentConsignmentItemList.Add(declarationConsignmentConsignmentItem);
-
                         decimal packageQuantity = 0;
                         if (consignmentPackagePM.PackageQuantity.HasValue)
                         {
@@ -330,44 +285,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             DeclarationConsignmentAcceptancePlace declarationConsignmentAcceptancePlace = new DeclarationConsignmentAcceptancePlace() { Name = new AcceptancePlaceNameTextType() { Value = _CourierMasterPM.OriginPortCode } };
             declarationConsignmentAcceptancePlaceList.Add(declarationConsignmentAcceptancePlace);
             declarationConsignment.AcceptancePlace = declarationConsignmentAcceptancePlaceList.ToArray();
+
             declarationConsignment.Consignee = GetConsignee();
             declarationConsignment.Consignor = GetConsignor();
-
-            DecDangersContactPM decDangersContactPM =null;
-
-            if (declarationPM.DecDangersContacts != null && declarationPM.DecDangersContacts.Count > 0)
-            { decDangersContactPM = declarationPM.DecDangersContacts[0]; }
-
-            if (decDangersContactPM != null)
-            //DeclarationConsignmentUNDGContact
-            {
-                DeclarationConsignmentUNDGContact[] declarationConsignmentUNDGContacts = new DeclarationConsignmentUNDGContact[] {
-                new DeclarationConsignmentUNDGContact
-                {
-                    Name = new UNDGContactNameTextType() { Value = decDangersContactPM.CompanyName },
-                    Communication = new DeclarationConsignmentUNDGContactCommunication[]{
-                 new DeclarationConsignmentUNDGContactCommunication {
-                    ID =  new CommunicationIdentificationIDType (){Value =decDangersContactPM.CompanyCommNumber},
-                    TypeID = new CommunicationTypeIDType (){ Value=decDangersContactPM.CompanyCommTypeCode} }
-                },
-                    Contact = new DeclarationConsignmentUNDGContactContact[] {
-                    new DeclarationConsignmentUNDGContactContact{
-                        Name = new ContactNameTextType { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(decDangersContactPM.ContactName, _forbiddenSigns) } ,
-                        Communication =new DeclarationConsignmentUNDGContactContactCommunication[]
-                    { new DeclarationConsignmentUNDGContactContactCommunication {
-                                            TypeID = new CommunicationTypeIDType { Value = decDangersContactPM.ContactCommTypeCode },
-                                            ID = new CommunicationIdentificationIDType { Value = decDangersContactPM.ContactCommNumber }
-
-                    } }
-
-                    } }
-                }};
-
- 
-
-                declarationConsignment.UNDGContact = declarationConsignmentUNDGContacts;
-
-            }
 
 
             List<DeclarationConsignmentFreight> declarationConsignmentFreightList = new List<DeclarationConsignmentFreight>();
@@ -439,41 +359,58 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationConsignmentConsignee[] GetConsignee()
         {
-         
             List<DeclarationConsignmentConsignee> declarationConsignmentConsigneeList = new List<DeclarationConsignmentConsignee>();
             DeclarationConsignmentConsignee declarationConsignmentConsignee = new DeclarationConsignmentConsignee();
 
-          
-            declarationConsignmentConsignee.Name = new ConsigneeNameTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterName, _forbiddenSigns) };
-            List<DeclarationConsignmentConsigneeAddress> declarationConsignmentConsigneeAddressList = new List<DeclarationConsignmentConsigneeAddress>();
-            DeclarationConsignmentConsigneeAddress declarationConsignmentConsigneeAddress = new DeclarationConsignmentConsigneeAddress();
-            if (!string.IsNullOrWhiteSpace(_DeclarationPM.ImporterAddress))
-            {
-                declarationConsignmentConsigneeAddress = new DeclarationConsignmentConsigneeAddress()
+            //ClientPM clientPM = null;
+            //if (!string.IsNullOrWhiteSpace(_DeclarationPM.ImporterId))
+            //{
+            //    _ClientQueryService = new ClientQueryService(_Tenant.Id);
+            //    clientPM = _ClientQueryService.GetSingle(_DeclarationPM.ImporterId,true,false);
+            //    if (clientPM != null)
+            //    {
+            //        //declarationConsignmentConsignee.ID = new ConsigneeIdentificationIDType() { Value = clientPM.Code };
+            //        declarationConsignmentConsignee.Name = new ConsigneeNameTextType() { Value = clientPM.FullName };
+
+            //        List<DeclarationConsignmentConsigneeAddress> declarationConsignmentConsigneeAddressList = new List<DeclarationConsignmentConsigneeAddress>();
+            //        DeclarationConsignmentConsigneeAddress declarationConsignmentConsigneeAddress = new DeclarationConsignmentConsigneeAddress();
+            //        if (clientPM.ClientAddresses.FirstOrDefault() != null)
+            //        {
+            //            declarationConsignmentConsigneeAddress = new DeclarationConsignmentConsigneeAddress()
+            //            {
+            //                Line = new AddressLineTextType() { Value = clientPM.ClientAddresses.FirstOrDefault().LocalCityName }
+            //            };
+            //            if(!string.IsNullOrWhiteSpace(clientPM.ClientAddresses.FirstOrDefault().LocalStreetName))
+            //            {
+            //                declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value + " " + clientPM.ClientAddresses.FirstOrDefault().LocalStreetName;
+            //            }
+            //            if (!string.IsNullOrWhiteSpace(clientPM.ClientAddresses.FirstOrDefault().LocalStreetName))
+            //            {
+            //                declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value + " " + clientPM.ClientAddresses.FirstOrDefault().LocalHouseNumber;
+            //            }
+            //            if (!string.IsNullOrWhiteSpace(clientPM.ClientAddresses.FirstOrDefault().LocalPostalCode))
+            //            {
+            //                declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value + " " + clientPM.ClientAddresses.FirstOrDefault().LocalPostalCode;
+            //            }
+            //        }
+            //        declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
+            //        declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();
+            //    }
+            //}
+            //else
+            //{
+                declarationConsignmentConsignee.Name = new ConsigneeNameTextType() { Value = _DeclarationPM.ImporterName };
+                List<DeclarationConsignmentConsigneeAddress> declarationConsignmentConsigneeAddressList = new List<DeclarationConsignmentConsigneeAddress>();
+                DeclarationConsignmentConsigneeAddress declarationConsignmentConsigneeAddress = new DeclarationConsignmentConsigneeAddress();
+                if (!string.IsNullOrWhiteSpace(_DeclarationPM.ImporterAddress))
                 {
-                    Line = new AddressLineTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.ImporterAddress, _forbiddenSigns)  }
-                };
-            }
-
-            if (!string.IsNullOrEmpty(declarationConsignmentConsigneeAddress?.Line?.Value) && declarationConsignmentConsigneeAddress.Line.Value.Length > 70)
-            {
-                declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value.Substring(0, 70);
-                declarationConsignmentConsigneeAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsigneeAddress.Line.Value, _forbiddenSigns);
-            }
-
-            declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
-            declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();
-
-            if (!string.IsNullOrWhiteSpace(_DeclarationPM.CasualImporterTel))
-            {
-                declarationConsignmentConsignee.Communication = new DeclarationConsignmentConsigneeCommunication[1] {
-                    new DeclarationConsignmentConsigneeCommunication() {
-                 ID  =  new CommunicationIdentificationIDType() {Value = _DeclarationPM.CasualImporterTel },
-                TypeID= new CommunicationTypeIDType() { Value = "TE" } }
-
-            };
-            }
-
+                    declarationConsignmentConsigneeAddress = new DeclarationConsignmentConsigneeAddress()
+                    {
+                        Line = new AddressLineTextType() { Value = _DeclarationPM.ImporterAddress }
+                    };
+                }
+                declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
+                declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();
             //}
             declarationConsignmentConsigneeList.Add(declarationConsignmentConsignee);
             return declarationConsignmentConsigneeList.ToArray();
@@ -481,7 +418,6 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationConsignmentConsignor[] GetConsignor()
         {
-          
             List<DeclarationConsignmentConsignor> declarationConsignmentConsignorList = new List<DeclarationConsignmentConsignor>();
             DeclarationConsignmentConsignor declarationConsignmentConsignor = new DeclarationConsignmentConsignor();
             CustomsVendorPM customsVendorPM = null;
@@ -490,14 +426,15 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (!string.IsNullOrWhiteSpace(_DeclarationPM.SupplierInvoices.First().VendorId))
                 {
                     _CustomsVendorQueryService = new CustomsVendorQueryService(_Tenant.Id);
-                    customsVendorPM = _CustomsVendorQueryService.GetSingle(_DeclarationPM.SupplierInvoices.First().VendorId, false, false);
+                    customsVendorPM = _CustomsVendorQueryService.GetSingle(_DeclarationPM.SupplierInvoices.First().VendorId,false,false);
                 }
             }
             if (customsVendorPM != null)
             {
                 //declarationConsignmentConsignor.ID = new ConsignorIdentificationIDType() { Value = customsVendorPM.VendorNumber };
-                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(customsVendorPM.VendorName, _forbiddenSigns) };
- 
+                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = customsVendorPM.VendorName };
+
+
                 List<DeclarationConsignmentConsignorAddress> declarationConsignmentConsignorAddressList = new List<DeclarationConsignmentConsignorAddress>();
                 DeclarationConsignmentConsignorAddress declarationConsignmentConsignorAddress = new DeclarationConsignmentConsignorAddress();
 
@@ -512,22 +449,14 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (!string.IsNullOrWhiteSpace(customsVendorPM.CountryCode))
                 {
                     declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value + " " + customsVendorPM.CountryCode;
-
                 }
-
-
-                  if (!string.IsNullOrEmpty( declarationConsignmentConsignorAddress.Line.Value) && declarationConsignmentConsignorAddress.Line.Value.Length>70)
-                    {
-                    declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value.Substring(0, 70);
-                    }
-                declarationConsignmentConsignorAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsignorAddress.Line.Value, _forbiddenSigns);
 
                 declarationConsignmentConsignorAddressList.Add(declarationConsignmentConsignorAddress);
                 declarationConsignmentConsignor.Address = declarationConsignmentConsignorAddressList.ToArray();
             }
             else
             {
-                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(_DeclarationPM.CasualSupplierName, _forbiddenSigns) };
+                declarationConsignmentConsignor.Name = new ConsignorNameTextType() { Value = _DeclarationPM.CasualSupplierName };
                 List<DeclarationConsignmentConsignorAddress> declarationConsignmentConsignorAddressList = new List<DeclarationConsignmentConsignorAddress>();
                 DeclarationConsignmentConsignorAddress declarationConsignmentConsignorAddress = new DeclarationConsignmentConsignorAddress();
                 if (!string.IsNullOrWhiteSpace(_DeclarationPM.CasualSupplierAddress))
@@ -537,14 +466,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                         Line = new AddressLineTextType() { Value = _DeclarationPM.CasualSupplierAddress }
                     };
                 }
-
-                if (!string.IsNullOrEmpty(declarationConsignmentConsignorAddress.Line.Value) && declarationConsignmentConsignorAddress.Line.Value.Length > 70)
-                {
-                    declarationConsignmentConsignorAddress.Line.Value = declarationConsignmentConsignorAddress.Line.Value.Substring(0, 70);
-                }
-
-                declarationConsignmentConsignorAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsignorAddress.Line.Value, _forbiddenSigns);
-
                 declarationConsignmentConsignorAddressList.Add(declarationConsignmentConsignorAddress);
                 declarationConsignmentConsignor.Address = declarationConsignmentConsignorAddressList.ToArray();
             }
@@ -555,94 +476,21 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationConsignmentConsignmentItem BuildConsignmentItem(ConsignmentPM consignmentPM, ConsignmentPackagePM consignmentPackagePM)
         {
-           
-
             DeclarationConsignmentConsignmentItem declarationConsignmentConsignmentItem = new DeclarationConsignmentConsignmentItem();
 
-            ConsignmentPackDangerPM consignmentPackDangerPM= null;
-            
-            if (consignmentPackagePM.ConsignmentPackDangers != null && consignmentPackagePM.ConsignmentPackDangers.Count>0)
-            { consignmentPackDangerPM=consignmentPackagePM.ConsignmentPackDangers[0];}
-              
-
             declarationConsignmentConsignmentItem.GoodsStatusCode = new ConsignmentItemGoodsStatusCodeType() { Value = "N" };
-            if(consignmentPackDangerPM!=null)
-            {
-             if (consignmentPackDangerPM.UNCode !="" || consignmentPackDangerPM.FlashpointTemperature !=""
-                || consignmentPackDangerPM.StorageTemperature != ""|| consignmentPackDangerPM.DangerousGoodsPackingReqCode!="")
-            {
-                declarationConsignmentConsignmentItem.GoodsStatusCode.Value = "D";
-            }
-
-            }
-
- 
 
             List<DeclarationConsignmentConsignmentItemCommodity> declarationConsignmentUnloadingLocationList = new List<DeclarationConsignmentConsignmentItemCommodity>();
             DeclarationConsignmentConsignmentItemCommodity declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity();
 
-                if (consignmentPackDangerPM != null)
+            if (!string.IsNullOrWhiteSpace(consignmentPM.CargoDescription))
+            {
+                declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity()
                 {
-                    declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity()
-                    {
-                        CargoDescription = new CommodityCargoDescriptionTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, _forbiddenSigns)},
-
-                        Classification = new DeclarationConsignmentConsignmentItemCommodityClassification[]
-                   { new DeclarationConsignmentConsignmentItemCommodityClassification {
-                       ID = new ClassificationIdentificationIDType { Value = consignmentPackDangerPM.UNCode },
-                       
-                       IdentificationTypeCode = new ClassificationIdentificationTypeCodeType { Value = "SSO" }
-                      
-                   },
-                    new DeclarationConsignmentConsignmentItemCommodityClassification {
-                       ID = new ClassificationIdentificationIDType { Value =! string.IsNullOrEmpty(consignmentPackDangerPM.ClassificationFourDigit) ? consignmentPackDangerPM.ClassificationFourDigit:"" },
-
-                       IdentificationTypeCode = new ClassificationIdentificationTypeCodeType { Value = "HS" }
-
-                   }
-                   }
-                   ,
-                        CommodityRelatedPackaging = new DeclarationConsignmentConsignmentItemCommodityCommodityRelatedPackaging[]
-                   {
-                        new DeclarationConsignmentConsignmentItemCommodityCommodityRelatedPackaging
-                        {
-                            DangerousGoodsPackingRequirementGroupCode = new CommodityRelatedPackagingDangerousGoodsPackingRequirementGroupCodeType
-                            {
-                                Value =    consignmentPackDangerPM.DangerousGoodsPackingReqCode
-                            }
-                        }
-                   }
-                   ,
-                        Temperature = new DeclarationConsignmentConsignmentItemCommodityTemperature[]
-                   { new DeclarationConsignmentConsignmentItemCommodityTemperature
-                    {
-                        FlashpointMeasure = new TemperatureFlashpointMeasureType
-                        {
-                            Value = Convert.ToDecimal(consignmentPackDangerPM.FlashpointTemperature)
-
-                        } ,
-                        StorageRequirementMeasure= new TemperatureStorageRequirementMeasureType
-                        {
-                            Value = Convert.ToDecimal(consignmentPackDangerPM.StorageTemperature)
-
-                        }
-                    }
-
-
-                   }
-
-                    };
-
-                }
-                else
-                {
-                    declarationConsignmentUnloadingLocation = new DeclarationConsignmentConsignmentItemCommodity()
-                    {
-                        CargoDescription = new CommodityCargoDescriptionTextType() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, _forbiddenSigns)  },
-                    };
-                }
+                    CargoDescription = new CommodityCargoDescriptionTextType() { Value = consignmentPM.CargoDescription }
+                };
                 declarationConsignmentUnloadingLocationList.Add(declarationConsignmentUnloadingLocation);
-          
+            }
             declarationConsignmentConsignmentItem.Commodity = declarationConsignmentUnloadingLocationList.ToArray();
 
             decimal grossMassMeasure;
@@ -680,7 +528,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationConsignmentConsignmentItem.Packaging = declarationConsignmentConsignmentItemPackagingList.ToArray();
                 }
             }
-
+          
             return declarationConsignmentConsignmentItem;
         }
 
@@ -692,7 +540,6 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override void PostGetRequest(MN_MSG1_MANIFEST customRequest, MANIFESTRequestRequestParams requestParams)
         {
-        
             ICustomContext context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(context);
             DeclarationPM declarationPM = null;
@@ -709,7 +556,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, true, false);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationPM.Id, false, false);
                 if (currentDeclarationCourierStatusPM == null)
                 {
                     currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
@@ -718,8 +565,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                         Tenant = declarationPM.Tenant,
                         IsClosedForFollowUp = false,
                         IsCourierMissingClassification = false,
-                        CargoDescription =  declarationPM.CargoDescription,
-                        ImporterName =  declarationPM.CargoDescription ,
                     };
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }

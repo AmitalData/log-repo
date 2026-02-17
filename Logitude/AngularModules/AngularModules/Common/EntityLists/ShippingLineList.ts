@@ -47,13 +47,5 @@ export class ShippingLineList {
 		PrimaryContactPhone: string;
 		CBSA: string;
 		CAAT: string;
-		StateName: string;
-		GLAccountNumber: string;
-		IsSendingByContainer: boolean;
-		IsSendingByBillOfLading: boolean;
-		RegimenFiscalCode: string;
-		SATReceptorName: string;
-		IsSupportsContainerTracking: boolean;
-		IsAutomaticRequestsSent: boolean;
 	
 }

@@ -1,30 +1,36 @@
-import {Injectable} from '@angular/core';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
+import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators'
-import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
- 
 
+
+import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 @Injectable()
 
 export class GLAccountExtendedPMService {
-
+    private _http: Http;
     private _apiUrl: string;
-    private httpClient: HttpClient;
     constructor() {
-
-        this.httpClient = ServiceHelper.HttpClient;
+        this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccountViews';
     }
 
     GetSplittedByCurrencyGLAccounts(accountId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-     return this.httpClient.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
-        map(response => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetSplittedByCurrencyGLAccounts?accountId=' + accountId, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
 
                 var _mappedListsArray: Array<GLAccountPM> = [];
                 if (serviceResponse.Result) {
@@ -39,123 +45,57 @@ export class GLAccountExtendedPMService {
 
                 serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-        }),
-        catchError(ServiceHelper.HandleServiceError));
-       
+            });
+        });
+
     }
 
     ConnectCardToGLAccount(accountId: string, cardId: string, skipConnectedCardsValidation: boolean = false)
     {
-    
-        
-        var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-        return this.httpClient.get(api + '/GetConnectCardToGLAccount?accountId=' + accountId
-        + '&cardId=' + cardId
-        + '&skipConnectedCardsValidation=' + skipConnectedCardsValidation,  ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() =>
+        {
+            var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+            return this._http.get(api + '/GetConnectCardToGLAccount?accountId=' + accountId
+                + '&cardId=' + cardId
+                + '&skipConnectedCardsValidation=' + skipConnectedCardsValidation, {
+                headers: authHeader
+            }).map(response =>
+            {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
 
                 return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-       
+            }).catch(ServiceHelper.HandleServiceError);
+        });
 
     }
 
     GetConnectedCardsForGLAccount(accountId: string)
     {
-     
-     var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-     return this.httpClient.get(api + '/GetConnectedCardsForGLAccount?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
-         map(response => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
 
-            serviceResponse.Result = response;
-
-            return serviceResponse;
-         }),
-         catchError(ServiceHelper.HandleServiceError));
-        
-
-    }
-
-    GetByGLAccountsDisplayNumber(displayNumber: string, tenant: number)
-    {
-     
-     var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-     return this.httpClient.get(api + '/GetByGLAccountsDisplayNumber?displayNumber=' + displayNumber + '&tenant=' + tenant,  ServiceHelper.GetHttpHeaders()).pipe(
-         map(response => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-
-            serviceResponse.Result = response;
-
-            return serviceResponse;
-         }),
-         catchError(ServiceHelper.HandleServiceError));
-    }
-
-    GetGLAReconcilationCount(accountId: string)
-    {
-     
-     var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-     return this.httpClient.get(api + '/GetGLAReconcilationCount?accountId=' + accountId,  ServiceHelper.GetHttpHeaders()).pipe(
-         map(response => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-
-            serviceResponse.Result = response;
-
-            return serviceResponse;
-         }),
-         catchError(ServiceHelper.HandleServiceError));
-    }
-
-
-
-    GetARPyamentChequesListAsLedgerTransactions(accountId: string) {
-
-        var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-        return this.httpClient.get(this._apiUrl  + '/GetARPyamentChequesListAsLedgerTransactions?accountId=' + accountId, ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
+        return Observable.defer(() =>
+        {
+            var api = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
+            return this._http.get(api + '/GetConnectedCardsForGLAccount?accountId=' + accountId, {
+                headers: authHeader
+            }).map(response =>
+            {
                 var serviceResponse: ServiceResponse = new ServiceResponse();
 
-                serviceResponse.Result = response;
+                serviceResponse.Result = response.json();
 
                 return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-
-    }
-    SetGLAccountIsMark(accountId: string) {
-     
-        return this.httpClient.put(this._apiUrl  + '/PutGLAccountIsMark?accountId=' + accountId, null, ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
-
-            serviceResponse.Result = response;
-
-            return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
+            }).catch(ServiceHelper.HandleServiceError);
+        });
 
     }
-    UndoMark(accountId: string) {
-     
-        return this.httpClient.put(this._apiUrl  + '/PutGLAccountUndoMark?accountId=' + accountId, null, ServiceHelper.GetHttpHeaders()).pipe(
-            map(response => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
 
-            serviceResponse.Result = response;
-
-            return serviceResponse;
-            }),
-            catchError(ServiceHelper.HandleServiceError));
-
-
-    }
 
     MapJsonToEntityPM(jsonPM: any) {
 

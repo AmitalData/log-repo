@@ -12,7 +12,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'TicketDocsOutTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './NewInboundEmailComponent.html',
 })
 
@@ -109,7 +109,7 @@ export class NewInboundEmailComponent extends BaseComponent implements OnInit {
         if (this.myInboundEmailWebService == null) {
             this.myInboundEmailWebService = new InboundEmailWebService();
         }
-        this.myInboundEmailWebService.SendInboundEmailAsync(this.Recepient, this.entityPM.Tenant, this.Subject, this.Body, this.entityPM.Id).subscribe((myResult: ServiceResponse) => {
+        this.myInboundEmailWebService.SendInboundEmailAsync(this.Recepient, this.entityPM.Tenant, this.Subject, this.Body, this.entityPM.Id).subscribe((myResult) => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 var mySendingResultClass = myResponse.Result;

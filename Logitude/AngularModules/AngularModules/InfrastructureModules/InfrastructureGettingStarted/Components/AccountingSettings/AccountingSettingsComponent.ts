@@ -12,11 +12,10 @@ import {CommonDomainService} from '../../../../Common/Services/CommonDomainServi
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ObjectsUpdater} from '../../../../Infrastructure/Locators/ObjectsUpdater';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'AccountingSettingsComponent',
-    
+    moduleId: module.id,
     templateUrl: './AccountingSettingsComponent.html',
 })
 
@@ -29,8 +28,6 @@ export class AccountingSettingsComponent extends BaseComponent {
     public IsEnableMultiRateAPInvoicesVisible: boolean = false;
     public IsEnableMultiCurrencyAPPaymentsVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    QBOAccountingSystemCode = "QBO";
-    QBOGlobalAccountingSystemCode = "QBOG";
     constructor(private entityResourceService: EntityResourceService){
         super();
 
@@ -89,7 +86,7 @@ export class AccountingSettingsComponent extends BaseComponent {
         this.ShowDummySingleTaxCheckBox = isShowDummySingleTaxCheckBox;
 
         var isDemoTenant = false;
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             isDemoTenant = true;
 
             if (SessionLocator.LoggedUserPM.Email) {
@@ -122,13 +119,6 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("EnableMultiPercentageVATTypes", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("NotifyPastDateOnInvoiceEdit", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("RegistryDateTypeCode", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AllowRegionalTaxManagement", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("APPaymentExternalPayment", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("EnableMultiRateAPInvoices", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("EnableNegativeOffsetAPPayments", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("EnableMultiCurrencyAPPayments", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("BlockSendInvoiceOriginalCopy", this.ObjectTableName, false);   
         }
 
         else {
@@ -152,24 +142,18 @@ export class AccountingSettingsComponent extends BaseComponent {
 
 
             if (SessionLocator.TenantPM.CountryCode == "IL" && SessionLocator.LoggedUserPM.IsCustomerCare == false) {
-                this.UIProperties.SetEnabled("AllowVoidARI", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("AllowManualARPaymentNumber", this.ObjectTableName, false);
-                
+                this.UIProperties.SetEnabled("AllowVoidARI", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false)
             }
         }
-        if ((ObjectsLocator.AccountingSettingPM.AccountingSystemCode == this.QBOAccountingSystemCode
-            || ObjectsLocator.AccountingSettingPM.AccountingSystemCode == this.QBOGlobalAccountingSystemCode) 
-            && !this.EntityPM.EnableEnteringTotalVAT) {
-                this.UIProperties.SetEnabled("EnableEnteringTotalVAT", this.ObjectTableName, false);
-            }
+
         this.UIProperties.SetEnabled("EnableInvoiceStocksManagement", this.ObjectTableName, !this.IsARInvoiceChronologicalDates);
         this.SetUIProperties_RegistryDate();
     }
@@ -237,27 +221,6 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
-    get AllowManualARPaymentNumber() { return this.EntityPM.AllowManualARPaymentNumber; }
-    set AllowManualARPaymentNumber(value: boolean) {
-        if (this.EntityPM.AllowManualARPaymentNumber != value) {
-            this.EntityPM.AllowManualARPaymentNumber = value;
-        }
-    }
-
-    get AllowRegionalTaxManagement() { return this.EntityPM.AllowRegionalTaxManagement; }
-    set AllowRegionalTaxManagement(value: boolean) {
-        if (this.EntityPM.AllowRegionalTaxManagement != value) {
-            this.EntityPM.AllowRegionalTaxManagement = value;
-        }
-    }
-
-    get BlockSendInvoiceOriginalCopy() { return this.EntityPM.BlockSendInvoiceOriginalCopy; }
-    set BlockSendInvoiceOriginalCopy(value: boolean) {
-        if (this.EntityPM.BlockSendInvoiceOriginalCopy != value) {
-            this.EntityPM.BlockSendInvoiceOriginalCopy = value;
-        }
-    }
-    
     get IsARInvoiceChronologicalDates() { return this.EntityPM.IsARInvoiceChronologicalDates; }
     set IsARInvoiceChronologicalDates(value: boolean) {
         if (this.EntityPM.IsARInvoiceChronologicalDates != value) {
@@ -419,20 +382,6 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
-    get EnableAPPaymentExternalPayment() { return this.EntityPM.EnableAPPaymentExternalPayment; }
-    set EnableAPPaymentExternalPayment(value: boolean) {
-        if (this.EntityPM.EnableAPPaymentExternalPayment != value) {
-            this.EntityPM.EnableAPPaymentExternalPayment = value;
-        }
-    }
-
-    get EnableEnteringTotalVAT() { return this.EntityPM.EnableEnteringTotalVAT; }
-    set EnableEnteringTotalVAT(value: boolean) {
-        if (this.EntityPM.EnableEnteringTotalVAT != value) {
-            this.EntityPM.EnableEnteringTotalVAT = value;
-        }
-    }
-
     //Commands 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -489,24 +438,14 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
-    ViewAdvancedARSettings() {
-        var windowTitle = "Advanced Accounting Settings ";
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 500;
-        logWindow.Height = 390;
-        logWindow.Title = windowTitle;
-        logWindow.DataContext = this;
-        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedSettingsComponent');
-    }
-
-    ViewAdvancedAPSettings() {
+    ViewAdvancedSettings() {
         var windowTitle = "Advanced Accounting Settings ";
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
         logWindow.Height = 350;
         logWindow.Title = windowTitle;
         logWindow.DataContext = this;
-        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedAPSettingsComponent');
+        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedSettingsComponent');
     }
 
     ManageStocksClicked() {

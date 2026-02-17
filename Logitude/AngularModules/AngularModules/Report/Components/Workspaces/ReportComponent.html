@@ -10,13 +10,6 @@
     .ReportsSection:not(:first-child) {
         margin-top: 10px;
     }
-
-    .ReportScheduler{
-        width:23px;
-        margin-left: 10px;
-        margin-bottom: 2px;
-        cursor: pointer;
-    }
 </style>
 
 <table>
@@ -57,10 +50,7 @@
                                                 <tr>
                                                     <td>
                     
-                                                        <HyperlinkQuery id="{{'View' + Report.Code+ 'Reportbtn' | IdGeneratorAsyncPipe | async}}" (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
-                                                    </td>
-                                                    <td [hidden]="!IsAvailableForScheduling || !Report.AvailableForScheduling" style="width: 20px;">
-                                                        <img class="ReportScheduler" (click)="onReportSchedulerClick(item.GroupList, Report)" title="Report Scheduler" src="./Images/ReportScheduler.png" />
+                                                        <HyperlinkQuery id="{{'View' + Report.Code+ 'Reportbtn' | IdGeneratorPipe}}" (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
                                                     </td>
                                                     <td style="width:5px;" *ngIf="Report.Code == 'DSCA'">
                                                         <div></div>

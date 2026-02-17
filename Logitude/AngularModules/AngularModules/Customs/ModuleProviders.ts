@@ -24,7 +24,7 @@ import { CheckRepresentativeTypeListService } from './Services/StandardLists/Che
 import { CheckTypeLookupListService } from './Services/StandardLists/CheckTypeLookupListService';
 import { CityListService } from './Services/StandardLists/CityListService';
 import { AgentTalkBackTypeListService } from './Services/StandardLists/AgentTalkBackTypeListService';
-import { AcceptanceStatusListService } from './Services/StandardLists/AcceptanceStatusListService';
+
 import { ClaimEntityListService } from './Services/StandardLists/ClaimEntityListService';
 import { ClaimExplanationCodeListService } from './Services/StandardLists/ClaimExplanationCodeListService';
 import { ClaimListService } from './Services/StandardLists/ClaimListService';
@@ -43,7 +43,6 @@ import { ConstraintStatusListService } from './Services/StandardLists/Constraint
 import { ConstraintTypeListService } from './Services/StandardLists/ConstraintTypeListService';
 import { ContactRoleTypeListService } from './Services/StandardLists/ContactRoleTypeListService';
 import { ContinuousMessagesTypeCodeListService } from './Services/StandardLists/ContinuousMessagesTypeCodeListService';
-import { ContinuousRequestTypeListService } from './Services/StandardLists/ContinuousRequestTypeListService';
 import { ConverterTypeListService } from './Services/StandardLists/ConverterTypeListService';
 import { CountryGroupListService } from './Services/StandardLists/CountryGroupListService';
 import { CourtInstanceListService } from './Services/StandardLists/CourtInstanceListService';
@@ -83,7 +82,6 @@ import { CustomsVendorListService } from './Services/StandardLists/CustomsVendor
 import { CustomsVerificationStatusTypeListService } from './Services/StandardLists/CustomsVerificationStatusTypeListService';
 import { DangerousGoodsPackingReqListService } from './Services/StandardLists/DangerousGoodsPackingReqListService';
 import { DebtNotificationTypeListService } from './Services/StandardLists/DebtNotificationTypeListService';
-import { TransportMeansTypeListService } from './Services/StandardLists/TransportMeansTypeListService';
 import { DeclarationErrorMappingListService } from './Services/StandardLists/DeclarationErrorMappingListService';
 import { DeclarationListService } from './Services/StandardLists/DeclarationListService';
 import { DeclarationPaymentListService } from './Services/StandardLists/DeclarationPaymentListService';
@@ -102,7 +100,6 @@ import { EntityTypeLookupListService } from './Services/StandardLists/EntityType
 import { FacilitationTypeListService } from './Services/StandardLists/FacilitationTypeListService';
 import { FaultInspectionTypeListService } from './Services/StandardLists/FaultInspectionTypeListService';
 import { FuelTypeListService } from './Services/StandardLists/FuelTypeListService';
-import { FullnessCodeListService } from './Services/StandardLists/FullnessCodeListService';
 import { GenderListService } from './Services/StandardLists/GenderListService';
 import { GovernmentProcedureTypeListService } from './Services/StandardLists/GovernmentProcedureTypeListService';
 import { GuaranteeCertificateTypeListService } from './Services/StandardLists/GuaranteeCertificateTypeListService';
@@ -159,7 +156,6 @@ import { ProductNameTypeListService } from './Services/StandardLists/ProductName
 import { RansomViolationTypeListService } from './Services/StandardLists/RansomViolationTypeListService';
 import { RegisteredWarehouseSiteTypeListService } from './Services/StandardLists/RegisteredWarehouseSiteTypeListService';
 import { RequestStatusListService } from './Services/StandardLists/RequestStatusListService';
-import { RequestToAdvanceAQueueListService } from './Services/StandardLists/RequestToAdvanceAQueueListService';
 import { ReturnConditionListService } from './Services/StandardLists/ReturnConditionListService';
 import { SalesTaxExemptionTypeListService } from './Services/StandardLists/SalesTaxExemptionTypeListService';
 import { SignatureTypeListService } from './Services/StandardLists/SignatureTypeListService';
@@ -175,10 +171,6 @@ import { TapagListService } from './Services/StandardLists/TapagListService';
 import { TapagTypeListService } from './Services/StandardLists/TapagTypeListService';
 import { TermsOfSaleTypeListService } from './Services/StandardLists/TermsOfSaleTypeListService';
 import { TradeAgreementListService } from './Services/StandardLists/TradeAgreementListService';
-import { RequestReasonCodeEnumListService } from './Services/StandardLists/RequestReasonCodeEnumListService';
-import { OriginCriterionListService } from './Services/StandardLists/OriginCriterionListService';
-import { CertificateOfOriginTypeCodeEnumListService   } from './Services/StandardLists/CertificateOfOriginTypeCodeEnumListService';
-import { CertificateOfOriginStatusCodeEnumListService  } from './Services/StandardLists/CertificateOfOriginStatusCodeEnumListService';
 import { TradeLevyExamptTypeListService } from './Services/StandardLists/TradeLevyExamptTypeListService';
 import { UnloadingSiteTypeListService } from './Services/StandardLists/UnloadingSiteTypeListService';
 import { ValidCustomsItemListService } from './Services/StandardLists/ValidCustomsItemListService';
@@ -199,21 +191,19 @@ import { VendorTypeListService } from './Services/StandardLists/VendorTypeListSe
 import { AccumalationStateListService } from './Services/StandardLists/AccumalationStateListService';
 import { CouriersVatListService } from './Services/StandardLists/CouriersVatListService';
 import { CourierPendingReasonListService } from './Services/StandardLists/CourierPendingReasonListService';
-import { CustomsAutonomyKeywordListService } from './Services/StandardLists/CustomsAutonomyKeywordListService';
 import { StorageStatusListService } from './Services/StandardLists/StorageStatusListService';
 import { FreightPaymentMethodListService } from './Services/StandardLists/FreightPaymentMethodListService';
 import { CustomsDocumentsDefinitionListService } from './Services/StandardLists/CustomsDocumentsDefinitionListService';
 import { UIMessageListService } from './Services/StandardLists/UIMessageListService';
 import { UIMessageAdditionalListService } from './Services/StandardLists/UIMessageAdditionalListService';
 import { PointerLevelListService } from './Services/StandardLists/PointerLevelListService';
-import { CourierMasterListService } from './Services/StandardLists/CourierMasterListService';
-import { CourierDeclarationStatusListService } from './Services/StandardLists/CourierDeclarationStatusListService';
-import { DeclarationCourierStatusListService } from './Services/StandardLists/DeclarationCourierStatusListService';
+import { CourierMasterListService} from './Services/StandardLists/CourierMasterListService';
+import { CourierDeclarationStatusListService} from './Services/StandardLists/CourierDeclarationStatusListService';
+import { DeclarationCourierStatusListService} from './Services/StandardLists/DeclarationCourierStatusListService';
 import { DeclarationCargoSplitListService } from './Services/StandardLists/DeclarationCargoSplitListService';
 import { ActionCodeListService } from './Services/StandardLists/ActionCodeListService';
 import { SplitOrMergeReasonListService } from './Services/StandardLists/SplitOrMergeReasonListService';
 import { CargoSplitRequestStatusListService } from './Services/StandardLists/CargoSplitRequestStatusListService';
-import { CargoStatusListService } from './Services/StandardLists/CargoStatusListService';
 import { TreatmentWayListService } from './Services/StandardLists/TreatmentWayListService';
 import { TPGFileTypeListService } from './Services/StandardLists/TPGFileTypeListService';
 import { CustomsAirlineListService } from './Services/StandardLists/CustomsAirlineListService';
@@ -222,58 +212,12 @@ import { DecisionTypeListService } from './Services/StandardLists/DecisionTypeLi
 import { SeizureMethodTypeListService } from './Services/StandardLists/SeizureMethodTypeListService';
 import { SeizureFactorTypeListService } from './Services/StandardLists/SeizureFactorTypeListService';
 import { RefundCustomerActivityTypeListService } from './Services/StandardLists/RefundCustomerActivityTypeListService';
-import { TransferCargoMethodTypeListService } from './Services/StandardLists/TransferCargoMethodTypeListService';
-import { UpdateCodeListService } from './Services/StandardLists/UpdateCodeListService';
-import { GatepassReturnCodeListService } from './Services/StandardLists/GatepassReturnCodeListService';
-import { CourierCustomStatusListService } from './Services/StandardLists/CourierCustomStatusListService';
-import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
-import { HazardousSubstanceListService } from './Services/StandardLists/HazardousSubstanceListService';
-import { SealCompletenesListService } from './Services/StandardLists/SealCompletenesListService';
-import { SealTypeListService } from './Services/StandardLists/SealTypeListService';
-import { AmendmentTypeListService } from './Services/StandardLists/AmendmentTypeListService';
-import { SealUpdateReasonTypeListService } from './Services/StandardLists/SealUpdateReasonTypeListService';
-import { DeclarationReferantDataListService } from './Services/StandardLists/DeclarationReferantDataListService';
-import { ExceptionReasonListService } from './Services/StandardLists/ExceptionReasonListService';
-import { PartyRelationshipTypeListService } from './Services/StandardLists/PartyRelationshipTypeListService';
-import { AmountTypeListService } from './Services/StandardLists/AmountTypeListService';
-import { ClaimReasonTypeListService } from './Services/StandardLists/ClaimReasonTypeListService';
-import { ClassificationTypeListService } from './Services/StandardLists/ClassificationTypeListService';
-import { TransactionNatureTypeListService } from './Services/StandardLists/TransactionNatureTypeListService';
-import { NbcDeclarationTypeListService } from './Services/StandardLists/NbcDeclarationTypeListService';
-import { ExporterRoleTypeListService } from './Services/StandardLists/ExporterRoleTypeListService';
-import { AutonomyRegionTypeListService } from './Services/StandardLists/AutonomyRegionTypeListService';
-import { AmendmentStatusListService } from './Services/StandardLists/AmendmentStatusListService';
-import { ReferantTeamListService } from './Services/StandardLists/ReferantTeamListService';
-import { AmendRequestRejectReasonTypeListService } from './Services/StandardLists/AmendRequestRejectReasonTypeListService';
-import { ReleaseMessageTypeListService } from './Services/StandardLists/ReleaseMessageTypeListService';
-import { DocumentRejectTypeListService } from './Services/StandardLists/DocumentRejectTypeListService';
-import { FclLclCodeListService } from './Services/StandardLists/FclLclCodeListService';
-import { CancelRequestRejectReasonTypeListService } from './Services/StandardLists/CancelRequestRejectReasonTypeListService';
-import { SecurityClearenceTypeCodeListService } from './Services/StandardLists/SecurityClearenceTypeCodeListService';
-import { CargoTypeListService } from './Services/StandardLists/CargoTypeListService';
-import { CustomsDocumentUploadListService } from './Services/StandardLists/CustomsDocumentUploadListService';
-
-import { ContainerizationListService } from './Services/StandardLists/ContainerizationListService';
-import { ContainerizationStatusCodeListService } from './Services/StandardLists/ContainerizationStatusCodeListService';
-import { StatusCodeListService } from './Services/StandardLists/StatusCodeListService';
-import { ContainerizationHataraStatusListService } from './Services/StandardLists/ContainerizationHataraStatusListService';
-import { PhysicalCheckSearchResultTypeListService } from './Services/StandardLists/PhysicalCheckSearchResultTypeListService';
-import { GTBFUSTATUListService } from './Services/StandardLists/GTBFUSTATUListService';
-import { StorageStatusTableListService } from './Services/StandardLists/StorageStatusTableListService';
-import { ClientsTapagListService } from './Services/StandardLists/ClientsTapagListService';
-import { ServersNameListService } from './Services/StandardLists/ServersNameListService';
-import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
-import { SchedulerParamListService } from './Services/StandardLists/SchedulerParamListService';
-import { VendorCurrencyListService } from './Services/StandardLists/VendorCurrencyListService';
-import { CertificateOfOriginListService } from './Services/StandardLists/CertificateOfOriginListService';
-import { CertificateOfOriginMandatoryFieldsListService } from './Services/StandardLists/CertificateOfOriginMandatoryFieldsListService';
-import { ClientItemListService } from './Services/StandardLists/ClientItemListService';
-
 
 //#endregion
 
 //#region StandardPMs
 import { ClaimPMService } from './Services/StandardPMs/ClaimPMService';
+import { ClientPMService } from './Services/StandardPMs/ClientPMService';
 import { CustomBankPMService } from './Services/StandardPMs/CustomBankPMService';
 import { CustomsBookPMService } from './Services/StandardPMs/CustomsBookPMService';
 import { CustomsClosedTablePMService } from './Services/StandardPMs/CustomsClosedTablePMService';
@@ -282,8 +226,6 @@ import { CustomsDocumentPMService } from './Services/StandardPMs/CustomsDocument
 import { CustomsDocumentsTicketPMService } from './Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { CustomsExchangeRatePMService } from './Services/StandardPMs/CustomsExchangeRatePMService';
 import { CustomsHouseTypeAdditionalPMService } from './Services/StandardPMs/CustomsHouseTypeAdditionalPMService';
-import { InternalBorderSiteTypePMService } from './Services/StandardPMs/InternalBorderSiteTypePMService';
-import { CertificateOfOriginMandatoryFieldsPMService } from './Services/StandardPMs/CertificateOfOriginMandatoryFieldsPMService';
 import { CustomsHouseTypePMService } from './Services/StandardPMs/CustomsHouseTypePMService';
 import { CustomsItemPMService } from './Services/StandardPMs/CustomsItemPMService';
 import { CustomsPartnersItemPMService } from './Services/StandardPMs/CustomsPartnersItemPMService';
@@ -315,18 +257,12 @@ import { VehiclePMService } from './Services/StandardPMs/VehiclePMService';
 import { VendorCommissionPMService } from './Services/StandardPMs/VendorCommissionPMService';
 import { CouriersVatPMService } from './Services/StandardPMs/CouriersVatPMService';
 import { CourierPendingReasonPMService } from './Services/StandardPMs/CourierPendingReasonPMService';
-import { ExceptionReasonPMService } from './Services/StandardPMs/ExceptionReasonPMService';
 import { CourierMasterPMService } from './Services/StandardPMs/CourierMasterPMService';
 import { CustomDocumentTypePMService } from './Services/StandardPMs/CustomDocumentTypePMService';
 import { UIMessagePMService } from './Services/StandardPMs/UIMessagePMService';
 import { InternationalSitePMService } from './Services/StandardPMs/InternationalSitePMService';
 import { DeclarationCargoSplitPMService } from './Services/StandardPMs/DeclarationCargoSplitPMService';
 import { CustomsAirlinePMService } from './Services/StandardPMs/CustomsAirlinePMService';
-import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPMService';
-import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
-import { ReferantTeamPMService } from './Services/StandardPMs/ReferantTeamPMService';
-import { ExportStorgePMService } from './Services/StandardPMs/ExportStorgePMService';
-import { SchedulerParamPMService } from './Services/StandardPMs/SchedulerParamPMService';
 
 //#endregion
 
@@ -343,10 +279,6 @@ import { NotificationExtendedListService } from './Services/ExtendedLists/Notifi
 import { SupplierInvoiceItemsTaxExtendedListService } from './Services/ExtendedLists/SupplierInvoiceItemsTaxExtendedListService';
 import { SignStationExtendedListService } from './Services/ExtendedLists/SignStationExtendedListService';
 import { DeclarationCourierStatusExtendedListService } from './Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
-import { RecallClientsForCutoms } from '../CustomsModules/CustomsGeneralRequests/Components/RecallClientsForCutoms';
-import { CustomsCollateralExtendedListService } from './Services/ExtendedLists/CustomsCollateralExtendedListService';
-import { CourierMasterExtendedListService } from './Services/ExtendedLists/CourierMasterExtendedListService';
-
 
 //#endregion
 
@@ -359,10 +291,8 @@ import { CustomsHouseTypeExtendedPMService } from './Services/ExtendedPMs/Custom
 import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
 import { PaymentOrderConnectionTableExtendedPMService } from './Services/ExtendedPMs/PaymentOrderConnectionTableExtendedPMService';
 import { SupplierInvoiceExtendedPMService } from './Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
-import { ReferantExceptionExtendedPMService } from './Services/ExtendedPMs/ReferantExceptionExtendedPMService';
-import { ExportDeclarationClosingDatasExtendPMService } from './Services/ExtendedPMs/ExportDeclarationClosingDatasExtendPMService';
-
 ///????  import { CustomsRequestSheetExtendedPMService } from './Services/ExtendedPMs/CustomsRequestSheetExtendedPMService';
+
 
 //#endregion
 
@@ -379,13 +309,7 @@ import { PaymentOrderWebService } from './Services/WebServices/PaymentOrderWebSe
 import { QuantityTypeMessageService } from './Services/WebServices/QuantityTypeMessageService';
 import { TapagMessagesService } from './Services/WebServices/TapagMessagesService';
 import { VendorMessagesService } from './Services/WebServices/VendorMessagesService';
-import { SupplierInvioceItemCertificatsService } from './Services/WebServices/SupplierInvioceItemCertificatsService';
 import { LoadTestService } from './Services/WebServices/LoadTestService';
-import { InvoiceQueueWebService } from './Services/WebServices/InvoiceQueueWebService';
-import { ContainerizationMessagesService } from './Services/WebServices/ContainerizationMessagesService';
-import { VendorCurrencyService } from './Services/WebServices/VendorCurrencyService';;
-
-
 //#endregion
 
 // Others
@@ -395,113 +319,27 @@ import { CustomsRequestMenuService } from './Services/Others/CustomsRequestMenuS
 import { MultiCertificatesService } from './Services/Others/MultiCertificatesService';
 import { SupplierInvoiceService } from './Services/Others/SupplierInvoiceService';
 import { GITITEMCacheService } from './Services/Others/GITITEMCacheService';
-import { CacheCourierPendingReasonService } from './Services/Others/CacheCourierPendingReasonService';
+
 
 import { DeclarationMenuButtonsHandler } from './Components/MenuButtons/DeclarationMenuButtonsHandler';
-import { ContainerizationMenuButtonsHandler } from './Components/MenuButtons/ContainerizationMenuButtonsHandler';
 import { VehicleMenuButtonsHandler } from './Components/MenuButtons/VehicleMenuButtonsHandler';
 import { PaymentOrderMenuButtonsHandler } from './Components/MenuButtons/PaymentOrderMenuButtonsHandler';
 import { ClaimMenuButtonsHandler } from './Components/MenuButtons/ClaimMenuButtonsHandler';
 import { PhysicalCheckMenuButtonsHandler } from './Components/MenuButtons/PhysicalCheckMenuButtonsHandler';
 import { DeclarationEditComponentController } from './Controller/DeclarationEditComponentController'
 import { VehicleEditComponentController } from './Controller/VehicleEditComponentController'
-import { PhysicalCheckEditComponentController } from './Controller/PhysicalCheckEditComponentController'
-
 import { VendorCommissionService } from './Services/WebServices/VendorCommissionService'
-import { ApprovedProfessionListService } from './Services/StandardLists/ApprovedProfessionListService'
-import { RequestTypeListService } from './Services/StandardLists/RequestTypeListService'
-import { CustomsAutonomyKeywordPMService } from './Services/StandardPMs/CustomsAutonomyKeywordPMService';
-import { CurrencyTypePMService } from './Services/StandardPMs/CurrencyTypePMService';
-import { CustomsShipListService } from './Services/StandardLists/CustomsShipListService';
-import { CancellationReasonRequestTypeListService } from './Services/StandardLists/CancellationReasonRequestTypeListService';
-import { CancellationRequestStatusListService } from './Services/StandardLists/CancellationRequestStatusListService';
-import { AmendmentFieldStatusTypeListService } from './Services/StandardLists/AmendmentFieldStatusTypeListService';
-import { LoadingSiteTypeListService } from './Services/StandardLists/LoadingSiteTypeListService';
-import { AmendCancellRequestInitiatorListService } from './Services/StandardLists/AmendCancellRequestInitiatorListService';
-import { ExportDeliveryDocumentMessageListService } from './Services/StandardLists/ExportDeliveryDocumentMessageListService';
-import { SupplierPartyTypeListService } from './Services/StandardLists/SupplierPartyTypeListService';
-import { DeliveryTypeListService } from './Services/StandardLists/DeliveryTypeListService';
-import { CustomerIdentificationTypeListService } from './Services/StandardLists/CustomerIdentificationTypeListService';
-import { CoolingReportingMethodListService } from './Services/StandardLists/CoolingReportingMethodListService';
-import { NDMessageActionCodeListService } from './Services/StandardLists/NDMessageActionCodeListService';
-import { HandingCodeListService } from './Services/StandardLists/HandingCodeListService';
-import { StuffingSiteTypeListService } from './Services/StandardLists/StuffingSiteTypeListService';
-import { ContainerTypeListService } from './Services/StandardLists/ContainerTypeListService';
-import { ExportStorageListService } from './Services/StandardLists/ExportStorageListService';
-import { LogisticsReferenceTypeListService } from './Services/StandardLists/LogisticsReferenceTypeListService';
-import { ReferenceStatusListService } from './Services/StandardLists/ReferenceStatusListService';
-import { ReferenceInputTypeListService } from './Services/StandardLists/ReferenceInputTypeListService';
-import { ContainerizationPMService } from './Services/StandardPMs/ContainerizationPMService';
-import { ContainerizationExtendedListService } from './Services/ExtendedLists/ContainerizationExtendedListService';
-import { CustomerClassificationTypeListService } from './Services/StandardLists/CustomerClassificationTypeListService';
-import { PoaStatusTypeLookUpListService } from './Services/StandardLists/PoaStatusTypeLookUpListService';
 
-import { DeclarationAmendmentSharedDataService } from './Services/DataChange/DeclarationAmendmentSharedDataService';
-import { DeclarationMenuButtonService } from './MetaDataServices/MenuButtonServices/DeclarationMenuButtonService';
-import { DeclarationTabsService } from './MetaDataServices/TabsServices/DeclarationTabsService';
-import { DeclarationHeaderScreenService } from './MetaDataServices/HeaderScreenServices/DeclarationHeaderScreenService';
-import { CustomerIndicationTypeListService } from './Services/StandardLists/CustomerIndicationTypeListService';
-import { PoaAuthorizationTypeLookupListService } from './Services/StandardLists/PoaAuthorizationTypeLookupListService';
-import { ClientsPoaListService } from './Services/StandardLists/ClientsPoaListService';
-import { BuyerRoleTypeListService } from './Services/StandardLists/BuyerRoleTypeListService';
-import { AmedmentTypeListService } from './Services/StandardLists/AmedmentTypeListService';
-import { CustomsRequestsSheetWebService } from './Services/WebServices/CustomsRequestsSheetWebService';
-import { TradeAgreementProtocolListService } from './Services/StandardLists/TradeAgreementProtocolListService';
-import { ExportStoragePMService } from './Services/StandardPMs/ExportStoragePMService';
-import { IncotemrsFileValidationListService } from './Services/StandardLists/IncotemrsFileValidationListService';
-import { ClientPMService } from './Services/StandardPMs/ClientPMService';
-import { LogisticActionRequestListService } from './Services/StandardLists/LogisticActionRequestListService';
-import { LogisticActionRequestTypeListService } from './Services/StandardLists/LogisticActionRequestTypeListService';
-import { LogisticActionResponseReqSListService } from './Services/StandardLists/LogisticActionResponseReqSListService';
-import { LogisticActionRequestPMService } from './Services/StandardPMs/LogisticActionRequestPMService';
-import { LogisticPermitListService } from './Services/StandardLists/LogisticPermitListService';
-import { ExportLogisticPermitActionListService } from './Services/StandardLists/ExportLogisticPermitActionListService';
-import { ExportStorageExtendedListService } from './Services/ExtendedLists/ExportStorageExtendedListService';
-import { ExternalFieldMappingListService } from './Services/StandardLists/ExternalFieldMappingListService';
-import { ExternalFieldMappingPMService } from './Services/StandardPMs/ExternalFieldMappingPMService';
-import { StatusFieldTypeListService } from './Services/StandardLists/StatusFieldTypeListService';
-import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
-import { ManifestCargoStatusListService } from './Services/StandardLists/ManifestCargoStatusListService';
-import { ServersNamePMService } from './Services/StandardPMs/ServersNamePMService';
-import { ConfirmationNumberTokenLogListService } from './Services/StandardLists/ConfirmationNumberTokenLogListService';
-import { ConfirmationNumberTokenLogPMService } from './Services/StandardPMs/ConfirmationNumberTokenLogPMService';
-import { CustomsItemCategoryListService } from './Services/StandardLists/CustomsItemCategoryListService';
-import { CustomsItemHierarchicLocationListService } from './Services/StandardLists/CustomsItemHierarchicLocationListService';
-import { LevyTrustListService } from './Services/StandardLists/LevyTrustListService';
-
-import { CustomsEntityStatusListService } from './Services/StandardLists/CustomsEntityStatusListService';
-import { ConditionalExemptionTypeListService } from './Services/StandardLists/ConditionalExemptionTypeListService';
-import { CarEngineVolumeListService } from './Services/StandardLists/CarEngineVolumeListService';
-import { CarWeightListService } from './Services/StandardLists/CarWeightListService';
-import { ComputationMethodListService } from './Services/StandardLists/ComputationMethodListService';
-import { TarifRelatedToQuotaListService } from './Services/StandardLists/TarifRelatedToQuotaListService';
-import { QuotaComputationBasisListService } from './Services/StandardLists/QuotaComputationBasisListService';
-import { QuotaIncrementListService } from './Services/StandardLists/QuotaIncrementListService';
-import { RenewalMethodListService } from './Services/StandardLists/RenewalMethodListService';
-import { PerYearFrequencyListService } from './Services/StandardLists/PerYearFrequencyListService';
-import { InceptionCodeListService } from './Services/StandardLists/InceptionCodeListService';
-import { TradeLevyStatusListService } from './Services/StandardLists/TradeLevyStatusListService';
-import { RegularityPublicationListService } from './Services/StandardLists/RegularityPublicationListService';
-import { ChangeTypeListService } from './Services/StandardLists/ChangeTypeListService';
-import { RegularitySourceListService } from './Services/StandardLists/RegularitySourceListService';
-import { InterConditionsRelationshipListService } from './Services/StandardLists/InterConditionsRelationshipListService';
-import { EntryExitTypeListService } from './Services/StandardLists/EntryExitTypeListService';
-import { CustomsItemGroupListService } from './Services/StandardLists/CustomsItemGroupListService';
-import { DiscountTypeRegulationListService } from './Services/StandardLists/DiscountTypeRegulationListService';
-import { AzureSearchWebService } from './Services/WebServices/AzureSearchWebService';
-import { SIIDocumentTypeListService } from './Services/StandardLists/SIIDocumentTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
 
         var myResult: any = null;
+
         switch (name) {
 
             //#region StandardList
-
             case "AddressContactStateListService": { myResult = new AddressContactStateListService(); break; }
-            case "ContainerTypeListService": { myResult = new ContainerTypeListService(); break; }
-            case "StuffingSiteTypeListService": { myResult = new StuffingSiteTypeListService(); break; }
             case "AddressPurposeListService": { myResult = new AddressPurposeListService(); break; }
             case "AmendmentFieldReasonTypeListService": { myResult = new AmendmentFieldReasonTypeListService(); break; }
             case "AmendmentRequestStatusListService": { myResult = new AmendmentRequestStatusListService(); break; }
@@ -522,7 +360,7 @@ export class ModuleProviders {
             case "CheckTypeLookupListService": { myResult = new CheckTypeLookupListService(); break; }
             case "CityListService": { myResult = new CityListService(); break; }
             case "AgentTalkBackTypeListService": { myResult = new AgentTalkBackTypeListService(); break; }
-            case "AcceptanceStatusListService": { myResult = new AcceptanceStatusListService(); break; }
+                
             case "ClaimEntityListService": { myResult = new ClaimEntityListService(); break; }
             case "ClaimExplanationCodeListService": { myResult = new ClaimExplanationCodeListService(); break; }
             case "ClaimListService": { myResult = new ClaimListService(); break; }
@@ -541,7 +379,6 @@ export class ModuleProviders {
             case "ConstraintTypeListService": { myResult = new ConstraintTypeListService(); break; }
             case "ContactRoleTypeListService": { myResult = new ContactRoleTypeListService(); break; }
             case "ContinuousMessagesTypeCodeListService": { myResult = new ContinuousMessagesTypeCodeListService(); break; }
-            case "ContinuousRequestTypeListService": { myResult = new ContinuousRequestTypeListService(); break; }
             case "ConverterTypeListService": { myResult = new ConverterTypeListService(); break; }
             case "CountryGroupListService": { myResult = new CountryGroupListService(); break; }
             case "CourtInstanceListService": { myResult = new CourtInstanceListService(); break; }
@@ -583,7 +420,6 @@ export class ModuleProviders {
             case "DebtNotificationTypeListService": { myResult = new DebtNotificationTypeListService(); break; }
             case "DeclarationErrorMappingListService": { myResult = new DeclarationErrorMappingListService(); break; }
             case "DeclarationListService": { myResult = new DeclarationListService(); break; }
-            case "Customs.DeclarationListService": { myResult = new DeclarationListService(); break; }
             case "DeclarationPaymentListService": { myResult = new DeclarationPaymentListService(); break; }
             case "DeclarationStatementTypeListService": { myResult = new DeclarationStatementTypeListService(); break; }
             case "DeclarationStatusTypeListService": { myResult = new DeclarationStatusTypeListService(); break; }
@@ -604,7 +440,6 @@ export class ModuleProviders {
             case "GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }
             case "GuaranteeCertificateTypeListService": { myResult = new GuaranteeCertificateTypeListService(); break; }
             case "GuaranteeCustomerActivityListService": { myResult = new GuaranteeCustomerActivityListService(); break; }
-            case "FullnessCodeListService": { myResult = new FullnessCodeListService(); break; }
             case "GuaranteeListService": { myResult = new GuaranteeListService(); break; }
             case "ImporterDeclarationTypeListService": { myResult = new ImporterDeclarationTypeListService(); break; }
             case "ImporterDespositionListService": { myResult = new ImporterDespositionListService(); break; }
@@ -657,7 +492,6 @@ export class ModuleProviders {
             case "RansomViolationTypeListService": { myResult = new RansomViolationTypeListService(); break; }
             case "RegisteredWarehouseSiteTypeListService": { myResult = new RegisteredWarehouseSiteTypeListService(); break; }
             case "RequestStatusListService": { myResult = new RequestStatusListService(); break; }
-            case "RequestToAdvanceAQueueListService": { myResult = new RequestToAdvanceAQueueListService(); break; }
             case "ReturnConditionListService": { myResult = new ReturnConditionListService(); break; }
             case "SalesTaxExemptionTypeListService": { myResult = new SalesTaxExemptionTypeListService(); break; }
             case "SignatureTypeListService": { myResult = new SignatureTypeListService(); break; }
@@ -668,23 +502,16 @@ export class ModuleProviders {
             case "StorageMessageTypeListService": { myResult = new StorageMessageTypeListService(); break; }
             case "SubCountryListService": { myResult = new SubCountryListService(); break; }
             case "SupplierInvoiceListService": { myResult = new SupplierInvoiceListService(); break; }
-            case "CertificateOfOriginListService": { myResult = new CertificateOfOriginListService(); break; }
-            case "CertificateOfOriginMandatoryFieldsListService": { myResult = new CertificateOfOriginMandatoryFieldsListService(); break; }
             case "TapagConnectionTableListService": { myResult = new TapagConnectionTableListService(); break; }
             case "TapagListService": { myResult = new TapagListService(); break; }
             case "TapagTypeListService": { myResult = new TapagTypeListService(); break; }
             case "TermsOfSaleTypeListService": { myResult = new TermsOfSaleTypeListService(); break; }
             case "TradeAgreementListService": { myResult = new TradeAgreementListService(); break; }
-            case "RequestReasonCodeEnumListService": { myResult = new RequestReasonCodeEnumListService(); break; }
-            case "OriginCriterionListService": { myResult = new OriginCriterionListService(); break; }
-            case "CertificateOfOriginTypeCodeEnumListService": { myResult = new CertificateOfOriginTypeCodeEnumListService(); break; }
-            case "CertificateOfOriginStatusCodeEnumListService": { myResult = new CertificateOfOriginStatusCodeEnumListService(); break; }
             case "TradeLevyExamptTypeListService": { myResult = new TradeLevyExamptTypeListService(); break; }
             case "UnloadingSiteTypeListService": { myResult = new UnloadingSiteTypeListService(); break; }
             case "ValidCustomsItemListService": { myResult = new ValidCustomsItemListService(); break; }
             case "VehicleListService": { myResult = new VehicleListService(); break; }
             case "VehicleManufacturerListService": { myResult = new VehicleManufacturerListService(); break; }
-            case "TransportMeansTypeListService": { myResult = new TransportMeansTypeListService(); break; }
             case "VehiclePoolTypeListService": { myResult = new VehiclePoolTypeListService(); break; }
             case "VehiclePriceListTypeListService": { myResult = new VehiclePriceListTypeListService(); break; }
             case "VehicleReductionTypeListService": { myResult = new VehicleReductionTypeListService(); break; }
@@ -700,8 +527,6 @@ export class ModuleProviders {
             case "AccumalationStateListService": { myResult = new AccumalationStateListService(); break; }
             case "CouriersVatListService": { myResult = new CouriersVatListService(); break; }
             case "CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
-            case "AmedmentTypeListService": { myResult = new AmedmentTypeListService(); break; }
-            case "CustomsAutonomyKeywordListService": { myResult = new CustomsAutonomyKeywordListService(); break; }
             case "StorageStatusListService": { myResult = new StorageStatusListService(); break; }
             case "FreightPaymentMethodListService": { myResult = new FreightPaymentMethodListService(); break; }
             case "CustomsDocumentsDefinitionListService": { myResult = new CustomsDocumentsDefinitionListService(); break; }
@@ -716,116 +541,14 @@ export class ModuleProviders {
             case "ActionCodeListService": { myResult = new ActionCodeListService(); break; }
             case "SplitOrMergeReasonListService": { myResult = new SplitOrMergeReasonListService(); break; }
             case "CargoSplitRequestStatusListService": { myResult = new CargoSplitRequestStatusListService(); break; }
-            case "CargoStatusListService": { myResult = new CargoStatusListService(); break; }
             case "TreatmentWayListService": { myResult = new TreatmentWayListService(); break; }
-            case "TPGFileTypeListService": { myResult = new TPGFileTypeListService(); break; }
+            case "TPGFileTypeListService": { myResult = new TPGFileTypeListService(); break; }  
             case "CustomsAirlineListService": { myResult = new CustomsAirlineListService(); break; }
             case "PendingErrorPlaceListService": { myResult = new PendingErrorPlaceListService(); break; }
             case "DecisionTypeListService": { myResult = new DecisionTypeListService(); break; }
             case "SeizureMethodTypeListService": { myResult = new SeizureMethodTypeListService(); break; }
             case "SeizureFactorTypeListService": { myResult = new SeizureFactorTypeListService(); break; }
             case "RefundCustomerActivityTypeListService": { myResult = new RefundCustomerActivityTypeListService(); break; }
-            case "TransferCargoMethodTypeListService": { myResult = new TransferCargoMethodTypeListService(); break; }
-            case "UpdateCodeListService": { myResult = new UpdateCodeListService(); break; }
-            case "GatepassReturnCodeListService": { myResult = new GatepassReturnCodeListService(); break; }
-            case "PendingByKeywordListService": { myResult = new PendingByKeywordListService(); break; }
-            case "ApprovedProfessionListService": { myResult = new ApprovedProfessionListService(); break; }
-            case "RequestTypeListService": { myResult = new RequestTypeListService(); break; }
-            case "CourierCustomStatusListService": { myResult = new CourierCustomStatusListService(); break; }
-            case "HazardousSubstanceListService": { myResult = new HazardousSubstanceListService(); break; }
-            case "SealCompletenesListService": { myResult = new SealCompletenesListService(); break; }
-            case "SealTypeListService": { myResult = new SealTypeListService(); break; }
-            case "AmendmentTypeListService": { myResult = new AmendmentTypeListService(); break; }
-            case "SealUpdateReasonTypeListService": { myResult = new SealUpdateReasonTypeListService(); break; }
-            case "DeclarationReferantDataListService": { myResult = new DeclarationReferantDataListService(); break; }
-            case "ExceptionReasonListService": { myResult = new ExceptionReasonListService(); break; }
-            case "TransactionNatureTypeListService": { myResult = new TransactionNatureTypeListService(); break; }
-            case "ClassificationTypeListService": { myResult = new ClassificationTypeListService(); break; }
-            case "ClaimReasonTypeListService": { myResult = new ClaimReasonTypeListService(); break; }
-            case "AmountTypeListService": { myResult = new AmountTypeListService(); break; }
-            case "PartyRelationshipTypeListService": { myResult = new PartyRelationshipTypeListService(); break; }
-            case "ReferenceInputTypeListService": { myResult = new ReferenceInputTypeListService(); break; }
-            case "ReferenceStatusListService": { myResult = new ReferenceStatusListService(); break; }
-            case "CustomerClassificationTypeListService": { myResult = new CustomerClassificationTypeListService(); break; }
-            case "LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
-            case "PoaStatusTypeLookUpListService": { myResult = new PoaStatusTypeLookUpListService(); break; }
-            case "LogisticActionRequestListService": { myResult = new LogisticActionRequestListService(); break; }
-            case "LogisticActionRequestTypeListService": { myResult = new LogisticActionRequestTypeListService(); break; }
-            case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
-            case "CustomsDocumentUploadListService": { myResult = new CustomsDocumentUploadListService(); break; }
-            case "ExportLogisticPermitActionListService": { myResult = new ExportLogisticPermitActionListService(); break; }
-            case "CustomsItemGroupListService": { myResult = new CustomsItemGroupListService(); break; }
-            case "DiscountTypeRegulationListService": { myResult = new DiscountTypeRegulationListService(); break; }
-            case "CustomsItemCategoryListService": { myResult = new CustomsItemCategoryListService(); break; }
-            case "CustomsItemHierarchicLocationListService": { myResult = new CustomsItemHierarchicLocationListService(); break; }
-            case "CustomsEntityStatusListService": { myResult = new CustomsEntityStatusListService(); break; }
-            case "ConditionalExemptionTypeListService": { myResult = new ConditionalExemptionTypeListService(); break; }
-            case "CarEngineVolumeListService": { myResult = new CarEngineVolumeListService(); break; }
-            case "CarWeightListService": { myResult = new CarWeightListService(); break; }
-            case "ComputationMethodListService": { myResult = new ComputationMethodListService(); break; }
-            case "TarifRelatedToQuotaListService": { myResult = new TarifRelatedToQuotaListService(); break; }
-            case "QuotaComputationBasisListService": { myResult = new QuotaComputationBasisListService(); break; }
-            case "QuotaIncrementListService": { myResult = new QuotaIncrementListService(); break; }
-            case "RenewalMethodListService": { myResult = new RenewalMethodListService(); break; }
-            case "PerYearFrequencyListService": { myResult = new PerYearFrequencyListService(); break; }
-            case "InceptionCodeListService": { myResult = new InceptionCodeListService(); break; }
-            case "LevyTrustListService": { myResult = new LevyTrustListService(); break; }
-            case "TradeLevyStatusListService": { myResult = new TradeLevyStatusListService(); break; }
-            case "RegularityPublicationListService": { myResult = new RegularityPublicationListService(); break; }
-            case "ChangeTypeListService": { myResult = new ChangeTypeListService(); break; }
-            case "RegularitySourceListService": { myResult = new RegularitySourceListService(); break; }
-            case "EntryExitTypeListService": { myResult = new EntryExitTypeListService(); break; }
-            case "InterConditionsRelationshipListService": { myResult = new InterConditionsRelationshipListService(); break; }
-
-            case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
-            case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
-            case "ExporterRoleTypeListService": { myResult = new ExporterRoleTypeListService(); break; }
-            case "AutonomyRegionTypeListService": { myResult = new AutonomyRegionTypeListService(); break; }
-            case "GTBFUSTATUListService": { myResult = new GTBFUSTATUListService(); break; }
-            case "SchedulerParamListService": { myResult = new SchedulerParamListService(); break; }
-            case "StorageStatusTableListService": { myResult = new StorageStatusTableListService(); break; }
-            case "CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
-            case "CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
-            case "AmendmentStatusListService": { myResult = new AmendmentStatusListService(); break; }
-            case "ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
-            case "AmendRequestRejectReasonTypeListService": { myResult = new AmendRequestRejectReasonTypeListService(); break; }
-            case "ReleaseMessageTypeListService": { myResult = new ReleaseMessageTypeListService(); break; }
-            case "DocumentRejectTypeListService": { myResult = new DocumentRejectTypeListService(); break; }
-            case "AmendmentFieldStatusTypeListService": { myResult = new AmendmentFieldStatusTypeListService(); break; }
-            case "LoadingSiteTypeListService": { myResult = new LoadingSiteTypeListService(); break; }
-            case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
-            case "SecurityClearenceTypeCodeListService": { myResult = new SecurityClearenceTypeCodeListService(); break; }
-            case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
-            case "ExportDeliveryDocumentMessageListService": { myResult = new ExportDeliveryDocumentMessageListService(); break; }
-            case "SupplierPartyTypeListService": { myResult = new SupplierPartyTypeListService(); break; }
-            case "DeliveryTypeListService": { myResult = new DeliveryTypeListService(); break; }
-            case "CargoTypeListService": { myResult = new CargoTypeListService(); break; }
-            case "CustomerIdentificationTypeListService": { myResult = new CustomerIdentificationTypeListService(); break; }
-            case "CoolingReportingMethodListService": { myResult = new CoolingReportingMethodListService(); break; }
-            case "NDMessageActionCodeListService": { myResult = new NDMessageActionCodeListService(); break; }
-            case "HandingCodeListService": { myResult = new HandingCodeListService(); break; }
-            case "ExportStorageListService": { myResult = new ExportStorageListService(); break; }
-            case "LogisticPermitListService": { myResult = new LogisticPermitListService(); break; }
-            case "ClientsTapagListService": { myResult = new ClientsTapagListService(); break; }
-
-            case "AmendCancellRequestInitiatorListService": { myResult = new AmendCancellRequestInitiatorListService(); break; }
-            case "FclLclCodeListService": { myResult = new FclLclCodeListService(); break; }
-            case "CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
-            case "ContainerizationListService": { myResult = new ContainerizationListService(); break; }
-            case "ContainerizationStatusCodeListService": { myResult = new ContainerizationStatusCodeListService(); break; }
-            case "StatusCodeListService": { myResult = new StatusCodeListService(); break; }
-            case "ContainerizationHataraStatusListService": { myResult = new ContainerizationHataraStatusListService(); break; }
-            case "CustomerIndicationTypeListService": { myResult = new CustomerIndicationTypeListService(); break; }
-            case "PoaAuthorizationTypeLookupListService": { myResult = new PoaAuthorizationTypeLookupListService(); break; }
-            case "ClientsPoaListService": { myResult = new ClientsPoaListService(); break; }
-            case "BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
-            case "PhysicalCheckSearchResultTypeListService": { myResult = new PhysicalCheckSearchResultTypeListService(); break; }
-            case "IncotemrsFileValidationListService": { myResult = new IncotemrsFileValidationListService(); break; }
-            case "ExternalFieldMappingListService": { myResult = new ExternalFieldMappingListService(); break; }
-            case "ManifestCargoStatusListService": { myResult = new ManifestCargoStatusListService(); break; }
-            case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
-            case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
-            case "SIIDocumentTypeListService" : { myResult = new SIIDocumentTypeListService(); break; }
             //#endregion                
 
             //#region StandardPMs
@@ -840,8 +563,6 @@ export class ModuleProviders {
             case "CustomsExchangeRatePMService": { myResult = new CustomsExchangeRatePMService(); break; }
             case "CustomsHouseTypeAdditionalPMService": { myResult = new CustomsHouseTypeAdditionalPMService(); break; }
             case "CustomsHouseTypePMService": { myResult = new CustomsHouseTypePMService(); break; }
-            case "InternalBorderSiteTypePMService": { myResult = new InternalBorderSiteTypePMService(); break; }
-            case "CertificateOfOriginMandatoryFieldsPMService": { myResult = new CertificateOfOriginMandatoryFieldsPMService(); break; }
             case "CustomsItemPMService": { myResult = new CustomsItemPMService(); break; }
             case "CustomsPartnersItemPMService": { myResult = new CustomsPartnersItemPMService(); break; }
             case "CustomsRequestsSheetPMService": { myResult = new CustomsRequestsSheetPMService(); break; }
@@ -863,7 +584,6 @@ export class ModuleProviders {
             case "NotificationPMService": { myResult = new NotificationPMService(); break; }
             case "NotificationTenantDefinitionPMService": { myResult = new NotificationTenantDefinitionPMService(); break; }
             case "PaymentOrderPMService": { myResult = new PaymentOrderPMService(); break; }
-            case "ExportStoragePMService": { myResult = new ExportStoragePMService(); break; }
             case "PhysicalCheckPMService": { myResult = new PhysicalCheckPMService(); break; }
             case "ProceduralFaultPMService": { myResult = new ProceduralFaultPMService(); break; }
             case "ProceduralFaultsPMService": { myResult = new ProceduralFaultPMService(); break; }
@@ -874,28 +594,12 @@ export class ModuleProviders {
             case "VendorCommissionPMService": { myResult = new VendorCommissionPMService(); break; }
             case "CouriersVatPMService": { myResult = new CouriersVatPMService(); break; }
             case "CourierPendingReasonPMService": { myResult = new CourierPendingReasonPMService(); break; }
-            case "ExceptionReasonPMService": { myResult = new ExceptionReasonPMService(); break; }
-            case "CustomsAutonomyKeywordPMService": { myResult = new CustomsAutonomyKeywordPMService(); break; }
             case "CourierMasterPMService": { myResult = new CourierMasterPMService(); break; }
             case "CustomDocumentTypePMService": { myResult = new CustomDocumentTypePMService(); break; }
             case "UIMessagePMService": { myResult = new UIMessagePMService(); break; }
             case "InternationalSitePMService": { myResult = new InternationalSitePMService(); break; }
             case "DeclarationCargoSplitPMService": { myResult = new DeclarationCargoSplitPMService(); break; }
             case "CustomsAirlinePMService": { myResult = new CustomsAirlinePMService(); break; }
-            case "CustomsCountryPMService": { myResult = new CustomsCountryPMService(); break; }
-            case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
-            case "CurrencyTypePMService": { myResult = new CurrencyTypePMService(); break; }
-            case "ReferantTeamPMService": { myResult = new ReferantTeamPMService(); break; }
-            case "ExportStorgePMService": { myResult = new ExportStorgePMService(); break; }
-            case "ContainerizationPMService": { myResult = new ContainerizationPMService(); break; }
-            case "TradeAgreementProtocolListService": { myResult = new TradeAgreementProtocolListService(); break; }
-            case "LogisticActionRequestPMService": { myResult = new LogisticActionRequestPMService(); break; }
-            case "ExternalFieldMappingPMService": { myResult = new ExternalFieldMappingPMService(); break; }
-            case "SchedulerParamPMService": { myResult = new SchedulerParamPMService(); break; }
-            case "StatusFieldTypeListService": { myResult = new StatusFieldTypeListService(); break; }
-            case "ServersNameListService": { myResult = new ServersNameListService(); break; }
-            case "ClientItemListService": { myResult = new ClientItemListService(); break; }
-
             //#endregion
 
             //#region ExtendedLists
@@ -910,12 +614,7 @@ export class ModuleProviders {
             case "SupplierInvoiceItemsTaxExtendedListService": { myResult = new SupplierInvoiceItemsTaxExtendedListService(); break; }
             case "SignStationExtendedListService": { myResult = new SignStationExtendedListService(); break; }
             case "DeclarationCourierStatusExtendedListService": { myResult = new DeclarationCourierStatusExtendedListService(); break; }
-            case "RecallClientsForCutoms": { myResult = new RecallClientsForCutoms(); break; }
-            case "CustomsCollateralExtendedListService": { myResult = new CustomsCollateralExtendedListService(); break; }
-            case "CourierMasterExtendedListService": { myResult = new CourierMasterExtendedListService(); break; }
-            case "ContainerizationExtendedListService": { myResult = new ContainerizationExtendedListService(); break; }
-            case "ExportStorageExtendedListService": { myResult = new ExportStorageExtendedListService(); break; }
-
+            //case "SupplierInvoiceItemsExtendedList": { myResult = new SupplierInvoiceItemsExtendedList(); break; } 
             //#endregion
 
             //#region ExtendedPMs
@@ -926,16 +625,8 @@ export class ModuleProviders {
             case "CustomsHouseTypeExtendedPMService": { myResult = new CustomsHouseTypeExtendedPMService(); break; }
             case "CustomsRequestSheetExtendedPMService": { myResult = new CustomsRequestSheetExtendedPMService(); break; }
             case "PaymentOrderConnectionTableExtendedPMService": { myResult = new PaymentOrderConnectionTableExtendedPMService(); break; }
-            case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; }
-            case "ReferantExceptionExtendedPMService": { myResult = new ReferantExceptionExtendedPMService(); break; }
-            case "ExportDeclarationClosingDatasExtendPMService": { myResult = new ExportDeclarationClosingDatasExtendPMService(); break; }
-            case "ServersNamePMService": { myResult = new ServersNamePMService(); break; }
+            case "SupplierInvoiceExtendedPMService": { myResult = new SupplierInvoiceExtendedPMService(); break; } 
             //#endregion
-
-            //MetaData
-            case "DeclarationMenuButtonService": { myResult = new DeclarationMenuButtonService(); break; }
-            case "DeclarationHeaderScreenService": { myResult = new DeclarationHeaderScreenService(); break; }
-            case "DeclarationTabsService": { myResult = new DeclarationTabsService(); break; }
 
             //#region WebServices
             case "ClientMessagesService": { myResult = new ClientMessagesService(); break; }
@@ -950,16 +641,8 @@ export class ModuleProviders {
             case "QuantityTypeMessageService": { myResult = new QuantityTypeMessageService(); break; }
             case "TapagMessagesService": { myResult = new TapagMessagesService(); break; }
             case "VendorMessagesService": { myResult = new VendorMessagesService(); break; }
-            case "SupplierInvioceItemCertificatsService": { myResult = new SupplierInvioceItemCertificatsService(); break; }
             case "LoadTestService": { myResult = new LoadTestService(); break; }
-            case "InvoiceQueueWebService": { myResult = new InvoiceQueueWebService(); break; }
-            case "ContainerizationMessagesService": { myResult = new ContainerizationMessagesService(); break; }
-            case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
-            case "GTBFUSTATUWebService": { myResult = new GTBFUSTATUWebService(); break; }
-            case "VendorCurrencyService": { myResult = new VendorCurrencyService(); break; }
-            case "AzureSearchWebService": { myResult = new AzureSearchWebService(); break; }
-
-
+                
             //#endregion
 
             //Others
@@ -967,25 +650,20 @@ export class ModuleProviders {
             case "CustomsDocumentPointerService": { myResult = new CustomsDocumentPointerService(); break; }
             case "CustomsRequestMenuService": { myResult = new CustomsRequestMenuService(); break; }
             case "MultiCertificatesService": { myResult = new MultiCertificatesService(); break; }
-            case "SupplierInvoiceService": { myResult = new SupplierInvoiceService(); break; }
-            //case "GITITEMCacheService": { myResult = new GITITEMCacheService(); break; }
-
+          case "SupplierInvoiceService": { myResult = new SupplierInvoiceService(); break; }
+          //case "GITITEMCacheService": { myResult = new GITITEMCacheService(); break; }
+            
 
             case "DeclarationMenuButtonsHandler": { myResult = new DeclarationMenuButtonsHandler(); break; }
             case "VehicleMenuButtonsHandler": { myResult = new VehicleMenuButtonsHandler(); break; }
-            case "ContainerizationMenuButtonsHandler": { myResult = new ContainerizationMenuButtonsHandler(); break; }
             case "PaymentOrderMenuButtonsHandler": { myResult = new PaymentOrderMenuButtonsHandler(); break; }
             case "ClaimMenuButtonsHandler": { myResult = new ClaimMenuButtonsHandler(); break; }
             case "DeclarationEditComponentController": { myResult = new DeclarationEditComponentController(); break; }
             case "VehicleEditComponentController": { myResult = new VehicleEditComponentController(); break; }
             case "PhysicalCheckMenuButtonsHandler": { myResult = new PhysicalCheckMenuButtonsHandler(); break; }
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
-            case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
-            case "PhysicalCheckEditComponentController": { myResult = new PhysicalCheckEditComponentController(); break; }
-            case "ConfirmationNumberTokenLogListService": { myResult = new ConfirmationNumberTokenLogListService(); break; }
-            case "ConfirmationNumberTokenLogPMService": { myResult = new ConfirmationNumberTokenLogPMService(); break; }
-
-
+          
+                
 
         }
 

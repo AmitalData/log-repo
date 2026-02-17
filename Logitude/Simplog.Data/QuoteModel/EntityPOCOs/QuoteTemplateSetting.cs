@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,7 +38,6 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public bool ShowMeasurementPackages { get; set; }
         public bool ShowMeasurementContainers { get; set; }
-        public bool ShowUnitsContainers { get; set; }
 
         public bool ShowFixedPriceContainers { get; set; }
         public bool ShowUnitsPackages { get; set; }
@@ -344,20 +343,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool ShowIncludedChargesPerContainers { get; set; }
         public bool ShowIncludedChargesPackages { get; set; }
         public bool ShowIncludedChargesContainers { get; set; }
-
-
-
-
-        public bool ShowVATTypePackages { get; set; }
-        public bool ShowVATTypeContainers { get; set; }
-        public bool ShowVATPercentagePackages { get; set; }
-        public bool ShowVATPercentageContainers { get; set; }
-        public string PageNumberingTextDesignId { get; set; }
-        public bool HidePageNumber { get; set; }
-        public bool ShowRegionalTAXPackages { get; set; }
-        public bool ShowRegionalTAXContainers { get; set; }
-
-        public string XMLData { get; set; }
+        
 
 
         [ForeignKey("TotalPerContainersAdditionalTextDesignId")]
@@ -367,8 +353,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("TotalPerContainersTableDesignId")]
         public virtual QuoteTemplateTableDesign TotalPerContainersTableDesign { get; set; }
 
-        [ForeignKey("PageNumberingTextDesignId")]
-        public virtual QuoteTemplateTableDesign PageNumberingTextDesign { get; set; }
+
 
 
         [ForeignKey("PricingPackagesTitleDesignId")]
@@ -488,11 +473,15 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         [ForeignKey("PageFooterArea3FreeTextDesignId")]
         public virtual QuoteTemplateTextDesign PageFooterArea3FreeTextDesign { get; set; }
 
-        public bool ShowSaleIncludingVATContainers { get; set; }
-        public bool ShowSaleIncludingVATPackages { get; set; }
-        public bool ShowLocalSaleIncludingVATContainers { get; set; }
-        public bool ShowLocalSaleIncludingVATPackages { get; set; }
 
+
+
+
+
+        
     }
     
+
+
+   
 }

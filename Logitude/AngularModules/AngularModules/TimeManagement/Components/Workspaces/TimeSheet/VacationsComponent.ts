@@ -4,7 +4,7 @@ import { TimeManagementDomainService } from '../../../Services/TimeManagementDom
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VacationsComponent.html',
 })
 

@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -55,11 +55,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public int Retries { get; set; }
         public double AverageRunTime { get; set; }
-        public string EntityId { get; set; }
 
-        public string ResultType { get; set; }
-        public string Format { get; set; }
-        public string AdvancedFormat { get; set; }
-        public string ExecutedByServerName { get; set; }
+
+
     }
 }

@@ -4,7 +4,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WarehouseEntryFiltersMenuComponent.html',
 })
 

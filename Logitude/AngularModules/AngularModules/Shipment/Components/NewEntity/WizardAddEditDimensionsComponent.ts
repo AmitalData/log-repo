@@ -6,7 +6,7 @@ import {ShipmentOrderPackagePM} from '../../EntityPMs/ShipmentOrderPackagePM';
 import {WizardDimensionItem} from './WizardDimensionsComponent';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './WizardAddEditDimensionsComponent.html',
 })
 

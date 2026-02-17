@@ -5,7 +5,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './BillingTabComponent.html',
 })
 
@@ -15,30 +15,17 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: any;
     public ObjectTableName: string;
     public DataContext = this;
-    public Profact4Enabled: boolean = false;
-     public IsBlockMessageVisible: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
-    @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.ScreenCode = entityArgs.ObjectTableName + ".BillingTabScreen";
-        this.ObjectTableName = this.entityArgs.ObjectTableName;
-        this.EntityPM = this.entityArgs.EntityPM;
+        this.RunComponent();
 
-        this.LoadGeneratedComponents();
-        this.SetFieldsEditability();
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
-            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
     }
-    SetFieldsEditability() {
-        if (this.EntityPM?.Card?.ExternalSystem == "UNIFREIGHT") {
-            this.IsBlockMessageVisible = true;
-            this.UIProperties.SetEnabled("IsAutonomy", "Card", false);
 
-        }
-    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null; 
     private Listen() {
@@ -62,51 +49,36 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    LoadGeneratedComponents() {
-        if (!this.viewContainerRef) {
-            this.RunComponentTimer("Child");
-            return;
+    RunComponent() {
+        this.ObjectTableName = this.entityArgs.ObjectTableName;
+        this.EntityPM = this.entityArgs.EntityPM;
+
+        if (this.viewContainerRef) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
+                });
+
+            this.Listen();
         }
-        this.LoadChildComponent(this.viewContainerRef);     
+
+        else {
+            this.RunComponentTimer();
+        }
     }
 
     private Retries: number = 0;
     private timerToken: any;
-    private RunComponentTimer(componentName: String) {
+    private RunComponentTimer() {
         this.Retries++;
 
         if (this.timerToken) {
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
-            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), 1) : setTimeout(() => this.LoadGeneratedComponents(), 1);
+        if (this.Retries < 3) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
-    }
-
-    private LoadChildComponent(viewContainerRef) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
-                if (viewContainerRef == this.viewContainerRef) this.LoadARInvoiceDocumentTypeTemplateComponent();
-            });
-
-        this.Listen();
-    }
-
-    IsARInvoiceDocumentTypeTemplateAreaLoaded: boolean = false;
-    public LoadARInvoiceDocumentTypeTemplateComponent() {
-        if (this.IsARInvoiceDocumentTypeTemplateAreaLoaded) return;
-        this.Retries = 0;
-        if (!this.documentTemplateViewContainerRef) {
-            this.RunComponentTimer("ARInvoiceDocumentTypeTemplateComponent");
-            return;
-        }
-        SessionLocator.DynamicLoader.Load('./CommonModules/CommonPartners/Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent', this.documentTemplateViewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.Run(this.entityArgs.EntityPM);
-            });
-        this.IsARInvoiceDocumentTypeTemplateAreaLoaded = true;
     }
 
     get PaymentMethodCode() { return this.entityArgs.EntityPM.PaymentMethodCode; }
@@ -130,32 +102,10 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
         }
     }
 
-    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
-    set RegimenFiscalCode(newValue: string) {
-        if (this.EntityPM.RegimenFiscalCode != newValue) {
-            this.EntityPM.RegimenFiscalCode = newValue;
-        }
-    }
-
-    get SATReceptorName() { return this.EntityPM.SATReceptorName; }
-    set SATReceptorName(newValue: string) {
-        if (this.EntityPM.SATReceptorName != newValue) {
-            this.EntityPM.SATReceptorName = newValue;
-        }
-    }
-
     get SATForeignRFC() { return this.EntityPM.SATForeignRFC; }
     set SATForeignRFC(newValue: string) {
         if (this.EntityPM.SATForeignRFC != newValue) {
             this.EntityPM.SATForeignRFC = newValue;
         }
     }
-    get IsAutonomy() { return this.EntityPM?.Card?.IsAutonomy; }
-    set IsAutonomy(newValue: boolean) {
-        if (this.EntityPM?.Card != null && this.EntityPM?.Card?.IsAutonomy != newValue) {
-            this.EntityPM.Card.IsAutonomy = newValue;
-            this.EntityPM.IsDirty = true;
-        }
-    }   
-
 }

@@ -1479,6 +1479,2195 @@ namespace Logitude.HybridTest.OpportunityServiceReference {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CustomerList", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityLists")]
+    [System.SerializableAttribute()]
+    public partial class CustomerList : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AccountManagerUserEnglishNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivatedByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ActivationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ActivationRequestDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivationRequestedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivationRequestedByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ActivityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ActivityWatchField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Address1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Address2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BeforeDeactiveStatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillToIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillToNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool BlockNewInvoiceCreationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool BlockNewShipmentCreationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CityNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClassifierIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClassifierNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CollectorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CollectorNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CompetitorFieldsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> CreateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> CreditLimitAmountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> CreditLimitOpenBalanceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> CreditLimitWarningPercentageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerSizeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerSizeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerStatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerStatusNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomerStatusTemplateCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomsAgentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CustomsAgentNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EnableConsolidationInvoicesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EnglishNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalAccountingBusinessAreaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalId2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field10Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field3Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field4Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field5Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field6Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field7Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field8Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Field9Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> FirstInvoiceDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> FirstShipmentDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ForwarderIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ForwarderNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FreelancerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FreelancerNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool InActiveField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> InactiveDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IndustryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IndustryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> InvitationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InvoiceCurrencyCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InvoiceCurrencyIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double InvoicesDueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsActiveForMobileField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsBlockedBusinessUnitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsBlockedQuickSearchField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCreditLimitEnabledField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCustomerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsPrivateLabelCustomerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> KCExpirationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string KnownConsignorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastActivityByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastActivityDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastActivityTypeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastCallDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastInteractionDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastLoginDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastMeetingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastOpportunityDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastOpportunityStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastOpportunitySubjectField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastQuoteDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastShipmentDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LeadDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LeadSourceIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LeadSourceNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocalNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool LogBoxActivatedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MediatorIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MediatorNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MetodoPagoCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PartnerTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PayablesAccountingCardField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PaymentMethodCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PaymentTermEnglishNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PaymentTermIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PhoneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PrimaryContactEmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PrimaryContactIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PrimaryContactNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PrimaryContactPhoneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RankCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RankIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RankNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ReadyForActivationDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ReceivablesAccountingCardField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RegionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RegionNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SATForeignRFCField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SalesmanBusinessUnitIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SalesmanUserEnglishNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SalesmanUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SearchFieldsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SetAsInactiveByNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SetAsInactiveByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> SharedLogisticsInvitationStatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SharedLogisticsInvitationStatusNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> StartWorkingDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool StartWorkingManuallySetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SupportNotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> UpdateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdatedByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UsoCFDICodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VatTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WebsiteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ZipCodeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AccountManagerUserEnglishName {
+            get {
+                return this.AccountManagerUserEnglishNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AccountManagerUserEnglishNameField, value) != true)) {
+                    this.AccountManagerUserEnglishNameField = value;
+                    this.RaisePropertyChanged("AccountManagerUserEnglishName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivatedByUserId {
+            get {
+                return this.ActivatedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivatedByUserIdField, value) != true)) {
+                    this.ActivatedByUserIdField = value;
+                    this.RaisePropertyChanged("ActivatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivatedByUserName {
+            get {
+                return this.ActivatedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivatedByUserNameField, value) != true)) {
+                    this.ActivatedByUserNameField = value;
+                    this.RaisePropertyChanged("ActivatedByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ActivationDate {
+            get {
+                return this.ActivationDateField;
+            }
+            set {
+                if ((this.ActivationDateField.Equals(value) != true)) {
+                    this.ActivationDateField = value;
+                    this.RaisePropertyChanged("ActivationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ActivationRequestDate {
+            get {
+                return this.ActivationRequestDateField;
+            }
+            set {
+                if ((this.ActivationRequestDateField.Equals(value) != true)) {
+                    this.ActivationRequestDateField = value;
+                    this.RaisePropertyChanged("ActivationRequestDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivationRequestedByUserId {
+            get {
+                return this.ActivationRequestedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivationRequestedByUserIdField, value) != true)) {
+                    this.ActivationRequestedByUserIdField = value;
+                    this.RaisePropertyChanged("ActivationRequestedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ActivationRequestedByUserName {
+            get {
+                return this.ActivationRequestedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivationRequestedByUserNameField, value) != true)) {
+                    this.ActivationRequestedByUserNameField = value;
+                    this.RaisePropertyChanged("ActivationRequestedByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Activity {
+            get {
+                return this.ActivityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ActivityField, value) != true)) {
+                    this.ActivityField = value;
+                    this.RaisePropertyChanged("Activity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ActivityWatch {
+            get {
+                return this.ActivityWatchField;
+            }
+            set {
+                if ((this.ActivityWatchField.Equals(value) != true)) {
+                    this.ActivityWatchField = value;
+                    this.RaisePropertyChanged("ActivityWatch");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address1 {
+            get {
+                return this.Address1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Address1Field, value) != true)) {
+                    this.Address1Field = value;
+                    this.RaisePropertyChanged("Address1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address2 {
+            get {
+                return this.Address2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Address2Field, value) != true)) {
+                    this.Address2Field = value;
+                    this.RaisePropertyChanged("Address2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BeforeDeactiveStatusCode {
+            get {
+                return this.BeforeDeactiveStatusCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BeforeDeactiveStatusCodeField, value) != true)) {
+                    this.BeforeDeactiveStatusCodeField = value;
+                    this.RaisePropertyChanged("BeforeDeactiveStatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillToId {
+            get {
+                return this.BillToIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillToIdField, value) != true)) {
+                    this.BillToIdField = value;
+                    this.RaisePropertyChanged("BillToId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillToName {
+            get {
+                return this.BillToNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillToNameField, value) != true)) {
+                    this.BillToNameField = value;
+                    this.RaisePropertyChanged("BillToName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool BlockNewInvoiceCreation {
+            get {
+                return this.BlockNewInvoiceCreationField;
+            }
+            set {
+                if ((this.BlockNewInvoiceCreationField.Equals(value) != true)) {
+                    this.BlockNewInvoiceCreationField = value;
+                    this.RaisePropertyChanged("BlockNewInvoiceCreation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool BlockNewShipmentCreation {
+            get {
+                return this.BlockNewShipmentCreationField;
+            }
+            set {
+                if ((this.BlockNewShipmentCreationField.Equals(value) != true)) {
+                    this.BlockNewShipmentCreationField = value;
+                    this.RaisePropertyChanged("BlockNewShipmentCreation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CityName {
+            get {
+                return this.CityNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CityNameField, value) != true)) {
+                    this.CityNameField = value;
+                    this.RaisePropertyChanged("CityName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClassifierId {
+            get {
+                return this.ClassifierIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClassifierIdField, value) != true)) {
+                    this.ClassifierIdField = value;
+                    this.RaisePropertyChanged("ClassifierId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClassifierName {
+            get {
+                return this.ClassifierNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClassifierNameField, value) != true)) {
+                    this.ClassifierNameField = value;
+                    this.RaisePropertyChanged("ClassifierName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Code {
+            get {
+                return this.CodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CodeField, value) != true)) {
+                    this.CodeField = value;
+                    this.RaisePropertyChanged("Code");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CollectorId {
+            get {
+                return this.CollectorIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CollectorIdField, value) != true)) {
+                    this.CollectorIdField = value;
+                    this.RaisePropertyChanged("CollectorId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CollectorName {
+            get {
+                return this.CollectorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CollectorNameField, value) != true)) {
+                    this.CollectorNameField = value;
+                    this.RaisePropertyChanged("CollectorName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CompetitorFields {
+            get {
+                return this.CompetitorFieldsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CompetitorFieldsField, value) != true)) {
+                    this.CompetitorFieldsField = value;
+                    this.RaisePropertyChanged("CompetitorFields");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryCode {
+            get {
+                return this.CountryCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryCodeField, value) != true)) {
+                    this.CountryCodeField = value;
+                    this.RaisePropertyChanged("CountryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryId {
+            get {
+                return this.CountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryIdField, value) != true)) {
+                    this.CountryIdField = value;
+                    this.RaisePropertyChanged("CountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryName {
+            get {
+                return this.CountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryNameField, value) != true)) {
+                    this.CountryNameField = value;
+                    this.RaisePropertyChanged("CountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> CreateDate {
+            get {
+                return this.CreateDateField;
+            }
+            set {
+                if ((this.CreateDateField.Equals(value) != true)) {
+                    this.CreateDateField = value;
+                    this.RaisePropertyChanged("CreateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByUserId {
+            get {
+                return this.CreatedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByUserIdField, value) != true)) {
+                    this.CreatedByUserIdField = value;
+                    this.RaisePropertyChanged("CreatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByUserName {
+            get {
+                return this.CreatedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByUserNameField, value) != true)) {
+                    this.CreatedByUserNameField = value;
+                    this.RaisePropertyChanged("CreatedByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CreditLimitAmount {
+            get {
+                return this.CreditLimitAmountField;
+            }
+            set {
+                if ((this.CreditLimitAmountField.Equals(value) != true)) {
+                    this.CreditLimitAmountField = value;
+                    this.RaisePropertyChanged("CreditLimitAmount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CreditLimitOpenBalance {
+            get {
+                return this.CreditLimitOpenBalanceField;
+            }
+            set {
+                if ((this.CreditLimitOpenBalanceField.Equals(value) != true)) {
+                    this.CreditLimitOpenBalanceField = value;
+                    this.RaisePropertyChanged("CreditLimitOpenBalance");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> CreditLimitWarningPercentage {
+            get {
+                return this.CreditLimitWarningPercentageField;
+            }
+            set {
+                if ((this.CreditLimitWarningPercentageField.Equals(value) != true)) {
+                    this.CreditLimitWarningPercentageField = value;
+                    this.RaisePropertyChanged("CreditLimitWarningPercentage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerSizeId {
+            get {
+                return this.CustomerSizeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerSizeIdField, value) != true)) {
+                    this.CustomerSizeIdField = value;
+                    this.RaisePropertyChanged("CustomerSizeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerSizeName {
+            get {
+                return this.CustomerSizeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerSizeNameField, value) != true)) {
+                    this.CustomerSizeNameField = value;
+                    this.RaisePropertyChanged("CustomerSizeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerStatusCode {
+            get {
+                return this.CustomerStatusCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerStatusCodeField, value) != true)) {
+                    this.CustomerStatusCodeField = value;
+                    this.RaisePropertyChanged("CustomerStatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerStatusName {
+            get {
+                return this.CustomerStatusNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerStatusNameField, value) != true)) {
+                    this.CustomerStatusNameField = value;
+                    this.RaisePropertyChanged("CustomerStatusName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomerStatusTemplateCode {
+            get {
+                return this.CustomerStatusTemplateCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomerStatusTemplateCodeField, value) != true)) {
+                    this.CustomerStatusTemplateCodeField = value;
+                    this.RaisePropertyChanged("CustomerStatusTemplateCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomsAgentId {
+            get {
+                return this.CustomsAgentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomsAgentIdField, value) != true)) {
+                    this.CustomsAgentIdField = value;
+                    this.RaisePropertyChanged("CustomsAgentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CustomsAgentName {
+            get {
+                return this.CustomsAgentNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CustomsAgentNameField, value) != true)) {
+                    this.CustomsAgentNameField = value;
+                    this.RaisePropertyChanged("CustomsAgentName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool EnableConsolidationInvoices {
+            get {
+                return this.EnableConsolidationInvoicesField;
+            }
+            set {
+                if ((this.EnableConsolidationInvoicesField.Equals(value) != true)) {
+                    this.EnableConsolidationInvoicesField = value;
+                    this.RaisePropertyChanged("EnableConsolidationInvoices");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EnglishName {
+            get {
+                return this.EnglishNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EnglishNameField, value) != true)) {
+                    this.EnglishNameField = value;
+                    this.RaisePropertyChanged("EnglishName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExternalAccountingBusinessArea {
+            get {
+                return this.ExternalAccountingBusinessAreaField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalAccountingBusinessAreaField, value) != true)) {
+                    this.ExternalAccountingBusinessAreaField = value;
+                    this.RaisePropertyChanged("ExternalAccountingBusinessArea");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExternalId2 {
+            get {
+                return this.ExternalId2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalId2Field, value) != true)) {
+                    this.ExternalId2Field = value;
+                    this.RaisePropertyChanged("ExternalId2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field1 {
+            get {
+                return this.Field1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field1Field, value) != true)) {
+                    this.Field1Field = value;
+                    this.RaisePropertyChanged("Field1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field10 {
+            get {
+                return this.Field10Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field10Field, value) != true)) {
+                    this.Field10Field = value;
+                    this.RaisePropertyChanged("Field10");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field2 {
+            get {
+                return this.Field2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field2Field, value) != true)) {
+                    this.Field2Field = value;
+                    this.RaisePropertyChanged("Field2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field3 {
+            get {
+                return this.Field3Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field3Field, value) != true)) {
+                    this.Field3Field = value;
+                    this.RaisePropertyChanged("Field3");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field4 {
+            get {
+                return this.Field4Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field4Field, value) != true)) {
+                    this.Field4Field = value;
+                    this.RaisePropertyChanged("Field4");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field5 {
+            get {
+                return this.Field5Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field5Field, value) != true)) {
+                    this.Field5Field = value;
+                    this.RaisePropertyChanged("Field5");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field6 {
+            get {
+                return this.Field6Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field6Field, value) != true)) {
+                    this.Field6Field = value;
+                    this.RaisePropertyChanged("Field6");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field7 {
+            get {
+                return this.Field7Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field7Field, value) != true)) {
+                    this.Field7Field = value;
+                    this.RaisePropertyChanged("Field7");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field8 {
+            get {
+                return this.Field8Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field8Field, value) != true)) {
+                    this.Field8Field = value;
+                    this.RaisePropertyChanged("Field8");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Field9 {
+            get {
+                return this.Field9Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Field9Field, value) != true)) {
+                    this.Field9Field = value;
+                    this.RaisePropertyChanged("Field9");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> FirstInvoiceDate {
+            get {
+                return this.FirstInvoiceDateField;
+            }
+            set {
+                if ((this.FirstInvoiceDateField.Equals(value) != true)) {
+                    this.FirstInvoiceDateField = value;
+                    this.RaisePropertyChanged("FirstInvoiceDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> FirstShipmentDate {
+            get {
+                return this.FirstShipmentDateField;
+            }
+            set {
+                if ((this.FirstShipmentDateField.Equals(value) != true)) {
+                    this.FirstShipmentDateField = value;
+                    this.RaisePropertyChanged("FirstShipmentDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ForwarderId {
+            get {
+                return this.ForwarderIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ForwarderIdField, value) != true)) {
+                    this.ForwarderIdField = value;
+                    this.RaisePropertyChanged("ForwarderId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ForwarderName {
+            get {
+                return this.ForwarderNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ForwarderNameField, value) != true)) {
+                    this.ForwarderNameField = value;
+                    this.RaisePropertyChanged("ForwarderName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FreelancerId {
+            get {
+                return this.FreelancerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FreelancerIdField, value) != true)) {
+                    this.FreelancerIdField = value;
+                    this.RaisePropertyChanged("FreelancerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FreelancerName {
+            get {
+                return this.FreelancerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FreelancerNameField, value) != true)) {
+                    this.FreelancerNameField = value;
+                    this.RaisePropertyChanged("FreelancerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool InActive {
+            get {
+                return this.InActiveField;
+            }
+            set {
+                if ((this.InActiveField.Equals(value) != true)) {
+                    this.InActiveField = value;
+                    this.RaisePropertyChanged("InActive");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> InactiveDate {
+            get {
+                return this.InactiveDateField;
+            }
+            set {
+                if ((this.InactiveDateField.Equals(value) != true)) {
+                    this.InactiveDateField = value;
+                    this.RaisePropertyChanged("InactiveDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IndustryId {
+            get {
+                return this.IndustryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IndustryIdField, value) != true)) {
+                    this.IndustryIdField = value;
+                    this.RaisePropertyChanged("IndustryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IndustryName {
+            get {
+                return this.IndustryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IndustryNameField, value) != true)) {
+                    this.IndustryNameField = value;
+                    this.RaisePropertyChanged("IndustryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> InvitationDate {
+            get {
+                return this.InvitationDateField;
+            }
+            set {
+                if ((this.InvitationDateField.Equals(value) != true)) {
+                    this.InvitationDateField = value;
+                    this.RaisePropertyChanged("InvitationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InvoiceCurrencyCode {
+            get {
+                return this.InvoiceCurrencyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InvoiceCurrencyCodeField, value) != true)) {
+                    this.InvoiceCurrencyCodeField = value;
+                    this.RaisePropertyChanged("InvoiceCurrencyCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InvoiceCurrencyId {
+            get {
+                return this.InvoiceCurrencyIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InvoiceCurrencyIdField, value) != true)) {
+                    this.InvoiceCurrencyIdField = value;
+                    this.RaisePropertyChanged("InvoiceCurrencyId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double InvoicesDue {
+            get {
+                return this.InvoicesDueField;
+            }
+            set {
+                if ((this.InvoicesDueField.Equals(value) != true)) {
+                    this.InvoicesDueField = value;
+                    this.RaisePropertyChanged("InvoicesDue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsActiveForMobile {
+            get {
+                return this.IsActiveForMobileField;
+            }
+            set {
+                if ((this.IsActiveForMobileField.Equals(value) != true)) {
+                    this.IsActiveForMobileField = value;
+                    this.RaisePropertyChanged("IsActiveForMobile");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsBlockedBusinessUnit {
+            get {
+                return this.IsBlockedBusinessUnitField;
+            }
+            set {
+                if ((this.IsBlockedBusinessUnitField.Equals(value) != true)) {
+                    this.IsBlockedBusinessUnitField = value;
+                    this.RaisePropertyChanged("IsBlockedBusinessUnit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsBlockedQuickSearch {
+            get {
+                return this.IsBlockedQuickSearchField;
+            }
+            set {
+                if ((this.IsBlockedQuickSearchField.Equals(value) != true)) {
+                    this.IsBlockedQuickSearchField = value;
+                    this.RaisePropertyChanged("IsBlockedQuickSearch");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCreditLimitEnabled {
+            get {
+                return this.IsCreditLimitEnabledField;
+            }
+            set {
+                if ((this.IsCreditLimitEnabledField.Equals(value) != true)) {
+                    this.IsCreditLimitEnabledField = value;
+                    this.RaisePropertyChanged("IsCreditLimitEnabled");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCustomer {
+            get {
+                return this.IsCustomerField;
+            }
+            set {
+                if ((this.IsCustomerField.Equals(value) != true)) {
+                    this.IsCustomerField = value;
+                    this.RaisePropertyChanged("IsCustomer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsPrivateLabelCustomer {
+            get {
+                return this.IsPrivateLabelCustomerField;
+            }
+            set {
+                if ((this.IsPrivateLabelCustomerField.Equals(value) != true)) {
+                    this.IsPrivateLabelCustomerField = value;
+                    this.RaisePropertyChanged("IsPrivateLabelCustomer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> KCExpirationDate {
+            get {
+                return this.KCExpirationDateField;
+            }
+            set {
+                if ((this.KCExpirationDateField.Equals(value) != true)) {
+                    this.KCExpirationDateField = value;
+                    this.RaisePropertyChanged("KCExpirationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string KnownConsignor {
+            get {
+                return this.KnownConsignorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KnownConsignorField, value) != true)) {
+                    this.KnownConsignorField = value;
+                    this.RaisePropertyChanged("KnownConsignor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastActivityByUserName {
+            get {
+                return this.LastActivityByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastActivityByUserNameField, value) != true)) {
+                    this.LastActivityByUserNameField = value;
+                    this.RaisePropertyChanged("LastActivityByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastActivityDate {
+            get {
+                return this.LastActivityDateField;
+            }
+            set {
+                if ((this.LastActivityDateField.Equals(value) != true)) {
+                    this.LastActivityDateField = value;
+                    this.RaisePropertyChanged("LastActivityDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastActivityTypeName {
+            get {
+                return this.LastActivityTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastActivityTypeNameField, value) != true)) {
+                    this.LastActivityTypeNameField = value;
+                    this.RaisePropertyChanged("LastActivityTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastCallDate {
+            get {
+                return this.LastCallDateField;
+            }
+            set {
+                if ((this.LastCallDateField.Equals(value) != true)) {
+                    this.LastCallDateField = value;
+                    this.RaisePropertyChanged("LastCallDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastInteractionDate {
+            get {
+                return this.LastInteractionDateField;
+            }
+            set {
+                if ((this.LastInteractionDateField.Equals(value) != true)) {
+                    this.LastInteractionDateField = value;
+                    this.RaisePropertyChanged("LastInteractionDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastLoginDate {
+            get {
+                return this.LastLoginDateField;
+            }
+            set {
+                if ((this.LastLoginDateField.Equals(value) != true)) {
+                    this.LastLoginDateField = value;
+                    this.RaisePropertyChanged("LastLoginDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastMeetingDate {
+            get {
+                return this.LastMeetingDateField;
+            }
+            set {
+                if ((this.LastMeetingDateField.Equals(value) != true)) {
+                    this.LastMeetingDateField = value;
+                    this.RaisePropertyChanged("LastMeetingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastOpportunityDate {
+            get {
+                return this.LastOpportunityDateField;
+            }
+            set {
+                if ((this.LastOpportunityDateField.Equals(value) != true)) {
+                    this.LastOpportunityDateField = value;
+                    this.RaisePropertyChanged("LastOpportunityDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastOpportunityStatus {
+            get {
+                return this.LastOpportunityStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastOpportunityStatusField, value) != true)) {
+                    this.LastOpportunityStatusField = value;
+                    this.RaisePropertyChanged("LastOpportunityStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastOpportunitySubject {
+            get {
+                return this.LastOpportunitySubjectField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastOpportunitySubjectField, value) != true)) {
+                    this.LastOpportunitySubjectField = value;
+                    this.RaisePropertyChanged("LastOpportunitySubject");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastQuoteDate {
+            get {
+                return this.LastQuoteDateField;
+            }
+            set {
+                if ((this.LastQuoteDateField.Equals(value) != true)) {
+                    this.LastQuoteDateField = value;
+                    this.RaisePropertyChanged("LastQuoteDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastShipmentDate {
+            get {
+                return this.LastShipmentDateField;
+            }
+            set {
+                if ((this.LastShipmentDateField.Equals(value) != true)) {
+                    this.LastShipmentDateField = value;
+                    this.RaisePropertyChanged("LastShipmentDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LeadDescription {
+            get {
+                return this.LeadDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LeadDescriptionField, value) != true)) {
+                    this.LeadDescriptionField = value;
+                    this.RaisePropertyChanged("LeadDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LeadSourceId {
+            get {
+                return this.LeadSourceIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LeadSourceIdField, value) != true)) {
+                    this.LeadSourceIdField = value;
+                    this.RaisePropertyChanged("LeadSourceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LeadSourceName {
+            get {
+                return this.LeadSourceNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LeadSourceNameField, value) != true)) {
+                    this.LeadSourceNameField = value;
+                    this.RaisePropertyChanged("LeadSourceName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LocalName {
+            get {
+                return this.LocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocalNameField, value) != true)) {
+                    this.LocalNameField = value;
+                    this.RaisePropertyChanged("LocalName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool LogBoxActivated {
+            get {
+                return this.LogBoxActivatedField;
+            }
+            set {
+                if ((this.LogBoxActivatedField.Equals(value) != true)) {
+                    this.LogBoxActivatedField = value;
+                    this.RaisePropertyChanged("LogBoxActivated");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MediatorId {
+            get {
+                return this.MediatorIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MediatorIdField, value) != true)) {
+                    this.MediatorIdField = value;
+                    this.RaisePropertyChanged("MediatorId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MediatorName {
+            get {
+                return this.MediatorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MediatorNameField, value) != true)) {
+                    this.MediatorNameField = value;
+                    this.RaisePropertyChanged("MediatorName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MetodoPagoCode {
+            get {
+                return this.MetodoPagoCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MetodoPagoCodeField, value) != true)) {
+                    this.MetodoPagoCodeField = value;
+                    this.RaisePropertyChanged("MetodoPagoCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Notes {
+            get {
+                return this.NotesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
+                    this.NotesField = value;
+                    this.RaisePropertyChanged("Notes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PartnerTypeId {
+            get {
+                return this.PartnerTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PartnerTypeIdField, value) != true)) {
+                    this.PartnerTypeIdField = value;
+                    this.RaisePropertyChanged("PartnerTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PayablesAccountingCard {
+            get {
+                return this.PayablesAccountingCardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PayablesAccountingCardField, value) != true)) {
+                    this.PayablesAccountingCardField = value;
+                    this.RaisePropertyChanged("PayablesAccountingCard");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PaymentMethodCode {
+            get {
+                return this.PaymentMethodCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PaymentMethodCodeField, value) != true)) {
+                    this.PaymentMethodCodeField = value;
+                    this.RaisePropertyChanged("PaymentMethodCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PaymentTermEnglishName {
+            get {
+                return this.PaymentTermEnglishNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PaymentTermEnglishNameField, value) != true)) {
+                    this.PaymentTermEnglishNameField = value;
+                    this.RaisePropertyChanged("PaymentTermEnglishName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PaymentTermId {
+            get {
+                return this.PaymentTermIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PaymentTermIdField, value) != true)) {
+                    this.PaymentTermIdField = value;
+                    this.RaisePropertyChanged("PaymentTermId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Phone {
+            get {
+                return this.PhoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhoneField, value) != true)) {
+                    this.PhoneField = value;
+                    this.RaisePropertyChanged("Phone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrimaryContactEmail {
+            get {
+                return this.PrimaryContactEmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrimaryContactEmailField, value) != true)) {
+                    this.PrimaryContactEmailField = value;
+                    this.RaisePropertyChanged("PrimaryContactEmail");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrimaryContactId {
+            get {
+                return this.PrimaryContactIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrimaryContactIdField, value) != true)) {
+                    this.PrimaryContactIdField = value;
+                    this.RaisePropertyChanged("PrimaryContactId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrimaryContactName {
+            get {
+                return this.PrimaryContactNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrimaryContactNameField, value) != true)) {
+                    this.PrimaryContactNameField = value;
+                    this.RaisePropertyChanged("PrimaryContactName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrimaryContactPhone {
+            get {
+                return this.PrimaryContactPhoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrimaryContactPhoneField, value) != true)) {
+                    this.PrimaryContactPhoneField = value;
+                    this.RaisePropertyChanged("PrimaryContactPhone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RankCode {
+            get {
+                return this.RankCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RankCodeField, value) != true)) {
+                    this.RankCodeField = value;
+                    this.RaisePropertyChanged("RankCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RankId {
+            get {
+                return this.RankIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RankIdField, value) != true)) {
+                    this.RankIdField = value;
+                    this.RaisePropertyChanged("RankId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RankName {
+            get {
+                return this.RankNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RankNameField, value) != true)) {
+                    this.RankNameField = value;
+                    this.RaisePropertyChanged("RankName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ReadyForActivationDate {
+            get {
+                return this.ReadyForActivationDateField;
+            }
+            set {
+                if ((this.ReadyForActivationDateField.Equals(value) != true)) {
+                    this.ReadyForActivationDateField = value;
+                    this.RaisePropertyChanged("ReadyForActivationDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ReceivablesAccountingCard {
+            get {
+                return this.ReceivablesAccountingCardField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReceivablesAccountingCardField, value) != true)) {
+                    this.ReceivablesAccountingCardField = value;
+                    this.RaisePropertyChanged("ReceivablesAccountingCard");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RegionId {
+            get {
+                return this.RegionIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RegionIdField, value) != true)) {
+                    this.RegionIdField = value;
+                    this.RaisePropertyChanged("RegionId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RegionName {
+            get {
+                return this.RegionNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RegionNameField, value) != true)) {
+                    this.RegionNameField = value;
+                    this.RaisePropertyChanged("RegionName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SATForeignRFC {
+            get {
+                return this.SATForeignRFCField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SATForeignRFCField, value) != true)) {
+                    this.SATForeignRFCField = value;
+                    this.RaisePropertyChanged("SATForeignRFC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SalesmanBusinessUnitId {
+            get {
+                return this.SalesmanBusinessUnitIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SalesmanBusinessUnitIdField, value) != true)) {
+                    this.SalesmanBusinessUnitIdField = value;
+                    this.RaisePropertyChanged("SalesmanBusinessUnitId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SalesmanUserEnglishName {
+            get {
+                return this.SalesmanUserEnglishNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SalesmanUserEnglishNameField, value) != true)) {
+                    this.SalesmanUserEnglishNameField = value;
+                    this.RaisePropertyChanged("SalesmanUserEnglishName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SalesmanUserId {
+            get {
+                return this.SalesmanUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SalesmanUserIdField, value) != true)) {
+                    this.SalesmanUserIdField = value;
+                    this.RaisePropertyChanged("SalesmanUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SearchFields {
+            get {
+                return this.SearchFieldsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SearchFieldsField, value) != true)) {
+                    this.SearchFieldsField = value;
+                    this.RaisePropertyChanged("SearchFields");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SetAsInactiveByName {
+            get {
+                return this.SetAsInactiveByNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SetAsInactiveByNameField, value) != true)) {
+                    this.SetAsInactiveByNameField = value;
+                    this.RaisePropertyChanged("SetAsInactiveByName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SetAsInactiveByUserId {
+            get {
+                return this.SetAsInactiveByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SetAsInactiveByUserIdField, value) != true)) {
+                    this.SetAsInactiveByUserIdField = value;
+                    this.RaisePropertyChanged("SetAsInactiveByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> SharedLogisticsInvitationStatusCode {
+            get {
+                return this.SharedLogisticsInvitationStatusCodeField;
+            }
+            set {
+                if ((this.SharedLogisticsInvitationStatusCodeField.Equals(value) != true)) {
+                    this.SharedLogisticsInvitationStatusCodeField = value;
+                    this.RaisePropertyChanged("SharedLogisticsInvitationStatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SharedLogisticsInvitationStatusName {
+            get {
+                return this.SharedLogisticsInvitationStatusNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SharedLogisticsInvitationStatusNameField, value) != true)) {
+                    this.SharedLogisticsInvitationStatusNameField = value;
+                    this.RaisePropertyChanged("SharedLogisticsInvitationStatusName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> StartWorkingDate {
+            get {
+                return this.StartWorkingDateField;
+            }
+            set {
+                if ((this.StartWorkingDateField.Equals(value) != true)) {
+                    this.StartWorkingDateField = value;
+                    this.RaisePropertyChanged("StartWorkingDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool StartWorkingManuallySet {
+            get {
+                return this.StartWorkingManuallySetField;
+            }
+            set {
+                if ((this.StartWorkingManuallySetField.Equals(value) != true)) {
+                    this.StartWorkingManuallySetField = value;
+                    this.RaisePropertyChanged("StartWorkingManuallySet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SupportNotes {
+            get {
+                return this.SupportNotesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SupportNotesField, value) != true)) {
+                    this.SupportNotesField = value;
+                    this.RaisePropertyChanged("SupportNotes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> UpdateDate {
+            get {
+                return this.UpdateDateField;
+            }
+            set {
+                if ((this.UpdateDateField.Equals(value) != true)) {
+                    this.UpdateDateField = value;
+                    this.RaisePropertyChanged("UpdateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpdatedByUserId {
+            get {
+                return this.UpdatedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByUserIdField, value) != true)) {
+                    this.UpdatedByUserIdField = value;
+                    this.RaisePropertyChanged("UpdatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpdatedByUserName {
+            get {
+                return this.UpdatedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdatedByUserNameField, value) != true)) {
+                    this.UpdatedByUserNameField = value;
+                    this.RaisePropertyChanged("UpdatedByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UsoCFDICode {
+            get {
+                return this.UsoCFDICodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UsoCFDICodeField, value) != true)) {
+                    this.UsoCFDICodeField = value;
+                    this.RaisePropertyChanged("UsoCFDICode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatNumber {
+            get {
+                return this.VatNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatNumberField, value) != true)) {
+                    this.VatNumberField = value;
+                    this.RaisePropertyChanged("VatNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VatTypeId {
+            get {
+                return this.VatTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VatTypeIdField, value) != true)) {
+                    this.VatTypeIdField = value;
+                    this.RaisePropertyChanged("VatTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Website {
+            get {
+                return this.WebsiteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WebsiteField, value) != true)) {
+                    this.WebsiteField = value;
+                    this.RaisePropertyChanged("Website");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ZipCode {
+            get {
+                return this.ZipCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ZipCodeField, value) != true)) {
+                    this.ZipCodeField = value;
+                    this.RaisePropertyChanged("ZipCode");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="OpportunityServiceReference.IOpportunityWcfService")]
     public interface IOpportunityWcfService {
@@ -1588,7 +3777,7 @@ namespace Logitude.HybridTest.OpportunityServiceReference {
     public partial class GetCustomerListByOpportunityIdResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public Logitude.BL.CommonDataModel.EntityLists.CustomerList GetCustomerListByOpportunityIdResult;
+        public Logitude.HybridTest.OpportunityServiceReference.CustomerList GetCustomerListByOpportunityIdResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
         public Logitude.Server.Tools.Response response;
@@ -1596,7 +3785,7 @@ namespace Logitude.HybridTest.OpportunityServiceReference {
         public GetCustomerListByOpportunityIdResponse() {
         }
         
-        public GetCustomerListByOpportunityIdResponse(Logitude.BL.CommonDataModel.EntityLists.CustomerList GetCustomerListByOpportunityIdResult, Logitude.Server.Tools.Response response) {
+        public GetCustomerListByOpportunityIdResponse(Logitude.HybridTest.OpportunityServiceReference.CustomerList GetCustomerListByOpportunityIdResult, Logitude.Server.Tools.Response response) {
             this.GetCustomerListByOpportunityIdResult = GetCustomerListByOpportunityIdResult;
             this.response = response;
         }
@@ -1657,7 +3846,7 @@ namespace Logitude.HybridTest.OpportunityServiceReference {
             return base.Channel.GetCustomerListByOpportunityId(request);
         }
         
-        public Logitude.BL.CommonDataModel.EntityLists.CustomerList GetCustomerListByOpportunityId(string opportunityId, int tenant, ref Logitude.Server.Tools.Response response) {
+        public Logitude.HybridTest.OpportunityServiceReference.CustomerList GetCustomerListByOpportunityId(string opportunityId, int tenant, ref Logitude.Server.Tools.Response response) {
             Logitude.HybridTest.OpportunityServiceReference.GetCustomerListByOpportunityIdRequest inValue = new Logitude.HybridTest.OpportunityServiceReference.GetCustomerListByOpportunityIdRequest();
             inValue.opportunityId = opportunityId;
             inValue.tenant = tenant;

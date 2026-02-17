@@ -6,7 +6,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CreditLimitPopupComponent.html',
 })
 

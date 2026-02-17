@@ -12,10 +12,9 @@ import {HybridPartnerPMService} from '../../../../Common/Services/StandardPMs/Hy
 import {WebFreightDomainService} from '../../../../Infrastructure/Services/WebFreightDomainService';
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'HybridPartnerUploadLogo',
     templateUrl: './HybridPartnerUploadLogoComponent.html',
@@ -35,7 +34,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     SharedLogisticsLogoFileHtmlId: string = Guid.NewRandomString();
     EntityPM: HybridPartnerPM;
     LogoFileHtmlId: string = Guid.NewRandomString();
-    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.O.LogoHelpText");
+    LogoHelpText: string = TextCodeTranslator.Translate("Tenant.LogoHelpText");
     DemoMessageVisibility: boolean;
     ShowUploadSharedLogisLogo: boolean = false;
 
@@ -44,7 +43,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _imageLibraryService: ImageLibraryService, private CD: ChangeDetectorRef) {
         this._HybridPartnerPMService = new HybridPartnerPMService();
-        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
 
         });
 
@@ -58,7 +57,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
 
 
 
-        if (ObjectsLocator.IsDemoTenant(SessionLocator.Tenant.toString())) {
+        if (SessionLocator.Tenant == 65) {
             this.DemoMessageVisibility = true;
 
             if (SessionLocator.LoggedUserPM.Email.toLowerCase() == "customercare@logitudeworld.com‏") {
@@ -95,7 +94,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
 
         }
         //var myService: WebFreightDomainService = new WebFreightDomainService();
-        //myService.getHypridPartnerLogo(this.EntityPM.LogoId).subscribe((myResult:any) => {
+        //myService.getHypridPartnerLogo(this.EntityPM.LogoId).subscribe(myResult => {
         //    if (myResult) {
         //        this.Source = "data:image/JPEG;base64," + myResult;
 
@@ -105,7 +104,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         //        }
         //    }
         //});
-        this._imageLibraryService.DownloadFile(this.EntityPM.LogoId, "jpg", "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res:any) => {
+        this._imageLibraryService.DownloadFile(this.EntityPM.LogoId, "jpg", "images", SessionInfo.LoggedUserTenant, "Base64").subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -166,7 +165,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         if (isload) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         }
-        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._imageLibraryService.DownloadFile("verysmalllogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -191,7 +190,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         if (isload) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         }
-        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        this._imageLibraryService.DownloadFile("sharedLogtsitcslogo" + SessionInfo.LoggedUserTenant, "png", "logos", SessionInfo.LoggedUserTenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
@@ -274,7 +273,7 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
         filter.Height = height;
         filter.Extension = extension;
         filter.UploadMode = "Image";
-        this._imageLibraryService.UploadFile(filter).subscribe((res:any) => {
+        this._imageLibraryService.UploadFile(filter).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             var result: any;
@@ -294,13 +293,13 @@ export class HybridPartnerUploadLogoComponent implements AfterViewInit {
                         filter.Height = 35;
                         filter.Extension = extension;
                         filter.UploadMode = "Image";
-                        this._imageLibraryService.UploadFile(filter).subscribe((myres:any) => {
+                        this._imageLibraryService.UploadFile(filter).subscribe(myres => {
                             var mypmResponse: ServiceResponse = myres;
                             var myresult: any;
                             if (!mypmResponse.HasError) {
                                 myresult = mypmResponse.Result;
                                 this.EntityPM.SmallLogoId = myresult;
-                                this._HybridPartnerPMService.update(this.EntityPM).subscribe((myResult:any) => {
+                                this._HybridPartnerPMService.update(this.EntityPM).subscribe(myResult => {
                                     if (!myResult.HasError) {
                                         this.IsShowMessageComplate = true;
                                         this.IsShowProgressLoading = false;

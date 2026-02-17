@@ -18,7 +18,7 @@ export class OperationsComp {
         this.EditShipmentTabs = new EditTabsComponent();
     }
     DoOperations(ShipmentLevelCode: string, Direction: string, TransportMode: string, ShipmentType: string) {
-        this.Operation.GoToMainMenu2('General.MH.Operations');
+        this.Operation.GoToMainMenu('General.MH.Operations');
         this.Operation.SelectMenuWorkSpaceTabs('SHIP');
 
         return this.ShipmentWorkSpace.CreateShipment(ShipmentLevelCode, Direction, TransportMode, ShipmentType);

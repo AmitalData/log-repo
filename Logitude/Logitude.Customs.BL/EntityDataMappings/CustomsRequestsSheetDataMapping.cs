@@ -14,7 +14,6 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Def.ClosedTable;
-using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -66,33 +65,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 result = string.IsNullOrEmpty(result) ? entityPM.CustomFileNo : result + "," + entityPM.CustomFileNo;
             }
-            if (entityPM.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
+
+            DeclarationRepository declarationRepository = new DeclarationRepository(entityPM.Tenant);
+            DeclarationKeys declarationKeys = new DeclarationKeys() { Id = entityPM.EntityId1 };
+            Declaration declaration = declarationRepository.GetSingle(declarationKeys);
+            
+            if (declaration != null)
             {
-                DeclarationRepository declarationRepository = new DeclarationRepository(entityPM.Tenant);
-                DeclarationKeys declarationKeys = new DeclarationKeys() { Id = entityPM.EntityId1 };
-                bool faster = true;//cache not relvanat due id Change all the time !!
-                string DeclarationNumber = null;
-                if (faster)
-                {
-                    DeclarationNumber =
-                    declarationRepository.GetQSingle(declarationKeys)
-                        .Select(r => r.DeclarationNumber)
-                        .FirstOrDefault();
-                }
-                else
-                {
-                    Declaration declaration = declarationRepository.GetSingle(declarationKeys);
-                }
-
-
-
-                if (/*declaration != null*/ !string.IsNullOrWhiteSpace(DeclarationNumber))
-                {
-                    result = string.IsNullOrEmpty(result) ? /*declaration.*/DeclarationNumber : result + "," + /*declaration.*/DeclarationNumber;
-                }
-
-
+                result = string.IsNullOrEmpty(result) ? declaration.DeclarationNumber : result + "," + declaration.DeclarationNumber;
             }
+
             result = result ?? "";
             entityPM.SearchFields = result.ToLower();
             poco.SearchFields = entityPM.SearchFields;

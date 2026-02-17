@@ -7,6 +7,37 @@
         </td>
     </tr>
 
+    <tr *ngIf="ActionStepsStateList != null && ActionStepsStateList.length > 0" style="height:1px;">
+
+        <td colspan="2" style="vertical-align:top;height:1px">
+            <ul style="margin-top:10px" class="SimpleGridViewBody">
+                <li *ngFor="let item of ActionStepsStateList" class="SimpleGridViewRow RowHover RowSelected">
+                    <table>
+                        <tr>
+                            <td style="width:10px"></td>
+                            <td class="GridViewCell">
+                                <div>
+                                    {{item.Message}}
+                                    <img *ngIf="item.state == 'Error' || item.state == 'Failed'  " src="./Images/SimplogIcons/ErrorIcon.png" width="20" height="20" />
+                                    <img *ngIf="item.state == 'Warning' " src="./Images/SimplogIcons/Warning.png" width="20" height="20" />
+                                    <img *ngIf="item.state == 'Succeeded' " src="./Images/SimplogIcons/tick.png" width="20" height="20" />
+
+                                </div>
+
+                            </td>
+
+                            <td></td>
+                        </tr>
+                    </table>
+
+
+                </li>
+            </ul>
+
+        </td>
+        <td style="height:50px"><div style="height:50px"></div></td>
+    </tr>
+
     <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList.length > 0" style="height:1px;">
         <td colspan="2">
             <WarningSummary [ItemsSource]="ValidationWarningsList" [SingleLine]="'true'"></WarningSummary>
@@ -19,7 +50,7 @@
         </td>
 
         <td>
-            <LogLov [ObjectFieldName]="'QuoteClosingReasonId'"
+            <LogLov [ObjectFieldName]="'QuoteClosingReasonCode'"
                     [ObjectTableName]="'QuoteClosingReason'"
                     [DataContext]="DataContext"
                     [LookUpTableName]="'Quote'">
@@ -46,22 +77,13 @@
                     </td>
                 </tr>
 
-                <tr style="height: 90px;">
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 350px; height: 90px;">
-                                    <div style="height: 90px;">
-                                        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'EventNotes'" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
+                <tr style="height: 80px;">
+                    <td style="width:50%">
+                        <div class="FillParent">
+                            <LogTextBox [ObjectFieldName]="'EventNotes'" [IsMultiline]="true" [DataContext]="DataContext"></LogTextBox>
+                        </div>
                     </td>
+                    <td></td>
                 </tr>
             </table>
         </td>
@@ -78,7 +100,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelAction' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'CancelAction' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -86,7 +108,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'ConfirmAction' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!EnabledOkButton">Confirm</button>
+                        <button id="{{'ConfirmAction' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!EnabledOkButton">Confirm</button>
                     </td>
                 </tr>
             </table>

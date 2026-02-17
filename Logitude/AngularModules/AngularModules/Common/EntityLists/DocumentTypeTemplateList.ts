@@ -45,10 +45,5 @@ export class DocumentTypeTemplateList {
 		CC: string;
 		CountryName: string;
 		BCC: string;
-		To: string;
-		AutomationId: string;
-		AttachedExternalDocumentsIds: string;
-		IsSystem: boolean;
-		EntityId: string;
 	
 }

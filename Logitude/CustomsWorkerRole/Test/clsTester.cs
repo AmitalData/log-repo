@@ -26,19 +26,10 @@ using UnifreightIIG.Common.Utils;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Customs.BL.Messaging.Maman;
 using Simplog.Server.Infrastructure.Helpers;
-using Unifreight.Data.AmitalModel.Repsitories;
-using Logitude.Customs.BL.CloseTables;
-using Logitude.Customs.BL.Messaging.ILSWS;
-using Logitude.Customs.BL.TraceEvents;
-using Logitude.Server.Tools.Helpers;
-
-using Logitude.Customs.BL.TraceEvents;
-
-using Logitude.CustomsMessaging.Common.RequestParams;
 
 namespace CustomsWorkerRole.Test
 {
-    public partial class clsTester
+    public class clsTester
     {
 
         public void TestAsDataSet(string closedTableId)
@@ -61,9 +52,9 @@ namespace CustomsWorkerRole.Test
             }
 
             // req.RequestVIA = Logitude.CustomsMessaging.Common.RequestParams.SendRequestVIA.WebServiceInteractive;    
-
+            
             var res = messageService.Send(req);
-
+            
         }
 
         public static void RequestSheetRepushQService(string customsRequestsSheetId, int tenant)
@@ -233,7 +224,7 @@ SELECT TOP 1000 [Id]
         {
             try
             {
-
+                
                 var DeclarationQueryService = new DeclarationQueryService(tenant);
 
 
@@ -257,16 +248,13 @@ SELECT TOP 1000 [Id]
 
         }
 
-
-
-
         public static void SendDeclarationsThatCanResendInBatch()
         {
             //12 or 13
             var declarationQueryService = new DeclarationQueryService(1);
             var declarationRepository = new DeclarationRepository(1);
             var list = declarationRepository.GetDeclarationsThatCanResend(1, 300);
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDeclarationsThatCanResend:Retrieve:" + list.Count().ToString());
+            Debug.WriteLine("GetDeclarationsThatCanResend:Retrieve:" + list.Count().ToString());
             int succ = 0;
             foreach (var item in list)
             {
@@ -288,7 +276,7 @@ SELECT TOP 1000 [Id]
 
                 }
             }
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDeclarationsThatCanResend:succ:" + succ.ToString());
+            Debug.WriteLine("GetDeclarationsThatCanResend:succ:" + succ.ToString());
         }
 
 
@@ -306,213 +294,76 @@ SELECT TOP 1000 [Id]
                     //return Request.CreateResponse(HttpStatusCode.OK, documents);
                     var query = new DeclarationQueryService(customContext);
                     var myCustomsDocumentsTicketPMList = query.GetDeclarationMandatoryTicket(parentEntityId, 1);
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(s.ToString());
+                    Debug.WriteLine(s.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                Debug.WriteLine(ex.ToString());
             }
         }
-        public static void Check_CourierSchedulerServiceIsTimeRange()
-        {
-            
-            StringBuilder stringBuilder = new StringBuilder();
-            bool IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("09:00-13:00", DateTime.Now.Date.AddHours(12), stringBuilder);
-            Debug.Assert(IsTimeRange == true , "12:00 -Expected true 09:00-13:00");
-
-            stringBuilder.Clear();
-            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("09:00-13:00", DateTime.Now.Date.AddHours(8), stringBuilder);
-            Debug.Assert(IsTimeRange  == false, "08:00 -Expected false  09:00-13:00");
-
-            stringBuilder.Clear();
-
-            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("17:00-06:00", DateTime.Now.Date.AddHours(5), stringBuilder);
-            Debug.Assert(IsTimeRange == true, "05:00 -Expected true 17:00-06:00");
-
-            stringBuilder.Clear();
-            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("17:00-06:00", DateTime.Now.Date.AddHours(20), stringBuilder);
-            Debug.Assert(IsTimeRange == true, "20:00 -Expected true 17:00-06:00");
-            stringBuilder.Clear();
-
-            IsTimeRange = Logitude.Customs.BL.BL.CourierSchedulerService.IsTimeRange("17:00-06:00", DateTime.Now.Date.AddHours(8), stringBuilder);
-            Debug.Assert(IsTimeRange == false, "08:00 -Expected false  17:00-06:00");
-
-        }
-
-        public static void GetPointer()
-        {
-            int tenant = 1;
-            
-            
-            var param= new GetTicketsParams()
-            {
-                ParentEntityId = "1-5594",
-                ParentEntityCode = "Declaration",
-                Child1EntityCode = "SupplierInvoice",
-                Child1EntityId = "1",
-                Child2EntityCode = "SupplierInvoiceItem",
-                Child2EntityId = "1"
-            };
-            param = new GetTicketsParams()
-            {
-                ParentEntityId = "1-5594",
-                ParentEntityCode = "Declaration",
-                Child1EntityCode = "SupplierInvoice",
-                Child1EntityId = "1",
-                //Child2EntityCode = "SupplierInvoiceItem",
-                //Child2EntityId = "1"
-            };
-            var customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            var customsDocumentPMList = customsDocumentQueryService
-                .GetCustomsDocumentPMListWithoutRequestedDoc(param, tenant);
-
-            customsDocumentPMList = customsDocumentQueryService
-                .GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(param, tenant);
-
-            var qs = new CustomsDocumentsTicketQueryService(tenant);
-            var tickets=qs.GetCustomsDocumentsTickets(param, tenant);
-
-        }
-
-        public static void FeatureToggle()
-        {
-
-            var hcd = FeatureToggleHelper.HasFeatureToggle("HCD", 3);
-            var hcdCache = FeatureToggleHelper.HasFeatureToggle("HCD", 3);
-
-            var hcdNotInCache = FeatureToggleHelper.HasFeatureToggle("HCD", 2);
-
-
-            var notexist = FeatureToggleHelper.HasFeatureToggle("notexist", 1);
-            var notexist_cache = FeatureToggleHelper.HasFeatureToggle("notexist", 1);
-        }
-
-        public static string CheckWSCourierStatistic(int tenant, bool multiThreard)
-        {
-            var declarationCourierStatusQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationCourierStatusQueryService(tenant);
-            var counts = declarationCourierStatusQueryService.GetQueriesCounts(tenant,"",multiThreard);
-            var jsonSetting = ProxyUtil.JsonConvertSerialize(counts);
-            return jsonSetting;
-        }
-
-        public static void TestUnifreightFUStatusTaskService()
-        {
-            //var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
-            //unifreightFUStatusTaskService.UpsertFUStatusLE2U(3, "1-10", new UnifreightFUStatusParam()
-            //{
-            //    Entname = "CFIFILEM",
-            //    PrimaryNum = "60515808",
-            //    Mode = UnifreightEventMode.@new,
-            //    StatusCode = "SMG",
-            //    EventDateTime = new DateTime(2021,03,09),
-            //    OwnerUnifreightUserCode = FUOwnerUnifreightUserCode.SWISS
-            //});
-        }
-
-
-        public static void TestUpdateLOGITUDE_FILE()
-        {
-            int tenant = 3;
-            var repo = new CFIFILEMRepository(tenant);
-            var res = repo.UpdateLOGITUDE_FILE(tenant, 60714877, "xxxx");
-            repo.SubmitChanges();
-            //throw new NotImplementedException();
-
-        }
-
-
-        public static void GetListByCourierHAWB()
-        {
-            var repo = new DeclarationRepository(1);
-            var res=repo.GetListByCourierHAWB("xmd",1);
-            //throw new NotImplementedException();
-        }
-
-        public static void MultiProccessTestLockTab()
+        public static void TestLockTab()
         {
             int nTasks = 0;
             object o = nTasks;
             List<Task> tasks = new List<Task>();
             IDisposable processLockReleaseToken = null;
-
-
-            int counter = 1;
-            string myKey = "Key," + counter.ToString();
-            using (var tran = TransactionFactory.GetTransaction())
+            try
             {
-                using (processLockReleaseToken = ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(1, true, myKey, "blabla"))
+                int counter = 1;
+                string myKey = "Key," + counter.ToString();
+                processLockReleaseToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla");
+
+
+                for (int ctr = 0; ctr < 3; ctr++)
+                    tasks.Add(Task.Run(() =>
+                    { // Instead of doing some work, just sleep.
+                        Thread.Sleep(250);
+                        // Increment the number of tasks.
+                        if (ctr > 1)
+                        {
+                            counter++;
+                        }
+                        myKey = "Key," + counter.ToString();
+                        try
+                        {
+                            using (var processLockReleaseToken1 = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla"))
+                            {
+                                Thread.Sleep(25);
+
+                            }
+                        }
+                        catch (Exception eeee)
+                        {
+
+                            Console.WriteLine(eeee.ToString());
+                        }
+
+
+
+                    }));
+                Task.WaitAll(tasks.ToArray());
+                Console.WriteLine("{0} tasks started and executed.", nTasks);
+            }
+            catch (AggregateException e)
+            {
+                String msg = String.Empty;
+                foreach (var ie in e.InnerExceptions)
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(30));
-
-                    Console.WriteLine("{0} tasks started and executed.", nTasks);
+                    Console.WriteLine("{0}", ie.GetType().Name);
+                    if (!msg.Contains(ie.Message))
+                        msg += ie.Message + Environment.NewLine;
                 }
-
+                Console.WriteLine("\nException Message(s):");
+                Console.WriteLine(msg);
+            }
+            finally
+            {
+                processLockReleaseToken.Dispose();
             }
 
         }
-        //public static void TestLockTab()
-        //{
-        //    int nTasks = 0;
-        //    object o = nTasks;
-        //    List<Task> tasks = new List<Task>();
-        //    IDisposable processLockReleaseToken = null;
-        //    try
-        //    {
-        //        int counter = 1;
-        //        string myKey = "Key," + counter.ToString();
-        //        processLockReleaseToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla");
-
-
-        //        for (int ctr = 0; ctr < 3; ctr++)
-        //            tasks.Add(Task.Run(() =>
-        //            { // Instead of doing some work, just sleep.
-        //                Thread.Sleep(250);
-        //                // Increment the number of tasks.
-        //                if (ctr > 1)
-        //                {
-        //                    counter++;
-        //                }
-        //                myKey = "Key," + counter.ToString();
-        //                try
-        //                {
-        //                    using (var processLockReleaseToken1 = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(myKey, "blabla"))
-        //                    {
-        //                        Thread.Sleep(25);
-
-        //                    }
-        //                }
-        //                catch (Exception eeee)
-        //                {
-
-        //                    Console.WriteLine(eeee.ToString());
-        //                }
-
-
-
-        //            }));
-        //        Task.WaitAll(tasks.ToArray());
-        //        Console.WriteLine("{0} tasks started and executed.", nTasks);
-        //    }
-        //    catch (AggregateException e)
-        //    {
-        //        String msg = String.Empty;
-        //        foreach (var ie in e.InnerExceptions)
-        //        {
-        //            Console.WriteLine("{0}", ie.GetType().Name);
-        //            if (!msg.Contains(ie.Message))
-        //                msg += ie.Message + Environment.NewLine;
-        //        }
-        //        Console.WriteLine("\nException Message(s):");
-        //        Console.WriteLine(msg);
-        //    }
-        //    finally
-        //    {
-        //        processLockReleaseToken.Dispose();
-        //    }
-
-        //}
 
         public void RestoreAlDec()
         {
@@ -520,7 +371,7 @@ SELECT TOP 1000 [Id]
             bool err = false;
             //Debug.WriteLine("RestoreAlDec");
             //Debug.WriteLine("תיקים ששולמו ושסוג תהליך שלהם מתחיל ב-407");
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("תיקים ששולמו ");
+            Debug.WriteLine("תיקים ששולמו ");
             try
             {
                 var declarationRepository = new DeclarationRepository(1);
@@ -545,7 +396,7 @@ SELECT TOP 1000 [Id]
 
 
                 var payList = alreadyPay.ToList();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("payList.Count" + payList.Count().ToString());
+                Debug.WriteLine("payList.Count" + payList.Count().ToString());
 
                 //var supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(1);
                 //var qHaveMoreThen1 = (from a in supplierInvoiceItemRepository.GetAll(1)
@@ -564,7 +415,7 @@ SELECT TOP 1000 [Id]
                 {
 
 
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
+                    Debug.WriteLine($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
 
                     var ms = new Logitude.CustomsMessaging.MessagingServices.DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
                     ms.Send(
@@ -591,25 +442,25 @@ SELECT TOP 1000 [Id]
             catch (Exception ee)
             {
                 err = true;
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee, "RestoreAlDec:");
+                Debug.WriteLine("RestoreAlDec:" + ee.ToString());
 
             }
             finally
             {
                 if (!err)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Done !!!!:" + i.ToString());
+                    Debug.WriteLine("Done !!!!:" + i.ToString());
                 }
             }
         }
 
         public void Send8373()
         {
-            //           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"לפתח תוכנית תיקון שתריץ מסר סטטוס הצהרה
+            //            Debug.WriteLine(@"לפתח תוכנית תיקון שתריץ מסר סטטוס הצהרה
             //האוכולוסיה לחיפוש - הצהרות שיש להם תאריך תשלום ואין להם תאריך התרה
             //עבור כל הצהרה יבוצע שאילתא לסטטוס הצהרה");
 
-           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"שיחזור נתוני הצהרה    
+            Debug.WriteLine(@"שיחזור נתוני הצהרה    
 PaymentDate  מלפני 3  ימים ");
             int i = 1;
             bool err = false;
@@ -632,7 +483,7 @@ PaymentDate  מלפני 3  ימים ");
 
 
                 var noHatraList = noHatra.ToList();
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Count" + noHatraList.Count().ToString());
+                Debug.WriteLine("Count" + noHatraList.Count().ToString());
 
                 //var supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(1);
                 //var qHaveMoreThen1 = (from a in supplierInvoiceItemRepository.GetAll(1)
@@ -651,7 +502,7 @@ PaymentDate  מלפני 3  ימים ");
                 {
 
 
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
+                    Debug.WriteLine($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
 
                     var ms = new Logitude.CustomsMessaging.MessagingServices.DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
                     ms.Send(
@@ -685,19 +536,19 @@ PaymentDate  מלפני 3  ימים ");
             catch (Exception ee)
             {
                 err = true;
-               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee,"RestoreAlDec:" );
+                Debug.WriteLine("RestoreAlDec:" + ee.ToString());
 
             }
             finally
             {
                 if (!err)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Done !!!!:" + i.ToString());
+                    Debug.WriteLine("Done !!!!:" + i.ToString());
                 }
             }
         }
 
-        public void FtpTester(int tenant)
+        public void FtpMamanTester()
         {
             using (var scop = TransactionFactory.GetTransaction())
             {
@@ -709,24 +560,7 @@ PaymentDate  מלפני 3  ימים ");
                 //http://192.116.221.103:584/Courier58/api/couriermasters/getsingle?id=1-106
 
                 var myFTPMamanService = new FTPOutMamanSubManifestService();
-                myFTPMamanService.BuildCommunicationLog(bytearray, tenant, "1-1651726");//02004004
-
-                var myFTPOutMaman2470ReleaseGoodService = new FTPOutMaman2470ReleaseGoodService();
-                myFTPOutMaman2470ReleaseGoodService.BuildCommunicationLog(bytearray, tenant, "1-1651726", $"maman{Guid.NewGuid().ToString()}", false);
-
-
-
-                string dec = "1-1255463";
-                //CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST
-                var fTPOutMawbSWSService = new FTPOutMawbSWSService();
-                Guid g = Guid.NewGuid();
-                string filename = "02004004" + "_" + g;
-                fTPOutMawbSWSService.BuildCommunicationLog(bytearray, tenant, dec, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
-                    
-                    
-                g = Guid.NewGuid();
-                filename = "02004004" + "_" + g;
-                fTPOutMawbSWSService.BuildCommunicationLog(bytearray, tenant, dec, CustomsPartnerFtpDetails.InterfaceName_ECSWSTHR_REQUEST, filename);
+                myFTPMamanService.BuildCommunicationLog(bytearray, 1, "1-106");//020-42905645
                 scop.Complete();
                     //output  ftp://192.168.10.88/FTP_MAMAN/	
             }
@@ -783,7 +617,7 @@ PaymentDate  מלפני 3  ימים ");
                     catch (Exception ee)
                     {
 
-                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee,$"error  {i}:{counter}  " );
+                        Debug.WriteLine($"error  {i}:{counter}  " + ee.ToString());
 
                     }
                     finally

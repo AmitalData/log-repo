@@ -10,7 +10,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './CustomsInterfaceStartDatesComponent.html',
 })
 

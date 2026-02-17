@@ -72,36 +72,6 @@ namespace WebFreight.Web.DataContracts
         public string Field38 { get; set; }
         public string Field39 { get; set; }
         public string Field40 { get; set; }
-        public string Field41 { get; set; }
-        public string Field42 { get; set; }
-        public string Field43 { get; set; }
-        public string Field44 { get; set; }
-        public string Field45 { get; set; }
-        public string Field46 { get; set; }
-        public string Field47 { get; set; }
-        public string Field48 { get; set; }
-        public string Field49 { get; set; }
-        public string Field50 { get; set; }
-        public string Field51 { get; set; }
-        public string Field52 { get; set; }
-        public string Field53 { get; set; }
-        public string Field54 { get; set; }
-        public string Field55 { get; set; }
-        public string Field56 { get; set; }
-        public string Field57 { get; set; }
-        public string Field58 { get; set; }
-        public string Field59 { get; set; }
-        public string Field60 { get; set; }
-        public string Field61 { get; set; }
-        public string Field62 { get; set; }
-        public string Field63 { get; set; }
-        public string Field64 { get; set; }
-        public string Field65 { get; set; }
-        public string Field66 { get; set; }
-        public string Field67 { get; set; }
-        public string Field68 { get; set; }
-        public string Field69 { get; set; }
-        public string Field70 { get; set; }
 
         public bool NewMessage { get; set; }
         

@@ -20,7 +20,7 @@ import { ContactPM } from '../../../../Common/EntityPMs/ContactPM';
 
 @Component({
     selector: 'OccasionMainTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './OccasionMainTabComponent.html',
 })
 
@@ -45,7 +45,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         this.LoadOccasionLinesData();
         this.Listen();
 
-        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response => {
         });
     }
 
@@ -53,7 +53,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         if (this.CurrentSession.CurrentEditComponent != null) {
             this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties_EntityClosed();
                     this.LoadOccasionLinesData();
                   
@@ -64,7 +64,6 @@ export class OccasionMainTabComponent extends BaseComponent {
                 if (isLoadSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties_EntityClosed();
-                    this.LoadOccasionLinesData();
                 }
             });
 
@@ -252,7 +251,7 @@ export class OccasionMainTabComponent extends BaseComponent {
         listArgs.QueryCode = queryCode;
         listArgs.ObjectTableName = objectTableName;
         listArgs.BackButtonTitle = "Occasions";
-        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -302,7 +301,7 @@ export class OccasionMainTabComponent extends BaseComponent {
             contactsIds = contactsIds + item.ContactId + ",";
         });
 
-        service.GetCountOfOccasionAllCustomers(contactsIds).subscribe((myResult:any) => {
+        service.GetCountOfOccasionAllCustomers(contactsIds).subscribe(myResult => {
             var mm: ServiceResponse = myResult;
             var list_AllCustomers = [];
             if (!mm.HasError) {

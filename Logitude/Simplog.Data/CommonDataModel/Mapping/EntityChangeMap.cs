@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -96,43 +96,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FollowUpAutomationSsucceedXml)
                 .IsMaxLength()
                 .IsUnicode(true);
-                      
-            
-            this.Property(t => t.SendInterfaceAutomationFailedXml)
-            .IsMaxLength()
-            .IsUnicode(true);
-
-            this.Property(t => t.SendInterfaceAutomationSsucceedXml)
-
-                .IsMaxLength()
-                .IsUnicode(true);
-
-            this.Property(t => t.SendDocumentAutomationFailedXml)
-                .IsMaxLength()
-                .IsUnicode(true);
-
-            this.Property(t => t.SendDocumentAutomationSsucceedXml)
-                .IsMaxLength()
-                .IsUnicode(true);
-
-
-
-            this.Property(t => t.CreateTaskAutomationFailedXml)
-                .IsMaxLength()
-                .IsUnicode(true);
-
-            this.Property(t => t.CreateTaskAutomationSsucceedXml)
-                .IsMaxLength()
-                .IsUnicode(true);
-
-            this.Property(t => t.OnUpdateDocumentAutomationFailedXml)
-                .IsMaxLength()
-                .IsUnicode(true);
-
-            this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml)
-                .IsMaxLength()
-                .IsUnicode(true);
-
 
 
             // Table & Column Mappings
@@ -165,33 +128,16 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FollowUpAutomationSsucceedXml).HasColumnName("FollowUpAutomationSsucceedXml");
 
 
-            this.Property(t => t.SendInterfaceAutomationFailedXml).HasColumnName("SendInterfaceAutomationFailedXml");
-            this.Property(t => t.SendInterfaceAutomationSsucceedXml).HasColumnName("SendInterfaceAutomationSsucceedXml");
-            this.Property(t => t.SendDocumentAutomationFailedXml).HasColumnName("SendDocumentAutomationFailedXml");
-            this.Property(t => t.SendDocumentAutomationSsucceedXml).HasColumnName("SendDocumentAutomationSsucceedXml");
-            this.Property(t => t.OnUpdateDocumentAutomationFailedXml).HasColumnName("OnUpdateDocumentAutomationFailedXml");
-            this.Property(t => t.OnUpdateDocumentAutomationSsucceedXml).HasColumnName("OnUpdateDocumentAutomationSsucceedXml");
-
-
-
-            this.Property(t => t.CreateTaskAutomationFailedXml).HasColumnName("CreateTaskAutomationFailedXml");
-            
-
-
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSucceedXml");
-
-#warning ALTER TABLE ENTITYCHANGES ADD (CreateTaskAutomationSucceedXml NCLOB );
-                this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSucceedXml");
             }
             //#elseelse
             else
             {
                 this.Property(t => t.QueuedTaskAutomationSsucceedXml).HasColumnName("QueuedTaskAutomationSsucceedXml");
-                this.Property(t => t.CreateTaskAutomationSsucceedXml).HasColumnName("CreateTaskAutomationSsucceedXml");
             }
             //#endif
 

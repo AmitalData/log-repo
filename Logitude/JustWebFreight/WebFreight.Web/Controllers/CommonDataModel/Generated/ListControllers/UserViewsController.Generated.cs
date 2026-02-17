@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,14 +26,14 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
@@ -46,10 +46,6 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Social.BL.EntityPMs;
 using Logitude.Social.BL.EntityQueryServices;
 using Logitude.CRM.Data.Repsitories;
-using System.Transactions;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Logitude.Server.Tools.TreeFilterQuery;
-using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 {
@@ -81,35 +77,21 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                     UserQuery userQuery = new UserQuery(userRepository);
                     IQueryable<User> iQueryable = singleEntityList.AsQueryable();
-                    //IQueryable<UserList> iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
-
-
                     IQueryable<UserList> iQueryableEntityList = null;
 
                     string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
                     UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, authToken.Tenant, true);
-                    var isDemo = false;
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    if (loggedUser != null && !loggedUser.IsCustomerCare && authToken.Tenant == 65)
                     {
-                        SettingRepository mySettingRepository = new SettingRepository();
-                        isDemo = mySettingRepository.IsDemoTenant(authToken.Tenant.ToString());
-                        scope.Complete();
+                        iQueryableEntityList = userQuery.GetDemoTenantUserList(iQueryable, loggedUser.Id, authToken.Tenant);
+                    }
+                    else
+                    {
+                        iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
                     }
 
-                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                    {
-                        if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
-                        {
-                            iQueryableEntityList = userQuery.GetDemoTenantUserList(iQueryable, loggedUser.Id, authToken.Tenant);
-                        }
-                        else
-                        {
-                            iQueryableEntityList = userQuery.GetIQueryableEntityList(iQueryable);
-                        }
+                    entityList = iQueryableEntityList.FirstOrDefault();
 
-                        entityList = iQueryableEntityList.FirstOrDefault();
-                        scope.Complete();
-                    }
                 }
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -250,15 +232,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
-                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
-                {
-                    AdditionalTreeFilter = filters.TreeFilters,
-                    ObjectTableName = "User",
-                    ParentEntityId = filters.ParentEntityId,
-                    ParentObjectTableName = filters.ParentObjectTableName,
-                    Tenant = tenant,
-                    ParentEntity = filters.ParentEntity
-                };
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 UserRepository userRepository = new UserRepository(MyContext);
@@ -275,45 +248,23 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
 
                 entityPocos = genericFilter.GetFilteredQuery<User>(nonListQueryOperation, entityPocos);
-
-
-
-
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<UserList> entityLists = null;
 
                 string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
                 UserPM loggedUser = userQuery.GetSingleUserPMByEmail(loggedUserEmail, tenant, true);
-
-                var isDemo = false;
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                if (loggedUser != null && !loggedUser.IsCustomerCare && tenant == 65)
                 {
-                    SettingRepository mySettingRepository = new SettingRepository();
-                    isDemo = mySettingRepository.IsDemoTenant(tenant.ToString());
-                    scope.Complete();
+                    entityLists = userQuery.GetDemoTenantUserList(entityPocos, loggedUser.Id, tenant);
                 }
 
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                else
                 {
-                    
-                    if (loggedUser != null && !loggedUser.IsCustomerCare && isDemo)
-                    {
-                        entityLists = userQuery.GetDemoTenantUserList(entityPocos, loggedUser.Id, tenant);
-                    }
-
-                    else
-                    {
-                        entityLists = userQuery.GetIQueryableEntityList(entityPocos);
-                    }
-
-                    entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
-                    entityLists = new TreeFilterQueryService().Apply<UserList>(entityLists, treeFilterQueryArgs);
-
-                    scope.Complete();
+                    entityLists = userQuery.GetIQueryableEntityList(entityPocos);
                 }
 
+                entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
 
-         
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {

@@ -5,7 +5,7 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {ServiceViewModelData} from './CustomerGeneralTabComponent';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './EditCustomerAdditionalServiceComponent.html',
 })
 

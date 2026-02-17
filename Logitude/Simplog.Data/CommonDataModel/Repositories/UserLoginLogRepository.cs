@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 
@@ -13,7 +13,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-
+        public UserLoginLogRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public UserLoginLogRepository(ICommonDataContext context)
         {
@@ -41,7 +44,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             UserLoginLog entity;
             if (getFromCache)
             {
-              
+                if (HttpContext.Current != null)
+                {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = (from record in context.UserLoginLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
@@ -58,8 +62,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
                         entity = (UserLoginLog)CacheManager.CacheWrapper.Get(entityName);
                     }
 
-                
-             
+                }
+                else
+                {
+                    entity = (from record in context.UserLoginLogs where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+                }
             }
             else
             {

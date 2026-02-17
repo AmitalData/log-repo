@@ -1,3 +1,5 @@
+/// <reference path="../../common/datacontracts/shipmentsharedocumentsdata.ts" />
+
 declare var System: any;
 declare var window: any;
 import {ServiceResponse} from '../DataContracts/ServiceResponse';
@@ -73,7 +75,7 @@ export class SharedDocumentHelper {
                 this.LoadCopies();
             }
             else if (!AppTool.IsNullOrEmpty(shareDocument.DocumentOutId)) {
-                this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.ShareDocument.EntityId, SessionInfo.LoggedUserTenant, "", this.ShareDocument.DocumentTypeId).subscribe((res:any) => {
+                this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.ShareDocument.EntityId, SessionInfo.LoggedUserTenant, "", this.ShareDocument.DocumentTypeId).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
                         var myResult = pmResponse.Result;
@@ -115,7 +117,7 @@ export class SharedDocumentHelper {
 
          this.ItemsSource = new Array<DocumentCopiesViewModel>();
         if (this.ShareDocument.DocumentOutPM != null) {
-            this.documentTypePMExtendedService.getSingleDocumentType(this.ShareDocument.DocumentTypeId, this.ShareDocument.DocumentOutPM.Id, SessionLocator.Tenant).subscribe((res:any) => {
+            this.documentTypePMExtendedService.getSingleDocumentType(this.ShareDocument.DocumentTypeId, this.ShareDocument.DocumentOutPM.Id, SessionLocator.Tenant).subscribe(res => {
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -263,7 +265,7 @@ export class SharedDocumentHelper {
             var count: number = 0;
             this.AddedDocumentTypeCopyViewModels.filter(d => d.IsSelected).forEach((copy) => {
 
-                this.exportDocumentService.getDocumentPdfFile(this.documentTypePM.Id, this.ShareDocument.EntityId, this.ObjectTableId, "", "", this.ShareDocument.DocumentOutPM.Id, this.ShareDocument.DocumentOutPM.Tenant, copy.CurrentDocumentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe((res:any) => {
+                this.exportDocumentService.getDocumentPdfFile(this.documentTypePM.Id, this.ShareDocument.EntityId, this.ObjectTableId, "", "", this.ShareDocument.DocumentOutPM.Id, this.ShareDocument.DocumentOutPM.Tenant, copy.CurrentDocumentTypeCopy.Id, SessionLocator.LoggedUserId).subscribe(res => {
                     count += 1;
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -324,12 +326,12 @@ export class SharedDocumentHelper {
 
     SaveContext() {
 
-        this.documentOutPMService.putDocumentOut(this.ShareDocument.DocumentOutPM).subscribe((res:any) => {
+        this.documentOutPMService.putDocumentOut(this.ShareDocument.DocumentOutPM).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError && pmResponse.Result) {
                 var myResult = pmResponse.Result;
-                this.documentOutPMService.getSingleDocumentOutPM(this.ShareDocument.DocumentOutPM.Id, this.ShareDocument.DocumentOutPM.Tenant).subscribe((res:any) => {
+                this.documentOutPMService.getSingleDocumentOutPM(this.ShareDocument.DocumentOutPM.Id, this.ShareDocument.DocumentOutPM.Tenant).subscribe(res => {
                 
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -358,7 +360,7 @@ export class SharedDocumentHelper {
                             this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
                             if (!this.ShareDocument.IsReady) {
                                 this.ShareDocument.IsReady = true;
-                                this.documentOutPMService.GetCalculatedFileNameForDocumentOutCopy(this.ShareDocument.DocumentOutPM.Id, this.ShareDocument.DocumentTypeCopyId).subscribe((res:any) => {
+                                this.documentOutPMService.GetCalculatedFileNameForDocumentOutCopy(this.ShareDocument.DocumentOutPM.Id, this.ShareDocument.DocumentTypeCopyId).subscribe(res => {
                                     this.StopBusyIndicator();
                                     var pmResponse: ServiceResponse = res;
                                     if (!pmResponse.HasError) {
@@ -402,7 +404,7 @@ export class SharedDocumentHelper {
 
 
         this.CurrentSession.StartBusyIndicatorLoading();
-        this.htmlEditorService.getEditorHtmlData(this.ShareDocument.DocumentOutPM.Id, shipmentId, this.ObjectTableId, "", "", SessionLocator.Tenant, SessionLocator.LoggedUserId, false, this.ShareDocument.DocumentOutPM.DocumentTemplateId, "", "Edit").subscribe((res:any) => {
+        this.htmlEditorService.getEditorHtmlData(this.ShareDocument.DocumentOutPM.Id, shipmentId, this.ObjectTableId, "", "", SessionLocator.Tenant, SessionLocator.LoggedUserId, false, this.ShareDocument.DocumentOutPM.DocumentTemplateId, "", "Edit").subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -441,7 +443,7 @@ export class SharedDocumentHelper {
         filter.ChildEntityId = "";
         filter.DocumentTypeId = this.ShareDocument.DocumentTypeId;
         var idArray: any[];
-        this.htmlEditorService.saveEditedReportToServer(filter).subscribe((res:any) => {
+        this.htmlEditorService.saveEditedReportToServer(filter).subscribe(res => {
 
             this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
@@ -577,7 +579,7 @@ export class SharedDocumentHelper {
     CreateDocumentsFilingPM(shareDocument: ShareDocument = null) {
 
         if (!shareDocument) shareDocument = this.ShareDocument;
-        this.documentsFilingExtendedPMService.CreateDocumentsFiling(shareDocument.DocumentTypeId, shareDocument.EntityId, "", "", this.ObjectTableId, "I", SessionLocator.Tenant).subscribe((res:any) => {
+        this.documentsFilingExtendedPMService.CreateDocumentsFiling(shareDocument.DocumentTypeId, shareDocument.EntityId, "", "", this.ObjectTableId, "I", SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
@@ -596,7 +598,7 @@ export class SharedDocumentHelper {
     }
     LoadDocumentFiling() {
 
-        this.documentsFilingPMService.get(this.ShareDocument.DocumentsFilingId).subscribe((res:any) => {
+        this.documentsFilingPMService.get(this.ShareDocument.DocumentsFilingId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

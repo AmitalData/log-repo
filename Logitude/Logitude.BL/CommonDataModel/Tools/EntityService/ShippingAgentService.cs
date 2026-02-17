@@ -9,7 +9,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -22,8 +22,6 @@ using System.Transactions;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.Helpers;
-using Logitude.BL.DataContracts;
-using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -41,21 +39,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactRepository contactRepository;
         private CardContactRepository cardContactRepository;
         private ICommonDataContext objectContext;
-        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
-
-        public ShippingAgentService(ICommonDataContext objectContext, ShippingAgentPM entityPM, string loggedContactId)
-        {
-            this.entityPM = entityPM;
-            this.tenant = entityPM.Tenant;
-            this.objectContext = objectContext;
-            this.entityRepository = new ShippingAgentRepository(objectContext);
-            this.cardRepository = new CardRepository(objectContext);
-            this.addressRepository = new AddressRepository(objectContext);
-            this.contactRepository = new ContactRepository(objectContext);
-            this.cardContactRepository = new CardContactRepository(objectContext);
-            this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
-            this.loggedContact = contactRepository.GetSingleContact(loggedContactId, tenant);
-        }
+        private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;  
         public ShippingAgentService(ICommonDataContext objectContext, int tenant)
         {
             
@@ -86,14 +70,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.entityPM = entityPM;
             this.isNewEntity = true;
-            this.entityPM.Id = string.IsNullOrEmpty(this.entityPM.Id) || this.entityPM.IsHybrid ? IdCounter.GetNumber("Card", tenant).ToString() : this.entityPM.Id;
+            this.entityPM.Id = IdCounter.GetNumber("Card", tenant).ToString();
 
             this.entityCard = new Card()
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
                 PartnerTypeId = "SG",
-                UploadingUniqueKey= entityPM.UploadingUniqueKey,
             };
 
             this.entityPOCO = new ShippingAgent()
@@ -129,18 +112,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
-            entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingAgent", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingAgentPM> { entityPM }.Cast<object>().ToList() }).Update();
+            entityRepository.SubmitChanges();         
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
-            }
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
+        }
         }
 
         public void Update(ShippingAgentPM entityPM, bool mapComposition = false)
@@ -178,21 +155,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateCardExternalCodeByCurrencyCollection();
+
             ShippingAgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
             ShippingAgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ShippingAgent", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ShippingAgentPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ShippingAgent");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
-            }
         }
 
         private void InitializeComponent()
@@ -206,12 +178,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 if (!entityPM.IsHybrid)
                 {
-                    var counterAdditionalParameters = new Dictionary<string, string>
-                    {
-                        ["[B]"] = "SG",
-                        ["[BranchName]"] = "SG"
-                    };
-                    entityPM.Code = TableCounter.DoesCounterDefinitionExist("CADC", tenant, "SG") ? TableCounter.GetNumber(tenant, "CADC", "SG", null, counterAdditionalParameters, true) : CodeCounter.GetNumber("ShippingAgent", tenant).ToString();
+                    entityPM.Code = CodeCounter.GetNumber("ShippingAgent", tenant).ToString();
                 }
             }
 
@@ -275,11 +242,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
-            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityPM.Card!=null?entityPM.Card.SendingInterestReport: entityCard.SendingInterestReport;
-            entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
-            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
-
         }
 
         private void ComputeContactFields()
@@ -366,7 +328,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-     
         private void CreateAddress(AddressPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("Address", tenant).ToString();
@@ -391,7 +352,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
-            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
@@ -481,23 +441,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     #endregion
 
                     #endregion
-                }
-                else
-                {
-                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
-
-                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
-                    contactRepository.Update(newContact);
-                }
-
-                if (isNewEntity)
-                {
-                    if (itemContactPM.SetAsPrimaryForCard)
-                    {
-                        entityPM.PrimaryContactId = itemContactPM.Id;
-                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
-                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
-                    }
                 }
 
                 CardContact newCardContact = new CardContact()

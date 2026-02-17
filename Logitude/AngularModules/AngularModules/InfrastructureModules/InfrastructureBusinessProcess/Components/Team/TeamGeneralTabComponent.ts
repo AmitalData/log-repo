@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+﻿import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -18,13 +18,11 @@ import {BusinessRoleExtendedListService} from '../../../../Infrastructure/Servic
 
 @Component({
     selector: 'TeamGeneralTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './TeamGeneralTabComponent.html',
 })
 
 export class TeamGeneralTabComponent extends BaseComponent implements OnInit {
-    public SearchText: string = null;
-
     public Session: number = SessionLocator.Tenant;
     public EntityPM: TeamPM;
     public DataContext: TeamGeneralTabComponent = this;

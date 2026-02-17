@@ -1,79 +1,64 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Component } from '@angular/core';
-import { LoginService } from '../LoginService';
-import { SessionInfo } from '../SessionInfo';
-import { LoginComponent } from './LoginComponent';
-import { Tools } from '../Utilities/Tools';
-import { PrivateLabelsBrandingDataService } from '../PrivateLabels/Services/PrivateLabelsBrandingDataService';
-import { BrandingDataService } from '../PrivateLabels/Services/BrandingDataService';
-export var DSVLoginComponent = (function (_super) {
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var LoginService_1 = require("../LoginService");
+var SessionInfo_1 = require("../SessionInfo");
+var LoginComponent_1 = require("./LoginComponent");
+var Tools_1 = require("../Utilities/Tools");
+var DSVLoginComponent = /** @class */ (function (_super) {
     __extends(DSVLoginComponent, _super);
-    function DSVLoginComponent(ss, privateLabelsBrandingDataService) {
-        _super.call(this, ss);
-        this.ss = ss;
-        this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
-        this.SecondaryColor = null;
-        this.BackgroundImage = "";
-        this.LoginImage = "";
-        this.MainLogo = "";
-        this.showSpinner = true;
+    function DSVLoginComponent(ss) {
+        var _this = _super.call(this, ss) || this;
+        _this.ss = ss;
+        return _this;
     }
     DSVLoginComponent.prototype.ngOnInit = function () {
+        console.log("ngOnInit");
         this.get_cookie_data();
-        this.privateUrl = SessionInfo.GetLogitudeURL();
-        // Get Images from storage, then request from server to change if there is an update
-        this.GetImagesFromStorage();
-        this.GetPrivateLabelsData(this.privateUrl);
-    };
-    DSVLoginComponent.prototype.GetImagesFromStorage = function () {
-        this.GetLoginPageImages();
-    };
-    DSVLoginComponent.prototype.GetLoginPageImages = function () {
-        this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
-        this.MainLogo = BrandingDataService.GetImage("MainLogo");
-        this.LoginImage = BrandingDataService.GetImage("LoginImage");
-        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
-        this.showSpinner = false;
-    };
-    DSVLoginComponent.prototype.GetPrivateLabelsData = function (privateUrl) {
-        var _this = this;
-        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
-            if (response.Result) {
-                BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
-                //this.MainColor = response.Result.MainColor;
-                _this.GetLoginPageImages();
-            }
-        });
-        this.showSpinner = false;
     };
     DSVLoginComponent.prototype.ClearLocation = function () {
-        if (SessionInfo.MainLocation) {
-            SessionInfo.MainLocation.clear();
+        if (SessionInfo_1.SessionInfo.MainLocation) {
+            SessionInfo_1.SessionInfo.MainLocation.clear();
         }
     };
     DSVLoginComponent.prototype.ForgotPasswordClicked = function () {
         this.ClearLocation();
-        Tools.DynamicLoader.Load("./Login/Components/DSVResetPasswordComponent", SessionInfo.MainLocation)
+        Tools_1.Tools.DynamicLoader.Load("./Login/Components/DSVResetPasswordComponent", SessionInfo_1.SessionInfo.MainLocation)
             .then(function (cmpRef) {
         });
     };
-    DSVLoginComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'DSVLoginComponent',
-                    moduleId: './Login/Components/',
-                    templateUrl: 'DSVLoginComponent.html',
-                    styleUrls: ['DSVLoginComponent.css']
-                },] },
-    ];
-    /** @nocollapse */
-    DSVLoginComponent.ctorParameters = [
-        { type: LoginService, },
-        { type: PrivateLabelsBrandingDataService, },
-    ];
+    DSVLoginComponent = __decorate([
+        core_1.Component({
+            selector: 'DSVLoginComponent',
+            moduleId: './Login/Components/',
+            templateUrl: 'DSVLoginComponent.html',
+            styleUrls: ['DSVLoginComponent.css']
+        }),
+        __metadata("design:paramtypes", [LoginService_1.LoginService])
+    ], DSVLoginComponent);
     return DSVLoginComponent;
-}(LoginComponent));
+}(LoginComponent_1.LoginComponent));
+exports.DSVLoginComponent = DSVLoginComponent;
 //# sourceMappingURL=DSVLoginComponent.js.map

@@ -8,7 +8,7 @@ import {ActivityList} from '../../../../../CRM/EntityLists/ActivityList';
 
 @Component({
     selector: 'ActivitiesTabComponent',
-    
+    moduleId: module.id,
     templateUrl: './ActivitiesTabComponent.html',
 })
 

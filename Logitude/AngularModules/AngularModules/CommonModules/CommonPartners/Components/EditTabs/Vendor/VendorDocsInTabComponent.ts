@@ -4,7 +4,7 @@ import { VendorPM } from '../../../../../Common/EntityPMs/VendorPM';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './VendorDocsInTabComponent.html',
 })
 

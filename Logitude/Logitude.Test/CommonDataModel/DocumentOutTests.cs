@@ -5,7 +5,7 @@ using Logitude.Test.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.CommonDataModel.Repositories;
 

@@ -1,5 +1,5 @@
 ﻿using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -21,7 +21,7 @@ namespace Logitude.Server.Tools.Helpers
             if (tenantEmailSendingQuota > 0)
             {
                 CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(tenant);
-                int communicationLogCount = communicationLogRep.GetEmailCommunicationLogCountForTenantInLasthour(tenant);
+                int communicationLogCount = communicationLogRep.GetCommunicationLogCountForTenantInLasthour(tenant);
                 if (communicationLogCount > tenantEmailSendingQuota)
                 {
                     result.IsQuotaExceeded = true;

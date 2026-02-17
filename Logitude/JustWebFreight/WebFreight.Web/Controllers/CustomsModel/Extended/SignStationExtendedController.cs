@@ -7,7 +7,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -24,14 +24,13 @@ using Unifreight.Data.AmitalModel;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class SignStationExtendedController : ApiController
     {
 
-
+        
 
         public HttpResponseMessage GetSignStationGroupByStatus(string searchfields)
         {
@@ -47,31 +46,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
+                //List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
 
-                List<MySignStationList> entityLists;
-
-
-                var signQueueHSMService = new SignQueueHSMService();
-                if (true || signQueueHSMService.IsHSMSign_IsOn(tenant))
-                {
-                    entityLists = GetSignStationDBHSM(searchfields, tenant);
-
-                }
-                else
-                {
-                    entityLists = GetAllStation(searchfields, tenant);
-                }
-                if (!String.IsNullOrWhiteSpace(searchfields))
-                {
-                    entityLists = entityLists
-                        .Where(r => String.Concat(r.MachineUser, r.MachineUser, r.PersonId, r.SignerName, r.Status).ToLower().Contains(searchfields.ToLower())).ToList();
-                }
-
+                List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
                 var q = (from a in entityLists
                          group a by a.Status into gStatus
                          select new { gStatus.Key, Total = gStatus.Count() }
 
-                );
+                    );
 
                 var response = q.ToList();
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
@@ -89,25 +71,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        private static List<MySignStationList> GetSignStationDBHSM(string searchfields, int tenant)
-        {
-            List<MySignStationList> entityLists;
-            var dbSignQueueService = new SignQueueHybridDbService();
-            entityLists = dbSignQueueService.GetAllStation(searchfields, tenant);
-            var signQueueHSMService = new SignQueueHSMService();
-            if (signQueueHSMService.IsHSMSign_IsOn(tenant))
-            {
-                var hsmCertList = signQueueHSMService.GetHSMAllCertificates(tenant, false);
 
-                entityLists = entityLists ?? new List<MySignStationList>();
-                hsmCertList = hsmCertList ?? new List<MySignStationList>();
-                entityLists = hsmCertList.Union(entityLists).ToList();
-            }
-
-            return entityLists;
-        }
-
-        public HttpResponseMessage GetSignStations(int skip, int take, string sortingCol, string sortingDir, string searchfields, string FilterByStatus)
+        public HttpResponseMessage GetSignStations(int skip , int take, string sortingCol, string sortingDir, string searchfields,string FilterByStatus)
         {
             try
             {
@@ -117,19 +82,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
+                List<SignStationList> entityLists = GetAllStation(searchfields, tenant);
 
-                List<MySignStationList> entityLists = new List<MySignStationList>(); /*= GetAllStation(searchfields, tenant)*/;
-
-                var signQueueHSMService = new SignQueueHSMService();
-                if (true || signQueueHSMService.IsHSMSign_IsOn(tenant))
-
-                {
-                    entityLists = GetSignStationDBHSM(searchfields, tenant);
-                }
-                else
-                {
-                    entityLists = GetAllStation(searchfields, tenant);
-                }
                 if (!String.IsNullOrWhiteSpace(FilterByStatus))
                 {
                     entityLists = entityLists.Where(r => r.Status.Trim().ToString().Equals(FilterByStatus.Trim(), StringComparison.OrdinalIgnoreCase)).ToList();
@@ -144,7 +98,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
 
                 entityLists = GetList(skip, take, sortingCol, sortingDir, entityLists);
-                //entityLists.Add(new SignStationList() { MachineName = "itzik" });
+
 
                 response.Result = entityLists;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
@@ -162,16 +116,16 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        private static List<MySignStationList> GetAllStation(string searchfields, int tenant)
+        private static List<SignStationList> GetAllStation(string searchfields, int tenant)
         {
-            var entityLists = new List<MySignStationList>();
+            var entityLists = new List<SignStationList>();
             List<SubscribeSignServer> mySubscribeSignServerList = SignQueue.Instance.GetCopyOfMySubscribeSignServerList(tenant);
 
 
             mySubscribeSignServerList.ForEach(
                 s =>
                 {
-                    entityLists.Add(new MySignStationList()
+                    entityLists.Add(new Extended.SignStationList()
                     {
                         PersonId = s.MySignCertificateClass.PersonId,
                         SignerName = s.MySignCertificateClass.SignerName,
@@ -208,7 +162,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     }
                     else
                     {
-                        entityLists.Add(new MySignStationList()
+                        entityLists.Add(new SignStationList()
                         {
                             MachineName = stsRow.MachineName,
                             CustomsAgentId = stsRow.MySignCertificateClass.CustomsAgentId,
@@ -221,12 +175,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                             LastSignAt = stsRow.LastSuccessSignningAt,
                             IsOk = stsRow.IsOk,
                             VersionByFeatures = stsRow.VersionByFeatures,
-                        });
+                });
                     }
                 }
                 );
 
+            //for (int i = 0; i < 30; i++)
+            //{
+            //    entityLists.Add(new Extended.SignStationList() {
+            //        PersonId = "PersonId" + i.ToString(),
+            //        MachineName = "MachineName" + i.ToString(),
+            //        SignerName = "sign 11",
+            //        CustomsAgentId = "vart1",
+            //        IsCompanySignOn = (i % 2 == 0),
+            //        IsPersonalSignOn = (i % 4 == 0),
+            //         LastSignAt = DateTime.Now,
+            //          MachineUser = "MachineUser",
+            //           Status ="Ok !!!"
 
+
+            //    });
+            //}
             if (!String.IsNullOrWhiteSpace(searchfields))
             {
                 entityLists = entityLists
@@ -236,13 +205,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             return entityLists;
         }
 
-        List<MySignStationList> GetList(int skip, int take, string sortingCol, string sortingDir, List<MySignStationList> entityLists)
+        List<SignStationList> GetList(int skip, int take, string sortingCol, string sortingDir, List<SignStationList> entityLists)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
 
-            IQueryable<MySignStationList> query2 = entityLists.AsQueryable(); ;
+            IQueryable<SignStationList> query2 = entityLists.AsQueryable(); ;
             if (!String.IsNullOrWhiteSpace(sortingDir))
             {
                 QueryOperations queryOperations = new QueryOperations() { SortByColumnName = sortingCol, SortDirectin = sortingDir };
@@ -253,20 +222,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     case "IsPersonalSignOn":
                     case "IsCompanySignOn":
                         {
-                            query2 = sortClass.GetSorterQuery<MySignStationList, bool>(queryOperations, query2);
+                            query2 = sortClass.GetSorterQuery<SignStationList, bool>(queryOperations, query2);
                         }
                         break;
                     case "LastSignAt":
                         {
-                            query2 = sortClass.GetSorterQuery<MySignStationList, DateTime>(queryOperations, query2);
+                            query2 = sortClass.GetSorterQuery<SignStationList, DateTime>(queryOperations, query2);
                         }
                         break;
                     default:
-                        query2 = sortClass.GetSorterQuery<MySignStationList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<SignStationList, string>(queryOperations, query2);
                         break;
                 }
             }
-
+        
 
             //if (!queryOperations.GetAll)
             {
@@ -281,5 +250,19 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
     }
 
+    class SignStationList
+    {
+        public string PersonId{ get; set; }
+        public string SignerName{ get; set; }
+        public string CustomsAgentId{ get; set; }
+        public string MachineName{ get; set; }
+        public string MachineUser{ get; set; }
 
+        public bool IsPersonalSignOn { get; set; }
+        public bool IsCompanySignOn { get; set; }
+        public string Status { get; internal set; }
+        public DateTime? LastSignAt { get; set; }
+        public bool? IsOk { get; internal set; }
+        public string VersionByFeatures { get; internal set; }
+    }
 }

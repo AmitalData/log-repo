@@ -41,11 +41,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      TransferDate = a.TransferDate,
                      TransferNumber = a.TransferNumber,
                      CreatedByUserId = a.CreatedByUserId,
-                     CreatedByUserName = a.CreatedByUser == null ?null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                     CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                      CustomsTransferTypeName = a.CustomsTransferType == null ? "" : a.CustomsTransferType.Name,
                      SearchFields = a.SearchFields,
                      Notes = a.Notes,
-                     ShipmentNumber = a.ShipmentNumber
                  }).FirstOrDefault();
 
             entityPM.CustomsTransferLines = linesQuery.GetCustomsTransferLinePMsForTransferHeader(id, tenant).ToList();
@@ -82,9 +81,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                              TransferNumber = a.TransferNumber,
                              CreatedByUserId = a.CreatedByUserId,
                              Notes = a.Notes,
-                             CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                             CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                              CustomsTransferTypeName = a.CustomsTransferType == null ? "" : a.CustomsTransferType.Name,
-                             ShipmentNumber = a.ShipmentNumber
                          };
 
             return result;

@@ -297,13 +297,13 @@ export var NewChargesTypeComponent = (function (_super) {
         if (this.ValidationErrorsList.length == 0) {
             this.EntityPM.IsReceivable = true;
             this.EntityPM.IsPayable = true;
-            SessionLocator.SelectedSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             var myService = new ChargesTypePMService();
             myService.insert(this.EntityPM).subscribe(function (myResponse) {
-                SessionLocator.SelectedSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     CachedDataManager.RefreshTableData(_this.ObjectTableName, true);
-                    SessionLocator.SelectedSession.CloseCurrentWindowEmit(_this.EntityPM.Id);
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(_this.EntityPM.Id);
                 }
                 else {
                     _this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -312,7 +312,7 @@ export var NewChargesTypeComponent = (function (_super) {
         }
     };
     NewChargesTypeComponent.prototype.CancelButtonClicked = function () {
-        SessionLocator.SelectedSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     };
     NewChargesTypeComponent.decorators = [
         { type: Component, args: [{

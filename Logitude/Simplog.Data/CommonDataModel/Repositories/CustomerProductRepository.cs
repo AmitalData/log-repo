@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -24,7 +24,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-
+        public CustomerProductRepository()
+        {
+            commonDataContext = new CommonDataContext();
+        }
 
         public IQueryable<CustomerProduct> GetCustomerProducts(int tenant)
         {

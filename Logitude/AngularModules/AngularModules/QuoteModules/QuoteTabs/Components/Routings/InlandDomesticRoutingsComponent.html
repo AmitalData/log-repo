@@ -1,4 +1,4 @@
-
+﻿
 <style type="text/css">
     .PartnerBoxHeader td {
         vertical-align: middle;
@@ -120,367 +120,190 @@
                 </table>
             </div>
 
+            <!-- Partners-->
             <div style="padding: 10px; padding-top: 5px; top: 3px; right: 3px; bottom: 3px;">
                 <table>
-                    <tr style="height: 192px;">
-                        <td>
+                    <tr>
+                        <td style="width:700px;">
                             <table>
                                 <tr>
-                                    <td style="width: 400px;">
-                                        <fieldset class="MediaFill GroupBox">
-                                            <legend>
-                                                <span>From</span>
-                                            </legend>
 
-                                            <div style="height: 192px; width: 100%; margin-top: -5px;">
-                                                <table>
-                                                    <tr style="height: 25px;">
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsQuoteEditEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PART'" (Checked)="InlandDomesticFromTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
-                                                                    </td>
+                                    <!-- From Partner -->
+                                    <td style="width:335px;">
+                                        <div class="PartnerBox">
+                                            <table>
+                                                <tr class="PartnerBoxHeader">
+                                                    <td>From Partner</td>
+                                                </tr>
 
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsQuoteEditEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'PORT'" (Checked)="InlandDomesticFromTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
-                                                                    </td>
+                                                <tr>
+                                                    <td style="padding-left: 5px; padding-right: 5px;">
+                                                        <table class="FixedTable">
+                                                            <tr class="FormFieldRow">
+                                                                <td style="width:80px;">
+                                                                    <LogLabel [ObjectFieldName]="'FromPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Partners.Name'"></LogLabel>
+                                                                </td>
 
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsQuoteEditEnabled" [Name]="'FromRadio'" [IsChecked]="InlandDomesticFromTypeCode == 'CASL'" (Checked)="InlandDomesticFromTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
+                                                                <td style="width:200px; max-width:200px;">
+                                                                    <div style="position:relative;" class="NameTextBox TextTrimming">
+                                                                        <label style="color:#6E7172; font-size:11px;"> {{FromPartnerName}} </label>
+                                                                    </div>
+                                                                </td>
 
-                                                    <tr>
-                                                        <td>
-                                                            <!-- PART -->
-                                                            <table *ngIf="InlandDomesticFromTypeCode == 'PART'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [ObjectFieldName]="'FromPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.NewQuote.Name'"></LogLabel>
-                                                                    </td>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
 
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'FromPartnerId'"
-                                                                                [SelectedValue]="FromPartnerId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Card'"
-                                                                                [DependencyFilter1Value]="CardLOVDependencyProperty1"
-                                                                                [DependencyFilter1IsList]="true">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
+                                                            <tr class="FormFieldRow">
+                                                                <td style="width:80px;">
+                                                                    <div></div>
+                                                                </td>
 
-                                                                <tr class="FormFieldRow">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'FromPartnerAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Partners.Address'"></LogLabel>
-                                                                    </td>
+                                                                <td colspan="2">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 200px;">
+                                                                                <LogLov [ObjectFieldName]="'FromPartnerAddressId'"
+                                                                                        [SelectedValue]="FromPartnerAddressId"
+                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                        [DataContext]="DataContext"
+                                                                                        [LookUpTableName]="'Address'"
+                                                                                        [HideColumns]="true"
+                                                                                        [DependencyFilter1Value]="FromPartnerId">
+                                                                                </LogLov>
+                                                                            </td>
 
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'FromPartnerAddressId'"
-                                                                                [SelectedValue]="FromPartnerAddressId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Address'"
-                                                                                [DependencyFilter1Value]="FromPartnerId">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
+                                                                            <td style="width: 2px;">
+                                                                                <div></div>
+                                                                            </td>
 
-                                                                <tr>
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
+                                                                            <td style="width:18px;">
+                                                                                <IconButton [disabled]="!IsEditFromAddressEnabled" (click)="EditAddressClicked('F')" [Name]="'Edit'" [IsSmall]="true"></IconButton>
+                                                                            </td>
 
-                                                                    <td style="vertical-align: top; padding-top: 5px;">
-                                                                        <AddressTemplate [Address]="FromAddressList" [Right]="36"></AddressTemplate>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                                            <td style="width:18px;">
+                                                                                <IconButton [disabled]="!IsQuoteEditEnabled" (click)="AddAddressClicked('F')" [Name]="'Add'" [IsSmall]="true" [Left]="3"></IconButton>
+                                                                            </td>
 
-                                                            <!-- PORT -->
-                                                            <table *ngIf="InlandDomesticFromTypeCode == 'PORT'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [ObjectFieldName]="'FromPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'From Port'"></LogLabel>
-                                                                    </td>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
 
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'FromPortId'"
-                                                                                [SelectedValue]="FromPortId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Port'"
-                                                                                [DependencyFilter1Value]="TransportModeId">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
+                                                            <tr style="height: 90px;">
+                                                                <td>
+                                                                    <LogLabel [ObjectFieldName]="'FromPartnerAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Partners.Address'"></LogLabel>
+                                                                </td>
 
-                                                                <tr style="height: 75px;">
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
+                                                                <td colspan="2">
+                                                                    <AddressTemplate [Address]="FromAddressList" [Height]="80" [Right]="36"></AddressTemplate>                                                                    
+                                                                </td>
 
-                                                                    <td style="height: 75px; vertical-align: top;">
-                                                                        <div style="height: 100%;">
-                                                                            <LogTextBox [ObjectFieldName]="'MainCarriageFromPortAddress'" [Text]="MainCarriageFromPortAddress" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
+                                                            </tr>
 
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-
-                                                            <!-- CASL -->
-                                                            <table *ngIf="InlandDomesticFromTypeCode == 'CASL'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [ObjectFieldName]="'InlandDomesticFromZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogTextBox [ObjectFieldName]="'InlandDomesticFromZipCode'" [Text]="InlandDomesticFromZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr class="FormFieldRow">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'InlandDomesticFromCity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <LogTextBox [ObjectFieldName]="'InlandDomesticFromCity'" [Text]="InlandDomesticFromCity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                </td>
-
-                                                                                <td style="padding-left: 5px;">
-                                                                                    <Hyperlink [IsEnabled]="IsQuoteEditEnabled" (click)="SelectCityCommand('F')">Select</Hyperlink>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr class="FormFieldRow">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'InlandDomesticFromCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'InlandDomesticFromCountryId'"
-                                                                                [SelectedValue]="InlandDomesticFromCountryId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Country'"
-                                                                                (SelectedItemChanged)="InlandDomesticFromCountry = $event">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </fieldset>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </td>
 
-                                    <td style="width: 10px;">
+                                    <td style="width:10px;">
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 400px;">
-                                        <fieldset class="MediaFill GroupBox">
-                                            <legend>
-                                                <span>To</span>
-                                            </legend>
+                                    <!-- To Partner -->
+                                    <td style="width:335px;">
+                                        <div class="PartnerBox">
+                                            <table>
+                                                <tr class="PartnerBoxHeader">
+                                                    <td>To Partner</td>
+                                                </tr>
 
-                                            <div style="height: 192px; width: 100%; margin-top: -5px;">
-                                                <table>
-                                                    <tr style="height: 25px;">
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsQuoteEditEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PART'" (Checked)="InlandDomesticToTypeCode = 'PART'" [Text]="'Partner'"></RadioButton>
-                                                                    </td>
+                                                <tr>
+                                                    <td style="padding-left: 5px; padding-right: 5px;">
+                                                        <table class="FixedTable">
+                                                            <tr class="FormFieldRow">
+                                                                <td style="width:80px;">
+                                                                    <LogLabel [ObjectFieldName]="'ToPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Partners.Name'"></LogLabel>
+                                                                </td>
 
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsQuoteEditEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'PORT'" (Checked)="InlandDomesticToTypeCode = 'PORT'" [Text]="'Port'"></RadioButton>
-                                                                    </td>
+                                                                <td style="width:200px; max-width:200px;">
+                                                                    <div style="position:relative;" class="NameTextBox TextTrimming">
+                                                                        <label style="color:#6E7172; font-size:11px;"> {{ToPartnerName}} </label>
+                                                                    </div>
+                                                                </td>
 
-                                                                    <td>
-                                                                        <RadioButton [IsEnabled]="IsQuoteEditEnabled" [Name]="'ToRadio'" [IsChecked]="InlandDomesticToTypeCode == 'CASL'" (Checked)="InlandDomesticToTypeCode = 'CASL'" [Text]="'Casual Address'"></RadioButton>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
 
-                                                    <tr>
-                                                        <td>
-                                                            <!-- PART -->
-                                                            <table *ngIf="InlandDomesticToTypeCode == 'PART'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [ObjectFieldName]="'ToPartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.NewQuote.Name'"></LogLabel>
-                                                                    </td>
+                                                            <tr class="FormFieldRow">
+                                                                <td style="width:80px;">
+                                                                    <div></div>
+                                                                </td>
 
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'ToPartnerId'"
-                                                                                [SelectedValue]="ToPartnerId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Card'"
-                                                                                [DependencyFilter1Value]="CardLOVDependencyProperty1"
-                                                                                [DependencyFilter1IsList]="true">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
+                                                                <td colspan="2">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td style="width: 200px;">
+                                                                                <LogLov [ObjectFieldName]="'ToPartnerAddressId'"
+                                                                                        [SelectedValue]="ToPartnerAddressId"
+                                                                                        [ObjectTableName]="ObjectTableName"
+                                                                                        [DataContext]="DataContext"
+                                                                                        [LookUpTableName]="'Address'"
+                                                                                        [HideColumns]="true"
+                                                                                        [DependencyFilter1Value]="ToPartnerId">
+                                                                                </LogLov>
+                                                                            </td>
 
-                                                                <tr class="FormFieldRow">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'ToPartnerAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Partners.Address'"></LogLabel>
-                                                                    </td>
+                                                                            <td style="width: 2px;">
+                                                                                <div></div>
+                                                                            </td>
 
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'ToPartnerAddressId'"
-                                                                                [SelectedValue]="ToPartnerAddressId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Address'"
-                                                                                [DependencyFilter1Value]="ToPartnerId">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
+                                                                            <td style="width:18px;">
+                                                                                <IconButton [disabled]="!IsEditToAddressEnabled" (click)="EditAddressClicked('T')" [Name]="'Edit'" [IsSmall]="true"></IconButton>
+                                                                            </td>
 
-                                                                <tr>
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
+                                                                            <td style="width:18px;">
+                                                                                <IconButton [disabled]="!IsQuoteEditEnabled" (click)="AddAddressClicked('T')" [Name]="'Add'" [IsSmall]="true" [Left]="3"></IconButton>
+                                                                            </td>
 
-                                                                    <td style="vertical-align: top; padding-top: 5px;">
-                                                                        <AddressTemplate [Address]="ToAddressList" [Right]="36"></AddressTemplate>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
 
-                                                            <!-- PORT -->
-                                                            <table *ngIf="InlandDomesticToTypeCode == 'PORT'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [ObjectFieldName]="'ToPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'To Port'"></LogLabel>
-                                                                    </td>
+                                                            <tr style="height: 90px;">
+                                                                <td>
+                                                                    <LogLabel [ObjectFieldName]="'ToPartnerAddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Quote.S.Partners.Address'"></LogLabel>
+                                                                </td>
 
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'ToPortId'"
-                                                                                [SelectedValue]="ToPortId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Port'"
-                                                                                [DependencyFilter1Value]="TransportModeId">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
+                                                                <td colspan="2">
+                                                                    <AddressTemplate [Address]="ToAddressList" [Height]="80" [Right]="36"></AddressTemplate>                                                                     
+                                                                </td>
 
-                                                                <tr style="height: 75px;">
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
+                                                            </tr>
 
-                                                                    <td style="height: 75px; vertical-align: top;">
-                                                                        <div style="height: 100%;">
-                                                                            <LogTextBox [ObjectFieldName]="'MainCarriageToPortAddress'" [Text]="MainCarriageToPortAddress" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-
-                                                            <!-- CASL -->
-                                                            <table *ngIf="InlandDomesticToTypeCode == 'CASL'">
-                                                                <tr class="FormFieldRow">
-                                                                    <td style="width: 90px;">
-                                                                        <LogLabel [ObjectFieldName]="'InlandDomesticToZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogTextBox [ObjectFieldName]="'InlandDomesticToZipCode'" [Text]="InlandDomesticToZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr class="FormFieldRow">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'InlandDomesticToCity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <LogTextBox [ObjectFieldName]="'InlandDomesticToCity'" [Text]="InlandDomesticToCity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
-                                                                                </td>
-
-                                                                                <td style="padding-left: 5px;">
-                                                                                    <Hyperlink [IsEnabled]="IsQuoteEditEnabled" (click)="SelectCityCommand('T')">Select</Hyperlink>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr class="FormFieldRow">
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'InlandDomesticToCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <LogLov [ObjectFieldName]="'InlandDomesticToCountryId'"
-                                                                                [SelectedValue]="InlandDomesticToCountryId"
-                                                                                [ObjectTableName]="ObjectTableName"
-                                                                                [DataContext]="DataContext"
-                                                                                [LookUpTableName]="'Country'"
-                                                                                (SelectedItemChanged)="InlandDomesticToCountry = $event">
-                                                                        </LogLov>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </fieldset>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </td>
-
+                                        
                                     <td>
                                         <div></div>
                                     </td>
+
                                 </tr>
                             </table>
                         </td>

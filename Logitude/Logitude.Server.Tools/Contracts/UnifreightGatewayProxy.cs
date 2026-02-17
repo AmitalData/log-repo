@@ -184,14 +184,14 @@ namespace Logitude.Server.Tools.Contracts
         protected virtual string GetLoggingObjectTableId(string objectTableName)
         {
             if (String.IsNullOrWhiteSpace(objectTableName)) return "";//not must 
-            var objectTableRepository = new ObjectTableRepository(this._iTenanat); // ObjectTabelRepository tenant must be zero !!
+            var objectTableRepository = new ObjectTableRepository(0); // ObjectTabelRepository tenant must be zero !!
             var objectTable = objectTableRepository.GetObjectTableByName(objectTableName,// "Customs.PhysicalCheck", 
-				this._iTenanat, true);
+                0, true);
 
             return objectTable.Id;
         }
         protected virtual int ResolvedTenant()
-        { 
+        {
             return this._iTenanat;
         }
 

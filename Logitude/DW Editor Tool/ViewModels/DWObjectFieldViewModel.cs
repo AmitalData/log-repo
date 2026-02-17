@@ -147,63 +147,8 @@ namespace DW_Editor_Tool.ViewModels
         }
         // is Measurement , Aggregation Type
 
-        string originalObjectFieldCode;
-        public string OriginalObjectFieldCode
-        {
-            get { return originalObjectFieldCode; }
-            set { originalObjectFieldCode = value; FirePropertyChanged("OriginalObjectFieldCode"); }
-        }
-
-        string viewFieldDisplayName;
-        public string ViewFieldDisplayName
-        {
-            get { return viewFieldDisplayName; }
-            set { viewFieldDisplayName = value; FirePropertyChanged("ViewFieldDisplayName"); }
-        }
-
-        bool dontDisplayInView;
-        public bool DontDisplayInView
-        {
-            get { return dontDisplayInView; }
-            set { dontDisplayInView = value; FirePropertyChanged("DontDisplayInView"); }
-        }
-
-        bool isMultipleSelection;
-        public bool IsMultipleSelection
-        {
-            get { return isMultipleSelection; }
-            set { isMultipleSelection = value; FirePropertyChanged("IsMultipleSelection"); }
-        }
-
-        bool useUnitSelection;
-        public bool UseUnitSelection
-        {
-            get { return useUnitSelection; }
-            set { useUnitSelection = value; FirePropertyChanged("UseUnitSelection"); }
-        }
-
-        string dimensionDataViewName;
-        public string DimensionDataViewName
-        {
-            get { return dimensionDataViewName; }
-            set { dimensionDataViewName = value; FirePropertyChanged("DimensionDataViewName"); }
-        }
-
-
-        string recordType;
-        public string RecordType
-        {
-            get { return recordType; }
-            set { recordType = value; FirePropertyChanged("RecordType"); }
-        }
-
-
-
-
-
-
         public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension", "SqlVariant" }; } }
-        public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT", "MAX" }; } }
+        public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT" }; } }
 
         Visibility errorsVisibility = Visibility.Collapsed;
         public Visibility ErrorsVisibility

@@ -1,24 +1,20 @@
-﻿using Logitude.BL.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
+﻿using Simplog.Data.CommonDataModel;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Services;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -38,11 +34,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private IInvoiceContext myInvoiceContext;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentsContext;
-        private ShipmentPackageRepository shipmentPackageRepository;
-        private string tenantLocalCurrencyId;
-        private IWebFreightContext webFreightContext;
-        private RatesTableRepository ratesTablesRepository;
-        private RatesTableQuery ratesTableQuery;
         public ArchivoExportadoManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -50,10 +41,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myInvoiceContext = InvoiceContext.GetContext(tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
-            shipmentPackageRepository = new ShipmentPackageRepository(myShipmentsContext);
-            webFreightContext = WebFreightContext.GetContext(tenant);
-            ratesTablesRepository = new RatesTableRepository(webFreightContext);
-            ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
 
             AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings where d.Id == tenant select d).FirstOrDefault();
             if (myAccountingSetting != null)
@@ -63,9 +50,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     this.IsByRegistryDate = true;
                 }
             }
-
-            Tenant myTenant = (from d in myCommonContext.Tenants where d.Id == tenant select d).FirstOrDefault();
-            tenantLocalCurrencyId = myTenant?.CurrencyId;
 
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
@@ -79,7 +63,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_IncludeEstimations = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeEstimations").FirstOrDefault();
             QueryFilterItem filterItem_SplitByCharges = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SplitByCharges").FirstOrDefault();
             QueryFilterItem filterItem_IsByCreateDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
-
+            
             if (filterItem_FromDate != null)
             {
                 if (filterItem_FromDate.FieldValue != null)
@@ -171,7 +155,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 myDataProvider = this.LoadDataProvider();
             }
 
-            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(ArchivoExportadoDataProvider), tenant);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ArchivoExportadoDataProvider));
+            MemoryStream memoryStream = new MemoryStream();
+            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            StreamReader streamReader = new StreamReader(memoryStream);
+            string content = streamReader.ReadToEnd();
+            byte[] bytearray = memoryStream.ToArray();
+            return bytearray;
         }
 
         private ArchivoExportadoDataProvider LoadDataProvider()
@@ -185,7 +177,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myDataProvider.To = this.GetDateString(this.ToDate);
             myDataProvider.Shipments = new List<ArchivoExportadoShipmentItem>();
 
-            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();
+            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();            
             List<ShipmentDataView> allShipments = iQueryable_Shipments.ToList();
 
             if (allShipments.Count > 0)
@@ -203,8 +195,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                               && allShipmentsIds.Contains(d.EntityId)
                                                               select d.ARInvoice);
 
-                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA").Include("Status");
-                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL").Include("Status");
+                iQueryable_APInvoice = iQueryable_APInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
+                iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL");
 
                 if (!this.IncludeDraftInvoices)
                 {
@@ -249,19 +241,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                             myRecord.Salesman = myShipment.SalesmanUserName;
                             myRecord.Direction = myShipment.DirectionName;
-                            myRecord.House = myShipment.House;
-                            myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
-                            myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
-                            myRecord.AccountingClosed = myShipment.IsAccountingClosed;
-                            myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
-                            myRecord.ShipmentNotes = myShipment.Notes;
-                            myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
-
-                            if(myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
-                            {
-                                myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
-                            }
-                            
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -314,27 +293,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Payables = this.IsLocalCurrency ? invoice.AmountInLocalCurrency : invoice.AmountInProfitCurrency;
                         myRecord.Salesman = myShipment.SalesmanUserName;
                         myRecord.Direction = myShipment.DirectionName;
+
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-                        myRecord.House = myShipment.House;
-                        myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
-                        myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
-                        myRecord.AccountingClosed = myShipment.IsAccountingClosed;
-                        myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
-                        myRecord.ShipmentNotes = myShipment.Notes;
-                        myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
-                        myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
-                        myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
-                        myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                        myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                        myRecord.InvoiceStatusName = invoice.Status?.Name;
-                        myRecord.PaidDate = invoice.PaidDate;
-
-                        if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
-                        {
-                            myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
-                        }
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -402,7 +364,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     {
                         #region AR Invoices
                         ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
-                        myRecord.LineTypeCode = invoice.StatusCode == "DR" || invoice.StatusCode == "PR" ? "FX" : "FC";
+                        myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
                         myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                         myRecord.LongMaster = longMaster;
                         myRecord.Customer = myCustomer;
@@ -411,27 +373,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.Receivables = this.IsLocalCurrency ? invoice.AmountInLocalCurrency : invoice.AmountInProfitCurrency;
                         myRecord.Salesman = myShipment.SalesmanUserName;
                         myRecord.Direction = myShipment.DirectionName;
+
                         myRecord.InvoiceNumber = invoice.InvoiceNumber;
                         myRecord.InvoiceDate = invoice.InvoiceDate;
                         myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-                        myRecord.House = myShipment.House;
-                        myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
-                        myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
-                        myRecord.AccountingClosed = myShipment.IsAccountingClosed;
-                        myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
-                        myRecord.ShipmentNotes = myShipment.Notes;
-                        myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
-                        myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
-                        myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
-                        myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                        myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                        myRecord.InvoiceStatusName = invoice.Status?.Name;
-                        myRecord.PaidDate = invoice.PaidDate;
-
-                        if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
-                        {
-                            myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
-                        }
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -496,7 +441,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myDataProvider;
         }
-
         private ArchivoExportadoDataProvider LoadDataProvider_SplitByCharges()
         {
             ArchivoExportadoDataProvider myDataProvider = new ArchivoExportadoDataProvider();
@@ -508,7 +452,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myDataProvider.To = this.GetDateString(this.ToDate);
             myDataProvider.Shipments = new List<ArchivoExportadoShipmentItem>();
 
-            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();
+            IQueryable<ShipmentDataView> iQueryable_Shipments = this.GetIQueryableShipments();            
             List<ShipmentDataView> allShipments = iQueryable_Shipments.ToList();
 
             if (allShipments.Count > 0)
@@ -582,8 +526,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                            }).ToList();
                 }
 
-                iQueryable_APInvoices = iQueryable_APInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA").Include("Status");
-                iQueryable_ARInvoices = iQueryable_ARInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL").Include("Status");
+                iQueryable_APInvoices = iQueryable_APInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "WA");
+                iQueryable_ARInvoices = iQueryable_ARInvoices.Where(d => d.StatusCode != "VD" && d.StatusCode != "LL");
 
                 if (!this.IncludeDraftInvoices)
                 {
@@ -649,7 +593,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 #endregion
 
                 Currency SelectedCurrency = allCurrencies.Where(d => d.Code == this.SelectedCurrencyCode).FirstOrDefault();
-
                 if (SelectedCurrency != null)
                 {
                     this.SelectedCurrencyId = SelectedCurrency.Id;
@@ -657,13 +600,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                 foreach (ShipmentDataView myShipment in allShipments)
                 {
-                    Branch myBranch = null;
 
+
+
+                    Branch myBranch = null;
                     if (!string.IsNullOrEmpty(myShipment.BranchId))
                     {
                         myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
                     }
-
                     #region
 
                     string longMaster = this.GetLongMaster(myShipment);
@@ -690,20 +634,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.Direction = myShipment.DirectionName;
-                                    myRecord.House = myShipment.House;
-                                    myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
-                                    myRecord.AccountManagerName = myShipment.AccountManagerUserName;
-                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
-                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
-                                    myRecord.OpenPayables = myRecord.Payables;
-                                    myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
-                                    myRecord.ShipmentNotes = myShipment.Notes;
-                                    myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
 
-                                    if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
-                                    {
-                                        myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
-                                    }
+                                    myRecord.OpenPayables = myRecord.Payables;
 
                                     if (myBranch != null)
                                     {
@@ -783,20 +715,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.Direction = myShipment.DirectionName;
-                                    myRecord.House = myShipment.House;
-                                    myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
-                                    myRecord.AccountManagerName = myShipment.AccountManagerUserName;
-                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
-                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
-                                    myRecord.OpenReceivables = myRecord.Receivables;
-                                    myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
-                                    myRecord.ShipmentNotes = myShipment.Notes;
-                                    myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
 
-                                    if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
-                                    {
-                                        myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
-                                    }
+                                    myRecord.OpenReceivables = myRecord.Receivables;
 
                                     if (myBranch != null)
                                     {
@@ -877,29 +797,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                 myRecord.Salesman = myShipment.SalesmanUserName;
                                 myRecord.Direction = myShipment.DirectionName;
-                                myRecord.AccountManagerName = myShipment.AccountManagerUserName;
-                                myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
-                                myRecord.AccountingClosed = myShipment.IsAccountingClosed;
+
                                 myRecord.Payables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                 myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                 myRecord.InvoiceDate = invoice.InvoiceDate;
                                 myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-                                myRecord.House = myShipment.House;
-                                myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
-                                myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
-                                myRecord.ShipmentNotes = myShipment.Notes;
-                                myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
-                                myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
-                                myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
-                                myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                                myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                                myRecord.InvoiceStatusName = invoice.Status?.Name;
-                                myRecord.PaidDate = invoice.PaidDate;
-
-                                if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
-                                {
-                                    myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
-                                }
 
                                 if (myCurrency != null)
                                 {
@@ -1009,15 +911,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             if (isAddingInvoice)
                             {
                                 Card myCard = allCards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
+                                //Branch myBranch = allBranchs.Where(d => d.Id == invoice.BranchId).FirstOrDefault();
                                 Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
                                 Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
 
                                 List<ChargeTypeGroupClass> lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
+                                //List<ChargeTypeGroupClass> lines_Grouped2 = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id).ToList();
 
                                 foreach (ChargeTypeGroupClass item in lines_Grouped)
                                 {
                                     ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
-                                    myRecord.LineTypeCode = invoice.StatusCode == "DR" || invoice.StatusCode == "PR" ? "FX" : "FC";
+                                    myRecord.LineTypeCode = invoice.StatusCode == "DR" ? "FX" : "FC";
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.LongMaster = longMaster;
                                     myRecord.Customer = myCustomer;
@@ -1025,29 +929,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.DescriptionOfGoods = myShipment.DescriptionOfGoods;
                                     myRecord.Salesman = myShipment.SalesmanUserName;
                                     myRecord.Direction = myShipment.DirectionName;
-                                    myRecord.AccountManagerName = myShipment.AccountManagerUserName;
-                                    myRecord.ShipmentStatus = myShipment.ShipmentStatusName;
-                                    myRecord.AccountingClosed = myShipment.IsAccountingClosed;
+
                                     myRecord.Receivables = this.IsLocalCurrency ? item.AmountInLocal : item.AmountInProfit;
                                     myRecord.InvoiceNumber = invoice.InvoiceNumber;
                                     myRecord.InvoiceDate = invoice.InvoiceDate;
                                     myRecord.InvoiceCurrencyRate = invoice.InvoiceCurrencyExchangeRate;
-                                    myRecord.House = myShipment.House;
-                                    myRecord.ContainersNumbers = shipmentPackageRepository.GetContainersNumbersByShipmentIdAndTenant(myShipment.Id, myShipment.Tenant);
-                                    myRecord.ShipmentCreateDate = myShipment.CreateDateTime;
-                                    myRecord.ShipmentNotes = myShipment.Notes;
-                                    myRecord.ShipmentOpenedBy = myShipment.CreatedByUserName;
-                                    myRecord.InvoiceAmountDueInLocalCurrency = invoice.AmountDueInLocalCurrency;
-                                    myRecord.InvoiceAmountDueInInvoiceCurrency = invoice.AmountDue;
-                                    myRecord.AccountedReceivablesInInvoiceCurrency = this.ComputeAccountedReceivablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                                    myRecord.AccountedPayablesInInvoiceCurrency = this.ComputeAccountedPayablesInInvoiceCurrency(invoice.InvoiceCurrencyId, myShipment, invoice.InvoiceDate);
-                                    myRecord.InvoiceStatusName = invoice.Status?.Name;
-                                    myRecord.PaidDate = invoice.PaidDate;
-
-                                    if (myShipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(myShipment.MasterShipmentDataId))
-                                    {
-                                        myRecord.MasterShipmentNumber = myShipment.MasterShipmentNumber;
-                                    }
 
                                     if (myCurrency != null)
                                     {
@@ -1274,7 +1160,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         {
             bool myResult = false;
 
-            if (value != null && value != 0)
+            if(value != null && value != 0)
             {
                 myResult = true;
             }
@@ -1311,68 +1197,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myResult;
         }
-        private double? ComputeAccountedReceivablesInInvoiceCurrency(string invoiceCurrencyId, ShipmentDataView myShipment, DateTime? invoiceDate)
-        {
-            double? myResult = null;
-
-            if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
-            {
-                myResult = myShipment.AccountedReceivablesInProfitCurrency;
-            }
-
-            else if (invoiceCurrencyId == tenantLocalCurrencyId)
-            {
-                myResult = myShipment.AccountedReceivablesInLocalCurrency;
-            }
-
-            else
-            {
-                double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
-                if(rate != null && rate != 0)
-                {
-                    myResult = myShipment.AccountedReceivablesInLocalCurrency / rate;
-                }
-            }
-
-            return myResult;
-        }
-        private double? ComputeAccountedPayablesInInvoiceCurrency(string invoiceCurrencyId, ShipmentDataView myShipment, DateTime? invoiceDate)
-        {
-            double? myResult = null;
-
-            if (invoiceCurrencyId == myShipment.ProfitCurrencyId)
-            {
-                myResult = myShipment.AccountedPayablesInProfitCurrency;
-            }
-
-            else if (invoiceCurrencyId == tenantLocalCurrencyId)
-            {
-                myResult = myShipment.AccountedPayablesInLocalCurrency;
-            }
-
-            else
-            {
-                double? rate = this.GetCurrencysExchangeRate(invoiceCurrencyId, invoiceDate);
-                if (rate != null && rate != 0)
-                {
-                    myResult = myShipment.AccountedPayablesInLocalCurrency / rate;
-                }
-            }
-
-            return myResult;
-        }
-        private double? GetCurrencysExchangeRate(string foreignCurrencyId, DateTime? rateDate)
-        {
-            double? rate = null;
-
-            LastRate lastRate = ratesTableQuery.GetLastRecordByValueDate(tenant, foreignCurrencyId, tenantLocalCurrencyId, rateDate);
-            if (lastRate != null)
-            {
-                rate = lastRate.Rate;
-            }
-
-            return rate;
-        }
     }
     public class ChargeTypeGroupClass
     {
@@ -1380,8 +1204,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public string InvoiceId { get; set; }
         public string ShipmentId { get; set; }
         public string ChargesTypeId { get; set; }
-        public string PayableId { get; set; }
-        public string ReceivableId { get; set; }
         public double? AmountInLocal { get; set; }
         public double? AmountInProfit { get; set; }
         public double? ExpectedAmountInLocal { get; set; }

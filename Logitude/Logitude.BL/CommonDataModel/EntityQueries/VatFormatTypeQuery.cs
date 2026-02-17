@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
@@ -16,6 +16,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
        VatFormatTypeRepository repository;
 
+        public VatFormatTypeQuery()
+        {
+            repository = new VatFormatTypeRepository();
+        }
         public VatFormatTypeQuery(int tenant)
         {
             repository = new VatFormatTypeRepository(tenant);

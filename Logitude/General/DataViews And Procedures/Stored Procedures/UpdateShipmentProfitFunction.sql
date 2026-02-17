@@ -41,15 +41,6 @@ BEGIN
 			declare @ARInvoiceIssued as bit
 			declare @CreditNoteIssued as bit
 			declare @NotInvoicedReceivablesAmount as float
-
-			declare @HousesOpenPayablesInLocal as float
-			declare @HousesOpenPayablesInProfit as float
-			declare @HousesACCTPayablesInLocal as float
-			declare @HousesACCTPayablesInProfit as float
-			declare @HousesOpenReceivablesInLocal as float
-			declare @HousesOpenReceivablesInProfit as float
-			declare @HousesACCTReceivablesInLocal as float
-			declare @HousesACCTReceivablesInProfit as float
 		END
 
 		-- Reset Variables
@@ -73,14 +64,6 @@ BEGIN
 			set @ARInvoiceIssued = 0
 			set @CreditNoteIssued = 0
 			set @NotInvoicedReceivablesAmount = 0
-			set @HousesOpenPayablesInLocal = 0
-			set @HousesOpenPayablesInProfit = 0
-			set @HousesACCTPayablesInLocal = 0
-			set @HousesACCTPayablesInProfit = 0
-			set @HousesOpenReceivablesInLocal = 0
-			set @HousesOpenReceivablesInProfit = 0
-			set @HousesACCTReceivablesInLocal = 0
-			set @HousesACCTReceivablesInProfit = 0
 		END
 
 		-- Get Payables Data
@@ -89,18 +72,6 @@ BEGIN
 			begin
 				if exists (select * from Shipments where Tenant = @Tenant AND ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
 				begin
-
-					select
-					@HousesOpenPayablesInLocal = sum(isnull(OpenAmountInLocalCurrency,0)),
-					@HousesOpenPayablesInProfit = sum(isnull(OpenAmountInProfitCurrency,0)),
-					@HousesACCTPayablesInLocal = sum(isnull(AccountedAmountInLocalCurrency,0)),
-					@HousesACCTPayablesInProfit = sum(isnull(AccountedAmountInProfitCurrency,0))
-					from ShipmentPayables
-					where
-					Tenant = @Tenant
-					AND (ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId))
-					AND ShipmentPayableParentId is null
-
 					select
 					@OpenPayablesInLocalCurrency = sum(isnull(OpenAmountInLocalCurrency,0)),
 					@OpenPayablesInProfitCurrency = sum(isnull(OpenAmountInProfitCurrency,0)),
@@ -144,26 +115,6 @@ BEGIN
 		BEGIN
 			if (@IsConsoleShipment = 1)
 			begin
-
-				select
-				@HousesOpenReceivablesInLocal = sum(isnull(TotalAmountLocal,0)),
-				@HousesOpenReceivablesInProfit = sum(isnull(AmountInProfitCurrency,0))
-				from ShipmentReceivables
-				where
-				Tenant = @Tenant
-				AND ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
-				AND (ShipmentReceivableLineStatusCode = 'OAMT' OR ShipmentReceivableLineStatusCode = 'DRFT')
-				AND ShipmentReceivableParentId is null
-	
-				select
-				@HousesACCTReceivablesInLocal = sum(isnull(TotalAmountLocal,0)),
-				@HousesACCTReceivablesInProfit = sum(isnull(AmountInProfitCurrency,0))
-				from ShipmentReceivables
-				where
-				Tenant = @Tenant
-				AND ShipmentId in (select Id from Shipments where ShipmentLevelCode = 'H' AND MasterShipmentDataId = @ShipmentId)
-				AND ShipmentReceivableLineStatusCode = 'ACCT'
-				AND ShipmentReceivableParentId is null
 
 				if (@ProrateReceivables = 1)
 				BEGIN
@@ -264,15 +215,6 @@ BEGIN
 			set @OpenReceivablesInProfitCurrency = isnull(@OpenReceivablesInProfitCurrency,0)
 			set @AccountedReceivablesInLocalCurrency = isnull(@AccountedReceivablesInLocalCurrency,0)
 			set @AccountedReceivablesInProfitCurrency = isnull(@AccountedReceivablesInProfitCurrency,0)
-
-			set @HousesOpenPayablesInLocal = isnull(@HousesOpenPayablesInLocal,0)
-			set @HousesOpenPayablesInProfit = isnull(@HousesOpenPayablesInProfit,0)
-			set @HousesACCTPayablesInLocal = isnull(@HousesACCTPayablesInLocal,0)
-			set @HousesACCTPayablesInProfit = isnull(@HousesACCTPayablesInProfit,0)
-			set @HousesOpenReceivablesInLocal = isnull(@HousesOpenReceivablesInLocal,0)
-			set @HousesOpenReceivablesInProfit = isnull(@HousesOpenReceivablesInProfit,0)
-			set @HousesACCTReceivablesInLocal = isnull(@HousesACCTReceivablesInLocal,0)
-			set @HousesACCTReceivablesInProfit = isnull(@HousesACCTReceivablesInProfit,0)
 		END
 
 		-- Compute Profit Fields
@@ -385,16 +327,7 @@ BEGIN
 			ShipmentReceivableStatusCode = @ShipmentReceivableStatusCode,
 			ARInvoiceIssued = @ARInvoiceIssued,
 			CreditNoteIssued = @CreditNoteIssued,
-			NotInvoicedReceivablesAmount = @NotInvoicedReceivablesAmount,
-
-			HousesOpenPayablesInLocal = @HousesOpenPayablesInLocal,
-			HousesOpenPayablesInProfit = @HousesOpenPayablesInProfit,
-			HousesACCTPayablesInLocal = @HousesACCTPayablesInLocal,
-			HousesACCTPayablesInProfit = @HousesACCTPayablesInProfit,
-			HousesOpenReceivablesInLocal = @HousesOpenReceivablesInLocal,
-			HousesOpenReceivablesInProfit = @HousesOpenReceivablesInProfit,
-			HousesACCTReceivablesInLocal = @HousesACCTReceivablesInLocal,
-			HousesACCTReceivablesInProfit = @HousesACCTReceivablesInProfit
+			NotInvoicedReceivablesAmount = @NotInvoicedReceivablesAmount
 			Where Id = @ShipmentId AND Tenant = @Tenant
 		END
 END

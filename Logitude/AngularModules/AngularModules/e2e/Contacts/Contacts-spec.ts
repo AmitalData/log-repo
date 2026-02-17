@@ -7,8 +7,8 @@ let x:FieldsHelper=new FieldsHelper();
 let z:GeneralFunctions=new GeneralFunctions();
 
 it('',function(){
-z.GoToMainMenu2('General.MH.Contacts');
-//browser.driver.sleep(5000);
+z.GoToMainMenu('General.MH.Contacts');
+browser.driver.sleep(5000);
 });
 
 

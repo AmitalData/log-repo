@@ -9,11 +9,9 @@ import {ChangeField} from '../../../../Common/DataContracts/ChangeField';
 import {EntityChangeAutomation} from '../../../../Common/DataContracts/EntityChangeAutomation';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { AutomationConditionsDetailsComponent } from './AutomationConditionsDetailsComponent';
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'AuditAutomationTabComponent',
     templateUrl: './AuditAutomationTabComponent.html',
     inputs: ['ObjectTableName','EntityId'],
@@ -41,8 +39,6 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
     SelectedEntityAutomationList: EntityChangeAutomation;
     IsCustomerCareUser: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
-    ShowConditionsDetailsLink: boolean = true;
-
     constructor(private _entityChangeExtendedPMService: EntityChangeExtendedPMService, private cd: ChangeDetectorRef) {
 
         if (SessionLocator.LoggedUserPM.IsCustomerCare) {
@@ -50,29 +46,6 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         }
 
         this.Listen();
-    }
-
-    SetWindowArgs(windowArgs) {
-        //this.ReportGroupList = windowArgs.ReportGroupList;
-        //this.ReportList = windowArgs.ReportList;
-    }
-
-    ShowCondithionsDetails(item) { 
-        let windowArgs: any = {};  
-        let logWindow = new LogitudeWindow(); 
-        logWindow.DataContext = this;
-        logWindow.Height = 800;
-        logWindow.Width = 840;
-        logWindow.Title = "Conditions Statuses";
-        logWindow.DataContext = this;
-        windowArgs.CurrentEntityPM = item; 
-        windowArgs.AutomationHistoryPM = item;
-        windowArgs.DataViewModel = this;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.IsShowCloseButton = true;
-        logWindow.Show('./Infrastructure/Components/Maintenance/Automation/AutomationConditionsDetailsComponent');
-        logWindow.WindowClosed.subscribe(closed => { 
-        });
     }
 
     Listen() {
@@ -90,7 +63,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             var table = window.ObjectTables.filter(d => d.Name == this.ObjectTableName)[0];
             if (table) {
                 this.ObjectTableId = table.Id;
@@ -110,7 +83,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         this.AutomationList = [];
         this.ChangeFieldsList = [];
 
-        this._entityChangeExtendedPMService.getEntityChangePMsByEntityIdAndObjectTable(this.EntityId, this.ObjectTableId, SessionLocator.Tenant).subscribe((res:any) => {
+        this._entityChangeExtendedPMService.getEntityChangePMsByEntityIdAndObjectTable(this.EntityId, this.ObjectTableId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             this.IsConditionAll = true;
@@ -142,7 +115,7 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
         this.AutomationList = [];
         this.ChangeFieldsList = [];
         this.CurrentSession.StartBusyIndicator("Loading...");
-        this._entityChangeExtendedPMService.getEntityChangeAutomationsSummaryByEntityChangeId(this.EntityChangeListSelected.Id, this.ObjectTableName, SessionLocator.Tenant).subscribe((res:any) => {
+        this._entityChangeExtendedPMService.getEntityChangeAutomationsSummaryByEntityChangeId(this.EntityChangeListSelected.Id, this.ObjectTableName, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
@@ -153,11 +126,6 @@ export class AuditAutomationTabComponent implements OnInit, AfterViewInit {
                 if (entityChangeAutomationsSummary) {
                     this.ChangeFieldsList = entityChangeAutomationsSummary.ChangeFieldsList;
                     this.AutomationList = this.EntityAutomationList = entityChangeAutomationsSummary.EntityChangeAutomationList;
-                    if (this.AutomationList.length && !this.AutomationList[0].ConditionsList.length) {
-                        this.ShowConditionsDetailsLink = false;
-                    } else {
-                        this.ShowConditionsDetailsLink = true;
-                    }
 
                 }
             }

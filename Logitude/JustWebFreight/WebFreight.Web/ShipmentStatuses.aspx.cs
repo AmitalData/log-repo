@@ -11,15 +11,13 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
-using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Parameter = Logitude.Server.Tools.Parameter;
@@ -132,10 +130,8 @@ namespace WebFreight.Web
                     Priority = 1,
 
                 };
-                Logitude.Customs.Def.EntityPMs.CustomsSettingPM a = CustomsSettingQueryService.GetSettingByTenant(Tenant);
 
-                if (!CustomsSettingQueryService.GetSettingByTenant(Tenant).StandAlone)
-                    communicationLogRepository.Add(commLog);
+                communicationLogRepository.Add(commLog);
                 communicationLogRepository.SubmitChanges();
                 SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, Tenant);
             }
@@ -148,7 +144,7 @@ namespace WebFreight.Web
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
     
             }
             catch (Exception ex)

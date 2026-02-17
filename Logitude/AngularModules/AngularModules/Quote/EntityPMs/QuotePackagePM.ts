@@ -14,14 +14,13 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
- import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';
 
-export class QuotePackagePM extends ChildEntitiesCustomFieldPM {
+
+export class QuotePackagePM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-	        		  super("QuotePackage");
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
@@ -94,9 +93,9 @@ export class QuotePackagePM extends ChildEntitiesCustomFieldPM {
     public set Dimensions(newValue: string) { if (this.dimensions != newValue) { this.dimensions = newValue; this.MarkAsDirty("Dimensions"); } }
        
 	 
-    private quote: any;
+    private quote: string;
     public get Quote() { return this.quote; }
-    public set Quote(newValue: any) { if (this.quote != newValue) { this.quote = newValue; this.MarkAsDirty("Quote"); } }
+    public set Quote(newValue: string) { if (this.quote != newValue) { this.quote = newValue; this.MarkAsDirty("Quote"); } }
        
 	 
     private changeSetOp: string;
@@ -114,10 +113,7 @@ export class QuotePackagePM extends ChildEntitiesCustomFieldPM {
     public UniqueKey: string;
 	 	
     public IsDirty: boolean;
-    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
@@ -127,7 +123,6 @@ export class QuotePackagePM extends ChildEntitiesCustomFieldPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "QuotePackage");
            
         }
-	 }
     }
     private MyClone: QuotePackagePM;
 

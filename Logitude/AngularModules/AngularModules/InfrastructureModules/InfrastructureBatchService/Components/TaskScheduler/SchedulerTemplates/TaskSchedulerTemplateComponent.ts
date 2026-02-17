@@ -6,7 +6,7 @@ import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/Ser
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 @Component({
-    
+    moduleId: module.id,
 
     selector: 'TaskSchedulerTemplateComponent',
     templateUrl: './TaskSchedulerTemplateComponent.html',

@@ -1,4 +1,4 @@
-import { CourierBOLQueryComponent } from './Components/CourierBOLQueryComponent';
+﻿import { CourierBOLQueryComponent } from './Components/CourierBOLQueryComponent';
 import { ExchangeRatesQueryComponent } from './Components/ExchangeRatesQueryComponent';
 import { MasterBOLQueryComponent } from './Components/MasterBOLQueryComponent';
 import { CustomItemLegalDemandsQueryComponent } from './Components/CustomItemLegalDemandsQueryComponent';
@@ -14,19 +14,13 @@ import { DeclarationReshimonConversionComponent } from './Components/Declaration
 import { AddAttachmentResponseComponent } from './Components/AddAttachmentResponseComponent';
 import { RequiredDocumentComponent } from './Components/RequiredDocumentComponent';
 import { RecallSuppliersFromFileComponent } from './Components/RecallSuppliersFromFileComponent';
-import { ReceiptCertificateFromFileComponent } from './Components/ReceiptCertificateFromFileComponent';
 import { ClientSearchByIDComponent } from './Components/ClientSearchByIDComponent';
 import { CustomerIndicationComponent } from './Components/CustomerIndicationComponent';
 import { RecallClientsForCutoms } from './Components/RecallClientsForCutoms';
 import { MorningMessageComponent } from './Components/MorningMessageComponent';
-import { CopyDeclarationComponent } from './Components/CopyDeclarationComponent';
-import { PhysicalCheckComponent } from './Components/PhysicalCheckComponent';
-import { EndPhysicalCheckComponent } from './Components/EndPhysicalCheckComponent';
-import { CustomsItemDetailsQueryComponent } from './Components/CustomsItemDetailsQueryComponent';
- 
+
 export const Components =
     [
-        CustomsItemDetailsQueryComponent,
         CourierBOLQueryComponent,
         ExchangeRatesQueryComponent,
         MasterBOLQueryComponent,
@@ -43,15 +37,12 @@ export const Components =
         AddAttachmentResponseComponent,
         RequiredDocumentComponent,
         RecallSuppliersFromFileComponent,
-        ReceiptCertificateFromFileComponent,
         ClientSearchByIDComponent,
         CustomerIndicationComponent,
         RecallClientsForCutoms,
         MorningMessageComponent,
-        CopyDeclarationComponent,
-        PhysicalCheckComponent,
-        EndPhysicalCheckComponent,
-     ];
+
+    ];
 
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -62,7 +53,6 @@ export class ModuleDeclarations {
 
             case "CourierBOLQueryComponent": { myResult = CourierBOLQueryComponent; break; }
             case "ExchangeRatesQueryComponent": { myResult = ExchangeRatesQueryComponent; break; }
-            case "CustomsItemDetailsQueryComponent": { myResult = CustomsItemDetailsQueryComponent; break; }
             case "MasterBOLQueryComponent": { myResult = MasterBOLQueryComponent; break; }
             case "CustomItemLegalDemandsQueryComponent": { myResult = CustomItemLegalDemandsQueryComponent; break; }
             case "CreditLimitQueryComponent": { myResult = CreditLimitQueryComponent; break; }
@@ -77,14 +67,11 @@ export class ModuleDeclarations {
             case "AddAttachmentResponseComponent": { myResult = AddAttachmentResponseComponent; break; }
             case "RequiredDocumentComponent": { myResult = RequiredDocumentComponent; break; }
             case "RecallSuppliersFromFileComponent": { myResult = RecallSuppliersFromFileComponent; break; }
-            case "ReceiptCertificateFromFileComponent": { myResult = ReceiptCertificateFromFileComponent; break; }
             case "ClientSearchByIDComponent": { myResult = ClientSearchByIDComponent; break; }
             case "CustomerIndicationComponent": { myResult = CustomerIndicationComponent; break; }
             case "RecallClientsForCutoms": { myResult = RecallClientsForCutoms; break; }
             case "MorningMessageComponent": { myResult = MorningMessageComponent; break; }
-            case "CopyDeclarationComponent": { myResult = CopyDeclarationComponent; break; }
-            case "PhysicalCheckComponent": { myResult = PhysicalCheckComponent; break; }
-            case "EndPhysicalCheckComponent": { myResult = EndPhysicalCheckComponent; break; }
+
         }
 
         return myResult;

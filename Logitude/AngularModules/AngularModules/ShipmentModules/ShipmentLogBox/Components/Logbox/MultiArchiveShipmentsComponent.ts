@@ -1,31 +1,29 @@
-import { ShipmentArchiveFilter } from '../../../../Controls/ShipmentArchiveFilter';
-import { TransportsFilter } from '../../../../Controls/TransportsFilter';
-import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
-import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { SearchTextBox } from '../../../../Controls/SearchTextBox';
-import { IconButton } from '../../../../Controls/IconButton';
-import { LogGridComponent } from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
-
-import { ServiceArgs } from '../../../../Infrastructure/DataContracts/ServiceArgs';
-import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
-import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { LogBoxDocumentsComponent } from './LogBoxDocumentsComponent';
-import { ShipmentDomainService, ImporterQueriesDataCounts } from '../../../../Shipment/Services/ShipmentDomainService';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
-import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { PortExtendedPMService } from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
-import { EntityStatusExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
-import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
-import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
+import {ShipmentArchiveFilter} from '../../../../Controls/ShipmentArchiveFilter';
+import {TransportsFilter} from '../../../../Controls/TransportsFilter';
+import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
+import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {SearchTextBox} from '../../../../Controls/SearchTextBox';
+import {IconButton} from '../../../../Controls/IconButton';
+import {LogGridComponent} from '../../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
+import {Http, Response} from '@angular/http';
+import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
+import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
+import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
+import {LogBoxDocumentsComponent} from './LogBoxDocumentsComponent';
+import {ShipmentDomainService, ImporterQueriesDataCounts} from '../../../../Shipment/Services/ShipmentDomainService';
+import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
+import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
+import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
+import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import {PortExtendedPMService} from '../../../../Common/Services/ExtendedPMs/PortExtendedPMService';
+import {ShipmentPMService} from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import {EntityStatusExtendedListService} from '../../../../Infrastructure/Services/ExtendedLists/EntityStatusExtendedListService';
+import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
+import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 
 @Component({
-
+    moduleId: module.id,
     templateUrl: './MultiArchiveShipmentsComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -34,7 +32,6 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     private myShipmentDomainService: ShipmentDomainService;
     public AgentShortName: string = "";
     public IsPrivateLabel: boolean = false;
-    public IsDSV: boolean = false;
     private messageWindow: MessageWindow = new MessageWindow();
     //EntityPm: ShipmentPM = new ShipmentPM();
     DataContext: MultiArchiveShipmentsComponent = this;
@@ -47,39 +44,25 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     AllRecordsCount: number = 0;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
     private CurrentSession = SessionLocator.SelectedSession;
-    public isLogbox = SystemEnvironmentService.IsLogBox();
-    public IsExportActivated: boolean = false;
-    public IsCustomsActivated: boolean = true;
-    public ShowDirectionFilters: boolean = false;
-
     constructor(private _entityListService: EntityListService) {
         super();
+
         this.myShipmentDomainService = new ShipmentDomainService();
-        this._PortExtendedPMService = new PortExtendedPMService();
-        this._ShipmentPMService = new ShipmentPMService();
-        this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
-
+        //if (SessionLocator.PrivateLableSettings) {
+            //this.ValidationErrorsList = [];
+            //this.AgentShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+            //this.IsPrivateLabel = true;
+            this._PortExtendedPMService = new PortExtendedPMService();
+            this._ShipmentPMService = new ShipmentPMService();
+            this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
+        //}
     }
-
     ngOnInit() {
-        this.handlePrivateLable();
         this.LoadImporterShipments();
     }
-
-
-    private handlePrivateLable() {
-        if (SessionLocator.PrivateLableSettings) {
-            this.IsPrivateLabel = true;
-            this.IsDSV = SessionLocator.PrivateLableSettings.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
-
-
-        }
-    }
-
     ngAfterViewInit() {
 
     }
-
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @Output() ShipmentSelectedEvent = new EventEmitter();
     @Output() OnImporterShipmentsFilterChanged = new EventEmitter();
@@ -91,36 +74,40 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public RecentImg: string = "./Images/LogBox/Recent.png";
     SearchFilter: string = "";
     SourceEntity: any;
-
-
-    private selectedDirectionFilter: string = "All";
-    public get SelectedDirectionFilter() { return this.selectedDirectionFilter; }
-    public set SelectedDirectionFilter(newValue: string) {
-        if (this.selectedDirectionFilter != newValue) {
-            this.selectedDirectionFilter = newValue;
-            this.LoadImporterShipments();
-        }
-    }
-
-
     private mySelectedTransportFilter: string = "All";
     get SelectedTransportFilter() { return this.mySelectedTransportFilter; }
     set SelectedTransportFilter(newValue: string) {
         if (this.mySelectedTransportFilter != newValue) {
             this.mySelectedTransportFilter = newValue;
+            //if (this.filterAgrs == null) {
+            //    this.filterAgrs = new ApiQueryFilters();
+            //}
+            //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
+            //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
+            //}
+            //this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
+            //this.LoadQueriesCounts();
+            //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
             this.LoadImporterShipments();
         }
     }
-
     private mySelectedArchiveFilter: string = "O";
     get SelectedArchiveFilter() { return this.mySelectedArchiveFilter; }
     set SelectedArchiveFilter(newValue: string) {
         if (this.mySelectedArchiveFilter != newValue) {
             this.mySelectedArchiveFilter = newValue;
+            //if (this.filterAgrs == null) {
+            //    this.filterAgrs = new ApiQueryFilters();
+            //}
+            //if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'IsOperationalClosed').length > 0) {
+            //    this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'IsOperationalClosed');
+            //}
+            //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", this.SelectedTransportFilter == "O" ? false : true, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
+            //this.LoadQueriesCounts();
+            //this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: this.SelectedTransportFilter == "All" ? true : false });
             this.LoadImporterShipments();
         }
     }
-
     public AgentShipmentsCount: string;
     public MyShipmentsCount: string;
     public RequestedCount: string;
@@ -128,7 +115,6 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     public searchFields: string;
     public HasSharedDocs: boolean = true;
     @Output() SearchFieldchangeevent = new EventEmitter();
-
     DataSource = {
         pageSize: 20,
         rowCount: null,
@@ -136,13 +122,15 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         sortingDir: "Descending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            //if (!this.SelectedFilter) {
+            //    this.SelectedFilter = tempo.rowData;
+            //    this.ShipmentSelectedEvent.emit(this.SelectedRow);
+            //}
             return tempo;
         },
     };
-
     private GetSourceEntityEvent: any = null;
     SetWindowArgs(args: any) {
-        this.SetFiltersOptions(args);
         this.SourceEntity = {};//args.SourceEntity;
         this.HasSharedDocs = args.HasSharedDocs;
         if (this.SourceEntity) {
@@ -163,13 +151,6 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         //    }
         //}); 
     }
-
-    private SetFiltersOptions(args: any) {
-        this.IsCustomsActivated = SessionLocator.PrivateLableSettings ? args.IsCustomsActivated : this.IsCustomsActivated;
-        this.IsExportActivated = SessionLocator.PrivateLableSettings ? args.IsExportActivated : this.IsExportActivated;
-        this.ShowDirectionFilters = args.ShowDirectionFilters;
-    }
-
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -225,16 +206,12 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
         this.CustomColumnsReady.emit(this.columns);
     }
-
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         //if (filters == null) {
         filters = new ApiQueryFilters();
         filters.SortBy = "StatusDate";
         filters.SortDirection = "Descending";
         //}
-        if (this.IsPrivateLabel && !this.IsDSV) {
-            filters.addAdditionalFilter("ForwarderPartnerId", SessionLocator.PrivateLableSettings.HybridPartnerId, null, null, "Equal", true, true, false, "String");
-        }
         if (!AppTool.IsNullOrEmpty(searchfields)) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
             filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
@@ -284,7 +261,7 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
 
 
 
-        return this._entityListService.getByFilters("Shipment", filters, "LogBoxShipment");
+        return this._entityListService.getByFilters("Shipment", filters);
     }
 
 
@@ -317,11 +294,6 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         if (this.SelectedTransportFilter != "All") {
             this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
         }
-
-        if (this.SelectedDirectionFilter != "All") {
-            this.AddDirectionFilter();
-        }
-
         else {
             if (this.filterAgrs.AdditionalFilters.filter(a => a.FieldName == 'TransportModeId').length > 0) {
                 this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'TransportModeId');
@@ -341,11 +313,6 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             this.filterAgrs.AdditionalFilters = this.filterAgrs.AdditionalFilters.filter(a => a.FieldName != 'NotForwarderShipmentsFilter');
         }
         this.filterAgrs.addAdditionalFilter("ForwarderShipmentsFilter", "null", null, null, "NotEqual", true, true, false, "String");
-
-        if (this.IsPrivateLabel && !this.IsDSV) {
-            this.filterAgrs.addAdditionalFilter("ForwarderPartnerId", SessionLocator.PrivateLableSettings.HybridPartnerId, null, null, "Equal", true, true, false, "String");
-        }
-
         var FilterDate = new Date();
         if (this.SelectedValue == "7d") {
             FilterDate = last7Date;
@@ -386,44 +353,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             this.filterAgrs.addAdditionalFilter("CreateDateTime", FilterDate, null, null, "LessThanOrEqual", false, true, false, "Date", true);
         }
 
-        this.FilterLogboxShipments();
-        this.FilterPrivateLabelShipments();
         this.filterAgrs.SortBy = "StatusDate";
         this.filterAgrs.SortDirection = "Descending";
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-    }
-
-    private FilterLogboxShipments() {
-        if (this.isLogbox) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "NotEqual", true, true, false, "String");
-        }
-    }
-
-    FilterPrivateLabelShipments() {
-        if (!this.IsPrivateLabel) {
-            return
-        }
-        if (this.ShowDirectionFilters) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
-        } else {
-            this.SetPrivateLabelDirection();
-        }
-
-    }
-
-
-
-    private SetPrivateLabelDirection() {
-        if (this.IsCustomsActivated) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
-        }
-        if (this.IsExportActivated) {
-            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
-        }
-    }
-
-    private AddDirectionFilter() {
-        this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.selectedDirectionFilter == "All" ? true : false);
     }
 
     GridAfterViewInitCompleted($event) {
@@ -454,17 +386,20 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         this.isAllRecordSelected = value;
         if (value == true) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("loading ..");
-            this._ShipmentPMService.GetTop100ShipmentIds(this.filterAgrs).subscribe((myResult: any) => {
+            this._ShipmentPMService.GetTop100ShipmentIds(this.filterAgrs).subscribe(myResult => {
                 if (!myResult.HasError) {
                     this.SelectedRecordsCount = myResult.Result.length;
                     this.SelectedRecords = myResult.Result;
                     this.SelectedItemsCountText = this.SelectedRecordsCount + " of " + this.AllRecordsCount + " shipments selected";
+                    
+                    
                 }
                 else {
                     this.ValidationErrorsList = myResult.ErrorsArray;
                 }
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
             });
+           
         }
         else {
             this.SelectedItemsCountText = "0 of " + this.AllRecordsCount + " shipments selected";
@@ -473,7 +408,6 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
         }
 
     }
-
     onCheckBoxChecked(event) {
         var temp = this.SelectedRecords.filter(a => a == event.rowData.Id);
         if (event.IsChecked) {
@@ -516,9 +450,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
     ArchivedRecordNumber = 0;
     SaveData() {
         this.ArchivedRecordNumber = 0;
-        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) {
+        if (this.SelectedRecords.length > 0 || this.IsAllRecordSelected == true) { 
             //if (this.IsAllRecordSelected == true) {
-            //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe((myResult:any) => {
+            //    this._ShipmentPMService.ArchiveAllShipments(this.filterAgrs).subscribe(myResult => {
             //        if (!myResult.HasError) {
             //            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             //            this.CurrentSession.SessionEvent.emit({ Name: "CustomReloadShipments" });
@@ -534,10 +468,9 @@ export class MultiArchiveShipmentsComponent extends BaseComponent implements OnI
             for (var i = 0; i < NumberOfTimes; i++) {
                 var nextStart = (i * 10);
                 var TenSelectedRecords = this.SelectedRecords.slice(nextStart, nextStart + 10)
-                this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length + " ...");
-                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe((myResult: any) => {
+                this.StartBusyIndicator("Archiving " + TenSelectedRecords.length + "/" + this.SelectedRecords.length  + " ...");
+                this._ShipmentPMService.ArchiveShipments(TenSelectedRecords).subscribe(myResult => {
                     if (!myResult.HasError) {
-                        MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "Archive Shipment" });
                         if ((this.ArchivedRecordNumber + 10) > this.SelectedRecords.length) {
                             this.ArchivedRecordNumber = this.SelectedRecords.length;
                         }

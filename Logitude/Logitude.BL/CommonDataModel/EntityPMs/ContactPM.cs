@@ -122,10 +122,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool DontShowLocal { get; set; }
 
         [DataMember]
-        public bool DontShowLocalLabels { get; set; }
-
-
-        [DataMember]
         public bool MustChangePassword { get; set; }
 
         [DataMember]
@@ -206,9 +202,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public bool IsCreatedWithPartner { get; set; }
-        [DataMember]
-        public bool IsAPIContact { get; set; }
-
+         
         [DataMember]
         public string CompanyName { get; set; }
 
@@ -216,7 +210,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public DateTime? CreateDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
 
         [DataMember]
         public bool IsUserAdditionalPackagesOnly { get; set; }
@@ -248,45 +241,5 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 }
             }
         }
-
-        private List<CardContactProductPM> cardContactProducts;
-        [Include]
-        [Association("CardContactProductContact", "Id", "ContactId")]
-        [Composition]
-        [DataMember]
-        public virtual List<CardContactProductPM> CardContactProducts
-        {
-            get
-            {
-
-                if (this.cardContactProducts == null)
-                {
-                    cardContactProducts = new List<CardContactProductPM>();
-                }
-                return this.cardContactProducts;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    cardContactProducts = value;
-                }
-            }
-        }
-
-        public string OldSimilarInactiveContactId { get; set; }
-        [DataMember]
-        public string DigitalPortalCardId { get; set; }
-
-        [DataMember]
-        public string TimeZone { get; set; }
-
-        [DataMember]
-        public string DigitalPortalLanguage { get; set; }
-
-        [DataMember]
-        public bool? ContactForAccounting { get; set; }
-
-
     }
 }

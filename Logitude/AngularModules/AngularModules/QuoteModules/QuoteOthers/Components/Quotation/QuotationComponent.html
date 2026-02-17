@@ -185,9 +185,9 @@
                                         <table>
                                             <tr style="height:50px;vertical-align:top;">
                                                 <td>
-                                                    <button [attr.title]="AttrTitleShowTemplateList" id="{{'EdiitTempalte' | IdGeneratorAsyncPipe | async}}" class="Button2" (click)="ShowHideTemplateList()" style="height:50px;width:24px;margin-right:4px;text-align:center;vertical-align:central;">
-                                                        <img *ngIf="!IsShowTemplateList" id="{{'EditTempaltee' | IdGeneratorAsyncPipe | async}}" style="height:17px;margin-left:-1px;margin-top:5px;width:15px" src="./Images/SimplogIcons/ArrowRight.png" />
-                                                        <img *ngIf="IsShowTemplateList" id="{{'EditTempalte' | IdGeneratorAsyncPipe | async}}" style="height:17px;margin-left:-1px;width:15px;margin-top:5px" src="./Images/SimplogIcons/ArrowLeft.png" />
+                                                    <button [attr.title]="AttrTitleShowTemplateList" class="Button2" (click)="ShowHideTemplateList()" style="height:50px;width:24px;margin-right:4px;text-align:center;vertical-align:central;">
+                                                        <img *ngIf="!IsShowTemplateList" style="height:17px;margin-left:-1px;margin-top:5px;width:15px" src="./Images/SimplogIcons/ArrowRight.png" />
+                                                        <img *ngIf="IsShowTemplateList" style="height:17px;margin-left:-1px;width:15px;margin-top:5px" src="./Images/SimplogIcons/ArrowLeft.png" />
                                                     </button>
                                                 </td>
                                             </tr>
@@ -215,7 +215,7 @@
                                                         <table>
                                                             <tr>
                                                                 <td style="width:5px;"><div style="width:5px"></div></td>
-                                                                <td style="width:50px;"><button style="width:50px" id="{{'EditId' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="OnEditQuotationTemplate()" [disabled]="!IsEditEnabled || IsDisableEditQuoteTemplateButton">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </button></td>
+                                                                <td style="width:50px;"><button style="width:50px" class="Button" (click)="OnEditQuotationTemplate()" [disabled]="!IsEditEnabled || IsDisableEditQuoteTemplateButton">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </button></td>
                                                                 <td></td>
                                                                 <td style="float:right;margin-top:5px" *ngIf="IsShowFromLibraryLink">
                                                                     <a [class.HyperlinkDisabled]="!IsEditEnabled" (click)="AddQuoteTemplateFromLibraryClcik()" style="font-size:12px;color:#0094ff;width:150px;">{{'QuoteTemplate.B.Addtemplatefromlibrary' | TextCodeTranslationPipe}}</a>
@@ -358,12 +358,12 @@
                         <td style="width:100%;height:22px">
 
 
-                            <div id="{{'SendOption' | IdGeneratorAsyncPipe | async}}" [class.ToggleButtonDisabled]="!IsSendButtonEnabled" tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
+                            <div [class.ToggleButtonDisabled]="!IsSendButtonEnabled" tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
                                 <label>{{'Quote.Quotation.B.Send' | TextCodeTranslationPipe}} </label>
                                 <img src="./Images/ToggleIcon.png" />
                                 <div class="ToggleButtonMenu" style="width: 100%;">
-                                    <button id="{{'SendToCustomer' | IdGeneratorAsyncPipe | async}}" (click)="OnSendToCustomer('Send to Customer')">{{'Quote.Quotation.B.SendtoCustomer' | TextCodeTranslationPipe}} </button>
-                                    <button id="{{'SendInternally' | IdGeneratorAsyncPipe | async}}" (click)="OnSendToCustomer('Send Internally')">{{'Quote.Quotation.B.SendInternally' | TextCodeTranslationPipe}} </button>
+                                    <button (click)="OnSendToCustomer('Send to Customer')">{{'Quote.Quotation.B.SendtoCustomer' | TextCodeTranslationPipe}} </button>
+                                    <button (click)="OnSendToCustomer('Send Internally')">{{'Quote.Quotation.B.SendInternally' | TextCodeTranslationPipe}} </button>
                                 </div>
                             </div>
 
@@ -433,11 +433,11 @@
                                                                     <td class="CellStretched" style="width:100px;position:relative">
 
                                                                         <div *ngIf="item.IsSection" style="vertical-align:central;margin-top:2px">
-                                                                            <button style="display:inline;width:80px;margin-top:2px" id="{{'EditSection1' | IdGeneratorAsyncPipe | async}}" class="QuoteTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
+                                                                            <button style="display:inline;width:80px;margin-top:2px" class="QuoteTemplateSettingButton" (click)="OnEditSectionButtonClicked(item)" [disabled]="!IsEditEnabled">
                                                                                 <table>
                                                                                     <tr>
-                                                                                        <td style="width:20px;"> <img src="./Images/Buttons/EditBlack.png" />  </td>
-                                                                                        <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}}  </td>
+                                                                                        <td style="width:20px;"><img src="./Images/Buttons/EditBlack.png" /></td>
+                                                                                        <td style="width:30px;">{{'QuoteTemplate.B.Edit' | TextCodeTranslationPipe}} </td>
                                                                                         <td></td>
                                                                                     </tr>
                                                                                 </table>

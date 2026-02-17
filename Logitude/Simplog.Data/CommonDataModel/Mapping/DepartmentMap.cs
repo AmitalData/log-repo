@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -34,10 +34,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(1000)
                 .IsUnicode(true);
 
-            this.Property(t => t.DirectionId)
-                .HasMaxLength(1)
-                .IsUnicode(true);
-
             this.Property(t => t.Code)
            
            .HasMaxLength(10)
@@ -53,8 +49,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.InActive).HasColumnName("InActive");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.Code).HasColumnName("Code");
-            this.Property(t => t.DirectionId).HasColumnName("DirectionId");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
         }
     }
 }

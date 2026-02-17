@@ -9,7 +9,7 @@ using System.Web.Security;
 using Simplog.Data.CommonDataModel;
 using WebFreight.Web.Security;
 using Simplog.Global.Data.GlobalModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
@@ -47,7 +47,7 @@ namespace WebFreight.Web
                 enableHttps = false;
             }
             //logbox
-            if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Development) && LogitudeSettings.WorkEnvironment != "customs")
+            if (LogitudeSettings.DeploymentStage != "Dev" && LogitudeSettings.WorkEnvironment != "customs")
             {
                 if (LogitudeSettings.WorkEnvironment == "logbox")
                 {
@@ -61,36 +61,68 @@ namespace WebFreight.Web
             else
                 enableHttps = false;
 
-            if (!IsPostBack && (Request.QueryString["Menu"] == "IdentityShaamLandingPage"))
-            { 
-                string RedirectUrl = GetLinkToAngularSite();
-                RedirectUrl += "?" + HttpUtility.UrlDecode(Request.QueryString.ToString());
-                Response.Redirect(RedirectUrl);
-            }
-
-           
-            string IsSecureConnection = context.Request.IsSecureConnection.ToString();
-            if (context.Request.Headers.AllKeys.Contains("X-IsSecure"))
+            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+            string oldIP = HttpContext.Current.Request.UserHostAddress;
+            int LastIpPart = 0;
+            if (string.IsNullOrEmpty(currentIP))
             {
-                IsSecureConnection = context.Request.Headers["X-IsSecure"];
-            } 
-            if (IsSecureConnection?.ToLower() != "true" && enableHttps && LogitudeSettings.ForceHttps)
+                var IpParts = oldIP.Split('.');
+                if (IpParts.Length == 4)
+                {
+                    int.TryParse(IpParts[3], out LastIpPart);
+                    IGlobalContext objectContext = GlobalContext.GetContext();
+                    var settingRepository = new SettingRepository(objectContext);
+                    var settingQuery = new SettingQuery(settingRepository);
+                    var settings = settingQuery.GetSinglePM();
+                    if (settings != null && settings.System2RedirectFraction > 0 && LastIpPart != 0 && (LastIpPart % settings.System2RedirectFraction) == 0)
+                    {
+                        if (LogitudeSettings.DeploymentStage == "amitalstorage")
+                        {
+                            context.Response.Redirect("https://cloud2.amital.co.il"); 
+                        }
+                        else
+                        {
+                            context.Response.Redirect("https://system2.logitudeworld.com");
+                        }
+                    }
+                }
+               
+            }
+            if (!string.IsNullOrEmpty(currentIP))
+            {
+                LastIpPart = 0;
+                var IpParts = currentIP.Split('.');
+                if (IpParts.Length == 4)
+                {
+                    int.TryParse(IpParts[3], out LastIpPart);
+                    IGlobalContext objectContext = GlobalContext.GetContext();
+                    var settingRepository = new SettingRepository(objectContext);
+                    var settingQuery = new SettingQuery(settingRepository);
+                    var settings = settingQuery.GetSinglePM();
+                    if (settings != null && settings.System2RedirectFraction > 0 && LastIpPart != 0 && (LastIpPart % settings.System2RedirectFraction) == 0)
+                    {
+                        if (LogitudeSettings.DeploymentStage == "logboxwe1" && !url.Contains("system2"))
+                        {
+                            if (url.Contains("system.dsv.co.il"))
+                            {
+                                enableHttps = false;
+                                context.Response.Redirect("http://system2.dsv.co.il");
+                            }
+                            else
+                            {
+                                context.Response.Redirect("https://system2.logbox.co.il");
+                            }
+
+                        }
+                    }
+                }
+            }
+            if (enableHttps && LogitudeSettings.ForceHttps)
             {
                 SecurityUtility.RedirectToHttps();
             }
 
             this.SetPartnerEnvironment();
-        }
-
-        private string GetLinkToAngularSite()
-        {
-            IGlobalContext objectContext = GlobalContext.GetContext();
-            SettingRepository MySettingRepository = new SettingRepository(objectContext);
-            SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
-            var MySettings = MySettingQuery.GetSinglePM();
-
-            string RedirectUrl = Request.IsLocal ? "http://localhost:4200" : "~/Angular" + MySettings.HtmlVersion + "/index.html";
-            return RedirectUrl;
         }
 
         private void SetPartnerEnvironment()

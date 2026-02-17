@@ -6,7 +6,7 @@ import { QueryPM } from '../../EntityPMs/QueryPM';
 import { SharedUserQueryPM } from '../../EntityPMs/SharedUserQueryPM';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './ChooseUserComponent.html',
 })
 
@@ -34,7 +34,6 @@ export class ChooseUserComponent {
             newItem.Id = item.Id;
             newItem.UserId = item.UserId;
             newItem.QueryId = item.QueryId;            
-            newItem.QueryCode = item.QueryCode;            
 
             this.savedList.push(newItem);
         });               

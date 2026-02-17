@@ -16,12 +16,6 @@ using Simplog.Global.Data.GlobalModel;
 using System.Configuration;
 using Devart.Data.Oracle;
 using CustomsWorkerRole;
-using Logitude.Customs.BL.PatchDistribution;
-using System.Diagnostics;
-using CommunicationWorkerRole;
-using System.IO;
-using Logitude.CustomsMessaging.Dca;
-using System.Reflection;
 
 namespace AmitalCustomsWindowsService
 {
@@ -38,16 +32,16 @@ namespace AmitalCustomsWindowsService
         {
             try
             {
+                
 
-
-                var myDB = GlobalContext.GetContext((int)TimeSpan.FromMinutes(2).TotalSeconds, true) as DbContextBase;
+                var myDB= GlobalContext.GetContext((int)TimeSpan.FromMinutes(2).TotalSeconds,true) as DbContextBase;
                 var myDualRepository = new DualRepository(myDB);
-                var dt = DateTime.Now;
+                var dt = myDualRepository.GetServerDateTime(true);
                 return true;
             }
             catch (System.Exception e)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                Logger.LogMe(e.ToString(), true, "DbError");
                 return false;
 
             }
@@ -60,19 +54,18 @@ namespace AmitalCustomsWindowsService
                 w.InvokeStatistics();
             });
         }
-
+        
 
         public void EnshureThreadWorking(bool forceStartAgain)
         {
 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
-            if (!HaveDB()  )
+            if (!HaveDB())
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError("no connection to db, stop all threads");
                 StopThreads();
                 return;
             }
-
+            
             LoadWorkerFromDB();
             if (forceStartAgain)
             {
@@ -81,72 +74,12 @@ namespace AmitalCustomsWindowsService
 
             AllThreadsAreAlive();
 
-
-        }
-
-        public static bool IsOldDB()
-        {
-            try
-            {
-
-                //var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
-                //myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
-
-                var _PatchDistributionManager = new PatchDistributionManager();
-                _PatchDistributionManager.Check_PatchDistributionListAreValid();
-
-
-
-                var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
-                var prodInfo = assemblyUtil.GetProductInfo(typeof(JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.MyEntityUpdateClass).Assembly);
-                var assemblyVersion = assemblyUtil.GetVersion(prodInfo);
-
-
-
-                var patchDistributionMatch = new PatchDistributionMatch();
-                var _PatchDistributionMatchModel = patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
-
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_PatchDistributionMatchModel.Message);
-
-                if (assemblyVersion == "1.0.0.0" || _PatchDistributionMatchModel.LastClosed_DBMigration == null)
-                {
-                    return false;
-                }
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"assemblyVersion ={assemblyVersion}");
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
-                //Debug.WriteLine($"DB MinorLine={_PatchDistributionMatchModel.Last_DBMigrationLine.CounterKey}");
-                if (_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"shuttttdown !!!_PatchDistributionMatchModel.MajorVersionMatch == PatchDistributionMatch.MajorVersionMatchEnum.OldDB");
-                    return true;
-
-                }
-                if (
-                    _PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion
-                    >
-                    _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"shuttttdown !!!OldDB !!! MyAssemblyDBMigrationModel.MinorVersion {_PatchDistributionMatchModel.MyAssemblyDBMigrationModel.MinorVersion}> _PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion {_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ee)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee,"IsOldDB -- " );
-                return true;
-            }
+            
         }
 
         private void AllThreadsAreAlive()
         {
-            if (WorkerRoleServiceLocator.PleaseShutDown)
-            {
-                WorkerRoleServiceLocator.PleaseShutDown = false;
-                NetCommonHelper.Logger.DevLog.Instance.WriteWarning("WorkerRoleServiceLocator.PleaseShutDown = false;");
 
-            }
             for (Int32 iWorker = 0; iWorker < _Workers.Count; iWorker++)
             {
                 _Workers[iWorker].ServiceStarted = true;//startIt
@@ -158,14 +91,14 @@ namespace AmitalCustomsWindowsService
                     }
                     else
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker)+":"+ "NotIsAliveBut_WhileServiceStarted_IsOut");
+                        Logger.LogMe(GetThreadName(iWorker), false, "NotIsAliveBut_WhileServiceStarted_IsOut");
                     }
                     //_Threads[iWorker] = new Thread(_Workers[iWorker].Run);
                     //_Threads[iWorker].Start();
-
+                    
                 }
             }
-
+            
         }
 
         private void StartThread(int iWorker)
@@ -178,7 +111,7 @@ namespace AmitalCustomsWindowsService
             //_Threads.Add(t);
             _Threads[iWorker] = currThread;
             _Threads[iWorker].Start();
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
+            Logger.LogMe(GetThreadName(iWorker), false, "StartThread");
         }
 
         private string GetThreadName(int iWorker)
@@ -186,7 +119,6 @@ namespace AmitalCustomsWindowsService
             return _Workers[iWorker].MyType + ":" + iWorker.ToString();
         }
 
-        
         private void LoadWorkerFromDB()
         {
             if (!_AllWorkerLoaded)
@@ -194,9 +126,9 @@ namespace AmitalCustomsWindowsService
                 _Workers = new List<IWorkerBaseWorkOnce>();
                 _Threads = new List<Thread>(_Workers.Count);
                 List<BatchServicesDefinitionPM> BatchServicesDefinitions = GetBatchServicesDefinitions();
-             
                 LoadWorkerFromDB(BatchServicesDefinitions);
 
+                
                 for (int iWorker = 0; iWorker < _Workers.Count; iWorker++)
                 {
                     StartThread(iWorker);
@@ -208,7 +140,7 @@ namespace AmitalCustomsWindowsService
 
 
 
-        public void AddWorkerFromAppSettingDB<TWorker>(bool suppresDoOnlyCheck = false,String queueDefinitionCode=null, WorkerQueueType workerQueueType= WorkerQueueType.DB)
+        public void AddWorkerFromAppSettingDB<TWorker>(bool suppresDoOnlyCheck = false)
        where TWorker : Logitude.Server.Tools.WorkerEntryPointDoneLog, new()
         {
             if (suppresDoOnlyCheck)
@@ -218,7 +150,7 @@ namespace AmitalCustomsWindowsService
             var type = typeof(TWorker);
             var typeName = type.Name;
 
-            var workerOnce = new WorkerOnce<TWorker>(1, _Workers.Count) { ServiceStarted = true , QueueDefinitionCode = queueDefinitionCode , WorkerQueueType  =workerQueueType };
+            var workerOnce = new WorkerOnce<TWorker>(1, _Workers.Count) { ServiceStarted = true };
 
             _Workers.Add(workerOnce);
             _Threads.Add(null);
@@ -229,61 +161,19 @@ namespace AmitalCustomsWindowsService
         {
 
             var suppresDoOnlyCheck = false;
-            string queueDefinitionCode = null;    
-            WorkerQueueType workerQueueType = WorkerQueueType.DB;
-
             var addWorkerFromAppSettingMethodInfoDB = typeof(DBWorkerService).GetMethod("AddWorkerFromAppSettingDB");
             if (addWorkerFromAppSettingMethodInfoDB == null)
             {
                 throw new Exception("how change code where is method >public AddWorkerFromAppSettingDB");
             }
-            var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
+            var listOfWorkerEntryPoint = CustomsWorkerRole.ThreadedRoleEntryPoint.GetAllWorkerEntryPointType();
+            ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
-
-
-
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
+            listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
-            listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
-            listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
-            listOfWorkerEntryPoint.Add(new ReportExecutionLogWR());
-            listOfWorkerEntryPoint.Add(new SyncRecordsCCUTableWR());
-			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
-			listOfWorkerEntryPoint.Add(new DocumentSFTPAnalyzeWR());
-            listOfWorkerEntryPoint.Add(new SiiStatusAzureQueueWR());
+            
 
-
-            bool testCustomsSchedularWR = false;
-            if (testCustomsSchedularWR)
-            {
-                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
-            }
-            listOfWorkerEntryPoint.Add(new CustomsSchedularWR());
-
-
-
-            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("Discard.DownloadDcaMessageSheetWR")))
-            {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName != "DownloadDcaMessageSheetWR").ToList();
-            }
-
-            var dedicatedCourierDCAService = new DedicatedCourierDCAService();
-            var modelDedicatedCourierDCA = dedicatedCourierDCAService.CreateDedicatedCourierDCA();
-            if (modelDedicatedCourierDCA != null)//Task 147744: AMITALCUSTOMSSERVER העברת הטיפול בכספת בבלדרות לתהליך
-            {
-                listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();
-                listOfWorkerEntryPoint.Add(new DownloadDcaMessageSheetWR());
-                var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new DownloadDcaMessageSheetWR()).GetType() });
-                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType }); 
-                return;
-            }
-
-            bool test = false;
-            if (test)
-            {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "DownloadDcaMessageSheetWR").ToList();
-                //BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "CustomsHSMSignWR").ToList();
-            }
 
 
             foreach (var batchServicesDefinitionPM in BatchServicesDefinitions)
@@ -294,43 +184,12 @@ namespace AmitalCustomsWindowsService
                     for (int i = 0; i < batchServicesDefinitionPM.NumberOfThreads; i++)
                     {
                         var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { worker.GetType() });
-                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
-                    
+                        AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck });
                     }
                 }
-            }
-        
-            ////FROM CONFIG !!! 
-            SingletonFTPCommunicationLogQueue(listOfWorkerEntryPoint);
-        }
-
-        private void SingletonFTPCommunicationLogQueue(List<Logitude.Server.Tools.WorkerEntryPoint> listOfWorkerEntryPoint)
-        {
-            var suppresDoOnlyCheck = false;
-            string queueDefinitionCode = null;
-            WorkerQueueType workerQueueType = WorkerQueueType.DB;
-
-            var addWorkerFromAppSettingMethodInfoDB = typeof(DBWorkerService).GetMethod("AddWorkerFromAppSettingDB");
-            //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONS"(CODE, CLASSNAME) VALUES('SingletonFTPCommunicationWorkerRoleWinService', 'SingletonFTPCommunicationWorkerRoleWinService');
-            //INSERT INTO "AMINET_GLOBAL"."BATCHSERVICESDEFINITIONMODS" VALUES('SingletonFTPCommunicationWorkerRoleWinService', '0', '1');
-
-            ///< add key = "SingletonFTPCommunicationWorkerRoleWinService" value = "1" />
-            if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("SingletonFTPWorker")))/*"SingletonFTPCommunicationLogQueue"*/
-            {
-                listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.SingletonFTPCommunicationWorkerRoleWinService());
-                var AddWorkerFromAppSettingGenericMethod = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new SingletonFTPCommunicationWorkerRoleWinService()).GetType() });
-                AddWorkerFromAppSettingGenericMethod.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
-
-                ///listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
-
-                listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
-                var AddWorkerFromAppSettingGenericMethodDown = addWorkerFromAppSettingMethodInfoDB.MakeGenericMethod(new Type[] { (new FTPToAnalyzeQueueWR()).GetType() });
-                AddWorkerFromAppSettingGenericMethodDown.Invoke(this, new object[] { (object)suppresDoOnlyCheck, (object)queueDefinitionCode, (object)workerQueueType });
 
             }
-
         }
-
 
         private List<BatchServicesDefinitionPM> GetBatchServicesDefinitions()
         {
@@ -348,51 +207,28 @@ namespace AmitalCustomsWindowsService
             }
             try
             {
-                ///WorkerRoleServiceLocator.PleaseShutDown = true;
+
 
                 for (int i = 0; i < _Workers.Count; i++)
                 {
                     StopThread(i);
 
                 }
-                //if (WorkerRoleServiceLocator.HaveCourierTenant)
-                //{
-                //    Logger.LogMe("Is Courier Wait 60Sec", false);
-                //    var sw = Stopwatch.StartNew();
-                //    while (sw.Elapsed < TimeSpan.FromSeconds(60))
-                //    {
-                //        if (!_Threads.Any(r => !r.IsAlive))
-                //        {
-                //            break;
-                //        }
-                //        Thread.Sleep(300);
-                //    }
-                //    bool b = _Threads.Any(r => !r.IsAlive);
-                //    Logger.LogMe($"All thread down == _Threads.Any(r => !r.IsAlive)? ={b} ", false);
-                //    Thread.Sleep(100);
-                //}
-                //else
-                {
-                    Thread.Sleep(1000);
-                }
-
-
-
+                Thread.Sleep(1000);
 
             }
             catch (Exception e)
             {
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                Logger.LogMe(e.ToString(), true, "StopThreads");
             }
 
         }
 
         private void StopThread(int iWorker)
         {
-
             _Workers[iWorker].ServiceStarted = false;//== dispose !!!
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(GetThreadName(iWorker));
+            Logger.LogMe(GetThreadName(iWorker), false, "StopThread");
         }
 
 

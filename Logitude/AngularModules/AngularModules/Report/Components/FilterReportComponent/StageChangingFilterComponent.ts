@@ -9,11 +9,10 @@ import {ParticipantList} from '../../EntityLists/ParticipantList';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ReportsDomainService} from '../../Services/ReportsDomainService';
 import {CodeNameClass} from './CodeNameClass';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'StageChangingFilterComponent',
     templateUrl: './StageChangingFilterComponent.html',
     inputs: ['ReportsPreview']
@@ -35,8 +34,6 @@ export class StageChangingFilterComponent extends BaseComponent  {
     public IsStageDate: boolean = false;
     public SelectedProdustsItem: any;
     public ValidationErrorsList: string[] = [];
-    AdditionalServiceSelectedValue:string
-
     public SelectedItemChanged(item) {
         this.SelectedProdustsItem = item;
     }
@@ -62,9 +59,7 @@ export class StageChangingFilterComponent extends BaseComponent  {
             }
         });
         this.FilterdAdditionalService.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
-        this.FilterdAdditionalService.forEach((item: any) => {
-            item.Checked =  this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id);
-        });
+
     }
     public TenantPM: TenantPM;
     queryFilterItems: QueryFilterItem[];
@@ -117,60 +112,10 @@ export class StageChangingFilterComponent extends BaseComponent  {
     daysInMonth(aDate: Date) {
         return (new Date(aDate.getFullYear(), aDate.getMonth() + 1, 0)).getDate();
     }
-     public IsSchedulerReport: boolean = false;
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
-        this.IsSchedulerReport = isSchedulerReport;
-        if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
-            });
-        }
-    }
-    public RunReportTitle: string = 'Run Report';
-    SetRunReportTitle() {
-         
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-       
-    }
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
-        if (queryFilterItem) {
-            switch (queryFilterItem.FieldName) {
-                case "FromDate":
-                    this.FromDate = new Date(queryFilterItem.FieldValue);
-                    break;
-               
-                case "ToDate":
-                    this.ToDate =new Date(queryFilterItem.FieldValue);
-                    break;                          
-                case "DataType":
-                    this.OpportunityTypeId = queryFilterItem.FieldValue;
-                    break;
-                case "OwnerId":
-                    this.OwnerId = queryFilterItem.FieldValue;
-                    break;
-                case "CountryId":
-                    this.CountryId = queryFilterItem.FieldValue;
-                    break;
-                case "LeadSources":
-                     this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
-                    break;
-                case "IsByStageDate":
-                    this.IsStageDate = queryFilterItem.FieldValue;
-                    break;
-                
-                   
-                        
-                        
-            }
     
-        }
-    }
-    ValidateSelectedFilters() {
+    RunReport(isloading: boolean) {
+
+
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
@@ -186,19 +131,67 @@ export class StageChangingFilterComponent extends BaseComponent  {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
 
         }
-        return this.ValidationErrorsList.length == 0;
-    }
-    RunReport(isloading: boolean) {
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.queryFilterItems = new Array<QueryFilterItem>();
+            var myAdditionalServices: string = "";
+            this.FilterdAdditionalService.forEach((i) => {
+                if (i.Checked) {
+                    myAdditionalServices += i.Id + ",";
+                }
+            });
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "LeadSources";
+            this.queryFilterItem.FieldValue = myAdditionalServices;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
 
-       
 
-        if (this.ValidateSelectedFilters()) {
-          
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "DataType";
+            this.queryFilterItem.FieldValue = this.OpportunityTypeId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "OwnerId";
+            this.queryFilterItem.FieldValue = this.OwnerId;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IsByStageDate";
+            this.queryFilterItem.FieldValue = this.IsStageDate;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "FromDate";
+            this.queryFilterItem.FieldValue = this.FromDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "ToDate";
+            this.queryFilterItem.FieldValue = this.ToDate;
+            this.queryFilterItem.FieldDataType = "Date";
+            this.queryFilterItems.push(this.queryFilterItem);
+
+
 
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -211,63 +204,7 @@ export class StageChangingFilterComponent extends BaseComponent  {
         }
 
     }
-    GetQueryFilterItems() {
-        this.queryFilterItems = new Array<QueryFilterItem>();
-        var myAdditionalServices: string = "";
-        this.FilterdAdditionalService.forEach((i) => {
-            if (i.Checked) {
-                myAdditionalServices += i.Id + ",";
-            }
-        });
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "LeadSources";
-        this.queryFilterItem.FieldValue = myAdditionalServices;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
 
-
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "DataType";
-        this.queryFilterItem.FieldValue = this.OpportunityTypeId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "OwnerId";
-        this.queryFilterItem.FieldValue = this.OwnerId;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "IsByStageDate";
-        this.queryFilterItem.FieldValue = this.IsStageDate;
-        this.queryFilterItem.Operator = "Equals";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "FromDate";
-        this.queryFilterItem.FieldValue = this.FromDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        this.queryFilterItem = new QueryFilterItem();
-        this.queryFilterItem.DisplayInList = false;
-        this.queryFilterItem.FieldName = "ToDate";
-        this.queryFilterItem.FieldValue = this.ToDate;
-        this.queryFilterItem.FieldDataType = "Date";
-        this.queryFilterItems.push(this.queryFilterItem);
-
-        return this.queryFilterItems;
-    }
     SetDate(year: number, month: number, day: number) {
         var date = new Date();
         date.setUTCFullYear(year);

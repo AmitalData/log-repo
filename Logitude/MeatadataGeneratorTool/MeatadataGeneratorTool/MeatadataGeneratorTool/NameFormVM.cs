@@ -13,7 +13,7 @@ namespace MeatadataGeneratorTool
     {
         ObjectTableViewModel ParentViewModel;
         public ObservableCollection<ObjectFieldsViewModel> ObsList { get; set; }
-        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "DateTime2", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List", "Emails", "Byte[]" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List", "Emails", "Byte[]" }; } }
         string ActionType;
         public NameFormVM(ObjectTableViewModel ParentVM,string Action = "ReNameTable")
         {

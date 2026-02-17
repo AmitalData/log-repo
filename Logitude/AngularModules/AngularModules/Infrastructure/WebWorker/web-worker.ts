@@ -1,3 +1,4 @@
+import {IWebWorkerService} from './web-worker.interface';
 
 export interface IWebWorkerService {
     run<T>(workerFunction: (any) => T, data?: any): Promise<T>;

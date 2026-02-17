@@ -8,7 +8,7 @@ import {SplitShipmentItem} from './SplitShipmentComponent';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
-    
+    moduleId: module.id,
     templateUrl: './SplitPartialPackageComponent.html',
 })
 
@@ -53,7 +53,7 @@ export class SplitPartialPackageComponent extends BaseComponent {
     SetLabels() {
         this.TareLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Tare').replace('%WeightCode', this.ShipmentPM.GrossWeightUnitCode);
         this.VolumeLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Volume').replace('%VolumeCode', this.ShipmentPM.VolumeUnitCode);
-        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.O.Dimensions').replace('%UnitCode', this.ShipmentPM.DimensionsUnitCode);
+        this.DimensionsLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Dimensions').replace('%UnitCode', this.ShipmentPM.DimensionsUnitCode);
         this.GrossWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.Weight').replace('%WeightCode', this.ShipmentPM.GrossWeightUnitCode);
         this.VolumetricWeightLabel = TextCodeTranslator.Translate('ShipmentPackage.F.VolumetricWeight').replace('%WeightCode', this.ShipmentPM.ChargeableWeightUnitCode);
     }

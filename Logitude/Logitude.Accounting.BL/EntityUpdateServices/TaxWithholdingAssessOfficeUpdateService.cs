@@ -6,7 +6,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -33,8 +33,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bool exist = service.CheckIfTaxOfficeExists(entityPM.Code, entityPM.Tenant);
             if (exist)
             {
-                throw new ApplicationException("already exist");
-             //   throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, true));
+                throw new Exception("already exist");
+             //   throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, true));
             }
 
         }

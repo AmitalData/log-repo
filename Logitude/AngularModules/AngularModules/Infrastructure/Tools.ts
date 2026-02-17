@@ -1,8 +1,9 @@
 import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
+import {NumbersPipe} from './Pipes/NumbersPipe';
+import { forEach } from '@angular/router/src/utils/collection';
+import { DatePipe } from '@angular/common';
 import { SessionLocator } from './Utilities/SessionLocator';
-import { environment } from 'environments/environment';
-
 export class AppTool {
 
     public static GetCounterPrefixLength(prefix: string) {
@@ -81,10 +82,6 @@ export class AppTool {
     }
 
     public static TenantPM: any;
-    public static IsNullOrUndefined(myFieldValue: any) {
-        return myFieldValue == null || myFieldValue == undefined;
-    }
-    
     public static IsNullOrEmpty(myFieldValue: any) {
         var myResult: boolean = false;
 
@@ -233,19 +230,6 @@ export class AppTool {
 
         return myResult;
     }
-    public static ToNumber(currencyformat :string) {
-        var myResult: number = null;
-
-        if (!this.IsNullOrEmpty(currencyformat)) {
-            let numberformat = currencyformat.toString().replace(/[^0-9.-]+/g, '')
-            myResult = +numberformat;
-        }
-
-        return myResult;
-    }
-    public static IsNil(myFieldValue: any) {
-        return myFieldValue && myFieldValue[0] && myFieldValue[0]['@nil'] == 'true';
-    }
 
     public static GetNewGuid() {
 
@@ -256,19 +240,22 @@ export class AppTool {
             return v.toString(16);
         });
     }
-    public static GetLogitudeURL(url: string = null) {
+    public static GetLogitudeURL() {
 
-        let current_URL = !AppTool.IsNullOrEmpty(url) ? url : !AppTool.IsNullOrEmpty(environment.url) ? environment.url : location.href;
+        var logitude_url = location.href.replace('index.html', '');
 
-        if (current_URL.indexOf('localhost') > -1) {
-            return 'http://localhost:9996/';
+        if (location.href.indexOf('localhost') > -1) {
+            logitude_url = 'http://localhost:9996/';
         }
+
         else {
-            let url = current_URL.split("/index.html")[0];
+            var urlArr = location.href.split("/index.html");
+            var url = urlArr[0];
             url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
-            return url + "/";
+            logitude_url = url + "/";
         }
 
+        return logitude_url;
     }
 
 
@@ -278,7 +265,7 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
+            logitude_url = 'http://localhost:9996/';
         }
 
         else {
@@ -540,67 +527,31 @@ export class AppTool {
             }
         }
 
-        if (myResult == null) {
+        if (myResult == null ) {
             {
                 switch (transportModeId) {
-                    case "A": {
-                        myResult = SessionLocator.TenantPM.AirRatio;
+                    case "A": { myResult = 6; break; }
+                    case "O": { myResult = 1; break; }
+                    case "I":
+                        {
+                            if (shipmentTypeId == "LTL") {
+                                myResult = 3.3;
+                            }
+
+                            else {
+                                myResult = 1;
+                            }
+
+                            break;
+                        }
+                    default:
                         break;
-                    }
-
-                    case "O": {
-                        if (shipmentTypeId == "FCL" || shipmentTypeId == "FCLD") {
-                            myResult = SessionLocator.TenantPM.FCLRatio;
-                        }
-
-                        else {
-                            myResult = SessionLocator.TenantPM.LCLRatio;
-                        }
-
-                        break;
-                    }
-
-                    case "I": {
-                        if (shipmentTypeId == "FTL") {
-                            myResult = SessionLocator.TenantPM.FTLRatio;
-                        }
-
-                        else {
-                            myResult = SessionLocator.TenantPM.LTLRatio;
-                        }
-
-                        break;
-                    }
                 }
             }
         }
 
         return myResult;
     }
-    public static GetPickupDeliveryRatio(shipmentTypeId: string) {
-        var myResult: number = null;
-        switch (shipmentTypeId != null && shipmentTypeId.toLowerCase()) {
-            case "air":
-            case "lcl":
-            case "lcld":
-            case "ltl":
-                {
-                    myResult = SessionLocator.TenantPM.LTLRatio;
-                    break;
-                }
-            case "ftl":
-            case "fcl":
-            case "fcld":        
-                {
-                    myResult = SessionLocator.TenantPM.FTLRatio;
-                    break;
-                }
-            default:
-                break;
-        }
-        return myResult;
-    }
-
     public static GetRatioFromDimFactor(myDimFactor: number, dimentionCode: string, weightCode: string) {
 
         var myResult: number = null;
@@ -854,7 +805,7 @@ export class AppTool {
         var result: number = myArgs;
 
         if (chargeableWeightUnitCode != "MT") {
-            if (directionId == "R" || (directionId == "E" && transportModeId == "A")) {
+            if (directionId == "E" && transportModeId == "A") {
                 if (result != null) {
 
                     var toString: string = result.toString();
@@ -880,13 +831,10 @@ export class AppTool {
 
         return result;
     }
-    public static GetChargeableWeightUnitCode(myTransportModeId: string) {
-        var myResult: string;
+    public static GetChargeableWeightUnitCode(myTransportModeId: string, myShipmentTypeId: string) {
+        var myResult: string = this.TenantPM.ChargeableWeightUnitCode;
 
-        if (myTransportModeId == "A") {
-            myResult = this.TenantPM.ChargeableWeightUnitCode;
-        }
-        else if (myTransportModeId == "O" || myTransportModeId == "I") {
+        if ((myTransportModeId == "O" && myShipmentTypeId == "LCLD") || (myTransportModeId == "I" && myShipmentTypeId == "LTL")) {
             myResult = this.TenantPM.WeightMeasurementUnitCode;
         }
 
@@ -1014,10 +962,7 @@ export class AppTool {
                 myResult = "Occasion";
                 break;
             }
-            case "General.MH.Cards": {
-                myResult = "Card";
-                break;
-            }
+
             case "General.MH.Operations": {
                 myResult = "Box";
                 break;
@@ -1026,6 +971,7 @@ export class AppTool {
                 myResult = "FollowUps";
                 break;
             }
+
             case "General.MH.Quotes": {
                 myResult = "Quote";
                 break;
@@ -1039,7 +985,6 @@ export class AppTool {
             case "General.MH.CRM":
             case "General.MH.Dashboard":
             case "General.MH.Importers":
-            case "General.MH.ClassicDashboard":
                 {
                     myResult = "Bars";
                     break;
@@ -1069,7 +1014,7 @@ export class AppTool {
             }
 
             case "General.MH.Reports": {
-                myResult = "Report";
+                myResult = "Table";
                 break;
             }
 
@@ -1121,20 +1066,7 @@ export class AppTool {
                 myResult = "Tariff";
                 break;
             }
-            case "General.MH.Automations": {
-                myResult = "AutomationBlueIcon";
-                break;
-            }
-
-            case "General.MH.Containers": {
-                myResult = "Containers";
-                break;
-            }
-
-            case "General.MH.Tasks": {
-                myResult = "Table";
-                break;
-            }
+                
 
             default: {
                 myResult = "Person";
@@ -1288,17 +1220,6 @@ export class DateTool {
         myResult.setUTCMilliseconds(0);
         return myResult;
     }
-    public static GetCurrentDateAsUtcForAccountingValidation(timeZoneOffset:number) {
-        var myResult: Date = new Date();
-        myResult.setUTCFullYear(myResult.getUTCFullYear());
-        myResult.setUTCMonth(myResult.getUTCMonth());
-        myResult.setUTCDate(myResult.getUTCDate());
-        myResult.setUTCHours(myResult.getUTCHours() + timeZoneOffset);
-        myResult.setUTCMinutes(0);
-        myResult.setUTCSeconds(0);
-        myResult.setUTCMilliseconds(0);
-        return myResult;
-    }
     public static GetCurrentDateTimeAsUtc() {
         var myResult: Date = new Date();
         myResult.setUTCFullYear(myResult.getFullYear());
@@ -1427,36 +1348,14 @@ export class DateTool {
 
         return myResult;
     }
-    public static AddDays(input: Date, days: number) {
+    public static AddDays(myDate: Date, days: number) {
+        var myResult = this.GetDateParts(myDate).DateObject;
 
-        if (days) {
-            if (input) {
-                var output: Date = null;
-                var dateParts = this.GetDateParts(input);
-
-                if (typeof (input) == "string") {
-                    output = dateParts.DateObject;
-                    output.setUTCDate(output.getDate() + days);                   
-                }
-
-                else {
-                    output = new Date();
-                    output.setUTCMonth(0);
-                    output.setUTCDate(1);
-                    output.setUTCFullYear(dateParts.Year);
-                    output.setUTCMonth((dateParts.Month - 1));
-                    output.setUTCDate(dateParts.Day + days);
-                    output.setUTCHours(dateParts.Hours);
-                    output.setUTCMinutes(dateParts.Minutes);
-                    output.setUTCSeconds(dateParts.Seconds);
-                    output.setUTCMilliseconds(dateParts.Milliseconds);
-                }
-
-                return output;
-            }
+        if (myResult != null) {
+            myResult.setUTCDate(myResult.getDate() + days);
         }
 
-        return input;
+        return myResult;
     }
     public static NextDay(myDate: Date, days: number) {
         var myResult = this.GetDateParts(myDate).DateObject;
@@ -1802,7 +1701,7 @@ export class DateTool {
         if (dateFormats) {
 
             var dayIndex = dateFormats.DateParts.DateObject.getDay();
-            var monthIndex = dateFormats.DateParts.Month - 1;
+            var monthIndex = dateFormats.DateParts.DateObject.getMonth();
 
             switch (dayIndex) {
                 case 0: { dateFormats.DayName = "Sunday", dateFormats.DayNameShort = "Sun"; break; }
@@ -2054,9 +1953,6 @@ export class DateTool {
         if (myDate.valueOf() == DateTool.GetMinDateTime().valueOf()) {
             return true;
         }
-        if (myDate.toString() == "0001-01-01T00:00:00") {
-            return true;
-        }
         return false;
     }
 
@@ -2221,35 +2117,6 @@ export class FormatTool {
 
         return myResult;
     }
-
-    public static IsValidNameText(input: string): boolean {
-        var isvalid = true;
-
-        if (!AppTool.IsNullOrEmpty(input)) {
-            let firstChar = input.charAt(0);
-
-            if (this.IsNumeric(firstChar) || !this.IsText(input)) {
-                isvalid = false;
-            }
-        }
-
-        return isvalid
-    }
-
-    public static IsTextBeginWithNumber(input: string): boolean {
-        var isvalid = false;
-
-        if (!AppTool.IsNullOrEmpty(input)) {
-            let firstChar = input.charAt(0);
-
-            if (this.IsNumeric(firstChar)) {
-                isvalid = true;
-            }
-        }
-
-        return isvalid
-    }
-
     public static IsAlpha(input: string): boolean {
         var myResult = true;
 
@@ -2310,86 +2177,128 @@ export class FormatTool {
     }
     public static FormatNumber(myNumber: number, myFormat: string = 'N2') {
 
-        var myResult: string = "";
+            var first = ",";
+        var second = ".";
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+                        case "CD": {
+                            first = ",";
+                            second = ".";
+                            break;
+                        }
 
-        var isValidNumber = FormatTool.ValidateNumber(myNumber);
+                        case "DC": {
+                            first = ".";
+                            second = ",";
+                            break;
+                        }
 
-        if (isValidNumber) {
+                        case "AD": {
+                            first = "'";
+                            second = ".";
+                            break;
+                        }
 
-            var fractionDigits = FormatTool.GetFractionDigits(myFormat);
-
-            myNumber = AppTool.Round(myNumber, fractionDigits);
-
-            var myStringNumber = myNumber + "";
-            var myStringNumber1 = myStringNumber.split('.')[0];
-            var myStringNumber2 = myStringNumber.split('.')[1];
-
-            var firstFormatChar = FormatTool.GetFirstFormatChar();
-            var secondFormatChar = FormatTool.GetSecondFormatChar();
-
-            myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, firstFormatChar);
-
-            if (myFormat.toString().toLowerCase() != "n0") {
-
-                if (AppTool.IsNullOrEmpty(myStringNumber2)) {
-                    myStringNumber2 = "0";
-                }
-
-                myResult += secondFormatChar + AppTool.PadRight(myStringNumber2, fractionDigits, '0');
-            }
-        }
+                        default:
+                            {
+                                first = ",";
+                                second = ".";
+                                break;
+                            }
+                    }
                 
-        return myResult;       
-    }
+            
+            var myResult: string = "";
 
-    private static ValidateNumber(myNumber: number) {
-        var isValid = false;
+            if (!AppTool.IsNullOrEmpty(myNumber)) {
 
-        if (!AppTool.IsNullOrEmpty(myNumber)) {
-            isValid = true;
+                var isValid = true;
 
-            if (typeof (myNumber) == "string") {
-                isValid = false;
+                if (typeof (myNumber) == "string") {
+                    isValid = false;
 
-                if (FormatTool.IsDecimal(myNumber + "")) {
-                    myNumber = +myNumber;
-                    isValid = true;
+                    if (FormatTool.IsDecimal(myNumber + "")) {
+                        myNumber = +myNumber;
+                        isValid = true;
+                    }
+                }
+
+                if (isValid) {
+                    var myFractionDigits = 2;
+
+                    switch (myFormat.toString().toLowerCase()) {
+                        case "n0": { myFractionDigits = 0; break; }
+                        case "n1": { myFractionDigits = 1; break; }
+                        case "n2": { myFractionDigits = 2; break; }
+                        case "n3": { myFractionDigits = 3; break; }
+                        case "n4": { myFractionDigits = 4; break; }
+                        case "n5": { myFractionDigits = 5; break; }
+                        default: { myFractionDigits = 2; break; }
+                    }
+
+                    myNumber = AppTool.Round(myNumber, myFractionDigits);
+
+                    var myStringNumber = myNumber + "";
+                    var myStringNumber1 = myStringNumber.split('.')[0];
+                    var myStringNumber2 = myStringNumber.split('.')[1];
+
+                    myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, first);
+                    if (!AppTool.IsNullOrEmpty(myStringNumber2)) {
+                        myResult += second + myStringNumber2;
+                    }
+
+                    if (myFormat.toString().toLowerCase() != "n0") {
+                        var side1;
+                        var side2;
+                        if (first == "." && !myResult.toString().toLowerCase().includes(",")) {
+                            var arr = myResult.split('.');
+                            var firstRound: boolean = true;
+                            var zero = /^0+$/;
+
+                            if (arr.length == 2) {
+                                if (arr[1].match(zero)) {
+                                    side1 = arr[0];
+                                }
+                                else if(arr[0].match(zero)){
+                                    side1 = "0";                                    
+                                }
+
+                            }
+                            else if (arr.length == 1) {
+                                side1 = arr[0];
+                            }
+                            if (AppTool.IsNullOrEmpty(side1)) {
+                                arr.forEach(p => {
+                                    if (firstRound)
+                                        side1 = p;
+                                    else
+                                        side1 += "." + p;
+                                    firstRound = false;
+                                });
+                            }
+                            if (arr.length > 1)
+                                if (myResult.includes(second))
+                                side2 = myResult.split(second)[myResult.split(second).length-1];
+                        }
+                        else {
+                            if (myResult.toString().toLowerCase().includes(",") && first==".") {
+                                side1 = myResult.split(',')[0];
+                                side2 = myResult.split(',')[1];
+                            }
+                            else {
+                                side1 = myResult.split('.')[0];
+                                side2 = myResult.split('.')[1];
+                            }
+                        }
+                      
+                        myResult = side1 + second + AppTool.PadRight(side2, myFractionDigits, '0');
+                    }
                 }
             }
-        }
 
-        return isValid;
-    }
-    private static GetFractionDigits(myFormat: string) {
-        var fractionDigits = 2;
+            return myResult;
 
-        switch (myFormat.toString().toLowerCase()) {
-            case "n0": { fractionDigits = 0; break; }
-            case "n1": { fractionDigits = 1; break; }
-            case "n2": { fractionDigits = 2; break; }
-            case "n3": { fractionDigits = 3; break; }
-            case "n4": { fractionDigits = 4; break; }
-            case "n5": { fractionDigits = 5; break; }
-            default: { fractionDigits = 2; break; }
-        }
-
-        return fractionDigits;
+       
     }
-    private static GetFirstFormatChar() {
-        switch (SessionLocator.TenantPM.NumberFormatCode) {
-            case "DC": { return "."; }
-            case "AD": { return "'"; }
-            default: { return ","; }
-        }
-    }
-    private static GetSecondFormatChar() {
-        switch (SessionLocator.TenantPM.NumberFormatCode) {
-            case "DC": { return ","; }
-            case "AD": { return "."; }
-            default: { return "."; }
-        }
-    }
-
     public static CustomFormatNumber(myNumber: number, myFormat: string = 'N2') {
 
         var first = ",";
@@ -2494,22 +2403,6 @@ export class FormatTool {
         if (!AppTool.IsNullOrEmpty(input)) {
             if (!AppTool.IsNullOrEmpty(input)) {
                 if (input.length <= 4) {
-                    var pattern = /^\d+$/;
-                    if (pattern.test(input)) {
-                        myResult = true;
-                    }
-                }
-            }
-        }
-
-        return myResult;
-    }
-    public static Validate_SLAC(input: string): boolean {
-        var myResult: boolean = false;
-
-        if (!AppTool.IsNullOrEmpty(input)) {
-            if (!AppTool.IsNullOrEmpty(input)) {
-                if (input.length <= 5) {
                     var pattern = /^\d+$/;
                     if (pattern.test(input)) {
                         myResult = true;
@@ -2885,7 +2778,8 @@ export class ArrayTool {
         }
 
         return myResult;
-    }    
+    }
+
     public static GroupIt(array: any[],
         funcReturnKeyFromItemOrLiteral: any 
             //(item: any) => string  //User-Defined Type Guards
@@ -2930,6 +2824,10 @@ export class ArrayTool {
 
             }, {});
     }
+
+
+    
+
 }
 export class FileLoader {
     public static AllFroalaResources: ResourceFile[] = [];

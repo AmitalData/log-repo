@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+﻿import {Injectable} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 
 @Injectable()
 export class ServiceArgs {
-    public http: HttpClient;
+    public http: Http;
     public objectTableName: string;
 }

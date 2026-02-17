@@ -38,20 +38,20 @@ var ActionValidationComponent = (function () {
         }
     };
     ActionValidationComponent.prototype.CloseClicked = function () {
-        SessionLocator_1.SessionLocator.SelectedSession.CloseCurrentWindow();
+        SessionLocator_1.SessionLocator.CurrentSession.CloseCurrentWindow();
     };
     ActionValidationComponent.prototype.ConfirmClicked = function () {
-        // SessionLocator.SelectedSession.StartBusyIndicator("Saving...");
+        // SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
         var errors = []; //this.ValidateSending();
         this.ValidationErrorsList = errors;
         if (errors.length == 0) {
             //this.myCCSWebService.GetSendingValidations(this.entityPM.Id, this.SelectedRecipient, this.isSendingFHLs, this.isSendingCargonaut, this.isSendingDEXX, this.entityPM.MainCarriageCarrierId).subscribe((myResponse: ServiceResponse) => {
             //    if (myResponse == null) {
-            //        SessionLocator.SelectedSession.StopBusyIndicator();
+            //        SessionLocator.CurrentSession.StopBusyIndicator();
             //    }
             //    else if (myResponse.HasError) {
             //        this.ValidationErrorsList = myResponse.ErrorsArray;
-            //        SessionLocator.SelectedSession.StopBusyIndicator();
+            //        SessionLocator.CurrentSession.StopBusyIndicator();
             //    }
             //    else {
             //        var myResult: AWBResultClass = myResponse.Result;
@@ -72,13 +72,13 @@ var ActionValidationComponent = (function () {
             //            else {
             //                this.SendingResultMessage = "Error sending " + this.MessageType;
             //            }
-            //            SessionLocator.SelectedSession.StopBusyIndicator();
+            //            SessionLocator.CurrentSession.StopBusyIndicator();
             //        }
             //    }
             //});
         }
         else {
-            SessionLocator_1.SessionLocator.SelectedSession.StopBusyIndicator();
+            SessionLocator_1.SessionLocator.CurrentSession.StopBusyIndicator();
         }
     };
     return ActionValidationComponent;

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -40,7 +40,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(120)
                 .IsUnicode(true);
 
-            this.Property(t => t.MarkForDelete).IsOptional();
 
             // Table & Column Mappings
             this.ToTable("Documents");
@@ -55,7 +54,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FileName).HasColumnName("FileName");
             this.Property(t => t.CalculatedFileName).HasColumnName("CalculatedFileName");
             this.Property(t => t.IsEncrypted).HasColumnName("IsEncrypted");
-            this.Property(t => t.MarkForDelete).HasColumnName("MarkForDelete");
             //relationships
 
             this.HasOptional(t => t.SmallDocument)

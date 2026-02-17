@@ -40,8 +40,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string BankAccount { get; set; }
     
     public string Bank { get; set; }
-    
-    public ARPaymentChequeStatusReplica ChequeStatus { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

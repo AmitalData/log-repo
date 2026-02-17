@@ -3,7 +3,7 @@ import { TextCodeTranslator } from '../../../Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Tools';
 
 @Component({
-    
+    moduleId: module.id,
 
     templateUrl: './LogitudeListBoxComponent.html',
     inputs: ['DataSource', 'Height', 'SelectedItem', 'Binding', 'event', 'DataSourceChanged', 'Sort'],

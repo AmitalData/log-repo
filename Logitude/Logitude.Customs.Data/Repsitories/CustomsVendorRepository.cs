@@ -67,11 +67,23 @@ namespace Logitude.Customs.Data.Repsitories
 
                 if (searchText == "null")
                 {
- 
+                    //despositions = from a in context.CustomsVendors
+                    //               join m in importerDespositions on a.Id equals m.VendorID
+                    //               //  where a.SearchFields.Contains(searchText)
+                    //               select new ImporterDespositionClass()
+                    //               {
+                    //                   VendorId = a.Id,
+                    //                   VendorName = a.VendorName,
+                    //                   VendorNumber = a.VendorNumber,
+                    //                   CountryCode = a.CountryCode,
+                    //                   EndDate = (m.ImporterlId == importerId) ? m.EndDate : null,
+                    //                   ImporterDespositionNumber = (m.ImporterlId == importerId) ? m.DepositionNumber : null,
+                    //                   SearchFields = a.VendorName + "," + a.VendorNumber + "," + m.DepositionNumber,
+                    //               };
+
                     despositions = (from left in context.CustomsVendors
                                  join right in importerDespositions on left.Id equals right.VendorID into joinedList
                                  from m in joinedList.DefaultIfEmpty()
-                                 where left.InActive == false && (left.StatusCode == "1" || string.IsNullOrEmpty(left.StatusCode))
                                  select new ImporterDespositionClass()
                                  {
                                      VendorId = left.Id,
@@ -80,17 +92,31 @@ namespace Logitude.Customs.Data.Repsitories
                                      CountryCode = left.CountryCode,
                                      EndDate = (m.ImporterlId == importerId) ? m.EndDate : null,
                                      ImporterDespositionNumber = (m.ImporterlId == importerId) ? m.DepositionNumber : null,
-                                     SearchFields = left.VendorName + "," + left.VendorNumber + "," + m.DepositionNumber,                                
+                                     SearchFields = left.VendorName + "," + left.VendorNumber + "," + m.DepositionNumber,
                                  });
                 }
 
                 else
                 {
- 
+                    //despositions = from a in context.CustomsVendors
+                    //               join m in importerDespositions on a.Id equals m.VendorID
+                    //               where a.SearchFields.Contains(searchText.ToLower())
+                    //               select new ImporterDespositionClass()
+                    //               {
+                    //                   //   Id = Guid.NewGuid().ToString(),
+                    //                   VendorId = a.Id,
+                    //                   VendorName = a.VendorName,
+                    //                   VendorNumber = a.VendorNumber,
+                    //                   CountryCode = a.CountryCode,
+                    //                   EndDate = (m.ImporterlId == importerId) ? m.EndDate : null,
+                    //                   ImporterDespositionNumber = (m.ImporterlId == importerId) ? m.DepositionNumber : null,
+                    //                   SearchFields = a.VendorName + "," + a.VendorNumber + "," + m.DepositionNumber,
+
+                    //               };
+
                     despositions = (from left in context.CustomsVendors
                                     join right in importerDespositions on left.Id equals right.VendorID into joinedList
                                     where left.SearchFields.Contains(searchText.ToLower())
-                                    && left.InActive == false && (left.StatusCode == "1" || string.IsNullOrEmpty(left.StatusCode))
                                     from m in joinedList.DefaultIfEmpty()
                                     select new ImporterDespositionClass()
                                     {
@@ -153,7 +179,6 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     despositions = from a in context.CustomsVendors
                                    join m in importerDespositions on a.Id equals m.VendorID
-                                   where a.InActive == false && (a.StatusCode == "1" || string.IsNullOrEmpty(a.StatusCode))
                                    select new ImporterDespositionClass()
                                    {
                                        VendorId = a.Id,
@@ -172,7 +197,6 @@ namespace Logitude.Customs.Data.Repsitories
                     despositions = from a in context.CustomsVendors
                                    join m in importerDespositions on a.Id equals m.VendorID
                                    where a.SearchFields.Contains(searchText.ToLower())
-                                   &&  a.InActive == false && (a.StatusCode == "1" || string.IsNullOrEmpty(a.StatusCode))
                                    select new ImporterDespositionClass()
                                    {
                                        VendorId = a.Id,

@@ -4,12 +4,11 @@ using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -57,7 +56,7 @@ namespace Logitude.CRM.BL.WorkRoles
         {
             DateTime? myNearestDueDate = null;
             List<TicketEscalation> myTicketEscalations = new List<TicketEscalation>();
-
+          
             myTicketEscalations = escalationRepository.GetTicketEscalations(ticketPM.Id, Tenant).ToList();
             SLAHeaderPM slaHeaderPM = sLAHeaderQuery.GetSinglePMByTenant(Tenant);
 
@@ -112,26 +111,6 @@ namespace Logitude.CRM.BL.WorkRoles
                             DueDate = dueDateTime,
                         };
 
-                        string mySearchFields = "";
-
-                        if (!string.IsNullOrEmpty(entity.EscalationFor))
-                        {
-                            string escalationForName = entity.EscalationFor == "FR" ? "First Response" : "Resolve Within";
-                            MethodHelper.AddToSearchFields(ref mySearchFields, escalationForName);
-                        }
-
-                        if (!string.IsNullOrEmpty(entity.Recepients))
-                        {
-                            MethodHelper.AddToSearchFields(ref mySearchFields, entity.Recepients);
-                        }
-
-                        if (mySearchFields.Length > 1000)
-                        {
-                            mySearchFields = mySearchFields.Substring(0, 1000);
-                        }
-
-                        entity.SearchFields = mySearchFields;
-
                         escalationRepository.Add(entity);
                         myNearestDueDate = CheckNearestDueDate(myNearestDueDate, dueDateTime);
                     }
@@ -152,7 +131,6 @@ namespace Logitude.CRM.BL.WorkRoles
                 context.SaveChanges();
                 this.Run(ticketPM, myNearestDueDate);
             }
-
         }
 
         private DateTime? CheckNearestDueDate(DateTime? myNearestDueDate, DateTime? itemDueDate)
@@ -416,7 +394,7 @@ namespace Logitude.CRM.BL.WorkRoles
                     myTimeSpan = myNearestDueDate.Value - myCreateDate;
                     Dictionary<string, string> param = new Dictionary<string, string>() { { "Tenant", Tenant.ToString() }, { "TicketId", myTicket.Id.ToString() } };
 
-                    queueservice.Send(param, Tenant, myTimeSpan);
+                    queueservice.Send(param, myTimeSpan);
                 }
             }
 

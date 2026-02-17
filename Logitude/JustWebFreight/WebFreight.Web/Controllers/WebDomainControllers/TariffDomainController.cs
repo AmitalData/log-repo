@@ -1,10 +1,11 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.TariffModule.BL.DataContracts;
 using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.BL.EntityQueryServices;
 using Logitude.TariffModule.Data;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Net;
@@ -22,7 +23,14 @@ using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Syncfusion.XlsIO;
 using System.Data;
+using System.ComponentModel;
+using System.IO;
 using System.Xml.Serialization;
+using Stimulsoft.Base.Excel;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Data.SqlClient;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Counters;
@@ -36,57 +44,16 @@ using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools.QueueService;
 using WebFreight.Web.Helpers.APIHelpers;
 using System.Reflection;
+using Stimulsoft.Report.Export;
 using Logitude.BL.Helpers;
 using Logitude.Infrastructure.Data.EntityPOCOs;
-using Logitude.TariffModule.Data.EntityLists;
-using Logitude.TariffModule.Data.EntityListQueryServices;
-using Logitude.TariffModule.BL.Helpers;
-using Logitude.BL.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class TariffDomainController : ApiController
     {
         private PortRepository portRepository;
-        public HttpResponseMessage GetSaleTariffsCounts()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
 
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-
-                string loggedContactId = null;
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
-                if (loggedContact != null)
-                {
-                    loggedContactId = loggedContact.Id;
-                }
-
-
-                TariffQueryService tariffQueryService = new TariffQueryService(tenant);
-
-                TariffsSummary myResult = tariffQueryService.GetSaleCount(tenant);
-
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
         public HttpResponseMessage GetTariffsCounts()
         {
             try
@@ -122,8 +89,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        [ActionName("PostAvailableAirlineFreightTariffs")]
-        public HttpResponseMessage PostAvailableAirlineFreightTariffs(TariffSearchArgs args)
+        public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort, string ToPort, string BetweenDate, double Weight, string Weightcode, double? GrossWeight, string GrossWeightCode, double? Volume, string VolumeCode, string currencyId, string tariffType)
         {
             try
             {
@@ -134,16 +100,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-
-                DateTime? betweenDate = DateHelper.GetDate(args.Date);
-                if (betweenDate == null)
+                DateTime? BetweenDateOBJ = DateHelper.GetDate(BetweenDate);
+                if (BetweenDateOBJ == null)
                 {
-                    betweenDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                    BetweenDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
                 }
-                args.BetweenDate = betweenDate;
 
-                PriceCheckManager priceCheckManager = new PriceCheckManager(args, tenant);
-                List<TariffSearchSummary> myResult = priceCheckManager.GetSummary();
+
+
+                TariffQueryService tariffQueryService = new TariffQueryService(tenant);
+
+                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(FromPort, ToPort, BetweenDateOBJ, Weight, tenant, Weightcode, GrossWeight, GrossWeightCode, Volume, VolumeCode, currencyId, tariffType);
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -204,17 +172,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 Tenant = d.Tenant,
                                                 DefaultPriceSteps = d.DefaultPriceSteps,
                                                 DefaultWarningPercentage = d.DefaultWarningPercentage,
-                                                AirDefaultStepsId = d.AirDefaultStepsId,
+                                                AirDefaultStepsId = d.AirDefaultStepsId, 
                                                 LCLDefaultStepsId = d.LCLDefaultStepsId,
-                                                ContainerDefaults = d.ContainerDefaults,
-                                                DefaultCurrencyId = d.DefaultCurrencyId,
-                                                AirUnitOfMeasurementCode = d.AirUnitOfMeasurementCode,
-                                                LCLUnitOfMeasurementCode = d.LCLUnitOfMeasurementCode
                                             }).FirstOrDefault();
 
                 IInfrastructureContext iInfrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
-                PriceStep airPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.AirDefaultStepsId select d).FirstOrDefault();
-                PriceStep lclPriceSteps = (from d in iInfrastructureContext.PriceSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.LCLDefaultStepsId select d).FirstOrDefault();
+                PriceSteps airPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.AirDefaultStepsId select d).FirstOrDefault();
+                PriceSteps lclPriceSteps = (from d in iInfrastructureContext.PricesSteps where d.Tenant == entityPM.Tenant && d.Id == entityPM.LCLDefaultStepsId select d).FirstOrDefault();
                 entityPM.AirDefaultSteps = airPriceSteps != null ? airPriceSteps.Steps : null;
                 entityPM.LCLDefaultSteps = lclPriceSteps != null ? lclPriceSteps.Steps : null;
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -255,10 +219,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             data = this.ExportAirFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
-
-                        else if (tariff.TypeCode == "OFC")
+                        
+                        else if(tariff.TypeCode == "OFC")
                         {
                             data = this.ExportOceanFCLFreightCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
+                        }
+
+                        else if (tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC" || tariff.TypeCode == "OFS")
+                        {
+                            data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
 
                         fileName = "Tariff-" + tariff.TariffNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
@@ -328,22 +297,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
 
-            DataTable table_multi = new DataTable();
-            table_multi.Columns.Add("From Multi-Ports");
-            DataRow row0 = table_multi.NewRow();
-            row0[0] = "To Multi-Ports";
-            table_multi.Rows.Add(row0);
-            sheet1.ImportDataTable(table_multi, true, 1, 1);
-
             // Build excel headers 
             DataTable table = new DataTable();
             string[] steps = tariff.PriceSteps.Split(',');
-
             if (steps.Length > 1)
             {
                 table.Columns.Add("From");
                 table.Columns.Add("To");
-                table.Columns.Add("Via");
                 table.Columns.Add("Min Price");
 
                 sheet1.InsertColumn(3, steps.Length, ExcelInsertOptions.FormatAsAfter);
@@ -352,58 +312,52 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     table.Columns.Add(steps[i] + " KG");
                 }
 
-                table.Columns.Add("Transit Time");
                 table.Columns.Add("Notes");
             }
             else
             {
                 table.Columns.Add("From");
                 table.Columns.Add("To");
-                table.Columns.Add("Via");
                 table.Columns.Add("Min Price");
                 table.Columns.Add(tariff.PriceSteps + " KG");
-                table.Columns.Add("Transit Time");
                 table.Columns.Add("Notes");
             }
 
-            #region Range
-            string range = "A3:G3";
+            string range = "A1:E1";
             if (steps.Length == 2)
             {
-                range = "A3:H3";
+                range = "A1:F1";
             }
 
             else if (steps.Length == 3)
             {
-                range = "A3:I3";
+                range = "A1:G1";
             }
 
             else if (steps.Length == 4)
             {
-                range = "A3:J3";
+                range = "A1:H1";
             }
 
             else if (steps.Length == 5)
             {
-                range = "A3:K3";
+                range = "A1:I1";
             }
 
             else if (steps.Length == 6)
             {
-                range = "A3:L3";
+                range = "A1:J1";
             }
 
             else if (steps.Length == 7)
             {
-                range = "A3:M3";
+                range = "A1:K1";
             }
 
             else if (steps.Length == 8)
             {
-                range = "A3:N3";
+                range = "A1:L1";
             }
-
-            #endregion
 
             if (type == "Data")
             {
@@ -412,60 +366,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     foreach (var item in tariffLines)
                     {
                         DataRow row = table.NewRow();
-                        if (tariff.TypeCode == "AFC")
-                        {
-                            row[0] = item.OriginPortCode ?? null;
-                            row[1] = item.DestinationPortCode ?? null;
-                            row[2] = item.ViaPortCode ?? null;
-                        }
-                        else
-                        {
-                            row[0] = item.OriginPortCombinedCode ?? null;
-                            row[1] = item.DestinationPortCombinedCode ?? null;
-                            row[2] = item.ViaPortCombinedCode ?? null;
-                        }
-
-                        row[3] = item.MinPrice ?? null;
-                        row[4] = item.Step1Price ?? null;
+                        row[0] = item.OriginPortCode ?? null;
+                        row[1] = item.DestinationPortCode ?? null;
+                        row[2] = item.MinPrice ?? null;
+                        row[3] = item.Step1Price ?? null;
 
                         if (item.Step2Price.HasValue)
                         {
-                            row[5] = item.Step2Price ?? null;
+                            row[4] = item.Step2Price ?? null;
                         }
 
                         if (item.Step3Price.HasValue)
                         {
-                            row[6] = item.Step3Price ?? null;
+                            row[5] = item.Step3Price ?? null;
                         }
 
                         if (item.Step4Price.HasValue)
                         {
-                            row[7] = item.Step4Price ?? null;
+                            row[6] = item.Step4Price ?? null;
                         }
 
                         if (item.Step5Price.HasValue)
                         {
-                            row[8] = item.Step5Price ?? null;
+                            row[7] = item.Step5Price ?? null;
                         }
 
                         if (item.Step6Price.HasValue)
                         {
-                            row[9] = item.Step6Price ?? null;
+                            row[8] = item.Step6Price ?? null;
                         }
 
                         if (item.Step7Price.HasValue)
                         {
-                            row[10] = item.Step7Price ?? null;
+                            row[9] = item.Step7Price ?? null;
                         }
 
                         if (item.Step8Price.HasValue)
                         {
-                            row[11] = item.Step8Price ?? null;
+                            row[10] = item.Step8Price ?? null;
                         }
 
-                        row[steps.Length + 4] = item.TransitTime ?? null;
-
-                        row[steps.Length + 5] = item.Notes ?? null;
+                        row[steps.Length + 3] = item.Notes ?? null;
 
                         table.Rows.Add(row);
                     }
@@ -475,8 +416,523 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-            sheet1.Columns[steps.Length + 3].ColumnWidth = 14;
-            sheet1.ImportDataTable(table, true, 3, 1);
+
+            sheet1.ImportDataTable(table, true, 1, 1);
+            workbook.SaveAs(memory);
+            return memory.ToArray();
+        }
+        private byte[] ExportAirSurchargesCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            tariffLines = tariffLines.Where(d => !d.IsFromAllOtherPorts && !d.IsToAllOtherPorts).ToList();
+            tariffLines = tariffLines.OrderBy(P => P.Index).ToList();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            IWorksheet sheet1 = workbook.Worksheets[0];
+
+            DataTable table = new DataTable();
+
+            #region header
+            table.Columns.Add("From");
+            table.Columns.Add("To");
+            table.Columns.Add("Currency");
+            table.Columns.Add("Start Date", typeof(DateTime));
+
+            int count = 0;
+            ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
+            MeasurementRepository measurementRepository = new MeasurementRepository(tenant);
+            ChargesType chargesType = null;
+            Measurement measurement = null;
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge1Id))
+            {
+                count = 1;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge1Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge1UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge2Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge2Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge2UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge3Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge3Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge3UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge4Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge4Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge4UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge5Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge5Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge5UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge6Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge6Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge6UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge7Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge7Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge7UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge8Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge8Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge8UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge9Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge9Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge9UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(tariff.Surcharge10Id))
+            {
+                count++;
+                chargesType = chargesTypeRepository.GetSingleChargesType(tariff.Surcharge10Id, tenant);
+                measurement = measurementRepository.GetSingleMeasurement(tariff.Surcharge10UOM, tenant);
+
+                if (chargesType != null && measurement != null)
+                {
+                    if (measurement.Code != "FIXD")
+                    {
+                        count++;
+                        string firstColumnName = "Min " + chargesType.Code;
+                        if (tariff.TypeCode == "OFS")
+                        {
+                            firstColumnName = firstColumnName + "(" + measurement.Code + ")";
+                        }
+                        table.Columns.Add(firstColumnName);
+                    }
+                    string secondColumnName = chargesType.Code;
+                    if (tariff.TypeCode == "OFS")
+                    {
+                        secondColumnName = secondColumnName + "(" + measurement.Code + ")";
+                    }
+                    table.Columns.Add(secondColumnName);
+                }
+            }
+
+            table.Columns.Add("Notes");
+            #endregion
+
+            #region range
+            string range = "A1:E1";
+            if (count == 1)
+            {
+                range = "A1:F1";
+            }
+            else if (count == 2)
+            {
+                range = "A1:G1";
+            }
+            else if (count == 3)
+            {
+                range = "A1:H1";
+            }
+            else if (count == 4)
+            {
+                range = "A1:I1";
+            }
+            else if (count == 5)
+            {
+                range = "A1:J1";
+            }
+            else if (count == 6)
+            {
+                range = "A1:K1";
+            }
+            else if (count == 7)
+            {
+                range = "A1:L1";
+            }
+            else if (count == 8)
+            {
+                range = "A1:M1";
+            }
+            else if (count == 9)
+            {
+                range = "A1:N1";
+            }
+            else if (count == 10)
+            {
+                range = "A1:O1";
+            }
+            else if (count == 11)
+            {
+                range = "A1:P1";
+            }
+            else if (count == 12)
+            {
+                range = "A1:Q1";
+            }
+            else if (count == 13)
+            {
+                range = "A1:R1";
+            }
+            else if (count == 14)
+            {
+                range = "A1:S1";
+            }
+            else if (count == 15)
+            {
+                range = "A1:T1";
+            }
+            else if (count == 16)
+            {
+                range = "A1:U1";
+            }
+            else if (count == 17)
+            {
+                range = "A1:V1";
+            }
+            else if (count == 18)
+            {
+                range = "A1:W1";
+            }
+            else if (count == 19)
+            {
+                range = "A1:X1";
+            }
+            else if (count == 20)
+            {
+                range = "A1:Y1";
+            }
+            #endregion
+
+            if (type == "Data")
+            {
+                if (tariffLines != null && tariffLines.Count > 0)
+                {
+                    foreach (var item in tariffLines)
+                    {
+                        DataRow row = table.NewRow();
+                        row[0] = item.OriginPortCode ?? null;
+                        row[1] = item.DestinationPortCode ?? null;
+                        row[2] = item.CurrencyCode ?? null;
+                        row[3] = item.StartDate ?? null;
+
+                        int rowIndex = 4;
+
+                        if (item.Surcharge1MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge1MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge1Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge1Price ?? null;
+                        }
+
+                        if (item.Surcharge2MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge2MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge2Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge2Price ?? null;
+                        }
+
+                        if (item.Surcharge3MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge3MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge3Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge3Price ?? null;
+                        }
+
+                        if (item.Surcharge4MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge4MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge4Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge4Price ?? null;
+                        }
+
+                        if (item.Surcharge5MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge5MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge5Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge5Price ?? null;
+                        }
+
+                        if (item.Surcharge6MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge6MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge6Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge6Price ?? null;
+                        }
+
+                        if (item.Surcharge7MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge7MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge7Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge7Price ?? null;
+                        }
+
+                        if (item.Surcharge8MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge8MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge8Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge8Price ?? null;
+                        }
+
+                        if (item.Surcharge9MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge9MinPrice ?? null;
+                        }
+
+                        if (item.Surcharge9Price.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge9Price ?? null;
+                        }
+
+                        if (item.Surcharge10MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge10Price ?? null;
+                        }
+
+                        if (item.Surcharge10MinPrice.HasValue)
+                        {
+                            row[rowIndex++] = item.Surcharge10Price ?? null;
+                        }
+
+                        row[count + 4] = item.Notes ?? null;
+
+                        table.Rows.Add(row);
+                    }
+
+                    string dateRange = "C2:C" + (tariffLines.Count + 1);
+                    sheet1.Range[dateRange].ColumnWidth = 14;
+                    sheet1.Range[dateRange].NumberFormat = "dd/MM/yyyy";
+                }
+            }
+
+            sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            sheet1.ImportDataTable(table, true, 1, 1);
             workbook.SaveAs(memory);
             return memory.ToArray();
         }
@@ -488,20 +944,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
-
-            DataTable table_multi = new DataTable();
-            table_multi.Columns.Add("From Multi-Ports");
-            DataRow row0 = table_multi.NewRow();
-            row0[0] = "To Multi-Ports";
-            table_multi.Rows.Add(row0);
-            sheet1.ImportDataTable(table_multi, true, 1, 1);
-
+            
             DataTable table = new DataTable();
 
             #region header
             table.Columns.Add("From");
             table.Columns.Add("To");
-            table.Columns.Add("Via");
 
             int count = 0;
             PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
@@ -562,33 +1010,31 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
 
-            table.Columns.Add("Transit Time");
             table.Columns.Add("Notes");
             #endregion
 
             #region range
-            string range = "A3:E3";
+            string range = "A1:C1";
             if (count == 1)
             {
-                range = "A3:F3";
+                range = "A1:D1";
             }
             else if (count == 2)
             {
-                range = "A3:G3";
+                range = "A1:E1";
             }
             else if (count == 3)
             {
-                range = "A3:H3";
+                range = "A1:F1";
             }
             else if (count == 4)
             {
-                range = "A3:I3";
+                range = "A1:G1";
             }
             else if (count == 5)
             {
-                range = "A3:J3";
-            }
-
+                range = "A1:H1";
+            }          
             #endregion
 
             if (type == "Data")
@@ -598,17 +1044,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     foreach (var item in tariffLines)
                     {
                         DataRow row = table.NewRow();
-                        row[0] = item.OriginPortCombinedCode ?? null;
-                        row[1] = item.DestinationPortCombinedCode ?? null;
-                        row[2] = item.ViaPortCombinedCode ?? null;
+                        row[0] = item.OriginPortCode ?? null;
+                        row[1] = item.DestinationPortCode ?? null;
 
-                        int rowIndex = 3;
-
+                        int rowIndex = 2;
+                        
                         if (item.Surcharge1Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge1Price ?? null;
                         }
-
+                        
                         if (item.Surcharge2Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge2Price ?? null;
@@ -618,19 +1063,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             row[rowIndex++] = item.Surcharge3Price ?? null;
                         }
-
+                        
                         if (item.Surcharge4Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge4Price ?? null;
                         }
-
+                        
                         if (item.Surcharge5Price.HasValue)
                         {
                             row[rowIndex++] = item.Surcharge5Price ?? null;
                         }
-
-                        row[count + 3] = item.TransitTime ?? null;
-                        row[count + 4] = item.Notes ?? null;
+                                                
+                        row[count + 2] = item.Notes ?? null;
 
                         table.Rows.Add(row);
                     }
@@ -640,8 +1084,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-            sheet1.Columns[count + 2].ColumnWidth = 14;
-            sheet1.ImportDataTable(table, true, 3, 1);
+
+            sheet1.ImportDataTable(table, true, 1, 1);
             workbook.SaveAs(memory);
             return memory.ToArray();
         }
@@ -699,7 +1143,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        private string TariffType = "";
+        private string TariffType = ""; 
         [ActionName("PostUploadExcelFile")]
         public HttpResponseMessage PostUploadExcelFile(TariffFilterParameter filter)
         {
@@ -710,10 +1154,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 filter.Tenant = authToken.Tenant;
 
-                UploadTariffHelper uploadTariffHelper = new UploadTariffHelper(filter);
-                uploadTariffHelper.Upload();
+                string loggedUserEmail = authToken.Email;
 
-                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, authToken.Tenant);
+
+                this.portRepository = new PortRepository(authToken.Tenant);
+
+                byte[] fileData = Convert.FromBase64String(filter.FileData);
+
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
+                IWorksheet sheet = workbook.Worksheets[0];
+
+                List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
+                if (filter.TariffType == "AFC" || filter.TariffType == "OLC")
+                {
+                    this.TariffType = filter.TariffType;
+                    tariffLinesResult = this.BuildOceanAirFreightCostExcelLines(sheet, authToken.Tenant, filter);
+                }
+
+                else if (filter.TariffType == "OFC")
+                {
+                    this.TariffType = filter.TariffType;
+                    tariffLinesResult = this.BuildOceanFCLFreightCostExcelLines(sheet, authToken.Tenant, filter);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
             }
 
             catch (Exception ex)
@@ -738,29 +1207,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 this.portRepository = new PortRepository(authToken.Tenant);
 
-                //byte[] fileData = Convert.FromBase64String(filter.FileData);
+                byte[] fileData = Convert.FromBase64String(filter.FileData);
 
-                //TariffsExcelGeneratorArgs args = new TariffsExcelGeneratorArgs()
-                //{
-                //    LoggedUserEmail = loggedUserEmail,
-                //    Tenant = authToken.Tenant,
-                //};
-
-
-                //this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+                TariffsExcelGeneratorArgs args = new TariffsExcelGeneratorArgs()
+                {
+                    LoggedUserEmail = loggedUserEmail,
+                    Tenant = authToken.Tenant,
+                };
 
 
-                GenerateTariffsArgs args = new GenerateTariffsArgs() { LoggedUserEmail = loggedUserEmail, Tenant = authToken.Tenant };
+                this.UploadExcelFileToStorage(fileData, args, authToken.Tenant);
+
+
                 var stringwriter = new System.IO.StringWriter();
-                var serializer = new XmlSerializer(typeof(GenerateTariffsArgs));
+                var serializer = new XmlSerializer(typeof(TariffsExcelGeneratorArgs));
                 serializer.Serialize(stringwriter, args);
                 string xmlParameters = stringwriter.ToString();
-
-
-                //var stringwriter = new System.IO.StringWriter();
-                //var serializer = new XmlSerializer(typeof(TariffsExcelGeneratorArgs));
-                //serializer.Serialize(stringwriter, args);
-                //string xmlParameters = stringwriter.ToString();
 
                 BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
                 {
@@ -784,7 +1246,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", authToken.Tenant.ToString() }
-                }, authToken.Tenant);
+                });
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -878,62 +1340,46 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                /*From Port*/
-                string fromPortCode = rowData[0];
-                if (!Regex.IsMatch(fromPortCode, @"^[a-zA-Z0-9]+$"))
-                {
-                    fromPortCode = Regex.Replace(fromPortCode, @"[^a-zA-Z0-9]+", "");
-                }
-
-                Port fromPort = this.GetPortDetails(fromPortCode, tenant);
+                Port fromPort = this.GetPortDetails(rowData[0], tenant);
                 if (fromPort != null)
                 {
                     if ((fromPort.IsAir && tariffType == "AFC") || (fromPort.IsOcean && tariffType == "OLC"))
                     {
                         tariffLine.FromPortId = fromPort.Id;
                         tariffLine.FromPortCode = fromPort.Code;
-                        tariffLine.FromPortCombinedCode = fromPort.CombinedCode;
                         tariffLine.FromPortName = fromPort.EnglishName;
                     }
 
                     else
                     {
                         tariffLine.FromPortIsNotAir = true;
-                        tariffLine.FromPortText = fromPortCode;
+                        tariffLine.FromPortText = rowData[0];
                     }
                 }
                 else
                 {
-                    tariffLine.FromPortText = this.TrimTo_20(fromPortCode);
+                    tariffLine.FromPortText = this.TrimTo_20(rowData[0]);
                 }
 
-                /*To Port*/
-                string toPortCode = rowData[1];
-                if (!Regex.IsMatch(toPortCode, @"^[a-zA-Z0-9]+$"))
-                {
-                    toPortCode = Regex.Replace(toPortCode, @"[^a-zA-Z0-9]+", "");
-                }
-
-                Port toPort = this.GetPortDetails(toPortCode, tenant);
+                Port toPort = this.GetPortDetails(rowData[1], tenant);
                 if (toPort != null)
                 {
                     if ((toPort.IsAir && tariffType == "AFC") || (toPort.IsOcean && tariffType == "OLC"))
                     {
                         tariffLine.ToPortId = toPort.Id;
                         tariffLine.ToPortCode = toPort.Code;
-                        tariffLine.ToPortCombinedCode = toPort.CombinedCode;
                         tariffLine.ToPortName = toPort.EnglishName;
                     }
 
                     else
                     {
                         tariffLine.ToPortIsNotAir = true;
-                        tariffLine.ToPortText = toPortCode;
+                        tariffLine.ToPortText = rowData[1];
                     }
                 }
                 else
                 {
-                    tariffLine.ToPortText = this.TrimTo_20(toPortCode);
+                    tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
 
                 if (StepLength > 2 && rowDataLength > 2)
@@ -1151,6 +1597,206 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             foreach (ExcelTariffLines item in myResult)
             {
                 this.SetErrors_AirFreightCost(item);
+            }
+
+            return myResult;
+        }
+        public List<ExcelTariffLines> BuildOceanFCLFreightCostExcelLines(IWorksheet sheet, int tenant, TariffFilterParameter filter = null)
+        {
+            List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
+            int rowIndex = 0;
+
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            {
+                String[] rowData = new String[sheet.Columns.Count() - 1];
+                ExcelTariffLines tariffLine = new ExcelTariffLines();
+                tariffLine.Index = rowIndex;
+
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
+                {
+                    if (row.Cells[i].HasFormula)
+                    {
+                        rowData[i] = row.Cells[i].FormulaNumberValue.ToString();
+                    }
+                    else
+                    {
+                        rowData[i] = row.Cells[i].Value2.ToString();
+                    }
+                }
+
+                Port fromPort = this.GetPortDetails(rowData[0], tenant);
+                if (fromPort != null)
+                {
+                    if ((fromPort.IsAir && this.TariffType == "AFC") || (fromPort.IsOcean && this.TariffType == "OLC") || (fromPort.IsOcean && this.TariffType == "OFC"))
+                    {
+                        tariffLine.FromPortId = fromPort.Id;
+                        tariffLine.FromPortCode = fromPort.Code;
+                        tariffLine.FromPortName = fromPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.FromPortIsNotAir = true;
+                        tariffLine.FromPortText = rowData[0];
+                    }
+                }
+                else
+                {
+                    tariffLine.FromPortText = this.TrimTo_20(rowData[0]);
+                }
+
+                Port toPort = this.GetPortDetails(rowData[1], tenant);
+                if (toPort != null)
+                {
+                    if ((toPort.IsAir && this.TariffType == "AFC") || (toPort.IsOcean && this.TariffType == "OLC") || (toPort.IsOcean && this.TariffType == "OFC"))
+                    {
+                        tariffLine.ToPortId = toPort.Id;
+                        tariffLine.ToPortCode = toPort.Code;
+                        tariffLine.ToPortName = toPort.EnglishName;
+                    }
+
+                    else
+                    {
+                        tariffLine.ToPortIsNotAir = true;
+                        tariffLine.ToPortText = rowData[1];
+                    }
+                }
+                else
+                {
+                    tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
+                }
+                
+                if (rowData.Length > 2)
+                {
+                    if (this.IsNumber(rowData[2]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[2]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge1Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge1PriceMinus = true;
+                            tariffLine.Surcharge1PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge1PriceText = this.TrimTo_20(rowData[2]);
+                    }
+                }
+
+                if (rowData.Length > 3)
+                {
+                    if (this.IsNumber(rowData[3]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[3]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge2Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge2PriceMinus = true;
+                            tariffLine.Surcharge2PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge2PriceText = this.TrimTo_20(rowData[3]);
+                    }
+                }
+
+                if (rowData.Length > 4)
+                {
+                    if (this.IsNumber(rowData[4]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[4]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge3Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge3PriceMinus = true;
+                            tariffLine.Surcharge3PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge3PriceText = this.TrimTo_20(rowData[4]);
+                    }
+                }
+
+                if (rowData.Length > 5)
+                {
+                    if (this.IsNumber(rowData[5]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[5]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge4Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge4PriceMinus = true;
+                            tariffLine.Surcharge4PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge4PriceText = this.TrimTo_20(rowData[5]);
+                    }
+                }
+
+                if (rowData.Length > 6)
+                {
+                    if (this.IsNumber(rowData[6]))
+                    {
+                        decimal myNumber = Convert.ToDecimal(rowData[6]);
+
+                        if (myNumber >= 0)
+                        {
+                            tariffLine.Surcharge5Price = myNumber;
+                        }
+                        else
+                        {
+                            tariffLine.IsSurcharge5PriceMinus = true;
+                            tariffLine.Surcharge5PriceText = String.Format("{0:0.000}", myNumber);
+                        }
+                    }
+                    else
+                    {
+                        tariffLine.Surcharge5PriceText = this.TrimTo_20(rowData[6]);
+                    }
+                }
+                
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    tariffLine.Notes = notesRowData;
+
+                    if (notesRowData.Length > 500)
+                    {
+                        tariffLine.Notes = notesRowData.Substring(0, 500);
+                    }
+                }
+
+                myResult.Add(tariffLine);
+                rowIndex++;
+            }
+
+            foreach (ExcelTariffLines item in myResult)
+            {
+                this.SetErrors_OceanFCLFreightCost(item);
             }
 
             return myResult;
@@ -1622,7 +2268,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     errorText = errorText + ", Missing Destination Port";
                 }
             }
-
+            
             if (!string.IsNullOrEmpty(item.Surcharge1PriceText) && item.Surcharge1Price == null)
             {
                 error = true;
@@ -1777,7 +2423,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
             }
-
+            
             item.HasErrors = error;
             item.ErrorText = errorText;
         }
@@ -1798,7 +2444,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                 {
-                    myPort = this.portRepository.GetOceanPortByCombinedCode(code, tenant);
+                    myPort = this.portRepository.GetOceanPortByCode(tenant, code, true);
                 }
 
                 if (myPort == null)
@@ -1810,7 +2456,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                     else if (this.TariffType == "OLC" || this.TariffType == "OFC")
                     {
-                        portZero = this.portRepository.GetOceanPortByCombinedCode(code, 0);
+                        portZero = this.portRepository.GetOceanPortByCode(0, code, true);
                     }
                     if (portZero != null)
                     {
@@ -1874,7 +2520,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 Id = IdCounter.GetNumber("Port", tenant).ToString(),
                 Code = ZeroPort.Code,
-                CombinedCode = ZeroPort.CombinedCode,
                 EnglishName = ZeroPort.EnglishName,
                 LocalName = ZeroPort.LocalName,
                 Tenant = tenant,
@@ -1888,12 +2533,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 Longtitude = ZeroPort.Longtitude,
                 SearchFields = ZeroPort.SearchFields,
                 Notes = ZeroPort.Notes,
-                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
             };
 
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
-            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
+
             TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 
             return newPort;
@@ -1950,7 +2594,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
 
                 GenerateTariffsArgs args = new GenerateTariffsArgs() { LoggedUserEmail = loggedUserEmail, Tenant = tenant };
@@ -1978,11 +2621,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
                 queueservice.Send(new Dictionary<string, string>()
-                                    {
-                                        { "BatchTaskExecutionId", taskExe.Id },
-                                        { "Tenant", tenant.ToString() }
-                                    }
-                , tenant);
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                });
 
                 return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
@@ -2035,19 +2677,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     TariffSurchargesUpdatePM tariffSurchageLog;
                     if (iDraftVersion != null)
                     {
-                        List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant, tariff.TypeCode);
+                        List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant);
                         bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate, tariffContext);
-
-                        if (isValid)
-                        {
-                            int currentLinesCount = iDraftVersion.TariffLines.Count;
-
-                            if (routs.Count + currentLinesCount > 1000)
-                            {
-                                isValid = false;
-                                throw new ApplicationException("Can't perform this update due to tariff lines limitation to 1000");
-                            }
-                        }
 
                         if (isValid)
                         {
@@ -2056,7 +2687,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 mySurchargesText = "";
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
-
                                 // Update
                                 if (myLine != null)
                                 {
@@ -2066,65 +2696,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     foreach (string charge in args.Surcharge)
                                     {
                                         string[] charge_array = charge.Split(',');
+                                        decimal? price = null;
+                                        decimal? minPrice = null;
 
-                                        if (tariff.TypeCode == "OFS")
+                                        if (this.FixFilter(charge_array[1]) != null)
                                         {
-                                            var arrayChargeType = "";
-
-                                            if (this.FixFilter(charge_array[1]) != null)
-                                            {
-                                                arrayChargeType = charge_array[1];
-                                            }
-
-                                            mySurchargesText += arrayChargeType + ", ";
-
-                                            string chargeId = null;
-                                            if (this.FixFilter(charge_array[0]) != null)
-                                            {
-                                                chargeId = charge_array[0];
-                                            }
-
-                                            TariffLinesContainersPricePM containersPricePM = myLine.ContainersPrices.Where(d => d.SurchargeId == chargeId).FirstOrDefault();
-                                            if (containersPricePM == null)
-                                            {
-                                                this.BuildContainersPrices(tariff, charge_array, myLine, true);
-                                            }
-
-                                            else
-                                            {
-                                                this.BuildContainersPrices(tariff, charge_array, myLine, false, containersPricePM);
-                                            }
+                                            price = Convert.ToDecimal(charge_array[1]);
                                         }
 
-                                        else
+                                        if (this.FixFilter(charge_array[2]) != null)
                                         {
-                                            decimal? price = null;
-                                            decimal? minPrice = null;
-
-                                            if (this.FixFilter(charge_array[1]) != null)
-                                            {
-                                                price = Convert.ToDecimal(charge_array[1]);
-                                            }
-
-                                            if (this.FixFilter(charge_array[2]) != null)
-                                            {
-                                                minPrice = Convert.ToDecimal(charge_array[2]);
-                                            }
-
-                                            var arrayChargeType = "";
-                                            if (this.FixFilter(charge_array[4]) != null)
-                                            {
-                                                arrayChargeType = charge_array[4];
-                                            }
-
-                                            mySurchargesText += arrayChargeType + ", ";
-
-                                            PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
-                                            PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
-
-                                            valuePropInfo1.SetValue(myLine, price, null);
-                                            valuePropInfo2.SetValue(myLine, minPrice, null);
+                                            minPrice = Convert.ToDecimal(charge_array[2]);
                                         }
+
+                                        var arrayChargeType = "";
+                                        if (this.FixFilter(charge_array[4]) != null)
+                                        {
+                                            arrayChargeType = charge_array[4];
+                                        }
+
+                                        mySurchargesText += arrayChargeType + ", ";
+
+                                        PropertyInfo valuePropInfo1 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
+                                        PropertyInfo valuePropInfo2 = myLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
+
+                                        valuePropInfo1.SetValue(myLine, price, null);
+                                        valuePropInfo2.SetValue(myLine, minPrice, null);
                                     }
                                 }
                                 // New 
@@ -2145,47 +2742,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     foreach (string charge in args.Surcharge)
                                     {
                                         string[] charge_array = charge.Split(',');
+                                        decimal? price = null;
+                                        decimal? minPrice = null;
 
-                                        if (tariff.TypeCode == "OFS")
+                                        if (this.FixFilter(charge_array[1]) != null)
                                         {
-                                            var arrayChargeType = "";
-
-                                            if (this.FixFilter(charge_array[1]) != null)
-                                            {
-                                                arrayChargeType = charge_array[1];
-                                            }
-
-                                            mySurchargesText += arrayChargeType + ", ";
-
-                                            this.BuildContainersPrices(tariff, charge_array, tariffLine, true);
+                                            price = Convert.ToDecimal(charge_array[1]);
                                         }
 
-                                        else
+                                        if (this.FixFilter(charge_array[2]) != null)
                                         {
-                                            decimal? price = null;
-                                            decimal? minPrice = null;
-
-                                            if (this.FixFilter(charge_array[1]) != null)
-                                            {
-                                                price = Convert.ToDecimal(charge_array[1]);
-                                            }
-
-                                            if (this.FixFilter(charge_array[2]) != null)
-                                            {
-                                                minPrice = Convert.ToDecimal(charge_array[2]);
-                                            }
-                                            var arrayChargeType = "";
-                                            if (this.FixFilter(charge_array[4]) != null)
-                                            {
-                                                arrayChargeType = charge_array[4];
-                                            }
-
-                                            mySurchargesText += arrayChargeType + ", ";
-                                            PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
-                                            PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
-                                            valuePropInfo1.SetValue(tariffLine, price, null);
-                                            valuePropInfo2.SetValue(tariffLine, minPrice, null);
+                                            minPrice = Convert.ToDecimal(charge_array[2]);
                                         }
+                                        var arrayChargeType = "";
+                                        if (this.FixFilter(charge_array[4]) != null)
+                                        {
+                                            arrayChargeType = charge_array[4];
+                                        }
+
+                                        mySurchargesText += arrayChargeType + ", ";
+                                        PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "Price");
+                                        PropertyInfo valuePropInfo2 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[3] + "MinPrice");
+                                        valuePropInfo1.SetValue(tariffLine, price, null);
+                                        valuePropInfo2.SetValue(tariffLine, minPrice, null);
                                     }
 
                                     iDraftVersion.TariffLines.Add(tariffLine);
@@ -2224,102 +2803,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        private void BuildContainersPrices(TariffPM tariff, string[] charge_array, TariffLinePM tariffLine, bool isNew, TariffLinesContainersPricePM containersPricePM = null)
-        {
-            string chargeId = null;
-            decimal? price1 = null;
-            decimal? price2 = null;
-            decimal? price3 = null;
-            decimal? price4 = null;
-            decimal? price5 = null;
-            decimal? costPrice = null;
-
-            if (this.FixFilter(charge_array[0]) != null)
-            {
-                chargeId = charge_array[0];
-            }
-
-            if (this.FixFilter(charge_array[2]) != null)
-            {
-                price1 = Convert.ToDecimal(charge_array[2]);
-            }
-
-            if (this.FixFilter(charge_array[3]) != null)
-            {
-                price2 = Convert.ToDecimal(charge_array[3]);
-            }
-
-            if (this.FixFilter(charge_array[4]) != null)
-            {
-                price3 = Convert.ToDecimal(charge_array[4]);
-            }
-
-            if (this.FixFilter(charge_array[5]) != null)
-            {
-                price4 = Convert.ToDecimal(charge_array[5]);
-            }
-
-            if (this.FixFilter(charge_array[6]) != null)
-            {
-                price5 = Convert.ToDecimal(charge_array[6]);
-            }
-
-            if (this.FixFilter(charge_array[7]) != null)
-            {
-                costPrice = Convert.ToDecimal(charge_array[7]);
-            }
-
-            if (isNew)
-            {
-                containersPricePM = new TariffLinesContainersPricePM()
-                {
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    Tenant = tariffLine.Tenant,
-                    TariffId = tariffLine.TariffId,
-                    SurchargeId = chargeId,
-                    Price1 = price1,
-                    Price2 = price2,
-                    Price3 = price3,
-                    Price4 = price4,
-                    Price5 = price5,
-                    CostPrice = costPrice,
-                };
-
-                tariffLine.ContainersPrices.Add(containersPricePM);
-            }
-
-            else
-            {
-                containersPricePM.ChangeSetOp = ChangeSetOperation.Update;
-                containersPricePM.CostPrice = costPrice;
-                if (!string.IsNullOrEmpty(tariff.ContainerType1Id))
-                {
-                    containersPricePM.Price1 = price1;
-                }
-
-                if (!string.IsNullOrEmpty(tariff.ContainerType2Id))
-                {
-                    containersPricePM.Price2 = price2;
-                }
-
-                if (!string.IsNullOrEmpty(tariff.ContainerType3Id))
-                {
-                    containersPricePM.Price3 = price3;
-                }
-
-                if (!string.IsNullOrEmpty(tariff.ContainerType4Id))
-                {
-                    containersPricePM.Price4 = price4;
-                }
-
-                if (!string.IsNullOrEmpty(tariff.ContainerType5Id))
-                {
-                    containersPricePM.Price5 = price5;
-                }
-            }
-        }
-
         private bool ValidateStartDate(TariffPM tariff, TariffVersionPM iDraftVersion, List<FromToClass> routs, DateTime startDate, ITariffModuleContext tariffContext)
         {
             bool isValid = true;
@@ -2351,11 +2834,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
         List<SurchargeLog> SurchargeLog = new List<SurchargeLog>();
-        private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant, string typeCode)
+        private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
         {
             List<FromToClass> myResult = new List<FromToClass>();
-            CarrierAreasPortRepository carrierAreasPortRepository = new CarrierAreasPortRepository(tenant);
-            CarrierAreaRepository carrierAreasRepository = new CarrierAreaRepository(tenant);
+            AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(tenant);
+            AirlineAreaRepository airlineAreasRepository = new AirlineAreaRepository(tenant);
             var surchargeLogItem = new SurchargeLog();
             List<string> areasFromPorts = new List<string>();
             List<string> areasToPorts = new List<string>();
@@ -2366,14 +2849,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (from[0] == "Port")
                 {
-                    if (typeCode.StartsWith("A"))
-                    {
-                        areasFromPorts.Add(from[2]);
-                    }
-                    else
-                    {
-                        areasFromPorts.Add(from[3]);
-                    }
+                    areasFromPorts.Add(from[2]);
                     foreach (string item_to in toList)
                     {
                         string[] to = item_to.Split(',');
@@ -2389,14 +2865,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             myResult.Add(routItem);
                             if (isFirstTime)
                             {
-                                if (typeCode.StartsWith("A"))
-                                {
-                                    areasToPorts.Add(to[2]);
-                                }
-                                else
-                                {
-                                    areasToPorts.Add(to[3]);
-                                }
+                                areasToPorts.Add(to[2]);
                             }
 
                             surchargeLogItem.Count += 1;
@@ -2404,15 +2873,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         else if (to[0] == "Area")
                         {
-                            List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(to[1], tenant);
-                            var area = carrierAreasRepository.GetSingleCarrierArea(to[1], tenant);
+                            List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
+                            var area = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
                             if (isFirstTime && area != null)
                             {
                                 areasToPorts.Add(area.Name);
                             }
                             if (areasPorts != null && areasPorts.Count > 0)
                             {
-                                foreach (CarrierAreasPort port in areasPorts)
+                                foreach (AirlineAreasPort port in areasPorts)
                                 {
                                     FromToClass routItem = new FromToClass()
                                     {
@@ -2429,13 +2898,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else if (from[0] == "Area")
                 {
-                    List<CarrierAreasPort> areasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(from[1], tenant);
+                    List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(from[1], tenant);
                     if (areasPorts != null && areasPorts.Count > 0)
                     {
-                        var area = carrierAreasRepository.GetSingleCarrierArea(from[1], tenant);
+                        var area = airlineAreasRepository.GetSingleAirlineArea(from[1], tenant);
                         areasFromPorts.Add(area.Name);
                         var isFirstTimeAreaLoop = true;
-                        foreach (CarrierAreasPort port in areasPorts)
+                        foreach (AirlineAreasPort port in areasPorts)
                         {
                             foreach (string item_to in toList)
                             {
@@ -2452,29 +2921,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                     myResult.Add(routItem);
                                     if (isFirstTime && isFirstTimeAreaLoop)
                                     {
-                                        if (typeCode.StartsWith("A"))
-                                        {
-                                            areasToPorts.Add(to[2]);
-                                        }
-                                        else
-                                        {
-                                            areasToPorts.Add(to[3]);
-                                        }
+                                        areasToPorts.Add(to[2]);
                                     }
                                     surchargeLogItem.Count += 1;
 
                                 }
                                 else if (to[0] == "Area")
                                 {
-                                    List<CarrierAreasPort> toAreasPorts = carrierAreasPortRepository.GetCarrierAreasPortByAreaId(to[1], tenant);
-                                    var toarea = carrierAreasRepository.GetSingleCarrierArea(to[1], tenant);
+                                    List<AirlineAreasPort> toAreasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
+                                    var toarea = airlineAreasRepository.GetSingleAirlineArea(to[1], tenant);
                                     if (isFirstTime && isFirstTimeAreaLoop && toarea != null)
                                     {
                                         areasToPorts.Add(toarea.Name);
                                     }
                                     if (toAreasPorts != null && toAreasPorts.Count > 0)
                                     {
-                                        foreach (CarrierAreasPort toPort in toAreasPorts)
+                                        foreach (AirlineAreasPort toPort in toAreasPorts)
                                         {
                                             FromToClass routItem = new FromToClass()
                                             {
@@ -2520,13 +2982,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return myResult;
         }
-
+        
         public HttpResponseMessage GetTariffsLogsByTariffId(string tariffId, int version)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int tenant = authToken.Tenant;
-            SecurityUtility.AuthenticationOnTenant(tenant);
             string loggedUserEmail = authToken.Email;
             List<TariffSurchargesUpdatePM> logs = new List<TariffSurchargesUpdatePM>();
 
@@ -2542,267 +3003,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             int tenant = authToken.Tenant;
             string loggedUserEmail = authToken.Email;
-            SecurityUtility.AuthenticationOnTenant(tenant);
+
             ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
-            TariffVersionQueryService iTariffVersionQueryService = new TariffVersionQueryService(iContext);
+            TariffVersionQueryService iTariffVersionQueryService = new TariffVersionQueryService(iContext);          
             List<TariffVersionPM> entityPMs = iTariffVersionQueryService.GetAllVersionsWithLines(tariffId, tenant);
             return Request.CreateResponse(HttpStatusCode.OK, entityPMs);
         }
-        public HttpResponseMessage GetRecentTariffs()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-
-                string mail = SecurityUtility.GetAuthenticatedUser();
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(mail, tenant);
-
-                ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
-                TariffListQueryService tariffListQueryservice = new TariffListQueryService(iContext);
-                List<TariffList> myResult = tariffListQueryservice.GetRecentTariffs(contact.Id, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage GetRecentSaleTariffs()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-
-                string mail = SecurityUtility.GetAuthenticatedUser();
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(mail, tenant);
-
-                ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
-                TariffListQueryService tariffListQueryservice = new TariffListQueryService(iContext);
-                List<TariffList> myResult = tariffListQueryservice.GetRecentSaleTariffs(contact.Id, tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        public HttpResponseMessage GetTariffLineContainerPrices(string tariffId, int version, string fromPortId, string toPortId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                fromPortId = this.FixFilter(fromPortId);
-                toPortId = this.FixFilter(toPortId);
-
-                ITariffModuleContext iContext = TariffModuleContext.GetContext(authToken.Tenant);
-                TariffLinesContainersPriceQueryService tariffLinesContainersPriceQueryService = new TariffLinesContainersPriceQueryService(iContext);
-                List<TariffLinesContainersPricePM> myResult = tariffLinesContainersPriceQueryService.GetContainerPricesByVersionAndPorts(tariffId, version, fromPortId, toPortId, authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
-        public HttpResponseMessage GetRefreshPortsFromTranslations(string tariffId, int version)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                ITariffModuleContext tariffModuleContext = TariffModuleContext.GetContext(tenant);
-                TariffRepository tariffRepository = new TariffRepository(tariffModuleContext);
-                Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
-
-                if (tariff != null)
-                {
-                    TariffLineRepository tariffLineRepository = new TariffLineRepository(tariffModuleContext);
-                    List<TariffLine> iDraftVersionLines = tariffLineRepository.GetTariffLinesByTariffAndVersion(tariffId, version, tenant);
-
-                    if (iDraftVersionLines.Count > 0)
-                    {
-                        iDraftVersionLines = iDraftVersionLines.Where(d => d.HasErrors && (string.IsNullOrEmpty(d.OriginPortId) || string.IsNullOrEmpty(d.DestinationPortId))).ToList();
-
-                        TariffCarrierTranslationRepository tariffCarrierTranslationRepository = new TariffCarrierTranslationRepository(tenant);
-
-                        foreach (TariffLine tariffLine in iDraftVersionLines)
-                        {
-                            bool tariffLineUpdated = false;
-
-                            if (string.IsNullOrEmpty(tariffLine.OriginPortId) && !string.IsNullOrEmpty(tariffLine.OriginPortText))
-                            {
-                                TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetCarrierTranslationByPartnerCodeAndCarrier(tariffLine.OriginPortText, tariff.SellerId, tenant);
-                                if (carrierTranslation != null)
-                                {
-                                    tariffLine.OriginPortId = carrierTranslation.PortId;
-                                    tariffLine.OriginPortText = null;
-                                    tariffLineUpdated = true;
-                                }
-                            }
-
-                            if (string.IsNullOrEmpty(tariffLine.DestinationPortId) && !string.IsNullOrEmpty(tariffLine.DestinationPortText))
-                            {
-                                TariffCarrierTranslation carrierTranslation = tariffCarrierTranslationRepository.GetCarrierTranslationByPartnerCodeAndCarrier(tariffLine.DestinationPortText, tariff.SellerId, tenant);
-                                if (carrierTranslation != null)
-                                {
-                                    tariffLine.DestinationPortId = carrierTranslation.PortId;
-                                    tariffLine.DestinationPortText = null;
-                                    tariffLineUpdated = true;
-                                }
-                            }
-
-                            if (tariffLineUpdated)
-                            {
-                                tariffLine.ErrorText = TariffLineHelper.ComputeTariffLineErrorText(tariffLine);
-
-                                if (string.IsNullOrEmpty(tariffLine.ErrorText))
-                                {
-                                    tariffLine.HasErrors = false;
-                                }
-                                else
-                                {
-                                    tariffLine.HasErrors = true;
-                                }
-
-                                tariffLineRepository.Update(tariffLine);
-                            }
-                        }
-
-                        tariffLineRepository.SubmitChanges();
-                    }
-                }
-
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetTariffsPricesConnectedToPayables(string freightTariffId, string shipmentId, string tariffType)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
-
-                freightTariffId = this.FixFilter(freightTariffId);
-                shipmentId = this.FixFilter(shipmentId);
-
-                PriceCheckManager priceCheckManager = new PriceCheckManager(freightTariffId, shipmentId, tariffType, tenant);
-                List<TariffSearchSummary> myResult = priceCheckManager.GetSummaryForExistedTariff();
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        public HttpResponseMessage GetUploadedExcelByTariffAndVersion(string tariffId, int version)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                string loggedUserEmail = authToken.Email;
-
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
-                tariffId = this.FixFilter(tariffId);
-
-                TariffVersionUploadedExcelQueryService queryService = new TariffVersionUploadedExcelQueryService(tenant);
-                List<TariffVersionUploadedExcelPM> myResult = queryService.GetUploadedExcelByTariffAndVersion(tariffId, version, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-       
-        [ActionName("PostAvailableCustomsChargesTariffs")]
-        public HttpResponseMessage PostAvailableCustomsChargesTariffs(CustomsChargesTariffSearchArgs args)
-        {
-            try
-            {
-                int tenant = this.AuthenticateAPIRequest();
-                CustomsChargesGenerator customsChargesGenerator = new CustomsChargesGenerator(args, tenant);
-                CustomsChargesTariffSearchArgs newArgs = customsChargesGenerator.GeneratePayables();
-                return Request.CreateResponse(HttpStatusCode.OK, newArgs);
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-        [ActionName("PostAvailableSalesLocalChargesTariffs")]
-        public HttpResponseMessage PostAvailableSalesLocalChargesTariffs(SalesLocalChargesTariffSearchArgs args)
-        {
-            try
-            {
-                int tenant = this.AuthenticateAPIRequest();
-                SalesLocalChargesGenerator customsChargesGenerator = new SalesLocalChargesGenerator(args, tenant);
-                SalesLocalChargesTariffSearchArgs newArgs = customsChargesGenerator.GenerateSaleLocalCharges();
-
-                return Request.CreateResponse(HttpStatusCode.OK, newArgs);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-
-        private int AuthenticateAPIRequest()
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-            return authToken.Tenant;
-        }        
     }
 
     public class SurchargeLog
@@ -2811,41 +3017,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public List<string> ToPorts { get; set; }
         public int Count { get; set; }
     }
-    
-    public class UpdateSurchargeArgs
+
+    public class TariffFilterParameter
     {
+        public int Tenant { get; set; }
+        public string FileData { get; set; }
+        public string PriceSteps { get; set; }
         public string TariffId { get; set; }
-        public int VersionNumber { get; set; }
-        public List<string> From { get; set; }
-        public List<string> To { get; set; }
-        public List<string> Surcharge { get; set; }
-        public DateTime StartDate { get; set; }
+        public int Version { get; set; }
+        public string TariffType { get; set; }
+        public string FileName { get; set; }
     }
-    public class FromToClass
-    {
-        public string FromCode { get; set; }
-        public string ToCode { get; set; }
-    }
-
-    public class ChargeContainerClass
-    {
-        public int ChargeIndex { get; set; }
-        public int ContainerIndex { get; set; }
-        public string ChargeCode { get; set; }
-        public string ContainerCode { get; set; }
-        public string ChargeId { get; set; }
-        public string ContainerId { get; set; }
-    }
-
     public class ExcelTariffLines
     {
         public string FromPortId { get; set; }
         public string FromPortCode { get; set; }
-        public string FromPortCombinedCode { get; set; }
         public string FromPortName { get; set; }
         public string ToPortId { get; set; }
         public string ToPortCode { get; set; }
-        public string ToPortCombinedCode { get; set; }
         public string ToPortName { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? Step1Price { get; set; }
@@ -2923,6 +3112,19 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string Notes { get; set; }
         public DateTime? StartDate { get; set; }
         public string StartDateText { get; set; }
-        public string TransitTime { get; set; }
-    }    
+    }
+    public class UpdateSurchargeArgs
+    {
+        public string TariffId { get; set; }
+        public int VersionNumber { get; set; }
+        public List<string> From { get; set; }
+        public List<string> To { get; set; }
+        public List<string> Surcharge { get; set; }
+        public DateTime StartDate { get; set; }
+    }
+    public class FromToClass
+    {
+        public string FromCode { get; set; }
+        public string ToCode { get; set; }
+    }
 }

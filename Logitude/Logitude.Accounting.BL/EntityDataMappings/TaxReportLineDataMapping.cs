@@ -12,9 +12,6 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -53,11 +50,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 result = string.IsNullOrEmpty(result) ? entityPM.Reference : result + "," + entityPM.Reference;
 
             }
-
-            if (!string.IsNullOrEmpty(entityPM.PreviousReference))
-            {
-                result = string.IsNullOrEmpty(result) ? entityPM.PreviousReference : result + "," + entityPM.PreviousReference;
-            }
             //if (!string.IsNullOrEmpty(entityPM.ReferecneGroup))
             //{
             //    result = string.IsNullOrEmpty(result) ? entityPM.ReferecneGroup : result + "," + entityPM.ReferecneGroup;
@@ -88,29 +80,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         }
 
 
-        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
-            if (OverrideGetLoggedContactFunc != null)
-            {
-                return OverrideGetLoggedContactFunc(tenant);
-            }
-
-            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
-            return loggedcontact;
-        }
 
 
 
         public void CustomPOCOToPM(TaxReportLinePM entityPM, TaxReportLine entityPOCO)
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusCode);
-            ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
+
             if (entityPOCO.StatusCode != null)
             {
                 TaxReportLineStatusQueryService queryService = new TaxReportLineStatusQueryService(entityPOCO.Tenant);
-                TaxReportLineStatusPM status = queryService.GetSingle(entityPOCO.StatusCode, false, true);
+                TaxReportLineStatusPM status = queryService.GetSingle(entityPOCO.StatusCode, false, false);
                 if (status != null)
                 {
                     entityPM.StatusEnglishName = status.EnglishName;
@@ -123,20 +104,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (entityPOCO.JournalId != null)
             {
                 JournalQueryService queryService = new JournalQueryService(entityPOCO.Tenant);
-                JournalPM jr = queryService.GetSingle(entityPOCO.JournalId, false, true);
+                JournalPM jr = queryService.GetSingle(entityPOCO.JournalId, false, false);
                 if (jr != null)
                 {
                     entityPM.JournalNumber = jr.JournalNumber;
                 }
             }
-            if (entityPOCO.UpdatedByUserId != null)
-            {
-                ContactPM updatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
-                if (updatedByContact == null)
-                    updatedByContact = contactQuery.GetSinglePMFromCacheWithSystemUser(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
-                if (updatedByContact != null)
-                    entityPM.UpdatedBUserName = updatedByContact.LocalName == null ? updatedByContact.EnglishName : updatedByContact.LocalName;
-            }
+
             //entityPM.SearchFields = entityPM.VatNumber + "," + entityPM.Reference + "," + entityPM.ReferecneGroup + "," + entityPM.JournalNumber + "," + entityPM.StatusEnglishName + "," + entityPM.StatusLocalName;
 
 

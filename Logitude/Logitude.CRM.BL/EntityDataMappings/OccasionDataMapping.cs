@@ -12,7 +12,7 @@ using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.CRM.Data.EntityKeys;

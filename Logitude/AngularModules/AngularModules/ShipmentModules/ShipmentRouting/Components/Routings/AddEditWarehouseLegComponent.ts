@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AppTool, DateTool, ArrayTool} from '../../../../Infrastructure/Tools';
+import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
 import {ShipmentTool, RoutingHelper} from '../../../../Shipment/Tools';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
 import {ShipmentFollowUpPM} from '../../../../Shipment/EntityPMs/ShipmentFollowUpPM';
@@ -17,20 +17,6 @@ import {TenantPM} from '../../../../Common/EntityPMs/TenantPM';
 import {WarehouseHelper} from '../../../../Warehouse/Helpers/WarehouseHelper';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ShipmentPickUpPM} from '../../../../Shipment/EntityPMs/ShipmentPickUpPM';
-import { CardPMService } from '../../../../Common/Services/StandardPMs/CardPMService';
-import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-import { WarehouseStoragePricingPM } from '../../../../Common/EntityPMs/WarehouseStoragePricingPM';
-import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { ShipmentReceivablePM } from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
-import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
-import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
-import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
-import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
-import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
-import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
-import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
 @Component({
     moduleId: './ShipmentModules/ShipmentRouting/Components/Routings/',
@@ -48,60 +34,19 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     public TransportModeId: string = null;
     public ValidationErrorsList: string[] = [];
     public FatherComponent: RoutingsTabComponent;
-    public IsImportShipment: boolean = false;
     IsShowNewWarehouseEntryButton: Boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public StoragePricingEnabled: boolean = false;
-    public StoragePricingMessageVisible: boolean = false;
-    public DisableNewWarehouseEntryButton: boolean = false;
-    private warehouseType: string;
-    public IsStoragePricingAreaVisible: boolean = false;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
         this.InitServices();
-        this.CurrentSession.SessionEvent.subscribe($event => {
-            if ($event == "Refresh") {
-                this.EntityPM.IsDirty = true;
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
-            }
-        });
     }
 
     private myAddressListService: AddressListService;
-    private cardService: CardPMService;
-    private cardListService: CardListService;
-    private warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
-
     InitServices() {
         this.myAddressListService = new AddressListService();
-        this.cardService = new CardPMService();
-        this.cardListService = new CardListService();
-        this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
     }
 
-    GetShipmentDirection() {
-        if (this.EntityPM.DirectionId == "I") {
-            this.IsImportShipment = true;
-        }
-    }
-
-    private myConsignee: CardPM;
-    InitFreeDaysStorage() {
-        this.cardService.get(this.EntityPM.ConsigneeId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.myConsignee = myResponse.Result;
-                    if (this.myConsignee) {
-                        if (this.IsNewLeg && this.myConsignee.IsCustomer) {
-                            this.WarehouseStorageFreeDays = this.myConsignee.StorageFreeDays;                            
-                        }
-                    }
-                }
-            }
-        });
-    }
-     
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.LegType = args['LegType'];
@@ -111,101 +56,29 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.TransportModeId = this.EntityPM.TransportModeId;
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
 
-            if (this.LegType =="WarehouseLeg2") {
-                this.IsShowNewWarehouseEntryButton = false;
-            }
-            else if(this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
+            if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
                 if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
-                    this.IsShowNewWarehouseEntryButton = this.EntityPM.DirectionId == "I";
+                    this.IsShowNewWarehouseEntryButton = true;
                 }
             }
+        }
 
-            var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "STR")[0];
-            if (FeatureToggle) {
-                this.IsStoragePricingAreaVisible = true;
-            }
+        this.ObjectTableName = args['ObjectTableName'];
+        this.FatherComponent = args['FatherComponent'];
+        this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
+        this.SetUIProperties();
+        this.Clone();
 
-            this.GetShipmentDirection();
-            this.SetStorageDays();
-            this.ComputeStorageFee();
-
-            this.ObjectTableName = args['ObjectTableName'];
-            this.FatherComponent = args['FatherComponent'];
-            this.WarehouseAddressList = this.FatherComponent.WarehouseAddressList;
-            this.SetUIProperties();
-            this.InitFreeDaysStorage();
-            this.Clone();
-
-            if (this.IsNewLeg) {
-                if (this.LegType == "WarehouseLeg_Pickups") {
-                    if (this.EntityPM.ShipmentPickUps.length > 0) {
-                        var FirstPickup: ShipmentPickUpPM = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; })[0];
-                        if (FirstPickup) {
-                            this.WarehouseLegExpectedEntryDate = FirstPickup.ETA
-                            this.WarehouseLegActualEntryDate = FirstPickup.ATA;
-                        }
+        if (this.IsNewLeg) {
+            if (this.LegType == "WarehouseLeg_Pickups") {
+                if (this.EntityPM.ShipmentPickUps.length > 0) {
+                    var FirstPickup: ShipmentPickUpPM = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; })[0];
+                    if (FirstPickup) {
+                        this.WarehouseLegExpectedEntryDate = FirstPickup.ETA
+                        this.WarehouseLegActualEntryDate = FirstPickup.ATA;
                     }
                 }
-
-                this.GetShipmentDirection();
             }
-            
-            if (this.IsImportShipment) {
-                if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
-                    this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
-                        if (myResponse != null) {
-                            if (!myResponse.HasError) {
-                                var result: CardList = myResponse.Result;
-                                if (result) {
-                                    this.warehouseType = result.WarehouseTypeCode;                                    
-                                    this.SetNewWarehouseEntryButtonProperty();
-                                    this.SetChargeStorageProperies();
-                                    this.SetUIProperties_Storage();
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-        }
-    }
-
-    SetIsCFSWarehouseProperities() {
-        if (!this.EntityPM.IsCFSWarehouseChanged) {
-            if (this.warehouseType == "CFS") {
-                this.IsCFSWarehouse = true;
-                this.SetNewWarehouseEntryButtonProperty();
-            }
-
-            else {
-                this.IsCFSWarehouse = false;
-            }
-
-            this.EntityPM.IsCFSWarehouseChanged = true;
-        }
-
-        else if (this.IsCFSWarehouse) {
-            this.SetNewWarehouseEntryButtonProperty();
-        }
-    }
-    SetNewWarehouseEntryButtonProperty() {
-        if (this.IsCFSWarehouse) {
-            this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-                var warehouseEntries = serviceResponse.Result;
-                if (warehouseEntries && warehouseEntries.length > 0) {
-                    this.DisableNewWarehouseEntryButton = true;
-                }
-            });
-        }
-    }
-    SetChargeStorageProperies() {
-        if (this.warehouseType == "CFS" && this.IsCFSWarehouse) {
-            this.StoragePricingEnabled = true;
-            this.StoragePricingMessageVisible = false;
-        }
-        else {
-            this.StoragePricingEnabled = false;
-            this.StoragePricingMessageVisible = true;
         }
     }
 
@@ -216,8 +89,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.IsEditingEnabled = isEditingEnabled;
         this.IsFirmCodeVisible = (this.TenantPM.CountryCode.toUpperCase()) == "US" ? true : false;
 
-        //this.UIProperties.SetEnabled("IsCFS", this.ObjectTableName, false);
-        this.UIProperties.SetEnabled("ChargeStorage", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegWarehouseId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegAddressId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("WarehouseLegTerminalCode", this.ObjectTableName, isEditingEnabled);
@@ -230,27 +101,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.UIProperties.SetEnabled("WarehouseLegReference", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("TerminalAvailable", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetRequired("WarehouseLegWarehouseId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId) ? true : false);
-        this.UIProperties.SetEnabled("WarehouseLeg2WarehouseId", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2AddressId", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2TerminalCode", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2Remarks", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2LastFreeDate", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2ExpectedEntryDate", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2ExpectedReleaseDate", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2ActualEntryDate", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2ActualReleaseDate", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("WarehouseLeg2Reference", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetRequired("WarehouseLeg2WarehouseId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WarehouseLeg2WarehouseId) ? true : false);
-
         this.SetUIProperties_ValidateActualDates();
-        this.SetUIProperties_Storage();
     }
     SetUIProperties_ValidateActualDates() {
 
         this.UIProperties.SetValidity("WarehouseLegActualEntryDate", this.ObjectTableName, true, null);
         this.UIProperties.SetValidity("WarehouseLegActualReleaseDate", this.ObjectTableName, true, null);
-        this.UIProperties.SetValidity("WarehouseLeg2ActualEntryDate", this.ObjectTableName, true, null);
-        this.UIProperties.SetValidity("WarehouseLeg2ActualReleaseDate", this.ObjectTableName, true, null);
 
         if (this.LegType == "WarehouseLeg_Pickups") {
             var date: Date = DateTool.GetCurrentDateAsUtc();
@@ -265,17 +121,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.UIProperties.SetValidity("WarehouseLegActualReleaseDate", this.ObjectTableName, false, errorMessage);
             }
         }
-        if (this.LegType == "WarehouseLeg2") {
-            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualEntryDate)) {
-                var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualEntryDate"));
-                this.UIProperties.SetValidity("WarehouseLeg2ActualEntryDate", this.ObjectTableName, false, errorMessage);
-            }
-
-            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualReleaseDate)) {
-                var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualReleaseDate"));
-                this.UIProperties.SetValidity("WarehouseLeg2ActualReleaseDate", this.ObjectTableName, false, errorMessage);
-            }
-        }
 
         else {
             if (!DateTool.IsActualDateValid(this.WarehouseLegActualEntryDate)) {
@@ -288,9 +133,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 this.UIProperties.SetValidity("WarehouseLegActualReleaseDate", this.ObjectTableName, false, errorMessage);
             }
         }
-    }
-    SetUIProperties_Storage() {
-        this.UIProperties.SetEnabled("ChargeStorage", this.ObjectTableName, this.StoragePricingEnabled);
     }
 
     private IsDateBigger(date1: any, date2: any) {
@@ -315,11 +157,9 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegWarehouseId(newValue: string) {
         if (this.EntityPM.WarehouseLegWarehouseId != newValue) {
             this.EntityPM.WarehouseLegWarehouseId = newValue;
-
             if (!AppTool.IsNullOrEmpty(newValue)) {
                 this.GetAddress();
             }
-
             else {
                 this.WarehouseLegAddressId = null;
                 this.FatherComponent.WarehouseLegTerminalName = "";
@@ -329,148 +169,21 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }         
     }
     GetAddress() {
-        this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
+        var myService = new CardListService();
+        myService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
-                    var result: CardList = myResponse.Result;
+                    var result = myResponse.Result;
                     if (result) {
                         this.WarehouseLegAddressId = result.MainAddressId;
                         this.FatherComponent.WarehouseLegTerminalName = result.EnglishName;
-                        this.FatherComponent.EntityPM.WarehouseLegTerminalName = result.EnglishName;
-                        this.WarehouseLegTerminalCode = result.FirmCode;
-
-                        if (this.myConsignee != null && !AppTool.IsNullOrZero(this.myConsignee.StorageFreeDays)) {
-                            this.WarehouseStorageFreeDays = this.myConsignee.StorageFreeDays;
-                        }
-
-                        else {
-                            this.WarehouseStorageFreeDays = result.StorageFreeDays;
-                        }
-
-                        this.warehouseType = result.WarehouseTypeCode;
-                        this.EntityPM.IsCFSWarehouseChanged = false;
-                        this.SetIsCFSWarehouseProperities();
-                        this.SetChargeStorageProperies();
-                        this.SetUIProperties_Storage();
-                        this.SetStorageDefaults(result);
-
-                        if (result.WarehouseTypeCode == "CFS" && this.IsCFSWarehouse) {
-                            this.LoadWarehouseStoragePricing();
+                        if (this.IsFirmCodeVisible) {
+                            this.WarehouseLegTerminalCode = result.FirmCode;
                         }
                     }
                 }
             }
         });
-    }
-
-    get WarehouseLeg2WarehouseId() { return this.EntityPM.WarehouseLeg2WarehouseId; }
-    set WarehouseLeg2WarehouseId(newValue: string) {
-        if (this.EntityPM.WarehouseLeg2WarehouseId != newValue) {
-            this.EntityPM.WarehouseLeg2WarehouseId = newValue;
-
-            if (!AppTool.IsNullOrEmpty(newValue)) {
-                this.GetAddress2();
-            }
-
-            else {
-                this.WarehouseLeg2AddressId = null;
-                this.FatherComponent.WarehouseLeg2TerminalName = "";
-            }
-
-            this.SetUIProperties();
-        }
-    }
-    GetAddress2() {        
-        this.cardListService.getSingle(this.WarehouseLeg2WarehouseId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    var result: CardList = myResponse.Result;
-                    if (result) {
-                        this.WarehouseLeg2AddressId = result.MainAddressId;
-                        this.FatherComponent.WarehouseLeg2TerminalName = result.EnglishName;
-                        this.FatherComponent.EntityPM.WarehouseLeg2TerminalName = result.EnglishName;
-                        this.WarehouseLeg2TerminalCode = result.FirmCode;
-                        this.warehouseType = result.WarehouseTypeCode;
-                        this.EntityPM.IsCFSWarehouseChanged = false;
-                        this.SetIsCFSWarehouseProperities();
-                    }
-                }
-            }
-        });
-    }
-
-    private warehouseStoragePricings: WarehouseStoragePricingPM[];
-    private LoadWarehouseStoragePricing() {
-        this.CurrentSession.StartBusyIndicatorLoading();
-
-        var myService: PartnersDomainService = new PartnersDomainService();
-        myService.GetWarehouseStoragePricingForWarehouse(this.EntityPM.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.warehouseStoragePricings = myResponse.Result;
-                    this.FillDefaultPricings();
-                }
-
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
-    }
-    private SetStorageDefaults(myWarehouse: CardList) {
-        if (myWarehouse.WarehouseTypeCode == "CFS") {
-            this.ChargeStorage = myWarehouse.ChargeStorage;
-            this.EntityPM.ChargeStorageCurrencyId = myWarehouse.ChargeStorageCurrencyId;
-
-            switch (this.EntityPM.TransportModeId) {
-                case "A":
-                    {
-                        this.EntityPM.WeightMeasurementCode = myWarehouse.AirWeightMeasurementCode;
-                        this.EntityPM.WeightRoundingCode = myWarehouse.AirWeightRoundingCode;
-                        break;
-                    }
-
-                case "O":
-                    {
-                        this.EntityPM.WeightMeasurementCode = myWarehouse.OceanWeightMeasurementCode;
-                        this.EntityPM.WeightRoundingCode = myWarehouse.OceanWeightRoundingCode;
-                        break;
-                    }
-
-                case "I":
-                    {
-                        this.EntityPM.WeightMeasurementCode = myWarehouse.InlandWeightMeasurementCode;
-                        this.EntityPM.WeightRoundingCode = myWarehouse.InlandWeightRoundingCode;
-                        break;
-                    }
-            }
-        }
-
-        else {
-            this.ChargeStorage = false;
-            this.EntityPM.ChargeStorageCurrencyId = null;
-            this.EntityPM.WeightMeasurementCode = null;
-            this.EntityPM.WeightRoundingCode = null;
-            this.EntityPM.ShipmentStoragePricings = [];
-        }
-    }
-    private FillDefaultPricings() {
-        this.EntityPM.ShipmentStoragePricings = [];
-
-        if (this.warehouseStoragePricings != null && this.warehouseStoragePricings.length > 0) {
-            var count: number = 1;
-            this.warehouseStoragePricings.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 }).forEach(item => {
-                var defaultItem: ShipmentStoragePricingPM = new ShipmentStoragePricingPM(this.EntityPM);
-                defaultItem.Tenant = SessionLocator.Tenant;
-                defaultItem.ShipmentId = this.EntityPM.Id;
-                defaultItem.WarehouseId = this.EntityPM.WarehouseLegWarehouseId;
-                defaultItem.StepFrom = item.StepFrom;
-                defaultItem.StepTo = item.StepTo;
-                defaultItem.Days = item.Days;
-                defaultItem.SalePrice = item.SalePrice;
-                defaultItem.LineNumber = count++;
-                
-                this.EntityPM.AddShipmentStoragePricing(defaultItem);
-            });
-        }
     }
 
     private myWarehouseAddressList: AddressList;
@@ -520,6 +233,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+    get WarehouseLegLastFreeDate() { return this.EntityPM.WarehouseLegLastFreeDate; }
+    set WarehouseLegLastFreeDate(newValue: Date) {
+        if (this.EntityPM.WarehouseLegLastFreeDate != newValue) {
+            this.EntityPM.WarehouseLegLastFreeDate = newValue;
+        }
+    }
+
     get WarehouseLegExpectedEntryDate() { return this.EntityPM.WarehouseLegExpectedEntryDate; }
     set WarehouseLegExpectedEntryDate(value: Date) {
         if (this.EntityPM.WarehouseLegExpectedEntryDate != value) {
@@ -531,8 +251,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegExpectedReleaseDate(value: Date) {
         if (this.EntityPM.WarehouseLegExpectedReleaseDate != value) {
             this.EntityPM.WarehouseLegExpectedReleaseDate = value;
-
-            this.SetStorageDays();
         }
     }
 
@@ -541,18 +259,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualEntryDate != value) {
             this.EntityPM.WarehouseLegActualEntryDate = value;
             this.SetUIProperties_ValidateActualDates();
-
-            if (value == null) {
-                this.StorageDays = null;
-                this.Days = null;
-            }
-
-            else {
-                this.SetLastFreeDate();
-                this.SetStorageDays();
-            }
-
-            this.ComputeGrossWeight_PerStorageDays();
         }
     }
 
@@ -561,135 +267,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         if (this.EntityPM.WarehouseLegActualReleaseDate != value) {
             this.EntityPM.WarehouseLegActualReleaseDate = value;
             this.SetUIProperties_ValidateActualDates();
-
-            if (value == null) {
-                this.StorageDays = null;
-                this.Days = null;
-            }
-            else {
-                this.SetStorageDays();
-            }
-
-            this.PricesChanged = true;
-            this.ComputeGrossWeight_PerStorageDays();
-        }
-    }
-
-    get WarehouseLegLastFreeDate() { return this.EntityPM.WarehouseLegLastFreeDate; }
-    set WarehouseLegLastFreeDate(newValue: Date) {
-        if (this.EntityPM.WarehouseLegLastFreeDate != newValue) {
-            this.EntityPM.WarehouseLegLastFreeDate = newValue;
-
-            if (newValue) {                
-                this.SetStorageFreeDays();
-            }
-        }
-    }
-
-
-    private myWarehouse2AddressList: AddressList;
-    get Warehouse2AddressList() { return this.myWarehouse2AddressList; }
-    set Warehouse2AddressList(newValue: AddressList) {
-        this.myWarehouse2AddressList = newValue;
-        this.FatherComponent.Warehouse2AddressList = newValue;
-    }
-
-    get WarehouseLeg2AddressId() { return this.EntityPM.WarehouseLeg2AddressId; }
-    set WarehouseLeg2AddressId(newValue: string) {
-        if (this.EntityPM.WarehouseLeg2AddressId != newValue) {
-            this.EntityPM.WarehouseLeg2AddressId = newValue;
-
-            if (AppTool.IsNullOrEmpty(newValue)) {
-                this.Warehouse2AddressList = null;
-            }
-
-            else {
-                this.myAddressListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
-                    if (!myResponse.HasError) {
-                        this.Warehouse2AddressList = myResponse.Result;
-                    }
-                });
-            }
-        }
-    }
-
-    get WarehouseLeg2TerminalCode() { return this.EntityPM.WarehouseLeg2TerminalCode; }
-    set WarehouseLeg2TerminalCode(newValue: string) {
-        if (this.EntityPM.WarehouseLeg2TerminalCode != newValue) {
-            this.EntityPM.WarehouseLeg2TerminalCode = newValue;
-        }
-    }
-
-    get WarehouseLeg2Reference() { return this.EntityPM.WarehouseLeg2Reference; }
-    set WarehouseLeg2Reference(newValue: string) {
-        if (this.EntityPM.WarehouseLeg2Reference != newValue) {
-            this.EntityPM.WarehouseLeg2Reference = newValue;
-        }
-    }
-
-    get WarehouseLeg2Remarks() { return this.EntityPM.WarehouseLeg2Remarks; }
-    set WarehouseLeg2Remarks(newValue: string) {
-        if (this.EntityPM.WarehouseLeg2Remarks != newValue) {
-            this.EntityPM.WarehouseLeg2Remarks = newValue;
-        }
-    }
-
-    get WarehouseLeg2ExpectedEntryDate() { return this.EntityPM.WarehouseLeg2ExpectedEntryDate; }
-    set WarehouseLeg2ExpectedEntryDate(value: Date) {
-        if (this.EntityPM.WarehouseLeg2ExpectedEntryDate != value) {
-            this.EntityPM.WarehouseLeg2ExpectedEntryDate = value;
-        }
-    }
-
-    get WarehouseLeg2ExpectedReleaseDate() { return this.EntityPM.WarehouseLeg2ExpectedReleaseDate; }
-    set WarehouseLeg2ExpectedReleaseDate(value: Date) {
-        if (this.EntityPM.WarehouseLeg2ExpectedReleaseDate != value) {
-            this.EntityPM.WarehouseLeg2ExpectedReleaseDate = value;
-        }
-    }
-
-    get WarehouseLeg2ActualEntryDate() { return this.EntityPM.WarehouseLeg2ActualEntryDate; }
-    set WarehouseLeg2ActualEntryDate(value: Date) {
-        if (this.EntityPM.WarehouseLeg2ActualEntryDate != value) {
-            this.EntityPM.WarehouseLeg2ActualEntryDate = value;
-            this.SetUIProperties_ValidateActualDates();
-        }
-    }
-
-    get WarehouseLeg2ActualReleaseDate() { return this.EntityPM.WarehouseLeg2ActualReleaseDate; }
-    set WarehouseLeg2ActualReleaseDate(value: Date) {
-        if (this.EntityPM.WarehouseLeg2ActualReleaseDate != value) {
-            this.EntityPM.WarehouseLeg2ActualReleaseDate = value;
-            this.SetUIProperties_ValidateActualDates();
-
-        }
-    }
-
-
-    private SetStorageFreeDays() {
-        if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
-            if (DateTool.GetDateFromDate(this.WarehouseLegLastFreeDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
-                var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegLastFreeDate);
-
-                if (days == null) {
-                    days = 0;
-                }
-
-                this.EntityPM.WarehouseStorageFreeDays = days;
-            }
-
-            else {
-                this.EntityPM.WarehouseStorageFreeDays = 0;
-            }
-
-            this.ComputeGrossWeight_PerStorageDays();
-        }
-    }
-
-    get GrossWeightPerStorageDays() { return this.EntityPM.GrossWeightPerStorageDays == null ? 0 : this.EntityPM.GrossWeightPerStorageDays; }
-    set GrossWeightPerStorageDays(newValue: number) {
-        if (this.EntityPM.GrossWeightPerStorageDays != newValue) {
-            this.EntityPM.GrossWeightPerStorageDays = AppTool.Round(newValue, 3);
         }
     }
 
@@ -700,15 +277,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.FatherComponent.EntityPM.TerminalAvailable = value;
         }
     }
-
-    get Terminal2Available() { return this.EntityPM.Terminal2Available; }
-    set Terminal2Available(value: Date) {
-        if (this.EntityPM.Terminal2Available != value) {
-            this.EntityPM.Terminal2Available = value;
-            this.FatherComponent.EntityPM.Terminal2Available = value;
-        }
-    }
-
 
     get WarehouseLegCutOffDate() { return this.EntityPM.WarehouseLegCutOffDate; }
     set WarehouseLegCutOffDate(value: Date) {
@@ -724,206 +292,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
-    get WarehouseLeg2VGMCutOffDate() { return this.EntityPM.WarehouseLeg2VGMCutOffDate; }
-    set WarehouseLeg2VGMCutOffDate(value: Date) {
-        if (this.EntityPM.WarehouseLeg2VGMCutOffDate != value) {
-            this.EntityPM.WarehouseLeg2VGMCutOffDate = value;
-        }
-    }
-
-    get WarehouseStorageFreeDays() { return this.EntityPM.WarehouseStorageFreeDays; }
-    set WarehouseStorageFreeDays(value: number) {
-        if (this.EntityPM.WarehouseStorageFreeDays != value) {
-            this.EntityPM.WarehouseStorageFreeDays = value;
-
-            this.SetLastFreeDate();
-            this.PricesChanged = true;
-            this.ComputeGrossWeight_PerStorageDays();
-        }
-    }
-
-    private SetLastFreeDate() {
-        if (this.WarehouseLegActualEntryDate != null && this.WarehouseStorageFreeDays != null) {
-            var date = DateTool.AddDays(this.WarehouseLegActualEntryDate, this.WarehouseStorageFreeDays);
-            if (date == null) {
-                this.EntityPM.WarehouseStorageFreeDays = 0;
-            }
-            else {
-                this.EntityPM.WarehouseLegLastFreeDate = date;
-            }
-        }
-    }
-
-    get IsCFSWarehouse() { return this.EntityPM.IsCFSWarehouse; }
-    set IsCFSWarehouse(value: boolean) {
-        if (this.EntityPM.IsCFSWarehouse != value) {
-            this.EntityPM.IsCFSWarehouse = value;
-            if (this.IsImportShipment) {
-                this.SetIsCFSWarehouseProperities();
-                this.SetChargeStorageProperies();
-                this.SetUIProperties_Storage();
-                this.PricesChanged = true;
-            }
-        }
-    }
-
-    get IsCFSWarehouseChanged() { return this.EntityPM.IsCFSWarehouseChanged; }
-    set IsCFSWarehouseChanged(value: boolean) {
-        if (this.EntityPM.IsCFSWarehouseChanged != value) {
-            this.EntityPM.IsCFSWarehouseChanged = value;
-        }
-    }
-
-    get ChargeStorage() { return this.EntityPM.ChargeStorage; }
-    set ChargeStorage(value: boolean) {
-        if (this.EntityPM.ChargeStorage != value) {
-            this.EntityPM.ChargeStorage = value;            
-        }
-    }
-
-    private PricesChanged: boolean = false;
-    StoragePricingClicked() {
-        var entityResourceService: EntityResourceService = new EntityResourceService();
-        entityResourceService.getEntityResourceByTableName("ShipmentStoragePricing").subscribe((res1: any) => {
-            var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = "Storage Pricing";
-            logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName };
-            logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/WarehouseStoragePricingComponent");
-            logitudeWindow.WindowClosed.subscribe(s => {
-                if (s) {
-                    if (s.indexOf('+') > -1) {
-                        this.PricesChanged = true;
-                        this.CheckStorageProperties(this.WarehouseLegActualReleaseDate);
-                        this.UpdateCurrency();
-                    }
-
-                    else {
-                        if (s == "PricesChanged") {
-                            this.PricesChanged = true;
-                            this.CheckStorageProperties(this.WarehouseLegActualReleaseDate);
-                        }
-
-                        else if (s == "CurrencyChanged") {
-                            this.UpdateCurrency();
-                        }
-                    }
-                }
-            });
-        });
-    }
-
-    private UpdateCurrency() {
-        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
-        if (storageReceivable) {
-            storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
-            storageReceivable.CurrencyCode = this.EntityPM.ChargeStorageCurrencyCode;
-
-            var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-            var myCurrencyRatesService = new CurrencyRatesService();
-            myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
-                if (!myResponse2.HasError) {
-                    var allRates: LastRate[] = myResponse2.Result;
-
-                    if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
-                        storageReceivable.Rate = 1;
-                    }
-                    else {
-                        var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
-                        if (lastRate != null) {
-                            storageReceivable.Rate = lastRate.Rate;
-                        }
-                    }
-
-                    if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                        storageReceivable.ProfitCurrencyExchangeRate = 1;
-                    }
-
-                    else {
-                        var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
-                        if (myLastRate != null) {
-                            storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
-                        }
-                    }
-
-                    storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-                    if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-                        storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-                    }
-
-                    else {
-                        storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-                    }
-
-                    this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
-                }
-            });            
-        }
-    }
-
-    public StorageDays: number;
-    public StorageFee: number;
-    public Days: string;
-    private SetStorageDays() {
-        var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
-
-        if (this.WarehouseLegActualEntryDate != null) {
-            if (storageReceivables.length > 0 && this.WarehouseLegActualReleaseDate == null && this.WarehouseLegExpectedReleaseDate != null) {
-                if (DateTool.GetDateFromDate(this.WarehouseLegExpectedReleaseDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
-                    var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegExpectedReleaseDate);
-                    this.StorageDays = days;
-                    this.Days = " Days";
-                }
-
-                else {
-                    this.StorageDays = null;
-                    this.Days = null;
-                }
-            }
-
-            else {
-                if (this.WarehouseLegActualReleaseDate != null) {
-                    if (DateTool.GetDateFromDate(this.WarehouseLegActualReleaseDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
-                        var days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, this.WarehouseLegActualReleaseDate);
-                        this.StorageDays = days;
-                        this.Days = " Days";
-                    }
-
-                    else {
-                        this.StorageDays = null;
-                        this.Days = null;
-                    }
-                }
-            }
-        }        
-    }
-    private ComputeStorageFee() {
-        var adjustedAmount = 0;
-
-        if (this.StorageDays <= this.EntityPM.WarehouseStorageFreeDays) {
-            var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
-            var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-            if (invoicedStorageReceivable && storageReceivable == null) {
-                adjustedAmount = invoicedStorageReceivable.TotalAmount * -1;
-            }
-
-            else if (storageReceivable) {
-                adjustedAmount = storageReceivable.TotalAmount * -1;
-            }
-        }
-
-        var storageReceivables: ShipmentReceivablePM[] = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE");
-        if (storageReceivables.length > 0) {
-            this.StorageFee = ArrayTool.Sum(storageReceivables, "TotalAmount") + adjustedAmount;
-        }
-
-        else {
-            this.StorageFee = null;
-        }
-    }
-    
     NewWarehouseEntryButtonClicked() {
         var windowArgs: any = {};
         windowArgs.ExpectedEntryDate = this.WarehouseLegExpectedEntryDate;
@@ -943,12 +311,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             case "WarehouseLegExpectedEntryDate": {
                 this.WarehouseLegActualEntryDate = DateTool.GetDateParts(this.WarehouseLegExpectedEntryDate).DateObject; break;
             }
-            case "WarehouseLeg2ExpectedReleaseDate": {
-                this.WarehouseLeg2ActualReleaseDate = DateTool.GetDateParts(this.WarehouseLeg2ExpectedReleaseDate).DateObject; break;
-            }
-            case "WarehouseLeg2ExpectedEntryDate": {
-                this.WarehouseLeg2ActualEntryDate = DateTool.GetDateParts(this.WarehouseLeg2ExpectedEntryDate).DateObject; break;
-            }
         }
     }
 
@@ -960,10 +322,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.LegType != "WarehouseLeg2") {
-            if (AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
-                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegWarehouseId")));
-            }
+        if (AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegWarehouseId")));
         }
 
         // Series Dates
@@ -981,15 +341,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualReleaseDate")));
             }
         }
-        else if (this.LegType == "WarehouseLeg2") {
-            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualEntryDate)) {
-                errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualEntryDate")));
-            }
 
-            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualReleaseDate)) {
-                errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualReleaseDate")));
-            }
-        }
         else {
             if (!DateTool.IsActualDateValid(this.WarehouseLegActualEntryDate)) {
                 errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualEntryDate")));
@@ -1003,202 +355,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            if (this.LegType != "WarehouseLeg2") {
-                var date: Date = this.WarehouseLegActualReleaseDate;
-                if (this.isCalculateStorageClicked && date == null) {
-                    date = this.WarehouseLegExpectedReleaseDate;
-                }
-
-                this.CheckStorageProperties(date);
-
-                if (this.StorageDays <= this.EntityPM.WarehouseStorageFreeDays) {
-                    var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
-                    var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-                    if (invoicedStorageReceivable && storageReceivable == null) {
-                        this.CreateReceivable(invoicedStorageReceivable.TotalAmount * -1);
-                    }
-
-                    else if (storageReceivable) {
-                        this.EntityPM.RemoveReceivable(storageReceivable);
-                        this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
-                    }
-                }
-            }
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
-        }
-    }
-
-    private CheckStorageProperties(date: Date) {
-        var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
-        if (this.IsCFSWarehouse
-            && date != null && date != undefined
-            && !AppTool.IsNullOrEmpty(this.EntityPM.ChargeStorageCurrencyId)
-            && !AppTool.IsNullOrZero(this.StorageDays)            
-            && this.ChargeStorage
-            && this.EntityPM.ShipmentStoragePricings.length > 0) {
-
-            if (this.StorageDays > this.EntityPM.WarehouseStorageFreeDays) {
-                if (this.PricesChanged) {
-                    if (storageReceivable) {
-                        this.UpdateStorageReceivable(storageReceivable);
-                    }
-
-                    else {
-                        this.CreateReceivable();
-                    }
-                }
-
-                else {
-                    if (storageReceivable == null) {
-                        this.CreateReceivable();
-                    }
-                }
-            }
-        }
-
-        else {            
-            if (storageReceivable) {
-                this.EntityPM.RemoveReceivable(storageReceivable);
-                this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
-            }
-        }
-
-        this.ComputeStorageFee();
-    }
-    private ComputeReceivableAmount(): number {
-        var myResult: number = ShipmentTool.ComputeImportStorageReceivableAmount(this.StorageDays, this.EntityPM);
-
-        return myResult;
-    }
-    private UpdateStorageReceivable(storageReceivable: ShipmentReceivablePM) {
-        var amount: number = this.ComputeReceivableAmount();
-
-        if (AppTool.IsNullOrZero(amount)) {
-            this.EntityPM.RemoveReceivable(storageReceivable);
-        }
-
-        else {
-            storageReceivable.TotalAmount = amount;
-            storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-            if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-            }
-
-            else {
-                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-            }
-        }
-
-        this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
-    }
-    private CreateReceivable(invoicedStorageReceivableAmount : number = null) {
-        var amount: number = 0;
-
-        if (!AppTool.IsNullOrZero(invoicedStorageReceivableAmount)) {
-            amount = invoicedStorageReceivableAmount;
-        }
-
-        else {
-            amount = this.ComputeReceivableAmount();
-        }
-
-        if (!AppTool.IsNullOrZero(amount)) {
-            var myService = new CommonDomainService();
-            myService.GetChargesTypeByCode('ISTOR').subscribe((myResponse: ServiceResponse) => {
-                if (!myResponse.HasError) {
-                    var chargesType: ChargesTypeList = myResponse.Result;
-
-                    if (chargesType) {
-                        var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-                        var myCurrencyRatesService = new CurrencyRatesService();
-                        myCurrencyRatesService.getAll(SessionLocator.LocalCurrencyId, todayDate).subscribe((myResponse2: ServiceResponse) => {
-                            if (!myResponse2.HasError) {
-                                var allRates: LastRate[] = myResponse2.Result;
-
-                                var myService = new CurrencyListService();
-                                myService.getSingleFromCache(this.EntityPM.ChargeStorageCurrencyId).subscribe((myResponse: ServiceResponse) => {
-                                    if (!myResponse.HasError) {
-                                        var currencyList: CurrencyList = myResponse.Result;
-                                        if (currencyList != null) {
-
-                                            var storageReceivable: ShipmentReceivablePM = new ShipmentReceivablePM(this.EntityPM);
-                                            storageReceivable.Tenant = this.EntityPM.Tenant;
-                                            storageReceivable.ShipmentId = this.EntityPM.Id;
-                                            storageReceivable.ChargesTypeId = chargesType.Id;
-                                            storageReceivable.ChargesTypeCode = chargesType.Code;
-                                            storageReceivable.ChargesTypeName = chargesType.EnglishName;
-                                            storageReceivable.MeasurementId = chargesType.MeasurementId;
-                                            storageReceivable.MeasurementCode = chargesType.MeasurementCode;
-                                            storageReceivable.ChargesGroupCode = chargesType.ChargesGroupCode;
-                                            storageReceivable.DueTypeCode = chargesType.DueTypeCode;
-                                            storageReceivable.DueTypeName = chargesType.DueTypeName;
-                                            storageReceivable.VatTypeId = chargesType.VatTypeId;
-                                            storageReceivable.IATACodeId = chargesType.IATACodeId;
-                                            storageReceivable.IsExpense = chargesType.IsExpense;
-                                            storageReceivable.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                                            storageReceivable.CreateDate = DateTool.GetCurrentDateAsUtc();
-                                            storageReceivable.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                                            storageReceivable.CreatedByUserId = SessionLocator.LoggedUserId;
-                                            storageReceivable.UpdateByUserId = SessionLocator.LoggedUserId;
-                                            storageReceivable.ShipmentReceivableLineStatusCode = "OAMT";
-                                            storageReceivable.CurrencyId = this.EntityPM.ChargeStorageCurrencyId;
-                                            storageReceivable.CurrencyCode = currencyList.Code;
-
-                                            if (SessionLocator.LocalCurrencyId == storageReceivable.CurrencyId) {
-                                                storageReceivable.Rate = 1;
-                                            }
-                                            else {
-                                                var lastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == storageReceivable.CurrencyId)[0];
-                                                if (lastRate != null) {
-                                                    storageReceivable.Rate = lastRate.Rate;
-                                                }
-                                            }
-
-                                            if (this.EntityPM.ProfitCurrencyId == SessionLocator.TenantPM.CurrencyId) {
-                                                storageReceivable.ProfitCurrencyExchangeRate = 1;
-                                            }
-
-                                            else {
-                                                var myLastRate: LastRate = allRates.filter(d => d.ForeignCurrencyId == this.EntityPM.ProfitCurrencyId)[0];
-                                                if (myLastRate != null) {
-                                                    storageReceivable.ProfitCurrencyExchangeRate = myLastRate.Rate;
-                                                }
-                                            }
-
-                                            if (chargesType.ChargesGroupCode == "FRT") {
-                                                storageReceivable.PrepaidCollectId = this.EntityPM.FreightPrepaidCollectId;
-                                            }
-
-                                            else {
-                                                storageReceivable.PrepaidCollectId = this.EntityPM.OtherPrepaidCollectId;
-                                            }
-
-                                            storageReceivable.TotalAmount = amount;
-                                            storageReceivable.TotalAmountLocal = AppTool.Round(storageReceivable.TotalAmount * storageReceivable.Rate, 2);
-
-                                            if (storageReceivable.CurrencyId == this.EntityPM.ProfitCurrencyId) {
-                                                storageReceivable.AmountInProfitCurrency = storageReceivable.TotalAmount;
-                                            }
-
-                                            else {
-                                                storageReceivable.AmountInProfitCurrency = (storageReceivable.TotalAmountLocal / storageReceivable.ProfitCurrencyExchangeRate);
-                                            }
-
-                                            this.EntityPM.AddReceivable(storageReceivable);
-                                            this.ComputeStorageFee();
-                                            this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
-                                        }
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }
-            });
         }
     }
 
@@ -1222,7 +380,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             oldItem.JobId = item.JobId;
             oldItem.LegType = item.LegType;
             oldItem.ManualActivatedFollowUp = item.ManualActivatedFollowUp;
-            oldItem.Notes = item.Notes;
+            oldItem.Note = item.Note;
             oldItem.OwnerUserId = item.OwnerUserId;
             oldItem.OwnerUserName = item.OwnerUserName;
             oldItem.ShipmentId = item.ShipmentId;
@@ -1249,19 +407,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.myCloner.AddField('TerminalAvailable');
         this.myCloner.AddField('WarehouseLegCutOffDate');
         this.myCloner.AddField('WarehouseLegVGMCutOffDate');
-        this.myCloner.AddField('WarehouseStorageFreeDays');
-        this.myCloner.AddField('IsCFSWarehouse');
-        this.myCloner.AddField('WarehouseLeg2WarehouseId');
-        this.myCloner.AddField('WarehouseLeg2AddressId');
-        this.myCloner.AddField('WarehouseLeg2TerminalCode');
-        this.myCloner.AddField('WarehouseLeg2ExpectedReleaseDate');
-        this.myCloner.AddField('WarehouseLeg2ExpectedEntryDate');
-        this.myCloner.AddField('WarehouseLeg2ActualEntryDate');
-        this.myCloner.AddField('WarehouseLeg2ActualReleaseDate');
-        this.myCloner.AddField('WarehouseLeg2Remarks');
-        this.myCloner.AddField('WarehouseLeg2TerminalName');
-        this.myCloner.AddField('WarehouseLeg2CutOffDate');
-        this.myCloner.AddField('WarehouseLeg2VGMCutOffDate');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.WarehouseAddressList);
         this.myCloner.AddEntity(this.FatherComponent.WarehouseAddressList);
@@ -1297,51 +442,6 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.CurrentSession.FireEvent("FollowupsChanged");
         }
 
-        if (this.IsNewLeg && this.EntityPM.ShipmentStoragePricings.length > 0) {
-            this.EntityPM.ShipmentStoragePricings = [];
-
-            //this.EntityPM.ShipmentStoragePricings.forEach(item => {
-            //    this.EntityPM.RemoveShipmentStoragePricing(item);
-            //});
-        }
-
         this.myCloner.RejectChanges();
-    }
-
-    private ComputeGrossWeight_PerStorageDays() {
-        var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
-        var freeDays = this.EntityPM.WarehouseStorageFreeDays;
-        if (freeDays == null) freeDays = 0;
-
-        var weightPerStorageDays;
-        if (this.EntityPM.TransportModeId != "A") {
-            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - freeDays);
-        }
-        else {
-            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - freeDays);
-        }
-        this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
-
-        ShipmentTool.OnWarehouseStorageFreeDaysChanged(this.EntityPM);
-    }
-
-    private isCalculateStorageClicked: boolean = false;
-    CalculateStorageClicked() {
-        this.isCalculateStorageClicked = true;
-
-        var date: Date = this.WarehouseLegActualReleaseDate;
-        var days: number;
-
-        if (date == null) {
-            date = this.WarehouseLegExpectedReleaseDate;
-        }
-
-        if (DateTool.GetDateFromDate(date) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
-            days = DateTool.GetDaysBetweenDates(this.WarehouseLegActualEntryDate, date);
-            this.StorageDays = days;
-            this.Days = " Days";
-        }
-
-        this.CheckStorageProperties(date);
     }
 }

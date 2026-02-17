@@ -13,8 +13,5 @@ export class BluesnapTransactionList {
 		TransactionDate: Date;
 		DocumentId: string;
 		LogitudeAmital: string;
-		InvoiceAmountInUSD: number;
-		TaxAmountInUSD: number;
-		ContractNumber: string;
 	
 }

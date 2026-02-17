@@ -7,7 +7,7 @@ import { GLAccountExtendedListService } from "../../Services/ExtendedLists/GLAcc
 import { ServiceResponse } from "../../../Infrastructure/DataContracts/ServiceResponse";
 
 @Component({
-    
+    moduleId: module.id,
     selector: 'FullAccountingAddControlComponent',
     templateUrl: './FullAccountingAddControlComponent.html',
     
